@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewGuarddutyDetector creates a new instance of [GuarddutyDetector].
 func NewGuarddutyDetector(name string, args GuarddutyDetectorArgs) *GuarddutyDetector {
 	return &GuarddutyDetector{
 		Args: args,
@@ -19,28 +20,51 @@ func NewGuarddutyDetector(name string, args GuarddutyDetectorArgs) *GuarddutyDet
 
 var _ terra.Resource = (*GuarddutyDetector)(nil)
 
+// GuarddutyDetector represents the Terraform resource aws_guardduty_detector.
 type GuarddutyDetector struct {
-	Name  string
-	Args  GuarddutyDetectorArgs
-	state *guarddutyDetectorState
+	Name      string
+	Args      GuarddutyDetectorArgs
+	state     *guarddutyDetectorState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GuarddutyDetector].
 func (gd *GuarddutyDetector) Type() string {
 	return "aws_guardduty_detector"
 }
 
+// LocalName returns the local name for [GuarddutyDetector].
 func (gd *GuarddutyDetector) LocalName() string {
 	return gd.Name
 }
 
+// Configuration returns the configuration (args) for [GuarddutyDetector].
 func (gd *GuarddutyDetector) Configuration() interface{} {
 	return gd.Args
 }
 
+// DependOn is used for other resources to depend on [GuarddutyDetector].
+func (gd *GuarddutyDetector) DependOn() terra.Reference {
+	return terra.ReferenceResource(gd)
+}
+
+// Dependencies returns the list of resources [GuarddutyDetector] depends_on.
+func (gd *GuarddutyDetector) Dependencies() terra.Dependencies {
+	return gd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GuarddutyDetector].
+func (gd *GuarddutyDetector) LifecycleManagement() *terra.Lifecycle {
+	return gd.Lifecycle
+}
+
+// Attributes returns the attributes for [GuarddutyDetector].
 func (gd *GuarddutyDetector) Attributes() guarddutyDetectorAttributes {
 	return guarddutyDetectorAttributes{ref: terra.ReferenceResource(gd)}
 }
 
+// ImportState imports the given attribute values into [GuarddutyDetector]'s state.
 func (gd *GuarddutyDetector) ImportState(av io.Reader) error {
 	gd.state = &guarddutyDetectorState{}
 	if err := json.NewDecoder(av).Decode(gd.state); err != nil {
@@ -49,10 +73,12 @@ func (gd *GuarddutyDetector) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GuarddutyDetector] has state.
 func (gd *GuarddutyDetector) State() (*guarddutyDetectorState, bool) {
 	return gd.state, gd.state != nil
 }
 
+// StateMust returns the state for [GuarddutyDetector]. Panics if the state is nil.
 func (gd *GuarddutyDetector) StateMust() *guarddutyDetectorState {
 	if gd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", gd.Type(), gd.LocalName()))
@@ -60,10 +86,7 @@ func (gd *GuarddutyDetector) StateMust() *guarddutyDetectorState {
 	return gd.state
 }
 
-func (gd *GuarddutyDetector) DependOn() terra.Reference {
-	return terra.ReferenceResource(gd)
-}
-
+// GuarddutyDetectorArgs contains the configurations for aws_guardduty_detector.
 type GuarddutyDetectorArgs struct {
 	// Enable: bool, optional
 	Enable terra.BoolValue `hcl:"enable,attr"`
@@ -77,43 +100,48 @@ type GuarddutyDetectorArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Datasources: optional
 	Datasources *guarddutydetector.Datasources `hcl:"datasources,block"`
-	// DependsOn contains resources that GuarddutyDetector depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type guarddutyDetectorAttributes struct {
 	ref terra.Reference
 }
 
+// AccountId returns a reference to field account_id of aws_guardduty_detector.
 func (gd guarddutyDetectorAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(gd.ref.Append("account_id"))
+	return terra.ReferenceAsString(gd.ref.Append("account_id"))
 }
 
+// Arn returns a reference to field arn of aws_guardduty_detector.
 func (gd guarddutyDetectorAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(gd.ref.Append("arn"))
+	return terra.ReferenceAsString(gd.ref.Append("arn"))
 }
 
+// Enable returns a reference to field enable of aws_guardduty_detector.
 func (gd guarddutyDetectorAttributes) Enable() terra.BoolValue {
-	return terra.ReferenceBool(gd.ref.Append("enable"))
+	return terra.ReferenceAsBool(gd.ref.Append("enable"))
 }
 
+// FindingPublishingFrequency returns a reference to field finding_publishing_frequency of aws_guardduty_detector.
 func (gd guarddutyDetectorAttributes) FindingPublishingFrequency() terra.StringValue {
-	return terra.ReferenceString(gd.ref.Append("finding_publishing_frequency"))
+	return terra.ReferenceAsString(gd.ref.Append("finding_publishing_frequency"))
 }
 
+// Id returns a reference to field id of aws_guardduty_detector.
 func (gd guarddutyDetectorAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gd.ref.Append("id"))
+	return terra.ReferenceAsString(gd.ref.Append("id"))
 }
 
+// Tags returns a reference to field tags of aws_guardduty_detector.
 func (gd guarddutyDetectorAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gd.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](gd.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_guardduty_detector.
 func (gd guarddutyDetectorAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gd.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](gd.ref.Append("tags_all"))
 }
 
 func (gd guarddutyDetectorAttributes) Datasources() terra.ListValue[guarddutydetector.DatasourcesAttributes] {
-	return terra.ReferenceList[guarddutydetector.DatasourcesAttributes](gd.ref.Append("datasources"))
+	return terra.ReferenceAsList[guarddutydetector.DatasourcesAttributes](gd.ref.Append("datasources"))
 }
 
 type guarddutyDetectorState struct {

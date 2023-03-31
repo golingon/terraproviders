@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataServicecatalogPortfolio creates a new instance of [DataServicecatalogPortfolio].
 func NewDataServicecatalogPortfolio(name string, args DataServicecatalogPortfolioArgs) *DataServicecatalogPortfolio {
 	return &DataServicecatalogPortfolio{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataServicecatalogPortfolio(name string, args DataServicecatalogPortfoli
 
 var _ terra.DataResource = (*DataServicecatalogPortfolio)(nil)
 
+// DataServicecatalogPortfolio represents the Terraform data resource aws_servicecatalog_portfolio.
 type DataServicecatalogPortfolio struct {
 	Name string
 	Args DataServicecatalogPortfolioArgs
 }
 
+// DataSource returns the Terraform object type for [DataServicecatalogPortfolio].
 func (sp *DataServicecatalogPortfolio) DataSource() string {
 	return "aws_servicecatalog_portfolio"
 }
 
+// LocalName returns the local name for [DataServicecatalogPortfolio].
 func (sp *DataServicecatalogPortfolio) LocalName() string {
 	return sp.Name
 }
 
+// Configuration returns the configuration (args) for [DataServicecatalogPortfolio].
 func (sp *DataServicecatalogPortfolio) Configuration() interface{} {
 	return sp.Args
 }
 
+// Attributes returns the attributes for [DataServicecatalogPortfolio].
 func (sp *DataServicecatalogPortfolio) Attributes() dataServicecatalogPortfolioAttributes {
 	return dataServicecatalogPortfolioAttributes{ref: terra.ReferenceDataResource(sp)}
 }
 
+// DataServicecatalogPortfolioArgs contains the configurations for aws_servicecatalog_portfolio.
 type DataServicecatalogPortfolioArgs struct {
 	// AcceptLanguage: string, optional
 	AcceptLanguage terra.StringValue `hcl:"accept_language,attr"`
@@ -51,38 +58,46 @@ type dataServicecatalogPortfolioAttributes struct {
 	ref terra.Reference
 }
 
+// AcceptLanguage returns a reference to field accept_language of aws_servicecatalog_portfolio.
 func (sp dataServicecatalogPortfolioAttributes) AcceptLanguage() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("accept_language"))
+	return terra.ReferenceAsString(sp.ref.Append("accept_language"))
 }
 
+// Arn returns a reference to field arn of aws_servicecatalog_portfolio.
 func (sp dataServicecatalogPortfolioAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("arn"))
+	return terra.ReferenceAsString(sp.ref.Append("arn"))
 }
 
+// CreatedTime returns a reference to field created_time of aws_servicecatalog_portfolio.
 func (sp dataServicecatalogPortfolioAttributes) CreatedTime() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("created_time"))
+	return terra.ReferenceAsString(sp.ref.Append("created_time"))
 }
 
+// Description returns a reference to field description of aws_servicecatalog_portfolio.
 func (sp dataServicecatalogPortfolioAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("description"))
+	return terra.ReferenceAsString(sp.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_servicecatalog_portfolio.
 func (sp dataServicecatalogPortfolioAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("id"))
+	return terra.ReferenceAsString(sp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_servicecatalog_portfolio.
 func (sp dataServicecatalogPortfolioAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("name"))
+	return terra.ReferenceAsString(sp.ref.Append("name"))
 }
 
+// ProviderName returns a reference to field provider_name of aws_servicecatalog_portfolio.
 func (sp dataServicecatalogPortfolioAttributes) ProviderName() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("provider_name"))
+	return terra.ReferenceAsString(sp.ref.Append("provider_name"))
 }
 
+// Tags returns a reference to field tags of aws_servicecatalog_portfolio.
 func (sp dataServicecatalogPortfolioAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sp.ref.Append("tags"))
 }
 
 func (sp dataServicecatalogPortfolioAttributes) Timeouts() dataservicecatalogportfolio.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataservicecatalogportfolio.TimeoutsAttributes](sp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataservicecatalogportfolio.TimeoutsAttributes](sp.ref.Append("timeouts"))
 }

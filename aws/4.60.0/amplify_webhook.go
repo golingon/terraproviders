@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAmplifyWebhook creates a new instance of [AmplifyWebhook].
 func NewAmplifyWebhook(name string, args AmplifyWebhookArgs) *AmplifyWebhook {
 	return &AmplifyWebhook{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAmplifyWebhook(name string, args AmplifyWebhookArgs) *AmplifyWebhook {
 
 var _ terra.Resource = (*AmplifyWebhook)(nil)
 
+// AmplifyWebhook represents the Terraform resource aws_amplify_webhook.
 type AmplifyWebhook struct {
-	Name  string
-	Args  AmplifyWebhookArgs
-	state *amplifyWebhookState
+	Name      string
+	Args      AmplifyWebhookArgs
+	state     *amplifyWebhookState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AmplifyWebhook].
 func (aw *AmplifyWebhook) Type() string {
 	return "aws_amplify_webhook"
 }
 
+// LocalName returns the local name for [AmplifyWebhook].
 func (aw *AmplifyWebhook) LocalName() string {
 	return aw.Name
 }
 
+// Configuration returns the configuration (args) for [AmplifyWebhook].
 func (aw *AmplifyWebhook) Configuration() interface{} {
 	return aw.Args
 }
 
+// DependOn is used for other resources to depend on [AmplifyWebhook].
+func (aw *AmplifyWebhook) DependOn() terra.Reference {
+	return terra.ReferenceResource(aw)
+}
+
+// Dependencies returns the list of resources [AmplifyWebhook] depends_on.
+func (aw *AmplifyWebhook) Dependencies() terra.Dependencies {
+	return aw.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AmplifyWebhook].
+func (aw *AmplifyWebhook) LifecycleManagement() *terra.Lifecycle {
+	return aw.Lifecycle
+}
+
+// Attributes returns the attributes for [AmplifyWebhook].
 func (aw *AmplifyWebhook) Attributes() amplifyWebhookAttributes {
 	return amplifyWebhookAttributes{ref: terra.ReferenceResource(aw)}
 }
 
+// ImportState imports the given attribute values into [AmplifyWebhook]'s state.
 func (aw *AmplifyWebhook) ImportState(av io.Reader) error {
 	aw.state = &amplifyWebhookState{}
 	if err := json.NewDecoder(av).Decode(aw.state); err != nil {
@@ -48,10 +72,12 @@ func (aw *AmplifyWebhook) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AmplifyWebhook] has state.
 func (aw *AmplifyWebhook) State() (*amplifyWebhookState, bool) {
 	return aw.state, aw.state != nil
 }
 
+// StateMust returns the state for [AmplifyWebhook]. Panics if the state is nil.
 func (aw *AmplifyWebhook) StateMust() *amplifyWebhookState {
 	if aw.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", aw.Type(), aw.LocalName()))
@@ -59,10 +85,7 @@ func (aw *AmplifyWebhook) StateMust() *amplifyWebhookState {
 	return aw.state
 }
 
-func (aw *AmplifyWebhook) DependOn() terra.Reference {
-	return terra.ReferenceResource(aw)
-}
-
+// AmplifyWebhookArgs contains the configurations for aws_amplify_webhook.
 type AmplifyWebhookArgs struct {
 	// AppId: string, required
 	AppId terra.StringValue `hcl:"app_id,attr" validate:"required"`
@@ -72,35 +95,39 @@ type AmplifyWebhookArgs struct {
 	Description terra.StringValue `hcl:"description,attr"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that AmplifyWebhook depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type amplifyWebhookAttributes struct {
 	ref terra.Reference
 }
 
+// AppId returns a reference to field app_id of aws_amplify_webhook.
 func (aw amplifyWebhookAttributes) AppId() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("app_id"))
+	return terra.ReferenceAsString(aw.ref.Append("app_id"))
 }
 
+// Arn returns a reference to field arn of aws_amplify_webhook.
 func (aw amplifyWebhookAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("arn"))
+	return terra.ReferenceAsString(aw.ref.Append("arn"))
 }
 
+// BranchName returns a reference to field branch_name of aws_amplify_webhook.
 func (aw amplifyWebhookAttributes) BranchName() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("branch_name"))
+	return terra.ReferenceAsString(aw.ref.Append("branch_name"))
 }
 
+// Description returns a reference to field description of aws_amplify_webhook.
 func (aw amplifyWebhookAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("description"))
+	return terra.ReferenceAsString(aw.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_amplify_webhook.
 func (aw amplifyWebhookAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("id"))
+	return terra.ReferenceAsString(aw.ref.Append("id"))
 }
 
+// Url returns a reference to field url of aws_amplify_webhook.
 func (aw amplifyWebhookAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(aw.ref.Append("url"))
+	return terra.ReferenceAsString(aw.ref.Append("url"))
 }
 
 type amplifyWebhookState struct {

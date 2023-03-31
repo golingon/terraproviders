@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSagemakerEndpointConfiguration creates a new instance of [SagemakerEndpointConfiguration].
 func NewSagemakerEndpointConfiguration(name string, args SagemakerEndpointConfigurationArgs) *SagemakerEndpointConfiguration {
 	return &SagemakerEndpointConfiguration{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSagemakerEndpointConfiguration(name string, args SagemakerEndpointConfig
 
 var _ terra.Resource = (*SagemakerEndpointConfiguration)(nil)
 
+// SagemakerEndpointConfiguration represents the Terraform resource aws_sagemaker_endpoint_configuration.
 type SagemakerEndpointConfiguration struct {
-	Name  string
-	Args  SagemakerEndpointConfigurationArgs
-	state *sagemakerEndpointConfigurationState
+	Name      string
+	Args      SagemakerEndpointConfigurationArgs
+	state     *sagemakerEndpointConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SagemakerEndpointConfiguration].
 func (sec *SagemakerEndpointConfiguration) Type() string {
 	return "aws_sagemaker_endpoint_configuration"
 }
 
+// LocalName returns the local name for [SagemakerEndpointConfiguration].
 func (sec *SagemakerEndpointConfiguration) LocalName() string {
 	return sec.Name
 }
 
+// Configuration returns the configuration (args) for [SagemakerEndpointConfiguration].
 func (sec *SagemakerEndpointConfiguration) Configuration() interface{} {
 	return sec.Args
 }
 
+// DependOn is used for other resources to depend on [SagemakerEndpointConfiguration].
+func (sec *SagemakerEndpointConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(sec)
+}
+
+// Dependencies returns the list of resources [SagemakerEndpointConfiguration] depends_on.
+func (sec *SagemakerEndpointConfiguration) Dependencies() terra.Dependencies {
+	return sec.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SagemakerEndpointConfiguration].
+func (sec *SagemakerEndpointConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return sec.Lifecycle
+}
+
+// Attributes returns the attributes for [SagemakerEndpointConfiguration].
 func (sec *SagemakerEndpointConfiguration) Attributes() sagemakerEndpointConfigurationAttributes {
 	return sagemakerEndpointConfigurationAttributes{ref: terra.ReferenceResource(sec)}
 }
 
+// ImportState imports the given attribute values into [SagemakerEndpointConfiguration]'s state.
 func (sec *SagemakerEndpointConfiguration) ImportState(av io.Reader) error {
 	sec.state = &sagemakerEndpointConfigurationState{}
 	if err := json.NewDecoder(av).Decode(sec.state); err != nil {
@@ -49,10 +73,12 @@ func (sec *SagemakerEndpointConfiguration) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SagemakerEndpointConfiguration] has state.
 func (sec *SagemakerEndpointConfiguration) State() (*sagemakerEndpointConfigurationState, bool) {
 	return sec.state, sec.state != nil
 }
 
+// StateMust returns the state for [SagemakerEndpointConfiguration]. Panics if the state is nil.
 func (sec *SagemakerEndpointConfiguration) StateMust() *sagemakerEndpointConfigurationState {
 	if sec.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sec.Type(), sec.LocalName()))
@@ -60,10 +86,7 @@ func (sec *SagemakerEndpointConfiguration) StateMust() *sagemakerEndpointConfigu
 	return sec.state
 }
 
-func (sec *SagemakerEndpointConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(sec)
-}
-
+// SagemakerEndpointConfigurationArgs contains the configurations for aws_sagemaker_endpoint_configuration.
 type SagemakerEndpointConfigurationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -83,51 +106,55 @@ type SagemakerEndpointConfigurationArgs struct {
 	ProductionVariants []sagemakerendpointconfiguration.ProductionVariants `hcl:"production_variants,block" validate:"min=1,max=10"`
 	// ShadowProductionVariants: min=0,max=10
 	ShadowProductionVariants []sagemakerendpointconfiguration.ShadowProductionVariants `hcl:"shadow_production_variants,block" validate:"min=0,max=10"`
-	// DependsOn contains resources that SagemakerEndpointConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sagemakerEndpointConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_sagemaker_endpoint_configuration.
 func (sec sagemakerEndpointConfigurationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sec.ref.Append("arn"))
+	return terra.ReferenceAsString(sec.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_sagemaker_endpoint_configuration.
 func (sec sagemakerEndpointConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sec.ref.Append("id"))
+	return terra.ReferenceAsString(sec.ref.Append("id"))
 }
 
+// KmsKeyArn returns a reference to field kms_key_arn of aws_sagemaker_endpoint_configuration.
 func (sec sagemakerEndpointConfigurationAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(sec.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(sec.ref.Append("kms_key_arn"))
 }
 
+// Name returns a reference to field name of aws_sagemaker_endpoint_configuration.
 func (sec sagemakerEndpointConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sec.ref.Append("name"))
+	return terra.ReferenceAsString(sec.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_sagemaker_endpoint_configuration.
 func (sec sagemakerEndpointConfigurationAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sec.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sec.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_sagemaker_endpoint_configuration.
 func (sec sagemakerEndpointConfigurationAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sec.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sec.ref.Append("tags_all"))
 }
 
 func (sec sagemakerEndpointConfigurationAttributes) AsyncInferenceConfig() terra.ListValue[sagemakerendpointconfiguration.AsyncInferenceConfigAttributes] {
-	return terra.ReferenceList[sagemakerendpointconfiguration.AsyncInferenceConfigAttributes](sec.ref.Append("async_inference_config"))
+	return terra.ReferenceAsList[sagemakerendpointconfiguration.AsyncInferenceConfigAttributes](sec.ref.Append("async_inference_config"))
 }
 
 func (sec sagemakerEndpointConfigurationAttributes) DataCaptureConfig() terra.ListValue[sagemakerendpointconfiguration.DataCaptureConfigAttributes] {
-	return terra.ReferenceList[sagemakerendpointconfiguration.DataCaptureConfigAttributes](sec.ref.Append("data_capture_config"))
+	return terra.ReferenceAsList[sagemakerendpointconfiguration.DataCaptureConfigAttributes](sec.ref.Append("data_capture_config"))
 }
 
 func (sec sagemakerEndpointConfigurationAttributes) ProductionVariants() terra.ListValue[sagemakerendpointconfiguration.ProductionVariantsAttributes] {
-	return terra.ReferenceList[sagemakerendpointconfiguration.ProductionVariantsAttributes](sec.ref.Append("production_variants"))
+	return terra.ReferenceAsList[sagemakerendpointconfiguration.ProductionVariantsAttributes](sec.ref.Append("production_variants"))
 }
 
 func (sec sagemakerEndpointConfigurationAttributes) ShadowProductionVariants() terra.ListValue[sagemakerendpointconfiguration.ShadowProductionVariantsAttributes] {
-	return terra.ReferenceList[sagemakerendpointconfiguration.ShadowProductionVariantsAttributes](sec.ref.Append("shadow_production_variants"))
+	return terra.ReferenceAsList[sagemakerendpointconfiguration.ShadowProductionVariantsAttributes](sec.ref.Append("shadow_production_variants"))
 }
 
 type sagemakerEndpointConfigurationState struct {

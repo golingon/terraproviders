@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAthenaDatabase creates a new instance of [AthenaDatabase].
 func NewAthenaDatabase(name string, args AthenaDatabaseArgs) *AthenaDatabase {
 	return &AthenaDatabase{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAthenaDatabase(name string, args AthenaDatabaseArgs) *AthenaDatabase {
 
 var _ terra.Resource = (*AthenaDatabase)(nil)
 
+// AthenaDatabase represents the Terraform resource aws_athena_database.
 type AthenaDatabase struct {
-	Name  string
-	Args  AthenaDatabaseArgs
-	state *athenaDatabaseState
+	Name      string
+	Args      AthenaDatabaseArgs
+	state     *athenaDatabaseState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AthenaDatabase].
 func (ad *AthenaDatabase) Type() string {
 	return "aws_athena_database"
 }
 
+// LocalName returns the local name for [AthenaDatabase].
 func (ad *AthenaDatabase) LocalName() string {
 	return ad.Name
 }
 
+// Configuration returns the configuration (args) for [AthenaDatabase].
 func (ad *AthenaDatabase) Configuration() interface{} {
 	return ad.Args
 }
 
+// DependOn is used for other resources to depend on [AthenaDatabase].
+func (ad *AthenaDatabase) DependOn() terra.Reference {
+	return terra.ReferenceResource(ad)
+}
+
+// Dependencies returns the list of resources [AthenaDatabase] depends_on.
+func (ad *AthenaDatabase) Dependencies() terra.Dependencies {
+	return ad.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AthenaDatabase].
+func (ad *AthenaDatabase) LifecycleManagement() *terra.Lifecycle {
+	return ad.Lifecycle
+}
+
+// Attributes returns the attributes for [AthenaDatabase].
 func (ad *AthenaDatabase) Attributes() athenaDatabaseAttributes {
 	return athenaDatabaseAttributes{ref: terra.ReferenceResource(ad)}
 }
 
+// ImportState imports the given attribute values into [AthenaDatabase]'s state.
 func (ad *AthenaDatabase) ImportState(av io.Reader) error {
 	ad.state = &athenaDatabaseState{}
 	if err := json.NewDecoder(av).Decode(ad.state); err != nil {
@@ -49,10 +73,12 @@ func (ad *AthenaDatabase) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AthenaDatabase] has state.
 func (ad *AthenaDatabase) State() (*athenaDatabaseState, bool) {
 	return ad.state, ad.state != nil
 }
 
+// StateMust returns the state for [AthenaDatabase]. Panics if the state is nil.
 func (ad *AthenaDatabase) StateMust() *athenaDatabaseState {
 	if ad.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ad.Type(), ad.LocalName()))
@@ -60,10 +86,7 @@ func (ad *AthenaDatabase) StateMust() *athenaDatabaseState {
 	return ad.state
 }
 
-func (ad *AthenaDatabase) DependOn() terra.Reference {
-	return terra.ReferenceResource(ad)
-}
-
+// AthenaDatabaseArgs contains the configurations for aws_athena_database.
 type AthenaDatabaseArgs struct {
 	// Bucket: string, optional
 	Bucket terra.StringValue `hcl:"bucket,attr"`
@@ -83,47 +106,52 @@ type AthenaDatabaseArgs struct {
 	AclConfiguration *athenadatabase.AclConfiguration `hcl:"acl_configuration,block"`
 	// EncryptionConfiguration: optional
 	EncryptionConfiguration *athenadatabase.EncryptionConfiguration `hcl:"encryption_configuration,block"`
-	// DependsOn contains resources that AthenaDatabase depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type athenaDatabaseAttributes struct {
 	ref terra.Reference
 }
 
+// Bucket returns a reference to field bucket of aws_athena_database.
 func (ad athenaDatabaseAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("bucket"))
+	return terra.ReferenceAsString(ad.ref.Append("bucket"))
 }
 
+// Comment returns a reference to field comment of aws_athena_database.
 func (ad athenaDatabaseAttributes) Comment() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("comment"))
+	return terra.ReferenceAsString(ad.ref.Append("comment"))
 }
 
+// ExpectedBucketOwner returns a reference to field expected_bucket_owner of aws_athena_database.
 func (ad athenaDatabaseAttributes) ExpectedBucketOwner() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("expected_bucket_owner"))
+	return terra.ReferenceAsString(ad.ref.Append("expected_bucket_owner"))
 }
 
+// ForceDestroy returns a reference to field force_destroy of aws_athena_database.
 func (ad athenaDatabaseAttributes) ForceDestroy() terra.BoolValue {
-	return terra.ReferenceBool(ad.ref.Append("force_destroy"))
+	return terra.ReferenceAsBool(ad.ref.Append("force_destroy"))
 }
 
+// Id returns a reference to field id of aws_athena_database.
 func (ad athenaDatabaseAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("id"))
+	return terra.ReferenceAsString(ad.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_athena_database.
 func (ad athenaDatabaseAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("name"))
+	return terra.ReferenceAsString(ad.ref.Append("name"))
 }
 
+// Properties returns a reference to field properties of aws_athena_database.
 func (ad athenaDatabaseAttributes) Properties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ad.ref.Append("properties"))
+	return terra.ReferenceAsMap[terra.StringValue](ad.ref.Append("properties"))
 }
 
 func (ad athenaDatabaseAttributes) AclConfiguration() terra.ListValue[athenadatabase.AclConfigurationAttributes] {
-	return terra.ReferenceList[athenadatabase.AclConfigurationAttributes](ad.ref.Append("acl_configuration"))
+	return terra.ReferenceAsList[athenadatabase.AclConfigurationAttributes](ad.ref.Append("acl_configuration"))
 }
 
 func (ad athenaDatabaseAttributes) EncryptionConfiguration() terra.ListValue[athenadatabase.EncryptionConfigurationAttributes] {
-	return terra.ReferenceList[athenadatabase.EncryptionConfigurationAttributes](ad.ref.Append("encryption_configuration"))
+	return terra.ReferenceAsList[athenadatabase.EncryptionConfigurationAttributes](ad.ref.Append("encryption_configuration"))
 }
 
 type athenaDatabaseState struct {

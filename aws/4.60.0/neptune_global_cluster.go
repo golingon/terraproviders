@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNeptuneGlobalCluster creates a new instance of [NeptuneGlobalCluster].
 func NewNeptuneGlobalCluster(name string, args NeptuneGlobalClusterArgs) *NeptuneGlobalCluster {
 	return &NeptuneGlobalCluster{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNeptuneGlobalCluster(name string, args NeptuneGlobalClusterArgs) *Neptun
 
 var _ terra.Resource = (*NeptuneGlobalCluster)(nil)
 
+// NeptuneGlobalCluster represents the Terraform resource aws_neptune_global_cluster.
 type NeptuneGlobalCluster struct {
-	Name  string
-	Args  NeptuneGlobalClusterArgs
-	state *neptuneGlobalClusterState
+	Name      string
+	Args      NeptuneGlobalClusterArgs
+	state     *neptuneGlobalClusterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NeptuneGlobalCluster].
 func (ngc *NeptuneGlobalCluster) Type() string {
 	return "aws_neptune_global_cluster"
 }
 
+// LocalName returns the local name for [NeptuneGlobalCluster].
 func (ngc *NeptuneGlobalCluster) LocalName() string {
 	return ngc.Name
 }
 
+// Configuration returns the configuration (args) for [NeptuneGlobalCluster].
 func (ngc *NeptuneGlobalCluster) Configuration() interface{} {
 	return ngc.Args
 }
 
+// DependOn is used for other resources to depend on [NeptuneGlobalCluster].
+func (ngc *NeptuneGlobalCluster) DependOn() terra.Reference {
+	return terra.ReferenceResource(ngc)
+}
+
+// Dependencies returns the list of resources [NeptuneGlobalCluster] depends_on.
+func (ngc *NeptuneGlobalCluster) Dependencies() terra.Dependencies {
+	return ngc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NeptuneGlobalCluster].
+func (ngc *NeptuneGlobalCluster) LifecycleManagement() *terra.Lifecycle {
+	return ngc.Lifecycle
+}
+
+// Attributes returns the attributes for [NeptuneGlobalCluster].
 func (ngc *NeptuneGlobalCluster) Attributes() neptuneGlobalClusterAttributes {
 	return neptuneGlobalClusterAttributes{ref: terra.ReferenceResource(ngc)}
 }
 
+// ImportState imports the given attribute values into [NeptuneGlobalCluster]'s state.
 func (ngc *NeptuneGlobalCluster) ImportState(av io.Reader) error {
 	ngc.state = &neptuneGlobalClusterState{}
 	if err := json.NewDecoder(av).Decode(ngc.state); err != nil {
@@ -49,10 +73,12 @@ func (ngc *NeptuneGlobalCluster) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NeptuneGlobalCluster] has state.
 func (ngc *NeptuneGlobalCluster) State() (*neptuneGlobalClusterState, bool) {
 	return ngc.state, ngc.state != nil
 }
 
+// StateMust returns the state for [NeptuneGlobalCluster]. Panics if the state is nil.
 func (ngc *NeptuneGlobalCluster) StateMust() *neptuneGlobalClusterState {
 	if ngc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ngc.Type(), ngc.LocalName()))
@@ -60,10 +86,7 @@ func (ngc *NeptuneGlobalCluster) StateMust() *neptuneGlobalClusterState {
 	return ngc.state
 }
 
-func (ngc *NeptuneGlobalCluster) DependOn() terra.Reference {
-	return terra.ReferenceResource(ngc)
-}
-
+// NeptuneGlobalClusterArgs contains the configurations for aws_neptune_global_cluster.
 type NeptuneGlobalClusterArgs struct {
 	// DeletionProtection: bool, optional
 	DeletionProtection terra.BoolValue `hcl:"deletion_protection,attr"`
@@ -83,59 +106,67 @@ type NeptuneGlobalClusterArgs struct {
 	GlobalClusterMembers []neptuneglobalcluster.GlobalClusterMembers `hcl:"global_cluster_members,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *neptuneglobalcluster.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that NeptuneGlobalCluster depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type neptuneGlobalClusterAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_neptune_global_cluster.
 func (ngc neptuneGlobalClusterAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ngc.ref.Append("arn"))
+	return terra.ReferenceAsString(ngc.ref.Append("arn"))
 }
 
+// DeletionProtection returns a reference to field deletion_protection of aws_neptune_global_cluster.
 func (ngc neptuneGlobalClusterAttributes) DeletionProtection() terra.BoolValue {
-	return terra.ReferenceBool(ngc.ref.Append("deletion_protection"))
+	return terra.ReferenceAsBool(ngc.ref.Append("deletion_protection"))
 }
 
+// Engine returns a reference to field engine of aws_neptune_global_cluster.
 func (ngc neptuneGlobalClusterAttributes) Engine() terra.StringValue {
-	return terra.ReferenceString(ngc.ref.Append("engine"))
+	return terra.ReferenceAsString(ngc.ref.Append("engine"))
 }
 
+// EngineVersion returns a reference to field engine_version of aws_neptune_global_cluster.
 func (ngc neptuneGlobalClusterAttributes) EngineVersion() terra.StringValue {
-	return terra.ReferenceString(ngc.ref.Append("engine_version"))
+	return terra.ReferenceAsString(ngc.ref.Append("engine_version"))
 }
 
+// GlobalClusterIdentifier returns a reference to field global_cluster_identifier of aws_neptune_global_cluster.
 func (ngc neptuneGlobalClusterAttributes) GlobalClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(ngc.ref.Append("global_cluster_identifier"))
+	return terra.ReferenceAsString(ngc.ref.Append("global_cluster_identifier"))
 }
 
+// GlobalClusterResourceId returns a reference to field global_cluster_resource_id of aws_neptune_global_cluster.
 func (ngc neptuneGlobalClusterAttributes) GlobalClusterResourceId() terra.StringValue {
-	return terra.ReferenceString(ngc.ref.Append("global_cluster_resource_id"))
+	return terra.ReferenceAsString(ngc.ref.Append("global_cluster_resource_id"))
 }
 
+// Id returns a reference to field id of aws_neptune_global_cluster.
 func (ngc neptuneGlobalClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ngc.ref.Append("id"))
+	return terra.ReferenceAsString(ngc.ref.Append("id"))
 }
 
+// SourceDbClusterIdentifier returns a reference to field source_db_cluster_identifier of aws_neptune_global_cluster.
 func (ngc neptuneGlobalClusterAttributes) SourceDbClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(ngc.ref.Append("source_db_cluster_identifier"))
+	return terra.ReferenceAsString(ngc.ref.Append("source_db_cluster_identifier"))
 }
 
+// Status returns a reference to field status of aws_neptune_global_cluster.
 func (ngc neptuneGlobalClusterAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ngc.ref.Append("status"))
+	return terra.ReferenceAsString(ngc.ref.Append("status"))
 }
 
+// StorageEncrypted returns a reference to field storage_encrypted of aws_neptune_global_cluster.
 func (ngc neptuneGlobalClusterAttributes) StorageEncrypted() terra.BoolValue {
-	return terra.ReferenceBool(ngc.ref.Append("storage_encrypted"))
+	return terra.ReferenceAsBool(ngc.ref.Append("storage_encrypted"))
 }
 
 func (ngc neptuneGlobalClusterAttributes) GlobalClusterMembers() terra.SetValue[neptuneglobalcluster.GlobalClusterMembersAttributes] {
-	return terra.ReferenceSet[neptuneglobalcluster.GlobalClusterMembersAttributes](ngc.ref.Append("global_cluster_members"))
+	return terra.ReferenceAsSet[neptuneglobalcluster.GlobalClusterMembersAttributes](ngc.ref.Append("global_cluster_members"))
 }
 
 func (ngc neptuneGlobalClusterAttributes) Timeouts() neptuneglobalcluster.TimeoutsAttributes {
-	return terra.ReferenceSingle[neptuneglobalcluster.TimeoutsAttributes](ngc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[neptuneglobalcluster.TimeoutsAttributes](ngc.ref.Append("timeouts"))
 }
 
 type neptuneGlobalClusterState struct {

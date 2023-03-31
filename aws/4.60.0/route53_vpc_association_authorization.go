@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRoute53VpcAssociationAuthorization creates a new instance of [Route53VpcAssociationAuthorization].
 func NewRoute53VpcAssociationAuthorization(name string, args Route53VpcAssociationAuthorizationArgs) *Route53VpcAssociationAuthorization {
 	return &Route53VpcAssociationAuthorization{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRoute53VpcAssociationAuthorization(name string, args Route53VpcAssociati
 
 var _ terra.Resource = (*Route53VpcAssociationAuthorization)(nil)
 
+// Route53VpcAssociationAuthorization represents the Terraform resource aws_route53_vpc_association_authorization.
 type Route53VpcAssociationAuthorization struct {
-	Name  string
-	Args  Route53VpcAssociationAuthorizationArgs
-	state *route53VpcAssociationAuthorizationState
+	Name      string
+	Args      Route53VpcAssociationAuthorizationArgs
+	state     *route53VpcAssociationAuthorizationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Route53VpcAssociationAuthorization].
 func (rvaa *Route53VpcAssociationAuthorization) Type() string {
 	return "aws_route53_vpc_association_authorization"
 }
 
+// LocalName returns the local name for [Route53VpcAssociationAuthorization].
 func (rvaa *Route53VpcAssociationAuthorization) LocalName() string {
 	return rvaa.Name
 }
 
+// Configuration returns the configuration (args) for [Route53VpcAssociationAuthorization].
 func (rvaa *Route53VpcAssociationAuthorization) Configuration() interface{} {
 	return rvaa.Args
 }
 
+// DependOn is used for other resources to depend on [Route53VpcAssociationAuthorization].
+func (rvaa *Route53VpcAssociationAuthorization) DependOn() terra.Reference {
+	return terra.ReferenceResource(rvaa)
+}
+
+// Dependencies returns the list of resources [Route53VpcAssociationAuthorization] depends_on.
+func (rvaa *Route53VpcAssociationAuthorization) Dependencies() terra.Dependencies {
+	return rvaa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Route53VpcAssociationAuthorization].
+func (rvaa *Route53VpcAssociationAuthorization) LifecycleManagement() *terra.Lifecycle {
+	return rvaa.Lifecycle
+}
+
+// Attributes returns the attributes for [Route53VpcAssociationAuthorization].
 func (rvaa *Route53VpcAssociationAuthorization) Attributes() route53VpcAssociationAuthorizationAttributes {
 	return route53VpcAssociationAuthorizationAttributes{ref: terra.ReferenceResource(rvaa)}
 }
 
+// ImportState imports the given attribute values into [Route53VpcAssociationAuthorization]'s state.
 func (rvaa *Route53VpcAssociationAuthorization) ImportState(av io.Reader) error {
 	rvaa.state = &route53VpcAssociationAuthorizationState{}
 	if err := json.NewDecoder(av).Decode(rvaa.state); err != nil {
@@ -48,10 +72,12 @@ func (rvaa *Route53VpcAssociationAuthorization) ImportState(av io.Reader) error 
 	return nil
 }
 
+// State returns the state and a bool indicating if [Route53VpcAssociationAuthorization] has state.
 func (rvaa *Route53VpcAssociationAuthorization) State() (*route53VpcAssociationAuthorizationState, bool) {
 	return rvaa.state, rvaa.state != nil
 }
 
+// StateMust returns the state for [Route53VpcAssociationAuthorization]. Panics if the state is nil.
 func (rvaa *Route53VpcAssociationAuthorization) StateMust() *route53VpcAssociationAuthorizationState {
 	if rvaa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rvaa.Type(), rvaa.LocalName()))
@@ -59,10 +85,7 @@ func (rvaa *Route53VpcAssociationAuthorization) StateMust() *route53VpcAssociati
 	return rvaa.state
 }
 
-func (rvaa *Route53VpcAssociationAuthorization) DependOn() terra.Reference {
-	return terra.ReferenceResource(rvaa)
-}
-
+// Route53VpcAssociationAuthorizationArgs contains the configurations for aws_route53_vpc_association_authorization.
 type Route53VpcAssociationAuthorizationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -72,27 +95,29 @@ type Route53VpcAssociationAuthorizationArgs struct {
 	VpcRegion terra.StringValue `hcl:"vpc_region,attr"`
 	// ZoneId: string, required
 	ZoneId terra.StringValue `hcl:"zone_id,attr" validate:"required"`
-	// DependsOn contains resources that Route53VpcAssociationAuthorization depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type route53VpcAssociationAuthorizationAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_route53_vpc_association_authorization.
 func (rvaa route53VpcAssociationAuthorizationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rvaa.ref.Append("id"))
+	return terra.ReferenceAsString(rvaa.ref.Append("id"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_route53_vpc_association_authorization.
 func (rvaa route53VpcAssociationAuthorizationAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(rvaa.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(rvaa.ref.Append("vpc_id"))
 }
 
+// VpcRegion returns a reference to field vpc_region of aws_route53_vpc_association_authorization.
 func (rvaa route53VpcAssociationAuthorizationAttributes) VpcRegion() terra.StringValue {
-	return terra.ReferenceString(rvaa.ref.Append("vpc_region"))
+	return terra.ReferenceAsString(rvaa.ref.Append("vpc_region"))
 }
 
+// ZoneId returns a reference to field zone_id of aws_route53_vpc_association_authorization.
 func (rvaa route53VpcAssociationAuthorizationAttributes) ZoneId() terra.StringValue {
-	return terra.ReferenceString(rvaa.ref.Append("zone_id"))
+	return terra.ReferenceAsString(rvaa.ref.Append("zone_id"))
 }
 
 type route53VpcAssociationAuthorizationState struct {

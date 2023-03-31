@@ -45,11 +45,11 @@ func (ae AccessEndpointAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ae AccessEndpointAttributes) EndpointType() terra.StringValue {
-	return terra.ReferenceString(ae.ref.Append("endpoint_type"))
+	return terra.ReferenceAsString(ae.ref.Append("endpoint_type"))
 }
 
 func (ae AccessEndpointAttributes) VpceId() terra.StringValue {
-	return terra.ReferenceString(ae.ref.Append("vpce_id"))
+	return terra.ReferenceAsString(ae.ref.Append("vpce_id"))
 }
 
 type DomainJoinInfoAttributes struct {
@@ -69,11 +69,11 @@ func (dji DomainJoinInfoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dji DomainJoinInfoAttributes) DirectoryName() terra.StringValue {
-	return terra.ReferenceString(dji.ref.Append("directory_name"))
+	return terra.ReferenceAsString(dji.ref.Append("directory_name"))
 }
 
 func (dji DomainJoinInfoAttributes) OrganizationalUnitDistinguishedName() terra.StringValue {
-	return terra.ReferenceString(dji.ref.Append("organizational_unit_distinguished_name"))
+	return terra.ReferenceAsString(dji.ref.Append("organizational_unit_distinguished_name"))
 }
 
 type VpcConfigAttributes struct {
@@ -93,11 +93,11 @@ func (vc VpcConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vc VpcConfigAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("security_group_ids"))
 }
 
 func (vc VpcConfigAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("subnet_ids"))
 }
 
 type AccessEndpointState struct {

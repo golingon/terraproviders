@@ -50,35 +50,35 @@ func (o OidcAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (o OidcAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("client_id"))
+	return terra.ReferenceAsString(o.ref.Append("client_id"))
 }
 
 func (o OidcAttributes) GroupsClaim() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("groups_claim"))
+	return terra.ReferenceAsString(o.ref.Append("groups_claim"))
 }
 
 func (o OidcAttributes) GroupsPrefix() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("groups_prefix"))
+	return terra.ReferenceAsString(o.ref.Append("groups_prefix"))
 }
 
 func (o OidcAttributes) IdentityProviderConfigName() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("identity_provider_config_name"))
+	return terra.ReferenceAsString(o.ref.Append("identity_provider_config_name"))
 }
 
 func (o OidcAttributes) IssuerUrl() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("issuer_url"))
+	return terra.ReferenceAsString(o.ref.Append("issuer_url"))
 }
 
 func (o OidcAttributes) RequiredClaims() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](o.ref.Append("required_claims"))
+	return terra.ReferenceAsMap[terra.StringValue](o.ref.Append("required_claims"))
 }
 
 func (o OidcAttributes) UsernameClaim() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("username_claim"))
+	return terra.ReferenceAsString(o.ref.Append("username_claim"))
 }
 
 func (o OidcAttributes) UsernamePrefix() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("username_prefix"))
+	return terra.ReferenceAsString(o.ref.Append("username_prefix"))
 }
 
 type TimeoutsAttributes struct {
@@ -98,11 +98,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type OidcState struct {

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataOrganizationsOrganizationalUnitChildAccounts creates a new instance of [DataOrganizationsOrganizationalUnitChildAccounts].
 func NewDataOrganizationsOrganizationalUnitChildAccounts(name string, args DataOrganizationsOrganizationalUnitChildAccountsArgs) *DataOrganizationsOrganizationalUnitChildAccounts {
 	return &DataOrganizationsOrganizationalUnitChildAccounts{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataOrganizationsOrganizationalUnitChildAccounts(name string, args DataO
 
 var _ terra.DataResource = (*DataOrganizationsOrganizationalUnitChildAccounts)(nil)
 
+// DataOrganizationsOrganizationalUnitChildAccounts represents the Terraform data resource aws_organizations_organizational_unit_child_accounts.
 type DataOrganizationsOrganizationalUnitChildAccounts struct {
 	Name string
 	Args DataOrganizationsOrganizationalUnitChildAccountsArgs
 }
 
+// DataSource returns the Terraform object type for [DataOrganizationsOrganizationalUnitChildAccounts].
 func (oouca *DataOrganizationsOrganizationalUnitChildAccounts) DataSource() string {
 	return "aws_organizations_organizational_unit_child_accounts"
 }
 
+// LocalName returns the local name for [DataOrganizationsOrganizationalUnitChildAccounts].
 func (oouca *DataOrganizationsOrganizationalUnitChildAccounts) LocalName() string {
 	return oouca.Name
 }
 
+// Configuration returns the configuration (args) for [DataOrganizationsOrganizationalUnitChildAccounts].
 func (oouca *DataOrganizationsOrganizationalUnitChildAccounts) Configuration() interface{} {
 	return oouca.Args
 }
 
+// Attributes returns the attributes for [DataOrganizationsOrganizationalUnitChildAccounts].
 func (oouca *DataOrganizationsOrganizationalUnitChildAccounts) Attributes() dataOrganizationsOrganizationalUnitChildAccountsAttributes {
 	return dataOrganizationsOrganizationalUnitChildAccountsAttributes{ref: terra.ReferenceDataResource(oouca)}
 }
 
+// DataOrganizationsOrganizationalUnitChildAccountsArgs contains the configurations for aws_organizations_organizational_unit_child_accounts.
 type DataOrganizationsOrganizationalUnitChildAccountsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -49,14 +56,16 @@ type dataOrganizationsOrganizationalUnitChildAccountsAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_organizations_organizational_unit_child_accounts.
 func (oouca dataOrganizationsOrganizationalUnitChildAccountsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(oouca.ref.Append("id"))
+	return terra.ReferenceAsString(oouca.ref.Append("id"))
 }
 
+// ParentId returns a reference to field parent_id of aws_organizations_organizational_unit_child_accounts.
 func (oouca dataOrganizationsOrganizationalUnitChildAccountsAttributes) ParentId() terra.StringValue {
-	return terra.ReferenceString(oouca.ref.Append("parent_id"))
+	return terra.ReferenceAsString(oouca.ref.Append("parent_id"))
 }
 
 func (oouca dataOrganizationsOrganizationalUnitChildAccountsAttributes) Accounts() terra.ListValue[dataorganizationsorganizationalunitchildaccounts.AccountsAttributes] {
-	return terra.ReferenceList[dataorganizationsorganizationalunitchildaccounts.AccountsAttributes](oouca.ref.Append("accounts"))
+	return terra.ReferenceAsList[dataorganizationsorganizationalunitchildaccounts.AccountsAttributes](oouca.ref.Append("accounts"))
 }

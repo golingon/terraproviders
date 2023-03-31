@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewPinpointEmailChannel creates a new instance of [PinpointEmailChannel].
 func NewPinpointEmailChannel(name string, args PinpointEmailChannelArgs) *PinpointEmailChannel {
 	return &PinpointEmailChannel{
 		Args: args,
@@ -18,28 +19,51 @@ func NewPinpointEmailChannel(name string, args PinpointEmailChannelArgs) *Pinpoi
 
 var _ terra.Resource = (*PinpointEmailChannel)(nil)
 
+// PinpointEmailChannel represents the Terraform resource aws_pinpoint_email_channel.
 type PinpointEmailChannel struct {
-	Name  string
-	Args  PinpointEmailChannelArgs
-	state *pinpointEmailChannelState
+	Name      string
+	Args      PinpointEmailChannelArgs
+	state     *pinpointEmailChannelState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PinpointEmailChannel].
 func (pec *PinpointEmailChannel) Type() string {
 	return "aws_pinpoint_email_channel"
 }
 
+// LocalName returns the local name for [PinpointEmailChannel].
 func (pec *PinpointEmailChannel) LocalName() string {
 	return pec.Name
 }
 
+// Configuration returns the configuration (args) for [PinpointEmailChannel].
 func (pec *PinpointEmailChannel) Configuration() interface{} {
 	return pec.Args
 }
 
+// DependOn is used for other resources to depend on [PinpointEmailChannel].
+func (pec *PinpointEmailChannel) DependOn() terra.Reference {
+	return terra.ReferenceResource(pec)
+}
+
+// Dependencies returns the list of resources [PinpointEmailChannel] depends_on.
+func (pec *PinpointEmailChannel) Dependencies() terra.Dependencies {
+	return pec.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PinpointEmailChannel].
+func (pec *PinpointEmailChannel) LifecycleManagement() *terra.Lifecycle {
+	return pec.Lifecycle
+}
+
+// Attributes returns the attributes for [PinpointEmailChannel].
 func (pec *PinpointEmailChannel) Attributes() pinpointEmailChannelAttributes {
 	return pinpointEmailChannelAttributes{ref: terra.ReferenceResource(pec)}
 }
 
+// ImportState imports the given attribute values into [PinpointEmailChannel]'s state.
 func (pec *PinpointEmailChannel) ImportState(av io.Reader) error {
 	pec.state = &pinpointEmailChannelState{}
 	if err := json.NewDecoder(av).Decode(pec.state); err != nil {
@@ -48,10 +72,12 @@ func (pec *PinpointEmailChannel) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PinpointEmailChannel] has state.
 func (pec *PinpointEmailChannel) State() (*pinpointEmailChannelState, bool) {
 	return pec.state, pec.state != nil
 }
 
+// StateMust returns the state for [PinpointEmailChannel]. Panics if the state is nil.
 func (pec *PinpointEmailChannel) StateMust() *pinpointEmailChannelState {
 	if pec.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pec.Type(), pec.LocalName()))
@@ -59,10 +85,7 @@ func (pec *PinpointEmailChannel) StateMust() *pinpointEmailChannelState {
 	return pec.state
 }
 
-func (pec *PinpointEmailChannel) DependOn() terra.Reference {
-	return terra.ReferenceResource(pec)
-}
-
+// PinpointEmailChannelArgs contains the configurations for aws_pinpoint_email_channel.
 type PinpointEmailChannelArgs struct {
 	// ApplicationId: string, required
 	ApplicationId terra.StringValue `hcl:"application_id,attr" validate:"required"`
@@ -78,43 +101,49 @@ type PinpointEmailChannelArgs struct {
 	Identity terra.StringValue `hcl:"identity,attr" validate:"required"`
 	// RoleArn: string, optional
 	RoleArn terra.StringValue `hcl:"role_arn,attr"`
-	// DependsOn contains resources that PinpointEmailChannel depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type pinpointEmailChannelAttributes struct {
 	ref terra.Reference
 }
 
+// ApplicationId returns a reference to field application_id of aws_pinpoint_email_channel.
 func (pec pinpointEmailChannelAttributes) ApplicationId() terra.StringValue {
-	return terra.ReferenceString(pec.ref.Append("application_id"))
+	return terra.ReferenceAsString(pec.ref.Append("application_id"))
 }
 
+// ConfigurationSet returns a reference to field configuration_set of aws_pinpoint_email_channel.
 func (pec pinpointEmailChannelAttributes) ConfigurationSet() terra.StringValue {
-	return terra.ReferenceString(pec.ref.Append("configuration_set"))
+	return terra.ReferenceAsString(pec.ref.Append("configuration_set"))
 }
 
+// Enabled returns a reference to field enabled of aws_pinpoint_email_channel.
 func (pec pinpointEmailChannelAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(pec.ref.Append("enabled"))
+	return terra.ReferenceAsBool(pec.ref.Append("enabled"))
 }
 
+// FromAddress returns a reference to field from_address of aws_pinpoint_email_channel.
 func (pec pinpointEmailChannelAttributes) FromAddress() terra.StringValue {
-	return terra.ReferenceString(pec.ref.Append("from_address"))
+	return terra.ReferenceAsString(pec.ref.Append("from_address"))
 }
 
+// Id returns a reference to field id of aws_pinpoint_email_channel.
 func (pec pinpointEmailChannelAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pec.ref.Append("id"))
+	return terra.ReferenceAsString(pec.ref.Append("id"))
 }
 
+// Identity returns a reference to field identity of aws_pinpoint_email_channel.
 func (pec pinpointEmailChannelAttributes) Identity() terra.StringValue {
-	return terra.ReferenceString(pec.ref.Append("identity"))
+	return terra.ReferenceAsString(pec.ref.Append("identity"))
 }
 
+// MessagesPerSecond returns a reference to field messages_per_second of aws_pinpoint_email_channel.
 func (pec pinpointEmailChannelAttributes) MessagesPerSecond() terra.NumberValue {
-	return terra.ReferenceNumber(pec.ref.Append("messages_per_second"))
+	return terra.ReferenceAsNumber(pec.ref.Append("messages_per_second"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_pinpoint_email_channel.
 func (pec pinpointEmailChannelAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(pec.ref.Append("role_arn"))
+	return terra.ReferenceAsString(pec.ref.Append("role_arn"))
 }
 
 type pinpointEmailChannelState struct {

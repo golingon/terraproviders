@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataKmsCiphertext creates a new instance of [DataKmsCiphertext].
 func NewDataKmsCiphertext(name string, args DataKmsCiphertextArgs) *DataKmsCiphertext {
 	return &DataKmsCiphertext{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataKmsCiphertext(name string, args DataKmsCiphertextArgs) *DataKmsCiphe
 
 var _ terra.DataResource = (*DataKmsCiphertext)(nil)
 
+// DataKmsCiphertext represents the Terraform data resource aws_kms_ciphertext.
 type DataKmsCiphertext struct {
 	Name string
 	Args DataKmsCiphertextArgs
 }
 
+// DataSource returns the Terraform object type for [DataKmsCiphertext].
 func (kc *DataKmsCiphertext) DataSource() string {
 	return "aws_kms_ciphertext"
 }
 
+// LocalName returns the local name for [DataKmsCiphertext].
 func (kc *DataKmsCiphertext) LocalName() string {
 	return kc.Name
 }
 
+// Configuration returns the configuration (args) for [DataKmsCiphertext].
 func (kc *DataKmsCiphertext) Configuration() interface{} {
 	return kc.Args
 }
 
+// Attributes returns the attributes for [DataKmsCiphertext].
 func (kc *DataKmsCiphertext) Attributes() dataKmsCiphertextAttributes {
 	return dataKmsCiphertextAttributes{ref: terra.ReferenceDataResource(kc)}
 }
 
+// DataKmsCiphertextArgs contains the configurations for aws_kms_ciphertext.
 type DataKmsCiphertextArgs struct {
 	// Context: map of string, optional
 	Context terra.MapValue[terra.StringValue] `hcl:"context,attr"`
@@ -48,22 +55,27 @@ type dataKmsCiphertextAttributes struct {
 	ref terra.Reference
 }
 
+// CiphertextBlob returns a reference to field ciphertext_blob of aws_kms_ciphertext.
 func (kc dataKmsCiphertextAttributes) CiphertextBlob() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("ciphertext_blob"))
+	return terra.ReferenceAsString(kc.ref.Append("ciphertext_blob"))
 }
 
+// Context returns a reference to field context of aws_kms_ciphertext.
 func (kc dataKmsCiphertextAttributes) Context() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kc.ref.Append("context"))
+	return terra.ReferenceAsMap[terra.StringValue](kc.ref.Append("context"))
 }
 
+// Id returns a reference to field id of aws_kms_ciphertext.
 func (kc dataKmsCiphertextAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("id"))
+	return terra.ReferenceAsString(kc.ref.Append("id"))
 }
 
+// KeyId returns a reference to field key_id of aws_kms_ciphertext.
 func (kc dataKmsCiphertextAttributes) KeyId() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("key_id"))
+	return terra.ReferenceAsString(kc.ref.Append("key_id"))
 }
 
+// Plaintext returns a reference to field plaintext of aws_kms_ciphertext.
 func (kc dataKmsCiphertextAttributes) Plaintext() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("plaintext"))
+	return terra.ReferenceAsString(kc.ref.Append("plaintext"))
 }

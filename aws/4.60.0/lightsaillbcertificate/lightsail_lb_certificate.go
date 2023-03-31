@@ -26,19 +26,19 @@ func (dvr DomainValidationRecordsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dvr DomainValidationRecordsAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(dvr.ref.Append("domain_name"))
+	return terra.ReferenceAsString(dvr.ref.Append("domain_name"))
 }
 
 func (dvr DomainValidationRecordsAttributes) ResourceRecordName() terra.StringValue {
-	return terra.ReferenceString(dvr.ref.Append("resource_record_name"))
+	return terra.ReferenceAsString(dvr.ref.Append("resource_record_name"))
 }
 
 func (dvr DomainValidationRecordsAttributes) ResourceRecordType() terra.StringValue {
-	return terra.ReferenceString(dvr.ref.Append("resource_record_type"))
+	return terra.ReferenceAsString(dvr.ref.Append("resource_record_type"))
 }
 
 func (dvr DomainValidationRecordsAttributes) ResourceRecordValue() terra.StringValue {
-	return terra.ReferenceString(dvr.ref.Append("resource_record_value"))
+	return terra.ReferenceAsString(dvr.ref.Append("resource_record_value"))
 }
 
 type DomainValidationRecordsState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewChimeVoiceConnectorGroup creates a new instance of [ChimeVoiceConnectorGroup].
 func NewChimeVoiceConnectorGroup(name string, args ChimeVoiceConnectorGroupArgs) *ChimeVoiceConnectorGroup {
 	return &ChimeVoiceConnectorGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewChimeVoiceConnectorGroup(name string, args ChimeVoiceConnectorGroupArgs)
 
 var _ terra.Resource = (*ChimeVoiceConnectorGroup)(nil)
 
+// ChimeVoiceConnectorGroup represents the Terraform resource aws_chime_voice_connector_group.
 type ChimeVoiceConnectorGroup struct {
-	Name  string
-	Args  ChimeVoiceConnectorGroupArgs
-	state *chimeVoiceConnectorGroupState
+	Name      string
+	Args      ChimeVoiceConnectorGroupArgs
+	state     *chimeVoiceConnectorGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ChimeVoiceConnectorGroup].
 func (cvcg *ChimeVoiceConnectorGroup) Type() string {
 	return "aws_chime_voice_connector_group"
 }
 
+// LocalName returns the local name for [ChimeVoiceConnectorGroup].
 func (cvcg *ChimeVoiceConnectorGroup) LocalName() string {
 	return cvcg.Name
 }
 
+// Configuration returns the configuration (args) for [ChimeVoiceConnectorGroup].
 func (cvcg *ChimeVoiceConnectorGroup) Configuration() interface{} {
 	return cvcg.Args
 }
 
+// DependOn is used for other resources to depend on [ChimeVoiceConnectorGroup].
+func (cvcg *ChimeVoiceConnectorGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(cvcg)
+}
+
+// Dependencies returns the list of resources [ChimeVoiceConnectorGroup] depends_on.
+func (cvcg *ChimeVoiceConnectorGroup) Dependencies() terra.Dependencies {
+	return cvcg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ChimeVoiceConnectorGroup].
+func (cvcg *ChimeVoiceConnectorGroup) LifecycleManagement() *terra.Lifecycle {
+	return cvcg.Lifecycle
+}
+
+// Attributes returns the attributes for [ChimeVoiceConnectorGroup].
 func (cvcg *ChimeVoiceConnectorGroup) Attributes() chimeVoiceConnectorGroupAttributes {
 	return chimeVoiceConnectorGroupAttributes{ref: terra.ReferenceResource(cvcg)}
 }
 
+// ImportState imports the given attribute values into [ChimeVoiceConnectorGroup]'s state.
 func (cvcg *ChimeVoiceConnectorGroup) ImportState(av io.Reader) error {
 	cvcg.state = &chimeVoiceConnectorGroupState{}
 	if err := json.NewDecoder(av).Decode(cvcg.state); err != nil {
@@ -49,10 +73,12 @@ func (cvcg *ChimeVoiceConnectorGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ChimeVoiceConnectorGroup] has state.
 func (cvcg *ChimeVoiceConnectorGroup) State() (*chimeVoiceConnectorGroupState, bool) {
 	return cvcg.state, cvcg.state != nil
 }
 
+// StateMust returns the state for [ChimeVoiceConnectorGroup]. Panics if the state is nil.
 func (cvcg *ChimeVoiceConnectorGroup) StateMust() *chimeVoiceConnectorGroupState {
 	if cvcg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cvcg.Type(), cvcg.LocalName()))
@@ -60,10 +86,7 @@ func (cvcg *ChimeVoiceConnectorGroup) StateMust() *chimeVoiceConnectorGroupState
 	return cvcg.state
 }
 
-func (cvcg *ChimeVoiceConnectorGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(cvcg)
-}
-
+// ChimeVoiceConnectorGroupArgs contains the configurations for aws_chime_voice_connector_group.
 type ChimeVoiceConnectorGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -71,23 +94,23 @@ type ChimeVoiceConnectorGroupArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// Connector: min=0,max=3
 	Connector []chimevoiceconnectorgroup.Connector `hcl:"connector,block" validate:"min=0,max=3"`
-	// DependsOn contains resources that ChimeVoiceConnectorGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type chimeVoiceConnectorGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_chime_voice_connector_group.
 func (cvcg chimeVoiceConnectorGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cvcg.ref.Append("id"))
+	return terra.ReferenceAsString(cvcg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_chime_voice_connector_group.
 func (cvcg chimeVoiceConnectorGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cvcg.ref.Append("name"))
+	return terra.ReferenceAsString(cvcg.ref.Append("name"))
 }
 
 func (cvcg chimeVoiceConnectorGroupAttributes) Connector() terra.SetValue[chimevoiceconnectorgroup.ConnectorAttributes] {
-	return terra.ReferenceSet[chimevoiceconnectorgroup.ConnectorAttributes](cvcg.ref.Append("connector"))
+	return terra.ReferenceAsSet[chimevoiceconnectorgroup.ConnectorAttributes](cvcg.ref.Append("connector"))
 }
 
 type chimeVoiceConnectorGroupState struct {

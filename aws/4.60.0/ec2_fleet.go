@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEc2Fleet creates a new instance of [Ec2Fleet].
 func NewEc2Fleet(name string, args Ec2FleetArgs) *Ec2Fleet {
 	return &Ec2Fleet{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEc2Fleet(name string, args Ec2FleetArgs) *Ec2Fleet {
 
 var _ terra.Resource = (*Ec2Fleet)(nil)
 
+// Ec2Fleet represents the Terraform resource aws_ec2_fleet.
 type Ec2Fleet struct {
-	Name  string
-	Args  Ec2FleetArgs
-	state *ec2FleetState
+	Name      string
+	Args      Ec2FleetArgs
+	state     *ec2FleetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Ec2Fleet].
 func (ef *Ec2Fleet) Type() string {
 	return "aws_ec2_fleet"
 }
 
+// LocalName returns the local name for [Ec2Fleet].
 func (ef *Ec2Fleet) LocalName() string {
 	return ef.Name
 }
 
+// Configuration returns the configuration (args) for [Ec2Fleet].
 func (ef *Ec2Fleet) Configuration() interface{} {
 	return ef.Args
 }
 
+// DependOn is used for other resources to depend on [Ec2Fleet].
+func (ef *Ec2Fleet) DependOn() terra.Reference {
+	return terra.ReferenceResource(ef)
+}
+
+// Dependencies returns the list of resources [Ec2Fleet] depends_on.
+func (ef *Ec2Fleet) Dependencies() terra.Dependencies {
+	return ef.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Ec2Fleet].
+func (ef *Ec2Fleet) LifecycleManagement() *terra.Lifecycle {
+	return ef.Lifecycle
+}
+
+// Attributes returns the attributes for [Ec2Fleet].
 func (ef *Ec2Fleet) Attributes() ec2FleetAttributes {
 	return ec2FleetAttributes{ref: terra.ReferenceResource(ef)}
 }
 
+// ImportState imports the given attribute values into [Ec2Fleet]'s state.
 func (ef *Ec2Fleet) ImportState(av io.Reader) error {
 	ef.state = &ec2FleetState{}
 	if err := json.NewDecoder(av).Decode(ef.state); err != nil {
@@ -49,10 +73,12 @@ func (ef *Ec2Fleet) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Ec2Fleet] has state.
 func (ef *Ec2Fleet) State() (*ec2FleetState, bool) {
 	return ef.state, ef.state != nil
 }
 
+// StateMust returns the state for [Ec2Fleet]. Panics if the state is nil.
 func (ef *Ec2Fleet) StateMust() *ec2FleetState {
 	if ef.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ef.Type(), ef.LocalName()))
@@ -60,10 +86,7 @@ func (ef *Ec2Fleet) StateMust() *ec2FleetState {
 	return ef.state
 }
 
-func (ef *Ec2Fleet) DependOn() terra.Reference {
-	return terra.ReferenceResource(ef)
-}
-
+// Ec2FleetArgs contains the configurations for aws_ec2_fleet.
 type Ec2FleetArgs struct {
 	// Context: string, optional
 	Context terra.StringValue `hcl:"context,attr"`
@@ -105,95 +128,108 @@ type Ec2FleetArgs struct {
 	TargetCapacitySpecification *ec2fleet.TargetCapacitySpecification `hcl:"target_capacity_specification,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *ec2fleet.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Ec2Fleet depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ec2FleetAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ec2_fleet.
 func (ef ec2FleetAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("arn"))
+	return terra.ReferenceAsString(ef.ref.Append("arn"))
 }
 
+// Context returns a reference to field context of aws_ec2_fleet.
 func (ef ec2FleetAttributes) Context() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("context"))
+	return terra.ReferenceAsString(ef.ref.Append("context"))
 }
 
+// ExcessCapacityTerminationPolicy returns a reference to field excess_capacity_termination_policy of aws_ec2_fleet.
 func (ef ec2FleetAttributes) ExcessCapacityTerminationPolicy() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("excess_capacity_termination_policy"))
+	return terra.ReferenceAsString(ef.ref.Append("excess_capacity_termination_policy"))
 }
 
+// FleetState returns a reference to field fleet_state of aws_ec2_fleet.
 func (ef ec2FleetAttributes) FleetState() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("fleet_state"))
+	return terra.ReferenceAsString(ef.ref.Append("fleet_state"))
 }
 
+// FulfilledCapacity returns a reference to field fulfilled_capacity of aws_ec2_fleet.
 func (ef ec2FleetAttributes) FulfilledCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(ef.ref.Append("fulfilled_capacity"))
+	return terra.ReferenceAsNumber(ef.ref.Append("fulfilled_capacity"))
 }
 
+// FulfilledOnDemandCapacity returns a reference to field fulfilled_on_demand_capacity of aws_ec2_fleet.
 func (ef ec2FleetAttributes) FulfilledOnDemandCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(ef.ref.Append("fulfilled_on_demand_capacity"))
+	return terra.ReferenceAsNumber(ef.ref.Append("fulfilled_on_demand_capacity"))
 }
 
+// Id returns a reference to field id of aws_ec2_fleet.
 func (ef ec2FleetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("id"))
+	return terra.ReferenceAsString(ef.ref.Append("id"))
 }
 
+// ReplaceUnhealthyInstances returns a reference to field replace_unhealthy_instances of aws_ec2_fleet.
 func (ef ec2FleetAttributes) ReplaceUnhealthyInstances() terra.BoolValue {
-	return terra.ReferenceBool(ef.ref.Append("replace_unhealthy_instances"))
+	return terra.ReferenceAsBool(ef.ref.Append("replace_unhealthy_instances"))
 }
 
+// Tags returns a reference to field tags of aws_ec2_fleet.
 func (ef ec2FleetAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ef.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ef.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_ec2_fleet.
 func (ef ec2FleetAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ef.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ef.ref.Append("tags_all"))
 }
 
+// TerminateInstances returns a reference to field terminate_instances of aws_ec2_fleet.
 func (ef ec2FleetAttributes) TerminateInstances() terra.BoolValue {
-	return terra.ReferenceBool(ef.ref.Append("terminate_instances"))
+	return terra.ReferenceAsBool(ef.ref.Append("terminate_instances"))
 }
 
+// TerminateInstancesWithExpiration returns a reference to field terminate_instances_with_expiration of aws_ec2_fleet.
 func (ef ec2FleetAttributes) TerminateInstancesWithExpiration() terra.BoolValue {
-	return terra.ReferenceBool(ef.ref.Append("terminate_instances_with_expiration"))
+	return terra.ReferenceAsBool(ef.ref.Append("terminate_instances_with_expiration"))
 }
 
+// Type returns a reference to field type of aws_ec2_fleet.
 func (ef ec2FleetAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("type"))
+	return terra.ReferenceAsString(ef.ref.Append("type"))
 }
 
+// ValidFrom returns a reference to field valid_from of aws_ec2_fleet.
 func (ef ec2FleetAttributes) ValidFrom() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("valid_from"))
+	return terra.ReferenceAsString(ef.ref.Append("valid_from"))
 }
 
+// ValidUntil returns a reference to field valid_until of aws_ec2_fleet.
 func (ef ec2FleetAttributes) ValidUntil() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("valid_until"))
+	return terra.ReferenceAsString(ef.ref.Append("valid_until"))
 }
 
 func (ef ec2FleetAttributes) FleetInstanceSet() terra.ListValue[ec2fleet.FleetInstanceSetAttributes] {
-	return terra.ReferenceList[ec2fleet.FleetInstanceSetAttributes](ef.ref.Append("fleet_instance_set"))
+	return terra.ReferenceAsList[ec2fleet.FleetInstanceSetAttributes](ef.ref.Append("fleet_instance_set"))
 }
 
 func (ef ec2FleetAttributes) LaunchTemplateConfig() terra.ListValue[ec2fleet.LaunchTemplateConfigAttributes] {
-	return terra.ReferenceList[ec2fleet.LaunchTemplateConfigAttributes](ef.ref.Append("launch_template_config"))
+	return terra.ReferenceAsList[ec2fleet.LaunchTemplateConfigAttributes](ef.ref.Append("launch_template_config"))
 }
 
 func (ef ec2FleetAttributes) OnDemandOptions() terra.ListValue[ec2fleet.OnDemandOptionsAttributes] {
-	return terra.ReferenceList[ec2fleet.OnDemandOptionsAttributes](ef.ref.Append("on_demand_options"))
+	return terra.ReferenceAsList[ec2fleet.OnDemandOptionsAttributes](ef.ref.Append("on_demand_options"))
 }
 
 func (ef ec2FleetAttributes) SpotOptions() terra.ListValue[ec2fleet.SpotOptionsAttributes] {
-	return terra.ReferenceList[ec2fleet.SpotOptionsAttributes](ef.ref.Append("spot_options"))
+	return terra.ReferenceAsList[ec2fleet.SpotOptionsAttributes](ef.ref.Append("spot_options"))
 }
 
 func (ef ec2FleetAttributes) TargetCapacitySpecification() terra.ListValue[ec2fleet.TargetCapacitySpecificationAttributes] {
-	return terra.ReferenceList[ec2fleet.TargetCapacitySpecificationAttributes](ef.ref.Append("target_capacity_specification"))
+	return terra.ReferenceAsList[ec2fleet.TargetCapacitySpecificationAttributes](ef.ref.Append("target_capacity_specification"))
 }
 
 func (ef ec2FleetAttributes) Timeouts() ec2fleet.TimeoutsAttributes {
-	return terra.ReferenceSingle[ec2fleet.TimeoutsAttributes](ef.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[ec2fleet.TimeoutsAttributes](ef.ref.Append("timeouts"))
 }
 
 type ec2FleetState struct {

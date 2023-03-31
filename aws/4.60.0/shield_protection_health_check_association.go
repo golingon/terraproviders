@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewShieldProtectionHealthCheckAssociation creates a new instance of [ShieldProtectionHealthCheckAssociation].
 func NewShieldProtectionHealthCheckAssociation(name string, args ShieldProtectionHealthCheckAssociationArgs) *ShieldProtectionHealthCheckAssociation {
 	return &ShieldProtectionHealthCheckAssociation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewShieldProtectionHealthCheckAssociation(name string, args ShieldProtectio
 
 var _ terra.Resource = (*ShieldProtectionHealthCheckAssociation)(nil)
 
+// ShieldProtectionHealthCheckAssociation represents the Terraform resource aws_shield_protection_health_check_association.
 type ShieldProtectionHealthCheckAssociation struct {
-	Name  string
-	Args  ShieldProtectionHealthCheckAssociationArgs
-	state *shieldProtectionHealthCheckAssociationState
+	Name      string
+	Args      ShieldProtectionHealthCheckAssociationArgs
+	state     *shieldProtectionHealthCheckAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ShieldProtectionHealthCheckAssociation].
 func (sphca *ShieldProtectionHealthCheckAssociation) Type() string {
 	return "aws_shield_protection_health_check_association"
 }
 
+// LocalName returns the local name for [ShieldProtectionHealthCheckAssociation].
 func (sphca *ShieldProtectionHealthCheckAssociation) LocalName() string {
 	return sphca.Name
 }
 
+// Configuration returns the configuration (args) for [ShieldProtectionHealthCheckAssociation].
 func (sphca *ShieldProtectionHealthCheckAssociation) Configuration() interface{} {
 	return sphca.Args
 }
 
+// DependOn is used for other resources to depend on [ShieldProtectionHealthCheckAssociation].
+func (sphca *ShieldProtectionHealthCheckAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(sphca)
+}
+
+// Dependencies returns the list of resources [ShieldProtectionHealthCheckAssociation] depends_on.
+func (sphca *ShieldProtectionHealthCheckAssociation) Dependencies() terra.Dependencies {
+	return sphca.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ShieldProtectionHealthCheckAssociation].
+func (sphca *ShieldProtectionHealthCheckAssociation) LifecycleManagement() *terra.Lifecycle {
+	return sphca.Lifecycle
+}
+
+// Attributes returns the attributes for [ShieldProtectionHealthCheckAssociation].
 func (sphca *ShieldProtectionHealthCheckAssociation) Attributes() shieldProtectionHealthCheckAssociationAttributes {
 	return shieldProtectionHealthCheckAssociationAttributes{ref: terra.ReferenceResource(sphca)}
 }
 
+// ImportState imports the given attribute values into [ShieldProtectionHealthCheckAssociation]'s state.
 func (sphca *ShieldProtectionHealthCheckAssociation) ImportState(av io.Reader) error {
 	sphca.state = &shieldProtectionHealthCheckAssociationState{}
 	if err := json.NewDecoder(av).Decode(sphca.state); err != nil {
@@ -48,10 +72,12 @@ func (sphca *ShieldProtectionHealthCheckAssociation) ImportState(av io.Reader) e
 	return nil
 }
 
+// State returns the state and a bool indicating if [ShieldProtectionHealthCheckAssociation] has state.
 func (sphca *ShieldProtectionHealthCheckAssociation) State() (*shieldProtectionHealthCheckAssociationState, bool) {
 	return sphca.state, sphca.state != nil
 }
 
+// StateMust returns the state for [ShieldProtectionHealthCheckAssociation]. Panics if the state is nil.
 func (sphca *ShieldProtectionHealthCheckAssociation) StateMust() *shieldProtectionHealthCheckAssociationState {
 	if sphca.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sphca.Type(), sphca.LocalName()))
@@ -59,10 +85,7 @@ func (sphca *ShieldProtectionHealthCheckAssociation) StateMust() *shieldProtecti
 	return sphca.state
 }
 
-func (sphca *ShieldProtectionHealthCheckAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(sphca)
-}
-
+// ShieldProtectionHealthCheckAssociationArgs contains the configurations for aws_shield_protection_health_check_association.
 type ShieldProtectionHealthCheckAssociationArgs struct {
 	// HealthCheckArn: string, required
 	HealthCheckArn terra.StringValue `hcl:"health_check_arn,attr" validate:"required"`
@@ -70,23 +93,24 @@ type ShieldProtectionHealthCheckAssociationArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// ShieldProtectionId: string, required
 	ShieldProtectionId terra.StringValue `hcl:"shield_protection_id,attr" validate:"required"`
-	// DependsOn contains resources that ShieldProtectionHealthCheckAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type shieldProtectionHealthCheckAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// HealthCheckArn returns a reference to field health_check_arn of aws_shield_protection_health_check_association.
 func (sphca shieldProtectionHealthCheckAssociationAttributes) HealthCheckArn() terra.StringValue {
-	return terra.ReferenceString(sphca.ref.Append("health_check_arn"))
+	return terra.ReferenceAsString(sphca.ref.Append("health_check_arn"))
 }
 
+// Id returns a reference to field id of aws_shield_protection_health_check_association.
 func (sphca shieldProtectionHealthCheckAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sphca.ref.Append("id"))
+	return terra.ReferenceAsString(sphca.ref.Append("id"))
 }
 
+// ShieldProtectionId returns a reference to field shield_protection_id of aws_shield_protection_health_check_association.
 func (sphca shieldProtectionHealthCheckAssociationAttributes) ShieldProtectionId() terra.StringValue {
-	return terra.ReferenceString(sphca.ref.Append("shield_protection_id"))
+	return terra.ReferenceAsString(sphca.ref.Append("shield_protection_id"))
 }
 
 type shieldProtectionHealthCheckAssociationState struct {

@@ -40,11 +40,11 @@ func (de DnsEntryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (de DnsEntryAttributes) DnsName() terra.StringValue {
-	return terra.ReferenceString(de.ref.Append("dns_name"))
+	return terra.ReferenceAsString(de.ref.Append("dns_name"))
 }
 
 func (de DnsEntryAttributes) HostedZoneId() terra.StringValue {
-	return terra.ReferenceString(de.ref.Append("hosted_zone_id"))
+	return terra.ReferenceAsString(de.ref.Append("hosted_zone_id"))
 }
 
 type DnsOptionsAttributes struct {
@@ -64,7 +64,7 @@ func (do DnsOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (do DnsOptionsAttributes) DnsRecordIpType() terra.StringValue {
-	return terra.ReferenceString(do.ref.Append("dns_record_ip_type"))
+	return terra.ReferenceAsString(do.ref.Append("dns_record_ip_type"))
 }
 
 type FilterAttributes struct {
@@ -84,11 +84,11 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
 func (f FilterAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](f.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](f.ref.Append("values"))
 }
 
 type TimeoutsAttributes struct {
@@ -108,7 +108,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type DnsEntryState struct {

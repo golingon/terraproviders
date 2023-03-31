@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDmsEndpoint creates a new instance of [DmsEndpoint].
 func NewDmsEndpoint(name string, args DmsEndpointArgs) *DmsEndpoint {
 	return &DmsEndpoint{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDmsEndpoint(name string, args DmsEndpointArgs) *DmsEndpoint {
 
 var _ terra.Resource = (*DmsEndpoint)(nil)
 
+// DmsEndpoint represents the Terraform resource aws_dms_endpoint.
 type DmsEndpoint struct {
-	Name  string
-	Args  DmsEndpointArgs
-	state *dmsEndpointState
+	Name      string
+	Args      DmsEndpointArgs
+	state     *dmsEndpointState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DmsEndpoint].
 func (de *DmsEndpoint) Type() string {
 	return "aws_dms_endpoint"
 }
 
+// LocalName returns the local name for [DmsEndpoint].
 func (de *DmsEndpoint) LocalName() string {
 	return de.Name
 }
 
+// Configuration returns the configuration (args) for [DmsEndpoint].
 func (de *DmsEndpoint) Configuration() interface{} {
 	return de.Args
 }
 
+// DependOn is used for other resources to depend on [DmsEndpoint].
+func (de *DmsEndpoint) DependOn() terra.Reference {
+	return terra.ReferenceResource(de)
+}
+
+// Dependencies returns the list of resources [DmsEndpoint] depends_on.
+func (de *DmsEndpoint) Dependencies() terra.Dependencies {
+	return de.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DmsEndpoint].
+func (de *DmsEndpoint) LifecycleManagement() *terra.Lifecycle {
+	return de.Lifecycle
+}
+
+// Attributes returns the attributes for [DmsEndpoint].
 func (de *DmsEndpoint) Attributes() dmsEndpointAttributes {
 	return dmsEndpointAttributes{ref: terra.ReferenceResource(de)}
 }
 
+// ImportState imports the given attribute values into [DmsEndpoint]'s state.
 func (de *DmsEndpoint) ImportState(av io.Reader) error {
 	de.state = &dmsEndpointState{}
 	if err := json.NewDecoder(av).Decode(de.state); err != nil {
@@ -49,10 +73,12 @@ func (de *DmsEndpoint) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DmsEndpoint] has state.
 func (de *DmsEndpoint) State() (*dmsEndpointState, bool) {
 	return de.state, de.state != nil
 }
 
+// StateMust returns the state for [DmsEndpoint]. Panics if the state is nil.
 func (de *DmsEndpoint) StateMust() *dmsEndpointState {
 	if de.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", de.Type(), de.LocalName()))
@@ -60,10 +86,7 @@ func (de *DmsEndpoint) StateMust() *dmsEndpointState {
 	return de.state
 }
 
-func (de *DmsEndpoint) DependOn() terra.Reference {
-	return terra.ReferenceResource(de)
-}
-
+// DmsEndpointArgs contains the configurations for aws_dms_endpoint.
 type DmsEndpointArgs struct {
 	// CertificateArn: string, optional
 	CertificateArn terra.StringValue `hcl:"certificate_arn,attr"`
@@ -117,119 +140,136 @@ type DmsEndpointArgs struct {
 	S3Settings *dmsendpoint.S3Settings `hcl:"s3_settings,block"`
 	// Timeouts: optional
 	Timeouts *dmsendpoint.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DmsEndpoint depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dmsEndpointAttributes struct {
 	ref terra.Reference
 }
 
+// CertificateArn returns a reference to field certificate_arn of aws_dms_endpoint.
 func (de dmsEndpointAttributes) CertificateArn() terra.StringValue {
-	return terra.ReferenceString(de.ref.Append("certificate_arn"))
+	return terra.ReferenceAsString(de.ref.Append("certificate_arn"))
 }
 
+// DatabaseName returns a reference to field database_name of aws_dms_endpoint.
 func (de dmsEndpointAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(de.ref.Append("database_name"))
+	return terra.ReferenceAsString(de.ref.Append("database_name"))
 }
 
+// EndpointArn returns a reference to field endpoint_arn of aws_dms_endpoint.
 func (de dmsEndpointAttributes) EndpointArn() terra.StringValue {
-	return terra.ReferenceString(de.ref.Append("endpoint_arn"))
+	return terra.ReferenceAsString(de.ref.Append("endpoint_arn"))
 }
 
+// EndpointId returns a reference to field endpoint_id of aws_dms_endpoint.
 func (de dmsEndpointAttributes) EndpointId() terra.StringValue {
-	return terra.ReferenceString(de.ref.Append("endpoint_id"))
+	return terra.ReferenceAsString(de.ref.Append("endpoint_id"))
 }
 
+// EndpointType returns a reference to field endpoint_type of aws_dms_endpoint.
 func (de dmsEndpointAttributes) EndpointType() terra.StringValue {
-	return terra.ReferenceString(de.ref.Append("endpoint_type"))
+	return terra.ReferenceAsString(de.ref.Append("endpoint_type"))
 }
 
+// EngineName returns a reference to field engine_name of aws_dms_endpoint.
 func (de dmsEndpointAttributes) EngineName() terra.StringValue {
-	return terra.ReferenceString(de.ref.Append("engine_name"))
+	return terra.ReferenceAsString(de.ref.Append("engine_name"))
 }
 
+// ExtraConnectionAttributes returns a reference to field extra_connection_attributes of aws_dms_endpoint.
 func (de dmsEndpointAttributes) ExtraConnectionAttributes() terra.StringValue {
-	return terra.ReferenceString(de.ref.Append("extra_connection_attributes"))
+	return terra.ReferenceAsString(de.ref.Append("extra_connection_attributes"))
 }
 
+// Id returns a reference to field id of aws_dms_endpoint.
 func (de dmsEndpointAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(de.ref.Append("id"))
+	return terra.ReferenceAsString(de.ref.Append("id"))
 }
 
+// KmsKeyArn returns a reference to field kms_key_arn of aws_dms_endpoint.
 func (de dmsEndpointAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(de.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(de.ref.Append("kms_key_arn"))
 }
 
+// Password returns a reference to field password of aws_dms_endpoint.
 func (de dmsEndpointAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(de.ref.Append("password"))
+	return terra.ReferenceAsString(de.ref.Append("password"))
 }
 
+// Port returns a reference to field port of aws_dms_endpoint.
 func (de dmsEndpointAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(de.ref.Append("port"))
+	return terra.ReferenceAsNumber(de.ref.Append("port"))
 }
 
+// SecretsManagerAccessRoleArn returns a reference to field secrets_manager_access_role_arn of aws_dms_endpoint.
 func (de dmsEndpointAttributes) SecretsManagerAccessRoleArn() terra.StringValue {
-	return terra.ReferenceString(de.ref.Append("secrets_manager_access_role_arn"))
+	return terra.ReferenceAsString(de.ref.Append("secrets_manager_access_role_arn"))
 }
 
+// SecretsManagerArn returns a reference to field secrets_manager_arn of aws_dms_endpoint.
 func (de dmsEndpointAttributes) SecretsManagerArn() terra.StringValue {
-	return terra.ReferenceString(de.ref.Append("secrets_manager_arn"))
+	return terra.ReferenceAsString(de.ref.Append("secrets_manager_arn"))
 }
 
+// ServerName returns a reference to field server_name of aws_dms_endpoint.
 func (de dmsEndpointAttributes) ServerName() terra.StringValue {
-	return terra.ReferenceString(de.ref.Append("server_name"))
+	return terra.ReferenceAsString(de.ref.Append("server_name"))
 }
 
+// ServiceAccessRole returns a reference to field service_access_role of aws_dms_endpoint.
 func (de dmsEndpointAttributes) ServiceAccessRole() terra.StringValue {
-	return terra.ReferenceString(de.ref.Append("service_access_role"))
+	return terra.ReferenceAsString(de.ref.Append("service_access_role"))
 }
 
+// SslMode returns a reference to field ssl_mode of aws_dms_endpoint.
 func (de dmsEndpointAttributes) SslMode() terra.StringValue {
-	return terra.ReferenceString(de.ref.Append("ssl_mode"))
+	return terra.ReferenceAsString(de.ref.Append("ssl_mode"))
 }
 
+// Tags returns a reference to field tags of aws_dms_endpoint.
 func (de dmsEndpointAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](de.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](de.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_dms_endpoint.
 func (de dmsEndpointAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](de.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](de.ref.Append("tags_all"))
 }
 
+// Username returns a reference to field username of aws_dms_endpoint.
 func (de dmsEndpointAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(de.ref.Append("username"))
+	return terra.ReferenceAsString(de.ref.Append("username"))
 }
 
 func (de dmsEndpointAttributes) ElasticsearchSettings() terra.ListValue[dmsendpoint.ElasticsearchSettingsAttributes] {
-	return terra.ReferenceList[dmsendpoint.ElasticsearchSettingsAttributes](de.ref.Append("elasticsearch_settings"))
+	return terra.ReferenceAsList[dmsendpoint.ElasticsearchSettingsAttributes](de.ref.Append("elasticsearch_settings"))
 }
 
 func (de dmsEndpointAttributes) KafkaSettings() terra.ListValue[dmsendpoint.KafkaSettingsAttributes] {
-	return terra.ReferenceList[dmsendpoint.KafkaSettingsAttributes](de.ref.Append("kafka_settings"))
+	return terra.ReferenceAsList[dmsendpoint.KafkaSettingsAttributes](de.ref.Append("kafka_settings"))
 }
 
 func (de dmsEndpointAttributes) KinesisSettings() terra.ListValue[dmsendpoint.KinesisSettingsAttributes] {
-	return terra.ReferenceList[dmsendpoint.KinesisSettingsAttributes](de.ref.Append("kinesis_settings"))
+	return terra.ReferenceAsList[dmsendpoint.KinesisSettingsAttributes](de.ref.Append("kinesis_settings"))
 }
 
 func (de dmsEndpointAttributes) MongodbSettings() terra.ListValue[dmsendpoint.MongodbSettingsAttributes] {
-	return terra.ReferenceList[dmsendpoint.MongodbSettingsAttributes](de.ref.Append("mongodb_settings"))
+	return terra.ReferenceAsList[dmsendpoint.MongodbSettingsAttributes](de.ref.Append("mongodb_settings"))
 }
 
 func (de dmsEndpointAttributes) RedisSettings() terra.ListValue[dmsendpoint.RedisSettingsAttributes] {
-	return terra.ReferenceList[dmsendpoint.RedisSettingsAttributes](de.ref.Append("redis_settings"))
+	return terra.ReferenceAsList[dmsendpoint.RedisSettingsAttributes](de.ref.Append("redis_settings"))
 }
 
 func (de dmsEndpointAttributes) RedshiftSettings() terra.ListValue[dmsendpoint.RedshiftSettingsAttributes] {
-	return terra.ReferenceList[dmsendpoint.RedshiftSettingsAttributes](de.ref.Append("redshift_settings"))
+	return terra.ReferenceAsList[dmsendpoint.RedshiftSettingsAttributes](de.ref.Append("redshift_settings"))
 }
 
 func (de dmsEndpointAttributes) S3Settings() terra.ListValue[dmsendpoint.S3SettingsAttributes] {
-	return terra.ReferenceList[dmsendpoint.S3SettingsAttributes](de.ref.Append("s3_settings"))
+	return terra.ReferenceAsList[dmsendpoint.S3SettingsAttributes](de.ref.Append("s3_settings"))
 }
 
 func (de dmsEndpointAttributes) Timeouts() dmsendpoint.TimeoutsAttributes {
-	return terra.ReferenceSingle[dmsendpoint.TimeoutsAttributes](de.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dmsendpoint.TimeoutsAttributes](de.ref.Append("timeouts"))
 }
 
 type dmsEndpointState struct {

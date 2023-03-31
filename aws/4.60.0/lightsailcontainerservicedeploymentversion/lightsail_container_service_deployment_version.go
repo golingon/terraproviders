@@ -66,23 +66,23 @@ func (c ContainerAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ContainerAttributes) Command() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](c.ref.Append("command"))
+	return terra.ReferenceAsList[terra.StringValue](c.ref.Append("command"))
 }
 
 func (c ContainerAttributes) ContainerName() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("container_name"))
+	return terra.ReferenceAsString(c.ref.Append("container_name"))
 }
 
 func (c ContainerAttributes) Environment() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](c.ref.Append("environment"))
+	return terra.ReferenceAsMap[terra.StringValue](c.ref.Append("environment"))
 }
 
 func (c ContainerAttributes) Image() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("image"))
+	return terra.ReferenceAsString(c.ref.Append("image"))
 }
 
 func (c ContainerAttributes) Ports() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](c.ref.Append("ports"))
+	return terra.ReferenceAsMap[terra.StringValue](c.ref.Append("ports"))
 }
 
 type PublicEndpointAttributes struct {
@@ -102,15 +102,15 @@ func (pe PublicEndpointAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pe PublicEndpointAttributes) ContainerName() terra.StringValue {
-	return terra.ReferenceString(pe.ref.Append("container_name"))
+	return terra.ReferenceAsString(pe.ref.Append("container_name"))
 }
 
 func (pe PublicEndpointAttributes) ContainerPort() terra.NumberValue {
-	return terra.ReferenceNumber(pe.ref.Append("container_port"))
+	return terra.ReferenceAsNumber(pe.ref.Append("container_port"))
 }
 
 func (pe PublicEndpointAttributes) HealthCheck() terra.ListValue[HealthCheckAttributes] {
-	return terra.ReferenceList[HealthCheckAttributes](pe.ref.Append("health_check"))
+	return terra.ReferenceAsList[HealthCheckAttributes](pe.ref.Append("health_check"))
 }
 
 type HealthCheckAttributes struct {
@@ -130,27 +130,27 @@ func (hc HealthCheckAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hc HealthCheckAttributes) HealthyThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(hc.ref.Append("healthy_threshold"))
+	return terra.ReferenceAsNumber(hc.ref.Append("healthy_threshold"))
 }
 
 func (hc HealthCheckAttributes) IntervalSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(hc.ref.Append("interval_seconds"))
+	return terra.ReferenceAsNumber(hc.ref.Append("interval_seconds"))
 }
 
 func (hc HealthCheckAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("path"))
+	return terra.ReferenceAsString(hc.ref.Append("path"))
 }
 
 func (hc HealthCheckAttributes) SuccessCodes() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("success_codes"))
+	return terra.ReferenceAsString(hc.ref.Append("success_codes"))
 }
 
 func (hc HealthCheckAttributes) TimeoutSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(hc.ref.Append("timeout_seconds"))
+	return terra.ReferenceAsNumber(hc.ref.Append("timeout_seconds"))
 }
 
 func (hc HealthCheckAttributes) UnhealthyThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(hc.ref.Append("unhealthy_threshold"))
+	return terra.ReferenceAsNumber(hc.ref.Append("unhealthy_threshold"))
 }
 
 type TimeoutsAttributes struct {
@@ -170,7 +170,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 type ContainerState struct {

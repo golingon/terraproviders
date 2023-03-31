@@ -45,11 +45,11 @@ func (dces DataCatalogEncryptionSettingsAttributes) InternalTokens() hclwrite.To
 }
 
 func (dces DataCatalogEncryptionSettingsAttributes) ConnectionPasswordEncryption() terra.ListValue[ConnectionPasswordEncryptionAttributes] {
-	return terra.ReferenceList[ConnectionPasswordEncryptionAttributes](dces.ref.Append("connection_password_encryption"))
+	return terra.ReferenceAsList[ConnectionPasswordEncryptionAttributes](dces.ref.Append("connection_password_encryption"))
 }
 
 func (dces DataCatalogEncryptionSettingsAttributes) EncryptionAtRest() terra.ListValue[EncryptionAtRestAttributes] {
-	return terra.ReferenceList[EncryptionAtRestAttributes](dces.ref.Append("encryption_at_rest"))
+	return terra.ReferenceAsList[EncryptionAtRestAttributes](dces.ref.Append("encryption_at_rest"))
 }
 
 type ConnectionPasswordEncryptionAttributes struct {
@@ -69,11 +69,11 @@ func (cpe ConnectionPasswordEncryptionAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (cpe ConnectionPasswordEncryptionAttributes) AwsKmsKeyId() terra.StringValue {
-	return terra.ReferenceString(cpe.ref.Append("aws_kms_key_id"))
+	return terra.ReferenceAsString(cpe.ref.Append("aws_kms_key_id"))
 }
 
 func (cpe ConnectionPasswordEncryptionAttributes) ReturnConnectionPasswordEncrypted() terra.BoolValue {
-	return terra.ReferenceBool(cpe.ref.Append("return_connection_password_encrypted"))
+	return terra.ReferenceAsBool(cpe.ref.Append("return_connection_password_encrypted"))
 }
 
 type EncryptionAtRestAttributes struct {
@@ -93,11 +93,11 @@ func (ear EncryptionAtRestAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ear EncryptionAtRestAttributes) CatalogEncryptionMode() terra.StringValue {
-	return terra.ReferenceString(ear.ref.Append("catalog_encryption_mode"))
+	return terra.ReferenceAsString(ear.ref.Append("catalog_encryption_mode"))
 }
 
 func (ear EncryptionAtRestAttributes) SseAwsKmsKeyId() terra.StringValue {
-	return terra.ReferenceString(ear.ref.Append("sse_aws_kms_key_id"))
+	return terra.ReferenceAsString(ear.ref.Append("sse_aws_kms_key_id"))
 }
 
 type DataCatalogEncryptionSettingsState struct {

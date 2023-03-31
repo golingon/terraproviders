@@ -38,11 +38,11 @@ func (d DetailsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DetailsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("name"))
+	return terra.ReferenceAsString(d.ref.Append("name"))
 }
 
 func (d DetailsAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("policy"))
+	return terra.ReferenceAsString(d.ref.Append("policy"))
 }
 
 type TimeoutsAttributes struct {
@@ -62,11 +62,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DetailsState struct {

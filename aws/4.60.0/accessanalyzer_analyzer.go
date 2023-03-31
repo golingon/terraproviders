@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAccessanalyzerAnalyzer creates a new instance of [AccessanalyzerAnalyzer].
 func NewAccessanalyzerAnalyzer(name string, args AccessanalyzerAnalyzerArgs) *AccessanalyzerAnalyzer {
 	return &AccessanalyzerAnalyzer{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAccessanalyzerAnalyzer(name string, args AccessanalyzerAnalyzerArgs) *Ac
 
 var _ terra.Resource = (*AccessanalyzerAnalyzer)(nil)
 
+// AccessanalyzerAnalyzer represents the Terraform resource aws_accessanalyzer_analyzer.
 type AccessanalyzerAnalyzer struct {
-	Name  string
-	Args  AccessanalyzerAnalyzerArgs
-	state *accessanalyzerAnalyzerState
+	Name      string
+	Args      AccessanalyzerAnalyzerArgs
+	state     *accessanalyzerAnalyzerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AccessanalyzerAnalyzer].
 func (aa *AccessanalyzerAnalyzer) Type() string {
 	return "aws_accessanalyzer_analyzer"
 }
 
+// LocalName returns the local name for [AccessanalyzerAnalyzer].
 func (aa *AccessanalyzerAnalyzer) LocalName() string {
 	return aa.Name
 }
 
+// Configuration returns the configuration (args) for [AccessanalyzerAnalyzer].
 func (aa *AccessanalyzerAnalyzer) Configuration() interface{} {
 	return aa.Args
 }
 
+// DependOn is used for other resources to depend on [AccessanalyzerAnalyzer].
+func (aa *AccessanalyzerAnalyzer) DependOn() terra.Reference {
+	return terra.ReferenceResource(aa)
+}
+
+// Dependencies returns the list of resources [AccessanalyzerAnalyzer] depends_on.
+func (aa *AccessanalyzerAnalyzer) Dependencies() terra.Dependencies {
+	return aa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AccessanalyzerAnalyzer].
+func (aa *AccessanalyzerAnalyzer) LifecycleManagement() *terra.Lifecycle {
+	return aa.Lifecycle
+}
+
+// Attributes returns the attributes for [AccessanalyzerAnalyzer].
 func (aa *AccessanalyzerAnalyzer) Attributes() accessanalyzerAnalyzerAttributes {
 	return accessanalyzerAnalyzerAttributes{ref: terra.ReferenceResource(aa)}
 }
 
+// ImportState imports the given attribute values into [AccessanalyzerAnalyzer]'s state.
 func (aa *AccessanalyzerAnalyzer) ImportState(av io.Reader) error {
 	aa.state = &accessanalyzerAnalyzerState{}
 	if err := json.NewDecoder(av).Decode(aa.state); err != nil {
@@ -48,10 +72,12 @@ func (aa *AccessanalyzerAnalyzer) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AccessanalyzerAnalyzer] has state.
 func (aa *AccessanalyzerAnalyzer) State() (*accessanalyzerAnalyzerState, bool) {
 	return aa.state, aa.state != nil
 }
 
+// StateMust returns the state for [AccessanalyzerAnalyzer]. Panics if the state is nil.
 func (aa *AccessanalyzerAnalyzer) StateMust() *accessanalyzerAnalyzerState {
 	if aa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", aa.Type(), aa.LocalName()))
@@ -59,10 +85,7 @@ func (aa *AccessanalyzerAnalyzer) StateMust() *accessanalyzerAnalyzerState {
 	return aa.state
 }
 
-func (aa *AccessanalyzerAnalyzer) DependOn() terra.Reference {
-	return terra.ReferenceResource(aa)
-}
-
+// AccessanalyzerAnalyzerArgs contains the configurations for aws_accessanalyzer_analyzer.
 type AccessanalyzerAnalyzerArgs struct {
 	// AnalyzerName: string, required
 	AnalyzerName terra.StringValue `hcl:"analyzer_name,attr" validate:"required"`
@@ -74,35 +97,39 @@ type AccessanalyzerAnalyzerArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Type: string, optional
 	Type terra.StringValue `hcl:"type,attr"`
-	// DependsOn contains resources that AccessanalyzerAnalyzer depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type accessanalyzerAnalyzerAttributes struct {
 	ref terra.Reference
 }
 
+// AnalyzerName returns a reference to field analyzer_name of aws_accessanalyzer_analyzer.
 func (aa accessanalyzerAnalyzerAttributes) AnalyzerName() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("analyzer_name"))
+	return terra.ReferenceAsString(aa.ref.Append("analyzer_name"))
 }
 
+// Arn returns a reference to field arn of aws_accessanalyzer_analyzer.
 func (aa accessanalyzerAnalyzerAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("arn"))
+	return terra.ReferenceAsString(aa.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_accessanalyzer_analyzer.
 func (aa accessanalyzerAnalyzerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("id"))
+	return terra.ReferenceAsString(aa.ref.Append("id"))
 }
 
+// Tags returns a reference to field tags of aws_accessanalyzer_analyzer.
 func (aa accessanalyzerAnalyzerAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](aa.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](aa.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_accessanalyzer_analyzer.
 func (aa accessanalyzerAnalyzerAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](aa.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](aa.ref.Append("tags_all"))
 }
 
+// Type returns a reference to field type of aws_accessanalyzer_analyzer.
 func (aa accessanalyzerAnalyzerAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("type"))
+	return terra.ReferenceAsString(aa.ref.Append("type"))
 }
 
 type accessanalyzerAnalyzerState struct {

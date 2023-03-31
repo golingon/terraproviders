@@ -38,11 +38,11 @@ func (s SourceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SourceAttributes) SourceType() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("source_type"))
+	return terra.ReferenceAsString(s.ref.Append("source_type"))
 }
 
 func (s SourceAttributes) SourceData() terra.ListValue[SourceDataAttributes] {
-	return terra.ReferenceList[SourceDataAttributes](s.ref.Append("source_data"))
+	return terra.ReferenceAsList[SourceDataAttributes](s.ref.Append("source_data"))
 }
 
 type SourceDataAttributes struct {
@@ -62,11 +62,11 @@ func (sd SourceDataAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sd SourceDataAttributes) AcmPcaArn() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("acm_pca_arn"))
+	return terra.ReferenceAsString(sd.ref.Append("acm_pca_arn"))
 }
 
 func (sd SourceDataAttributes) X509CertificateData() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("x509_certificate_data"))
+	return terra.ReferenceAsString(sd.ref.Append("x509_certificate_data"))
 }
 
 type SourceState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLambdaFunctionUrl creates a new instance of [LambdaFunctionUrl].
 func NewLambdaFunctionUrl(name string, args LambdaFunctionUrlArgs) *LambdaFunctionUrl {
 	return &LambdaFunctionUrl{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLambdaFunctionUrl(name string, args LambdaFunctionUrlArgs) *LambdaFuncti
 
 var _ terra.Resource = (*LambdaFunctionUrl)(nil)
 
+// LambdaFunctionUrl represents the Terraform resource aws_lambda_function_url.
 type LambdaFunctionUrl struct {
-	Name  string
-	Args  LambdaFunctionUrlArgs
-	state *lambdaFunctionUrlState
+	Name      string
+	Args      LambdaFunctionUrlArgs
+	state     *lambdaFunctionUrlState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LambdaFunctionUrl].
 func (lfu *LambdaFunctionUrl) Type() string {
 	return "aws_lambda_function_url"
 }
 
+// LocalName returns the local name for [LambdaFunctionUrl].
 func (lfu *LambdaFunctionUrl) LocalName() string {
 	return lfu.Name
 }
 
+// Configuration returns the configuration (args) for [LambdaFunctionUrl].
 func (lfu *LambdaFunctionUrl) Configuration() interface{} {
 	return lfu.Args
 }
 
+// DependOn is used for other resources to depend on [LambdaFunctionUrl].
+func (lfu *LambdaFunctionUrl) DependOn() terra.Reference {
+	return terra.ReferenceResource(lfu)
+}
+
+// Dependencies returns the list of resources [LambdaFunctionUrl] depends_on.
+func (lfu *LambdaFunctionUrl) Dependencies() terra.Dependencies {
+	return lfu.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LambdaFunctionUrl].
+func (lfu *LambdaFunctionUrl) LifecycleManagement() *terra.Lifecycle {
+	return lfu.Lifecycle
+}
+
+// Attributes returns the attributes for [LambdaFunctionUrl].
 func (lfu *LambdaFunctionUrl) Attributes() lambdaFunctionUrlAttributes {
 	return lambdaFunctionUrlAttributes{ref: terra.ReferenceResource(lfu)}
 }
 
+// ImportState imports the given attribute values into [LambdaFunctionUrl]'s state.
 func (lfu *LambdaFunctionUrl) ImportState(av io.Reader) error {
 	lfu.state = &lambdaFunctionUrlState{}
 	if err := json.NewDecoder(av).Decode(lfu.state); err != nil {
@@ -49,10 +73,12 @@ func (lfu *LambdaFunctionUrl) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LambdaFunctionUrl] has state.
 func (lfu *LambdaFunctionUrl) State() (*lambdaFunctionUrlState, bool) {
 	return lfu.state, lfu.state != nil
 }
 
+// StateMust returns the state for [LambdaFunctionUrl]. Panics if the state is nil.
 func (lfu *LambdaFunctionUrl) StateMust() *lambdaFunctionUrlState {
 	if lfu.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lfu.Type(), lfu.LocalName()))
@@ -60,10 +86,7 @@ func (lfu *LambdaFunctionUrl) StateMust() *lambdaFunctionUrlState {
 	return lfu.state
 }
 
-func (lfu *LambdaFunctionUrl) DependOn() terra.Reference {
-	return terra.ReferenceResource(lfu)
-}
-
+// LambdaFunctionUrlArgs contains the configurations for aws_lambda_function_url.
 type LambdaFunctionUrlArgs struct {
 	// AuthorizationType: string, required
 	AuthorizationType terra.StringValue `hcl:"authorization_type,attr" validate:"required"`
@@ -77,47 +100,52 @@ type LambdaFunctionUrlArgs struct {
 	Cors *lambdafunctionurl.Cors `hcl:"cors,block"`
 	// Timeouts: optional
 	Timeouts *lambdafunctionurl.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LambdaFunctionUrl depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lambdaFunctionUrlAttributes struct {
 	ref terra.Reference
 }
 
+// AuthorizationType returns a reference to field authorization_type of aws_lambda_function_url.
 func (lfu lambdaFunctionUrlAttributes) AuthorizationType() terra.StringValue {
-	return terra.ReferenceString(lfu.ref.Append("authorization_type"))
+	return terra.ReferenceAsString(lfu.ref.Append("authorization_type"))
 }
 
+// FunctionArn returns a reference to field function_arn of aws_lambda_function_url.
 func (lfu lambdaFunctionUrlAttributes) FunctionArn() terra.StringValue {
-	return terra.ReferenceString(lfu.ref.Append("function_arn"))
+	return terra.ReferenceAsString(lfu.ref.Append("function_arn"))
 }
 
+// FunctionName returns a reference to field function_name of aws_lambda_function_url.
 func (lfu lambdaFunctionUrlAttributes) FunctionName() terra.StringValue {
-	return terra.ReferenceString(lfu.ref.Append("function_name"))
+	return terra.ReferenceAsString(lfu.ref.Append("function_name"))
 }
 
+// FunctionUrl returns a reference to field function_url of aws_lambda_function_url.
 func (lfu lambdaFunctionUrlAttributes) FunctionUrl() terra.StringValue {
-	return terra.ReferenceString(lfu.ref.Append("function_url"))
+	return terra.ReferenceAsString(lfu.ref.Append("function_url"))
 }
 
+// Id returns a reference to field id of aws_lambda_function_url.
 func (lfu lambdaFunctionUrlAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lfu.ref.Append("id"))
+	return terra.ReferenceAsString(lfu.ref.Append("id"))
 }
 
+// Qualifier returns a reference to field qualifier of aws_lambda_function_url.
 func (lfu lambdaFunctionUrlAttributes) Qualifier() terra.StringValue {
-	return terra.ReferenceString(lfu.ref.Append("qualifier"))
+	return terra.ReferenceAsString(lfu.ref.Append("qualifier"))
 }
 
+// UrlId returns a reference to field url_id of aws_lambda_function_url.
 func (lfu lambdaFunctionUrlAttributes) UrlId() terra.StringValue {
-	return terra.ReferenceString(lfu.ref.Append("url_id"))
+	return terra.ReferenceAsString(lfu.ref.Append("url_id"))
 }
 
 func (lfu lambdaFunctionUrlAttributes) Cors() terra.ListValue[lambdafunctionurl.CorsAttributes] {
-	return terra.ReferenceList[lambdafunctionurl.CorsAttributes](lfu.ref.Append("cors"))
+	return terra.ReferenceAsList[lambdafunctionurl.CorsAttributes](lfu.ref.Append("cors"))
 }
 
 func (lfu lambdaFunctionUrlAttributes) Timeouts() lambdafunctionurl.TimeoutsAttributes {
-	return terra.ReferenceSingle[lambdafunctionurl.TimeoutsAttributes](lfu.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[lambdafunctionurl.TimeoutsAttributes](lfu.ref.Append("timeouts"))
 }
 
 type lambdaFunctionUrlState struct {

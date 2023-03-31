@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDatasyncLocationEfs creates a new instance of [DatasyncLocationEfs].
 func NewDatasyncLocationEfs(name string, args DatasyncLocationEfsArgs) *DatasyncLocationEfs {
 	return &DatasyncLocationEfs{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDatasyncLocationEfs(name string, args DatasyncLocationEfsArgs) *Datasync
 
 var _ terra.Resource = (*DatasyncLocationEfs)(nil)
 
+// DatasyncLocationEfs represents the Terraform resource aws_datasync_location_efs.
 type DatasyncLocationEfs struct {
-	Name  string
-	Args  DatasyncLocationEfsArgs
-	state *datasyncLocationEfsState
+	Name      string
+	Args      DatasyncLocationEfsArgs
+	state     *datasyncLocationEfsState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DatasyncLocationEfs].
 func (dle *DatasyncLocationEfs) Type() string {
 	return "aws_datasync_location_efs"
 }
 
+// LocalName returns the local name for [DatasyncLocationEfs].
 func (dle *DatasyncLocationEfs) LocalName() string {
 	return dle.Name
 }
 
+// Configuration returns the configuration (args) for [DatasyncLocationEfs].
 func (dle *DatasyncLocationEfs) Configuration() interface{} {
 	return dle.Args
 }
 
+// DependOn is used for other resources to depend on [DatasyncLocationEfs].
+func (dle *DatasyncLocationEfs) DependOn() terra.Reference {
+	return terra.ReferenceResource(dle)
+}
+
+// Dependencies returns the list of resources [DatasyncLocationEfs] depends_on.
+func (dle *DatasyncLocationEfs) Dependencies() terra.Dependencies {
+	return dle.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DatasyncLocationEfs].
+func (dle *DatasyncLocationEfs) LifecycleManagement() *terra.Lifecycle {
+	return dle.Lifecycle
+}
+
+// Attributes returns the attributes for [DatasyncLocationEfs].
 func (dle *DatasyncLocationEfs) Attributes() datasyncLocationEfsAttributes {
 	return datasyncLocationEfsAttributes{ref: terra.ReferenceResource(dle)}
 }
 
+// ImportState imports the given attribute values into [DatasyncLocationEfs]'s state.
 func (dle *DatasyncLocationEfs) ImportState(av io.Reader) error {
 	dle.state = &datasyncLocationEfsState{}
 	if err := json.NewDecoder(av).Decode(dle.state); err != nil {
@@ -49,10 +73,12 @@ func (dle *DatasyncLocationEfs) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DatasyncLocationEfs] has state.
 func (dle *DatasyncLocationEfs) State() (*datasyncLocationEfsState, bool) {
 	return dle.state, dle.state != nil
 }
 
+// StateMust returns the state for [DatasyncLocationEfs]. Panics if the state is nil.
 func (dle *DatasyncLocationEfs) StateMust() *datasyncLocationEfsState {
 	if dle.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dle.Type(), dle.LocalName()))
@@ -60,10 +86,7 @@ func (dle *DatasyncLocationEfs) StateMust() *datasyncLocationEfsState {
 	return dle.state
 }
 
-func (dle *DatasyncLocationEfs) DependOn() terra.Reference {
-	return terra.ReferenceResource(dle)
-}
-
+// DatasyncLocationEfsArgs contains the configurations for aws_datasync_location_efs.
 type DatasyncLocationEfsArgs struct {
 	// AccessPointArn: string, optional
 	AccessPointArn terra.StringValue `hcl:"access_point_arn,attr"`
@@ -83,55 +106,63 @@ type DatasyncLocationEfsArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Ec2Config: required
 	Ec2Config *datasynclocationefs.Ec2Config `hcl:"ec2_config,block" validate:"required"`
-	// DependsOn contains resources that DatasyncLocationEfs depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type datasyncLocationEfsAttributes struct {
 	ref terra.Reference
 }
 
+// AccessPointArn returns a reference to field access_point_arn of aws_datasync_location_efs.
 func (dle datasyncLocationEfsAttributes) AccessPointArn() terra.StringValue {
-	return terra.ReferenceString(dle.ref.Append("access_point_arn"))
+	return terra.ReferenceAsString(dle.ref.Append("access_point_arn"))
 }
 
+// Arn returns a reference to field arn of aws_datasync_location_efs.
 func (dle datasyncLocationEfsAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dle.ref.Append("arn"))
+	return terra.ReferenceAsString(dle.ref.Append("arn"))
 }
 
+// EfsFileSystemArn returns a reference to field efs_file_system_arn of aws_datasync_location_efs.
 func (dle datasyncLocationEfsAttributes) EfsFileSystemArn() terra.StringValue {
-	return terra.ReferenceString(dle.ref.Append("efs_file_system_arn"))
+	return terra.ReferenceAsString(dle.ref.Append("efs_file_system_arn"))
 }
 
+// FileSystemAccessRoleArn returns a reference to field file_system_access_role_arn of aws_datasync_location_efs.
 func (dle datasyncLocationEfsAttributes) FileSystemAccessRoleArn() terra.StringValue {
-	return terra.ReferenceString(dle.ref.Append("file_system_access_role_arn"))
+	return terra.ReferenceAsString(dle.ref.Append("file_system_access_role_arn"))
 }
 
+// Id returns a reference to field id of aws_datasync_location_efs.
 func (dle datasyncLocationEfsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dle.ref.Append("id"))
+	return terra.ReferenceAsString(dle.ref.Append("id"))
 }
 
+// InTransitEncryption returns a reference to field in_transit_encryption of aws_datasync_location_efs.
 func (dle datasyncLocationEfsAttributes) InTransitEncryption() terra.StringValue {
-	return terra.ReferenceString(dle.ref.Append("in_transit_encryption"))
+	return terra.ReferenceAsString(dle.ref.Append("in_transit_encryption"))
 }
 
+// Subdirectory returns a reference to field subdirectory of aws_datasync_location_efs.
 func (dle datasyncLocationEfsAttributes) Subdirectory() terra.StringValue {
-	return terra.ReferenceString(dle.ref.Append("subdirectory"))
+	return terra.ReferenceAsString(dle.ref.Append("subdirectory"))
 }
 
+// Tags returns a reference to field tags of aws_datasync_location_efs.
 func (dle datasyncLocationEfsAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dle.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dle.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_datasync_location_efs.
 func (dle datasyncLocationEfsAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dle.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dle.ref.Append("tags_all"))
 }
 
+// Uri returns a reference to field uri of aws_datasync_location_efs.
 func (dle datasyncLocationEfsAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(dle.ref.Append("uri"))
+	return terra.ReferenceAsString(dle.ref.Append("uri"))
 }
 
 func (dle datasyncLocationEfsAttributes) Ec2Config() terra.ListValue[datasynclocationefs.Ec2ConfigAttributes] {
-	return terra.ReferenceList[datasynclocationefs.Ec2ConfigAttributes](dle.ref.Append("ec2_config"))
+	return terra.ReferenceAsList[datasynclocationefs.Ec2ConfigAttributes](dle.ref.Append("ec2_config"))
 }
 
 type datasyncLocationEfsState struct {

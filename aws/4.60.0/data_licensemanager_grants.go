@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataLicensemanagerGrants creates a new instance of [DataLicensemanagerGrants].
 func NewDataLicensemanagerGrants(name string, args DataLicensemanagerGrantsArgs) *DataLicensemanagerGrants {
 	return &DataLicensemanagerGrants{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataLicensemanagerGrants(name string, args DataLicensemanagerGrantsArgs)
 
 var _ terra.DataResource = (*DataLicensemanagerGrants)(nil)
 
+// DataLicensemanagerGrants represents the Terraform data resource aws_licensemanager_grants.
 type DataLicensemanagerGrants struct {
 	Name string
 	Args DataLicensemanagerGrantsArgs
 }
 
+// DataSource returns the Terraform object type for [DataLicensemanagerGrants].
 func (lg *DataLicensemanagerGrants) DataSource() string {
 	return "aws_licensemanager_grants"
 }
 
+// LocalName returns the local name for [DataLicensemanagerGrants].
 func (lg *DataLicensemanagerGrants) LocalName() string {
 	return lg.Name
 }
 
+// Configuration returns the configuration (args) for [DataLicensemanagerGrants].
 func (lg *DataLicensemanagerGrants) Configuration() interface{} {
 	return lg.Args
 }
 
+// Attributes returns the attributes for [DataLicensemanagerGrants].
 func (lg *DataLicensemanagerGrants) Attributes() dataLicensemanagerGrantsAttributes {
 	return dataLicensemanagerGrantsAttributes{ref: terra.ReferenceDataResource(lg)}
 }
 
+// DataLicensemanagerGrantsArgs contains the configurations for aws_licensemanager_grants.
 type DataLicensemanagerGrantsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -47,14 +54,16 @@ type dataLicensemanagerGrantsAttributes struct {
 	ref terra.Reference
 }
 
+// Arns returns a reference to field arns of aws_licensemanager_grants.
 func (lg dataLicensemanagerGrantsAttributes) Arns() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lg.ref.Append("arns"))
+	return terra.ReferenceAsList[terra.StringValue](lg.ref.Append("arns"))
 }
 
+// Id returns a reference to field id of aws_licensemanager_grants.
 func (lg dataLicensemanagerGrantsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lg.ref.Append("id"))
+	return terra.ReferenceAsString(lg.ref.Append("id"))
 }
 
 func (lg dataLicensemanagerGrantsAttributes) Filter() terra.SetValue[datalicensemanagergrants.FilterAttributes] {
-	return terra.ReferenceSet[datalicensemanagergrants.FilterAttributes](lg.ref.Append("filter"))
+	return terra.ReferenceAsSet[datalicensemanagergrants.FilterAttributes](lg.ref.Append("filter"))
 }

@@ -57,7 +57,7 @@ func (ef ExcludeFilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ef ExcludeFilterAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("namespace"))
+	return terra.ReferenceAsString(ef.ref.Append("namespace"))
 }
 
 type IncludeFilterAttributes struct {
@@ -77,7 +77,7 @@ func (_if IncludeFilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (_if IncludeFilterAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(_if.ref.Append("namespace"))
+	return terra.ReferenceAsString(_if.ref.Append("namespace"))
 }
 
 type StatisticsConfigurationAttributes struct {
@@ -97,11 +97,11 @@ func (sc StatisticsConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc StatisticsConfigurationAttributes) AdditionalStatistics() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sc.ref.Append("additional_statistics"))
+	return terra.ReferenceAsSet[terra.StringValue](sc.ref.Append("additional_statistics"))
 }
 
 func (sc StatisticsConfigurationAttributes) IncludeMetric() terra.SetValue[IncludeMetricAttributes] {
-	return terra.ReferenceSet[IncludeMetricAttributes](sc.ref.Append("include_metric"))
+	return terra.ReferenceAsSet[IncludeMetricAttributes](sc.ref.Append("include_metric"))
 }
 
 type IncludeMetricAttributes struct {
@@ -121,11 +121,11 @@ func (im IncludeMetricAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (im IncludeMetricAttributes) MetricName() terra.StringValue {
-	return terra.ReferenceString(im.ref.Append("metric_name"))
+	return terra.ReferenceAsString(im.ref.Append("metric_name"))
 }
 
 func (im IncludeMetricAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(im.ref.Append("namespace"))
+	return terra.ReferenceAsString(im.ref.Append("namespace"))
 }
 
 type TimeoutsAttributes struct {
@@ -145,15 +145,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ExcludeFilterState struct {

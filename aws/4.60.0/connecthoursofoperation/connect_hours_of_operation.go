@@ -47,15 +47,15 @@ func (c ConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ConfigAttributes) Day() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("day"))
+	return terra.ReferenceAsString(c.ref.Append("day"))
 }
 
 func (c ConfigAttributes) EndTime() terra.ListValue[EndTimeAttributes] {
-	return terra.ReferenceList[EndTimeAttributes](c.ref.Append("end_time"))
+	return terra.ReferenceAsList[EndTimeAttributes](c.ref.Append("end_time"))
 }
 
 func (c ConfigAttributes) StartTime() terra.ListValue[StartTimeAttributes] {
-	return terra.ReferenceList[StartTimeAttributes](c.ref.Append("start_time"))
+	return terra.ReferenceAsList[StartTimeAttributes](c.ref.Append("start_time"))
 }
 
 type EndTimeAttributes struct {
@@ -75,11 +75,11 @@ func (et EndTimeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (et EndTimeAttributes) Hours() terra.NumberValue {
-	return terra.ReferenceNumber(et.ref.Append("hours"))
+	return terra.ReferenceAsNumber(et.ref.Append("hours"))
 }
 
 func (et EndTimeAttributes) Minutes() terra.NumberValue {
-	return terra.ReferenceNumber(et.ref.Append("minutes"))
+	return terra.ReferenceAsNumber(et.ref.Append("minutes"))
 }
 
 type StartTimeAttributes struct {
@@ -99,11 +99,11 @@ func (st StartTimeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (st StartTimeAttributes) Hours() terra.NumberValue {
-	return terra.ReferenceNumber(st.ref.Append("hours"))
+	return terra.ReferenceAsNumber(st.ref.Append("hours"))
 }
 
 func (st StartTimeAttributes) Minutes() terra.NumberValue {
-	return terra.ReferenceNumber(st.ref.Append("minutes"))
+	return terra.ReferenceAsNumber(st.ref.Append("minutes"))
 }
 
 type ConfigState struct {

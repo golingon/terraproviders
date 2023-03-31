@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudformationStack creates a new instance of [CloudformationStack].
 func NewCloudformationStack(name string, args CloudformationStackArgs) *CloudformationStack {
 	return &CloudformationStack{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudformationStack(name string, args CloudformationStackArgs) *Cloudfor
 
 var _ terra.Resource = (*CloudformationStack)(nil)
 
+// CloudformationStack represents the Terraform resource aws_cloudformation_stack.
 type CloudformationStack struct {
-	Name  string
-	Args  CloudformationStackArgs
-	state *cloudformationStackState
+	Name      string
+	Args      CloudformationStackArgs
+	state     *cloudformationStackState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudformationStack].
 func (cs *CloudformationStack) Type() string {
 	return "aws_cloudformation_stack"
 }
 
+// LocalName returns the local name for [CloudformationStack].
 func (cs *CloudformationStack) LocalName() string {
 	return cs.Name
 }
 
+// Configuration returns the configuration (args) for [CloudformationStack].
 func (cs *CloudformationStack) Configuration() interface{} {
 	return cs.Args
 }
 
+// DependOn is used for other resources to depend on [CloudformationStack].
+func (cs *CloudformationStack) DependOn() terra.Reference {
+	return terra.ReferenceResource(cs)
+}
+
+// Dependencies returns the list of resources [CloudformationStack] depends_on.
+func (cs *CloudformationStack) Dependencies() terra.Dependencies {
+	return cs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudformationStack].
+func (cs *CloudformationStack) LifecycleManagement() *terra.Lifecycle {
+	return cs.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudformationStack].
 func (cs *CloudformationStack) Attributes() cloudformationStackAttributes {
 	return cloudformationStackAttributes{ref: terra.ReferenceResource(cs)}
 }
 
+// ImportState imports the given attribute values into [CloudformationStack]'s state.
 func (cs *CloudformationStack) ImportState(av io.Reader) error {
 	cs.state = &cloudformationStackState{}
 	if err := json.NewDecoder(av).Decode(cs.state); err != nil {
@@ -49,10 +73,12 @@ func (cs *CloudformationStack) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudformationStack] has state.
 func (cs *CloudformationStack) State() (*cloudformationStackState, bool) {
 	return cs.state, cs.state != nil
 }
 
+// StateMust returns the state for [CloudformationStack]. Panics if the state is nil.
 func (cs *CloudformationStack) StateMust() *cloudformationStackState {
 	if cs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cs.Type(), cs.LocalName()))
@@ -60,10 +86,7 @@ func (cs *CloudformationStack) StateMust() *cloudformationStackState {
 	return cs.state
 }
 
-func (cs *CloudformationStack) DependOn() terra.Reference {
-	return terra.ReferenceResource(cs)
-}
-
+// CloudformationStackArgs contains the configurations for aws_cloudformation_stack.
 type CloudformationStackArgs struct {
 	// Capabilities: set of string, optional
 	Capabilities terra.SetValue[terra.StringValue] `hcl:"capabilities,attr"`
@@ -97,79 +120,93 @@ type CloudformationStackArgs struct {
 	TimeoutInMinutes terra.NumberValue `hcl:"timeout_in_minutes,attr"`
 	// Timeouts: optional
 	Timeouts *cloudformationstack.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CloudformationStack depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudformationStackAttributes struct {
 	ref terra.Reference
 }
 
+// Capabilities returns a reference to field capabilities of aws_cloudformation_stack.
 func (cs cloudformationStackAttributes) Capabilities() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cs.ref.Append("capabilities"))
+	return terra.ReferenceAsSet[terra.StringValue](cs.ref.Append("capabilities"))
 }
 
+// DisableRollback returns a reference to field disable_rollback of aws_cloudformation_stack.
 func (cs cloudformationStackAttributes) DisableRollback() terra.BoolValue {
-	return terra.ReferenceBool(cs.ref.Append("disable_rollback"))
+	return terra.ReferenceAsBool(cs.ref.Append("disable_rollback"))
 }
 
+// IamRoleArn returns a reference to field iam_role_arn of aws_cloudformation_stack.
 func (cs cloudformationStackAttributes) IamRoleArn() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("iam_role_arn"))
+	return terra.ReferenceAsString(cs.ref.Append("iam_role_arn"))
 }
 
+// Id returns a reference to field id of aws_cloudformation_stack.
 func (cs cloudformationStackAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("id"))
+	return terra.ReferenceAsString(cs.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_cloudformation_stack.
 func (cs cloudformationStackAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("name"))
+	return terra.ReferenceAsString(cs.ref.Append("name"))
 }
 
+// NotificationArns returns a reference to field notification_arns of aws_cloudformation_stack.
 func (cs cloudformationStackAttributes) NotificationArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cs.ref.Append("notification_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](cs.ref.Append("notification_arns"))
 }
 
+// OnFailure returns a reference to field on_failure of aws_cloudformation_stack.
 func (cs cloudformationStackAttributes) OnFailure() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("on_failure"))
+	return terra.ReferenceAsString(cs.ref.Append("on_failure"))
 }
 
+// Outputs returns a reference to field outputs of aws_cloudformation_stack.
 func (cs cloudformationStackAttributes) Outputs() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cs.ref.Append("outputs"))
+	return terra.ReferenceAsMap[terra.StringValue](cs.ref.Append("outputs"))
 }
 
+// Parameters returns a reference to field parameters of aws_cloudformation_stack.
 func (cs cloudformationStackAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cs.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](cs.ref.Append("parameters"))
 }
 
+// PolicyBody returns a reference to field policy_body of aws_cloudformation_stack.
 func (cs cloudformationStackAttributes) PolicyBody() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("policy_body"))
+	return terra.ReferenceAsString(cs.ref.Append("policy_body"))
 }
 
+// PolicyUrl returns a reference to field policy_url of aws_cloudformation_stack.
 func (cs cloudformationStackAttributes) PolicyUrl() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("policy_url"))
+	return terra.ReferenceAsString(cs.ref.Append("policy_url"))
 }
 
+// Tags returns a reference to field tags of aws_cloudformation_stack.
 func (cs cloudformationStackAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cs.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cs.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_cloudformation_stack.
 func (cs cloudformationStackAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cs.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](cs.ref.Append("tags_all"))
 }
 
+// TemplateBody returns a reference to field template_body of aws_cloudformation_stack.
 func (cs cloudformationStackAttributes) TemplateBody() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("template_body"))
+	return terra.ReferenceAsString(cs.ref.Append("template_body"))
 }
 
+// TemplateUrl returns a reference to field template_url of aws_cloudformation_stack.
 func (cs cloudformationStackAttributes) TemplateUrl() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("template_url"))
+	return terra.ReferenceAsString(cs.ref.Append("template_url"))
 }
 
+// TimeoutInMinutes returns a reference to field timeout_in_minutes of aws_cloudformation_stack.
 func (cs cloudformationStackAttributes) TimeoutInMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(cs.ref.Append("timeout_in_minutes"))
+	return terra.ReferenceAsNumber(cs.ref.Append("timeout_in_minutes"))
 }
 
 func (cs cloudformationStackAttributes) Timeouts() cloudformationstack.TimeoutsAttributes {
-	return terra.ReferenceSingle[cloudformationstack.TimeoutsAttributes](cs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cloudformationstack.TimeoutsAttributes](cs.ref.Append("timeouts"))
 }
 
 type cloudformationStackState struct {

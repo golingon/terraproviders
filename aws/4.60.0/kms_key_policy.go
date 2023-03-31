@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewKmsKeyPolicy creates a new instance of [KmsKeyPolicy].
 func NewKmsKeyPolicy(name string, args KmsKeyPolicyArgs) *KmsKeyPolicy {
 	return &KmsKeyPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewKmsKeyPolicy(name string, args KmsKeyPolicyArgs) *KmsKeyPolicy {
 
 var _ terra.Resource = (*KmsKeyPolicy)(nil)
 
+// KmsKeyPolicy represents the Terraform resource aws_kms_key_policy.
 type KmsKeyPolicy struct {
-	Name  string
-	Args  KmsKeyPolicyArgs
-	state *kmsKeyPolicyState
+	Name      string
+	Args      KmsKeyPolicyArgs
+	state     *kmsKeyPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KmsKeyPolicy].
 func (kkp *KmsKeyPolicy) Type() string {
 	return "aws_kms_key_policy"
 }
 
+// LocalName returns the local name for [KmsKeyPolicy].
 func (kkp *KmsKeyPolicy) LocalName() string {
 	return kkp.Name
 }
 
+// Configuration returns the configuration (args) for [KmsKeyPolicy].
 func (kkp *KmsKeyPolicy) Configuration() interface{} {
 	return kkp.Args
 }
 
+// DependOn is used for other resources to depend on [KmsKeyPolicy].
+func (kkp *KmsKeyPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(kkp)
+}
+
+// Dependencies returns the list of resources [KmsKeyPolicy] depends_on.
+func (kkp *KmsKeyPolicy) Dependencies() terra.Dependencies {
+	return kkp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KmsKeyPolicy].
+func (kkp *KmsKeyPolicy) LifecycleManagement() *terra.Lifecycle {
+	return kkp.Lifecycle
+}
+
+// Attributes returns the attributes for [KmsKeyPolicy].
 func (kkp *KmsKeyPolicy) Attributes() kmsKeyPolicyAttributes {
 	return kmsKeyPolicyAttributes{ref: terra.ReferenceResource(kkp)}
 }
 
+// ImportState imports the given attribute values into [KmsKeyPolicy]'s state.
 func (kkp *KmsKeyPolicy) ImportState(av io.Reader) error {
 	kkp.state = &kmsKeyPolicyState{}
 	if err := json.NewDecoder(av).Decode(kkp.state); err != nil {
@@ -48,10 +72,12 @@ func (kkp *KmsKeyPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [KmsKeyPolicy] has state.
 func (kkp *KmsKeyPolicy) State() (*kmsKeyPolicyState, bool) {
 	return kkp.state, kkp.state != nil
 }
 
+// StateMust returns the state for [KmsKeyPolicy]. Panics if the state is nil.
 func (kkp *KmsKeyPolicy) StateMust() *kmsKeyPolicyState {
 	if kkp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", kkp.Type(), kkp.LocalName()))
@@ -59,10 +85,7 @@ func (kkp *KmsKeyPolicy) StateMust() *kmsKeyPolicyState {
 	return kkp.state
 }
 
-func (kkp *KmsKeyPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(kkp)
-}
-
+// KmsKeyPolicyArgs contains the configurations for aws_kms_key_policy.
 type KmsKeyPolicyArgs struct {
 	// BypassPolicyLockoutSafetyCheck: bool, optional
 	BypassPolicyLockoutSafetyCheck terra.BoolValue `hcl:"bypass_policy_lockout_safety_check,attr"`
@@ -72,27 +95,29 @@ type KmsKeyPolicyArgs struct {
 	KeyId terra.StringValue `hcl:"key_id,attr" validate:"required"`
 	// Policy: string, required
 	Policy terra.StringValue `hcl:"policy,attr" validate:"required"`
-	// DependsOn contains resources that KmsKeyPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type kmsKeyPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// BypassPolicyLockoutSafetyCheck returns a reference to field bypass_policy_lockout_safety_check of aws_kms_key_policy.
 func (kkp kmsKeyPolicyAttributes) BypassPolicyLockoutSafetyCheck() terra.BoolValue {
-	return terra.ReferenceBool(kkp.ref.Append("bypass_policy_lockout_safety_check"))
+	return terra.ReferenceAsBool(kkp.ref.Append("bypass_policy_lockout_safety_check"))
 }
 
+// Id returns a reference to field id of aws_kms_key_policy.
 func (kkp kmsKeyPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kkp.ref.Append("id"))
+	return terra.ReferenceAsString(kkp.ref.Append("id"))
 }
 
+// KeyId returns a reference to field key_id of aws_kms_key_policy.
 func (kkp kmsKeyPolicyAttributes) KeyId() terra.StringValue {
-	return terra.ReferenceString(kkp.ref.Append("key_id"))
+	return terra.ReferenceAsString(kkp.ref.Append("key_id"))
 }
 
+// Policy returns a reference to field policy of aws_kms_key_policy.
 func (kkp kmsKeyPolicyAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(kkp.ref.Append("policy"))
+	return terra.ReferenceAsString(kkp.ref.Append("policy"))
 }
 
 type kmsKeyPolicyState struct {

@@ -38,15 +38,15 @@ func (pi PartitionIndexAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pi PartitionIndexAttributes) IndexName() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("index_name"))
+	return terra.ReferenceAsString(pi.ref.Append("index_name"))
 }
 
 func (pi PartitionIndexAttributes) IndexStatus() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("index_status"))
+	return terra.ReferenceAsString(pi.ref.Append("index_status"))
 }
 
 func (pi PartitionIndexAttributes) Keys() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](pi.ref.Append("keys"))
+	return terra.ReferenceAsList[terra.StringValue](pi.ref.Append("keys"))
 }
 
 type TimeoutsAttributes struct {
@@ -66,11 +66,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type PartitionIndexState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudwatchEventPermission creates a new instance of [CloudwatchEventPermission].
 func NewCloudwatchEventPermission(name string, args CloudwatchEventPermissionArgs) *CloudwatchEventPermission {
 	return &CloudwatchEventPermission{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudwatchEventPermission(name string, args CloudwatchEventPermissionArg
 
 var _ terra.Resource = (*CloudwatchEventPermission)(nil)
 
+// CloudwatchEventPermission represents the Terraform resource aws_cloudwatch_event_permission.
 type CloudwatchEventPermission struct {
-	Name  string
-	Args  CloudwatchEventPermissionArgs
-	state *cloudwatchEventPermissionState
+	Name      string
+	Args      CloudwatchEventPermissionArgs
+	state     *cloudwatchEventPermissionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudwatchEventPermission].
 func (cep *CloudwatchEventPermission) Type() string {
 	return "aws_cloudwatch_event_permission"
 }
 
+// LocalName returns the local name for [CloudwatchEventPermission].
 func (cep *CloudwatchEventPermission) LocalName() string {
 	return cep.Name
 }
 
+// Configuration returns the configuration (args) for [CloudwatchEventPermission].
 func (cep *CloudwatchEventPermission) Configuration() interface{} {
 	return cep.Args
 }
 
+// DependOn is used for other resources to depend on [CloudwatchEventPermission].
+func (cep *CloudwatchEventPermission) DependOn() terra.Reference {
+	return terra.ReferenceResource(cep)
+}
+
+// Dependencies returns the list of resources [CloudwatchEventPermission] depends_on.
+func (cep *CloudwatchEventPermission) Dependencies() terra.Dependencies {
+	return cep.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudwatchEventPermission].
+func (cep *CloudwatchEventPermission) LifecycleManagement() *terra.Lifecycle {
+	return cep.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudwatchEventPermission].
 func (cep *CloudwatchEventPermission) Attributes() cloudwatchEventPermissionAttributes {
 	return cloudwatchEventPermissionAttributes{ref: terra.ReferenceResource(cep)}
 }
 
+// ImportState imports the given attribute values into [CloudwatchEventPermission]'s state.
 func (cep *CloudwatchEventPermission) ImportState(av io.Reader) error {
 	cep.state = &cloudwatchEventPermissionState{}
 	if err := json.NewDecoder(av).Decode(cep.state); err != nil {
@@ -49,10 +73,12 @@ func (cep *CloudwatchEventPermission) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudwatchEventPermission] has state.
 func (cep *CloudwatchEventPermission) State() (*cloudwatchEventPermissionState, bool) {
 	return cep.state, cep.state != nil
 }
 
+// StateMust returns the state for [CloudwatchEventPermission]. Panics if the state is nil.
 func (cep *CloudwatchEventPermission) StateMust() *cloudwatchEventPermissionState {
 	if cep.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cep.Type(), cep.LocalName()))
@@ -60,10 +86,7 @@ func (cep *CloudwatchEventPermission) StateMust() *cloudwatchEventPermissionStat
 	return cep.state
 }
 
-func (cep *CloudwatchEventPermission) DependOn() terra.Reference {
-	return terra.ReferenceResource(cep)
-}
-
+// CloudwatchEventPermissionArgs contains the configurations for aws_cloudwatch_event_permission.
 type CloudwatchEventPermissionArgs struct {
 	// Action: string, optional
 	Action terra.StringValue `hcl:"action,attr"`
@@ -77,35 +100,38 @@ type CloudwatchEventPermissionArgs struct {
 	StatementId terra.StringValue `hcl:"statement_id,attr" validate:"required"`
 	// Condition: optional
 	Condition *cloudwatcheventpermission.Condition `hcl:"condition,block"`
-	// DependsOn contains resources that CloudwatchEventPermission depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudwatchEventPermissionAttributes struct {
 	ref terra.Reference
 }
 
+// Action returns a reference to field action of aws_cloudwatch_event_permission.
 func (cep cloudwatchEventPermissionAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(cep.ref.Append("action"))
+	return terra.ReferenceAsString(cep.ref.Append("action"))
 }
 
+// EventBusName returns a reference to field event_bus_name of aws_cloudwatch_event_permission.
 func (cep cloudwatchEventPermissionAttributes) EventBusName() terra.StringValue {
-	return terra.ReferenceString(cep.ref.Append("event_bus_name"))
+	return terra.ReferenceAsString(cep.ref.Append("event_bus_name"))
 }
 
+// Id returns a reference to field id of aws_cloudwatch_event_permission.
 func (cep cloudwatchEventPermissionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cep.ref.Append("id"))
+	return terra.ReferenceAsString(cep.ref.Append("id"))
 }
 
+// Principal returns a reference to field principal of aws_cloudwatch_event_permission.
 func (cep cloudwatchEventPermissionAttributes) Principal() terra.StringValue {
-	return terra.ReferenceString(cep.ref.Append("principal"))
+	return terra.ReferenceAsString(cep.ref.Append("principal"))
 }
 
+// StatementId returns a reference to field statement_id of aws_cloudwatch_event_permission.
 func (cep cloudwatchEventPermissionAttributes) StatementId() terra.StringValue {
-	return terra.ReferenceString(cep.ref.Append("statement_id"))
+	return terra.ReferenceAsString(cep.ref.Append("statement_id"))
 }
 
 func (cep cloudwatchEventPermissionAttributes) Condition() terra.ListValue[cloudwatcheventpermission.ConditionAttributes] {
-	return terra.ReferenceList[cloudwatcheventpermission.ConditionAttributes](cep.ref.Append("condition"))
+	return terra.ReferenceAsList[cloudwatcheventpermission.ConditionAttributes](cep.ref.Append("condition"))
 }
 
 type cloudwatchEventPermissionState struct {

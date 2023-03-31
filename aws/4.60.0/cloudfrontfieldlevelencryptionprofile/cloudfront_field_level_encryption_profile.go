@@ -43,7 +43,7 @@ func (ee EncryptionEntitiesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ee EncryptionEntitiesAttributes) Items() terra.SetValue[ItemsAttributes] {
-	return terra.ReferenceSet[ItemsAttributes](ee.ref.Append("items"))
+	return terra.ReferenceAsSet[ItemsAttributes](ee.ref.Append("items"))
 }
 
 type ItemsAttributes struct {
@@ -63,15 +63,15 @@ func (i ItemsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i ItemsAttributes) ProviderId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("provider_id"))
+	return terra.ReferenceAsString(i.ref.Append("provider_id"))
 }
 
 func (i ItemsAttributes) PublicKeyId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("public_key_id"))
+	return terra.ReferenceAsString(i.ref.Append("public_key_id"))
 }
 
 func (i ItemsAttributes) FieldPatterns() terra.ListValue[FieldPatternsAttributes] {
-	return terra.ReferenceList[FieldPatternsAttributes](i.ref.Append("field_patterns"))
+	return terra.ReferenceAsList[FieldPatternsAttributes](i.ref.Append("field_patterns"))
 }
 
 type FieldPatternsAttributes struct {
@@ -91,7 +91,7 @@ func (fp FieldPatternsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fp FieldPatternsAttributes) Items() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](fp.ref.Append("items"))
+	return terra.ReferenceAsSet[terra.StringValue](fp.ref.Append("items"))
 }
 
 type EncryptionEntitiesState struct {

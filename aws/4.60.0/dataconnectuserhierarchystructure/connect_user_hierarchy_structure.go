@@ -47,23 +47,23 @@ func (hs HierarchyStructureAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hs HierarchyStructureAttributes) LevelFive() terra.ListValue[LevelFiveAttributes] {
-	return terra.ReferenceList[LevelFiveAttributes](hs.ref.Append("level_five"))
+	return terra.ReferenceAsList[LevelFiveAttributes](hs.ref.Append("level_five"))
 }
 
 func (hs HierarchyStructureAttributes) LevelFour() terra.ListValue[LevelFourAttributes] {
-	return terra.ReferenceList[LevelFourAttributes](hs.ref.Append("level_four"))
+	return terra.ReferenceAsList[LevelFourAttributes](hs.ref.Append("level_four"))
 }
 
 func (hs HierarchyStructureAttributes) LevelOne() terra.ListValue[LevelOneAttributes] {
-	return terra.ReferenceList[LevelOneAttributes](hs.ref.Append("level_one"))
+	return terra.ReferenceAsList[LevelOneAttributes](hs.ref.Append("level_one"))
 }
 
 func (hs HierarchyStructureAttributes) LevelThree() terra.ListValue[LevelThreeAttributes] {
-	return terra.ReferenceList[LevelThreeAttributes](hs.ref.Append("level_three"))
+	return terra.ReferenceAsList[LevelThreeAttributes](hs.ref.Append("level_three"))
 }
 
 func (hs HierarchyStructureAttributes) LevelTwo() terra.ListValue[LevelTwoAttributes] {
-	return terra.ReferenceList[LevelTwoAttributes](hs.ref.Append("level_two"))
+	return terra.ReferenceAsList[LevelTwoAttributes](hs.ref.Append("level_two"))
 }
 
 type LevelFiveAttributes struct {
@@ -83,15 +83,15 @@ func (lf LevelFiveAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lf LevelFiveAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("arn"))
+	return terra.ReferenceAsString(lf.ref.Append("arn"))
 }
 
 func (lf LevelFiveAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("id"))
+	return terra.ReferenceAsString(lf.ref.Append("id"))
 }
 
 func (lf LevelFiveAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("name"))
+	return terra.ReferenceAsString(lf.ref.Append("name"))
 }
 
 type LevelFourAttributes struct {
@@ -111,15 +111,15 @@ func (lf LevelFourAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lf LevelFourAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("arn"))
+	return terra.ReferenceAsString(lf.ref.Append("arn"))
 }
 
 func (lf LevelFourAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("id"))
+	return terra.ReferenceAsString(lf.ref.Append("id"))
 }
 
 func (lf LevelFourAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("name"))
+	return terra.ReferenceAsString(lf.ref.Append("name"))
 }
 
 type LevelOneAttributes struct {
@@ -139,15 +139,15 @@ func (lo LevelOneAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lo LevelOneAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(lo.ref.Append("arn"))
+	return terra.ReferenceAsString(lo.ref.Append("arn"))
 }
 
 func (lo LevelOneAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lo.ref.Append("id"))
+	return terra.ReferenceAsString(lo.ref.Append("id"))
 }
 
 func (lo LevelOneAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lo.ref.Append("name"))
+	return terra.ReferenceAsString(lo.ref.Append("name"))
 }
 
 type LevelThreeAttributes struct {
@@ -167,15 +167,15 @@ func (lt LevelThreeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lt LevelThreeAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("arn"))
+	return terra.ReferenceAsString(lt.ref.Append("arn"))
 }
 
 func (lt LevelThreeAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("id"))
+	return terra.ReferenceAsString(lt.ref.Append("id"))
 }
 
 func (lt LevelThreeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("name"))
+	return terra.ReferenceAsString(lt.ref.Append("name"))
 }
 
 type LevelTwoAttributes struct {
@@ -195,15 +195,15 @@ func (lt LevelTwoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lt LevelTwoAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("arn"))
+	return terra.ReferenceAsString(lt.ref.Append("arn"))
 }
 
 func (lt LevelTwoAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("id"))
+	return terra.ReferenceAsString(lt.ref.Append("id"))
 }
 
 func (lt LevelTwoAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("name"))
+	return terra.ReferenceAsString(lt.ref.Append("name"))
 }
 
 type HierarchyStructureState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewLightsailBucketResourceAccess creates a new instance of [LightsailBucketResourceAccess].
 func NewLightsailBucketResourceAccess(name string, args LightsailBucketResourceAccessArgs) *LightsailBucketResourceAccess {
 	return &LightsailBucketResourceAccess{
 		Args: args,
@@ -18,28 +19,51 @@ func NewLightsailBucketResourceAccess(name string, args LightsailBucketResourceA
 
 var _ terra.Resource = (*LightsailBucketResourceAccess)(nil)
 
+// LightsailBucketResourceAccess represents the Terraform resource aws_lightsail_bucket_resource_access.
 type LightsailBucketResourceAccess struct {
-	Name  string
-	Args  LightsailBucketResourceAccessArgs
-	state *lightsailBucketResourceAccessState
+	Name      string
+	Args      LightsailBucketResourceAccessArgs
+	state     *lightsailBucketResourceAccessState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LightsailBucketResourceAccess].
 func (lbra *LightsailBucketResourceAccess) Type() string {
 	return "aws_lightsail_bucket_resource_access"
 }
 
+// LocalName returns the local name for [LightsailBucketResourceAccess].
 func (lbra *LightsailBucketResourceAccess) LocalName() string {
 	return lbra.Name
 }
 
+// Configuration returns the configuration (args) for [LightsailBucketResourceAccess].
 func (lbra *LightsailBucketResourceAccess) Configuration() interface{} {
 	return lbra.Args
 }
 
+// DependOn is used for other resources to depend on [LightsailBucketResourceAccess].
+func (lbra *LightsailBucketResourceAccess) DependOn() terra.Reference {
+	return terra.ReferenceResource(lbra)
+}
+
+// Dependencies returns the list of resources [LightsailBucketResourceAccess] depends_on.
+func (lbra *LightsailBucketResourceAccess) Dependencies() terra.Dependencies {
+	return lbra.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LightsailBucketResourceAccess].
+func (lbra *LightsailBucketResourceAccess) LifecycleManagement() *terra.Lifecycle {
+	return lbra.Lifecycle
+}
+
+// Attributes returns the attributes for [LightsailBucketResourceAccess].
 func (lbra *LightsailBucketResourceAccess) Attributes() lightsailBucketResourceAccessAttributes {
 	return lightsailBucketResourceAccessAttributes{ref: terra.ReferenceResource(lbra)}
 }
 
+// ImportState imports the given attribute values into [LightsailBucketResourceAccess]'s state.
 func (lbra *LightsailBucketResourceAccess) ImportState(av io.Reader) error {
 	lbra.state = &lightsailBucketResourceAccessState{}
 	if err := json.NewDecoder(av).Decode(lbra.state); err != nil {
@@ -48,10 +72,12 @@ func (lbra *LightsailBucketResourceAccess) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LightsailBucketResourceAccess] has state.
 func (lbra *LightsailBucketResourceAccess) State() (*lightsailBucketResourceAccessState, bool) {
 	return lbra.state, lbra.state != nil
 }
 
+// StateMust returns the state for [LightsailBucketResourceAccess]. Panics if the state is nil.
 func (lbra *LightsailBucketResourceAccess) StateMust() *lightsailBucketResourceAccessState {
 	if lbra.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lbra.Type(), lbra.LocalName()))
@@ -59,10 +85,7 @@ func (lbra *LightsailBucketResourceAccess) StateMust() *lightsailBucketResourceA
 	return lbra.state
 }
 
-func (lbra *LightsailBucketResourceAccess) DependOn() terra.Reference {
-	return terra.ReferenceResource(lbra)
-}
-
+// LightsailBucketResourceAccessArgs contains the configurations for aws_lightsail_bucket_resource_access.
 type LightsailBucketResourceAccessArgs struct {
 	// BucketName: string, required
 	BucketName terra.StringValue `hcl:"bucket_name,attr" validate:"required"`
@@ -70,23 +93,24 @@ type LightsailBucketResourceAccessArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// ResourceName: string, required
 	ResourceName terra.StringValue `hcl:"resource_name,attr" validate:"required"`
-	// DependsOn contains resources that LightsailBucketResourceAccess depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lightsailBucketResourceAccessAttributes struct {
 	ref terra.Reference
 }
 
+// BucketName returns a reference to field bucket_name of aws_lightsail_bucket_resource_access.
 func (lbra lightsailBucketResourceAccessAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(lbra.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(lbra.ref.Append("bucket_name"))
 }
 
+// Id returns a reference to field id of aws_lightsail_bucket_resource_access.
 func (lbra lightsailBucketResourceAccessAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lbra.ref.Append("id"))
+	return terra.ReferenceAsString(lbra.ref.Append("id"))
 }
 
+// ResourceName returns a reference to field resource_name of aws_lightsail_bucket_resource_access.
 func (lbra lightsailBucketResourceAccessAttributes) ResourceName() terra.StringValue {
-	return terra.ReferenceString(lbra.ref.Append("resource_name"))
+	return terra.ReferenceAsString(lbra.ref.Append("resource_name"))
 }
 
 type lightsailBucketResourceAccessState struct {

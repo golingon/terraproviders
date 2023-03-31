@@ -155,7 +155,7 @@ func (ec EncryptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec EncryptionConfigurationAttributes) KmsKey() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("kms_key"))
+	return terra.ReferenceAsString(ec.ref.Append("kms_key"))
 }
 
 type HealthCheckConfigurationAttributes struct {
@@ -175,27 +175,27 @@ func (hcc HealthCheckConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hcc HealthCheckConfigurationAttributes) HealthyThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(hcc.ref.Append("healthy_threshold"))
+	return terra.ReferenceAsNumber(hcc.ref.Append("healthy_threshold"))
 }
 
 func (hcc HealthCheckConfigurationAttributes) Interval() terra.NumberValue {
-	return terra.ReferenceNumber(hcc.ref.Append("interval"))
+	return terra.ReferenceAsNumber(hcc.ref.Append("interval"))
 }
 
 func (hcc HealthCheckConfigurationAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(hcc.ref.Append("path"))
+	return terra.ReferenceAsString(hcc.ref.Append("path"))
 }
 
 func (hcc HealthCheckConfigurationAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(hcc.ref.Append("protocol"))
+	return terra.ReferenceAsString(hcc.ref.Append("protocol"))
 }
 
 func (hcc HealthCheckConfigurationAttributes) Timeout() terra.NumberValue {
-	return terra.ReferenceNumber(hcc.ref.Append("timeout"))
+	return terra.ReferenceAsNumber(hcc.ref.Append("timeout"))
 }
 
 func (hcc HealthCheckConfigurationAttributes) UnhealthyThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(hcc.ref.Append("unhealthy_threshold"))
+	return terra.ReferenceAsNumber(hcc.ref.Append("unhealthy_threshold"))
 }
 
 type InstanceConfigurationAttributes struct {
@@ -215,15 +215,15 @@ func (ic InstanceConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ic InstanceConfigurationAttributes) Cpu() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("cpu"))
+	return terra.ReferenceAsString(ic.ref.Append("cpu"))
 }
 
 func (ic InstanceConfigurationAttributes) InstanceRoleArn() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("instance_role_arn"))
+	return terra.ReferenceAsString(ic.ref.Append("instance_role_arn"))
 }
 
 func (ic InstanceConfigurationAttributes) Memory() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("memory"))
+	return terra.ReferenceAsString(ic.ref.Append("memory"))
 }
 
 type NetworkConfigurationAttributes struct {
@@ -243,11 +243,11 @@ func (nc NetworkConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nc NetworkConfigurationAttributes) EgressConfiguration() terra.ListValue[EgressConfigurationAttributes] {
-	return terra.ReferenceList[EgressConfigurationAttributes](nc.ref.Append("egress_configuration"))
+	return terra.ReferenceAsList[EgressConfigurationAttributes](nc.ref.Append("egress_configuration"))
 }
 
 func (nc NetworkConfigurationAttributes) IngressConfiguration() terra.ListValue[IngressConfigurationAttributes] {
-	return terra.ReferenceList[IngressConfigurationAttributes](nc.ref.Append("ingress_configuration"))
+	return terra.ReferenceAsList[IngressConfigurationAttributes](nc.ref.Append("ingress_configuration"))
 }
 
 type EgressConfigurationAttributes struct {
@@ -267,11 +267,11 @@ func (ec EgressConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec EgressConfigurationAttributes) EgressType() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("egress_type"))
+	return terra.ReferenceAsString(ec.ref.Append("egress_type"))
 }
 
 func (ec EgressConfigurationAttributes) VpcConnectorArn() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("vpc_connector_arn"))
+	return terra.ReferenceAsString(ec.ref.Append("vpc_connector_arn"))
 }
 
 type IngressConfigurationAttributes struct {
@@ -291,7 +291,7 @@ func (ic IngressConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ic IngressConfigurationAttributes) IsPubliclyAccessible() terra.BoolValue {
-	return terra.ReferenceBool(ic.ref.Append("is_publicly_accessible"))
+	return terra.ReferenceAsBool(ic.ref.Append("is_publicly_accessible"))
 }
 
 type ObservabilityConfigurationAttributes struct {
@@ -311,11 +311,11 @@ func (oc ObservabilityConfigurationAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (oc ObservabilityConfigurationAttributes) ObservabilityConfigurationArn() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("observability_configuration_arn"))
+	return terra.ReferenceAsString(oc.ref.Append("observability_configuration_arn"))
 }
 
 func (oc ObservabilityConfigurationAttributes) ObservabilityEnabled() terra.BoolValue {
-	return terra.ReferenceBool(oc.ref.Append("observability_enabled"))
+	return terra.ReferenceAsBool(oc.ref.Append("observability_enabled"))
 }
 
 type SourceConfigurationAttributes struct {
@@ -335,19 +335,19 @@ func (sc SourceConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc SourceConfigurationAttributes) AutoDeploymentsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sc.ref.Append("auto_deployments_enabled"))
+	return terra.ReferenceAsBool(sc.ref.Append("auto_deployments_enabled"))
 }
 
 func (sc SourceConfigurationAttributes) AuthenticationConfiguration() terra.ListValue[AuthenticationConfigurationAttributes] {
-	return terra.ReferenceList[AuthenticationConfigurationAttributes](sc.ref.Append("authentication_configuration"))
+	return terra.ReferenceAsList[AuthenticationConfigurationAttributes](sc.ref.Append("authentication_configuration"))
 }
 
 func (sc SourceConfigurationAttributes) CodeRepository() terra.ListValue[CodeRepositoryAttributes] {
-	return terra.ReferenceList[CodeRepositoryAttributes](sc.ref.Append("code_repository"))
+	return terra.ReferenceAsList[CodeRepositoryAttributes](sc.ref.Append("code_repository"))
 }
 
 func (sc SourceConfigurationAttributes) ImageRepository() terra.ListValue[ImageRepositoryAttributes] {
-	return terra.ReferenceList[ImageRepositoryAttributes](sc.ref.Append("image_repository"))
+	return terra.ReferenceAsList[ImageRepositoryAttributes](sc.ref.Append("image_repository"))
 }
 
 type AuthenticationConfigurationAttributes struct {
@@ -367,11 +367,11 @@ func (ac AuthenticationConfigurationAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (ac AuthenticationConfigurationAttributes) AccessRoleArn() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("access_role_arn"))
+	return terra.ReferenceAsString(ac.ref.Append("access_role_arn"))
 }
 
 func (ac AuthenticationConfigurationAttributes) ConnectionArn() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("connection_arn"))
+	return terra.ReferenceAsString(ac.ref.Append("connection_arn"))
 }
 
 type CodeRepositoryAttributes struct {
@@ -391,15 +391,15 @@ func (cr CodeRepositoryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cr CodeRepositoryAttributes) RepositoryUrl() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("repository_url"))
+	return terra.ReferenceAsString(cr.ref.Append("repository_url"))
 }
 
 func (cr CodeRepositoryAttributes) CodeConfiguration() terra.ListValue[CodeConfigurationAttributes] {
-	return terra.ReferenceList[CodeConfigurationAttributes](cr.ref.Append("code_configuration"))
+	return terra.ReferenceAsList[CodeConfigurationAttributes](cr.ref.Append("code_configuration"))
 }
 
 func (cr CodeRepositoryAttributes) SourceCodeVersion() terra.ListValue[SourceCodeVersionAttributes] {
-	return terra.ReferenceList[SourceCodeVersionAttributes](cr.ref.Append("source_code_version"))
+	return terra.ReferenceAsList[SourceCodeVersionAttributes](cr.ref.Append("source_code_version"))
 }
 
 type CodeConfigurationAttributes struct {
@@ -419,11 +419,11 @@ func (cc CodeConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc CodeConfigurationAttributes) ConfigurationSource() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("configuration_source"))
+	return terra.ReferenceAsString(cc.ref.Append("configuration_source"))
 }
 
 func (cc CodeConfigurationAttributes) CodeConfigurationValues() terra.ListValue[CodeConfigurationValuesAttributes] {
-	return terra.ReferenceList[CodeConfigurationValuesAttributes](cc.ref.Append("code_configuration_values"))
+	return terra.ReferenceAsList[CodeConfigurationValuesAttributes](cc.ref.Append("code_configuration_values"))
 }
 
 type CodeConfigurationValuesAttributes struct {
@@ -443,27 +443,27 @@ func (ccv CodeConfigurationValuesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ccv CodeConfigurationValuesAttributes) BuildCommand() terra.StringValue {
-	return terra.ReferenceString(ccv.ref.Append("build_command"))
+	return terra.ReferenceAsString(ccv.ref.Append("build_command"))
 }
 
 func (ccv CodeConfigurationValuesAttributes) Port() terra.StringValue {
-	return terra.ReferenceString(ccv.ref.Append("port"))
+	return terra.ReferenceAsString(ccv.ref.Append("port"))
 }
 
 func (ccv CodeConfigurationValuesAttributes) Runtime() terra.StringValue {
-	return terra.ReferenceString(ccv.ref.Append("runtime"))
+	return terra.ReferenceAsString(ccv.ref.Append("runtime"))
 }
 
 func (ccv CodeConfigurationValuesAttributes) RuntimeEnvironmentSecrets() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ccv.ref.Append("runtime_environment_secrets"))
+	return terra.ReferenceAsMap[terra.StringValue](ccv.ref.Append("runtime_environment_secrets"))
 }
 
 func (ccv CodeConfigurationValuesAttributes) RuntimeEnvironmentVariables() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ccv.ref.Append("runtime_environment_variables"))
+	return terra.ReferenceAsMap[terra.StringValue](ccv.ref.Append("runtime_environment_variables"))
 }
 
 func (ccv CodeConfigurationValuesAttributes) StartCommand() terra.StringValue {
-	return terra.ReferenceString(ccv.ref.Append("start_command"))
+	return terra.ReferenceAsString(ccv.ref.Append("start_command"))
 }
 
 type SourceCodeVersionAttributes struct {
@@ -483,11 +483,11 @@ func (scv SourceCodeVersionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (scv SourceCodeVersionAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(scv.ref.Append("type"))
+	return terra.ReferenceAsString(scv.ref.Append("type"))
 }
 
 func (scv SourceCodeVersionAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(scv.ref.Append("value"))
+	return terra.ReferenceAsString(scv.ref.Append("value"))
 }
 
 type ImageRepositoryAttributes struct {
@@ -507,15 +507,15 @@ func (ir ImageRepositoryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ir ImageRepositoryAttributes) ImageIdentifier() terra.StringValue {
-	return terra.ReferenceString(ir.ref.Append("image_identifier"))
+	return terra.ReferenceAsString(ir.ref.Append("image_identifier"))
 }
 
 func (ir ImageRepositoryAttributes) ImageRepositoryType() terra.StringValue {
-	return terra.ReferenceString(ir.ref.Append("image_repository_type"))
+	return terra.ReferenceAsString(ir.ref.Append("image_repository_type"))
 }
 
 func (ir ImageRepositoryAttributes) ImageConfiguration() terra.ListValue[ImageConfigurationAttributes] {
-	return terra.ReferenceList[ImageConfigurationAttributes](ir.ref.Append("image_configuration"))
+	return terra.ReferenceAsList[ImageConfigurationAttributes](ir.ref.Append("image_configuration"))
 }
 
 type ImageConfigurationAttributes struct {
@@ -535,19 +535,19 @@ func (ic ImageConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ic ImageConfigurationAttributes) Port() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("port"))
+	return terra.ReferenceAsString(ic.ref.Append("port"))
 }
 
 func (ic ImageConfigurationAttributes) RuntimeEnvironmentSecrets() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ic.ref.Append("runtime_environment_secrets"))
+	return terra.ReferenceAsMap[terra.StringValue](ic.ref.Append("runtime_environment_secrets"))
 }
 
 func (ic ImageConfigurationAttributes) RuntimeEnvironmentVariables() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ic.ref.Append("runtime_environment_variables"))
+	return terra.ReferenceAsMap[terra.StringValue](ic.ref.Append("runtime_environment_variables"))
 }
 
 func (ic ImageConfigurationAttributes) StartCommand() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("start_command"))
+	return terra.ReferenceAsString(ic.ref.Append("start_command"))
 }
 
 type EncryptionConfigurationState struct {

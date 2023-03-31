@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataCloudcontrolapiResource creates a new instance of [DataCloudcontrolapiResource].
 func NewDataCloudcontrolapiResource(name string, args DataCloudcontrolapiResourceArgs) *DataCloudcontrolapiResource {
 	return &DataCloudcontrolapiResource{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataCloudcontrolapiResource(name string, args DataCloudcontrolapiResourc
 
 var _ terra.DataResource = (*DataCloudcontrolapiResource)(nil)
 
+// DataCloudcontrolapiResource represents the Terraform data resource aws_cloudcontrolapi_resource.
 type DataCloudcontrolapiResource struct {
 	Name string
 	Args DataCloudcontrolapiResourceArgs
 }
 
+// DataSource returns the Terraform object type for [DataCloudcontrolapiResource].
 func (cr *DataCloudcontrolapiResource) DataSource() string {
 	return "aws_cloudcontrolapi_resource"
 }
 
+// LocalName returns the local name for [DataCloudcontrolapiResource].
 func (cr *DataCloudcontrolapiResource) LocalName() string {
 	return cr.Name
 }
 
+// Configuration returns the configuration (args) for [DataCloudcontrolapiResource].
 func (cr *DataCloudcontrolapiResource) Configuration() interface{} {
 	return cr.Args
 }
 
+// Attributes returns the attributes for [DataCloudcontrolapiResource].
 func (cr *DataCloudcontrolapiResource) Attributes() dataCloudcontrolapiResourceAttributes {
 	return dataCloudcontrolapiResourceAttributes{ref: terra.ReferenceDataResource(cr)}
 }
 
+// DataCloudcontrolapiResourceArgs contains the configurations for aws_cloudcontrolapi_resource.
 type DataCloudcontrolapiResourceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -50,26 +57,32 @@ type dataCloudcontrolapiResourceAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_cloudcontrolapi_resource.
 func (cr dataCloudcontrolapiResourceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("id"))
+	return terra.ReferenceAsString(cr.ref.Append("id"))
 }
 
+// Identifier returns a reference to field identifier of aws_cloudcontrolapi_resource.
 func (cr dataCloudcontrolapiResourceAttributes) Identifier() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("identifier"))
+	return terra.ReferenceAsString(cr.ref.Append("identifier"))
 }
 
+// Properties returns a reference to field properties of aws_cloudcontrolapi_resource.
 func (cr dataCloudcontrolapiResourceAttributes) Properties() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("properties"))
+	return terra.ReferenceAsString(cr.ref.Append("properties"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_cloudcontrolapi_resource.
 func (cr dataCloudcontrolapiResourceAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("role_arn"))
+	return terra.ReferenceAsString(cr.ref.Append("role_arn"))
 }
 
+// TypeName returns a reference to field type_name of aws_cloudcontrolapi_resource.
 func (cr dataCloudcontrolapiResourceAttributes) TypeName() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("type_name"))
+	return terra.ReferenceAsString(cr.ref.Append("type_name"))
 }
 
+// TypeVersionId returns a reference to field type_version_id of aws_cloudcontrolapi_resource.
 func (cr dataCloudcontrolapiResourceAttributes) TypeVersionId() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("type_version_id"))
+	return terra.ReferenceAsString(cr.ref.Append("type_version_id"))
 }

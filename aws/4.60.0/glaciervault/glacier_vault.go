@@ -31,11 +31,11 @@ func (n NotificationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (n NotificationAttributes) Events() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](n.ref.Append("events"))
+	return terra.ReferenceAsSet[terra.StringValue](n.ref.Append("events"))
 }
 
 func (n NotificationAttributes) SnsTopic() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("sns_topic"))
+	return terra.ReferenceAsString(n.ref.Append("sns_topic"))
 }
 
 type NotificationState struct {

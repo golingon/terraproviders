@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataRedshiftClusterCredentials creates a new instance of [DataRedshiftClusterCredentials].
 func NewDataRedshiftClusterCredentials(name string, args DataRedshiftClusterCredentialsArgs) *DataRedshiftClusterCredentials {
 	return &DataRedshiftClusterCredentials{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataRedshiftClusterCredentials(name string, args DataRedshiftClusterCred
 
 var _ terra.DataResource = (*DataRedshiftClusterCredentials)(nil)
 
+// DataRedshiftClusterCredentials represents the Terraform data resource aws_redshift_cluster_credentials.
 type DataRedshiftClusterCredentials struct {
 	Name string
 	Args DataRedshiftClusterCredentialsArgs
 }
 
+// DataSource returns the Terraform object type for [DataRedshiftClusterCredentials].
 func (rcc *DataRedshiftClusterCredentials) DataSource() string {
 	return "aws_redshift_cluster_credentials"
 }
 
+// LocalName returns the local name for [DataRedshiftClusterCredentials].
 func (rcc *DataRedshiftClusterCredentials) LocalName() string {
 	return rcc.Name
 }
 
+// Configuration returns the configuration (args) for [DataRedshiftClusterCredentials].
 func (rcc *DataRedshiftClusterCredentials) Configuration() interface{} {
 	return rcc.Args
 }
 
+// Attributes returns the attributes for [DataRedshiftClusterCredentials].
 func (rcc *DataRedshiftClusterCredentials) Attributes() dataRedshiftClusterCredentialsAttributes {
 	return dataRedshiftClusterCredentialsAttributes{ref: terra.ReferenceDataResource(rcc)}
 }
 
+// DataRedshiftClusterCredentialsArgs contains the configurations for aws_redshift_cluster_credentials.
 type DataRedshiftClusterCredentialsArgs struct {
 	// AutoCreate: bool, optional
 	AutoCreate terra.BoolValue `hcl:"auto_create,attr"`
@@ -54,38 +61,47 @@ type dataRedshiftClusterCredentialsAttributes struct {
 	ref terra.Reference
 }
 
+// AutoCreate returns a reference to field auto_create of aws_redshift_cluster_credentials.
 func (rcc dataRedshiftClusterCredentialsAttributes) AutoCreate() terra.BoolValue {
-	return terra.ReferenceBool(rcc.ref.Append("auto_create"))
+	return terra.ReferenceAsBool(rcc.ref.Append("auto_create"))
 }
 
+// ClusterIdentifier returns a reference to field cluster_identifier of aws_redshift_cluster_credentials.
 func (rcc dataRedshiftClusterCredentialsAttributes) ClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(rcc.ref.Append("cluster_identifier"))
+	return terra.ReferenceAsString(rcc.ref.Append("cluster_identifier"))
 }
 
+// DbGroups returns a reference to field db_groups of aws_redshift_cluster_credentials.
 func (rcc dataRedshiftClusterCredentialsAttributes) DbGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rcc.ref.Append("db_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](rcc.ref.Append("db_groups"))
 }
 
+// DbName returns a reference to field db_name of aws_redshift_cluster_credentials.
 func (rcc dataRedshiftClusterCredentialsAttributes) DbName() terra.StringValue {
-	return terra.ReferenceString(rcc.ref.Append("db_name"))
+	return terra.ReferenceAsString(rcc.ref.Append("db_name"))
 }
 
+// DbPassword returns a reference to field db_password of aws_redshift_cluster_credentials.
 func (rcc dataRedshiftClusterCredentialsAttributes) DbPassword() terra.StringValue {
-	return terra.ReferenceString(rcc.ref.Append("db_password"))
+	return terra.ReferenceAsString(rcc.ref.Append("db_password"))
 }
 
+// DbUser returns a reference to field db_user of aws_redshift_cluster_credentials.
 func (rcc dataRedshiftClusterCredentialsAttributes) DbUser() terra.StringValue {
-	return terra.ReferenceString(rcc.ref.Append("db_user"))
+	return terra.ReferenceAsString(rcc.ref.Append("db_user"))
 }
 
+// DurationSeconds returns a reference to field duration_seconds of aws_redshift_cluster_credentials.
 func (rcc dataRedshiftClusterCredentialsAttributes) DurationSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(rcc.ref.Append("duration_seconds"))
+	return terra.ReferenceAsNumber(rcc.ref.Append("duration_seconds"))
 }
 
+// Expiration returns a reference to field expiration of aws_redshift_cluster_credentials.
 func (rcc dataRedshiftClusterCredentialsAttributes) Expiration() terra.StringValue {
-	return terra.ReferenceString(rcc.ref.Append("expiration"))
+	return terra.ReferenceAsString(rcc.ref.Append("expiration"))
 }
 
+// Id returns a reference to field id of aws_redshift_cluster_credentials.
 func (rcc dataRedshiftClusterCredentialsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rcc.ref.Append("id"))
+	return terra.ReferenceAsString(rcc.ref.Append("id"))
 }

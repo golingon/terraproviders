@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewIamUserGroupMembership creates a new instance of [IamUserGroupMembership].
 func NewIamUserGroupMembership(name string, args IamUserGroupMembershipArgs) *IamUserGroupMembership {
 	return &IamUserGroupMembership{
 		Args: args,
@@ -18,28 +19,51 @@ func NewIamUserGroupMembership(name string, args IamUserGroupMembershipArgs) *Ia
 
 var _ terra.Resource = (*IamUserGroupMembership)(nil)
 
+// IamUserGroupMembership represents the Terraform resource aws_iam_user_group_membership.
 type IamUserGroupMembership struct {
-	Name  string
-	Args  IamUserGroupMembershipArgs
-	state *iamUserGroupMembershipState
+	Name      string
+	Args      IamUserGroupMembershipArgs
+	state     *iamUserGroupMembershipState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IamUserGroupMembership].
 func (iugm *IamUserGroupMembership) Type() string {
 	return "aws_iam_user_group_membership"
 }
 
+// LocalName returns the local name for [IamUserGroupMembership].
 func (iugm *IamUserGroupMembership) LocalName() string {
 	return iugm.Name
 }
 
+// Configuration returns the configuration (args) for [IamUserGroupMembership].
 func (iugm *IamUserGroupMembership) Configuration() interface{} {
 	return iugm.Args
 }
 
+// DependOn is used for other resources to depend on [IamUserGroupMembership].
+func (iugm *IamUserGroupMembership) DependOn() terra.Reference {
+	return terra.ReferenceResource(iugm)
+}
+
+// Dependencies returns the list of resources [IamUserGroupMembership] depends_on.
+func (iugm *IamUserGroupMembership) Dependencies() terra.Dependencies {
+	return iugm.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IamUserGroupMembership].
+func (iugm *IamUserGroupMembership) LifecycleManagement() *terra.Lifecycle {
+	return iugm.Lifecycle
+}
+
+// Attributes returns the attributes for [IamUserGroupMembership].
 func (iugm *IamUserGroupMembership) Attributes() iamUserGroupMembershipAttributes {
 	return iamUserGroupMembershipAttributes{ref: terra.ReferenceResource(iugm)}
 }
 
+// ImportState imports the given attribute values into [IamUserGroupMembership]'s state.
 func (iugm *IamUserGroupMembership) ImportState(av io.Reader) error {
 	iugm.state = &iamUserGroupMembershipState{}
 	if err := json.NewDecoder(av).Decode(iugm.state); err != nil {
@@ -48,10 +72,12 @@ func (iugm *IamUserGroupMembership) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IamUserGroupMembership] has state.
 func (iugm *IamUserGroupMembership) State() (*iamUserGroupMembershipState, bool) {
 	return iugm.state, iugm.state != nil
 }
 
+// StateMust returns the state for [IamUserGroupMembership]. Panics if the state is nil.
 func (iugm *IamUserGroupMembership) StateMust() *iamUserGroupMembershipState {
 	if iugm.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", iugm.Type(), iugm.LocalName()))
@@ -59,10 +85,7 @@ func (iugm *IamUserGroupMembership) StateMust() *iamUserGroupMembershipState {
 	return iugm.state
 }
 
-func (iugm *IamUserGroupMembership) DependOn() terra.Reference {
-	return terra.ReferenceResource(iugm)
-}
-
+// IamUserGroupMembershipArgs contains the configurations for aws_iam_user_group_membership.
 type IamUserGroupMembershipArgs struct {
 	// Groups: set of string, required
 	Groups terra.SetValue[terra.StringValue] `hcl:"groups,attr" validate:"required"`
@@ -70,23 +93,24 @@ type IamUserGroupMembershipArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// User: string, required
 	User terra.StringValue `hcl:"user,attr" validate:"required"`
-	// DependsOn contains resources that IamUserGroupMembership depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iamUserGroupMembershipAttributes struct {
 	ref terra.Reference
 }
 
+// Groups returns a reference to field groups of aws_iam_user_group_membership.
 func (iugm iamUserGroupMembershipAttributes) Groups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](iugm.ref.Append("groups"))
+	return terra.ReferenceAsSet[terra.StringValue](iugm.ref.Append("groups"))
 }
 
+// Id returns a reference to field id of aws_iam_user_group_membership.
 func (iugm iamUserGroupMembershipAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(iugm.ref.Append("id"))
+	return terra.ReferenceAsString(iugm.ref.Append("id"))
 }
 
+// User returns a reference to field user of aws_iam_user_group_membership.
 func (iugm iamUserGroupMembershipAttributes) User() terra.StringValue {
-	return terra.ReferenceString(iugm.ref.Append("user"))
+	return terra.ReferenceAsString(iugm.ref.Append("user"))
 }
 
 type iamUserGroupMembershipState struct {

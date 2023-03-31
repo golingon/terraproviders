@@ -38,11 +38,11 @@ func (sp S3PathAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sp S3PathAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("bucket"))
+	return terra.ReferenceAsString(sp.ref.Append("bucket"))
 }
 
 func (sp S3PathAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("key"))
+	return terra.ReferenceAsString(sp.ref.Append("key"))
 }
 
 type TimeoutsAttributes struct {
@@ -62,11 +62,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type S3PathState struct {

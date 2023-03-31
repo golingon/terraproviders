@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRoute53HealthCheck creates a new instance of [Route53HealthCheck].
 func NewRoute53HealthCheck(name string, args Route53HealthCheckArgs) *Route53HealthCheck {
 	return &Route53HealthCheck{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRoute53HealthCheck(name string, args Route53HealthCheckArgs) *Route53Hea
 
 var _ terra.Resource = (*Route53HealthCheck)(nil)
 
+// Route53HealthCheck represents the Terraform resource aws_route53_health_check.
 type Route53HealthCheck struct {
-	Name  string
-	Args  Route53HealthCheckArgs
-	state *route53HealthCheckState
+	Name      string
+	Args      Route53HealthCheckArgs
+	state     *route53HealthCheckState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Route53HealthCheck].
 func (rhc *Route53HealthCheck) Type() string {
 	return "aws_route53_health_check"
 }
 
+// LocalName returns the local name for [Route53HealthCheck].
 func (rhc *Route53HealthCheck) LocalName() string {
 	return rhc.Name
 }
 
+// Configuration returns the configuration (args) for [Route53HealthCheck].
 func (rhc *Route53HealthCheck) Configuration() interface{} {
 	return rhc.Args
 }
 
+// DependOn is used for other resources to depend on [Route53HealthCheck].
+func (rhc *Route53HealthCheck) DependOn() terra.Reference {
+	return terra.ReferenceResource(rhc)
+}
+
+// Dependencies returns the list of resources [Route53HealthCheck] depends_on.
+func (rhc *Route53HealthCheck) Dependencies() terra.Dependencies {
+	return rhc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Route53HealthCheck].
+func (rhc *Route53HealthCheck) LifecycleManagement() *terra.Lifecycle {
+	return rhc.Lifecycle
+}
+
+// Attributes returns the attributes for [Route53HealthCheck].
 func (rhc *Route53HealthCheck) Attributes() route53HealthCheckAttributes {
 	return route53HealthCheckAttributes{ref: terra.ReferenceResource(rhc)}
 }
 
+// ImportState imports the given attribute values into [Route53HealthCheck]'s state.
 func (rhc *Route53HealthCheck) ImportState(av io.Reader) error {
 	rhc.state = &route53HealthCheckState{}
 	if err := json.NewDecoder(av).Decode(rhc.state); err != nil {
@@ -48,10 +72,12 @@ func (rhc *Route53HealthCheck) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Route53HealthCheck] has state.
 func (rhc *Route53HealthCheck) State() (*route53HealthCheckState, bool) {
 	return rhc.state, rhc.state != nil
 }
 
+// StateMust returns the state for [Route53HealthCheck]. Panics if the state is nil.
 func (rhc *Route53HealthCheck) StateMust() *route53HealthCheckState {
 	if rhc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rhc.Type(), rhc.LocalName()))
@@ -59,10 +85,7 @@ func (rhc *Route53HealthCheck) StateMust() *route53HealthCheckState {
 	return rhc.state
 }
 
-func (rhc *Route53HealthCheck) DependOn() terra.Reference {
-	return terra.ReferenceResource(rhc)
-}
-
+// Route53HealthCheckArgs contains the configurations for aws_route53_health_check.
 type Route53HealthCheckArgs struct {
 	// ChildHealthThreshold: number, optional
 	ChildHealthThreshold terra.NumberValue `hcl:"child_health_threshold,attr"`
@@ -110,107 +133,129 @@ type Route53HealthCheckArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Type: string, required
 	Type terra.StringValue `hcl:"type,attr" validate:"required"`
-	// DependsOn contains resources that Route53HealthCheck depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type route53HealthCheckAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rhc.ref.Append("arn"))
+	return terra.ReferenceAsString(rhc.ref.Append("arn"))
 }
 
+// ChildHealthThreshold returns a reference to field child_health_threshold of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) ChildHealthThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(rhc.ref.Append("child_health_threshold"))
+	return terra.ReferenceAsNumber(rhc.ref.Append("child_health_threshold"))
 }
 
+// ChildHealthchecks returns a reference to field child_healthchecks of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) ChildHealthchecks() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rhc.ref.Append("child_healthchecks"))
+	return terra.ReferenceAsSet[terra.StringValue](rhc.ref.Append("child_healthchecks"))
 }
 
+// CloudwatchAlarmName returns a reference to field cloudwatch_alarm_name of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) CloudwatchAlarmName() terra.StringValue {
-	return terra.ReferenceString(rhc.ref.Append("cloudwatch_alarm_name"))
+	return terra.ReferenceAsString(rhc.ref.Append("cloudwatch_alarm_name"))
 }
 
+// CloudwatchAlarmRegion returns a reference to field cloudwatch_alarm_region of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) CloudwatchAlarmRegion() terra.StringValue {
-	return terra.ReferenceString(rhc.ref.Append("cloudwatch_alarm_region"))
+	return terra.ReferenceAsString(rhc.ref.Append("cloudwatch_alarm_region"))
 }
 
+// Disabled returns a reference to field disabled of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) Disabled() terra.BoolValue {
-	return terra.ReferenceBool(rhc.ref.Append("disabled"))
+	return terra.ReferenceAsBool(rhc.ref.Append("disabled"))
 }
 
+// EnableSni returns a reference to field enable_sni of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) EnableSni() terra.BoolValue {
-	return terra.ReferenceBool(rhc.ref.Append("enable_sni"))
+	return terra.ReferenceAsBool(rhc.ref.Append("enable_sni"))
 }
 
+// FailureThreshold returns a reference to field failure_threshold of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) FailureThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(rhc.ref.Append("failure_threshold"))
+	return terra.ReferenceAsNumber(rhc.ref.Append("failure_threshold"))
 }
 
+// Fqdn returns a reference to field fqdn of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) Fqdn() terra.StringValue {
-	return terra.ReferenceString(rhc.ref.Append("fqdn"))
+	return terra.ReferenceAsString(rhc.ref.Append("fqdn"))
 }
 
+// Id returns a reference to field id of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rhc.ref.Append("id"))
+	return terra.ReferenceAsString(rhc.ref.Append("id"))
 }
 
+// InsufficientDataHealthStatus returns a reference to field insufficient_data_health_status of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) InsufficientDataHealthStatus() terra.StringValue {
-	return terra.ReferenceString(rhc.ref.Append("insufficient_data_health_status"))
+	return terra.ReferenceAsString(rhc.ref.Append("insufficient_data_health_status"))
 }
 
+// InvertHealthcheck returns a reference to field invert_healthcheck of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) InvertHealthcheck() terra.BoolValue {
-	return terra.ReferenceBool(rhc.ref.Append("invert_healthcheck"))
+	return terra.ReferenceAsBool(rhc.ref.Append("invert_healthcheck"))
 }
 
+// IpAddress returns a reference to field ip_address of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(rhc.ref.Append("ip_address"))
+	return terra.ReferenceAsString(rhc.ref.Append("ip_address"))
 }
 
+// MeasureLatency returns a reference to field measure_latency of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) MeasureLatency() terra.BoolValue {
-	return terra.ReferenceBool(rhc.ref.Append("measure_latency"))
+	return terra.ReferenceAsBool(rhc.ref.Append("measure_latency"))
 }
 
+// Port returns a reference to field port of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(rhc.ref.Append("port"))
+	return terra.ReferenceAsNumber(rhc.ref.Append("port"))
 }
 
+// ReferenceName returns a reference to field reference_name of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) ReferenceName() terra.StringValue {
-	return terra.ReferenceString(rhc.ref.Append("reference_name"))
+	return terra.ReferenceAsString(rhc.ref.Append("reference_name"))
 }
 
+// Regions returns a reference to field regions of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) Regions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rhc.ref.Append("regions"))
+	return terra.ReferenceAsSet[terra.StringValue](rhc.ref.Append("regions"))
 }
 
+// RequestInterval returns a reference to field request_interval of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) RequestInterval() terra.NumberValue {
-	return terra.ReferenceNumber(rhc.ref.Append("request_interval"))
+	return terra.ReferenceAsNumber(rhc.ref.Append("request_interval"))
 }
 
+// ResourcePath returns a reference to field resource_path of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) ResourcePath() terra.StringValue {
-	return terra.ReferenceString(rhc.ref.Append("resource_path"))
+	return terra.ReferenceAsString(rhc.ref.Append("resource_path"))
 }
 
+// RoutingControlArn returns a reference to field routing_control_arn of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) RoutingControlArn() terra.StringValue {
-	return terra.ReferenceString(rhc.ref.Append("routing_control_arn"))
+	return terra.ReferenceAsString(rhc.ref.Append("routing_control_arn"))
 }
 
+// SearchString returns a reference to field search_string of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) SearchString() terra.StringValue {
-	return terra.ReferenceString(rhc.ref.Append("search_string"))
+	return terra.ReferenceAsString(rhc.ref.Append("search_string"))
 }
 
+// Tags returns a reference to field tags of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rhc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rhc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rhc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](rhc.ref.Append("tags_all"))
 }
 
+// Type returns a reference to field type of aws_route53_health_check.
 func (rhc route53HealthCheckAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(rhc.ref.Append("type"))
+	return terra.ReferenceAsString(rhc.ref.Append("type"))
 }
 
 type route53HealthCheckState struct {

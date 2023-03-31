@@ -66,15 +66,15 @@ func (le ListenerEndpointAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (le ListenerEndpointAttributes) Address() terra.StringValue {
-	return terra.ReferenceString(le.ref.Append("address"))
+	return terra.ReferenceAsString(le.ref.Append("address"))
 }
 
 func (le ListenerEndpointAttributes) HostedZoneId() terra.StringValue {
-	return terra.ReferenceString(le.ref.Append("hosted_zone_id"))
+	return terra.ReferenceAsString(le.ref.Append("hosted_zone_id"))
 }
 
 func (le ListenerEndpointAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(le.ref.Append("port"))
+	return terra.ReferenceAsNumber(le.ref.Append("port"))
 }
 
 type BlueGreenUpdateAttributes struct {
@@ -94,7 +94,7 @@ func (bgu BlueGreenUpdateAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (bgu BlueGreenUpdateAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(bgu.ref.Append("enabled"))
+	return terra.ReferenceAsBool(bgu.ref.Append("enabled"))
 }
 
 type RestoreToPointInTimeAttributes struct {
@@ -114,23 +114,23 @@ func (rtpit RestoreToPointInTimeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rtpit RestoreToPointInTimeAttributes) RestoreTime() terra.StringValue {
-	return terra.ReferenceString(rtpit.ref.Append("restore_time"))
+	return terra.ReferenceAsString(rtpit.ref.Append("restore_time"))
 }
 
 func (rtpit RestoreToPointInTimeAttributes) SourceDbInstanceAutomatedBackupsArn() terra.StringValue {
-	return terra.ReferenceString(rtpit.ref.Append("source_db_instance_automated_backups_arn"))
+	return terra.ReferenceAsString(rtpit.ref.Append("source_db_instance_automated_backups_arn"))
 }
 
 func (rtpit RestoreToPointInTimeAttributes) SourceDbInstanceIdentifier() terra.StringValue {
-	return terra.ReferenceString(rtpit.ref.Append("source_db_instance_identifier"))
+	return terra.ReferenceAsString(rtpit.ref.Append("source_db_instance_identifier"))
 }
 
 func (rtpit RestoreToPointInTimeAttributes) SourceDbiResourceId() terra.StringValue {
-	return terra.ReferenceString(rtpit.ref.Append("source_dbi_resource_id"))
+	return terra.ReferenceAsString(rtpit.ref.Append("source_dbi_resource_id"))
 }
 
 func (rtpit RestoreToPointInTimeAttributes) UseLatestRestorableTime() terra.BoolValue {
-	return terra.ReferenceBool(rtpit.ref.Append("use_latest_restorable_time"))
+	return terra.ReferenceAsBool(rtpit.ref.Append("use_latest_restorable_time"))
 }
 
 type S3ImportAttributes struct {
@@ -150,23 +150,23 @@ func (si S3ImportAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (si S3ImportAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(si.ref.Append("bucket_name"))
 }
 
 func (si S3ImportAttributes) BucketPrefix() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("bucket_prefix"))
+	return terra.ReferenceAsString(si.ref.Append("bucket_prefix"))
 }
 
 func (si S3ImportAttributes) IngestionRole() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("ingestion_role"))
+	return terra.ReferenceAsString(si.ref.Append("ingestion_role"))
 }
 
 func (si S3ImportAttributes) SourceEngine() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("source_engine"))
+	return terra.ReferenceAsString(si.ref.Append("source_engine"))
 }
 
 func (si S3ImportAttributes) SourceEngineVersion() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("source_engine_version"))
+	return terra.ReferenceAsString(si.ref.Append("source_engine_version"))
 }
 
 type TimeoutsAttributes struct {
@@ -186,15 +186,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ListenerEndpointState struct {

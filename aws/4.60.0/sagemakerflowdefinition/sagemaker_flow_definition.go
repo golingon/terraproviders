@@ -81,7 +81,7 @@ func (hlac HumanLoopActivationConfigAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (hlac HumanLoopActivationConfigAttributes) HumanLoopActivationConditionsConfig() terra.ListValue[HumanLoopActivationConditionsConfigAttributes] {
-	return terra.ReferenceList[HumanLoopActivationConditionsConfigAttributes](hlac.ref.Append("human_loop_activation_conditions_config"))
+	return terra.ReferenceAsList[HumanLoopActivationConditionsConfigAttributes](hlac.ref.Append("human_loop_activation_conditions_config"))
 }
 
 type HumanLoopActivationConditionsConfigAttributes struct {
@@ -101,7 +101,7 @@ func (hlacc HumanLoopActivationConditionsConfigAttributes) InternalTokens() hclw
 }
 
 func (hlacc HumanLoopActivationConditionsConfigAttributes) HumanLoopActivationConditions() terra.StringValue {
-	return terra.ReferenceString(hlacc.ref.Append("human_loop_activation_conditions"))
+	return terra.ReferenceAsString(hlacc.ref.Append("human_loop_activation_conditions"))
 }
 
 type HumanLoopConfigAttributes struct {
@@ -121,39 +121,39 @@ func (hlc HumanLoopConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hlc HumanLoopConfigAttributes) HumanTaskUiArn() terra.StringValue {
-	return terra.ReferenceString(hlc.ref.Append("human_task_ui_arn"))
+	return terra.ReferenceAsString(hlc.ref.Append("human_task_ui_arn"))
 }
 
 func (hlc HumanLoopConfigAttributes) TaskAvailabilityLifetimeInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(hlc.ref.Append("task_availability_lifetime_in_seconds"))
+	return terra.ReferenceAsNumber(hlc.ref.Append("task_availability_lifetime_in_seconds"))
 }
 
 func (hlc HumanLoopConfigAttributes) TaskCount() terra.NumberValue {
-	return terra.ReferenceNumber(hlc.ref.Append("task_count"))
+	return terra.ReferenceAsNumber(hlc.ref.Append("task_count"))
 }
 
 func (hlc HumanLoopConfigAttributes) TaskDescription() terra.StringValue {
-	return terra.ReferenceString(hlc.ref.Append("task_description"))
+	return terra.ReferenceAsString(hlc.ref.Append("task_description"))
 }
 
 func (hlc HumanLoopConfigAttributes) TaskKeywords() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](hlc.ref.Append("task_keywords"))
+	return terra.ReferenceAsSet[terra.StringValue](hlc.ref.Append("task_keywords"))
 }
 
 func (hlc HumanLoopConfigAttributes) TaskTimeLimitInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(hlc.ref.Append("task_time_limit_in_seconds"))
+	return terra.ReferenceAsNumber(hlc.ref.Append("task_time_limit_in_seconds"))
 }
 
 func (hlc HumanLoopConfigAttributes) TaskTitle() terra.StringValue {
-	return terra.ReferenceString(hlc.ref.Append("task_title"))
+	return terra.ReferenceAsString(hlc.ref.Append("task_title"))
 }
 
 func (hlc HumanLoopConfigAttributes) WorkteamArn() terra.StringValue {
-	return terra.ReferenceString(hlc.ref.Append("workteam_arn"))
+	return terra.ReferenceAsString(hlc.ref.Append("workteam_arn"))
 }
 
 func (hlc HumanLoopConfigAttributes) PublicWorkforceTaskPrice() terra.ListValue[PublicWorkforceTaskPriceAttributes] {
-	return terra.ReferenceList[PublicWorkforceTaskPriceAttributes](hlc.ref.Append("public_workforce_task_price"))
+	return terra.ReferenceAsList[PublicWorkforceTaskPriceAttributes](hlc.ref.Append("public_workforce_task_price"))
 }
 
 type PublicWorkforceTaskPriceAttributes struct {
@@ -173,7 +173,7 @@ func (pwtp PublicWorkforceTaskPriceAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (pwtp PublicWorkforceTaskPriceAttributes) AmountInUsd() terra.ListValue[AmountInUsdAttributes] {
-	return terra.ReferenceList[AmountInUsdAttributes](pwtp.ref.Append("amount_in_usd"))
+	return terra.ReferenceAsList[AmountInUsdAttributes](pwtp.ref.Append("amount_in_usd"))
 }
 
 type AmountInUsdAttributes struct {
@@ -193,15 +193,15 @@ func (aiu AmountInUsdAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (aiu AmountInUsdAttributes) Cents() terra.NumberValue {
-	return terra.ReferenceNumber(aiu.ref.Append("cents"))
+	return terra.ReferenceAsNumber(aiu.ref.Append("cents"))
 }
 
 func (aiu AmountInUsdAttributes) Dollars() terra.NumberValue {
-	return terra.ReferenceNumber(aiu.ref.Append("dollars"))
+	return terra.ReferenceAsNumber(aiu.ref.Append("dollars"))
 }
 
 func (aiu AmountInUsdAttributes) TenthFractionsOfACent() terra.NumberValue {
-	return terra.ReferenceNumber(aiu.ref.Append("tenth_fractions_of_a_cent"))
+	return terra.ReferenceAsNumber(aiu.ref.Append("tenth_fractions_of_a_cent"))
 }
 
 type HumanLoopRequestSourceAttributes struct {
@@ -221,7 +221,7 @@ func (hlrs HumanLoopRequestSourceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hlrs HumanLoopRequestSourceAttributes) AwsManagedHumanLoopRequestSource() terra.StringValue {
-	return terra.ReferenceString(hlrs.ref.Append("aws_managed_human_loop_request_source"))
+	return terra.ReferenceAsString(hlrs.ref.Append("aws_managed_human_loop_request_source"))
 }
 
 type OutputConfigAttributes struct {
@@ -241,11 +241,11 @@ func (oc OutputConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (oc OutputConfigAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(oc.ref.Append("kms_key_id"))
 }
 
 func (oc OutputConfigAttributes) S3OutputPath() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("s3_output_path"))
+	return terra.ReferenceAsString(oc.ref.Append("s3_output_path"))
 }
 
 type HumanLoopActivationConfigState struct {

@@ -36,23 +36,23 @@ func (r ReplicaAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r ReplicaAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(r.ref.Append("kms_key_id"))
 }
 
 func (r ReplicaAttributes) LastAccessedDate() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("last_accessed_date"))
+	return terra.ReferenceAsString(r.ref.Append("last_accessed_date"))
 }
 
 func (r ReplicaAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("region"))
+	return terra.ReferenceAsString(r.ref.Append("region"))
 }
 
 func (r ReplicaAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("status"))
+	return terra.ReferenceAsString(r.ref.Append("status"))
 }
 
 func (r ReplicaAttributes) StatusMessage() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("status_message"))
+	return terra.ReferenceAsString(r.ref.Append("status_message"))
 }
 
 type RotationRulesAttributes struct {
@@ -72,7 +72,7 @@ func (rr RotationRulesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rr RotationRulesAttributes) AutomaticallyAfterDays() terra.NumberValue {
-	return terra.ReferenceNumber(rr.ref.Append("automatically_after_days"))
+	return terra.ReferenceAsNumber(rr.ref.Append("automatically_after_days"))
 }
 
 type ReplicaState struct {

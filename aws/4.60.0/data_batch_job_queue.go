@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataBatchJobQueue creates a new instance of [DataBatchJobQueue].
 func NewDataBatchJobQueue(name string, args DataBatchJobQueueArgs) *DataBatchJobQueue {
 	return &DataBatchJobQueue{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataBatchJobQueue(name string, args DataBatchJobQueueArgs) *DataBatchJob
 
 var _ terra.DataResource = (*DataBatchJobQueue)(nil)
 
+// DataBatchJobQueue represents the Terraform data resource aws_batch_job_queue.
 type DataBatchJobQueue struct {
 	Name string
 	Args DataBatchJobQueueArgs
 }
 
+// DataSource returns the Terraform object type for [DataBatchJobQueue].
 func (bjq *DataBatchJobQueue) DataSource() string {
 	return "aws_batch_job_queue"
 }
 
+// LocalName returns the local name for [DataBatchJobQueue].
 func (bjq *DataBatchJobQueue) LocalName() string {
 	return bjq.Name
 }
 
+// Configuration returns the configuration (args) for [DataBatchJobQueue].
 func (bjq *DataBatchJobQueue) Configuration() interface{} {
 	return bjq.Args
 }
 
+// Attributes returns the attributes for [DataBatchJobQueue].
 func (bjq *DataBatchJobQueue) Attributes() dataBatchJobQueueAttributes {
 	return dataBatchJobQueueAttributes{ref: terra.ReferenceDataResource(bjq)}
 }
 
+// DataBatchJobQueueArgs contains the configurations for aws_batch_job_queue.
 type DataBatchJobQueueArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,42 +58,51 @@ type dataBatchJobQueueAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_batch_job_queue.
 func (bjq dataBatchJobQueueAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(bjq.ref.Append("arn"))
+	return terra.ReferenceAsString(bjq.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_batch_job_queue.
 func (bjq dataBatchJobQueueAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bjq.ref.Append("id"))
+	return terra.ReferenceAsString(bjq.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_batch_job_queue.
 func (bjq dataBatchJobQueueAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bjq.ref.Append("name"))
+	return terra.ReferenceAsString(bjq.ref.Append("name"))
 }
 
+// Priority returns a reference to field priority of aws_batch_job_queue.
 func (bjq dataBatchJobQueueAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(bjq.ref.Append("priority"))
+	return terra.ReferenceAsNumber(bjq.ref.Append("priority"))
 }
 
+// SchedulingPolicyArn returns a reference to field scheduling_policy_arn of aws_batch_job_queue.
 func (bjq dataBatchJobQueueAttributes) SchedulingPolicyArn() terra.StringValue {
-	return terra.ReferenceString(bjq.ref.Append("scheduling_policy_arn"))
+	return terra.ReferenceAsString(bjq.ref.Append("scheduling_policy_arn"))
 }
 
+// State returns a reference to field state of aws_batch_job_queue.
 func (bjq dataBatchJobQueueAttributes) State() terra.StringValue {
-	return terra.ReferenceString(bjq.ref.Append("state"))
+	return terra.ReferenceAsString(bjq.ref.Append("state"))
 }
 
+// Status returns a reference to field status of aws_batch_job_queue.
 func (bjq dataBatchJobQueueAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(bjq.ref.Append("status"))
+	return terra.ReferenceAsString(bjq.ref.Append("status"))
 }
 
+// StatusReason returns a reference to field status_reason of aws_batch_job_queue.
 func (bjq dataBatchJobQueueAttributes) StatusReason() terra.StringValue {
-	return terra.ReferenceString(bjq.ref.Append("status_reason"))
+	return terra.ReferenceAsString(bjq.ref.Append("status_reason"))
 }
 
+// Tags returns a reference to field tags of aws_batch_job_queue.
 func (bjq dataBatchJobQueueAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bjq.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](bjq.ref.Append("tags"))
 }
 
 func (bjq dataBatchJobQueueAttributes) ComputeEnvironmentOrder() terra.ListValue[databatchjobqueue.ComputeEnvironmentOrderAttributes] {
-	return terra.ReferenceList[databatchjobqueue.ComputeEnvironmentOrderAttributes](bjq.ref.Append("compute_environment_order"))
+	return terra.ReferenceAsList[databatchjobqueue.ComputeEnvironmentOrderAttributes](bjq.ref.Append("compute_environment_order"))
 }

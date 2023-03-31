@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEksFargateProfile creates a new instance of [EksFargateProfile].
 func NewEksFargateProfile(name string, args EksFargateProfileArgs) *EksFargateProfile {
 	return &EksFargateProfile{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEksFargateProfile(name string, args EksFargateProfileArgs) *EksFargatePr
 
 var _ terra.Resource = (*EksFargateProfile)(nil)
 
+// EksFargateProfile represents the Terraform resource aws_eks_fargate_profile.
 type EksFargateProfile struct {
-	Name  string
-	Args  EksFargateProfileArgs
-	state *eksFargateProfileState
+	Name      string
+	Args      EksFargateProfileArgs
+	state     *eksFargateProfileState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EksFargateProfile].
 func (efp *EksFargateProfile) Type() string {
 	return "aws_eks_fargate_profile"
 }
 
+// LocalName returns the local name for [EksFargateProfile].
 func (efp *EksFargateProfile) LocalName() string {
 	return efp.Name
 }
 
+// Configuration returns the configuration (args) for [EksFargateProfile].
 func (efp *EksFargateProfile) Configuration() interface{} {
 	return efp.Args
 }
 
+// DependOn is used for other resources to depend on [EksFargateProfile].
+func (efp *EksFargateProfile) DependOn() terra.Reference {
+	return terra.ReferenceResource(efp)
+}
+
+// Dependencies returns the list of resources [EksFargateProfile] depends_on.
+func (efp *EksFargateProfile) Dependencies() terra.Dependencies {
+	return efp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EksFargateProfile].
+func (efp *EksFargateProfile) LifecycleManagement() *terra.Lifecycle {
+	return efp.Lifecycle
+}
+
+// Attributes returns the attributes for [EksFargateProfile].
 func (efp *EksFargateProfile) Attributes() eksFargateProfileAttributes {
 	return eksFargateProfileAttributes{ref: terra.ReferenceResource(efp)}
 }
 
+// ImportState imports the given attribute values into [EksFargateProfile]'s state.
 func (efp *EksFargateProfile) ImportState(av io.Reader) error {
 	efp.state = &eksFargateProfileState{}
 	if err := json.NewDecoder(av).Decode(efp.state); err != nil {
@@ -49,10 +73,12 @@ func (efp *EksFargateProfile) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EksFargateProfile] has state.
 func (efp *EksFargateProfile) State() (*eksFargateProfileState, bool) {
 	return efp.state, efp.state != nil
 }
 
+// StateMust returns the state for [EksFargateProfile]. Panics if the state is nil.
 func (efp *EksFargateProfile) StateMust() *eksFargateProfileState {
 	if efp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", efp.Type(), efp.LocalName()))
@@ -60,10 +86,7 @@ func (efp *EksFargateProfile) StateMust() *eksFargateProfileState {
 	return efp.state
 }
 
-func (efp *EksFargateProfile) DependOn() terra.Reference {
-	return terra.ReferenceResource(efp)
-}
-
+// EksFargateProfileArgs contains the configurations for aws_eks_fargate_profile.
 type EksFargateProfileArgs struct {
 	// ClusterName: string, required
 	ClusterName terra.StringValue `hcl:"cluster_name,attr" validate:"required"`
@@ -83,55 +106,62 @@ type EksFargateProfileArgs struct {
 	Selector []eksfargateprofile.Selector `hcl:"selector,block" validate:"min=1"`
 	// Timeouts: optional
 	Timeouts *eksfargateprofile.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that EksFargateProfile depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type eksFargateProfileAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_eks_fargate_profile.
 func (efp eksFargateProfileAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(efp.ref.Append("arn"))
+	return terra.ReferenceAsString(efp.ref.Append("arn"))
 }
 
+// ClusterName returns a reference to field cluster_name of aws_eks_fargate_profile.
 func (efp eksFargateProfileAttributes) ClusterName() terra.StringValue {
-	return terra.ReferenceString(efp.ref.Append("cluster_name"))
+	return terra.ReferenceAsString(efp.ref.Append("cluster_name"))
 }
 
+// FargateProfileName returns a reference to field fargate_profile_name of aws_eks_fargate_profile.
 func (efp eksFargateProfileAttributes) FargateProfileName() terra.StringValue {
-	return terra.ReferenceString(efp.ref.Append("fargate_profile_name"))
+	return terra.ReferenceAsString(efp.ref.Append("fargate_profile_name"))
 }
 
+// Id returns a reference to field id of aws_eks_fargate_profile.
 func (efp eksFargateProfileAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(efp.ref.Append("id"))
+	return terra.ReferenceAsString(efp.ref.Append("id"))
 }
 
+// PodExecutionRoleArn returns a reference to field pod_execution_role_arn of aws_eks_fargate_profile.
 func (efp eksFargateProfileAttributes) PodExecutionRoleArn() terra.StringValue {
-	return terra.ReferenceString(efp.ref.Append("pod_execution_role_arn"))
+	return terra.ReferenceAsString(efp.ref.Append("pod_execution_role_arn"))
 }
 
+// Status returns a reference to field status of aws_eks_fargate_profile.
 func (efp eksFargateProfileAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(efp.ref.Append("status"))
+	return terra.ReferenceAsString(efp.ref.Append("status"))
 }
 
+// SubnetIds returns a reference to field subnet_ids of aws_eks_fargate_profile.
 func (efp eksFargateProfileAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](efp.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](efp.ref.Append("subnet_ids"))
 }
 
+// Tags returns a reference to field tags of aws_eks_fargate_profile.
 func (efp eksFargateProfileAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](efp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](efp.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_eks_fargate_profile.
 func (efp eksFargateProfileAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](efp.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](efp.ref.Append("tags_all"))
 }
 
 func (efp eksFargateProfileAttributes) Selector() terra.SetValue[eksfargateprofile.SelectorAttributes] {
-	return terra.ReferenceSet[eksfargateprofile.SelectorAttributes](efp.ref.Append("selector"))
+	return terra.ReferenceAsSet[eksfargateprofile.SelectorAttributes](efp.ref.Append("selector"))
 }
 
 func (efp eksFargateProfileAttributes) Timeouts() eksfargateprofile.TimeoutsAttributes {
-	return terra.ReferenceSingle[eksfargateprofile.TimeoutsAttributes](efp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[eksfargateprofile.TimeoutsAttributes](efp.ref.Append("timeouts"))
 }
 
 type eksFargateProfileState struct {

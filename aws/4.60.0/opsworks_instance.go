@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewOpsworksInstance creates a new instance of [OpsworksInstance].
 func NewOpsworksInstance(name string, args OpsworksInstanceArgs) *OpsworksInstance {
 	return &OpsworksInstance{
 		Args: args,
@@ -19,28 +20,51 @@ func NewOpsworksInstance(name string, args OpsworksInstanceArgs) *OpsworksInstan
 
 var _ terra.Resource = (*OpsworksInstance)(nil)
 
+// OpsworksInstance represents the Terraform resource aws_opsworks_instance.
 type OpsworksInstance struct {
-	Name  string
-	Args  OpsworksInstanceArgs
-	state *opsworksInstanceState
+	Name      string
+	Args      OpsworksInstanceArgs
+	state     *opsworksInstanceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [OpsworksInstance].
 func (oi *OpsworksInstance) Type() string {
 	return "aws_opsworks_instance"
 }
 
+// LocalName returns the local name for [OpsworksInstance].
 func (oi *OpsworksInstance) LocalName() string {
 	return oi.Name
 }
 
+// Configuration returns the configuration (args) for [OpsworksInstance].
 func (oi *OpsworksInstance) Configuration() interface{} {
 	return oi.Args
 }
 
+// DependOn is used for other resources to depend on [OpsworksInstance].
+func (oi *OpsworksInstance) DependOn() terra.Reference {
+	return terra.ReferenceResource(oi)
+}
+
+// Dependencies returns the list of resources [OpsworksInstance] depends_on.
+func (oi *OpsworksInstance) Dependencies() terra.Dependencies {
+	return oi.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [OpsworksInstance].
+func (oi *OpsworksInstance) LifecycleManagement() *terra.Lifecycle {
+	return oi.Lifecycle
+}
+
+// Attributes returns the attributes for [OpsworksInstance].
 func (oi *OpsworksInstance) Attributes() opsworksInstanceAttributes {
 	return opsworksInstanceAttributes{ref: terra.ReferenceResource(oi)}
 }
 
+// ImportState imports the given attribute values into [OpsworksInstance]'s state.
 func (oi *OpsworksInstance) ImportState(av io.Reader) error {
 	oi.state = &opsworksInstanceState{}
 	if err := json.NewDecoder(av).Decode(oi.state); err != nil {
@@ -49,10 +73,12 @@ func (oi *OpsworksInstance) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [OpsworksInstance] has state.
 func (oi *OpsworksInstance) State() (*opsworksInstanceState, bool) {
 	return oi.state, oi.state != nil
 }
 
+// StateMust returns the state for [OpsworksInstance]. Panics if the state is nil.
 func (oi *OpsworksInstance) StateMust() *opsworksInstanceState {
 	if oi.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", oi.Type(), oi.LocalName()))
@@ -60,10 +86,7 @@ func (oi *OpsworksInstance) StateMust() *opsworksInstanceState {
 	return oi.state
 }
 
-func (oi *OpsworksInstance) DependOn() terra.Reference {
-	return terra.ReferenceResource(oi)
-}
-
+// OpsworksInstanceArgs contains the configurations for aws_opsworks_instance.
 type OpsworksInstanceArgs struct {
 	// AgentVersion: string, optional
 	AgentVersion terra.StringValue `hcl:"agent_version,attr"`
@@ -129,199 +152,240 @@ type OpsworksInstanceArgs struct {
 	RootBlockDevice []opsworksinstance.RootBlockDevice `hcl:"root_block_device,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *opsworksinstance.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that OpsworksInstance depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type opsworksInstanceAttributes struct {
 	ref terra.Reference
 }
 
+// AgentVersion returns a reference to field agent_version of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) AgentVersion() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("agent_version"))
+	return terra.ReferenceAsString(oi.ref.Append("agent_version"))
 }
 
+// AmiId returns a reference to field ami_id of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) AmiId() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("ami_id"))
+	return terra.ReferenceAsString(oi.ref.Append("ami_id"))
 }
 
+// Architecture returns a reference to field architecture of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) Architecture() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("architecture"))
+	return terra.ReferenceAsString(oi.ref.Append("architecture"))
 }
 
+// AutoScalingType returns a reference to field auto_scaling_type of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) AutoScalingType() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("auto_scaling_type"))
+	return terra.ReferenceAsString(oi.ref.Append("auto_scaling_type"))
 }
 
+// AvailabilityZone returns a reference to field availability_zone of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) AvailabilityZone() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("availability_zone"))
+	return terra.ReferenceAsString(oi.ref.Append("availability_zone"))
 }
 
+// CreatedAt returns a reference to field created_at of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) CreatedAt() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("created_at"))
+	return terra.ReferenceAsString(oi.ref.Append("created_at"))
 }
 
+// DeleteEbs returns a reference to field delete_ebs of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) DeleteEbs() terra.BoolValue {
-	return terra.ReferenceBool(oi.ref.Append("delete_ebs"))
+	return terra.ReferenceAsBool(oi.ref.Append("delete_ebs"))
 }
 
+// DeleteEip returns a reference to field delete_eip of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) DeleteEip() terra.BoolValue {
-	return terra.ReferenceBool(oi.ref.Append("delete_eip"))
+	return terra.ReferenceAsBool(oi.ref.Append("delete_eip"))
 }
 
+// EbsOptimized returns a reference to field ebs_optimized of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) EbsOptimized() terra.BoolValue {
-	return terra.ReferenceBool(oi.ref.Append("ebs_optimized"))
+	return terra.ReferenceAsBool(oi.ref.Append("ebs_optimized"))
 }
 
+// Ec2InstanceId returns a reference to field ec2_instance_id of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) Ec2InstanceId() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("ec2_instance_id"))
+	return terra.ReferenceAsString(oi.ref.Append("ec2_instance_id"))
 }
 
+// EcsClusterArn returns a reference to field ecs_cluster_arn of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) EcsClusterArn() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("ecs_cluster_arn"))
+	return terra.ReferenceAsString(oi.ref.Append("ecs_cluster_arn"))
 }
 
+// ElasticIp returns a reference to field elastic_ip of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) ElasticIp() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("elastic_ip"))
+	return terra.ReferenceAsString(oi.ref.Append("elastic_ip"))
 }
 
+// Hostname returns a reference to field hostname of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) Hostname() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("hostname"))
+	return terra.ReferenceAsString(oi.ref.Append("hostname"))
 }
 
+// Id returns a reference to field id of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("id"))
+	return terra.ReferenceAsString(oi.ref.Append("id"))
 }
 
+// InfrastructureClass returns a reference to field infrastructure_class of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) InfrastructureClass() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("infrastructure_class"))
+	return terra.ReferenceAsString(oi.ref.Append("infrastructure_class"))
 }
 
+// InstallUpdatesOnBoot returns a reference to field install_updates_on_boot of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) InstallUpdatesOnBoot() terra.BoolValue {
-	return terra.ReferenceBool(oi.ref.Append("install_updates_on_boot"))
+	return terra.ReferenceAsBool(oi.ref.Append("install_updates_on_boot"))
 }
 
+// InstanceProfileArn returns a reference to field instance_profile_arn of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) InstanceProfileArn() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("instance_profile_arn"))
+	return terra.ReferenceAsString(oi.ref.Append("instance_profile_arn"))
 }
 
+// InstanceType returns a reference to field instance_type of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("instance_type"))
+	return terra.ReferenceAsString(oi.ref.Append("instance_type"))
 }
 
+// LastServiceErrorId returns a reference to field last_service_error_id of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) LastServiceErrorId() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("last_service_error_id"))
+	return terra.ReferenceAsString(oi.ref.Append("last_service_error_id"))
 }
 
+// LayerIds returns a reference to field layer_ids of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) LayerIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](oi.ref.Append("layer_ids"))
+	return terra.ReferenceAsList[terra.StringValue](oi.ref.Append("layer_ids"))
 }
 
+// Os returns a reference to field os of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) Os() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("os"))
+	return terra.ReferenceAsString(oi.ref.Append("os"))
 }
 
+// Platform returns a reference to field platform of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) Platform() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("platform"))
+	return terra.ReferenceAsString(oi.ref.Append("platform"))
 }
 
+// PrivateDns returns a reference to field private_dns of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) PrivateDns() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("private_dns"))
+	return terra.ReferenceAsString(oi.ref.Append("private_dns"))
 }
 
+// PrivateIp returns a reference to field private_ip of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) PrivateIp() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("private_ip"))
+	return terra.ReferenceAsString(oi.ref.Append("private_ip"))
 }
 
+// PublicDns returns a reference to field public_dns of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) PublicDns() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("public_dns"))
+	return terra.ReferenceAsString(oi.ref.Append("public_dns"))
 }
 
+// PublicIp returns a reference to field public_ip of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) PublicIp() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("public_ip"))
+	return terra.ReferenceAsString(oi.ref.Append("public_ip"))
 }
 
+// RegisteredBy returns a reference to field registered_by of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) RegisteredBy() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("registered_by"))
+	return terra.ReferenceAsString(oi.ref.Append("registered_by"))
 }
 
+// ReportedAgentVersion returns a reference to field reported_agent_version of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) ReportedAgentVersion() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("reported_agent_version"))
+	return terra.ReferenceAsString(oi.ref.Append("reported_agent_version"))
 }
 
+// ReportedOsFamily returns a reference to field reported_os_family of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) ReportedOsFamily() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("reported_os_family"))
+	return terra.ReferenceAsString(oi.ref.Append("reported_os_family"))
 }
 
+// ReportedOsName returns a reference to field reported_os_name of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) ReportedOsName() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("reported_os_name"))
+	return terra.ReferenceAsString(oi.ref.Append("reported_os_name"))
 }
 
+// ReportedOsVersion returns a reference to field reported_os_version of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) ReportedOsVersion() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("reported_os_version"))
+	return terra.ReferenceAsString(oi.ref.Append("reported_os_version"))
 }
 
+// RootDeviceType returns a reference to field root_device_type of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) RootDeviceType() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("root_device_type"))
+	return terra.ReferenceAsString(oi.ref.Append("root_device_type"))
 }
 
+// RootDeviceVolumeId returns a reference to field root_device_volume_id of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) RootDeviceVolumeId() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("root_device_volume_id"))
+	return terra.ReferenceAsString(oi.ref.Append("root_device_volume_id"))
 }
 
+// SecurityGroupIds returns a reference to field security_group_ids of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) SecurityGroupIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](oi.ref.Append("security_group_ids"))
+	return terra.ReferenceAsList[terra.StringValue](oi.ref.Append("security_group_ids"))
 }
 
+// SshHostDsaKeyFingerprint returns a reference to field ssh_host_dsa_key_fingerprint of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) SshHostDsaKeyFingerprint() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("ssh_host_dsa_key_fingerprint"))
+	return terra.ReferenceAsString(oi.ref.Append("ssh_host_dsa_key_fingerprint"))
 }
 
+// SshHostRsaKeyFingerprint returns a reference to field ssh_host_rsa_key_fingerprint of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) SshHostRsaKeyFingerprint() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("ssh_host_rsa_key_fingerprint"))
+	return terra.ReferenceAsString(oi.ref.Append("ssh_host_rsa_key_fingerprint"))
 }
 
+// SshKeyName returns a reference to field ssh_key_name of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) SshKeyName() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("ssh_key_name"))
+	return terra.ReferenceAsString(oi.ref.Append("ssh_key_name"))
 }
 
+// StackId returns a reference to field stack_id of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) StackId() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("stack_id"))
+	return terra.ReferenceAsString(oi.ref.Append("stack_id"))
 }
 
+// State returns a reference to field state of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) State() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("state"))
+	return terra.ReferenceAsString(oi.ref.Append("state"))
 }
 
+// Status returns a reference to field status of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("status"))
+	return terra.ReferenceAsString(oi.ref.Append("status"))
 }
 
+// SubnetId returns a reference to field subnet_id of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(oi.ref.Append("subnet_id"))
 }
 
+// Tenancy returns a reference to field tenancy of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) Tenancy() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("tenancy"))
+	return terra.ReferenceAsString(oi.ref.Append("tenancy"))
 }
 
+// VirtualizationType returns a reference to field virtualization_type of aws_opsworks_instance.
 func (oi opsworksInstanceAttributes) VirtualizationType() terra.StringValue {
-	return terra.ReferenceString(oi.ref.Append("virtualization_type"))
+	return terra.ReferenceAsString(oi.ref.Append("virtualization_type"))
 }
 
 func (oi opsworksInstanceAttributes) EbsBlockDevice() terra.SetValue[opsworksinstance.EbsBlockDeviceAttributes] {
-	return terra.ReferenceSet[opsworksinstance.EbsBlockDeviceAttributes](oi.ref.Append("ebs_block_device"))
+	return terra.ReferenceAsSet[opsworksinstance.EbsBlockDeviceAttributes](oi.ref.Append("ebs_block_device"))
 }
 
 func (oi opsworksInstanceAttributes) EphemeralBlockDevice() terra.SetValue[opsworksinstance.EphemeralBlockDeviceAttributes] {
-	return terra.ReferenceSet[opsworksinstance.EphemeralBlockDeviceAttributes](oi.ref.Append("ephemeral_block_device"))
+	return terra.ReferenceAsSet[opsworksinstance.EphemeralBlockDeviceAttributes](oi.ref.Append("ephemeral_block_device"))
 }
 
 func (oi opsworksInstanceAttributes) RootBlockDevice() terra.SetValue[opsworksinstance.RootBlockDeviceAttributes] {
-	return terra.ReferenceSet[opsworksinstance.RootBlockDeviceAttributes](oi.ref.Append("root_block_device"))
+	return terra.ReferenceAsSet[opsworksinstance.RootBlockDeviceAttributes](oi.ref.Append("root_block_device"))
 }
 
 func (oi opsworksInstanceAttributes) Timeouts() opsworksinstance.TimeoutsAttributes {
-	return terra.ReferenceSingle[opsworksinstance.TimeoutsAttributes](oi.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[opsworksinstance.TimeoutsAttributes](oi.ref.Append("timeouts"))
 }
 
 type opsworksInstanceState struct {

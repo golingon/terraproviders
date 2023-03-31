@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewIamUserLoginProfile creates a new instance of [IamUserLoginProfile].
 func NewIamUserLoginProfile(name string, args IamUserLoginProfileArgs) *IamUserLoginProfile {
 	return &IamUserLoginProfile{
 		Args: args,
@@ -18,28 +19,51 @@ func NewIamUserLoginProfile(name string, args IamUserLoginProfileArgs) *IamUserL
 
 var _ terra.Resource = (*IamUserLoginProfile)(nil)
 
+// IamUserLoginProfile represents the Terraform resource aws_iam_user_login_profile.
 type IamUserLoginProfile struct {
-	Name  string
-	Args  IamUserLoginProfileArgs
-	state *iamUserLoginProfileState
+	Name      string
+	Args      IamUserLoginProfileArgs
+	state     *iamUserLoginProfileState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IamUserLoginProfile].
 func (iulp *IamUserLoginProfile) Type() string {
 	return "aws_iam_user_login_profile"
 }
 
+// LocalName returns the local name for [IamUserLoginProfile].
 func (iulp *IamUserLoginProfile) LocalName() string {
 	return iulp.Name
 }
 
+// Configuration returns the configuration (args) for [IamUserLoginProfile].
 func (iulp *IamUserLoginProfile) Configuration() interface{} {
 	return iulp.Args
 }
 
+// DependOn is used for other resources to depend on [IamUserLoginProfile].
+func (iulp *IamUserLoginProfile) DependOn() terra.Reference {
+	return terra.ReferenceResource(iulp)
+}
+
+// Dependencies returns the list of resources [IamUserLoginProfile] depends_on.
+func (iulp *IamUserLoginProfile) Dependencies() terra.Dependencies {
+	return iulp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IamUserLoginProfile].
+func (iulp *IamUserLoginProfile) LifecycleManagement() *terra.Lifecycle {
+	return iulp.Lifecycle
+}
+
+// Attributes returns the attributes for [IamUserLoginProfile].
 func (iulp *IamUserLoginProfile) Attributes() iamUserLoginProfileAttributes {
 	return iamUserLoginProfileAttributes{ref: terra.ReferenceResource(iulp)}
 }
 
+// ImportState imports the given attribute values into [IamUserLoginProfile]'s state.
 func (iulp *IamUserLoginProfile) ImportState(av io.Reader) error {
 	iulp.state = &iamUserLoginProfileState{}
 	if err := json.NewDecoder(av).Decode(iulp.state); err != nil {
@@ -48,10 +72,12 @@ func (iulp *IamUserLoginProfile) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IamUserLoginProfile] has state.
 func (iulp *IamUserLoginProfile) State() (*iamUserLoginProfileState, bool) {
 	return iulp.state, iulp.state != nil
 }
 
+// StateMust returns the state for [IamUserLoginProfile]. Panics if the state is nil.
 func (iulp *IamUserLoginProfile) StateMust() *iamUserLoginProfileState {
 	if iulp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", iulp.Type(), iulp.LocalName()))
@@ -59,10 +85,7 @@ func (iulp *IamUserLoginProfile) StateMust() *iamUserLoginProfileState {
 	return iulp.state
 }
 
-func (iulp *IamUserLoginProfile) DependOn() terra.Reference {
-	return terra.ReferenceResource(iulp)
-}
-
+// IamUserLoginProfileArgs contains the configurations for aws_iam_user_login_profile.
 type IamUserLoginProfileArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -74,43 +97,49 @@ type IamUserLoginProfileArgs struct {
 	PgpKey terra.StringValue `hcl:"pgp_key,attr"`
 	// User: string, required
 	User terra.StringValue `hcl:"user,attr" validate:"required"`
-	// DependsOn contains resources that IamUserLoginProfile depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iamUserLoginProfileAttributes struct {
 	ref terra.Reference
 }
 
+// EncryptedPassword returns a reference to field encrypted_password of aws_iam_user_login_profile.
 func (iulp iamUserLoginProfileAttributes) EncryptedPassword() terra.StringValue {
-	return terra.ReferenceString(iulp.ref.Append("encrypted_password"))
+	return terra.ReferenceAsString(iulp.ref.Append("encrypted_password"))
 }
 
+// Id returns a reference to field id of aws_iam_user_login_profile.
 func (iulp iamUserLoginProfileAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(iulp.ref.Append("id"))
+	return terra.ReferenceAsString(iulp.ref.Append("id"))
 }
 
+// KeyFingerprint returns a reference to field key_fingerprint of aws_iam_user_login_profile.
 func (iulp iamUserLoginProfileAttributes) KeyFingerprint() terra.StringValue {
-	return terra.ReferenceString(iulp.ref.Append("key_fingerprint"))
+	return terra.ReferenceAsString(iulp.ref.Append("key_fingerprint"))
 }
 
+// Password returns a reference to field password of aws_iam_user_login_profile.
 func (iulp iamUserLoginProfileAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(iulp.ref.Append("password"))
+	return terra.ReferenceAsString(iulp.ref.Append("password"))
 }
 
+// PasswordLength returns a reference to field password_length of aws_iam_user_login_profile.
 func (iulp iamUserLoginProfileAttributes) PasswordLength() terra.NumberValue {
-	return terra.ReferenceNumber(iulp.ref.Append("password_length"))
+	return terra.ReferenceAsNumber(iulp.ref.Append("password_length"))
 }
 
+// PasswordResetRequired returns a reference to field password_reset_required of aws_iam_user_login_profile.
 func (iulp iamUserLoginProfileAttributes) PasswordResetRequired() terra.BoolValue {
-	return terra.ReferenceBool(iulp.ref.Append("password_reset_required"))
+	return terra.ReferenceAsBool(iulp.ref.Append("password_reset_required"))
 }
 
+// PgpKey returns a reference to field pgp_key of aws_iam_user_login_profile.
 func (iulp iamUserLoginProfileAttributes) PgpKey() terra.StringValue {
-	return terra.ReferenceString(iulp.ref.Append("pgp_key"))
+	return terra.ReferenceAsString(iulp.ref.Append("pgp_key"))
 }
 
+// User returns a reference to field user of aws_iam_user_login_profile.
 func (iulp iamUserLoginProfileAttributes) User() terra.StringValue {
-	return terra.ReferenceString(iulp.ref.Append("user"))
+	return terra.ReferenceAsString(iulp.ref.Append("user"))
 }
 
 type iamUserLoginProfileState struct {

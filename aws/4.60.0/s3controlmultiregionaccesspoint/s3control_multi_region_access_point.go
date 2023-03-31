@@ -56,15 +56,15 @@ func (d DetailsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DetailsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("name"))
+	return terra.ReferenceAsString(d.ref.Append("name"))
 }
 
 func (d DetailsAttributes) PublicAccessBlock() terra.ListValue[PublicAccessBlockAttributes] {
-	return terra.ReferenceList[PublicAccessBlockAttributes](d.ref.Append("public_access_block"))
+	return terra.ReferenceAsList[PublicAccessBlockAttributes](d.ref.Append("public_access_block"))
 }
 
 func (d DetailsAttributes) Region() terra.SetValue[RegionAttributes] {
-	return terra.ReferenceSet[RegionAttributes](d.ref.Append("region"))
+	return terra.ReferenceAsSet[RegionAttributes](d.ref.Append("region"))
 }
 
 type PublicAccessBlockAttributes struct {
@@ -84,19 +84,19 @@ func (pab PublicAccessBlockAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pab PublicAccessBlockAttributes) BlockPublicAcls() terra.BoolValue {
-	return terra.ReferenceBool(pab.ref.Append("block_public_acls"))
+	return terra.ReferenceAsBool(pab.ref.Append("block_public_acls"))
 }
 
 func (pab PublicAccessBlockAttributes) BlockPublicPolicy() terra.BoolValue {
-	return terra.ReferenceBool(pab.ref.Append("block_public_policy"))
+	return terra.ReferenceAsBool(pab.ref.Append("block_public_policy"))
 }
 
 func (pab PublicAccessBlockAttributes) IgnorePublicAcls() terra.BoolValue {
-	return terra.ReferenceBool(pab.ref.Append("ignore_public_acls"))
+	return terra.ReferenceAsBool(pab.ref.Append("ignore_public_acls"))
 }
 
 func (pab PublicAccessBlockAttributes) RestrictPublicBuckets() terra.BoolValue {
-	return terra.ReferenceBool(pab.ref.Append("restrict_public_buckets"))
+	return terra.ReferenceAsBool(pab.ref.Append("restrict_public_buckets"))
 }
 
 type RegionAttributes struct {
@@ -116,7 +116,7 @@ func (r RegionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RegionAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("bucket"))
+	return terra.ReferenceAsString(r.ref.Append("bucket"))
 }
 
 type TimeoutsAttributes struct {
@@ -136,11 +136,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type DetailsState struct {

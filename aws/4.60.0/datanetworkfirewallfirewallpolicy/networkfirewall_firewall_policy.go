@@ -58,31 +58,31 @@ func (fp FirewallPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fp FirewallPolicyAttributes) StatefulDefaultActions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](fp.ref.Append("stateful_default_actions"))
+	return terra.ReferenceAsSet[terra.StringValue](fp.ref.Append("stateful_default_actions"))
 }
 
 func (fp FirewallPolicyAttributes) StatelessDefaultActions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](fp.ref.Append("stateless_default_actions"))
+	return terra.ReferenceAsSet[terra.StringValue](fp.ref.Append("stateless_default_actions"))
 }
 
 func (fp FirewallPolicyAttributes) StatelessFragmentDefaultActions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](fp.ref.Append("stateless_fragment_default_actions"))
+	return terra.ReferenceAsSet[terra.StringValue](fp.ref.Append("stateless_fragment_default_actions"))
 }
 
 func (fp FirewallPolicyAttributes) StatefulEngineOptions() terra.ListValue[StatefulEngineOptionsAttributes] {
-	return terra.ReferenceList[StatefulEngineOptionsAttributes](fp.ref.Append("stateful_engine_options"))
+	return terra.ReferenceAsList[StatefulEngineOptionsAttributes](fp.ref.Append("stateful_engine_options"))
 }
 
 func (fp FirewallPolicyAttributes) StatefulRuleGroupReference() terra.SetValue[StatefulRuleGroupReferenceAttributes] {
-	return terra.ReferenceSet[StatefulRuleGroupReferenceAttributes](fp.ref.Append("stateful_rule_group_reference"))
+	return terra.ReferenceAsSet[StatefulRuleGroupReferenceAttributes](fp.ref.Append("stateful_rule_group_reference"))
 }
 
 func (fp FirewallPolicyAttributes) StatelessCustomAction() terra.SetValue[StatelessCustomActionAttributes] {
-	return terra.ReferenceSet[StatelessCustomActionAttributes](fp.ref.Append("stateless_custom_action"))
+	return terra.ReferenceAsSet[StatelessCustomActionAttributes](fp.ref.Append("stateless_custom_action"))
 }
 
 func (fp FirewallPolicyAttributes) StatelessRuleGroupReference() terra.SetValue[StatelessRuleGroupReferenceAttributes] {
-	return terra.ReferenceSet[StatelessRuleGroupReferenceAttributes](fp.ref.Append("stateless_rule_group_reference"))
+	return terra.ReferenceAsSet[StatelessRuleGroupReferenceAttributes](fp.ref.Append("stateless_rule_group_reference"))
 }
 
 type StatefulEngineOptionsAttributes struct {
@@ -102,7 +102,7 @@ func (seo StatefulEngineOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (seo StatefulEngineOptionsAttributes) RuleOrder() terra.StringValue {
-	return terra.ReferenceString(seo.ref.Append("rule_order"))
+	return terra.ReferenceAsString(seo.ref.Append("rule_order"))
 }
 
 type StatefulRuleGroupReferenceAttributes struct {
@@ -122,11 +122,11 @@ func (srgr StatefulRuleGroupReferenceAttributes) InternalTokens() hclwrite.Token
 }
 
 func (srgr StatefulRuleGroupReferenceAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(srgr.ref.Append("priority"))
+	return terra.ReferenceAsNumber(srgr.ref.Append("priority"))
 }
 
 func (srgr StatefulRuleGroupReferenceAttributes) ResourceArn() terra.StringValue {
-	return terra.ReferenceString(srgr.ref.Append("resource_arn"))
+	return terra.ReferenceAsString(srgr.ref.Append("resource_arn"))
 }
 
 type StatelessCustomActionAttributes struct {
@@ -146,11 +146,11 @@ func (sca StatelessCustomActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sca StatelessCustomActionAttributes) ActionName() terra.StringValue {
-	return terra.ReferenceString(sca.ref.Append("action_name"))
+	return terra.ReferenceAsString(sca.ref.Append("action_name"))
 }
 
 func (sca StatelessCustomActionAttributes) ActionDefinition() terra.ListValue[ActionDefinitionAttributes] {
-	return terra.ReferenceList[ActionDefinitionAttributes](sca.ref.Append("action_definition"))
+	return terra.ReferenceAsList[ActionDefinitionAttributes](sca.ref.Append("action_definition"))
 }
 
 type ActionDefinitionAttributes struct {
@@ -170,7 +170,7 @@ func (ad ActionDefinitionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ad ActionDefinitionAttributes) PublishMetricAction() terra.ListValue[PublishMetricActionAttributes] {
-	return terra.ReferenceList[PublishMetricActionAttributes](ad.ref.Append("publish_metric_action"))
+	return terra.ReferenceAsList[PublishMetricActionAttributes](ad.ref.Append("publish_metric_action"))
 }
 
 type PublishMetricActionAttributes struct {
@@ -190,7 +190,7 @@ func (pma PublishMetricActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pma PublishMetricActionAttributes) Dimension() terra.SetValue[DimensionAttributes] {
-	return terra.ReferenceSet[DimensionAttributes](pma.ref.Append("dimension"))
+	return terra.ReferenceAsSet[DimensionAttributes](pma.ref.Append("dimension"))
 }
 
 type DimensionAttributes struct {
@@ -210,7 +210,7 @@ func (d DimensionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DimensionAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("value"))
+	return terra.ReferenceAsString(d.ref.Append("value"))
 }
 
 type StatelessRuleGroupReferenceAttributes struct {
@@ -230,11 +230,11 @@ func (srgr StatelessRuleGroupReferenceAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (srgr StatelessRuleGroupReferenceAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(srgr.ref.Append("priority"))
+	return terra.ReferenceAsNumber(srgr.ref.Append("priority"))
 }
 
 func (srgr StatelessRuleGroupReferenceAttributes) ResourceArn() terra.StringValue {
-	return terra.ReferenceString(srgr.ref.Append("resource_arn"))
+	return terra.ReferenceAsString(srgr.ref.Append("resource_arn"))
 }
 
 type FirewallPolicyState struct {

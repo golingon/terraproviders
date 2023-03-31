@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewServicecatalogOrganizationsAccess creates a new instance of [ServicecatalogOrganizationsAccess].
 func NewServicecatalogOrganizationsAccess(name string, args ServicecatalogOrganizationsAccessArgs) *ServicecatalogOrganizationsAccess {
 	return &ServicecatalogOrganizationsAccess{
 		Args: args,
@@ -19,28 +20,51 @@ func NewServicecatalogOrganizationsAccess(name string, args ServicecatalogOrgani
 
 var _ terra.Resource = (*ServicecatalogOrganizationsAccess)(nil)
 
+// ServicecatalogOrganizationsAccess represents the Terraform resource aws_servicecatalog_organizations_access.
 type ServicecatalogOrganizationsAccess struct {
-	Name  string
-	Args  ServicecatalogOrganizationsAccessArgs
-	state *servicecatalogOrganizationsAccessState
+	Name      string
+	Args      ServicecatalogOrganizationsAccessArgs
+	state     *servicecatalogOrganizationsAccessState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ServicecatalogOrganizationsAccess].
 func (soa *ServicecatalogOrganizationsAccess) Type() string {
 	return "aws_servicecatalog_organizations_access"
 }
 
+// LocalName returns the local name for [ServicecatalogOrganizationsAccess].
 func (soa *ServicecatalogOrganizationsAccess) LocalName() string {
 	return soa.Name
 }
 
+// Configuration returns the configuration (args) for [ServicecatalogOrganizationsAccess].
 func (soa *ServicecatalogOrganizationsAccess) Configuration() interface{} {
 	return soa.Args
 }
 
+// DependOn is used for other resources to depend on [ServicecatalogOrganizationsAccess].
+func (soa *ServicecatalogOrganizationsAccess) DependOn() terra.Reference {
+	return terra.ReferenceResource(soa)
+}
+
+// Dependencies returns the list of resources [ServicecatalogOrganizationsAccess] depends_on.
+func (soa *ServicecatalogOrganizationsAccess) Dependencies() terra.Dependencies {
+	return soa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ServicecatalogOrganizationsAccess].
+func (soa *ServicecatalogOrganizationsAccess) LifecycleManagement() *terra.Lifecycle {
+	return soa.Lifecycle
+}
+
+// Attributes returns the attributes for [ServicecatalogOrganizationsAccess].
 func (soa *ServicecatalogOrganizationsAccess) Attributes() servicecatalogOrganizationsAccessAttributes {
 	return servicecatalogOrganizationsAccessAttributes{ref: terra.ReferenceResource(soa)}
 }
 
+// ImportState imports the given attribute values into [ServicecatalogOrganizationsAccess]'s state.
 func (soa *ServicecatalogOrganizationsAccess) ImportState(av io.Reader) error {
 	soa.state = &servicecatalogOrganizationsAccessState{}
 	if err := json.NewDecoder(av).Decode(soa.state); err != nil {
@@ -49,10 +73,12 @@ func (soa *ServicecatalogOrganizationsAccess) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ServicecatalogOrganizationsAccess] has state.
 func (soa *ServicecatalogOrganizationsAccess) State() (*servicecatalogOrganizationsAccessState, bool) {
 	return soa.state, soa.state != nil
 }
 
+// StateMust returns the state for [ServicecatalogOrganizationsAccess]. Panics if the state is nil.
 func (soa *ServicecatalogOrganizationsAccess) StateMust() *servicecatalogOrganizationsAccessState {
 	if soa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", soa.Type(), soa.LocalName()))
@@ -60,10 +86,7 @@ func (soa *ServicecatalogOrganizationsAccess) StateMust() *servicecatalogOrganiz
 	return soa.state
 }
 
-func (soa *ServicecatalogOrganizationsAccess) DependOn() terra.Reference {
-	return terra.ReferenceResource(soa)
-}
-
+// ServicecatalogOrganizationsAccessArgs contains the configurations for aws_servicecatalog_organizations_access.
 type ServicecatalogOrganizationsAccessArgs struct {
 	// Enabled: bool, required
 	Enabled terra.BoolValue `hcl:"enabled,attr" validate:"required"`
@@ -71,23 +94,23 @@ type ServicecatalogOrganizationsAccessArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// Timeouts: optional
 	Timeouts *servicecatalogorganizationsaccess.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ServicecatalogOrganizationsAccess depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type servicecatalogOrganizationsAccessAttributes struct {
 	ref terra.Reference
 }
 
+// Enabled returns a reference to field enabled of aws_servicecatalog_organizations_access.
 func (soa servicecatalogOrganizationsAccessAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(soa.ref.Append("enabled"))
+	return terra.ReferenceAsBool(soa.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of aws_servicecatalog_organizations_access.
 func (soa servicecatalogOrganizationsAccessAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(soa.ref.Append("id"))
+	return terra.ReferenceAsString(soa.ref.Append("id"))
 }
 
 func (soa servicecatalogOrganizationsAccessAttributes) Timeouts() servicecatalogorganizationsaccess.TimeoutsAttributes {
-	return terra.ReferenceSingle[servicecatalogorganizationsaccess.TimeoutsAttributes](soa.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[servicecatalogorganizationsaccess.TimeoutsAttributes](soa.ref.Append("timeouts"))
 }
 
 type servicecatalogOrganizationsAccessState struct {

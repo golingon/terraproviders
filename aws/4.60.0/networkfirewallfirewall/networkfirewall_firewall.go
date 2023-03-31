@@ -50,7 +50,7 @@ func (fs FirewallStatusAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fs FirewallStatusAttributes) SyncStates() terra.SetValue[SyncStatesAttributes] {
-	return terra.ReferenceSet[SyncStatesAttributes](fs.ref.Append("sync_states"))
+	return terra.ReferenceAsSet[SyncStatesAttributes](fs.ref.Append("sync_states"))
 }
 
 type SyncStatesAttributes struct {
@@ -70,11 +70,11 @@ func (ss SyncStatesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ss SyncStatesAttributes) AvailabilityZone() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("availability_zone"))
+	return terra.ReferenceAsString(ss.ref.Append("availability_zone"))
 }
 
 func (ss SyncStatesAttributes) Attachment() terra.ListValue[AttachmentAttributes] {
-	return terra.ReferenceList[AttachmentAttributes](ss.ref.Append("attachment"))
+	return terra.ReferenceAsList[AttachmentAttributes](ss.ref.Append("attachment"))
 }
 
 type AttachmentAttributes struct {
@@ -94,11 +94,11 @@ func (a AttachmentAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AttachmentAttributes) EndpointId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("endpoint_id"))
+	return terra.ReferenceAsString(a.ref.Append("endpoint_id"))
 }
 
 func (a AttachmentAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(a.ref.Append("subnet_id"))
 }
 
 type EncryptionConfigurationAttributes struct {
@@ -118,11 +118,11 @@ func (ec EncryptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec EncryptionConfigurationAttributes) KeyId() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("key_id"))
+	return terra.ReferenceAsString(ec.ref.Append("key_id"))
 }
 
 func (ec EncryptionConfigurationAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("type"))
+	return terra.ReferenceAsString(ec.ref.Append("type"))
 }
 
 type SubnetMappingAttributes struct {
@@ -142,11 +142,11 @@ func (sm SubnetMappingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sm SubnetMappingAttributes) IpAddressType() terra.StringValue {
-	return terra.ReferenceString(sm.ref.Append("ip_address_type"))
+	return terra.ReferenceAsString(sm.ref.Append("ip_address_type"))
 }
 
 func (sm SubnetMappingAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(sm.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(sm.ref.Append("subnet_id"))
 }
 
 type FirewallStatusState struct {

@@ -64,11 +64,11 @@ func (cc CognitoConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc CognitoConfigAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("client_id"))
+	return terra.ReferenceAsString(cc.ref.Append("client_id"))
 }
 
 func (cc CognitoConfigAttributes) UserPool() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("user_pool"))
+	return terra.ReferenceAsString(cc.ref.Append("user_pool"))
 }
 
 type OidcConfigAttributes struct {
@@ -88,35 +88,35 @@ func (oc OidcConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (oc OidcConfigAttributes) AuthorizationEndpoint() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("authorization_endpoint"))
+	return terra.ReferenceAsString(oc.ref.Append("authorization_endpoint"))
 }
 
 func (oc OidcConfigAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("client_id"))
+	return terra.ReferenceAsString(oc.ref.Append("client_id"))
 }
 
 func (oc OidcConfigAttributes) ClientSecret() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("client_secret"))
+	return terra.ReferenceAsString(oc.ref.Append("client_secret"))
 }
 
 func (oc OidcConfigAttributes) Issuer() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("issuer"))
+	return terra.ReferenceAsString(oc.ref.Append("issuer"))
 }
 
 func (oc OidcConfigAttributes) JwksUri() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("jwks_uri"))
+	return terra.ReferenceAsString(oc.ref.Append("jwks_uri"))
 }
 
 func (oc OidcConfigAttributes) LogoutEndpoint() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("logout_endpoint"))
+	return terra.ReferenceAsString(oc.ref.Append("logout_endpoint"))
 }
 
 func (oc OidcConfigAttributes) TokenEndpoint() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("token_endpoint"))
+	return terra.ReferenceAsString(oc.ref.Append("token_endpoint"))
 }
 
 func (oc OidcConfigAttributes) UserInfoEndpoint() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("user_info_endpoint"))
+	return terra.ReferenceAsString(oc.ref.Append("user_info_endpoint"))
 }
 
 type SourceIpConfigAttributes struct {
@@ -136,7 +136,7 @@ func (sic SourceIpConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sic SourceIpConfigAttributes) Cidrs() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sic.ref.Append("cidrs"))
+	return terra.ReferenceAsSet[terra.StringValue](sic.ref.Append("cidrs"))
 }
 
 type WorkforceVpcConfigAttributes struct {
@@ -156,19 +156,19 @@ func (wvc WorkforceVpcConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (wvc WorkforceVpcConfigAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](wvc.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](wvc.ref.Append("security_group_ids"))
 }
 
 func (wvc WorkforceVpcConfigAttributes) Subnets() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](wvc.ref.Append("subnets"))
+	return terra.ReferenceAsSet[terra.StringValue](wvc.ref.Append("subnets"))
 }
 
 func (wvc WorkforceVpcConfigAttributes) VpcEndpointId() terra.StringValue {
-	return terra.ReferenceString(wvc.ref.Append("vpc_endpoint_id"))
+	return terra.ReferenceAsString(wvc.ref.Append("vpc_endpoint_id"))
 }
 
 func (wvc WorkforceVpcConfigAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(wvc.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(wvc.ref.Append("vpc_id"))
 }
 
 type CognitoConfigState struct {

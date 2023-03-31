@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataLambdaFunctions creates a new instance of [DataLambdaFunctions].
 func NewDataLambdaFunctions(name string, args DataLambdaFunctionsArgs) *DataLambdaFunctions {
 	return &DataLambdaFunctions{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataLambdaFunctions(name string, args DataLambdaFunctionsArgs) *DataLamb
 
 var _ terra.DataResource = (*DataLambdaFunctions)(nil)
 
+// DataLambdaFunctions represents the Terraform data resource aws_lambda_functions.
 type DataLambdaFunctions struct {
 	Name string
 	Args DataLambdaFunctionsArgs
 }
 
+// DataSource returns the Terraform object type for [DataLambdaFunctions].
 func (lf *DataLambdaFunctions) DataSource() string {
 	return "aws_lambda_functions"
 }
 
+// LocalName returns the local name for [DataLambdaFunctions].
 func (lf *DataLambdaFunctions) LocalName() string {
 	return lf.Name
 }
 
+// Configuration returns the configuration (args) for [DataLambdaFunctions].
 func (lf *DataLambdaFunctions) Configuration() interface{} {
 	return lf.Args
 }
 
+// Attributes returns the attributes for [DataLambdaFunctions].
 func (lf *DataLambdaFunctions) Attributes() dataLambdaFunctionsAttributes {
 	return dataLambdaFunctionsAttributes{ref: terra.ReferenceDataResource(lf)}
 }
 
+// DataLambdaFunctionsArgs contains the configurations for aws_lambda_functions.
 type DataLambdaFunctionsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -42,14 +49,17 @@ type dataLambdaFunctionsAttributes struct {
 	ref terra.Reference
 }
 
+// FunctionArns returns a reference to field function_arns of aws_lambda_functions.
 func (lf dataLambdaFunctionsAttributes) FunctionArns() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lf.ref.Append("function_arns"))
+	return terra.ReferenceAsList[terra.StringValue](lf.ref.Append("function_arns"))
 }
 
+// FunctionNames returns a reference to field function_names of aws_lambda_functions.
 func (lf dataLambdaFunctionsAttributes) FunctionNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lf.ref.Append("function_names"))
+	return terra.ReferenceAsList[terra.StringValue](lf.ref.Append("function_names"))
 }
 
+// Id returns a reference to field id of aws_lambda_functions.
 func (lf dataLambdaFunctionsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("id"))
+	return terra.ReferenceAsString(lf.ref.Append("id"))
 }

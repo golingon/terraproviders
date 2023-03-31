@@ -47,43 +47,43 @@ func (s SettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SettingsAttributes) CacheDataEncrypted() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("cache_data_encrypted"))
+	return terra.ReferenceAsBool(s.ref.Append("cache_data_encrypted"))
 }
 
 func (s SettingsAttributes) CacheTtlInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("cache_ttl_in_seconds"))
+	return terra.ReferenceAsNumber(s.ref.Append("cache_ttl_in_seconds"))
 }
 
 func (s SettingsAttributes) CachingEnabled() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("caching_enabled"))
+	return terra.ReferenceAsBool(s.ref.Append("caching_enabled"))
 }
 
 func (s SettingsAttributes) DataTraceEnabled() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("data_trace_enabled"))
+	return terra.ReferenceAsBool(s.ref.Append("data_trace_enabled"))
 }
 
 func (s SettingsAttributes) LoggingLevel() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("logging_level"))
+	return terra.ReferenceAsString(s.ref.Append("logging_level"))
 }
 
 func (s SettingsAttributes) MetricsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("metrics_enabled"))
+	return terra.ReferenceAsBool(s.ref.Append("metrics_enabled"))
 }
 
 func (s SettingsAttributes) RequireAuthorizationForCacheControl() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("require_authorization_for_cache_control"))
+	return terra.ReferenceAsBool(s.ref.Append("require_authorization_for_cache_control"))
 }
 
 func (s SettingsAttributes) ThrottlingBurstLimit() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("throttling_burst_limit"))
+	return terra.ReferenceAsNumber(s.ref.Append("throttling_burst_limit"))
 }
 
 func (s SettingsAttributes) ThrottlingRateLimit() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("throttling_rate_limit"))
+	return terra.ReferenceAsNumber(s.ref.Append("throttling_rate_limit"))
 }
 
 func (s SettingsAttributes) UnauthorizedCacheControlHeaderStrategy() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("unauthorized_cache_control_header_strategy"))
+	return terra.ReferenceAsString(s.ref.Append("unauthorized_cache_control_header_strategy"))
 }
 
 type SettingsState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewApprunnerAutoScalingConfigurationVersion creates a new instance of [ApprunnerAutoScalingConfigurationVersion].
 func NewApprunnerAutoScalingConfigurationVersion(name string, args ApprunnerAutoScalingConfigurationVersionArgs) *ApprunnerAutoScalingConfigurationVersion {
 	return &ApprunnerAutoScalingConfigurationVersion{
 		Args: args,
@@ -18,28 +19,51 @@ func NewApprunnerAutoScalingConfigurationVersion(name string, args ApprunnerAuto
 
 var _ terra.Resource = (*ApprunnerAutoScalingConfigurationVersion)(nil)
 
+// ApprunnerAutoScalingConfigurationVersion represents the Terraform resource aws_apprunner_auto_scaling_configuration_version.
 type ApprunnerAutoScalingConfigurationVersion struct {
-	Name  string
-	Args  ApprunnerAutoScalingConfigurationVersionArgs
-	state *apprunnerAutoScalingConfigurationVersionState
+	Name      string
+	Args      ApprunnerAutoScalingConfigurationVersionArgs
+	state     *apprunnerAutoScalingConfigurationVersionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApprunnerAutoScalingConfigurationVersion].
 func (aascv *ApprunnerAutoScalingConfigurationVersion) Type() string {
 	return "aws_apprunner_auto_scaling_configuration_version"
 }
 
+// LocalName returns the local name for [ApprunnerAutoScalingConfigurationVersion].
 func (aascv *ApprunnerAutoScalingConfigurationVersion) LocalName() string {
 	return aascv.Name
 }
 
+// Configuration returns the configuration (args) for [ApprunnerAutoScalingConfigurationVersion].
 func (aascv *ApprunnerAutoScalingConfigurationVersion) Configuration() interface{} {
 	return aascv.Args
 }
 
+// DependOn is used for other resources to depend on [ApprunnerAutoScalingConfigurationVersion].
+func (aascv *ApprunnerAutoScalingConfigurationVersion) DependOn() terra.Reference {
+	return terra.ReferenceResource(aascv)
+}
+
+// Dependencies returns the list of resources [ApprunnerAutoScalingConfigurationVersion] depends_on.
+func (aascv *ApprunnerAutoScalingConfigurationVersion) Dependencies() terra.Dependencies {
+	return aascv.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApprunnerAutoScalingConfigurationVersion].
+func (aascv *ApprunnerAutoScalingConfigurationVersion) LifecycleManagement() *terra.Lifecycle {
+	return aascv.Lifecycle
+}
+
+// Attributes returns the attributes for [ApprunnerAutoScalingConfigurationVersion].
 func (aascv *ApprunnerAutoScalingConfigurationVersion) Attributes() apprunnerAutoScalingConfigurationVersionAttributes {
 	return apprunnerAutoScalingConfigurationVersionAttributes{ref: terra.ReferenceResource(aascv)}
 }
 
+// ImportState imports the given attribute values into [ApprunnerAutoScalingConfigurationVersion]'s state.
 func (aascv *ApprunnerAutoScalingConfigurationVersion) ImportState(av io.Reader) error {
 	aascv.state = &apprunnerAutoScalingConfigurationVersionState{}
 	if err := json.NewDecoder(av).Decode(aascv.state); err != nil {
@@ -48,10 +72,12 @@ func (aascv *ApprunnerAutoScalingConfigurationVersion) ImportState(av io.Reader)
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApprunnerAutoScalingConfigurationVersion] has state.
 func (aascv *ApprunnerAutoScalingConfigurationVersion) State() (*apprunnerAutoScalingConfigurationVersionState, bool) {
 	return aascv.state, aascv.state != nil
 }
 
+// StateMust returns the state for [ApprunnerAutoScalingConfigurationVersion]. Panics if the state is nil.
 func (aascv *ApprunnerAutoScalingConfigurationVersion) StateMust() *apprunnerAutoScalingConfigurationVersionState {
 	if aascv.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", aascv.Type(), aascv.LocalName()))
@@ -59,10 +85,7 @@ func (aascv *ApprunnerAutoScalingConfigurationVersion) StateMust() *apprunnerAut
 	return aascv.state
 }
 
-func (aascv *ApprunnerAutoScalingConfigurationVersion) DependOn() terra.Reference {
-	return terra.ReferenceResource(aascv)
-}
-
+// ApprunnerAutoScalingConfigurationVersionArgs contains the configurations for aws_apprunner_auto_scaling_configuration_version.
 type ApprunnerAutoScalingConfigurationVersionArgs struct {
 	// AutoScalingConfigurationName: string, required
 	AutoScalingConfigurationName terra.StringValue `hcl:"auto_scaling_configuration_name,attr" validate:"required"`
@@ -78,55 +101,64 @@ type ApprunnerAutoScalingConfigurationVersionArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that ApprunnerAutoScalingConfigurationVersion depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apprunnerAutoScalingConfigurationVersionAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_apprunner_auto_scaling_configuration_version.
 func (aascv apprunnerAutoScalingConfigurationVersionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(aascv.ref.Append("arn"))
+	return terra.ReferenceAsString(aascv.ref.Append("arn"))
 }
 
+// AutoScalingConfigurationName returns a reference to field auto_scaling_configuration_name of aws_apprunner_auto_scaling_configuration_version.
 func (aascv apprunnerAutoScalingConfigurationVersionAttributes) AutoScalingConfigurationName() terra.StringValue {
-	return terra.ReferenceString(aascv.ref.Append("auto_scaling_configuration_name"))
+	return terra.ReferenceAsString(aascv.ref.Append("auto_scaling_configuration_name"))
 }
 
+// AutoScalingConfigurationRevision returns a reference to field auto_scaling_configuration_revision of aws_apprunner_auto_scaling_configuration_version.
 func (aascv apprunnerAutoScalingConfigurationVersionAttributes) AutoScalingConfigurationRevision() terra.NumberValue {
-	return terra.ReferenceNumber(aascv.ref.Append("auto_scaling_configuration_revision"))
+	return terra.ReferenceAsNumber(aascv.ref.Append("auto_scaling_configuration_revision"))
 }
 
+// Id returns a reference to field id of aws_apprunner_auto_scaling_configuration_version.
 func (aascv apprunnerAutoScalingConfigurationVersionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aascv.ref.Append("id"))
+	return terra.ReferenceAsString(aascv.ref.Append("id"))
 }
 
+// Latest returns a reference to field latest of aws_apprunner_auto_scaling_configuration_version.
 func (aascv apprunnerAutoScalingConfigurationVersionAttributes) Latest() terra.BoolValue {
-	return terra.ReferenceBool(aascv.ref.Append("latest"))
+	return terra.ReferenceAsBool(aascv.ref.Append("latest"))
 }
 
+// MaxConcurrency returns a reference to field max_concurrency of aws_apprunner_auto_scaling_configuration_version.
 func (aascv apprunnerAutoScalingConfigurationVersionAttributes) MaxConcurrency() terra.NumberValue {
-	return terra.ReferenceNumber(aascv.ref.Append("max_concurrency"))
+	return terra.ReferenceAsNumber(aascv.ref.Append("max_concurrency"))
 }
 
+// MaxSize returns a reference to field max_size of aws_apprunner_auto_scaling_configuration_version.
 func (aascv apprunnerAutoScalingConfigurationVersionAttributes) MaxSize() terra.NumberValue {
-	return terra.ReferenceNumber(aascv.ref.Append("max_size"))
+	return terra.ReferenceAsNumber(aascv.ref.Append("max_size"))
 }
 
+// MinSize returns a reference to field min_size of aws_apprunner_auto_scaling_configuration_version.
 func (aascv apprunnerAutoScalingConfigurationVersionAttributes) MinSize() terra.NumberValue {
-	return terra.ReferenceNumber(aascv.ref.Append("min_size"))
+	return terra.ReferenceAsNumber(aascv.ref.Append("min_size"))
 }
 
+// Status returns a reference to field status of aws_apprunner_auto_scaling_configuration_version.
 func (aascv apprunnerAutoScalingConfigurationVersionAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(aascv.ref.Append("status"))
+	return terra.ReferenceAsString(aascv.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of aws_apprunner_auto_scaling_configuration_version.
 func (aascv apprunnerAutoScalingConfigurationVersionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](aascv.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](aascv.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_apprunner_auto_scaling_configuration_version.
 func (aascv apprunnerAutoScalingConfigurationVersionAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](aascv.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](aascv.ref.Append("tags_all"))
 }
 
 type apprunnerAutoScalingConfigurationVersionState struct {

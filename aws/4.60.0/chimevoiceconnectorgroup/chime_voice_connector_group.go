@@ -31,11 +31,11 @@ func (c ConnectorAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ConnectorAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("priority"))
+	return terra.ReferenceAsNumber(c.ref.Append("priority"))
 }
 
 func (c ConnectorAttributes) VoiceConnectorId() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("voice_connector_id"))
+	return terra.ReferenceAsString(c.ref.Append("voice_connector_id"))
 }
 
 type ConnectorState struct {

@@ -56,15 +56,15 @@ func (ta TargetActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ta TargetActionAttributes) PauseCluster() terra.ListValue[PauseClusterAttributes] {
-	return terra.ReferenceList[PauseClusterAttributes](ta.ref.Append("pause_cluster"))
+	return terra.ReferenceAsList[PauseClusterAttributes](ta.ref.Append("pause_cluster"))
 }
 
 func (ta TargetActionAttributes) ResizeCluster() terra.ListValue[ResizeClusterAttributes] {
-	return terra.ReferenceList[ResizeClusterAttributes](ta.ref.Append("resize_cluster"))
+	return terra.ReferenceAsList[ResizeClusterAttributes](ta.ref.Append("resize_cluster"))
 }
 
 func (ta TargetActionAttributes) ResumeCluster() terra.ListValue[ResumeClusterAttributes] {
-	return terra.ReferenceList[ResumeClusterAttributes](ta.ref.Append("resume_cluster"))
+	return terra.ReferenceAsList[ResumeClusterAttributes](ta.ref.Append("resume_cluster"))
 }
 
 type PauseClusterAttributes struct {
@@ -84,7 +84,7 @@ func (pc PauseClusterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pc PauseClusterAttributes) ClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("cluster_identifier"))
+	return terra.ReferenceAsString(pc.ref.Append("cluster_identifier"))
 }
 
 type ResizeClusterAttributes struct {
@@ -104,23 +104,23 @@ func (rc ResizeClusterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rc ResizeClusterAttributes) Classic() terra.BoolValue {
-	return terra.ReferenceBool(rc.ref.Append("classic"))
+	return terra.ReferenceAsBool(rc.ref.Append("classic"))
 }
 
 func (rc ResizeClusterAttributes) ClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("cluster_identifier"))
+	return terra.ReferenceAsString(rc.ref.Append("cluster_identifier"))
 }
 
 func (rc ResizeClusterAttributes) ClusterType() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("cluster_type"))
+	return terra.ReferenceAsString(rc.ref.Append("cluster_type"))
 }
 
 func (rc ResizeClusterAttributes) NodeType() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("node_type"))
+	return terra.ReferenceAsString(rc.ref.Append("node_type"))
 }
 
 func (rc ResizeClusterAttributes) NumberOfNodes() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("number_of_nodes"))
+	return terra.ReferenceAsNumber(rc.ref.Append("number_of_nodes"))
 }
 
 type ResumeClusterAttributes struct {
@@ -140,7 +140,7 @@ func (rc ResumeClusterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rc ResumeClusterAttributes) ClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("cluster_identifier"))
+	return terra.ReferenceAsString(rc.ref.Append("cluster_identifier"))
 }
 
 type TargetActionState struct {

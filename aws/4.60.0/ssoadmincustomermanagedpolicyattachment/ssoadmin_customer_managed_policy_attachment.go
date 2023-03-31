@@ -31,11 +31,11 @@ func (cmpr CustomerManagedPolicyReferenceAttributes) InternalTokens() hclwrite.T
 }
 
 func (cmpr CustomerManagedPolicyReferenceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cmpr.ref.Append("name"))
+	return terra.ReferenceAsString(cmpr.ref.Append("name"))
 }
 
 func (cmpr CustomerManagedPolicyReferenceAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(cmpr.ref.Append("path"))
+	return terra.ReferenceAsString(cmpr.ref.Append("path"))
 }
 
 type CustomerManagedPolicyReferenceState struct {

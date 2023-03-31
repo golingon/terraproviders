@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataServicequotasServiceQuota creates a new instance of [DataServicequotasServiceQuota].
 func NewDataServicequotasServiceQuota(name string, args DataServicequotasServiceQuotaArgs) *DataServicequotasServiceQuota {
 	return &DataServicequotasServiceQuota{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataServicequotasServiceQuota(name string, args DataServicequotasService
 
 var _ terra.DataResource = (*DataServicequotasServiceQuota)(nil)
 
+// DataServicequotasServiceQuota represents the Terraform data resource aws_servicequotas_service_quota.
 type DataServicequotasServiceQuota struct {
 	Name string
 	Args DataServicequotasServiceQuotaArgs
 }
 
+// DataSource returns the Terraform object type for [DataServicequotasServiceQuota].
 func (ssq *DataServicequotasServiceQuota) DataSource() string {
 	return "aws_servicequotas_service_quota"
 }
 
+// LocalName returns the local name for [DataServicequotasServiceQuota].
 func (ssq *DataServicequotasServiceQuota) LocalName() string {
 	return ssq.Name
 }
 
+// Configuration returns the configuration (args) for [DataServicequotasServiceQuota].
 func (ssq *DataServicequotasServiceQuota) Configuration() interface{} {
 	return ssq.Args
 }
 
+// Attributes returns the attributes for [DataServicequotasServiceQuota].
 func (ssq *DataServicequotasServiceQuota) Attributes() dataServicequotasServiceQuotaAttributes {
 	return dataServicequotasServiceQuotaAttributes{ref: terra.ReferenceDataResource(ssq)}
 }
 
+// DataServicequotasServiceQuotaArgs contains the configurations for aws_servicequotas_service_quota.
 type DataServicequotasServiceQuotaArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -48,42 +55,52 @@ type dataServicequotasServiceQuotaAttributes struct {
 	ref terra.Reference
 }
 
+// Adjustable returns a reference to field adjustable of aws_servicequotas_service_quota.
 func (ssq dataServicequotasServiceQuotaAttributes) Adjustable() terra.BoolValue {
-	return terra.ReferenceBool(ssq.ref.Append("adjustable"))
+	return terra.ReferenceAsBool(ssq.ref.Append("adjustable"))
 }
 
+// Arn returns a reference to field arn of aws_servicequotas_service_quota.
 func (ssq dataServicequotasServiceQuotaAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ssq.ref.Append("arn"))
+	return terra.ReferenceAsString(ssq.ref.Append("arn"))
 }
 
+// DefaultValue returns a reference to field default_value of aws_servicequotas_service_quota.
 func (ssq dataServicequotasServiceQuotaAttributes) DefaultValue() terra.NumberValue {
-	return terra.ReferenceNumber(ssq.ref.Append("default_value"))
+	return terra.ReferenceAsNumber(ssq.ref.Append("default_value"))
 }
 
+// GlobalQuota returns a reference to field global_quota of aws_servicequotas_service_quota.
 func (ssq dataServicequotasServiceQuotaAttributes) GlobalQuota() terra.BoolValue {
-	return terra.ReferenceBool(ssq.ref.Append("global_quota"))
+	return terra.ReferenceAsBool(ssq.ref.Append("global_quota"))
 }
 
+// Id returns a reference to field id of aws_servicequotas_service_quota.
 func (ssq dataServicequotasServiceQuotaAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ssq.ref.Append("id"))
+	return terra.ReferenceAsString(ssq.ref.Append("id"))
 }
 
+// QuotaCode returns a reference to field quota_code of aws_servicequotas_service_quota.
 func (ssq dataServicequotasServiceQuotaAttributes) QuotaCode() terra.StringValue {
-	return terra.ReferenceString(ssq.ref.Append("quota_code"))
+	return terra.ReferenceAsString(ssq.ref.Append("quota_code"))
 }
 
+// QuotaName returns a reference to field quota_name of aws_servicequotas_service_quota.
 func (ssq dataServicequotasServiceQuotaAttributes) QuotaName() terra.StringValue {
-	return terra.ReferenceString(ssq.ref.Append("quota_name"))
+	return terra.ReferenceAsString(ssq.ref.Append("quota_name"))
 }
 
+// ServiceCode returns a reference to field service_code of aws_servicequotas_service_quota.
 func (ssq dataServicequotasServiceQuotaAttributes) ServiceCode() terra.StringValue {
-	return terra.ReferenceString(ssq.ref.Append("service_code"))
+	return terra.ReferenceAsString(ssq.ref.Append("service_code"))
 }
 
+// ServiceName returns a reference to field service_name of aws_servicequotas_service_quota.
 func (ssq dataServicequotasServiceQuotaAttributes) ServiceName() terra.StringValue {
-	return terra.ReferenceString(ssq.ref.Append("service_name"))
+	return terra.ReferenceAsString(ssq.ref.Append("service_name"))
 }
 
+// Value returns a reference to field value of aws_servicequotas_service_quota.
 func (ssq dataServicequotasServiceQuotaAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(ssq.ref.Append("value"))
+	return terra.ReferenceAsNumber(ssq.ref.Append("value"))
 }

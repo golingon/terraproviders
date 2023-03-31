@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAuditmanagerAssessmentReport creates a new instance of [AuditmanagerAssessmentReport].
 func NewAuditmanagerAssessmentReport(name string, args AuditmanagerAssessmentReportArgs) *AuditmanagerAssessmentReport {
 	return &AuditmanagerAssessmentReport{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAuditmanagerAssessmentReport(name string, args AuditmanagerAssessmentRep
 
 var _ terra.Resource = (*AuditmanagerAssessmentReport)(nil)
 
+// AuditmanagerAssessmentReport represents the Terraform resource aws_auditmanager_assessment_report.
 type AuditmanagerAssessmentReport struct {
-	Name  string
-	Args  AuditmanagerAssessmentReportArgs
-	state *auditmanagerAssessmentReportState
+	Name      string
+	Args      AuditmanagerAssessmentReportArgs
+	state     *auditmanagerAssessmentReportState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AuditmanagerAssessmentReport].
 func (aar *AuditmanagerAssessmentReport) Type() string {
 	return "aws_auditmanager_assessment_report"
 }
 
+// LocalName returns the local name for [AuditmanagerAssessmentReport].
 func (aar *AuditmanagerAssessmentReport) LocalName() string {
 	return aar.Name
 }
 
+// Configuration returns the configuration (args) for [AuditmanagerAssessmentReport].
 func (aar *AuditmanagerAssessmentReport) Configuration() interface{} {
 	return aar.Args
 }
 
+// DependOn is used for other resources to depend on [AuditmanagerAssessmentReport].
+func (aar *AuditmanagerAssessmentReport) DependOn() terra.Reference {
+	return terra.ReferenceResource(aar)
+}
+
+// Dependencies returns the list of resources [AuditmanagerAssessmentReport] depends_on.
+func (aar *AuditmanagerAssessmentReport) Dependencies() terra.Dependencies {
+	return aar.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AuditmanagerAssessmentReport].
+func (aar *AuditmanagerAssessmentReport) LifecycleManagement() *terra.Lifecycle {
+	return aar.Lifecycle
+}
+
+// Attributes returns the attributes for [AuditmanagerAssessmentReport].
 func (aar *AuditmanagerAssessmentReport) Attributes() auditmanagerAssessmentReportAttributes {
 	return auditmanagerAssessmentReportAttributes{ref: terra.ReferenceResource(aar)}
 }
 
+// ImportState imports the given attribute values into [AuditmanagerAssessmentReport]'s state.
 func (aar *AuditmanagerAssessmentReport) ImportState(av io.Reader) error {
 	aar.state = &auditmanagerAssessmentReportState{}
 	if err := json.NewDecoder(av).Decode(aar.state); err != nil {
@@ -48,10 +72,12 @@ func (aar *AuditmanagerAssessmentReport) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AuditmanagerAssessmentReport] has state.
 func (aar *AuditmanagerAssessmentReport) State() (*auditmanagerAssessmentReportState, bool) {
 	return aar.state, aar.state != nil
 }
 
+// StateMust returns the state for [AuditmanagerAssessmentReport]. Panics if the state is nil.
 func (aar *AuditmanagerAssessmentReport) StateMust() *auditmanagerAssessmentReportState {
 	if aar.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", aar.Type(), aar.LocalName()))
@@ -59,10 +85,7 @@ func (aar *AuditmanagerAssessmentReport) StateMust() *auditmanagerAssessmentRepo
 	return aar.state
 }
 
-func (aar *AuditmanagerAssessmentReport) DependOn() terra.Reference {
-	return terra.ReferenceResource(aar)
-}
-
+// AuditmanagerAssessmentReportArgs contains the configurations for aws_auditmanager_assessment_report.
 type AuditmanagerAssessmentReportArgs struct {
 	// AssessmentId: string, required
 	AssessmentId terra.StringValue `hcl:"assessment_id,attr" validate:"required"`
@@ -70,35 +93,39 @@ type AuditmanagerAssessmentReportArgs struct {
 	Description terra.StringValue `hcl:"description,attr"`
 	// Name: string, required
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
-	// DependsOn contains resources that AuditmanagerAssessmentReport depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type auditmanagerAssessmentReportAttributes struct {
 	ref terra.Reference
 }
 
+// AssessmentId returns a reference to field assessment_id of aws_auditmanager_assessment_report.
 func (aar auditmanagerAssessmentReportAttributes) AssessmentId() terra.StringValue {
-	return terra.ReferenceString(aar.ref.Append("assessment_id"))
+	return terra.ReferenceAsString(aar.ref.Append("assessment_id"))
 }
 
+// Author returns a reference to field author of aws_auditmanager_assessment_report.
 func (aar auditmanagerAssessmentReportAttributes) Author() terra.StringValue {
-	return terra.ReferenceString(aar.ref.Append("author"))
+	return terra.ReferenceAsString(aar.ref.Append("author"))
 }
 
+// Description returns a reference to field description of aws_auditmanager_assessment_report.
 func (aar auditmanagerAssessmentReportAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(aar.ref.Append("description"))
+	return terra.ReferenceAsString(aar.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_auditmanager_assessment_report.
 func (aar auditmanagerAssessmentReportAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aar.ref.Append("id"))
+	return terra.ReferenceAsString(aar.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_auditmanager_assessment_report.
 func (aar auditmanagerAssessmentReportAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(aar.ref.Append("name"))
+	return terra.ReferenceAsString(aar.ref.Append("name"))
 }
 
+// Status returns a reference to field status of aws_auditmanager_assessment_report.
 func (aar auditmanagerAssessmentReportAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(aar.ref.Append("status"))
+	return terra.ReferenceAsString(aar.ref.Append("status"))
 }
 
 type auditmanagerAssessmentReportState struct {

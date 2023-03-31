@@ -99,15 +99,15 @@ func (cs CapacitySpecificationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cs CapacitySpecificationAttributes) ReadCapacityUnits() terra.NumberValue {
-	return terra.ReferenceNumber(cs.ref.Append("read_capacity_units"))
+	return terra.ReferenceAsNumber(cs.ref.Append("read_capacity_units"))
 }
 
 func (cs CapacitySpecificationAttributes) ThroughputMode() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("throughput_mode"))
+	return terra.ReferenceAsString(cs.ref.Append("throughput_mode"))
 }
 
 func (cs CapacitySpecificationAttributes) WriteCapacityUnits() terra.NumberValue {
-	return terra.ReferenceNumber(cs.ref.Append("write_capacity_units"))
+	return terra.ReferenceAsNumber(cs.ref.Append("write_capacity_units"))
 }
 
 type CommentAttributes struct {
@@ -127,7 +127,7 @@ func (c CommentAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c CommentAttributes) Message() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("message"))
+	return terra.ReferenceAsString(c.ref.Append("message"))
 }
 
 type EncryptionSpecificationAttributes struct {
@@ -147,11 +147,11 @@ func (es EncryptionSpecificationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (es EncryptionSpecificationAttributes) KmsKeyIdentifier() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("kms_key_identifier"))
+	return terra.ReferenceAsString(es.ref.Append("kms_key_identifier"))
 }
 
 func (es EncryptionSpecificationAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("type"))
+	return terra.ReferenceAsString(es.ref.Append("type"))
 }
 
 type PointInTimeRecoveryAttributes struct {
@@ -171,7 +171,7 @@ func (pitr PointInTimeRecoveryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pitr PointInTimeRecoveryAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(pitr.ref.Append("status"))
+	return terra.ReferenceAsString(pitr.ref.Append("status"))
 }
 
 type SchemaDefinitionAttributes struct {
@@ -191,19 +191,19 @@ func (sd SchemaDefinitionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sd SchemaDefinitionAttributes) ClusteringKey() terra.ListValue[ClusteringKeyAttributes] {
-	return terra.ReferenceList[ClusteringKeyAttributes](sd.ref.Append("clustering_key"))
+	return terra.ReferenceAsList[ClusteringKeyAttributes](sd.ref.Append("clustering_key"))
 }
 
 func (sd SchemaDefinitionAttributes) Column() terra.SetValue[ColumnAttributes] {
-	return terra.ReferenceSet[ColumnAttributes](sd.ref.Append("column"))
+	return terra.ReferenceAsSet[ColumnAttributes](sd.ref.Append("column"))
 }
 
 func (sd SchemaDefinitionAttributes) PartitionKey() terra.ListValue[PartitionKeyAttributes] {
-	return terra.ReferenceList[PartitionKeyAttributes](sd.ref.Append("partition_key"))
+	return terra.ReferenceAsList[PartitionKeyAttributes](sd.ref.Append("partition_key"))
 }
 
 func (sd SchemaDefinitionAttributes) StaticColumn() terra.SetValue[StaticColumnAttributes] {
-	return terra.ReferenceSet[StaticColumnAttributes](sd.ref.Append("static_column"))
+	return terra.ReferenceAsSet[StaticColumnAttributes](sd.ref.Append("static_column"))
 }
 
 type ClusteringKeyAttributes struct {
@@ -223,11 +223,11 @@ func (ck ClusteringKeyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ck ClusteringKeyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ck.ref.Append("name"))
+	return terra.ReferenceAsString(ck.ref.Append("name"))
 }
 
 func (ck ClusteringKeyAttributes) OrderBy() terra.StringValue {
-	return terra.ReferenceString(ck.ref.Append("order_by"))
+	return terra.ReferenceAsString(ck.ref.Append("order_by"))
 }
 
 type ColumnAttributes struct {
@@ -247,11 +247,11 @@ func (c ColumnAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ColumnAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 func (c ColumnAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("type"))
+	return terra.ReferenceAsString(c.ref.Append("type"))
 }
 
 type PartitionKeyAttributes struct {
@@ -271,7 +271,7 @@ func (pk PartitionKeyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pk PartitionKeyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pk.ref.Append("name"))
+	return terra.ReferenceAsString(pk.ref.Append("name"))
 }
 
 type StaticColumnAttributes struct {
@@ -291,7 +291,7 @@ func (sc StaticColumnAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc StaticColumnAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("name"))
+	return terra.ReferenceAsString(sc.ref.Append("name"))
 }
 
 type TimeoutsAttributes struct {
@@ -311,15 +311,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type TtlAttributes struct {
@@ -339,7 +339,7 @@ func (t TtlAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TtlAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("status"))
+	return terra.ReferenceAsString(t.ref.Append("status"))
 }
 
 type CapacitySpecificationState struct {

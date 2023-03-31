@@ -38,15 +38,15 @@ func (rtml ResourceTagMappingListAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rtml ResourceTagMappingListAttributes) ResourceArn() terra.StringValue {
-	return terra.ReferenceString(rtml.ref.Append("resource_arn"))
+	return terra.ReferenceAsString(rtml.ref.Append("resource_arn"))
 }
 
 func (rtml ResourceTagMappingListAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rtml.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rtml.ref.Append("tags"))
 }
 
 func (rtml ResourceTagMappingListAttributes) ComplianceDetails() terra.ListValue[ComplianceDetailsAttributes] {
-	return terra.ReferenceList[ComplianceDetailsAttributes](rtml.ref.Append("compliance_details"))
+	return terra.ReferenceAsList[ComplianceDetailsAttributes](rtml.ref.Append("compliance_details"))
 }
 
 type ComplianceDetailsAttributes struct {
@@ -66,15 +66,15 @@ func (cd ComplianceDetailsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cd ComplianceDetailsAttributes) ComplianceStatus() terra.BoolValue {
-	return terra.ReferenceBool(cd.ref.Append("compliance_status"))
+	return terra.ReferenceAsBool(cd.ref.Append("compliance_status"))
 }
 
 func (cd ComplianceDetailsAttributes) KeysWithNoncompliantValues() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cd.ref.Append("keys_with_noncompliant_values"))
+	return terra.ReferenceAsSet[terra.StringValue](cd.ref.Append("keys_with_noncompliant_values"))
 }
 
 func (cd ComplianceDetailsAttributes) NonCompliantKeys() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cd.ref.Append("non_compliant_keys"))
+	return terra.ReferenceAsSet[terra.StringValue](cd.ref.Append("non_compliant_keys"))
 }
 
 type TagFilterAttributes struct {
@@ -94,11 +94,11 @@ func (tf TagFilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tf TagFilterAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(tf.ref.Append("key"))
+	return terra.ReferenceAsString(tf.ref.Append("key"))
 }
 
 func (tf TagFilterAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](tf.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](tf.ref.Append("values"))
 }
 
 type ResourceTagMappingListState struct {

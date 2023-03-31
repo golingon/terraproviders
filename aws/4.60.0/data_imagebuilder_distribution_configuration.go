@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataImagebuilderDistributionConfiguration creates a new instance of [DataImagebuilderDistributionConfiguration].
 func NewDataImagebuilderDistributionConfiguration(name string, args DataImagebuilderDistributionConfigurationArgs) *DataImagebuilderDistributionConfiguration {
 	return &DataImagebuilderDistributionConfiguration{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataImagebuilderDistributionConfiguration(name string, args DataImagebui
 
 var _ terra.DataResource = (*DataImagebuilderDistributionConfiguration)(nil)
 
+// DataImagebuilderDistributionConfiguration represents the Terraform data resource aws_imagebuilder_distribution_configuration.
 type DataImagebuilderDistributionConfiguration struct {
 	Name string
 	Args DataImagebuilderDistributionConfigurationArgs
 }
 
+// DataSource returns the Terraform object type for [DataImagebuilderDistributionConfiguration].
 func (idc *DataImagebuilderDistributionConfiguration) DataSource() string {
 	return "aws_imagebuilder_distribution_configuration"
 }
 
+// LocalName returns the local name for [DataImagebuilderDistributionConfiguration].
 func (idc *DataImagebuilderDistributionConfiguration) LocalName() string {
 	return idc.Name
 }
 
+// Configuration returns the configuration (args) for [DataImagebuilderDistributionConfiguration].
 func (idc *DataImagebuilderDistributionConfiguration) Configuration() interface{} {
 	return idc.Args
 }
 
+// Attributes returns the attributes for [DataImagebuilderDistributionConfiguration].
 func (idc *DataImagebuilderDistributionConfiguration) Attributes() dataImagebuilderDistributionConfigurationAttributes {
 	return dataImagebuilderDistributionConfigurationAttributes{ref: terra.ReferenceDataResource(idc)}
 }
 
+// DataImagebuilderDistributionConfigurationArgs contains the configurations for aws_imagebuilder_distribution_configuration.
 type DataImagebuilderDistributionConfigurationArgs struct {
 	// Arn: string, required
 	Arn terra.StringValue `hcl:"arn,attr" validate:"required"`
@@ -51,34 +58,41 @@ type dataImagebuilderDistributionConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_imagebuilder_distribution_configuration.
 func (idc dataImagebuilderDistributionConfigurationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("arn"))
+	return terra.ReferenceAsString(idc.ref.Append("arn"))
 }
 
+// DateCreated returns a reference to field date_created of aws_imagebuilder_distribution_configuration.
 func (idc dataImagebuilderDistributionConfigurationAttributes) DateCreated() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("date_created"))
+	return terra.ReferenceAsString(idc.ref.Append("date_created"))
 }
 
+// DateUpdated returns a reference to field date_updated of aws_imagebuilder_distribution_configuration.
 func (idc dataImagebuilderDistributionConfigurationAttributes) DateUpdated() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("date_updated"))
+	return terra.ReferenceAsString(idc.ref.Append("date_updated"))
 }
 
+// Description returns a reference to field description of aws_imagebuilder_distribution_configuration.
 func (idc dataImagebuilderDistributionConfigurationAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("description"))
+	return terra.ReferenceAsString(idc.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_imagebuilder_distribution_configuration.
 func (idc dataImagebuilderDistributionConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("id"))
+	return terra.ReferenceAsString(idc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_imagebuilder_distribution_configuration.
 func (idc dataImagebuilderDistributionConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("name"))
+	return terra.ReferenceAsString(idc.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_imagebuilder_distribution_configuration.
 func (idc dataImagebuilderDistributionConfigurationAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](idc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](idc.ref.Append("tags"))
 }
 
 func (idc dataImagebuilderDistributionConfigurationAttributes) Distribution() terra.SetValue[dataimagebuilderdistributionconfiguration.DistributionAttributes] {
-	return terra.ReferenceSet[dataimagebuilderdistributionconfiguration.DistributionAttributes](idc.ref.Append("distribution"))
+	return terra.ReferenceAsSet[dataimagebuilderdistributionconfiguration.DistributionAttributes](idc.ref.Append("distribution"))
 }

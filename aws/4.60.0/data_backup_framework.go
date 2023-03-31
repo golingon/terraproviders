@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataBackupFramework creates a new instance of [DataBackupFramework].
 func NewDataBackupFramework(name string, args DataBackupFrameworkArgs) *DataBackupFramework {
 	return &DataBackupFramework{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataBackupFramework(name string, args DataBackupFrameworkArgs) *DataBack
 
 var _ terra.DataResource = (*DataBackupFramework)(nil)
 
+// DataBackupFramework represents the Terraform data resource aws_backup_framework.
 type DataBackupFramework struct {
 	Name string
 	Args DataBackupFrameworkArgs
 }
 
+// DataSource returns the Terraform object type for [DataBackupFramework].
 func (bf *DataBackupFramework) DataSource() string {
 	return "aws_backup_framework"
 }
 
+// LocalName returns the local name for [DataBackupFramework].
 func (bf *DataBackupFramework) LocalName() string {
 	return bf.Name
 }
 
+// Configuration returns the configuration (args) for [DataBackupFramework].
 func (bf *DataBackupFramework) Configuration() interface{} {
 	return bf.Args
 }
 
+// Attributes returns the attributes for [DataBackupFramework].
 func (bf *DataBackupFramework) Attributes() dataBackupFrameworkAttributes {
 	return dataBackupFrameworkAttributes{ref: terra.ReferenceDataResource(bf)}
 }
 
+// DataBackupFrameworkArgs contains the configurations for aws_backup_framework.
 type DataBackupFrameworkArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,38 +58,46 @@ type dataBackupFrameworkAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_backup_framework.
 func (bf dataBackupFrameworkAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(bf.ref.Append("arn"))
+	return terra.ReferenceAsString(bf.ref.Append("arn"))
 }
 
+// CreationTime returns a reference to field creation_time of aws_backup_framework.
 func (bf dataBackupFrameworkAttributes) CreationTime() terra.StringValue {
-	return terra.ReferenceString(bf.ref.Append("creation_time"))
+	return terra.ReferenceAsString(bf.ref.Append("creation_time"))
 }
 
+// DeploymentStatus returns a reference to field deployment_status of aws_backup_framework.
 func (bf dataBackupFrameworkAttributes) DeploymentStatus() terra.StringValue {
-	return terra.ReferenceString(bf.ref.Append("deployment_status"))
+	return terra.ReferenceAsString(bf.ref.Append("deployment_status"))
 }
 
+// Description returns a reference to field description of aws_backup_framework.
 func (bf dataBackupFrameworkAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(bf.ref.Append("description"))
+	return terra.ReferenceAsString(bf.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_backup_framework.
 func (bf dataBackupFrameworkAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bf.ref.Append("id"))
+	return terra.ReferenceAsString(bf.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_backup_framework.
 func (bf dataBackupFrameworkAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bf.ref.Append("name"))
+	return terra.ReferenceAsString(bf.ref.Append("name"))
 }
 
+// Status returns a reference to field status of aws_backup_framework.
 func (bf dataBackupFrameworkAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(bf.ref.Append("status"))
+	return terra.ReferenceAsString(bf.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of aws_backup_framework.
 func (bf dataBackupFrameworkAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bf.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](bf.ref.Append("tags"))
 }
 
 func (bf dataBackupFrameworkAttributes) Control() terra.SetValue[databackupframework.ControlAttributes] {
-	return terra.ReferenceSet[databackupframework.ControlAttributes](bf.ref.Append("control"))
+	return terra.ReferenceAsSet[databackupframework.ControlAttributes](bf.ref.Append("control"))
 }

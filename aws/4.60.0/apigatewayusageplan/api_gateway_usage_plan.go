@@ -58,15 +58,15 @@ func (as ApiStagesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (as ApiStagesAttributes) ApiId() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("api_id"))
+	return terra.ReferenceAsString(as.ref.Append("api_id"))
 }
 
 func (as ApiStagesAttributes) Stage() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("stage"))
+	return terra.ReferenceAsString(as.ref.Append("stage"))
 }
 
 func (as ApiStagesAttributes) Throttle() terra.SetValue[ThrottleAttributes] {
-	return terra.ReferenceSet[ThrottleAttributes](as.ref.Append("throttle"))
+	return terra.ReferenceAsSet[ThrottleAttributes](as.ref.Append("throttle"))
 }
 
 type ThrottleAttributes struct {
@@ -86,15 +86,15 @@ func (t ThrottleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t ThrottleAttributes) BurstLimit() terra.NumberValue {
-	return terra.ReferenceNumber(t.ref.Append("burst_limit"))
+	return terra.ReferenceAsNumber(t.ref.Append("burst_limit"))
 }
 
 func (t ThrottleAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("path"))
+	return terra.ReferenceAsString(t.ref.Append("path"))
 }
 
 func (t ThrottleAttributes) RateLimit() terra.NumberValue {
-	return terra.ReferenceNumber(t.ref.Append("rate_limit"))
+	return terra.ReferenceAsNumber(t.ref.Append("rate_limit"))
 }
 
 type QuotaSettingsAttributes struct {
@@ -114,15 +114,15 @@ func (qs QuotaSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (qs QuotaSettingsAttributes) Limit() terra.NumberValue {
-	return terra.ReferenceNumber(qs.ref.Append("limit"))
+	return terra.ReferenceAsNumber(qs.ref.Append("limit"))
 }
 
 func (qs QuotaSettingsAttributes) Offset() terra.NumberValue {
-	return terra.ReferenceNumber(qs.ref.Append("offset"))
+	return terra.ReferenceAsNumber(qs.ref.Append("offset"))
 }
 
 func (qs QuotaSettingsAttributes) Period() terra.StringValue {
-	return terra.ReferenceString(qs.ref.Append("period"))
+	return terra.ReferenceAsString(qs.ref.Append("period"))
 }
 
 type ThrottleSettingsAttributes struct {
@@ -142,11 +142,11 @@ func (ts ThrottleSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ts ThrottleSettingsAttributes) BurstLimit() terra.NumberValue {
-	return terra.ReferenceNumber(ts.ref.Append("burst_limit"))
+	return terra.ReferenceAsNumber(ts.ref.Append("burst_limit"))
 }
 
 func (ts ThrottleSettingsAttributes) RateLimit() terra.NumberValue {
-	return terra.ReferenceNumber(ts.ref.Append("rate_limit"))
+	return terra.ReferenceAsNumber(ts.ref.Append("rate_limit"))
 }
 
 type ApiStagesState struct {

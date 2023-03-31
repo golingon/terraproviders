@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSecurityhubStandardsControl creates a new instance of [SecurityhubStandardsControl].
 func NewSecurityhubStandardsControl(name string, args SecurityhubStandardsControlArgs) *SecurityhubStandardsControl {
 	return &SecurityhubStandardsControl{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSecurityhubStandardsControl(name string, args SecurityhubStandardsContro
 
 var _ terra.Resource = (*SecurityhubStandardsControl)(nil)
 
+// SecurityhubStandardsControl represents the Terraform resource aws_securityhub_standards_control.
 type SecurityhubStandardsControl struct {
-	Name  string
-	Args  SecurityhubStandardsControlArgs
-	state *securityhubStandardsControlState
+	Name      string
+	Args      SecurityhubStandardsControlArgs
+	state     *securityhubStandardsControlState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SecurityhubStandardsControl].
 func (ssc *SecurityhubStandardsControl) Type() string {
 	return "aws_securityhub_standards_control"
 }
 
+// LocalName returns the local name for [SecurityhubStandardsControl].
 func (ssc *SecurityhubStandardsControl) LocalName() string {
 	return ssc.Name
 }
 
+// Configuration returns the configuration (args) for [SecurityhubStandardsControl].
 func (ssc *SecurityhubStandardsControl) Configuration() interface{} {
 	return ssc.Args
 }
 
+// DependOn is used for other resources to depend on [SecurityhubStandardsControl].
+func (ssc *SecurityhubStandardsControl) DependOn() terra.Reference {
+	return terra.ReferenceResource(ssc)
+}
+
+// Dependencies returns the list of resources [SecurityhubStandardsControl] depends_on.
+func (ssc *SecurityhubStandardsControl) Dependencies() terra.Dependencies {
+	return ssc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SecurityhubStandardsControl].
+func (ssc *SecurityhubStandardsControl) LifecycleManagement() *terra.Lifecycle {
+	return ssc.Lifecycle
+}
+
+// Attributes returns the attributes for [SecurityhubStandardsControl].
 func (ssc *SecurityhubStandardsControl) Attributes() securityhubStandardsControlAttributes {
 	return securityhubStandardsControlAttributes{ref: terra.ReferenceResource(ssc)}
 }
 
+// ImportState imports the given attribute values into [SecurityhubStandardsControl]'s state.
 func (ssc *SecurityhubStandardsControl) ImportState(av io.Reader) error {
 	ssc.state = &securityhubStandardsControlState{}
 	if err := json.NewDecoder(av).Decode(ssc.state); err != nil {
@@ -48,10 +72,12 @@ func (ssc *SecurityhubStandardsControl) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SecurityhubStandardsControl] has state.
 func (ssc *SecurityhubStandardsControl) State() (*securityhubStandardsControlState, bool) {
 	return ssc.state, ssc.state != nil
 }
 
+// StateMust returns the state for [SecurityhubStandardsControl]. Panics if the state is nil.
 func (ssc *SecurityhubStandardsControl) StateMust() *securityhubStandardsControlState {
 	if ssc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ssc.Type(), ssc.LocalName()))
@@ -59,10 +85,7 @@ func (ssc *SecurityhubStandardsControl) StateMust() *securityhubStandardsControl
 	return ssc.state
 }
 
-func (ssc *SecurityhubStandardsControl) DependOn() terra.Reference {
-	return terra.ReferenceResource(ssc)
-}
-
+// SecurityhubStandardsControlArgs contains the configurations for aws_securityhub_standards_control.
 type SecurityhubStandardsControlArgs struct {
 	// ControlStatus: string, required
 	ControlStatus terra.StringValue `hcl:"control_status,attr" validate:"required"`
@@ -72,55 +95,64 @@ type SecurityhubStandardsControlArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// StandardsControlArn: string, required
 	StandardsControlArn terra.StringValue `hcl:"standards_control_arn,attr" validate:"required"`
-	// DependsOn contains resources that SecurityhubStandardsControl depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type securityhubStandardsControlAttributes struct {
 	ref terra.Reference
 }
 
+// ControlId returns a reference to field control_id of aws_securityhub_standards_control.
 func (ssc securityhubStandardsControlAttributes) ControlId() terra.StringValue {
-	return terra.ReferenceString(ssc.ref.Append("control_id"))
+	return terra.ReferenceAsString(ssc.ref.Append("control_id"))
 }
 
+// ControlStatus returns a reference to field control_status of aws_securityhub_standards_control.
 func (ssc securityhubStandardsControlAttributes) ControlStatus() terra.StringValue {
-	return terra.ReferenceString(ssc.ref.Append("control_status"))
+	return terra.ReferenceAsString(ssc.ref.Append("control_status"))
 }
 
+// ControlStatusUpdatedAt returns a reference to field control_status_updated_at of aws_securityhub_standards_control.
 func (ssc securityhubStandardsControlAttributes) ControlStatusUpdatedAt() terra.StringValue {
-	return terra.ReferenceString(ssc.ref.Append("control_status_updated_at"))
+	return terra.ReferenceAsString(ssc.ref.Append("control_status_updated_at"))
 }
 
+// Description returns a reference to field description of aws_securityhub_standards_control.
 func (ssc securityhubStandardsControlAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ssc.ref.Append("description"))
+	return terra.ReferenceAsString(ssc.ref.Append("description"))
 }
 
+// DisabledReason returns a reference to field disabled_reason of aws_securityhub_standards_control.
 func (ssc securityhubStandardsControlAttributes) DisabledReason() terra.StringValue {
-	return terra.ReferenceString(ssc.ref.Append("disabled_reason"))
+	return terra.ReferenceAsString(ssc.ref.Append("disabled_reason"))
 }
 
+// Id returns a reference to field id of aws_securityhub_standards_control.
 func (ssc securityhubStandardsControlAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ssc.ref.Append("id"))
+	return terra.ReferenceAsString(ssc.ref.Append("id"))
 }
 
+// RelatedRequirements returns a reference to field related_requirements of aws_securityhub_standards_control.
 func (ssc securityhubStandardsControlAttributes) RelatedRequirements() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ssc.ref.Append("related_requirements"))
+	return terra.ReferenceAsList[terra.StringValue](ssc.ref.Append("related_requirements"))
 }
 
+// RemediationUrl returns a reference to field remediation_url of aws_securityhub_standards_control.
 func (ssc securityhubStandardsControlAttributes) RemediationUrl() terra.StringValue {
-	return terra.ReferenceString(ssc.ref.Append("remediation_url"))
+	return terra.ReferenceAsString(ssc.ref.Append("remediation_url"))
 }
 
+// SeverityRating returns a reference to field severity_rating of aws_securityhub_standards_control.
 func (ssc securityhubStandardsControlAttributes) SeverityRating() terra.StringValue {
-	return terra.ReferenceString(ssc.ref.Append("severity_rating"))
+	return terra.ReferenceAsString(ssc.ref.Append("severity_rating"))
 }
 
+// StandardsControlArn returns a reference to field standards_control_arn of aws_securityhub_standards_control.
 func (ssc securityhubStandardsControlAttributes) StandardsControlArn() terra.StringValue {
-	return terra.ReferenceString(ssc.ref.Append("standards_control_arn"))
+	return terra.ReferenceAsString(ssc.ref.Append("standards_control_arn"))
 }
 
+// Title returns a reference to field title of aws_securityhub_standards_control.
 func (ssc securityhubStandardsControlAttributes) Title() terra.StringValue {
-	return terra.ReferenceString(ssc.ref.Append("title"))
+	return terra.ReferenceAsString(ssc.ref.Append("title"))
 }
 
 type securityhubStandardsControlState struct {

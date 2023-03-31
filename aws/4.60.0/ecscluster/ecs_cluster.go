@@ -72,7 +72,7 @@ func (c ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ConfigurationAttributes) ExecuteCommandConfiguration() terra.ListValue[ExecuteCommandConfigurationAttributes] {
-	return terra.ReferenceList[ExecuteCommandConfigurationAttributes](c.ref.Append("execute_command_configuration"))
+	return terra.ReferenceAsList[ExecuteCommandConfigurationAttributes](c.ref.Append("execute_command_configuration"))
 }
 
 type ExecuteCommandConfigurationAttributes struct {
@@ -92,15 +92,15 @@ func (ecc ExecuteCommandConfigurationAttributes) InternalTokens() hclwrite.Token
 }
 
 func (ecc ExecuteCommandConfigurationAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(ecc.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(ecc.ref.Append("kms_key_id"))
 }
 
 func (ecc ExecuteCommandConfigurationAttributes) Logging() terra.StringValue {
-	return terra.ReferenceString(ecc.ref.Append("logging"))
+	return terra.ReferenceAsString(ecc.ref.Append("logging"))
 }
 
 func (ecc ExecuteCommandConfigurationAttributes) LogConfiguration() terra.ListValue[LogConfigurationAttributes] {
-	return terra.ReferenceList[LogConfigurationAttributes](ecc.ref.Append("log_configuration"))
+	return terra.ReferenceAsList[LogConfigurationAttributes](ecc.ref.Append("log_configuration"))
 }
 
 type LogConfigurationAttributes struct {
@@ -120,23 +120,23 @@ func (lc LogConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lc LogConfigurationAttributes) CloudWatchEncryptionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(lc.ref.Append("cloud_watch_encryption_enabled"))
+	return terra.ReferenceAsBool(lc.ref.Append("cloud_watch_encryption_enabled"))
 }
 
 func (lc LogConfigurationAttributes) CloudWatchLogGroupName() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("cloud_watch_log_group_name"))
+	return terra.ReferenceAsString(lc.ref.Append("cloud_watch_log_group_name"))
 }
 
 func (lc LogConfigurationAttributes) S3BucketEncryptionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(lc.ref.Append("s3_bucket_encryption_enabled"))
+	return terra.ReferenceAsBool(lc.ref.Append("s3_bucket_encryption_enabled"))
 }
 
 func (lc LogConfigurationAttributes) S3BucketName() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("s3_bucket_name"))
+	return terra.ReferenceAsString(lc.ref.Append("s3_bucket_name"))
 }
 
 func (lc LogConfigurationAttributes) S3KeyPrefix() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("s3_key_prefix"))
+	return terra.ReferenceAsString(lc.ref.Append("s3_key_prefix"))
 }
 
 type DefaultCapacityProviderStrategyAttributes struct {
@@ -156,15 +156,15 @@ func (dcps DefaultCapacityProviderStrategyAttributes) InternalTokens() hclwrite.
 }
 
 func (dcps DefaultCapacityProviderStrategyAttributes) Base() terra.NumberValue {
-	return terra.ReferenceNumber(dcps.ref.Append("base"))
+	return terra.ReferenceAsNumber(dcps.ref.Append("base"))
 }
 
 func (dcps DefaultCapacityProviderStrategyAttributes) CapacityProvider() terra.StringValue {
-	return terra.ReferenceString(dcps.ref.Append("capacity_provider"))
+	return terra.ReferenceAsString(dcps.ref.Append("capacity_provider"))
 }
 
 func (dcps DefaultCapacityProviderStrategyAttributes) Weight() terra.NumberValue {
-	return terra.ReferenceNumber(dcps.ref.Append("weight"))
+	return terra.ReferenceAsNumber(dcps.ref.Append("weight"))
 }
 
 type ServiceConnectDefaultsAttributes struct {
@@ -184,7 +184,7 @@ func (scd ServiceConnectDefaultsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (scd ServiceConnectDefaultsAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(scd.ref.Append("namespace"))
+	return terra.ReferenceAsString(scd.ref.Append("namespace"))
 }
 
 type SettingAttributes struct {
@@ -204,11 +204,11 @@ func (s SettingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SettingAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s SettingAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("value"))
+	return terra.ReferenceAsString(s.ref.Append("value"))
 }
 
 type ConfigurationState struct {

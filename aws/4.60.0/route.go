@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewRoute creates a new instance of [Route].
 func NewRoute(name string, args RouteArgs) *Route {
 	return &Route{
 		Args: args,
@@ -19,28 +20,51 @@ func NewRoute(name string, args RouteArgs) *Route {
 
 var _ terra.Resource = (*Route)(nil)
 
+// Route represents the Terraform resource aws_route.
 type Route struct {
-	Name  string
-	Args  RouteArgs
-	state *routeState
+	Name      string
+	Args      RouteArgs
+	state     *routeState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Route].
 func (r *Route) Type() string {
 	return "aws_route"
 }
 
+// LocalName returns the local name for [Route].
 func (r *Route) LocalName() string {
 	return r.Name
 }
 
+// Configuration returns the configuration (args) for [Route].
 func (r *Route) Configuration() interface{} {
 	return r.Args
 }
 
+// DependOn is used for other resources to depend on [Route].
+func (r *Route) DependOn() terra.Reference {
+	return terra.ReferenceResource(r)
+}
+
+// Dependencies returns the list of resources [Route] depends_on.
+func (r *Route) Dependencies() terra.Dependencies {
+	return r.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Route].
+func (r *Route) LifecycleManagement() *terra.Lifecycle {
+	return r.Lifecycle
+}
+
+// Attributes returns the attributes for [Route].
 func (r *Route) Attributes() routeAttributes {
 	return routeAttributes{ref: terra.ReferenceResource(r)}
 }
 
+// ImportState imports the given attribute values into [Route]'s state.
 func (r *Route) ImportState(av io.Reader) error {
 	r.state = &routeState{}
 	if err := json.NewDecoder(av).Decode(r.state); err != nil {
@@ -49,10 +73,12 @@ func (r *Route) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Route] has state.
 func (r *Route) State() (*routeState, bool) {
 	return r.state, r.state != nil
 }
 
+// StateMust returns the state for [Route]. Panics if the state is nil.
 func (r *Route) StateMust() *routeState {
 	if r.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", r.Type(), r.LocalName()))
@@ -60,10 +86,7 @@ func (r *Route) StateMust() *routeState {
 	return r.state
 }
 
-func (r *Route) DependOn() terra.Reference {
-	return terra.ReferenceResource(r)
-}
-
+// RouteArgs contains the configurations for aws_route.
 type RouteArgs struct {
 	// CarrierGatewayId: string, optional
 	CarrierGatewayId terra.StringValue `hcl:"carrier_gateway_id,attr"`
@@ -99,91 +122,108 @@ type RouteArgs struct {
 	VpcPeeringConnectionId terra.StringValue `hcl:"vpc_peering_connection_id,attr"`
 	// Timeouts: optional
 	Timeouts *route.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Route depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type routeAttributes struct {
 	ref terra.Reference
 }
 
+// CarrierGatewayId returns a reference to field carrier_gateway_id of aws_route.
 func (r routeAttributes) CarrierGatewayId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("carrier_gateway_id"))
+	return terra.ReferenceAsString(r.ref.Append("carrier_gateway_id"))
 }
 
+// CoreNetworkArn returns a reference to field core_network_arn of aws_route.
 func (r routeAttributes) CoreNetworkArn() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("core_network_arn"))
+	return terra.ReferenceAsString(r.ref.Append("core_network_arn"))
 }
 
+// DestinationCidrBlock returns a reference to field destination_cidr_block of aws_route.
 func (r routeAttributes) DestinationCidrBlock() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("destination_cidr_block"))
+	return terra.ReferenceAsString(r.ref.Append("destination_cidr_block"))
 }
 
+// DestinationIpv6CidrBlock returns a reference to field destination_ipv6_cidr_block of aws_route.
 func (r routeAttributes) DestinationIpv6CidrBlock() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("destination_ipv6_cidr_block"))
+	return terra.ReferenceAsString(r.ref.Append("destination_ipv6_cidr_block"))
 }
 
+// DestinationPrefixListId returns a reference to field destination_prefix_list_id of aws_route.
 func (r routeAttributes) DestinationPrefixListId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("destination_prefix_list_id"))
+	return terra.ReferenceAsString(r.ref.Append("destination_prefix_list_id"))
 }
 
+// EgressOnlyGatewayId returns a reference to field egress_only_gateway_id of aws_route.
 func (r routeAttributes) EgressOnlyGatewayId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("egress_only_gateway_id"))
+	return terra.ReferenceAsString(r.ref.Append("egress_only_gateway_id"))
 }
 
+// GatewayId returns a reference to field gateway_id of aws_route.
 func (r routeAttributes) GatewayId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("gateway_id"))
+	return terra.ReferenceAsString(r.ref.Append("gateway_id"))
 }
 
+// Id returns a reference to field id of aws_route.
 func (r routeAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("id"))
+	return terra.ReferenceAsString(r.ref.Append("id"))
 }
 
+// InstanceId returns a reference to field instance_id of aws_route.
 func (r routeAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("instance_id"))
+	return terra.ReferenceAsString(r.ref.Append("instance_id"))
 }
 
+// InstanceOwnerId returns a reference to field instance_owner_id of aws_route.
 func (r routeAttributes) InstanceOwnerId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("instance_owner_id"))
+	return terra.ReferenceAsString(r.ref.Append("instance_owner_id"))
 }
 
+// LocalGatewayId returns a reference to field local_gateway_id of aws_route.
 func (r routeAttributes) LocalGatewayId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("local_gateway_id"))
+	return terra.ReferenceAsString(r.ref.Append("local_gateway_id"))
 }
 
+// NatGatewayId returns a reference to field nat_gateway_id of aws_route.
 func (r routeAttributes) NatGatewayId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("nat_gateway_id"))
+	return terra.ReferenceAsString(r.ref.Append("nat_gateway_id"))
 }
 
+// NetworkInterfaceId returns a reference to field network_interface_id of aws_route.
 func (r routeAttributes) NetworkInterfaceId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("network_interface_id"))
+	return terra.ReferenceAsString(r.ref.Append("network_interface_id"))
 }
 
+// Origin returns a reference to field origin of aws_route.
 func (r routeAttributes) Origin() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("origin"))
+	return terra.ReferenceAsString(r.ref.Append("origin"))
 }
 
+// RouteTableId returns a reference to field route_table_id of aws_route.
 func (r routeAttributes) RouteTableId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("route_table_id"))
+	return terra.ReferenceAsString(r.ref.Append("route_table_id"))
 }
 
+// State returns a reference to field state of aws_route.
 func (r routeAttributes) State() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("state"))
+	return terra.ReferenceAsString(r.ref.Append("state"))
 }
 
+// TransitGatewayId returns a reference to field transit_gateway_id of aws_route.
 func (r routeAttributes) TransitGatewayId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("transit_gateway_id"))
+	return terra.ReferenceAsString(r.ref.Append("transit_gateway_id"))
 }
 
+// VpcEndpointId returns a reference to field vpc_endpoint_id of aws_route.
 func (r routeAttributes) VpcEndpointId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("vpc_endpoint_id"))
+	return terra.ReferenceAsString(r.ref.Append("vpc_endpoint_id"))
 }
 
+// VpcPeeringConnectionId returns a reference to field vpc_peering_connection_id of aws_route.
 func (r routeAttributes) VpcPeeringConnectionId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("vpc_peering_connection_id"))
+	return terra.ReferenceAsString(r.ref.Append("vpc_peering_connection_id"))
 }
 
 func (r routeAttributes) Timeouts() route.TimeoutsAttributes {
-	return terra.ReferenceSingle[route.TimeoutsAttributes](r.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[route.TimeoutsAttributes](r.ref.Append("timeouts"))
 }
 
 type routeState struct {

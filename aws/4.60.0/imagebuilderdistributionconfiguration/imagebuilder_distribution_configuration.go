@@ -117,27 +117,27 @@ func (d DistributionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DistributionAttributes) LicenseConfigurationArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](d.ref.Append("license_configuration_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](d.ref.Append("license_configuration_arns"))
 }
 
 func (d DistributionAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("region"))
+	return terra.ReferenceAsString(d.ref.Append("region"))
 }
 
 func (d DistributionAttributes) AmiDistributionConfiguration() terra.ListValue[AmiDistributionConfigurationAttributes] {
-	return terra.ReferenceList[AmiDistributionConfigurationAttributes](d.ref.Append("ami_distribution_configuration"))
+	return terra.ReferenceAsList[AmiDistributionConfigurationAttributes](d.ref.Append("ami_distribution_configuration"))
 }
 
 func (d DistributionAttributes) ContainerDistributionConfiguration() terra.ListValue[ContainerDistributionConfigurationAttributes] {
-	return terra.ReferenceList[ContainerDistributionConfigurationAttributes](d.ref.Append("container_distribution_configuration"))
+	return terra.ReferenceAsList[ContainerDistributionConfigurationAttributes](d.ref.Append("container_distribution_configuration"))
 }
 
 func (d DistributionAttributes) FastLaunchConfiguration() terra.SetValue[FastLaunchConfigurationAttributes] {
-	return terra.ReferenceSet[FastLaunchConfigurationAttributes](d.ref.Append("fast_launch_configuration"))
+	return terra.ReferenceAsSet[FastLaunchConfigurationAttributes](d.ref.Append("fast_launch_configuration"))
 }
 
 func (d DistributionAttributes) LaunchTemplateConfiguration() terra.SetValue[LaunchTemplateConfigurationAttributes] {
-	return terra.ReferenceSet[LaunchTemplateConfigurationAttributes](d.ref.Append("launch_template_configuration"))
+	return terra.ReferenceAsSet[LaunchTemplateConfigurationAttributes](d.ref.Append("launch_template_configuration"))
 }
 
 type AmiDistributionConfigurationAttributes struct {
@@ -157,27 +157,27 @@ func (adc AmiDistributionConfigurationAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (adc AmiDistributionConfigurationAttributes) AmiTags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](adc.ref.Append("ami_tags"))
+	return terra.ReferenceAsMap[terra.StringValue](adc.ref.Append("ami_tags"))
 }
 
 func (adc AmiDistributionConfigurationAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(adc.ref.Append("description"))
+	return terra.ReferenceAsString(adc.ref.Append("description"))
 }
 
 func (adc AmiDistributionConfigurationAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(adc.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(adc.ref.Append("kms_key_id"))
 }
 
 func (adc AmiDistributionConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(adc.ref.Append("name"))
+	return terra.ReferenceAsString(adc.ref.Append("name"))
 }
 
 func (adc AmiDistributionConfigurationAttributes) TargetAccountIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](adc.ref.Append("target_account_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](adc.ref.Append("target_account_ids"))
 }
 
 func (adc AmiDistributionConfigurationAttributes) LaunchPermission() terra.ListValue[LaunchPermissionAttributes] {
-	return terra.ReferenceList[LaunchPermissionAttributes](adc.ref.Append("launch_permission"))
+	return terra.ReferenceAsList[LaunchPermissionAttributes](adc.ref.Append("launch_permission"))
 }
 
 type LaunchPermissionAttributes struct {
@@ -197,19 +197,19 @@ func (lp LaunchPermissionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lp LaunchPermissionAttributes) OrganizationArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](lp.ref.Append("organization_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](lp.ref.Append("organization_arns"))
 }
 
 func (lp LaunchPermissionAttributes) OrganizationalUnitArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](lp.ref.Append("organizational_unit_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](lp.ref.Append("organizational_unit_arns"))
 }
 
 func (lp LaunchPermissionAttributes) UserGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](lp.ref.Append("user_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](lp.ref.Append("user_groups"))
 }
 
 func (lp LaunchPermissionAttributes) UserIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](lp.ref.Append("user_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](lp.ref.Append("user_ids"))
 }
 
 type ContainerDistributionConfigurationAttributes struct {
@@ -229,15 +229,15 @@ func (cdc ContainerDistributionConfigurationAttributes) InternalTokens() hclwrit
 }
 
 func (cdc ContainerDistributionConfigurationAttributes) ContainerTags() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cdc.ref.Append("container_tags"))
+	return terra.ReferenceAsSet[terra.StringValue](cdc.ref.Append("container_tags"))
 }
 
 func (cdc ContainerDistributionConfigurationAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cdc.ref.Append("description"))
+	return terra.ReferenceAsString(cdc.ref.Append("description"))
 }
 
 func (cdc ContainerDistributionConfigurationAttributes) TargetRepository() terra.ListValue[TargetRepositoryAttributes] {
-	return terra.ReferenceList[TargetRepositoryAttributes](cdc.ref.Append("target_repository"))
+	return terra.ReferenceAsList[TargetRepositoryAttributes](cdc.ref.Append("target_repository"))
 }
 
 type TargetRepositoryAttributes struct {
@@ -257,11 +257,11 @@ func (tr TargetRepositoryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tr TargetRepositoryAttributes) RepositoryName() terra.StringValue {
-	return terra.ReferenceString(tr.ref.Append("repository_name"))
+	return terra.ReferenceAsString(tr.ref.Append("repository_name"))
 }
 
 func (tr TargetRepositoryAttributes) Service() terra.StringValue {
-	return terra.ReferenceString(tr.ref.Append("service"))
+	return terra.ReferenceAsString(tr.ref.Append("service"))
 }
 
 type FastLaunchConfigurationAttributes struct {
@@ -281,23 +281,23 @@ func (flc FastLaunchConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (flc FastLaunchConfigurationAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(flc.ref.Append("account_id"))
+	return terra.ReferenceAsString(flc.ref.Append("account_id"))
 }
 
 func (flc FastLaunchConfigurationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(flc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(flc.ref.Append("enabled"))
 }
 
 func (flc FastLaunchConfigurationAttributes) MaxParallelLaunches() terra.NumberValue {
-	return terra.ReferenceNumber(flc.ref.Append("max_parallel_launches"))
+	return terra.ReferenceAsNumber(flc.ref.Append("max_parallel_launches"))
 }
 
 func (flc FastLaunchConfigurationAttributes) LaunchTemplate() terra.ListValue[LaunchTemplateAttributes] {
-	return terra.ReferenceList[LaunchTemplateAttributes](flc.ref.Append("launch_template"))
+	return terra.ReferenceAsList[LaunchTemplateAttributes](flc.ref.Append("launch_template"))
 }
 
 func (flc FastLaunchConfigurationAttributes) SnapshotConfiguration() terra.ListValue[SnapshotConfigurationAttributes] {
-	return terra.ReferenceList[SnapshotConfigurationAttributes](flc.ref.Append("snapshot_configuration"))
+	return terra.ReferenceAsList[SnapshotConfigurationAttributes](flc.ref.Append("snapshot_configuration"))
 }
 
 type LaunchTemplateAttributes struct {
@@ -317,15 +317,15 @@ func (lt LaunchTemplateAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lt LaunchTemplateAttributes) LaunchTemplateId() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("launch_template_id"))
+	return terra.ReferenceAsString(lt.ref.Append("launch_template_id"))
 }
 
 func (lt LaunchTemplateAttributes) LaunchTemplateName() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("launch_template_name"))
+	return terra.ReferenceAsString(lt.ref.Append("launch_template_name"))
 }
 
 func (lt LaunchTemplateAttributes) LaunchTemplateVersion() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("launch_template_version"))
+	return terra.ReferenceAsString(lt.ref.Append("launch_template_version"))
 }
 
 type SnapshotConfigurationAttributes struct {
@@ -345,7 +345,7 @@ func (sc SnapshotConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc SnapshotConfigurationAttributes) TargetResourceCount() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("target_resource_count"))
+	return terra.ReferenceAsNumber(sc.ref.Append("target_resource_count"))
 }
 
 type LaunchTemplateConfigurationAttributes struct {
@@ -365,15 +365,15 @@ func (ltc LaunchTemplateConfigurationAttributes) InternalTokens() hclwrite.Token
 }
 
 func (ltc LaunchTemplateConfigurationAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(ltc.ref.Append("account_id"))
+	return terra.ReferenceAsString(ltc.ref.Append("account_id"))
 }
 
 func (ltc LaunchTemplateConfigurationAttributes) Default() terra.BoolValue {
-	return terra.ReferenceBool(ltc.ref.Append("default"))
+	return terra.ReferenceAsBool(ltc.ref.Append("default"))
 }
 
 func (ltc LaunchTemplateConfigurationAttributes) LaunchTemplateId() terra.StringValue {
-	return terra.ReferenceString(ltc.ref.Append("launch_template_id"))
+	return terra.ReferenceAsString(ltc.ref.Append("launch_template_id"))
 }
 
 type DistributionState struct {

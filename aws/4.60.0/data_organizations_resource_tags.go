@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataOrganizationsResourceTags creates a new instance of [DataOrganizationsResourceTags].
 func NewDataOrganizationsResourceTags(name string, args DataOrganizationsResourceTagsArgs) *DataOrganizationsResourceTags {
 	return &DataOrganizationsResourceTags{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataOrganizationsResourceTags(name string, args DataOrganizationsResourc
 
 var _ terra.DataResource = (*DataOrganizationsResourceTags)(nil)
 
+// DataOrganizationsResourceTags represents the Terraform data resource aws_organizations_resource_tags.
 type DataOrganizationsResourceTags struct {
 	Name string
 	Args DataOrganizationsResourceTagsArgs
 }
 
+// DataSource returns the Terraform object type for [DataOrganizationsResourceTags].
 func (ort *DataOrganizationsResourceTags) DataSource() string {
 	return "aws_organizations_resource_tags"
 }
 
+// LocalName returns the local name for [DataOrganizationsResourceTags].
 func (ort *DataOrganizationsResourceTags) LocalName() string {
 	return ort.Name
 }
 
+// Configuration returns the configuration (args) for [DataOrganizationsResourceTags].
 func (ort *DataOrganizationsResourceTags) Configuration() interface{} {
 	return ort.Args
 }
 
+// Attributes returns the attributes for [DataOrganizationsResourceTags].
 func (ort *DataOrganizationsResourceTags) Attributes() dataOrganizationsResourceTagsAttributes {
 	return dataOrganizationsResourceTagsAttributes{ref: terra.ReferenceDataResource(ort)}
 }
 
+// DataOrganizationsResourceTagsArgs contains the configurations for aws_organizations_resource_tags.
 type DataOrganizationsResourceTagsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -46,14 +53,17 @@ type dataOrganizationsResourceTagsAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_organizations_resource_tags.
 func (ort dataOrganizationsResourceTagsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ort.ref.Append("id"))
+	return terra.ReferenceAsString(ort.ref.Append("id"))
 }
 
+// ResourceId returns a reference to field resource_id of aws_organizations_resource_tags.
 func (ort dataOrganizationsResourceTagsAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(ort.ref.Append("resource_id"))
+	return terra.ReferenceAsString(ort.ref.Append("resource_id"))
 }
 
+// Tags returns a reference to field tags of aws_organizations_resource_tags.
 func (ort dataOrganizationsResourceTagsAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ort.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ort.ref.Append("tags"))
 }

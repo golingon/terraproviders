@@ -64,35 +64,35 @@ func (cc CsvClassifierAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc CsvClassifierAttributes) AllowSingleColumn() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("allow_single_column"))
+	return terra.ReferenceAsBool(cc.ref.Append("allow_single_column"))
 }
 
 func (cc CsvClassifierAttributes) ContainsHeader() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("contains_header"))
+	return terra.ReferenceAsString(cc.ref.Append("contains_header"))
 }
 
 func (cc CsvClassifierAttributes) CustomDatatypeConfigured() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("custom_datatype_configured"))
+	return terra.ReferenceAsBool(cc.ref.Append("custom_datatype_configured"))
 }
 
 func (cc CsvClassifierAttributes) CustomDatatypes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cc.ref.Append("custom_datatypes"))
+	return terra.ReferenceAsList[terra.StringValue](cc.ref.Append("custom_datatypes"))
 }
 
 func (cc CsvClassifierAttributes) Delimiter() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("delimiter"))
+	return terra.ReferenceAsString(cc.ref.Append("delimiter"))
 }
 
 func (cc CsvClassifierAttributes) DisableValueTrimming() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("disable_value_trimming"))
+	return terra.ReferenceAsBool(cc.ref.Append("disable_value_trimming"))
 }
 
 func (cc CsvClassifierAttributes) Header() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cc.ref.Append("header"))
+	return terra.ReferenceAsList[terra.StringValue](cc.ref.Append("header"))
 }
 
 func (cc CsvClassifierAttributes) QuoteSymbol() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("quote_symbol"))
+	return terra.ReferenceAsString(cc.ref.Append("quote_symbol"))
 }
 
 type GrokClassifierAttributes struct {
@@ -112,15 +112,15 @@ func (gc GrokClassifierAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (gc GrokClassifierAttributes) Classification() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("classification"))
+	return terra.ReferenceAsString(gc.ref.Append("classification"))
 }
 
 func (gc GrokClassifierAttributes) CustomPatterns() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("custom_patterns"))
+	return terra.ReferenceAsString(gc.ref.Append("custom_patterns"))
 }
 
 func (gc GrokClassifierAttributes) GrokPattern() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("grok_pattern"))
+	return terra.ReferenceAsString(gc.ref.Append("grok_pattern"))
 }
 
 type JsonClassifierAttributes struct {
@@ -140,7 +140,7 @@ func (jc JsonClassifierAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (jc JsonClassifierAttributes) JsonPath() terra.StringValue {
-	return terra.ReferenceString(jc.ref.Append("json_path"))
+	return terra.ReferenceAsString(jc.ref.Append("json_path"))
 }
 
 type XmlClassifierAttributes struct {
@@ -160,11 +160,11 @@ func (xc XmlClassifierAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (xc XmlClassifierAttributes) Classification() terra.StringValue {
-	return terra.ReferenceString(xc.ref.Append("classification"))
+	return terra.ReferenceAsString(xc.ref.Append("classification"))
 }
 
 func (xc XmlClassifierAttributes) RowTag() terra.StringValue {
-	return terra.ReferenceString(xc.ref.Append("row_tag"))
+	return terra.ReferenceAsString(xc.ref.Append("row_tag"))
 }
 
 type CsvClassifierState struct {

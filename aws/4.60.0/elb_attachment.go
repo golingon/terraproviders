@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewElbAttachment creates a new instance of [ElbAttachment].
 func NewElbAttachment(name string, args ElbAttachmentArgs) *ElbAttachment {
 	return &ElbAttachment{
 		Args: args,
@@ -18,28 +19,51 @@ func NewElbAttachment(name string, args ElbAttachmentArgs) *ElbAttachment {
 
 var _ terra.Resource = (*ElbAttachment)(nil)
 
+// ElbAttachment represents the Terraform resource aws_elb_attachment.
 type ElbAttachment struct {
-	Name  string
-	Args  ElbAttachmentArgs
-	state *elbAttachmentState
+	Name      string
+	Args      ElbAttachmentArgs
+	state     *elbAttachmentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ElbAttachment].
 func (ea *ElbAttachment) Type() string {
 	return "aws_elb_attachment"
 }
 
+// LocalName returns the local name for [ElbAttachment].
 func (ea *ElbAttachment) LocalName() string {
 	return ea.Name
 }
 
+// Configuration returns the configuration (args) for [ElbAttachment].
 func (ea *ElbAttachment) Configuration() interface{} {
 	return ea.Args
 }
 
+// DependOn is used for other resources to depend on [ElbAttachment].
+func (ea *ElbAttachment) DependOn() terra.Reference {
+	return terra.ReferenceResource(ea)
+}
+
+// Dependencies returns the list of resources [ElbAttachment] depends_on.
+func (ea *ElbAttachment) Dependencies() terra.Dependencies {
+	return ea.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ElbAttachment].
+func (ea *ElbAttachment) LifecycleManagement() *terra.Lifecycle {
+	return ea.Lifecycle
+}
+
+// Attributes returns the attributes for [ElbAttachment].
 func (ea *ElbAttachment) Attributes() elbAttachmentAttributes {
 	return elbAttachmentAttributes{ref: terra.ReferenceResource(ea)}
 }
 
+// ImportState imports the given attribute values into [ElbAttachment]'s state.
 func (ea *ElbAttachment) ImportState(av io.Reader) error {
 	ea.state = &elbAttachmentState{}
 	if err := json.NewDecoder(av).Decode(ea.state); err != nil {
@@ -48,10 +72,12 @@ func (ea *ElbAttachment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ElbAttachment] has state.
 func (ea *ElbAttachment) State() (*elbAttachmentState, bool) {
 	return ea.state, ea.state != nil
 }
 
+// StateMust returns the state for [ElbAttachment]. Panics if the state is nil.
 func (ea *ElbAttachment) StateMust() *elbAttachmentState {
 	if ea.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ea.Type(), ea.LocalName()))
@@ -59,10 +85,7 @@ func (ea *ElbAttachment) StateMust() *elbAttachmentState {
 	return ea.state
 }
 
-func (ea *ElbAttachment) DependOn() terra.Reference {
-	return terra.ReferenceResource(ea)
-}
-
+// ElbAttachmentArgs contains the configurations for aws_elb_attachment.
 type ElbAttachmentArgs struct {
 	// Elb: string, required
 	Elb terra.StringValue `hcl:"elb,attr" validate:"required"`
@@ -70,23 +93,24 @@ type ElbAttachmentArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// Instance: string, required
 	Instance terra.StringValue `hcl:"instance,attr" validate:"required"`
-	// DependsOn contains resources that ElbAttachment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type elbAttachmentAttributes struct {
 	ref terra.Reference
 }
 
+// Elb returns a reference to field elb of aws_elb_attachment.
 func (ea elbAttachmentAttributes) Elb() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("elb"))
+	return terra.ReferenceAsString(ea.ref.Append("elb"))
 }
 
+// Id returns a reference to field id of aws_elb_attachment.
 func (ea elbAttachmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("id"))
+	return terra.ReferenceAsString(ea.ref.Append("id"))
 }
 
+// Instance returns a reference to field instance of aws_elb_attachment.
 func (ea elbAttachmentAttributes) Instance() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("instance"))
+	return terra.ReferenceAsString(ea.ref.Append("instance"))
 }
 
 type elbAttachmentState struct {

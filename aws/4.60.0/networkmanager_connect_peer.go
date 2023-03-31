@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNetworkmanagerConnectPeer creates a new instance of [NetworkmanagerConnectPeer].
 func NewNetworkmanagerConnectPeer(name string, args NetworkmanagerConnectPeerArgs) *NetworkmanagerConnectPeer {
 	return &NetworkmanagerConnectPeer{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNetworkmanagerConnectPeer(name string, args NetworkmanagerConnectPeerArg
 
 var _ terra.Resource = (*NetworkmanagerConnectPeer)(nil)
 
+// NetworkmanagerConnectPeer represents the Terraform resource aws_networkmanager_connect_peer.
 type NetworkmanagerConnectPeer struct {
-	Name  string
-	Args  NetworkmanagerConnectPeerArgs
-	state *networkmanagerConnectPeerState
+	Name      string
+	Args      NetworkmanagerConnectPeerArgs
+	state     *networkmanagerConnectPeerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NetworkmanagerConnectPeer].
 func (ncp *NetworkmanagerConnectPeer) Type() string {
 	return "aws_networkmanager_connect_peer"
 }
 
+// LocalName returns the local name for [NetworkmanagerConnectPeer].
 func (ncp *NetworkmanagerConnectPeer) LocalName() string {
 	return ncp.Name
 }
 
+// Configuration returns the configuration (args) for [NetworkmanagerConnectPeer].
 func (ncp *NetworkmanagerConnectPeer) Configuration() interface{} {
 	return ncp.Args
 }
 
+// DependOn is used for other resources to depend on [NetworkmanagerConnectPeer].
+func (ncp *NetworkmanagerConnectPeer) DependOn() terra.Reference {
+	return terra.ReferenceResource(ncp)
+}
+
+// Dependencies returns the list of resources [NetworkmanagerConnectPeer] depends_on.
+func (ncp *NetworkmanagerConnectPeer) Dependencies() terra.Dependencies {
+	return ncp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NetworkmanagerConnectPeer].
+func (ncp *NetworkmanagerConnectPeer) LifecycleManagement() *terra.Lifecycle {
+	return ncp.Lifecycle
+}
+
+// Attributes returns the attributes for [NetworkmanagerConnectPeer].
 func (ncp *NetworkmanagerConnectPeer) Attributes() networkmanagerConnectPeerAttributes {
 	return networkmanagerConnectPeerAttributes{ref: terra.ReferenceResource(ncp)}
 }
 
+// ImportState imports the given attribute values into [NetworkmanagerConnectPeer]'s state.
 func (ncp *NetworkmanagerConnectPeer) ImportState(av io.Reader) error {
 	ncp.state = &networkmanagerConnectPeerState{}
 	if err := json.NewDecoder(av).Decode(ncp.state); err != nil {
@@ -49,10 +73,12 @@ func (ncp *NetworkmanagerConnectPeer) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NetworkmanagerConnectPeer] has state.
 func (ncp *NetworkmanagerConnectPeer) State() (*networkmanagerConnectPeerState, bool) {
 	return ncp.state, ncp.state != nil
 }
 
+// StateMust returns the state for [NetworkmanagerConnectPeer]. Panics if the state is nil.
 func (ncp *NetworkmanagerConnectPeer) StateMust() *networkmanagerConnectPeerState {
 	if ncp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ncp.Type(), ncp.LocalName()))
@@ -60,10 +86,7 @@ func (ncp *NetworkmanagerConnectPeer) StateMust() *networkmanagerConnectPeerStat
 	return ncp.state
 }
 
-func (ncp *NetworkmanagerConnectPeer) DependOn() terra.Reference {
-	return terra.ReferenceResource(ncp)
-}
-
+// NetworkmanagerConnectPeerArgs contains the configurations for aws_networkmanager_connect_peer.
 type NetworkmanagerConnectPeerArgs struct {
 	// ConnectAttachmentId: string, required
 	ConnectAttachmentId terra.StringValue `hcl:"connect_attachment_id,attr" validate:"required"`
@@ -85,75 +108,86 @@ type NetworkmanagerConnectPeerArgs struct {
 	BgpOptions *networkmanagerconnectpeer.BgpOptions `hcl:"bgp_options,block"`
 	// Timeouts: optional
 	Timeouts *networkmanagerconnectpeer.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that NetworkmanagerConnectPeer depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type networkmanagerConnectPeerAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_networkmanager_connect_peer.
 func (ncp networkmanagerConnectPeerAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ncp.ref.Append("arn"))
+	return terra.ReferenceAsString(ncp.ref.Append("arn"))
 }
 
+// ConnectAttachmentId returns a reference to field connect_attachment_id of aws_networkmanager_connect_peer.
 func (ncp networkmanagerConnectPeerAttributes) ConnectAttachmentId() terra.StringValue {
-	return terra.ReferenceString(ncp.ref.Append("connect_attachment_id"))
+	return terra.ReferenceAsString(ncp.ref.Append("connect_attachment_id"))
 }
 
+// ConnectPeerId returns a reference to field connect_peer_id of aws_networkmanager_connect_peer.
 func (ncp networkmanagerConnectPeerAttributes) ConnectPeerId() terra.StringValue {
-	return terra.ReferenceString(ncp.ref.Append("connect_peer_id"))
+	return terra.ReferenceAsString(ncp.ref.Append("connect_peer_id"))
 }
 
+// CoreNetworkAddress returns a reference to field core_network_address of aws_networkmanager_connect_peer.
 func (ncp networkmanagerConnectPeerAttributes) CoreNetworkAddress() terra.StringValue {
-	return terra.ReferenceString(ncp.ref.Append("core_network_address"))
+	return terra.ReferenceAsString(ncp.ref.Append("core_network_address"))
 }
 
+// CoreNetworkId returns a reference to field core_network_id of aws_networkmanager_connect_peer.
 func (ncp networkmanagerConnectPeerAttributes) CoreNetworkId() terra.StringValue {
-	return terra.ReferenceString(ncp.ref.Append("core_network_id"))
+	return terra.ReferenceAsString(ncp.ref.Append("core_network_id"))
 }
 
+// CreatedAt returns a reference to field created_at of aws_networkmanager_connect_peer.
 func (ncp networkmanagerConnectPeerAttributes) CreatedAt() terra.StringValue {
-	return terra.ReferenceString(ncp.ref.Append("created_at"))
+	return terra.ReferenceAsString(ncp.ref.Append("created_at"))
 }
 
+// EdgeLocation returns a reference to field edge_location of aws_networkmanager_connect_peer.
 func (ncp networkmanagerConnectPeerAttributes) EdgeLocation() terra.StringValue {
-	return terra.ReferenceString(ncp.ref.Append("edge_location"))
+	return terra.ReferenceAsString(ncp.ref.Append("edge_location"))
 }
 
+// Id returns a reference to field id of aws_networkmanager_connect_peer.
 func (ncp networkmanagerConnectPeerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ncp.ref.Append("id"))
+	return terra.ReferenceAsString(ncp.ref.Append("id"))
 }
 
+// InsideCidrBlocks returns a reference to field inside_cidr_blocks of aws_networkmanager_connect_peer.
 func (ncp networkmanagerConnectPeerAttributes) InsideCidrBlocks() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ncp.ref.Append("inside_cidr_blocks"))
+	return terra.ReferenceAsList[terra.StringValue](ncp.ref.Append("inside_cidr_blocks"))
 }
 
+// PeerAddress returns a reference to field peer_address of aws_networkmanager_connect_peer.
 func (ncp networkmanagerConnectPeerAttributes) PeerAddress() terra.StringValue {
-	return terra.ReferenceString(ncp.ref.Append("peer_address"))
+	return terra.ReferenceAsString(ncp.ref.Append("peer_address"))
 }
 
+// State returns a reference to field state of aws_networkmanager_connect_peer.
 func (ncp networkmanagerConnectPeerAttributes) State() terra.StringValue {
-	return terra.ReferenceString(ncp.ref.Append("state"))
+	return terra.ReferenceAsString(ncp.ref.Append("state"))
 }
 
+// Tags returns a reference to field tags of aws_networkmanager_connect_peer.
 func (ncp networkmanagerConnectPeerAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ncp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ncp.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_networkmanager_connect_peer.
 func (ncp networkmanagerConnectPeerAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ncp.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ncp.ref.Append("tags_all"))
 }
 
 func (ncp networkmanagerConnectPeerAttributes) Configuration() terra.ListValue[networkmanagerconnectpeer.ConfigurationAttributes] {
-	return terra.ReferenceList[networkmanagerconnectpeer.ConfigurationAttributes](ncp.ref.Append("configuration"))
+	return terra.ReferenceAsList[networkmanagerconnectpeer.ConfigurationAttributes](ncp.ref.Append("configuration"))
 }
 
 func (ncp networkmanagerConnectPeerAttributes) BgpOptions() terra.ListValue[networkmanagerconnectpeer.BgpOptionsAttributes] {
-	return terra.ReferenceList[networkmanagerconnectpeer.BgpOptionsAttributes](ncp.ref.Append("bgp_options"))
+	return terra.ReferenceAsList[networkmanagerconnectpeer.BgpOptionsAttributes](ncp.ref.Append("bgp_options"))
 }
 
 func (ncp networkmanagerConnectPeerAttributes) Timeouts() networkmanagerconnectpeer.TimeoutsAttributes {
-	return terra.ReferenceSingle[networkmanagerconnectpeer.TimeoutsAttributes](ncp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[networkmanagerconnectpeer.TimeoutsAttributes](ncp.ref.Append("timeouts"))
 }
 
 type networkmanagerConnectPeerState struct {

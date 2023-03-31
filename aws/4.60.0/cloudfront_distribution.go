@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudfrontDistribution creates a new instance of [CloudfrontDistribution].
 func NewCloudfrontDistribution(name string, args CloudfrontDistributionArgs) *CloudfrontDistribution {
 	return &CloudfrontDistribution{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudfrontDistribution(name string, args CloudfrontDistributionArgs) *Cl
 
 var _ terra.Resource = (*CloudfrontDistribution)(nil)
 
+// CloudfrontDistribution represents the Terraform resource aws_cloudfront_distribution.
 type CloudfrontDistribution struct {
-	Name  string
-	Args  CloudfrontDistributionArgs
-	state *cloudfrontDistributionState
+	Name      string
+	Args      CloudfrontDistributionArgs
+	state     *cloudfrontDistributionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudfrontDistribution].
 func (cd *CloudfrontDistribution) Type() string {
 	return "aws_cloudfront_distribution"
 }
 
+// LocalName returns the local name for [CloudfrontDistribution].
 func (cd *CloudfrontDistribution) LocalName() string {
 	return cd.Name
 }
 
+// Configuration returns the configuration (args) for [CloudfrontDistribution].
 func (cd *CloudfrontDistribution) Configuration() interface{} {
 	return cd.Args
 }
 
+// DependOn is used for other resources to depend on [CloudfrontDistribution].
+func (cd *CloudfrontDistribution) DependOn() terra.Reference {
+	return terra.ReferenceResource(cd)
+}
+
+// Dependencies returns the list of resources [CloudfrontDistribution] depends_on.
+func (cd *CloudfrontDistribution) Dependencies() terra.Dependencies {
+	return cd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudfrontDistribution].
+func (cd *CloudfrontDistribution) LifecycleManagement() *terra.Lifecycle {
+	return cd.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudfrontDistribution].
 func (cd *CloudfrontDistribution) Attributes() cloudfrontDistributionAttributes {
 	return cloudfrontDistributionAttributes{ref: terra.ReferenceResource(cd)}
 }
 
+// ImportState imports the given attribute values into [CloudfrontDistribution]'s state.
 func (cd *CloudfrontDistribution) ImportState(av io.Reader) error {
 	cd.state = &cloudfrontDistributionState{}
 	if err := json.NewDecoder(av).Decode(cd.state); err != nil {
@@ -49,10 +73,12 @@ func (cd *CloudfrontDistribution) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudfrontDistribution] has state.
 func (cd *CloudfrontDistribution) State() (*cloudfrontDistributionState, bool) {
 	return cd.state, cd.state != nil
 }
 
+// StateMust returns the state for [CloudfrontDistribution]. Panics if the state is nil.
 func (cd *CloudfrontDistribution) StateMust() *cloudfrontDistributionState {
 	if cd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cd.Type(), cd.LocalName()))
@@ -60,10 +86,7 @@ func (cd *CloudfrontDistribution) StateMust() *cloudfrontDistributionState {
 	return cd.state
 }
 
-func (cd *CloudfrontDistribution) DependOn() terra.Reference {
-	return terra.ReferenceResource(cd)
-}
-
+// CloudfrontDistributionArgs contains the configurations for aws_cloudfront_distribution.
 type CloudfrontDistributionArgs struct {
 	// Aliases: set of string, optional
 	Aliases terra.SetValue[terra.StringValue] `hcl:"aliases,attr"`
@@ -111,135 +134,154 @@ type CloudfrontDistributionArgs struct {
 	Restrictions *cloudfrontdistribution.Restrictions `hcl:"restrictions,block" validate:"required"`
 	// ViewerCertificate: required
 	ViewerCertificate *cloudfrontdistribution.ViewerCertificate `hcl:"viewer_certificate,block" validate:"required"`
-	// DependsOn contains resources that CloudfrontDistribution depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudfrontDistributionAttributes struct {
 	ref terra.Reference
 }
 
+// Aliases returns a reference to field aliases of aws_cloudfront_distribution.
 func (cd cloudfrontDistributionAttributes) Aliases() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cd.ref.Append("aliases"))
+	return terra.ReferenceAsSet[terra.StringValue](cd.ref.Append("aliases"))
 }
 
+// Arn returns a reference to field arn of aws_cloudfront_distribution.
 func (cd cloudfrontDistributionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("arn"))
+	return terra.ReferenceAsString(cd.ref.Append("arn"))
 }
 
+// CallerReference returns a reference to field caller_reference of aws_cloudfront_distribution.
 func (cd cloudfrontDistributionAttributes) CallerReference() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("caller_reference"))
+	return terra.ReferenceAsString(cd.ref.Append("caller_reference"))
 }
 
+// Comment returns a reference to field comment of aws_cloudfront_distribution.
 func (cd cloudfrontDistributionAttributes) Comment() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("comment"))
+	return terra.ReferenceAsString(cd.ref.Append("comment"))
 }
 
+// DefaultRootObject returns a reference to field default_root_object of aws_cloudfront_distribution.
 func (cd cloudfrontDistributionAttributes) DefaultRootObject() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("default_root_object"))
+	return terra.ReferenceAsString(cd.ref.Append("default_root_object"))
 }
 
+// DomainName returns a reference to field domain_name of aws_cloudfront_distribution.
 func (cd cloudfrontDistributionAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("domain_name"))
+	return terra.ReferenceAsString(cd.ref.Append("domain_name"))
 }
 
+// Enabled returns a reference to field enabled of aws_cloudfront_distribution.
 func (cd cloudfrontDistributionAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(cd.ref.Append("enabled"))
+	return terra.ReferenceAsBool(cd.ref.Append("enabled"))
 }
 
+// Etag returns a reference to field etag of aws_cloudfront_distribution.
 func (cd cloudfrontDistributionAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("etag"))
+	return terra.ReferenceAsString(cd.ref.Append("etag"))
 }
 
+// HostedZoneId returns a reference to field hosted_zone_id of aws_cloudfront_distribution.
 func (cd cloudfrontDistributionAttributes) HostedZoneId() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("hosted_zone_id"))
+	return terra.ReferenceAsString(cd.ref.Append("hosted_zone_id"))
 }
 
+// HttpVersion returns a reference to field http_version of aws_cloudfront_distribution.
 func (cd cloudfrontDistributionAttributes) HttpVersion() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("http_version"))
+	return terra.ReferenceAsString(cd.ref.Append("http_version"))
 }
 
+// Id returns a reference to field id of aws_cloudfront_distribution.
 func (cd cloudfrontDistributionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("id"))
+	return terra.ReferenceAsString(cd.ref.Append("id"))
 }
 
+// InProgressValidationBatches returns a reference to field in_progress_validation_batches of aws_cloudfront_distribution.
 func (cd cloudfrontDistributionAttributes) InProgressValidationBatches() terra.NumberValue {
-	return terra.ReferenceNumber(cd.ref.Append("in_progress_validation_batches"))
+	return terra.ReferenceAsNumber(cd.ref.Append("in_progress_validation_batches"))
 }
 
+// IsIpv6Enabled returns a reference to field is_ipv6_enabled of aws_cloudfront_distribution.
 func (cd cloudfrontDistributionAttributes) IsIpv6Enabled() terra.BoolValue {
-	return terra.ReferenceBool(cd.ref.Append("is_ipv6_enabled"))
+	return terra.ReferenceAsBool(cd.ref.Append("is_ipv6_enabled"))
 }
 
+// LastModifiedTime returns a reference to field last_modified_time of aws_cloudfront_distribution.
 func (cd cloudfrontDistributionAttributes) LastModifiedTime() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("last_modified_time"))
+	return terra.ReferenceAsString(cd.ref.Append("last_modified_time"))
 }
 
+// PriceClass returns a reference to field price_class of aws_cloudfront_distribution.
 func (cd cloudfrontDistributionAttributes) PriceClass() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("price_class"))
+	return terra.ReferenceAsString(cd.ref.Append("price_class"))
 }
 
+// RetainOnDelete returns a reference to field retain_on_delete of aws_cloudfront_distribution.
 func (cd cloudfrontDistributionAttributes) RetainOnDelete() terra.BoolValue {
-	return terra.ReferenceBool(cd.ref.Append("retain_on_delete"))
+	return terra.ReferenceAsBool(cd.ref.Append("retain_on_delete"))
 }
 
+// Status returns a reference to field status of aws_cloudfront_distribution.
 func (cd cloudfrontDistributionAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("status"))
+	return terra.ReferenceAsString(cd.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of aws_cloudfront_distribution.
 func (cd cloudfrontDistributionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cd.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cd.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_cloudfront_distribution.
 func (cd cloudfrontDistributionAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cd.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](cd.ref.Append("tags_all"))
 }
 
+// WaitForDeployment returns a reference to field wait_for_deployment of aws_cloudfront_distribution.
 func (cd cloudfrontDistributionAttributes) WaitForDeployment() terra.BoolValue {
-	return terra.ReferenceBool(cd.ref.Append("wait_for_deployment"))
+	return terra.ReferenceAsBool(cd.ref.Append("wait_for_deployment"))
 }
 
+// WebAclId returns a reference to field web_acl_id of aws_cloudfront_distribution.
 func (cd cloudfrontDistributionAttributes) WebAclId() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("web_acl_id"))
+	return terra.ReferenceAsString(cd.ref.Append("web_acl_id"))
 }
 
 func (cd cloudfrontDistributionAttributes) TrustedKeyGroups() terra.ListValue[cloudfrontdistribution.TrustedKeyGroupsAttributes] {
-	return terra.ReferenceList[cloudfrontdistribution.TrustedKeyGroupsAttributes](cd.ref.Append("trusted_key_groups"))
+	return terra.ReferenceAsList[cloudfrontdistribution.TrustedKeyGroupsAttributes](cd.ref.Append("trusted_key_groups"))
 }
 
 func (cd cloudfrontDistributionAttributes) TrustedSigners() terra.ListValue[cloudfrontdistribution.TrustedSignersAttributes] {
-	return terra.ReferenceList[cloudfrontdistribution.TrustedSignersAttributes](cd.ref.Append("trusted_signers"))
+	return terra.ReferenceAsList[cloudfrontdistribution.TrustedSignersAttributes](cd.ref.Append("trusted_signers"))
 }
 
 func (cd cloudfrontDistributionAttributes) CustomErrorResponse() terra.SetValue[cloudfrontdistribution.CustomErrorResponseAttributes] {
-	return terra.ReferenceSet[cloudfrontdistribution.CustomErrorResponseAttributes](cd.ref.Append("custom_error_response"))
+	return terra.ReferenceAsSet[cloudfrontdistribution.CustomErrorResponseAttributes](cd.ref.Append("custom_error_response"))
 }
 
 func (cd cloudfrontDistributionAttributes) DefaultCacheBehavior() terra.ListValue[cloudfrontdistribution.DefaultCacheBehaviorAttributes] {
-	return terra.ReferenceList[cloudfrontdistribution.DefaultCacheBehaviorAttributes](cd.ref.Append("default_cache_behavior"))
+	return terra.ReferenceAsList[cloudfrontdistribution.DefaultCacheBehaviorAttributes](cd.ref.Append("default_cache_behavior"))
 }
 
 func (cd cloudfrontDistributionAttributes) LoggingConfig() terra.ListValue[cloudfrontdistribution.LoggingConfigAttributes] {
-	return terra.ReferenceList[cloudfrontdistribution.LoggingConfigAttributes](cd.ref.Append("logging_config"))
+	return terra.ReferenceAsList[cloudfrontdistribution.LoggingConfigAttributes](cd.ref.Append("logging_config"))
 }
 
 func (cd cloudfrontDistributionAttributes) OrderedCacheBehavior() terra.ListValue[cloudfrontdistribution.OrderedCacheBehaviorAttributes] {
-	return terra.ReferenceList[cloudfrontdistribution.OrderedCacheBehaviorAttributes](cd.ref.Append("ordered_cache_behavior"))
+	return terra.ReferenceAsList[cloudfrontdistribution.OrderedCacheBehaviorAttributes](cd.ref.Append("ordered_cache_behavior"))
 }
 
 func (cd cloudfrontDistributionAttributes) Origin() terra.SetValue[cloudfrontdistribution.OriginAttributes] {
-	return terra.ReferenceSet[cloudfrontdistribution.OriginAttributes](cd.ref.Append("origin"))
+	return terra.ReferenceAsSet[cloudfrontdistribution.OriginAttributes](cd.ref.Append("origin"))
 }
 
 func (cd cloudfrontDistributionAttributes) OriginGroup() terra.SetValue[cloudfrontdistribution.OriginGroupAttributes] {
-	return terra.ReferenceSet[cloudfrontdistribution.OriginGroupAttributes](cd.ref.Append("origin_group"))
+	return terra.ReferenceAsSet[cloudfrontdistribution.OriginGroupAttributes](cd.ref.Append("origin_group"))
 }
 
 func (cd cloudfrontDistributionAttributes) Restrictions() terra.ListValue[cloudfrontdistribution.RestrictionsAttributes] {
-	return terra.ReferenceList[cloudfrontdistribution.RestrictionsAttributes](cd.ref.Append("restrictions"))
+	return terra.ReferenceAsList[cloudfrontdistribution.RestrictionsAttributes](cd.ref.Append("restrictions"))
 }
 
 func (cd cloudfrontDistributionAttributes) ViewerCertificate() terra.ListValue[cloudfrontdistribution.ViewerCertificateAttributes] {
-	return terra.ReferenceList[cloudfrontdistribution.ViewerCertificateAttributes](cd.ref.Append("viewer_certificate"))
+	return terra.ReferenceAsList[cloudfrontdistribution.ViewerCertificateAttributes](cd.ref.Append("viewer_certificate"))
 }
 
 type cloudfrontDistributionState struct {

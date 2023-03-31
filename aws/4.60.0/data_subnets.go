@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataSubnets creates a new instance of [DataSubnets].
 func NewDataSubnets(name string, args DataSubnetsArgs) *DataSubnets {
 	return &DataSubnets{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataSubnets(name string, args DataSubnetsArgs) *DataSubnets {
 
 var _ terra.DataResource = (*DataSubnets)(nil)
 
+// DataSubnets represents the Terraform data resource aws_subnets.
 type DataSubnets struct {
 	Name string
 	Args DataSubnetsArgs
 }
 
+// DataSource returns the Terraform object type for [DataSubnets].
 func (s *DataSubnets) DataSource() string {
 	return "aws_subnets"
 }
 
+// LocalName returns the local name for [DataSubnets].
 func (s *DataSubnets) LocalName() string {
 	return s.Name
 }
 
+// Configuration returns the configuration (args) for [DataSubnets].
 func (s *DataSubnets) Configuration() interface{} {
 	return s.Args
 }
 
+// Attributes returns the attributes for [DataSubnets].
 func (s *DataSubnets) Attributes() dataSubnetsAttributes {
 	return dataSubnetsAttributes{ref: terra.ReferenceDataResource(s)}
 }
 
+// DataSubnetsArgs contains the configurations for aws_subnets.
 type DataSubnetsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,22 +58,25 @@ type dataSubnetsAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_subnets.
 func (s dataSubnetsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("id"))
+	return terra.ReferenceAsString(s.ref.Append("id"))
 }
 
+// Ids returns a reference to field ids of aws_subnets.
 func (s dataSubnetsAttributes) Ids() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("ids"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("ids"))
 }
 
+// Tags returns a reference to field tags of aws_subnets.
 func (s dataSubnetsAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](s.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](s.ref.Append("tags"))
 }
 
 func (s dataSubnetsAttributes) Filter() terra.SetValue[datasubnets.FilterAttributes] {
-	return terra.ReferenceSet[datasubnets.FilterAttributes](s.ref.Append("filter"))
+	return terra.ReferenceAsSet[datasubnets.FilterAttributes](s.ref.Append("filter"))
 }
 
 func (s dataSubnetsAttributes) Timeouts() datasubnets.TimeoutsAttributes {
-	return terra.ReferenceSingle[datasubnets.TimeoutsAttributes](s.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datasubnets.TimeoutsAttributes](s.ref.Append("timeouts"))
 }

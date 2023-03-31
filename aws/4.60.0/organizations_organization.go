@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewOrganizationsOrganization creates a new instance of [OrganizationsOrganization].
 func NewOrganizationsOrganization(name string, args OrganizationsOrganizationArgs) *OrganizationsOrganization {
 	return &OrganizationsOrganization{
 		Args: args,
@@ -19,28 +20,51 @@ func NewOrganizationsOrganization(name string, args OrganizationsOrganizationArg
 
 var _ terra.Resource = (*OrganizationsOrganization)(nil)
 
+// OrganizationsOrganization represents the Terraform resource aws_organizations_organization.
 type OrganizationsOrganization struct {
-	Name  string
-	Args  OrganizationsOrganizationArgs
-	state *organizationsOrganizationState
+	Name      string
+	Args      OrganizationsOrganizationArgs
+	state     *organizationsOrganizationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [OrganizationsOrganization].
 func (oo *OrganizationsOrganization) Type() string {
 	return "aws_organizations_organization"
 }
 
+// LocalName returns the local name for [OrganizationsOrganization].
 func (oo *OrganizationsOrganization) LocalName() string {
 	return oo.Name
 }
 
+// Configuration returns the configuration (args) for [OrganizationsOrganization].
 func (oo *OrganizationsOrganization) Configuration() interface{} {
 	return oo.Args
 }
 
+// DependOn is used for other resources to depend on [OrganizationsOrganization].
+func (oo *OrganizationsOrganization) DependOn() terra.Reference {
+	return terra.ReferenceResource(oo)
+}
+
+// Dependencies returns the list of resources [OrganizationsOrganization] depends_on.
+func (oo *OrganizationsOrganization) Dependencies() terra.Dependencies {
+	return oo.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [OrganizationsOrganization].
+func (oo *OrganizationsOrganization) LifecycleManagement() *terra.Lifecycle {
+	return oo.Lifecycle
+}
+
+// Attributes returns the attributes for [OrganizationsOrganization].
 func (oo *OrganizationsOrganization) Attributes() organizationsOrganizationAttributes {
 	return organizationsOrganizationAttributes{ref: terra.ReferenceResource(oo)}
 }
 
+// ImportState imports the given attribute values into [OrganizationsOrganization]'s state.
 func (oo *OrganizationsOrganization) ImportState(av io.Reader) error {
 	oo.state = &organizationsOrganizationState{}
 	if err := json.NewDecoder(av).Decode(oo.state); err != nil {
@@ -49,10 +73,12 @@ func (oo *OrganizationsOrganization) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [OrganizationsOrganization] has state.
 func (oo *OrganizationsOrganization) State() (*organizationsOrganizationState, bool) {
 	return oo.state, oo.state != nil
 }
 
+// StateMust returns the state for [OrganizationsOrganization]. Panics if the state is nil.
 func (oo *OrganizationsOrganization) StateMust() *organizationsOrganizationState {
 	if oo.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", oo.Type(), oo.LocalName()))
@@ -60,10 +86,7 @@ func (oo *OrganizationsOrganization) StateMust() *organizationsOrganizationState
 	return oo.state
 }
 
-func (oo *OrganizationsOrganization) DependOn() terra.Reference {
-	return terra.ReferenceResource(oo)
-}
-
+// OrganizationsOrganizationArgs contains the configurations for aws_organizations_organization.
 type OrganizationsOrganizationArgs struct {
 	// AwsServiceAccessPrincipals: set of string, optional
 	AwsServiceAccessPrincipals terra.SetValue[terra.StringValue] `hcl:"aws_service_access_principals,attr"`
@@ -79,55 +102,61 @@ type OrganizationsOrganizationArgs struct {
 	NonMasterAccounts []organizationsorganization.NonMasterAccounts `hcl:"non_master_accounts,block" validate:"min=0"`
 	// Roots: min=0
 	Roots []organizationsorganization.Roots `hcl:"roots,block" validate:"min=0"`
-	// DependsOn contains resources that OrganizationsOrganization depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type organizationsOrganizationAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_organizations_organization.
 func (oo organizationsOrganizationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(oo.ref.Append("arn"))
+	return terra.ReferenceAsString(oo.ref.Append("arn"))
 }
 
+// AwsServiceAccessPrincipals returns a reference to field aws_service_access_principals of aws_organizations_organization.
 func (oo organizationsOrganizationAttributes) AwsServiceAccessPrincipals() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](oo.ref.Append("aws_service_access_principals"))
+	return terra.ReferenceAsSet[terra.StringValue](oo.ref.Append("aws_service_access_principals"))
 }
 
+// EnabledPolicyTypes returns a reference to field enabled_policy_types of aws_organizations_organization.
 func (oo organizationsOrganizationAttributes) EnabledPolicyTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](oo.ref.Append("enabled_policy_types"))
+	return terra.ReferenceAsSet[terra.StringValue](oo.ref.Append("enabled_policy_types"))
 }
 
+// FeatureSet returns a reference to field feature_set of aws_organizations_organization.
 func (oo organizationsOrganizationAttributes) FeatureSet() terra.StringValue {
-	return terra.ReferenceString(oo.ref.Append("feature_set"))
+	return terra.ReferenceAsString(oo.ref.Append("feature_set"))
 }
 
+// Id returns a reference to field id of aws_organizations_organization.
 func (oo organizationsOrganizationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(oo.ref.Append("id"))
+	return terra.ReferenceAsString(oo.ref.Append("id"))
 }
 
+// MasterAccountArn returns a reference to field master_account_arn of aws_organizations_organization.
 func (oo organizationsOrganizationAttributes) MasterAccountArn() terra.StringValue {
-	return terra.ReferenceString(oo.ref.Append("master_account_arn"))
+	return terra.ReferenceAsString(oo.ref.Append("master_account_arn"))
 }
 
+// MasterAccountEmail returns a reference to field master_account_email of aws_organizations_organization.
 func (oo organizationsOrganizationAttributes) MasterAccountEmail() terra.StringValue {
-	return terra.ReferenceString(oo.ref.Append("master_account_email"))
+	return terra.ReferenceAsString(oo.ref.Append("master_account_email"))
 }
 
+// MasterAccountId returns a reference to field master_account_id of aws_organizations_organization.
 func (oo organizationsOrganizationAttributes) MasterAccountId() terra.StringValue {
-	return terra.ReferenceString(oo.ref.Append("master_account_id"))
+	return terra.ReferenceAsString(oo.ref.Append("master_account_id"))
 }
 
 func (oo organizationsOrganizationAttributes) Accounts() terra.ListValue[organizationsorganization.AccountsAttributes] {
-	return terra.ReferenceList[organizationsorganization.AccountsAttributes](oo.ref.Append("accounts"))
+	return terra.ReferenceAsList[organizationsorganization.AccountsAttributes](oo.ref.Append("accounts"))
 }
 
 func (oo organizationsOrganizationAttributes) NonMasterAccounts() terra.ListValue[organizationsorganization.NonMasterAccountsAttributes] {
-	return terra.ReferenceList[organizationsorganization.NonMasterAccountsAttributes](oo.ref.Append("non_master_accounts"))
+	return terra.ReferenceAsList[organizationsorganization.NonMasterAccountsAttributes](oo.ref.Append("non_master_accounts"))
 }
 
 func (oo organizationsOrganizationAttributes) Roots() terra.ListValue[organizationsorganization.RootsAttributes] {
-	return terra.ReferenceList[organizationsorganization.RootsAttributes](oo.ref.Append("roots"))
+	return terra.ReferenceAsList[organizationsorganization.RootsAttributes](oo.ref.Append("roots"))
 }
 
 type organizationsOrganizationState struct {

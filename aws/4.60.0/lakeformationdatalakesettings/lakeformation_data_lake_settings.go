@@ -38,11 +38,11 @@ func (cddp CreateDatabaseDefaultPermissionsAttributes) InternalTokens() hclwrite
 }
 
 func (cddp CreateDatabaseDefaultPermissionsAttributes) Permissions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cddp.ref.Append("permissions"))
+	return terra.ReferenceAsSet[terra.StringValue](cddp.ref.Append("permissions"))
 }
 
 func (cddp CreateDatabaseDefaultPermissionsAttributes) Principal() terra.StringValue {
-	return terra.ReferenceString(cddp.ref.Append("principal"))
+	return terra.ReferenceAsString(cddp.ref.Append("principal"))
 }
 
 type CreateTableDefaultPermissionsAttributes struct {
@@ -62,11 +62,11 @@ func (ctdp CreateTableDefaultPermissionsAttributes) InternalTokens() hclwrite.To
 }
 
 func (ctdp CreateTableDefaultPermissionsAttributes) Permissions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ctdp.ref.Append("permissions"))
+	return terra.ReferenceAsSet[terra.StringValue](ctdp.ref.Append("permissions"))
 }
 
 func (ctdp CreateTableDefaultPermissionsAttributes) Principal() terra.StringValue {
-	return terra.ReferenceString(ctdp.ref.Append("principal"))
+	return terra.ReferenceAsString(ctdp.ref.Append("principal"))
 }
 
 type CreateDatabaseDefaultPermissionsState struct {

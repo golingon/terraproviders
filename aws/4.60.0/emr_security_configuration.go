@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewEmrSecurityConfiguration creates a new instance of [EmrSecurityConfiguration].
 func NewEmrSecurityConfiguration(name string, args EmrSecurityConfigurationArgs) *EmrSecurityConfiguration {
 	return &EmrSecurityConfiguration{
 		Args: args,
@@ -18,28 +19,51 @@ func NewEmrSecurityConfiguration(name string, args EmrSecurityConfigurationArgs)
 
 var _ terra.Resource = (*EmrSecurityConfiguration)(nil)
 
+// EmrSecurityConfiguration represents the Terraform resource aws_emr_security_configuration.
 type EmrSecurityConfiguration struct {
-	Name  string
-	Args  EmrSecurityConfigurationArgs
-	state *emrSecurityConfigurationState
+	Name      string
+	Args      EmrSecurityConfigurationArgs
+	state     *emrSecurityConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EmrSecurityConfiguration].
 func (esc *EmrSecurityConfiguration) Type() string {
 	return "aws_emr_security_configuration"
 }
 
+// LocalName returns the local name for [EmrSecurityConfiguration].
 func (esc *EmrSecurityConfiguration) LocalName() string {
 	return esc.Name
 }
 
+// Configuration returns the configuration (args) for [EmrSecurityConfiguration].
 func (esc *EmrSecurityConfiguration) Configuration() interface{} {
 	return esc.Args
 }
 
+// DependOn is used for other resources to depend on [EmrSecurityConfiguration].
+func (esc *EmrSecurityConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(esc)
+}
+
+// Dependencies returns the list of resources [EmrSecurityConfiguration] depends_on.
+func (esc *EmrSecurityConfiguration) Dependencies() terra.Dependencies {
+	return esc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EmrSecurityConfiguration].
+func (esc *EmrSecurityConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return esc.Lifecycle
+}
+
+// Attributes returns the attributes for [EmrSecurityConfiguration].
 func (esc *EmrSecurityConfiguration) Attributes() emrSecurityConfigurationAttributes {
 	return emrSecurityConfigurationAttributes{ref: terra.ReferenceResource(esc)}
 }
 
+// ImportState imports the given attribute values into [EmrSecurityConfiguration]'s state.
 func (esc *EmrSecurityConfiguration) ImportState(av io.Reader) error {
 	esc.state = &emrSecurityConfigurationState{}
 	if err := json.NewDecoder(av).Decode(esc.state); err != nil {
@@ -48,10 +72,12 @@ func (esc *EmrSecurityConfiguration) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EmrSecurityConfiguration] has state.
 func (esc *EmrSecurityConfiguration) State() (*emrSecurityConfigurationState, bool) {
 	return esc.state, esc.state != nil
 }
 
+// StateMust returns the state for [EmrSecurityConfiguration]. Panics if the state is nil.
 func (esc *EmrSecurityConfiguration) StateMust() *emrSecurityConfigurationState {
 	if esc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", esc.Type(), esc.LocalName()))
@@ -59,10 +85,7 @@ func (esc *EmrSecurityConfiguration) StateMust() *emrSecurityConfigurationState 
 	return esc.state
 }
 
-func (esc *EmrSecurityConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(esc)
-}
-
+// EmrSecurityConfigurationArgs contains the configurations for aws_emr_security_configuration.
 type EmrSecurityConfigurationArgs struct {
 	// Configuration: string, required
 	Configuration terra.StringValue `hcl:"configuration,attr" validate:"required"`
@@ -72,31 +95,34 @@ type EmrSecurityConfigurationArgs struct {
 	Name terra.StringValue `hcl:"name,attr"`
 	// NamePrefix: string, optional
 	NamePrefix terra.StringValue `hcl:"name_prefix,attr"`
-	// DependsOn contains resources that EmrSecurityConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type emrSecurityConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// Configuration returns a reference to field configuration of aws_emr_security_configuration.
 func (esc emrSecurityConfigurationAttributes) Configuration() terra.StringValue {
-	return terra.ReferenceString(esc.ref.Append("configuration"))
+	return terra.ReferenceAsString(esc.ref.Append("configuration"))
 }
 
+// CreationDate returns a reference to field creation_date of aws_emr_security_configuration.
 func (esc emrSecurityConfigurationAttributes) CreationDate() terra.StringValue {
-	return terra.ReferenceString(esc.ref.Append("creation_date"))
+	return terra.ReferenceAsString(esc.ref.Append("creation_date"))
 }
 
+// Id returns a reference to field id of aws_emr_security_configuration.
 func (esc emrSecurityConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(esc.ref.Append("id"))
+	return terra.ReferenceAsString(esc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_emr_security_configuration.
 func (esc emrSecurityConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(esc.ref.Append("name"))
+	return terra.ReferenceAsString(esc.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_emr_security_configuration.
 func (esc emrSecurityConfigurationAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(esc.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(esc.ref.Append("name_prefix"))
 }
 
 type emrSecurityConfigurationState struct {

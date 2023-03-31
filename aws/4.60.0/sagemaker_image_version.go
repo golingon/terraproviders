@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSagemakerImageVersion creates a new instance of [SagemakerImageVersion].
 func NewSagemakerImageVersion(name string, args SagemakerImageVersionArgs) *SagemakerImageVersion {
 	return &SagemakerImageVersion{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSagemakerImageVersion(name string, args SagemakerImageVersionArgs) *Sage
 
 var _ terra.Resource = (*SagemakerImageVersion)(nil)
 
+// SagemakerImageVersion represents the Terraform resource aws_sagemaker_image_version.
 type SagemakerImageVersion struct {
-	Name  string
-	Args  SagemakerImageVersionArgs
-	state *sagemakerImageVersionState
+	Name      string
+	Args      SagemakerImageVersionArgs
+	state     *sagemakerImageVersionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SagemakerImageVersion].
 func (siv *SagemakerImageVersion) Type() string {
 	return "aws_sagemaker_image_version"
 }
 
+// LocalName returns the local name for [SagemakerImageVersion].
 func (siv *SagemakerImageVersion) LocalName() string {
 	return siv.Name
 }
 
+// Configuration returns the configuration (args) for [SagemakerImageVersion].
 func (siv *SagemakerImageVersion) Configuration() interface{} {
 	return siv.Args
 }
 
+// DependOn is used for other resources to depend on [SagemakerImageVersion].
+func (siv *SagemakerImageVersion) DependOn() terra.Reference {
+	return terra.ReferenceResource(siv)
+}
+
+// Dependencies returns the list of resources [SagemakerImageVersion] depends_on.
+func (siv *SagemakerImageVersion) Dependencies() terra.Dependencies {
+	return siv.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SagemakerImageVersion].
+func (siv *SagemakerImageVersion) LifecycleManagement() *terra.Lifecycle {
+	return siv.Lifecycle
+}
+
+// Attributes returns the attributes for [SagemakerImageVersion].
 func (siv *SagemakerImageVersion) Attributes() sagemakerImageVersionAttributes {
 	return sagemakerImageVersionAttributes{ref: terra.ReferenceResource(siv)}
 }
 
+// ImportState imports the given attribute values into [SagemakerImageVersion]'s state.
 func (siv *SagemakerImageVersion) ImportState(av io.Reader) error {
 	siv.state = &sagemakerImageVersionState{}
 	if err := json.NewDecoder(av).Decode(siv.state); err != nil {
@@ -48,10 +72,12 @@ func (siv *SagemakerImageVersion) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SagemakerImageVersion] has state.
 func (siv *SagemakerImageVersion) State() (*sagemakerImageVersionState, bool) {
 	return siv.state, siv.state != nil
 }
 
+// StateMust returns the state for [SagemakerImageVersion]. Panics if the state is nil.
 func (siv *SagemakerImageVersion) StateMust() *sagemakerImageVersionState {
 	if siv.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", siv.Type(), siv.LocalName()))
@@ -59,10 +85,7 @@ func (siv *SagemakerImageVersion) StateMust() *sagemakerImageVersionState {
 	return siv.state
 }
 
-func (siv *SagemakerImageVersion) DependOn() terra.Reference {
-	return terra.ReferenceResource(siv)
-}
-
+// SagemakerImageVersionArgs contains the configurations for aws_sagemaker_image_version.
 type SagemakerImageVersionArgs struct {
 	// BaseImage: string, required
 	BaseImage terra.StringValue `hcl:"base_image,attr" validate:"required"`
@@ -70,39 +93,44 @@ type SagemakerImageVersionArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// ImageName: string, required
 	ImageName terra.StringValue `hcl:"image_name,attr" validate:"required"`
-	// DependsOn contains resources that SagemakerImageVersion depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sagemakerImageVersionAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_sagemaker_image_version.
 func (siv sagemakerImageVersionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(siv.ref.Append("arn"))
+	return terra.ReferenceAsString(siv.ref.Append("arn"))
 }
 
+// BaseImage returns a reference to field base_image of aws_sagemaker_image_version.
 func (siv sagemakerImageVersionAttributes) BaseImage() terra.StringValue {
-	return terra.ReferenceString(siv.ref.Append("base_image"))
+	return terra.ReferenceAsString(siv.ref.Append("base_image"))
 }
 
+// ContainerImage returns a reference to field container_image of aws_sagemaker_image_version.
 func (siv sagemakerImageVersionAttributes) ContainerImage() terra.StringValue {
-	return terra.ReferenceString(siv.ref.Append("container_image"))
+	return terra.ReferenceAsString(siv.ref.Append("container_image"))
 }
 
+// Id returns a reference to field id of aws_sagemaker_image_version.
 func (siv sagemakerImageVersionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(siv.ref.Append("id"))
+	return terra.ReferenceAsString(siv.ref.Append("id"))
 }
 
+// ImageArn returns a reference to field image_arn of aws_sagemaker_image_version.
 func (siv sagemakerImageVersionAttributes) ImageArn() terra.StringValue {
-	return terra.ReferenceString(siv.ref.Append("image_arn"))
+	return terra.ReferenceAsString(siv.ref.Append("image_arn"))
 }
 
+// ImageName returns a reference to field image_name of aws_sagemaker_image_version.
 func (siv sagemakerImageVersionAttributes) ImageName() terra.StringValue {
-	return terra.ReferenceString(siv.ref.Append("image_name"))
+	return terra.ReferenceAsString(siv.ref.Append("image_name"))
 }
 
+// Version returns a reference to field version of aws_sagemaker_image_version.
 func (siv sagemakerImageVersionAttributes) Version() terra.NumberValue {
-	return terra.ReferenceNumber(siv.ref.Append("version"))
+	return terra.ReferenceAsNumber(siv.ref.Append("version"))
 }
 
 type sagemakerImageVersionState struct {

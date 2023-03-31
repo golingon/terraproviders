@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataVpcEndpointService creates a new instance of [DataVpcEndpointService].
 func NewDataVpcEndpointService(name string, args DataVpcEndpointServiceArgs) *DataVpcEndpointService {
 	return &DataVpcEndpointService{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataVpcEndpointService(name string, args DataVpcEndpointServiceArgs) *Da
 
 var _ terra.DataResource = (*DataVpcEndpointService)(nil)
 
+// DataVpcEndpointService represents the Terraform data resource aws_vpc_endpoint_service.
 type DataVpcEndpointService struct {
 	Name string
 	Args DataVpcEndpointServiceArgs
 }
 
+// DataSource returns the Terraform object type for [DataVpcEndpointService].
 func (ves *DataVpcEndpointService) DataSource() string {
 	return "aws_vpc_endpoint_service"
 }
 
+// LocalName returns the local name for [DataVpcEndpointService].
 func (ves *DataVpcEndpointService) LocalName() string {
 	return ves.Name
 }
 
+// Configuration returns the configuration (args) for [DataVpcEndpointService].
 func (ves *DataVpcEndpointService) Configuration() interface{} {
 	return ves.Args
 }
 
+// Attributes returns the attributes for [DataVpcEndpointService].
 func (ves *DataVpcEndpointService) Attributes() dataVpcEndpointServiceAttributes {
 	return dataVpcEndpointServiceAttributes{ref: terra.ReferenceDataResource(ves)}
 }
 
+// DataVpcEndpointServiceArgs contains the configurations for aws_vpc_endpoint_service.
 type DataVpcEndpointServiceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -57,70 +64,85 @@ type dataVpcEndpointServiceAttributes struct {
 	ref terra.Reference
 }
 
+// AcceptanceRequired returns a reference to field acceptance_required of aws_vpc_endpoint_service.
 func (ves dataVpcEndpointServiceAttributes) AcceptanceRequired() terra.BoolValue {
-	return terra.ReferenceBool(ves.ref.Append("acceptance_required"))
+	return terra.ReferenceAsBool(ves.ref.Append("acceptance_required"))
 }
 
+// Arn returns a reference to field arn of aws_vpc_endpoint_service.
 func (ves dataVpcEndpointServiceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ves.ref.Append("arn"))
+	return terra.ReferenceAsString(ves.ref.Append("arn"))
 }
 
+// AvailabilityZones returns a reference to field availability_zones of aws_vpc_endpoint_service.
 func (ves dataVpcEndpointServiceAttributes) AvailabilityZones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ves.ref.Append("availability_zones"))
+	return terra.ReferenceAsSet[terra.StringValue](ves.ref.Append("availability_zones"))
 }
 
+// BaseEndpointDnsNames returns a reference to field base_endpoint_dns_names of aws_vpc_endpoint_service.
 func (ves dataVpcEndpointServiceAttributes) BaseEndpointDnsNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ves.ref.Append("base_endpoint_dns_names"))
+	return terra.ReferenceAsSet[terra.StringValue](ves.ref.Append("base_endpoint_dns_names"))
 }
 
+// Id returns a reference to field id of aws_vpc_endpoint_service.
 func (ves dataVpcEndpointServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ves.ref.Append("id"))
+	return terra.ReferenceAsString(ves.ref.Append("id"))
 }
 
+// ManagesVpcEndpoints returns a reference to field manages_vpc_endpoints of aws_vpc_endpoint_service.
 func (ves dataVpcEndpointServiceAttributes) ManagesVpcEndpoints() terra.BoolValue {
-	return terra.ReferenceBool(ves.ref.Append("manages_vpc_endpoints"))
+	return terra.ReferenceAsBool(ves.ref.Append("manages_vpc_endpoints"))
 }
 
+// Owner returns a reference to field owner of aws_vpc_endpoint_service.
 func (ves dataVpcEndpointServiceAttributes) Owner() terra.StringValue {
-	return terra.ReferenceString(ves.ref.Append("owner"))
+	return terra.ReferenceAsString(ves.ref.Append("owner"))
 }
 
+// PrivateDnsName returns a reference to field private_dns_name of aws_vpc_endpoint_service.
 func (ves dataVpcEndpointServiceAttributes) PrivateDnsName() terra.StringValue {
-	return terra.ReferenceString(ves.ref.Append("private_dns_name"))
+	return terra.ReferenceAsString(ves.ref.Append("private_dns_name"))
 }
 
+// Service returns a reference to field service of aws_vpc_endpoint_service.
 func (ves dataVpcEndpointServiceAttributes) Service() terra.StringValue {
-	return terra.ReferenceString(ves.ref.Append("service"))
+	return terra.ReferenceAsString(ves.ref.Append("service"))
 }
 
+// ServiceId returns a reference to field service_id of aws_vpc_endpoint_service.
 func (ves dataVpcEndpointServiceAttributes) ServiceId() terra.StringValue {
-	return terra.ReferenceString(ves.ref.Append("service_id"))
+	return terra.ReferenceAsString(ves.ref.Append("service_id"))
 }
 
+// ServiceName returns a reference to field service_name of aws_vpc_endpoint_service.
 func (ves dataVpcEndpointServiceAttributes) ServiceName() terra.StringValue {
-	return terra.ReferenceString(ves.ref.Append("service_name"))
+	return terra.ReferenceAsString(ves.ref.Append("service_name"))
 }
 
+// ServiceType returns a reference to field service_type of aws_vpc_endpoint_service.
 func (ves dataVpcEndpointServiceAttributes) ServiceType() terra.StringValue {
-	return terra.ReferenceString(ves.ref.Append("service_type"))
+	return terra.ReferenceAsString(ves.ref.Append("service_type"))
 }
 
+// SupportedIpAddressTypes returns a reference to field supported_ip_address_types of aws_vpc_endpoint_service.
 func (ves dataVpcEndpointServiceAttributes) SupportedIpAddressTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ves.ref.Append("supported_ip_address_types"))
+	return terra.ReferenceAsSet[terra.StringValue](ves.ref.Append("supported_ip_address_types"))
 }
 
+// Tags returns a reference to field tags of aws_vpc_endpoint_service.
 func (ves dataVpcEndpointServiceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ves.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ves.ref.Append("tags"))
 }
 
+// VpcEndpointPolicySupported returns a reference to field vpc_endpoint_policy_supported of aws_vpc_endpoint_service.
 func (ves dataVpcEndpointServiceAttributes) VpcEndpointPolicySupported() terra.BoolValue {
-	return terra.ReferenceBool(ves.ref.Append("vpc_endpoint_policy_supported"))
+	return terra.ReferenceAsBool(ves.ref.Append("vpc_endpoint_policy_supported"))
 }
 
 func (ves dataVpcEndpointServiceAttributes) Filter() terra.SetValue[datavpcendpointservice.FilterAttributes] {
-	return terra.ReferenceSet[datavpcendpointservice.FilterAttributes](ves.ref.Append("filter"))
+	return terra.ReferenceAsSet[datavpcendpointservice.FilterAttributes](ves.ref.Append("filter"))
 }
 
 func (ves dataVpcEndpointServiceAttributes) Timeouts() datavpcendpointservice.TimeoutsAttributes {
-	return terra.ReferenceSingle[datavpcendpointservice.TimeoutsAttributes](ves.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datavpcendpointservice.TimeoutsAttributes](ves.ref.Append("timeouts"))
 }

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAppstreamStack creates a new instance of [AppstreamStack].
 func NewAppstreamStack(name string, args AppstreamStackArgs) *AppstreamStack {
 	return &AppstreamStack{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAppstreamStack(name string, args AppstreamStackArgs) *AppstreamStack {
 
 var _ terra.Resource = (*AppstreamStack)(nil)
 
+// AppstreamStack represents the Terraform resource aws_appstream_stack.
 type AppstreamStack struct {
-	Name  string
-	Args  AppstreamStackArgs
-	state *appstreamStackState
+	Name      string
+	Args      AppstreamStackArgs
+	state     *appstreamStackState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppstreamStack].
 func (as *AppstreamStack) Type() string {
 	return "aws_appstream_stack"
 }
 
+// LocalName returns the local name for [AppstreamStack].
 func (as *AppstreamStack) LocalName() string {
 	return as.Name
 }
 
+// Configuration returns the configuration (args) for [AppstreamStack].
 func (as *AppstreamStack) Configuration() interface{} {
 	return as.Args
 }
 
+// DependOn is used for other resources to depend on [AppstreamStack].
+func (as *AppstreamStack) DependOn() terra.Reference {
+	return terra.ReferenceResource(as)
+}
+
+// Dependencies returns the list of resources [AppstreamStack] depends_on.
+func (as *AppstreamStack) Dependencies() terra.Dependencies {
+	return as.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppstreamStack].
+func (as *AppstreamStack) LifecycleManagement() *terra.Lifecycle {
+	return as.Lifecycle
+}
+
+// Attributes returns the attributes for [AppstreamStack].
 func (as *AppstreamStack) Attributes() appstreamStackAttributes {
 	return appstreamStackAttributes{ref: terra.ReferenceResource(as)}
 }
 
+// ImportState imports the given attribute values into [AppstreamStack]'s state.
 func (as *AppstreamStack) ImportState(av io.Reader) error {
 	as.state = &appstreamStackState{}
 	if err := json.NewDecoder(av).Decode(as.state); err != nil {
@@ -49,10 +73,12 @@ func (as *AppstreamStack) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppstreamStack] has state.
 func (as *AppstreamStack) State() (*appstreamStackState, bool) {
 	return as.state, as.state != nil
 }
 
+// StateMust returns the state for [AppstreamStack]. Panics if the state is nil.
 func (as *AppstreamStack) StateMust() *appstreamStackState {
 	if as.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", as.Type(), as.LocalName()))
@@ -60,10 +86,7 @@ func (as *AppstreamStack) StateMust() *appstreamStackState {
 	return as.state
 }
 
-func (as *AppstreamStack) DependOn() terra.Reference {
-	return terra.ReferenceResource(as)
-}
-
+// AppstreamStackArgs contains the configurations for aws_appstream_stack.
 type AppstreamStackArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -91,71 +114,80 @@ type AppstreamStackArgs struct {
 	StorageConnectors []appstreamstack.StorageConnectors `hcl:"storage_connectors,block" validate:"min=0"`
 	// UserSettings: min=0
 	UserSettings []appstreamstack.UserSettings `hcl:"user_settings,block" validate:"min=0"`
-	// DependsOn contains resources that AppstreamStack depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appstreamStackAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_appstream_stack.
 func (as appstreamStackAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("arn"))
+	return terra.ReferenceAsString(as.ref.Append("arn"))
 }
 
+// CreatedTime returns a reference to field created_time of aws_appstream_stack.
 func (as appstreamStackAttributes) CreatedTime() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("created_time"))
+	return terra.ReferenceAsString(as.ref.Append("created_time"))
 }
 
+// Description returns a reference to field description of aws_appstream_stack.
 func (as appstreamStackAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("description"))
+	return terra.ReferenceAsString(as.ref.Append("description"))
 }
 
+// DisplayName returns a reference to field display_name of aws_appstream_stack.
 func (as appstreamStackAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("display_name"))
+	return terra.ReferenceAsString(as.ref.Append("display_name"))
 }
 
+// EmbedHostDomains returns a reference to field embed_host_domains of aws_appstream_stack.
 func (as appstreamStackAttributes) EmbedHostDomains() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](as.ref.Append("embed_host_domains"))
+	return terra.ReferenceAsSet[terra.StringValue](as.ref.Append("embed_host_domains"))
 }
 
+// FeedbackUrl returns a reference to field feedback_url of aws_appstream_stack.
 func (as appstreamStackAttributes) FeedbackUrl() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("feedback_url"))
+	return terra.ReferenceAsString(as.ref.Append("feedback_url"))
 }
 
+// Id returns a reference to field id of aws_appstream_stack.
 func (as appstreamStackAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("id"))
+	return terra.ReferenceAsString(as.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_appstream_stack.
 func (as appstreamStackAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("name"))
+	return terra.ReferenceAsString(as.ref.Append("name"))
 }
 
+// RedirectUrl returns a reference to field redirect_url of aws_appstream_stack.
 func (as appstreamStackAttributes) RedirectUrl() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("redirect_url"))
+	return terra.ReferenceAsString(as.ref.Append("redirect_url"))
 }
 
+// Tags returns a reference to field tags of aws_appstream_stack.
 func (as appstreamStackAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](as.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](as.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_appstream_stack.
 func (as appstreamStackAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](as.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](as.ref.Append("tags_all"))
 }
 
 func (as appstreamStackAttributes) AccessEndpoints() terra.SetValue[appstreamstack.AccessEndpointsAttributes] {
-	return terra.ReferenceSet[appstreamstack.AccessEndpointsAttributes](as.ref.Append("access_endpoints"))
+	return terra.ReferenceAsSet[appstreamstack.AccessEndpointsAttributes](as.ref.Append("access_endpoints"))
 }
 
 func (as appstreamStackAttributes) ApplicationSettings() terra.ListValue[appstreamstack.ApplicationSettingsAttributes] {
-	return terra.ReferenceList[appstreamstack.ApplicationSettingsAttributes](as.ref.Append("application_settings"))
+	return terra.ReferenceAsList[appstreamstack.ApplicationSettingsAttributes](as.ref.Append("application_settings"))
 }
 
 func (as appstreamStackAttributes) StorageConnectors() terra.SetValue[appstreamstack.StorageConnectorsAttributes] {
-	return terra.ReferenceSet[appstreamstack.StorageConnectorsAttributes](as.ref.Append("storage_connectors"))
+	return terra.ReferenceAsSet[appstreamstack.StorageConnectorsAttributes](as.ref.Append("storage_connectors"))
 }
 
 func (as appstreamStackAttributes) UserSettings() terra.SetValue[appstreamstack.UserSettingsAttributes] {
-	return terra.ReferenceSet[appstreamstack.UserSettingsAttributes](as.ref.Append("user_settings"))
+	return terra.ReferenceAsSet[appstreamstack.UserSettingsAttributes](as.ref.Append("user_settings"))
 }
 
 type appstreamStackState struct {

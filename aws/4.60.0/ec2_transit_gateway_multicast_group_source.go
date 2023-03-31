@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewEc2TransitGatewayMulticastGroupSource creates a new instance of [Ec2TransitGatewayMulticastGroupSource].
 func NewEc2TransitGatewayMulticastGroupSource(name string, args Ec2TransitGatewayMulticastGroupSourceArgs) *Ec2TransitGatewayMulticastGroupSource {
 	return &Ec2TransitGatewayMulticastGroupSource{
 		Args: args,
@@ -18,28 +19,51 @@ func NewEc2TransitGatewayMulticastGroupSource(name string, args Ec2TransitGatewa
 
 var _ terra.Resource = (*Ec2TransitGatewayMulticastGroupSource)(nil)
 
+// Ec2TransitGatewayMulticastGroupSource represents the Terraform resource aws_ec2_transit_gateway_multicast_group_source.
 type Ec2TransitGatewayMulticastGroupSource struct {
-	Name  string
-	Args  Ec2TransitGatewayMulticastGroupSourceArgs
-	state *ec2TransitGatewayMulticastGroupSourceState
+	Name      string
+	Args      Ec2TransitGatewayMulticastGroupSourceArgs
+	state     *ec2TransitGatewayMulticastGroupSourceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Ec2TransitGatewayMulticastGroupSource].
 func (etgmgs *Ec2TransitGatewayMulticastGroupSource) Type() string {
 	return "aws_ec2_transit_gateway_multicast_group_source"
 }
 
+// LocalName returns the local name for [Ec2TransitGatewayMulticastGroupSource].
 func (etgmgs *Ec2TransitGatewayMulticastGroupSource) LocalName() string {
 	return etgmgs.Name
 }
 
+// Configuration returns the configuration (args) for [Ec2TransitGatewayMulticastGroupSource].
 func (etgmgs *Ec2TransitGatewayMulticastGroupSource) Configuration() interface{} {
 	return etgmgs.Args
 }
 
+// DependOn is used for other resources to depend on [Ec2TransitGatewayMulticastGroupSource].
+func (etgmgs *Ec2TransitGatewayMulticastGroupSource) DependOn() terra.Reference {
+	return terra.ReferenceResource(etgmgs)
+}
+
+// Dependencies returns the list of resources [Ec2TransitGatewayMulticastGroupSource] depends_on.
+func (etgmgs *Ec2TransitGatewayMulticastGroupSource) Dependencies() terra.Dependencies {
+	return etgmgs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Ec2TransitGatewayMulticastGroupSource].
+func (etgmgs *Ec2TransitGatewayMulticastGroupSource) LifecycleManagement() *terra.Lifecycle {
+	return etgmgs.Lifecycle
+}
+
+// Attributes returns the attributes for [Ec2TransitGatewayMulticastGroupSource].
 func (etgmgs *Ec2TransitGatewayMulticastGroupSource) Attributes() ec2TransitGatewayMulticastGroupSourceAttributes {
 	return ec2TransitGatewayMulticastGroupSourceAttributes{ref: terra.ReferenceResource(etgmgs)}
 }
 
+// ImportState imports the given attribute values into [Ec2TransitGatewayMulticastGroupSource]'s state.
 func (etgmgs *Ec2TransitGatewayMulticastGroupSource) ImportState(av io.Reader) error {
 	etgmgs.state = &ec2TransitGatewayMulticastGroupSourceState{}
 	if err := json.NewDecoder(av).Decode(etgmgs.state); err != nil {
@@ -48,10 +72,12 @@ func (etgmgs *Ec2TransitGatewayMulticastGroupSource) ImportState(av io.Reader) e
 	return nil
 }
 
+// State returns the state and a bool indicating if [Ec2TransitGatewayMulticastGroupSource] has state.
 func (etgmgs *Ec2TransitGatewayMulticastGroupSource) State() (*ec2TransitGatewayMulticastGroupSourceState, bool) {
 	return etgmgs.state, etgmgs.state != nil
 }
 
+// StateMust returns the state for [Ec2TransitGatewayMulticastGroupSource]. Panics if the state is nil.
 func (etgmgs *Ec2TransitGatewayMulticastGroupSource) StateMust() *ec2TransitGatewayMulticastGroupSourceState {
 	if etgmgs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", etgmgs.Type(), etgmgs.LocalName()))
@@ -59,10 +85,7 @@ func (etgmgs *Ec2TransitGatewayMulticastGroupSource) StateMust() *ec2TransitGate
 	return etgmgs.state
 }
 
-func (etgmgs *Ec2TransitGatewayMulticastGroupSource) DependOn() terra.Reference {
-	return terra.ReferenceResource(etgmgs)
-}
-
+// Ec2TransitGatewayMulticastGroupSourceArgs contains the configurations for aws_ec2_transit_gateway_multicast_group_source.
 type Ec2TransitGatewayMulticastGroupSourceArgs struct {
 	// GroupIpAddress: string, required
 	GroupIpAddress terra.StringValue `hcl:"group_ip_address,attr" validate:"required"`
@@ -72,27 +95,29 @@ type Ec2TransitGatewayMulticastGroupSourceArgs struct {
 	NetworkInterfaceId terra.StringValue `hcl:"network_interface_id,attr" validate:"required"`
 	// TransitGatewayMulticastDomainId: string, required
 	TransitGatewayMulticastDomainId terra.StringValue `hcl:"transit_gateway_multicast_domain_id,attr" validate:"required"`
-	// DependsOn contains resources that Ec2TransitGatewayMulticastGroupSource depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ec2TransitGatewayMulticastGroupSourceAttributes struct {
 	ref terra.Reference
 }
 
+// GroupIpAddress returns a reference to field group_ip_address of aws_ec2_transit_gateway_multicast_group_source.
 func (etgmgs ec2TransitGatewayMulticastGroupSourceAttributes) GroupIpAddress() terra.StringValue {
-	return terra.ReferenceString(etgmgs.ref.Append("group_ip_address"))
+	return terra.ReferenceAsString(etgmgs.ref.Append("group_ip_address"))
 }
 
+// Id returns a reference to field id of aws_ec2_transit_gateway_multicast_group_source.
 func (etgmgs ec2TransitGatewayMulticastGroupSourceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(etgmgs.ref.Append("id"))
+	return terra.ReferenceAsString(etgmgs.ref.Append("id"))
 }
 
+// NetworkInterfaceId returns a reference to field network_interface_id of aws_ec2_transit_gateway_multicast_group_source.
 func (etgmgs ec2TransitGatewayMulticastGroupSourceAttributes) NetworkInterfaceId() terra.StringValue {
-	return terra.ReferenceString(etgmgs.ref.Append("network_interface_id"))
+	return terra.ReferenceAsString(etgmgs.ref.Append("network_interface_id"))
 }
 
+// TransitGatewayMulticastDomainId returns a reference to field transit_gateway_multicast_domain_id of aws_ec2_transit_gateway_multicast_group_source.
 func (etgmgs ec2TransitGatewayMulticastGroupSourceAttributes) TransitGatewayMulticastDomainId() terra.StringValue {
-	return terra.ReferenceString(etgmgs.ref.Append("transit_gateway_multicast_domain_id"))
+	return terra.ReferenceAsString(etgmgs.ref.Append("transit_gateway_multicast_domain_id"))
 }
 
 type ec2TransitGatewayMulticastGroupSourceState struct {

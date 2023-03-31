@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewS3ControlAccessPointPolicy creates a new instance of [S3ControlAccessPointPolicy].
 func NewS3ControlAccessPointPolicy(name string, args S3ControlAccessPointPolicyArgs) *S3ControlAccessPointPolicy {
 	return &S3ControlAccessPointPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewS3ControlAccessPointPolicy(name string, args S3ControlAccessPointPolicyA
 
 var _ terra.Resource = (*S3ControlAccessPointPolicy)(nil)
 
+// S3ControlAccessPointPolicy represents the Terraform resource aws_s3control_access_point_policy.
 type S3ControlAccessPointPolicy struct {
-	Name  string
-	Args  S3ControlAccessPointPolicyArgs
-	state *s3ControlAccessPointPolicyState
+	Name      string
+	Args      S3ControlAccessPointPolicyArgs
+	state     *s3ControlAccessPointPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [S3ControlAccessPointPolicy].
 func (sapp *S3ControlAccessPointPolicy) Type() string {
 	return "aws_s3control_access_point_policy"
 }
 
+// LocalName returns the local name for [S3ControlAccessPointPolicy].
 func (sapp *S3ControlAccessPointPolicy) LocalName() string {
 	return sapp.Name
 }
 
+// Configuration returns the configuration (args) for [S3ControlAccessPointPolicy].
 func (sapp *S3ControlAccessPointPolicy) Configuration() interface{} {
 	return sapp.Args
 }
 
+// DependOn is used for other resources to depend on [S3ControlAccessPointPolicy].
+func (sapp *S3ControlAccessPointPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(sapp)
+}
+
+// Dependencies returns the list of resources [S3ControlAccessPointPolicy] depends_on.
+func (sapp *S3ControlAccessPointPolicy) Dependencies() terra.Dependencies {
+	return sapp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [S3ControlAccessPointPolicy].
+func (sapp *S3ControlAccessPointPolicy) LifecycleManagement() *terra.Lifecycle {
+	return sapp.Lifecycle
+}
+
+// Attributes returns the attributes for [S3ControlAccessPointPolicy].
 func (sapp *S3ControlAccessPointPolicy) Attributes() s3ControlAccessPointPolicyAttributes {
 	return s3ControlAccessPointPolicyAttributes{ref: terra.ReferenceResource(sapp)}
 }
 
+// ImportState imports the given attribute values into [S3ControlAccessPointPolicy]'s state.
 func (sapp *S3ControlAccessPointPolicy) ImportState(av io.Reader) error {
 	sapp.state = &s3ControlAccessPointPolicyState{}
 	if err := json.NewDecoder(av).Decode(sapp.state); err != nil {
@@ -48,10 +72,12 @@ func (sapp *S3ControlAccessPointPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [S3ControlAccessPointPolicy] has state.
 func (sapp *S3ControlAccessPointPolicy) State() (*s3ControlAccessPointPolicyState, bool) {
 	return sapp.state, sapp.state != nil
 }
 
+// StateMust returns the state for [S3ControlAccessPointPolicy]. Panics if the state is nil.
 func (sapp *S3ControlAccessPointPolicy) StateMust() *s3ControlAccessPointPolicyState {
 	if sapp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sapp.Type(), sapp.LocalName()))
@@ -59,10 +85,7 @@ func (sapp *S3ControlAccessPointPolicy) StateMust() *s3ControlAccessPointPolicyS
 	return sapp.state
 }
 
-func (sapp *S3ControlAccessPointPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(sapp)
-}
-
+// S3ControlAccessPointPolicyArgs contains the configurations for aws_s3control_access_point_policy.
 type S3ControlAccessPointPolicyArgs struct {
 	// AccessPointArn: string, required
 	AccessPointArn terra.StringValue `hcl:"access_point_arn,attr" validate:"required"`
@@ -70,27 +93,29 @@ type S3ControlAccessPointPolicyArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// Policy: string, required
 	Policy terra.StringValue `hcl:"policy,attr" validate:"required"`
-	// DependsOn contains resources that S3ControlAccessPointPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type s3ControlAccessPointPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// AccessPointArn returns a reference to field access_point_arn of aws_s3control_access_point_policy.
 func (sapp s3ControlAccessPointPolicyAttributes) AccessPointArn() terra.StringValue {
-	return terra.ReferenceString(sapp.ref.Append("access_point_arn"))
+	return terra.ReferenceAsString(sapp.ref.Append("access_point_arn"))
 }
 
+// HasPublicAccessPolicy returns a reference to field has_public_access_policy of aws_s3control_access_point_policy.
 func (sapp s3ControlAccessPointPolicyAttributes) HasPublicAccessPolicy() terra.BoolValue {
-	return terra.ReferenceBool(sapp.ref.Append("has_public_access_policy"))
+	return terra.ReferenceAsBool(sapp.ref.Append("has_public_access_policy"))
 }
 
+// Id returns a reference to field id of aws_s3control_access_point_policy.
 func (sapp s3ControlAccessPointPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sapp.ref.Append("id"))
+	return terra.ReferenceAsString(sapp.ref.Append("id"))
 }
 
+// Policy returns a reference to field policy of aws_s3control_access_point_policy.
 func (sapp s3ControlAccessPointPolicyAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(sapp.ref.Append("policy"))
+	return terra.ReferenceAsString(sapp.ref.Append("policy"))
 }
 
 type s3ControlAccessPointPolicyState struct {

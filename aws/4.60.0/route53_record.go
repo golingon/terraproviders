@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewRoute53Record creates a new instance of [Route53Record].
 func NewRoute53Record(name string, args Route53RecordArgs) *Route53Record {
 	return &Route53Record{
 		Args: args,
@@ -19,28 +20,51 @@ func NewRoute53Record(name string, args Route53RecordArgs) *Route53Record {
 
 var _ terra.Resource = (*Route53Record)(nil)
 
+// Route53Record represents the Terraform resource aws_route53_record.
 type Route53Record struct {
-	Name  string
-	Args  Route53RecordArgs
-	state *route53RecordState
+	Name      string
+	Args      Route53RecordArgs
+	state     *route53RecordState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Route53Record].
 func (rr *Route53Record) Type() string {
 	return "aws_route53_record"
 }
 
+// LocalName returns the local name for [Route53Record].
 func (rr *Route53Record) LocalName() string {
 	return rr.Name
 }
 
+// Configuration returns the configuration (args) for [Route53Record].
 func (rr *Route53Record) Configuration() interface{} {
 	return rr.Args
 }
 
+// DependOn is used for other resources to depend on [Route53Record].
+func (rr *Route53Record) DependOn() terra.Reference {
+	return terra.ReferenceResource(rr)
+}
+
+// Dependencies returns the list of resources [Route53Record] depends_on.
+func (rr *Route53Record) Dependencies() terra.Dependencies {
+	return rr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Route53Record].
+func (rr *Route53Record) LifecycleManagement() *terra.Lifecycle {
+	return rr.Lifecycle
+}
+
+// Attributes returns the attributes for [Route53Record].
 func (rr *Route53Record) Attributes() route53RecordAttributes {
 	return route53RecordAttributes{ref: terra.ReferenceResource(rr)}
 }
 
+// ImportState imports the given attribute values into [Route53Record]'s state.
 func (rr *Route53Record) ImportState(av io.Reader) error {
 	rr.state = &route53RecordState{}
 	if err := json.NewDecoder(av).Decode(rr.state); err != nil {
@@ -49,10 +73,12 @@ func (rr *Route53Record) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Route53Record] has state.
 func (rr *Route53Record) State() (*route53RecordState, bool) {
 	return rr.state, rr.state != nil
 }
 
+// StateMust returns the state for [Route53Record]. Panics if the state is nil.
 func (rr *Route53Record) StateMust() *route53RecordState {
 	if rr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rr.Type(), rr.LocalName()))
@@ -60,10 +86,7 @@ func (rr *Route53Record) StateMust() *route53RecordState {
 	return rr.state
 }
 
-func (rr *Route53Record) DependOn() terra.Reference {
-	return terra.ReferenceResource(rr)
-}
-
+// Route53RecordArgs contains the configurations for aws_route53_record.
 type Route53RecordArgs struct {
 	// AllowOverwrite: bool, optional
 	AllowOverwrite terra.BoolValue `hcl:"allow_overwrite,attr"`
@@ -97,79 +120,88 @@ type Route53RecordArgs struct {
 	LatencyRoutingPolicy *route53record.LatencyRoutingPolicy `hcl:"latency_routing_policy,block"`
 	// WeightedRoutingPolicy: optional
 	WeightedRoutingPolicy *route53record.WeightedRoutingPolicy `hcl:"weighted_routing_policy,block"`
-	// DependsOn contains resources that Route53Record depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type route53RecordAttributes struct {
 	ref terra.Reference
 }
 
+// AllowOverwrite returns a reference to field allow_overwrite of aws_route53_record.
 func (rr route53RecordAttributes) AllowOverwrite() terra.BoolValue {
-	return terra.ReferenceBool(rr.ref.Append("allow_overwrite"))
+	return terra.ReferenceAsBool(rr.ref.Append("allow_overwrite"))
 }
 
+// Fqdn returns a reference to field fqdn of aws_route53_record.
 func (rr route53RecordAttributes) Fqdn() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("fqdn"))
+	return terra.ReferenceAsString(rr.ref.Append("fqdn"))
 }
 
+// HealthCheckId returns a reference to field health_check_id of aws_route53_record.
 func (rr route53RecordAttributes) HealthCheckId() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("health_check_id"))
+	return terra.ReferenceAsString(rr.ref.Append("health_check_id"))
 }
 
+// Id returns a reference to field id of aws_route53_record.
 func (rr route53RecordAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("id"))
+	return terra.ReferenceAsString(rr.ref.Append("id"))
 }
 
+// MultivalueAnswerRoutingPolicy returns a reference to field multivalue_answer_routing_policy of aws_route53_record.
 func (rr route53RecordAttributes) MultivalueAnswerRoutingPolicy() terra.BoolValue {
-	return terra.ReferenceBool(rr.ref.Append("multivalue_answer_routing_policy"))
+	return terra.ReferenceAsBool(rr.ref.Append("multivalue_answer_routing_policy"))
 }
 
+// Name returns a reference to field name of aws_route53_record.
 func (rr route53RecordAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("name"))
+	return terra.ReferenceAsString(rr.ref.Append("name"))
 }
 
+// Records returns a reference to field records of aws_route53_record.
 func (rr route53RecordAttributes) Records() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rr.ref.Append("records"))
+	return terra.ReferenceAsSet[terra.StringValue](rr.ref.Append("records"))
 }
 
+// SetIdentifier returns a reference to field set_identifier of aws_route53_record.
 func (rr route53RecordAttributes) SetIdentifier() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("set_identifier"))
+	return terra.ReferenceAsString(rr.ref.Append("set_identifier"))
 }
 
+// Ttl returns a reference to field ttl of aws_route53_record.
 func (rr route53RecordAttributes) Ttl() terra.NumberValue {
-	return terra.ReferenceNumber(rr.ref.Append("ttl"))
+	return terra.ReferenceAsNumber(rr.ref.Append("ttl"))
 }
 
+// Type returns a reference to field type of aws_route53_record.
 func (rr route53RecordAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("type"))
+	return terra.ReferenceAsString(rr.ref.Append("type"))
 }
 
+// ZoneId returns a reference to field zone_id of aws_route53_record.
 func (rr route53RecordAttributes) ZoneId() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("zone_id"))
+	return terra.ReferenceAsString(rr.ref.Append("zone_id"))
 }
 
 func (rr route53RecordAttributes) Alias() terra.ListValue[route53record.AliasAttributes] {
-	return terra.ReferenceList[route53record.AliasAttributes](rr.ref.Append("alias"))
+	return terra.ReferenceAsList[route53record.AliasAttributes](rr.ref.Append("alias"))
 }
 
 func (rr route53RecordAttributes) CidrRoutingPolicy() terra.ListValue[route53record.CidrRoutingPolicyAttributes] {
-	return terra.ReferenceList[route53record.CidrRoutingPolicyAttributes](rr.ref.Append("cidr_routing_policy"))
+	return terra.ReferenceAsList[route53record.CidrRoutingPolicyAttributes](rr.ref.Append("cidr_routing_policy"))
 }
 
 func (rr route53RecordAttributes) FailoverRoutingPolicy() terra.ListValue[route53record.FailoverRoutingPolicyAttributes] {
-	return terra.ReferenceList[route53record.FailoverRoutingPolicyAttributes](rr.ref.Append("failover_routing_policy"))
+	return terra.ReferenceAsList[route53record.FailoverRoutingPolicyAttributes](rr.ref.Append("failover_routing_policy"))
 }
 
 func (rr route53RecordAttributes) GeolocationRoutingPolicy() terra.ListValue[route53record.GeolocationRoutingPolicyAttributes] {
-	return terra.ReferenceList[route53record.GeolocationRoutingPolicyAttributes](rr.ref.Append("geolocation_routing_policy"))
+	return terra.ReferenceAsList[route53record.GeolocationRoutingPolicyAttributes](rr.ref.Append("geolocation_routing_policy"))
 }
 
 func (rr route53RecordAttributes) LatencyRoutingPolicy() terra.ListValue[route53record.LatencyRoutingPolicyAttributes] {
-	return terra.ReferenceList[route53record.LatencyRoutingPolicyAttributes](rr.ref.Append("latency_routing_policy"))
+	return terra.ReferenceAsList[route53record.LatencyRoutingPolicyAttributes](rr.ref.Append("latency_routing_policy"))
 }
 
 func (rr route53RecordAttributes) WeightedRoutingPolicy() terra.ListValue[route53record.WeightedRoutingPolicyAttributes] {
-	return terra.ReferenceList[route53record.WeightedRoutingPolicyAttributes](rr.ref.Append("weighted_routing_policy"))
+	return terra.ReferenceAsList[route53record.WeightedRoutingPolicyAttributes](rr.ref.Append("weighted_routing_policy"))
 }
 
 type route53RecordState struct {

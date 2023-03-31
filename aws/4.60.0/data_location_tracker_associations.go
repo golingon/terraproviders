@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataLocationTrackerAssociations creates a new instance of [DataLocationTrackerAssociations].
 func NewDataLocationTrackerAssociations(name string, args DataLocationTrackerAssociationsArgs) *DataLocationTrackerAssociations {
 	return &DataLocationTrackerAssociations{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataLocationTrackerAssociations(name string, args DataLocationTrackerAss
 
 var _ terra.DataResource = (*DataLocationTrackerAssociations)(nil)
 
+// DataLocationTrackerAssociations represents the Terraform data resource aws_location_tracker_associations.
 type DataLocationTrackerAssociations struct {
 	Name string
 	Args DataLocationTrackerAssociationsArgs
 }
 
+// DataSource returns the Terraform object type for [DataLocationTrackerAssociations].
 func (lta *DataLocationTrackerAssociations) DataSource() string {
 	return "aws_location_tracker_associations"
 }
 
+// LocalName returns the local name for [DataLocationTrackerAssociations].
 func (lta *DataLocationTrackerAssociations) LocalName() string {
 	return lta.Name
 }
 
+// Configuration returns the configuration (args) for [DataLocationTrackerAssociations].
 func (lta *DataLocationTrackerAssociations) Configuration() interface{} {
 	return lta.Args
 }
 
+// Attributes returns the attributes for [DataLocationTrackerAssociations].
 func (lta *DataLocationTrackerAssociations) Attributes() dataLocationTrackerAssociationsAttributes {
 	return dataLocationTrackerAssociationsAttributes{ref: terra.ReferenceDataResource(lta)}
 }
 
+// DataLocationTrackerAssociationsArgs contains the configurations for aws_location_tracker_associations.
 type DataLocationTrackerAssociationsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,14 +51,17 @@ type dataLocationTrackerAssociationsAttributes struct {
 	ref terra.Reference
 }
 
+// ConsumerArns returns a reference to field consumer_arns of aws_location_tracker_associations.
 func (lta dataLocationTrackerAssociationsAttributes) ConsumerArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](lta.ref.Append("consumer_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](lta.ref.Append("consumer_arns"))
 }
 
+// Id returns a reference to field id of aws_location_tracker_associations.
 func (lta dataLocationTrackerAssociationsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lta.ref.Append("id"))
+	return terra.ReferenceAsString(lta.ref.Append("id"))
 }
 
+// TrackerName returns a reference to field tracker_name of aws_location_tracker_associations.
 func (lta dataLocationTrackerAssociationsAttributes) TrackerName() terra.StringValue {
-	return terra.ReferenceString(lta.ref.Append("tracker_name"))
+	return terra.ReferenceAsString(lta.ref.Append("tracker_name"))
 }

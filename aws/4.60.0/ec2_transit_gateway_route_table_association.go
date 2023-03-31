@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewEc2TransitGatewayRouteTableAssociation creates a new instance of [Ec2TransitGatewayRouteTableAssociation].
 func NewEc2TransitGatewayRouteTableAssociation(name string, args Ec2TransitGatewayRouteTableAssociationArgs) *Ec2TransitGatewayRouteTableAssociation {
 	return &Ec2TransitGatewayRouteTableAssociation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewEc2TransitGatewayRouteTableAssociation(name string, args Ec2TransitGatew
 
 var _ terra.Resource = (*Ec2TransitGatewayRouteTableAssociation)(nil)
 
+// Ec2TransitGatewayRouteTableAssociation represents the Terraform resource aws_ec2_transit_gateway_route_table_association.
 type Ec2TransitGatewayRouteTableAssociation struct {
-	Name  string
-	Args  Ec2TransitGatewayRouteTableAssociationArgs
-	state *ec2TransitGatewayRouteTableAssociationState
+	Name      string
+	Args      Ec2TransitGatewayRouteTableAssociationArgs
+	state     *ec2TransitGatewayRouteTableAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Ec2TransitGatewayRouteTableAssociation].
 func (etgrta *Ec2TransitGatewayRouteTableAssociation) Type() string {
 	return "aws_ec2_transit_gateway_route_table_association"
 }
 
+// LocalName returns the local name for [Ec2TransitGatewayRouteTableAssociation].
 func (etgrta *Ec2TransitGatewayRouteTableAssociation) LocalName() string {
 	return etgrta.Name
 }
 
+// Configuration returns the configuration (args) for [Ec2TransitGatewayRouteTableAssociation].
 func (etgrta *Ec2TransitGatewayRouteTableAssociation) Configuration() interface{} {
 	return etgrta.Args
 }
 
+// DependOn is used for other resources to depend on [Ec2TransitGatewayRouteTableAssociation].
+func (etgrta *Ec2TransitGatewayRouteTableAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(etgrta)
+}
+
+// Dependencies returns the list of resources [Ec2TransitGatewayRouteTableAssociation] depends_on.
+func (etgrta *Ec2TransitGatewayRouteTableAssociation) Dependencies() terra.Dependencies {
+	return etgrta.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Ec2TransitGatewayRouteTableAssociation].
+func (etgrta *Ec2TransitGatewayRouteTableAssociation) LifecycleManagement() *terra.Lifecycle {
+	return etgrta.Lifecycle
+}
+
+// Attributes returns the attributes for [Ec2TransitGatewayRouteTableAssociation].
 func (etgrta *Ec2TransitGatewayRouteTableAssociation) Attributes() ec2TransitGatewayRouteTableAssociationAttributes {
 	return ec2TransitGatewayRouteTableAssociationAttributes{ref: terra.ReferenceResource(etgrta)}
 }
 
+// ImportState imports the given attribute values into [Ec2TransitGatewayRouteTableAssociation]'s state.
 func (etgrta *Ec2TransitGatewayRouteTableAssociation) ImportState(av io.Reader) error {
 	etgrta.state = &ec2TransitGatewayRouteTableAssociationState{}
 	if err := json.NewDecoder(av).Decode(etgrta.state); err != nil {
@@ -48,10 +72,12 @@ func (etgrta *Ec2TransitGatewayRouteTableAssociation) ImportState(av io.Reader) 
 	return nil
 }
 
+// State returns the state and a bool indicating if [Ec2TransitGatewayRouteTableAssociation] has state.
 func (etgrta *Ec2TransitGatewayRouteTableAssociation) State() (*ec2TransitGatewayRouteTableAssociationState, bool) {
 	return etgrta.state, etgrta.state != nil
 }
 
+// StateMust returns the state for [Ec2TransitGatewayRouteTableAssociation]. Panics if the state is nil.
 func (etgrta *Ec2TransitGatewayRouteTableAssociation) StateMust() *ec2TransitGatewayRouteTableAssociationState {
 	if etgrta.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", etgrta.Type(), etgrta.LocalName()))
@@ -59,10 +85,7 @@ func (etgrta *Ec2TransitGatewayRouteTableAssociation) StateMust() *ec2TransitGat
 	return etgrta.state
 }
 
-func (etgrta *Ec2TransitGatewayRouteTableAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(etgrta)
-}
-
+// Ec2TransitGatewayRouteTableAssociationArgs contains the configurations for aws_ec2_transit_gateway_route_table_association.
 type Ec2TransitGatewayRouteTableAssociationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,31 +93,34 @@ type Ec2TransitGatewayRouteTableAssociationArgs struct {
 	TransitGatewayAttachmentId terra.StringValue `hcl:"transit_gateway_attachment_id,attr" validate:"required"`
 	// TransitGatewayRouteTableId: string, required
 	TransitGatewayRouteTableId terra.StringValue `hcl:"transit_gateway_route_table_id,attr" validate:"required"`
-	// DependsOn contains resources that Ec2TransitGatewayRouteTableAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ec2TransitGatewayRouteTableAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_ec2_transit_gateway_route_table_association.
 func (etgrta ec2TransitGatewayRouteTableAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(etgrta.ref.Append("id"))
+	return terra.ReferenceAsString(etgrta.ref.Append("id"))
 }
 
+// ResourceId returns a reference to field resource_id of aws_ec2_transit_gateway_route_table_association.
 func (etgrta ec2TransitGatewayRouteTableAssociationAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(etgrta.ref.Append("resource_id"))
+	return terra.ReferenceAsString(etgrta.ref.Append("resource_id"))
 }
 
+// ResourceType returns a reference to field resource_type of aws_ec2_transit_gateway_route_table_association.
 func (etgrta ec2TransitGatewayRouteTableAssociationAttributes) ResourceType() terra.StringValue {
-	return terra.ReferenceString(etgrta.ref.Append("resource_type"))
+	return terra.ReferenceAsString(etgrta.ref.Append("resource_type"))
 }
 
+// TransitGatewayAttachmentId returns a reference to field transit_gateway_attachment_id of aws_ec2_transit_gateway_route_table_association.
 func (etgrta ec2TransitGatewayRouteTableAssociationAttributes) TransitGatewayAttachmentId() terra.StringValue {
-	return terra.ReferenceString(etgrta.ref.Append("transit_gateway_attachment_id"))
+	return terra.ReferenceAsString(etgrta.ref.Append("transit_gateway_attachment_id"))
 }
 
+// TransitGatewayRouteTableId returns a reference to field transit_gateway_route_table_id of aws_ec2_transit_gateway_route_table_association.
 func (etgrta ec2TransitGatewayRouteTableAssociationAttributes) TransitGatewayRouteTableId() terra.StringValue {
-	return terra.ReferenceString(etgrta.ref.Append("transit_gateway_route_table_id"))
+	return terra.ReferenceAsString(etgrta.ref.Append("transit_gateway_route_table_id"))
 }
 
 type ec2TransitGatewayRouteTableAssociationState struct {

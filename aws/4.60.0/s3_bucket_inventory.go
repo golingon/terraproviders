@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewS3BucketInventory creates a new instance of [S3BucketInventory].
 func NewS3BucketInventory(name string, args S3BucketInventoryArgs) *S3BucketInventory {
 	return &S3BucketInventory{
 		Args: args,
@@ -19,28 +20,51 @@ func NewS3BucketInventory(name string, args S3BucketInventoryArgs) *S3BucketInve
 
 var _ terra.Resource = (*S3BucketInventory)(nil)
 
+// S3BucketInventory represents the Terraform resource aws_s3_bucket_inventory.
 type S3BucketInventory struct {
-	Name  string
-	Args  S3BucketInventoryArgs
-	state *s3BucketInventoryState
+	Name      string
+	Args      S3BucketInventoryArgs
+	state     *s3BucketInventoryState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [S3BucketInventory].
 func (sbi *S3BucketInventory) Type() string {
 	return "aws_s3_bucket_inventory"
 }
 
+// LocalName returns the local name for [S3BucketInventory].
 func (sbi *S3BucketInventory) LocalName() string {
 	return sbi.Name
 }
 
+// Configuration returns the configuration (args) for [S3BucketInventory].
 func (sbi *S3BucketInventory) Configuration() interface{} {
 	return sbi.Args
 }
 
+// DependOn is used for other resources to depend on [S3BucketInventory].
+func (sbi *S3BucketInventory) DependOn() terra.Reference {
+	return terra.ReferenceResource(sbi)
+}
+
+// Dependencies returns the list of resources [S3BucketInventory] depends_on.
+func (sbi *S3BucketInventory) Dependencies() terra.Dependencies {
+	return sbi.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [S3BucketInventory].
+func (sbi *S3BucketInventory) LifecycleManagement() *terra.Lifecycle {
+	return sbi.Lifecycle
+}
+
+// Attributes returns the attributes for [S3BucketInventory].
 func (sbi *S3BucketInventory) Attributes() s3BucketInventoryAttributes {
 	return s3BucketInventoryAttributes{ref: terra.ReferenceResource(sbi)}
 }
 
+// ImportState imports the given attribute values into [S3BucketInventory]'s state.
 func (sbi *S3BucketInventory) ImportState(av io.Reader) error {
 	sbi.state = &s3BucketInventoryState{}
 	if err := json.NewDecoder(av).Decode(sbi.state); err != nil {
@@ -49,10 +73,12 @@ func (sbi *S3BucketInventory) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [S3BucketInventory] has state.
 func (sbi *S3BucketInventory) State() (*s3BucketInventoryState, bool) {
 	return sbi.state, sbi.state != nil
 }
 
+// StateMust returns the state for [S3BucketInventory]. Panics if the state is nil.
 func (sbi *S3BucketInventory) StateMust() *s3BucketInventoryState {
 	if sbi.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sbi.Type(), sbi.LocalName()))
@@ -60,10 +86,7 @@ func (sbi *S3BucketInventory) StateMust() *s3BucketInventoryState {
 	return sbi.state
 }
 
-func (sbi *S3BucketInventory) DependOn() terra.Reference {
-	return terra.ReferenceResource(sbi)
-}
-
+// S3BucketInventoryArgs contains the configurations for aws_s3_bucket_inventory.
 type S3BucketInventoryArgs struct {
 	// Bucket: string, required
 	Bucket terra.StringValue `hcl:"bucket,attr" validate:"required"`
@@ -83,47 +106,51 @@ type S3BucketInventoryArgs struct {
 	Filter *s3bucketinventory.Filter `hcl:"filter,block"`
 	// Schedule: required
 	Schedule *s3bucketinventory.Schedule `hcl:"schedule,block" validate:"required"`
-	// DependsOn contains resources that S3BucketInventory depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type s3BucketInventoryAttributes struct {
 	ref terra.Reference
 }
 
+// Bucket returns a reference to field bucket of aws_s3_bucket_inventory.
 func (sbi s3BucketInventoryAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(sbi.ref.Append("bucket"))
+	return terra.ReferenceAsString(sbi.ref.Append("bucket"))
 }
 
+// Enabled returns a reference to field enabled of aws_s3_bucket_inventory.
 func (sbi s3BucketInventoryAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(sbi.ref.Append("enabled"))
+	return terra.ReferenceAsBool(sbi.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of aws_s3_bucket_inventory.
 func (sbi s3BucketInventoryAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sbi.ref.Append("id"))
+	return terra.ReferenceAsString(sbi.ref.Append("id"))
 }
 
+// IncludedObjectVersions returns a reference to field included_object_versions of aws_s3_bucket_inventory.
 func (sbi s3BucketInventoryAttributes) IncludedObjectVersions() terra.StringValue {
-	return terra.ReferenceString(sbi.ref.Append("included_object_versions"))
+	return terra.ReferenceAsString(sbi.ref.Append("included_object_versions"))
 }
 
+// Name returns a reference to field name of aws_s3_bucket_inventory.
 func (sbi s3BucketInventoryAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sbi.ref.Append("name"))
+	return terra.ReferenceAsString(sbi.ref.Append("name"))
 }
 
+// OptionalFields returns a reference to field optional_fields of aws_s3_bucket_inventory.
 func (sbi s3BucketInventoryAttributes) OptionalFields() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sbi.ref.Append("optional_fields"))
+	return terra.ReferenceAsSet[terra.StringValue](sbi.ref.Append("optional_fields"))
 }
 
 func (sbi s3BucketInventoryAttributes) Destination() terra.ListValue[s3bucketinventory.DestinationAttributes] {
-	return terra.ReferenceList[s3bucketinventory.DestinationAttributes](sbi.ref.Append("destination"))
+	return terra.ReferenceAsList[s3bucketinventory.DestinationAttributes](sbi.ref.Append("destination"))
 }
 
 func (sbi s3BucketInventoryAttributes) Filter() terra.ListValue[s3bucketinventory.FilterAttributes] {
-	return terra.ReferenceList[s3bucketinventory.FilterAttributes](sbi.ref.Append("filter"))
+	return terra.ReferenceAsList[s3bucketinventory.FilterAttributes](sbi.ref.Append("filter"))
 }
 
 func (sbi s3BucketInventoryAttributes) Schedule() terra.ListValue[s3bucketinventory.ScheduleAttributes] {
-	return terra.ReferenceList[s3bucketinventory.ScheduleAttributes](sbi.ref.Append("schedule"))
+	return terra.ReferenceAsList[s3bucketinventory.ScheduleAttributes](sbi.ref.Append("schedule"))
 }
 
 type s3BucketInventoryState struct {

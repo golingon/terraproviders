@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewPinpointApnsVoipChannel creates a new instance of [PinpointApnsVoipChannel].
 func NewPinpointApnsVoipChannel(name string, args PinpointApnsVoipChannelArgs) *PinpointApnsVoipChannel {
 	return &PinpointApnsVoipChannel{
 		Args: args,
@@ -18,28 +19,51 @@ func NewPinpointApnsVoipChannel(name string, args PinpointApnsVoipChannelArgs) *
 
 var _ terra.Resource = (*PinpointApnsVoipChannel)(nil)
 
+// PinpointApnsVoipChannel represents the Terraform resource aws_pinpoint_apns_voip_channel.
 type PinpointApnsVoipChannel struct {
-	Name  string
-	Args  PinpointApnsVoipChannelArgs
-	state *pinpointApnsVoipChannelState
+	Name      string
+	Args      PinpointApnsVoipChannelArgs
+	state     *pinpointApnsVoipChannelState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PinpointApnsVoipChannel].
 func (pavc *PinpointApnsVoipChannel) Type() string {
 	return "aws_pinpoint_apns_voip_channel"
 }
 
+// LocalName returns the local name for [PinpointApnsVoipChannel].
 func (pavc *PinpointApnsVoipChannel) LocalName() string {
 	return pavc.Name
 }
 
+// Configuration returns the configuration (args) for [PinpointApnsVoipChannel].
 func (pavc *PinpointApnsVoipChannel) Configuration() interface{} {
 	return pavc.Args
 }
 
+// DependOn is used for other resources to depend on [PinpointApnsVoipChannel].
+func (pavc *PinpointApnsVoipChannel) DependOn() terra.Reference {
+	return terra.ReferenceResource(pavc)
+}
+
+// Dependencies returns the list of resources [PinpointApnsVoipChannel] depends_on.
+func (pavc *PinpointApnsVoipChannel) Dependencies() terra.Dependencies {
+	return pavc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PinpointApnsVoipChannel].
+func (pavc *PinpointApnsVoipChannel) LifecycleManagement() *terra.Lifecycle {
+	return pavc.Lifecycle
+}
+
+// Attributes returns the attributes for [PinpointApnsVoipChannel].
 func (pavc *PinpointApnsVoipChannel) Attributes() pinpointApnsVoipChannelAttributes {
 	return pinpointApnsVoipChannelAttributes{ref: terra.ReferenceResource(pavc)}
 }
 
+// ImportState imports the given attribute values into [PinpointApnsVoipChannel]'s state.
 func (pavc *PinpointApnsVoipChannel) ImportState(av io.Reader) error {
 	pavc.state = &pinpointApnsVoipChannelState{}
 	if err := json.NewDecoder(av).Decode(pavc.state); err != nil {
@@ -48,10 +72,12 @@ func (pavc *PinpointApnsVoipChannel) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PinpointApnsVoipChannel] has state.
 func (pavc *PinpointApnsVoipChannel) State() (*pinpointApnsVoipChannelState, bool) {
 	return pavc.state, pavc.state != nil
 }
 
+// StateMust returns the state for [PinpointApnsVoipChannel]. Panics if the state is nil.
 func (pavc *PinpointApnsVoipChannel) StateMust() *pinpointApnsVoipChannelState {
 	if pavc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pavc.Type(), pavc.LocalName()))
@@ -59,10 +85,7 @@ func (pavc *PinpointApnsVoipChannel) StateMust() *pinpointApnsVoipChannelState {
 	return pavc.state
 }
 
-func (pavc *PinpointApnsVoipChannel) DependOn() terra.Reference {
-	return terra.ReferenceResource(pavc)
-}
-
+// PinpointApnsVoipChannelArgs contains the configurations for aws_pinpoint_apns_voip_channel.
 type PinpointApnsVoipChannelArgs struct {
 	// ApplicationId: string, required
 	ApplicationId terra.StringValue `hcl:"application_id,attr" validate:"required"`
@@ -84,51 +107,59 @@ type PinpointApnsVoipChannelArgs struct {
 	TokenKey terra.StringValue `hcl:"token_key,attr"`
 	// TokenKeyId: string, optional
 	TokenKeyId terra.StringValue `hcl:"token_key_id,attr"`
-	// DependsOn contains resources that PinpointApnsVoipChannel depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type pinpointApnsVoipChannelAttributes struct {
 	ref terra.Reference
 }
 
+// ApplicationId returns a reference to field application_id of aws_pinpoint_apns_voip_channel.
 func (pavc pinpointApnsVoipChannelAttributes) ApplicationId() terra.StringValue {
-	return terra.ReferenceString(pavc.ref.Append("application_id"))
+	return terra.ReferenceAsString(pavc.ref.Append("application_id"))
 }
 
+// BundleId returns a reference to field bundle_id of aws_pinpoint_apns_voip_channel.
 func (pavc pinpointApnsVoipChannelAttributes) BundleId() terra.StringValue {
-	return terra.ReferenceString(pavc.ref.Append("bundle_id"))
+	return terra.ReferenceAsString(pavc.ref.Append("bundle_id"))
 }
 
+// Certificate returns a reference to field certificate of aws_pinpoint_apns_voip_channel.
 func (pavc pinpointApnsVoipChannelAttributes) Certificate() terra.StringValue {
-	return terra.ReferenceString(pavc.ref.Append("certificate"))
+	return terra.ReferenceAsString(pavc.ref.Append("certificate"))
 }
 
+// DefaultAuthenticationMethod returns a reference to field default_authentication_method of aws_pinpoint_apns_voip_channel.
 func (pavc pinpointApnsVoipChannelAttributes) DefaultAuthenticationMethod() terra.StringValue {
-	return terra.ReferenceString(pavc.ref.Append("default_authentication_method"))
+	return terra.ReferenceAsString(pavc.ref.Append("default_authentication_method"))
 }
 
+// Enabled returns a reference to field enabled of aws_pinpoint_apns_voip_channel.
 func (pavc pinpointApnsVoipChannelAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(pavc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(pavc.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of aws_pinpoint_apns_voip_channel.
 func (pavc pinpointApnsVoipChannelAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pavc.ref.Append("id"))
+	return terra.ReferenceAsString(pavc.ref.Append("id"))
 }
 
+// PrivateKey returns a reference to field private_key of aws_pinpoint_apns_voip_channel.
 func (pavc pinpointApnsVoipChannelAttributes) PrivateKey() terra.StringValue {
-	return terra.ReferenceString(pavc.ref.Append("private_key"))
+	return terra.ReferenceAsString(pavc.ref.Append("private_key"))
 }
 
+// TeamId returns a reference to field team_id of aws_pinpoint_apns_voip_channel.
 func (pavc pinpointApnsVoipChannelAttributes) TeamId() terra.StringValue {
-	return terra.ReferenceString(pavc.ref.Append("team_id"))
+	return terra.ReferenceAsString(pavc.ref.Append("team_id"))
 }
 
+// TokenKey returns a reference to field token_key of aws_pinpoint_apns_voip_channel.
 func (pavc pinpointApnsVoipChannelAttributes) TokenKey() terra.StringValue {
-	return terra.ReferenceString(pavc.ref.Append("token_key"))
+	return terra.ReferenceAsString(pavc.ref.Append("token_key"))
 }
 
+// TokenKeyId returns a reference to field token_key_id of aws_pinpoint_apns_voip_channel.
 func (pavc pinpointApnsVoipChannelAttributes) TokenKeyId() terra.StringValue {
-	return terra.ReferenceString(pavc.ref.Append("token_key_id"))
+	return terra.ReferenceAsString(pavc.ref.Append("token_key_id"))
 }
 
 type pinpointApnsVoipChannelState struct {

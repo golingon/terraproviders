@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewServiceDiscoveryInstance creates a new instance of [ServiceDiscoveryInstance].
 func NewServiceDiscoveryInstance(name string, args ServiceDiscoveryInstanceArgs) *ServiceDiscoveryInstance {
 	return &ServiceDiscoveryInstance{
 		Args: args,
@@ -18,28 +19,51 @@ func NewServiceDiscoveryInstance(name string, args ServiceDiscoveryInstanceArgs)
 
 var _ terra.Resource = (*ServiceDiscoveryInstance)(nil)
 
+// ServiceDiscoveryInstance represents the Terraform resource aws_service_discovery_instance.
 type ServiceDiscoveryInstance struct {
-	Name  string
-	Args  ServiceDiscoveryInstanceArgs
-	state *serviceDiscoveryInstanceState
+	Name      string
+	Args      ServiceDiscoveryInstanceArgs
+	state     *serviceDiscoveryInstanceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ServiceDiscoveryInstance].
 func (sdi *ServiceDiscoveryInstance) Type() string {
 	return "aws_service_discovery_instance"
 }
 
+// LocalName returns the local name for [ServiceDiscoveryInstance].
 func (sdi *ServiceDiscoveryInstance) LocalName() string {
 	return sdi.Name
 }
 
+// Configuration returns the configuration (args) for [ServiceDiscoveryInstance].
 func (sdi *ServiceDiscoveryInstance) Configuration() interface{} {
 	return sdi.Args
 }
 
+// DependOn is used for other resources to depend on [ServiceDiscoveryInstance].
+func (sdi *ServiceDiscoveryInstance) DependOn() terra.Reference {
+	return terra.ReferenceResource(sdi)
+}
+
+// Dependencies returns the list of resources [ServiceDiscoveryInstance] depends_on.
+func (sdi *ServiceDiscoveryInstance) Dependencies() terra.Dependencies {
+	return sdi.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ServiceDiscoveryInstance].
+func (sdi *ServiceDiscoveryInstance) LifecycleManagement() *terra.Lifecycle {
+	return sdi.Lifecycle
+}
+
+// Attributes returns the attributes for [ServiceDiscoveryInstance].
 func (sdi *ServiceDiscoveryInstance) Attributes() serviceDiscoveryInstanceAttributes {
 	return serviceDiscoveryInstanceAttributes{ref: terra.ReferenceResource(sdi)}
 }
 
+// ImportState imports the given attribute values into [ServiceDiscoveryInstance]'s state.
 func (sdi *ServiceDiscoveryInstance) ImportState(av io.Reader) error {
 	sdi.state = &serviceDiscoveryInstanceState{}
 	if err := json.NewDecoder(av).Decode(sdi.state); err != nil {
@@ -48,10 +72,12 @@ func (sdi *ServiceDiscoveryInstance) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ServiceDiscoveryInstance] has state.
 func (sdi *ServiceDiscoveryInstance) State() (*serviceDiscoveryInstanceState, bool) {
 	return sdi.state, sdi.state != nil
 }
 
+// StateMust returns the state for [ServiceDiscoveryInstance]. Panics if the state is nil.
 func (sdi *ServiceDiscoveryInstance) StateMust() *serviceDiscoveryInstanceState {
 	if sdi.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sdi.Type(), sdi.LocalName()))
@@ -59,10 +85,7 @@ func (sdi *ServiceDiscoveryInstance) StateMust() *serviceDiscoveryInstanceState 
 	return sdi.state
 }
 
-func (sdi *ServiceDiscoveryInstance) DependOn() terra.Reference {
-	return terra.ReferenceResource(sdi)
-}
-
+// ServiceDiscoveryInstanceArgs contains the configurations for aws_service_discovery_instance.
 type ServiceDiscoveryInstanceArgs struct {
 	// Attributes: map of string, required
 	Attributes terra.MapValue[terra.StringValue] `hcl:"attributes,attr" validate:"required"`
@@ -72,27 +95,29 @@ type ServiceDiscoveryInstanceArgs struct {
 	InstanceId terra.StringValue `hcl:"instance_id,attr" validate:"required"`
 	// ServiceId: string, required
 	ServiceId terra.StringValue `hcl:"service_id,attr" validate:"required"`
-	// DependsOn contains resources that ServiceDiscoveryInstance depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type serviceDiscoveryInstanceAttributes struct {
 	ref terra.Reference
 }
 
+// Attributes returns a reference to field attributes of aws_service_discovery_instance.
 func (sdi serviceDiscoveryInstanceAttributes) Attributes() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sdi.ref.Append("attributes"))
+	return terra.ReferenceAsMap[terra.StringValue](sdi.ref.Append("attributes"))
 }
 
+// Id returns a reference to field id of aws_service_discovery_instance.
 func (sdi serviceDiscoveryInstanceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sdi.ref.Append("id"))
+	return terra.ReferenceAsString(sdi.ref.Append("id"))
 }
 
+// InstanceId returns a reference to field instance_id of aws_service_discovery_instance.
 func (sdi serviceDiscoveryInstanceAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(sdi.ref.Append("instance_id"))
+	return terra.ReferenceAsString(sdi.ref.Append("instance_id"))
 }
 
+// ServiceId returns a reference to field service_id of aws_service_discovery_instance.
 func (sdi serviceDiscoveryInstanceAttributes) ServiceId() terra.StringValue {
-	return terra.ReferenceString(sdi.ref.Append("service_id"))
+	return terra.ReferenceAsString(sdi.ref.Append("service_id"))
 }
 
 type serviceDiscoveryInstanceState struct {

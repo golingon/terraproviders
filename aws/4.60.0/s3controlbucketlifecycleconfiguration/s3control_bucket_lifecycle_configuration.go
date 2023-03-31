@@ -58,23 +58,23 @@ func (r RuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("id"))
+	return terra.ReferenceAsString(r.ref.Append("id"))
 }
 
 func (r RuleAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("status"))
+	return terra.ReferenceAsString(r.ref.Append("status"))
 }
 
 func (r RuleAttributes) AbortIncompleteMultipartUpload() terra.ListValue[AbortIncompleteMultipartUploadAttributes] {
-	return terra.ReferenceList[AbortIncompleteMultipartUploadAttributes](r.ref.Append("abort_incomplete_multipart_upload"))
+	return terra.ReferenceAsList[AbortIncompleteMultipartUploadAttributes](r.ref.Append("abort_incomplete_multipart_upload"))
 }
 
 func (r RuleAttributes) Expiration() terra.ListValue[ExpirationAttributes] {
-	return terra.ReferenceList[ExpirationAttributes](r.ref.Append("expiration"))
+	return terra.ReferenceAsList[ExpirationAttributes](r.ref.Append("expiration"))
 }
 
 func (r RuleAttributes) Filter() terra.ListValue[FilterAttributes] {
-	return terra.ReferenceList[FilterAttributes](r.ref.Append("filter"))
+	return terra.ReferenceAsList[FilterAttributes](r.ref.Append("filter"))
 }
 
 type AbortIncompleteMultipartUploadAttributes struct {
@@ -94,7 +94,7 @@ func (aimu AbortIncompleteMultipartUploadAttributes) InternalTokens() hclwrite.T
 }
 
 func (aimu AbortIncompleteMultipartUploadAttributes) DaysAfterInitiation() terra.NumberValue {
-	return terra.ReferenceNumber(aimu.ref.Append("days_after_initiation"))
+	return terra.ReferenceAsNumber(aimu.ref.Append("days_after_initiation"))
 }
 
 type ExpirationAttributes struct {
@@ -114,15 +114,15 @@ func (e ExpirationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e ExpirationAttributes) Date() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("date"))
+	return terra.ReferenceAsString(e.ref.Append("date"))
 }
 
 func (e ExpirationAttributes) Days() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("days"))
+	return terra.ReferenceAsNumber(e.ref.Append("days"))
 }
 
 func (e ExpirationAttributes) ExpiredObjectDeleteMarker() terra.BoolValue {
-	return terra.ReferenceBool(e.ref.Append("expired_object_delete_marker"))
+	return terra.ReferenceAsBool(e.ref.Append("expired_object_delete_marker"))
 }
 
 type FilterAttributes struct {
@@ -142,11 +142,11 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("prefix"))
+	return terra.ReferenceAsString(f.ref.Append("prefix"))
 }
 
 func (f FilterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](f.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](f.ref.Append("tags"))
 }
 
 type RuleState struct {

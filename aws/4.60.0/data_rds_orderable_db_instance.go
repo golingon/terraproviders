@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataRdsOrderableDbInstance creates a new instance of [DataRdsOrderableDbInstance].
 func NewDataRdsOrderableDbInstance(name string, args DataRdsOrderableDbInstanceArgs) *DataRdsOrderableDbInstance {
 	return &DataRdsOrderableDbInstance{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataRdsOrderableDbInstance(name string, args DataRdsOrderableDbInstanceA
 
 var _ terra.DataResource = (*DataRdsOrderableDbInstance)(nil)
 
+// DataRdsOrderableDbInstance represents the Terraform data resource aws_rds_orderable_db_instance.
 type DataRdsOrderableDbInstance struct {
 	Name string
 	Args DataRdsOrderableDbInstanceArgs
 }
 
+// DataSource returns the Terraform object type for [DataRdsOrderableDbInstance].
 func (rodi *DataRdsOrderableDbInstance) DataSource() string {
 	return "aws_rds_orderable_db_instance"
 }
 
+// LocalName returns the local name for [DataRdsOrderableDbInstance].
 func (rodi *DataRdsOrderableDbInstance) LocalName() string {
 	return rodi.Name
 }
 
+// Configuration returns the configuration (args) for [DataRdsOrderableDbInstance].
 func (rodi *DataRdsOrderableDbInstance) Configuration() interface{} {
 	return rodi.Args
 }
 
+// Attributes returns the attributes for [DataRdsOrderableDbInstance].
 func (rodi *DataRdsOrderableDbInstance) Attributes() dataRdsOrderableDbInstanceAttributes {
 	return dataRdsOrderableDbInstanceAttributes{ref: terra.ReferenceDataResource(rodi)}
 }
 
+// DataRdsOrderableDbInstanceArgs contains the configurations for aws_rds_orderable_db_instance.
 type DataRdsOrderableDbInstanceArgs struct {
 	// AvailabilityZoneGroup: string, optional
 	AvailabilityZoneGroup terra.StringValue `hcl:"availability_zone_group,attr"`
@@ -76,122 +83,152 @@ type dataRdsOrderableDbInstanceAttributes struct {
 	ref terra.Reference
 }
 
+// AvailabilityZoneGroup returns a reference to field availability_zone_group of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) AvailabilityZoneGroup() terra.StringValue {
-	return terra.ReferenceString(rodi.ref.Append("availability_zone_group"))
+	return terra.ReferenceAsString(rodi.ref.Append("availability_zone_group"))
 }
 
+// AvailabilityZones returns a reference to field availability_zones of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) AvailabilityZones() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rodi.ref.Append("availability_zones"))
+	return terra.ReferenceAsList[terra.StringValue](rodi.ref.Append("availability_zones"))
 }
 
+// Engine returns a reference to field engine of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) Engine() terra.StringValue {
-	return terra.ReferenceString(rodi.ref.Append("engine"))
+	return terra.ReferenceAsString(rodi.ref.Append("engine"))
 }
 
+// EngineVersion returns a reference to field engine_version of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) EngineVersion() terra.StringValue {
-	return terra.ReferenceString(rodi.ref.Append("engine_version"))
+	return terra.ReferenceAsString(rodi.ref.Append("engine_version"))
 }
 
+// Id returns a reference to field id of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rodi.ref.Append("id"))
+	return terra.ReferenceAsString(rodi.ref.Append("id"))
 }
 
+// InstanceClass returns a reference to field instance_class of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) InstanceClass() terra.StringValue {
-	return terra.ReferenceString(rodi.ref.Append("instance_class"))
+	return terra.ReferenceAsString(rodi.ref.Append("instance_class"))
 }
 
+// LicenseModel returns a reference to field license_model of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) LicenseModel() terra.StringValue {
-	return terra.ReferenceString(rodi.ref.Append("license_model"))
+	return terra.ReferenceAsString(rodi.ref.Append("license_model"))
 }
 
+// MaxIopsPerDbInstance returns a reference to field max_iops_per_db_instance of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) MaxIopsPerDbInstance() terra.NumberValue {
-	return terra.ReferenceNumber(rodi.ref.Append("max_iops_per_db_instance"))
+	return terra.ReferenceAsNumber(rodi.ref.Append("max_iops_per_db_instance"))
 }
 
+// MaxIopsPerGib returns a reference to field max_iops_per_gib of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) MaxIopsPerGib() terra.NumberValue {
-	return terra.ReferenceNumber(rodi.ref.Append("max_iops_per_gib"))
+	return terra.ReferenceAsNumber(rodi.ref.Append("max_iops_per_gib"))
 }
 
+// MaxStorageSize returns a reference to field max_storage_size of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) MaxStorageSize() terra.NumberValue {
-	return terra.ReferenceNumber(rodi.ref.Append("max_storage_size"))
+	return terra.ReferenceAsNumber(rodi.ref.Append("max_storage_size"))
 }
 
+// MinIopsPerDbInstance returns a reference to field min_iops_per_db_instance of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) MinIopsPerDbInstance() terra.NumberValue {
-	return terra.ReferenceNumber(rodi.ref.Append("min_iops_per_db_instance"))
+	return terra.ReferenceAsNumber(rodi.ref.Append("min_iops_per_db_instance"))
 }
 
+// MinIopsPerGib returns a reference to field min_iops_per_gib of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) MinIopsPerGib() terra.NumberValue {
-	return terra.ReferenceNumber(rodi.ref.Append("min_iops_per_gib"))
+	return terra.ReferenceAsNumber(rodi.ref.Append("min_iops_per_gib"))
 }
 
+// MinStorageSize returns a reference to field min_storage_size of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) MinStorageSize() terra.NumberValue {
-	return terra.ReferenceNumber(rodi.ref.Append("min_storage_size"))
+	return terra.ReferenceAsNumber(rodi.ref.Append("min_storage_size"))
 }
 
+// MultiAzCapable returns a reference to field multi_az_capable of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) MultiAzCapable() terra.BoolValue {
-	return terra.ReferenceBool(rodi.ref.Append("multi_az_capable"))
+	return terra.ReferenceAsBool(rodi.ref.Append("multi_az_capable"))
 }
 
+// OutpostCapable returns a reference to field outpost_capable of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) OutpostCapable() terra.BoolValue {
-	return terra.ReferenceBool(rodi.ref.Append("outpost_capable"))
+	return terra.ReferenceAsBool(rodi.ref.Append("outpost_capable"))
 }
 
+// PreferredEngineVersions returns a reference to field preferred_engine_versions of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) PreferredEngineVersions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rodi.ref.Append("preferred_engine_versions"))
+	return terra.ReferenceAsList[terra.StringValue](rodi.ref.Append("preferred_engine_versions"))
 }
 
+// PreferredInstanceClasses returns a reference to field preferred_instance_classes of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) PreferredInstanceClasses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rodi.ref.Append("preferred_instance_classes"))
+	return terra.ReferenceAsList[terra.StringValue](rodi.ref.Append("preferred_instance_classes"))
 }
 
+// ReadReplicaCapable returns a reference to field read_replica_capable of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) ReadReplicaCapable() terra.BoolValue {
-	return terra.ReferenceBool(rodi.ref.Append("read_replica_capable"))
+	return terra.ReferenceAsBool(rodi.ref.Append("read_replica_capable"))
 }
 
+// StorageType returns a reference to field storage_type of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) StorageType() terra.StringValue {
-	return terra.ReferenceString(rodi.ref.Append("storage_type"))
+	return terra.ReferenceAsString(rodi.ref.Append("storage_type"))
 }
 
+// SupportedEngineModes returns a reference to field supported_engine_modes of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) SupportedEngineModes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rodi.ref.Append("supported_engine_modes"))
+	return terra.ReferenceAsList[terra.StringValue](rodi.ref.Append("supported_engine_modes"))
 }
 
+// SupportedNetworkTypes returns a reference to field supported_network_types of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) SupportedNetworkTypes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rodi.ref.Append("supported_network_types"))
+	return terra.ReferenceAsList[terra.StringValue](rodi.ref.Append("supported_network_types"))
 }
 
+// SupportsEnhancedMonitoring returns a reference to field supports_enhanced_monitoring of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) SupportsEnhancedMonitoring() terra.BoolValue {
-	return terra.ReferenceBool(rodi.ref.Append("supports_enhanced_monitoring"))
+	return terra.ReferenceAsBool(rodi.ref.Append("supports_enhanced_monitoring"))
 }
 
+// SupportsGlobalDatabases returns a reference to field supports_global_databases of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) SupportsGlobalDatabases() terra.BoolValue {
-	return terra.ReferenceBool(rodi.ref.Append("supports_global_databases"))
+	return terra.ReferenceAsBool(rodi.ref.Append("supports_global_databases"))
 }
 
+// SupportsIamDatabaseAuthentication returns a reference to field supports_iam_database_authentication of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) SupportsIamDatabaseAuthentication() terra.BoolValue {
-	return terra.ReferenceBool(rodi.ref.Append("supports_iam_database_authentication"))
+	return terra.ReferenceAsBool(rodi.ref.Append("supports_iam_database_authentication"))
 }
 
+// SupportsIops returns a reference to field supports_iops of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) SupportsIops() terra.BoolValue {
-	return terra.ReferenceBool(rodi.ref.Append("supports_iops"))
+	return terra.ReferenceAsBool(rodi.ref.Append("supports_iops"))
 }
 
+// SupportsKerberosAuthentication returns a reference to field supports_kerberos_authentication of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) SupportsKerberosAuthentication() terra.BoolValue {
-	return terra.ReferenceBool(rodi.ref.Append("supports_kerberos_authentication"))
+	return terra.ReferenceAsBool(rodi.ref.Append("supports_kerberos_authentication"))
 }
 
+// SupportsPerformanceInsights returns a reference to field supports_performance_insights of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) SupportsPerformanceInsights() terra.BoolValue {
-	return terra.ReferenceBool(rodi.ref.Append("supports_performance_insights"))
+	return terra.ReferenceAsBool(rodi.ref.Append("supports_performance_insights"))
 }
 
+// SupportsStorageAutoscaling returns a reference to field supports_storage_autoscaling of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) SupportsStorageAutoscaling() terra.BoolValue {
-	return terra.ReferenceBool(rodi.ref.Append("supports_storage_autoscaling"))
+	return terra.ReferenceAsBool(rodi.ref.Append("supports_storage_autoscaling"))
 }
 
+// SupportsStorageEncryption returns a reference to field supports_storage_encryption of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) SupportsStorageEncryption() terra.BoolValue {
-	return terra.ReferenceBool(rodi.ref.Append("supports_storage_encryption"))
+	return terra.ReferenceAsBool(rodi.ref.Append("supports_storage_encryption"))
 }
 
+// Vpc returns a reference to field vpc of aws_rds_orderable_db_instance.
 func (rodi dataRdsOrderableDbInstanceAttributes) Vpc() terra.BoolValue {
-	return terra.ReferenceBool(rodi.ref.Append("vpc"))
+	return terra.ReferenceAsBool(rodi.ref.Append("vpc"))
 }

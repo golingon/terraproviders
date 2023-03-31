@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApigatewayv2Integration creates a new instance of [Apigatewayv2Integration].
 func NewApigatewayv2Integration(name string, args Apigatewayv2IntegrationArgs) *Apigatewayv2Integration {
 	return &Apigatewayv2Integration{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApigatewayv2Integration(name string, args Apigatewayv2IntegrationArgs) *
 
 var _ terra.Resource = (*Apigatewayv2Integration)(nil)
 
+// Apigatewayv2Integration represents the Terraform resource aws_apigatewayv2_integration.
 type Apigatewayv2Integration struct {
-	Name  string
-	Args  Apigatewayv2IntegrationArgs
-	state *apigatewayv2IntegrationState
+	Name      string
+	Args      Apigatewayv2IntegrationArgs
+	state     *apigatewayv2IntegrationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Apigatewayv2Integration].
 func (ai *Apigatewayv2Integration) Type() string {
 	return "aws_apigatewayv2_integration"
 }
 
+// LocalName returns the local name for [Apigatewayv2Integration].
 func (ai *Apigatewayv2Integration) LocalName() string {
 	return ai.Name
 }
 
+// Configuration returns the configuration (args) for [Apigatewayv2Integration].
 func (ai *Apigatewayv2Integration) Configuration() interface{} {
 	return ai.Args
 }
 
+// DependOn is used for other resources to depend on [Apigatewayv2Integration].
+func (ai *Apigatewayv2Integration) DependOn() terra.Reference {
+	return terra.ReferenceResource(ai)
+}
+
+// Dependencies returns the list of resources [Apigatewayv2Integration] depends_on.
+func (ai *Apigatewayv2Integration) Dependencies() terra.Dependencies {
+	return ai.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Apigatewayv2Integration].
+func (ai *Apigatewayv2Integration) LifecycleManagement() *terra.Lifecycle {
+	return ai.Lifecycle
+}
+
+// Attributes returns the attributes for [Apigatewayv2Integration].
 func (ai *Apigatewayv2Integration) Attributes() apigatewayv2IntegrationAttributes {
 	return apigatewayv2IntegrationAttributes{ref: terra.ReferenceResource(ai)}
 }
 
+// ImportState imports the given attribute values into [Apigatewayv2Integration]'s state.
 func (ai *Apigatewayv2Integration) ImportState(av io.Reader) error {
 	ai.state = &apigatewayv2IntegrationState{}
 	if err := json.NewDecoder(av).Decode(ai.state); err != nil {
@@ -49,10 +73,12 @@ func (ai *Apigatewayv2Integration) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Apigatewayv2Integration] has state.
 func (ai *Apigatewayv2Integration) State() (*apigatewayv2IntegrationState, bool) {
 	return ai.state, ai.state != nil
 }
 
+// StateMust returns the state for [Apigatewayv2Integration]. Panics if the state is nil.
 func (ai *Apigatewayv2Integration) StateMust() *apigatewayv2IntegrationState {
 	if ai.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ai.Type(), ai.LocalName()))
@@ -60,10 +86,7 @@ func (ai *Apigatewayv2Integration) StateMust() *apigatewayv2IntegrationState {
 	return ai.state
 }
 
-func (ai *Apigatewayv2Integration) DependOn() terra.Reference {
-	return terra.ReferenceResource(ai)
-}
-
+// Apigatewayv2IntegrationArgs contains the configurations for aws_apigatewayv2_integration.
 type Apigatewayv2IntegrationArgs struct {
 	// ApiId: string, required
 	ApiId terra.StringValue `hcl:"api_id,attr" validate:"required"`
@@ -103,91 +126,107 @@ type Apigatewayv2IntegrationArgs struct {
 	ResponseParameters []apigatewayv2integration.ResponseParameters `hcl:"response_parameters,block" validate:"min=0"`
 	// TlsConfig: optional
 	TlsConfig *apigatewayv2integration.TlsConfig `hcl:"tls_config,block"`
-	// DependsOn contains resources that Apigatewayv2Integration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apigatewayv2IntegrationAttributes struct {
 	ref terra.Reference
 }
 
+// ApiId returns a reference to field api_id of aws_apigatewayv2_integration.
 func (ai apigatewayv2IntegrationAttributes) ApiId() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("api_id"))
+	return terra.ReferenceAsString(ai.ref.Append("api_id"))
 }
 
+// ConnectionId returns a reference to field connection_id of aws_apigatewayv2_integration.
 func (ai apigatewayv2IntegrationAttributes) ConnectionId() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("connection_id"))
+	return terra.ReferenceAsString(ai.ref.Append("connection_id"))
 }
 
+// ConnectionType returns a reference to field connection_type of aws_apigatewayv2_integration.
 func (ai apigatewayv2IntegrationAttributes) ConnectionType() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("connection_type"))
+	return terra.ReferenceAsString(ai.ref.Append("connection_type"))
 }
 
+// ContentHandlingStrategy returns a reference to field content_handling_strategy of aws_apigatewayv2_integration.
 func (ai apigatewayv2IntegrationAttributes) ContentHandlingStrategy() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("content_handling_strategy"))
+	return terra.ReferenceAsString(ai.ref.Append("content_handling_strategy"))
 }
 
+// CredentialsArn returns a reference to field credentials_arn of aws_apigatewayv2_integration.
 func (ai apigatewayv2IntegrationAttributes) CredentialsArn() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("credentials_arn"))
+	return terra.ReferenceAsString(ai.ref.Append("credentials_arn"))
 }
 
+// Description returns a reference to field description of aws_apigatewayv2_integration.
 func (ai apigatewayv2IntegrationAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("description"))
+	return terra.ReferenceAsString(ai.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_apigatewayv2_integration.
 func (ai apigatewayv2IntegrationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("id"))
+	return terra.ReferenceAsString(ai.ref.Append("id"))
 }
 
+// IntegrationMethod returns a reference to field integration_method of aws_apigatewayv2_integration.
 func (ai apigatewayv2IntegrationAttributes) IntegrationMethod() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("integration_method"))
+	return terra.ReferenceAsString(ai.ref.Append("integration_method"))
 }
 
+// IntegrationResponseSelectionExpression returns a reference to field integration_response_selection_expression of aws_apigatewayv2_integration.
 func (ai apigatewayv2IntegrationAttributes) IntegrationResponseSelectionExpression() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("integration_response_selection_expression"))
+	return terra.ReferenceAsString(ai.ref.Append("integration_response_selection_expression"))
 }
 
+// IntegrationSubtype returns a reference to field integration_subtype of aws_apigatewayv2_integration.
 func (ai apigatewayv2IntegrationAttributes) IntegrationSubtype() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("integration_subtype"))
+	return terra.ReferenceAsString(ai.ref.Append("integration_subtype"))
 }
 
+// IntegrationType returns a reference to field integration_type of aws_apigatewayv2_integration.
 func (ai apigatewayv2IntegrationAttributes) IntegrationType() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("integration_type"))
+	return terra.ReferenceAsString(ai.ref.Append("integration_type"))
 }
 
+// IntegrationUri returns a reference to field integration_uri of aws_apigatewayv2_integration.
 func (ai apigatewayv2IntegrationAttributes) IntegrationUri() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("integration_uri"))
+	return terra.ReferenceAsString(ai.ref.Append("integration_uri"))
 }
 
+// PassthroughBehavior returns a reference to field passthrough_behavior of aws_apigatewayv2_integration.
 func (ai apigatewayv2IntegrationAttributes) PassthroughBehavior() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("passthrough_behavior"))
+	return terra.ReferenceAsString(ai.ref.Append("passthrough_behavior"))
 }
 
+// PayloadFormatVersion returns a reference to field payload_format_version of aws_apigatewayv2_integration.
 func (ai apigatewayv2IntegrationAttributes) PayloadFormatVersion() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("payload_format_version"))
+	return terra.ReferenceAsString(ai.ref.Append("payload_format_version"))
 }
 
+// RequestParameters returns a reference to field request_parameters of aws_apigatewayv2_integration.
 func (ai apigatewayv2IntegrationAttributes) RequestParameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ai.ref.Append("request_parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](ai.ref.Append("request_parameters"))
 }
 
+// RequestTemplates returns a reference to field request_templates of aws_apigatewayv2_integration.
 func (ai apigatewayv2IntegrationAttributes) RequestTemplates() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ai.ref.Append("request_templates"))
+	return terra.ReferenceAsMap[terra.StringValue](ai.ref.Append("request_templates"))
 }
 
+// TemplateSelectionExpression returns a reference to field template_selection_expression of aws_apigatewayv2_integration.
 func (ai apigatewayv2IntegrationAttributes) TemplateSelectionExpression() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("template_selection_expression"))
+	return terra.ReferenceAsString(ai.ref.Append("template_selection_expression"))
 }
 
+// TimeoutMilliseconds returns a reference to field timeout_milliseconds of aws_apigatewayv2_integration.
 func (ai apigatewayv2IntegrationAttributes) TimeoutMilliseconds() terra.NumberValue {
-	return terra.ReferenceNumber(ai.ref.Append("timeout_milliseconds"))
+	return terra.ReferenceAsNumber(ai.ref.Append("timeout_milliseconds"))
 }
 
 func (ai apigatewayv2IntegrationAttributes) ResponseParameters() terra.SetValue[apigatewayv2integration.ResponseParametersAttributes] {
-	return terra.ReferenceSet[apigatewayv2integration.ResponseParametersAttributes](ai.ref.Append("response_parameters"))
+	return terra.ReferenceAsSet[apigatewayv2integration.ResponseParametersAttributes](ai.ref.Append("response_parameters"))
 }
 
 func (ai apigatewayv2IntegrationAttributes) TlsConfig() terra.ListValue[apigatewayv2integration.TlsConfigAttributes] {
-	return terra.ReferenceList[apigatewayv2integration.TlsConfigAttributes](ai.ref.Append("tls_config"))
+	return terra.ReferenceAsList[apigatewayv2integration.TlsConfigAttributes](ai.ref.Append("tls_config"))
 }
 
 type apigatewayv2IntegrationState struct {

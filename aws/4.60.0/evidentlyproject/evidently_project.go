@@ -52,11 +52,11 @@ func (dd DataDeliveryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dd DataDeliveryAttributes) CloudwatchLogs() terra.ListValue[CloudwatchLogsAttributes] {
-	return terra.ReferenceList[CloudwatchLogsAttributes](dd.ref.Append("cloudwatch_logs"))
+	return terra.ReferenceAsList[CloudwatchLogsAttributes](dd.ref.Append("cloudwatch_logs"))
 }
 
 func (dd DataDeliveryAttributes) S3Destination() terra.ListValue[S3DestinationAttributes] {
-	return terra.ReferenceList[S3DestinationAttributes](dd.ref.Append("s3_destination"))
+	return terra.ReferenceAsList[S3DestinationAttributes](dd.ref.Append("s3_destination"))
 }
 
 type CloudwatchLogsAttributes struct {
@@ -76,7 +76,7 @@ func (cl CloudwatchLogsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cl CloudwatchLogsAttributes) LogGroup() terra.StringValue {
-	return terra.ReferenceString(cl.ref.Append("log_group"))
+	return terra.ReferenceAsString(cl.ref.Append("log_group"))
 }
 
 type S3DestinationAttributes struct {
@@ -96,11 +96,11 @@ func (sd S3DestinationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sd S3DestinationAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("bucket"))
+	return terra.ReferenceAsString(sd.ref.Append("bucket"))
 }
 
 func (sd S3DestinationAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("prefix"))
+	return terra.ReferenceAsString(sd.ref.Append("prefix"))
 }
 
 type TimeoutsAttributes struct {
@@ -120,15 +120,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DataDeliveryState struct {

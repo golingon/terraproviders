@@ -45,11 +45,11 @@ func (em ExcludeMapAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (em ExcludeMapAttributes) Account() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](em.ref.Append("account"))
+	return terra.ReferenceAsSet[terra.StringValue](em.ref.Append("account"))
 }
 
 func (em ExcludeMapAttributes) Orgunit() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](em.ref.Append("orgunit"))
+	return terra.ReferenceAsSet[terra.StringValue](em.ref.Append("orgunit"))
 }
 
 type IncludeMapAttributes struct {
@@ -69,11 +69,11 @@ func (im IncludeMapAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (im IncludeMapAttributes) Account() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](im.ref.Append("account"))
+	return terra.ReferenceAsSet[terra.StringValue](im.ref.Append("account"))
 }
 
 func (im IncludeMapAttributes) Orgunit() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](im.ref.Append("orgunit"))
+	return terra.ReferenceAsSet[terra.StringValue](im.ref.Append("orgunit"))
 }
 
 type SecurityServicePolicyDataAttributes struct {
@@ -93,11 +93,11 @@ func (sspd SecurityServicePolicyDataAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (sspd SecurityServicePolicyDataAttributes) ManagedServiceData() terra.StringValue {
-	return terra.ReferenceString(sspd.ref.Append("managed_service_data"))
+	return terra.ReferenceAsString(sspd.ref.Append("managed_service_data"))
 }
 
 func (sspd SecurityServicePolicyDataAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(sspd.ref.Append("type"))
+	return terra.ReferenceAsString(sspd.ref.Append("type"))
 }
 
 type ExcludeMapState struct {

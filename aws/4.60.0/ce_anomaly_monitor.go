@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCeAnomalyMonitor creates a new instance of [CeAnomalyMonitor].
 func NewCeAnomalyMonitor(name string, args CeAnomalyMonitorArgs) *CeAnomalyMonitor {
 	return &CeAnomalyMonitor{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCeAnomalyMonitor(name string, args CeAnomalyMonitorArgs) *CeAnomalyMonit
 
 var _ terra.Resource = (*CeAnomalyMonitor)(nil)
 
+// CeAnomalyMonitor represents the Terraform resource aws_ce_anomaly_monitor.
 type CeAnomalyMonitor struct {
-	Name  string
-	Args  CeAnomalyMonitorArgs
-	state *ceAnomalyMonitorState
+	Name      string
+	Args      CeAnomalyMonitorArgs
+	state     *ceAnomalyMonitorState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CeAnomalyMonitor].
 func (cam *CeAnomalyMonitor) Type() string {
 	return "aws_ce_anomaly_monitor"
 }
 
+// LocalName returns the local name for [CeAnomalyMonitor].
 func (cam *CeAnomalyMonitor) LocalName() string {
 	return cam.Name
 }
 
+// Configuration returns the configuration (args) for [CeAnomalyMonitor].
 func (cam *CeAnomalyMonitor) Configuration() interface{} {
 	return cam.Args
 }
 
+// DependOn is used for other resources to depend on [CeAnomalyMonitor].
+func (cam *CeAnomalyMonitor) DependOn() terra.Reference {
+	return terra.ReferenceResource(cam)
+}
+
+// Dependencies returns the list of resources [CeAnomalyMonitor] depends_on.
+func (cam *CeAnomalyMonitor) Dependencies() terra.Dependencies {
+	return cam.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CeAnomalyMonitor].
+func (cam *CeAnomalyMonitor) LifecycleManagement() *terra.Lifecycle {
+	return cam.Lifecycle
+}
+
+// Attributes returns the attributes for [CeAnomalyMonitor].
 func (cam *CeAnomalyMonitor) Attributes() ceAnomalyMonitorAttributes {
 	return ceAnomalyMonitorAttributes{ref: terra.ReferenceResource(cam)}
 }
 
+// ImportState imports the given attribute values into [CeAnomalyMonitor]'s state.
 func (cam *CeAnomalyMonitor) ImportState(av io.Reader) error {
 	cam.state = &ceAnomalyMonitorState{}
 	if err := json.NewDecoder(av).Decode(cam.state); err != nil {
@@ -48,10 +72,12 @@ func (cam *CeAnomalyMonitor) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CeAnomalyMonitor] has state.
 func (cam *CeAnomalyMonitor) State() (*ceAnomalyMonitorState, bool) {
 	return cam.state, cam.state != nil
 }
 
+// StateMust returns the state for [CeAnomalyMonitor]. Panics if the state is nil.
 func (cam *CeAnomalyMonitor) StateMust() *ceAnomalyMonitorState {
 	if cam.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cam.Type(), cam.LocalName()))
@@ -59,10 +85,7 @@ func (cam *CeAnomalyMonitor) StateMust() *ceAnomalyMonitorState {
 	return cam.state
 }
 
-func (cam *CeAnomalyMonitor) DependOn() terra.Reference {
-	return terra.ReferenceResource(cam)
-}
-
+// CeAnomalyMonitorArgs contains the configurations for aws_ce_anomaly_monitor.
 type CeAnomalyMonitorArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -78,43 +101,49 @@ type CeAnomalyMonitorArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that CeAnomalyMonitor depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ceAnomalyMonitorAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ce_anomaly_monitor.
 func (cam ceAnomalyMonitorAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(cam.ref.Append("arn"))
+	return terra.ReferenceAsString(cam.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_ce_anomaly_monitor.
 func (cam ceAnomalyMonitorAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cam.ref.Append("id"))
+	return terra.ReferenceAsString(cam.ref.Append("id"))
 }
 
+// MonitorDimension returns a reference to field monitor_dimension of aws_ce_anomaly_monitor.
 func (cam ceAnomalyMonitorAttributes) MonitorDimension() terra.StringValue {
-	return terra.ReferenceString(cam.ref.Append("monitor_dimension"))
+	return terra.ReferenceAsString(cam.ref.Append("monitor_dimension"))
 }
 
+// MonitorSpecification returns a reference to field monitor_specification of aws_ce_anomaly_monitor.
 func (cam ceAnomalyMonitorAttributes) MonitorSpecification() terra.StringValue {
-	return terra.ReferenceString(cam.ref.Append("monitor_specification"))
+	return terra.ReferenceAsString(cam.ref.Append("monitor_specification"))
 }
 
+// MonitorType returns a reference to field monitor_type of aws_ce_anomaly_monitor.
 func (cam ceAnomalyMonitorAttributes) MonitorType() terra.StringValue {
-	return terra.ReferenceString(cam.ref.Append("monitor_type"))
+	return terra.ReferenceAsString(cam.ref.Append("monitor_type"))
 }
 
+// Name returns a reference to field name of aws_ce_anomaly_monitor.
 func (cam ceAnomalyMonitorAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cam.ref.Append("name"))
+	return terra.ReferenceAsString(cam.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_ce_anomaly_monitor.
 func (cam ceAnomalyMonitorAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cam.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cam.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_ce_anomaly_monitor.
 func (cam ceAnomalyMonitorAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cam.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](cam.ref.Append("tags_all"))
 }
 
 type ceAnomalyMonitorState struct {

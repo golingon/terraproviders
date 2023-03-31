@@ -26,7 +26,7 @@ func (smd StreamModeDetailsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (smd StreamModeDetailsAttributes) StreamMode() terra.StringValue {
-	return terra.ReferenceString(smd.ref.Append("stream_mode"))
+	return terra.ReferenceAsString(smd.ref.Append("stream_mode"))
 }
 
 type StreamModeDetailsState struct {

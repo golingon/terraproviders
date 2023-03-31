@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewServicecatalogProvisioningArtifact creates a new instance of [ServicecatalogProvisioningArtifact].
 func NewServicecatalogProvisioningArtifact(name string, args ServicecatalogProvisioningArtifactArgs) *ServicecatalogProvisioningArtifact {
 	return &ServicecatalogProvisioningArtifact{
 		Args: args,
@@ -19,28 +20,51 @@ func NewServicecatalogProvisioningArtifact(name string, args ServicecatalogProvi
 
 var _ terra.Resource = (*ServicecatalogProvisioningArtifact)(nil)
 
+// ServicecatalogProvisioningArtifact represents the Terraform resource aws_servicecatalog_provisioning_artifact.
 type ServicecatalogProvisioningArtifact struct {
-	Name  string
-	Args  ServicecatalogProvisioningArtifactArgs
-	state *servicecatalogProvisioningArtifactState
+	Name      string
+	Args      ServicecatalogProvisioningArtifactArgs
+	state     *servicecatalogProvisioningArtifactState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ServicecatalogProvisioningArtifact].
 func (spa *ServicecatalogProvisioningArtifact) Type() string {
 	return "aws_servicecatalog_provisioning_artifact"
 }
 
+// LocalName returns the local name for [ServicecatalogProvisioningArtifact].
 func (spa *ServicecatalogProvisioningArtifact) LocalName() string {
 	return spa.Name
 }
 
+// Configuration returns the configuration (args) for [ServicecatalogProvisioningArtifact].
 func (spa *ServicecatalogProvisioningArtifact) Configuration() interface{} {
 	return spa.Args
 }
 
+// DependOn is used for other resources to depend on [ServicecatalogProvisioningArtifact].
+func (spa *ServicecatalogProvisioningArtifact) DependOn() terra.Reference {
+	return terra.ReferenceResource(spa)
+}
+
+// Dependencies returns the list of resources [ServicecatalogProvisioningArtifact] depends_on.
+func (spa *ServicecatalogProvisioningArtifact) Dependencies() terra.Dependencies {
+	return spa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ServicecatalogProvisioningArtifact].
+func (spa *ServicecatalogProvisioningArtifact) LifecycleManagement() *terra.Lifecycle {
+	return spa.Lifecycle
+}
+
+// Attributes returns the attributes for [ServicecatalogProvisioningArtifact].
 func (spa *ServicecatalogProvisioningArtifact) Attributes() servicecatalogProvisioningArtifactAttributes {
 	return servicecatalogProvisioningArtifactAttributes{ref: terra.ReferenceResource(spa)}
 }
 
+// ImportState imports the given attribute values into [ServicecatalogProvisioningArtifact]'s state.
 func (spa *ServicecatalogProvisioningArtifact) ImportState(av io.Reader) error {
 	spa.state = &servicecatalogProvisioningArtifactState{}
 	if err := json.NewDecoder(av).Decode(spa.state); err != nil {
@@ -49,10 +73,12 @@ func (spa *ServicecatalogProvisioningArtifact) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ServicecatalogProvisioningArtifact] has state.
 func (spa *ServicecatalogProvisioningArtifact) State() (*servicecatalogProvisioningArtifactState, bool) {
 	return spa.state, spa.state != nil
 }
 
+// StateMust returns the state for [ServicecatalogProvisioningArtifact]. Panics if the state is nil.
 func (spa *ServicecatalogProvisioningArtifact) StateMust() *servicecatalogProvisioningArtifactState {
 	if spa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", spa.Type(), spa.LocalName()))
@@ -60,10 +86,7 @@ func (spa *ServicecatalogProvisioningArtifact) StateMust() *servicecatalogProvis
 	return spa.state
 }
 
-func (spa *ServicecatalogProvisioningArtifact) DependOn() terra.Reference {
-	return terra.ReferenceResource(spa)
-}
-
+// ServicecatalogProvisioningArtifactArgs contains the configurations for aws_servicecatalog_provisioning_artifact.
 type ServicecatalogProvisioningArtifactArgs struct {
 	// AcceptLanguage: string, optional
 	AcceptLanguage terra.StringValue `hcl:"accept_language,attr"`
@@ -89,63 +112,73 @@ type ServicecatalogProvisioningArtifactArgs struct {
 	Type terra.StringValue `hcl:"type,attr"`
 	// Timeouts: optional
 	Timeouts *servicecatalogprovisioningartifact.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ServicecatalogProvisioningArtifact depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type servicecatalogProvisioningArtifactAttributes struct {
 	ref terra.Reference
 }
 
+// AcceptLanguage returns a reference to field accept_language of aws_servicecatalog_provisioning_artifact.
 func (spa servicecatalogProvisioningArtifactAttributes) AcceptLanguage() terra.StringValue {
-	return terra.ReferenceString(spa.ref.Append("accept_language"))
+	return terra.ReferenceAsString(spa.ref.Append("accept_language"))
 }
 
+// Active returns a reference to field active of aws_servicecatalog_provisioning_artifact.
 func (spa servicecatalogProvisioningArtifactAttributes) Active() terra.BoolValue {
-	return terra.ReferenceBool(spa.ref.Append("active"))
+	return terra.ReferenceAsBool(spa.ref.Append("active"))
 }
 
+// CreatedTime returns a reference to field created_time of aws_servicecatalog_provisioning_artifact.
 func (spa servicecatalogProvisioningArtifactAttributes) CreatedTime() terra.StringValue {
-	return terra.ReferenceString(spa.ref.Append("created_time"))
+	return terra.ReferenceAsString(spa.ref.Append("created_time"))
 }
 
+// Description returns a reference to field description of aws_servicecatalog_provisioning_artifact.
 func (spa servicecatalogProvisioningArtifactAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(spa.ref.Append("description"))
+	return terra.ReferenceAsString(spa.ref.Append("description"))
 }
 
+// DisableTemplateValidation returns a reference to field disable_template_validation of aws_servicecatalog_provisioning_artifact.
 func (spa servicecatalogProvisioningArtifactAttributes) DisableTemplateValidation() terra.BoolValue {
-	return terra.ReferenceBool(spa.ref.Append("disable_template_validation"))
+	return terra.ReferenceAsBool(spa.ref.Append("disable_template_validation"))
 }
 
+// Guidance returns a reference to field guidance of aws_servicecatalog_provisioning_artifact.
 func (spa servicecatalogProvisioningArtifactAttributes) Guidance() terra.StringValue {
-	return terra.ReferenceString(spa.ref.Append("guidance"))
+	return terra.ReferenceAsString(spa.ref.Append("guidance"))
 }
 
+// Id returns a reference to field id of aws_servicecatalog_provisioning_artifact.
 func (spa servicecatalogProvisioningArtifactAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(spa.ref.Append("id"))
+	return terra.ReferenceAsString(spa.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_servicecatalog_provisioning_artifact.
 func (spa servicecatalogProvisioningArtifactAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(spa.ref.Append("name"))
+	return terra.ReferenceAsString(spa.ref.Append("name"))
 }
 
+// ProductId returns a reference to field product_id of aws_servicecatalog_provisioning_artifact.
 func (spa servicecatalogProvisioningArtifactAttributes) ProductId() terra.StringValue {
-	return terra.ReferenceString(spa.ref.Append("product_id"))
+	return terra.ReferenceAsString(spa.ref.Append("product_id"))
 }
 
+// TemplatePhysicalId returns a reference to field template_physical_id of aws_servicecatalog_provisioning_artifact.
 func (spa servicecatalogProvisioningArtifactAttributes) TemplatePhysicalId() terra.StringValue {
-	return terra.ReferenceString(spa.ref.Append("template_physical_id"))
+	return terra.ReferenceAsString(spa.ref.Append("template_physical_id"))
 }
 
+// TemplateUrl returns a reference to field template_url of aws_servicecatalog_provisioning_artifact.
 func (spa servicecatalogProvisioningArtifactAttributes) TemplateUrl() terra.StringValue {
-	return terra.ReferenceString(spa.ref.Append("template_url"))
+	return terra.ReferenceAsString(spa.ref.Append("template_url"))
 }
 
+// Type returns a reference to field type of aws_servicecatalog_provisioning_artifact.
 func (spa servicecatalogProvisioningArtifactAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(spa.ref.Append("type"))
+	return terra.ReferenceAsString(spa.ref.Append("type"))
 }
 
 func (spa servicecatalogProvisioningArtifactAttributes) Timeouts() servicecatalogprovisioningartifact.TimeoutsAttributes {
-	return terra.ReferenceSingle[servicecatalogprovisioningartifact.TimeoutsAttributes](spa.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[servicecatalogprovisioningartifact.TimeoutsAttributes](spa.ref.Append("timeouts"))
 }
 
 type servicecatalogProvisioningArtifactState struct {

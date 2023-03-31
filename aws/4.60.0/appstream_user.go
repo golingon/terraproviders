@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAppstreamUser creates a new instance of [AppstreamUser].
 func NewAppstreamUser(name string, args AppstreamUserArgs) *AppstreamUser {
 	return &AppstreamUser{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAppstreamUser(name string, args AppstreamUserArgs) *AppstreamUser {
 
 var _ terra.Resource = (*AppstreamUser)(nil)
 
+// AppstreamUser represents the Terraform resource aws_appstream_user.
 type AppstreamUser struct {
-	Name  string
-	Args  AppstreamUserArgs
-	state *appstreamUserState
+	Name      string
+	Args      AppstreamUserArgs
+	state     *appstreamUserState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppstreamUser].
 func (au *AppstreamUser) Type() string {
 	return "aws_appstream_user"
 }
 
+// LocalName returns the local name for [AppstreamUser].
 func (au *AppstreamUser) LocalName() string {
 	return au.Name
 }
 
+// Configuration returns the configuration (args) for [AppstreamUser].
 func (au *AppstreamUser) Configuration() interface{} {
 	return au.Args
 }
 
+// DependOn is used for other resources to depend on [AppstreamUser].
+func (au *AppstreamUser) DependOn() terra.Reference {
+	return terra.ReferenceResource(au)
+}
+
+// Dependencies returns the list of resources [AppstreamUser] depends_on.
+func (au *AppstreamUser) Dependencies() terra.Dependencies {
+	return au.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppstreamUser].
+func (au *AppstreamUser) LifecycleManagement() *terra.Lifecycle {
+	return au.Lifecycle
+}
+
+// Attributes returns the attributes for [AppstreamUser].
 func (au *AppstreamUser) Attributes() appstreamUserAttributes {
 	return appstreamUserAttributes{ref: terra.ReferenceResource(au)}
 }
 
+// ImportState imports the given attribute values into [AppstreamUser]'s state.
 func (au *AppstreamUser) ImportState(av io.Reader) error {
 	au.state = &appstreamUserState{}
 	if err := json.NewDecoder(av).Decode(au.state); err != nil {
@@ -48,10 +72,12 @@ func (au *AppstreamUser) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppstreamUser] has state.
 func (au *AppstreamUser) State() (*appstreamUserState, bool) {
 	return au.state, au.state != nil
 }
 
+// StateMust returns the state for [AppstreamUser]. Panics if the state is nil.
 func (au *AppstreamUser) StateMust() *appstreamUserState {
 	if au.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", au.Type(), au.LocalName()))
@@ -59,10 +85,7 @@ func (au *AppstreamUser) StateMust() *appstreamUserState {
 	return au.state
 }
 
-func (au *AppstreamUser) DependOn() terra.Reference {
-	return terra.ReferenceResource(au)
-}
-
+// AppstreamUserArgs contains the configurations for aws_appstream_user.
 type AppstreamUserArgs struct {
 	// AuthenticationType: string, required
 	AuthenticationType terra.StringValue `hcl:"authentication_type,attr" validate:"required"`
@@ -78,47 +101,54 @@ type AppstreamUserArgs struct {
 	SendEmailNotification terra.BoolValue `hcl:"send_email_notification,attr"`
 	// UserName: string, required
 	UserName terra.StringValue `hcl:"user_name,attr" validate:"required"`
-	// DependsOn contains resources that AppstreamUser depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appstreamUserAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_appstream_user.
 func (au appstreamUserAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(au.ref.Append("arn"))
+	return terra.ReferenceAsString(au.ref.Append("arn"))
 }
 
+// AuthenticationType returns a reference to field authentication_type of aws_appstream_user.
 func (au appstreamUserAttributes) AuthenticationType() terra.StringValue {
-	return terra.ReferenceString(au.ref.Append("authentication_type"))
+	return terra.ReferenceAsString(au.ref.Append("authentication_type"))
 }
 
+// CreatedTime returns a reference to field created_time of aws_appstream_user.
 func (au appstreamUserAttributes) CreatedTime() terra.StringValue {
-	return terra.ReferenceString(au.ref.Append("created_time"))
+	return terra.ReferenceAsString(au.ref.Append("created_time"))
 }
 
+// Enabled returns a reference to field enabled of aws_appstream_user.
 func (au appstreamUserAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(au.ref.Append("enabled"))
+	return terra.ReferenceAsBool(au.ref.Append("enabled"))
 }
 
+// FirstName returns a reference to field first_name of aws_appstream_user.
 func (au appstreamUserAttributes) FirstName() terra.StringValue {
-	return terra.ReferenceString(au.ref.Append("first_name"))
+	return terra.ReferenceAsString(au.ref.Append("first_name"))
 }
 
+// Id returns a reference to field id of aws_appstream_user.
 func (au appstreamUserAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(au.ref.Append("id"))
+	return terra.ReferenceAsString(au.ref.Append("id"))
 }
 
+// LastName returns a reference to field last_name of aws_appstream_user.
 func (au appstreamUserAttributes) LastName() terra.StringValue {
-	return terra.ReferenceString(au.ref.Append("last_name"))
+	return terra.ReferenceAsString(au.ref.Append("last_name"))
 }
 
+// SendEmailNotification returns a reference to field send_email_notification of aws_appstream_user.
 func (au appstreamUserAttributes) SendEmailNotification() terra.BoolValue {
-	return terra.ReferenceBool(au.ref.Append("send_email_notification"))
+	return terra.ReferenceAsBool(au.ref.Append("send_email_notification"))
 }
 
+// UserName returns a reference to field user_name of aws_appstream_user.
 func (au appstreamUserAttributes) UserName() terra.StringValue {
-	return terra.ReferenceString(au.ref.Append("user_name"))
+	return terra.ReferenceAsString(au.ref.Append("user_name"))
 }
 
 type appstreamUserState struct {

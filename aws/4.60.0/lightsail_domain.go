@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewLightsailDomain creates a new instance of [LightsailDomain].
 func NewLightsailDomain(name string, args LightsailDomainArgs) *LightsailDomain {
 	return &LightsailDomain{
 		Args: args,
@@ -18,28 +19,51 @@ func NewLightsailDomain(name string, args LightsailDomainArgs) *LightsailDomain 
 
 var _ terra.Resource = (*LightsailDomain)(nil)
 
+// LightsailDomain represents the Terraform resource aws_lightsail_domain.
 type LightsailDomain struct {
-	Name  string
-	Args  LightsailDomainArgs
-	state *lightsailDomainState
+	Name      string
+	Args      LightsailDomainArgs
+	state     *lightsailDomainState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LightsailDomain].
 func (ld *LightsailDomain) Type() string {
 	return "aws_lightsail_domain"
 }
 
+// LocalName returns the local name for [LightsailDomain].
 func (ld *LightsailDomain) LocalName() string {
 	return ld.Name
 }
 
+// Configuration returns the configuration (args) for [LightsailDomain].
 func (ld *LightsailDomain) Configuration() interface{} {
 	return ld.Args
 }
 
+// DependOn is used for other resources to depend on [LightsailDomain].
+func (ld *LightsailDomain) DependOn() terra.Reference {
+	return terra.ReferenceResource(ld)
+}
+
+// Dependencies returns the list of resources [LightsailDomain] depends_on.
+func (ld *LightsailDomain) Dependencies() terra.Dependencies {
+	return ld.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LightsailDomain].
+func (ld *LightsailDomain) LifecycleManagement() *terra.Lifecycle {
+	return ld.Lifecycle
+}
+
+// Attributes returns the attributes for [LightsailDomain].
 func (ld *LightsailDomain) Attributes() lightsailDomainAttributes {
 	return lightsailDomainAttributes{ref: terra.ReferenceResource(ld)}
 }
 
+// ImportState imports the given attribute values into [LightsailDomain]'s state.
 func (ld *LightsailDomain) ImportState(av io.Reader) error {
 	ld.state = &lightsailDomainState{}
 	if err := json.NewDecoder(av).Decode(ld.state); err != nil {
@@ -48,10 +72,12 @@ func (ld *LightsailDomain) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LightsailDomain] has state.
 func (ld *LightsailDomain) State() (*lightsailDomainState, bool) {
 	return ld.state, ld.state != nil
 }
 
+// StateMust returns the state for [LightsailDomain]. Panics if the state is nil.
 func (ld *LightsailDomain) StateMust() *lightsailDomainState {
 	if ld.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ld.Type(), ld.LocalName()))
@@ -59,32 +85,30 @@ func (ld *LightsailDomain) StateMust() *lightsailDomainState {
 	return ld.state
 }
 
-func (ld *LightsailDomain) DependOn() terra.Reference {
-	return terra.ReferenceResource(ld)
-}
-
+// LightsailDomainArgs contains the configurations for aws_lightsail_domain.
 type LightsailDomainArgs struct {
 	// DomainName: string, required
 	DomainName terra.StringValue `hcl:"domain_name,attr" validate:"required"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that LightsailDomain depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lightsailDomainAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_lightsail_domain.
 func (ld lightsailDomainAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("arn"))
+	return terra.ReferenceAsString(ld.ref.Append("arn"))
 }
 
+// DomainName returns a reference to field domain_name of aws_lightsail_domain.
 func (ld lightsailDomainAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("domain_name"))
+	return terra.ReferenceAsString(ld.ref.Append("domain_name"))
 }
 
+// Id returns a reference to field id of aws_lightsail_domain.
 func (ld lightsailDomainAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("id"))
+	return terra.ReferenceAsString(ld.ref.Append("id"))
 }
 
 type lightsailDomainState struct {

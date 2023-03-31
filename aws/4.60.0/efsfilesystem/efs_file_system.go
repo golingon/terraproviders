@@ -33,15 +33,15 @@ func (sib SizeInBytesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sib SizeInBytesAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(sib.ref.Append("value"))
+	return terra.ReferenceAsNumber(sib.ref.Append("value"))
 }
 
 func (sib SizeInBytesAttributes) ValueInIa() terra.NumberValue {
-	return terra.ReferenceNumber(sib.ref.Append("value_in_ia"))
+	return terra.ReferenceAsNumber(sib.ref.Append("value_in_ia"))
 }
 
 func (sib SizeInBytesAttributes) ValueInStandard() terra.NumberValue {
-	return terra.ReferenceNumber(sib.ref.Append("value_in_standard"))
+	return terra.ReferenceAsNumber(sib.ref.Append("value_in_standard"))
 }
 
 type LifecyclePolicyAttributes struct {
@@ -61,11 +61,11 @@ func (lp LifecyclePolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lp LifecyclePolicyAttributes) TransitionToIa() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("transition_to_ia"))
+	return terra.ReferenceAsString(lp.ref.Append("transition_to_ia"))
 }
 
 func (lp LifecyclePolicyAttributes) TransitionToPrimaryStorageClass() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("transition_to_primary_storage_class"))
+	return terra.ReferenceAsString(lp.ref.Append("transition_to_primary_storage_class"))
 }
 
 type SizeInBytesState struct {

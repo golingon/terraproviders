@@ -47,11 +47,11 @@ func (kgic KernelGatewayImageConfigAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (kgic KernelGatewayImageConfigAttributes) FileSystemConfig() terra.ListValue[FileSystemConfigAttributes] {
-	return terra.ReferenceList[FileSystemConfigAttributes](kgic.ref.Append("file_system_config"))
+	return terra.ReferenceAsList[FileSystemConfigAttributes](kgic.ref.Append("file_system_config"))
 }
 
 func (kgic KernelGatewayImageConfigAttributes) KernelSpec() terra.ListValue[KernelSpecAttributes] {
-	return terra.ReferenceList[KernelSpecAttributes](kgic.ref.Append("kernel_spec"))
+	return terra.ReferenceAsList[KernelSpecAttributes](kgic.ref.Append("kernel_spec"))
 }
 
 type FileSystemConfigAttributes struct {
@@ -71,15 +71,15 @@ func (fsc FileSystemConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fsc FileSystemConfigAttributes) DefaultGid() terra.NumberValue {
-	return terra.ReferenceNumber(fsc.ref.Append("default_gid"))
+	return terra.ReferenceAsNumber(fsc.ref.Append("default_gid"))
 }
 
 func (fsc FileSystemConfigAttributes) DefaultUid() terra.NumberValue {
-	return terra.ReferenceNumber(fsc.ref.Append("default_uid"))
+	return terra.ReferenceAsNumber(fsc.ref.Append("default_uid"))
 }
 
 func (fsc FileSystemConfigAttributes) MountPath() terra.StringValue {
-	return terra.ReferenceString(fsc.ref.Append("mount_path"))
+	return terra.ReferenceAsString(fsc.ref.Append("mount_path"))
 }
 
 type KernelSpecAttributes struct {
@@ -99,11 +99,11 @@ func (ks KernelSpecAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ks KernelSpecAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("display_name"))
+	return terra.ReferenceAsString(ks.ref.Append("display_name"))
 }
 
 func (ks KernelSpecAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("name"))
+	return terra.ReferenceAsString(ks.ref.Append("name"))
 }
 
 type KernelGatewayImageConfigState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewApigatewayv2IntegrationResponse creates a new instance of [Apigatewayv2IntegrationResponse].
 func NewApigatewayv2IntegrationResponse(name string, args Apigatewayv2IntegrationResponseArgs) *Apigatewayv2IntegrationResponse {
 	return &Apigatewayv2IntegrationResponse{
 		Args: args,
@@ -18,28 +19,51 @@ func NewApigatewayv2IntegrationResponse(name string, args Apigatewayv2Integratio
 
 var _ terra.Resource = (*Apigatewayv2IntegrationResponse)(nil)
 
+// Apigatewayv2IntegrationResponse represents the Terraform resource aws_apigatewayv2_integration_response.
 type Apigatewayv2IntegrationResponse struct {
-	Name  string
-	Args  Apigatewayv2IntegrationResponseArgs
-	state *apigatewayv2IntegrationResponseState
+	Name      string
+	Args      Apigatewayv2IntegrationResponseArgs
+	state     *apigatewayv2IntegrationResponseState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Apigatewayv2IntegrationResponse].
 func (air *Apigatewayv2IntegrationResponse) Type() string {
 	return "aws_apigatewayv2_integration_response"
 }
 
+// LocalName returns the local name for [Apigatewayv2IntegrationResponse].
 func (air *Apigatewayv2IntegrationResponse) LocalName() string {
 	return air.Name
 }
 
+// Configuration returns the configuration (args) for [Apigatewayv2IntegrationResponse].
 func (air *Apigatewayv2IntegrationResponse) Configuration() interface{} {
 	return air.Args
 }
 
+// DependOn is used for other resources to depend on [Apigatewayv2IntegrationResponse].
+func (air *Apigatewayv2IntegrationResponse) DependOn() terra.Reference {
+	return terra.ReferenceResource(air)
+}
+
+// Dependencies returns the list of resources [Apigatewayv2IntegrationResponse] depends_on.
+func (air *Apigatewayv2IntegrationResponse) Dependencies() terra.Dependencies {
+	return air.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Apigatewayv2IntegrationResponse].
+func (air *Apigatewayv2IntegrationResponse) LifecycleManagement() *terra.Lifecycle {
+	return air.Lifecycle
+}
+
+// Attributes returns the attributes for [Apigatewayv2IntegrationResponse].
 func (air *Apigatewayv2IntegrationResponse) Attributes() apigatewayv2IntegrationResponseAttributes {
 	return apigatewayv2IntegrationResponseAttributes{ref: terra.ReferenceResource(air)}
 }
 
+// ImportState imports the given attribute values into [Apigatewayv2IntegrationResponse]'s state.
 func (air *Apigatewayv2IntegrationResponse) ImportState(av io.Reader) error {
 	air.state = &apigatewayv2IntegrationResponseState{}
 	if err := json.NewDecoder(av).Decode(air.state); err != nil {
@@ -48,10 +72,12 @@ func (air *Apigatewayv2IntegrationResponse) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Apigatewayv2IntegrationResponse] has state.
 func (air *Apigatewayv2IntegrationResponse) State() (*apigatewayv2IntegrationResponseState, bool) {
 	return air.state, air.state != nil
 }
 
+// StateMust returns the state for [Apigatewayv2IntegrationResponse]. Panics if the state is nil.
 func (air *Apigatewayv2IntegrationResponse) StateMust() *apigatewayv2IntegrationResponseState {
 	if air.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", air.Type(), air.LocalName()))
@@ -59,10 +85,7 @@ func (air *Apigatewayv2IntegrationResponse) StateMust() *apigatewayv2Integration
 	return air.state
 }
 
-func (air *Apigatewayv2IntegrationResponse) DependOn() terra.Reference {
-	return terra.ReferenceResource(air)
-}
-
+// Apigatewayv2IntegrationResponseArgs contains the configurations for aws_apigatewayv2_integration_response.
 type Apigatewayv2IntegrationResponseArgs struct {
 	// ApiId: string, required
 	ApiId terra.StringValue `hcl:"api_id,attr" validate:"required"`
@@ -78,39 +101,44 @@ type Apigatewayv2IntegrationResponseArgs struct {
 	ResponseTemplates terra.MapValue[terra.StringValue] `hcl:"response_templates,attr"`
 	// TemplateSelectionExpression: string, optional
 	TemplateSelectionExpression terra.StringValue `hcl:"template_selection_expression,attr"`
-	// DependsOn contains resources that Apigatewayv2IntegrationResponse depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apigatewayv2IntegrationResponseAttributes struct {
 	ref terra.Reference
 }
 
+// ApiId returns a reference to field api_id of aws_apigatewayv2_integration_response.
 func (air apigatewayv2IntegrationResponseAttributes) ApiId() terra.StringValue {
-	return terra.ReferenceString(air.ref.Append("api_id"))
+	return terra.ReferenceAsString(air.ref.Append("api_id"))
 }
 
+// ContentHandlingStrategy returns a reference to field content_handling_strategy of aws_apigatewayv2_integration_response.
 func (air apigatewayv2IntegrationResponseAttributes) ContentHandlingStrategy() terra.StringValue {
-	return terra.ReferenceString(air.ref.Append("content_handling_strategy"))
+	return terra.ReferenceAsString(air.ref.Append("content_handling_strategy"))
 }
 
+// Id returns a reference to field id of aws_apigatewayv2_integration_response.
 func (air apigatewayv2IntegrationResponseAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(air.ref.Append("id"))
+	return terra.ReferenceAsString(air.ref.Append("id"))
 }
 
+// IntegrationId returns a reference to field integration_id of aws_apigatewayv2_integration_response.
 func (air apigatewayv2IntegrationResponseAttributes) IntegrationId() terra.StringValue {
-	return terra.ReferenceString(air.ref.Append("integration_id"))
+	return terra.ReferenceAsString(air.ref.Append("integration_id"))
 }
 
+// IntegrationResponseKey returns a reference to field integration_response_key of aws_apigatewayv2_integration_response.
 func (air apigatewayv2IntegrationResponseAttributes) IntegrationResponseKey() terra.StringValue {
-	return terra.ReferenceString(air.ref.Append("integration_response_key"))
+	return terra.ReferenceAsString(air.ref.Append("integration_response_key"))
 }
 
+// ResponseTemplates returns a reference to field response_templates of aws_apigatewayv2_integration_response.
 func (air apigatewayv2IntegrationResponseAttributes) ResponseTemplates() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](air.ref.Append("response_templates"))
+	return terra.ReferenceAsMap[terra.StringValue](air.ref.Append("response_templates"))
 }
 
+// TemplateSelectionExpression returns a reference to field template_selection_expression of aws_apigatewayv2_integration_response.
 func (air apigatewayv2IntegrationResponseAttributes) TemplateSelectionExpression() terra.StringValue {
-	return terra.ReferenceString(air.ref.Append("template_selection_expression"))
+	return terra.ReferenceAsString(air.ref.Append("template_selection_expression"))
 }
 
 type apigatewayv2IntegrationResponseState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewS3ControlStorageLensConfiguration creates a new instance of [S3ControlStorageLensConfiguration].
 func NewS3ControlStorageLensConfiguration(name string, args S3ControlStorageLensConfigurationArgs) *S3ControlStorageLensConfiguration {
 	return &S3ControlStorageLensConfiguration{
 		Args: args,
@@ -19,28 +20,51 @@ func NewS3ControlStorageLensConfiguration(name string, args S3ControlStorageLens
 
 var _ terra.Resource = (*S3ControlStorageLensConfiguration)(nil)
 
+// S3ControlStorageLensConfiguration represents the Terraform resource aws_s3control_storage_lens_configuration.
 type S3ControlStorageLensConfiguration struct {
-	Name  string
-	Args  S3ControlStorageLensConfigurationArgs
-	state *s3ControlStorageLensConfigurationState
+	Name      string
+	Args      S3ControlStorageLensConfigurationArgs
+	state     *s3ControlStorageLensConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [S3ControlStorageLensConfiguration].
 func (sslc *S3ControlStorageLensConfiguration) Type() string {
 	return "aws_s3control_storage_lens_configuration"
 }
 
+// LocalName returns the local name for [S3ControlStorageLensConfiguration].
 func (sslc *S3ControlStorageLensConfiguration) LocalName() string {
 	return sslc.Name
 }
 
+// Configuration returns the configuration (args) for [S3ControlStorageLensConfiguration].
 func (sslc *S3ControlStorageLensConfiguration) Configuration() interface{} {
 	return sslc.Args
 }
 
+// DependOn is used for other resources to depend on [S3ControlStorageLensConfiguration].
+func (sslc *S3ControlStorageLensConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(sslc)
+}
+
+// Dependencies returns the list of resources [S3ControlStorageLensConfiguration] depends_on.
+func (sslc *S3ControlStorageLensConfiguration) Dependencies() terra.Dependencies {
+	return sslc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [S3ControlStorageLensConfiguration].
+func (sslc *S3ControlStorageLensConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return sslc.Lifecycle
+}
+
+// Attributes returns the attributes for [S3ControlStorageLensConfiguration].
 func (sslc *S3ControlStorageLensConfiguration) Attributes() s3ControlStorageLensConfigurationAttributes {
 	return s3ControlStorageLensConfigurationAttributes{ref: terra.ReferenceResource(sslc)}
 }
 
+// ImportState imports the given attribute values into [S3ControlStorageLensConfiguration]'s state.
 func (sslc *S3ControlStorageLensConfiguration) ImportState(av io.Reader) error {
 	sslc.state = &s3ControlStorageLensConfigurationState{}
 	if err := json.NewDecoder(av).Decode(sslc.state); err != nil {
@@ -49,10 +73,12 @@ func (sslc *S3ControlStorageLensConfiguration) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [S3ControlStorageLensConfiguration] has state.
 func (sslc *S3ControlStorageLensConfiguration) State() (*s3ControlStorageLensConfigurationState, bool) {
 	return sslc.state, sslc.state != nil
 }
 
+// StateMust returns the state for [S3ControlStorageLensConfiguration]. Panics if the state is nil.
 func (sslc *S3ControlStorageLensConfiguration) StateMust() *s3ControlStorageLensConfigurationState {
 	if sslc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sslc.Type(), sslc.LocalName()))
@@ -60,10 +86,7 @@ func (sslc *S3ControlStorageLensConfiguration) StateMust() *s3ControlStorageLens
 	return sslc.state
 }
 
-func (sslc *S3ControlStorageLensConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(sslc)
-}
-
+// S3ControlStorageLensConfigurationArgs contains the configurations for aws_s3control_storage_lens_configuration.
 type S3ControlStorageLensConfigurationArgs struct {
 	// AccountId: string, optional
 	AccountId terra.StringValue `hcl:"account_id,attr"`
@@ -77,39 +100,43 @@ type S3ControlStorageLensConfigurationArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// StorageLensConfiguration: required
 	StorageLensConfiguration *s3controlstoragelensconfiguration.StorageLensConfiguration `hcl:"storage_lens_configuration,block" validate:"required"`
-	// DependsOn contains resources that S3ControlStorageLensConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type s3ControlStorageLensConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// AccountId returns a reference to field account_id of aws_s3control_storage_lens_configuration.
 func (sslc s3ControlStorageLensConfigurationAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(sslc.ref.Append("account_id"))
+	return terra.ReferenceAsString(sslc.ref.Append("account_id"))
 }
 
+// Arn returns a reference to field arn of aws_s3control_storage_lens_configuration.
 func (sslc s3ControlStorageLensConfigurationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sslc.ref.Append("arn"))
+	return terra.ReferenceAsString(sslc.ref.Append("arn"))
 }
 
+// ConfigId returns a reference to field config_id of aws_s3control_storage_lens_configuration.
 func (sslc s3ControlStorageLensConfigurationAttributes) ConfigId() terra.StringValue {
-	return terra.ReferenceString(sslc.ref.Append("config_id"))
+	return terra.ReferenceAsString(sslc.ref.Append("config_id"))
 }
 
+// Id returns a reference to field id of aws_s3control_storage_lens_configuration.
 func (sslc s3ControlStorageLensConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sslc.ref.Append("id"))
+	return terra.ReferenceAsString(sslc.ref.Append("id"))
 }
 
+// Tags returns a reference to field tags of aws_s3control_storage_lens_configuration.
 func (sslc s3ControlStorageLensConfigurationAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sslc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sslc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_s3control_storage_lens_configuration.
 func (sslc s3ControlStorageLensConfigurationAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sslc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sslc.ref.Append("tags_all"))
 }
 
 func (sslc s3ControlStorageLensConfigurationAttributes) StorageLensConfiguration() terra.ListValue[s3controlstoragelensconfiguration.StorageLensConfigurationAttributes] {
-	return terra.ReferenceList[s3controlstoragelensconfiguration.StorageLensConfigurationAttributes](sslc.ref.Append("storage_lens_configuration"))
+	return terra.ReferenceAsList[s3controlstoragelensconfiguration.StorageLensConfigurationAttributes](sslc.ref.Append("storage_lens_configuration"))
 }
 
 type s3ControlStorageLensConfigurationState struct {

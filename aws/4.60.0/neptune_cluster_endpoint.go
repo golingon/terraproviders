@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewNeptuneClusterEndpoint creates a new instance of [NeptuneClusterEndpoint].
 func NewNeptuneClusterEndpoint(name string, args NeptuneClusterEndpointArgs) *NeptuneClusterEndpoint {
 	return &NeptuneClusterEndpoint{
 		Args: args,
@@ -18,28 +19,51 @@ func NewNeptuneClusterEndpoint(name string, args NeptuneClusterEndpointArgs) *Ne
 
 var _ terra.Resource = (*NeptuneClusterEndpoint)(nil)
 
+// NeptuneClusterEndpoint represents the Terraform resource aws_neptune_cluster_endpoint.
 type NeptuneClusterEndpoint struct {
-	Name  string
-	Args  NeptuneClusterEndpointArgs
-	state *neptuneClusterEndpointState
+	Name      string
+	Args      NeptuneClusterEndpointArgs
+	state     *neptuneClusterEndpointState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NeptuneClusterEndpoint].
 func (nce *NeptuneClusterEndpoint) Type() string {
 	return "aws_neptune_cluster_endpoint"
 }
 
+// LocalName returns the local name for [NeptuneClusterEndpoint].
 func (nce *NeptuneClusterEndpoint) LocalName() string {
 	return nce.Name
 }
 
+// Configuration returns the configuration (args) for [NeptuneClusterEndpoint].
 func (nce *NeptuneClusterEndpoint) Configuration() interface{} {
 	return nce.Args
 }
 
+// DependOn is used for other resources to depend on [NeptuneClusterEndpoint].
+func (nce *NeptuneClusterEndpoint) DependOn() terra.Reference {
+	return terra.ReferenceResource(nce)
+}
+
+// Dependencies returns the list of resources [NeptuneClusterEndpoint] depends_on.
+func (nce *NeptuneClusterEndpoint) Dependencies() terra.Dependencies {
+	return nce.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NeptuneClusterEndpoint].
+func (nce *NeptuneClusterEndpoint) LifecycleManagement() *terra.Lifecycle {
+	return nce.Lifecycle
+}
+
+// Attributes returns the attributes for [NeptuneClusterEndpoint].
 func (nce *NeptuneClusterEndpoint) Attributes() neptuneClusterEndpointAttributes {
 	return neptuneClusterEndpointAttributes{ref: terra.ReferenceResource(nce)}
 }
 
+// ImportState imports the given attribute values into [NeptuneClusterEndpoint]'s state.
 func (nce *NeptuneClusterEndpoint) ImportState(av io.Reader) error {
 	nce.state = &neptuneClusterEndpointState{}
 	if err := json.NewDecoder(av).Decode(nce.state); err != nil {
@@ -48,10 +72,12 @@ func (nce *NeptuneClusterEndpoint) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NeptuneClusterEndpoint] has state.
 func (nce *NeptuneClusterEndpoint) State() (*neptuneClusterEndpointState, bool) {
 	return nce.state, nce.state != nil
 }
 
+// StateMust returns the state for [NeptuneClusterEndpoint]. Panics if the state is nil.
 func (nce *NeptuneClusterEndpoint) StateMust() *neptuneClusterEndpointState {
 	if nce.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", nce.Type(), nce.LocalName()))
@@ -59,10 +85,7 @@ func (nce *NeptuneClusterEndpoint) StateMust() *neptuneClusterEndpointState {
 	return nce.state
 }
 
-func (nce *NeptuneClusterEndpoint) DependOn() terra.Reference {
-	return terra.ReferenceResource(nce)
-}
-
+// NeptuneClusterEndpointArgs contains the configurations for aws_neptune_cluster_endpoint.
 type NeptuneClusterEndpointArgs struct {
 	// ClusterEndpointIdentifier: string, required
 	ClusterEndpointIdentifier terra.StringValue `hcl:"cluster_endpoint_identifier,attr" validate:"required"`
@@ -80,51 +103,59 @@ type NeptuneClusterEndpointArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that NeptuneClusterEndpoint depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type neptuneClusterEndpointAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_neptune_cluster_endpoint.
 func (nce neptuneClusterEndpointAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(nce.ref.Append("arn"))
+	return terra.ReferenceAsString(nce.ref.Append("arn"))
 }
 
+// ClusterEndpointIdentifier returns a reference to field cluster_endpoint_identifier of aws_neptune_cluster_endpoint.
 func (nce neptuneClusterEndpointAttributes) ClusterEndpointIdentifier() terra.StringValue {
-	return terra.ReferenceString(nce.ref.Append("cluster_endpoint_identifier"))
+	return terra.ReferenceAsString(nce.ref.Append("cluster_endpoint_identifier"))
 }
 
+// ClusterIdentifier returns a reference to field cluster_identifier of aws_neptune_cluster_endpoint.
 func (nce neptuneClusterEndpointAttributes) ClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(nce.ref.Append("cluster_identifier"))
+	return terra.ReferenceAsString(nce.ref.Append("cluster_identifier"))
 }
 
+// Endpoint returns a reference to field endpoint of aws_neptune_cluster_endpoint.
 func (nce neptuneClusterEndpointAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(nce.ref.Append("endpoint"))
+	return terra.ReferenceAsString(nce.ref.Append("endpoint"))
 }
 
+// EndpointType returns a reference to field endpoint_type of aws_neptune_cluster_endpoint.
 func (nce neptuneClusterEndpointAttributes) EndpointType() terra.StringValue {
-	return terra.ReferenceString(nce.ref.Append("endpoint_type"))
+	return terra.ReferenceAsString(nce.ref.Append("endpoint_type"))
 }
 
+// ExcludedMembers returns a reference to field excluded_members of aws_neptune_cluster_endpoint.
 func (nce neptuneClusterEndpointAttributes) ExcludedMembers() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](nce.ref.Append("excluded_members"))
+	return terra.ReferenceAsSet[terra.StringValue](nce.ref.Append("excluded_members"))
 }
 
+// Id returns a reference to field id of aws_neptune_cluster_endpoint.
 func (nce neptuneClusterEndpointAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nce.ref.Append("id"))
+	return terra.ReferenceAsString(nce.ref.Append("id"))
 }
 
+// StaticMembers returns a reference to field static_members of aws_neptune_cluster_endpoint.
 func (nce neptuneClusterEndpointAttributes) StaticMembers() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](nce.ref.Append("static_members"))
+	return terra.ReferenceAsSet[terra.StringValue](nce.ref.Append("static_members"))
 }
 
+// Tags returns a reference to field tags of aws_neptune_cluster_endpoint.
 func (nce neptuneClusterEndpointAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](nce.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](nce.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_neptune_cluster_endpoint.
 func (nce neptuneClusterEndpointAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](nce.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](nce.ref.Append("tags_all"))
 }
 
 type neptuneClusterEndpointState struct {

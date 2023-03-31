@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataOutpostsOutpostInstanceType creates a new instance of [DataOutpostsOutpostInstanceType].
 func NewDataOutpostsOutpostInstanceType(name string, args DataOutpostsOutpostInstanceTypeArgs) *DataOutpostsOutpostInstanceType {
 	return &DataOutpostsOutpostInstanceType{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataOutpostsOutpostInstanceType(name string, args DataOutpostsOutpostIns
 
 var _ terra.DataResource = (*DataOutpostsOutpostInstanceType)(nil)
 
+// DataOutpostsOutpostInstanceType represents the Terraform data resource aws_outposts_outpost_instance_type.
 type DataOutpostsOutpostInstanceType struct {
 	Name string
 	Args DataOutpostsOutpostInstanceTypeArgs
 }
 
+// DataSource returns the Terraform object type for [DataOutpostsOutpostInstanceType].
 func (ooit *DataOutpostsOutpostInstanceType) DataSource() string {
 	return "aws_outposts_outpost_instance_type"
 }
 
+// LocalName returns the local name for [DataOutpostsOutpostInstanceType].
 func (ooit *DataOutpostsOutpostInstanceType) LocalName() string {
 	return ooit.Name
 }
 
+// Configuration returns the configuration (args) for [DataOutpostsOutpostInstanceType].
 func (ooit *DataOutpostsOutpostInstanceType) Configuration() interface{} {
 	return ooit.Args
 }
 
+// Attributes returns the attributes for [DataOutpostsOutpostInstanceType].
 func (ooit *DataOutpostsOutpostInstanceType) Attributes() dataOutpostsOutpostInstanceTypeAttributes {
 	return dataOutpostsOutpostInstanceTypeAttributes{ref: terra.ReferenceDataResource(ooit)}
 }
 
+// DataOutpostsOutpostInstanceTypeArgs contains the configurations for aws_outposts_outpost_instance_type.
 type DataOutpostsOutpostInstanceTypeArgs struct {
 	// Arn: string, required
 	Arn terra.StringValue `hcl:"arn,attr" validate:"required"`
@@ -48,18 +55,22 @@ type dataOutpostsOutpostInstanceTypeAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_outposts_outpost_instance_type.
 func (ooit dataOutpostsOutpostInstanceTypeAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ooit.ref.Append("arn"))
+	return terra.ReferenceAsString(ooit.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_outposts_outpost_instance_type.
 func (ooit dataOutpostsOutpostInstanceTypeAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ooit.ref.Append("id"))
+	return terra.ReferenceAsString(ooit.ref.Append("id"))
 }
 
+// InstanceType returns a reference to field instance_type of aws_outposts_outpost_instance_type.
 func (ooit dataOutpostsOutpostInstanceTypeAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(ooit.ref.Append("instance_type"))
+	return terra.ReferenceAsString(ooit.ref.Append("instance_type"))
 }
 
+// PreferredInstanceTypes returns a reference to field preferred_instance_types of aws_outposts_outpost_instance_type.
 func (ooit dataOutpostsOutpostInstanceTypeAttributes) PreferredInstanceTypes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ooit.ref.Append("preferred_instance_types"))
+	return terra.ReferenceAsList[terra.StringValue](ooit.ref.Append("preferred_instance_types"))
 }

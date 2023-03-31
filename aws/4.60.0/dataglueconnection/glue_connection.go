@@ -26,15 +26,15 @@ func (pcr PhysicalConnectionRequirementsAttributes) InternalTokens() hclwrite.To
 }
 
 func (pcr PhysicalConnectionRequirementsAttributes) AvailabilityZone() terra.StringValue {
-	return terra.ReferenceString(pcr.ref.Append("availability_zone"))
+	return terra.ReferenceAsString(pcr.ref.Append("availability_zone"))
 }
 
 func (pcr PhysicalConnectionRequirementsAttributes) SecurityGroupIdList() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](pcr.ref.Append("security_group_id_list"))
+	return terra.ReferenceAsSet[terra.StringValue](pcr.ref.Append("security_group_id_list"))
 }
 
 func (pcr PhysicalConnectionRequirementsAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(pcr.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(pcr.ref.Append("subnet_id"))
 }
 
 type PhysicalConnectionRequirementsState struct {

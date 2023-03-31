@@ -38,11 +38,11 @@ func (nn NameNodeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nn NameNodeAttributes) Hostname() terra.StringValue {
-	return terra.ReferenceString(nn.ref.Append("hostname"))
+	return terra.ReferenceAsString(nn.ref.Append("hostname"))
 }
 
 func (nn NameNodeAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(nn.ref.Append("port"))
+	return terra.ReferenceAsNumber(nn.ref.Append("port"))
 }
 
 type QopConfigurationAttributes struct {
@@ -62,11 +62,11 @@ func (qc QopConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (qc QopConfigurationAttributes) DataTransferProtection() terra.StringValue {
-	return terra.ReferenceString(qc.ref.Append("data_transfer_protection"))
+	return terra.ReferenceAsString(qc.ref.Append("data_transfer_protection"))
 }
 
 func (qc QopConfigurationAttributes) RpcProtection() terra.StringValue {
-	return terra.ReferenceString(qc.ref.Append("rpc_protection"))
+	return terra.ReferenceAsString(qc.ref.Append("rpc_protection"))
 }
 
 type NameNodeState struct {

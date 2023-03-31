@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataAppmeshVirtualGateway creates a new instance of [DataAppmeshVirtualGateway].
 func NewDataAppmeshVirtualGateway(name string, args DataAppmeshVirtualGatewayArgs) *DataAppmeshVirtualGateway {
 	return &DataAppmeshVirtualGateway{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataAppmeshVirtualGateway(name string, args DataAppmeshVirtualGatewayArg
 
 var _ terra.DataResource = (*DataAppmeshVirtualGateway)(nil)
 
+// DataAppmeshVirtualGateway represents the Terraform data resource aws_appmesh_virtual_gateway.
 type DataAppmeshVirtualGateway struct {
 	Name string
 	Args DataAppmeshVirtualGatewayArgs
 }
 
+// DataSource returns the Terraform object type for [DataAppmeshVirtualGateway].
 func (avg *DataAppmeshVirtualGateway) DataSource() string {
 	return "aws_appmesh_virtual_gateway"
 }
 
+// LocalName returns the local name for [DataAppmeshVirtualGateway].
 func (avg *DataAppmeshVirtualGateway) LocalName() string {
 	return avg.Name
 }
 
+// Configuration returns the configuration (args) for [DataAppmeshVirtualGateway].
 func (avg *DataAppmeshVirtualGateway) Configuration() interface{} {
 	return avg.Args
 }
 
+// Attributes returns the attributes for [DataAppmeshVirtualGateway].
 func (avg *DataAppmeshVirtualGateway) Attributes() dataAppmeshVirtualGatewayAttributes {
 	return dataAppmeshVirtualGatewayAttributes{ref: terra.ReferenceDataResource(avg)}
 }
 
+// DataAppmeshVirtualGatewayArgs contains the configurations for aws_appmesh_virtual_gateway.
 type DataAppmeshVirtualGatewayArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,42 +60,51 @@ type dataAppmeshVirtualGatewayAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_appmesh_virtual_gateway.
 func (avg dataAppmeshVirtualGatewayAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(avg.ref.Append("arn"))
+	return terra.ReferenceAsString(avg.ref.Append("arn"))
 }
 
+// CreatedDate returns a reference to field created_date of aws_appmesh_virtual_gateway.
 func (avg dataAppmeshVirtualGatewayAttributes) CreatedDate() terra.StringValue {
-	return terra.ReferenceString(avg.ref.Append("created_date"))
+	return terra.ReferenceAsString(avg.ref.Append("created_date"))
 }
 
+// Id returns a reference to field id of aws_appmesh_virtual_gateway.
 func (avg dataAppmeshVirtualGatewayAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(avg.ref.Append("id"))
+	return terra.ReferenceAsString(avg.ref.Append("id"))
 }
 
+// LastUpdatedDate returns a reference to field last_updated_date of aws_appmesh_virtual_gateway.
 func (avg dataAppmeshVirtualGatewayAttributes) LastUpdatedDate() terra.StringValue {
-	return terra.ReferenceString(avg.ref.Append("last_updated_date"))
+	return terra.ReferenceAsString(avg.ref.Append("last_updated_date"))
 }
 
+// MeshName returns a reference to field mesh_name of aws_appmesh_virtual_gateway.
 func (avg dataAppmeshVirtualGatewayAttributes) MeshName() terra.StringValue {
-	return terra.ReferenceString(avg.ref.Append("mesh_name"))
+	return terra.ReferenceAsString(avg.ref.Append("mesh_name"))
 }
 
+// MeshOwner returns a reference to field mesh_owner of aws_appmesh_virtual_gateway.
 func (avg dataAppmeshVirtualGatewayAttributes) MeshOwner() terra.StringValue {
-	return terra.ReferenceString(avg.ref.Append("mesh_owner"))
+	return terra.ReferenceAsString(avg.ref.Append("mesh_owner"))
 }
 
+// Name returns a reference to field name of aws_appmesh_virtual_gateway.
 func (avg dataAppmeshVirtualGatewayAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(avg.ref.Append("name"))
+	return terra.ReferenceAsString(avg.ref.Append("name"))
 }
 
+// ResourceOwner returns a reference to field resource_owner of aws_appmesh_virtual_gateway.
 func (avg dataAppmeshVirtualGatewayAttributes) ResourceOwner() terra.StringValue {
-	return terra.ReferenceString(avg.ref.Append("resource_owner"))
+	return terra.ReferenceAsString(avg.ref.Append("resource_owner"))
 }
 
+// Tags returns a reference to field tags of aws_appmesh_virtual_gateway.
 func (avg dataAppmeshVirtualGatewayAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](avg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](avg.ref.Append("tags"))
 }
 
 func (avg dataAppmeshVirtualGatewayAttributes) Spec() terra.ListValue[dataappmeshvirtualgateway.SpecAttributes] {
-	return terra.ReferenceList[dataappmeshvirtualgateway.SpecAttributes](avg.ref.Append("spec"))
+	return terra.ReferenceAsList[dataappmeshvirtualgateway.SpecAttributes](avg.ref.Append("spec"))
 }

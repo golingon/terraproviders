@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewElb creates a new instance of [Elb].
 func NewElb(name string, args ElbArgs) *Elb {
 	return &Elb{
 		Args: args,
@@ -19,28 +20,51 @@ func NewElb(name string, args ElbArgs) *Elb {
 
 var _ terra.Resource = (*Elb)(nil)
 
+// Elb represents the Terraform resource aws_elb.
 type Elb struct {
-	Name  string
-	Args  ElbArgs
-	state *elbState
+	Name      string
+	Args      ElbArgs
+	state     *elbState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Elb].
 func (e *Elb) Type() string {
 	return "aws_elb"
 }
 
+// LocalName returns the local name for [Elb].
 func (e *Elb) LocalName() string {
 	return e.Name
 }
 
+// Configuration returns the configuration (args) for [Elb].
 func (e *Elb) Configuration() interface{} {
 	return e.Args
 }
 
+// DependOn is used for other resources to depend on [Elb].
+func (e *Elb) DependOn() terra.Reference {
+	return terra.ReferenceResource(e)
+}
+
+// Dependencies returns the list of resources [Elb] depends_on.
+func (e *Elb) Dependencies() terra.Dependencies {
+	return e.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Elb].
+func (e *Elb) LifecycleManagement() *terra.Lifecycle {
+	return e.Lifecycle
+}
+
+// Attributes returns the attributes for [Elb].
 func (e *Elb) Attributes() elbAttributes {
 	return elbAttributes{ref: terra.ReferenceResource(e)}
 }
 
+// ImportState imports the given attribute values into [Elb]'s state.
 func (e *Elb) ImportState(av io.Reader) error {
 	e.state = &elbState{}
 	if err := json.NewDecoder(av).Decode(e.state); err != nil {
@@ -49,10 +73,12 @@ func (e *Elb) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Elb] has state.
 func (e *Elb) State() (*elbState, bool) {
 	return e.state, e.state != nil
 }
 
+// StateMust returns the state for [Elb]. Panics if the state is nil.
 func (e *Elb) StateMust() *elbState {
 	if e.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", e.Type(), e.LocalName()))
@@ -60,10 +86,7 @@ func (e *Elb) StateMust() *elbState {
 	return e.state
 }
 
-func (e *Elb) DependOn() terra.Reference {
-	return terra.ReferenceResource(e)
-}
-
+// ElbArgs contains the configurations for aws_elb.
 type ElbArgs struct {
 	// AvailabilityZones: set of string, optional
 	AvailabilityZones terra.SetValue[terra.StringValue] `hcl:"availability_zones,attr"`
@@ -103,103 +126,121 @@ type ElbArgs struct {
 	HealthCheck *elb.HealthCheck `hcl:"health_check,block"`
 	// Listener: min=1
 	Listener []elb.Listener `hcl:"listener,block" validate:"min=1"`
-	// DependsOn contains resources that Elb depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type elbAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_elb.
 func (e elbAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("arn"))
+	return terra.ReferenceAsString(e.ref.Append("arn"))
 }
 
+// AvailabilityZones returns a reference to field availability_zones of aws_elb.
 func (e elbAttributes) AvailabilityZones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](e.ref.Append("availability_zones"))
+	return terra.ReferenceAsSet[terra.StringValue](e.ref.Append("availability_zones"))
 }
 
+// ConnectionDraining returns a reference to field connection_draining of aws_elb.
 func (e elbAttributes) ConnectionDraining() terra.BoolValue {
-	return terra.ReferenceBool(e.ref.Append("connection_draining"))
+	return terra.ReferenceAsBool(e.ref.Append("connection_draining"))
 }
 
+// ConnectionDrainingTimeout returns a reference to field connection_draining_timeout of aws_elb.
 func (e elbAttributes) ConnectionDrainingTimeout() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("connection_draining_timeout"))
+	return terra.ReferenceAsNumber(e.ref.Append("connection_draining_timeout"))
 }
 
+// CrossZoneLoadBalancing returns a reference to field cross_zone_load_balancing of aws_elb.
 func (e elbAttributes) CrossZoneLoadBalancing() terra.BoolValue {
-	return terra.ReferenceBool(e.ref.Append("cross_zone_load_balancing"))
+	return terra.ReferenceAsBool(e.ref.Append("cross_zone_load_balancing"))
 }
 
+// DesyncMitigationMode returns a reference to field desync_mitigation_mode of aws_elb.
 func (e elbAttributes) DesyncMitigationMode() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("desync_mitigation_mode"))
+	return terra.ReferenceAsString(e.ref.Append("desync_mitigation_mode"))
 }
 
+// DnsName returns a reference to field dns_name of aws_elb.
 func (e elbAttributes) DnsName() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("dns_name"))
+	return terra.ReferenceAsString(e.ref.Append("dns_name"))
 }
 
+// Id returns a reference to field id of aws_elb.
 func (e elbAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("id"))
+	return terra.ReferenceAsString(e.ref.Append("id"))
 }
 
+// IdleTimeout returns a reference to field idle_timeout of aws_elb.
 func (e elbAttributes) IdleTimeout() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("idle_timeout"))
+	return terra.ReferenceAsNumber(e.ref.Append("idle_timeout"))
 }
 
+// Instances returns a reference to field instances of aws_elb.
 func (e elbAttributes) Instances() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](e.ref.Append("instances"))
+	return terra.ReferenceAsSet[terra.StringValue](e.ref.Append("instances"))
 }
 
+// Internal returns a reference to field internal of aws_elb.
 func (e elbAttributes) Internal() terra.BoolValue {
-	return terra.ReferenceBool(e.ref.Append("internal"))
+	return terra.ReferenceAsBool(e.ref.Append("internal"))
 }
 
+// Name returns a reference to field name of aws_elb.
 func (e elbAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("name"))
+	return terra.ReferenceAsString(e.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_elb.
 func (e elbAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(e.ref.Append("name_prefix"))
 }
 
+// SecurityGroups returns a reference to field security_groups of aws_elb.
 func (e elbAttributes) SecurityGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](e.ref.Append("security_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](e.ref.Append("security_groups"))
 }
 
+// SourceSecurityGroup returns a reference to field source_security_group of aws_elb.
 func (e elbAttributes) SourceSecurityGroup() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("source_security_group"))
+	return terra.ReferenceAsString(e.ref.Append("source_security_group"))
 }
 
+// SourceSecurityGroupId returns a reference to field source_security_group_id of aws_elb.
 func (e elbAttributes) SourceSecurityGroupId() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("source_security_group_id"))
+	return terra.ReferenceAsString(e.ref.Append("source_security_group_id"))
 }
 
+// Subnets returns a reference to field subnets of aws_elb.
 func (e elbAttributes) Subnets() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](e.ref.Append("subnets"))
+	return terra.ReferenceAsSet[terra.StringValue](e.ref.Append("subnets"))
 }
 
+// Tags returns a reference to field tags of aws_elb.
 func (e elbAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](e.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](e.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_elb.
 func (e elbAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](e.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](e.ref.Append("tags_all"))
 }
 
+// ZoneId returns a reference to field zone_id of aws_elb.
 func (e elbAttributes) ZoneId() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("zone_id"))
+	return terra.ReferenceAsString(e.ref.Append("zone_id"))
 }
 
 func (e elbAttributes) AccessLogs() terra.ListValue[elb.AccessLogsAttributes] {
-	return terra.ReferenceList[elb.AccessLogsAttributes](e.ref.Append("access_logs"))
+	return terra.ReferenceAsList[elb.AccessLogsAttributes](e.ref.Append("access_logs"))
 }
 
 func (e elbAttributes) HealthCheck() terra.ListValue[elb.HealthCheckAttributes] {
-	return terra.ReferenceList[elb.HealthCheckAttributes](e.ref.Append("health_check"))
+	return terra.ReferenceAsList[elb.HealthCheckAttributes](e.ref.Append("health_check"))
 }
 
 func (e elbAttributes) Listener() terra.SetValue[elb.ListenerAttributes] {
-	return terra.ReferenceSet[elb.ListenerAttributes](e.ref.Append("listener"))
+	return terra.ReferenceAsSet[elb.ListenerAttributes](e.ref.Append("listener"))
 }
 
 type elbState struct {

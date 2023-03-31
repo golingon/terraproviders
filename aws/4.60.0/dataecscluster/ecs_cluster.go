@@ -28,7 +28,7 @@ func (scd ServiceConnectDefaultsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (scd ServiceConnectDefaultsAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(scd.ref.Append("namespace"))
+	return terra.ReferenceAsString(scd.ref.Append("namespace"))
 }
 
 type SettingAttributes struct {
@@ -48,11 +48,11 @@ func (s SettingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SettingAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s SettingAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("value"))
+	return terra.ReferenceAsString(s.ref.Append("value"))
 }
 
 type ServiceConnectDefaultsState struct {

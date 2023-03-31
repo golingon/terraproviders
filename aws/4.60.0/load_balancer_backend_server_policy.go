@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewLoadBalancerBackendServerPolicy creates a new instance of [LoadBalancerBackendServerPolicy].
 func NewLoadBalancerBackendServerPolicy(name string, args LoadBalancerBackendServerPolicyArgs) *LoadBalancerBackendServerPolicy {
 	return &LoadBalancerBackendServerPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewLoadBalancerBackendServerPolicy(name string, args LoadBalancerBackendSer
 
 var _ terra.Resource = (*LoadBalancerBackendServerPolicy)(nil)
 
+// LoadBalancerBackendServerPolicy represents the Terraform resource aws_load_balancer_backend_server_policy.
 type LoadBalancerBackendServerPolicy struct {
-	Name  string
-	Args  LoadBalancerBackendServerPolicyArgs
-	state *loadBalancerBackendServerPolicyState
+	Name      string
+	Args      LoadBalancerBackendServerPolicyArgs
+	state     *loadBalancerBackendServerPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LoadBalancerBackendServerPolicy].
 func (lbbsp *LoadBalancerBackendServerPolicy) Type() string {
 	return "aws_load_balancer_backend_server_policy"
 }
 
+// LocalName returns the local name for [LoadBalancerBackendServerPolicy].
 func (lbbsp *LoadBalancerBackendServerPolicy) LocalName() string {
 	return lbbsp.Name
 }
 
+// Configuration returns the configuration (args) for [LoadBalancerBackendServerPolicy].
 func (lbbsp *LoadBalancerBackendServerPolicy) Configuration() interface{} {
 	return lbbsp.Args
 }
 
+// DependOn is used for other resources to depend on [LoadBalancerBackendServerPolicy].
+func (lbbsp *LoadBalancerBackendServerPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(lbbsp)
+}
+
+// Dependencies returns the list of resources [LoadBalancerBackendServerPolicy] depends_on.
+func (lbbsp *LoadBalancerBackendServerPolicy) Dependencies() terra.Dependencies {
+	return lbbsp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LoadBalancerBackendServerPolicy].
+func (lbbsp *LoadBalancerBackendServerPolicy) LifecycleManagement() *terra.Lifecycle {
+	return lbbsp.Lifecycle
+}
+
+// Attributes returns the attributes for [LoadBalancerBackendServerPolicy].
 func (lbbsp *LoadBalancerBackendServerPolicy) Attributes() loadBalancerBackendServerPolicyAttributes {
 	return loadBalancerBackendServerPolicyAttributes{ref: terra.ReferenceResource(lbbsp)}
 }
 
+// ImportState imports the given attribute values into [LoadBalancerBackendServerPolicy]'s state.
 func (lbbsp *LoadBalancerBackendServerPolicy) ImportState(av io.Reader) error {
 	lbbsp.state = &loadBalancerBackendServerPolicyState{}
 	if err := json.NewDecoder(av).Decode(lbbsp.state); err != nil {
@@ -48,10 +72,12 @@ func (lbbsp *LoadBalancerBackendServerPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LoadBalancerBackendServerPolicy] has state.
 func (lbbsp *LoadBalancerBackendServerPolicy) State() (*loadBalancerBackendServerPolicyState, bool) {
 	return lbbsp.state, lbbsp.state != nil
 }
 
+// StateMust returns the state for [LoadBalancerBackendServerPolicy]. Panics if the state is nil.
 func (lbbsp *LoadBalancerBackendServerPolicy) StateMust() *loadBalancerBackendServerPolicyState {
 	if lbbsp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lbbsp.Type(), lbbsp.LocalName()))
@@ -59,10 +85,7 @@ func (lbbsp *LoadBalancerBackendServerPolicy) StateMust() *loadBalancerBackendSe
 	return lbbsp.state
 }
 
-func (lbbsp *LoadBalancerBackendServerPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(lbbsp)
-}
-
+// LoadBalancerBackendServerPolicyArgs contains the configurations for aws_load_balancer_backend_server_policy.
 type LoadBalancerBackendServerPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -72,27 +95,29 @@ type LoadBalancerBackendServerPolicyArgs struct {
 	LoadBalancerName terra.StringValue `hcl:"load_balancer_name,attr" validate:"required"`
 	// PolicyNames: set of string, optional
 	PolicyNames terra.SetValue[terra.StringValue] `hcl:"policy_names,attr"`
-	// DependsOn contains resources that LoadBalancerBackendServerPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type loadBalancerBackendServerPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_load_balancer_backend_server_policy.
 func (lbbsp loadBalancerBackendServerPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lbbsp.ref.Append("id"))
+	return terra.ReferenceAsString(lbbsp.ref.Append("id"))
 }
 
+// InstancePort returns a reference to field instance_port of aws_load_balancer_backend_server_policy.
 func (lbbsp loadBalancerBackendServerPolicyAttributes) InstancePort() terra.NumberValue {
-	return terra.ReferenceNumber(lbbsp.ref.Append("instance_port"))
+	return terra.ReferenceAsNumber(lbbsp.ref.Append("instance_port"))
 }
 
+// LoadBalancerName returns a reference to field load_balancer_name of aws_load_balancer_backend_server_policy.
 func (lbbsp loadBalancerBackendServerPolicyAttributes) LoadBalancerName() terra.StringValue {
-	return terra.ReferenceString(lbbsp.ref.Append("load_balancer_name"))
+	return terra.ReferenceAsString(lbbsp.ref.Append("load_balancer_name"))
 }
 
+// PolicyNames returns a reference to field policy_names of aws_load_balancer_backend_server_policy.
 func (lbbsp loadBalancerBackendServerPolicyAttributes) PolicyNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](lbbsp.ref.Append("policy_names"))
+	return terra.ReferenceAsSet[terra.StringValue](lbbsp.ref.Append("policy_names"))
 }
 
 type loadBalancerBackendServerPolicyState struct {

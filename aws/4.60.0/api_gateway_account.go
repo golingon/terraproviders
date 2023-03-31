@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApiGatewayAccount creates a new instance of [ApiGatewayAccount].
 func NewApiGatewayAccount(name string, args ApiGatewayAccountArgs) *ApiGatewayAccount {
 	return &ApiGatewayAccount{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApiGatewayAccount(name string, args ApiGatewayAccountArgs) *ApiGatewayAc
 
 var _ terra.Resource = (*ApiGatewayAccount)(nil)
 
+// ApiGatewayAccount represents the Terraform resource aws_api_gateway_account.
 type ApiGatewayAccount struct {
-	Name  string
-	Args  ApiGatewayAccountArgs
-	state *apiGatewayAccountState
+	Name      string
+	Args      ApiGatewayAccountArgs
+	state     *apiGatewayAccountState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiGatewayAccount].
 func (aga *ApiGatewayAccount) Type() string {
 	return "aws_api_gateway_account"
 }
 
+// LocalName returns the local name for [ApiGatewayAccount].
 func (aga *ApiGatewayAccount) LocalName() string {
 	return aga.Name
 }
 
+// Configuration returns the configuration (args) for [ApiGatewayAccount].
 func (aga *ApiGatewayAccount) Configuration() interface{} {
 	return aga.Args
 }
 
+// DependOn is used for other resources to depend on [ApiGatewayAccount].
+func (aga *ApiGatewayAccount) DependOn() terra.Reference {
+	return terra.ReferenceResource(aga)
+}
+
+// Dependencies returns the list of resources [ApiGatewayAccount] depends_on.
+func (aga *ApiGatewayAccount) Dependencies() terra.Dependencies {
+	return aga.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiGatewayAccount].
+func (aga *ApiGatewayAccount) LifecycleManagement() *terra.Lifecycle {
+	return aga.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiGatewayAccount].
 func (aga *ApiGatewayAccount) Attributes() apiGatewayAccountAttributes {
 	return apiGatewayAccountAttributes{ref: terra.ReferenceResource(aga)}
 }
 
+// ImportState imports the given attribute values into [ApiGatewayAccount]'s state.
 func (aga *ApiGatewayAccount) ImportState(av io.Reader) error {
 	aga.state = &apiGatewayAccountState{}
 	if err := json.NewDecoder(av).Decode(aga.state); err != nil {
@@ -49,10 +73,12 @@ func (aga *ApiGatewayAccount) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiGatewayAccount] has state.
 func (aga *ApiGatewayAccount) State() (*apiGatewayAccountState, bool) {
 	return aga.state, aga.state != nil
 }
 
+// StateMust returns the state for [ApiGatewayAccount]. Panics if the state is nil.
 func (aga *ApiGatewayAccount) StateMust() *apiGatewayAccountState {
 	if aga.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", aga.Type(), aga.LocalName()))
@@ -60,10 +86,7 @@ func (aga *ApiGatewayAccount) StateMust() *apiGatewayAccountState {
 	return aga.state
 }
 
-func (aga *ApiGatewayAccount) DependOn() terra.Reference {
-	return terra.ReferenceResource(aga)
-}
-
+// ApiGatewayAccountArgs contains the configurations for aws_api_gateway_account.
 type ApiGatewayAccountArgs struct {
 	// CloudwatchRoleArn: string, optional
 	CloudwatchRoleArn terra.StringValue `hcl:"cloudwatch_role_arn,attr"`
@@ -71,23 +94,23 @@ type ApiGatewayAccountArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// ThrottleSettings: min=0
 	ThrottleSettings []apigatewayaccount.ThrottleSettings `hcl:"throttle_settings,block" validate:"min=0"`
-	// DependsOn contains resources that ApiGatewayAccount depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiGatewayAccountAttributes struct {
 	ref terra.Reference
 }
 
+// CloudwatchRoleArn returns a reference to field cloudwatch_role_arn of aws_api_gateway_account.
 func (aga apiGatewayAccountAttributes) CloudwatchRoleArn() terra.StringValue {
-	return terra.ReferenceString(aga.ref.Append("cloudwatch_role_arn"))
+	return terra.ReferenceAsString(aga.ref.Append("cloudwatch_role_arn"))
 }
 
+// Id returns a reference to field id of aws_api_gateway_account.
 func (aga apiGatewayAccountAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aga.ref.Append("id"))
+	return terra.ReferenceAsString(aga.ref.Append("id"))
 }
 
 func (aga apiGatewayAccountAttributes) ThrottleSettings() terra.ListValue[apigatewayaccount.ThrottleSettingsAttributes] {
-	return terra.ReferenceList[apigatewayaccount.ThrottleSettingsAttributes](aga.ref.Append("throttle_settings"))
+	return terra.ReferenceAsList[apigatewayaccount.ThrottleSettingsAttributes](aga.ref.Append("throttle_settings"))
 }
 
 type apiGatewayAccountState struct {

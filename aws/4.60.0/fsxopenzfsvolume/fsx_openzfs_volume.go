@@ -61,7 +61,7 @@ func (ne NfsExportsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ne NfsExportsAttributes) ClientConfigurations() terra.SetValue[ClientConfigurationsAttributes] {
-	return terra.ReferenceSet[ClientConfigurationsAttributes](ne.ref.Append("client_configurations"))
+	return terra.ReferenceAsSet[ClientConfigurationsAttributes](ne.ref.Append("client_configurations"))
 }
 
 type ClientConfigurationsAttributes struct {
@@ -81,11 +81,11 @@ func (cc ClientConfigurationsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc ClientConfigurationsAttributes) Clients() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("clients"))
+	return terra.ReferenceAsString(cc.ref.Append("clients"))
 }
 
 func (cc ClientConfigurationsAttributes) Options() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cc.ref.Append("options"))
+	return terra.ReferenceAsList[terra.StringValue](cc.ref.Append("options"))
 }
 
 type OriginSnapshotAttributes struct {
@@ -105,11 +105,11 @@ func (os OriginSnapshotAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (os OriginSnapshotAttributes) CopyStrategy() terra.StringValue {
-	return terra.ReferenceString(os.ref.Append("copy_strategy"))
+	return terra.ReferenceAsString(os.ref.Append("copy_strategy"))
 }
 
 func (os OriginSnapshotAttributes) SnapshotArn() terra.StringValue {
-	return terra.ReferenceString(os.ref.Append("snapshot_arn"))
+	return terra.ReferenceAsString(os.ref.Append("snapshot_arn"))
 }
 
 type TimeoutsAttributes struct {
@@ -129,15 +129,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type UserAndGroupQuotasAttributes struct {
@@ -157,15 +157,15 @@ func (uagq UserAndGroupQuotasAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (uagq UserAndGroupQuotasAttributes) Id() terra.NumberValue {
-	return terra.ReferenceNumber(uagq.ref.Append("id"))
+	return terra.ReferenceAsNumber(uagq.ref.Append("id"))
 }
 
 func (uagq UserAndGroupQuotasAttributes) StorageCapacityQuotaGib() terra.NumberValue {
-	return terra.ReferenceNumber(uagq.ref.Append("storage_capacity_quota_gib"))
+	return terra.ReferenceAsNumber(uagq.ref.Append("storage_capacity_quota_gib"))
 }
 
 func (uagq UserAndGroupQuotasAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(uagq.ref.Append("type"))
+	return terra.ReferenceAsString(uagq.ref.Append("type"))
 }
 
 type NfsExportsState struct {

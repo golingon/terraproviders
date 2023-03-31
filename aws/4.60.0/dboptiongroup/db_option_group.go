@@ -51,27 +51,27 @@ func (o OptionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (o OptionAttributes) DbSecurityGroupMemberships() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](o.ref.Append("db_security_group_memberships"))
+	return terra.ReferenceAsSet[terra.StringValue](o.ref.Append("db_security_group_memberships"))
 }
 
 func (o OptionAttributes) OptionName() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("option_name"))
+	return terra.ReferenceAsString(o.ref.Append("option_name"))
 }
 
 func (o OptionAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(o.ref.Append("port"))
+	return terra.ReferenceAsNumber(o.ref.Append("port"))
 }
 
 func (o OptionAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("version"))
+	return terra.ReferenceAsString(o.ref.Append("version"))
 }
 
 func (o OptionAttributes) VpcSecurityGroupMemberships() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](o.ref.Append("vpc_security_group_memberships"))
+	return terra.ReferenceAsSet[terra.StringValue](o.ref.Append("vpc_security_group_memberships"))
 }
 
 func (o OptionAttributes) OptionSettings() terra.SetValue[OptionSettingsAttributes] {
-	return terra.ReferenceSet[OptionSettingsAttributes](o.ref.Append("option_settings"))
+	return terra.ReferenceAsSet[OptionSettingsAttributes](o.ref.Append("option_settings"))
 }
 
 type OptionSettingsAttributes struct {
@@ -91,11 +91,11 @@ func (os OptionSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (os OptionSettingsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(os.ref.Append("name"))
+	return terra.ReferenceAsString(os.ref.Append("name"))
 }
 
 func (os OptionSettingsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(os.ref.Append("value"))
+	return terra.ReferenceAsString(os.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
@@ -115,7 +115,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type OptionState struct {

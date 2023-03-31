@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewElasticacheUserGroupAssociation creates a new instance of [ElasticacheUserGroupAssociation].
 func NewElasticacheUserGroupAssociation(name string, args ElasticacheUserGroupAssociationArgs) *ElasticacheUserGroupAssociation {
 	return &ElasticacheUserGroupAssociation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewElasticacheUserGroupAssociation(name string, args ElasticacheUserGroupAs
 
 var _ terra.Resource = (*ElasticacheUserGroupAssociation)(nil)
 
+// ElasticacheUserGroupAssociation represents the Terraform resource aws_elasticache_user_group_association.
 type ElasticacheUserGroupAssociation struct {
-	Name  string
-	Args  ElasticacheUserGroupAssociationArgs
-	state *elasticacheUserGroupAssociationState
+	Name      string
+	Args      ElasticacheUserGroupAssociationArgs
+	state     *elasticacheUserGroupAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ElasticacheUserGroupAssociation].
 func (euga *ElasticacheUserGroupAssociation) Type() string {
 	return "aws_elasticache_user_group_association"
 }
 
+// LocalName returns the local name for [ElasticacheUserGroupAssociation].
 func (euga *ElasticacheUserGroupAssociation) LocalName() string {
 	return euga.Name
 }
 
+// Configuration returns the configuration (args) for [ElasticacheUserGroupAssociation].
 func (euga *ElasticacheUserGroupAssociation) Configuration() interface{} {
 	return euga.Args
 }
 
+// DependOn is used for other resources to depend on [ElasticacheUserGroupAssociation].
+func (euga *ElasticacheUserGroupAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(euga)
+}
+
+// Dependencies returns the list of resources [ElasticacheUserGroupAssociation] depends_on.
+func (euga *ElasticacheUserGroupAssociation) Dependencies() terra.Dependencies {
+	return euga.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ElasticacheUserGroupAssociation].
+func (euga *ElasticacheUserGroupAssociation) LifecycleManagement() *terra.Lifecycle {
+	return euga.Lifecycle
+}
+
+// Attributes returns the attributes for [ElasticacheUserGroupAssociation].
 func (euga *ElasticacheUserGroupAssociation) Attributes() elasticacheUserGroupAssociationAttributes {
 	return elasticacheUserGroupAssociationAttributes{ref: terra.ReferenceResource(euga)}
 }
 
+// ImportState imports the given attribute values into [ElasticacheUserGroupAssociation]'s state.
 func (euga *ElasticacheUserGroupAssociation) ImportState(av io.Reader) error {
 	euga.state = &elasticacheUserGroupAssociationState{}
 	if err := json.NewDecoder(av).Decode(euga.state); err != nil {
@@ -48,10 +72,12 @@ func (euga *ElasticacheUserGroupAssociation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ElasticacheUserGroupAssociation] has state.
 func (euga *ElasticacheUserGroupAssociation) State() (*elasticacheUserGroupAssociationState, bool) {
 	return euga.state, euga.state != nil
 }
 
+// StateMust returns the state for [ElasticacheUserGroupAssociation]. Panics if the state is nil.
 func (euga *ElasticacheUserGroupAssociation) StateMust() *elasticacheUserGroupAssociationState {
 	if euga.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", euga.Type(), euga.LocalName()))
@@ -59,10 +85,7 @@ func (euga *ElasticacheUserGroupAssociation) StateMust() *elasticacheUserGroupAs
 	return euga.state
 }
 
-func (euga *ElasticacheUserGroupAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(euga)
-}
-
+// ElasticacheUserGroupAssociationArgs contains the configurations for aws_elasticache_user_group_association.
 type ElasticacheUserGroupAssociationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,23 +93,24 @@ type ElasticacheUserGroupAssociationArgs struct {
 	UserGroupId terra.StringValue `hcl:"user_group_id,attr" validate:"required"`
 	// UserId: string, required
 	UserId terra.StringValue `hcl:"user_id,attr" validate:"required"`
-	// DependsOn contains resources that ElasticacheUserGroupAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type elasticacheUserGroupAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_elasticache_user_group_association.
 func (euga elasticacheUserGroupAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(euga.ref.Append("id"))
+	return terra.ReferenceAsString(euga.ref.Append("id"))
 }
 
+// UserGroupId returns a reference to field user_group_id of aws_elasticache_user_group_association.
 func (euga elasticacheUserGroupAssociationAttributes) UserGroupId() terra.StringValue {
-	return terra.ReferenceString(euga.ref.Append("user_group_id"))
+	return terra.ReferenceAsString(euga.ref.Append("user_group_id"))
 }
 
+// UserId returns a reference to field user_id of aws_elasticache_user_group_association.
 func (euga elasticacheUserGroupAssociationAttributes) UserId() terra.StringValue {
-	return terra.ReferenceString(euga.ref.Append("user_id"))
+	return terra.ReferenceAsString(euga.ref.Append("user_id"))
 }
 
 type elasticacheUserGroupAssociationState struct {

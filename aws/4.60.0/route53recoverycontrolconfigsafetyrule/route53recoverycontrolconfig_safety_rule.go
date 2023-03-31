@@ -33,15 +33,15 @@ func (rc RuleConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rc RuleConfigAttributes) Inverted() terra.BoolValue {
-	return terra.ReferenceBool(rc.ref.Append("inverted"))
+	return terra.ReferenceAsBool(rc.ref.Append("inverted"))
 }
 
 func (rc RuleConfigAttributes) Threshold() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("threshold"))
+	return terra.ReferenceAsNumber(rc.ref.Append("threshold"))
 }
 
 func (rc RuleConfigAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("type"))
+	return terra.ReferenceAsString(rc.ref.Append("type"))
 }
 
 type RuleConfigState struct {

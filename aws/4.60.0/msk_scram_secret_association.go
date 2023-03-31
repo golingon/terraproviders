@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewMskScramSecretAssociation creates a new instance of [MskScramSecretAssociation].
 func NewMskScramSecretAssociation(name string, args MskScramSecretAssociationArgs) *MskScramSecretAssociation {
 	return &MskScramSecretAssociation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewMskScramSecretAssociation(name string, args MskScramSecretAssociationArg
 
 var _ terra.Resource = (*MskScramSecretAssociation)(nil)
 
+// MskScramSecretAssociation represents the Terraform resource aws_msk_scram_secret_association.
 type MskScramSecretAssociation struct {
-	Name  string
-	Args  MskScramSecretAssociationArgs
-	state *mskScramSecretAssociationState
+	Name      string
+	Args      MskScramSecretAssociationArgs
+	state     *mskScramSecretAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MskScramSecretAssociation].
 func (mssa *MskScramSecretAssociation) Type() string {
 	return "aws_msk_scram_secret_association"
 }
 
+// LocalName returns the local name for [MskScramSecretAssociation].
 func (mssa *MskScramSecretAssociation) LocalName() string {
 	return mssa.Name
 }
 
+// Configuration returns the configuration (args) for [MskScramSecretAssociation].
 func (mssa *MskScramSecretAssociation) Configuration() interface{} {
 	return mssa.Args
 }
 
+// DependOn is used for other resources to depend on [MskScramSecretAssociation].
+func (mssa *MskScramSecretAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(mssa)
+}
+
+// Dependencies returns the list of resources [MskScramSecretAssociation] depends_on.
+func (mssa *MskScramSecretAssociation) Dependencies() terra.Dependencies {
+	return mssa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MskScramSecretAssociation].
+func (mssa *MskScramSecretAssociation) LifecycleManagement() *terra.Lifecycle {
+	return mssa.Lifecycle
+}
+
+// Attributes returns the attributes for [MskScramSecretAssociation].
 func (mssa *MskScramSecretAssociation) Attributes() mskScramSecretAssociationAttributes {
 	return mskScramSecretAssociationAttributes{ref: terra.ReferenceResource(mssa)}
 }
 
+// ImportState imports the given attribute values into [MskScramSecretAssociation]'s state.
 func (mssa *MskScramSecretAssociation) ImportState(av io.Reader) error {
 	mssa.state = &mskScramSecretAssociationState{}
 	if err := json.NewDecoder(av).Decode(mssa.state); err != nil {
@@ -48,10 +72,12 @@ func (mssa *MskScramSecretAssociation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MskScramSecretAssociation] has state.
 func (mssa *MskScramSecretAssociation) State() (*mskScramSecretAssociationState, bool) {
 	return mssa.state, mssa.state != nil
 }
 
+// StateMust returns the state for [MskScramSecretAssociation]. Panics if the state is nil.
 func (mssa *MskScramSecretAssociation) StateMust() *mskScramSecretAssociationState {
 	if mssa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mssa.Type(), mssa.LocalName()))
@@ -59,10 +85,7 @@ func (mssa *MskScramSecretAssociation) StateMust() *mskScramSecretAssociationSta
 	return mssa.state
 }
 
-func (mssa *MskScramSecretAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(mssa)
-}
-
+// MskScramSecretAssociationArgs contains the configurations for aws_msk_scram_secret_association.
 type MskScramSecretAssociationArgs struct {
 	// ClusterArn: string, required
 	ClusterArn terra.StringValue `hcl:"cluster_arn,attr" validate:"required"`
@@ -70,23 +93,24 @@ type MskScramSecretAssociationArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// SecretArnList: set of string, required
 	SecretArnList terra.SetValue[terra.StringValue] `hcl:"secret_arn_list,attr" validate:"required"`
-	// DependsOn contains resources that MskScramSecretAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mskScramSecretAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// ClusterArn returns a reference to field cluster_arn of aws_msk_scram_secret_association.
 func (mssa mskScramSecretAssociationAttributes) ClusterArn() terra.StringValue {
-	return terra.ReferenceString(mssa.ref.Append("cluster_arn"))
+	return terra.ReferenceAsString(mssa.ref.Append("cluster_arn"))
 }
 
+// Id returns a reference to field id of aws_msk_scram_secret_association.
 func (mssa mskScramSecretAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mssa.ref.Append("id"))
+	return terra.ReferenceAsString(mssa.ref.Append("id"))
 }
 
+// SecretArnList returns a reference to field secret_arn_list of aws_msk_scram_secret_association.
 func (mssa mskScramSecretAssociationAttributes) SecretArnList() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](mssa.ref.Append("secret_arn_list"))
+	return terra.ReferenceAsSet[terra.StringValue](mssa.ref.Append("secret_arn_list"))
 }
 
 type mskScramSecretAssociationState struct {

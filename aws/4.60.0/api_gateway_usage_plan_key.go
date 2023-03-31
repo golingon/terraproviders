@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewApiGatewayUsagePlanKey creates a new instance of [ApiGatewayUsagePlanKey].
 func NewApiGatewayUsagePlanKey(name string, args ApiGatewayUsagePlanKeyArgs) *ApiGatewayUsagePlanKey {
 	return &ApiGatewayUsagePlanKey{
 		Args: args,
@@ -18,28 +19,51 @@ func NewApiGatewayUsagePlanKey(name string, args ApiGatewayUsagePlanKeyArgs) *Ap
 
 var _ terra.Resource = (*ApiGatewayUsagePlanKey)(nil)
 
+// ApiGatewayUsagePlanKey represents the Terraform resource aws_api_gateway_usage_plan_key.
 type ApiGatewayUsagePlanKey struct {
-	Name  string
-	Args  ApiGatewayUsagePlanKeyArgs
-	state *apiGatewayUsagePlanKeyState
+	Name      string
+	Args      ApiGatewayUsagePlanKeyArgs
+	state     *apiGatewayUsagePlanKeyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiGatewayUsagePlanKey].
 func (agupk *ApiGatewayUsagePlanKey) Type() string {
 	return "aws_api_gateway_usage_plan_key"
 }
 
+// LocalName returns the local name for [ApiGatewayUsagePlanKey].
 func (agupk *ApiGatewayUsagePlanKey) LocalName() string {
 	return agupk.Name
 }
 
+// Configuration returns the configuration (args) for [ApiGatewayUsagePlanKey].
 func (agupk *ApiGatewayUsagePlanKey) Configuration() interface{} {
 	return agupk.Args
 }
 
+// DependOn is used for other resources to depend on [ApiGatewayUsagePlanKey].
+func (agupk *ApiGatewayUsagePlanKey) DependOn() terra.Reference {
+	return terra.ReferenceResource(agupk)
+}
+
+// Dependencies returns the list of resources [ApiGatewayUsagePlanKey] depends_on.
+func (agupk *ApiGatewayUsagePlanKey) Dependencies() terra.Dependencies {
+	return agupk.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiGatewayUsagePlanKey].
+func (agupk *ApiGatewayUsagePlanKey) LifecycleManagement() *terra.Lifecycle {
+	return agupk.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiGatewayUsagePlanKey].
 func (agupk *ApiGatewayUsagePlanKey) Attributes() apiGatewayUsagePlanKeyAttributes {
 	return apiGatewayUsagePlanKeyAttributes{ref: terra.ReferenceResource(agupk)}
 }
 
+// ImportState imports the given attribute values into [ApiGatewayUsagePlanKey]'s state.
 func (agupk *ApiGatewayUsagePlanKey) ImportState(av io.Reader) error {
 	agupk.state = &apiGatewayUsagePlanKeyState{}
 	if err := json.NewDecoder(av).Decode(agupk.state); err != nil {
@@ -48,10 +72,12 @@ func (agupk *ApiGatewayUsagePlanKey) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiGatewayUsagePlanKey] has state.
 func (agupk *ApiGatewayUsagePlanKey) State() (*apiGatewayUsagePlanKeyState, bool) {
 	return agupk.state, agupk.state != nil
 }
 
+// StateMust returns the state for [ApiGatewayUsagePlanKey]. Panics if the state is nil.
 func (agupk *ApiGatewayUsagePlanKey) StateMust() *apiGatewayUsagePlanKeyState {
 	if agupk.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", agupk.Type(), agupk.LocalName()))
@@ -59,10 +85,7 @@ func (agupk *ApiGatewayUsagePlanKey) StateMust() *apiGatewayUsagePlanKeyState {
 	return agupk.state
 }
 
-func (agupk *ApiGatewayUsagePlanKey) DependOn() terra.Reference {
-	return terra.ReferenceResource(agupk)
-}
-
+// ApiGatewayUsagePlanKeyArgs contains the configurations for aws_api_gateway_usage_plan_key.
 type ApiGatewayUsagePlanKeyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -72,35 +95,39 @@ type ApiGatewayUsagePlanKeyArgs struct {
 	KeyType terra.StringValue `hcl:"key_type,attr" validate:"required"`
 	// UsagePlanId: string, required
 	UsagePlanId terra.StringValue `hcl:"usage_plan_id,attr" validate:"required"`
-	// DependsOn contains resources that ApiGatewayUsagePlanKey depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiGatewayUsagePlanKeyAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_api_gateway_usage_plan_key.
 func (agupk apiGatewayUsagePlanKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(agupk.ref.Append("id"))
+	return terra.ReferenceAsString(agupk.ref.Append("id"))
 }
 
+// KeyId returns a reference to field key_id of aws_api_gateway_usage_plan_key.
 func (agupk apiGatewayUsagePlanKeyAttributes) KeyId() terra.StringValue {
-	return terra.ReferenceString(agupk.ref.Append("key_id"))
+	return terra.ReferenceAsString(agupk.ref.Append("key_id"))
 }
 
+// KeyType returns a reference to field key_type of aws_api_gateway_usage_plan_key.
 func (agupk apiGatewayUsagePlanKeyAttributes) KeyType() terra.StringValue {
-	return terra.ReferenceString(agupk.ref.Append("key_type"))
+	return terra.ReferenceAsString(agupk.ref.Append("key_type"))
 }
 
+// Name returns a reference to field name of aws_api_gateway_usage_plan_key.
 func (agupk apiGatewayUsagePlanKeyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(agupk.ref.Append("name"))
+	return terra.ReferenceAsString(agupk.ref.Append("name"))
 }
 
+// UsagePlanId returns a reference to field usage_plan_id of aws_api_gateway_usage_plan_key.
 func (agupk apiGatewayUsagePlanKeyAttributes) UsagePlanId() terra.StringValue {
-	return terra.ReferenceString(agupk.ref.Append("usage_plan_id"))
+	return terra.ReferenceAsString(agupk.ref.Append("usage_plan_id"))
 }
 
+// Value returns a reference to field value of aws_api_gateway_usage_plan_key.
 func (agupk apiGatewayUsagePlanKeyAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(agupk.ref.Append("value"))
+	return terra.ReferenceAsString(agupk.ref.Append("value"))
 }
 
 type apiGatewayUsagePlanKeyState struct {

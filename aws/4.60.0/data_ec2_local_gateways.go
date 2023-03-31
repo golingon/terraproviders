@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataEc2LocalGateways creates a new instance of [DataEc2LocalGateways].
 func NewDataEc2LocalGateways(name string, args DataEc2LocalGatewaysArgs) *DataEc2LocalGateways {
 	return &DataEc2LocalGateways{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataEc2LocalGateways(name string, args DataEc2LocalGatewaysArgs) *DataEc
 
 var _ terra.DataResource = (*DataEc2LocalGateways)(nil)
 
+// DataEc2LocalGateways represents the Terraform data resource aws_ec2_local_gateways.
 type DataEc2LocalGateways struct {
 	Name string
 	Args DataEc2LocalGatewaysArgs
 }
 
+// DataSource returns the Terraform object type for [DataEc2LocalGateways].
 func (elg *DataEc2LocalGateways) DataSource() string {
 	return "aws_ec2_local_gateways"
 }
 
+// LocalName returns the local name for [DataEc2LocalGateways].
 func (elg *DataEc2LocalGateways) LocalName() string {
 	return elg.Name
 }
 
+// Configuration returns the configuration (args) for [DataEc2LocalGateways].
 func (elg *DataEc2LocalGateways) Configuration() interface{} {
 	return elg.Args
 }
 
+// Attributes returns the attributes for [DataEc2LocalGateways].
 func (elg *DataEc2LocalGateways) Attributes() dataEc2LocalGatewaysAttributes {
 	return dataEc2LocalGatewaysAttributes{ref: terra.ReferenceDataResource(elg)}
 }
 
+// DataEc2LocalGatewaysArgs contains the configurations for aws_ec2_local_gateways.
 type DataEc2LocalGatewaysArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,22 +58,25 @@ type dataEc2LocalGatewaysAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_ec2_local_gateways.
 func (elg dataEc2LocalGatewaysAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(elg.ref.Append("id"))
+	return terra.ReferenceAsString(elg.ref.Append("id"))
 }
 
+// Ids returns a reference to field ids of aws_ec2_local_gateways.
 func (elg dataEc2LocalGatewaysAttributes) Ids() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](elg.ref.Append("ids"))
+	return terra.ReferenceAsList[terra.StringValue](elg.ref.Append("ids"))
 }
 
+// Tags returns a reference to field tags of aws_ec2_local_gateways.
 func (elg dataEc2LocalGatewaysAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](elg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](elg.ref.Append("tags"))
 }
 
 func (elg dataEc2LocalGatewaysAttributes) Filter() terra.SetValue[dataec2localgateways.FilterAttributes] {
-	return terra.ReferenceSet[dataec2localgateways.FilterAttributes](elg.ref.Append("filter"))
+	return terra.ReferenceAsSet[dataec2localgateways.FilterAttributes](elg.ref.Append("filter"))
 }
 
 func (elg dataEc2LocalGatewaysAttributes) Timeouts() dataec2localgateways.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataec2localgateways.TimeoutsAttributes](elg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataec2localgateways.TimeoutsAttributes](elg.ref.Append("timeouts"))
 }

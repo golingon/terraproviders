@@ -31,11 +31,11 @@ func (s ScopeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s ScopeAttributes) ScopeDescription() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("scope_description"))
+	return terra.ReferenceAsString(s.ref.Append("scope_description"))
 }
 
 func (s ScopeAttributes) ScopeName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("scope_name"))
+	return terra.ReferenceAsString(s.ref.Append("scope_name"))
 }
 
 type ScopeState struct {

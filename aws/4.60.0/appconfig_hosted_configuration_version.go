@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAppconfigHostedConfigurationVersion creates a new instance of [AppconfigHostedConfigurationVersion].
 func NewAppconfigHostedConfigurationVersion(name string, args AppconfigHostedConfigurationVersionArgs) *AppconfigHostedConfigurationVersion {
 	return &AppconfigHostedConfigurationVersion{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAppconfigHostedConfigurationVersion(name string, args AppconfigHostedCon
 
 var _ terra.Resource = (*AppconfigHostedConfigurationVersion)(nil)
 
+// AppconfigHostedConfigurationVersion represents the Terraform resource aws_appconfig_hosted_configuration_version.
 type AppconfigHostedConfigurationVersion struct {
-	Name  string
-	Args  AppconfigHostedConfigurationVersionArgs
-	state *appconfigHostedConfigurationVersionState
+	Name      string
+	Args      AppconfigHostedConfigurationVersionArgs
+	state     *appconfigHostedConfigurationVersionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppconfigHostedConfigurationVersion].
 func (ahcv *AppconfigHostedConfigurationVersion) Type() string {
 	return "aws_appconfig_hosted_configuration_version"
 }
 
+// LocalName returns the local name for [AppconfigHostedConfigurationVersion].
 func (ahcv *AppconfigHostedConfigurationVersion) LocalName() string {
 	return ahcv.Name
 }
 
+// Configuration returns the configuration (args) for [AppconfigHostedConfigurationVersion].
 func (ahcv *AppconfigHostedConfigurationVersion) Configuration() interface{} {
 	return ahcv.Args
 }
 
+// DependOn is used for other resources to depend on [AppconfigHostedConfigurationVersion].
+func (ahcv *AppconfigHostedConfigurationVersion) DependOn() terra.Reference {
+	return terra.ReferenceResource(ahcv)
+}
+
+// Dependencies returns the list of resources [AppconfigHostedConfigurationVersion] depends_on.
+func (ahcv *AppconfigHostedConfigurationVersion) Dependencies() terra.Dependencies {
+	return ahcv.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppconfigHostedConfigurationVersion].
+func (ahcv *AppconfigHostedConfigurationVersion) LifecycleManagement() *terra.Lifecycle {
+	return ahcv.Lifecycle
+}
+
+// Attributes returns the attributes for [AppconfigHostedConfigurationVersion].
 func (ahcv *AppconfigHostedConfigurationVersion) Attributes() appconfigHostedConfigurationVersionAttributes {
 	return appconfigHostedConfigurationVersionAttributes{ref: terra.ReferenceResource(ahcv)}
 }
 
+// ImportState imports the given attribute values into [AppconfigHostedConfigurationVersion]'s state.
 func (ahcv *AppconfigHostedConfigurationVersion) ImportState(av io.Reader) error {
 	ahcv.state = &appconfigHostedConfigurationVersionState{}
 	if err := json.NewDecoder(av).Decode(ahcv.state); err != nil {
@@ -48,10 +72,12 @@ func (ahcv *AppconfigHostedConfigurationVersion) ImportState(av io.Reader) error
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppconfigHostedConfigurationVersion] has state.
 func (ahcv *AppconfigHostedConfigurationVersion) State() (*appconfigHostedConfigurationVersionState, bool) {
 	return ahcv.state, ahcv.state != nil
 }
 
+// StateMust returns the state for [AppconfigHostedConfigurationVersion]. Panics if the state is nil.
 func (ahcv *AppconfigHostedConfigurationVersion) StateMust() *appconfigHostedConfigurationVersionState {
 	if ahcv.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ahcv.Type(), ahcv.LocalName()))
@@ -59,10 +85,7 @@ func (ahcv *AppconfigHostedConfigurationVersion) StateMust() *appconfigHostedCon
 	return ahcv.state
 }
 
-func (ahcv *AppconfigHostedConfigurationVersion) DependOn() terra.Reference {
-	return terra.ReferenceResource(ahcv)
-}
-
+// AppconfigHostedConfigurationVersionArgs contains the configurations for aws_appconfig_hosted_configuration_version.
 type AppconfigHostedConfigurationVersionArgs struct {
 	// ApplicationId: string, required
 	ApplicationId terra.StringValue `hcl:"application_id,attr" validate:"required"`
@@ -76,43 +99,49 @@ type AppconfigHostedConfigurationVersionArgs struct {
 	Description terra.StringValue `hcl:"description,attr"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that AppconfigHostedConfigurationVersion depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appconfigHostedConfigurationVersionAttributes struct {
 	ref terra.Reference
 }
 
+// ApplicationId returns a reference to field application_id of aws_appconfig_hosted_configuration_version.
 func (ahcv appconfigHostedConfigurationVersionAttributes) ApplicationId() terra.StringValue {
-	return terra.ReferenceString(ahcv.ref.Append("application_id"))
+	return terra.ReferenceAsString(ahcv.ref.Append("application_id"))
 }
 
+// Arn returns a reference to field arn of aws_appconfig_hosted_configuration_version.
 func (ahcv appconfigHostedConfigurationVersionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ahcv.ref.Append("arn"))
+	return terra.ReferenceAsString(ahcv.ref.Append("arn"))
 }
 
+// ConfigurationProfileId returns a reference to field configuration_profile_id of aws_appconfig_hosted_configuration_version.
 func (ahcv appconfigHostedConfigurationVersionAttributes) ConfigurationProfileId() terra.StringValue {
-	return terra.ReferenceString(ahcv.ref.Append("configuration_profile_id"))
+	return terra.ReferenceAsString(ahcv.ref.Append("configuration_profile_id"))
 }
 
+// Content returns a reference to field content of aws_appconfig_hosted_configuration_version.
 func (ahcv appconfigHostedConfigurationVersionAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(ahcv.ref.Append("content"))
+	return terra.ReferenceAsString(ahcv.ref.Append("content"))
 }
 
+// ContentType returns a reference to field content_type of aws_appconfig_hosted_configuration_version.
 func (ahcv appconfigHostedConfigurationVersionAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(ahcv.ref.Append("content_type"))
+	return terra.ReferenceAsString(ahcv.ref.Append("content_type"))
 }
 
+// Description returns a reference to field description of aws_appconfig_hosted_configuration_version.
 func (ahcv appconfigHostedConfigurationVersionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ahcv.ref.Append("description"))
+	return terra.ReferenceAsString(ahcv.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_appconfig_hosted_configuration_version.
 func (ahcv appconfigHostedConfigurationVersionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ahcv.ref.Append("id"))
+	return terra.ReferenceAsString(ahcv.ref.Append("id"))
 }
 
+// VersionNumber returns a reference to field version_number of aws_appconfig_hosted_configuration_version.
 func (ahcv appconfigHostedConfigurationVersionAttributes) VersionNumber() terra.NumberValue {
-	return terra.ReferenceNumber(ahcv.ref.Append("version_number"))
+	return terra.ReferenceAsNumber(ahcv.ref.Append("version_number"))
 }
 
 type appconfigHostedConfigurationVersionState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCloudwatchDashboard creates a new instance of [CloudwatchDashboard].
 func NewCloudwatchDashboard(name string, args CloudwatchDashboardArgs) *CloudwatchDashboard {
 	return &CloudwatchDashboard{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCloudwatchDashboard(name string, args CloudwatchDashboardArgs) *Cloudwat
 
 var _ terra.Resource = (*CloudwatchDashboard)(nil)
 
+// CloudwatchDashboard represents the Terraform resource aws_cloudwatch_dashboard.
 type CloudwatchDashboard struct {
-	Name  string
-	Args  CloudwatchDashboardArgs
-	state *cloudwatchDashboardState
+	Name      string
+	Args      CloudwatchDashboardArgs
+	state     *cloudwatchDashboardState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudwatchDashboard].
 func (cd *CloudwatchDashboard) Type() string {
 	return "aws_cloudwatch_dashboard"
 }
 
+// LocalName returns the local name for [CloudwatchDashboard].
 func (cd *CloudwatchDashboard) LocalName() string {
 	return cd.Name
 }
 
+// Configuration returns the configuration (args) for [CloudwatchDashboard].
 func (cd *CloudwatchDashboard) Configuration() interface{} {
 	return cd.Args
 }
 
+// DependOn is used for other resources to depend on [CloudwatchDashboard].
+func (cd *CloudwatchDashboard) DependOn() terra.Reference {
+	return terra.ReferenceResource(cd)
+}
+
+// Dependencies returns the list of resources [CloudwatchDashboard] depends_on.
+func (cd *CloudwatchDashboard) Dependencies() terra.Dependencies {
+	return cd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudwatchDashboard].
+func (cd *CloudwatchDashboard) LifecycleManagement() *terra.Lifecycle {
+	return cd.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudwatchDashboard].
 func (cd *CloudwatchDashboard) Attributes() cloudwatchDashboardAttributes {
 	return cloudwatchDashboardAttributes{ref: terra.ReferenceResource(cd)}
 }
 
+// ImportState imports the given attribute values into [CloudwatchDashboard]'s state.
 func (cd *CloudwatchDashboard) ImportState(av io.Reader) error {
 	cd.state = &cloudwatchDashboardState{}
 	if err := json.NewDecoder(av).Decode(cd.state); err != nil {
@@ -48,10 +72,12 @@ func (cd *CloudwatchDashboard) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudwatchDashboard] has state.
 func (cd *CloudwatchDashboard) State() (*cloudwatchDashboardState, bool) {
 	return cd.state, cd.state != nil
 }
 
+// StateMust returns the state for [CloudwatchDashboard]. Panics if the state is nil.
 func (cd *CloudwatchDashboard) StateMust() *cloudwatchDashboardState {
 	if cd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cd.Type(), cd.LocalName()))
@@ -59,10 +85,7 @@ func (cd *CloudwatchDashboard) StateMust() *cloudwatchDashboardState {
 	return cd.state
 }
 
-func (cd *CloudwatchDashboard) DependOn() terra.Reference {
-	return terra.ReferenceResource(cd)
-}
-
+// CloudwatchDashboardArgs contains the configurations for aws_cloudwatch_dashboard.
 type CloudwatchDashboardArgs struct {
 	// DashboardBody: string, required
 	DashboardBody terra.StringValue `hcl:"dashboard_body,attr" validate:"required"`
@@ -70,27 +93,29 @@ type CloudwatchDashboardArgs struct {
 	DashboardName terra.StringValue `hcl:"dashboard_name,attr" validate:"required"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that CloudwatchDashboard depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudwatchDashboardAttributes struct {
 	ref terra.Reference
 }
 
+// DashboardArn returns a reference to field dashboard_arn of aws_cloudwatch_dashboard.
 func (cd cloudwatchDashboardAttributes) DashboardArn() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("dashboard_arn"))
+	return terra.ReferenceAsString(cd.ref.Append("dashboard_arn"))
 }
 
+// DashboardBody returns a reference to field dashboard_body of aws_cloudwatch_dashboard.
 func (cd cloudwatchDashboardAttributes) DashboardBody() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("dashboard_body"))
+	return terra.ReferenceAsString(cd.ref.Append("dashboard_body"))
 }
 
+// DashboardName returns a reference to field dashboard_name of aws_cloudwatch_dashboard.
 func (cd cloudwatchDashboardAttributes) DashboardName() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("dashboard_name"))
+	return terra.ReferenceAsString(cd.ref.Append("dashboard_name"))
 }
 
+// Id returns a reference to field id of aws_cloudwatch_dashboard.
 func (cd cloudwatchDashboardAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("id"))
+	return terra.ReferenceAsString(cd.ref.Append("id"))
 }
 
 type cloudwatchDashboardState struct {

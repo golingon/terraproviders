@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDatasyncLocationObjectStorage creates a new instance of [DatasyncLocationObjectStorage].
 func NewDatasyncLocationObjectStorage(name string, args DatasyncLocationObjectStorageArgs) *DatasyncLocationObjectStorage {
 	return &DatasyncLocationObjectStorage{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDatasyncLocationObjectStorage(name string, args DatasyncLocationObjectSt
 
 var _ terra.Resource = (*DatasyncLocationObjectStorage)(nil)
 
+// DatasyncLocationObjectStorage represents the Terraform resource aws_datasync_location_object_storage.
 type DatasyncLocationObjectStorage struct {
-	Name  string
-	Args  DatasyncLocationObjectStorageArgs
-	state *datasyncLocationObjectStorageState
+	Name      string
+	Args      DatasyncLocationObjectStorageArgs
+	state     *datasyncLocationObjectStorageState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DatasyncLocationObjectStorage].
 func (dlos *DatasyncLocationObjectStorage) Type() string {
 	return "aws_datasync_location_object_storage"
 }
 
+// LocalName returns the local name for [DatasyncLocationObjectStorage].
 func (dlos *DatasyncLocationObjectStorage) LocalName() string {
 	return dlos.Name
 }
 
+// Configuration returns the configuration (args) for [DatasyncLocationObjectStorage].
 func (dlos *DatasyncLocationObjectStorage) Configuration() interface{} {
 	return dlos.Args
 }
 
+// DependOn is used for other resources to depend on [DatasyncLocationObjectStorage].
+func (dlos *DatasyncLocationObjectStorage) DependOn() terra.Reference {
+	return terra.ReferenceResource(dlos)
+}
+
+// Dependencies returns the list of resources [DatasyncLocationObjectStorage] depends_on.
+func (dlos *DatasyncLocationObjectStorage) Dependencies() terra.Dependencies {
+	return dlos.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DatasyncLocationObjectStorage].
+func (dlos *DatasyncLocationObjectStorage) LifecycleManagement() *terra.Lifecycle {
+	return dlos.Lifecycle
+}
+
+// Attributes returns the attributes for [DatasyncLocationObjectStorage].
 func (dlos *DatasyncLocationObjectStorage) Attributes() datasyncLocationObjectStorageAttributes {
 	return datasyncLocationObjectStorageAttributes{ref: terra.ReferenceResource(dlos)}
 }
 
+// ImportState imports the given attribute values into [DatasyncLocationObjectStorage]'s state.
 func (dlos *DatasyncLocationObjectStorage) ImportState(av io.Reader) error {
 	dlos.state = &datasyncLocationObjectStorageState{}
 	if err := json.NewDecoder(av).Decode(dlos.state); err != nil {
@@ -48,10 +72,12 @@ func (dlos *DatasyncLocationObjectStorage) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DatasyncLocationObjectStorage] has state.
 func (dlos *DatasyncLocationObjectStorage) State() (*datasyncLocationObjectStorageState, bool) {
 	return dlos.state, dlos.state != nil
 }
 
+// StateMust returns the state for [DatasyncLocationObjectStorage]. Panics if the state is nil.
 func (dlos *DatasyncLocationObjectStorage) StateMust() *datasyncLocationObjectStorageState {
 	if dlos.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dlos.Type(), dlos.LocalName()))
@@ -59,10 +85,7 @@ func (dlos *DatasyncLocationObjectStorage) StateMust() *datasyncLocationObjectSt
 	return dlos.state
 }
 
-func (dlos *DatasyncLocationObjectStorage) DependOn() terra.Reference {
-	return terra.ReferenceResource(dlos)
-}
-
+// DatasyncLocationObjectStorageArgs contains the configurations for aws_datasync_location_object_storage.
 type DatasyncLocationObjectStorageArgs struct {
 	// AccessKey: string, optional
 	AccessKey terra.StringValue `hcl:"access_key,attr"`
@@ -88,67 +111,79 @@ type DatasyncLocationObjectStorageArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that DatasyncLocationObjectStorage depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type datasyncLocationObjectStorageAttributes struct {
 	ref terra.Reference
 }
 
+// AccessKey returns a reference to field access_key of aws_datasync_location_object_storage.
 func (dlos datasyncLocationObjectStorageAttributes) AccessKey() terra.StringValue {
-	return terra.ReferenceString(dlos.ref.Append("access_key"))
+	return terra.ReferenceAsString(dlos.ref.Append("access_key"))
 }
 
+// AgentArns returns a reference to field agent_arns of aws_datasync_location_object_storage.
 func (dlos datasyncLocationObjectStorageAttributes) AgentArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dlos.ref.Append("agent_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](dlos.ref.Append("agent_arns"))
 }
 
+// Arn returns a reference to field arn of aws_datasync_location_object_storage.
 func (dlos datasyncLocationObjectStorageAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dlos.ref.Append("arn"))
+	return terra.ReferenceAsString(dlos.ref.Append("arn"))
 }
 
+// BucketName returns a reference to field bucket_name of aws_datasync_location_object_storage.
 func (dlos datasyncLocationObjectStorageAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(dlos.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(dlos.ref.Append("bucket_name"))
 }
 
+// Id returns a reference to field id of aws_datasync_location_object_storage.
 func (dlos datasyncLocationObjectStorageAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dlos.ref.Append("id"))
+	return terra.ReferenceAsString(dlos.ref.Append("id"))
 }
 
+// SecretKey returns a reference to field secret_key of aws_datasync_location_object_storage.
 func (dlos datasyncLocationObjectStorageAttributes) SecretKey() terra.StringValue {
-	return terra.ReferenceString(dlos.ref.Append("secret_key"))
+	return terra.ReferenceAsString(dlos.ref.Append("secret_key"))
 }
 
+// ServerCertificate returns a reference to field server_certificate of aws_datasync_location_object_storage.
 func (dlos datasyncLocationObjectStorageAttributes) ServerCertificate() terra.StringValue {
-	return terra.ReferenceString(dlos.ref.Append("server_certificate"))
+	return terra.ReferenceAsString(dlos.ref.Append("server_certificate"))
 }
 
+// ServerHostname returns a reference to field server_hostname of aws_datasync_location_object_storage.
 func (dlos datasyncLocationObjectStorageAttributes) ServerHostname() terra.StringValue {
-	return terra.ReferenceString(dlos.ref.Append("server_hostname"))
+	return terra.ReferenceAsString(dlos.ref.Append("server_hostname"))
 }
 
+// ServerPort returns a reference to field server_port of aws_datasync_location_object_storage.
 func (dlos datasyncLocationObjectStorageAttributes) ServerPort() terra.NumberValue {
-	return terra.ReferenceNumber(dlos.ref.Append("server_port"))
+	return terra.ReferenceAsNumber(dlos.ref.Append("server_port"))
 }
 
+// ServerProtocol returns a reference to field server_protocol of aws_datasync_location_object_storage.
 func (dlos datasyncLocationObjectStorageAttributes) ServerProtocol() terra.StringValue {
-	return terra.ReferenceString(dlos.ref.Append("server_protocol"))
+	return terra.ReferenceAsString(dlos.ref.Append("server_protocol"))
 }
 
+// Subdirectory returns a reference to field subdirectory of aws_datasync_location_object_storage.
 func (dlos datasyncLocationObjectStorageAttributes) Subdirectory() terra.StringValue {
-	return terra.ReferenceString(dlos.ref.Append("subdirectory"))
+	return terra.ReferenceAsString(dlos.ref.Append("subdirectory"))
 }
 
+// Tags returns a reference to field tags of aws_datasync_location_object_storage.
 func (dlos datasyncLocationObjectStorageAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dlos.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dlos.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_datasync_location_object_storage.
 func (dlos datasyncLocationObjectStorageAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dlos.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dlos.ref.Append("tags_all"))
 }
 
+// Uri returns a reference to field uri of aws_datasync_location_object_storage.
 func (dlos datasyncLocationObjectStorageAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(dlos.ref.Append("uri"))
+	return terra.ReferenceAsString(dlos.ref.Append("uri"))
 }
 
 type datasyncLocationObjectStorageState struct {

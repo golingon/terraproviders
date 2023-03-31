@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataAppconfigEnvironment creates a new instance of [DataAppconfigEnvironment].
 func NewDataAppconfigEnvironment(name string, args DataAppconfigEnvironmentArgs) *DataAppconfigEnvironment {
 	return &DataAppconfigEnvironment{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataAppconfigEnvironment(name string, args DataAppconfigEnvironmentArgs)
 
 var _ terra.DataResource = (*DataAppconfigEnvironment)(nil)
 
+// DataAppconfigEnvironment represents the Terraform data resource aws_appconfig_environment.
 type DataAppconfigEnvironment struct {
 	Name string
 	Args DataAppconfigEnvironmentArgs
 }
 
+// DataSource returns the Terraform object type for [DataAppconfigEnvironment].
 func (ae *DataAppconfigEnvironment) DataSource() string {
 	return "aws_appconfig_environment"
 }
 
+// LocalName returns the local name for [DataAppconfigEnvironment].
 func (ae *DataAppconfigEnvironment) LocalName() string {
 	return ae.Name
 }
 
+// Configuration returns the configuration (args) for [DataAppconfigEnvironment].
 func (ae *DataAppconfigEnvironment) Configuration() interface{} {
 	return ae.Args
 }
 
+// Attributes returns the attributes for [DataAppconfigEnvironment].
 func (ae *DataAppconfigEnvironment) Attributes() dataAppconfigEnvironmentAttributes {
 	return dataAppconfigEnvironmentAttributes{ref: terra.ReferenceDataResource(ae)}
 }
 
+// DataAppconfigEnvironmentArgs contains the configurations for aws_appconfig_environment.
 type DataAppconfigEnvironmentArgs struct {
 	// ApplicationId: string, required
 	ApplicationId terra.StringValue `hcl:"application_id,attr" validate:"required"`
@@ -53,38 +60,46 @@ type dataAppconfigEnvironmentAttributes struct {
 	ref terra.Reference
 }
 
+// ApplicationId returns a reference to field application_id of aws_appconfig_environment.
 func (ae dataAppconfigEnvironmentAttributes) ApplicationId() terra.StringValue {
-	return terra.ReferenceString(ae.ref.Append("application_id"))
+	return terra.ReferenceAsString(ae.ref.Append("application_id"))
 }
 
+// Arn returns a reference to field arn of aws_appconfig_environment.
 func (ae dataAppconfigEnvironmentAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ae.ref.Append("arn"))
+	return terra.ReferenceAsString(ae.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_appconfig_environment.
 func (ae dataAppconfigEnvironmentAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ae.ref.Append("description"))
+	return terra.ReferenceAsString(ae.ref.Append("description"))
 }
 
+// EnvironmentId returns a reference to field environment_id of aws_appconfig_environment.
 func (ae dataAppconfigEnvironmentAttributes) EnvironmentId() terra.StringValue {
-	return terra.ReferenceString(ae.ref.Append("environment_id"))
+	return terra.ReferenceAsString(ae.ref.Append("environment_id"))
 }
 
+// Id returns a reference to field id of aws_appconfig_environment.
 func (ae dataAppconfigEnvironmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ae.ref.Append("id"))
+	return terra.ReferenceAsString(ae.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_appconfig_environment.
 func (ae dataAppconfigEnvironmentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ae.ref.Append("name"))
+	return terra.ReferenceAsString(ae.ref.Append("name"))
 }
 
+// State returns a reference to field state of aws_appconfig_environment.
 func (ae dataAppconfigEnvironmentAttributes) State() terra.StringValue {
-	return terra.ReferenceString(ae.ref.Append("state"))
+	return terra.ReferenceAsString(ae.ref.Append("state"))
 }
 
+// Tags returns a reference to field tags of aws_appconfig_environment.
 func (ae dataAppconfigEnvironmentAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ae.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ae.ref.Append("tags"))
 }
 
 func (ae dataAppconfigEnvironmentAttributes) Monitor() terra.SetValue[dataappconfigenvironment.MonitorAttributes] {
-	return terra.ReferenceSet[dataappconfigenvironment.MonitorAttributes](ae.ref.Append("monitor"))
+	return terra.ReferenceAsSet[dataappconfigenvironment.MonitorAttributes](ae.ref.Append("monitor"))
 }

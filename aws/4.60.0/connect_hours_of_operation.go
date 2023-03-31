@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewConnectHoursOfOperation creates a new instance of [ConnectHoursOfOperation].
 func NewConnectHoursOfOperation(name string, args ConnectHoursOfOperationArgs) *ConnectHoursOfOperation {
 	return &ConnectHoursOfOperation{
 		Args: args,
@@ -19,28 +20,51 @@ func NewConnectHoursOfOperation(name string, args ConnectHoursOfOperationArgs) *
 
 var _ terra.Resource = (*ConnectHoursOfOperation)(nil)
 
+// ConnectHoursOfOperation represents the Terraform resource aws_connect_hours_of_operation.
 type ConnectHoursOfOperation struct {
-	Name  string
-	Args  ConnectHoursOfOperationArgs
-	state *connectHoursOfOperationState
+	Name      string
+	Args      ConnectHoursOfOperationArgs
+	state     *connectHoursOfOperationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ConnectHoursOfOperation].
 func (choo *ConnectHoursOfOperation) Type() string {
 	return "aws_connect_hours_of_operation"
 }
 
+// LocalName returns the local name for [ConnectHoursOfOperation].
 func (choo *ConnectHoursOfOperation) LocalName() string {
 	return choo.Name
 }
 
+// Configuration returns the configuration (args) for [ConnectHoursOfOperation].
 func (choo *ConnectHoursOfOperation) Configuration() interface{} {
 	return choo.Args
 }
 
+// DependOn is used for other resources to depend on [ConnectHoursOfOperation].
+func (choo *ConnectHoursOfOperation) DependOn() terra.Reference {
+	return terra.ReferenceResource(choo)
+}
+
+// Dependencies returns the list of resources [ConnectHoursOfOperation] depends_on.
+func (choo *ConnectHoursOfOperation) Dependencies() terra.Dependencies {
+	return choo.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ConnectHoursOfOperation].
+func (choo *ConnectHoursOfOperation) LifecycleManagement() *terra.Lifecycle {
+	return choo.Lifecycle
+}
+
+// Attributes returns the attributes for [ConnectHoursOfOperation].
 func (choo *ConnectHoursOfOperation) Attributes() connectHoursOfOperationAttributes {
 	return connectHoursOfOperationAttributes{ref: terra.ReferenceResource(choo)}
 }
 
+// ImportState imports the given attribute values into [ConnectHoursOfOperation]'s state.
 func (choo *ConnectHoursOfOperation) ImportState(av io.Reader) error {
 	choo.state = &connectHoursOfOperationState{}
 	if err := json.NewDecoder(av).Decode(choo.state); err != nil {
@@ -49,10 +73,12 @@ func (choo *ConnectHoursOfOperation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ConnectHoursOfOperation] has state.
 func (choo *ConnectHoursOfOperation) State() (*connectHoursOfOperationState, bool) {
 	return choo.state, choo.state != nil
 }
 
+// StateMust returns the state for [ConnectHoursOfOperation]. Panics if the state is nil.
 func (choo *ConnectHoursOfOperation) StateMust() *connectHoursOfOperationState {
 	if choo.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", choo.Type(), choo.LocalName()))
@@ -60,10 +86,7 @@ func (choo *ConnectHoursOfOperation) StateMust() *connectHoursOfOperationState {
 	return choo.state
 }
 
-func (choo *ConnectHoursOfOperation) DependOn() terra.Reference {
-	return terra.ReferenceResource(choo)
-}
-
+// ConnectHoursOfOperationArgs contains the configurations for aws_connect_hours_of_operation.
 type ConnectHoursOfOperationArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -81,55 +104,63 @@ type ConnectHoursOfOperationArgs struct {
 	TimeZone terra.StringValue `hcl:"time_zone,attr" validate:"required"`
 	// Config: min=1
 	Config []connecthoursofoperation.Config `hcl:"config,block" validate:"min=1"`
-	// DependsOn contains resources that ConnectHoursOfOperation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type connectHoursOfOperationAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_connect_hours_of_operation.
 func (choo connectHoursOfOperationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(choo.ref.Append("arn"))
+	return terra.ReferenceAsString(choo.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_connect_hours_of_operation.
 func (choo connectHoursOfOperationAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(choo.ref.Append("description"))
+	return terra.ReferenceAsString(choo.ref.Append("description"))
 }
 
+// HoursOfOperationArn returns a reference to field hours_of_operation_arn of aws_connect_hours_of_operation.
 func (choo connectHoursOfOperationAttributes) HoursOfOperationArn() terra.StringValue {
-	return terra.ReferenceString(choo.ref.Append("hours_of_operation_arn"))
+	return terra.ReferenceAsString(choo.ref.Append("hours_of_operation_arn"))
 }
 
+// HoursOfOperationId returns a reference to field hours_of_operation_id of aws_connect_hours_of_operation.
 func (choo connectHoursOfOperationAttributes) HoursOfOperationId() terra.StringValue {
-	return terra.ReferenceString(choo.ref.Append("hours_of_operation_id"))
+	return terra.ReferenceAsString(choo.ref.Append("hours_of_operation_id"))
 }
 
+// Id returns a reference to field id of aws_connect_hours_of_operation.
 func (choo connectHoursOfOperationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(choo.ref.Append("id"))
+	return terra.ReferenceAsString(choo.ref.Append("id"))
 }
 
+// InstanceId returns a reference to field instance_id of aws_connect_hours_of_operation.
 func (choo connectHoursOfOperationAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(choo.ref.Append("instance_id"))
+	return terra.ReferenceAsString(choo.ref.Append("instance_id"))
 }
 
+// Name returns a reference to field name of aws_connect_hours_of_operation.
 func (choo connectHoursOfOperationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(choo.ref.Append("name"))
+	return terra.ReferenceAsString(choo.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_connect_hours_of_operation.
 func (choo connectHoursOfOperationAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](choo.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](choo.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_connect_hours_of_operation.
 func (choo connectHoursOfOperationAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](choo.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](choo.ref.Append("tags_all"))
 }
 
+// TimeZone returns a reference to field time_zone of aws_connect_hours_of_operation.
 func (choo connectHoursOfOperationAttributes) TimeZone() terra.StringValue {
-	return terra.ReferenceString(choo.ref.Append("time_zone"))
+	return terra.ReferenceAsString(choo.ref.Append("time_zone"))
 }
 
 func (choo connectHoursOfOperationAttributes) Config() terra.SetValue[connecthoursofoperation.ConfigAttributes] {
-	return terra.ReferenceSet[connecthoursofoperation.ConfigAttributes](choo.ref.Append("config"))
+	return terra.ReferenceAsSet[connecthoursofoperation.ConfigAttributes](choo.ref.Append("config"))
 }
 
 type connectHoursOfOperationState struct {

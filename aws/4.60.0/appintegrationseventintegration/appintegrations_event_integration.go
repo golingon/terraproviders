@@ -29,7 +29,7 @@ func (ef EventFilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ef EventFilterAttributes) Source() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("source"))
+	return terra.ReferenceAsString(ef.ref.Append("source"))
 }
 
 type EventFilterState struct {

@@ -26,35 +26,35 @@ func (da DelegatedAdministratorsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (da DelegatedAdministratorsAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("arn"))
+	return terra.ReferenceAsString(da.ref.Append("arn"))
 }
 
 func (da DelegatedAdministratorsAttributes) DelegationEnabledDate() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("delegation_enabled_date"))
+	return terra.ReferenceAsString(da.ref.Append("delegation_enabled_date"))
 }
 
 func (da DelegatedAdministratorsAttributes) Email() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("email"))
+	return terra.ReferenceAsString(da.ref.Append("email"))
 }
 
 func (da DelegatedAdministratorsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("id"))
+	return terra.ReferenceAsString(da.ref.Append("id"))
 }
 
 func (da DelegatedAdministratorsAttributes) JoinedMethod() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("joined_method"))
+	return terra.ReferenceAsString(da.ref.Append("joined_method"))
 }
 
 func (da DelegatedAdministratorsAttributes) JoinedTimestamp() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("joined_timestamp"))
+	return terra.ReferenceAsString(da.ref.Append("joined_timestamp"))
 }
 
 func (da DelegatedAdministratorsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("name"))
+	return terra.ReferenceAsString(da.ref.Append("name"))
 }
 
 func (da DelegatedAdministratorsAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("status"))
+	return terra.ReferenceAsString(da.ref.Append("status"))
 }
 
 type DelegatedAdministratorsState struct {

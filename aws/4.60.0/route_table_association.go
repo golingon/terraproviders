@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRouteTableAssociation creates a new instance of [RouteTableAssociation].
 func NewRouteTableAssociation(name string, args RouteTableAssociationArgs) *RouteTableAssociation {
 	return &RouteTableAssociation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRouteTableAssociation(name string, args RouteTableAssociationArgs) *Rout
 
 var _ terra.Resource = (*RouteTableAssociation)(nil)
 
+// RouteTableAssociation represents the Terraform resource aws_route_table_association.
 type RouteTableAssociation struct {
-	Name  string
-	Args  RouteTableAssociationArgs
-	state *routeTableAssociationState
+	Name      string
+	Args      RouteTableAssociationArgs
+	state     *routeTableAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RouteTableAssociation].
 func (rta *RouteTableAssociation) Type() string {
 	return "aws_route_table_association"
 }
 
+// LocalName returns the local name for [RouteTableAssociation].
 func (rta *RouteTableAssociation) LocalName() string {
 	return rta.Name
 }
 
+// Configuration returns the configuration (args) for [RouteTableAssociation].
 func (rta *RouteTableAssociation) Configuration() interface{} {
 	return rta.Args
 }
 
+// DependOn is used for other resources to depend on [RouteTableAssociation].
+func (rta *RouteTableAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(rta)
+}
+
+// Dependencies returns the list of resources [RouteTableAssociation] depends_on.
+func (rta *RouteTableAssociation) Dependencies() terra.Dependencies {
+	return rta.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RouteTableAssociation].
+func (rta *RouteTableAssociation) LifecycleManagement() *terra.Lifecycle {
+	return rta.Lifecycle
+}
+
+// Attributes returns the attributes for [RouteTableAssociation].
 func (rta *RouteTableAssociation) Attributes() routeTableAssociationAttributes {
 	return routeTableAssociationAttributes{ref: terra.ReferenceResource(rta)}
 }
 
+// ImportState imports the given attribute values into [RouteTableAssociation]'s state.
 func (rta *RouteTableAssociation) ImportState(av io.Reader) error {
 	rta.state = &routeTableAssociationState{}
 	if err := json.NewDecoder(av).Decode(rta.state); err != nil {
@@ -48,10 +72,12 @@ func (rta *RouteTableAssociation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RouteTableAssociation] has state.
 func (rta *RouteTableAssociation) State() (*routeTableAssociationState, bool) {
 	return rta.state, rta.state != nil
 }
 
+// StateMust returns the state for [RouteTableAssociation]. Panics if the state is nil.
 func (rta *RouteTableAssociation) StateMust() *routeTableAssociationState {
 	if rta.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rta.Type(), rta.LocalName()))
@@ -59,10 +85,7 @@ func (rta *RouteTableAssociation) StateMust() *routeTableAssociationState {
 	return rta.state
 }
 
-func (rta *RouteTableAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(rta)
-}
-
+// RouteTableAssociationArgs contains the configurations for aws_route_table_association.
 type RouteTableAssociationArgs struct {
 	// GatewayId: string, optional
 	GatewayId terra.StringValue `hcl:"gateway_id,attr"`
@@ -72,27 +95,29 @@ type RouteTableAssociationArgs struct {
 	RouteTableId terra.StringValue `hcl:"route_table_id,attr" validate:"required"`
 	// SubnetId: string, optional
 	SubnetId terra.StringValue `hcl:"subnet_id,attr"`
-	// DependsOn contains resources that RouteTableAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type routeTableAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// GatewayId returns a reference to field gateway_id of aws_route_table_association.
 func (rta routeTableAssociationAttributes) GatewayId() terra.StringValue {
-	return terra.ReferenceString(rta.ref.Append("gateway_id"))
+	return terra.ReferenceAsString(rta.ref.Append("gateway_id"))
 }
 
+// Id returns a reference to field id of aws_route_table_association.
 func (rta routeTableAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rta.ref.Append("id"))
+	return terra.ReferenceAsString(rta.ref.Append("id"))
 }
 
+// RouteTableId returns a reference to field route_table_id of aws_route_table_association.
 func (rta routeTableAssociationAttributes) RouteTableId() terra.StringValue {
-	return terra.ReferenceString(rta.ref.Append("route_table_id"))
+	return terra.ReferenceAsString(rta.ref.Append("route_table_id"))
 }
 
+// SubnetId returns a reference to field subnet_id of aws_route_table_association.
 func (rta routeTableAssociationAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(rta.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(rta.ref.Append("subnet_id"))
 }
 
 type routeTableAssociationState struct {

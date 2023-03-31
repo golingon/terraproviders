@@ -34,7 +34,7 @@ func (ms MonitoringSubscriptionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ms MonitoringSubscriptionAttributes) RealtimeMetricsSubscriptionConfig() terra.ListValue[RealtimeMetricsSubscriptionConfigAttributes] {
-	return terra.ReferenceList[RealtimeMetricsSubscriptionConfigAttributes](ms.ref.Append("realtime_metrics_subscription_config"))
+	return terra.ReferenceAsList[RealtimeMetricsSubscriptionConfigAttributes](ms.ref.Append("realtime_metrics_subscription_config"))
 }
 
 type RealtimeMetricsSubscriptionConfigAttributes struct {
@@ -54,7 +54,7 @@ func (rmsc RealtimeMetricsSubscriptionConfigAttributes) InternalTokens() hclwrit
 }
 
 func (rmsc RealtimeMetricsSubscriptionConfigAttributes) RealtimeMetricsSubscriptionStatus() terra.StringValue {
-	return terra.ReferenceString(rmsc.ref.Append("realtime_metrics_subscription_status"))
+	return terra.ReferenceAsString(rmsc.ref.Append("realtime_metrics_subscription_status"))
 }
 
 type MonitoringSubscriptionState struct {

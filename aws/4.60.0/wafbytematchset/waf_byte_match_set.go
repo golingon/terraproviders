@@ -42,19 +42,19 @@ func (bmt ByteMatchTuplesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (bmt ByteMatchTuplesAttributes) PositionalConstraint() terra.StringValue {
-	return terra.ReferenceString(bmt.ref.Append("positional_constraint"))
+	return terra.ReferenceAsString(bmt.ref.Append("positional_constraint"))
 }
 
 func (bmt ByteMatchTuplesAttributes) TargetString() terra.StringValue {
-	return terra.ReferenceString(bmt.ref.Append("target_string"))
+	return terra.ReferenceAsString(bmt.ref.Append("target_string"))
 }
 
 func (bmt ByteMatchTuplesAttributes) TextTransformation() terra.StringValue {
-	return terra.ReferenceString(bmt.ref.Append("text_transformation"))
+	return terra.ReferenceAsString(bmt.ref.Append("text_transformation"))
 }
 
 func (bmt ByteMatchTuplesAttributes) FieldToMatch() terra.ListValue[FieldToMatchAttributes] {
-	return terra.ReferenceList[FieldToMatchAttributes](bmt.ref.Append("field_to_match"))
+	return terra.ReferenceAsList[FieldToMatchAttributes](bmt.ref.Append("field_to_match"))
 }
 
 type FieldToMatchAttributes struct {
@@ -74,11 +74,11 @@ func (ftm FieldToMatchAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ftm FieldToMatchAttributes) Data() terra.StringValue {
-	return terra.ReferenceString(ftm.ref.Append("data"))
+	return terra.ReferenceAsString(ftm.ref.Append("data"))
 }
 
 func (ftm FieldToMatchAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ftm.ref.Append("type"))
+	return terra.ReferenceAsString(ftm.ref.Append("type"))
 }
 
 type ByteMatchTuplesState struct {

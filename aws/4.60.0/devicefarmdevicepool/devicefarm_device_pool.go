@@ -33,15 +33,15 @@ func (r RuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RuleAttributes) Attribute() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("attribute"))
+	return terra.ReferenceAsString(r.ref.Append("attribute"))
 }
 
 func (r RuleAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("operator"))
+	return terra.ReferenceAsString(r.ref.Append("operator"))
 }
 
 func (r RuleAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("value"))
+	return terra.ReferenceAsString(r.ref.Append("value"))
 }
 
 type RuleState struct {

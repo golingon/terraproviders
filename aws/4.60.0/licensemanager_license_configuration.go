@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewLicensemanagerLicenseConfiguration creates a new instance of [LicensemanagerLicenseConfiguration].
 func NewLicensemanagerLicenseConfiguration(name string, args LicensemanagerLicenseConfigurationArgs) *LicensemanagerLicenseConfiguration {
 	return &LicensemanagerLicenseConfiguration{
 		Args: args,
@@ -18,28 +19,51 @@ func NewLicensemanagerLicenseConfiguration(name string, args LicensemanagerLicen
 
 var _ terra.Resource = (*LicensemanagerLicenseConfiguration)(nil)
 
+// LicensemanagerLicenseConfiguration represents the Terraform resource aws_licensemanager_license_configuration.
 type LicensemanagerLicenseConfiguration struct {
-	Name  string
-	Args  LicensemanagerLicenseConfigurationArgs
-	state *licensemanagerLicenseConfigurationState
+	Name      string
+	Args      LicensemanagerLicenseConfigurationArgs
+	state     *licensemanagerLicenseConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LicensemanagerLicenseConfiguration].
 func (llc *LicensemanagerLicenseConfiguration) Type() string {
 	return "aws_licensemanager_license_configuration"
 }
 
+// LocalName returns the local name for [LicensemanagerLicenseConfiguration].
 func (llc *LicensemanagerLicenseConfiguration) LocalName() string {
 	return llc.Name
 }
 
+// Configuration returns the configuration (args) for [LicensemanagerLicenseConfiguration].
 func (llc *LicensemanagerLicenseConfiguration) Configuration() interface{} {
 	return llc.Args
 }
 
+// DependOn is used for other resources to depend on [LicensemanagerLicenseConfiguration].
+func (llc *LicensemanagerLicenseConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(llc)
+}
+
+// Dependencies returns the list of resources [LicensemanagerLicenseConfiguration] depends_on.
+func (llc *LicensemanagerLicenseConfiguration) Dependencies() terra.Dependencies {
+	return llc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LicensemanagerLicenseConfiguration].
+func (llc *LicensemanagerLicenseConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return llc.Lifecycle
+}
+
+// Attributes returns the attributes for [LicensemanagerLicenseConfiguration].
 func (llc *LicensemanagerLicenseConfiguration) Attributes() licensemanagerLicenseConfigurationAttributes {
 	return licensemanagerLicenseConfigurationAttributes{ref: terra.ReferenceResource(llc)}
 }
 
+// ImportState imports the given attribute values into [LicensemanagerLicenseConfiguration]'s state.
 func (llc *LicensemanagerLicenseConfiguration) ImportState(av io.Reader) error {
 	llc.state = &licensemanagerLicenseConfigurationState{}
 	if err := json.NewDecoder(av).Decode(llc.state); err != nil {
@@ -48,10 +72,12 @@ func (llc *LicensemanagerLicenseConfiguration) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LicensemanagerLicenseConfiguration] has state.
 func (llc *LicensemanagerLicenseConfiguration) State() (*licensemanagerLicenseConfigurationState, bool) {
 	return llc.state, llc.state != nil
 }
 
+// StateMust returns the state for [LicensemanagerLicenseConfiguration]. Panics if the state is nil.
 func (llc *LicensemanagerLicenseConfiguration) StateMust() *licensemanagerLicenseConfigurationState {
 	if llc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", llc.Type(), llc.LocalName()))
@@ -59,10 +85,7 @@ func (llc *LicensemanagerLicenseConfiguration) StateMust() *licensemanagerLicens
 	return llc.state
 }
 
-func (llc *LicensemanagerLicenseConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(llc)
-}
-
+// LicensemanagerLicenseConfigurationArgs contains the configurations for aws_licensemanager_license_configuration.
 type LicensemanagerLicenseConfigurationArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -82,55 +105,64 @@ type LicensemanagerLicenseConfigurationArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that LicensemanagerLicenseConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type licensemanagerLicenseConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_licensemanager_license_configuration.
 func (llc licensemanagerLicenseConfigurationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(llc.ref.Append("arn"))
+	return terra.ReferenceAsString(llc.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_licensemanager_license_configuration.
 func (llc licensemanagerLicenseConfigurationAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(llc.ref.Append("description"))
+	return terra.ReferenceAsString(llc.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_licensemanager_license_configuration.
 func (llc licensemanagerLicenseConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(llc.ref.Append("id"))
+	return terra.ReferenceAsString(llc.ref.Append("id"))
 }
 
+// LicenseCount returns a reference to field license_count of aws_licensemanager_license_configuration.
 func (llc licensemanagerLicenseConfigurationAttributes) LicenseCount() terra.NumberValue {
-	return terra.ReferenceNumber(llc.ref.Append("license_count"))
+	return terra.ReferenceAsNumber(llc.ref.Append("license_count"))
 }
 
+// LicenseCountHardLimit returns a reference to field license_count_hard_limit of aws_licensemanager_license_configuration.
 func (llc licensemanagerLicenseConfigurationAttributes) LicenseCountHardLimit() terra.BoolValue {
-	return terra.ReferenceBool(llc.ref.Append("license_count_hard_limit"))
+	return terra.ReferenceAsBool(llc.ref.Append("license_count_hard_limit"))
 }
 
+// LicenseCountingType returns a reference to field license_counting_type of aws_licensemanager_license_configuration.
 func (llc licensemanagerLicenseConfigurationAttributes) LicenseCountingType() terra.StringValue {
-	return terra.ReferenceString(llc.ref.Append("license_counting_type"))
+	return terra.ReferenceAsString(llc.ref.Append("license_counting_type"))
 }
 
+// LicenseRules returns a reference to field license_rules of aws_licensemanager_license_configuration.
 func (llc licensemanagerLicenseConfigurationAttributes) LicenseRules() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](llc.ref.Append("license_rules"))
+	return terra.ReferenceAsList[terra.StringValue](llc.ref.Append("license_rules"))
 }
 
+// Name returns a reference to field name of aws_licensemanager_license_configuration.
 func (llc licensemanagerLicenseConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(llc.ref.Append("name"))
+	return terra.ReferenceAsString(llc.ref.Append("name"))
 }
 
+// OwnerAccountId returns a reference to field owner_account_id of aws_licensemanager_license_configuration.
 func (llc licensemanagerLicenseConfigurationAttributes) OwnerAccountId() terra.StringValue {
-	return terra.ReferenceString(llc.ref.Append("owner_account_id"))
+	return terra.ReferenceAsString(llc.ref.Append("owner_account_id"))
 }
 
+// Tags returns a reference to field tags of aws_licensemanager_license_configuration.
 func (llc licensemanagerLicenseConfigurationAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](llc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](llc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_licensemanager_license_configuration.
 func (llc licensemanagerLicenseConfigurationAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](llc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](llc.ref.Append("tags_all"))
 }
 
 type licensemanagerLicenseConfigurationState struct {

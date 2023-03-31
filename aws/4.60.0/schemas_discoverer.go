@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSchemasDiscoverer creates a new instance of [SchemasDiscoverer].
 func NewSchemasDiscoverer(name string, args SchemasDiscovererArgs) *SchemasDiscoverer {
 	return &SchemasDiscoverer{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSchemasDiscoverer(name string, args SchemasDiscovererArgs) *SchemasDisco
 
 var _ terra.Resource = (*SchemasDiscoverer)(nil)
 
+// SchemasDiscoverer represents the Terraform resource aws_schemas_discoverer.
 type SchemasDiscoverer struct {
-	Name  string
-	Args  SchemasDiscovererArgs
-	state *schemasDiscovererState
+	Name      string
+	Args      SchemasDiscovererArgs
+	state     *schemasDiscovererState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SchemasDiscoverer].
 func (sd *SchemasDiscoverer) Type() string {
 	return "aws_schemas_discoverer"
 }
 
+// LocalName returns the local name for [SchemasDiscoverer].
 func (sd *SchemasDiscoverer) LocalName() string {
 	return sd.Name
 }
 
+// Configuration returns the configuration (args) for [SchemasDiscoverer].
 func (sd *SchemasDiscoverer) Configuration() interface{} {
 	return sd.Args
 }
 
+// DependOn is used for other resources to depend on [SchemasDiscoverer].
+func (sd *SchemasDiscoverer) DependOn() terra.Reference {
+	return terra.ReferenceResource(sd)
+}
+
+// Dependencies returns the list of resources [SchemasDiscoverer] depends_on.
+func (sd *SchemasDiscoverer) Dependencies() terra.Dependencies {
+	return sd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SchemasDiscoverer].
+func (sd *SchemasDiscoverer) LifecycleManagement() *terra.Lifecycle {
+	return sd.Lifecycle
+}
+
+// Attributes returns the attributes for [SchemasDiscoverer].
 func (sd *SchemasDiscoverer) Attributes() schemasDiscovererAttributes {
 	return schemasDiscovererAttributes{ref: terra.ReferenceResource(sd)}
 }
 
+// ImportState imports the given attribute values into [SchemasDiscoverer]'s state.
 func (sd *SchemasDiscoverer) ImportState(av io.Reader) error {
 	sd.state = &schemasDiscovererState{}
 	if err := json.NewDecoder(av).Decode(sd.state); err != nil {
@@ -48,10 +72,12 @@ func (sd *SchemasDiscoverer) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SchemasDiscoverer] has state.
 func (sd *SchemasDiscoverer) State() (*schemasDiscovererState, bool) {
 	return sd.state, sd.state != nil
 }
 
+// StateMust returns the state for [SchemasDiscoverer]. Panics if the state is nil.
 func (sd *SchemasDiscoverer) StateMust() *schemasDiscovererState {
 	if sd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sd.Type(), sd.LocalName()))
@@ -59,10 +85,7 @@ func (sd *SchemasDiscoverer) StateMust() *schemasDiscovererState {
 	return sd.state
 }
 
-func (sd *SchemasDiscoverer) DependOn() terra.Reference {
-	return terra.ReferenceResource(sd)
-}
-
+// SchemasDiscovererArgs contains the configurations for aws_schemas_discoverer.
 type SchemasDiscovererArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -74,35 +97,39 @@ type SchemasDiscovererArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that SchemasDiscoverer depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type schemasDiscovererAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_schemas_discoverer.
 func (sd schemasDiscovererAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("arn"))
+	return terra.ReferenceAsString(sd.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_schemas_discoverer.
 func (sd schemasDiscovererAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("description"))
+	return terra.ReferenceAsString(sd.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_schemas_discoverer.
 func (sd schemasDiscovererAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("id"))
+	return terra.ReferenceAsString(sd.ref.Append("id"))
 }
 
+// SourceArn returns a reference to field source_arn of aws_schemas_discoverer.
 func (sd schemasDiscovererAttributes) SourceArn() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("source_arn"))
+	return terra.ReferenceAsString(sd.ref.Append("source_arn"))
 }
 
+// Tags returns a reference to field tags of aws_schemas_discoverer.
 func (sd schemasDiscovererAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sd.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sd.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_schemas_discoverer.
 func (sd schemasDiscovererAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sd.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sd.ref.Append("tags_all"))
 }
 
 type schemasDiscovererState struct {

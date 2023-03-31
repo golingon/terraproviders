@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAthenaDataCatalog creates a new instance of [AthenaDataCatalog].
 func NewAthenaDataCatalog(name string, args AthenaDataCatalogArgs) *AthenaDataCatalog {
 	return &AthenaDataCatalog{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAthenaDataCatalog(name string, args AthenaDataCatalogArgs) *AthenaDataCa
 
 var _ terra.Resource = (*AthenaDataCatalog)(nil)
 
+// AthenaDataCatalog represents the Terraform resource aws_athena_data_catalog.
 type AthenaDataCatalog struct {
-	Name  string
-	Args  AthenaDataCatalogArgs
-	state *athenaDataCatalogState
+	Name      string
+	Args      AthenaDataCatalogArgs
+	state     *athenaDataCatalogState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AthenaDataCatalog].
 func (adc *AthenaDataCatalog) Type() string {
 	return "aws_athena_data_catalog"
 }
 
+// LocalName returns the local name for [AthenaDataCatalog].
 func (adc *AthenaDataCatalog) LocalName() string {
 	return adc.Name
 }
 
+// Configuration returns the configuration (args) for [AthenaDataCatalog].
 func (adc *AthenaDataCatalog) Configuration() interface{} {
 	return adc.Args
 }
 
+// DependOn is used for other resources to depend on [AthenaDataCatalog].
+func (adc *AthenaDataCatalog) DependOn() terra.Reference {
+	return terra.ReferenceResource(adc)
+}
+
+// Dependencies returns the list of resources [AthenaDataCatalog] depends_on.
+func (adc *AthenaDataCatalog) Dependencies() terra.Dependencies {
+	return adc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AthenaDataCatalog].
+func (adc *AthenaDataCatalog) LifecycleManagement() *terra.Lifecycle {
+	return adc.Lifecycle
+}
+
+// Attributes returns the attributes for [AthenaDataCatalog].
 func (adc *AthenaDataCatalog) Attributes() athenaDataCatalogAttributes {
 	return athenaDataCatalogAttributes{ref: terra.ReferenceResource(adc)}
 }
 
+// ImportState imports the given attribute values into [AthenaDataCatalog]'s state.
 func (adc *AthenaDataCatalog) ImportState(av io.Reader) error {
 	adc.state = &athenaDataCatalogState{}
 	if err := json.NewDecoder(av).Decode(adc.state); err != nil {
@@ -48,10 +72,12 @@ func (adc *AthenaDataCatalog) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AthenaDataCatalog] has state.
 func (adc *AthenaDataCatalog) State() (*athenaDataCatalogState, bool) {
 	return adc.state, adc.state != nil
 }
 
+// StateMust returns the state for [AthenaDataCatalog]. Panics if the state is nil.
 func (adc *AthenaDataCatalog) StateMust() *athenaDataCatalogState {
 	if adc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", adc.Type(), adc.LocalName()))
@@ -59,10 +85,7 @@ func (adc *AthenaDataCatalog) StateMust() *athenaDataCatalogState {
 	return adc.state
 }
 
-func (adc *AthenaDataCatalog) DependOn() terra.Reference {
-	return terra.ReferenceResource(adc)
-}
-
+// AthenaDataCatalogArgs contains the configurations for aws_athena_data_catalog.
 type AthenaDataCatalogArgs struct {
 	// Description: string, required
 	Description terra.StringValue `hcl:"description,attr" validate:"required"`
@@ -78,43 +101,49 @@ type AthenaDataCatalogArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Type: string, required
 	Type terra.StringValue `hcl:"type,attr" validate:"required"`
-	// DependsOn contains resources that AthenaDataCatalog depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type athenaDataCatalogAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_athena_data_catalog.
 func (adc athenaDataCatalogAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(adc.ref.Append("arn"))
+	return terra.ReferenceAsString(adc.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_athena_data_catalog.
 func (adc athenaDataCatalogAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(adc.ref.Append("description"))
+	return terra.ReferenceAsString(adc.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_athena_data_catalog.
 func (adc athenaDataCatalogAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(adc.ref.Append("id"))
+	return terra.ReferenceAsString(adc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_athena_data_catalog.
 func (adc athenaDataCatalogAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(adc.ref.Append("name"))
+	return terra.ReferenceAsString(adc.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of aws_athena_data_catalog.
 func (adc athenaDataCatalogAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](adc.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](adc.ref.Append("parameters"))
 }
 
+// Tags returns a reference to field tags of aws_athena_data_catalog.
 func (adc athenaDataCatalogAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](adc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](adc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_athena_data_catalog.
 func (adc athenaDataCatalogAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](adc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](adc.ref.Append("tags_all"))
 }
 
+// Type returns a reference to field type of aws_athena_data_catalog.
 func (adc athenaDataCatalogAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(adc.ref.Append("type"))
+	return terra.ReferenceAsString(adc.ref.Append("type"))
 }
 
 type athenaDataCatalogState struct {

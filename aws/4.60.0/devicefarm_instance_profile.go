@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDevicefarmInstanceProfile creates a new instance of [DevicefarmInstanceProfile].
 func NewDevicefarmInstanceProfile(name string, args DevicefarmInstanceProfileArgs) *DevicefarmInstanceProfile {
 	return &DevicefarmInstanceProfile{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDevicefarmInstanceProfile(name string, args DevicefarmInstanceProfileArg
 
 var _ terra.Resource = (*DevicefarmInstanceProfile)(nil)
 
+// DevicefarmInstanceProfile represents the Terraform resource aws_devicefarm_instance_profile.
 type DevicefarmInstanceProfile struct {
-	Name  string
-	Args  DevicefarmInstanceProfileArgs
-	state *devicefarmInstanceProfileState
+	Name      string
+	Args      DevicefarmInstanceProfileArgs
+	state     *devicefarmInstanceProfileState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DevicefarmInstanceProfile].
 func (dip *DevicefarmInstanceProfile) Type() string {
 	return "aws_devicefarm_instance_profile"
 }
 
+// LocalName returns the local name for [DevicefarmInstanceProfile].
 func (dip *DevicefarmInstanceProfile) LocalName() string {
 	return dip.Name
 }
 
+// Configuration returns the configuration (args) for [DevicefarmInstanceProfile].
 func (dip *DevicefarmInstanceProfile) Configuration() interface{} {
 	return dip.Args
 }
 
+// DependOn is used for other resources to depend on [DevicefarmInstanceProfile].
+func (dip *DevicefarmInstanceProfile) DependOn() terra.Reference {
+	return terra.ReferenceResource(dip)
+}
+
+// Dependencies returns the list of resources [DevicefarmInstanceProfile] depends_on.
+func (dip *DevicefarmInstanceProfile) Dependencies() terra.Dependencies {
+	return dip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DevicefarmInstanceProfile].
+func (dip *DevicefarmInstanceProfile) LifecycleManagement() *terra.Lifecycle {
+	return dip.Lifecycle
+}
+
+// Attributes returns the attributes for [DevicefarmInstanceProfile].
 func (dip *DevicefarmInstanceProfile) Attributes() devicefarmInstanceProfileAttributes {
 	return devicefarmInstanceProfileAttributes{ref: terra.ReferenceResource(dip)}
 }
 
+// ImportState imports the given attribute values into [DevicefarmInstanceProfile]'s state.
 func (dip *DevicefarmInstanceProfile) ImportState(av io.Reader) error {
 	dip.state = &devicefarmInstanceProfileState{}
 	if err := json.NewDecoder(av).Decode(dip.state); err != nil {
@@ -48,10 +72,12 @@ func (dip *DevicefarmInstanceProfile) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DevicefarmInstanceProfile] has state.
 func (dip *DevicefarmInstanceProfile) State() (*devicefarmInstanceProfileState, bool) {
 	return dip.state, dip.state != nil
 }
 
+// StateMust returns the state for [DevicefarmInstanceProfile]. Panics if the state is nil.
 func (dip *DevicefarmInstanceProfile) StateMust() *devicefarmInstanceProfileState {
 	if dip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dip.Type(), dip.LocalName()))
@@ -59,10 +85,7 @@ func (dip *DevicefarmInstanceProfile) StateMust() *devicefarmInstanceProfileStat
 	return dip.state
 }
 
-func (dip *DevicefarmInstanceProfile) DependOn() terra.Reference {
-	return terra.ReferenceResource(dip)
-}
-
+// DevicefarmInstanceProfileArgs contains the configurations for aws_devicefarm_instance_profile.
 type DevicefarmInstanceProfileArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -80,47 +103,54 @@ type DevicefarmInstanceProfileArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that DevicefarmInstanceProfile depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type devicefarmInstanceProfileAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_devicefarm_instance_profile.
 func (dip devicefarmInstanceProfileAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dip.ref.Append("arn"))
+	return terra.ReferenceAsString(dip.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_devicefarm_instance_profile.
 func (dip devicefarmInstanceProfileAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dip.ref.Append("description"))
+	return terra.ReferenceAsString(dip.ref.Append("description"))
 }
 
+// ExcludeAppPackagesFromCleanup returns a reference to field exclude_app_packages_from_cleanup of aws_devicefarm_instance_profile.
 func (dip devicefarmInstanceProfileAttributes) ExcludeAppPackagesFromCleanup() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dip.ref.Append("exclude_app_packages_from_cleanup"))
+	return terra.ReferenceAsSet[terra.StringValue](dip.ref.Append("exclude_app_packages_from_cleanup"))
 }
 
+// Id returns a reference to field id of aws_devicefarm_instance_profile.
 func (dip devicefarmInstanceProfileAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dip.ref.Append("id"))
+	return terra.ReferenceAsString(dip.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_devicefarm_instance_profile.
 func (dip devicefarmInstanceProfileAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dip.ref.Append("name"))
+	return terra.ReferenceAsString(dip.ref.Append("name"))
 }
 
+// PackageCleanup returns a reference to field package_cleanup of aws_devicefarm_instance_profile.
 func (dip devicefarmInstanceProfileAttributes) PackageCleanup() terra.BoolValue {
-	return terra.ReferenceBool(dip.ref.Append("package_cleanup"))
+	return terra.ReferenceAsBool(dip.ref.Append("package_cleanup"))
 }
 
+// RebootAfterUse returns a reference to field reboot_after_use of aws_devicefarm_instance_profile.
 func (dip devicefarmInstanceProfileAttributes) RebootAfterUse() terra.BoolValue {
-	return terra.ReferenceBool(dip.ref.Append("reboot_after_use"))
+	return terra.ReferenceAsBool(dip.ref.Append("reboot_after_use"))
 }
 
+// Tags returns a reference to field tags of aws_devicefarm_instance_profile.
 func (dip devicefarmInstanceProfileAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dip.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dip.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_devicefarm_instance_profile.
 func (dip devicefarmInstanceProfileAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dip.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dip.ref.Append("tags_all"))
 }
 
 type devicefarmInstanceProfileState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewOpsworksPermission creates a new instance of [OpsworksPermission].
 func NewOpsworksPermission(name string, args OpsworksPermissionArgs) *OpsworksPermission {
 	return &OpsworksPermission{
 		Args: args,
@@ -18,28 +19,51 @@ func NewOpsworksPermission(name string, args OpsworksPermissionArgs) *OpsworksPe
 
 var _ terra.Resource = (*OpsworksPermission)(nil)
 
+// OpsworksPermission represents the Terraform resource aws_opsworks_permission.
 type OpsworksPermission struct {
-	Name  string
-	Args  OpsworksPermissionArgs
-	state *opsworksPermissionState
+	Name      string
+	Args      OpsworksPermissionArgs
+	state     *opsworksPermissionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [OpsworksPermission].
 func (op *OpsworksPermission) Type() string {
 	return "aws_opsworks_permission"
 }
 
+// LocalName returns the local name for [OpsworksPermission].
 func (op *OpsworksPermission) LocalName() string {
 	return op.Name
 }
 
+// Configuration returns the configuration (args) for [OpsworksPermission].
 func (op *OpsworksPermission) Configuration() interface{} {
 	return op.Args
 }
 
+// DependOn is used for other resources to depend on [OpsworksPermission].
+func (op *OpsworksPermission) DependOn() terra.Reference {
+	return terra.ReferenceResource(op)
+}
+
+// Dependencies returns the list of resources [OpsworksPermission] depends_on.
+func (op *OpsworksPermission) Dependencies() terra.Dependencies {
+	return op.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [OpsworksPermission].
+func (op *OpsworksPermission) LifecycleManagement() *terra.Lifecycle {
+	return op.Lifecycle
+}
+
+// Attributes returns the attributes for [OpsworksPermission].
 func (op *OpsworksPermission) Attributes() opsworksPermissionAttributes {
 	return opsworksPermissionAttributes{ref: terra.ReferenceResource(op)}
 }
 
+// ImportState imports the given attribute values into [OpsworksPermission]'s state.
 func (op *OpsworksPermission) ImportState(av io.Reader) error {
 	op.state = &opsworksPermissionState{}
 	if err := json.NewDecoder(av).Decode(op.state); err != nil {
@@ -48,10 +72,12 @@ func (op *OpsworksPermission) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [OpsworksPermission] has state.
 func (op *OpsworksPermission) State() (*opsworksPermissionState, bool) {
 	return op.state, op.state != nil
 }
 
+// StateMust returns the state for [OpsworksPermission]. Panics if the state is nil.
 func (op *OpsworksPermission) StateMust() *opsworksPermissionState {
 	if op.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", op.Type(), op.LocalName()))
@@ -59,10 +85,7 @@ func (op *OpsworksPermission) StateMust() *opsworksPermissionState {
 	return op.state
 }
 
-func (op *OpsworksPermission) DependOn() terra.Reference {
-	return terra.ReferenceResource(op)
-}
-
+// OpsworksPermissionArgs contains the configurations for aws_opsworks_permission.
 type OpsworksPermissionArgs struct {
 	// AllowSsh: bool, optional
 	AllowSsh terra.BoolValue `hcl:"allow_ssh,attr"`
@@ -76,35 +99,39 @@ type OpsworksPermissionArgs struct {
 	StackId terra.StringValue `hcl:"stack_id,attr" validate:"required"`
 	// UserArn: string, required
 	UserArn terra.StringValue `hcl:"user_arn,attr" validate:"required"`
-	// DependsOn contains resources that OpsworksPermission depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type opsworksPermissionAttributes struct {
 	ref terra.Reference
 }
 
+// AllowSsh returns a reference to field allow_ssh of aws_opsworks_permission.
 func (op opsworksPermissionAttributes) AllowSsh() terra.BoolValue {
-	return terra.ReferenceBool(op.ref.Append("allow_ssh"))
+	return terra.ReferenceAsBool(op.ref.Append("allow_ssh"))
 }
 
+// AllowSudo returns a reference to field allow_sudo of aws_opsworks_permission.
 func (op opsworksPermissionAttributes) AllowSudo() terra.BoolValue {
-	return terra.ReferenceBool(op.ref.Append("allow_sudo"))
+	return terra.ReferenceAsBool(op.ref.Append("allow_sudo"))
 }
 
+// Id returns a reference to field id of aws_opsworks_permission.
 func (op opsworksPermissionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(op.ref.Append("id"))
+	return terra.ReferenceAsString(op.ref.Append("id"))
 }
 
+// Level returns a reference to field level of aws_opsworks_permission.
 func (op opsworksPermissionAttributes) Level() terra.StringValue {
-	return terra.ReferenceString(op.ref.Append("level"))
+	return terra.ReferenceAsString(op.ref.Append("level"))
 }
 
+// StackId returns a reference to field stack_id of aws_opsworks_permission.
 func (op opsworksPermissionAttributes) StackId() terra.StringValue {
-	return terra.ReferenceString(op.ref.Append("stack_id"))
+	return terra.ReferenceAsString(op.ref.Append("stack_id"))
 }
 
+// UserArn returns a reference to field user_arn of aws_opsworks_permission.
 func (op opsworksPermissionAttributes) UserArn() terra.StringValue {
-	return terra.ReferenceString(op.ref.Append("user_arn"))
+	return terra.ReferenceAsString(op.ref.Append("user_arn"))
 }
 
 type opsworksPermissionState struct {

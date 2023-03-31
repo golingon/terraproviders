@@ -96,27 +96,27 @@ func (idc InputDataConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (idc InputDataConfigAttributes) DataFormat() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("data_format"))
+	return terra.ReferenceAsString(idc.ref.Append("data_format"))
 }
 
 func (idc InputDataConfigAttributes) Annotations() terra.ListValue[AnnotationsAttributes] {
-	return terra.ReferenceList[AnnotationsAttributes](idc.ref.Append("annotations"))
+	return terra.ReferenceAsList[AnnotationsAttributes](idc.ref.Append("annotations"))
 }
 
 func (idc InputDataConfigAttributes) AugmentedManifests() terra.SetValue[AugmentedManifestsAttributes] {
-	return terra.ReferenceSet[AugmentedManifestsAttributes](idc.ref.Append("augmented_manifests"))
+	return terra.ReferenceAsSet[AugmentedManifestsAttributes](idc.ref.Append("augmented_manifests"))
 }
 
 func (idc InputDataConfigAttributes) Documents() terra.ListValue[DocumentsAttributes] {
-	return terra.ReferenceList[DocumentsAttributes](idc.ref.Append("documents"))
+	return terra.ReferenceAsList[DocumentsAttributes](idc.ref.Append("documents"))
 }
 
 func (idc InputDataConfigAttributes) EntityList() terra.ListValue[EntityListAttributes] {
-	return terra.ReferenceList[EntityListAttributes](idc.ref.Append("entity_list"))
+	return terra.ReferenceAsList[EntityListAttributes](idc.ref.Append("entity_list"))
 }
 
 func (idc InputDataConfigAttributes) EntityTypes() terra.SetValue[EntityTypesAttributes] {
-	return terra.ReferenceSet[EntityTypesAttributes](idc.ref.Append("entity_types"))
+	return terra.ReferenceAsSet[EntityTypesAttributes](idc.ref.Append("entity_types"))
 }
 
 type AnnotationsAttributes struct {
@@ -136,11 +136,11 @@ func (a AnnotationsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AnnotationsAttributes) S3Uri() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("s3_uri"))
+	return terra.ReferenceAsString(a.ref.Append("s3_uri"))
 }
 
 func (a AnnotationsAttributes) TestS3Uri() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("test_s3_uri"))
+	return terra.ReferenceAsString(a.ref.Append("test_s3_uri"))
 }
 
 type AugmentedManifestsAttributes struct {
@@ -160,27 +160,27 @@ func (am AugmentedManifestsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (am AugmentedManifestsAttributes) AnnotationDataS3Uri() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("annotation_data_s3_uri"))
+	return terra.ReferenceAsString(am.ref.Append("annotation_data_s3_uri"))
 }
 
 func (am AugmentedManifestsAttributes) AttributeNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](am.ref.Append("attribute_names"))
+	return terra.ReferenceAsList[terra.StringValue](am.ref.Append("attribute_names"))
 }
 
 func (am AugmentedManifestsAttributes) DocumentType() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("document_type"))
+	return terra.ReferenceAsString(am.ref.Append("document_type"))
 }
 
 func (am AugmentedManifestsAttributes) S3Uri() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("s3_uri"))
+	return terra.ReferenceAsString(am.ref.Append("s3_uri"))
 }
 
 func (am AugmentedManifestsAttributes) SourceDocumentsS3Uri() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("source_documents_s3_uri"))
+	return terra.ReferenceAsString(am.ref.Append("source_documents_s3_uri"))
 }
 
 func (am AugmentedManifestsAttributes) Split() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("split"))
+	return terra.ReferenceAsString(am.ref.Append("split"))
 }
 
 type DocumentsAttributes struct {
@@ -200,15 +200,15 @@ func (d DocumentsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DocumentsAttributes) InputFormat() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("input_format"))
+	return terra.ReferenceAsString(d.ref.Append("input_format"))
 }
 
 func (d DocumentsAttributes) S3Uri() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("s3_uri"))
+	return terra.ReferenceAsString(d.ref.Append("s3_uri"))
 }
 
 func (d DocumentsAttributes) TestS3Uri() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("test_s3_uri"))
+	return terra.ReferenceAsString(d.ref.Append("test_s3_uri"))
 }
 
 type EntityListAttributes struct {
@@ -228,7 +228,7 @@ func (el EntityListAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (el EntityListAttributes) S3Uri() terra.StringValue {
-	return terra.ReferenceString(el.ref.Append("s3_uri"))
+	return terra.ReferenceAsString(el.ref.Append("s3_uri"))
 }
 
 type EntityTypesAttributes struct {
@@ -248,7 +248,7 @@ func (et EntityTypesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (et EntityTypesAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(et.ref.Append("type"))
+	return terra.ReferenceAsString(et.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
@@ -268,15 +268,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type VpcConfigAttributes struct {
@@ -296,11 +296,11 @@ func (vc VpcConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vc VpcConfigAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("security_group_ids"))
 }
 
 func (vc VpcConfigAttributes) Subnets() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("subnets"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("subnets"))
 }
 
 type InputDataConfigState struct {

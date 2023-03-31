@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataLocationRouteCalculator creates a new instance of [DataLocationRouteCalculator].
 func NewDataLocationRouteCalculator(name string, args DataLocationRouteCalculatorArgs) *DataLocationRouteCalculator {
 	return &DataLocationRouteCalculator{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataLocationRouteCalculator(name string, args DataLocationRouteCalculato
 
 var _ terra.DataResource = (*DataLocationRouteCalculator)(nil)
 
+// DataLocationRouteCalculator represents the Terraform data resource aws_location_route_calculator.
 type DataLocationRouteCalculator struct {
 	Name string
 	Args DataLocationRouteCalculatorArgs
 }
 
+// DataSource returns the Terraform object type for [DataLocationRouteCalculator].
 func (lrc *DataLocationRouteCalculator) DataSource() string {
 	return "aws_location_route_calculator"
 }
 
+// LocalName returns the local name for [DataLocationRouteCalculator].
 func (lrc *DataLocationRouteCalculator) LocalName() string {
 	return lrc.Name
 }
 
+// Configuration returns the configuration (args) for [DataLocationRouteCalculator].
 func (lrc *DataLocationRouteCalculator) Configuration() interface{} {
 	return lrc.Args
 }
 
+// Attributes returns the attributes for [DataLocationRouteCalculator].
 func (lrc *DataLocationRouteCalculator) Attributes() dataLocationRouteCalculatorAttributes {
 	return dataLocationRouteCalculatorAttributes{ref: terra.ReferenceDataResource(lrc)}
 }
 
+// DataLocationRouteCalculatorArgs contains the configurations for aws_location_route_calculator.
 type DataLocationRouteCalculatorArgs struct {
 	// CalculatorName: string, required
 	CalculatorName terra.StringValue `hcl:"calculator_name,attr" validate:"required"`
@@ -46,34 +53,42 @@ type dataLocationRouteCalculatorAttributes struct {
 	ref terra.Reference
 }
 
+// CalculatorArn returns a reference to field calculator_arn of aws_location_route_calculator.
 func (lrc dataLocationRouteCalculatorAttributes) CalculatorArn() terra.StringValue {
-	return terra.ReferenceString(lrc.ref.Append("calculator_arn"))
+	return terra.ReferenceAsString(lrc.ref.Append("calculator_arn"))
 }
 
+// CalculatorName returns a reference to field calculator_name of aws_location_route_calculator.
 func (lrc dataLocationRouteCalculatorAttributes) CalculatorName() terra.StringValue {
-	return terra.ReferenceString(lrc.ref.Append("calculator_name"))
+	return terra.ReferenceAsString(lrc.ref.Append("calculator_name"))
 }
 
+// CreateTime returns a reference to field create_time of aws_location_route_calculator.
 func (lrc dataLocationRouteCalculatorAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(lrc.ref.Append("create_time"))
+	return terra.ReferenceAsString(lrc.ref.Append("create_time"))
 }
 
+// DataSource returns a reference to field data_source of aws_location_route_calculator.
 func (lrc dataLocationRouteCalculatorAttributes) DataSource() terra.StringValue {
-	return terra.ReferenceString(lrc.ref.Append("data_source"))
+	return terra.ReferenceAsString(lrc.ref.Append("data_source"))
 }
 
+// Description returns a reference to field description of aws_location_route_calculator.
 func (lrc dataLocationRouteCalculatorAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(lrc.ref.Append("description"))
+	return terra.ReferenceAsString(lrc.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_location_route_calculator.
 func (lrc dataLocationRouteCalculatorAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lrc.ref.Append("id"))
+	return terra.ReferenceAsString(lrc.ref.Append("id"))
 }
 
+// Tags returns a reference to field tags of aws_location_route_calculator.
 func (lrc dataLocationRouteCalculatorAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lrc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](lrc.ref.Append("tags"))
 }
 
+// UpdateTime returns a reference to field update_time of aws_location_route_calculator.
 func (lrc dataLocationRouteCalculatorAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(lrc.ref.Append("update_time"))
+	return terra.ReferenceAsString(lrc.ref.Append("update_time"))
 }

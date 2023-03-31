@@ -40,23 +40,23 @@ func (d DestinationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DestinationAttributes) AvailabilityZoneName() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("availability_zone_name"))
+	return terra.ReferenceAsString(d.ref.Append("availability_zone_name"))
 }
 
 func (d DestinationAttributes) FileSystemId() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("file_system_id"))
+	return terra.ReferenceAsString(d.ref.Append("file_system_id"))
 }
 
 func (d DestinationAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(d.ref.Append("kms_key_id"))
 }
 
 func (d DestinationAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("region"))
+	return terra.ReferenceAsString(d.ref.Append("region"))
 }
 
 func (d DestinationAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("status"))
+	return terra.ReferenceAsString(d.ref.Append("status"))
 }
 
 type TimeoutsAttributes struct {
@@ -76,11 +76,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type DestinationState struct {

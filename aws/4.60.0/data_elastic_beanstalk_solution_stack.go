@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataElasticBeanstalkSolutionStack creates a new instance of [DataElasticBeanstalkSolutionStack].
 func NewDataElasticBeanstalkSolutionStack(name string, args DataElasticBeanstalkSolutionStackArgs) *DataElasticBeanstalkSolutionStack {
 	return &DataElasticBeanstalkSolutionStack{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataElasticBeanstalkSolutionStack(name string, args DataElasticBeanstalk
 
 var _ terra.DataResource = (*DataElasticBeanstalkSolutionStack)(nil)
 
+// DataElasticBeanstalkSolutionStack represents the Terraform data resource aws_elastic_beanstalk_solution_stack.
 type DataElasticBeanstalkSolutionStack struct {
 	Name string
 	Args DataElasticBeanstalkSolutionStackArgs
 }
 
+// DataSource returns the Terraform object type for [DataElasticBeanstalkSolutionStack].
 func (ebss *DataElasticBeanstalkSolutionStack) DataSource() string {
 	return "aws_elastic_beanstalk_solution_stack"
 }
 
+// LocalName returns the local name for [DataElasticBeanstalkSolutionStack].
 func (ebss *DataElasticBeanstalkSolutionStack) LocalName() string {
 	return ebss.Name
 }
 
+// Configuration returns the configuration (args) for [DataElasticBeanstalkSolutionStack].
 func (ebss *DataElasticBeanstalkSolutionStack) Configuration() interface{} {
 	return ebss.Args
 }
 
+// Attributes returns the attributes for [DataElasticBeanstalkSolutionStack].
 func (ebss *DataElasticBeanstalkSolutionStack) Attributes() dataElasticBeanstalkSolutionStackAttributes {
 	return dataElasticBeanstalkSolutionStackAttributes{ref: terra.ReferenceDataResource(ebss)}
 }
 
+// DataElasticBeanstalkSolutionStackArgs contains the configurations for aws_elastic_beanstalk_solution_stack.
 type DataElasticBeanstalkSolutionStackArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -46,18 +53,22 @@ type dataElasticBeanstalkSolutionStackAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_elastic_beanstalk_solution_stack.
 func (ebss dataElasticBeanstalkSolutionStackAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ebss.ref.Append("id"))
+	return terra.ReferenceAsString(ebss.ref.Append("id"))
 }
 
+// MostRecent returns a reference to field most_recent of aws_elastic_beanstalk_solution_stack.
 func (ebss dataElasticBeanstalkSolutionStackAttributes) MostRecent() terra.BoolValue {
-	return terra.ReferenceBool(ebss.ref.Append("most_recent"))
+	return terra.ReferenceAsBool(ebss.ref.Append("most_recent"))
 }
 
+// Name returns a reference to field name of aws_elastic_beanstalk_solution_stack.
 func (ebss dataElasticBeanstalkSolutionStackAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ebss.ref.Append("name"))
+	return terra.ReferenceAsString(ebss.ref.Append("name"))
 }
 
+// NameRegex returns a reference to field name_regex of aws_elastic_beanstalk_solution_stack.
 func (ebss dataElasticBeanstalkSolutionStackAttributes) NameRegex() terra.StringValue {
-	return terra.ReferenceString(ebss.ref.Append("name_regex"))
+	return terra.ReferenceAsString(ebss.ref.Append("name_regex"))
 }

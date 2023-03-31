@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEmrManagedScalingPolicy creates a new instance of [EmrManagedScalingPolicy].
 func NewEmrManagedScalingPolicy(name string, args EmrManagedScalingPolicyArgs) *EmrManagedScalingPolicy {
 	return &EmrManagedScalingPolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEmrManagedScalingPolicy(name string, args EmrManagedScalingPolicyArgs) *
 
 var _ terra.Resource = (*EmrManagedScalingPolicy)(nil)
 
+// EmrManagedScalingPolicy represents the Terraform resource aws_emr_managed_scaling_policy.
 type EmrManagedScalingPolicy struct {
-	Name  string
-	Args  EmrManagedScalingPolicyArgs
-	state *emrManagedScalingPolicyState
+	Name      string
+	Args      EmrManagedScalingPolicyArgs
+	state     *emrManagedScalingPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EmrManagedScalingPolicy].
 func (emsp *EmrManagedScalingPolicy) Type() string {
 	return "aws_emr_managed_scaling_policy"
 }
 
+// LocalName returns the local name for [EmrManagedScalingPolicy].
 func (emsp *EmrManagedScalingPolicy) LocalName() string {
 	return emsp.Name
 }
 
+// Configuration returns the configuration (args) for [EmrManagedScalingPolicy].
 func (emsp *EmrManagedScalingPolicy) Configuration() interface{} {
 	return emsp.Args
 }
 
+// DependOn is used for other resources to depend on [EmrManagedScalingPolicy].
+func (emsp *EmrManagedScalingPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(emsp)
+}
+
+// Dependencies returns the list of resources [EmrManagedScalingPolicy] depends_on.
+func (emsp *EmrManagedScalingPolicy) Dependencies() terra.Dependencies {
+	return emsp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EmrManagedScalingPolicy].
+func (emsp *EmrManagedScalingPolicy) LifecycleManagement() *terra.Lifecycle {
+	return emsp.Lifecycle
+}
+
+// Attributes returns the attributes for [EmrManagedScalingPolicy].
 func (emsp *EmrManagedScalingPolicy) Attributes() emrManagedScalingPolicyAttributes {
 	return emrManagedScalingPolicyAttributes{ref: terra.ReferenceResource(emsp)}
 }
 
+// ImportState imports the given attribute values into [EmrManagedScalingPolicy]'s state.
 func (emsp *EmrManagedScalingPolicy) ImportState(av io.Reader) error {
 	emsp.state = &emrManagedScalingPolicyState{}
 	if err := json.NewDecoder(av).Decode(emsp.state); err != nil {
@@ -49,10 +73,12 @@ func (emsp *EmrManagedScalingPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EmrManagedScalingPolicy] has state.
 func (emsp *EmrManagedScalingPolicy) State() (*emrManagedScalingPolicyState, bool) {
 	return emsp.state, emsp.state != nil
 }
 
+// StateMust returns the state for [EmrManagedScalingPolicy]. Panics if the state is nil.
 func (emsp *EmrManagedScalingPolicy) StateMust() *emrManagedScalingPolicyState {
 	if emsp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", emsp.Type(), emsp.LocalName()))
@@ -60,10 +86,7 @@ func (emsp *EmrManagedScalingPolicy) StateMust() *emrManagedScalingPolicyState {
 	return emsp.state
 }
 
-func (emsp *EmrManagedScalingPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(emsp)
-}
-
+// EmrManagedScalingPolicyArgs contains the configurations for aws_emr_managed_scaling_policy.
 type EmrManagedScalingPolicyArgs struct {
 	// ClusterId: string, required
 	ClusterId terra.StringValue `hcl:"cluster_id,attr" validate:"required"`
@@ -71,23 +94,23 @@ type EmrManagedScalingPolicyArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// ComputeLimits: min=1
 	ComputeLimits []emrmanagedscalingpolicy.ComputeLimits `hcl:"compute_limits,block" validate:"min=1"`
-	// DependsOn contains resources that EmrManagedScalingPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type emrManagedScalingPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// ClusterId returns a reference to field cluster_id of aws_emr_managed_scaling_policy.
 func (emsp emrManagedScalingPolicyAttributes) ClusterId() terra.StringValue {
-	return terra.ReferenceString(emsp.ref.Append("cluster_id"))
+	return terra.ReferenceAsString(emsp.ref.Append("cluster_id"))
 }
 
+// Id returns a reference to field id of aws_emr_managed_scaling_policy.
 func (emsp emrManagedScalingPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(emsp.ref.Append("id"))
+	return terra.ReferenceAsString(emsp.ref.Append("id"))
 }
 
 func (emsp emrManagedScalingPolicyAttributes) ComputeLimits() terra.SetValue[emrmanagedscalingpolicy.ComputeLimitsAttributes] {
-	return terra.ReferenceSet[emrmanagedscalingpolicy.ComputeLimitsAttributes](emsp.ref.Append("compute_limits"))
+	return terra.ReferenceAsSet[emrmanagedscalingpolicy.ComputeLimitsAttributes](emsp.ref.Append("compute_limits"))
 }
 
 type emrManagedScalingPolicyState struct {

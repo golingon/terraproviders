@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAcmpcaCertificateAuthorityCertificate creates a new instance of [AcmpcaCertificateAuthorityCertificate].
 func NewAcmpcaCertificateAuthorityCertificate(name string, args AcmpcaCertificateAuthorityCertificateArgs) *AcmpcaCertificateAuthorityCertificate {
 	return &AcmpcaCertificateAuthorityCertificate{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAcmpcaCertificateAuthorityCertificate(name string, args AcmpcaCertificat
 
 var _ terra.Resource = (*AcmpcaCertificateAuthorityCertificate)(nil)
 
+// AcmpcaCertificateAuthorityCertificate represents the Terraform resource aws_acmpca_certificate_authority_certificate.
 type AcmpcaCertificateAuthorityCertificate struct {
-	Name  string
-	Args  AcmpcaCertificateAuthorityCertificateArgs
-	state *acmpcaCertificateAuthorityCertificateState
+	Name      string
+	Args      AcmpcaCertificateAuthorityCertificateArgs
+	state     *acmpcaCertificateAuthorityCertificateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AcmpcaCertificateAuthorityCertificate].
 func (acac *AcmpcaCertificateAuthorityCertificate) Type() string {
 	return "aws_acmpca_certificate_authority_certificate"
 }
 
+// LocalName returns the local name for [AcmpcaCertificateAuthorityCertificate].
 func (acac *AcmpcaCertificateAuthorityCertificate) LocalName() string {
 	return acac.Name
 }
 
+// Configuration returns the configuration (args) for [AcmpcaCertificateAuthorityCertificate].
 func (acac *AcmpcaCertificateAuthorityCertificate) Configuration() interface{} {
 	return acac.Args
 }
 
+// DependOn is used for other resources to depend on [AcmpcaCertificateAuthorityCertificate].
+func (acac *AcmpcaCertificateAuthorityCertificate) DependOn() terra.Reference {
+	return terra.ReferenceResource(acac)
+}
+
+// Dependencies returns the list of resources [AcmpcaCertificateAuthorityCertificate] depends_on.
+func (acac *AcmpcaCertificateAuthorityCertificate) Dependencies() terra.Dependencies {
+	return acac.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AcmpcaCertificateAuthorityCertificate].
+func (acac *AcmpcaCertificateAuthorityCertificate) LifecycleManagement() *terra.Lifecycle {
+	return acac.Lifecycle
+}
+
+// Attributes returns the attributes for [AcmpcaCertificateAuthorityCertificate].
 func (acac *AcmpcaCertificateAuthorityCertificate) Attributes() acmpcaCertificateAuthorityCertificateAttributes {
 	return acmpcaCertificateAuthorityCertificateAttributes{ref: terra.ReferenceResource(acac)}
 }
 
+// ImportState imports the given attribute values into [AcmpcaCertificateAuthorityCertificate]'s state.
 func (acac *AcmpcaCertificateAuthorityCertificate) ImportState(av io.Reader) error {
 	acac.state = &acmpcaCertificateAuthorityCertificateState{}
 	if err := json.NewDecoder(av).Decode(acac.state); err != nil {
@@ -48,10 +72,12 @@ func (acac *AcmpcaCertificateAuthorityCertificate) ImportState(av io.Reader) err
 	return nil
 }
 
+// State returns the state and a bool indicating if [AcmpcaCertificateAuthorityCertificate] has state.
 func (acac *AcmpcaCertificateAuthorityCertificate) State() (*acmpcaCertificateAuthorityCertificateState, bool) {
 	return acac.state, acac.state != nil
 }
 
+// StateMust returns the state for [AcmpcaCertificateAuthorityCertificate]. Panics if the state is nil.
 func (acac *AcmpcaCertificateAuthorityCertificate) StateMust() *acmpcaCertificateAuthorityCertificateState {
 	if acac.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", acac.Type(), acac.LocalName()))
@@ -59,10 +85,7 @@ func (acac *AcmpcaCertificateAuthorityCertificate) StateMust() *acmpcaCertificat
 	return acac.state
 }
 
-func (acac *AcmpcaCertificateAuthorityCertificate) DependOn() terra.Reference {
-	return terra.ReferenceResource(acac)
-}
-
+// AcmpcaCertificateAuthorityCertificateArgs contains the configurations for aws_acmpca_certificate_authority_certificate.
 type AcmpcaCertificateAuthorityCertificateArgs struct {
 	// Certificate: string, required
 	Certificate terra.StringValue `hcl:"certificate,attr" validate:"required"`
@@ -72,27 +95,29 @@ type AcmpcaCertificateAuthorityCertificateArgs struct {
 	CertificateChain terra.StringValue `hcl:"certificate_chain,attr"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that AcmpcaCertificateAuthorityCertificate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type acmpcaCertificateAuthorityCertificateAttributes struct {
 	ref terra.Reference
 }
 
+// Certificate returns a reference to field certificate of aws_acmpca_certificate_authority_certificate.
 func (acac acmpcaCertificateAuthorityCertificateAttributes) Certificate() terra.StringValue {
-	return terra.ReferenceString(acac.ref.Append("certificate"))
+	return terra.ReferenceAsString(acac.ref.Append("certificate"))
 }
 
+// CertificateAuthorityArn returns a reference to field certificate_authority_arn of aws_acmpca_certificate_authority_certificate.
 func (acac acmpcaCertificateAuthorityCertificateAttributes) CertificateAuthorityArn() terra.StringValue {
-	return terra.ReferenceString(acac.ref.Append("certificate_authority_arn"))
+	return terra.ReferenceAsString(acac.ref.Append("certificate_authority_arn"))
 }
 
+// CertificateChain returns a reference to field certificate_chain of aws_acmpca_certificate_authority_certificate.
 func (acac acmpcaCertificateAuthorityCertificateAttributes) CertificateChain() terra.StringValue {
-	return terra.ReferenceString(acac.ref.Append("certificate_chain"))
+	return terra.ReferenceAsString(acac.ref.Append("certificate_chain"))
 }
 
+// Id returns a reference to field id of aws_acmpca_certificate_authority_certificate.
 func (acac acmpcaCertificateAuthorityCertificateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(acac.ref.Append("id"))
+	return terra.ReferenceAsString(acac.ref.Append("id"))
 }
 
 type acmpcaCertificateAuthorityCertificateState struct {

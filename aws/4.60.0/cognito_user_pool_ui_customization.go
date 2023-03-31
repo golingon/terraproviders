@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCognitoUserPoolUiCustomization creates a new instance of [CognitoUserPoolUiCustomization].
 func NewCognitoUserPoolUiCustomization(name string, args CognitoUserPoolUiCustomizationArgs) *CognitoUserPoolUiCustomization {
 	return &CognitoUserPoolUiCustomization{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCognitoUserPoolUiCustomization(name string, args CognitoUserPoolUiCustom
 
 var _ terra.Resource = (*CognitoUserPoolUiCustomization)(nil)
 
+// CognitoUserPoolUiCustomization represents the Terraform resource aws_cognito_user_pool_ui_customization.
 type CognitoUserPoolUiCustomization struct {
-	Name  string
-	Args  CognitoUserPoolUiCustomizationArgs
-	state *cognitoUserPoolUiCustomizationState
+	Name      string
+	Args      CognitoUserPoolUiCustomizationArgs
+	state     *cognitoUserPoolUiCustomizationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CognitoUserPoolUiCustomization].
 func (cupuc *CognitoUserPoolUiCustomization) Type() string {
 	return "aws_cognito_user_pool_ui_customization"
 }
 
+// LocalName returns the local name for [CognitoUserPoolUiCustomization].
 func (cupuc *CognitoUserPoolUiCustomization) LocalName() string {
 	return cupuc.Name
 }
 
+// Configuration returns the configuration (args) for [CognitoUserPoolUiCustomization].
 func (cupuc *CognitoUserPoolUiCustomization) Configuration() interface{} {
 	return cupuc.Args
 }
 
+// DependOn is used for other resources to depend on [CognitoUserPoolUiCustomization].
+func (cupuc *CognitoUserPoolUiCustomization) DependOn() terra.Reference {
+	return terra.ReferenceResource(cupuc)
+}
+
+// Dependencies returns the list of resources [CognitoUserPoolUiCustomization] depends_on.
+func (cupuc *CognitoUserPoolUiCustomization) Dependencies() terra.Dependencies {
+	return cupuc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CognitoUserPoolUiCustomization].
+func (cupuc *CognitoUserPoolUiCustomization) LifecycleManagement() *terra.Lifecycle {
+	return cupuc.Lifecycle
+}
+
+// Attributes returns the attributes for [CognitoUserPoolUiCustomization].
 func (cupuc *CognitoUserPoolUiCustomization) Attributes() cognitoUserPoolUiCustomizationAttributes {
 	return cognitoUserPoolUiCustomizationAttributes{ref: terra.ReferenceResource(cupuc)}
 }
 
+// ImportState imports the given attribute values into [CognitoUserPoolUiCustomization]'s state.
 func (cupuc *CognitoUserPoolUiCustomization) ImportState(av io.Reader) error {
 	cupuc.state = &cognitoUserPoolUiCustomizationState{}
 	if err := json.NewDecoder(av).Decode(cupuc.state); err != nil {
@@ -48,10 +72,12 @@ func (cupuc *CognitoUserPoolUiCustomization) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CognitoUserPoolUiCustomization] has state.
 func (cupuc *CognitoUserPoolUiCustomization) State() (*cognitoUserPoolUiCustomizationState, bool) {
 	return cupuc.state, cupuc.state != nil
 }
 
+// StateMust returns the state for [CognitoUserPoolUiCustomization]. Panics if the state is nil.
 func (cupuc *CognitoUserPoolUiCustomization) StateMust() *cognitoUserPoolUiCustomizationState {
 	if cupuc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cupuc.Type(), cupuc.LocalName()))
@@ -59,10 +85,7 @@ func (cupuc *CognitoUserPoolUiCustomization) StateMust() *cognitoUserPoolUiCusto
 	return cupuc.state
 }
 
-func (cupuc *CognitoUserPoolUiCustomization) DependOn() terra.Reference {
-	return terra.ReferenceResource(cupuc)
-}
-
+// CognitoUserPoolUiCustomizationArgs contains the configurations for aws_cognito_user_pool_ui_customization.
 type CognitoUserPoolUiCustomizationArgs struct {
 	// ClientId: string, optional
 	ClientId terra.StringValue `hcl:"client_id,attr"`
@@ -74,47 +97,54 @@ type CognitoUserPoolUiCustomizationArgs struct {
 	ImageFile terra.StringValue `hcl:"image_file,attr"`
 	// UserPoolId: string, required
 	UserPoolId terra.StringValue `hcl:"user_pool_id,attr" validate:"required"`
-	// DependsOn contains resources that CognitoUserPoolUiCustomization depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cognitoUserPoolUiCustomizationAttributes struct {
 	ref terra.Reference
 }
 
+// ClientId returns a reference to field client_id of aws_cognito_user_pool_ui_customization.
 func (cupuc cognitoUserPoolUiCustomizationAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(cupuc.ref.Append("client_id"))
+	return terra.ReferenceAsString(cupuc.ref.Append("client_id"))
 }
 
+// CreationDate returns a reference to field creation_date of aws_cognito_user_pool_ui_customization.
 func (cupuc cognitoUserPoolUiCustomizationAttributes) CreationDate() terra.StringValue {
-	return terra.ReferenceString(cupuc.ref.Append("creation_date"))
+	return terra.ReferenceAsString(cupuc.ref.Append("creation_date"))
 }
 
+// Css returns a reference to field css of aws_cognito_user_pool_ui_customization.
 func (cupuc cognitoUserPoolUiCustomizationAttributes) Css() terra.StringValue {
-	return terra.ReferenceString(cupuc.ref.Append("css"))
+	return terra.ReferenceAsString(cupuc.ref.Append("css"))
 }
 
+// CssVersion returns a reference to field css_version of aws_cognito_user_pool_ui_customization.
 func (cupuc cognitoUserPoolUiCustomizationAttributes) CssVersion() terra.StringValue {
-	return terra.ReferenceString(cupuc.ref.Append("css_version"))
+	return terra.ReferenceAsString(cupuc.ref.Append("css_version"))
 }
 
+// Id returns a reference to field id of aws_cognito_user_pool_ui_customization.
 func (cupuc cognitoUserPoolUiCustomizationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cupuc.ref.Append("id"))
+	return terra.ReferenceAsString(cupuc.ref.Append("id"))
 }
 
+// ImageFile returns a reference to field image_file of aws_cognito_user_pool_ui_customization.
 func (cupuc cognitoUserPoolUiCustomizationAttributes) ImageFile() terra.StringValue {
-	return terra.ReferenceString(cupuc.ref.Append("image_file"))
+	return terra.ReferenceAsString(cupuc.ref.Append("image_file"))
 }
 
+// ImageUrl returns a reference to field image_url of aws_cognito_user_pool_ui_customization.
 func (cupuc cognitoUserPoolUiCustomizationAttributes) ImageUrl() terra.StringValue {
-	return terra.ReferenceString(cupuc.ref.Append("image_url"))
+	return terra.ReferenceAsString(cupuc.ref.Append("image_url"))
 }
 
+// LastModifiedDate returns a reference to field last_modified_date of aws_cognito_user_pool_ui_customization.
 func (cupuc cognitoUserPoolUiCustomizationAttributes) LastModifiedDate() terra.StringValue {
-	return terra.ReferenceString(cupuc.ref.Append("last_modified_date"))
+	return terra.ReferenceAsString(cupuc.ref.Append("last_modified_date"))
 }
 
+// UserPoolId returns a reference to field user_pool_id of aws_cognito_user_pool_ui_customization.
 func (cupuc cognitoUserPoolUiCustomizationAttributes) UserPoolId() terra.StringValue {
-	return terra.ReferenceString(cupuc.ref.Append("user_pool_id"))
+	return terra.ReferenceAsString(cupuc.ref.Append("user_pool_id"))
 }
 
 type cognitoUserPoolUiCustomizationState struct {

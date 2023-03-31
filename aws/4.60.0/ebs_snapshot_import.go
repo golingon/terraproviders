@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEbsSnapshotImport creates a new instance of [EbsSnapshotImport].
 func NewEbsSnapshotImport(name string, args EbsSnapshotImportArgs) *EbsSnapshotImport {
 	return &EbsSnapshotImport{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEbsSnapshotImport(name string, args EbsSnapshotImportArgs) *EbsSnapshotI
 
 var _ terra.Resource = (*EbsSnapshotImport)(nil)
 
+// EbsSnapshotImport represents the Terraform resource aws_ebs_snapshot_import.
 type EbsSnapshotImport struct {
-	Name  string
-	Args  EbsSnapshotImportArgs
-	state *ebsSnapshotImportState
+	Name      string
+	Args      EbsSnapshotImportArgs
+	state     *ebsSnapshotImportState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EbsSnapshotImport].
 func (esi *EbsSnapshotImport) Type() string {
 	return "aws_ebs_snapshot_import"
 }
 
+// LocalName returns the local name for [EbsSnapshotImport].
 func (esi *EbsSnapshotImport) LocalName() string {
 	return esi.Name
 }
 
+// Configuration returns the configuration (args) for [EbsSnapshotImport].
 func (esi *EbsSnapshotImport) Configuration() interface{} {
 	return esi.Args
 }
 
+// DependOn is used for other resources to depend on [EbsSnapshotImport].
+func (esi *EbsSnapshotImport) DependOn() terra.Reference {
+	return terra.ReferenceResource(esi)
+}
+
+// Dependencies returns the list of resources [EbsSnapshotImport] depends_on.
+func (esi *EbsSnapshotImport) Dependencies() terra.Dependencies {
+	return esi.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EbsSnapshotImport].
+func (esi *EbsSnapshotImport) LifecycleManagement() *terra.Lifecycle {
+	return esi.Lifecycle
+}
+
+// Attributes returns the attributes for [EbsSnapshotImport].
 func (esi *EbsSnapshotImport) Attributes() ebsSnapshotImportAttributes {
 	return ebsSnapshotImportAttributes{ref: terra.ReferenceResource(esi)}
 }
 
+// ImportState imports the given attribute values into [EbsSnapshotImport]'s state.
 func (esi *EbsSnapshotImport) ImportState(av io.Reader) error {
 	esi.state = &ebsSnapshotImportState{}
 	if err := json.NewDecoder(av).Decode(esi.state); err != nil {
@@ -49,10 +73,12 @@ func (esi *EbsSnapshotImport) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EbsSnapshotImport] has state.
 func (esi *EbsSnapshotImport) State() (*ebsSnapshotImportState, bool) {
 	return esi.state, esi.state != nil
 }
 
+// StateMust returns the state for [EbsSnapshotImport]. Panics if the state is nil.
 func (esi *EbsSnapshotImport) StateMust() *ebsSnapshotImportState {
 	if esi.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", esi.Type(), esi.LocalName()))
@@ -60,10 +86,7 @@ func (esi *EbsSnapshotImport) StateMust() *ebsSnapshotImportState {
 	return esi.state
 }
 
-func (esi *EbsSnapshotImport) DependOn() terra.Reference {
-	return terra.ReferenceResource(esi)
-}
-
+// EbsSnapshotImportArgs contains the configurations for aws_ebs_snapshot_import.
 type EbsSnapshotImportArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -91,91 +114,106 @@ type EbsSnapshotImportArgs struct {
 	DiskContainer *ebssnapshotimport.DiskContainer `hcl:"disk_container,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *ebssnapshotimport.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that EbsSnapshotImport depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ebsSnapshotImportAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ebs_snapshot_import.
 func (esi ebsSnapshotImportAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(esi.ref.Append("arn"))
+	return terra.ReferenceAsString(esi.ref.Append("arn"))
 }
 
+// DataEncryptionKeyId returns a reference to field data_encryption_key_id of aws_ebs_snapshot_import.
 func (esi ebsSnapshotImportAttributes) DataEncryptionKeyId() terra.StringValue {
-	return terra.ReferenceString(esi.ref.Append("data_encryption_key_id"))
+	return terra.ReferenceAsString(esi.ref.Append("data_encryption_key_id"))
 }
 
+// Description returns a reference to field description of aws_ebs_snapshot_import.
 func (esi ebsSnapshotImportAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(esi.ref.Append("description"))
+	return terra.ReferenceAsString(esi.ref.Append("description"))
 }
 
+// Encrypted returns a reference to field encrypted of aws_ebs_snapshot_import.
 func (esi ebsSnapshotImportAttributes) Encrypted() terra.BoolValue {
-	return terra.ReferenceBool(esi.ref.Append("encrypted"))
+	return terra.ReferenceAsBool(esi.ref.Append("encrypted"))
 }
 
+// Id returns a reference to field id of aws_ebs_snapshot_import.
 func (esi ebsSnapshotImportAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(esi.ref.Append("id"))
+	return terra.ReferenceAsString(esi.ref.Append("id"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_ebs_snapshot_import.
 func (esi ebsSnapshotImportAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(esi.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(esi.ref.Append("kms_key_id"))
 }
 
+// OutpostArn returns a reference to field outpost_arn of aws_ebs_snapshot_import.
 func (esi ebsSnapshotImportAttributes) OutpostArn() terra.StringValue {
-	return terra.ReferenceString(esi.ref.Append("outpost_arn"))
+	return terra.ReferenceAsString(esi.ref.Append("outpost_arn"))
 }
 
+// OwnerAlias returns a reference to field owner_alias of aws_ebs_snapshot_import.
 func (esi ebsSnapshotImportAttributes) OwnerAlias() terra.StringValue {
-	return terra.ReferenceString(esi.ref.Append("owner_alias"))
+	return terra.ReferenceAsString(esi.ref.Append("owner_alias"))
 }
 
+// OwnerId returns a reference to field owner_id of aws_ebs_snapshot_import.
 func (esi ebsSnapshotImportAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(esi.ref.Append("owner_id"))
+	return terra.ReferenceAsString(esi.ref.Append("owner_id"))
 }
 
+// PermanentRestore returns a reference to field permanent_restore of aws_ebs_snapshot_import.
 func (esi ebsSnapshotImportAttributes) PermanentRestore() terra.BoolValue {
-	return terra.ReferenceBool(esi.ref.Append("permanent_restore"))
+	return terra.ReferenceAsBool(esi.ref.Append("permanent_restore"))
 }
 
+// RoleName returns a reference to field role_name of aws_ebs_snapshot_import.
 func (esi ebsSnapshotImportAttributes) RoleName() terra.StringValue {
-	return terra.ReferenceString(esi.ref.Append("role_name"))
+	return terra.ReferenceAsString(esi.ref.Append("role_name"))
 }
 
+// StorageTier returns a reference to field storage_tier of aws_ebs_snapshot_import.
 func (esi ebsSnapshotImportAttributes) StorageTier() terra.StringValue {
-	return terra.ReferenceString(esi.ref.Append("storage_tier"))
+	return terra.ReferenceAsString(esi.ref.Append("storage_tier"))
 }
 
+// Tags returns a reference to field tags of aws_ebs_snapshot_import.
 func (esi ebsSnapshotImportAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](esi.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](esi.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_ebs_snapshot_import.
 func (esi ebsSnapshotImportAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](esi.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](esi.ref.Append("tags_all"))
 }
 
+// TemporaryRestoreDays returns a reference to field temporary_restore_days of aws_ebs_snapshot_import.
 func (esi ebsSnapshotImportAttributes) TemporaryRestoreDays() terra.NumberValue {
-	return terra.ReferenceNumber(esi.ref.Append("temporary_restore_days"))
+	return terra.ReferenceAsNumber(esi.ref.Append("temporary_restore_days"))
 }
 
+// VolumeId returns a reference to field volume_id of aws_ebs_snapshot_import.
 func (esi ebsSnapshotImportAttributes) VolumeId() terra.StringValue {
-	return terra.ReferenceString(esi.ref.Append("volume_id"))
+	return terra.ReferenceAsString(esi.ref.Append("volume_id"))
 }
 
+// VolumeSize returns a reference to field volume_size of aws_ebs_snapshot_import.
 func (esi ebsSnapshotImportAttributes) VolumeSize() terra.NumberValue {
-	return terra.ReferenceNumber(esi.ref.Append("volume_size"))
+	return terra.ReferenceAsNumber(esi.ref.Append("volume_size"))
 }
 
 func (esi ebsSnapshotImportAttributes) ClientData() terra.ListValue[ebssnapshotimport.ClientDataAttributes] {
-	return terra.ReferenceList[ebssnapshotimport.ClientDataAttributes](esi.ref.Append("client_data"))
+	return terra.ReferenceAsList[ebssnapshotimport.ClientDataAttributes](esi.ref.Append("client_data"))
 }
 
 func (esi ebsSnapshotImportAttributes) DiskContainer() terra.ListValue[ebssnapshotimport.DiskContainerAttributes] {
-	return terra.ReferenceList[ebssnapshotimport.DiskContainerAttributes](esi.ref.Append("disk_container"))
+	return terra.ReferenceAsList[ebssnapshotimport.DiskContainerAttributes](esi.ref.Append("disk_container"))
 }
 
 func (esi ebsSnapshotImportAttributes) Timeouts() ebssnapshotimport.TimeoutsAttributes {
-	return terra.ReferenceSingle[ebssnapshotimport.TimeoutsAttributes](esi.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[ebssnapshotimport.TimeoutsAttributes](esi.ref.Append("timeouts"))
 }
 
 type ebsSnapshotImportState struct {

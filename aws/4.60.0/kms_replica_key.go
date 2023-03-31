@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewKmsReplicaKey creates a new instance of [KmsReplicaKey].
 func NewKmsReplicaKey(name string, args KmsReplicaKeyArgs) *KmsReplicaKey {
 	return &KmsReplicaKey{
 		Args: args,
@@ -18,28 +19,51 @@ func NewKmsReplicaKey(name string, args KmsReplicaKeyArgs) *KmsReplicaKey {
 
 var _ terra.Resource = (*KmsReplicaKey)(nil)
 
+// KmsReplicaKey represents the Terraform resource aws_kms_replica_key.
 type KmsReplicaKey struct {
-	Name  string
-	Args  KmsReplicaKeyArgs
-	state *kmsReplicaKeyState
+	Name      string
+	Args      KmsReplicaKeyArgs
+	state     *kmsReplicaKeyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KmsReplicaKey].
 func (krk *KmsReplicaKey) Type() string {
 	return "aws_kms_replica_key"
 }
 
+// LocalName returns the local name for [KmsReplicaKey].
 func (krk *KmsReplicaKey) LocalName() string {
 	return krk.Name
 }
 
+// Configuration returns the configuration (args) for [KmsReplicaKey].
 func (krk *KmsReplicaKey) Configuration() interface{} {
 	return krk.Args
 }
 
+// DependOn is used for other resources to depend on [KmsReplicaKey].
+func (krk *KmsReplicaKey) DependOn() terra.Reference {
+	return terra.ReferenceResource(krk)
+}
+
+// Dependencies returns the list of resources [KmsReplicaKey] depends_on.
+func (krk *KmsReplicaKey) Dependencies() terra.Dependencies {
+	return krk.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KmsReplicaKey].
+func (krk *KmsReplicaKey) LifecycleManagement() *terra.Lifecycle {
+	return krk.Lifecycle
+}
+
+// Attributes returns the attributes for [KmsReplicaKey].
 func (krk *KmsReplicaKey) Attributes() kmsReplicaKeyAttributes {
 	return kmsReplicaKeyAttributes{ref: terra.ReferenceResource(krk)}
 }
 
+// ImportState imports the given attribute values into [KmsReplicaKey]'s state.
 func (krk *KmsReplicaKey) ImportState(av io.Reader) error {
 	krk.state = &kmsReplicaKeyState{}
 	if err := json.NewDecoder(av).Decode(krk.state); err != nil {
@@ -48,10 +72,12 @@ func (krk *KmsReplicaKey) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [KmsReplicaKey] has state.
 func (krk *KmsReplicaKey) State() (*kmsReplicaKeyState, bool) {
 	return krk.state, krk.state != nil
 }
 
+// StateMust returns the state for [KmsReplicaKey]. Panics if the state is nil.
 func (krk *KmsReplicaKey) StateMust() *kmsReplicaKeyState {
 	if krk.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", krk.Type(), krk.LocalName()))
@@ -59,10 +85,7 @@ func (krk *KmsReplicaKey) StateMust() *kmsReplicaKeyState {
 	return krk.state
 }
 
-func (krk *KmsReplicaKey) DependOn() terra.Reference {
-	return terra.ReferenceResource(krk)
-}
-
+// KmsReplicaKeyArgs contains the configurations for aws_kms_replica_key.
 type KmsReplicaKeyArgs struct {
 	// BypassPolicyLockoutSafetyCheck: bool, optional
 	BypassPolicyLockoutSafetyCheck terra.BoolValue `hcl:"bypass_policy_lockout_safety_check,attr"`
@@ -82,67 +105,79 @@ type KmsReplicaKeyArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that KmsReplicaKey depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type kmsReplicaKeyAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_kms_replica_key.
 func (krk kmsReplicaKeyAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(krk.ref.Append("arn"))
+	return terra.ReferenceAsString(krk.ref.Append("arn"))
 }
 
+// BypassPolicyLockoutSafetyCheck returns a reference to field bypass_policy_lockout_safety_check of aws_kms_replica_key.
 func (krk kmsReplicaKeyAttributes) BypassPolicyLockoutSafetyCheck() terra.BoolValue {
-	return terra.ReferenceBool(krk.ref.Append("bypass_policy_lockout_safety_check"))
+	return terra.ReferenceAsBool(krk.ref.Append("bypass_policy_lockout_safety_check"))
 }
 
+// DeletionWindowInDays returns a reference to field deletion_window_in_days of aws_kms_replica_key.
 func (krk kmsReplicaKeyAttributes) DeletionWindowInDays() terra.NumberValue {
-	return terra.ReferenceNumber(krk.ref.Append("deletion_window_in_days"))
+	return terra.ReferenceAsNumber(krk.ref.Append("deletion_window_in_days"))
 }
 
+// Description returns a reference to field description of aws_kms_replica_key.
 func (krk kmsReplicaKeyAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(krk.ref.Append("description"))
+	return terra.ReferenceAsString(krk.ref.Append("description"))
 }
 
+// Enabled returns a reference to field enabled of aws_kms_replica_key.
 func (krk kmsReplicaKeyAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(krk.ref.Append("enabled"))
+	return terra.ReferenceAsBool(krk.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of aws_kms_replica_key.
 func (krk kmsReplicaKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(krk.ref.Append("id"))
+	return terra.ReferenceAsString(krk.ref.Append("id"))
 }
 
+// KeyId returns a reference to field key_id of aws_kms_replica_key.
 func (krk kmsReplicaKeyAttributes) KeyId() terra.StringValue {
-	return terra.ReferenceString(krk.ref.Append("key_id"))
+	return terra.ReferenceAsString(krk.ref.Append("key_id"))
 }
 
+// KeyRotationEnabled returns a reference to field key_rotation_enabled of aws_kms_replica_key.
 func (krk kmsReplicaKeyAttributes) KeyRotationEnabled() terra.BoolValue {
-	return terra.ReferenceBool(krk.ref.Append("key_rotation_enabled"))
+	return terra.ReferenceAsBool(krk.ref.Append("key_rotation_enabled"))
 }
 
+// KeySpec returns a reference to field key_spec of aws_kms_replica_key.
 func (krk kmsReplicaKeyAttributes) KeySpec() terra.StringValue {
-	return terra.ReferenceString(krk.ref.Append("key_spec"))
+	return terra.ReferenceAsString(krk.ref.Append("key_spec"))
 }
 
+// KeyUsage returns a reference to field key_usage of aws_kms_replica_key.
 func (krk kmsReplicaKeyAttributes) KeyUsage() terra.StringValue {
-	return terra.ReferenceString(krk.ref.Append("key_usage"))
+	return terra.ReferenceAsString(krk.ref.Append("key_usage"))
 }
 
+// Policy returns a reference to field policy of aws_kms_replica_key.
 func (krk kmsReplicaKeyAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(krk.ref.Append("policy"))
+	return terra.ReferenceAsString(krk.ref.Append("policy"))
 }
 
+// PrimaryKeyArn returns a reference to field primary_key_arn of aws_kms_replica_key.
 func (krk kmsReplicaKeyAttributes) PrimaryKeyArn() terra.StringValue {
-	return terra.ReferenceString(krk.ref.Append("primary_key_arn"))
+	return terra.ReferenceAsString(krk.ref.Append("primary_key_arn"))
 }
 
+// Tags returns a reference to field tags of aws_kms_replica_key.
 func (krk kmsReplicaKeyAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](krk.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](krk.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_kms_replica_key.
 func (krk kmsReplicaKeyAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](krk.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](krk.ref.Append("tags_all"))
 }
 
 type kmsReplicaKeyState struct {

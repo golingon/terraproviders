@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataBackupPlan creates a new instance of [DataBackupPlan].
 func NewDataBackupPlan(name string, args DataBackupPlanArgs) *DataBackupPlan {
 	return &DataBackupPlan{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataBackupPlan(name string, args DataBackupPlanArgs) *DataBackupPlan {
 
 var _ terra.DataResource = (*DataBackupPlan)(nil)
 
+// DataBackupPlan represents the Terraform data resource aws_backup_plan.
 type DataBackupPlan struct {
 	Name string
 	Args DataBackupPlanArgs
 }
 
+// DataSource returns the Terraform object type for [DataBackupPlan].
 func (bp *DataBackupPlan) DataSource() string {
 	return "aws_backup_plan"
 }
 
+// LocalName returns the local name for [DataBackupPlan].
 func (bp *DataBackupPlan) LocalName() string {
 	return bp.Name
 }
 
+// Configuration returns the configuration (args) for [DataBackupPlan].
 func (bp *DataBackupPlan) Configuration() interface{} {
 	return bp.Args
 }
 
+// Attributes returns the attributes for [DataBackupPlan].
 func (bp *DataBackupPlan) Attributes() dataBackupPlanAttributes {
 	return dataBackupPlanAttributes{ref: terra.ReferenceDataResource(bp)}
 }
 
+// DataBackupPlanArgs contains the configurations for aws_backup_plan.
 type DataBackupPlanArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -46,26 +53,32 @@ type dataBackupPlanAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_backup_plan.
 func (bp dataBackupPlanAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(bp.ref.Append("arn"))
+	return terra.ReferenceAsString(bp.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_backup_plan.
 func (bp dataBackupPlanAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bp.ref.Append("id"))
+	return terra.ReferenceAsString(bp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_backup_plan.
 func (bp dataBackupPlanAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bp.ref.Append("name"))
+	return terra.ReferenceAsString(bp.ref.Append("name"))
 }
 
+// PlanId returns a reference to field plan_id of aws_backup_plan.
 func (bp dataBackupPlanAttributes) PlanId() terra.StringValue {
-	return terra.ReferenceString(bp.ref.Append("plan_id"))
+	return terra.ReferenceAsString(bp.ref.Append("plan_id"))
 }
 
+// Tags returns a reference to field tags of aws_backup_plan.
 func (bp dataBackupPlanAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](bp.ref.Append("tags"))
 }
 
+// Version returns a reference to field version of aws_backup_plan.
 func (bp dataBackupPlanAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(bp.ref.Append("version"))
+	return terra.ReferenceAsString(bp.ref.Append("version"))
 }

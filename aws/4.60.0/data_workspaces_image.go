@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataWorkspacesImage creates a new instance of [DataWorkspacesImage].
 func NewDataWorkspacesImage(name string, args DataWorkspacesImageArgs) *DataWorkspacesImage {
 	return &DataWorkspacesImage{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataWorkspacesImage(name string, args DataWorkspacesImageArgs) *DataWork
 
 var _ terra.DataResource = (*DataWorkspacesImage)(nil)
 
+// DataWorkspacesImage represents the Terraform data resource aws_workspaces_image.
 type DataWorkspacesImage struct {
 	Name string
 	Args DataWorkspacesImageArgs
 }
 
+// DataSource returns the Terraform object type for [DataWorkspacesImage].
 func (wi *DataWorkspacesImage) DataSource() string {
 	return "aws_workspaces_image"
 }
 
+// LocalName returns the local name for [DataWorkspacesImage].
 func (wi *DataWorkspacesImage) LocalName() string {
 	return wi.Name
 }
 
+// Configuration returns the configuration (args) for [DataWorkspacesImage].
 func (wi *DataWorkspacesImage) Configuration() interface{} {
 	return wi.Args
 }
 
+// Attributes returns the attributes for [DataWorkspacesImage].
 func (wi *DataWorkspacesImage) Attributes() dataWorkspacesImageAttributes {
 	return dataWorkspacesImageAttributes{ref: terra.ReferenceDataResource(wi)}
 }
 
+// DataWorkspacesImageArgs contains the configurations for aws_workspaces_image.
 type DataWorkspacesImageArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,30 +51,37 @@ type dataWorkspacesImageAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of aws_workspaces_image.
 func (wi dataWorkspacesImageAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(wi.ref.Append("description"))
+	return terra.ReferenceAsString(wi.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_workspaces_image.
 func (wi dataWorkspacesImageAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(wi.ref.Append("id"))
+	return terra.ReferenceAsString(wi.ref.Append("id"))
 }
 
+// ImageId returns a reference to field image_id of aws_workspaces_image.
 func (wi dataWorkspacesImageAttributes) ImageId() terra.StringValue {
-	return terra.ReferenceString(wi.ref.Append("image_id"))
+	return terra.ReferenceAsString(wi.ref.Append("image_id"))
 }
 
+// Name returns a reference to field name of aws_workspaces_image.
 func (wi dataWorkspacesImageAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(wi.ref.Append("name"))
+	return terra.ReferenceAsString(wi.ref.Append("name"))
 }
 
+// OperatingSystemType returns a reference to field operating_system_type of aws_workspaces_image.
 func (wi dataWorkspacesImageAttributes) OperatingSystemType() terra.StringValue {
-	return terra.ReferenceString(wi.ref.Append("operating_system_type"))
+	return terra.ReferenceAsString(wi.ref.Append("operating_system_type"))
 }
 
+// RequiredTenancy returns a reference to field required_tenancy of aws_workspaces_image.
 func (wi dataWorkspacesImageAttributes) RequiredTenancy() terra.StringValue {
-	return terra.ReferenceString(wi.ref.Append("required_tenancy"))
+	return terra.ReferenceAsString(wi.ref.Append("required_tenancy"))
 }
 
+// State returns a reference to field state of aws_workspaces_image.
 func (wi dataWorkspacesImageAttributes) State() terra.StringValue {
-	return terra.ReferenceString(wi.ref.Append("state"))
+	return terra.ReferenceAsString(wi.ref.Append("state"))
 }

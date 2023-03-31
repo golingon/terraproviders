@@ -42,15 +42,15 @@ func (a AccepterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AccepterAttributes) AllowClassicLinkToRemoteVpc() terra.BoolValue {
-	return terra.ReferenceBool(a.ref.Append("allow_classic_link_to_remote_vpc"))
+	return terra.ReferenceAsBool(a.ref.Append("allow_classic_link_to_remote_vpc"))
 }
 
 func (a AccepterAttributes) AllowRemoteVpcDnsResolution() terra.BoolValue {
-	return terra.ReferenceBool(a.ref.Append("allow_remote_vpc_dns_resolution"))
+	return terra.ReferenceAsBool(a.ref.Append("allow_remote_vpc_dns_resolution"))
 }
 
 func (a AccepterAttributes) AllowVpcToRemoteClassicLink() terra.BoolValue {
-	return terra.ReferenceBool(a.ref.Append("allow_vpc_to_remote_classic_link"))
+	return terra.ReferenceAsBool(a.ref.Append("allow_vpc_to_remote_classic_link"))
 }
 
 type RequesterAttributes struct {
@@ -70,15 +70,15 @@ func (r RequesterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RequesterAttributes) AllowClassicLinkToRemoteVpc() terra.BoolValue {
-	return terra.ReferenceBool(r.ref.Append("allow_classic_link_to_remote_vpc"))
+	return terra.ReferenceAsBool(r.ref.Append("allow_classic_link_to_remote_vpc"))
 }
 
 func (r RequesterAttributes) AllowRemoteVpcDnsResolution() terra.BoolValue {
-	return terra.ReferenceBool(r.ref.Append("allow_remote_vpc_dns_resolution"))
+	return terra.ReferenceAsBool(r.ref.Append("allow_remote_vpc_dns_resolution"))
 }
 
 func (r RequesterAttributes) AllowVpcToRemoteClassicLink() terra.BoolValue {
-	return terra.ReferenceBool(r.ref.Append("allow_vpc_to_remote_classic_link"))
+	return terra.ReferenceAsBool(r.ref.Append("allow_vpc_to_remote_classic_link"))
 }
 
 type AccepterState struct {

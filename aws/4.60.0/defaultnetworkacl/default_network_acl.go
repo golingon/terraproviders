@@ -66,39 +66,39 @@ func (e EgressAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e EgressAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("action"))
+	return terra.ReferenceAsString(e.ref.Append("action"))
 }
 
 func (e EgressAttributes) CidrBlock() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cidr_block"))
+	return terra.ReferenceAsString(e.ref.Append("cidr_block"))
 }
 
 func (e EgressAttributes) FromPort() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("from_port"))
+	return terra.ReferenceAsNumber(e.ref.Append("from_port"))
 }
 
 func (e EgressAttributes) IcmpCode() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("icmp_code"))
+	return terra.ReferenceAsNumber(e.ref.Append("icmp_code"))
 }
 
 func (e EgressAttributes) IcmpType() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("icmp_type"))
+	return terra.ReferenceAsNumber(e.ref.Append("icmp_type"))
 }
 
 func (e EgressAttributes) Ipv6CidrBlock() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("ipv6_cidr_block"))
+	return terra.ReferenceAsString(e.ref.Append("ipv6_cidr_block"))
 }
 
 func (e EgressAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("protocol"))
+	return terra.ReferenceAsString(e.ref.Append("protocol"))
 }
 
 func (e EgressAttributes) RuleNo() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("rule_no"))
+	return terra.ReferenceAsNumber(e.ref.Append("rule_no"))
 }
 
 func (e EgressAttributes) ToPort() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("to_port"))
+	return terra.ReferenceAsNumber(e.ref.Append("to_port"))
 }
 
 type IngressAttributes struct {
@@ -118,39 +118,39 @@ func (i IngressAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i IngressAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("action"))
+	return terra.ReferenceAsString(i.ref.Append("action"))
 }
 
 func (i IngressAttributes) CidrBlock() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("cidr_block"))
+	return terra.ReferenceAsString(i.ref.Append("cidr_block"))
 }
 
 func (i IngressAttributes) FromPort() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("from_port"))
+	return terra.ReferenceAsNumber(i.ref.Append("from_port"))
 }
 
 func (i IngressAttributes) IcmpCode() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("icmp_code"))
+	return terra.ReferenceAsNumber(i.ref.Append("icmp_code"))
 }
 
 func (i IngressAttributes) IcmpType() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("icmp_type"))
+	return terra.ReferenceAsNumber(i.ref.Append("icmp_type"))
 }
 
 func (i IngressAttributes) Ipv6CidrBlock() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("ipv6_cidr_block"))
+	return terra.ReferenceAsString(i.ref.Append("ipv6_cidr_block"))
 }
 
 func (i IngressAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("protocol"))
+	return terra.ReferenceAsString(i.ref.Append("protocol"))
 }
 
 func (i IngressAttributes) RuleNo() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("rule_no"))
+	return terra.ReferenceAsNumber(i.ref.Append("rule_no"))
 }
 
 func (i IngressAttributes) ToPort() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("to_port"))
+	return terra.ReferenceAsNumber(i.ref.Append("to_port"))
 }
 
 type EgressState struct {

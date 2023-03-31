@@ -26,51 +26,51 @@ func (fr FirewallRulesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fr FirewallRulesAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(fr.ref.Append("action"))
+	return terra.ReferenceAsString(fr.ref.Append("action"))
 }
 
 func (fr FirewallRulesAttributes) BlockOverrideDnsType() terra.StringValue {
-	return terra.ReferenceString(fr.ref.Append("block_override_dns_type"))
+	return terra.ReferenceAsString(fr.ref.Append("block_override_dns_type"))
 }
 
 func (fr FirewallRulesAttributes) BlockOverrideDomain() terra.StringValue {
-	return terra.ReferenceString(fr.ref.Append("block_override_domain"))
+	return terra.ReferenceAsString(fr.ref.Append("block_override_domain"))
 }
 
 func (fr FirewallRulesAttributes) BlockOverrideTtl() terra.NumberValue {
-	return terra.ReferenceNumber(fr.ref.Append("block_override_ttl"))
+	return terra.ReferenceAsNumber(fr.ref.Append("block_override_ttl"))
 }
 
 func (fr FirewallRulesAttributes) BlockResponse() terra.StringValue {
-	return terra.ReferenceString(fr.ref.Append("block_response"))
+	return terra.ReferenceAsString(fr.ref.Append("block_response"))
 }
 
 func (fr FirewallRulesAttributes) CreationTime() terra.StringValue {
-	return terra.ReferenceString(fr.ref.Append("creation_time"))
+	return terra.ReferenceAsString(fr.ref.Append("creation_time"))
 }
 
 func (fr FirewallRulesAttributes) CreatorRequestId() terra.StringValue {
-	return terra.ReferenceString(fr.ref.Append("creator_request_id"))
+	return terra.ReferenceAsString(fr.ref.Append("creator_request_id"))
 }
 
 func (fr FirewallRulesAttributes) FirewallDomainListId() terra.StringValue {
-	return terra.ReferenceString(fr.ref.Append("firewall_domain_list_id"))
+	return terra.ReferenceAsString(fr.ref.Append("firewall_domain_list_id"))
 }
 
 func (fr FirewallRulesAttributes) FirewallRuleGroupId() terra.StringValue {
-	return terra.ReferenceString(fr.ref.Append("firewall_rule_group_id"))
+	return terra.ReferenceAsString(fr.ref.Append("firewall_rule_group_id"))
 }
 
 func (fr FirewallRulesAttributes) ModificationTime() terra.StringValue {
-	return terra.ReferenceString(fr.ref.Append("modification_time"))
+	return terra.ReferenceAsString(fr.ref.Append("modification_time"))
 }
 
 func (fr FirewallRulesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(fr.ref.Append("name"))
+	return terra.ReferenceAsString(fr.ref.Append("name"))
 }
 
 func (fr FirewallRulesAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(fr.ref.Append("priority"))
+	return terra.ReferenceAsNumber(fr.ref.Append("priority"))
 }
 
 type FirewallRulesState struct {

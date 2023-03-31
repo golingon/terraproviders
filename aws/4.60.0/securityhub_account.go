@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSecurityhubAccount creates a new instance of [SecurityhubAccount].
 func NewSecurityhubAccount(name string, args SecurityhubAccountArgs) *SecurityhubAccount {
 	return &SecurityhubAccount{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSecurityhubAccount(name string, args SecurityhubAccountArgs) *Securityhu
 
 var _ terra.Resource = (*SecurityhubAccount)(nil)
 
+// SecurityhubAccount represents the Terraform resource aws_securityhub_account.
 type SecurityhubAccount struct {
-	Name  string
-	Args  SecurityhubAccountArgs
-	state *securityhubAccountState
+	Name      string
+	Args      SecurityhubAccountArgs
+	state     *securityhubAccountState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SecurityhubAccount].
 func (sa *SecurityhubAccount) Type() string {
 	return "aws_securityhub_account"
 }
 
+// LocalName returns the local name for [SecurityhubAccount].
 func (sa *SecurityhubAccount) LocalName() string {
 	return sa.Name
 }
 
+// Configuration returns the configuration (args) for [SecurityhubAccount].
 func (sa *SecurityhubAccount) Configuration() interface{} {
 	return sa.Args
 }
 
+// DependOn is used for other resources to depend on [SecurityhubAccount].
+func (sa *SecurityhubAccount) DependOn() terra.Reference {
+	return terra.ReferenceResource(sa)
+}
+
+// Dependencies returns the list of resources [SecurityhubAccount] depends_on.
+func (sa *SecurityhubAccount) Dependencies() terra.Dependencies {
+	return sa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SecurityhubAccount].
+func (sa *SecurityhubAccount) LifecycleManagement() *terra.Lifecycle {
+	return sa.Lifecycle
+}
+
+// Attributes returns the attributes for [SecurityhubAccount].
 func (sa *SecurityhubAccount) Attributes() securityhubAccountAttributes {
 	return securityhubAccountAttributes{ref: terra.ReferenceResource(sa)}
 }
 
+// ImportState imports the given attribute values into [SecurityhubAccount]'s state.
 func (sa *SecurityhubAccount) ImportState(av io.Reader) error {
 	sa.state = &securityhubAccountState{}
 	if err := json.NewDecoder(av).Decode(sa.state); err != nil {
@@ -48,10 +72,12 @@ func (sa *SecurityhubAccount) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SecurityhubAccount] has state.
 func (sa *SecurityhubAccount) State() (*securityhubAccountState, bool) {
 	return sa.state, sa.state != nil
 }
 
+// StateMust returns the state for [SecurityhubAccount]. Panics if the state is nil.
 func (sa *SecurityhubAccount) StateMust() *securityhubAccountState {
 	if sa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sa.Type(), sa.LocalName()))
@@ -59,28 +85,25 @@ func (sa *SecurityhubAccount) StateMust() *securityhubAccountState {
 	return sa.state
 }
 
-func (sa *SecurityhubAccount) DependOn() terra.Reference {
-	return terra.ReferenceResource(sa)
-}
-
+// SecurityhubAccountArgs contains the configurations for aws_securityhub_account.
 type SecurityhubAccountArgs struct {
 	// EnableDefaultStandards: bool, optional
 	EnableDefaultStandards terra.BoolValue `hcl:"enable_default_standards,attr"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that SecurityhubAccount depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type securityhubAccountAttributes struct {
 	ref terra.Reference
 }
 
+// EnableDefaultStandards returns a reference to field enable_default_standards of aws_securityhub_account.
 func (sa securityhubAccountAttributes) EnableDefaultStandards() terra.BoolValue {
-	return terra.ReferenceBool(sa.ref.Append("enable_default_standards"))
+	return terra.ReferenceAsBool(sa.ref.Append("enable_default_standards"))
 }
 
+// Id returns a reference to field id of aws_securityhub_account.
 func (sa securityhubAccountAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("id"))
+	return terra.ReferenceAsString(sa.ref.Append("id"))
 }
 
 type securityhubAccountState struct {

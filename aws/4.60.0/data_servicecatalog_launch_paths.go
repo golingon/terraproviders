@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataServicecatalogLaunchPaths creates a new instance of [DataServicecatalogLaunchPaths].
 func NewDataServicecatalogLaunchPaths(name string, args DataServicecatalogLaunchPathsArgs) *DataServicecatalogLaunchPaths {
 	return &DataServicecatalogLaunchPaths{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataServicecatalogLaunchPaths(name string, args DataServicecatalogLaunch
 
 var _ terra.DataResource = (*DataServicecatalogLaunchPaths)(nil)
 
+// DataServicecatalogLaunchPaths represents the Terraform data resource aws_servicecatalog_launch_paths.
 type DataServicecatalogLaunchPaths struct {
 	Name string
 	Args DataServicecatalogLaunchPathsArgs
 }
 
+// DataSource returns the Terraform object type for [DataServicecatalogLaunchPaths].
 func (slp *DataServicecatalogLaunchPaths) DataSource() string {
 	return "aws_servicecatalog_launch_paths"
 }
 
+// LocalName returns the local name for [DataServicecatalogLaunchPaths].
 func (slp *DataServicecatalogLaunchPaths) LocalName() string {
 	return slp.Name
 }
 
+// Configuration returns the configuration (args) for [DataServicecatalogLaunchPaths].
 func (slp *DataServicecatalogLaunchPaths) Configuration() interface{} {
 	return slp.Args
 }
 
+// Attributes returns the attributes for [DataServicecatalogLaunchPaths].
 func (slp *DataServicecatalogLaunchPaths) Attributes() dataServicecatalogLaunchPathsAttributes {
 	return dataServicecatalogLaunchPathsAttributes{ref: terra.ReferenceDataResource(slp)}
 }
 
+// DataServicecatalogLaunchPathsArgs contains the configurations for aws_servicecatalog_launch_paths.
 type DataServicecatalogLaunchPathsArgs struct {
 	// AcceptLanguage: string, optional
 	AcceptLanguage terra.StringValue `hcl:"accept_language,attr"`
@@ -53,22 +60,25 @@ type dataServicecatalogLaunchPathsAttributes struct {
 	ref terra.Reference
 }
 
+// AcceptLanguage returns a reference to field accept_language of aws_servicecatalog_launch_paths.
 func (slp dataServicecatalogLaunchPathsAttributes) AcceptLanguage() terra.StringValue {
-	return terra.ReferenceString(slp.ref.Append("accept_language"))
+	return terra.ReferenceAsString(slp.ref.Append("accept_language"))
 }
 
+// Id returns a reference to field id of aws_servicecatalog_launch_paths.
 func (slp dataServicecatalogLaunchPathsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(slp.ref.Append("id"))
+	return terra.ReferenceAsString(slp.ref.Append("id"))
 }
 
+// ProductId returns a reference to field product_id of aws_servicecatalog_launch_paths.
 func (slp dataServicecatalogLaunchPathsAttributes) ProductId() terra.StringValue {
-	return terra.ReferenceString(slp.ref.Append("product_id"))
+	return terra.ReferenceAsString(slp.ref.Append("product_id"))
 }
 
 func (slp dataServicecatalogLaunchPathsAttributes) Summaries() terra.ListValue[dataservicecataloglaunchpaths.SummariesAttributes] {
-	return terra.ReferenceList[dataservicecataloglaunchpaths.SummariesAttributes](slp.ref.Append("summaries"))
+	return terra.ReferenceAsList[dataservicecataloglaunchpaths.SummariesAttributes](slp.ref.Append("summaries"))
 }
 
 func (slp dataServicecatalogLaunchPathsAttributes) Timeouts() dataservicecataloglaunchpaths.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataservicecataloglaunchpaths.TimeoutsAttributes](slp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataservicecataloglaunchpaths.TimeoutsAttributes](slp.ref.Append("timeouts"))
 }

@@ -26,15 +26,15 @@ func (c ChildrenAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ChildrenAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("arn"))
+	return terra.ReferenceAsString(c.ref.Append("arn"))
 }
 
 func (c ChildrenAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("id"))
+	return terra.ReferenceAsString(c.ref.Append("id"))
 }
 
 func (c ChildrenAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 type ChildrenState struct {

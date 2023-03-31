@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCloudwatchEventArchive creates a new instance of [CloudwatchEventArchive].
 func NewCloudwatchEventArchive(name string, args CloudwatchEventArchiveArgs) *CloudwatchEventArchive {
 	return &CloudwatchEventArchive{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCloudwatchEventArchive(name string, args CloudwatchEventArchiveArgs) *Cl
 
 var _ terra.Resource = (*CloudwatchEventArchive)(nil)
 
+// CloudwatchEventArchive represents the Terraform resource aws_cloudwatch_event_archive.
 type CloudwatchEventArchive struct {
-	Name  string
-	Args  CloudwatchEventArchiveArgs
-	state *cloudwatchEventArchiveState
+	Name      string
+	Args      CloudwatchEventArchiveArgs
+	state     *cloudwatchEventArchiveState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudwatchEventArchive].
 func (cea *CloudwatchEventArchive) Type() string {
 	return "aws_cloudwatch_event_archive"
 }
 
+// LocalName returns the local name for [CloudwatchEventArchive].
 func (cea *CloudwatchEventArchive) LocalName() string {
 	return cea.Name
 }
 
+// Configuration returns the configuration (args) for [CloudwatchEventArchive].
 func (cea *CloudwatchEventArchive) Configuration() interface{} {
 	return cea.Args
 }
 
+// DependOn is used for other resources to depend on [CloudwatchEventArchive].
+func (cea *CloudwatchEventArchive) DependOn() terra.Reference {
+	return terra.ReferenceResource(cea)
+}
+
+// Dependencies returns the list of resources [CloudwatchEventArchive] depends_on.
+func (cea *CloudwatchEventArchive) Dependencies() terra.Dependencies {
+	return cea.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudwatchEventArchive].
+func (cea *CloudwatchEventArchive) LifecycleManagement() *terra.Lifecycle {
+	return cea.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudwatchEventArchive].
 func (cea *CloudwatchEventArchive) Attributes() cloudwatchEventArchiveAttributes {
 	return cloudwatchEventArchiveAttributes{ref: terra.ReferenceResource(cea)}
 }
 
+// ImportState imports the given attribute values into [CloudwatchEventArchive]'s state.
 func (cea *CloudwatchEventArchive) ImportState(av io.Reader) error {
 	cea.state = &cloudwatchEventArchiveState{}
 	if err := json.NewDecoder(av).Decode(cea.state); err != nil {
@@ -48,10 +72,12 @@ func (cea *CloudwatchEventArchive) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudwatchEventArchive] has state.
 func (cea *CloudwatchEventArchive) State() (*cloudwatchEventArchiveState, bool) {
 	return cea.state, cea.state != nil
 }
 
+// StateMust returns the state for [CloudwatchEventArchive]. Panics if the state is nil.
 func (cea *CloudwatchEventArchive) StateMust() *cloudwatchEventArchiveState {
 	if cea.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cea.Type(), cea.LocalName()))
@@ -59,10 +85,7 @@ func (cea *CloudwatchEventArchive) StateMust() *cloudwatchEventArchiveState {
 	return cea.state
 }
 
-func (cea *CloudwatchEventArchive) DependOn() terra.Reference {
-	return terra.ReferenceResource(cea)
-}
-
+// CloudwatchEventArchiveArgs contains the configurations for aws_cloudwatch_event_archive.
 type CloudwatchEventArchiveArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -76,39 +99,44 @@ type CloudwatchEventArchiveArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// RetentionDays: number, optional
 	RetentionDays terra.NumberValue `hcl:"retention_days,attr"`
-	// DependsOn contains resources that CloudwatchEventArchive depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudwatchEventArchiveAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_cloudwatch_event_archive.
 func (cea cloudwatchEventArchiveAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(cea.ref.Append("arn"))
+	return terra.ReferenceAsString(cea.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_cloudwatch_event_archive.
 func (cea cloudwatchEventArchiveAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cea.ref.Append("description"))
+	return terra.ReferenceAsString(cea.ref.Append("description"))
 }
 
+// EventPattern returns a reference to field event_pattern of aws_cloudwatch_event_archive.
 func (cea cloudwatchEventArchiveAttributes) EventPattern() terra.StringValue {
-	return terra.ReferenceString(cea.ref.Append("event_pattern"))
+	return terra.ReferenceAsString(cea.ref.Append("event_pattern"))
 }
 
+// EventSourceArn returns a reference to field event_source_arn of aws_cloudwatch_event_archive.
 func (cea cloudwatchEventArchiveAttributes) EventSourceArn() terra.StringValue {
-	return terra.ReferenceString(cea.ref.Append("event_source_arn"))
+	return terra.ReferenceAsString(cea.ref.Append("event_source_arn"))
 }
 
+// Id returns a reference to field id of aws_cloudwatch_event_archive.
 func (cea cloudwatchEventArchiveAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cea.ref.Append("id"))
+	return terra.ReferenceAsString(cea.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_cloudwatch_event_archive.
 func (cea cloudwatchEventArchiveAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cea.ref.Append("name"))
+	return terra.ReferenceAsString(cea.ref.Append("name"))
 }
 
+// RetentionDays returns a reference to field retention_days of aws_cloudwatch_event_archive.
 func (cea cloudwatchEventArchiveAttributes) RetentionDays() terra.NumberValue {
-	return terra.ReferenceNumber(cea.ref.Append("retention_days"))
+	return terra.ReferenceAsNumber(cea.ref.Append("retention_days"))
 }
 
 type cloudwatchEventArchiveState struct {

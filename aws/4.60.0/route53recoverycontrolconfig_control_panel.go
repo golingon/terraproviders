@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRoute53RecoverycontrolconfigControlPanel creates a new instance of [Route53RecoverycontrolconfigControlPanel].
 func NewRoute53RecoverycontrolconfigControlPanel(name string, args Route53RecoverycontrolconfigControlPanelArgs) *Route53RecoverycontrolconfigControlPanel {
 	return &Route53RecoverycontrolconfigControlPanel{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRoute53RecoverycontrolconfigControlPanel(name string, args Route53Recove
 
 var _ terra.Resource = (*Route53RecoverycontrolconfigControlPanel)(nil)
 
+// Route53RecoverycontrolconfigControlPanel represents the Terraform resource aws_route53recoverycontrolconfig_control_panel.
 type Route53RecoverycontrolconfigControlPanel struct {
-	Name  string
-	Args  Route53RecoverycontrolconfigControlPanelArgs
-	state *route53RecoverycontrolconfigControlPanelState
+	Name      string
+	Args      Route53RecoverycontrolconfigControlPanelArgs
+	state     *route53RecoverycontrolconfigControlPanelState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Route53RecoverycontrolconfigControlPanel].
 func (rcp *Route53RecoverycontrolconfigControlPanel) Type() string {
 	return "aws_route53recoverycontrolconfig_control_panel"
 }
 
+// LocalName returns the local name for [Route53RecoverycontrolconfigControlPanel].
 func (rcp *Route53RecoverycontrolconfigControlPanel) LocalName() string {
 	return rcp.Name
 }
 
+// Configuration returns the configuration (args) for [Route53RecoverycontrolconfigControlPanel].
 func (rcp *Route53RecoverycontrolconfigControlPanel) Configuration() interface{} {
 	return rcp.Args
 }
 
+// DependOn is used for other resources to depend on [Route53RecoverycontrolconfigControlPanel].
+func (rcp *Route53RecoverycontrolconfigControlPanel) DependOn() terra.Reference {
+	return terra.ReferenceResource(rcp)
+}
+
+// Dependencies returns the list of resources [Route53RecoverycontrolconfigControlPanel] depends_on.
+func (rcp *Route53RecoverycontrolconfigControlPanel) Dependencies() terra.Dependencies {
+	return rcp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Route53RecoverycontrolconfigControlPanel].
+func (rcp *Route53RecoverycontrolconfigControlPanel) LifecycleManagement() *terra.Lifecycle {
+	return rcp.Lifecycle
+}
+
+// Attributes returns the attributes for [Route53RecoverycontrolconfigControlPanel].
 func (rcp *Route53RecoverycontrolconfigControlPanel) Attributes() route53RecoverycontrolconfigControlPanelAttributes {
 	return route53RecoverycontrolconfigControlPanelAttributes{ref: terra.ReferenceResource(rcp)}
 }
 
+// ImportState imports the given attribute values into [Route53RecoverycontrolconfigControlPanel]'s state.
 func (rcp *Route53RecoverycontrolconfigControlPanel) ImportState(av io.Reader) error {
 	rcp.state = &route53RecoverycontrolconfigControlPanelState{}
 	if err := json.NewDecoder(av).Decode(rcp.state); err != nil {
@@ -48,10 +72,12 @@ func (rcp *Route53RecoverycontrolconfigControlPanel) ImportState(av io.Reader) e
 	return nil
 }
 
+// State returns the state and a bool indicating if [Route53RecoverycontrolconfigControlPanel] has state.
 func (rcp *Route53RecoverycontrolconfigControlPanel) State() (*route53RecoverycontrolconfigControlPanelState, bool) {
 	return rcp.state, rcp.state != nil
 }
 
+// StateMust returns the state for [Route53RecoverycontrolconfigControlPanel]. Panics if the state is nil.
 func (rcp *Route53RecoverycontrolconfigControlPanel) StateMust() *route53RecoverycontrolconfigControlPanelState {
 	if rcp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rcp.Type(), rcp.LocalName()))
@@ -59,10 +85,7 @@ func (rcp *Route53RecoverycontrolconfigControlPanel) StateMust() *route53Recover
 	return rcp.state
 }
 
-func (rcp *Route53RecoverycontrolconfigControlPanel) DependOn() terra.Reference {
-	return terra.ReferenceResource(rcp)
-}
-
+// Route53RecoverycontrolconfigControlPanelArgs contains the configurations for aws_route53recoverycontrolconfig_control_panel.
 type Route53RecoverycontrolconfigControlPanelArgs struct {
 	// ClusterArn: string, required
 	ClusterArn terra.StringValue `hcl:"cluster_arn,attr" validate:"required"`
@@ -70,39 +93,44 @@ type Route53RecoverycontrolconfigControlPanelArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// Name: string, required
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
-	// DependsOn contains resources that Route53RecoverycontrolconfigControlPanel depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type route53RecoverycontrolconfigControlPanelAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_route53recoverycontrolconfig_control_panel.
 func (rcp route53RecoverycontrolconfigControlPanelAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rcp.ref.Append("arn"))
+	return terra.ReferenceAsString(rcp.ref.Append("arn"))
 }
 
+// ClusterArn returns a reference to field cluster_arn of aws_route53recoverycontrolconfig_control_panel.
 func (rcp route53RecoverycontrolconfigControlPanelAttributes) ClusterArn() terra.StringValue {
-	return terra.ReferenceString(rcp.ref.Append("cluster_arn"))
+	return terra.ReferenceAsString(rcp.ref.Append("cluster_arn"))
 }
 
+// DefaultControlPanel returns a reference to field default_control_panel of aws_route53recoverycontrolconfig_control_panel.
 func (rcp route53RecoverycontrolconfigControlPanelAttributes) DefaultControlPanel() terra.BoolValue {
-	return terra.ReferenceBool(rcp.ref.Append("default_control_panel"))
+	return terra.ReferenceAsBool(rcp.ref.Append("default_control_panel"))
 }
 
+// Id returns a reference to field id of aws_route53recoverycontrolconfig_control_panel.
 func (rcp route53RecoverycontrolconfigControlPanelAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rcp.ref.Append("id"))
+	return terra.ReferenceAsString(rcp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_route53recoverycontrolconfig_control_panel.
 func (rcp route53RecoverycontrolconfigControlPanelAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rcp.ref.Append("name"))
+	return terra.ReferenceAsString(rcp.ref.Append("name"))
 }
 
+// RoutingControlCount returns a reference to field routing_control_count of aws_route53recoverycontrolconfig_control_panel.
 func (rcp route53RecoverycontrolconfigControlPanelAttributes) RoutingControlCount() terra.NumberValue {
-	return terra.ReferenceNumber(rcp.ref.Append("routing_control_count"))
+	return terra.ReferenceAsNumber(rcp.ref.Append("routing_control_count"))
 }
 
+// Status returns a reference to field status of aws_route53recoverycontrolconfig_control_panel.
 func (rcp route53RecoverycontrolconfigControlPanelAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(rcp.ref.Append("status"))
+	return terra.ReferenceAsString(rcp.ref.Append("status"))
 }
 
 type route53RecoverycontrolconfigControlPanelState struct {

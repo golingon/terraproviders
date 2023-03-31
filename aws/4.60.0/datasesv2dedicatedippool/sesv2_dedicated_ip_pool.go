@@ -26,15 +26,15 @@ func (di DedicatedIpsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (di DedicatedIpsAttributes) Ip() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("ip"))
+	return terra.ReferenceAsString(di.ref.Append("ip"))
 }
 
 func (di DedicatedIpsAttributes) WarmupPercentage() terra.NumberValue {
-	return terra.ReferenceNumber(di.ref.Append("warmup_percentage"))
+	return terra.ReferenceAsNumber(di.ref.Append("warmup_percentage"))
 }
 
 func (di DedicatedIpsAttributes) WarmupStatus() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("warmup_status"))
+	return terra.ReferenceAsString(di.ref.Append("warmup_status"))
 }
 
 type DedicatedIpsState struct {

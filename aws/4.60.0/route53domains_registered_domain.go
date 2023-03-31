@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewRoute53DomainsRegisteredDomain creates a new instance of [Route53DomainsRegisteredDomain].
 func NewRoute53DomainsRegisteredDomain(name string, args Route53DomainsRegisteredDomainArgs) *Route53DomainsRegisteredDomain {
 	return &Route53DomainsRegisteredDomain{
 		Args: args,
@@ -19,28 +20,51 @@ func NewRoute53DomainsRegisteredDomain(name string, args Route53DomainsRegistere
 
 var _ terra.Resource = (*Route53DomainsRegisteredDomain)(nil)
 
+// Route53DomainsRegisteredDomain represents the Terraform resource aws_route53domains_registered_domain.
 type Route53DomainsRegisteredDomain struct {
-	Name  string
-	Args  Route53DomainsRegisteredDomainArgs
-	state *route53DomainsRegisteredDomainState
+	Name      string
+	Args      Route53DomainsRegisteredDomainArgs
+	state     *route53DomainsRegisteredDomainState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Route53DomainsRegisteredDomain].
 func (rrd *Route53DomainsRegisteredDomain) Type() string {
 	return "aws_route53domains_registered_domain"
 }
 
+// LocalName returns the local name for [Route53DomainsRegisteredDomain].
 func (rrd *Route53DomainsRegisteredDomain) LocalName() string {
 	return rrd.Name
 }
 
+// Configuration returns the configuration (args) for [Route53DomainsRegisteredDomain].
 func (rrd *Route53DomainsRegisteredDomain) Configuration() interface{} {
 	return rrd.Args
 }
 
+// DependOn is used for other resources to depend on [Route53DomainsRegisteredDomain].
+func (rrd *Route53DomainsRegisteredDomain) DependOn() terra.Reference {
+	return terra.ReferenceResource(rrd)
+}
+
+// Dependencies returns the list of resources [Route53DomainsRegisteredDomain] depends_on.
+func (rrd *Route53DomainsRegisteredDomain) Dependencies() terra.Dependencies {
+	return rrd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Route53DomainsRegisteredDomain].
+func (rrd *Route53DomainsRegisteredDomain) LifecycleManagement() *terra.Lifecycle {
+	return rrd.Lifecycle
+}
+
+// Attributes returns the attributes for [Route53DomainsRegisteredDomain].
 func (rrd *Route53DomainsRegisteredDomain) Attributes() route53DomainsRegisteredDomainAttributes {
 	return route53DomainsRegisteredDomainAttributes{ref: terra.ReferenceResource(rrd)}
 }
 
+// ImportState imports the given attribute values into [Route53DomainsRegisteredDomain]'s state.
 func (rrd *Route53DomainsRegisteredDomain) ImportState(av io.Reader) error {
 	rrd.state = &route53DomainsRegisteredDomainState{}
 	if err := json.NewDecoder(av).Decode(rrd.state); err != nil {
@@ -49,10 +73,12 @@ func (rrd *Route53DomainsRegisteredDomain) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Route53DomainsRegisteredDomain] has state.
 func (rrd *Route53DomainsRegisteredDomain) State() (*route53DomainsRegisteredDomainState, bool) {
 	return rrd.state, rrd.state != nil
 }
 
+// StateMust returns the state for [Route53DomainsRegisteredDomain]. Panics if the state is nil.
 func (rrd *Route53DomainsRegisteredDomain) StateMust() *route53DomainsRegisteredDomainState {
 	if rrd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rrd.Type(), rrd.LocalName()))
@@ -60,10 +86,7 @@ func (rrd *Route53DomainsRegisteredDomain) StateMust() *route53DomainsRegistered
 	return rrd.state
 }
 
-func (rrd *Route53DomainsRegisteredDomain) DependOn() terra.Reference {
-	return terra.ReferenceResource(rrd)
-}
-
+// Route53DomainsRegisteredDomainArgs contains the configurations for aws_route53domains_registered_domain.
 type Route53DomainsRegisteredDomainArgs struct {
 	// AdminPrivacy: bool, optional
 	AdminPrivacy terra.BoolValue `hcl:"admin_privacy,attr"`
@@ -93,107 +116,124 @@ type Route53DomainsRegisteredDomainArgs struct {
 	TechContact *route53domainsregistereddomain.TechContact `hcl:"tech_contact,block"`
 	// Timeouts: optional
 	Timeouts *route53domainsregistereddomain.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Route53DomainsRegisteredDomain depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type route53DomainsRegisteredDomainAttributes struct {
 	ref terra.Reference
 }
 
+// AbuseContactEmail returns a reference to field abuse_contact_email of aws_route53domains_registered_domain.
 func (rrd route53DomainsRegisteredDomainAttributes) AbuseContactEmail() terra.StringValue {
-	return terra.ReferenceString(rrd.ref.Append("abuse_contact_email"))
+	return terra.ReferenceAsString(rrd.ref.Append("abuse_contact_email"))
 }
 
+// AbuseContactPhone returns a reference to field abuse_contact_phone of aws_route53domains_registered_domain.
 func (rrd route53DomainsRegisteredDomainAttributes) AbuseContactPhone() terra.StringValue {
-	return terra.ReferenceString(rrd.ref.Append("abuse_contact_phone"))
+	return terra.ReferenceAsString(rrd.ref.Append("abuse_contact_phone"))
 }
 
+// AdminPrivacy returns a reference to field admin_privacy of aws_route53domains_registered_domain.
 func (rrd route53DomainsRegisteredDomainAttributes) AdminPrivacy() terra.BoolValue {
-	return terra.ReferenceBool(rrd.ref.Append("admin_privacy"))
+	return terra.ReferenceAsBool(rrd.ref.Append("admin_privacy"))
 }
 
+// AutoRenew returns a reference to field auto_renew of aws_route53domains_registered_domain.
 func (rrd route53DomainsRegisteredDomainAttributes) AutoRenew() terra.BoolValue {
-	return terra.ReferenceBool(rrd.ref.Append("auto_renew"))
+	return terra.ReferenceAsBool(rrd.ref.Append("auto_renew"))
 }
 
+// CreationDate returns a reference to field creation_date of aws_route53domains_registered_domain.
 func (rrd route53DomainsRegisteredDomainAttributes) CreationDate() terra.StringValue {
-	return terra.ReferenceString(rrd.ref.Append("creation_date"))
+	return terra.ReferenceAsString(rrd.ref.Append("creation_date"))
 }
 
+// DomainName returns a reference to field domain_name of aws_route53domains_registered_domain.
 func (rrd route53DomainsRegisteredDomainAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(rrd.ref.Append("domain_name"))
+	return terra.ReferenceAsString(rrd.ref.Append("domain_name"))
 }
 
+// ExpirationDate returns a reference to field expiration_date of aws_route53domains_registered_domain.
 func (rrd route53DomainsRegisteredDomainAttributes) ExpirationDate() terra.StringValue {
-	return terra.ReferenceString(rrd.ref.Append("expiration_date"))
+	return terra.ReferenceAsString(rrd.ref.Append("expiration_date"))
 }
 
+// Id returns a reference to field id of aws_route53domains_registered_domain.
 func (rrd route53DomainsRegisteredDomainAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rrd.ref.Append("id"))
+	return terra.ReferenceAsString(rrd.ref.Append("id"))
 }
 
+// RegistrantPrivacy returns a reference to field registrant_privacy of aws_route53domains_registered_domain.
 func (rrd route53DomainsRegisteredDomainAttributes) RegistrantPrivacy() terra.BoolValue {
-	return terra.ReferenceBool(rrd.ref.Append("registrant_privacy"))
+	return terra.ReferenceAsBool(rrd.ref.Append("registrant_privacy"))
 }
 
+// RegistrarName returns a reference to field registrar_name of aws_route53domains_registered_domain.
 func (rrd route53DomainsRegisteredDomainAttributes) RegistrarName() terra.StringValue {
-	return terra.ReferenceString(rrd.ref.Append("registrar_name"))
+	return terra.ReferenceAsString(rrd.ref.Append("registrar_name"))
 }
 
+// RegistrarUrl returns a reference to field registrar_url of aws_route53domains_registered_domain.
 func (rrd route53DomainsRegisteredDomainAttributes) RegistrarUrl() terra.StringValue {
-	return terra.ReferenceString(rrd.ref.Append("registrar_url"))
+	return terra.ReferenceAsString(rrd.ref.Append("registrar_url"))
 }
 
+// Reseller returns a reference to field reseller of aws_route53domains_registered_domain.
 func (rrd route53DomainsRegisteredDomainAttributes) Reseller() terra.StringValue {
-	return terra.ReferenceString(rrd.ref.Append("reseller"))
+	return terra.ReferenceAsString(rrd.ref.Append("reseller"))
 }
 
+// StatusList returns a reference to field status_list of aws_route53domains_registered_domain.
 func (rrd route53DomainsRegisteredDomainAttributes) StatusList() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rrd.ref.Append("status_list"))
+	return terra.ReferenceAsList[terra.StringValue](rrd.ref.Append("status_list"))
 }
 
+// Tags returns a reference to field tags of aws_route53domains_registered_domain.
 func (rrd route53DomainsRegisteredDomainAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rrd.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rrd.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_route53domains_registered_domain.
 func (rrd route53DomainsRegisteredDomainAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rrd.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](rrd.ref.Append("tags_all"))
 }
 
+// TechPrivacy returns a reference to field tech_privacy of aws_route53domains_registered_domain.
 func (rrd route53DomainsRegisteredDomainAttributes) TechPrivacy() terra.BoolValue {
-	return terra.ReferenceBool(rrd.ref.Append("tech_privacy"))
+	return terra.ReferenceAsBool(rrd.ref.Append("tech_privacy"))
 }
 
+// TransferLock returns a reference to field transfer_lock of aws_route53domains_registered_domain.
 func (rrd route53DomainsRegisteredDomainAttributes) TransferLock() terra.BoolValue {
-	return terra.ReferenceBool(rrd.ref.Append("transfer_lock"))
+	return terra.ReferenceAsBool(rrd.ref.Append("transfer_lock"))
 }
 
+// UpdatedDate returns a reference to field updated_date of aws_route53domains_registered_domain.
 func (rrd route53DomainsRegisteredDomainAttributes) UpdatedDate() terra.StringValue {
-	return terra.ReferenceString(rrd.ref.Append("updated_date"))
+	return terra.ReferenceAsString(rrd.ref.Append("updated_date"))
 }
 
+// WhoisServer returns a reference to field whois_server of aws_route53domains_registered_domain.
 func (rrd route53DomainsRegisteredDomainAttributes) WhoisServer() terra.StringValue {
-	return terra.ReferenceString(rrd.ref.Append("whois_server"))
+	return terra.ReferenceAsString(rrd.ref.Append("whois_server"))
 }
 
 func (rrd route53DomainsRegisteredDomainAttributes) AdminContact() terra.ListValue[route53domainsregistereddomain.AdminContactAttributes] {
-	return terra.ReferenceList[route53domainsregistereddomain.AdminContactAttributes](rrd.ref.Append("admin_contact"))
+	return terra.ReferenceAsList[route53domainsregistereddomain.AdminContactAttributes](rrd.ref.Append("admin_contact"))
 }
 
 func (rrd route53DomainsRegisteredDomainAttributes) NameServer() terra.ListValue[route53domainsregistereddomain.NameServerAttributes] {
-	return terra.ReferenceList[route53domainsregistereddomain.NameServerAttributes](rrd.ref.Append("name_server"))
+	return terra.ReferenceAsList[route53domainsregistereddomain.NameServerAttributes](rrd.ref.Append("name_server"))
 }
 
 func (rrd route53DomainsRegisteredDomainAttributes) RegistrantContact() terra.ListValue[route53domainsregistereddomain.RegistrantContactAttributes] {
-	return terra.ReferenceList[route53domainsregistereddomain.RegistrantContactAttributes](rrd.ref.Append("registrant_contact"))
+	return terra.ReferenceAsList[route53domainsregistereddomain.RegistrantContactAttributes](rrd.ref.Append("registrant_contact"))
 }
 
 func (rrd route53DomainsRegisteredDomainAttributes) TechContact() terra.ListValue[route53domainsregistereddomain.TechContactAttributes] {
-	return terra.ReferenceList[route53domainsregistereddomain.TechContactAttributes](rrd.ref.Append("tech_contact"))
+	return terra.ReferenceAsList[route53domainsregistereddomain.TechContactAttributes](rrd.ref.Append("tech_contact"))
 }
 
 func (rrd route53DomainsRegisteredDomainAttributes) Timeouts() route53domainsregistereddomain.TimeoutsAttributes {
-	return terra.ReferenceSingle[route53domainsregistereddomain.TimeoutsAttributes](rrd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[route53domainsregistereddomain.TimeoutsAttributes](rrd.ref.Append("timeouts"))
 }
 
 type route53DomainsRegisteredDomainState struct {

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataEc2TransitGatewayRouteTables creates a new instance of [DataEc2TransitGatewayRouteTables].
 func NewDataEc2TransitGatewayRouteTables(name string, args DataEc2TransitGatewayRouteTablesArgs) *DataEc2TransitGatewayRouteTables {
 	return &DataEc2TransitGatewayRouteTables{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataEc2TransitGatewayRouteTables(name string, args DataEc2TransitGateway
 
 var _ terra.DataResource = (*DataEc2TransitGatewayRouteTables)(nil)
 
+// DataEc2TransitGatewayRouteTables represents the Terraform data resource aws_ec2_transit_gateway_route_tables.
 type DataEc2TransitGatewayRouteTables struct {
 	Name string
 	Args DataEc2TransitGatewayRouteTablesArgs
 }
 
+// DataSource returns the Terraform object type for [DataEc2TransitGatewayRouteTables].
 func (etgrt *DataEc2TransitGatewayRouteTables) DataSource() string {
 	return "aws_ec2_transit_gateway_route_tables"
 }
 
+// LocalName returns the local name for [DataEc2TransitGatewayRouteTables].
 func (etgrt *DataEc2TransitGatewayRouteTables) LocalName() string {
 	return etgrt.Name
 }
 
+// Configuration returns the configuration (args) for [DataEc2TransitGatewayRouteTables].
 func (etgrt *DataEc2TransitGatewayRouteTables) Configuration() interface{} {
 	return etgrt.Args
 }
 
+// Attributes returns the attributes for [DataEc2TransitGatewayRouteTables].
 func (etgrt *DataEc2TransitGatewayRouteTables) Attributes() dataEc2TransitGatewayRouteTablesAttributes {
 	return dataEc2TransitGatewayRouteTablesAttributes{ref: terra.ReferenceDataResource(etgrt)}
 }
 
+// DataEc2TransitGatewayRouteTablesArgs contains the configurations for aws_ec2_transit_gateway_route_tables.
 type DataEc2TransitGatewayRouteTablesArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,22 +58,25 @@ type dataEc2TransitGatewayRouteTablesAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_ec2_transit_gateway_route_tables.
 func (etgrt dataEc2TransitGatewayRouteTablesAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(etgrt.ref.Append("id"))
+	return terra.ReferenceAsString(etgrt.ref.Append("id"))
 }
 
+// Ids returns a reference to field ids of aws_ec2_transit_gateway_route_tables.
 func (etgrt dataEc2TransitGatewayRouteTablesAttributes) Ids() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](etgrt.ref.Append("ids"))
+	return terra.ReferenceAsList[terra.StringValue](etgrt.ref.Append("ids"))
 }
 
+// Tags returns a reference to field tags of aws_ec2_transit_gateway_route_tables.
 func (etgrt dataEc2TransitGatewayRouteTablesAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](etgrt.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](etgrt.ref.Append("tags"))
 }
 
 func (etgrt dataEc2TransitGatewayRouteTablesAttributes) Filter() terra.SetValue[dataec2transitgatewayroutetables.FilterAttributes] {
-	return terra.ReferenceSet[dataec2transitgatewayroutetables.FilterAttributes](etgrt.ref.Append("filter"))
+	return terra.ReferenceAsSet[dataec2transitgatewayroutetables.FilterAttributes](etgrt.ref.Append("filter"))
 }
 
 func (etgrt dataEc2TransitGatewayRouteTablesAttributes) Timeouts() dataec2transitgatewayroutetables.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataec2transitgatewayroutetables.TimeoutsAttributes](etgrt.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataec2transitgatewayroutetables.TimeoutsAttributes](etgrt.ref.Append("timeouts"))
 }

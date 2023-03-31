@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewWafRule creates a new instance of [WafRule].
 func NewWafRule(name string, args WafRuleArgs) *WafRule {
 	return &WafRule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewWafRule(name string, args WafRuleArgs) *WafRule {
 
 var _ terra.Resource = (*WafRule)(nil)
 
+// WafRule represents the Terraform resource aws_waf_rule.
 type WafRule struct {
-	Name  string
-	Args  WafRuleArgs
-	state *wafRuleState
+	Name      string
+	Args      WafRuleArgs
+	state     *wafRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [WafRule].
 func (wr *WafRule) Type() string {
 	return "aws_waf_rule"
 }
 
+// LocalName returns the local name for [WafRule].
 func (wr *WafRule) LocalName() string {
 	return wr.Name
 }
 
+// Configuration returns the configuration (args) for [WafRule].
 func (wr *WafRule) Configuration() interface{} {
 	return wr.Args
 }
 
+// DependOn is used for other resources to depend on [WafRule].
+func (wr *WafRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(wr)
+}
+
+// Dependencies returns the list of resources [WafRule] depends_on.
+func (wr *WafRule) Dependencies() terra.Dependencies {
+	return wr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [WafRule].
+func (wr *WafRule) LifecycleManagement() *terra.Lifecycle {
+	return wr.Lifecycle
+}
+
+// Attributes returns the attributes for [WafRule].
 func (wr *WafRule) Attributes() wafRuleAttributes {
 	return wafRuleAttributes{ref: terra.ReferenceResource(wr)}
 }
 
+// ImportState imports the given attribute values into [WafRule]'s state.
 func (wr *WafRule) ImportState(av io.Reader) error {
 	wr.state = &wafRuleState{}
 	if err := json.NewDecoder(av).Decode(wr.state); err != nil {
@@ -49,10 +73,12 @@ func (wr *WafRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [WafRule] has state.
 func (wr *WafRule) State() (*wafRuleState, bool) {
 	return wr.state, wr.state != nil
 }
 
+// StateMust returns the state for [WafRule]. Panics if the state is nil.
 func (wr *WafRule) StateMust() *wafRuleState {
 	if wr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", wr.Type(), wr.LocalName()))
@@ -60,10 +86,7 @@ func (wr *WafRule) StateMust() *wafRuleState {
 	return wr.state
 }
 
-func (wr *WafRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(wr)
-}
-
+// WafRuleArgs contains the configurations for aws_waf_rule.
 type WafRuleArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,39 +100,43 @@ type WafRuleArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Predicates: min=0
 	Predicates []wafrule.Predicates `hcl:"predicates,block" validate:"min=0"`
-	// DependsOn contains resources that WafRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type wafRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_waf_rule.
 func (wr wafRuleAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(wr.ref.Append("arn"))
+	return terra.ReferenceAsString(wr.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_waf_rule.
 func (wr wafRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(wr.ref.Append("id"))
+	return terra.ReferenceAsString(wr.ref.Append("id"))
 }
 
+// MetricName returns a reference to field metric_name of aws_waf_rule.
 func (wr wafRuleAttributes) MetricName() terra.StringValue {
-	return terra.ReferenceString(wr.ref.Append("metric_name"))
+	return terra.ReferenceAsString(wr.ref.Append("metric_name"))
 }
 
+// Name returns a reference to field name of aws_waf_rule.
 func (wr wafRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(wr.ref.Append("name"))
+	return terra.ReferenceAsString(wr.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_waf_rule.
 func (wr wafRuleAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](wr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](wr.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_waf_rule.
 func (wr wafRuleAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](wr.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](wr.ref.Append("tags_all"))
 }
 
 func (wr wafRuleAttributes) Predicates() terra.SetValue[wafrule.PredicatesAttributes] {
-	return terra.ReferenceSet[wafrule.PredicatesAttributes](wr.ref.Append("predicates"))
+	return terra.ReferenceAsSet[wafrule.PredicatesAttributes](wr.ref.Append("predicates"))
 }
 
 type wafRuleState struct {

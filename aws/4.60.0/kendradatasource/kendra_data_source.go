@@ -246,11 +246,11 @@ func (c ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ConfigurationAttributes) S3Configuration() terra.ListValue[S3ConfigurationAttributes] {
-	return terra.ReferenceList[S3ConfigurationAttributes](c.ref.Append("s3_configuration"))
+	return terra.ReferenceAsList[S3ConfigurationAttributes](c.ref.Append("s3_configuration"))
 }
 
 func (c ConfigurationAttributes) WebCrawlerConfiguration() terra.ListValue[WebCrawlerConfigurationAttributes] {
-	return terra.ReferenceList[WebCrawlerConfigurationAttributes](c.ref.Append("web_crawler_configuration"))
+	return terra.ReferenceAsList[WebCrawlerConfigurationAttributes](c.ref.Append("web_crawler_configuration"))
 }
 
 type S3ConfigurationAttributes struct {
@@ -270,27 +270,27 @@ func (sc S3ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc S3ConfigurationAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(sc.ref.Append("bucket_name"))
 }
 
 func (sc S3ConfigurationAttributes) ExclusionPatterns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sc.ref.Append("exclusion_patterns"))
+	return terra.ReferenceAsSet[terra.StringValue](sc.ref.Append("exclusion_patterns"))
 }
 
 func (sc S3ConfigurationAttributes) InclusionPatterns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sc.ref.Append("inclusion_patterns"))
+	return terra.ReferenceAsSet[terra.StringValue](sc.ref.Append("inclusion_patterns"))
 }
 
 func (sc S3ConfigurationAttributes) InclusionPrefixes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sc.ref.Append("inclusion_prefixes"))
+	return terra.ReferenceAsSet[terra.StringValue](sc.ref.Append("inclusion_prefixes"))
 }
 
 func (sc S3ConfigurationAttributes) AccessControlListConfiguration() terra.ListValue[AccessControlListConfigurationAttributes] {
-	return terra.ReferenceList[AccessControlListConfigurationAttributes](sc.ref.Append("access_control_list_configuration"))
+	return terra.ReferenceAsList[AccessControlListConfigurationAttributes](sc.ref.Append("access_control_list_configuration"))
 }
 
 func (sc S3ConfigurationAttributes) DocumentsMetadataConfiguration() terra.ListValue[DocumentsMetadataConfigurationAttributes] {
-	return terra.ReferenceList[DocumentsMetadataConfigurationAttributes](sc.ref.Append("documents_metadata_configuration"))
+	return terra.ReferenceAsList[DocumentsMetadataConfigurationAttributes](sc.ref.Append("documents_metadata_configuration"))
 }
 
 type AccessControlListConfigurationAttributes struct {
@@ -310,7 +310,7 @@ func (aclc AccessControlListConfigurationAttributes) InternalTokens() hclwrite.T
 }
 
 func (aclc AccessControlListConfigurationAttributes) KeyPath() terra.StringValue {
-	return terra.ReferenceString(aclc.ref.Append("key_path"))
+	return terra.ReferenceAsString(aclc.ref.Append("key_path"))
 }
 
 type DocumentsMetadataConfigurationAttributes struct {
@@ -330,7 +330,7 @@ func (dmc DocumentsMetadataConfigurationAttributes) InternalTokens() hclwrite.To
 }
 
 func (dmc DocumentsMetadataConfigurationAttributes) S3Prefix() terra.StringValue {
-	return terra.ReferenceString(dmc.ref.Append("s3_prefix"))
+	return terra.ReferenceAsString(dmc.ref.Append("s3_prefix"))
 }
 
 type WebCrawlerConfigurationAttributes struct {
@@ -350,39 +350,39 @@ func (wcc WebCrawlerConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (wcc WebCrawlerConfigurationAttributes) CrawlDepth() terra.NumberValue {
-	return terra.ReferenceNumber(wcc.ref.Append("crawl_depth"))
+	return terra.ReferenceAsNumber(wcc.ref.Append("crawl_depth"))
 }
 
 func (wcc WebCrawlerConfigurationAttributes) MaxContentSizePerPageInMegaBytes() terra.NumberValue {
-	return terra.ReferenceNumber(wcc.ref.Append("max_content_size_per_page_in_mega_bytes"))
+	return terra.ReferenceAsNumber(wcc.ref.Append("max_content_size_per_page_in_mega_bytes"))
 }
 
 func (wcc WebCrawlerConfigurationAttributes) MaxLinksPerPage() terra.NumberValue {
-	return terra.ReferenceNumber(wcc.ref.Append("max_links_per_page"))
+	return terra.ReferenceAsNumber(wcc.ref.Append("max_links_per_page"))
 }
 
 func (wcc WebCrawlerConfigurationAttributes) MaxUrlsPerMinuteCrawlRate() terra.NumberValue {
-	return terra.ReferenceNumber(wcc.ref.Append("max_urls_per_minute_crawl_rate"))
+	return terra.ReferenceAsNumber(wcc.ref.Append("max_urls_per_minute_crawl_rate"))
 }
 
 func (wcc WebCrawlerConfigurationAttributes) UrlExclusionPatterns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](wcc.ref.Append("url_exclusion_patterns"))
+	return terra.ReferenceAsSet[terra.StringValue](wcc.ref.Append("url_exclusion_patterns"))
 }
 
 func (wcc WebCrawlerConfigurationAttributes) UrlInclusionPatterns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](wcc.ref.Append("url_inclusion_patterns"))
+	return terra.ReferenceAsSet[terra.StringValue](wcc.ref.Append("url_inclusion_patterns"))
 }
 
 func (wcc WebCrawlerConfigurationAttributes) AuthenticationConfiguration() terra.ListValue[AuthenticationConfigurationAttributes] {
-	return terra.ReferenceList[AuthenticationConfigurationAttributes](wcc.ref.Append("authentication_configuration"))
+	return terra.ReferenceAsList[AuthenticationConfigurationAttributes](wcc.ref.Append("authentication_configuration"))
 }
 
 func (wcc WebCrawlerConfigurationAttributes) ProxyConfiguration() terra.ListValue[ProxyConfigurationAttributes] {
-	return terra.ReferenceList[ProxyConfigurationAttributes](wcc.ref.Append("proxy_configuration"))
+	return terra.ReferenceAsList[ProxyConfigurationAttributes](wcc.ref.Append("proxy_configuration"))
 }
 
 func (wcc WebCrawlerConfigurationAttributes) Urls() terra.ListValue[UrlsAttributes] {
-	return terra.ReferenceList[UrlsAttributes](wcc.ref.Append("urls"))
+	return terra.ReferenceAsList[UrlsAttributes](wcc.ref.Append("urls"))
 }
 
 type AuthenticationConfigurationAttributes struct {
@@ -402,7 +402,7 @@ func (ac AuthenticationConfigurationAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (ac AuthenticationConfigurationAttributes) BasicAuthentication() terra.SetValue[BasicAuthenticationAttributes] {
-	return terra.ReferenceSet[BasicAuthenticationAttributes](ac.ref.Append("basic_authentication"))
+	return terra.ReferenceAsSet[BasicAuthenticationAttributes](ac.ref.Append("basic_authentication"))
 }
 
 type BasicAuthenticationAttributes struct {
@@ -422,15 +422,15 @@ func (ba BasicAuthenticationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ba BasicAuthenticationAttributes) Credentials() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("credentials"))
+	return terra.ReferenceAsString(ba.ref.Append("credentials"))
 }
 
 func (ba BasicAuthenticationAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("host"))
+	return terra.ReferenceAsString(ba.ref.Append("host"))
 }
 
 func (ba BasicAuthenticationAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(ba.ref.Append("port"))
+	return terra.ReferenceAsNumber(ba.ref.Append("port"))
 }
 
 type ProxyConfigurationAttributes struct {
@@ -450,15 +450,15 @@ func (pc ProxyConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pc ProxyConfigurationAttributes) Credentials() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("credentials"))
+	return terra.ReferenceAsString(pc.ref.Append("credentials"))
 }
 
 func (pc ProxyConfigurationAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("host"))
+	return terra.ReferenceAsString(pc.ref.Append("host"))
 }
 
 func (pc ProxyConfigurationAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(pc.ref.Append("port"))
+	return terra.ReferenceAsNumber(pc.ref.Append("port"))
 }
 
 type UrlsAttributes struct {
@@ -478,11 +478,11 @@ func (u UrlsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (u UrlsAttributes) SeedUrlConfiguration() terra.ListValue[SeedUrlConfigurationAttributes] {
-	return terra.ReferenceList[SeedUrlConfigurationAttributes](u.ref.Append("seed_url_configuration"))
+	return terra.ReferenceAsList[SeedUrlConfigurationAttributes](u.ref.Append("seed_url_configuration"))
 }
 
 func (u UrlsAttributes) SiteMapsConfiguration() terra.ListValue[SiteMapsConfigurationAttributes] {
-	return terra.ReferenceList[SiteMapsConfigurationAttributes](u.ref.Append("site_maps_configuration"))
+	return terra.ReferenceAsList[SiteMapsConfigurationAttributes](u.ref.Append("site_maps_configuration"))
 }
 
 type SeedUrlConfigurationAttributes struct {
@@ -502,11 +502,11 @@ func (suc SeedUrlConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (suc SeedUrlConfigurationAttributes) SeedUrls() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](suc.ref.Append("seed_urls"))
+	return terra.ReferenceAsSet[terra.StringValue](suc.ref.Append("seed_urls"))
 }
 
 func (suc SeedUrlConfigurationAttributes) WebCrawlerMode() terra.StringValue {
-	return terra.ReferenceString(suc.ref.Append("web_crawler_mode"))
+	return terra.ReferenceAsString(suc.ref.Append("web_crawler_mode"))
 }
 
 type SiteMapsConfigurationAttributes struct {
@@ -526,7 +526,7 @@ func (smc SiteMapsConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (smc SiteMapsConfigurationAttributes) SiteMaps() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](smc.ref.Append("site_maps"))
+	return terra.ReferenceAsSet[terra.StringValue](smc.ref.Append("site_maps"))
 }
 
 type CustomDocumentEnrichmentConfigurationAttributes struct {
@@ -546,19 +546,19 @@ func (cdec CustomDocumentEnrichmentConfigurationAttributes) InternalTokens() hcl
 }
 
 func (cdec CustomDocumentEnrichmentConfigurationAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(cdec.ref.Append("role_arn"))
+	return terra.ReferenceAsString(cdec.ref.Append("role_arn"))
 }
 
 func (cdec CustomDocumentEnrichmentConfigurationAttributes) InlineConfigurations() terra.SetValue[InlineConfigurationsAttributes] {
-	return terra.ReferenceSet[InlineConfigurationsAttributes](cdec.ref.Append("inline_configurations"))
+	return terra.ReferenceAsSet[InlineConfigurationsAttributes](cdec.ref.Append("inline_configurations"))
 }
 
 func (cdec CustomDocumentEnrichmentConfigurationAttributes) PostExtractionHookConfiguration() terra.ListValue[PostExtractionHookConfigurationAttributes] {
-	return terra.ReferenceList[PostExtractionHookConfigurationAttributes](cdec.ref.Append("post_extraction_hook_configuration"))
+	return terra.ReferenceAsList[PostExtractionHookConfigurationAttributes](cdec.ref.Append("post_extraction_hook_configuration"))
 }
 
 func (cdec CustomDocumentEnrichmentConfigurationAttributes) PreExtractionHookConfiguration() terra.ListValue[PreExtractionHookConfigurationAttributes] {
-	return terra.ReferenceList[PreExtractionHookConfigurationAttributes](cdec.ref.Append("pre_extraction_hook_configuration"))
+	return terra.ReferenceAsList[PreExtractionHookConfigurationAttributes](cdec.ref.Append("pre_extraction_hook_configuration"))
 }
 
 type InlineConfigurationsAttributes struct {
@@ -578,15 +578,15 @@ func (ic InlineConfigurationsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ic InlineConfigurationsAttributes) DocumentContentDeletion() terra.BoolValue {
-	return terra.ReferenceBool(ic.ref.Append("document_content_deletion"))
+	return terra.ReferenceAsBool(ic.ref.Append("document_content_deletion"))
 }
 
 func (ic InlineConfigurationsAttributes) Condition() terra.ListValue[ConditionAttributes] {
-	return terra.ReferenceList[ConditionAttributes](ic.ref.Append("condition"))
+	return terra.ReferenceAsList[ConditionAttributes](ic.ref.Append("condition"))
 }
 
 func (ic InlineConfigurationsAttributes) Target() terra.ListValue[TargetAttributes] {
-	return terra.ReferenceList[TargetAttributes](ic.ref.Append("target"))
+	return terra.ReferenceAsList[TargetAttributes](ic.ref.Append("target"))
 }
 
 type ConditionAttributes struct {
@@ -606,15 +606,15 @@ func (c ConditionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ConditionAttributes) ConditionDocumentAttributeKey() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("condition_document_attribute_key"))
+	return terra.ReferenceAsString(c.ref.Append("condition_document_attribute_key"))
 }
 
 func (c ConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("operator"))
+	return terra.ReferenceAsString(c.ref.Append("operator"))
 }
 
 func (c ConditionAttributes) ConditionOnValue() terra.ListValue[ConditionConditionOnValueAttributes] {
-	return terra.ReferenceList[ConditionConditionOnValueAttributes](c.ref.Append("condition_on_value"))
+	return terra.ReferenceAsList[ConditionConditionOnValueAttributes](c.ref.Append("condition_on_value"))
 }
 
 type ConditionConditionOnValueAttributes struct {
@@ -634,19 +634,19 @@ func (cov ConditionConditionOnValueAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (cov ConditionConditionOnValueAttributes) DateValue() terra.StringValue {
-	return terra.ReferenceString(cov.ref.Append("date_value"))
+	return terra.ReferenceAsString(cov.ref.Append("date_value"))
 }
 
 func (cov ConditionConditionOnValueAttributes) LongValue() terra.NumberValue {
-	return terra.ReferenceNumber(cov.ref.Append("long_value"))
+	return terra.ReferenceAsNumber(cov.ref.Append("long_value"))
 }
 
 func (cov ConditionConditionOnValueAttributes) StringListValue() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cov.ref.Append("string_list_value"))
+	return terra.ReferenceAsSet[terra.StringValue](cov.ref.Append("string_list_value"))
 }
 
 func (cov ConditionConditionOnValueAttributes) StringValue() terra.StringValue {
-	return terra.ReferenceString(cov.ref.Append("string_value"))
+	return terra.ReferenceAsString(cov.ref.Append("string_value"))
 }
 
 type TargetAttributes struct {
@@ -666,15 +666,15 @@ func (t TargetAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TargetAttributes) TargetDocumentAttributeKey() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("target_document_attribute_key"))
+	return terra.ReferenceAsString(t.ref.Append("target_document_attribute_key"))
 }
 
 func (t TargetAttributes) TargetDocumentAttributeValueDeletion() terra.BoolValue {
-	return terra.ReferenceBool(t.ref.Append("target_document_attribute_value_deletion"))
+	return terra.ReferenceAsBool(t.ref.Append("target_document_attribute_value_deletion"))
 }
 
 func (t TargetAttributes) TargetDocumentAttributeValue() terra.ListValue[TargetDocumentAttributeValueAttributes] {
-	return terra.ReferenceList[TargetDocumentAttributeValueAttributes](t.ref.Append("target_document_attribute_value"))
+	return terra.ReferenceAsList[TargetDocumentAttributeValueAttributes](t.ref.Append("target_document_attribute_value"))
 }
 
 type TargetDocumentAttributeValueAttributes struct {
@@ -694,19 +694,19 @@ func (tdav TargetDocumentAttributeValueAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (tdav TargetDocumentAttributeValueAttributes) DateValue() terra.StringValue {
-	return terra.ReferenceString(tdav.ref.Append("date_value"))
+	return terra.ReferenceAsString(tdav.ref.Append("date_value"))
 }
 
 func (tdav TargetDocumentAttributeValueAttributes) LongValue() terra.NumberValue {
-	return terra.ReferenceNumber(tdav.ref.Append("long_value"))
+	return terra.ReferenceAsNumber(tdav.ref.Append("long_value"))
 }
 
 func (tdav TargetDocumentAttributeValueAttributes) StringListValue() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](tdav.ref.Append("string_list_value"))
+	return terra.ReferenceAsSet[terra.StringValue](tdav.ref.Append("string_list_value"))
 }
 
 func (tdav TargetDocumentAttributeValueAttributes) StringValue() terra.StringValue {
-	return terra.ReferenceString(tdav.ref.Append("string_value"))
+	return terra.ReferenceAsString(tdav.ref.Append("string_value"))
 }
 
 type PostExtractionHookConfigurationAttributes struct {
@@ -726,15 +726,15 @@ func (pehc PostExtractionHookConfigurationAttributes) InternalTokens() hclwrite.
 }
 
 func (pehc PostExtractionHookConfigurationAttributes) LambdaArn() terra.StringValue {
-	return terra.ReferenceString(pehc.ref.Append("lambda_arn"))
+	return terra.ReferenceAsString(pehc.ref.Append("lambda_arn"))
 }
 
 func (pehc PostExtractionHookConfigurationAttributes) S3Bucket() terra.StringValue {
-	return terra.ReferenceString(pehc.ref.Append("s3_bucket"))
+	return terra.ReferenceAsString(pehc.ref.Append("s3_bucket"))
 }
 
 func (pehc PostExtractionHookConfigurationAttributes) InvocationCondition() terra.ListValue[PostExtractionHookConfigurationInvocationConditionAttributes] {
-	return terra.ReferenceList[PostExtractionHookConfigurationInvocationConditionAttributes](pehc.ref.Append("invocation_condition"))
+	return terra.ReferenceAsList[PostExtractionHookConfigurationInvocationConditionAttributes](pehc.ref.Append("invocation_condition"))
 }
 
 type PostExtractionHookConfigurationInvocationConditionAttributes struct {
@@ -754,15 +754,15 @@ func (ic PostExtractionHookConfigurationInvocationConditionAttributes) InternalT
 }
 
 func (ic PostExtractionHookConfigurationInvocationConditionAttributes) ConditionDocumentAttributeKey() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("condition_document_attribute_key"))
+	return terra.ReferenceAsString(ic.ref.Append("condition_document_attribute_key"))
 }
 
 func (ic PostExtractionHookConfigurationInvocationConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("operator"))
+	return terra.ReferenceAsString(ic.ref.Append("operator"))
 }
 
 func (ic PostExtractionHookConfigurationInvocationConditionAttributes) ConditionOnValue() terra.ListValue[PostExtractionHookConfigurationInvocationConditionConditionOnValueAttributes] {
-	return terra.ReferenceList[PostExtractionHookConfigurationInvocationConditionConditionOnValueAttributes](ic.ref.Append("condition_on_value"))
+	return terra.ReferenceAsList[PostExtractionHookConfigurationInvocationConditionConditionOnValueAttributes](ic.ref.Append("condition_on_value"))
 }
 
 type PostExtractionHookConfigurationInvocationConditionConditionOnValueAttributes struct {
@@ -782,19 +782,19 @@ func (cov PostExtractionHookConfigurationInvocationConditionConditionOnValueAttr
 }
 
 func (cov PostExtractionHookConfigurationInvocationConditionConditionOnValueAttributes) DateValue() terra.StringValue {
-	return terra.ReferenceString(cov.ref.Append("date_value"))
+	return terra.ReferenceAsString(cov.ref.Append("date_value"))
 }
 
 func (cov PostExtractionHookConfigurationInvocationConditionConditionOnValueAttributes) LongValue() terra.NumberValue {
-	return terra.ReferenceNumber(cov.ref.Append("long_value"))
+	return terra.ReferenceAsNumber(cov.ref.Append("long_value"))
 }
 
 func (cov PostExtractionHookConfigurationInvocationConditionConditionOnValueAttributes) StringListValue() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cov.ref.Append("string_list_value"))
+	return terra.ReferenceAsSet[terra.StringValue](cov.ref.Append("string_list_value"))
 }
 
 func (cov PostExtractionHookConfigurationInvocationConditionConditionOnValueAttributes) StringValue() terra.StringValue {
-	return terra.ReferenceString(cov.ref.Append("string_value"))
+	return terra.ReferenceAsString(cov.ref.Append("string_value"))
 }
 
 type PreExtractionHookConfigurationAttributes struct {
@@ -814,15 +814,15 @@ func (pehc PreExtractionHookConfigurationAttributes) InternalTokens() hclwrite.T
 }
 
 func (pehc PreExtractionHookConfigurationAttributes) LambdaArn() terra.StringValue {
-	return terra.ReferenceString(pehc.ref.Append("lambda_arn"))
+	return terra.ReferenceAsString(pehc.ref.Append("lambda_arn"))
 }
 
 func (pehc PreExtractionHookConfigurationAttributes) S3Bucket() terra.StringValue {
-	return terra.ReferenceString(pehc.ref.Append("s3_bucket"))
+	return terra.ReferenceAsString(pehc.ref.Append("s3_bucket"))
 }
 
 func (pehc PreExtractionHookConfigurationAttributes) InvocationCondition() terra.ListValue[PreExtractionHookConfigurationInvocationConditionAttributes] {
-	return terra.ReferenceList[PreExtractionHookConfigurationInvocationConditionAttributes](pehc.ref.Append("invocation_condition"))
+	return terra.ReferenceAsList[PreExtractionHookConfigurationInvocationConditionAttributes](pehc.ref.Append("invocation_condition"))
 }
 
 type PreExtractionHookConfigurationInvocationConditionAttributes struct {
@@ -842,15 +842,15 @@ func (ic PreExtractionHookConfigurationInvocationConditionAttributes) InternalTo
 }
 
 func (ic PreExtractionHookConfigurationInvocationConditionAttributes) ConditionDocumentAttributeKey() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("condition_document_attribute_key"))
+	return terra.ReferenceAsString(ic.ref.Append("condition_document_attribute_key"))
 }
 
 func (ic PreExtractionHookConfigurationInvocationConditionAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("operator"))
+	return terra.ReferenceAsString(ic.ref.Append("operator"))
 }
 
 func (ic PreExtractionHookConfigurationInvocationConditionAttributes) ConditionOnValue() terra.ListValue[PreExtractionHookConfigurationInvocationConditionConditionOnValueAttributes] {
-	return terra.ReferenceList[PreExtractionHookConfigurationInvocationConditionConditionOnValueAttributes](ic.ref.Append("condition_on_value"))
+	return terra.ReferenceAsList[PreExtractionHookConfigurationInvocationConditionConditionOnValueAttributes](ic.ref.Append("condition_on_value"))
 }
 
 type PreExtractionHookConfigurationInvocationConditionConditionOnValueAttributes struct {
@@ -870,19 +870,19 @@ func (cov PreExtractionHookConfigurationInvocationConditionConditionOnValueAttri
 }
 
 func (cov PreExtractionHookConfigurationInvocationConditionConditionOnValueAttributes) DateValue() terra.StringValue {
-	return terra.ReferenceString(cov.ref.Append("date_value"))
+	return terra.ReferenceAsString(cov.ref.Append("date_value"))
 }
 
 func (cov PreExtractionHookConfigurationInvocationConditionConditionOnValueAttributes) LongValue() terra.NumberValue {
-	return terra.ReferenceNumber(cov.ref.Append("long_value"))
+	return terra.ReferenceAsNumber(cov.ref.Append("long_value"))
 }
 
 func (cov PreExtractionHookConfigurationInvocationConditionConditionOnValueAttributes) StringListValue() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cov.ref.Append("string_list_value"))
+	return terra.ReferenceAsSet[terra.StringValue](cov.ref.Append("string_list_value"))
 }
 
 func (cov PreExtractionHookConfigurationInvocationConditionConditionOnValueAttributes) StringValue() terra.StringValue {
-	return terra.ReferenceString(cov.ref.Append("string_value"))
+	return terra.ReferenceAsString(cov.ref.Append("string_value"))
 }
 
 type TimeoutsAttributes struct {
@@ -902,15 +902,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ConfigurationState struct {

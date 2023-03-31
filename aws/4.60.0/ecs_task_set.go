@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEcsTaskSet creates a new instance of [EcsTaskSet].
 func NewEcsTaskSet(name string, args EcsTaskSetArgs) *EcsTaskSet {
 	return &EcsTaskSet{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEcsTaskSet(name string, args EcsTaskSetArgs) *EcsTaskSet {
 
 var _ terra.Resource = (*EcsTaskSet)(nil)
 
+// EcsTaskSet represents the Terraform resource aws_ecs_task_set.
 type EcsTaskSet struct {
-	Name  string
-	Args  EcsTaskSetArgs
-	state *ecsTaskSetState
+	Name      string
+	Args      EcsTaskSetArgs
+	state     *ecsTaskSetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EcsTaskSet].
 func (ets *EcsTaskSet) Type() string {
 	return "aws_ecs_task_set"
 }
 
+// LocalName returns the local name for [EcsTaskSet].
 func (ets *EcsTaskSet) LocalName() string {
 	return ets.Name
 }
 
+// Configuration returns the configuration (args) for [EcsTaskSet].
 func (ets *EcsTaskSet) Configuration() interface{} {
 	return ets.Args
 }
 
+// DependOn is used for other resources to depend on [EcsTaskSet].
+func (ets *EcsTaskSet) DependOn() terra.Reference {
+	return terra.ReferenceResource(ets)
+}
+
+// Dependencies returns the list of resources [EcsTaskSet] depends_on.
+func (ets *EcsTaskSet) Dependencies() terra.Dependencies {
+	return ets.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EcsTaskSet].
+func (ets *EcsTaskSet) LifecycleManagement() *terra.Lifecycle {
+	return ets.Lifecycle
+}
+
+// Attributes returns the attributes for [EcsTaskSet].
 func (ets *EcsTaskSet) Attributes() ecsTaskSetAttributes {
 	return ecsTaskSetAttributes{ref: terra.ReferenceResource(ets)}
 }
 
+// ImportState imports the given attribute values into [EcsTaskSet]'s state.
 func (ets *EcsTaskSet) ImportState(av io.Reader) error {
 	ets.state = &ecsTaskSetState{}
 	if err := json.NewDecoder(av).Decode(ets.state); err != nil {
@@ -49,10 +73,12 @@ func (ets *EcsTaskSet) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EcsTaskSet] has state.
 func (ets *EcsTaskSet) State() (*ecsTaskSetState, bool) {
 	return ets.state, ets.state != nil
 }
 
+// StateMust returns the state for [EcsTaskSet]. Panics if the state is nil.
 func (ets *EcsTaskSet) StateMust() *ecsTaskSetState {
 	if ets.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ets.Type(), ets.LocalName()))
@@ -60,10 +86,7 @@ func (ets *EcsTaskSet) StateMust() *ecsTaskSetState {
 	return ets.state
 }
 
-func (ets *EcsTaskSet) DependOn() terra.Reference {
-	return terra.ReferenceResource(ets)
-}
-
+// EcsTaskSetArgs contains the configurations for aws_ecs_task_set.
 type EcsTaskSetArgs struct {
 	// Cluster: string, required
 	Cluster terra.StringValue `hcl:"cluster,attr" validate:"required"`
@@ -99,95 +122,109 @@ type EcsTaskSetArgs struct {
 	Scale *ecstaskset.Scale `hcl:"scale,block"`
 	// ServiceRegistries: optional
 	ServiceRegistries *ecstaskset.ServiceRegistries `hcl:"service_registries,block"`
-	// DependsOn contains resources that EcsTaskSet depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ecsTaskSetAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ecs_task_set.
 func (ets ecsTaskSetAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ets.ref.Append("arn"))
+	return terra.ReferenceAsString(ets.ref.Append("arn"))
 }
 
+// Cluster returns a reference to field cluster of aws_ecs_task_set.
 func (ets ecsTaskSetAttributes) Cluster() terra.StringValue {
-	return terra.ReferenceString(ets.ref.Append("cluster"))
+	return terra.ReferenceAsString(ets.ref.Append("cluster"))
 }
 
+// ExternalId returns a reference to field external_id of aws_ecs_task_set.
 func (ets ecsTaskSetAttributes) ExternalId() terra.StringValue {
-	return terra.ReferenceString(ets.ref.Append("external_id"))
+	return terra.ReferenceAsString(ets.ref.Append("external_id"))
 }
 
+// ForceDelete returns a reference to field force_delete of aws_ecs_task_set.
 func (ets ecsTaskSetAttributes) ForceDelete() terra.BoolValue {
-	return terra.ReferenceBool(ets.ref.Append("force_delete"))
+	return terra.ReferenceAsBool(ets.ref.Append("force_delete"))
 }
 
+// Id returns a reference to field id of aws_ecs_task_set.
 func (ets ecsTaskSetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ets.ref.Append("id"))
+	return terra.ReferenceAsString(ets.ref.Append("id"))
 }
 
+// LaunchType returns a reference to field launch_type of aws_ecs_task_set.
 func (ets ecsTaskSetAttributes) LaunchType() terra.StringValue {
-	return terra.ReferenceString(ets.ref.Append("launch_type"))
+	return terra.ReferenceAsString(ets.ref.Append("launch_type"))
 }
 
+// PlatformVersion returns a reference to field platform_version of aws_ecs_task_set.
 func (ets ecsTaskSetAttributes) PlatformVersion() terra.StringValue {
-	return terra.ReferenceString(ets.ref.Append("platform_version"))
+	return terra.ReferenceAsString(ets.ref.Append("platform_version"))
 }
 
+// Service returns a reference to field service of aws_ecs_task_set.
 func (ets ecsTaskSetAttributes) Service() terra.StringValue {
-	return terra.ReferenceString(ets.ref.Append("service"))
+	return terra.ReferenceAsString(ets.ref.Append("service"))
 }
 
+// StabilityStatus returns a reference to field stability_status of aws_ecs_task_set.
 func (ets ecsTaskSetAttributes) StabilityStatus() terra.StringValue {
-	return terra.ReferenceString(ets.ref.Append("stability_status"))
+	return terra.ReferenceAsString(ets.ref.Append("stability_status"))
 }
 
+// Status returns a reference to field status of aws_ecs_task_set.
 func (ets ecsTaskSetAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ets.ref.Append("status"))
+	return terra.ReferenceAsString(ets.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of aws_ecs_task_set.
 func (ets ecsTaskSetAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ets.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ets.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_ecs_task_set.
 func (ets ecsTaskSetAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ets.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ets.ref.Append("tags_all"))
 }
 
+// TaskDefinition returns a reference to field task_definition of aws_ecs_task_set.
 func (ets ecsTaskSetAttributes) TaskDefinition() terra.StringValue {
-	return terra.ReferenceString(ets.ref.Append("task_definition"))
+	return terra.ReferenceAsString(ets.ref.Append("task_definition"))
 }
 
+// TaskSetId returns a reference to field task_set_id of aws_ecs_task_set.
 func (ets ecsTaskSetAttributes) TaskSetId() terra.StringValue {
-	return terra.ReferenceString(ets.ref.Append("task_set_id"))
+	return terra.ReferenceAsString(ets.ref.Append("task_set_id"))
 }
 
+// WaitUntilStable returns a reference to field wait_until_stable of aws_ecs_task_set.
 func (ets ecsTaskSetAttributes) WaitUntilStable() terra.BoolValue {
-	return terra.ReferenceBool(ets.ref.Append("wait_until_stable"))
+	return terra.ReferenceAsBool(ets.ref.Append("wait_until_stable"))
 }
 
+// WaitUntilStableTimeout returns a reference to field wait_until_stable_timeout of aws_ecs_task_set.
 func (ets ecsTaskSetAttributes) WaitUntilStableTimeout() terra.StringValue {
-	return terra.ReferenceString(ets.ref.Append("wait_until_stable_timeout"))
+	return terra.ReferenceAsString(ets.ref.Append("wait_until_stable_timeout"))
 }
 
 func (ets ecsTaskSetAttributes) CapacityProviderStrategy() terra.SetValue[ecstaskset.CapacityProviderStrategyAttributes] {
-	return terra.ReferenceSet[ecstaskset.CapacityProviderStrategyAttributes](ets.ref.Append("capacity_provider_strategy"))
+	return terra.ReferenceAsSet[ecstaskset.CapacityProviderStrategyAttributes](ets.ref.Append("capacity_provider_strategy"))
 }
 
 func (ets ecsTaskSetAttributes) LoadBalancer() terra.SetValue[ecstaskset.LoadBalancerAttributes] {
-	return terra.ReferenceSet[ecstaskset.LoadBalancerAttributes](ets.ref.Append("load_balancer"))
+	return terra.ReferenceAsSet[ecstaskset.LoadBalancerAttributes](ets.ref.Append("load_balancer"))
 }
 
 func (ets ecsTaskSetAttributes) NetworkConfiguration() terra.ListValue[ecstaskset.NetworkConfigurationAttributes] {
-	return terra.ReferenceList[ecstaskset.NetworkConfigurationAttributes](ets.ref.Append("network_configuration"))
+	return terra.ReferenceAsList[ecstaskset.NetworkConfigurationAttributes](ets.ref.Append("network_configuration"))
 }
 
 func (ets ecsTaskSetAttributes) Scale() terra.ListValue[ecstaskset.ScaleAttributes] {
-	return terra.ReferenceList[ecstaskset.ScaleAttributes](ets.ref.Append("scale"))
+	return terra.ReferenceAsList[ecstaskset.ScaleAttributes](ets.ref.Append("scale"))
 }
 
 func (ets ecsTaskSetAttributes) ServiceRegistries() terra.ListValue[ecstaskset.ServiceRegistriesAttributes] {
-	return terra.ReferenceList[ecstaskset.ServiceRegistriesAttributes](ets.ref.Append("service_registries"))
+	return terra.ReferenceAsList[ecstaskset.ServiceRegistriesAttributes](ets.ref.Append("service_registries"))
 }
 
 type ecsTaskSetState struct {

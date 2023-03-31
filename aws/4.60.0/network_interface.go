@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNetworkInterface creates a new instance of [NetworkInterface].
 func NewNetworkInterface(name string, args NetworkInterfaceArgs) *NetworkInterface {
 	return &NetworkInterface{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNetworkInterface(name string, args NetworkInterfaceArgs) *NetworkInterfa
 
 var _ terra.Resource = (*NetworkInterface)(nil)
 
+// NetworkInterface represents the Terraform resource aws_network_interface.
 type NetworkInterface struct {
-	Name  string
-	Args  NetworkInterfaceArgs
-	state *networkInterfaceState
+	Name      string
+	Args      NetworkInterfaceArgs
+	state     *networkInterfaceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NetworkInterface].
 func (ni *NetworkInterface) Type() string {
 	return "aws_network_interface"
 }
 
+// LocalName returns the local name for [NetworkInterface].
 func (ni *NetworkInterface) LocalName() string {
 	return ni.Name
 }
 
+// Configuration returns the configuration (args) for [NetworkInterface].
 func (ni *NetworkInterface) Configuration() interface{} {
 	return ni.Args
 }
 
+// DependOn is used for other resources to depend on [NetworkInterface].
+func (ni *NetworkInterface) DependOn() terra.Reference {
+	return terra.ReferenceResource(ni)
+}
+
+// Dependencies returns the list of resources [NetworkInterface] depends_on.
+func (ni *NetworkInterface) Dependencies() terra.Dependencies {
+	return ni.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NetworkInterface].
+func (ni *NetworkInterface) LifecycleManagement() *terra.Lifecycle {
+	return ni.Lifecycle
+}
+
+// Attributes returns the attributes for [NetworkInterface].
 func (ni *NetworkInterface) Attributes() networkInterfaceAttributes {
 	return networkInterfaceAttributes{ref: terra.ReferenceResource(ni)}
 }
 
+// ImportState imports the given attribute values into [NetworkInterface]'s state.
 func (ni *NetworkInterface) ImportState(av io.Reader) error {
 	ni.state = &networkInterfaceState{}
 	if err := json.NewDecoder(av).Decode(ni.state); err != nil {
@@ -49,10 +73,12 @@ func (ni *NetworkInterface) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NetworkInterface] has state.
 func (ni *NetworkInterface) State() (*networkInterfaceState, bool) {
 	return ni.state, ni.state != nil
 }
 
+// StateMust returns the state for [NetworkInterface]. Panics if the state is nil.
 func (ni *NetworkInterface) StateMust() *networkInterfaceState {
 	if ni.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ni.Type(), ni.LocalName()))
@@ -60,10 +86,7 @@ func (ni *NetworkInterface) StateMust() *networkInterfaceState {
 	return ni.state
 }
 
-func (ni *NetworkInterface) DependOn() terra.Reference {
-	return terra.ReferenceResource(ni)
-}
-
+// NetworkInterfaceArgs contains the configurations for aws_network_interface.
 type NetworkInterfaceArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -109,119 +132,143 @@ type NetworkInterfaceArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Attachment: min=0
 	Attachment []networkinterface.Attachment `hcl:"attachment,block" validate:"min=0"`
-	// DependsOn contains resources that NetworkInterface depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type networkInterfaceAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_network_interface.
 func (ni networkInterfaceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("arn"))
+	return terra.ReferenceAsString(ni.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_network_interface.
 func (ni networkInterfaceAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("description"))
+	return terra.ReferenceAsString(ni.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_network_interface.
 func (ni networkInterfaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("id"))
+	return terra.ReferenceAsString(ni.ref.Append("id"))
 }
 
+// InterfaceType returns a reference to field interface_type of aws_network_interface.
 func (ni networkInterfaceAttributes) InterfaceType() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("interface_type"))
+	return terra.ReferenceAsString(ni.ref.Append("interface_type"))
 }
 
+// Ipv4PrefixCount returns a reference to field ipv4_prefix_count of aws_network_interface.
 func (ni networkInterfaceAttributes) Ipv4PrefixCount() terra.NumberValue {
-	return terra.ReferenceNumber(ni.ref.Append("ipv4_prefix_count"))
+	return terra.ReferenceAsNumber(ni.ref.Append("ipv4_prefix_count"))
 }
 
+// Ipv4Prefixes returns a reference to field ipv4_prefixes of aws_network_interface.
 func (ni networkInterfaceAttributes) Ipv4Prefixes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ni.ref.Append("ipv4_prefixes"))
+	return terra.ReferenceAsSet[terra.StringValue](ni.ref.Append("ipv4_prefixes"))
 }
 
+// Ipv6AddressCount returns a reference to field ipv6_address_count of aws_network_interface.
 func (ni networkInterfaceAttributes) Ipv6AddressCount() terra.NumberValue {
-	return terra.ReferenceNumber(ni.ref.Append("ipv6_address_count"))
+	return terra.ReferenceAsNumber(ni.ref.Append("ipv6_address_count"))
 }
 
+// Ipv6AddressList returns a reference to field ipv6_address_list of aws_network_interface.
 func (ni networkInterfaceAttributes) Ipv6AddressList() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ni.ref.Append("ipv6_address_list"))
+	return terra.ReferenceAsList[terra.StringValue](ni.ref.Append("ipv6_address_list"))
 }
 
+// Ipv6AddressListEnabled returns a reference to field ipv6_address_list_enabled of aws_network_interface.
 func (ni networkInterfaceAttributes) Ipv6AddressListEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ni.ref.Append("ipv6_address_list_enabled"))
+	return terra.ReferenceAsBool(ni.ref.Append("ipv6_address_list_enabled"))
 }
 
+// Ipv6Addresses returns a reference to field ipv6_addresses of aws_network_interface.
 func (ni networkInterfaceAttributes) Ipv6Addresses() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ni.ref.Append("ipv6_addresses"))
+	return terra.ReferenceAsSet[terra.StringValue](ni.ref.Append("ipv6_addresses"))
 }
 
+// Ipv6PrefixCount returns a reference to field ipv6_prefix_count of aws_network_interface.
 func (ni networkInterfaceAttributes) Ipv6PrefixCount() terra.NumberValue {
-	return terra.ReferenceNumber(ni.ref.Append("ipv6_prefix_count"))
+	return terra.ReferenceAsNumber(ni.ref.Append("ipv6_prefix_count"))
 }
 
+// Ipv6Prefixes returns a reference to field ipv6_prefixes of aws_network_interface.
 func (ni networkInterfaceAttributes) Ipv6Prefixes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ni.ref.Append("ipv6_prefixes"))
+	return terra.ReferenceAsSet[terra.StringValue](ni.ref.Append("ipv6_prefixes"))
 }
 
+// MacAddress returns a reference to field mac_address of aws_network_interface.
 func (ni networkInterfaceAttributes) MacAddress() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("mac_address"))
+	return terra.ReferenceAsString(ni.ref.Append("mac_address"))
 }
 
+// OutpostArn returns a reference to field outpost_arn of aws_network_interface.
 func (ni networkInterfaceAttributes) OutpostArn() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("outpost_arn"))
+	return terra.ReferenceAsString(ni.ref.Append("outpost_arn"))
 }
 
+// OwnerId returns a reference to field owner_id of aws_network_interface.
 func (ni networkInterfaceAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("owner_id"))
+	return terra.ReferenceAsString(ni.ref.Append("owner_id"))
 }
 
+// PrivateDnsName returns a reference to field private_dns_name of aws_network_interface.
 func (ni networkInterfaceAttributes) PrivateDnsName() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("private_dns_name"))
+	return terra.ReferenceAsString(ni.ref.Append("private_dns_name"))
 }
 
+// PrivateIp returns a reference to field private_ip of aws_network_interface.
 func (ni networkInterfaceAttributes) PrivateIp() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("private_ip"))
+	return terra.ReferenceAsString(ni.ref.Append("private_ip"))
 }
 
+// PrivateIpList returns a reference to field private_ip_list of aws_network_interface.
 func (ni networkInterfaceAttributes) PrivateIpList() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ni.ref.Append("private_ip_list"))
+	return terra.ReferenceAsList[terra.StringValue](ni.ref.Append("private_ip_list"))
 }
 
+// PrivateIpListEnabled returns a reference to field private_ip_list_enabled of aws_network_interface.
 func (ni networkInterfaceAttributes) PrivateIpListEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ni.ref.Append("private_ip_list_enabled"))
+	return terra.ReferenceAsBool(ni.ref.Append("private_ip_list_enabled"))
 }
 
+// PrivateIps returns a reference to field private_ips of aws_network_interface.
 func (ni networkInterfaceAttributes) PrivateIps() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ni.ref.Append("private_ips"))
+	return terra.ReferenceAsSet[terra.StringValue](ni.ref.Append("private_ips"))
 }
 
+// PrivateIpsCount returns a reference to field private_ips_count of aws_network_interface.
 func (ni networkInterfaceAttributes) PrivateIpsCount() terra.NumberValue {
-	return terra.ReferenceNumber(ni.ref.Append("private_ips_count"))
+	return terra.ReferenceAsNumber(ni.ref.Append("private_ips_count"))
 }
 
+// SecurityGroups returns a reference to field security_groups of aws_network_interface.
 func (ni networkInterfaceAttributes) SecurityGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ni.ref.Append("security_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](ni.ref.Append("security_groups"))
 }
 
+// SourceDestCheck returns a reference to field source_dest_check of aws_network_interface.
 func (ni networkInterfaceAttributes) SourceDestCheck() terra.BoolValue {
-	return terra.ReferenceBool(ni.ref.Append("source_dest_check"))
+	return terra.ReferenceAsBool(ni.ref.Append("source_dest_check"))
 }
 
+// SubnetId returns a reference to field subnet_id of aws_network_interface.
 func (ni networkInterfaceAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(ni.ref.Append("subnet_id"))
 }
 
+// Tags returns a reference to field tags of aws_network_interface.
 func (ni networkInterfaceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ni.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ni.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_network_interface.
 func (ni networkInterfaceAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ni.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ni.ref.Append("tags_all"))
 }
 
 func (ni networkInterfaceAttributes) Attachment() terra.SetValue[networkinterface.AttachmentAttributes] {
-	return terra.ReferenceSet[networkinterface.AttachmentAttributes](ni.ref.Append("attachment"))
+	return terra.ReferenceAsSet[networkinterface.AttachmentAttributes](ni.ref.Append("attachment"))
 }
 
 type networkInterfaceState struct {

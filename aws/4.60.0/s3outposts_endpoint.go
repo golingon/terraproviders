@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewS3OutpostsEndpoint creates a new instance of [S3OutpostsEndpoint].
 func NewS3OutpostsEndpoint(name string, args S3OutpostsEndpointArgs) *S3OutpostsEndpoint {
 	return &S3OutpostsEndpoint{
 		Args: args,
@@ -19,28 +20,51 @@ func NewS3OutpostsEndpoint(name string, args S3OutpostsEndpointArgs) *S3Outposts
 
 var _ terra.Resource = (*S3OutpostsEndpoint)(nil)
 
+// S3OutpostsEndpoint represents the Terraform resource aws_s3outposts_endpoint.
 type S3OutpostsEndpoint struct {
-	Name  string
-	Args  S3OutpostsEndpointArgs
-	state *s3OutpostsEndpointState
+	Name      string
+	Args      S3OutpostsEndpointArgs
+	state     *s3OutpostsEndpointState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [S3OutpostsEndpoint].
 func (se *S3OutpostsEndpoint) Type() string {
 	return "aws_s3outposts_endpoint"
 }
 
+// LocalName returns the local name for [S3OutpostsEndpoint].
 func (se *S3OutpostsEndpoint) LocalName() string {
 	return se.Name
 }
 
+// Configuration returns the configuration (args) for [S3OutpostsEndpoint].
 func (se *S3OutpostsEndpoint) Configuration() interface{} {
 	return se.Args
 }
 
+// DependOn is used for other resources to depend on [S3OutpostsEndpoint].
+func (se *S3OutpostsEndpoint) DependOn() terra.Reference {
+	return terra.ReferenceResource(se)
+}
+
+// Dependencies returns the list of resources [S3OutpostsEndpoint] depends_on.
+func (se *S3OutpostsEndpoint) Dependencies() terra.Dependencies {
+	return se.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [S3OutpostsEndpoint].
+func (se *S3OutpostsEndpoint) LifecycleManagement() *terra.Lifecycle {
+	return se.Lifecycle
+}
+
+// Attributes returns the attributes for [S3OutpostsEndpoint].
 func (se *S3OutpostsEndpoint) Attributes() s3OutpostsEndpointAttributes {
 	return s3OutpostsEndpointAttributes{ref: terra.ReferenceResource(se)}
 }
 
+// ImportState imports the given attribute values into [S3OutpostsEndpoint]'s state.
 func (se *S3OutpostsEndpoint) ImportState(av io.Reader) error {
 	se.state = &s3OutpostsEndpointState{}
 	if err := json.NewDecoder(av).Decode(se.state); err != nil {
@@ -49,10 +73,12 @@ func (se *S3OutpostsEndpoint) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [S3OutpostsEndpoint] has state.
 func (se *S3OutpostsEndpoint) State() (*s3OutpostsEndpointState, bool) {
 	return se.state, se.state != nil
 }
 
+// StateMust returns the state for [S3OutpostsEndpoint]. Panics if the state is nil.
 func (se *S3OutpostsEndpoint) StateMust() *s3OutpostsEndpointState {
 	if se.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", se.Type(), se.LocalName()))
@@ -60,10 +86,7 @@ func (se *S3OutpostsEndpoint) StateMust() *s3OutpostsEndpointState {
 	return se.state
 }
 
-func (se *S3OutpostsEndpoint) DependOn() terra.Reference {
-	return terra.ReferenceResource(se)
-}
-
+// S3OutpostsEndpointArgs contains the configurations for aws_s3outposts_endpoint.
 type S3OutpostsEndpointArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -75,43 +98,48 @@ type S3OutpostsEndpointArgs struct {
 	SubnetId terra.StringValue `hcl:"subnet_id,attr" validate:"required"`
 	// NetworkInterfaces: min=0
 	NetworkInterfaces []s3outpostsendpoint.NetworkInterfaces `hcl:"network_interfaces,block" validate:"min=0"`
-	// DependsOn contains resources that S3OutpostsEndpoint depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type s3OutpostsEndpointAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_s3outposts_endpoint.
 func (se s3OutpostsEndpointAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(se.ref.Append("arn"))
+	return terra.ReferenceAsString(se.ref.Append("arn"))
 }
 
+// CidrBlock returns a reference to field cidr_block of aws_s3outposts_endpoint.
 func (se s3OutpostsEndpointAttributes) CidrBlock() terra.StringValue {
-	return terra.ReferenceString(se.ref.Append("cidr_block"))
+	return terra.ReferenceAsString(se.ref.Append("cidr_block"))
 }
 
+// CreationTime returns a reference to field creation_time of aws_s3outposts_endpoint.
 func (se s3OutpostsEndpointAttributes) CreationTime() terra.StringValue {
-	return terra.ReferenceString(se.ref.Append("creation_time"))
+	return terra.ReferenceAsString(se.ref.Append("creation_time"))
 }
 
+// Id returns a reference to field id of aws_s3outposts_endpoint.
 func (se s3OutpostsEndpointAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(se.ref.Append("id"))
+	return terra.ReferenceAsString(se.ref.Append("id"))
 }
 
+// OutpostId returns a reference to field outpost_id of aws_s3outposts_endpoint.
 func (se s3OutpostsEndpointAttributes) OutpostId() terra.StringValue {
-	return terra.ReferenceString(se.ref.Append("outpost_id"))
+	return terra.ReferenceAsString(se.ref.Append("outpost_id"))
 }
 
+// SecurityGroupId returns a reference to field security_group_id of aws_s3outposts_endpoint.
 func (se s3OutpostsEndpointAttributes) SecurityGroupId() terra.StringValue {
-	return terra.ReferenceString(se.ref.Append("security_group_id"))
+	return terra.ReferenceAsString(se.ref.Append("security_group_id"))
 }
 
+// SubnetId returns a reference to field subnet_id of aws_s3outposts_endpoint.
 func (se s3OutpostsEndpointAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(se.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(se.ref.Append("subnet_id"))
 }
 
 func (se s3OutpostsEndpointAttributes) NetworkInterfaces() terra.SetValue[s3outpostsendpoint.NetworkInterfacesAttributes] {
-	return terra.ReferenceSet[s3outpostsendpoint.NetworkInterfacesAttributes](se.ref.Append("network_interfaces"))
+	return terra.ReferenceAsSet[s3outpostsendpoint.NetworkInterfacesAttributes](se.ref.Append("network_interfaces"))
 }
 
 type s3OutpostsEndpointState struct {

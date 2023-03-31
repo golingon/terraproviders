@@ -72,19 +72,19 @@ func (c ConditionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ConditionAttributes) StringEquals() terra.SetValue[StringEqualsAttributes] {
-	return terra.ReferenceSet[StringEqualsAttributes](c.ref.Append("string_equals"))
+	return terra.ReferenceAsSet[StringEqualsAttributes](c.ref.Append("string_equals"))
 }
 
 func (c ConditionAttributes) StringLike() terra.SetValue[StringLikeAttributes] {
-	return terra.ReferenceSet[StringLikeAttributes](c.ref.Append("string_like"))
+	return terra.ReferenceAsSet[StringLikeAttributes](c.ref.Append("string_like"))
 }
 
 func (c ConditionAttributes) StringNotEquals() terra.SetValue[StringNotEqualsAttributes] {
-	return terra.ReferenceSet[StringNotEqualsAttributes](c.ref.Append("string_not_equals"))
+	return terra.ReferenceAsSet[StringNotEqualsAttributes](c.ref.Append("string_not_equals"))
 }
 
 func (c ConditionAttributes) StringNotLike() terra.SetValue[StringNotLikeAttributes] {
-	return terra.ReferenceSet[StringNotLikeAttributes](c.ref.Append("string_not_like"))
+	return terra.ReferenceAsSet[StringNotLikeAttributes](c.ref.Append("string_not_like"))
 }
 
 type StringEqualsAttributes struct {
@@ -104,11 +104,11 @@ func (se StringEqualsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (se StringEqualsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(se.ref.Append("key"))
+	return terra.ReferenceAsString(se.ref.Append("key"))
 }
 
 func (se StringEqualsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(se.ref.Append("value"))
+	return terra.ReferenceAsString(se.ref.Append("value"))
 }
 
 type StringLikeAttributes struct {
@@ -128,11 +128,11 @@ func (sl StringLikeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sl StringLikeAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("key"))
+	return terra.ReferenceAsString(sl.ref.Append("key"))
 }
 
 func (sl StringLikeAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("value"))
+	return terra.ReferenceAsString(sl.ref.Append("value"))
 }
 
 type StringNotEqualsAttributes struct {
@@ -152,11 +152,11 @@ func (sne StringNotEqualsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sne StringNotEqualsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(sne.ref.Append("key"))
+	return terra.ReferenceAsString(sne.ref.Append("key"))
 }
 
 func (sne StringNotEqualsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(sne.ref.Append("value"))
+	return terra.ReferenceAsString(sne.ref.Append("value"))
 }
 
 type StringNotLikeAttributes struct {
@@ -176,11 +176,11 @@ func (snl StringNotLikeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (snl StringNotLikeAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(snl.ref.Append("key"))
+	return terra.ReferenceAsString(snl.ref.Append("key"))
 }
 
 func (snl StringNotLikeAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(snl.ref.Append("value"))
+	return terra.ReferenceAsString(snl.ref.Append("value"))
 }
 
 type SelectionTagAttributes struct {
@@ -200,15 +200,15 @@ func (st SelectionTagAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (st SelectionTagAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("key"))
+	return terra.ReferenceAsString(st.ref.Append("key"))
 }
 
 func (st SelectionTagAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("type"))
+	return terra.ReferenceAsString(st.ref.Append("type"))
 }
 
 func (st SelectionTagAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("value"))
+	return terra.ReferenceAsString(st.ref.Append("value"))
 }
 
 type ConditionState struct {

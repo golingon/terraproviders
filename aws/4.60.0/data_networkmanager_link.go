@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataNetworkmanagerLink creates a new instance of [DataNetworkmanagerLink].
 func NewDataNetworkmanagerLink(name string, args DataNetworkmanagerLinkArgs) *DataNetworkmanagerLink {
 	return &DataNetworkmanagerLink{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataNetworkmanagerLink(name string, args DataNetworkmanagerLinkArgs) *Da
 
 var _ terra.DataResource = (*DataNetworkmanagerLink)(nil)
 
+// DataNetworkmanagerLink represents the Terraform data resource aws_networkmanager_link.
 type DataNetworkmanagerLink struct {
 	Name string
 	Args DataNetworkmanagerLinkArgs
 }
 
+// DataSource returns the Terraform object type for [DataNetworkmanagerLink].
 func (nl *DataNetworkmanagerLink) DataSource() string {
 	return "aws_networkmanager_link"
 }
 
+// LocalName returns the local name for [DataNetworkmanagerLink].
 func (nl *DataNetworkmanagerLink) LocalName() string {
 	return nl.Name
 }
 
+// Configuration returns the configuration (args) for [DataNetworkmanagerLink].
 func (nl *DataNetworkmanagerLink) Configuration() interface{} {
 	return nl.Args
 }
 
+// Attributes returns the attributes for [DataNetworkmanagerLink].
 func (nl *DataNetworkmanagerLink) Attributes() dataNetworkmanagerLinkAttributes {
 	return dataNetworkmanagerLinkAttributes{ref: terra.ReferenceDataResource(nl)}
 }
 
+// DataNetworkmanagerLinkArgs contains the configurations for aws_networkmanager_link.
 type DataNetworkmanagerLinkArgs struct {
 	// GlobalNetworkId: string, required
 	GlobalNetworkId terra.StringValue `hcl:"global_network_id,attr" validate:"required"`
@@ -53,42 +60,51 @@ type dataNetworkmanagerLinkAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_networkmanager_link.
 func (nl dataNetworkmanagerLinkAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(nl.ref.Append("arn"))
+	return terra.ReferenceAsString(nl.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_networkmanager_link.
 func (nl dataNetworkmanagerLinkAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(nl.ref.Append("description"))
+	return terra.ReferenceAsString(nl.ref.Append("description"))
 }
 
+// GlobalNetworkId returns a reference to field global_network_id of aws_networkmanager_link.
 func (nl dataNetworkmanagerLinkAttributes) GlobalNetworkId() terra.StringValue {
-	return terra.ReferenceString(nl.ref.Append("global_network_id"))
+	return terra.ReferenceAsString(nl.ref.Append("global_network_id"))
 }
 
+// Id returns a reference to field id of aws_networkmanager_link.
 func (nl dataNetworkmanagerLinkAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nl.ref.Append("id"))
+	return terra.ReferenceAsString(nl.ref.Append("id"))
 }
 
+// LinkId returns a reference to field link_id of aws_networkmanager_link.
 func (nl dataNetworkmanagerLinkAttributes) LinkId() terra.StringValue {
-	return terra.ReferenceString(nl.ref.Append("link_id"))
+	return terra.ReferenceAsString(nl.ref.Append("link_id"))
 }
 
+// ProviderName returns a reference to field provider_name of aws_networkmanager_link.
 func (nl dataNetworkmanagerLinkAttributes) ProviderName() terra.StringValue {
-	return terra.ReferenceString(nl.ref.Append("provider_name"))
+	return terra.ReferenceAsString(nl.ref.Append("provider_name"))
 }
 
+// SiteId returns a reference to field site_id of aws_networkmanager_link.
 func (nl dataNetworkmanagerLinkAttributes) SiteId() terra.StringValue {
-	return terra.ReferenceString(nl.ref.Append("site_id"))
+	return terra.ReferenceAsString(nl.ref.Append("site_id"))
 }
 
+// Tags returns a reference to field tags of aws_networkmanager_link.
 func (nl dataNetworkmanagerLinkAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](nl.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](nl.ref.Append("tags"))
 }
 
+// Type returns a reference to field type of aws_networkmanager_link.
 func (nl dataNetworkmanagerLinkAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(nl.ref.Append("type"))
+	return terra.ReferenceAsString(nl.ref.Append("type"))
 }
 
 func (nl dataNetworkmanagerLinkAttributes) Bandwidth() terra.ListValue[datanetworkmanagerlink.BandwidthAttributes] {
-	return terra.ReferenceList[datanetworkmanagerlink.BandwidthAttributes](nl.ref.Append("bandwidth"))
+	return terra.ReferenceAsList[datanetworkmanagerlink.BandwidthAttributes](nl.ref.Append("bandwidth"))
 }

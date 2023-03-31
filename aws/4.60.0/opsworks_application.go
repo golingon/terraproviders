@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewOpsworksApplication creates a new instance of [OpsworksApplication].
 func NewOpsworksApplication(name string, args OpsworksApplicationArgs) *OpsworksApplication {
 	return &OpsworksApplication{
 		Args: args,
@@ -19,28 +20,51 @@ func NewOpsworksApplication(name string, args OpsworksApplicationArgs) *Opsworks
 
 var _ terra.Resource = (*OpsworksApplication)(nil)
 
+// OpsworksApplication represents the Terraform resource aws_opsworks_application.
 type OpsworksApplication struct {
-	Name  string
-	Args  OpsworksApplicationArgs
-	state *opsworksApplicationState
+	Name      string
+	Args      OpsworksApplicationArgs
+	state     *opsworksApplicationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [OpsworksApplication].
 func (oa *OpsworksApplication) Type() string {
 	return "aws_opsworks_application"
 }
 
+// LocalName returns the local name for [OpsworksApplication].
 func (oa *OpsworksApplication) LocalName() string {
 	return oa.Name
 }
 
+// Configuration returns the configuration (args) for [OpsworksApplication].
 func (oa *OpsworksApplication) Configuration() interface{} {
 	return oa.Args
 }
 
+// DependOn is used for other resources to depend on [OpsworksApplication].
+func (oa *OpsworksApplication) DependOn() terra.Reference {
+	return terra.ReferenceResource(oa)
+}
+
+// Dependencies returns the list of resources [OpsworksApplication] depends_on.
+func (oa *OpsworksApplication) Dependencies() terra.Dependencies {
+	return oa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [OpsworksApplication].
+func (oa *OpsworksApplication) LifecycleManagement() *terra.Lifecycle {
+	return oa.Lifecycle
+}
+
+// Attributes returns the attributes for [OpsworksApplication].
 func (oa *OpsworksApplication) Attributes() opsworksApplicationAttributes {
 	return opsworksApplicationAttributes{ref: terra.ReferenceResource(oa)}
 }
 
+// ImportState imports the given attribute values into [OpsworksApplication]'s state.
 func (oa *OpsworksApplication) ImportState(av io.Reader) error {
 	oa.state = &opsworksApplicationState{}
 	if err := json.NewDecoder(av).Decode(oa.state); err != nil {
@@ -49,10 +73,12 @@ func (oa *OpsworksApplication) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [OpsworksApplication] has state.
 func (oa *OpsworksApplication) State() (*opsworksApplicationState, bool) {
 	return oa.state, oa.state != nil
 }
 
+// StateMust returns the state for [OpsworksApplication]. Panics if the state is nil.
 func (oa *OpsworksApplication) StateMust() *opsworksApplicationState {
 	if oa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", oa.Type(), oa.LocalName()))
@@ -60,10 +86,7 @@ func (oa *OpsworksApplication) StateMust() *opsworksApplicationState {
 	return oa.state
 }
 
-func (oa *OpsworksApplication) DependOn() terra.Reference {
-	return terra.ReferenceResource(oa)
-}
-
+// OpsworksApplicationArgs contains the configurations for aws_opsworks_application.
 type OpsworksApplicationArgs struct {
 	// AutoBundleOnDeploy: string, optional
 	AutoBundleOnDeploy terra.StringValue `hcl:"auto_bundle_on_deploy,attr"`
@@ -101,83 +124,96 @@ type OpsworksApplicationArgs struct {
 	Environment []opsworksapplication.Environment `hcl:"environment,block" validate:"min=0"`
 	// SslConfiguration: min=0
 	SslConfiguration []opsworksapplication.SslConfiguration `hcl:"ssl_configuration,block" validate:"min=0"`
-	// DependsOn contains resources that OpsworksApplication depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type opsworksApplicationAttributes struct {
 	ref terra.Reference
 }
 
+// AutoBundleOnDeploy returns a reference to field auto_bundle_on_deploy of aws_opsworks_application.
 func (oa opsworksApplicationAttributes) AutoBundleOnDeploy() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("auto_bundle_on_deploy"))
+	return terra.ReferenceAsString(oa.ref.Append("auto_bundle_on_deploy"))
 }
 
+// AwsFlowRubySettings returns a reference to field aws_flow_ruby_settings of aws_opsworks_application.
 func (oa opsworksApplicationAttributes) AwsFlowRubySettings() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("aws_flow_ruby_settings"))
+	return terra.ReferenceAsString(oa.ref.Append("aws_flow_ruby_settings"))
 }
 
+// DataSourceArn returns a reference to field data_source_arn of aws_opsworks_application.
 func (oa opsworksApplicationAttributes) DataSourceArn() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("data_source_arn"))
+	return terra.ReferenceAsString(oa.ref.Append("data_source_arn"))
 }
 
+// DataSourceDatabaseName returns a reference to field data_source_database_name of aws_opsworks_application.
 func (oa opsworksApplicationAttributes) DataSourceDatabaseName() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("data_source_database_name"))
+	return terra.ReferenceAsString(oa.ref.Append("data_source_database_name"))
 }
 
+// DataSourceType returns a reference to field data_source_type of aws_opsworks_application.
 func (oa opsworksApplicationAttributes) DataSourceType() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("data_source_type"))
+	return terra.ReferenceAsString(oa.ref.Append("data_source_type"))
 }
 
+// Description returns a reference to field description of aws_opsworks_application.
 func (oa opsworksApplicationAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("description"))
+	return terra.ReferenceAsString(oa.ref.Append("description"))
 }
 
+// DocumentRoot returns a reference to field document_root of aws_opsworks_application.
 func (oa opsworksApplicationAttributes) DocumentRoot() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("document_root"))
+	return terra.ReferenceAsString(oa.ref.Append("document_root"))
 }
 
+// Domains returns a reference to field domains of aws_opsworks_application.
 func (oa opsworksApplicationAttributes) Domains() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](oa.ref.Append("domains"))
+	return terra.ReferenceAsList[terra.StringValue](oa.ref.Append("domains"))
 }
 
+// EnableSsl returns a reference to field enable_ssl of aws_opsworks_application.
 func (oa opsworksApplicationAttributes) EnableSsl() terra.BoolValue {
-	return terra.ReferenceBool(oa.ref.Append("enable_ssl"))
+	return terra.ReferenceAsBool(oa.ref.Append("enable_ssl"))
 }
 
+// Id returns a reference to field id of aws_opsworks_application.
 func (oa opsworksApplicationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("id"))
+	return terra.ReferenceAsString(oa.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_opsworks_application.
 func (oa opsworksApplicationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("name"))
+	return terra.ReferenceAsString(oa.ref.Append("name"))
 }
 
+// RailsEnv returns a reference to field rails_env of aws_opsworks_application.
 func (oa opsworksApplicationAttributes) RailsEnv() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("rails_env"))
+	return terra.ReferenceAsString(oa.ref.Append("rails_env"))
 }
 
+// ShortName returns a reference to field short_name of aws_opsworks_application.
 func (oa opsworksApplicationAttributes) ShortName() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("short_name"))
+	return terra.ReferenceAsString(oa.ref.Append("short_name"))
 }
 
+// StackId returns a reference to field stack_id of aws_opsworks_application.
 func (oa opsworksApplicationAttributes) StackId() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("stack_id"))
+	return terra.ReferenceAsString(oa.ref.Append("stack_id"))
 }
 
+// Type returns a reference to field type of aws_opsworks_application.
 func (oa opsworksApplicationAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("type"))
+	return terra.ReferenceAsString(oa.ref.Append("type"))
 }
 
 func (oa opsworksApplicationAttributes) AppSource() terra.ListValue[opsworksapplication.AppSourceAttributes] {
-	return terra.ReferenceList[opsworksapplication.AppSourceAttributes](oa.ref.Append("app_source"))
+	return terra.ReferenceAsList[opsworksapplication.AppSourceAttributes](oa.ref.Append("app_source"))
 }
 
 func (oa opsworksApplicationAttributes) Environment() terra.SetValue[opsworksapplication.EnvironmentAttributes] {
-	return terra.ReferenceSet[opsworksapplication.EnvironmentAttributes](oa.ref.Append("environment"))
+	return terra.ReferenceAsSet[opsworksapplication.EnvironmentAttributes](oa.ref.Append("environment"))
 }
 
 func (oa opsworksApplicationAttributes) SslConfiguration() terra.ListValue[opsworksapplication.SslConfigurationAttributes] {
-	return terra.ReferenceList[opsworksapplication.SslConfigurationAttributes](oa.ref.Append("ssl_configuration"))
+	return terra.ReferenceAsList[opsworksapplication.SslConfigurationAttributes](oa.ref.Append("ssl_configuration"))
 }
 
 type opsworksApplicationState struct {

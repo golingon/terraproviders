@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataOutpostsSite creates a new instance of [DataOutpostsSite].
 func NewDataOutpostsSite(name string, args DataOutpostsSiteArgs) *DataOutpostsSite {
 	return &DataOutpostsSite{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataOutpostsSite(name string, args DataOutpostsSiteArgs) *DataOutpostsSi
 
 var _ terra.DataResource = (*DataOutpostsSite)(nil)
 
+// DataOutpostsSite represents the Terraform data resource aws_outposts_site.
 type DataOutpostsSite struct {
 	Name string
 	Args DataOutpostsSiteArgs
 }
 
+// DataSource returns the Terraform object type for [DataOutpostsSite].
 func (os *DataOutpostsSite) DataSource() string {
 	return "aws_outposts_site"
 }
 
+// LocalName returns the local name for [DataOutpostsSite].
 func (os *DataOutpostsSite) LocalName() string {
 	return os.Name
 }
 
+// Configuration returns the configuration (args) for [DataOutpostsSite].
 func (os *DataOutpostsSite) Configuration() interface{} {
 	return os.Args
 }
 
+// Attributes returns the attributes for [DataOutpostsSite].
 func (os *DataOutpostsSite) Attributes() dataOutpostsSiteAttributes {
 	return dataOutpostsSiteAttributes{ref: terra.ReferenceDataResource(os)}
 }
 
+// DataOutpostsSiteArgs contains the configurations for aws_outposts_site.
 type DataOutpostsSiteArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,18 +51,22 @@ type dataOutpostsSiteAttributes struct {
 	ref terra.Reference
 }
 
+// AccountId returns a reference to field account_id of aws_outposts_site.
 func (os dataOutpostsSiteAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(os.ref.Append("account_id"))
+	return terra.ReferenceAsString(os.ref.Append("account_id"))
 }
 
+// Description returns a reference to field description of aws_outposts_site.
 func (os dataOutpostsSiteAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(os.ref.Append("description"))
+	return terra.ReferenceAsString(os.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_outposts_site.
 func (os dataOutpostsSiteAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(os.ref.Append("id"))
+	return terra.ReferenceAsString(os.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_outposts_site.
 func (os dataOutpostsSiteAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(os.ref.Append("name"))
+	return terra.ReferenceAsString(os.ref.Append("name"))
 }

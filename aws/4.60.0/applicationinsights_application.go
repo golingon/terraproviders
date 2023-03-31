@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewApplicationinsightsApplication creates a new instance of [ApplicationinsightsApplication].
 func NewApplicationinsightsApplication(name string, args ApplicationinsightsApplicationArgs) *ApplicationinsightsApplication {
 	return &ApplicationinsightsApplication{
 		Args: args,
@@ -18,28 +19,51 @@ func NewApplicationinsightsApplication(name string, args ApplicationinsightsAppl
 
 var _ terra.Resource = (*ApplicationinsightsApplication)(nil)
 
+// ApplicationinsightsApplication represents the Terraform resource aws_applicationinsights_application.
 type ApplicationinsightsApplication struct {
-	Name  string
-	Args  ApplicationinsightsApplicationArgs
-	state *applicationinsightsApplicationState
+	Name      string
+	Args      ApplicationinsightsApplicationArgs
+	state     *applicationinsightsApplicationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApplicationinsightsApplication].
 func (aa *ApplicationinsightsApplication) Type() string {
 	return "aws_applicationinsights_application"
 }
 
+// LocalName returns the local name for [ApplicationinsightsApplication].
 func (aa *ApplicationinsightsApplication) LocalName() string {
 	return aa.Name
 }
 
+// Configuration returns the configuration (args) for [ApplicationinsightsApplication].
 func (aa *ApplicationinsightsApplication) Configuration() interface{} {
 	return aa.Args
 }
 
+// DependOn is used for other resources to depend on [ApplicationinsightsApplication].
+func (aa *ApplicationinsightsApplication) DependOn() terra.Reference {
+	return terra.ReferenceResource(aa)
+}
+
+// Dependencies returns the list of resources [ApplicationinsightsApplication] depends_on.
+func (aa *ApplicationinsightsApplication) Dependencies() terra.Dependencies {
+	return aa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApplicationinsightsApplication].
+func (aa *ApplicationinsightsApplication) LifecycleManagement() *terra.Lifecycle {
+	return aa.Lifecycle
+}
+
+// Attributes returns the attributes for [ApplicationinsightsApplication].
 func (aa *ApplicationinsightsApplication) Attributes() applicationinsightsApplicationAttributes {
 	return applicationinsightsApplicationAttributes{ref: terra.ReferenceResource(aa)}
 }
 
+// ImportState imports the given attribute values into [ApplicationinsightsApplication]'s state.
 func (aa *ApplicationinsightsApplication) ImportState(av io.Reader) error {
 	aa.state = &applicationinsightsApplicationState{}
 	if err := json.NewDecoder(av).Decode(aa.state); err != nil {
@@ -48,10 +72,12 @@ func (aa *ApplicationinsightsApplication) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApplicationinsightsApplication] has state.
 func (aa *ApplicationinsightsApplication) State() (*applicationinsightsApplicationState, bool) {
 	return aa.state, aa.state != nil
 }
 
+// StateMust returns the state for [ApplicationinsightsApplication]. Panics if the state is nil.
 func (aa *ApplicationinsightsApplication) StateMust() *applicationinsightsApplicationState {
 	if aa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", aa.Type(), aa.LocalName()))
@@ -59,10 +85,7 @@ func (aa *ApplicationinsightsApplication) StateMust() *applicationinsightsApplic
 	return aa.state
 }
 
-func (aa *ApplicationinsightsApplication) DependOn() terra.Reference {
-	return terra.ReferenceResource(aa)
-}
-
+// ApplicationinsightsApplicationArgs contains the configurations for aws_applicationinsights_application.
 type ApplicationinsightsApplicationArgs struct {
 	// AutoConfigEnabled: bool, optional
 	AutoConfigEnabled terra.BoolValue `hcl:"auto_config_enabled,attr"`
@@ -84,55 +107,64 @@ type ApplicationinsightsApplicationArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that ApplicationinsightsApplication depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type applicationinsightsApplicationAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_applicationinsights_application.
 func (aa applicationinsightsApplicationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("arn"))
+	return terra.ReferenceAsString(aa.ref.Append("arn"))
 }
 
+// AutoConfigEnabled returns a reference to field auto_config_enabled of aws_applicationinsights_application.
 func (aa applicationinsightsApplicationAttributes) AutoConfigEnabled() terra.BoolValue {
-	return terra.ReferenceBool(aa.ref.Append("auto_config_enabled"))
+	return terra.ReferenceAsBool(aa.ref.Append("auto_config_enabled"))
 }
 
+// AutoCreate returns a reference to field auto_create of aws_applicationinsights_application.
 func (aa applicationinsightsApplicationAttributes) AutoCreate() terra.BoolValue {
-	return terra.ReferenceBool(aa.ref.Append("auto_create"))
+	return terra.ReferenceAsBool(aa.ref.Append("auto_create"))
 }
 
+// CweMonitorEnabled returns a reference to field cwe_monitor_enabled of aws_applicationinsights_application.
 func (aa applicationinsightsApplicationAttributes) CweMonitorEnabled() terra.BoolValue {
-	return terra.ReferenceBool(aa.ref.Append("cwe_monitor_enabled"))
+	return terra.ReferenceAsBool(aa.ref.Append("cwe_monitor_enabled"))
 }
 
+// GroupingType returns a reference to field grouping_type of aws_applicationinsights_application.
 func (aa applicationinsightsApplicationAttributes) GroupingType() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("grouping_type"))
+	return terra.ReferenceAsString(aa.ref.Append("grouping_type"))
 }
 
+// Id returns a reference to field id of aws_applicationinsights_application.
 func (aa applicationinsightsApplicationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("id"))
+	return terra.ReferenceAsString(aa.ref.Append("id"))
 }
 
+// OpsCenterEnabled returns a reference to field ops_center_enabled of aws_applicationinsights_application.
 func (aa applicationinsightsApplicationAttributes) OpsCenterEnabled() terra.BoolValue {
-	return terra.ReferenceBool(aa.ref.Append("ops_center_enabled"))
+	return terra.ReferenceAsBool(aa.ref.Append("ops_center_enabled"))
 }
 
+// OpsItemSnsTopicArn returns a reference to field ops_item_sns_topic_arn of aws_applicationinsights_application.
 func (aa applicationinsightsApplicationAttributes) OpsItemSnsTopicArn() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("ops_item_sns_topic_arn"))
+	return terra.ReferenceAsString(aa.ref.Append("ops_item_sns_topic_arn"))
 }
 
+// ResourceGroupName returns a reference to field resource_group_name of aws_applicationinsights_application.
 func (aa applicationinsightsApplicationAttributes) ResourceGroupName() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("resource_group_name"))
+	return terra.ReferenceAsString(aa.ref.Append("resource_group_name"))
 }
 
+// Tags returns a reference to field tags of aws_applicationinsights_application.
 func (aa applicationinsightsApplicationAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](aa.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](aa.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_applicationinsights_application.
 func (aa applicationinsightsApplicationAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](aa.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](aa.ref.Append("tags_all"))
 }
 
 type applicationinsightsApplicationState struct {

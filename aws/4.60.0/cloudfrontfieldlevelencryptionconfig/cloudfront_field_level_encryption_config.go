@@ -64,11 +64,11 @@ func (ctpc ContentTypeProfileConfigAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (ctpc ContentTypeProfileConfigAttributes) ForwardWhenContentTypeIsUnknown() terra.BoolValue {
-	return terra.ReferenceBool(ctpc.ref.Append("forward_when_content_type_is_unknown"))
+	return terra.ReferenceAsBool(ctpc.ref.Append("forward_when_content_type_is_unknown"))
 }
 
 func (ctpc ContentTypeProfileConfigAttributes) ContentTypeProfiles() terra.ListValue[ContentTypeProfilesAttributes] {
-	return terra.ReferenceList[ContentTypeProfilesAttributes](ctpc.ref.Append("content_type_profiles"))
+	return terra.ReferenceAsList[ContentTypeProfilesAttributes](ctpc.ref.Append("content_type_profiles"))
 }
 
 type ContentTypeProfilesAttributes struct {
@@ -88,7 +88,7 @@ func (ctp ContentTypeProfilesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ctp ContentTypeProfilesAttributes) Items() terra.SetValue[ContentTypeProfilesItemsAttributes] {
-	return terra.ReferenceSet[ContentTypeProfilesItemsAttributes](ctp.ref.Append("items"))
+	return terra.ReferenceAsSet[ContentTypeProfilesItemsAttributes](ctp.ref.Append("items"))
 }
 
 type ContentTypeProfilesItemsAttributes struct {
@@ -108,15 +108,15 @@ func (i ContentTypeProfilesItemsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i ContentTypeProfilesItemsAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("content_type"))
+	return terra.ReferenceAsString(i.ref.Append("content_type"))
 }
 
 func (i ContentTypeProfilesItemsAttributes) Format() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("format"))
+	return terra.ReferenceAsString(i.ref.Append("format"))
 }
 
 func (i ContentTypeProfilesItemsAttributes) ProfileId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("profile_id"))
+	return terra.ReferenceAsString(i.ref.Append("profile_id"))
 }
 
 type QueryArgProfileConfigAttributes struct {
@@ -136,11 +136,11 @@ func (qapc QueryArgProfileConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (qapc QueryArgProfileConfigAttributes) ForwardWhenQueryArgProfileIsUnknown() terra.BoolValue {
-	return terra.ReferenceBool(qapc.ref.Append("forward_when_query_arg_profile_is_unknown"))
+	return terra.ReferenceAsBool(qapc.ref.Append("forward_when_query_arg_profile_is_unknown"))
 }
 
 func (qapc QueryArgProfileConfigAttributes) QueryArgProfiles() terra.ListValue[QueryArgProfilesAttributes] {
-	return terra.ReferenceList[QueryArgProfilesAttributes](qapc.ref.Append("query_arg_profiles"))
+	return terra.ReferenceAsList[QueryArgProfilesAttributes](qapc.ref.Append("query_arg_profiles"))
 }
 
 type QueryArgProfilesAttributes struct {
@@ -160,7 +160,7 @@ func (qap QueryArgProfilesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (qap QueryArgProfilesAttributes) Items() terra.SetValue[QueryArgProfilesItemsAttributes] {
-	return terra.ReferenceSet[QueryArgProfilesItemsAttributes](qap.ref.Append("items"))
+	return terra.ReferenceAsSet[QueryArgProfilesItemsAttributes](qap.ref.Append("items"))
 }
 
 type QueryArgProfilesItemsAttributes struct {
@@ -180,11 +180,11 @@ func (i QueryArgProfilesItemsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i QueryArgProfilesItemsAttributes) ProfileId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("profile_id"))
+	return terra.ReferenceAsString(i.ref.Append("profile_id"))
 }
 
 func (i QueryArgProfilesItemsAttributes) QueryArg() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("query_arg"))
+	return terra.ReferenceAsString(i.ref.Append("query_arg"))
 }
 
 type ContentTypeProfileConfigState struct {

@@ -76,19 +76,19 @@ func (as ArtifactStoreAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (as ArtifactStoreAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("location"))
+	return terra.ReferenceAsString(as.ref.Append("location"))
 }
 
 func (as ArtifactStoreAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("region"))
+	return terra.ReferenceAsString(as.ref.Append("region"))
 }
 
 func (as ArtifactStoreAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("type"))
+	return terra.ReferenceAsString(as.ref.Append("type"))
 }
 
 func (as ArtifactStoreAttributes) EncryptionKey() terra.ListValue[EncryptionKeyAttributes] {
-	return terra.ReferenceList[EncryptionKeyAttributes](as.ref.Append("encryption_key"))
+	return terra.ReferenceAsList[EncryptionKeyAttributes](as.ref.Append("encryption_key"))
 }
 
 type EncryptionKeyAttributes struct {
@@ -108,11 +108,11 @@ func (ek EncryptionKeyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ek EncryptionKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ek.ref.Append("id"))
+	return terra.ReferenceAsString(ek.ref.Append("id"))
 }
 
 func (ek EncryptionKeyAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ek.ref.Append("type"))
+	return terra.ReferenceAsString(ek.ref.Append("type"))
 }
 
 type StageAttributes struct {
@@ -132,11 +132,11 @@ func (s StageAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s StageAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s StageAttributes) Action() terra.ListValue[ActionAttributes] {
-	return terra.ReferenceList[ActionAttributes](s.ref.Append("action"))
+	return terra.ReferenceAsList[ActionAttributes](s.ref.Append("action"))
 }
 
 type ActionAttributes struct {
@@ -156,51 +156,51 @@ func (a ActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a ActionAttributes) Category() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("category"))
+	return terra.ReferenceAsString(a.ref.Append("category"))
 }
 
 func (a ActionAttributes) Configuration() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](a.ref.Append("configuration"))
+	return terra.ReferenceAsMap[terra.StringValue](a.ref.Append("configuration"))
 }
 
 func (a ActionAttributes) InputArtifacts() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](a.ref.Append("input_artifacts"))
+	return terra.ReferenceAsList[terra.StringValue](a.ref.Append("input_artifacts"))
 }
 
 func (a ActionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("name"))
+	return terra.ReferenceAsString(a.ref.Append("name"))
 }
 
 func (a ActionAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("namespace"))
+	return terra.ReferenceAsString(a.ref.Append("namespace"))
 }
 
 func (a ActionAttributes) OutputArtifacts() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](a.ref.Append("output_artifacts"))
+	return terra.ReferenceAsList[terra.StringValue](a.ref.Append("output_artifacts"))
 }
 
 func (a ActionAttributes) Owner() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("owner"))
+	return terra.ReferenceAsString(a.ref.Append("owner"))
 }
 
 func (a ActionAttributes) Provider() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("provider"))
+	return terra.ReferenceAsString(a.ref.Append("provider"))
 }
 
 func (a ActionAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("region"))
+	return terra.ReferenceAsString(a.ref.Append("region"))
 }
 
 func (a ActionAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("role_arn"))
+	return terra.ReferenceAsString(a.ref.Append("role_arn"))
 }
 
 func (a ActionAttributes) RunOrder() terra.NumberValue {
-	return terra.ReferenceNumber(a.ref.Append("run_order"))
+	return terra.ReferenceAsNumber(a.ref.Append("run_order"))
 }
 
 func (a ActionAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("version"))
+	return terra.ReferenceAsString(a.ref.Append("version"))
 }
 
 type ArtifactStoreState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRedshiftSnapshotScheduleAssociation creates a new instance of [RedshiftSnapshotScheduleAssociation].
 func NewRedshiftSnapshotScheduleAssociation(name string, args RedshiftSnapshotScheduleAssociationArgs) *RedshiftSnapshotScheduleAssociation {
 	return &RedshiftSnapshotScheduleAssociation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRedshiftSnapshotScheduleAssociation(name string, args RedshiftSnapshotSc
 
 var _ terra.Resource = (*RedshiftSnapshotScheduleAssociation)(nil)
 
+// RedshiftSnapshotScheduleAssociation represents the Terraform resource aws_redshift_snapshot_schedule_association.
 type RedshiftSnapshotScheduleAssociation struct {
-	Name  string
-	Args  RedshiftSnapshotScheduleAssociationArgs
-	state *redshiftSnapshotScheduleAssociationState
+	Name      string
+	Args      RedshiftSnapshotScheduleAssociationArgs
+	state     *redshiftSnapshotScheduleAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RedshiftSnapshotScheduleAssociation].
 func (rssa *RedshiftSnapshotScheduleAssociation) Type() string {
 	return "aws_redshift_snapshot_schedule_association"
 }
 
+// LocalName returns the local name for [RedshiftSnapshotScheduleAssociation].
 func (rssa *RedshiftSnapshotScheduleAssociation) LocalName() string {
 	return rssa.Name
 }
 
+// Configuration returns the configuration (args) for [RedshiftSnapshotScheduleAssociation].
 func (rssa *RedshiftSnapshotScheduleAssociation) Configuration() interface{} {
 	return rssa.Args
 }
 
+// DependOn is used for other resources to depend on [RedshiftSnapshotScheduleAssociation].
+func (rssa *RedshiftSnapshotScheduleAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(rssa)
+}
+
+// Dependencies returns the list of resources [RedshiftSnapshotScheduleAssociation] depends_on.
+func (rssa *RedshiftSnapshotScheduleAssociation) Dependencies() terra.Dependencies {
+	return rssa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RedshiftSnapshotScheduleAssociation].
+func (rssa *RedshiftSnapshotScheduleAssociation) LifecycleManagement() *terra.Lifecycle {
+	return rssa.Lifecycle
+}
+
+// Attributes returns the attributes for [RedshiftSnapshotScheduleAssociation].
 func (rssa *RedshiftSnapshotScheduleAssociation) Attributes() redshiftSnapshotScheduleAssociationAttributes {
 	return redshiftSnapshotScheduleAssociationAttributes{ref: terra.ReferenceResource(rssa)}
 }
 
+// ImportState imports the given attribute values into [RedshiftSnapshotScheduleAssociation]'s state.
 func (rssa *RedshiftSnapshotScheduleAssociation) ImportState(av io.Reader) error {
 	rssa.state = &redshiftSnapshotScheduleAssociationState{}
 	if err := json.NewDecoder(av).Decode(rssa.state); err != nil {
@@ -48,10 +72,12 @@ func (rssa *RedshiftSnapshotScheduleAssociation) ImportState(av io.Reader) error
 	return nil
 }
 
+// State returns the state and a bool indicating if [RedshiftSnapshotScheduleAssociation] has state.
 func (rssa *RedshiftSnapshotScheduleAssociation) State() (*redshiftSnapshotScheduleAssociationState, bool) {
 	return rssa.state, rssa.state != nil
 }
 
+// StateMust returns the state for [RedshiftSnapshotScheduleAssociation]. Panics if the state is nil.
 func (rssa *RedshiftSnapshotScheduleAssociation) StateMust() *redshiftSnapshotScheduleAssociationState {
 	if rssa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rssa.Type(), rssa.LocalName()))
@@ -59,10 +85,7 @@ func (rssa *RedshiftSnapshotScheduleAssociation) StateMust() *redshiftSnapshotSc
 	return rssa.state
 }
 
-func (rssa *RedshiftSnapshotScheduleAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(rssa)
-}
-
+// RedshiftSnapshotScheduleAssociationArgs contains the configurations for aws_redshift_snapshot_schedule_association.
 type RedshiftSnapshotScheduleAssociationArgs struct {
 	// ClusterIdentifier: string, required
 	ClusterIdentifier terra.StringValue `hcl:"cluster_identifier,attr" validate:"required"`
@@ -70,23 +93,24 @@ type RedshiftSnapshotScheduleAssociationArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// ScheduleIdentifier: string, required
 	ScheduleIdentifier terra.StringValue `hcl:"schedule_identifier,attr" validate:"required"`
-	// DependsOn contains resources that RedshiftSnapshotScheduleAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type redshiftSnapshotScheduleAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// ClusterIdentifier returns a reference to field cluster_identifier of aws_redshift_snapshot_schedule_association.
 func (rssa redshiftSnapshotScheduleAssociationAttributes) ClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(rssa.ref.Append("cluster_identifier"))
+	return terra.ReferenceAsString(rssa.ref.Append("cluster_identifier"))
 }
 
+// Id returns a reference to field id of aws_redshift_snapshot_schedule_association.
 func (rssa redshiftSnapshotScheduleAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rssa.ref.Append("id"))
+	return terra.ReferenceAsString(rssa.ref.Append("id"))
 }
 
+// ScheduleIdentifier returns a reference to field schedule_identifier of aws_redshift_snapshot_schedule_association.
 func (rssa redshiftSnapshotScheduleAssociationAttributes) ScheduleIdentifier() terra.StringValue {
-	return terra.ReferenceString(rssa.ref.Append("schedule_identifier"))
+	return terra.ReferenceAsString(rssa.ref.Append("schedule_identifier"))
 }
 
 type redshiftSnapshotScheduleAssociationState struct {

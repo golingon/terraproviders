@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewGluePartition creates a new instance of [GluePartition].
 func NewGluePartition(name string, args GluePartitionArgs) *GluePartition {
 	return &GluePartition{
 		Args: args,
@@ -19,28 +20,51 @@ func NewGluePartition(name string, args GluePartitionArgs) *GluePartition {
 
 var _ terra.Resource = (*GluePartition)(nil)
 
+// GluePartition represents the Terraform resource aws_glue_partition.
 type GluePartition struct {
-	Name  string
-	Args  GluePartitionArgs
-	state *gluePartitionState
+	Name      string
+	Args      GluePartitionArgs
+	state     *gluePartitionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GluePartition].
 func (gp *GluePartition) Type() string {
 	return "aws_glue_partition"
 }
 
+// LocalName returns the local name for [GluePartition].
 func (gp *GluePartition) LocalName() string {
 	return gp.Name
 }
 
+// Configuration returns the configuration (args) for [GluePartition].
 func (gp *GluePartition) Configuration() interface{} {
 	return gp.Args
 }
 
+// DependOn is used for other resources to depend on [GluePartition].
+func (gp *GluePartition) DependOn() terra.Reference {
+	return terra.ReferenceResource(gp)
+}
+
+// Dependencies returns the list of resources [GluePartition] depends_on.
+func (gp *GluePartition) Dependencies() terra.Dependencies {
+	return gp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GluePartition].
+func (gp *GluePartition) LifecycleManagement() *terra.Lifecycle {
+	return gp.Lifecycle
+}
+
+// Attributes returns the attributes for [GluePartition].
 func (gp *GluePartition) Attributes() gluePartitionAttributes {
 	return gluePartitionAttributes{ref: terra.ReferenceResource(gp)}
 }
 
+// ImportState imports the given attribute values into [GluePartition]'s state.
 func (gp *GluePartition) ImportState(av io.Reader) error {
 	gp.state = &gluePartitionState{}
 	if err := json.NewDecoder(av).Decode(gp.state); err != nil {
@@ -49,10 +73,12 @@ func (gp *GluePartition) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GluePartition] has state.
 func (gp *GluePartition) State() (*gluePartitionState, bool) {
 	return gp.state, gp.state != nil
 }
 
+// StateMust returns the state for [GluePartition]. Panics if the state is nil.
 func (gp *GluePartition) StateMust() *gluePartitionState {
 	if gp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", gp.Type(), gp.LocalName()))
@@ -60,10 +86,7 @@ func (gp *GluePartition) StateMust() *gluePartitionState {
 	return gp.state
 }
 
-func (gp *GluePartition) DependOn() terra.Reference {
-	return terra.ReferenceResource(gp)
-}
-
+// GluePartitionArgs contains the configurations for aws_glue_partition.
 type GluePartitionArgs struct {
 	// CatalogId: string, optional
 	CatalogId terra.StringValue `hcl:"catalog_id,attr"`
@@ -79,51 +102,58 @@ type GluePartitionArgs struct {
 	TableName terra.StringValue `hcl:"table_name,attr" validate:"required"`
 	// StorageDescriptor: optional
 	StorageDescriptor *gluepartition.StorageDescriptor `hcl:"storage_descriptor,block"`
-	// DependsOn contains resources that GluePartition depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type gluePartitionAttributes struct {
 	ref terra.Reference
 }
 
+// CatalogId returns a reference to field catalog_id of aws_glue_partition.
 func (gp gluePartitionAttributes) CatalogId() terra.StringValue {
-	return terra.ReferenceString(gp.ref.Append("catalog_id"))
+	return terra.ReferenceAsString(gp.ref.Append("catalog_id"))
 }
 
+// CreationTime returns a reference to field creation_time of aws_glue_partition.
 func (gp gluePartitionAttributes) CreationTime() terra.StringValue {
-	return terra.ReferenceString(gp.ref.Append("creation_time"))
+	return terra.ReferenceAsString(gp.ref.Append("creation_time"))
 }
 
+// DatabaseName returns a reference to field database_name of aws_glue_partition.
 func (gp gluePartitionAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(gp.ref.Append("database_name"))
+	return terra.ReferenceAsString(gp.ref.Append("database_name"))
 }
 
+// Id returns a reference to field id of aws_glue_partition.
 func (gp gluePartitionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gp.ref.Append("id"))
+	return terra.ReferenceAsString(gp.ref.Append("id"))
 }
 
+// LastAccessedTime returns a reference to field last_accessed_time of aws_glue_partition.
 func (gp gluePartitionAttributes) LastAccessedTime() terra.StringValue {
-	return terra.ReferenceString(gp.ref.Append("last_accessed_time"))
+	return terra.ReferenceAsString(gp.ref.Append("last_accessed_time"))
 }
 
+// LastAnalyzedTime returns a reference to field last_analyzed_time of aws_glue_partition.
 func (gp gluePartitionAttributes) LastAnalyzedTime() terra.StringValue {
-	return terra.ReferenceString(gp.ref.Append("last_analyzed_time"))
+	return terra.ReferenceAsString(gp.ref.Append("last_analyzed_time"))
 }
 
+// Parameters returns a reference to field parameters of aws_glue_partition.
 func (gp gluePartitionAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gp.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](gp.ref.Append("parameters"))
 }
 
+// PartitionValues returns a reference to field partition_values of aws_glue_partition.
 func (gp gluePartitionAttributes) PartitionValues() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](gp.ref.Append("partition_values"))
+	return terra.ReferenceAsList[terra.StringValue](gp.ref.Append("partition_values"))
 }
 
+// TableName returns a reference to field table_name of aws_glue_partition.
 func (gp gluePartitionAttributes) TableName() terra.StringValue {
-	return terra.ReferenceString(gp.ref.Append("table_name"))
+	return terra.ReferenceAsString(gp.ref.Append("table_name"))
 }
 
 func (gp gluePartitionAttributes) StorageDescriptor() terra.ListValue[gluepartition.StorageDescriptorAttributes] {
-	return terra.ReferenceList[gluepartition.StorageDescriptorAttributes](gp.ref.Append("storage_descriptor"))
+	return terra.ReferenceAsList[gluepartition.StorageDescriptorAttributes](gp.ref.Append("storage_descriptor"))
 }
 
 type gluePartitionState struct {

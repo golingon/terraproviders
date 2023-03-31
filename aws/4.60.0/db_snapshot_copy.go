@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDbSnapshotCopy creates a new instance of [DbSnapshotCopy].
 func NewDbSnapshotCopy(name string, args DbSnapshotCopyArgs) *DbSnapshotCopy {
 	return &DbSnapshotCopy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDbSnapshotCopy(name string, args DbSnapshotCopyArgs) *DbSnapshotCopy {
 
 var _ terra.Resource = (*DbSnapshotCopy)(nil)
 
+// DbSnapshotCopy represents the Terraform resource aws_db_snapshot_copy.
 type DbSnapshotCopy struct {
-	Name  string
-	Args  DbSnapshotCopyArgs
-	state *dbSnapshotCopyState
+	Name      string
+	Args      DbSnapshotCopyArgs
+	state     *dbSnapshotCopyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DbSnapshotCopy].
 func (dsc *DbSnapshotCopy) Type() string {
 	return "aws_db_snapshot_copy"
 }
 
+// LocalName returns the local name for [DbSnapshotCopy].
 func (dsc *DbSnapshotCopy) LocalName() string {
 	return dsc.Name
 }
 
+// Configuration returns the configuration (args) for [DbSnapshotCopy].
 func (dsc *DbSnapshotCopy) Configuration() interface{} {
 	return dsc.Args
 }
 
+// DependOn is used for other resources to depend on [DbSnapshotCopy].
+func (dsc *DbSnapshotCopy) DependOn() terra.Reference {
+	return terra.ReferenceResource(dsc)
+}
+
+// Dependencies returns the list of resources [DbSnapshotCopy] depends_on.
+func (dsc *DbSnapshotCopy) Dependencies() terra.Dependencies {
+	return dsc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DbSnapshotCopy].
+func (dsc *DbSnapshotCopy) LifecycleManagement() *terra.Lifecycle {
+	return dsc.Lifecycle
+}
+
+// Attributes returns the attributes for [DbSnapshotCopy].
 func (dsc *DbSnapshotCopy) Attributes() dbSnapshotCopyAttributes {
 	return dbSnapshotCopyAttributes{ref: terra.ReferenceResource(dsc)}
 }
 
+// ImportState imports the given attribute values into [DbSnapshotCopy]'s state.
 func (dsc *DbSnapshotCopy) ImportState(av io.Reader) error {
 	dsc.state = &dbSnapshotCopyState{}
 	if err := json.NewDecoder(av).Decode(dsc.state); err != nil {
@@ -49,10 +73,12 @@ func (dsc *DbSnapshotCopy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DbSnapshotCopy] has state.
 func (dsc *DbSnapshotCopy) State() (*dbSnapshotCopyState, bool) {
 	return dsc.state, dsc.state != nil
 }
 
+// StateMust returns the state for [DbSnapshotCopy]. Panics if the state is nil.
 func (dsc *DbSnapshotCopy) StateMust() *dbSnapshotCopyState {
 	if dsc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dsc.Type(), dsc.LocalName()))
@@ -60,10 +86,7 @@ func (dsc *DbSnapshotCopy) StateMust() *dbSnapshotCopyState {
 	return dsc.state
 }
 
-func (dsc *DbSnapshotCopy) DependOn() terra.Reference {
-	return terra.ReferenceResource(dsc)
-}
-
+// DbSnapshotCopyArgs contains the configurations for aws_db_snapshot_copy.
 type DbSnapshotCopyArgs struct {
 	// CopyTags: bool, optional
 	CopyTags terra.BoolValue `hcl:"copy_tags,attr"`
@@ -89,111 +112,133 @@ type DbSnapshotCopyArgs struct {
 	TargetDbSnapshotIdentifier terra.StringValue `hcl:"target_db_snapshot_identifier,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *dbsnapshotcopy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DbSnapshotCopy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dbSnapshotCopyAttributes struct {
 	ref terra.Reference
 }
 
+// AllocatedStorage returns a reference to field allocated_storage of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) AllocatedStorage() terra.NumberValue {
-	return terra.ReferenceNumber(dsc.ref.Append("allocated_storage"))
+	return terra.ReferenceAsNumber(dsc.ref.Append("allocated_storage"))
 }
 
+// AvailabilityZone returns a reference to field availability_zone of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) AvailabilityZone() terra.StringValue {
-	return terra.ReferenceString(dsc.ref.Append("availability_zone"))
+	return terra.ReferenceAsString(dsc.ref.Append("availability_zone"))
 }
 
+// CopyTags returns a reference to field copy_tags of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) CopyTags() terra.BoolValue {
-	return terra.ReferenceBool(dsc.ref.Append("copy_tags"))
+	return terra.ReferenceAsBool(dsc.ref.Append("copy_tags"))
 }
 
+// DbSnapshotArn returns a reference to field db_snapshot_arn of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) DbSnapshotArn() terra.StringValue {
-	return terra.ReferenceString(dsc.ref.Append("db_snapshot_arn"))
+	return terra.ReferenceAsString(dsc.ref.Append("db_snapshot_arn"))
 }
 
+// DestinationRegion returns a reference to field destination_region of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) DestinationRegion() terra.StringValue {
-	return terra.ReferenceString(dsc.ref.Append("destination_region"))
+	return terra.ReferenceAsString(dsc.ref.Append("destination_region"))
 }
 
+// Encrypted returns a reference to field encrypted of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) Encrypted() terra.BoolValue {
-	return terra.ReferenceBool(dsc.ref.Append("encrypted"))
+	return terra.ReferenceAsBool(dsc.ref.Append("encrypted"))
 }
 
+// Engine returns a reference to field engine of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) Engine() terra.StringValue {
-	return terra.ReferenceString(dsc.ref.Append("engine"))
+	return terra.ReferenceAsString(dsc.ref.Append("engine"))
 }
 
+// EngineVersion returns a reference to field engine_version of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) EngineVersion() terra.StringValue {
-	return terra.ReferenceString(dsc.ref.Append("engine_version"))
+	return terra.ReferenceAsString(dsc.ref.Append("engine_version"))
 }
 
+// Id returns a reference to field id of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dsc.ref.Append("id"))
+	return terra.ReferenceAsString(dsc.ref.Append("id"))
 }
 
+// Iops returns a reference to field iops of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) Iops() terra.NumberValue {
-	return terra.ReferenceNumber(dsc.ref.Append("iops"))
+	return terra.ReferenceAsNumber(dsc.ref.Append("iops"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(dsc.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(dsc.ref.Append("kms_key_id"))
 }
 
+// LicenseModel returns a reference to field license_model of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) LicenseModel() terra.StringValue {
-	return terra.ReferenceString(dsc.ref.Append("license_model"))
+	return terra.ReferenceAsString(dsc.ref.Append("license_model"))
 }
 
+// OptionGroupName returns a reference to field option_group_name of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) OptionGroupName() terra.StringValue {
-	return terra.ReferenceString(dsc.ref.Append("option_group_name"))
+	return terra.ReferenceAsString(dsc.ref.Append("option_group_name"))
 }
 
+// Port returns a reference to field port of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(dsc.ref.Append("port"))
+	return terra.ReferenceAsNumber(dsc.ref.Append("port"))
 }
 
+// PresignedUrl returns a reference to field presigned_url of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) PresignedUrl() terra.StringValue {
-	return terra.ReferenceString(dsc.ref.Append("presigned_url"))
+	return terra.ReferenceAsString(dsc.ref.Append("presigned_url"))
 }
 
+// SnapshotType returns a reference to field snapshot_type of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) SnapshotType() terra.StringValue {
-	return terra.ReferenceString(dsc.ref.Append("snapshot_type"))
+	return terra.ReferenceAsString(dsc.ref.Append("snapshot_type"))
 }
 
+// SourceDbSnapshotIdentifier returns a reference to field source_db_snapshot_identifier of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) SourceDbSnapshotIdentifier() terra.StringValue {
-	return terra.ReferenceString(dsc.ref.Append("source_db_snapshot_identifier"))
+	return terra.ReferenceAsString(dsc.ref.Append("source_db_snapshot_identifier"))
 }
 
+// SourceRegion returns a reference to field source_region of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) SourceRegion() terra.StringValue {
-	return terra.ReferenceString(dsc.ref.Append("source_region"))
+	return terra.ReferenceAsString(dsc.ref.Append("source_region"))
 }
 
+// StorageType returns a reference to field storage_type of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) StorageType() terra.StringValue {
-	return terra.ReferenceString(dsc.ref.Append("storage_type"))
+	return terra.ReferenceAsString(dsc.ref.Append("storage_type"))
 }
 
+// Tags returns a reference to field tags of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dsc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dsc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dsc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dsc.ref.Append("tags_all"))
 }
 
+// TargetCustomAvailabilityZone returns a reference to field target_custom_availability_zone of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) TargetCustomAvailabilityZone() terra.StringValue {
-	return terra.ReferenceString(dsc.ref.Append("target_custom_availability_zone"))
+	return terra.ReferenceAsString(dsc.ref.Append("target_custom_availability_zone"))
 }
 
+// TargetDbSnapshotIdentifier returns a reference to field target_db_snapshot_identifier of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) TargetDbSnapshotIdentifier() terra.StringValue {
-	return terra.ReferenceString(dsc.ref.Append("target_db_snapshot_identifier"))
+	return terra.ReferenceAsString(dsc.ref.Append("target_db_snapshot_identifier"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_db_snapshot_copy.
 func (dsc dbSnapshotCopyAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(dsc.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(dsc.ref.Append("vpc_id"))
 }
 
 func (dsc dbSnapshotCopyAttributes) Timeouts() dbsnapshotcopy.TimeoutsAttributes {
-	return terra.ReferenceSingle[dbsnapshotcopy.TimeoutsAttributes](dsc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dbsnapshotcopy.TimeoutsAttributes](dsc.ref.Append("timeouts"))
 }
 
 type dbSnapshotCopyState struct {

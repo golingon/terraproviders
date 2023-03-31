@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCognitoUser creates a new instance of [CognitoUser].
 func NewCognitoUser(name string, args CognitoUserArgs) *CognitoUser {
 	return &CognitoUser{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCognitoUser(name string, args CognitoUserArgs) *CognitoUser {
 
 var _ terra.Resource = (*CognitoUser)(nil)
 
+// CognitoUser represents the Terraform resource aws_cognito_user.
 type CognitoUser struct {
-	Name  string
-	Args  CognitoUserArgs
-	state *cognitoUserState
+	Name      string
+	Args      CognitoUserArgs
+	state     *cognitoUserState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CognitoUser].
 func (cu *CognitoUser) Type() string {
 	return "aws_cognito_user"
 }
 
+// LocalName returns the local name for [CognitoUser].
 func (cu *CognitoUser) LocalName() string {
 	return cu.Name
 }
 
+// Configuration returns the configuration (args) for [CognitoUser].
 func (cu *CognitoUser) Configuration() interface{} {
 	return cu.Args
 }
 
+// DependOn is used for other resources to depend on [CognitoUser].
+func (cu *CognitoUser) DependOn() terra.Reference {
+	return terra.ReferenceResource(cu)
+}
+
+// Dependencies returns the list of resources [CognitoUser] depends_on.
+func (cu *CognitoUser) Dependencies() terra.Dependencies {
+	return cu.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CognitoUser].
+func (cu *CognitoUser) LifecycleManagement() *terra.Lifecycle {
+	return cu.Lifecycle
+}
+
+// Attributes returns the attributes for [CognitoUser].
 func (cu *CognitoUser) Attributes() cognitoUserAttributes {
 	return cognitoUserAttributes{ref: terra.ReferenceResource(cu)}
 }
 
+// ImportState imports the given attribute values into [CognitoUser]'s state.
 func (cu *CognitoUser) ImportState(av io.Reader) error {
 	cu.state = &cognitoUserState{}
 	if err := json.NewDecoder(av).Decode(cu.state); err != nil {
@@ -48,10 +72,12 @@ func (cu *CognitoUser) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CognitoUser] has state.
 func (cu *CognitoUser) State() (*cognitoUserState, bool) {
 	return cu.state, cu.state != nil
 }
 
+// StateMust returns the state for [CognitoUser]. Panics if the state is nil.
 func (cu *CognitoUser) StateMust() *cognitoUserState {
 	if cu.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cu.Type(), cu.LocalName()))
@@ -59,10 +85,7 @@ func (cu *CognitoUser) StateMust() *cognitoUserState {
 	return cu.state
 }
 
-func (cu *CognitoUser) DependOn() terra.Reference {
-	return terra.ReferenceResource(cu)
-}
-
+// CognitoUserArgs contains the configurations for aws_cognito_user.
 type CognitoUserArgs struct {
 	// Attributes: map of string, optional
 	Attributes terra.MapValue[terra.StringValue] `hcl:"attributes,attr"`
@@ -88,83 +111,99 @@ type CognitoUserArgs struct {
 	Username terra.StringValue `hcl:"username,attr" validate:"required"`
 	// ValidationData: map of string, optional
 	ValidationData terra.MapValue[terra.StringValue] `hcl:"validation_data,attr"`
-	// DependsOn contains resources that CognitoUser depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cognitoUserAttributes struct {
 	ref terra.Reference
 }
 
+// Attributes returns a reference to field attributes of aws_cognito_user.
 func (cu cognitoUserAttributes) Attributes() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cu.ref.Append("attributes"))
+	return terra.ReferenceAsMap[terra.StringValue](cu.ref.Append("attributes"))
 }
 
+// ClientMetadata returns a reference to field client_metadata of aws_cognito_user.
 func (cu cognitoUserAttributes) ClientMetadata() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cu.ref.Append("client_metadata"))
+	return terra.ReferenceAsMap[terra.StringValue](cu.ref.Append("client_metadata"))
 }
 
+// CreationDate returns a reference to field creation_date of aws_cognito_user.
 func (cu cognitoUserAttributes) CreationDate() terra.StringValue {
-	return terra.ReferenceString(cu.ref.Append("creation_date"))
+	return terra.ReferenceAsString(cu.ref.Append("creation_date"))
 }
 
+// DesiredDeliveryMediums returns a reference to field desired_delivery_mediums of aws_cognito_user.
 func (cu cognitoUserAttributes) DesiredDeliveryMediums() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cu.ref.Append("desired_delivery_mediums"))
+	return terra.ReferenceAsSet[terra.StringValue](cu.ref.Append("desired_delivery_mediums"))
 }
 
+// Enabled returns a reference to field enabled of aws_cognito_user.
 func (cu cognitoUserAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(cu.ref.Append("enabled"))
+	return terra.ReferenceAsBool(cu.ref.Append("enabled"))
 }
 
+// ForceAliasCreation returns a reference to field force_alias_creation of aws_cognito_user.
 func (cu cognitoUserAttributes) ForceAliasCreation() terra.BoolValue {
-	return terra.ReferenceBool(cu.ref.Append("force_alias_creation"))
+	return terra.ReferenceAsBool(cu.ref.Append("force_alias_creation"))
 }
 
+// Id returns a reference to field id of aws_cognito_user.
 func (cu cognitoUserAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cu.ref.Append("id"))
+	return terra.ReferenceAsString(cu.ref.Append("id"))
 }
 
+// LastModifiedDate returns a reference to field last_modified_date of aws_cognito_user.
 func (cu cognitoUserAttributes) LastModifiedDate() terra.StringValue {
-	return terra.ReferenceString(cu.ref.Append("last_modified_date"))
+	return terra.ReferenceAsString(cu.ref.Append("last_modified_date"))
 }
 
+// MessageAction returns a reference to field message_action of aws_cognito_user.
 func (cu cognitoUserAttributes) MessageAction() terra.StringValue {
-	return terra.ReferenceString(cu.ref.Append("message_action"))
+	return terra.ReferenceAsString(cu.ref.Append("message_action"))
 }
 
+// MfaSettingList returns a reference to field mfa_setting_list of aws_cognito_user.
 func (cu cognitoUserAttributes) MfaSettingList() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cu.ref.Append("mfa_setting_list"))
+	return terra.ReferenceAsSet[terra.StringValue](cu.ref.Append("mfa_setting_list"))
 }
 
+// Password returns a reference to field password of aws_cognito_user.
 func (cu cognitoUserAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(cu.ref.Append("password"))
+	return terra.ReferenceAsString(cu.ref.Append("password"))
 }
 
+// PreferredMfaSetting returns a reference to field preferred_mfa_setting of aws_cognito_user.
 func (cu cognitoUserAttributes) PreferredMfaSetting() terra.StringValue {
-	return terra.ReferenceString(cu.ref.Append("preferred_mfa_setting"))
+	return terra.ReferenceAsString(cu.ref.Append("preferred_mfa_setting"))
 }
 
+// Status returns a reference to field status of aws_cognito_user.
 func (cu cognitoUserAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(cu.ref.Append("status"))
+	return terra.ReferenceAsString(cu.ref.Append("status"))
 }
 
+// Sub returns a reference to field sub of aws_cognito_user.
 func (cu cognitoUserAttributes) Sub() terra.StringValue {
-	return terra.ReferenceString(cu.ref.Append("sub"))
+	return terra.ReferenceAsString(cu.ref.Append("sub"))
 }
 
+// TemporaryPassword returns a reference to field temporary_password of aws_cognito_user.
 func (cu cognitoUserAttributes) TemporaryPassword() terra.StringValue {
-	return terra.ReferenceString(cu.ref.Append("temporary_password"))
+	return terra.ReferenceAsString(cu.ref.Append("temporary_password"))
 }
 
+// UserPoolId returns a reference to field user_pool_id of aws_cognito_user.
 func (cu cognitoUserAttributes) UserPoolId() terra.StringValue {
-	return terra.ReferenceString(cu.ref.Append("user_pool_id"))
+	return terra.ReferenceAsString(cu.ref.Append("user_pool_id"))
 }
 
+// Username returns a reference to field username of aws_cognito_user.
 func (cu cognitoUserAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(cu.ref.Append("username"))
+	return terra.ReferenceAsString(cu.ref.Append("username"))
 }
 
+// ValidationData returns a reference to field validation_data of aws_cognito_user.
 func (cu cognitoUserAttributes) ValidationData() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cu.ref.Append("validation_data"))
+	return terra.ReferenceAsMap[terra.StringValue](cu.ref.Append("validation_data"))
 }
 
 type cognitoUserState struct {

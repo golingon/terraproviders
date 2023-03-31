@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIotTopicRule creates a new instance of [IotTopicRule].
 func NewIotTopicRule(name string, args IotTopicRuleArgs) *IotTopicRule {
 	return &IotTopicRule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIotTopicRule(name string, args IotTopicRuleArgs) *IotTopicRule {
 
 var _ terra.Resource = (*IotTopicRule)(nil)
 
+// IotTopicRule represents the Terraform resource aws_iot_topic_rule.
 type IotTopicRule struct {
-	Name  string
-	Args  IotTopicRuleArgs
-	state *iotTopicRuleState
+	Name      string
+	Args      IotTopicRuleArgs
+	state     *iotTopicRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IotTopicRule].
 func (itr *IotTopicRule) Type() string {
 	return "aws_iot_topic_rule"
 }
 
+// LocalName returns the local name for [IotTopicRule].
 func (itr *IotTopicRule) LocalName() string {
 	return itr.Name
 }
 
+// Configuration returns the configuration (args) for [IotTopicRule].
 func (itr *IotTopicRule) Configuration() interface{} {
 	return itr.Args
 }
 
+// DependOn is used for other resources to depend on [IotTopicRule].
+func (itr *IotTopicRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(itr)
+}
+
+// Dependencies returns the list of resources [IotTopicRule] depends_on.
+func (itr *IotTopicRule) Dependencies() terra.Dependencies {
+	return itr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IotTopicRule].
+func (itr *IotTopicRule) LifecycleManagement() *terra.Lifecycle {
+	return itr.Lifecycle
+}
+
+// Attributes returns the attributes for [IotTopicRule].
 func (itr *IotTopicRule) Attributes() iotTopicRuleAttributes {
 	return iotTopicRuleAttributes{ref: terra.ReferenceResource(itr)}
 }
 
+// ImportState imports the given attribute values into [IotTopicRule]'s state.
 func (itr *IotTopicRule) ImportState(av io.Reader) error {
 	itr.state = &iotTopicRuleState{}
 	if err := json.NewDecoder(av).Decode(itr.state); err != nil {
@@ -49,10 +73,12 @@ func (itr *IotTopicRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IotTopicRule] has state.
 func (itr *IotTopicRule) State() (*iotTopicRuleState, bool) {
 	return itr.state, itr.state != nil
 }
 
+// StateMust returns the state for [IotTopicRule]. Panics if the state is nil.
 func (itr *IotTopicRule) StateMust() *iotTopicRuleState {
 	if itr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", itr.Type(), itr.LocalName()))
@@ -60,10 +86,7 @@ func (itr *IotTopicRule) StateMust() *iotTopicRuleState {
 	return itr.state
 }
 
-func (itr *IotTopicRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(itr)
-}
-
+// IotTopicRuleArgs contains the configurations for aws_iot_topic_rule.
 type IotTopicRuleArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -121,127 +144,134 @@ type IotTopicRuleArgs struct {
 	StepFunctions []iottopicrule.StepFunctions `hcl:"step_functions,block" validate:"min=0"`
 	// Timestream: min=0
 	Timestream []iottopicrule.Timestream `hcl:"timestream,block" validate:"min=0"`
-	// DependsOn contains resources that IotTopicRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iotTopicRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_iot_topic_rule.
 func (itr iotTopicRuleAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(itr.ref.Append("arn"))
+	return terra.ReferenceAsString(itr.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_iot_topic_rule.
 func (itr iotTopicRuleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(itr.ref.Append("description"))
+	return terra.ReferenceAsString(itr.ref.Append("description"))
 }
 
+// Enabled returns a reference to field enabled of aws_iot_topic_rule.
 func (itr iotTopicRuleAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(itr.ref.Append("enabled"))
+	return terra.ReferenceAsBool(itr.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of aws_iot_topic_rule.
 func (itr iotTopicRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(itr.ref.Append("id"))
+	return terra.ReferenceAsString(itr.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_iot_topic_rule.
 func (itr iotTopicRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(itr.ref.Append("name"))
+	return terra.ReferenceAsString(itr.ref.Append("name"))
 }
 
+// Sql returns a reference to field sql of aws_iot_topic_rule.
 func (itr iotTopicRuleAttributes) Sql() terra.StringValue {
-	return terra.ReferenceString(itr.ref.Append("sql"))
+	return terra.ReferenceAsString(itr.ref.Append("sql"))
 }
 
+// SqlVersion returns a reference to field sql_version of aws_iot_topic_rule.
 func (itr iotTopicRuleAttributes) SqlVersion() terra.StringValue {
-	return terra.ReferenceString(itr.ref.Append("sql_version"))
+	return terra.ReferenceAsString(itr.ref.Append("sql_version"))
 }
 
+// Tags returns a reference to field tags of aws_iot_topic_rule.
 func (itr iotTopicRuleAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](itr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](itr.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_iot_topic_rule.
 func (itr iotTopicRuleAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](itr.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](itr.ref.Append("tags_all"))
 }
 
 func (itr iotTopicRuleAttributes) CloudwatchAlarm() terra.SetValue[iottopicrule.CloudwatchAlarmAttributes] {
-	return terra.ReferenceSet[iottopicrule.CloudwatchAlarmAttributes](itr.ref.Append("cloudwatch_alarm"))
+	return terra.ReferenceAsSet[iottopicrule.CloudwatchAlarmAttributes](itr.ref.Append("cloudwatch_alarm"))
 }
 
 func (itr iotTopicRuleAttributes) CloudwatchLogs() terra.SetValue[iottopicrule.CloudwatchLogsAttributes] {
-	return terra.ReferenceSet[iottopicrule.CloudwatchLogsAttributes](itr.ref.Append("cloudwatch_logs"))
+	return terra.ReferenceAsSet[iottopicrule.CloudwatchLogsAttributes](itr.ref.Append("cloudwatch_logs"))
 }
 
 func (itr iotTopicRuleAttributes) CloudwatchMetric() terra.SetValue[iottopicrule.CloudwatchMetricAttributes] {
-	return terra.ReferenceSet[iottopicrule.CloudwatchMetricAttributes](itr.ref.Append("cloudwatch_metric"))
+	return terra.ReferenceAsSet[iottopicrule.CloudwatchMetricAttributes](itr.ref.Append("cloudwatch_metric"))
 }
 
 func (itr iotTopicRuleAttributes) Dynamodb() terra.SetValue[iottopicrule.DynamodbAttributes] {
-	return terra.ReferenceSet[iottopicrule.DynamodbAttributes](itr.ref.Append("dynamodb"))
+	return terra.ReferenceAsSet[iottopicrule.DynamodbAttributes](itr.ref.Append("dynamodb"))
 }
 
 func (itr iotTopicRuleAttributes) Dynamodbv2() terra.SetValue[iottopicrule.Dynamodbv2Attributes] {
-	return terra.ReferenceSet[iottopicrule.Dynamodbv2Attributes](itr.ref.Append("dynamodbv2"))
+	return terra.ReferenceAsSet[iottopicrule.Dynamodbv2Attributes](itr.ref.Append("dynamodbv2"))
 }
 
 func (itr iotTopicRuleAttributes) Elasticsearch() terra.SetValue[iottopicrule.ElasticsearchAttributes] {
-	return terra.ReferenceSet[iottopicrule.ElasticsearchAttributes](itr.ref.Append("elasticsearch"))
+	return terra.ReferenceAsSet[iottopicrule.ElasticsearchAttributes](itr.ref.Append("elasticsearch"))
 }
 
 func (itr iotTopicRuleAttributes) ErrorAction() terra.ListValue[iottopicrule.ErrorActionAttributes] {
-	return terra.ReferenceList[iottopicrule.ErrorActionAttributes](itr.ref.Append("error_action"))
+	return terra.ReferenceAsList[iottopicrule.ErrorActionAttributes](itr.ref.Append("error_action"))
 }
 
 func (itr iotTopicRuleAttributes) Firehose() terra.SetValue[iottopicrule.FirehoseAttributes] {
-	return terra.ReferenceSet[iottopicrule.FirehoseAttributes](itr.ref.Append("firehose"))
+	return terra.ReferenceAsSet[iottopicrule.FirehoseAttributes](itr.ref.Append("firehose"))
 }
 
 func (itr iotTopicRuleAttributes) Http() terra.SetValue[iottopicrule.HttpAttributes] {
-	return terra.ReferenceSet[iottopicrule.HttpAttributes](itr.ref.Append("http"))
+	return terra.ReferenceAsSet[iottopicrule.HttpAttributes](itr.ref.Append("http"))
 }
 
 func (itr iotTopicRuleAttributes) IotAnalytics() terra.SetValue[iottopicrule.IotAnalyticsAttributes] {
-	return terra.ReferenceSet[iottopicrule.IotAnalyticsAttributes](itr.ref.Append("iot_analytics"))
+	return terra.ReferenceAsSet[iottopicrule.IotAnalyticsAttributes](itr.ref.Append("iot_analytics"))
 }
 
 func (itr iotTopicRuleAttributes) IotEvents() terra.SetValue[iottopicrule.IotEventsAttributes] {
-	return terra.ReferenceSet[iottopicrule.IotEventsAttributes](itr.ref.Append("iot_events"))
+	return terra.ReferenceAsSet[iottopicrule.IotEventsAttributes](itr.ref.Append("iot_events"))
 }
 
 func (itr iotTopicRuleAttributes) Kafka() terra.SetValue[iottopicrule.KafkaAttributes] {
-	return terra.ReferenceSet[iottopicrule.KafkaAttributes](itr.ref.Append("kafka"))
+	return terra.ReferenceAsSet[iottopicrule.KafkaAttributes](itr.ref.Append("kafka"))
 }
 
 func (itr iotTopicRuleAttributes) Kinesis() terra.SetValue[iottopicrule.KinesisAttributes] {
-	return terra.ReferenceSet[iottopicrule.KinesisAttributes](itr.ref.Append("kinesis"))
+	return terra.ReferenceAsSet[iottopicrule.KinesisAttributes](itr.ref.Append("kinesis"))
 }
 
 func (itr iotTopicRuleAttributes) Lambda() terra.SetValue[iottopicrule.LambdaAttributes] {
-	return terra.ReferenceSet[iottopicrule.LambdaAttributes](itr.ref.Append("lambda"))
+	return terra.ReferenceAsSet[iottopicrule.LambdaAttributes](itr.ref.Append("lambda"))
 }
 
 func (itr iotTopicRuleAttributes) Republish() terra.SetValue[iottopicrule.RepublishAttributes] {
-	return terra.ReferenceSet[iottopicrule.RepublishAttributes](itr.ref.Append("republish"))
+	return terra.ReferenceAsSet[iottopicrule.RepublishAttributes](itr.ref.Append("republish"))
 }
 
 func (itr iotTopicRuleAttributes) S3() terra.SetValue[iottopicrule.S3Attributes] {
-	return terra.ReferenceSet[iottopicrule.S3Attributes](itr.ref.Append("s3"))
+	return terra.ReferenceAsSet[iottopicrule.S3Attributes](itr.ref.Append("s3"))
 }
 
 func (itr iotTopicRuleAttributes) Sns() terra.SetValue[iottopicrule.SnsAttributes] {
-	return terra.ReferenceSet[iottopicrule.SnsAttributes](itr.ref.Append("sns"))
+	return terra.ReferenceAsSet[iottopicrule.SnsAttributes](itr.ref.Append("sns"))
 }
 
 func (itr iotTopicRuleAttributes) Sqs() terra.SetValue[iottopicrule.SqsAttributes] {
-	return terra.ReferenceSet[iottopicrule.SqsAttributes](itr.ref.Append("sqs"))
+	return terra.ReferenceAsSet[iottopicrule.SqsAttributes](itr.ref.Append("sqs"))
 }
 
 func (itr iotTopicRuleAttributes) StepFunctions() terra.SetValue[iottopicrule.StepFunctionsAttributes] {
-	return terra.ReferenceSet[iottopicrule.StepFunctionsAttributes](itr.ref.Append("step_functions"))
+	return terra.ReferenceAsSet[iottopicrule.StepFunctionsAttributes](itr.ref.Append("step_functions"))
 }
 
 func (itr iotTopicRuleAttributes) Timestream() terra.SetValue[iottopicrule.TimestreamAttributes] {
-	return terra.ReferenceSet[iottopicrule.TimestreamAttributes](itr.ref.Append("timestream"))
+	return terra.ReferenceAsSet[iottopicrule.TimestreamAttributes](itr.ref.Append("timestream"))
 }
 
 type iotTopicRuleState struct {

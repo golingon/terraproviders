@@ -88,7 +88,7 @@ func (ca CertificateAuthorityAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ca CertificateAuthorityAttributes) Data() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("data"))
+	return terra.ReferenceAsString(ca.ref.Append("data"))
 }
 
 type IdentityAttributes struct {
@@ -108,7 +108,7 @@ func (i IdentityAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i IdentityAttributes) Oidc() terra.ListValue[OidcAttributes] {
-	return terra.ReferenceList[OidcAttributes](i.ref.Append("oidc"))
+	return terra.ReferenceAsList[OidcAttributes](i.ref.Append("oidc"))
 }
 
 type OidcAttributes struct {
@@ -128,7 +128,7 @@ func (o OidcAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (o OidcAttributes) Issuer() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("issuer"))
+	return terra.ReferenceAsString(o.ref.Append("issuer"))
 }
 
 type EncryptionConfigAttributes struct {
@@ -148,11 +148,11 @@ func (ec EncryptionConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec EncryptionConfigAttributes) Resources() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ec.ref.Append("resources"))
+	return terra.ReferenceAsSet[terra.StringValue](ec.ref.Append("resources"))
 }
 
 func (ec EncryptionConfigAttributes) Provider() terra.ListValue[ProviderAttributes] {
-	return terra.ReferenceList[ProviderAttributes](ec.ref.Append("provider"))
+	return terra.ReferenceAsList[ProviderAttributes](ec.ref.Append("provider"))
 }
 
 type ProviderAttributes struct {
@@ -172,7 +172,7 @@ func (p ProviderAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p ProviderAttributes) KeyArn() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("key_arn"))
+	return terra.ReferenceAsString(p.ref.Append("key_arn"))
 }
 
 type KubernetesNetworkConfigAttributes struct {
@@ -192,15 +192,15 @@ func (knc KubernetesNetworkConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (knc KubernetesNetworkConfigAttributes) IpFamily() terra.StringValue {
-	return terra.ReferenceString(knc.ref.Append("ip_family"))
+	return terra.ReferenceAsString(knc.ref.Append("ip_family"))
 }
 
 func (knc KubernetesNetworkConfigAttributes) ServiceIpv4Cidr() terra.StringValue {
-	return terra.ReferenceString(knc.ref.Append("service_ipv4_cidr"))
+	return terra.ReferenceAsString(knc.ref.Append("service_ipv4_cidr"))
 }
 
 func (knc KubernetesNetworkConfigAttributes) ServiceIpv6Cidr() terra.StringValue {
-	return terra.ReferenceString(knc.ref.Append("service_ipv6_cidr"))
+	return terra.ReferenceAsString(knc.ref.Append("service_ipv6_cidr"))
 }
 
 type OutpostConfigAttributes struct {
@@ -220,15 +220,15 @@ func (oc OutpostConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (oc OutpostConfigAttributes) ControlPlaneInstanceType() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("control_plane_instance_type"))
+	return terra.ReferenceAsString(oc.ref.Append("control_plane_instance_type"))
 }
 
 func (oc OutpostConfigAttributes) OutpostArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](oc.ref.Append("outpost_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](oc.ref.Append("outpost_arns"))
 }
 
 func (oc OutpostConfigAttributes) ControlPlanePlacement() terra.ListValue[ControlPlanePlacementAttributes] {
-	return terra.ReferenceList[ControlPlanePlacementAttributes](oc.ref.Append("control_plane_placement"))
+	return terra.ReferenceAsList[ControlPlanePlacementAttributes](oc.ref.Append("control_plane_placement"))
 }
 
 type ControlPlanePlacementAttributes struct {
@@ -248,7 +248,7 @@ func (cpp ControlPlanePlacementAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cpp ControlPlanePlacementAttributes) GroupName() terra.StringValue {
-	return terra.ReferenceString(cpp.ref.Append("group_name"))
+	return terra.ReferenceAsString(cpp.ref.Append("group_name"))
 }
 
 type TimeoutsAttributes struct {
@@ -268,15 +268,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type VpcConfigAttributes struct {
@@ -296,31 +296,31 @@ func (vc VpcConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vc VpcConfigAttributes) ClusterSecurityGroupId() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("cluster_security_group_id"))
+	return terra.ReferenceAsString(vc.ref.Append("cluster_security_group_id"))
 }
 
 func (vc VpcConfigAttributes) EndpointPrivateAccess() terra.BoolValue {
-	return terra.ReferenceBool(vc.ref.Append("endpoint_private_access"))
+	return terra.ReferenceAsBool(vc.ref.Append("endpoint_private_access"))
 }
 
 func (vc VpcConfigAttributes) EndpointPublicAccess() terra.BoolValue {
-	return terra.ReferenceBool(vc.ref.Append("endpoint_public_access"))
+	return terra.ReferenceAsBool(vc.ref.Append("endpoint_public_access"))
 }
 
 func (vc VpcConfigAttributes) PublicAccessCidrs() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("public_access_cidrs"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("public_access_cidrs"))
 }
 
 func (vc VpcConfigAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("security_group_ids"))
 }
 
 func (vc VpcConfigAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("subnet_ids"))
 }
 
 func (vc VpcConfigAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(vc.ref.Append("vpc_id"))
 }
 
 type CertificateAuthorityState struct {

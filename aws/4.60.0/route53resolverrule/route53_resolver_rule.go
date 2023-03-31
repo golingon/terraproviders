@@ -40,11 +40,11 @@ func (ti TargetIpAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ti TargetIpAttributes) Ip() terra.StringValue {
-	return terra.ReferenceString(ti.ref.Append("ip"))
+	return terra.ReferenceAsString(ti.ref.Append("ip"))
 }
 
 func (ti TargetIpAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(ti.ref.Append("port"))
+	return terra.ReferenceAsNumber(ti.ref.Append("port"))
 }
 
 type TimeoutsAttributes struct {
@@ -64,15 +64,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type TargetIpState struct {

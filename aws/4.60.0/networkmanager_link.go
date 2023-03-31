@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNetworkmanagerLink creates a new instance of [NetworkmanagerLink].
 func NewNetworkmanagerLink(name string, args NetworkmanagerLinkArgs) *NetworkmanagerLink {
 	return &NetworkmanagerLink{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNetworkmanagerLink(name string, args NetworkmanagerLinkArgs) *Networkman
 
 var _ terra.Resource = (*NetworkmanagerLink)(nil)
 
+// NetworkmanagerLink represents the Terraform resource aws_networkmanager_link.
 type NetworkmanagerLink struct {
-	Name  string
-	Args  NetworkmanagerLinkArgs
-	state *networkmanagerLinkState
+	Name      string
+	Args      NetworkmanagerLinkArgs
+	state     *networkmanagerLinkState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NetworkmanagerLink].
 func (nl *NetworkmanagerLink) Type() string {
 	return "aws_networkmanager_link"
 }
 
+// LocalName returns the local name for [NetworkmanagerLink].
 func (nl *NetworkmanagerLink) LocalName() string {
 	return nl.Name
 }
 
+// Configuration returns the configuration (args) for [NetworkmanagerLink].
 func (nl *NetworkmanagerLink) Configuration() interface{} {
 	return nl.Args
 }
 
+// DependOn is used for other resources to depend on [NetworkmanagerLink].
+func (nl *NetworkmanagerLink) DependOn() terra.Reference {
+	return terra.ReferenceResource(nl)
+}
+
+// Dependencies returns the list of resources [NetworkmanagerLink] depends_on.
+func (nl *NetworkmanagerLink) Dependencies() terra.Dependencies {
+	return nl.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NetworkmanagerLink].
+func (nl *NetworkmanagerLink) LifecycleManagement() *terra.Lifecycle {
+	return nl.Lifecycle
+}
+
+// Attributes returns the attributes for [NetworkmanagerLink].
 func (nl *NetworkmanagerLink) Attributes() networkmanagerLinkAttributes {
 	return networkmanagerLinkAttributes{ref: terra.ReferenceResource(nl)}
 }
 
+// ImportState imports the given attribute values into [NetworkmanagerLink]'s state.
 func (nl *NetworkmanagerLink) ImportState(av io.Reader) error {
 	nl.state = &networkmanagerLinkState{}
 	if err := json.NewDecoder(av).Decode(nl.state); err != nil {
@@ -49,10 +73,12 @@ func (nl *NetworkmanagerLink) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NetworkmanagerLink] has state.
 func (nl *NetworkmanagerLink) State() (*networkmanagerLinkState, bool) {
 	return nl.state, nl.state != nil
 }
 
+// StateMust returns the state for [NetworkmanagerLink]. Panics if the state is nil.
 func (nl *NetworkmanagerLink) StateMust() *networkmanagerLinkState {
 	if nl.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", nl.Type(), nl.LocalName()))
@@ -60,10 +86,7 @@ func (nl *NetworkmanagerLink) StateMust() *networkmanagerLinkState {
 	return nl.state
 }
 
-func (nl *NetworkmanagerLink) DependOn() terra.Reference {
-	return terra.ReferenceResource(nl)
-}
-
+// NetworkmanagerLinkArgs contains the configurations for aws_networkmanager_link.
 type NetworkmanagerLinkArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -85,55 +108,62 @@ type NetworkmanagerLinkArgs struct {
 	Bandwidth *networkmanagerlink.Bandwidth `hcl:"bandwidth,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *networkmanagerlink.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that NetworkmanagerLink depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type networkmanagerLinkAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_networkmanager_link.
 func (nl networkmanagerLinkAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(nl.ref.Append("arn"))
+	return terra.ReferenceAsString(nl.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_networkmanager_link.
 func (nl networkmanagerLinkAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(nl.ref.Append("description"))
+	return terra.ReferenceAsString(nl.ref.Append("description"))
 }
 
+// GlobalNetworkId returns a reference to field global_network_id of aws_networkmanager_link.
 func (nl networkmanagerLinkAttributes) GlobalNetworkId() terra.StringValue {
-	return terra.ReferenceString(nl.ref.Append("global_network_id"))
+	return terra.ReferenceAsString(nl.ref.Append("global_network_id"))
 }
 
+// Id returns a reference to field id of aws_networkmanager_link.
 func (nl networkmanagerLinkAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nl.ref.Append("id"))
+	return terra.ReferenceAsString(nl.ref.Append("id"))
 }
 
+// ProviderName returns a reference to field provider_name of aws_networkmanager_link.
 func (nl networkmanagerLinkAttributes) ProviderName() terra.StringValue {
-	return terra.ReferenceString(nl.ref.Append("provider_name"))
+	return terra.ReferenceAsString(nl.ref.Append("provider_name"))
 }
 
+// SiteId returns a reference to field site_id of aws_networkmanager_link.
 func (nl networkmanagerLinkAttributes) SiteId() terra.StringValue {
-	return terra.ReferenceString(nl.ref.Append("site_id"))
+	return terra.ReferenceAsString(nl.ref.Append("site_id"))
 }
 
+// Tags returns a reference to field tags of aws_networkmanager_link.
 func (nl networkmanagerLinkAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](nl.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](nl.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_networkmanager_link.
 func (nl networkmanagerLinkAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](nl.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](nl.ref.Append("tags_all"))
 }
 
+// Type returns a reference to field type of aws_networkmanager_link.
 func (nl networkmanagerLinkAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(nl.ref.Append("type"))
+	return terra.ReferenceAsString(nl.ref.Append("type"))
 }
 
 func (nl networkmanagerLinkAttributes) Bandwidth() terra.ListValue[networkmanagerlink.BandwidthAttributes] {
-	return terra.ReferenceList[networkmanagerlink.BandwidthAttributes](nl.ref.Append("bandwidth"))
+	return terra.ReferenceAsList[networkmanagerlink.BandwidthAttributes](nl.ref.Append("bandwidth"))
 }
 
 func (nl networkmanagerLinkAttributes) Timeouts() networkmanagerlink.TimeoutsAttributes {
-	return terra.ReferenceSingle[networkmanagerlink.TimeoutsAttributes](nl.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[networkmanagerlink.TimeoutsAttributes](nl.ref.Append("timeouts"))
 }
 
 type networkmanagerLinkState struct {

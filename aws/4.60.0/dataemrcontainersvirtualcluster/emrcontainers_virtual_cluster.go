@@ -36,15 +36,15 @@ func (cp ContainerProviderAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cp ContainerProviderAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("id"))
+	return terra.ReferenceAsString(cp.ref.Append("id"))
 }
 
 func (cp ContainerProviderAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("type"))
+	return terra.ReferenceAsString(cp.ref.Append("type"))
 }
 
 func (cp ContainerProviderAttributes) Info() terra.ListValue[InfoAttributes] {
-	return terra.ReferenceList[InfoAttributes](cp.ref.Append("info"))
+	return terra.ReferenceAsList[InfoAttributes](cp.ref.Append("info"))
 }
 
 type InfoAttributes struct {
@@ -64,7 +64,7 @@ func (i InfoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i InfoAttributes) EksInfo() terra.ListValue[EksInfoAttributes] {
-	return terra.ReferenceList[EksInfoAttributes](i.ref.Append("eks_info"))
+	return terra.ReferenceAsList[EksInfoAttributes](i.ref.Append("eks_info"))
 }
 
 type EksInfoAttributes struct {
@@ -84,7 +84,7 @@ func (ei EksInfoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ei EksInfoAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(ei.ref.Append("namespace"))
+	return terra.ReferenceAsString(ei.ref.Append("namespace"))
 }
 
 type ContainerProviderState struct {

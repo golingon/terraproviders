@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudwatchEventTarget creates a new instance of [CloudwatchEventTarget].
 func NewCloudwatchEventTarget(name string, args CloudwatchEventTargetArgs) *CloudwatchEventTarget {
 	return &CloudwatchEventTarget{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudwatchEventTarget(name string, args CloudwatchEventTargetArgs) *Clou
 
 var _ terra.Resource = (*CloudwatchEventTarget)(nil)
 
+// CloudwatchEventTarget represents the Terraform resource aws_cloudwatch_event_target.
 type CloudwatchEventTarget struct {
-	Name  string
-	Args  CloudwatchEventTargetArgs
-	state *cloudwatchEventTargetState
+	Name      string
+	Args      CloudwatchEventTargetArgs
+	state     *cloudwatchEventTargetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudwatchEventTarget].
 func (cet *CloudwatchEventTarget) Type() string {
 	return "aws_cloudwatch_event_target"
 }
 
+// LocalName returns the local name for [CloudwatchEventTarget].
 func (cet *CloudwatchEventTarget) LocalName() string {
 	return cet.Name
 }
 
+// Configuration returns the configuration (args) for [CloudwatchEventTarget].
 func (cet *CloudwatchEventTarget) Configuration() interface{} {
 	return cet.Args
 }
 
+// DependOn is used for other resources to depend on [CloudwatchEventTarget].
+func (cet *CloudwatchEventTarget) DependOn() terra.Reference {
+	return terra.ReferenceResource(cet)
+}
+
+// Dependencies returns the list of resources [CloudwatchEventTarget] depends_on.
+func (cet *CloudwatchEventTarget) Dependencies() terra.Dependencies {
+	return cet.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudwatchEventTarget].
+func (cet *CloudwatchEventTarget) LifecycleManagement() *terra.Lifecycle {
+	return cet.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudwatchEventTarget].
 func (cet *CloudwatchEventTarget) Attributes() cloudwatchEventTargetAttributes {
 	return cloudwatchEventTargetAttributes{ref: terra.ReferenceResource(cet)}
 }
 
+// ImportState imports the given attribute values into [CloudwatchEventTarget]'s state.
 func (cet *CloudwatchEventTarget) ImportState(av io.Reader) error {
 	cet.state = &cloudwatchEventTargetState{}
 	if err := json.NewDecoder(av).Decode(cet.state); err != nil {
@@ -49,10 +73,12 @@ func (cet *CloudwatchEventTarget) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudwatchEventTarget] has state.
 func (cet *CloudwatchEventTarget) State() (*cloudwatchEventTargetState, bool) {
 	return cet.state, cet.state != nil
 }
 
+// StateMust returns the state for [CloudwatchEventTarget]. Panics if the state is nil.
 func (cet *CloudwatchEventTarget) StateMust() *cloudwatchEventTargetState {
 	if cet.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cet.Type(), cet.LocalName()))
@@ -60,10 +86,7 @@ func (cet *CloudwatchEventTarget) StateMust() *cloudwatchEventTargetState {
 	return cet.state
 }
 
-func (cet *CloudwatchEventTarget) DependOn() terra.Reference {
-	return terra.ReferenceResource(cet)
-}
-
+// CloudwatchEventTargetArgs contains the configurations for aws_cloudwatch_event_target.
 type CloudwatchEventTargetArgs struct {
 	// Arn: string, required
 	Arn terra.StringValue `hcl:"arn,attr" validate:"required"`
@@ -101,83 +124,89 @@ type CloudwatchEventTargetArgs struct {
 	RunCommandTargets []cloudwatcheventtarget.RunCommandTargets `hcl:"run_command_targets,block" validate:"min=0,max=5"`
 	// SqsTarget: optional
 	SqsTarget *cloudwatcheventtarget.SqsTarget `hcl:"sqs_target,block"`
-	// DependsOn contains resources that CloudwatchEventTarget depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudwatchEventTargetAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_cloudwatch_event_target.
 func (cet cloudwatchEventTargetAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(cet.ref.Append("arn"))
+	return terra.ReferenceAsString(cet.ref.Append("arn"))
 }
 
+// EventBusName returns a reference to field event_bus_name of aws_cloudwatch_event_target.
 func (cet cloudwatchEventTargetAttributes) EventBusName() terra.StringValue {
-	return terra.ReferenceString(cet.ref.Append("event_bus_name"))
+	return terra.ReferenceAsString(cet.ref.Append("event_bus_name"))
 }
 
+// Id returns a reference to field id of aws_cloudwatch_event_target.
 func (cet cloudwatchEventTargetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cet.ref.Append("id"))
+	return terra.ReferenceAsString(cet.ref.Append("id"))
 }
 
+// Input returns a reference to field input of aws_cloudwatch_event_target.
 func (cet cloudwatchEventTargetAttributes) Input() terra.StringValue {
-	return terra.ReferenceString(cet.ref.Append("input"))
+	return terra.ReferenceAsString(cet.ref.Append("input"))
 }
 
+// InputPath returns a reference to field input_path of aws_cloudwatch_event_target.
 func (cet cloudwatchEventTargetAttributes) InputPath() terra.StringValue {
-	return terra.ReferenceString(cet.ref.Append("input_path"))
+	return terra.ReferenceAsString(cet.ref.Append("input_path"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_cloudwatch_event_target.
 func (cet cloudwatchEventTargetAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(cet.ref.Append("role_arn"))
+	return terra.ReferenceAsString(cet.ref.Append("role_arn"))
 }
 
+// Rule returns a reference to field rule of aws_cloudwatch_event_target.
 func (cet cloudwatchEventTargetAttributes) Rule() terra.StringValue {
-	return terra.ReferenceString(cet.ref.Append("rule"))
+	return terra.ReferenceAsString(cet.ref.Append("rule"))
 }
 
+// TargetId returns a reference to field target_id of aws_cloudwatch_event_target.
 func (cet cloudwatchEventTargetAttributes) TargetId() terra.StringValue {
-	return terra.ReferenceString(cet.ref.Append("target_id"))
+	return terra.ReferenceAsString(cet.ref.Append("target_id"))
 }
 
 func (cet cloudwatchEventTargetAttributes) BatchTarget() terra.ListValue[cloudwatcheventtarget.BatchTargetAttributes] {
-	return terra.ReferenceList[cloudwatcheventtarget.BatchTargetAttributes](cet.ref.Append("batch_target"))
+	return terra.ReferenceAsList[cloudwatcheventtarget.BatchTargetAttributes](cet.ref.Append("batch_target"))
 }
 
 func (cet cloudwatchEventTargetAttributes) DeadLetterConfig() terra.ListValue[cloudwatcheventtarget.DeadLetterConfigAttributes] {
-	return terra.ReferenceList[cloudwatcheventtarget.DeadLetterConfigAttributes](cet.ref.Append("dead_letter_config"))
+	return terra.ReferenceAsList[cloudwatcheventtarget.DeadLetterConfigAttributes](cet.ref.Append("dead_letter_config"))
 }
 
 func (cet cloudwatchEventTargetAttributes) EcsTarget() terra.ListValue[cloudwatcheventtarget.EcsTargetAttributes] {
-	return terra.ReferenceList[cloudwatcheventtarget.EcsTargetAttributes](cet.ref.Append("ecs_target"))
+	return terra.ReferenceAsList[cloudwatcheventtarget.EcsTargetAttributes](cet.ref.Append("ecs_target"))
 }
 
 func (cet cloudwatchEventTargetAttributes) HttpTarget() terra.ListValue[cloudwatcheventtarget.HttpTargetAttributes] {
-	return terra.ReferenceList[cloudwatcheventtarget.HttpTargetAttributes](cet.ref.Append("http_target"))
+	return terra.ReferenceAsList[cloudwatcheventtarget.HttpTargetAttributes](cet.ref.Append("http_target"))
 }
 
 func (cet cloudwatchEventTargetAttributes) InputTransformer() terra.ListValue[cloudwatcheventtarget.InputTransformerAttributes] {
-	return terra.ReferenceList[cloudwatcheventtarget.InputTransformerAttributes](cet.ref.Append("input_transformer"))
+	return terra.ReferenceAsList[cloudwatcheventtarget.InputTransformerAttributes](cet.ref.Append("input_transformer"))
 }
 
 func (cet cloudwatchEventTargetAttributes) KinesisTarget() terra.ListValue[cloudwatcheventtarget.KinesisTargetAttributes] {
-	return terra.ReferenceList[cloudwatcheventtarget.KinesisTargetAttributes](cet.ref.Append("kinesis_target"))
+	return terra.ReferenceAsList[cloudwatcheventtarget.KinesisTargetAttributes](cet.ref.Append("kinesis_target"))
 }
 
 func (cet cloudwatchEventTargetAttributes) RedshiftTarget() terra.ListValue[cloudwatcheventtarget.RedshiftTargetAttributes] {
-	return terra.ReferenceList[cloudwatcheventtarget.RedshiftTargetAttributes](cet.ref.Append("redshift_target"))
+	return terra.ReferenceAsList[cloudwatcheventtarget.RedshiftTargetAttributes](cet.ref.Append("redshift_target"))
 }
 
 func (cet cloudwatchEventTargetAttributes) RetryPolicy() terra.ListValue[cloudwatcheventtarget.RetryPolicyAttributes] {
-	return terra.ReferenceList[cloudwatcheventtarget.RetryPolicyAttributes](cet.ref.Append("retry_policy"))
+	return terra.ReferenceAsList[cloudwatcheventtarget.RetryPolicyAttributes](cet.ref.Append("retry_policy"))
 }
 
 func (cet cloudwatchEventTargetAttributes) RunCommandTargets() terra.ListValue[cloudwatcheventtarget.RunCommandTargetsAttributes] {
-	return terra.ReferenceList[cloudwatcheventtarget.RunCommandTargetsAttributes](cet.ref.Append("run_command_targets"))
+	return terra.ReferenceAsList[cloudwatcheventtarget.RunCommandTargetsAttributes](cet.ref.Append("run_command_targets"))
 }
 
 func (cet cloudwatchEventTargetAttributes) SqsTarget() terra.ListValue[cloudwatcheventtarget.SqsTargetAttributes] {
-	return terra.ReferenceList[cloudwatcheventtarget.SqsTargetAttributes](cet.ref.Append("sqs_target"))
+	return terra.ReferenceAsList[cloudwatcheventtarget.SqsTargetAttributes](cet.ref.Append("sqs_target"))
 }
 
 type cloudwatchEventTargetState struct {

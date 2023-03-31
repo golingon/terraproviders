@@ -26,11 +26,11 @@ func (v ValidatorAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (v ValidatorAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("content"))
+	return terra.ReferenceAsString(v.ref.Append("content"))
 }
 
 func (v ValidatorAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("type"))
+	return terra.ReferenceAsString(v.ref.Append("type"))
 }
 
 type ValidatorState struct {

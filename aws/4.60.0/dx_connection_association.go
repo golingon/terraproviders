@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDxConnectionAssociation creates a new instance of [DxConnectionAssociation].
 func NewDxConnectionAssociation(name string, args DxConnectionAssociationArgs) *DxConnectionAssociation {
 	return &DxConnectionAssociation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDxConnectionAssociation(name string, args DxConnectionAssociationArgs) *
 
 var _ terra.Resource = (*DxConnectionAssociation)(nil)
 
+// DxConnectionAssociation represents the Terraform resource aws_dx_connection_association.
 type DxConnectionAssociation struct {
-	Name  string
-	Args  DxConnectionAssociationArgs
-	state *dxConnectionAssociationState
+	Name      string
+	Args      DxConnectionAssociationArgs
+	state     *dxConnectionAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DxConnectionAssociation].
 func (dca *DxConnectionAssociation) Type() string {
 	return "aws_dx_connection_association"
 }
 
+// LocalName returns the local name for [DxConnectionAssociation].
 func (dca *DxConnectionAssociation) LocalName() string {
 	return dca.Name
 }
 
+// Configuration returns the configuration (args) for [DxConnectionAssociation].
 func (dca *DxConnectionAssociation) Configuration() interface{} {
 	return dca.Args
 }
 
+// DependOn is used for other resources to depend on [DxConnectionAssociation].
+func (dca *DxConnectionAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(dca)
+}
+
+// Dependencies returns the list of resources [DxConnectionAssociation] depends_on.
+func (dca *DxConnectionAssociation) Dependencies() terra.Dependencies {
+	return dca.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DxConnectionAssociation].
+func (dca *DxConnectionAssociation) LifecycleManagement() *terra.Lifecycle {
+	return dca.Lifecycle
+}
+
+// Attributes returns the attributes for [DxConnectionAssociation].
 func (dca *DxConnectionAssociation) Attributes() dxConnectionAssociationAttributes {
 	return dxConnectionAssociationAttributes{ref: terra.ReferenceResource(dca)}
 }
 
+// ImportState imports the given attribute values into [DxConnectionAssociation]'s state.
 func (dca *DxConnectionAssociation) ImportState(av io.Reader) error {
 	dca.state = &dxConnectionAssociationState{}
 	if err := json.NewDecoder(av).Decode(dca.state); err != nil {
@@ -48,10 +72,12 @@ func (dca *DxConnectionAssociation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DxConnectionAssociation] has state.
 func (dca *DxConnectionAssociation) State() (*dxConnectionAssociationState, bool) {
 	return dca.state, dca.state != nil
 }
 
+// StateMust returns the state for [DxConnectionAssociation]. Panics if the state is nil.
 func (dca *DxConnectionAssociation) StateMust() *dxConnectionAssociationState {
 	if dca.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dca.Type(), dca.LocalName()))
@@ -59,10 +85,7 @@ func (dca *DxConnectionAssociation) StateMust() *dxConnectionAssociationState {
 	return dca.state
 }
 
-func (dca *DxConnectionAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(dca)
-}
-
+// DxConnectionAssociationArgs contains the configurations for aws_dx_connection_association.
 type DxConnectionAssociationArgs struct {
 	// ConnectionId: string, required
 	ConnectionId terra.StringValue `hcl:"connection_id,attr" validate:"required"`
@@ -70,23 +93,24 @@ type DxConnectionAssociationArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// LagId: string, required
 	LagId terra.StringValue `hcl:"lag_id,attr" validate:"required"`
-	// DependsOn contains resources that DxConnectionAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dxConnectionAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// ConnectionId returns a reference to field connection_id of aws_dx_connection_association.
 func (dca dxConnectionAssociationAttributes) ConnectionId() terra.StringValue {
-	return terra.ReferenceString(dca.ref.Append("connection_id"))
+	return terra.ReferenceAsString(dca.ref.Append("connection_id"))
 }
 
+// Id returns a reference to field id of aws_dx_connection_association.
 func (dca dxConnectionAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dca.ref.Append("id"))
+	return terra.ReferenceAsString(dca.ref.Append("id"))
 }
 
+// LagId returns a reference to field lag_id of aws_dx_connection_association.
 func (dca dxConnectionAssociationAttributes) LagId() terra.StringValue {
-	return terra.ReferenceString(dca.ref.Append("lag_id"))
+	return terra.ReferenceAsString(dca.ref.Append("lag_id"))
 }
 
 type dxConnectionAssociationState struct {

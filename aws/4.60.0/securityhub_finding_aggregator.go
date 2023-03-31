@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSecurityhubFindingAggregator creates a new instance of [SecurityhubFindingAggregator].
 func NewSecurityhubFindingAggregator(name string, args SecurityhubFindingAggregatorArgs) *SecurityhubFindingAggregator {
 	return &SecurityhubFindingAggregator{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSecurityhubFindingAggregator(name string, args SecurityhubFindingAggrega
 
 var _ terra.Resource = (*SecurityhubFindingAggregator)(nil)
 
+// SecurityhubFindingAggregator represents the Terraform resource aws_securityhub_finding_aggregator.
 type SecurityhubFindingAggregator struct {
-	Name  string
-	Args  SecurityhubFindingAggregatorArgs
-	state *securityhubFindingAggregatorState
+	Name      string
+	Args      SecurityhubFindingAggregatorArgs
+	state     *securityhubFindingAggregatorState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SecurityhubFindingAggregator].
 func (sfa *SecurityhubFindingAggregator) Type() string {
 	return "aws_securityhub_finding_aggregator"
 }
 
+// LocalName returns the local name for [SecurityhubFindingAggregator].
 func (sfa *SecurityhubFindingAggregator) LocalName() string {
 	return sfa.Name
 }
 
+// Configuration returns the configuration (args) for [SecurityhubFindingAggregator].
 func (sfa *SecurityhubFindingAggregator) Configuration() interface{} {
 	return sfa.Args
 }
 
+// DependOn is used for other resources to depend on [SecurityhubFindingAggregator].
+func (sfa *SecurityhubFindingAggregator) DependOn() terra.Reference {
+	return terra.ReferenceResource(sfa)
+}
+
+// Dependencies returns the list of resources [SecurityhubFindingAggregator] depends_on.
+func (sfa *SecurityhubFindingAggregator) Dependencies() terra.Dependencies {
+	return sfa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SecurityhubFindingAggregator].
+func (sfa *SecurityhubFindingAggregator) LifecycleManagement() *terra.Lifecycle {
+	return sfa.Lifecycle
+}
+
+// Attributes returns the attributes for [SecurityhubFindingAggregator].
 func (sfa *SecurityhubFindingAggregator) Attributes() securityhubFindingAggregatorAttributes {
 	return securityhubFindingAggregatorAttributes{ref: terra.ReferenceResource(sfa)}
 }
 
+// ImportState imports the given attribute values into [SecurityhubFindingAggregator]'s state.
 func (sfa *SecurityhubFindingAggregator) ImportState(av io.Reader) error {
 	sfa.state = &securityhubFindingAggregatorState{}
 	if err := json.NewDecoder(av).Decode(sfa.state); err != nil {
@@ -48,10 +72,12 @@ func (sfa *SecurityhubFindingAggregator) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SecurityhubFindingAggregator] has state.
 func (sfa *SecurityhubFindingAggregator) State() (*securityhubFindingAggregatorState, bool) {
 	return sfa.state, sfa.state != nil
 }
 
+// StateMust returns the state for [SecurityhubFindingAggregator]. Panics if the state is nil.
 func (sfa *SecurityhubFindingAggregator) StateMust() *securityhubFindingAggregatorState {
 	if sfa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sfa.Type(), sfa.LocalName()))
@@ -59,10 +85,7 @@ func (sfa *SecurityhubFindingAggregator) StateMust() *securityhubFindingAggregat
 	return sfa.state
 }
 
-func (sfa *SecurityhubFindingAggregator) DependOn() terra.Reference {
-	return terra.ReferenceResource(sfa)
-}
-
+// SecurityhubFindingAggregatorArgs contains the configurations for aws_securityhub_finding_aggregator.
 type SecurityhubFindingAggregatorArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,23 +93,24 @@ type SecurityhubFindingAggregatorArgs struct {
 	LinkingMode terra.StringValue `hcl:"linking_mode,attr" validate:"required"`
 	// SpecifiedRegions: set of string, optional
 	SpecifiedRegions terra.SetValue[terra.StringValue] `hcl:"specified_regions,attr"`
-	// DependsOn contains resources that SecurityhubFindingAggregator depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type securityhubFindingAggregatorAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_securityhub_finding_aggregator.
 func (sfa securityhubFindingAggregatorAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sfa.ref.Append("id"))
+	return terra.ReferenceAsString(sfa.ref.Append("id"))
 }
 
+// LinkingMode returns a reference to field linking_mode of aws_securityhub_finding_aggregator.
 func (sfa securityhubFindingAggregatorAttributes) LinkingMode() terra.StringValue {
-	return terra.ReferenceString(sfa.ref.Append("linking_mode"))
+	return terra.ReferenceAsString(sfa.ref.Append("linking_mode"))
 }
 
+// SpecifiedRegions returns a reference to field specified_regions of aws_securityhub_finding_aggregator.
 func (sfa securityhubFindingAggregatorAttributes) SpecifiedRegions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sfa.ref.Append("specified_regions"))
+	return terra.ReferenceAsSet[terra.StringValue](sfa.ref.Append("specified_regions"))
 }
 
 type securityhubFindingAggregatorState struct {

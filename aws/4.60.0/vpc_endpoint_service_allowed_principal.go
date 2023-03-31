@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewVpcEndpointServiceAllowedPrincipal creates a new instance of [VpcEndpointServiceAllowedPrincipal].
 func NewVpcEndpointServiceAllowedPrincipal(name string, args VpcEndpointServiceAllowedPrincipalArgs) *VpcEndpointServiceAllowedPrincipal {
 	return &VpcEndpointServiceAllowedPrincipal{
 		Args: args,
@@ -18,28 +19,51 @@ func NewVpcEndpointServiceAllowedPrincipal(name string, args VpcEndpointServiceA
 
 var _ terra.Resource = (*VpcEndpointServiceAllowedPrincipal)(nil)
 
+// VpcEndpointServiceAllowedPrincipal represents the Terraform resource aws_vpc_endpoint_service_allowed_principal.
 type VpcEndpointServiceAllowedPrincipal struct {
-	Name  string
-	Args  VpcEndpointServiceAllowedPrincipalArgs
-	state *vpcEndpointServiceAllowedPrincipalState
+	Name      string
+	Args      VpcEndpointServiceAllowedPrincipalArgs
+	state     *vpcEndpointServiceAllowedPrincipalState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VpcEndpointServiceAllowedPrincipal].
 func (vesap *VpcEndpointServiceAllowedPrincipal) Type() string {
 	return "aws_vpc_endpoint_service_allowed_principal"
 }
 
+// LocalName returns the local name for [VpcEndpointServiceAllowedPrincipal].
 func (vesap *VpcEndpointServiceAllowedPrincipal) LocalName() string {
 	return vesap.Name
 }
 
+// Configuration returns the configuration (args) for [VpcEndpointServiceAllowedPrincipal].
 func (vesap *VpcEndpointServiceAllowedPrincipal) Configuration() interface{} {
 	return vesap.Args
 }
 
+// DependOn is used for other resources to depend on [VpcEndpointServiceAllowedPrincipal].
+func (vesap *VpcEndpointServiceAllowedPrincipal) DependOn() terra.Reference {
+	return terra.ReferenceResource(vesap)
+}
+
+// Dependencies returns the list of resources [VpcEndpointServiceAllowedPrincipal] depends_on.
+func (vesap *VpcEndpointServiceAllowedPrincipal) Dependencies() terra.Dependencies {
+	return vesap.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VpcEndpointServiceAllowedPrincipal].
+func (vesap *VpcEndpointServiceAllowedPrincipal) LifecycleManagement() *terra.Lifecycle {
+	return vesap.Lifecycle
+}
+
+// Attributes returns the attributes for [VpcEndpointServiceAllowedPrincipal].
 func (vesap *VpcEndpointServiceAllowedPrincipal) Attributes() vpcEndpointServiceAllowedPrincipalAttributes {
 	return vpcEndpointServiceAllowedPrincipalAttributes{ref: terra.ReferenceResource(vesap)}
 }
 
+// ImportState imports the given attribute values into [VpcEndpointServiceAllowedPrincipal]'s state.
 func (vesap *VpcEndpointServiceAllowedPrincipal) ImportState(av io.Reader) error {
 	vesap.state = &vpcEndpointServiceAllowedPrincipalState{}
 	if err := json.NewDecoder(av).Decode(vesap.state); err != nil {
@@ -48,10 +72,12 @@ func (vesap *VpcEndpointServiceAllowedPrincipal) ImportState(av io.Reader) error
 	return nil
 }
 
+// State returns the state and a bool indicating if [VpcEndpointServiceAllowedPrincipal] has state.
 func (vesap *VpcEndpointServiceAllowedPrincipal) State() (*vpcEndpointServiceAllowedPrincipalState, bool) {
 	return vesap.state, vesap.state != nil
 }
 
+// StateMust returns the state for [VpcEndpointServiceAllowedPrincipal]. Panics if the state is nil.
 func (vesap *VpcEndpointServiceAllowedPrincipal) StateMust() *vpcEndpointServiceAllowedPrincipalState {
 	if vesap.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vesap.Type(), vesap.LocalName()))
@@ -59,10 +85,7 @@ func (vesap *VpcEndpointServiceAllowedPrincipal) StateMust() *vpcEndpointService
 	return vesap.state
 }
 
-func (vesap *VpcEndpointServiceAllowedPrincipal) DependOn() terra.Reference {
-	return terra.ReferenceResource(vesap)
-}
-
+// VpcEndpointServiceAllowedPrincipalArgs contains the configurations for aws_vpc_endpoint_service_allowed_principal.
 type VpcEndpointServiceAllowedPrincipalArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,23 +93,24 @@ type VpcEndpointServiceAllowedPrincipalArgs struct {
 	PrincipalArn terra.StringValue `hcl:"principal_arn,attr" validate:"required"`
 	// VpcEndpointServiceId: string, required
 	VpcEndpointServiceId terra.StringValue `hcl:"vpc_endpoint_service_id,attr" validate:"required"`
-	// DependsOn contains resources that VpcEndpointServiceAllowedPrincipal depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type vpcEndpointServiceAllowedPrincipalAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_vpc_endpoint_service_allowed_principal.
 func (vesap vpcEndpointServiceAllowedPrincipalAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vesap.ref.Append("id"))
+	return terra.ReferenceAsString(vesap.ref.Append("id"))
 }
 
+// PrincipalArn returns a reference to field principal_arn of aws_vpc_endpoint_service_allowed_principal.
 func (vesap vpcEndpointServiceAllowedPrincipalAttributes) PrincipalArn() terra.StringValue {
-	return terra.ReferenceString(vesap.ref.Append("principal_arn"))
+	return terra.ReferenceAsString(vesap.ref.Append("principal_arn"))
 }
 
+// VpcEndpointServiceId returns a reference to field vpc_endpoint_service_id of aws_vpc_endpoint_service_allowed_principal.
 func (vesap vpcEndpointServiceAllowedPrincipalAttributes) VpcEndpointServiceId() terra.StringValue {
-	return terra.ReferenceString(vesap.ref.Append("vpc_endpoint_service_id"))
+	return terra.ReferenceAsString(vesap.ref.Append("vpc_endpoint_service_id"))
 }
 
 type vpcEndpointServiceAllowedPrincipalState struct {

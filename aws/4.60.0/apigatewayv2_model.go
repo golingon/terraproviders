@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewApigatewayv2Model creates a new instance of [Apigatewayv2Model].
 func NewApigatewayv2Model(name string, args Apigatewayv2ModelArgs) *Apigatewayv2Model {
 	return &Apigatewayv2Model{
 		Args: args,
@@ -18,28 +19,51 @@ func NewApigatewayv2Model(name string, args Apigatewayv2ModelArgs) *Apigatewayv2
 
 var _ terra.Resource = (*Apigatewayv2Model)(nil)
 
+// Apigatewayv2Model represents the Terraform resource aws_apigatewayv2_model.
 type Apigatewayv2Model struct {
-	Name  string
-	Args  Apigatewayv2ModelArgs
-	state *apigatewayv2ModelState
+	Name      string
+	Args      Apigatewayv2ModelArgs
+	state     *apigatewayv2ModelState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Apigatewayv2Model].
 func (am *Apigatewayv2Model) Type() string {
 	return "aws_apigatewayv2_model"
 }
 
+// LocalName returns the local name for [Apigatewayv2Model].
 func (am *Apigatewayv2Model) LocalName() string {
 	return am.Name
 }
 
+// Configuration returns the configuration (args) for [Apigatewayv2Model].
 func (am *Apigatewayv2Model) Configuration() interface{} {
 	return am.Args
 }
 
+// DependOn is used for other resources to depend on [Apigatewayv2Model].
+func (am *Apigatewayv2Model) DependOn() terra.Reference {
+	return terra.ReferenceResource(am)
+}
+
+// Dependencies returns the list of resources [Apigatewayv2Model] depends_on.
+func (am *Apigatewayv2Model) Dependencies() terra.Dependencies {
+	return am.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Apigatewayv2Model].
+func (am *Apigatewayv2Model) LifecycleManagement() *terra.Lifecycle {
+	return am.Lifecycle
+}
+
+// Attributes returns the attributes for [Apigatewayv2Model].
 func (am *Apigatewayv2Model) Attributes() apigatewayv2ModelAttributes {
 	return apigatewayv2ModelAttributes{ref: terra.ReferenceResource(am)}
 }
 
+// ImportState imports the given attribute values into [Apigatewayv2Model]'s state.
 func (am *Apigatewayv2Model) ImportState(av io.Reader) error {
 	am.state = &apigatewayv2ModelState{}
 	if err := json.NewDecoder(av).Decode(am.state); err != nil {
@@ -48,10 +72,12 @@ func (am *Apigatewayv2Model) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Apigatewayv2Model] has state.
 func (am *Apigatewayv2Model) State() (*apigatewayv2ModelState, bool) {
 	return am.state, am.state != nil
 }
 
+// StateMust returns the state for [Apigatewayv2Model]. Panics if the state is nil.
 func (am *Apigatewayv2Model) StateMust() *apigatewayv2ModelState {
 	if am.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", am.Type(), am.LocalName()))
@@ -59,10 +85,7 @@ func (am *Apigatewayv2Model) StateMust() *apigatewayv2ModelState {
 	return am.state
 }
 
-func (am *Apigatewayv2Model) DependOn() terra.Reference {
-	return terra.ReferenceResource(am)
-}
-
+// Apigatewayv2ModelArgs contains the configurations for aws_apigatewayv2_model.
 type Apigatewayv2ModelArgs struct {
 	// ApiId: string, required
 	ApiId terra.StringValue `hcl:"api_id,attr" validate:"required"`
@@ -76,35 +99,39 @@ type Apigatewayv2ModelArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// Schema: string, required
 	Schema terra.StringValue `hcl:"schema,attr" validate:"required"`
-	// DependsOn contains resources that Apigatewayv2Model depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apigatewayv2ModelAttributes struct {
 	ref terra.Reference
 }
 
+// ApiId returns a reference to field api_id of aws_apigatewayv2_model.
 func (am apigatewayv2ModelAttributes) ApiId() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("api_id"))
+	return terra.ReferenceAsString(am.ref.Append("api_id"))
 }
 
+// ContentType returns a reference to field content_type of aws_apigatewayv2_model.
 func (am apigatewayv2ModelAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("content_type"))
+	return terra.ReferenceAsString(am.ref.Append("content_type"))
 }
 
+// Description returns a reference to field description of aws_apigatewayv2_model.
 func (am apigatewayv2ModelAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("description"))
+	return terra.ReferenceAsString(am.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_apigatewayv2_model.
 func (am apigatewayv2ModelAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("id"))
+	return terra.ReferenceAsString(am.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_apigatewayv2_model.
 func (am apigatewayv2ModelAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("name"))
+	return terra.ReferenceAsString(am.ref.Append("name"))
 }
 
+// Schema returns a reference to field schema of aws_apigatewayv2_model.
 func (am apigatewayv2ModelAttributes) Schema() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("schema"))
+	return terra.ReferenceAsString(am.ref.Append("schema"))
 }
 
 type apigatewayv2ModelState struct {

@@ -28,11 +28,11 @@ func (itc ImageTestsConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (itc ImageTestsConfigurationAttributes) ImageTestsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(itc.ref.Append("image_tests_enabled"))
+	return terra.ReferenceAsBool(itc.ref.Append("image_tests_enabled"))
 }
 
 func (itc ImageTestsConfigurationAttributes) TimeoutMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(itc.ref.Append("timeout_minutes"))
+	return terra.ReferenceAsNumber(itc.ref.Append("timeout_minutes"))
 }
 
 type ScheduleAttributes struct {
@@ -52,11 +52,11 @@ func (s ScheduleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s ScheduleAttributes) PipelineExecutionStartCondition() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("pipeline_execution_start_condition"))
+	return terra.ReferenceAsString(s.ref.Append("pipeline_execution_start_condition"))
 }
 
 func (s ScheduleAttributes) ScheduleExpression() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("schedule_expression"))
+	return terra.ReferenceAsString(s.ref.Append("schedule_expression"))
 }
 
 type ImageTestsConfigurationState struct {

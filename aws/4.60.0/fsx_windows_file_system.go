@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewFsxWindowsFileSystem creates a new instance of [FsxWindowsFileSystem].
 func NewFsxWindowsFileSystem(name string, args FsxWindowsFileSystemArgs) *FsxWindowsFileSystem {
 	return &FsxWindowsFileSystem{
 		Args: args,
@@ -19,28 +20,51 @@ func NewFsxWindowsFileSystem(name string, args FsxWindowsFileSystemArgs) *FsxWin
 
 var _ terra.Resource = (*FsxWindowsFileSystem)(nil)
 
+// FsxWindowsFileSystem represents the Terraform resource aws_fsx_windows_file_system.
 type FsxWindowsFileSystem struct {
-	Name  string
-	Args  FsxWindowsFileSystemArgs
-	state *fsxWindowsFileSystemState
+	Name      string
+	Args      FsxWindowsFileSystemArgs
+	state     *fsxWindowsFileSystemState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [FsxWindowsFileSystem].
 func (fwfs *FsxWindowsFileSystem) Type() string {
 	return "aws_fsx_windows_file_system"
 }
 
+// LocalName returns the local name for [FsxWindowsFileSystem].
 func (fwfs *FsxWindowsFileSystem) LocalName() string {
 	return fwfs.Name
 }
 
+// Configuration returns the configuration (args) for [FsxWindowsFileSystem].
 func (fwfs *FsxWindowsFileSystem) Configuration() interface{} {
 	return fwfs.Args
 }
 
+// DependOn is used for other resources to depend on [FsxWindowsFileSystem].
+func (fwfs *FsxWindowsFileSystem) DependOn() terra.Reference {
+	return terra.ReferenceResource(fwfs)
+}
+
+// Dependencies returns the list of resources [FsxWindowsFileSystem] depends_on.
+func (fwfs *FsxWindowsFileSystem) Dependencies() terra.Dependencies {
+	return fwfs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [FsxWindowsFileSystem].
+func (fwfs *FsxWindowsFileSystem) LifecycleManagement() *terra.Lifecycle {
+	return fwfs.Lifecycle
+}
+
+// Attributes returns the attributes for [FsxWindowsFileSystem].
 func (fwfs *FsxWindowsFileSystem) Attributes() fsxWindowsFileSystemAttributes {
 	return fsxWindowsFileSystemAttributes{ref: terra.ReferenceResource(fwfs)}
 }
 
+// ImportState imports the given attribute values into [FsxWindowsFileSystem]'s state.
 func (fwfs *FsxWindowsFileSystem) ImportState(av io.Reader) error {
 	fwfs.state = &fsxWindowsFileSystemState{}
 	if err := json.NewDecoder(av).Decode(fwfs.state); err != nil {
@@ -49,10 +73,12 @@ func (fwfs *FsxWindowsFileSystem) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [FsxWindowsFileSystem] has state.
 func (fwfs *FsxWindowsFileSystem) State() (*fsxWindowsFileSystemState, bool) {
 	return fwfs.state, fwfs.state != nil
 }
 
+// StateMust returns the state for [FsxWindowsFileSystem]. Panics if the state is nil.
 func (fwfs *FsxWindowsFileSystem) StateMust() *fsxWindowsFileSystemState {
 	if fwfs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", fwfs.Type(), fwfs.LocalName()))
@@ -60,10 +86,7 @@ func (fwfs *FsxWindowsFileSystem) StateMust() *fsxWindowsFileSystemState {
 	return fwfs.state
 }
 
-func (fwfs *FsxWindowsFileSystem) DependOn() terra.Reference {
-	return terra.ReferenceResource(fwfs)
-}
-
+// FsxWindowsFileSystemArgs contains the configurations for aws_fsx_windows_file_system.
 type FsxWindowsFileSystemArgs struct {
 	// ActiveDirectoryId: string, optional
 	ActiveDirectoryId terra.StringValue `hcl:"active_directory_id,attr"`
@@ -109,127 +132,151 @@ type FsxWindowsFileSystemArgs struct {
 	SelfManagedActiveDirectory *fsxwindowsfilesystem.SelfManagedActiveDirectory `hcl:"self_managed_active_directory,block"`
 	// Timeouts: optional
 	Timeouts *fsxwindowsfilesystem.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that FsxWindowsFileSystem depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type fsxWindowsFileSystemAttributes struct {
 	ref terra.Reference
 }
 
+// ActiveDirectoryId returns a reference to field active_directory_id of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) ActiveDirectoryId() terra.StringValue {
-	return terra.ReferenceString(fwfs.ref.Append("active_directory_id"))
+	return terra.ReferenceAsString(fwfs.ref.Append("active_directory_id"))
 }
 
+// Aliases returns a reference to field aliases of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) Aliases() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](fwfs.ref.Append("aliases"))
+	return terra.ReferenceAsSet[terra.StringValue](fwfs.ref.Append("aliases"))
 }
 
+// Arn returns a reference to field arn of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(fwfs.ref.Append("arn"))
+	return terra.ReferenceAsString(fwfs.ref.Append("arn"))
 }
 
+// AutomaticBackupRetentionDays returns a reference to field automatic_backup_retention_days of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) AutomaticBackupRetentionDays() terra.NumberValue {
-	return terra.ReferenceNumber(fwfs.ref.Append("automatic_backup_retention_days"))
+	return terra.ReferenceAsNumber(fwfs.ref.Append("automatic_backup_retention_days"))
 }
 
+// BackupId returns a reference to field backup_id of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) BackupId() terra.StringValue {
-	return terra.ReferenceString(fwfs.ref.Append("backup_id"))
+	return terra.ReferenceAsString(fwfs.ref.Append("backup_id"))
 }
 
+// CopyTagsToBackups returns a reference to field copy_tags_to_backups of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) CopyTagsToBackups() terra.BoolValue {
-	return terra.ReferenceBool(fwfs.ref.Append("copy_tags_to_backups"))
+	return terra.ReferenceAsBool(fwfs.ref.Append("copy_tags_to_backups"))
 }
 
+// DailyAutomaticBackupStartTime returns a reference to field daily_automatic_backup_start_time of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) DailyAutomaticBackupStartTime() terra.StringValue {
-	return terra.ReferenceString(fwfs.ref.Append("daily_automatic_backup_start_time"))
+	return terra.ReferenceAsString(fwfs.ref.Append("daily_automatic_backup_start_time"))
 }
 
+// DeploymentType returns a reference to field deployment_type of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) DeploymentType() terra.StringValue {
-	return terra.ReferenceString(fwfs.ref.Append("deployment_type"))
+	return terra.ReferenceAsString(fwfs.ref.Append("deployment_type"))
 }
 
+// DnsName returns a reference to field dns_name of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) DnsName() terra.StringValue {
-	return terra.ReferenceString(fwfs.ref.Append("dns_name"))
+	return terra.ReferenceAsString(fwfs.ref.Append("dns_name"))
 }
 
+// Id returns a reference to field id of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(fwfs.ref.Append("id"))
+	return terra.ReferenceAsString(fwfs.ref.Append("id"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(fwfs.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(fwfs.ref.Append("kms_key_id"))
 }
 
+// NetworkInterfaceIds returns a reference to field network_interface_ids of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) NetworkInterfaceIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](fwfs.ref.Append("network_interface_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](fwfs.ref.Append("network_interface_ids"))
 }
 
+// OwnerId returns a reference to field owner_id of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(fwfs.ref.Append("owner_id"))
+	return terra.ReferenceAsString(fwfs.ref.Append("owner_id"))
 }
 
+// PreferredFileServerIp returns a reference to field preferred_file_server_ip of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) PreferredFileServerIp() terra.StringValue {
-	return terra.ReferenceString(fwfs.ref.Append("preferred_file_server_ip"))
+	return terra.ReferenceAsString(fwfs.ref.Append("preferred_file_server_ip"))
 }
 
+// PreferredSubnetId returns a reference to field preferred_subnet_id of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) PreferredSubnetId() terra.StringValue {
-	return terra.ReferenceString(fwfs.ref.Append("preferred_subnet_id"))
+	return terra.ReferenceAsString(fwfs.ref.Append("preferred_subnet_id"))
 }
 
+// RemoteAdministrationEndpoint returns a reference to field remote_administration_endpoint of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) RemoteAdministrationEndpoint() terra.StringValue {
-	return terra.ReferenceString(fwfs.ref.Append("remote_administration_endpoint"))
+	return terra.ReferenceAsString(fwfs.ref.Append("remote_administration_endpoint"))
 }
 
+// SecurityGroupIds returns a reference to field security_group_ids of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](fwfs.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](fwfs.ref.Append("security_group_ids"))
 }
 
+// SkipFinalBackup returns a reference to field skip_final_backup of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) SkipFinalBackup() terra.BoolValue {
-	return terra.ReferenceBool(fwfs.ref.Append("skip_final_backup"))
+	return terra.ReferenceAsBool(fwfs.ref.Append("skip_final_backup"))
 }
 
+// StorageCapacity returns a reference to field storage_capacity of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) StorageCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(fwfs.ref.Append("storage_capacity"))
+	return terra.ReferenceAsNumber(fwfs.ref.Append("storage_capacity"))
 }
 
+// StorageType returns a reference to field storage_type of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) StorageType() terra.StringValue {
-	return terra.ReferenceString(fwfs.ref.Append("storage_type"))
+	return terra.ReferenceAsString(fwfs.ref.Append("storage_type"))
 }
 
+// SubnetIds returns a reference to field subnet_ids of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) SubnetIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](fwfs.ref.Append("subnet_ids"))
+	return terra.ReferenceAsList[terra.StringValue](fwfs.ref.Append("subnet_ids"))
 }
 
+// Tags returns a reference to field tags of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](fwfs.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](fwfs.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](fwfs.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](fwfs.ref.Append("tags_all"))
 }
 
+// ThroughputCapacity returns a reference to field throughput_capacity of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) ThroughputCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(fwfs.ref.Append("throughput_capacity"))
+	return terra.ReferenceAsNumber(fwfs.ref.Append("throughput_capacity"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(fwfs.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(fwfs.ref.Append("vpc_id"))
 }
 
+// WeeklyMaintenanceStartTime returns a reference to field weekly_maintenance_start_time of aws_fsx_windows_file_system.
 func (fwfs fsxWindowsFileSystemAttributes) WeeklyMaintenanceStartTime() terra.StringValue {
-	return terra.ReferenceString(fwfs.ref.Append("weekly_maintenance_start_time"))
+	return terra.ReferenceAsString(fwfs.ref.Append("weekly_maintenance_start_time"))
 }
 
 func (fwfs fsxWindowsFileSystemAttributes) AuditLogConfiguration() terra.ListValue[fsxwindowsfilesystem.AuditLogConfigurationAttributes] {
-	return terra.ReferenceList[fsxwindowsfilesystem.AuditLogConfigurationAttributes](fwfs.ref.Append("audit_log_configuration"))
+	return terra.ReferenceAsList[fsxwindowsfilesystem.AuditLogConfigurationAttributes](fwfs.ref.Append("audit_log_configuration"))
 }
 
 func (fwfs fsxWindowsFileSystemAttributes) SelfManagedActiveDirectory() terra.ListValue[fsxwindowsfilesystem.SelfManagedActiveDirectoryAttributes] {
-	return terra.ReferenceList[fsxwindowsfilesystem.SelfManagedActiveDirectoryAttributes](fwfs.ref.Append("self_managed_active_directory"))
+	return terra.ReferenceAsList[fsxwindowsfilesystem.SelfManagedActiveDirectoryAttributes](fwfs.ref.Append("self_managed_active_directory"))
 }
 
 func (fwfs fsxWindowsFileSystemAttributes) Timeouts() fsxwindowsfilesystem.TimeoutsAttributes {
-	return terra.ReferenceSingle[fsxwindowsfilesystem.TimeoutsAttributes](fwfs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[fsxwindowsfilesystem.TimeoutsAttributes](fwfs.ref.Append("timeouts"))
 }
 
 type fsxWindowsFileSystemState struct {

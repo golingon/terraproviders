@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewConfigConfigRule creates a new instance of [ConfigConfigRule].
 func NewConfigConfigRule(name string, args ConfigConfigRuleArgs) *ConfigConfigRule {
 	return &ConfigConfigRule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewConfigConfigRule(name string, args ConfigConfigRuleArgs) *ConfigConfigRu
 
 var _ terra.Resource = (*ConfigConfigRule)(nil)
 
+// ConfigConfigRule represents the Terraform resource aws_config_config_rule.
 type ConfigConfigRule struct {
-	Name  string
-	Args  ConfigConfigRuleArgs
-	state *configConfigRuleState
+	Name      string
+	Args      ConfigConfigRuleArgs
+	state     *configConfigRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ConfigConfigRule].
 func (ccr *ConfigConfigRule) Type() string {
 	return "aws_config_config_rule"
 }
 
+// LocalName returns the local name for [ConfigConfigRule].
 func (ccr *ConfigConfigRule) LocalName() string {
 	return ccr.Name
 }
 
+// Configuration returns the configuration (args) for [ConfigConfigRule].
 func (ccr *ConfigConfigRule) Configuration() interface{} {
 	return ccr.Args
 }
 
+// DependOn is used for other resources to depend on [ConfigConfigRule].
+func (ccr *ConfigConfigRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(ccr)
+}
+
+// Dependencies returns the list of resources [ConfigConfigRule] depends_on.
+func (ccr *ConfigConfigRule) Dependencies() terra.Dependencies {
+	return ccr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ConfigConfigRule].
+func (ccr *ConfigConfigRule) LifecycleManagement() *terra.Lifecycle {
+	return ccr.Lifecycle
+}
+
+// Attributes returns the attributes for [ConfigConfigRule].
 func (ccr *ConfigConfigRule) Attributes() configConfigRuleAttributes {
 	return configConfigRuleAttributes{ref: terra.ReferenceResource(ccr)}
 }
 
+// ImportState imports the given attribute values into [ConfigConfigRule]'s state.
 func (ccr *ConfigConfigRule) ImportState(av io.Reader) error {
 	ccr.state = &configConfigRuleState{}
 	if err := json.NewDecoder(av).Decode(ccr.state); err != nil {
@@ -49,10 +73,12 @@ func (ccr *ConfigConfigRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ConfigConfigRule] has state.
 func (ccr *ConfigConfigRule) State() (*configConfigRuleState, bool) {
 	return ccr.state, ccr.state != nil
 }
 
+// StateMust returns the state for [ConfigConfigRule]. Panics if the state is nil.
 func (ccr *ConfigConfigRule) StateMust() *configConfigRuleState {
 	if ccr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ccr.Type(), ccr.LocalName()))
@@ -60,10 +86,7 @@ func (ccr *ConfigConfigRule) StateMust() *configConfigRuleState {
 	return ccr.state
 }
 
-func (ccr *ConfigConfigRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(ccr)
-}
-
+// ConfigConfigRuleArgs contains the configurations for aws_config_config_rule.
 type ConfigConfigRuleArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -83,55 +106,62 @@ type ConfigConfigRuleArgs struct {
 	Scope *configconfigrule.Scope `hcl:"scope,block"`
 	// Source: required
 	Source *configconfigrule.Source `hcl:"source,block" validate:"required"`
-	// DependsOn contains resources that ConfigConfigRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type configConfigRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_config_config_rule.
 func (ccr configConfigRuleAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ccr.ref.Append("arn"))
+	return terra.ReferenceAsString(ccr.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_config_config_rule.
 func (ccr configConfigRuleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ccr.ref.Append("description"))
+	return terra.ReferenceAsString(ccr.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_config_config_rule.
 func (ccr configConfigRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ccr.ref.Append("id"))
+	return terra.ReferenceAsString(ccr.ref.Append("id"))
 }
 
+// InputParameters returns a reference to field input_parameters of aws_config_config_rule.
 func (ccr configConfigRuleAttributes) InputParameters() terra.StringValue {
-	return terra.ReferenceString(ccr.ref.Append("input_parameters"))
+	return terra.ReferenceAsString(ccr.ref.Append("input_parameters"))
 }
 
+// MaximumExecutionFrequency returns a reference to field maximum_execution_frequency of aws_config_config_rule.
 func (ccr configConfigRuleAttributes) MaximumExecutionFrequency() terra.StringValue {
-	return terra.ReferenceString(ccr.ref.Append("maximum_execution_frequency"))
+	return terra.ReferenceAsString(ccr.ref.Append("maximum_execution_frequency"))
 }
 
+// Name returns a reference to field name of aws_config_config_rule.
 func (ccr configConfigRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ccr.ref.Append("name"))
+	return terra.ReferenceAsString(ccr.ref.Append("name"))
 }
 
+// RuleId returns a reference to field rule_id of aws_config_config_rule.
 func (ccr configConfigRuleAttributes) RuleId() terra.StringValue {
-	return terra.ReferenceString(ccr.ref.Append("rule_id"))
+	return terra.ReferenceAsString(ccr.ref.Append("rule_id"))
 }
 
+// Tags returns a reference to field tags of aws_config_config_rule.
 func (ccr configConfigRuleAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ccr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ccr.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_config_config_rule.
 func (ccr configConfigRuleAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ccr.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ccr.ref.Append("tags_all"))
 }
 
 func (ccr configConfigRuleAttributes) Scope() terra.ListValue[configconfigrule.ScopeAttributes] {
-	return terra.ReferenceList[configconfigrule.ScopeAttributes](ccr.ref.Append("scope"))
+	return terra.ReferenceAsList[configconfigrule.ScopeAttributes](ccr.ref.Append("scope"))
 }
 
 func (ccr configConfigRuleAttributes) Source() terra.ListValue[configconfigrule.SourceAttributes] {
-	return terra.ReferenceList[configconfigrule.SourceAttributes](ccr.ref.Append("source"))
+	return terra.ReferenceAsList[configconfigrule.SourceAttributes](ccr.ref.Append("source"))
 }
 
 type configConfigRuleState struct {

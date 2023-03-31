@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataEcsCluster creates a new instance of [DataEcsCluster].
 func NewDataEcsCluster(name string, args DataEcsClusterArgs) *DataEcsCluster {
 	return &DataEcsCluster{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataEcsCluster(name string, args DataEcsClusterArgs) *DataEcsCluster {
 
 var _ terra.DataResource = (*DataEcsCluster)(nil)
 
+// DataEcsCluster represents the Terraform data resource aws_ecs_cluster.
 type DataEcsCluster struct {
 	Name string
 	Args DataEcsClusterArgs
 }
 
+// DataSource returns the Terraform object type for [DataEcsCluster].
 func (ec *DataEcsCluster) DataSource() string {
 	return "aws_ecs_cluster"
 }
 
+// LocalName returns the local name for [DataEcsCluster].
 func (ec *DataEcsCluster) LocalName() string {
 	return ec.Name
 }
 
+// Configuration returns the configuration (args) for [DataEcsCluster].
 func (ec *DataEcsCluster) Configuration() interface{} {
 	return ec.Args
 }
 
+// Attributes returns the attributes for [DataEcsCluster].
 func (ec *DataEcsCluster) Attributes() dataEcsClusterAttributes {
 	return dataEcsClusterAttributes{ref: terra.ReferenceDataResource(ec)}
 }
 
+// DataEcsClusterArgs contains the configurations for aws_ecs_cluster.
 type DataEcsClusterArgs struct {
 	// ClusterName: string, required
 	ClusterName terra.StringValue `hcl:"cluster_name,attr" validate:"required"`
@@ -53,42 +60,50 @@ type dataEcsClusterAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ecs_cluster.
 func (ec dataEcsClusterAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("arn"))
+	return terra.ReferenceAsString(ec.ref.Append("arn"))
 }
 
+// ClusterName returns a reference to field cluster_name of aws_ecs_cluster.
 func (ec dataEcsClusterAttributes) ClusterName() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("cluster_name"))
+	return terra.ReferenceAsString(ec.ref.Append("cluster_name"))
 }
 
+// Id returns a reference to field id of aws_ecs_cluster.
 func (ec dataEcsClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("id"))
+	return terra.ReferenceAsString(ec.ref.Append("id"))
 }
 
+// PendingTasksCount returns a reference to field pending_tasks_count of aws_ecs_cluster.
 func (ec dataEcsClusterAttributes) PendingTasksCount() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("pending_tasks_count"))
+	return terra.ReferenceAsNumber(ec.ref.Append("pending_tasks_count"))
 }
 
+// RegisteredContainerInstancesCount returns a reference to field registered_container_instances_count of aws_ecs_cluster.
 func (ec dataEcsClusterAttributes) RegisteredContainerInstancesCount() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("registered_container_instances_count"))
+	return terra.ReferenceAsNumber(ec.ref.Append("registered_container_instances_count"))
 }
 
+// RunningTasksCount returns a reference to field running_tasks_count of aws_ecs_cluster.
 func (ec dataEcsClusterAttributes) RunningTasksCount() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("running_tasks_count"))
+	return terra.ReferenceAsNumber(ec.ref.Append("running_tasks_count"))
 }
 
+// Status returns a reference to field status of aws_ecs_cluster.
 func (ec dataEcsClusterAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("status"))
+	return terra.ReferenceAsString(ec.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of aws_ecs_cluster.
 func (ec dataEcsClusterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ec.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ec.ref.Append("tags"))
 }
 
 func (ec dataEcsClusterAttributes) ServiceConnectDefaults() terra.ListValue[dataecscluster.ServiceConnectDefaultsAttributes] {
-	return terra.ReferenceList[dataecscluster.ServiceConnectDefaultsAttributes](ec.ref.Append("service_connect_defaults"))
+	return terra.ReferenceAsList[dataecscluster.ServiceConnectDefaultsAttributes](ec.ref.Append("service_connect_defaults"))
 }
 
 func (ec dataEcsClusterAttributes) Setting() terra.SetValue[dataecscluster.SettingAttributes] {
-	return terra.ReferenceSet[dataecscluster.SettingAttributes](ec.ref.Append("setting"))
+	return terra.ReferenceAsSet[dataecscluster.SettingAttributes](ec.ref.Append("setting"))
 }

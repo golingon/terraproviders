@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataSecurityGroups creates a new instance of [DataSecurityGroups].
 func NewDataSecurityGroups(name string, args DataSecurityGroupsArgs) *DataSecurityGroups {
 	return &DataSecurityGroups{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataSecurityGroups(name string, args DataSecurityGroupsArgs) *DataSecuri
 
 var _ terra.DataResource = (*DataSecurityGroups)(nil)
 
+// DataSecurityGroups represents the Terraform data resource aws_security_groups.
 type DataSecurityGroups struct {
 	Name string
 	Args DataSecurityGroupsArgs
 }
 
+// DataSource returns the Terraform object type for [DataSecurityGroups].
 func (sg *DataSecurityGroups) DataSource() string {
 	return "aws_security_groups"
 }
 
+// LocalName returns the local name for [DataSecurityGroups].
 func (sg *DataSecurityGroups) LocalName() string {
 	return sg.Name
 }
 
+// Configuration returns the configuration (args) for [DataSecurityGroups].
 func (sg *DataSecurityGroups) Configuration() interface{} {
 	return sg.Args
 }
 
+// Attributes returns the attributes for [DataSecurityGroups].
 func (sg *DataSecurityGroups) Attributes() dataSecurityGroupsAttributes {
 	return dataSecurityGroupsAttributes{ref: terra.ReferenceDataResource(sg)}
 }
 
+// DataSecurityGroupsArgs contains the configurations for aws_security_groups.
 type DataSecurityGroupsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,30 +58,35 @@ type dataSecurityGroupsAttributes struct {
 	ref terra.Reference
 }
 
+// Arns returns a reference to field arns of aws_security_groups.
 func (sg dataSecurityGroupsAttributes) Arns() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sg.ref.Append("arns"))
+	return terra.ReferenceAsList[terra.StringValue](sg.ref.Append("arns"))
 }
 
+// Id returns a reference to field id of aws_security_groups.
 func (sg dataSecurityGroupsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sg.ref.Append("id"))
+	return terra.ReferenceAsString(sg.ref.Append("id"))
 }
 
+// Ids returns a reference to field ids of aws_security_groups.
 func (sg dataSecurityGroupsAttributes) Ids() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sg.ref.Append("ids"))
+	return terra.ReferenceAsList[terra.StringValue](sg.ref.Append("ids"))
 }
 
+// Tags returns a reference to field tags of aws_security_groups.
 func (sg dataSecurityGroupsAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sg.ref.Append("tags"))
 }
 
+// VpcIds returns a reference to field vpc_ids of aws_security_groups.
 func (sg dataSecurityGroupsAttributes) VpcIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sg.ref.Append("vpc_ids"))
+	return terra.ReferenceAsList[terra.StringValue](sg.ref.Append("vpc_ids"))
 }
 
 func (sg dataSecurityGroupsAttributes) Filter() terra.SetValue[datasecuritygroups.FilterAttributes] {
-	return terra.ReferenceSet[datasecuritygroups.FilterAttributes](sg.ref.Append("filter"))
+	return terra.ReferenceAsSet[datasecuritygroups.FilterAttributes](sg.ref.Append("filter"))
 }
 
 func (sg dataSecurityGroupsAttributes) Timeouts() datasecuritygroups.TimeoutsAttributes {
-	return terra.ReferenceSingle[datasecuritygroups.TimeoutsAttributes](sg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datasecuritygroups.TimeoutsAttributes](sg.ref.Append("timeouts"))
 }

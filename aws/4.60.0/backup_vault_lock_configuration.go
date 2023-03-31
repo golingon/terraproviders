@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewBackupVaultLockConfiguration creates a new instance of [BackupVaultLockConfiguration].
 func NewBackupVaultLockConfiguration(name string, args BackupVaultLockConfigurationArgs) *BackupVaultLockConfiguration {
 	return &BackupVaultLockConfiguration{
 		Args: args,
@@ -18,28 +19,51 @@ func NewBackupVaultLockConfiguration(name string, args BackupVaultLockConfigurat
 
 var _ terra.Resource = (*BackupVaultLockConfiguration)(nil)
 
+// BackupVaultLockConfiguration represents the Terraform resource aws_backup_vault_lock_configuration.
 type BackupVaultLockConfiguration struct {
-	Name  string
-	Args  BackupVaultLockConfigurationArgs
-	state *backupVaultLockConfigurationState
+	Name      string
+	Args      BackupVaultLockConfigurationArgs
+	state     *backupVaultLockConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BackupVaultLockConfiguration].
 func (bvlc *BackupVaultLockConfiguration) Type() string {
 	return "aws_backup_vault_lock_configuration"
 }
 
+// LocalName returns the local name for [BackupVaultLockConfiguration].
 func (bvlc *BackupVaultLockConfiguration) LocalName() string {
 	return bvlc.Name
 }
 
+// Configuration returns the configuration (args) for [BackupVaultLockConfiguration].
 func (bvlc *BackupVaultLockConfiguration) Configuration() interface{} {
 	return bvlc.Args
 }
 
+// DependOn is used for other resources to depend on [BackupVaultLockConfiguration].
+func (bvlc *BackupVaultLockConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(bvlc)
+}
+
+// Dependencies returns the list of resources [BackupVaultLockConfiguration] depends_on.
+func (bvlc *BackupVaultLockConfiguration) Dependencies() terra.Dependencies {
+	return bvlc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BackupVaultLockConfiguration].
+func (bvlc *BackupVaultLockConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return bvlc.Lifecycle
+}
+
+// Attributes returns the attributes for [BackupVaultLockConfiguration].
 func (bvlc *BackupVaultLockConfiguration) Attributes() backupVaultLockConfigurationAttributes {
 	return backupVaultLockConfigurationAttributes{ref: terra.ReferenceResource(bvlc)}
 }
 
+// ImportState imports the given attribute values into [BackupVaultLockConfiguration]'s state.
 func (bvlc *BackupVaultLockConfiguration) ImportState(av io.Reader) error {
 	bvlc.state = &backupVaultLockConfigurationState{}
 	if err := json.NewDecoder(av).Decode(bvlc.state); err != nil {
@@ -48,10 +72,12 @@ func (bvlc *BackupVaultLockConfiguration) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BackupVaultLockConfiguration] has state.
 func (bvlc *BackupVaultLockConfiguration) State() (*backupVaultLockConfigurationState, bool) {
 	return bvlc.state, bvlc.state != nil
 }
 
+// StateMust returns the state for [BackupVaultLockConfiguration]. Panics if the state is nil.
 func (bvlc *BackupVaultLockConfiguration) StateMust() *backupVaultLockConfigurationState {
 	if bvlc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bvlc.Type(), bvlc.LocalName()))
@@ -59,10 +85,7 @@ func (bvlc *BackupVaultLockConfiguration) StateMust() *backupVaultLockConfigurat
 	return bvlc.state
 }
 
-func (bvlc *BackupVaultLockConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(bvlc)
-}
-
+// BackupVaultLockConfigurationArgs contains the configurations for aws_backup_vault_lock_configuration.
 type BackupVaultLockConfigurationArgs struct {
 	// BackupVaultName: string, required
 	BackupVaultName terra.StringValue `hcl:"backup_vault_name,attr" validate:"required"`
@@ -74,35 +97,39 @@ type BackupVaultLockConfigurationArgs struct {
 	MaxRetentionDays terra.NumberValue `hcl:"max_retention_days,attr"`
 	// MinRetentionDays: number, optional
 	MinRetentionDays terra.NumberValue `hcl:"min_retention_days,attr"`
-	// DependsOn contains resources that BackupVaultLockConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type backupVaultLockConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// BackupVaultArn returns a reference to field backup_vault_arn of aws_backup_vault_lock_configuration.
 func (bvlc backupVaultLockConfigurationAttributes) BackupVaultArn() terra.StringValue {
-	return terra.ReferenceString(bvlc.ref.Append("backup_vault_arn"))
+	return terra.ReferenceAsString(bvlc.ref.Append("backup_vault_arn"))
 }
 
+// BackupVaultName returns a reference to field backup_vault_name of aws_backup_vault_lock_configuration.
 func (bvlc backupVaultLockConfigurationAttributes) BackupVaultName() terra.StringValue {
-	return terra.ReferenceString(bvlc.ref.Append("backup_vault_name"))
+	return terra.ReferenceAsString(bvlc.ref.Append("backup_vault_name"))
 }
 
+// ChangeableForDays returns a reference to field changeable_for_days of aws_backup_vault_lock_configuration.
 func (bvlc backupVaultLockConfigurationAttributes) ChangeableForDays() terra.NumberValue {
-	return terra.ReferenceNumber(bvlc.ref.Append("changeable_for_days"))
+	return terra.ReferenceAsNumber(bvlc.ref.Append("changeable_for_days"))
 }
 
+// Id returns a reference to field id of aws_backup_vault_lock_configuration.
 func (bvlc backupVaultLockConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bvlc.ref.Append("id"))
+	return terra.ReferenceAsString(bvlc.ref.Append("id"))
 }
 
+// MaxRetentionDays returns a reference to field max_retention_days of aws_backup_vault_lock_configuration.
 func (bvlc backupVaultLockConfigurationAttributes) MaxRetentionDays() terra.NumberValue {
-	return terra.ReferenceNumber(bvlc.ref.Append("max_retention_days"))
+	return terra.ReferenceAsNumber(bvlc.ref.Append("max_retention_days"))
 }
 
+// MinRetentionDays returns a reference to field min_retention_days of aws_backup_vault_lock_configuration.
 func (bvlc backupVaultLockConfigurationAttributes) MinRetentionDays() terra.NumberValue {
-	return terra.ReferenceNumber(bvlc.ref.Append("min_retention_days"))
+	return terra.ReferenceAsNumber(bvlc.ref.Append("min_retention_days"))
 }
 
 type backupVaultLockConfigurationState struct {

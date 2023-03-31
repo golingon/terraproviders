@@ -37,23 +37,23 @@ func (r RouteAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RouteAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("host"))
+	return terra.ReferenceAsString(r.ref.Append("host"))
 }
 
 func (r RouteAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("port"))
+	return terra.ReferenceAsNumber(r.ref.Append("port"))
 }
 
 func (r RouteAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("priority"))
+	return terra.ReferenceAsNumber(r.ref.Append("priority"))
 }
 
 func (r RouteAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("protocol"))
+	return terra.ReferenceAsString(r.ref.Append("protocol"))
 }
 
 func (r RouteAttributes) Weight() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("weight"))
+	return terra.ReferenceAsNumber(r.ref.Append("weight"))
 }
 
 type RouteState struct {

@@ -31,11 +31,11 @@ func (ec Ec2ConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec Ec2ConfigAttributes) SecurityGroupArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ec.ref.Append("security_group_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](ec.ref.Append("security_group_arns"))
 }
 
 func (ec Ec2ConfigAttributes) SubnetArn() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("subnet_arn"))
+	return terra.ReferenceAsString(ec.ref.Append("subnet_arn"))
 }
 
 type Ec2ConfigState struct {

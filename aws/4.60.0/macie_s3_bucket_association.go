@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMacieS3BucketAssociation creates a new instance of [MacieS3BucketAssociation].
 func NewMacieS3BucketAssociation(name string, args MacieS3BucketAssociationArgs) *MacieS3BucketAssociation {
 	return &MacieS3BucketAssociation{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMacieS3BucketAssociation(name string, args MacieS3BucketAssociationArgs)
 
 var _ terra.Resource = (*MacieS3BucketAssociation)(nil)
 
+// MacieS3BucketAssociation represents the Terraform resource aws_macie_s3_bucket_association.
 type MacieS3BucketAssociation struct {
-	Name  string
-	Args  MacieS3BucketAssociationArgs
-	state *macieS3BucketAssociationState
+	Name      string
+	Args      MacieS3BucketAssociationArgs
+	state     *macieS3BucketAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MacieS3BucketAssociation].
 func (msba *MacieS3BucketAssociation) Type() string {
 	return "aws_macie_s3_bucket_association"
 }
 
+// LocalName returns the local name for [MacieS3BucketAssociation].
 func (msba *MacieS3BucketAssociation) LocalName() string {
 	return msba.Name
 }
 
+// Configuration returns the configuration (args) for [MacieS3BucketAssociation].
 func (msba *MacieS3BucketAssociation) Configuration() interface{} {
 	return msba.Args
 }
 
+// DependOn is used for other resources to depend on [MacieS3BucketAssociation].
+func (msba *MacieS3BucketAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(msba)
+}
+
+// Dependencies returns the list of resources [MacieS3BucketAssociation] depends_on.
+func (msba *MacieS3BucketAssociation) Dependencies() terra.Dependencies {
+	return msba.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MacieS3BucketAssociation].
+func (msba *MacieS3BucketAssociation) LifecycleManagement() *terra.Lifecycle {
+	return msba.Lifecycle
+}
+
+// Attributes returns the attributes for [MacieS3BucketAssociation].
 func (msba *MacieS3BucketAssociation) Attributes() macieS3BucketAssociationAttributes {
 	return macieS3BucketAssociationAttributes{ref: terra.ReferenceResource(msba)}
 }
 
+// ImportState imports the given attribute values into [MacieS3BucketAssociation]'s state.
 func (msba *MacieS3BucketAssociation) ImportState(av io.Reader) error {
 	msba.state = &macieS3BucketAssociationState{}
 	if err := json.NewDecoder(av).Decode(msba.state); err != nil {
@@ -49,10 +73,12 @@ func (msba *MacieS3BucketAssociation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MacieS3BucketAssociation] has state.
 func (msba *MacieS3BucketAssociation) State() (*macieS3BucketAssociationState, bool) {
 	return msba.state, msba.state != nil
 }
 
+// StateMust returns the state for [MacieS3BucketAssociation]. Panics if the state is nil.
 func (msba *MacieS3BucketAssociation) StateMust() *macieS3BucketAssociationState {
 	if msba.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", msba.Type(), msba.LocalName()))
@@ -60,10 +86,7 @@ func (msba *MacieS3BucketAssociation) StateMust() *macieS3BucketAssociationState
 	return msba.state
 }
 
-func (msba *MacieS3BucketAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(msba)
-}
-
+// MacieS3BucketAssociationArgs contains the configurations for aws_macie_s3_bucket_association.
 type MacieS3BucketAssociationArgs struct {
 	// BucketName: string, required
 	BucketName terra.StringValue `hcl:"bucket_name,attr" validate:"required"`
@@ -75,31 +98,33 @@ type MacieS3BucketAssociationArgs struct {
 	Prefix terra.StringValue `hcl:"prefix,attr"`
 	// ClassificationType: optional
 	ClassificationType *macies3bucketassociation.ClassificationType `hcl:"classification_type,block"`
-	// DependsOn contains resources that MacieS3BucketAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type macieS3BucketAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// BucketName returns a reference to field bucket_name of aws_macie_s3_bucket_association.
 func (msba macieS3BucketAssociationAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(msba.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(msba.ref.Append("bucket_name"))
 }
 
+// Id returns a reference to field id of aws_macie_s3_bucket_association.
 func (msba macieS3BucketAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(msba.ref.Append("id"))
+	return terra.ReferenceAsString(msba.ref.Append("id"))
 }
 
+// MemberAccountId returns a reference to field member_account_id of aws_macie_s3_bucket_association.
 func (msba macieS3BucketAssociationAttributes) MemberAccountId() terra.StringValue {
-	return terra.ReferenceString(msba.ref.Append("member_account_id"))
+	return terra.ReferenceAsString(msba.ref.Append("member_account_id"))
 }
 
+// Prefix returns a reference to field prefix of aws_macie_s3_bucket_association.
 func (msba macieS3BucketAssociationAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(msba.ref.Append("prefix"))
+	return terra.ReferenceAsString(msba.ref.Append("prefix"))
 }
 
 func (msba macieS3BucketAssociationAttributes) ClassificationType() terra.ListValue[macies3bucketassociation.ClassificationTypeAttributes] {
-	return terra.ReferenceList[macies3bucketassociation.ClassificationTypeAttributes](msba.ref.Append("classification_type"))
+	return terra.ReferenceAsList[macies3bucketassociation.ClassificationTypeAttributes](msba.ref.Append("classification_type"))
 }
 
 type macieS3BucketAssociationState struct {

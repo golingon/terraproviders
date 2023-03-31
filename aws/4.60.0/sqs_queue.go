@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSqsQueue creates a new instance of [SqsQueue].
 func NewSqsQueue(name string, args SqsQueueArgs) *SqsQueue {
 	return &SqsQueue{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSqsQueue(name string, args SqsQueueArgs) *SqsQueue {
 
 var _ terra.Resource = (*SqsQueue)(nil)
 
+// SqsQueue represents the Terraform resource aws_sqs_queue.
 type SqsQueue struct {
-	Name  string
-	Args  SqsQueueArgs
-	state *sqsQueueState
+	Name      string
+	Args      SqsQueueArgs
+	state     *sqsQueueState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SqsQueue].
 func (sq *SqsQueue) Type() string {
 	return "aws_sqs_queue"
 }
 
+// LocalName returns the local name for [SqsQueue].
 func (sq *SqsQueue) LocalName() string {
 	return sq.Name
 }
 
+// Configuration returns the configuration (args) for [SqsQueue].
 func (sq *SqsQueue) Configuration() interface{} {
 	return sq.Args
 }
 
+// DependOn is used for other resources to depend on [SqsQueue].
+func (sq *SqsQueue) DependOn() terra.Reference {
+	return terra.ReferenceResource(sq)
+}
+
+// Dependencies returns the list of resources [SqsQueue] depends_on.
+func (sq *SqsQueue) Dependencies() terra.Dependencies {
+	return sq.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SqsQueue].
+func (sq *SqsQueue) LifecycleManagement() *terra.Lifecycle {
+	return sq.Lifecycle
+}
+
+// Attributes returns the attributes for [SqsQueue].
 func (sq *SqsQueue) Attributes() sqsQueueAttributes {
 	return sqsQueueAttributes{ref: terra.ReferenceResource(sq)}
 }
 
+// ImportState imports the given attribute values into [SqsQueue]'s state.
 func (sq *SqsQueue) ImportState(av io.Reader) error {
 	sq.state = &sqsQueueState{}
 	if err := json.NewDecoder(av).Decode(sq.state); err != nil {
@@ -48,10 +72,12 @@ func (sq *SqsQueue) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SqsQueue] has state.
 func (sq *SqsQueue) State() (*sqsQueueState, bool) {
 	return sq.state, sq.state != nil
 }
 
+// StateMust returns the state for [SqsQueue]. Panics if the state is nil.
 func (sq *SqsQueue) StateMust() *sqsQueueState {
 	if sq.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sq.Type(), sq.LocalName()))
@@ -59,10 +85,7 @@ func (sq *SqsQueue) StateMust() *sqsQueueState {
 	return sq.state
 }
 
-func (sq *SqsQueue) DependOn() terra.Reference {
-	return terra.ReferenceResource(sq)
-}
-
+// SqsQueueArgs contains the configurations for aws_sqs_queue.
 type SqsQueueArgs struct {
 	// ContentBasedDeduplication: bool, optional
 	ContentBasedDeduplication terra.BoolValue `hcl:"content_based_deduplication,attr"`
@@ -104,99 +127,119 @@ type SqsQueueArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// VisibilityTimeoutSeconds: number, optional
 	VisibilityTimeoutSeconds terra.NumberValue `hcl:"visibility_timeout_seconds,attr"`
-	// DependsOn contains resources that SqsQueue depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sqsQueueAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_sqs_queue.
 func (sq sqsQueueAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("arn"))
+	return terra.ReferenceAsString(sq.ref.Append("arn"))
 }
 
+// ContentBasedDeduplication returns a reference to field content_based_deduplication of aws_sqs_queue.
 func (sq sqsQueueAttributes) ContentBasedDeduplication() terra.BoolValue {
-	return terra.ReferenceBool(sq.ref.Append("content_based_deduplication"))
+	return terra.ReferenceAsBool(sq.ref.Append("content_based_deduplication"))
 }
 
+// DeduplicationScope returns a reference to field deduplication_scope of aws_sqs_queue.
 func (sq sqsQueueAttributes) DeduplicationScope() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("deduplication_scope"))
+	return terra.ReferenceAsString(sq.ref.Append("deduplication_scope"))
 }
 
+// DelaySeconds returns a reference to field delay_seconds of aws_sqs_queue.
 func (sq sqsQueueAttributes) DelaySeconds() terra.NumberValue {
-	return terra.ReferenceNumber(sq.ref.Append("delay_seconds"))
+	return terra.ReferenceAsNumber(sq.ref.Append("delay_seconds"))
 }
 
+// FifoQueue returns a reference to field fifo_queue of aws_sqs_queue.
 func (sq sqsQueueAttributes) FifoQueue() terra.BoolValue {
-	return terra.ReferenceBool(sq.ref.Append("fifo_queue"))
+	return terra.ReferenceAsBool(sq.ref.Append("fifo_queue"))
 }
 
+// FifoThroughputLimit returns a reference to field fifo_throughput_limit of aws_sqs_queue.
 func (sq sqsQueueAttributes) FifoThroughputLimit() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("fifo_throughput_limit"))
+	return terra.ReferenceAsString(sq.ref.Append("fifo_throughput_limit"))
 }
 
+// Id returns a reference to field id of aws_sqs_queue.
 func (sq sqsQueueAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("id"))
+	return terra.ReferenceAsString(sq.ref.Append("id"))
 }
 
+// KmsDataKeyReusePeriodSeconds returns a reference to field kms_data_key_reuse_period_seconds of aws_sqs_queue.
 func (sq sqsQueueAttributes) KmsDataKeyReusePeriodSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(sq.ref.Append("kms_data_key_reuse_period_seconds"))
+	return terra.ReferenceAsNumber(sq.ref.Append("kms_data_key_reuse_period_seconds"))
 }
 
+// KmsMasterKeyId returns a reference to field kms_master_key_id of aws_sqs_queue.
 func (sq sqsQueueAttributes) KmsMasterKeyId() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("kms_master_key_id"))
+	return terra.ReferenceAsString(sq.ref.Append("kms_master_key_id"))
 }
 
+// MaxMessageSize returns a reference to field max_message_size of aws_sqs_queue.
 func (sq sqsQueueAttributes) MaxMessageSize() terra.NumberValue {
-	return terra.ReferenceNumber(sq.ref.Append("max_message_size"))
+	return terra.ReferenceAsNumber(sq.ref.Append("max_message_size"))
 }
 
+// MessageRetentionSeconds returns a reference to field message_retention_seconds of aws_sqs_queue.
 func (sq sqsQueueAttributes) MessageRetentionSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(sq.ref.Append("message_retention_seconds"))
+	return terra.ReferenceAsNumber(sq.ref.Append("message_retention_seconds"))
 }
 
+// Name returns a reference to field name of aws_sqs_queue.
 func (sq sqsQueueAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("name"))
+	return terra.ReferenceAsString(sq.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_sqs_queue.
 func (sq sqsQueueAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(sq.ref.Append("name_prefix"))
 }
 
+// Policy returns a reference to field policy of aws_sqs_queue.
 func (sq sqsQueueAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("policy"))
+	return terra.ReferenceAsString(sq.ref.Append("policy"))
 }
 
+// ReceiveWaitTimeSeconds returns a reference to field receive_wait_time_seconds of aws_sqs_queue.
 func (sq sqsQueueAttributes) ReceiveWaitTimeSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(sq.ref.Append("receive_wait_time_seconds"))
+	return terra.ReferenceAsNumber(sq.ref.Append("receive_wait_time_seconds"))
 }
 
+// RedriveAllowPolicy returns a reference to field redrive_allow_policy of aws_sqs_queue.
 func (sq sqsQueueAttributes) RedriveAllowPolicy() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("redrive_allow_policy"))
+	return terra.ReferenceAsString(sq.ref.Append("redrive_allow_policy"))
 }
 
+// RedrivePolicy returns a reference to field redrive_policy of aws_sqs_queue.
 func (sq sqsQueueAttributes) RedrivePolicy() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("redrive_policy"))
+	return terra.ReferenceAsString(sq.ref.Append("redrive_policy"))
 }
 
+// SqsManagedSseEnabled returns a reference to field sqs_managed_sse_enabled of aws_sqs_queue.
 func (sq sqsQueueAttributes) SqsManagedSseEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sq.ref.Append("sqs_managed_sse_enabled"))
+	return terra.ReferenceAsBool(sq.ref.Append("sqs_managed_sse_enabled"))
 }
 
+// Tags returns a reference to field tags of aws_sqs_queue.
 func (sq sqsQueueAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sq.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sq.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_sqs_queue.
 func (sq sqsQueueAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sq.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sq.ref.Append("tags_all"))
 }
 
+// Url returns a reference to field url of aws_sqs_queue.
 func (sq sqsQueueAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("url"))
+	return terra.ReferenceAsString(sq.ref.Append("url"))
 }
 
+// VisibilityTimeoutSeconds returns a reference to field visibility_timeout_seconds of aws_sqs_queue.
 func (sq sqsQueueAttributes) VisibilityTimeoutSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(sq.ref.Append("visibility_timeout_seconds"))
+	return terra.ReferenceAsNumber(sq.ref.Append("visibility_timeout_seconds"))
 }
 
 type sqsQueueState struct {

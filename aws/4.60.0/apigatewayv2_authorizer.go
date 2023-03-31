@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApigatewayv2Authorizer creates a new instance of [Apigatewayv2Authorizer].
 func NewApigatewayv2Authorizer(name string, args Apigatewayv2AuthorizerArgs) *Apigatewayv2Authorizer {
 	return &Apigatewayv2Authorizer{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApigatewayv2Authorizer(name string, args Apigatewayv2AuthorizerArgs) *Ap
 
 var _ terra.Resource = (*Apigatewayv2Authorizer)(nil)
 
+// Apigatewayv2Authorizer represents the Terraform resource aws_apigatewayv2_authorizer.
 type Apigatewayv2Authorizer struct {
-	Name  string
-	Args  Apigatewayv2AuthorizerArgs
-	state *apigatewayv2AuthorizerState
+	Name      string
+	Args      Apigatewayv2AuthorizerArgs
+	state     *apigatewayv2AuthorizerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Apigatewayv2Authorizer].
 func (aa *Apigatewayv2Authorizer) Type() string {
 	return "aws_apigatewayv2_authorizer"
 }
 
+// LocalName returns the local name for [Apigatewayv2Authorizer].
 func (aa *Apigatewayv2Authorizer) LocalName() string {
 	return aa.Name
 }
 
+// Configuration returns the configuration (args) for [Apigatewayv2Authorizer].
 func (aa *Apigatewayv2Authorizer) Configuration() interface{} {
 	return aa.Args
 }
 
+// DependOn is used for other resources to depend on [Apigatewayv2Authorizer].
+func (aa *Apigatewayv2Authorizer) DependOn() terra.Reference {
+	return terra.ReferenceResource(aa)
+}
+
+// Dependencies returns the list of resources [Apigatewayv2Authorizer] depends_on.
+func (aa *Apigatewayv2Authorizer) Dependencies() terra.Dependencies {
+	return aa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Apigatewayv2Authorizer].
+func (aa *Apigatewayv2Authorizer) LifecycleManagement() *terra.Lifecycle {
+	return aa.Lifecycle
+}
+
+// Attributes returns the attributes for [Apigatewayv2Authorizer].
 func (aa *Apigatewayv2Authorizer) Attributes() apigatewayv2AuthorizerAttributes {
 	return apigatewayv2AuthorizerAttributes{ref: terra.ReferenceResource(aa)}
 }
 
+// ImportState imports the given attribute values into [Apigatewayv2Authorizer]'s state.
 func (aa *Apigatewayv2Authorizer) ImportState(av io.Reader) error {
 	aa.state = &apigatewayv2AuthorizerState{}
 	if err := json.NewDecoder(av).Decode(aa.state); err != nil {
@@ -49,10 +73,12 @@ func (aa *Apigatewayv2Authorizer) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Apigatewayv2Authorizer] has state.
 func (aa *Apigatewayv2Authorizer) State() (*apigatewayv2AuthorizerState, bool) {
 	return aa.state, aa.state != nil
 }
 
+// StateMust returns the state for [Apigatewayv2Authorizer]. Panics if the state is nil.
 func (aa *Apigatewayv2Authorizer) StateMust() *apigatewayv2AuthorizerState {
 	if aa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", aa.Type(), aa.LocalName()))
@@ -60,10 +86,7 @@ func (aa *Apigatewayv2Authorizer) StateMust() *apigatewayv2AuthorizerState {
 	return aa.state
 }
 
-func (aa *Apigatewayv2Authorizer) DependOn() terra.Reference {
-	return terra.ReferenceResource(aa)
-}
-
+// Apigatewayv2AuthorizerArgs contains the configurations for aws_apigatewayv2_authorizer.
 type Apigatewayv2AuthorizerArgs struct {
 	// ApiId: string, required
 	ApiId terra.StringValue `hcl:"api_id,attr" validate:"required"`
@@ -87,55 +110,63 @@ type Apigatewayv2AuthorizerArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// JwtConfiguration: optional
 	JwtConfiguration *apigatewayv2authorizer.JwtConfiguration `hcl:"jwt_configuration,block"`
-	// DependsOn contains resources that Apigatewayv2Authorizer depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apigatewayv2AuthorizerAttributes struct {
 	ref terra.Reference
 }
 
+// ApiId returns a reference to field api_id of aws_apigatewayv2_authorizer.
 func (aa apigatewayv2AuthorizerAttributes) ApiId() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("api_id"))
+	return terra.ReferenceAsString(aa.ref.Append("api_id"))
 }
 
+// AuthorizerCredentialsArn returns a reference to field authorizer_credentials_arn of aws_apigatewayv2_authorizer.
 func (aa apigatewayv2AuthorizerAttributes) AuthorizerCredentialsArn() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("authorizer_credentials_arn"))
+	return terra.ReferenceAsString(aa.ref.Append("authorizer_credentials_arn"))
 }
 
+// AuthorizerPayloadFormatVersion returns a reference to field authorizer_payload_format_version of aws_apigatewayv2_authorizer.
 func (aa apigatewayv2AuthorizerAttributes) AuthorizerPayloadFormatVersion() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("authorizer_payload_format_version"))
+	return terra.ReferenceAsString(aa.ref.Append("authorizer_payload_format_version"))
 }
 
+// AuthorizerResultTtlInSeconds returns a reference to field authorizer_result_ttl_in_seconds of aws_apigatewayv2_authorizer.
 func (aa apigatewayv2AuthorizerAttributes) AuthorizerResultTtlInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(aa.ref.Append("authorizer_result_ttl_in_seconds"))
+	return terra.ReferenceAsNumber(aa.ref.Append("authorizer_result_ttl_in_seconds"))
 }
 
+// AuthorizerType returns a reference to field authorizer_type of aws_apigatewayv2_authorizer.
 func (aa apigatewayv2AuthorizerAttributes) AuthorizerType() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("authorizer_type"))
+	return terra.ReferenceAsString(aa.ref.Append("authorizer_type"))
 }
 
+// AuthorizerUri returns a reference to field authorizer_uri of aws_apigatewayv2_authorizer.
 func (aa apigatewayv2AuthorizerAttributes) AuthorizerUri() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("authorizer_uri"))
+	return terra.ReferenceAsString(aa.ref.Append("authorizer_uri"))
 }
 
+// EnableSimpleResponses returns a reference to field enable_simple_responses of aws_apigatewayv2_authorizer.
 func (aa apigatewayv2AuthorizerAttributes) EnableSimpleResponses() terra.BoolValue {
-	return terra.ReferenceBool(aa.ref.Append("enable_simple_responses"))
+	return terra.ReferenceAsBool(aa.ref.Append("enable_simple_responses"))
 }
 
+// Id returns a reference to field id of aws_apigatewayv2_authorizer.
 func (aa apigatewayv2AuthorizerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("id"))
+	return terra.ReferenceAsString(aa.ref.Append("id"))
 }
 
+// IdentitySources returns a reference to field identity_sources of aws_apigatewayv2_authorizer.
 func (aa apigatewayv2AuthorizerAttributes) IdentitySources() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](aa.ref.Append("identity_sources"))
+	return terra.ReferenceAsSet[terra.StringValue](aa.ref.Append("identity_sources"))
 }
 
+// Name returns a reference to field name of aws_apigatewayv2_authorizer.
 func (aa apigatewayv2AuthorizerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("name"))
+	return terra.ReferenceAsString(aa.ref.Append("name"))
 }
 
 func (aa apigatewayv2AuthorizerAttributes) JwtConfiguration() terra.ListValue[apigatewayv2authorizer.JwtConfigurationAttributes] {
-	return terra.ReferenceList[apigatewayv2authorizer.JwtConfigurationAttributes](aa.ref.Append("jwt_configuration"))
+	return terra.ReferenceAsList[apigatewayv2authorizer.JwtConfigurationAttributes](aa.ref.Append("jwt_configuration"))
 }
 
 type apigatewayv2AuthorizerState struct {

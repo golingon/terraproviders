@@ -90,27 +90,27 @@ func (c ContainerAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ContainerAttributes) ContainerHostname() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("container_hostname"))
+	return terra.ReferenceAsString(c.ref.Append("container_hostname"))
 }
 
 func (c ContainerAttributes) Environment() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](c.ref.Append("environment"))
+	return terra.ReferenceAsMap[terra.StringValue](c.ref.Append("environment"))
 }
 
 func (c ContainerAttributes) Image() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("image"))
+	return terra.ReferenceAsString(c.ref.Append("image"))
 }
 
 func (c ContainerAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("mode"))
+	return terra.ReferenceAsString(c.ref.Append("mode"))
 }
 
 func (c ContainerAttributes) ModelDataUrl() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("model_data_url"))
+	return terra.ReferenceAsString(c.ref.Append("model_data_url"))
 }
 
 func (c ContainerAttributes) ImageConfig() terra.ListValue[ContainerImageConfigAttributes] {
-	return terra.ReferenceList[ContainerImageConfigAttributes](c.ref.Append("image_config"))
+	return terra.ReferenceAsList[ContainerImageConfigAttributes](c.ref.Append("image_config"))
 }
 
 type ContainerImageConfigAttributes struct {
@@ -130,11 +130,11 @@ func (ic ContainerImageConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ic ContainerImageConfigAttributes) RepositoryAccessMode() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("repository_access_mode"))
+	return terra.ReferenceAsString(ic.ref.Append("repository_access_mode"))
 }
 
 func (ic ContainerImageConfigAttributes) RepositoryAuthConfig() terra.ListValue[ContainerImageConfigRepositoryAuthConfigAttributes] {
-	return terra.ReferenceList[ContainerImageConfigRepositoryAuthConfigAttributes](ic.ref.Append("repository_auth_config"))
+	return terra.ReferenceAsList[ContainerImageConfigRepositoryAuthConfigAttributes](ic.ref.Append("repository_auth_config"))
 }
 
 type ContainerImageConfigRepositoryAuthConfigAttributes struct {
@@ -154,7 +154,7 @@ func (rac ContainerImageConfigRepositoryAuthConfigAttributes) InternalTokens() h
 }
 
 func (rac ContainerImageConfigRepositoryAuthConfigAttributes) RepositoryCredentialsProviderArn() terra.StringValue {
-	return terra.ReferenceString(rac.ref.Append("repository_credentials_provider_arn"))
+	return terra.ReferenceAsString(rac.ref.Append("repository_credentials_provider_arn"))
 }
 
 type InferenceExecutionConfigAttributes struct {
@@ -174,7 +174,7 @@ func (iec InferenceExecutionConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (iec InferenceExecutionConfigAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(iec.ref.Append("mode"))
+	return terra.ReferenceAsString(iec.ref.Append("mode"))
 }
 
 type PrimaryContainerAttributes struct {
@@ -194,27 +194,27 @@ func (pc PrimaryContainerAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pc PrimaryContainerAttributes) ContainerHostname() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("container_hostname"))
+	return terra.ReferenceAsString(pc.ref.Append("container_hostname"))
 }
 
 func (pc PrimaryContainerAttributes) Environment() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](pc.ref.Append("environment"))
+	return terra.ReferenceAsMap[terra.StringValue](pc.ref.Append("environment"))
 }
 
 func (pc PrimaryContainerAttributes) Image() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("image"))
+	return terra.ReferenceAsString(pc.ref.Append("image"))
 }
 
 func (pc PrimaryContainerAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("mode"))
+	return terra.ReferenceAsString(pc.ref.Append("mode"))
 }
 
 func (pc PrimaryContainerAttributes) ModelDataUrl() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("model_data_url"))
+	return terra.ReferenceAsString(pc.ref.Append("model_data_url"))
 }
 
 func (pc PrimaryContainerAttributes) ImageConfig() terra.ListValue[PrimaryContainerImageConfigAttributes] {
-	return terra.ReferenceList[PrimaryContainerImageConfigAttributes](pc.ref.Append("image_config"))
+	return terra.ReferenceAsList[PrimaryContainerImageConfigAttributes](pc.ref.Append("image_config"))
 }
 
 type PrimaryContainerImageConfigAttributes struct {
@@ -234,11 +234,11 @@ func (ic PrimaryContainerImageConfigAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (ic PrimaryContainerImageConfigAttributes) RepositoryAccessMode() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("repository_access_mode"))
+	return terra.ReferenceAsString(ic.ref.Append("repository_access_mode"))
 }
 
 func (ic PrimaryContainerImageConfigAttributes) RepositoryAuthConfig() terra.ListValue[PrimaryContainerImageConfigRepositoryAuthConfigAttributes] {
-	return terra.ReferenceList[PrimaryContainerImageConfigRepositoryAuthConfigAttributes](ic.ref.Append("repository_auth_config"))
+	return terra.ReferenceAsList[PrimaryContainerImageConfigRepositoryAuthConfigAttributes](ic.ref.Append("repository_auth_config"))
 }
 
 type PrimaryContainerImageConfigRepositoryAuthConfigAttributes struct {
@@ -258,7 +258,7 @@ func (rac PrimaryContainerImageConfigRepositoryAuthConfigAttributes) InternalTok
 }
 
 func (rac PrimaryContainerImageConfigRepositoryAuthConfigAttributes) RepositoryCredentialsProviderArn() terra.StringValue {
-	return terra.ReferenceString(rac.ref.Append("repository_credentials_provider_arn"))
+	return terra.ReferenceAsString(rac.ref.Append("repository_credentials_provider_arn"))
 }
 
 type VpcConfigAttributes struct {
@@ -278,11 +278,11 @@ func (vc VpcConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vc VpcConfigAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("security_group_ids"))
 }
 
 func (vc VpcConfigAttributes) Subnets() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("subnets"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("subnets"))
 }
 
 type ContainerState struct {

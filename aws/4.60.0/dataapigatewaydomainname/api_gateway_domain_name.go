@@ -26,7 +26,7 @@ func (ec EndpointConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec EndpointConfigurationAttributes) Types() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ec.ref.Append("types"))
+	return terra.ReferenceAsList[terra.StringValue](ec.ref.Append("types"))
 }
 
 type EndpointConfigurationState struct {

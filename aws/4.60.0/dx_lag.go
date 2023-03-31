@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDxLag creates a new instance of [DxLag].
 func NewDxLag(name string, args DxLagArgs) *DxLag {
 	return &DxLag{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDxLag(name string, args DxLagArgs) *DxLag {
 
 var _ terra.Resource = (*DxLag)(nil)
 
+// DxLag represents the Terraform resource aws_dx_lag.
 type DxLag struct {
-	Name  string
-	Args  DxLagArgs
-	state *dxLagState
+	Name      string
+	Args      DxLagArgs
+	state     *dxLagState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DxLag].
 func (dl *DxLag) Type() string {
 	return "aws_dx_lag"
 }
 
+// LocalName returns the local name for [DxLag].
 func (dl *DxLag) LocalName() string {
 	return dl.Name
 }
 
+// Configuration returns the configuration (args) for [DxLag].
 func (dl *DxLag) Configuration() interface{} {
 	return dl.Args
 }
 
+// DependOn is used for other resources to depend on [DxLag].
+func (dl *DxLag) DependOn() terra.Reference {
+	return terra.ReferenceResource(dl)
+}
+
+// Dependencies returns the list of resources [DxLag] depends_on.
+func (dl *DxLag) Dependencies() terra.Dependencies {
+	return dl.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DxLag].
+func (dl *DxLag) LifecycleManagement() *terra.Lifecycle {
+	return dl.Lifecycle
+}
+
+// Attributes returns the attributes for [DxLag].
 func (dl *DxLag) Attributes() dxLagAttributes {
 	return dxLagAttributes{ref: terra.ReferenceResource(dl)}
 }
 
+// ImportState imports the given attribute values into [DxLag]'s state.
 func (dl *DxLag) ImportState(av io.Reader) error {
 	dl.state = &dxLagState{}
 	if err := json.NewDecoder(av).Decode(dl.state); err != nil {
@@ -48,10 +72,12 @@ func (dl *DxLag) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DxLag] has state.
 func (dl *DxLag) State() (*dxLagState, bool) {
 	return dl.state, dl.state != nil
 }
 
+// StateMust returns the state for [DxLag]. Panics if the state is nil.
 func (dl *DxLag) StateMust() *dxLagState {
 	if dl.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dl.Type(), dl.LocalName()))
@@ -59,10 +85,7 @@ func (dl *DxLag) StateMust() *dxLagState {
 	return dl.state
 }
 
-func (dl *DxLag) DependOn() terra.Reference {
-	return terra.ReferenceResource(dl)
-}
-
+// DxLagArgs contains the configurations for aws_dx_lag.
 type DxLagArgs struct {
 	// ConnectionId: string, optional
 	ConnectionId terra.StringValue `hcl:"connection_id,attr"`
@@ -82,63 +105,74 @@ type DxLagArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that DxLag depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dxLagAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_dx_lag.
 func (dl dxLagAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("arn"))
+	return terra.ReferenceAsString(dl.ref.Append("arn"))
 }
 
+// ConnectionId returns a reference to field connection_id of aws_dx_lag.
 func (dl dxLagAttributes) ConnectionId() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("connection_id"))
+	return terra.ReferenceAsString(dl.ref.Append("connection_id"))
 }
 
+// ConnectionsBandwidth returns a reference to field connections_bandwidth of aws_dx_lag.
 func (dl dxLagAttributes) ConnectionsBandwidth() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("connections_bandwidth"))
+	return terra.ReferenceAsString(dl.ref.Append("connections_bandwidth"))
 }
 
+// ForceDestroy returns a reference to field force_destroy of aws_dx_lag.
 func (dl dxLagAttributes) ForceDestroy() terra.BoolValue {
-	return terra.ReferenceBool(dl.ref.Append("force_destroy"))
+	return terra.ReferenceAsBool(dl.ref.Append("force_destroy"))
 }
 
+// HasLogicalRedundancy returns a reference to field has_logical_redundancy of aws_dx_lag.
 func (dl dxLagAttributes) HasLogicalRedundancy() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("has_logical_redundancy"))
+	return terra.ReferenceAsString(dl.ref.Append("has_logical_redundancy"))
 }
 
+// Id returns a reference to field id of aws_dx_lag.
 func (dl dxLagAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("id"))
+	return terra.ReferenceAsString(dl.ref.Append("id"))
 }
 
+// JumboFrameCapable returns a reference to field jumbo_frame_capable of aws_dx_lag.
 func (dl dxLagAttributes) JumboFrameCapable() terra.BoolValue {
-	return terra.ReferenceBool(dl.ref.Append("jumbo_frame_capable"))
+	return terra.ReferenceAsBool(dl.ref.Append("jumbo_frame_capable"))
 }
 
+// Location returns a reference to field location of aws_dx_lag.
 func (dl dxLagAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("location"))
+	return terra.ReferenceAsString(dl.ref.Append("location"))
 }
 
+// Name returns a reference to field name of aws_dx_lag.
 func (dl dxLagAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("name"))
+	return terra.ReferenceAsString(dl.ref.Append("name"))
 }
 
+// OwnerAccountId returns a reference to field owner_account_id of aws_dx_lag.
 func (dl dxLagAttributes) OwnerAccountId() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("owner_account_id"))
+	return terra.ReferenceAsString(dl.ref.Append("owner_account_id"))
 }
 
+// ProviderName returns a reference to field provider_name of aws_dx_lag.
 func (dl dxLagAttributes) ProviderName() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("provider_name"))
+	return terra.ReferenceAsString(dl.ref.Append("provider_name"))
 }
 
+// Tags returns a reference to field tags of aws_dx_lag.
 func (dl dxLagAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dl.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dl.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_dx_lag.
 func (dl dxLagAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dl.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dl.ref.Append("tags_all"))
 }
 
 type dxLagState struct {

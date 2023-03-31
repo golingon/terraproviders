@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSesDomainDkim creates a new instance of [SesDomainDkim].
 func NewSesDomainDkim(name string, args SesDomainDkimArgs) *SesDomainDkim {
 	return &SesDomainDkim{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSesDomainDkim(name string, args SesDomainDkimArgs) *SesDomainDkim {
 
 var _ terra.Resource = (*SesDomainDkim)(nil)
 
+// SesDomainDkim represents the Terraform resource aws_ses_domain_dkim.
 type SesDomainDkim struct {
-	Name  string
-	Args  SesDomainDkimArgs
-	state *sesDomainDkimState
+	Name      string
+	Args      SesDomainDkimArgs
+	state     *sesDomainDkimState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SesDomainDkim].
 func (sdd *SesDomainDkim) Type() string {
 	return "aws_ses_domain_dkim"
 }
 
+// LocalName returns the local name for [SesDomainDkim].
 func (sdd *SesDomainDkim) LocalName() string {
 	return sdd.Name
 }
 
+// Configuration returns the configuration (args) for [SesDomainDkim].
 func (sdd *SesDomainDkim) Configuration() interface{} {
 	return sdd.Args
 }
 
+// DependOn is used for other resources to depend on [SesDomainDkim].
+func (sdd *SesDomainDkim) DependOn() terra.Reference {
+	return terra.ReferenceResource(sdd)
+}
+
+// Dependencies returns the list of resources [SesDomainDkim] depends_on.
+func (sdd *SesDomainDkim) Dependencies() terra.Dependencies {
+	return sdd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SesDomainDkim].
+func (sdd *SesDomainDkim) LifecycleManagement() *terra.Lifecycle {
+	return sdd.Lifecycle
+}
+
+// Attributes returns the attributes for [SesDomainDkim].
 func (sdd *SesDomainDkim) Attributes() sesDomainDkimAttributes {
 	return sesDomainDkimAttributes{ref: terra.ReferenceResource(sdd)}
 }
 
+// ImportState imports the given attribute values into [SesDomainDkim]'s state.
 func (sdd *SesDomainDkim) ImportState(av io.Reader) error {
 	sdd.state = &sesDomainDkimState{}
 	if err := json.NewDecoder(av).Decode(sdd.state); err != nil {
@@ -48,10 +72,12 @@ func (sdd *SesDomainDkim) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SesDomainDkim] has state.
 func (sdd *SesDomainDkim) State() (*sesDomainDkimState, bool) {
 	return sdd.state, sdd.state != nil
 }
 
+// StateMust returns the state for [SesDomainDkim]. Panics if the state is nil.
 func (sdd *SesDomainDkim) StateMust() *sesDomainDkimState {
 	if sdd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sdd.Type(), sdd.LocalName()))
@@ -59,32 +85,30 @@ func (sdd *SesDomainDkim) StateMust() *sesDomainDkimState {
 	return sdd.state
 }
 
-func (sdd *SesDomainDkim) DependOn() terra.Reference {
-	return terra.ReferenceResource(sdd)
-}
-
+// SesDomainDkimArgs contains the configurations for aws_ses_domain_dkim.
 type SesDomainDkimArgs struct {
 	// Domain: string, required
 	Domain terra.StringValue `hcl:"domain,attr" validate:"required"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that SesDomainDkim depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sesDomainDkimAttributes struct {
 	ref terra.Reference
 }
 
+// DkimTokens returns a reference to field dkim_tokens of aws_ses_domain_dkim.
 func (sdd sesDomainDkimAttributes) DkimTokens() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sdd.ref.Append("dkim_tokens"))
+	return terra.ReferenceAsList[terra.StringValue](sdd.ref.Append("dkim_tokens"))
 }
 
+// Domain returns a reference to field domain of aws_ses_domain_dkim.
 func (sdd sesDomainDkimAttributes) Domain() terra.StringValue {
-	return terra.ReferenceString(sdd.ref.Append("domain"))
+	return terra.ReferenceAsString(sdd.ref.Append("domain"))
 }
 
+// Id returns a reference to field id of aws_ses_domain_dkim.
 func (sdd sesDomainDkimAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sdd.ref.Append("id"))
+	return terra.ReferenceAsString(sdd.ref.Append("id"))
 }
 
 type sesDomainDkimState struct {

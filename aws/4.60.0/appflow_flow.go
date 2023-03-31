@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAppflowFlow creates a new instance of [AppflowFlow].
 func NewAppflowFlow(name string, args AppflowFlowArgs) *AppflowFlow {
 	return &AppflowFlow{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAppflowFlow(name string, args AppflowFlowArgs) *AppflowFlow {
 
 var _ terra.Resource = (*AppflowFlow)(nil)
 
+// AppflowFlow represents the Terraform resource aws_appflow_flow.
 type AppflowFlow struct {
-	Name  string
-	Args  AppflowFlowArgs
-	state *appflowFlowState
+	Name      string
+	Args      AppflowFlowArgs
+	state     *appflowFlowState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppflowFlow].
 func (af *AppflowFlow) Type() string {
 	return "aws_appflow_flow"
 }
 
+// LocalName returns the local name for [AppflowFlow].
 func (af *AppflowFlow) LocalName() string {
 	return af.Name
 }
 
+// Configuration returns the configuration (args) for [AppflowFlow].
 func (af *AppflowFlow) Configuration() interface{} {
 	return af.Args
 }
 
+// DependOn is used for other resources to depend on [AppflowFlow].
+func (af *AppflowFlow) DependOn() terra.Reference {
+	return terra.ReferenceResource(af)
+}
+
+// Dependencies returns the list of resources [AppflowFlow] depends_on.
+func (af *AppflowFlow) Dependencies() terra.Dependencies {
+	return af.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppflowFlow].
+func (af *AppflowFlow) LifecycleManagement() *terra.Lifecycle {
+	return af.Lifecycle
+}
+
+// Attributes returns the attributes for [AppflowFlow].
 func (af *AppflowFlow) Attributes() appflowFlowAttributes {
 	return appflowFlowAttributes{ref: terra.ReferenceResource(af)}
 }
 
+// ImportState imports the given attribute values into [AppflowFlow]'s state.
 func (af *AppflowFlow) ImportState(av io.Reader) error {
 	af.state = &appflowFlowState{}
 	if err := json.NewDecoder(av).Decode(af.state); err != nil {
@@ -49,10 +73,12 @@ func (af *AppflowFlow) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppflowFlow] has state.
 func (af *AppflowFlow) State() (*appflowFlowState, bool) {
 	return af.state, af.state != nil
 }
 
+// StateMust returns the state for [AppflowFlow]. Panics if the state is nil.
 func (af *AppflowFlow) StateMust() *appflowFlowState {
 	if af.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", af.Type(), af.LocalName()))
@@ -60,10 +86,7 @@ func (af *AppflowFlow) StateMust() *appflowFlowState {
 	return af.state
 }
 
-func (af *AppflowFlow) DependOn() terra.Reference {
-	return terra.ReferenceResource(af)
-}
-
+// AppflowFlowArgs contains the configurations for aws_appflow_flow.
 type AppflowFlowArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -85,55 +108,60 @@ type AppflowFlowArgs struct {
 	Task []appflowflow.Task `hcl:"task,block" validate:"min=1"`
 	// TriggerConfig: required
 	TriggerConfig *appflowflow.TriggerConfig `hcl:"trigger_config,block" validate:"required"`
-	// DependsOn contains resources that AppflowFlow depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appflowFlowAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_appflow_flow.
 func (af appflowFlowAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(af.ref.Append("arn"))
+	return terra.ReferenceAsString(af.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_appflow_flow.
 func (af appflowFlowAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(af.ref.Append("description"))
+	return terra.ReferenceAsString(af.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_appflow_flow.
 func (af appflowFlowAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(af.ref.Append("id"))
+	return terra.ReferenceAsString(af.ref.Append("id"))
 }
 
+// KmsArn returns a reference to field kms_arn of aws_appflow_flow.
 func (af appflowFlowAttributes) KmsArn() terra.StringValue {
-	return terra.ReferenceString(af.ref.Append("kms_arn"))
+	return terra.ReferenceAsString(af.ref.Append("kms_arn"))
 }
 
+// Name returns a reference to field name of aws_appflow_flow.
 func (af appflowFlowAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(af.ref.Append("name"))
+	return terra.ReferenceAsString(af.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_appflow_flow.
 func (af appflowFlowAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](af.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](af.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_appflow_flow.
 func (af appflowFlowAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](af.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](af.ref.Append("tags_all"))
 }
 
 func (af appflowFlowAttributes) DestinationFlowConfig() terra.SetValue[appflowflow.DestinationFlowConfigAttributes] {
-	return terra.ReferenceSet[appflowflow.DestinationFlowConfigAttributes](af.ref.Append("destination_flow_config"))
+	return terra.ReferenceAsSet[appflowflow.DestinationFlowConfigAttributes](af.ref.Append("destination_flow_config"))
 }
 
 func (af appflowFlowAttributes) SourceFlowConfig() terra.ListValue[appflowflow.SourceFlowConfigAttributes] {
-	return terra.ReferenceList[appflowflow.SourceFlowConfigAttributes](af.ref.Append("source_flow_config"))
+	return terra.ReferenceAsList[appflowflow.SourceFlowConfigAttributes](af.ref.Append("source_flow_config"))
 }
 
 func (af appflowFlowAttributes) Task() terra.SetValue[appflowflow.TaskAttributes] {
-	return terra.ReferenceSet[appflowflow.TaskAttributes](af.ref.Append("task"))
+	return terra.ReferenceAsSet[appflowflow.TaskAttributes](af.ref.Append("task"))
 }
 
 func (af appflowFlowAttributes) TriggerConfig() terra.ListValue[appflowflow.TriggerConfigAttributes] {
-	return terra.ReferenceList[appflowflow.TriggerConfigAttributes](af.ref.Append("trigger_config"))
+	return terra.ReferenceAsList[appflowflow.TriggerConfigAttributes](af.ref.Append("trigger_config"))
 }
 
 type appflowFlowState struct {

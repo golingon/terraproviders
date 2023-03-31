@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewLocationTracker creates a new instance of [LocationTracker].
 func NewLocationTracker(name string, args LocationTrackerArgs) *LocationTracker {
 	return &LocationTracker{
 		Args: args,
@@ -18,28 +19,51 @@ func NewLocationTracker(name string, args LocationTrackerArgs) *LocationTracker 
 
 var _ terra.Resource = (*LocationTracker)(nil)
 
+// LocationTracker represents the Terraform resource aws_location_tracker.
 type LocationTracker struct {
-	Name  string
-	Args  LocationTrackerArgs
-	state *locationTrackerState
+	Name      string
+	Args      LocationTrackerArgs
+	state     *locationTrackerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LocationTracker].
 func (lt *LocationTracker) Type() string {
 	return "aws_location_tracker"
 }
 
+// LocalName returns the local name for [LocationTracker].
 func (lt *LocationTracker) LocalName() string {
 	return lt.Name
 }
 
+// Configuration returns the configuration (args) for [LocationTracker].
 func (lt *LocationTracker) Configuration() interface{} {
 	return lt.Args
 }
 
+// DependOn is used for other resources to depend on [LocationTracker].
+func (lt *LocationTracker) DependOn() terra.Reference {
+	return terra.ReferenceResource(lt)
+}
+
+// Dependencies returns the list of resources [LocationTracker] depends_on.
+func (lt *LocationTracker) Dependencies() terra.Dependencies {
+	return lt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LocationTracker].
+func (lt *LocationTracker) LifecycleManagement() *terra.Lifecycle {
+	return lt.Lifecycle
+}
+
+// Attributes returns the attributes for [LocationTracker].
 func (lt *LocationTracker) Attributes() locationTrackerAttributes {
 	return locationTrackerAttributes{ref: terra.ReferenceResource(lt)}
 }
 
+// ImportState imports the given attribute values into [LocationTracker]'s state.
 func (lt *LocationTracker) ImportState(av io.Reader) error {
 	lt.state = &locationTrackerState{}
 	if err := json.NewDecoder(av).Decode(lt.state); err != nil {
@@ -48,10 +72,12 @@ func (lt *LocationTracker) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LocationTracker] has state.
 func (lt *LocationTracker) State() (*locationTrackerState, bool) {
 	return lt.state, lt.state != nil
 }
 
+// StateMust returns the state for [LocationTracker]. Panics if the state is nil.
 func (lt *LocationTracker) StateMust() *locationTrackerState {
 	if lt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lt.Type(), lt.LocalName()))
@@ -59,10 +85,7 @@ func (lt *LocationTracker) StateMust() *locationTrackerState {
 	return lt.state
 }
 
-func (lt *LocationTracker) DependOn() terra.Reference {
-	return terra.ReferenceResource(lt)
-}
-
+// LocationTrackerArgs contains the configurations for aws_location_tracker.
 type LocationTrackerArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -78,51 +101,59 @@ type LocationTrackerArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// TrackerName: string, required
 	TrackerName terra.StringValue `hcl:"tracker_name,attr" validate:"required"`
-	// DependsOn contains resources that LocationTracker depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type locationTrackerAttributes struct {
 	ref terra.Reference
 }
 
+// CreateTime returns a reference to field create_time of aws_location_tracker.
 func (lt locationTrackerAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("create_time"))
+	return terra.ReferenceAsString(lt.ref.Append("create_time"))
 }
 
+// Description returns a reference to field description of aws_location_tracker.
 func (lt locationTrackerAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("description"))
+	return terra.ReferenceAsString(lt.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_location_tracker.
 func (lt locationTrackerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("id"))
+	return terra.ReferenceAsString(lt.ref.Append("id"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_location_tracker.
 func (lt locationTrackerAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(lt.ref.Append("kms_key_id"))
 }
 
+// PositionFiltering returns a reference to field position_filtering of aws_location_tracker.
 func (lt locationTrackerAttributes) PositionFiltering() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("position_filtering"))
+	return terra.ReferenceAsString(lt.ref.Append("position_filtering"))
 }
 
+// Tags returns a reference to field tags of aws_location_tracker.
 func (lt locationTrackerAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lt.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](lt.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_location_tracker.
 func (lt locationTrackerAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lt.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](lt.ref.Append("tags_all"))
 }
 
+// TrackerArn returns a reference to field tracker_arn of aws_location_tracker.
 func (lt locationTrackerAttributes) TrackerArn() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("tracker_arn"))
+	return terra.ReferenceAsString(lt.ref.Append("tracker_arn"))
 }
 
+// TrackerName returns a reference to field tracker_name of aws_location_tracker.
 func (lt locationTrackerAttributes) TrackerName() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("tracker_name"))
+	return terra.ReferenceAsString(lt.ref.Append("tracker_name"))
 }
 
+// UpdateTime returns a reference to field update_time of aws_location_tracker.
 func (lt locationTrackerAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("update_time"))
+	return terra.ReferenceAsString(lt.ref.Append("update_time"))
 }
 
 type locationTrackerState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewIamServerCertificate creates a new instance of [IamServerCertificate].
 func NewIamServerCertificate(name string, args IamServerCertificateArgs) *IamServerCertificate {
 	return &IamServerCertificate{
 		Args: args,
@@ -18,28 +19,51 @@ func NewIamServerCertificate(name string, args IamServerCertificateArgs) *IamSer
 
 var _ terra.Resource = (*IamServerCertificate)(nil)
 
+// IamServerCertificate represents the Terraform resource aws_iam_server_certificate.
 type IamServerCertificate struct {
-	Name  string
-	Args  IamServerCertificateArgs
-	state *iamServerCertificateState
+	Name      string
+	Args      IamServerCertificateArgs
+	state     *iamServerCertificateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IamServerCertificate].
 func (isc *IamServerCertificate) Type() string {
 	return "aws_iam_server_certificate"
 }
 
+// LocalName returns the local name for [IamServerCertificate].
 func (isc *IamServerCertificate) LocalName() string {
 	return isc.Name
 }
 
+// Configuration returns the configuration (args) for [IamServerCertificate].
 func (isc *IamServerCertificate) Configuration() interface{} {
 	return isc.Args
 }
 
+// DependOn is used for other resources to depend on [IamServerCertificate].
+func (isc *IamServerCertificate) DependOn() terra.Reference {
+	return terra.ReferenceResource(isc)
+}
+
+// Dependencies returns the list of resources [IamServerCertificate] depends_on.
+func (isc *IamServerCertificate) Dependencies() terra.Dependencies {
+	return isc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IamServerCertificate].
+func (isc *IamServerCertificate) LifecycleManagement() *terra.Lifecycle {
+	return isc.Lifecycle
+}
+
+// Attributes returns the attributes for [IamServerCertificate].
 func (isc *IamServerCertificate) Attributes() iamServerCertificateAttributes {
 	return iamServerCertificateAttributes{ref: terra.ReferenceResource(isc)}
 }
 
+// ImportState imports the given attribute values into [IamServerCertificate]'s state.
 func (isc *IamServerCertificate) ImportState(av io.Reader) error {
 	isc.state = &iamServerCertificateState{}
 	if err := json.NewDecoder(av).Decode(isc.state); err != nil {
@@ -48,10 +72,12 @@ func (isc *IamServerCertificate) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IamServerCertificate] has state.
 func (isc *IamServerCertificate) State() (*iamServerCertificateState, bool) {
 	return isc.state, isc.state != nil
 }
 
+// StateMust returns the state for [IamServerCertificate]. Panics if the state is nil.
 func (isc *IamServerCertificate) StateMust() *iamServerCertificateState {
 	if isc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", isc.Type(), isc.LocalName()))
@@ -59,10 +85,7 @@ func (isc *IamServerCertificate) StateMust() *iamServerCertificateState {
 	return isc.state
 }
 
-func (isc *IamServerCertificate) DependOn() terra.Reference {
-	return terra.ReferenceResource(isc)
-}
-
+// IamServerCertificateArgs contains the configurations for aws_iam_server_certificate.
 type IamServerCertificateArgs struct {
 	// CertificateBody: string, required
 	CertificateBody terra.StringValue `hcl:"certificate_body,attr" validate:"required"`
@@ -82,59 +105,69 @@ type IamServerCertificateArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that IamServerCertificate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iamServerCertificateAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_iam_server_certificate.
 func (isc iamServerCertificateAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(isc.ref.Append("arn"))
+	return terra.ReferenceAsString(isc.ref.Append("arn"))
 }
 
+// CertificateBody returns a reference to field certificate_body of aws_iam_server_certificate.
 func (isc iamServerCertificateAttributes) CertificateBody() terra.StringValue {
-	return terra.ReferenceString(isc.ref.Append("certificate_body"))
+	return terra.ReferenceAsString(isc.ref.Append("certificate_body"))
 }
 
+// CertificateChain returns a reference to field certificate_chain of aws_iam_server_certificate.
 func (isc iamServerCertificateAttributes) CertificateChain() terra.StringValue {
-	return terra.ReferenceString(isc.ref.Append("certificate_chain"))
+	return terra.ReferenceAsString(isc.ref.Append("certificate_chain"))
 }
 
+// Expiration returns a reference to field expiration of aws_iam_server_certificate.
 func (isc iamServerCertificateAttributes) Expiration() terra.StringValue {
-	return terra.ReferenceString(isc.ref.Append("expiration"))
+	return terra.ReferenceAsString(isc.ref.Append("expiration"))
 }
 
+// Id returns a reference to field id of aws_iam_server_certificate.
 func (isc iamServerCertificateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(isc.ref.Append("id"))
+	return terra.ReferenceAsString(isc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_iam_server_certificate.
 func (isc iamServerCertificateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(isc.ref.Append("name"))
+	return terra.ReferenceAsString(isc.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_iam_server_certificate.
 func (isc iamServerCertificateAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(isc.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(isc.ref.Append("name_prefix"))
 }
 
+// Path returns a reference to field path of aws_iam_server_certificate.
 func (isc iamServerCertificateAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(isc.ref.Append("path"))
+	return terra.ReferenceAsString(isc.ref.Append("path"))
 }
 
+// PrivateKey returns a reference to field private_key of aws_iam_server_certificate.
 func (isc iamServerCertificateAttributes) PrivateKey() terra.StringValue {
-	return terra.ReferenceString(isc.ref.Append("private_key"))
+	return terra.ReferenceAsString(isc.ref.Append("private_key"))
 }
 
+// Tags returns a reference to field tags of aws_iam_server_certificate.
 func (isc iamServerCertificateAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](isc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](isc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_iam_server_certificate.
 func (isc iamServerCertificateAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](isc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](isc.ref.Append("tags_all"))
 }
 
+// UploadDate returns a reference to field upload_date of aws_iam_server_certificate.
 func (isc iamServerCertificateAttributes) UploadDate() terra.StringValue {
-	return terra.ReferenceString(isc.ref.Append("upload_date"))
+	return terra.ReferenceAsString(isc.ref.Append("upload_date"))
 }
 
 type iamServerCertificateState struct {

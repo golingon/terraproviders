@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewLicensemanagerAssociation creates a new instance of [LicensemanagerAssociation].
 func NewLicensemanagerAssociation(name string, args LicensemanagerAssociationArgs) *LicensemanagerAssociation {
 	return &LicensemanagerAssociation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewLicensemanagerAssociation(name string, args LicensemanagerAssociationArg
 
 var _ terra.Resource = (*LicensemanagerAssociation)(nil)
 
+// LicensemanagerAssociation represents the Terraform resource aws_licensemanager_association.
 type LicensemanagerAssociation struct {
-	Name  string
-	Args  LicensemanagerAssociationArgs
-	state *licensemanagerAssociationState
+	Name      string
+	Args      LicensemanagerAssociationArgs
+	state     *licensemanagerAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LicensemanagerAssociation].
 func (la *LicensemanagerAssociation) Type() string {
 	return "aws_licensemanager_association"
 }
 
+// LocalName returns the local name for [LicensemanagerAssociation].
 func (la *LicensemanagerAssociation) LocalName() string {
 	return la.Name
 }
 
+// Configuration returns the configuration (args) for [LicensemanagerAssociation].
 func (la *LicensemanagerAssociation) Configuration() interface{} {
 	return la.Args
 }
 
+// DependOn is used for other resources to depend on [LicensemanagerAssociation].
+func (la *LicensemanagerAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(la)
+}
+
+// Dependencies returns the list of resources [LicensemanagerAssociation] depends_on.
+func (la *LicensemanagerAssociation) Dependencies() terra.Dependencies {
+	return la.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LicensemanagerAssociation].
+func (la *LicensemanagerAssociation) LifecycleManagement() *terra.Lifecycle {
+	return la.Lifecycle
+}
+
+// Attributes returns the attributes for [LicensemanagerAssociation].
 func (la *LicensemanagerAssociation) Attributes() licensemanagerAssociationAttributes {
 	return licensemanagerAssociationAttributes{ref: terra.ReferenceResource(la)}
 }
 
+// ImportState imports the given attribute values into [LicensemanagerAssociation]'s state.
 func (la *LicensemanagerAssociation) ImportState(av io.Reader) error {
 	la.state = &licensemanagerAssociationState{}
 	if err := json.NewDecoder(av).Decode(la.state); err != nil {
@@ -48,10 +72,12 @@ func (la *LicensemanagerAssociation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LicensemanagerAssociation] has state.
 func (la *LicensemanagerAssociation) State() (*licensemanagerAssociationState, bool) {
 	return la.state, la.state != nil
 }
 
+// StateMust returns the state for [LicensemanagerAssociation]. Panics if the state is nil.
 func (la *LicensemanagerAssociation) StateMust() *licensemanagerAssociationState {
 	if la.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", la.Type(), la.LocalName()))
@@ -59,10 +85,7 @@ func (la *LicensemanagerAssociation) StateMust() *licensemanagerAssociationState
 	return la.state
 }
 
-func (la *LicensemanagerAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(la)
-}
-
+// LicensemanagerAssociationArgs contains the configurations for aws_licensemanager_association.
 type LicensemanagerAssociationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,23 +93,24 @@ type LicensemanagerAssociationArgs struct {
 	LicenseConfigurationArn terra.StringValue `hcl:"license_configuration_arn,attr" validate:"required"`
 	// ResourceArn: string, required
 	ResourceArn terra.StringValue `hcl:"resource_arn,attr" validate:"required"`
-	// DependsOn contains resources that LicensemanagerAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type licensemanagerAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_licensemanager_association.
 func (la licensemanagerAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(la.ref.Append("id"))
+	return terra.ReferenceAsString(la.ref.Append("id"))
 }
 
+// LicenseConfigurationArn returns a reference to field license_configuration_arn of aws_licensemanager_association.
 func (la licensemanagerAssociationAttributes) LicenseConfigurationArn() terra.StringValue {
-	return terra.ReferenceString(la.ref.Append("license_configuration_arn"))
+	return terra.ReferenceAsString(la.ref.Append("license_configuration_arn"))
 }
 
+// ResourceArn returns a reference to field resource_arn of aws_licensemanager_association.
 func (la licensemanagerAssociationAttributes) ResourceArn() terra.StringValue {
-	return terra.ReferenceString(la.ref.Append("resource_arn"))
+	return terra.ReferenceAsString(la.ref.Append("resource_arn"))
 }
 
 type licensemanagerAssociationState struct {

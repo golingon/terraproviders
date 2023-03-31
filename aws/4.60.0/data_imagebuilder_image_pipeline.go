@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataImagebuilderImagePipeline creates a new instance of [DataImagebuilderImagePipeline].
 func NewDataImagebuilderImagePipeline(name string, args DataImagebuilderImagePipelineArgs) *DataImagebuilderImagePipeline {
 	return &DataImagebuilderImagePipeline{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataImagebuilderImagePipeline(name string, args DataImagebuilderImagePip
 
 var _ terra.DataResource = (*DataImagebuilderImagePipeline)(nil)
 
+// DataImagebuilderImagePipeline represents the Terraform data resource aws_imagebuilder_image_pipeline.
 type DataImagebuilderImagePipeline struct {
 	Name string
 	Args DataImagebuilderImagePipelineArgs
 }
 
+// DataSource returns the Terraform object type for [DataImagebuilderImagePipeline].
 func (iip *DataImagebuilderImagePipeline) DataSource() string {
 	return "aws_imagebuilder_image_pipeline"
 }
 
+// LocalName returns the local name for [DataImagebuilderImagePipeline].
 func (iip *DataImagebuilderImagePipeline) LocalName() string {
 	return iip.Name
 }
 
+// Configuration returns the configuration (args) for [DataImagebuilderImagePipeline].
 func (iip *DataImagebuilderImagePipeline) Configuration() interface{} {
 	return iip.Args
 }
 
+// Attributes returns the attributes for [DataImagebuilderImagePipeline].
 func (iip *DataImagebuilderImagePipeline) Attributes() dataImagebuilderImagePipelineAttributes {
 	return dataImagebuilderImagePipelineAttributes{ref: terra.ReferenceDataResource(iip)}
 }
 
+// DataImagebuilderImagePipelineArgs contains the configurations for aws_imagebuilder_image_pipeline.
 type DataImagebuilderImagePipelineArgs struct {
 	// Arn: string, required
 	Arn terra.StringValue `hcl:"arn,attr" validate:"required"`
@@ -53,74 +60,90 @@ type dataImagebuilderImagePipelineAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_imagebuilder_image_pipeline.
 func (iip dataImagebuilderImagePipelineAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(iip.ref.Append("arn"))
+	return terra.ReferenceAsString(iip.ref.Append("arn"))
 }
 
+// ContainerRecipeArn returns a reference to field container_recipe_arn of aws_imagebuilder_image_pipeline.
 func (iip dataImagebuilderImagePipelineAttributes) ContainerRecipeArn() terra.StringValue {
-	return terra.ReferenceString(iip.ref.Append("container_recipe_arn"))
+	return terra.ReferenceAsString(iip.ref.Append("container_recipe_arn"))
 }
 
+// DateCreated returns a reference to field date_created of aws_imagebuilder_image_pipeline.
 func (iip dataImagebuilderImagePipelineAttributes) DateCreated() terra.StringValue {
-	return terra.ReferenceString(iip.ref.Append("date_created"))
+	return terra.ReferenceAsString(iip.ref.Append("date_created"))
 }
 
+// DateLastRun returns a reference to field date_last_run of aws_imagebuilder_image_pipeline.
 func (iip dataImagebuilderImagePipelineAttributes) DateLastRun() terra.StringValue {
-	return terra.ReferenceString(iip.ref.Append("date_last_run"))
+	return terra.ReferenceAsString(iip.ref.Append("date_last_run"))
 }
 
+// DateNextRun returns a reference to field date_next_run of aws_imagebuilder_image_pipeline.
 func (iip dataImagebuilderImagePipelineAttributes) DateNextRun() terra.StringValue {
-	return terra.ReferenceString(iip.ref.Append("date_next_run"))
+	return terra.ReferenceAsString(iip.ref.Append("date_next_run"))
 }
 
+// DateUpdated returns a reference to field date_updated of aws_imagebuilder_image_pipeline.
 func (iip dataImagebuilderImagePipelineAttributes) DateUpdated() terra.StringValue {
-	return terra.ReferenceString(iip.ref.Append("date_updated"))
+	return terra.ReferenceAsString(iip.ref.Append("date_updated"))
 }
 
+// Description returns a reference to field description of aws_imagebuilder_image_pipeline.
 func (iip dataImagebuilderImagePipelineAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(iip.ref.Append("description"))
+	return terra.ReferenceAsString(iip.ref.Append("description"))
 }
 
+// DistributionConfigurationArn returns a reference to field distribution_configuration_arn of aws_imagebuilder_image_pipeline.
 func (iip dataImagebuilderImagePipelineAttributes) DistributionConfigurationArn() terra.StringValue {
-	return terra.ReferenceString(iip.ref.Append("distribution_configuration_arn"))
+	return terra.ReferenceAsString(iip.ref.Append("distribution_configuration_arn"))
 }
 
+// EnhancedImageMetadataEnabled returns a reference to field enhanced_image_metadata_enabled of aws_imagebuilder_image_pipeline.
 func (iip dataImagebuilderImagePipelineAttributes) EnhancedImageMetadataEnabled() terra.BoolValue {
-	return terra.ReferenceBool(iip.ref.Append("enhanced_image_metadata_enabled"))
+	return terra.ReferenceAsBool(iip.ref.Append("enhanced_image_metadata_enabled"))
 }
 
+// Id returns a reference to field id of aws_imagebuilder_image_pipeline.
 func (iip dataImagebuilderImagePipelineAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(iip.ref.Append("id"))
+	return terra.ReferenceAsString(iip.ref.Append("id"))
 }
 
+// ImageRecipeArn returns a reference to field image_recipe_arn of aws_imagebuilder_image_pipeline.
 func (iip dataImagebuilderImagePipelineAttributes) ImageRecipeArn() terra.StringValue {
-	return terra.ReferenceString(iip.ref.Append("image_recipe_arn"))
+	return terra.ReferenceAsString(iip.ref.Append("image_recipe_arn"))
 }
 
+// InfrastructureConfigurationArn returns a reference to field infrastructure_configuration_arn of aws_imagebuilder_image_pipeline.
 func (iip dataImagebuilderImagePipelineAttributes) InfrastructureConfigurationArn() terra.StringValue {
-	return terra.ReferenceString(iip.ref.Append("infrastructure_configuration_arn"))
+	return terra.ReferenceAsString(iip.ref.Append("infrastructure_configuration_arn"))
 }
 
+// Name returns a reference to field name of aws_imagebuilder_image_pipeline.
 func (iip dataImagebuilderImagePipelineAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(iip.ref.Append("name"))
+	return terra.ReferenceAsString(iip.ref.Append("name"))
 }
 
+// Platform returns a reference to field platform of aws_imagebuilder_image_pipeline.
 func (iip dataImagebuilderImagePipelineAttributes) Platform() terra.StringValue {
-	return terra.ReferenceString(iip.ref.Append("platform"))
+	return terra.ReferenceAsString(iip.ref.Append("platform"))
 }
 
+// Status returns a reference to field status of aws_imagebuilder_image_pipeline.
 func (iip dataImagebuilderImagePipelineAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(iip.ref.Append("status"))
+	return terra.ReferenceAsString(iip.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of aws_imagebuilder_image_pipeline.
 func (iip dataImagebuilderImagePipelineAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](iip.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](iip.ref.Append("tags"))
 }
 
 func (iip dataImagebuilderImagePipelineAttributes) ImageTestsConfiguration() terra.ListValue[dataimagebuilderimagepipeline.ImageTestsConfigurationAttributes] {
-	return terra.ReferenceList[dataimagebuilderimagepipeline.ImageTestsConfigurationAttributes](iip.ref.Append("image_tests_configuration"))
+	return terra.ReferenceAsList[dataimagebuilderimagepipeline.ImageTestsConfigurationAttributes](iip.ref.Append("image_tests_configuration"))
 }
 
 func (iip dataImagebuilderImagePipelineAttributes) Schedule() terra.ListValue[dataimagebuilderimagepipeline.ScheduleAttributes] {
-	return terra.ReferenceList[dataimagebuilderimagepipeline.ScheduleAttributes](iip.ref.Append("schedule"))
+	return terra.ReferenceAsList[dataimagebuilderimagepipeline.ScheduleAttributes](iip.ref.Append("schedule"))
 }

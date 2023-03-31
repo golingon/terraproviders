@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSecurityhubOrganizationAdminAccount creates a new instance of [SecurityhubOrganizationAdminAccount].
 func NewSecurityhubOrganizationAdminAccount(name string, args SecurityhubOrganizationAdminAccountArgs) *SecurityhubOrganizationAdminAccount {
 	return &SecurityhubOrganizationAdminAccount{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSecurityhubOrganizationAdminAccount(name string, args SecurityhubOrganiz
 
 var _ terra.Resource = (*SecurityhubOrganizationAdminAccount)(nil)
 
+// SecurityhubOrganizationAdminAccount represents the Terraform resource aws_securityhub_organization_admin_account.
 type SecurityhubOrganizationAdminAccount struct {
-	Name  string
-	Args  SecurityhubOrganizationAdminAccountArgs
-	state *securityhubOrganizationAdminAccountState
+	Name      string
+	Args      SecurityhubOrganizationAdminAccountArgs
+	state     *securityhubOrganizationAdminAccountState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SecurityhubOrganizationAdminAccount].
 func (soaa *SecurityhubOrganizationAdminAccount) Type() string {
 	return "aws_securityhub_organization_admin_account"
 }
 
+// LocalName returns the local name for [SecurityhubOrganizationAdminAccount].
 func (soaa *SecurityhubOrganizationAdminAccount) LocalName() string {
 	return soaa.Name
 }
 
+// Configuration returns the configuration (args) for [SecurityhubOrganizationAdminAccount].
 func (soaa *SecurityhubOrganizationAdminAccount) Configuration() interface{} {
 	return soaa.Args
 }
 
+// DependOn is used for other resources to depend on [SecurityhubOrganizationAdminAccount].
+func (soaa *SecurityhubOrganizationAdminAccount) DependOn() terra.Reference {
+	return terra.ReferenceResource(soaa)
+}
+
+// Dependencies returns the list of resources [SecurityhubOrganizationAdminAccount] depends_on.
+func (soaa *SecurityhubOrganizationAdminAccount) Dependencies() terra.Dependencies {
+	return soaa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SecurityhubOrganizationAdminAccount].
+func (soaa *SecurityhubOrganizationAdminAccount) LifecycleManagement() *terra.Lifecycle {
+	return soaa.Lifecycle
+}
+
+// Attributes returns the attributes for [SecurityhubOrganizationAdminAccount].
 func (soaa *SecurityhubOrganizationAdminAccount) Attributes() securityhubOrganizationAdminAccountAttributes {
 	return securityhubOrganizationAdminAccountAttributes{ref: terra.ReferenceResource(soaa)}
 }
 
+// ImportState imports the given attribute values into [SecurityhubOrganizationAdminAccount]'s state.
 func (soaa *SecurityhubOrganizationAdminAccount) ImportState(av io.Reader) error {
 	soaa.state = &securityhubOrganizationAdminAccountState{}
 	if err := json.NewDecoder(av).Decode(soaa.state); err != nil {
@@ -48,10 +72,12 @@ func (soaa *SecurityhubOrganizationAdminAccount) ImportState(av io.Reader) error
 	return nil
 }
 
+// State returns the state and a bool indicating if [SecurityhubOrganizationAdminAccount] has state.
 func (soaa *SecurityhubOrganizationAdminAccount) State() (*securityhubOrganizationAdminAccountState, bool) {
 	return soaa.state, soaa.state != nil
 }
 
+// StateMust returns the state for [SecurityhubOrganizationAdminAccount]. Panics if the state is nil.
 func (soaa *SecurityhubOrganizationAdminAccount) StateMust() *securityhubOrganizationAdminAccountState {
 	if soaa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", soaa.Type(), soaa.LocalName()))
@@ -59,28 +85,25 @@ func (soaa *SecurityhubOrganizationAdminAccount) StateMust() *securityhubOrganiz
 	return soaa.state
 }
 
-func (soaa *SecurityhubOrganizationAdminAccount) DependOn() terra.Reference {
-	return terra.ReferenceResource(soaa)
-}
-
+// SecurityhubOrganizationAdminAccountArgs contains the configurations for aws_securityhub_organization_admin_account.
 type SecurityhubOrganizationAdminAccountArgs struct {
 	// AdminAccountId: string, required
 	AdminAccountId terra.StringValue `hcl:"admin_account_id,attr" validate:"required"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that SecurityhubOrganizationAdminAccount depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type securityhubOrganizationAdminAccountAttributes struct {
 	ref terra.Reference
 }
 
+// AdminAccountId returns a reference to field admin_account_id of aws_securityhub_organization_admin_account.
 func (soaa securityhubOrganizationAdminAccountAttributes) AdminAccountId() terra.StringValue {
-	return terra.ReferenceString(soaa.ref.Append("admin_account_id"))
+	return terra.ReferenceAsString(soaa.ref.Append("admin_account_id"))
 }
 
+// Id returns a reference to field id of aws_securityhub_organization_admin_account.
 func (soaa securityhubOrganizationAdminAccountAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(soaa.ref.Append("id"))
+	return terra.ReferenceAsString(soaa.ref.Append("id"))
 }
 
 type securityhubOrganizationAdminAccountState struct {

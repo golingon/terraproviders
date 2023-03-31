@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewFmsPolicy creates a new instance of [FmsPolicy].
 func NewFmsPolicy(name string, args FmsPolicyArgs) *FmsPolicy {
 	return &FmsPolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewFmsPolicy(name string, args FmsPolicyArgs) *FmsPolicy {
 
 var _ terra.Resource = (*FmsPolicy)(nil)
 
+// FmsPolicy represents the Terraform resource aws_fms_policy.
 type FmsPolicy struct {
-	Name  string
-	Args  FmsPolicyArgs
-	state *fmsPolicyState
+	Name      string
+	Args      FmsPolicyArgs
+	state     *fmsPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [FmsPolicy].
 func (fp *FmsPolicy) Type() string {
 	return "aws_fms_policy"
 }
 
+// LocalName returns the local name for [FmsPolicy].
 func (fp *FmsPolicy) LocalName() string {
 	return fp.Name
 }
 
+// Configuration returns the configuration (args) for [FmsPolicy].
 func (fp *FmsPolicy) Configuration() interface{} {
 	return fp.Args
 }
 
+// DependOn is used for other resources to depend on [FmsPolicy].
+func (fp *FmsPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(fp)
+}
+
+// Dependencies returns the list of resources [FmsPolicy] depends_on.
+func (fp *FmsPolicy) Dependencies() terra.Dependencies {
+	return fp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [FmsPolicy].
+func (fp *FmsPolicy) LifecycleManagement() *terra.Lifecycle {
+	return fp.Lifecycle
+}
+
+// Attributes returns the attributes for [FmsPolicy].
 func (fp *FmsPolicy) Attributes() fmsPolicyAttributes {
 	return fmsPolicyAttributes{ref: terra.ReferenceResource(fp)}
 }
 
+// ImportState imports the given attribute values into [FmsPolicy]'s state.
 func (fp *FmsPolicy) ImportState(av io.Reader) error {
 	fp.state = &fmsPolicyState{}
 	if err := json.NewDecoder(av).Decode(fp.state); err != nil {
@@ -49,10 +73,12 @@ func (fp *FmsPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [FmsPolicy] has state.
 func (fp *FmsPolicy) State() (*fmsPolicyState, bool) {
 	return fp.state, fp.state != nil
 }
 
+// StateMust returns the state for [FmsPolicy]. Panics if the state is nil.
 func (fp *FmsPolicy) StateMust() *fmsPolicyState {
 	if fp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", fp.Type(), fp.LocalName()))
@@ -60,10 +86,7 @@ func (fp *FmsPolicy) StateMust() *fmsPolicyState {
 	return fp.state
 }
 
-func (fp *FmsPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(fp)
-}
-
+// FmsPolicyArgs contains the configurations for aws_fms_policy.
 type FmsPolicyArgs struct {
 	// DeleteAllPolicyResources: bool, optional
 	DeleteAllPolicyResources terra.BoolValue `hcl:"delete_all_policy_resources,attr"`
@@ -95,79 +118,91 @@ type FmsPolicyArgs struct {
 	IncludeMap *fmspolicy.IncludeMap `hcl:"include_map,block"`
 	// SecurityServicePolicyData: required
 	SecurityServicePolicyData *fmspolicy.SecurityServicePolicyData `hcl:"security_service_policy_data,block" validate:"required"`
-	// DependsOn contains resources that FmsPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type fmsPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_fms_policy.
 func (fp fmsPolicyAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("arn"))
+	return terra.ReferenceAsString(fp.ref.Append("arn"))
 }
 
+// DeleteAllPolicyResources returns a reference to field delete_all_policy_resources of aws_fms_policy.
 func (fp fmsPolicyAttributes) DeleteAllPolicyResources() terra.BoolValue {
-	return terra.ReferenceBool(fp.ref.Append("delete_all_policy_resources"))
+	return terra.ReferenceAsBool(fp.ref.Append("delete_all_policy_resources"))
 }
 
+// DeleteUnusedFmManagedResources returns a reference to field delete_unused_fm_managed_resources of aws_fms_policy.
 func (fp fmsPolicyAttributes) DeleteUnusedFmManagedResources() terra.BoolValue {
-	return terra.ReferenceBool(fp.ref.Append("delete_unused_fm_managed_resources"))
+	return terra.ReferenceAsBool(fp.ref.Append("delete_unused_fm_managed_resources"))
 }
 
+// Description returns a reference to field description of aws_fms_policy.
 func (fp fmsPolicyAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("description"))
+	return terra.ReferenceAsString(fp.ref.Append("description"))
 }
 
+// ExcludeResourceTags returns a reference to field exclude_resource_tags of aws_fms_policy.
 func (fp fmsPolicyAttributes) ExcludeResourceTags() terra.BoolValue {
-	return terra.ReferenceBool(fp.ref.Append("exclude_resource_tags"))
+	return terra.ReferenceAsBool(fp.ref.Append("exclude_resource_tags"))
 }
 
+// Id returns a reference to field id of aws_fms_policy.
 func (fp fmsPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("id"))
+	return terra.ReferenceAsString(fp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_fms_policy.
 func (fp fmsPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("name"))
+	return terra.ReferenceAsString(fp.ref.Append("name"))
 }
 
+// PolicyUpdateToken returns a reference to field policy_update_token of aws_fms_policy.
 func (fp fmsPolicyAttributes) PolicyUpdateToken() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("policy_update_token"))
+	return terra.ReferenceAsString(fp.ref.Append("policy_update_token"))
 }
 
+// RemediationEnabled returns a reference to field remediation_enabled of aws_fms_policy.
 func (fp fmsPolicyAttributes) RemediationEnabled() terra.BoolValue {
-	return terra.ReferenceBool(fp.ref.Append("remediation_enabled"))
+	return terra.ReferenceAsBool(fp.ref.Append("remediation_enabled"))
 }
 
+// ResourceTags returns a reference to field resource_tags of aws_fms_policy.
 func (fp fmsPolicyAttributes) ResourceTags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](fp.ref.Append("resource_tags"))
+	return terra.ReferenceAsMap[terra.StringValue](fp.ref.Append("resource_tags"))
 }
 
+// ResourceType returns a reference to field resource_type of aws_fms_policy.
 func (fp fmsPolicyAttributes) ResourceType() terra.StringValue {
-	return terra.ReferenceString(fp.ref.Append("resource_type"))
+	return terra.ReferenceAsString(fp.ref.Append("resource_type"))
 }
 
+// ResourceTypeList returns a reference to field resource_type_list of aws_fms_policy.
 func (fp fmsPolicyAttributes) ResourceTypeList() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](fp.ref.Append("resource_type_list"))
+	return terra.ReferenceAsSet[terra.StringValue](fp.ref.Append("resource_type_list"))
 }
 
+// Tags returns a reference to field tags of aws_fms_policy.
 func (fp fmsPolicyAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](fp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](fp.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_fms_policy.
 func (fp fmsPolicyAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](fp.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](fp.ref.Append("tags_all"))
 }
 
 func (fp fmsPolicyAttributes) ExcludeMap() terra.ListValue[fmspolicy.ExcludeMapAttributes] {
-	return terra.ReferenceList[fmspolicy.ExcludeMapAttributes](fp.ref.Append("exclude_map"))
+	return terra.ReferenceAsList[fmspolicy.ExcludeMapAttributes](fp.ref.Append("exclude_map"))
 }
 
 func (fp fmsPolicyAttributes) IncludeMap() terra.ListValue[fmspolicy.IncludeMapAttributes] {
-	return terra.ReferenceList[fmspolicy.IncludeMapAttributes](fp.ref.Append("include_map"))
+	return terra.ReferenceAsList[fmspolicy.IncludeMapAttributes](fp.ref.Append("include_map"))
 }
 
 func (fp fmsPolicyAttributes) SecurityServicePolicyData() terra.ListValue[fmspolicy.SecurityServicePolicyDataAttributes] {
-	return terra.ReferenceList[fmspolicy.SecurityServicePolicyDataAttributes](fp.ref.Append("security_service_policy_data"))
+	return terra.ReferenceAsList[fmspolicy.SecurityServicePolicyDataAttributes](fp.ref.Append("security_service_policy_data"))
 }
 
 type fmsPolicyState struct {

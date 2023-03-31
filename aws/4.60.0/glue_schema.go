@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewGlueSchema creates a new instance of [GlueSchema].
 func NewGlueSchema(name string, args GlueSchemaArgs) *GlueSchema {
 	return &GlueSchema{
 		Args: args,
@@ -18,28 +19,51 @@ func NewGlueSchema(name string, args GlueSchemaArgs) *GlueSchema {
 
 var _ terra.Resource = (*GlueSchema)(nil)
 
+// GlueSchema represents the Terraform resource aws_glue_schema.
 type GlueSchema struct {
-	Name  string
-	Args  GlueSchemaArgs
-	state *glueSchemaState
+	Name      string
+	Args      GlueSchemaArgs
+	state     *glueSchemaState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GlueSchema].
 func (gs *GlueSchema) Type() string {
 	return "aws_glue_schema"
 }
 
+// LocalName returns the local name for [GlueSchema].
 func (gs *GlueSchema) LocalName() string {
 	return gs.Name
 }
 
+// Configuration returns the configuration (args) for [GlueSchema].
 func (gs *GlueSchema) Configuration() interface{} {
 	return gs.Args
 }
 
+// DependOn is used for other resources to depend on [GlueSchema].
+func (gs *GlueSchema) DependOn() terra.Reference {
+	return terra.ReferenceResource(gs)
+}
+
+// Dependencies returns the list of resources [GlueSchema] depends_on.
+func (gs *GlueSchema) Dependencies() terra.Dependencies {
+	return gs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GlueSchema].
+func (gs *GlueSchema) LifecycleManagement() *terra.Lifecycle {
+	return gs.Lifecycle
+}
+
+// Attributes returns the attributes for [GlueSchema].
 func (gs *GlueSchema) Attributes() glueSchemaAttributes {
 	return glueSchemaAttributes{ref: terra.ReferenceResource(gs)}
 }
 
+// ImportState imports the given attribute values into [GlueSchema]'s state.
 func (gs *GlueSchema) ImportState(av io.Reader) error {
 	gs.state = &glueSchemaState{}
 	if err := json.NewDecoder(av).Decode(gs.state); err != nil {
@@ -48,10 +72,12 @@ func (gs *GlueSchema) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GlueSchema] has state.
 func (gs *GlueSchema) State() (*glueSchemaState, bool) {
 	return gs.state, gs.state != nil
 }
 
+// StateMust returns the state for [GlueSchema]. Panics if the state is nil.
 func (gs *GlueSchema) StateMust() *glueSchemaState {
 	if gs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", gs.Type(), gs.LocalName()))
@@ -59,10 +85,7 @@ func (gs *GlueSchema) StateMust() *glueSchemaState {
 	return gs.state
 }
 
-func (gs *GlueSchema) DependOn() terra.Reference {
-	return terra.ReferenceResource(gs)
-}
-
+// GlueSchemaArgs contains the configurations for aws_glue_schema.
 type GlueSchemaArgs struct {
 	// Compatibility: string, required
 	Compatibility terra.StringValue `hcl:"compatibility,attr" validate:"required"`
@@ -82,67 +105,79 @@ type GlueSchemaArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that GlueSchema depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type glueSchemaAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_glue_schema.
 func (gs glueSchemaAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(gs.ref.Append("arn"))
+	return terra.ReferenceAsString(gs.ref.Append("arn"))
 }
 
+// Compatibility returns a reference to field compatibility of aws_glue_schema.
 func (gs glueSchemaAttributes) Compatibility() terra.StringValue {
-	return terra.ReferenceString(gs.ref.Append("compatibility"))
+	return terra.ReferenceAsString(gs.ref.Append("compatibility"))
 }
 
+// DataFormat returns a reference to field data_format of aws_glue_schema.
 func (gs glueSchemaAttributes) DataFormat() terra.StringValue {
-	return terra.ReferenceString(gs.ref.Append("data_format"))
+	return terra.ReferenceAsString(gs.ref.Append("data_format"))
 }
 
+// Description returns a reference to field description of aws_glue_schema.
 func (gs glueSchemaAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(gs.ref.Append("description"))
+	return terra.ReferenceAsString(gs.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_glue_schema.
 func (gs glueSchemaAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gs.ref.Append("id"))
+	return terra.ReferenceAsString(gs.ref.Append("id"))
 }
 
+// LatestSchemaVersion returns a reference to field latest_schema_version of aws_glue_schema.
 func (gs glueSchemaAttributes) LatestSchemaVersion() terra.NumberValue {
-	return terra.ReferenceNumber(gs.ref.Append("latest_schema_version"))
+	return terra.ReferenceAsNumber(gs.ref.Append("latest_schema_version"))
 }
 
+// NextSchemaVersion returns a reference to field next_schema_version of aws_glue_schema.
 func (gs glueSchemaAttributes) NextSchemaVersion() terra.NumberValue {
-	return terra.ReferenceNumber(gs.ref.Append("next_schema_version"))
+	return terra.ReferenceAsNumber(gs.ref.Append("next_schema_version"))
 }
 
+// RegistryArn returns a reference to field registry_arn of aws_glue_schema.
 func (gs glueSchemaAttributes) RegistryArn() terra.StringValue {
-	return terra.ReferenceString(gs.ref.Append("registry_arn"))
+	return terra.ReferenceAsString(gs.ref.Append("registry_arn"))
 }
 
+// RegistryName returns a reference to field registry_name of aws_glue_schema.
 func (gs glueSchemaAttributes) RegistryName() terra.StringValue {
-	return terra.ReferenceString(gs.ref.Append("registry_name"))
+	return terra.ReferenceAsString(gs.ref.Append("registry_name"))
 }
 
+// SchemaCheckpoint returns a reference to field schema_checkpoint of aws_glue_schema.
 func (gs glueSchemaAttributes) SchemaCheckpoint() terra.NumberValue {
-	return terra.ReferenceNumber(gs.ref.Append("schema_checkpoint"))
+	return terra.ReferenceAsNumber(gs.ref.Append("schema_checkpoint"))
 }
 
+// SchemaDefinition returns a reference to field schema_definition of aws_glue_schema.
 func (gs glueSchemaAttributes) SchemaDefinition() terra.StringValue {
-	return terra.ReferenceString(gs.ref.Append("schema_definition"))
+	return terra.ReferenceAsString(gs.ref.Append("schema_definition"))
 }
 
+// SchemaName returns a reference to field schema_name of aws_glue_schema.
 func (gs glueSchemaAttributes) SchemaName() terra.StringValue {
-	return terra.ReferenceString(gs.ref.Append("schema_name"))
+	return terra.ReferenceAsString(gs.ref.Append("schema_name"))
 }
 
+// Tags returns a reference to field tags of aws_glue_schema.
 func (gs glueSchemaAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gs.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](gs.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_glue_schema.
 func (gs glueSchemaAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gs.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](gs.ref.Append("tags_all"))
 }
 
 type glueSchemaState struct {

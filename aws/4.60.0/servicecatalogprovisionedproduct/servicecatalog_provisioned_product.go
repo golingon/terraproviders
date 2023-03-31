@@ -61,15 +61,15 @@ func (o OutputsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (o OutputsAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("description"))
+	return terra.ReferenceAsString(o.ref.Append("description"))
 }
 
 func (o OutputsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("key"))
+	return terra.ReferenceAsString(o.ref.Append("key"))
 }
 
 func (o OutputsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("value"))
+	return terra.ReferenceAsString(o.ref.Append("value"))
 }
 
 type ProvisioningParametersAttributes struct {
@@ -89,15 +89,15 @@ func (pp ProvisioningParametersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pp ProvisioningParametersAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(pp.ref.Append("key"))
+	return terra.ReferenceAsString(pp.ref.Append("key"))
 }
 
 func (pp ProvisioningParametersAttributes) UsePreviousValue() terra.BoolValue {
-	return terra.ReferenceBool(pp.ref.Append("use_previous_value"))
+	return terra.ReferenceAsBool(pp.ref.Append("use_previous_value"))
 }
 
 func (pp ProvisioningParametersAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(pp.ref.Append("value"))
+	return terra.ReferenceAsString(pp.ref.Append("value"))
 }
 
 type StackSetProvisioningPreferencesAttributes struct {
@@ -117,27 +117,27 @@ func (sspp StackSetProvisioningPreferencesAttributes) InternalTokens() hclwrite.
 }
 
 func (sspp StackSetProvisioningPreferencesAttributes) Accounts() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sspp.ref.Append("accounts"))
+	return terra.ReferenceAsList[terra.StringValue](sspp.ref.Append("accounts"))
 }
 
 func (sspp StackSetProvisioningPreferencesAttributes) FailureToleranceCount() terra.NumberValue {
-	return terra.ReferenceNumber(sspp.ref.Append("failure_tolerance_count"))
+	return terra.ReferenceAsNumber(sspp.ref.Append("failure_tolerance_count"))
 }
 
 func (sspp StackSetProvisioningPreferencesAttributes) FailureTolerancePercentage() terra.NumberValue {
-	return terra.ReferenceNumber(sspp.ref.Append("failure_tolerance_percentage"))
+	return terra.ReferenceAsNumber(sspp.ref.Append("failure_tolerance_percentage"))
 }
 
 func (sspp StackSetProvisioningPreferencesAttributes) MaxConcurrencyCount() terra.NumberValue {
-	return terra.ReferenceNumber(sspp.ref.Append("max_concurrency_count"))
+	return terra.ReferenceAsNumber(sspp.ref.Append("max_concurrency_count"))
 }
 
 func (sspp StackSetProvisioningPreferencesAttributes) MaxConcurrencyPercentage() terra.NumberValue {
-	return terra.ReferenceNumber(sspp.ref.Append("max_concurrency_percentage"))
+	return terra.ReferenceAsNumber(sspp.ref.Append("max_concurrency_percentage"))
 }
 
 func (sspp StackSetProvisioningPreferencesAttributes) Regions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sspp.ref.Append("regions"))
+	return terra.ReferenceAsList[terra.StringValue](sspp.ref.Append("regions"))
 }
 
 type TimeoutsAttributes struct {
@@ -157,19 +157,19 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type OutputsState struct {

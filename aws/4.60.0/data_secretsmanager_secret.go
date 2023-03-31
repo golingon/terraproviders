@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataSecretsmanagerSecret creates a new instance of [DataSecretsmanagerSecret].
 func NewDataSecretsmanagerSecret(name string, args DataSecretsmanagerSecretArgs) *DataSecretsmanagerSecret {
 	return &DataSecretsmanagerSecret{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataSecretsmanagerSecret(name string, args DataSecretsmanagerSecretArgs)
 
 var _ terra.DataResource = (*DataSecretsmanagerSecret)(nil)
 
+// DataSecretsmanagerSecret represents the Terraform data resource aws_secretsmanager_secret.
 type DataSecretsmanagerSecret struct {
 	Name string
 	Args DataSecretsmanagerSecretArgs
 }
 
+// DataSource returns the Terraform object type for [DataSecretsmanagerSecret].
 func (ss *DataSecretsmanagerSecret) DataSource() string {
 	return "aws_secretsmanager_secret"
 }
 
+// LocalName returns the local name for [DataSecretsmanagerSecret].
 func (ss *DataSecretsmanagerSecret) LocalName() string {
 	return ss.Name
 }
 
+// Configuration returns the configuration (args) for [DataSecretsmanagerSecret].
 func (ss *DataSecretsmanagerSecret) Configuration() interface{} {
 	return ss.Args
 }
 
+// Attributes returns the attributes for [DataSecretsmanagerSecret].
 func (ss *DataSecretsmanagerSecret) Attributes() dataSecretsmanagerSecretAttributes {
 	return dataSecretsmanagerSecretAttributes{ref: terra.ReferenceDataResource(ss)}
 }
 
+// DataSecretsmanagerSecretArgs contains the configurations for aws_secretsmanager_secret.
 type DataSecretsmanagerSecretArgs struct {
 	// Arn: string, optional
 	Arn terra.StringValue `hcl:"arn,attr"`
@@ -51,42 +58,51 @@ type dataSecretsmanagerSecretAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_secretsmanager_secret.
 func (ss dataSecretsmanagerSecretAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("arn"))
+	return terra.ReferenceAsString(ss.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_secretsmanager_secret.
 func (ss dataSecretsmanagerSecretAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("description"))
+	return terra.ReferenceAsString(ss.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_secretsmanager_secret.
 func (ss dataSecretsmanagerSecretAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("id"))
+	return terra.ReferenceAsString(ss.ref.Append("id"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_secretsmanager_secret.
 func (ss dataSecretsmanagerSecretAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(ss.ref.Append("kms_key_id"))
 }
 
+// Name returns a reference to field name of aws_secretsmanager_secret.
 func (ss dataSecretsmanagerSecretAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("name"))
+	return terra.ReferenceAsString(ss.ref.Append("name"))
 }
 
+// Policy returns a reference to field policy of aws_secretsmanager_secret.
 func (ss dataSecretsmanagerSecretAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("policy"))
+	return terra.ReferenceAsString(ss.ref.Append("policy"))
 }
 
+// RotationEnabled returns a reference to field rotation_enabled of aws_secretsmanager_secret.
 func (ss dataSecretsmanagerSecretAttributes) RotationEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("rotation_enabled"))
+	return terra.ReferenceAsBool(ss.ref.Append("rotation_enabled"))
 }
 
+// RotationLambdaArn returns a reference to field rotation_lambda_arn of aws_secretsmanager_secret.
 func (ss dataSecretsmanagerSecretAttributes) RotationLambdaArn() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("rotation_lambda_arn"))
+	return terra.ReferenceAsString(ss.ref.Append("rotation_lambda_arn"))
 }
 
+// Tags returns a reference to field tags of aws_secretsmanager_secret.
 func (ss dataSecretsmanagerSecretAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ss.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ss.ref.Append("tags"))
 }
 
 func (ss dataSecretsmanagerSecretAttributes) RotationRules() terra.ListValue[datasecretsmanagersecret.RotationRulesAttributes] {
-	return terra.ReferenceList[datasecretsmanagersecret.RotationRulesAttributes](ss.ref.Append("rotation_rules"))
+	return terra.ReferenceAsList[datasecretsmanagersecret.RotationRulesAttributes](ss.ref.Append("rotation_rules"))
 }

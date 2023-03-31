@@ -181,15 +181,15 @@ func (aso AdvancedSecurityOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (aso AdvancedSecurityOptionsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(aso.ref.Append("enabled"))
+	return terra.ReferenceAsBool(aso.ref.Append("enabled"))
 }
 
 func (aso AdvancedSecurityOptionsAttributes) InternalUserDatabaseEnabled() terra.BoolValue {
-	return terra.ReferenceBool(aso.ref.Append("internal_user_database_enabled"))
+	return terra.ReferenceAsBool(aso.ref.Append("internal_user_database_enabled"))
 }
 
 func (aso AdvancedSecurityOptionsAttributes) MasterUserOptions() terra.ListValue[MasterUserOptionsAttributes] {
-	return terra.ReferenceList[MasterUserOptionsAttributes](aso.ref.Append("master_user_options"))
+	return terra.ReferenceAsList[MasterUserOptionsAttributes](aso.ref.Append("master_user_options"))
 }
 
 type MasterUserOptionsAttributes struct {
@@ -209,15 +209,15 @@ func (muo MasterUserOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (muo MasterUserOptionsAttributes) MasterUserArn() terra.StringValue {
-	return terra.ReferenceString(muo.ref.Append("master_user_arn"))
+	return terra.ReferenceAsString(muo.ref.Append("master_user_arn"))
 }
 
 func (muo MasterUserOptionsAttributes) MasterUserName() terra.StringValue {
-	return terra.ReferenceString(muo.ref.Append("master_user_name"))
+	return terra.ReferenceAsString(muo.ref.Append("master_user_name"))
 }
 
 func (muo MasterUserOptionsAttributes) MasterUserPassword() terra.StringValue {
-	return terra.ReferenceString(muo.ref.Append("master_user_password"))
+	return terra.ReferenceAsString(muo.ref.Append("master_user_password"))
 }
 
 type AutoTuneOptionsAttributes struct {
@@ -237,15 +237,15 @@ func (ato AutoTuneOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ato AutoTuneOptionsAttributes) DesiredState() terra.StringValue {
-	return terra.ReferenceString(ato.ref.Append("desired_state"))
+	return terra.ReferenceAsString(ato.ref.Append("desired_state"))
 }
 
 func (ato AutoTuneOptionsAttributes) RollbackOnDisable() terra.StringValue {
-	return terra.ReferenceString(ato.ref.Append("rollback_on_disable"))
+	return terra.ReferenceAsString(ato.ref.Append("rollback_on_disable"))
 }
 
 func (ato AutoTuneOptionsAttributes) MaintenanceSchedule() terra.SetValue[MaintenanceScheduleAttributes] {
-	return terra.ReferenceSet[MaintenanceScheduleAttributes](ato.ref.Append("maintenance_schedule"))
+	return terra.ReferenceAsSet[MaintenanceScheduleAttributes](ato.ref.Append("maintenance_schedule"))
 }
 
 type MaintenanceScheduleAttributes struct {
@@ -265,15 +265,15 @@ func (ms MaintenanceScheduleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ms MaintenanceScheduleAttributes) CronExpressionForRecurrence() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("cron_expression_for_recurrence"))
+	return terra.ReferenceAsString(ms.ref.Append("cron_expression_for_recurrence"))
 }
 
 func (ms MaintenanceScheduleAttributes) StartAt() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("start_at"))
+	return terra.ReferenceAsString(ms.ref.Append("start_at"))
 }
 
 func (ms MaintenanceScheduleAttributes) Duration() terra.ListValue[DurationAttributes] {
-	return terra.ReferenceList[DurationAttributes](ms.ref.Append("duration"))
+	return terra.ReferenceAsList[DurationAttributes](ms.ref.Append("duration"))
 }
 
 type DurationAttributes struct {
@@ -293,11 +293,11 @@ func (d DurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DurationAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("unit"))
+	return terra.ReferenceAsString(d.ref.Append("unit"))
 }
 
 func (d DurationAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(d.ref.Append("value"))
+	return terra.ReferenceAsNumber(d.ref.Append("value"))
 }
 
 type ClusterConfigAttributes struct {
@@ -317,47 +317,47 @@ func (cc ClusterConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc ClusterConfigAttributes) DedicatedMasterCount() terra.NumberValue {
-	return terra.ReferenceNumber(cc.ref.Append("dedicated_master_count"))
+	return terra.ReferenceAsNumber(cc.ref.Append("dedicated_master_count"))
 }
 
 func (cc ClusterConfigAttributes) DedicatedMasterEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("dedicated_master_enabled"))
+	return terra.ReferenceAsBool(cc.ref.Append("dedicated_master_enabled"))
 }
 
 func (cc ClusterConfigAttributes) DedicatedMasterType() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("dedicated_master_type"))
+	return terra.ReferenceAsString(cc.ref.Append("dedicated_master_type"))
 }
 
 func (cc ClusterConfigAttributes) InstanceCount() terra.NumberValue {
-	return terra.ReferenceNumber(cc.ref.Append("instance_count"))
+	return terra.ReferenceAsNumber(cc.ref.Append("instance_count"))
 }
 
 func (cc ClusterConfigAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("instance_type"))
+	return terra.ReferenceAsString(cc.ref.Append("instance_type"))
 }
 
 func (cc ClusterConfigAttributes) WarmCount() terra.NumberValue {
-	return terra.ReferenceNumber(cc.ref.Append("warm_count"))
+	return terra.ReferenceAsNumber(cc.ref.Append("warm_count"))
 }
 
 func (cc ClusterConfigAttributes) WarmEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("warm_enabled"))
+	return terra.ReferenceAsBool(cc.ref.Append("warm_enabled"))
 }
 
 func (cc ClusterConfigAttributes) WarmType() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("warm_type"))
+	return terra.ReferenceAsString(cc.ref.Append("warm_type"))
 }
 
 func (cc ClusterConfigAttributes) ZoneAwarenessEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("zone_awareness_enabled"))
+	return terra.ReferenceAsBool(cc.ref.Append("zone_awareness_enabled"))
 }
 
 func (cc ClusterConfigAttributes) ColdStorageOptions() terra.ListValue[ColdStorageOptionsAttributes] {
-	return terra.ReferenceList[ColdStorageOptionsAttributes](cc.ref.Append("cold_storage_options"))
+	return terra.ReferenceAsList[ColdStorageOptionsAttributes](cc.ref.Append("cold_storage_options"))
 }
 
 func (cc ClusterConfigAttributes) ZoneAwarenessConfig() terra.ListValue[ZoneAwarenessConfigAttributes] {
-	return terra.ReferenceList[ZoneAwarenessConfigAttributes](cc.ref.Append("zone_awareness_config"))
+	return terra.ReferenceAsList[ZoneAwarenessConfigAttributes](cc.ref.Append("zone_awareness_config"))
 }
 
 type ColdStorageOptionsAttributes struct {
@@ -377,7 +377,7 @@ func (cso ColdStorageOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cso ColdStorageOptionsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(cso.ref.Append("enabled"))
+	return terra.ReferenceAsBool(cso.ref.Append("enabled"))
 }
 
 type ZoneAwarenessConfigAttributes struct {
@@ -397,7 +397,7 @@ func (zac ZoneAwarenessConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (zac ZoneAwarenessConfigAttributes) AvailabilityZoneCount() terra.NumberValue {
-	return terra.ReferenceNumber(zac.ref.Append("availability_zone_count"))
+	return terra.ReferenceAsNumber(zac.ref.Append("availability_zone_count"))
 }
 
 type CognitoOptionsAttributes struct {
@@ -417,19 +417,19 @@ func (co CognitoOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (co CognitoOptionsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(co.ref.Append("enabled"))
+	return terra.ReferenceAsBool(co.ref.Append("enabled"))
 }
 
 func (co CognitoOptionsAttributes) IdentityPoolId() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("identity_pool_id"))
+	return terra.ReferenceAsString(co.ref.Append("identity_pool_id"))
 }
 
 func (co CognitoOptionsAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("role_arn"))
+	return terra.ReferenceAsString(co.ref.Append("role_arn"))
 }
 
 func (co CognitoOptionsAttributes) UserPoolId() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("user_pool_id"))
+	return terra.ReferenceAsString(co.ref.Append("user_pool_id"))
 }
 
 type DomainEndpointOptionsAttributes struct {
@@ -449,23 +449,23 @@ func (deo DomainEndpointOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (deo DomainEndpointOptionsAttributes) CustomEndpoint() terra.StringValue {
-	return terra.ReferenceString(deo.ref.Append("custom_endpoint"))
+	return terra.ReferenceAsString(deo.ref.Append("custom_endpoint"))
 }
 
 func (deo DomainEndpointOptionsAttributes) CustomEndpointCertificateArn() terra.StringValue {
-	return terra.ReferenceString(deo.ref.Append("custom_endpoint_certificate_arn"))
+	return terra.ReferenceAsString(deo.ref.Append("custom_endpoint_certificate_arn"))
 }
 
 func (deo DomainEndpointOptionsAttributes) CustomEndpointEnabled() terra.BoolValue {
-	return terra.ReferenceBool(deo.ref.Append("custom_endpoint_enabled"))
+	return terra.ReferenceAsBool(deo.ref.Append("custom_endpoint_enabled"))
 }
 
 func (deo DomainEndpointOptionsAttributes) EnforceHttps() terra.BoolValue {
-	return terra.ReferenceBool(deo.ref.Append("enforce_https"))
+	return terra.ReferenceAsBool(deo.ref.Append("enforce_https"))
 }
 
 func (deo DomainEndpointOptionsAttributes) TlsSecurityPolicy() terra.StringValue {
-	return terra.ReferenceString(deo.ref.Append("tls_security_policy"))
+	return terra.ReferenceAsString(deo.ref.Append("tls_security_policy"))
 }
 
 type EbsOptionsAttributes struct {
@@ -485,23 +485,23 @@ func (eo EbsOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (eo EbsOptionsAttributes) EbsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(eo.ref.Append("ebs_enabled"))
+	return terra.ReferenceAsBool(eo.ref.Append("ebs_enabled"))
 }
 
 func (eo EbsOptionsAttributes) Iops() terra.NumberValue {
-	return terra.ReferenceNumber(eo.ref.Append("iops"))
+	return terra.ReferenceAsNumber(eo.ref.Append("iops"))
 }
 
 func (eo EbsOptionsAttributes) Throughput() terra.NumberValue {
-	return terra.ReferenceNumber(eo.ref.Append("throughput"))
+	return terra.ReferenceAsNumber(eo.ref.Append("throughput"))
 }
 
 func (eo EbsOptionsAttributes) VolumeSize() terra.NumberValue {
-	return terra.ReferenceNumber(eo.ref.Append("volume_size"))
+	return terra.ReferenceAsNumber(eo.ref.Append("volume_size"))
 }
 
 func (eo EbsOptionsAttributes) VolumeType() terra.StringValue {
-	return terra.ReferenceString(eo.ref.Append("volume_type"))
+	return terra.ReferenceAsString(eo.ref.Append("volume_type"))
 }
 
 type EncryptAtRestAttributes struct {
@@ -521,11 +521,11 @@ func (ear EncryptAtRestAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ear EncryptAtRestAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(ear.ref.Append("enabled"))
+	return terra.ReferenceAsBool(ear.ref.Append("enabled"))
 }
 
 func (ear EncryptAtRestAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(ear.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(ear.ref.Append("kms_key_id"))
 }
 
 type LogPublishingOptionsAttributes struct {
@@ -545,15 +545,15 @@ func (lpo LogPublishingOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lpo LogPublishingOptionsAttributes) CloudwatchLogGroupArn() terra.StringValue {
-	return terra.ReferenceString(lpo.ref.Append("cloudwatch_log_group_arn"))
+	return terra.ReferenceAsString(lpo.ref.Append("cloudwatch_log_group_arn"))
 }
 
 func (lpo LogPublishingOptionsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(lpo.ref.Append("enabled"))
+	return terra.ReferenceAsBool(lpo.ref.Append("enabled"))
 }
 
 func (lpo LogPublishingOptionsAttributes) LogType() terra.StringValue {
-	return terra.ReferenceString(lpo.ref.Append("log_type"))
+	return terra.ReferenceAsString(lpo.ref.Append("log_type"))
 }
 
 type NodeToNodeEncryptionAttributes struct {
@@ -573,7 +573,7 @@ func (ntne NodeToNodeEncryptionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ntne NodeToNodeEncryptionAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(ntne.ref.Append("enabled"))
+	return terra.ReferenceAsBool(ntne.ref.Append("enabled"))
 }
 
 type SnapshotOptionsAttributes struct {
@@ -593,7 +593,7 @@ func (so SnapshotOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (so SnapshotOptionsAttributes) AutomatedSnapshotStartHour() terra.NumberValue {
-	return terra.ReferenceNumber(so.ref.Append("automated_snapshot_start_hour"))
+	return terra.ReferenceAsNumber(so.ref.Append("automated_snapshot_start_hour"))
 }
 
 type TimeoutsAttributes struct {
@@ -613,15 +613,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type VpcOptionsAttributes struct {
@@ -641,19 +641,19 @@ func (vo VpcOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vo VpcOptionsAttributes) AvailabilityZones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vo.ref.Append("availability_zones"))
+	return terra.ReferenceAsSet[terra.StringValue](vo.ref.Append("availability_zones"))
 }
 
 func (vo VpcOptionsAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vo.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vo.ref.Append("security_group_ids"))
 }
 
 func (vo VpcOptionsAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vo.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vo.ref.Append("subnet_ids"))
 }
 
 func (vo VpcOptionsAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(vo.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(vo.ref.Append("vpc_id"))
 }
 
 type AdvancedSecurityOptionsState struct {

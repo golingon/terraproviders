@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMemorydbCluster creates a new instance of [MemorydbCluster].
 func NewMemorydbCluster(name string, args MemorydbClusterArgs) *MemorydbCluster {
 	return &MemorydbCluster{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMemorydbCluster(name string, args MemorydbClusterArgs) *MemorydbCluster 
 
 var _ terra.Resource = (*MemorydbCluster)(nil)
 
+// MemorydbCluster represents the Terraform resource aws_memorydb_cluster.
 type MemorydbCluster struct {
-	Name  string
-	Args  MemorydbClusterArgs
-	state *memorydbClusterState
+	Name      string
+	Args      MemorydbClusterArgs
+	state     *memorydbClusterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MemorydbCluster].
 func (mc *MemorydbCluster) Type() string {
 	return "aws_memorydb_cluster"
 }
 
+// LocalName returns the local name for [MemorydbCluster].
 func (mc *MemorydbCluster) LocalName() string {
 	return mc.Name
 }
 
+// Configuration returns the configuration (args) for [MemorydbCluster].
 func (mc *MemorydbCluster) Configuration() interface{} {
 	return mc.Args
 }
 
+// DependOn is used for other resources to depend on [MemorydbCluster].
+func (mc *MemorydbCluster) DependOn() terra.Reference {
+	return terra.ReferenceResource(mc)
+}
+
+// Dependencies returns the list of resources [MemorydbCluster] depends_on.
+func (mc *MemorydbCluster) Dependencies() terra.Dependencies {
+	return mc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MemorydbCluster].
+func (mc *MemorydbCluster) LifecycleManagement() *terra.Lifecycle {
+	return mc.Lifecycle
+}
+
+// Attributes returns the attributes for [MemorydbCluster].
 func (mc *MemorydbCluster) Attributes() memorydbClusterAttributes {
 	return memorydbClusterAttributes{ref: terra.ReferenceResource(mc)}
 }
 
+// ImportState imports the given attribute values into [MemorydbCluster]'s state.
 func (mc *MemorydbCluster) ImportState(av io.Reader) error {
 	mc.state = &memorydbClusterState{}
 	if err := json.NewDecoder(av).Decode(mc.state); err != nil {
@@ -49,10 +73,12 @@ func (mc *MemorydbCluster) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MemorydbCluster] has state.
 func (mc *MemorydbCluster) State() (*memorydbClusterState, bool) {
 	return mc.state, mc.state != nil
 }
 
+// StateMust returns the state for [MemorydbCluster]. Panics if the state is nil.
 func (mc *MemorydbCluster) StateMust() *memorydbClusterState {
 	if mc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mc.Type(), mc.LocalName()))
@@ -60,10 +86,7 @@ func (mc *MemorydbCluster) StateMust() *memorydbClusterState {
 	return mc.state
 }
 
-func (mc *MemorydbCluster) DependOn() terra.Reference {
-	return terra.ReferenceResource(mc)
-}
-
+// MemorydbClusterArgs contains the configurations for aws_memorydb_cluster.
 type MemorydbClusterArgs struct {
 	// AclName: string, required
 	AclName terra.StringValue `hcl:"acl_name,attr" validate:"required"`
@@ -123,135 +146,161 @@ type MemorydbClusterArgs struct {
 	Shards []memorydbcluster.Shards `hcl:"shards,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *memorydbcluster.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MemorydbCluster depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type memorydbClusterAttributes struct {
 	ref terra.Reference
 }
 
+// AclName returns a reference to field acl_name of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) AclName() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("acl_name"))
+	return terra.ReferenceAsString(mc.ref.Append("acl_name"))
 }
 
+// Arn returns a reference to field arn of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("arn"))
+	return terra.ReferenceAsString(mc.ref.Append("arn"))
 }
 
+// AutoMinorVersionUpgrade returns a reference to field auto_minor_version_upgrade of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) AutoMinorVersionUpgrade() terra.BoolValue {
-	return terra.ReferenceBool(mc.ref.Append("auto_minor_version_upgrade"))
+	return terra.ReferenceAsBool(mc.ref.Append("auto_minor_version_upgrade"))
 }
 
+// DataTiering returns a reference to field data_tiering of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) DataTiering() terra.BoolValue {
-	return terra.ReferenceBool(mc.ref.Append("data_tiering"))
+	return terra.ReferenceAsBool(mc.ref.Append("data_tiering"))
 }
 
+// Description returns a reference to field description of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("description"))
+	return terra.ReferenceAsString(mc.ref.Append("description"))
 }
 
+// EnginePatchVersion returns a reference to field engine_patch_version of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) EnginePatchVersion() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("engine_patch_version"))
+	return terra.ReferenceAsString(mc.ref.Append("engine_patch_version"))
 }
 
+// EngineVersion returns a reference to field engine_version of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) EngineVersion() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("engine_version"))
+	return terra.ReferenceAsString(mc.ref.Append("engine_version"))
 }
 
+// FinalSnapshotName returns a reference to field final_snapshot_name of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) FinalSnapshotName() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("final_snapshot_name"))
+	return terra.ReferenceAsString(mc.ref.Append("final_snapshot_name"))
 }
 
+// Id returns a reference to field id of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("id"))
+	return terra.ReferenceAsString(mc.ref.Append("id"))
 }
 
+// KmsKeyArn returns a reference to field kms_key_arn of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(mc.ref.Append("kms_key_arn"))
 }
 
+// MaintenanceWindow returns a reference to field maintenance_window of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) MaintenanceWindow() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("maintenance_window"))
+	return terra.ReferenceAsString(mc.ref.Append("maintenance_window"))
 }
 
+// Name returns a reference to field name of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("name"))
+	return terra.ReferenceAsString(mc.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(mc.ref.Append("name_prefix"))
 }
 
+// NodeType returns a reference to field node_type of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) NodeType() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("node_type"))
+	return terra.ReferenceAsString(mc.ref.Append("node_type"))
 }
 
+// NumReplicasPerShard returns a reference to field num_replicas_per_shard of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) NumReplicasPerShard() terra.NumberValue {
-	return terra.ReferenceNumber(mc.ref.Append("num_replicas_per_shard"))
+	return terra.ReferenceAsNumber(mc.ref.Append("num_replicas_per_shard"))
 }
 
+// NumShards returns a reference to field num_shards of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) NumShards() terra.NumberValue {
-	return terra.ReferenceNumber(mc.ref.Append("num_shards"))
+	return terra.ReferenceAsNumber(mc.ref.Append("num_shards"))
 }
 
+// ParameterGroupName returns a reference to field parameter_group_name of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) ParameterGroupName() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("parameter_group_name"))
+	return terra.ReferenceAsString(mc.ref.Append("parameter_group_name"))
 }
 
+// Port returns a reference to field port of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(mc.ref.Append("port"))
+	return terra.ReferenceAsNumber(mc.ref.Append("port"))
 }
 
+// SecurityGroupIds returns a reference to field security_group_ids of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](mc.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](mc.ref.Append("security_group_ids"))
 }
 
+// SnapshotArns returns a reference to field snapshot_arns of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) SnapshotArns() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](mc.ref.Append("snapshot_arns"))
+	return terra.ReferenceAsList[terra.StringValue](mc.ref.Append("snapshot_arns"))
 }
 
+// SnapshotName returns a reference to field snapshot_name of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) SnapshotName() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("snapshot_name"))
+	return terra.ReferenceAsString(mc.ref.Append("snapshot_name"))
 }
 
+// SnapshotRetentionLimit returns a reference to field snapshot_retention_limit of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) SnapshotRetentionLimit() terra.NumberValue {
-	return terra.ReferenceNumber(mc.ref.Append("snapshot_retention_limit"))
+	return terra.ReferenceAsNumber(mc.ref.Append("snapshot_retention_limit"))
 }
 
+// SnapshotWindow returns a reference to field snapshot_window of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) SnapshotWindow() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("snapshot_window"))
+	return terra.ReferenceAsString(mc.ref.Append("snapshot_window"))
 }
 
+// SnsTopicArn returns a reference to field sns_topic_arn of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) SnsTopicArn() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("sns_topic_arn"))
+	return terra.ReferenceAsString(mc.ref.Append("sns_topic_arn"))
 }
 
+// SubnetGroupName returns a reference to field subnet_group_name of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) SubnetGroupName() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("subnet_group_name"))
+	return terra.ReferenceAsString(mc.ref.Append("subnet_group_name"))
 }
 
+// Tags returns a reference to field tags of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](mc.ref.Append("tags_all"))
 }
 
+// TlsEnabled returns a reference to field tls_enabled of aws_memorydb_cluster.
 func (mc memorydbClusterAttributes) TlsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(mc.ref.Append("tls_enabled"))
+	return terra.ReferenceAsBool(mc.ref.Append("tls_enabled"))
 }
 
 func (mc memorydbClusterAttributes) ClusterEndpoint() terra.ListValue[memorydbcluster.ClusterEndpointAttributes] {
-	return terra.ReferenceList[memorydbcluster.ClusterEndpointAttributes](mc.ref.Append("cluster_endpoint"))
+	return terra.ReferenceAsList[memorydbcluster.ClusterEndpointAttributes](mc.ref.Append("cluster_endpoint"))
 }
 
 func (mc memorydbClusterAttributes) Shards() terra.SetValue[memorydbcluster.ShardsAttributes] {
-	return terra.ReferenceSet[memorydbcluster.ShardsAttributes](mc.ref.Append("shards"))
+	return terra.ReferenceAsSet[memorydbcluster.ShardsAttributes](mc.ref.Append("shards"))
 }
 
 func (mc memorydbClusterAttributes) Timeouts() memorydbcluster.TimeoutsAttributes {
-	return terra.ReferenceSingle[memorydbcluster.TimeoutsAttributes](mc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[memorydbcluster.TimeoutsAttributes](mc.ref.Append("timeouts"))
 }
 
 type memorydbClusterState struct {

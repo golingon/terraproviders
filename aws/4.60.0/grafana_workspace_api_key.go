@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewGrafanaWorkspaceApiKey creates a new instance of [GrafanaWorkspaceApiKey].
 func NewGrafanaWorkspaceApiKey(name string, args GrafanaWorkspaceApiKeyArgs) *GrafanaWorkspaceApiKey {
 	return &GrafanaWorkspaceApiKey{
 		Args: args,
@@ -18,28 +19,51 @@ func NewGrafanaWorkspaceApiKey(name string, args GrafanaWorkspaceApiKeyArgs) *Gr
 
 var _ terra.Resource = (*GrafanaWorkspaceApiKey)(nil)
 
+// GrafanaWorkspaceApiKey represents the Terraform resource aws_grafana_workspace_api_key.
 type GrafanaWorkspaceApiKey struct {
-	Name  string
-	Args  GrafanaWorkspaceApiKeyArgs
-	state *grafanaWorkspaceApiKeyState
+	Name      string
+	Args      GrafanaWorkspaceApiKeyArgs
+	state     *grafanaWorkspaceApiKeyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GrafanaWorkspaceApiKey].
 func (gwak *GrafanaWorkspaceApiKey) Type() string {
 	return "aws_grafana_workspace_api_key"
 }
 
+// LocalName returns the local name for [GrafanaWorkspaceApiKey].
 func (gwak *GrafanaWorkspaceApiKey) LocalName() string {
 	return gwak.Name
 }
 
+// Configuration returns the configuration (args) for [GrafanaWorkspaceApiKey].
 func (gwak *GrafanaWorkspaceApiKey) Configuration() interface{} {
 	return gwak.Args
 }
 
+// DependOn is used for other resources to depend on [GrafanaWorkspaceApiKey].
+func (gwak *GrafanaWorkspaceApiKey) DependOn() terra.Reference {
+	return terra.ReferenceResource(gwak)
+}
+
+// Dependencies returns the list of resources [GrafanaWorkspaceApiKey] depends_on.
+func (gwak *GrafanaWorkspaceApiKey) Dependencies() terra.Dependencies {
+	return gwak.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GrafanaWorkspaceApiKey].
+func (gwak *GrafanaWorkspaceApiKey) LifecycleManagement() *terra.Lifecycle {
+	return gwak.Lifecycle
+}
+
+// Attributes returns the attributes for [GrafanaWorkspaceApiKey].
 func (gwak *GrafanaWorkspaceApiKey) Attributes() grafanaWorkspaceApiKeyAttributes {
 	return grafanaWorkspaceApiKeyAttributes{ref: terra.ReferenceResource(gwak)}
 }
 
+// ImportState imports the given attribute values into [GrafanaWorkspaceApiKey]'s state.
 func (gwak *GrafanaWorkspaceApiKey) ImportState(av io.Reader) error {
 	gwak.state = &grafanaWorkspaceApiKeyState{}
 	if err := json.NewDecoder(av).Decode(gwak.state); err != nil {
@@ -48,10 +72,12 @@ func (gwak *GrafanaWorkspaceApiKey) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GrafanaWorkspaceApiKey] has state.
 func (gwak *GrafanaWorkspaceApiKey) State() (*grafanaWorkspaceApiKeyState, bool) {
 	return gwak.state, gwak.state != nil
 }
 
+// StateMust returns the state for [GrafanaWorkspaceApiKey]. Panics if the state is nil.
 func (gwak *GrafanaWorkspaceApiKey) StateMust() *grafanaWorkspaceApiKeyState {
 	if gwak.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", gwak.Type(), gwak.LocalName()))
@@ -59,10 +85,7 @@ func (gwak *GrafanaWorkspaceApiKey) StateMust() *grafanaWorkspaceApiKeyState {
 	return gwak.state
 }
 
-func (gwak *GrafanaWorkspaceApiKey) DependOn() terra.Reference {
-	return terra.ReferenceResource(gwak)
-}
-
+// GrafanaWorkspaceApiKeyArgs contains the configurations for aws_grafana_workspace_api_key.
 type GrafanaWorkspaceApiKeyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -74,35 +97,39 @@ type GrafanaWorkspaceApiKeyArgs struct {
 	SecondsToLive terra.NumberValue `hcl:"seconds_to_live,attr" validate:"required"`
 	// WorkspaceId: string, required
 	WorkspaceId terra.StringValue `hcl:"workspace_id,attr" validate:"required"`
-	// DependsOn contains resources that GrafanaWorkspaceApiKey depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type grafanaWorkspaceApiKeyAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_grafana_workspace_api_key.
 func (gwak grafanaWorkspaceApiKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gwak.ref.Append("id"))
+	return terra.ReferenceAsString(gwak.ref.Append("id"))
 }
 
+// Key returns a reference to field key of aws_grafana_workspace_api_key.
 func (gwak grafanaWorkspaceApiKeyAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(gwak.ref.Append("key"))
+	return terra.ReferenceAsString(gwak.ref.Append("key"))
 }
 
+// KeyName returns a reference to field key_name of aws_grafana_workspace_api_key.
 func (gwak grafanaWorkspaceApiKeyAttributes) KeyName() terra.StringValue {
-	return terra.ReferenceString(gwak.ref.Append("key_name"))
+	return terra.ReferenceAsString(gwak.ref.Append("key_name"))
 }
 
+// KeyRole returns a reference to field key_role of aws_grafana_workspace_api_key.
 func (gwak grafanaWorkspaceApiKeyAttributes) KeyRole() terra.StringValue {
-	return terra.ReferenceString(gwak.ref.Append("key_role"))
+	return terra.ReferenceAsString(gwak.ref.Append("key_role"))
 }
 
+// SecondsToLive returns a reference to field seconds_to_live of aws_grafana_workspace_api_key.
 func (gwak grafanaWorkspaceApiKeyAttributes) SecondsToLive() terra.NumberValue {
-	return terra.ReferenceNumber(gwak.ref.Append("seconds_to_live"))
+	return terra.ReferenceAsNumber(gwak.ref.Append("seconds_to_live"))
 }
 
+// WorkspaceId returns a reference to field workspace_id of aws_grafana_workspace_api_key.
 func (gwak grafanaWorkspaceApiKeyAttributes) WorkspaceId() terra.StringValue {
-	return terra.ReferenceString(gwak.ref.Append("workspace_id"))
+	return terra.ReferenceAsString(gwak.ref.Append("workspace_id"))
 }
 
 type grafanaWorkspaceApiKeyState struct {

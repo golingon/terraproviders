@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewChimeVoiceConnector creates a new instance of [ChimeVoiceConnector].
 func NewChimeVoiceConnector(name string, args ChimeVoiceConnectorArgs) *ChimeVoiceConnector {
 	return &ChimeVoiceConnector{
 		Args: args,
@@ -18,28 +19,51 @@ func NewChimeVoiceConnector(name string, args ChimeVoiceConnectorArgs) *ChimeVoi
 
 var _ terra.Resource = (*ChimeVoiceConnector)(nil)
 
+// ChimeVoiceConnector represents the Terraform resource aws_chime_voice_connector.
 type ChimeVoiceConnector struct {
-	Name  string
-	Args  ChimeVoiceConnectorArgs
-	state *chimeVoiceConnectorState
+	Name      string
+	Args      ChimeVoiceConnectorArgs
+	state     *chimeVoiceConnectorState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ChimeVoiceConnector].
 func (cvc *ChimeVoiceConnector) Type() string {
 	return "aws_chime_voice_connector"
 }
 
+// LocalName returns the local name for [ChimeVoiceConnector].
 func (cvc *ChimeVoiceConnector) LocalName() string {
 	return cvc.Name
 }
 
+// Configuration returns the configuration (args) for [ChimeVoiceConnector].
 func (cvc *ChimeVoiceConnector) Configuration() interface{} {
 	return cvc.Args
 }
 
+// DependOn is used for other resources to depend on [ChimeVoiceConnector].
+func (cvc *ChimeVoiceConnector) DependOn() terra.Reference {
+	return terra.ReferenceResource(cvc)
+}
+
+// Dependencies returns the list of resources [ChimeVoiceConnector] depends_on.
+func (cvc *ChimeVoiceConnector) Dependencies() terra.Dependencies {
+	return cvc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ChimeVoiceConnector].
+func (cvc *ChimeVoiceConnector) LifecycleManagement() *terra.Lifecycle {
+	return cvc.Lifecycle
+}
+
+// Attributes returns the attributes for [ChimeVoiceConnector].
 func (cvc *ChimeVoiceConnector) Attributes() chimeVoiceConnectorAttributes {
 	return chimeVoiceConnectorAttributes{ref: terra.ReferenceResource(cvc)}
 }
 
+// ImportState imports the given attribute values into [ChimeVoiceConnector]'s state.
 func (cvc *ChimeVoiceConnector) ImportState(av io.Reader) error {
 	cvc.state = &chimeVoiceConnectorState{}
 	if err := json.NewDecoder(av).Decode(cvc.state); err != nil {
@@ -48,10 +72,12 @@ func (cvc *ChimeVoiceConnector) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ChimeVoiceConnector] has state.
 func (cvc *ChimeVoiceConnector) State() (*chimeVoiceConnectorState, bool) {
 	return cvc.state, cvc.state != nil
 }
 
+// StateMust returns the state for [ChimeVoiceConnector]. Panics if the state is nil.
 func (cvc *ChimeVoiceConnector) StateMust() *chimeVoiceConnectorState {
 	if cvc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cvc.Type(), cvc.LocalName()))
@@ -59,10 +85,7 @@ func (cvc *ChimeVoiceConnector) StateMust() *chimeVoiceConnectorState {
 	return cvc.state
 }
 
-func (cvc *ChimeVoiceConnector) DependOn() terra.Reference {
-	return terra.ReferenceResource(cvc)
-}
-
+// ChimeVoiceConnectorArgs contains the configurations for aws_chime_voice_connector.
 type ChimeVoiceConnectorArgs struct {
 	// AwsRegion: string, optional
 	AwsRegion terra.StringValue `hcl:"aws_region,attr"`
@@ -72,31 +95,34 @@ type ChimeVoiceConnectorArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// RequireEncryption: bool, required
 	RequireEncryption terra.BoolValue `hcl:"require_encryption,attr" validate:"required"`
-	// DependsOn contains resources that ChimeVoiceConnector depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type chimeVoiceConnectorAttributes struct {
 	ref terra.Reference
 }
 
+// AwsRegion returns a reference to field aws_region of aws_chime_voice_connector.
 func (cvc chimeVoiceConnectorAttributes) AwsRegion() terra.StringValue {
-	return terra.ReferenceString(cvc.ref.Append("aws_region"))
+	return terra.ReferenceAsString(cvc.ref.Append("aws_region"))
 }
 
+// Id returns a reference to field id of aws_chime_voice_connector.
 func (cvc chimeVoiceConnectorAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cvc.ref.Append("id"))
+	return terra.ReferenceAsString(cvc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_chime_voice_connector.
 func (cvc chimeVoiceConnectorAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cvc.ref.Append("name"))
+	return terra.ReferenceAsString(cvc.ref.Append("name"))
 }
 
+// OutboundHostName returns a reference to field outbound_host_name of aws_chime_voice_connector.
 func (cvc chimeVoiceConnectorAttributes) OutboundHostName() terra.StringValue {
-	return terra.ReferenceString(cvc.ref.Append("outbound_host_name"))
+	return terra.ReferenceAsString(cvc.ref.Append("outbound_host_name"))
 }
 
+// RequireEncryption returns a reference to field require_encryption of aws_chime_voice_connector.
 func (cvc chimeVoiceConnectorAttributes) RequireEncryption() terra.BoolValue {
-	return terra.ReferenceBool(cvc.ref.Append("require_encryption"))
+	return terra.ReferenceAsBool(cvc.ref.Append("require_encryption"))
 }
 
 type chimeVoiceConnectorState struct {

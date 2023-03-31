@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewEmrStudio creates a new instance of [EmrStudio].
 func NewEmrStudio(name string, args EmrStudioArgs) *EmrStudio {
 	return &EmrStudio{
 		Args: args,
@@ -18,28 +19,51 @@ func NewEmrStudio(name string, args EmrStudioArgs) *EmrStudio {
 
 var _ terra.Resource = (*EmrStudio)(nil)
 
+// EmrStudio represents the Terraform resource aws_emr_studio.
 type EmrStudio struct {
-	Name  string
-	Args  EmrStudioArgs
-	state *emrStudioState
+	Name      string
+	Args      EmrStudioArgs
+	state     *emrStudioState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EmrStudio].
 func (es *EmrStudio) Type() string {
 	return "aws_emr_studio"
 }
 
+// LocalName returns the local name for [EmrStudio].
 func (es *EmrStudio) LocalName() string {
 	return es.Name
 }
 
+// Configuration returns the configuration (args) for [EmrStudio].
 func (es *EmrStudio) Configuration() interface{} {
 	return es.Args
 }
 
+// DependOn is used for other resources to depend on [EmrStudio].
+func (es *EmrStudio) DependOn() terra.Reference {
+	return terra.ReferenceResource(es)
+}
+
+// Dependencies returns the list of resources [EmrStudio] depends_on.
+func (es *EmrStudio) Dependencies() terra.Dependencies {
+	return es.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EmrStudio].
+func (es *EmrStudio) LifecycleManagement() *terra.Lifecycle {
+	return es.Lifecycle
+}
+
+// Attributes returns the attributes for [EmrStudio].
 func (es *EmrStudio) Attributes() emrStudioAttributes {
 	return emrStudioAttributes{ref: terra.ReferenceResource(es)}
 }
 
+// ImportState imports the given attribute values into [EmrStudio]'s state.
 func (es *EmrStudio) ImportState(av io.Reader) error {
 	es.state = &emrStudioState{}
 	if err := json.NewDecoder(av).Decode(es.state); err != nil {
@@ -48,10 +72,12 @@ func (es *EmrStudio) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EmrStudio] has state.
 func (es *EmrStudio) State() (*emrStudioState, bool) {
 	return es.state, es.state != nil
 }
 
+// StateMust returns the state for [EmrStudio]. Panics if the state is nil.
 func (es *EmrStudio) StateMust() *emrStudioState {
 	if es.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", es.Type(), es.LocalName()))
@@ -59,10 +85,7 @@ func (es *EmrStudio) StateMust() *emrStudioState {
 	return es.state
 }
 
-func (es *EmrStudio) DependOn() terra.Reference {
-	return terra.ReferenceResource(es)
-}
-
+// EmrStudioArgs contains the configurations for aws_emr_studio.
 type EmrStudioArgs struct {
 	// AuthMode: string, required
 	AuthMode terra.StringValue `hcl:"auth_mode,attr" validate:"required"`
@@ -94,79 +117,94 @@ type EmrStudioArgs struct {
 	VpcId terra.StringValue `hcl:"vpc_id,attr" validate:"required"`
 	// WorkspaceSecurityGroupId: string, required
 	WorkspaceSecurityGroupId terra.StringValue `hcl:"workspace_security_group_id,attr" validate:"required"`
-	// DependsOn contains resources that EmrStudio depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type emrStudioAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_emr_studio.
 func (es emrStudioAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("arn"))
+	return terra.ReferenceAsString(es.ref.Append("arn"))
 }
 
+// AuthMode returns a reference to field auth_mode of aws_emr_studio.
 func (es emrStudioAttributes) AuthMode() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("auth_mode"))
+	return terra.ReferenceAsString(es.ref.Append("auth_mode"))
 }
 
+// DefaultS3Location returns a reference to field default_s3_location of aws_emr_studio.
 func (es emrStudioAttributes) DefaultS3Location() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("default_s3_location"))
+	return terra.ReferenceAsString(es.ref.Append("default_s3_location"))
 }
 
+// Description returns a reference to field description of aws_emr_studio.
 func (es emrStudioAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("description"))
+	return terra.ReferenceAsString(es.ref.Append("description"))
 }
 
+// EngineSecurityGroupId returns a reference to field engine_security_group_id of aws_emr_studio.
 func (es emrStudioAttributes) EngineSecurityGroupId() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("engine_security_group_id"))
+	return terra.ReferenceAsString(es.ref.Append("engine_security_group_id"))
 }
 
+// Id returns a reference to field id of aws_emr_studio.
 func (es emrStudioAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("id"))
+	return terra.ReferenceAsString(es.ref.Append("id"))
 }
 
+// IdpAuthUrl returns a reference to field idp_auth_url of aws_emr_studio.
 func (es emrStudioAttributes) IdpAuthUrl() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("idp_auth_url"))
+	return terra.ReferenceAsString(es.ref.Append("idp_auth_url"))
 }
 
+// IdpRelayStateParameterName returns a reference to field idp_relay_state_parameter_name of aws_emr_studio.
 func (es emrStudioAttributes) IdpRelayStateParameterName() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("idp_relay_state_parameter_name"))
+	return terra.ReferenceAsString(es.ref.Append("idp_relay_state_parameter_name"))
 }
 
+// Name returns a reference to field name of aws_emr_studio.
 func (es emrStudioAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("name"))
+	return terra.ReferenceAsString(es.ref.Append("name"))
 }
 
+// ServiceRole returns a reference to field service_role of aws_emr_studio.
 func (es emrStudioAttributes) ServiceRole() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("service_role"))
+	return terra.ReferenceAsString(es.ref.Append("service_role"))
 }
 
+// SubnetIds returns a reference to field subnet_ids of aws_emr_studio.
 func (es emrStudioAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](es.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](es.ref.Append("subnet_ids"))
 }
 
+// Tags returns a reference to field tags of aws_emr_studio.
 func (es emrStudioAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](es.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](es.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_emr_studio.
 func (es emrStudioAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](es.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](es.ref.Append("tags_all"))
 }
 
+// Url returns a reference to field url of aws_emr_studio.
 func (es emrStudioAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("url"))
+	return terra.ReferenceAsString(es.ref.Append("url"))
 }
 
+// UserRole returns a reference to field user_role of aws_emr_studio.
 func (es emrStudioAttributes) UserRole() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("user_role"))
+	return terra.ReferenceAsString(es.ref.Append("user_role"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_emr_studio.
 func (es emrStudioAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(es.ref.Append("vpc_id"))
 }
 
+// WorkspaceSecurityGroupId returns a reference to field workspace_security_group_id of aws_emr_studio.
 func (es emrStudioAttributes) WorkspaceSecurityGroupId() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("workspace_security_group_id"))
+	return terra.ReferenceAsString(es.ref.Append("workspace_security_group_id"))
 }
 
 type emrStudioState struct {

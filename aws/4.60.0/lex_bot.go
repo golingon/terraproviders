@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLexBot creates a new instance of [LexBot].
 func NewLexBot(name string, args LexBotArgs) *LexBot {
 	return &LexBot{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLexBot(name string, args LexBotArgs) *LexBot {
 
 var _ terra.Resource = (*LexBot)(nil)
 
+// LexBot represents the Terraform resource aws_lex_bot.
 type LexBot struct {
-	Name  string
-	Args  LexBotArgs
-	state *lexBotState
+	Name      string
+	Args      LexBotArgs
+	state     *lexBotState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LexBot].
 func (lb *LexBot) Type() string {
 	return "aws_lex_bot"
 }
 
+// LocalName returns the local name for [LexBot].
 func (lb *LexBot) LocalName() string {
 	return lb.Name
 }
 
+// Configuration returns the configuration (args) for [LexBot].
 func (lb *LexBot) Configuration() interface{} {
 	return lb.Args
 }
 
+// DependOn is used for other resources to depend on [LexBot].
+func (lb *LexBot) DependOn() terra.Reference {
+	return terra.ReferenceResource(lb)
+}
+
+// Dependencies returns the list of resources [LexBot] depends_on.
+func (lb *LexBot) Dependencies() terra.Dependencies {
+	return lb.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LexBot].
+func (lb *LexBot) LifecycleManagement() *terra.Lifecycle {
+	return lb.Lifecycle
+}
+
+// Attributes returns the attributes for [LexBot].
 func (lb *LexBot) Attributes() lexBotAttributes {
 	return lexBotAttributes{ref: terra.ReferenceResource(lb)}
 }
 
+// ImportState imports the given attribute values into [LexBot]'s state.
 func (lb *LexBot) ImportState(av io.Reader) error {
 	lb.state = &lexBotState{}
 	if err := json.NewDecoder(av).Decode(lb.state); err != nil {
@@ -49,10 +73,12 @@ func (lb *LexBot) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LexBot] has state.
 func (lb *LexBot) State() (*lexBotState, bool) {
 	return lb.state, lb.state != nil
 }
 
+// StateMust returns the state for [LexBot]. Panics if the state is nil.
 func (lb *LexBot) StateMust() *lexBotState {
 	if lb.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lb.Type(), lb.LocalName()))
@@ -60,10 +86,7 @@ func (lb *LexBot) StateMust() *lexBotState {
 	return lb.state
 }
 
-func (lb *LexBot) DependOn() terra.Reference {
-	return terra.ReferenceResource(lb)
-}
-
+// LexBotArgs contains the configurations for aws_lex_bot.
 type LexBotArgs struct {
 	// ChildDirected: bool, required
 	ChildDirected terra.BoolValue `hcl:"child_directed,attr" validate:"required"`
@@ -97,103 +120,120 @@ type LexBotArgs struct {
 	Intent []lexbot.Intent `hcl:"intent,block" validate:"min=1,max=250"`
 	// Timeouts: optional
 	Timeouts *lexbot.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LexBot depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lexBotAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_lex_bot.
 func (lb lexBotAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("arn"))
+	return terra.ReferenceAsString(lb.ref.Append("arn"))
 }
 
+// Checksum returns a reference to field checksum of aws_lex_bot.
 func (lb lexBotAttributes) Checksum() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("checksum"))
+	return terra.ReferenceAsString(lb.ref.Append("checksum"))
 }
 
+// ChildDirected returns a reference to field child_directed of aws_lex_bot.
 func (lb lexBotAttributes) ChildDirected() terra.BoolValue {
-	return terra.ReferenceBool(lb.ref.Append("child_directed"))
+	return terra.ReferenceAsBool(lb.ref.Append("child_directed"))
 }
 
+// CreateVersion returns a reference to field create_version of aws_lex_bot.
 func (lb lexBotAttributes) CreateVersion() terra.BoolValue {
-	return terra.ReferenceBool(lb.ref.Append("create_version"))
+	return terra.ReferenceAsBool(lb.ref.Append("create_version"))
 }
 
+// CreatedDate returns a reference to field created_date of aws_lex_bot.
 func (lb lexBotAttributes) CreatedDate() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("created_date"))
+	return terra.ReferenceAsString(lb.ref.Append("created_date"))
 }
 
+// Description returns a reference to field description of aws_lex_bot.
 func (lb lexBotAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("description"))
+	return terra.ReferenceAsString(lb.ref.Append("description"))
 }
 
+// DetectSentiment returns a reference to field detect_sentiment of aws_lex_bot.
 func (lb lexBotAttributes) DetectSentiment() terra.BoolValue {
-	return terra.ReferenceBool(lb.ref.Append("detect_sentiment"))
+	return terra.ReferenceAsBool(lb.ref.Append("detect_sentiment"))
 }
 
+// EnableModelImprovements returns a reference to field enable_model_improvements of aws_lex_bot.
 func (lb lexBotAttributes) EnableModelImprovements() terra.BoolValue {
-	return terra.ReferenceBool(lb.ref.Append("enable_model_improvements"))
+	return terra.ReferenceAsBool(lb.ref.Append("enable_model_improvements"))
 }
 
+// FailureReason returns a reference to field failure_reason of aws_lex_bot.
 func (lb lexBotAttributes) FailureReason() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("failure_reason"))
+	return terra.ReferenceAsString(lb.ref.Append("failure_reason"))
 }
 
+// Id returns a reference to field id of aws_lex_bot.
 func (lb lexBotAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("id"))
+	return terra.ReferenceAsString(lb.ref.Append("id"))
 }
 
+// IdleSessionTtlInSeconds returns a reference to field idle_session_ttl_in_seconds of aws_lex_bot.
 func (lb lexBotAttributes) IdleSessionTtlInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(lb.ref.Append("idle_session_ttl_in_seconds"))
+	return terra.ReferenceAsNumber(lb.ref.Append("idle_session_ttl_in_seconds"))
 }
 
+// LastUpdatedDate returns a reference to field last_updated_date of aws_lex_bot.
 func (lb lexBotAttributes) LastUpdatedDate() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("last_updated_date"))
+	return terra.ReferenceAsString(lb.ref.Append("last_updated_date"))
 }
 
+// Locale returns a reference to field locale of aws_lex_bot.
 func (lb lexBotAttributes) Locale() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("locale"))
+	return terra.ReferenceAsString(lb.ref.Append("locale"))
 }
 
+// Name returns a reference to field name of aws_lex_bot.
 func (lb lexBotAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("name"))
+	return terra.ReferenceAsString(lb.ref.Append("name"))
 }
 
+// NluIntentConfidenceThreshold returns a reference to field nlu_intent_confidence_threshold of aws_lex_bot.
 func (lb lexBotAttributes) NluIntentConfidenceThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(lb.ref.Append("nlu_intent_confidence_threshold"))
+	return terra.ReferenceAsNumber(lb.ref.Append("nlu_intent_confidence_threshold"))
 }
 
+// ProcessBehavior returns a reference to field process_behavior of aws_lex_bot.
 func (lb lexBotAttributes) ProcessBehavior() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("process_behavior"))
+	return terra.ReferenceAsString(lb.ref.Append("process_behavior"))
 }
 
+// Status returns a reference to field status of aws_lex_bot.
 func (lb lexBotAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("status"))
+	return terra.ReferenceAsString(lb.ref.Append("status"))
 }
 
+// Version returns a reference to field version of aws_lex_bot.
 func (lb lexBotAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("version"))
+	return terra.ReferenceAsString(lb.ref.Append("version"))
 }
 
+// VoiceId returns a reference to field voice_id of aws_lex_bot.
 func (lb lexBotAttributes) VoiceId() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("voice_id"))
+	return terra.ReferenceAsString(lb.ref.Append("voice_id"))
 }
 
 func (lb lexBotAttributes) AbortStatement() terra.ListValue[lexbot.AbortStatementAttributes] {
-	return terra.ReferenceList[lexbot.AbortStatementAttributes](lb.ref.Append("abort_statement"))
+	return terra.ReferenceAsList[lexbot.AbortStatementAttributes](lb.ref.Append("abort_statement"))
 }
 
 func (lb lexBotAttributes) ClarificationPrompt() terra.ListValue[lexbot.ClarificationPromptAttributes] {
-	return terra.ReferenceList[lexbot.ClarificationPromptAttributes](lb.ref.Append("clarification_prompt"))
+	return terra.ReferenceAsList[lexbot.ClarificationPromptAttributes](lb.ref.Append("clarification_prompt"))
 }
 
 func (lb lexBotAttributes) Intent() terra.SetValue[lexbot.IntentAttributes] {
-	return terra.ReferenceSet[lexbot.IntentAttributes](lb.ref.Append("intent"))
+	return terra.ReferenceAsSet[lexbot.IntentAttributes](lb.ref.Append("intent"))
 }
 
 func (lb lexBotAttributes) Timeouts() lexbot.TimeoutsAttributes {
-	return terra.ReferenceSingle[lexbot.TimeoutsAttributes](lb.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[lexbot.TimeoutsAttributes](lb.ref.Append("timeouts"))
 }
 
 type lexBotState struct {

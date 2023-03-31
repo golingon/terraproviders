@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewVpnConnectionRoute creates a new instance of [VpnConnectionRoute].
 func NewVpnConnectionRoute(name string, args VpnConnectionRouteArgs) *VpnConnectionRoute {
 	return &VpnConnectionRoute{
 		Args: args,
@@ -18,28 +19,51 @@ func NewVpnConnectionRoute(name string, args VpnConnectionRouteArgs) *VpnConnect
 
 var _ terra.Resource = (*VpnConnectionRoute)(nil)
 
+// VpnConnectionRoute represents the Terraform resource aws_vpn_connection_route.
 type VpnConnectionRoute struct {
-	Name  string
-	Args  VpnConnectionRouteArgs
-	state *vpnConnectionRouteState
+	Name      string
+	Args      VpnConnectionRouteArgs
+	state     *vpnConnectionRouteState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VpnConnectionRoute].
 func (vcr *VpnConnectionRoute) Type() string {
 	return "aws_vpn_connection_route"
 }
 
+// LocalName returns the local name for [VpnConnectionRoute].
 func (vcr *VpnConnectionRoute) LocalName() string {
 	return vcr.Name
 }
 
+// Configuration returns the configuration (args) for [VpnConnectionRoute].
 func (vcr *VpnConnectionRoute) Configuration() interface{} {
 	return vcr.Args
 }
 
+// DependOn is used for other resources to depend on [VpnConnectionRoute].
+func (vcr *VpnConnectionRoute) DependOn() terra.Reference {
+	return terra.ReferenceResource(vcr)
+}
+
+// Dependencies returns the list of resources [VpnConnectionRoute] depends_on.
+func (vcr *VpnConnectionRoute) Dependencies() terra.Dependencies {
+	return vcr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VpnConnectionRoute].
+func (vcr *VpnConnectionRoute) LifecycleManagement() *terra.Lifecycle {
+	return vcr.Lifecycle
+}
+
+// Attributes returns the attributes for [VpnConnectionRoute].
 func (vcr *VpnConnectionRoute) Attributes() vpnConnectionRouteAttributes {
 	return vpnConnectionRouteAttributes{ref: terra.ReferenceResource(vcr)}
 }
 
+// ImportState imports the given attribute values into [VpnConnectionRoute]'s state.
 func (vcr *VpnConnectionRoute) ImportState(av io.Reader) error {
 	vcr.state = &vpnConnectionRouteState{}
 	if err := json.NewDecoder(av).Decode(vcr.state); err != nil {
@@ -48,10 +72,12 @@ func (vcr *VpnConnectionRoute) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VpnConnectionRoute] has state.
 func (vcr *VpnConnectionRoute) State() (*vpnConnectionRouteState, bool) {
 	return vcr.state, vcr.state != nil
 }
 
+// StateMust returns the state for [VpnConnectionRoute]. Panics if the state is nil.
 func (vcr *VpnConnectionRoute) StateMust() *vpnConnectionRouteState {
 	if vcr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vcr.Type(), vcr.LocalName()))
@@ -59,10 +85,7 @@ func (vcr *VpnConnectionRoute) StateMust() *vpnConnectionRouteState {
 	return vcr.state
 }
 
-func (vcr *VpnConnectionRoute) DependOn() terra.Reference {
-	return terra.ReferenceResource(vcr)
-}
-
+// VpnConnectionRouteArgs contains the configurations for aws_vpn_connection_route.
 type VpnConnectionRouteArgs struct {
 	// DestinationCidrBlock: string, required
 	DestinationCidrBlock terra.StringValue `hcl:"destination_cidr_block,attr" validate:"required"`
@@ -70,23 +93,24 @@ type VpnConnectionRouteArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// VpnConnectionId: string, required
 	VpnConnectionId terra.StringValue `hcl:"vpn_connection_id,attr" validate:"required"`
-	// DependsOn contains resources that VpnConnectionRoute depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type vpnConnectionRouteAttributes struct {
 	ref terra.Reference
 }
 
+// DestinationCidrBlock returns a reference to field destination_cidr_block of aws_vpn_connection_route.
 func (vcr vpnConnectionRouteAttributes) DestinationCidrBlock() terra.StringValue {
-	return terra.ReferenceString(vcr.ref.Append("destination_cidr_block"))
+	return terra.ReferenceAsString(vcr.ref.Append("destination_cidr_block"))
 }
 
+// Id returns a reference to field id of aws_vpn_connection_route.
 func (vcr vpnConnectionRouteAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vcr.ref.Append("id"))
+	return terra.ReferenceAsString(vcr.ref.Append("id"))
 }
 
+// VpnConnectionId returns a reference to field vpn_connection_id of aws_vpn_connection_route.
 func (vcr vpnConnectionRouteAttributes) VpnConnectionId() terra.StringValue {
-	return terra.ReferenceString(vcr.ref.Append("vpn_connection_id"))
+	return terra.ReferenceAsString(vcr.ref.Append("vpn_connection_id"))
 }
 
 type vpnConnectionRouteState struct {

@@ -69,23 +69,23 @@ func (ed EndpointDetailsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ed EndpointDetailsAttributes) AddressAllocationIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ed.ref.Append("address_allocation_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](ed.ref.Append("address_allocation_ids"))
 }
 
 func (ed EndpointDetailsAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ed.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](ed.ref.Append("security_group_ids"))
 }
 
 func (ed EndpointDetailsAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ed.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](ed.ref.Append("subnet_ids"))
 }
 
 func (ed EndpointDetailsAttributes) VpcEndpointId() terra.StringValue {
-	return terra.ReferenceString(ed.ref.Append("vpc_endpoint_id"))
+	return terra.ReferenceAsString(ed.ref.Append("vpc_endpoint_id"))
 }
 
 func (ed EndpointDetailsAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(ed.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(ed.ref.Append("vpc_id"))
 }
 
 type ProtocolDetailsAttributes struct {
@@ -105,19 +105,19 @@ func (pd ProtocolDetailsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pd ProtocolDetailsAttributes) As2Transports() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](pd.ref.Append("as2_transports"))
+	return terra.ReferenceAsSet[terra.StringValue](pd.ref.Append("as2_transports"))
 }
 
 func (pd ProtocolDetailsAttributes) PassiveIp() terra.StringValue {
-	return terra.ReferenceString(pd.ref.Append("passive_ip"))
+	return terra.ReferenceAsString(pd.ref.Append("passive_ip"))
 }
 
 func (pd ProtocolDetailsAttributes) SetStatOption() terra.StringValue {
-	return terra.ReferenceString(pd.ref.Append("set_stat_option"))
+	return terra.ReferenceAsString(pd.ref.Append("set_stat_option"))
 }
 
 func (pd ProtocolDetailsAttributes) TlsSessionResumptionMode() terra.StringValue {
-	return terra.ReferenceString(pd.ref.Append("tls_session_resumption_mode"))
+	return terra.ReferenceAsString(pd.ref.Append("tls_session_resumption_mode"))
 }
 
 type WorkflowDetailsAttributes struct {
@@ -137,11 +137,11 @@ func (wd WorkflowDetailsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (wd WorkflowDetailsAttributes) OnPartialUpload() terra.ListValue[OnPartialUploadAttributes] {
-	return terra.ReferenceList[OnPartialUploadAttributes](wd.ref.Append("on_partial_upload"))
+	return terra.ReferenceAsList[OnPartialUploadAttributes](wd.ref.Append("on_partial_upload"))
 }
 
 func (wd WorkflowDetailsAttributes) OnUpload() terra.ListValue[OnUploadAttributes] {
-	return terra.ReferenceList[OnUploadAttributes](wd.ref.Append("on_upload"))
+	return terra.ReferenceAsList[OnUploadAttributes](wd.ref.Append("on_upload"))
 }
 
 type OnPartialUploadAttributes struct {
@@ -161,11 +161,11 @@ func (opu OnPartialUploadAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (opu OnPartialUploadAttributes) ExecutionRole() terra.StringValue {
-	return terra.ReferenceString(opu.ref.Append("execution_role"))
+	return terra.ReferenceAsString(opu.ref.Append("execution_role"))
 }
 
 func (opu OnPartialUploadAttributes) WorkflowId() terra.StringValue {
-	return terra.ReferenceString(opu.ref.Append("workflow_id"))
+	return terra.ReferenceAsString(opu.ref.Append("workflow_id"))
 }
 
 type OnUploadAttributes struct {
@@ -185,11 +185,11 @@ func (ou OnUploadAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ou OnUploadAttributes) ExecutionRole() terra.StringValue {
-	return terra.ReferenceString(ou.ref.Append("execution_role"))
+	return terra.ReferenceAsString(ou.ref.Append("execution_role"))
 }
 
 func (ou OnUploadAttributes) WorkflowId() terra.StringValue {
-	return terra.ReferenceString(ou.ref.Append("workflow_id"))
+	return terra.ReferenceAsString(ou.ref.Append("workflow_id"))
 }
 
 type EndpointDetailsState struct {

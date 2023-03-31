@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDevicefarmTestGridProject creates a new instance of [DevicefarmTestGridProject].
 func NewDevicefarmTestGridProject(name string, args DevicefarmTestGridProjectArgs) *DevicefarmTestGridProject {
 	return &DevicefarmTestGridProject{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDevicefarmTestGridProject(name string, args DevicefarmTestGridProjectArg
 
 var _ terra.Resource = (*DevicefarmTestGridProject)(nil)
 
+// DevicefarmTestGridProject represents the Terraform resource aws_devicefarm_test_grid_project.
 type DevicefarmTestGridProject struct {
-	Name  string
-	Args  DevicefarmTestGridProjectArgs
-	state *devicefarmTestGridProjectState
+	Name      string
+	Args      DevicefarmTestGridProjectArgs
+	state     *devicefarmTestGridProjectState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DevicefarmTestGridProject].
 func (dtgp *DevicefarmTestGridProject) Type() string {
 	return "aws_devicefarm_test_grid_project"
 }
 
+// LocalName returns the local name for [DevicefarmTestGridProject].
 func (dtgp *DevicefarmTestGridProject) LocalName() string {
 	return dtgp.Name
 }
 
+// Configuration returns the configuration (args) for [DevicefarmTestGridProject].
 func (dtgp *DevicefarmTestGridProject) Configuration() interface{} {
 	return dtgp.Args
 }
 
+// DependOn is used for other resources to depend on [DevicefarmTestGridProject].
+func (dtgp *DevicefarmTestGridProject) DependOn() terra.Reference {
+	return terra.ReferenceResource(dtgp)
+}
+
+// Dependencies returns the list of resources [DevicefarmTestGridProject] depends_on.
+func (dtgp *DevicefarmTestGridProject) Dependencies() terra.Dependencies {
+	return dtgp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DevicefarmTestGridProject].
+func (dtgp *DevicefarmTestGridProject) LifecycleManagement() *terra.Lifecycle {
+	return dtgp.Lifecycle
+}
+
+// Attributes returns the attributes for [DevicefarmTestGridProject].
 func (dtgp *DevicefarmTestGridProject) Attributes() devicefarmTestGridProjectAttributes {
 	return devicefarmTestGridProjectAttributes{ref: terra.ReferenceResource(dtgp)}
 }
 
+// ImportState imports the given attribute values into [DevicefarmTestGridProject]'s state.
 func (dtgp *DevicefarmTestGridProject) ImportState(av io.Reader) error {
 	dtgp.state = &devicefarmTestGridProjectState{}
 	if err := json.NewDecoder(av).Decode(dtgp.state); err != nil {
@@ -49,10 +73,12 @@ func (dtgp *DevicefarmTestGridProject) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DevicefarmTestGridProject] has state.
 func (dtgp *DevicefarmTestGridProject) State() (*devicefarmTestGridProjectState, bool) {
 	return dtgp.state, dtgp.state != nil
 }
 
+// StateMust returns the state for [DevicefarmTestGridProject]. Panics if the state is nil.
 func (dtgp *DevicefarmTestGridProject) StateMust() *devicefarmTestGridProjectState {
 	if dtgp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dtgp.Type(), dtgp.LocalName()))
@@ -60,10 +86,7 @@ func (dtgp *DevicefarmTestGridProject) StateMust() *devicefarmTestGridProjectSta
 	return dtgp.state
 }
 
-func (dtgp *DevicefarmTestGridProject) DependOn() terra.Reference {
-	return terra.ReferenceResource(dtgp)
-}
-
+// DevicefarmTestGridProjectArgs contains the configurations for aws_devicefarm_test_grid_project.
 type DevicefarmTestGridProjectArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -77,39 +100,43 @@ type DevicefarmTestGridProjectArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// VpcConfig: optional
 	VpcConfig *devicefarmtestgridproject.VpcConfig `hcl:"vpc_config,block"`
-	// DependsOn contains resources that DevicefarmTestGridProject depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type devicefarmTestGridProjectAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_devicefarm_test_grid_project.
 func (dtgp devicefarmTestGridProjectAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dtgp.ref.Append("arn"))
+	return terra.ReferenceAsString(dtgp.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_devicefarm_test_grid_project.
 func (dtgp devicefarmTestGridProjectAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dtgp.ref.Append("description"))
+	return terra.ReferenceAsString(dtgp.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_devicefarm_test_grid_project.
 func (dtgp devicefarmTestGridProjectAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dtgp.ref.Append("id"))
+	return terra.ReferenceAsString(dtgp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_devicefarm_test_grid_project.
 func (dtgp devicefarmTestGridProjectAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dtgp.ref.Append("name"))
+	return terra.ReferenceAsString(dtgp.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_devicefarm_test_grid_project.
 func (dtgp devicefarmTestGridProjectAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dtgp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dtgp.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_devicefarm_test_grid_project.
 func (dtgp devicefarmTestGridProjectAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dtgp.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dtgp.ref.Append("tags_all"))
 }
 
 func (dtgp devicefarmTestGridProjectAttributes) VpcConfig() terra.ListValue[devicefarmtestgridproject.VpcConfigAttributes] {
-	return terra.ReferenceList[devicefarmtestgridproject.VpcConfigAttributes](dtgp.ref.Append("vpc_config"))
+	return terra.ReferenceAsList[devicefarmtestgridproject.VpcConfigAttributes](dtgp.ref.Append("vpc_config"))
 }
 
 type devicefarmTestGridProjectState struct {

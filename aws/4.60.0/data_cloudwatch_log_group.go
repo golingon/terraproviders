@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataCloudwatchLogGroup creates a new instance of [DataCloudwatchLogGroup].
 func NewDataCloudwatchLogGroup(name string, args DataCloudwatchLogGroupArgs) *DataCloudwatchLogGroup {
 	return &DataCloudwatchLogGroup{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataCloudwatchLogGroup(name string, args DataCloudwatchLogGroupArgs) *Da
 
 var _ terra.DataResource = (*DataCloudwatchLogGroup)(nil)
 
+// DataCloudwatchLogGroup represents the Terraform data resource aws_cloudwatch_log_group.
 type DataCloudwatchLogGroup struct {
 	Name string
 	Args DataCloudwatchLogGroupArgs
 }
 
+// DataSource returns the Terraform object type for [DataCloudwatchLogGroup].
 func (clg *DataCloudwatchLogGroup) DataSource() string {
 	return "aws_cloudwatch_log_group"
 }
 
+// LocalName returns the local name for [DataCloudwatchLogGroup].
 func (clg *DataCloudwatchLogGroup) LocalName() string {
 	return clg.Name
 }
 
+// Configuration returns the configuration (args) for [DataCloudwatchLogGroup].
 func (clg *DataCloudwatchLogGroup) Configuration() interface{} {
 	return clg.Args
 }
 
+// Attributes returns the attributes for [DataCloudwatchLogGroup].
 func (clg *DataCloudwatchLogGroup) Attributes() dataCloudwatchLogGroupAttributes {
 	return dataCloudwatchLogGroupAttributes{ref: terra.ReferenceDataResource(clg)}
 }
 
+// DataCloudwatchLogGroupArgs contains the configurations for aws_cloudwatch_log_group.
 type DataCloudwatchLogGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -46,30 +53,37 @@ type dataCloudwatchLogGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_cloudwatch_log_group.
 func (clg dataCloudwatchLogGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(clg.ref.Append("arn"))
+	return terra.ReferenceAsString(clg.ref.Append("arn"))
 }
 
+// CreationTime returns a reference to field creation_time of aws_cloudwatch_log_group.
 func (clg dataCloudwatchLogGroupAttributes) CreationTime() terra.NumberValue {
-	return terra.ReferenceNumber(clg.ref.Append("creation_time"))
+	return terra.ReferenceAsNumber(clg.ref.Append("creation_time"))
 }
 
+// Id returns a reference to field id of aws_cloudwatch_log_group.
 func (clg dataCloudwatchLogGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(clg.ref.Append("id"))
+	return terra.ReferenceAsString(clg.ref.Append("id"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_cloudwatch_log_group.
 func (clg dataCloudwatchLogGroupAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(clg.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(clg.ref.Append("kms_key_id"))
 }
 
+// Name returns a reference to field name of aws_cloudwatch_log_group.
 func (clg dataCloudwatchLogGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(clg.ref.Append("name"))
+	return terra.ReferenceAsString(clg.ref.Append("name"))
 }
 
+// RetentionInDays returns a reference to field retention_in_days of aws_cloudwatch_log_group.
 func (clg dataCloudwatchLogGroupAttributes) RetentionInDays() terra.NumberValue {
-	return terra.ReferenceNumber(clg.ref.Append("retention_in_days"))
+	return terra.ReferenceAsNumber(clg.ref.Append("retention_in_days"))
 }
 
+// Tags returns a reference to field tags of aws_cloudwatch_log_group.
 func (clg dataCloudwatchLogGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](clg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](clg.ref.Append("tags"))
 }

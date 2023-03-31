@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewRdsExportTask creates a new instance of [RdsExportTask].
 func NewRdsExportTask(name string, args RdsExportTaskArgs) *RdsExportTask {
 	return &RdsExportTask{
 		Args: args,
@@ -19,28 +20,51 @@ func NewRdsExportTask(name string, args RdsExportTaskArgs) *RdsExportTask {
 
 var _ terra.Resource = (*RdsExportTask)(nil)
 
+// RdsExportTask represents the Terraform resource aws_rds_export_task.
 type RdsExportTask struct {
-	Name  string
-	Args  RdsExportTaskArgs
-	state *rdsExportTaskState
+	Name      string
+	Args      RdsExportTaskArgs
+	state     *rdsExportTaskState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RdsExportTask].
 func (ret *RdsExportTask) Type() string {
 	return "aws_rds_export_task"
 }
 
+// LocalName returns the local name for [RdsExportTask].
 func (ret *RdsExportTask) LocalName() string {
 	return ret.Name
 }
 
+// Configuration returns the configuration (args) for [RdsExportTask].
 func (ret *RdsExportTask) Configuration() interface{} {
 	return ret.Args
 }
 
+// DependOn is used for other resources to depend on [RdsExportTask].
+func (ret *RdsExportTask) DependOn() terra.Reference {
+	return terra.ReferenceResource(ret)
+}
+
+// Dependencies returns the list of resources [RdsExportTask] depends_on.
+func (ret *RdsExportTask) Dependencies() terra.Dependencies {
+	return ret.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RdsExportTask].
+func (ret *RdsExportTask) LifecycleManagement() *terra.Lifecycle {
+	return ret.Lifecycle
+}
+
+// Attributes returns the attributes for [RdsExportTask].
 func (ret *RdsExportTask) Attributes() rdsExportTaskAttributes {
 	return rdsExportTaskAttributes{ref: terra.ReferenceResource(ret)}
 }
 
+// ImportState imports the given attribute values into [RdsExportTask]'s state.
 func (ret *RdsExportTask) ImportState(av io.Reader) error {
 	ret.state = &rdsExportTaskState{}
 	if err := json.NewDecoder(av).Decode(ret.state); err != nil {
@@ -49,10 +73,12 @@ func (ret *RdsExportTask) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RdsExportTask] has state.
 func (ret *RdsExportTask) State() (*rdsExportTaskState, bool) {
 	return ret.state, ret.state != nil
 }
 
+// StateMust returns the state for [RdsExportTask]. Panics if the state is nil.
 func (ret *RdsExportTask) StateMust() *rdsExportTaskState {
 	if ret.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ret.Type(), ret.LocalName()))
@@ -60,10 +86,7 @@ func (ret *RdsExportTask) StateMust() *rdsExportTaskState {
 	return ret.state
 }
 
-func (ret *RdsExportTask) DependOn() terra.Reference {
-	return terra.ReferenceResource(ret)
-}
-
+// RdsExportTaskArgs contains the configurations for aws_rds_export_task.
 type RdsExportTaskArgs struct {
 	// ExportOnly: list of string, optional
 	ExportOnly terra.ListValue[terra.StringValue] `hcl:"export_only,attr"`
@@ -81,79 +104,93 @@ type RdsExportTaskArgs struct {
 	SourceArn terra.StringValue `hcl:"source_arn,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *rdsexporttask.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that RdsExportTask depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type rdsExportTaskAttributes struct {
 	ref terra.Reference
 }
 
+// ExportOnly returns a reference to field export_only of aws_rds_export_task.
 func (ret rdsExportTaskAttributes) ExportOnly() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ret.ref.Append("export_only"))
+	return terra.ReferenceAsList[terra.StringValue](ret.ref.Append("export_only"))
 }
 
+// ExportTaskIdentifier returns a reference to field export_task_identifier of aws_rds_export_task.
 func (ret rdsExportTaskAttributes) ExportTaskIdentifier() terra.StringValue {
-	return terra.ReferenceString(ret.ref.Append("export_task_identifier"))
+	return terra.ReferenceAsString(ret.ref.Append("export_task_identifier"))
 }
 
+// FailureCause returns a reference to field failure_cause of aws_rds_export_task.
 func (ret rdsExportTaskAttributes) FailureCause() terra.StringValue {
-	return terra.ReferenceString(ret.ref.Append("failure_cause"))
+	return terra.ReferenceAsString(ret.ref.Append("failure_cause"))
 }
 
+// IamRoleArn returns a reference to field iam_role_arn of aws_rds_export_task.
 func (ret rdsExportTaskAttributes) IamRoleArn() terra.StringValue {
-	return terra.ReferenceString(ret.ref.Append("iam_role_arn"))
+	return terra.ReferenceAsString(ret.ref.Append("iam_role_arn"))
 }
 
+// Id returns a reference to field id of aws_rds_export_task.
 func (ret rdsExportTaskAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ret.ref.Append("id"))
+	return terra.ReferenceAsString(ret.ref.Append("id"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_rds_export_task.
 func (ret rdsExportTaskAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(ret.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(ret.ref.Append("kms_key_id"))
 }
 
+// PercentProgress returns a reference to field percent_progress of aws_rds_export_task.
 func (ret rdsExportTaskAttributes) PercentProgress() terra.NumberValue {
-	return terra.ReferenceNumber(ret.ref.Append("percent_progress"))
+	return terra.ReferenceAsNumber(ret.ref.Append("percent_progress"))
 }
 
+// S3BucketName returns a reference to field s3_bucket_name of aws_rds_export_task.
 func (ret rdsExportTaskAttributes) S3BucketName() terra.StringValue {
-	return terra.ReferenceString(ret.ref.Append("s3_bucket_name"))
+	return terra.ReferenceAsString(ret.ref.Append("s3_bucket_name"))
 }
 
+// S3Prefix returns a reference to field s3_prefix of aws_rds_export_task.
 func (ret rdsExportTaskAttributes) S3Prefix() terra.StringValue {
-	return terra.ReferenceString(ret.ref.Append("s3_prefix"))
+	return terra.ReferenceAsString(ret.ref.Append("s3_prefix"))
 }
 
+// SnapshotTime returns a reference to field snapshot_time of aws_rds_export_task.
 func (ret rdsExportTaskAttributes) SnapshotTime() terra.StringValue {
-	return terra.ReferenceString(ret.ref.Append("snapshot_time"))
+	return terra.ReferenceAsString(ret.ref.Append("snapshot_time"))
 }
 
+// SourceArn returns a reference to field source_arn of aws_rds_export_task.
 func (ret rdsExportTaskAttributes) SourceArn() terra.StringValue {
-	return terra.ReferenceString(ret.ref.Append("source_arn"))
+	return terra.ReferenceAsString(ret.ref.Append("source_arn"))
 }
 
+// SourceType returns a reference to field source_type of aws_rds_export_task.
 func (ret rdsExportTaskAttributes) SourceType() terra.StringValue {
-	return terra.ReferenceString(ret.ref.Append("source_type"))
+	return terra.ReferenceAsString(ret.ref.Append("source_type"))
 }
 
+// Status returns a reference to field status of aws_rds_export_task.
 func (ret rdsExportTaskAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ret.ref.Append("status"))
+	return terra.ReferenceAsString(ret.ref.Append("status"))
 }
 
+// TaskEndTime returns a reference to field task_end_time of aws_rds_export_task.
 func (ret rdsExportTaskAttributes) TaskEndTime() terra.StringValue {
-	return terra.ReferenceString(ret.ref.Append("task_end_time"))
+	return terra.ReferenceAsString(ret.ref.Append("task_end_time"))
 }
 
+// TaskStartTime returns a reference to field task_start_time of aws_rds_export_task.
 func (ret rdsExportTaskAttributes) TaskStartTime() terra.StringValue {
-	return terra.ReferenceString(ret.ref.Append("task_start_time"))
+	return terra.ReferenceAsString(ret.ref.Append("task_start_time"))
 }
 
+// WarningMessage returns a reference to field warning_message of aws_rds_export_task.
 func (ret rdsExportTaskAttributes) WarningMessage() terra.StringValue {
-	return terra.ReferenceString(ret.ref.Append("warning_message"))
+	return terra.ReferenceAsString(ret.ref.Append("warning_message"))
 }
 
 func (ret rdsExportTaskAttributes) Timeouts() rdsexporttask.TimeoutsAttributes {
-	return terra.ReferenceSingle[rdsexporttask.TimeoutsAttributes](ret.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[rdsexporttask.TimeoutsAttributes](ret.ref.Append("timeouts"))
 }
 
 type rdsExportTaskState struct {

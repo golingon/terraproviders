@@ -146,39 +146,39 @@ func (r RuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("id"))
+	return terra.ReferenceAsString(r.ref.Append("id"))
 }
 
 func (r RuleAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("prefix"))
+	return terra.ReferenceAsString(r.ref.Append("prefix"))
 }
 
 func (r RuleAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("priority"))
+	return terra.ReferenceAsNumber(r.ref.Append("priority"))
 }
 
 func (r RuleAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("status"))
+	return terra.ReferenceAsString(r.ref.Append("status"))
 }
 
 func (r RuleAttributes) DeleteMarkerReplication() terra.ListValue[DeleteMarkerReplicationAttributes] {
-	return terra.ReferenceList[DeleteMarkerReplicationAttributes](r.ref.Append("delete_marker_replication"))
+	return terra.ReferenceAsList[DeleteMarkerReplicationAttributes](r.ref.Append("delete_marker_replication"))
 }
 
 func (r RuleAttributes) Destination() terra.ListValue[DestinationAttributes] {
-	return terra.ReferenceList[DestinationAttributes](r.ref.Append("destination"))
+	return terra.ReferenceAsList[DestinationAttributes](r.ref.Append("destination"))
 }
 
 func (r RuleAttributes) ExistingObjectReplication() terra.ListValue[ExistingObjectReplicationAttributes] {
-	return terra.ReferenceList[ExistingObjectReplicationAttributes](r.ref.Append("existing_object_replication"))
+	return terra.ReferenceAsList[ExistingObjectReplicationAttributes](r.ref.Append("existing_object_replication"))
 }
 
 func (r RuleAttributes) Filter() terra.ListValue[FilterAttributes] {
-	return terra.ReferenceList[FilterAttributes](r.ref.Append("filter"))
+	return terra.ReferenceAsList[FilterAttributes](r.ref.Append("filter"))
 }
 
 func (r RuleAttributes) SourceSelectionCriteria() terra.ListValue[SourceSelectionCriteriaAttributes] {
-	return terra.ReferenceList[SourceSelectionCriteriaAttributes](r.ref.Append("source_selection_criteria"))
+	return terra.ReferenceAsList[SourceSelectionCriteriaAttributes](r.ref.Append("source_selection_criteria"))
 }
 
 type DeleteMarkerReplicationAttributes struct {
@@ -198,7 +198,7 @@ func (dmr DeleteMarkerReplicationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dmr DeleteMarkerReplicationAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(dmr.ref.Append("status"))
+	return terra.ReferenceAsString(dmr.ref.Append("status"))
 }
 
 type DestinationAttributes struct {
@@ -218,31 +218,31 @@ func (d DestinationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DestinationAttributes) Account() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("account"))
+	return terra.ReferenceAsString(d.ref.Append("account"))
 }
 
 func (d DestinationAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("bucket"))
+	return terra.ReferenceAsString(d.ref.Append("bucket"))
 }
 
 func (d DestinationAttributes) StorageClass() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("storage_class"))
+	return terra.ReferenceAsString(d.ref.Append("storage_class"))
 }
 
 func (d DestinationAttributes) AccessControlTranslation() terra.ListValue[AccessControlTranslationAttributes] {
-	return terra.ReferenceList[AccessControlTranslationAttributes](d.ref.Append("access_control_translation"))
+	return terra.ReferenceAsList[AccessControlTranslationAttributes](d.ref.Append("access_control_translation"))
 }
 
 func (d DestinationAttributes) EncryptionConfiguration() terra.ListValue[EncryptionConfigurationAttributes] {
-	return terra.ReferenceList[EncryptionConfigurationAttributes](d.ref.Append("encryption_configuration"))
+	return terra.ReferenceAsList[EncryptionConfigurationAttributes](d.ref.Append("encryption_configuration"))
 }
 
 func (d DestinationAttributes) Metrics() terra.ListValue[MetricsAttributes] {
-	return terra.ReferenceList[MetricsAttributes](d.ref.Append("metrics"))
+	return terra.ReferenceAsList[MetricsAttributes](d.ref.Append("metrics"))
 }
 
 func (d DestinationAttributes) ReplicationTime() terra.ListValue[ReplicationTimeAttributes] {
-	return terra.ReferenceList[ReplicationTimeAttributes](d.ref.Append("replication_time"))
+	return terra.ReferenceAsList[ReplicationTimeAttributes](d.ref.Append("replication_time"))
 }
 
 type AccessControlTranslationAttributes struct {
@@ -262,7 +262,7 @@ func (act AccessControlTranslationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (act AccessControlTranslationAttributes) Owner() terra.StringValue {
-	return terra.ReferenceString(act.ref.Append("owner"))
+	return terra.ReferenceAsString(act.ref.Append("owner"))
 }
 
 type EncryptionConfigurationAttributes struct {
@@ -282,7 +282,7 @@ func (ec EncryptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec EncryptionConfigurationAttributes) ReplicaKmsKeyId() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("replica_kms_key_id"))
+	return terra.ReferenceAsString(ec.ref.Append("replica_kms_key_id"))
 }
 
 type MetricsAttributes struct {
@@ -302,11 +302,11 @@ func (m MetricsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m MetricsAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("status"))
+	return terra.ReferenceAsString(m.ref.Append("status"))
 }
 
 func (m MetricsAttributes) EventThreshold() terra.ListValue[EventThresholdAttributes] {
-	return terra.ReferenceList[EventThresholdAttributes](m.ref.Append("event_threshold"))
+	return terra.ReferenceAsList[EventThresholdAttributes](m.ref.Append("event_threshold"))
 }
 
 type EventThresholdAttributes struct {
@@ -326,7 +326,7 @@ func (et EventThresholdAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (et EventThresholdAttributes) Minutes() terra.NumberValue {
-	return terra.ReferenceNumber(et.ref.Append("minutes"))
+	return terra.ReferenceAsNumber(et.ref.Append("minutes"))
 }
 
 type ReplicationTimeAttributes struct {
@@ -346,11 +346,11 @@ func (rt ReplicationTimeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rt ReplicationTimeAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("status"))
+	return terra.ReferenceAsString(rt.ref.Append("status"))
 }
 
 func (rt ReplicationTimeAttributes) Time() terra.ListValue[TimeAttributes] {
-	return terra.ReferenceList[TimeAttributes](rt.ref.Append("time"))
+	return terra.ReferenceAsList[TimeAttributes](rt.ref.Append("time"))
 }
 
 type TimeAttributes struct {
@@ -370,7 +370,7 @@ func (t TimeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeAttributes) Minutes() terra.NumberValue {
-	return terra.ReferenceNumber(t.ref.Append("minutes"))
+	return terra.ReferenceAsNumber(t.ref.Append("minutes"))
 }
 
 type ExistingObjectReplicationAttributes struct {
@@ -390,7 +390,7 @@ func (eor ExistingObjectReplicationAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (eor ExistingObjectReplicationAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(eor.ref.Append("status"))
+	return terra.ReferenceAsString(eor.ref.Append("status"))
 }
 
 type FilterAttributes struct {
@@ -410,15 +410,15 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("prefix"))
+	return terra.ReferenceAsString(f.ref.Append("prefix"))
 }
 
 func (f FilterAttributes) And() terra.ListValue[AndAttributes] {
-	return terra.ReferenceList[AndAttributes](f.ref.Append("and"))
+	return terra.ReferenceAsList[AndAttributes](f.ref.Append("and"))
 }
 
 func (f FilterAttributes) Tag() terra.ListValue[TagAttributes] {
-	return terra.ReferenceList[TagAttributes](f.ref.Append("tag"))
+	return terra.ReferenceAsList[TagAttributes](f.ref.Append("tag"))
 }
 
 type AndAttributes struct {
@@ -438,11 +438,11 @@ func (a AndAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AndAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("prefix"))
+	return terra.ReferenceAsString(a.ref.Append("prefix"))
 }
 
 func (a AndAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](a.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](a.ref.Append("tags"))
 }
 
 type TagAttributes struct {
@@ -462,11 +462,11 @@ func (t TagAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TagAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("key"))
+	return terra.ReferenceAsString(t.ref.Append("key"))
 }
 
 func (t TagAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("value"))
+	return terra.ReferenceAsString(t.ref.Append("value"))
 }
 
 type SourceSelectionCriteriaAttributes struct {
@@ -486,11 +486,11 @@ func (ssc SourceSelectionCriteriaAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ssc SourceSelectionCriteriaAttributes) ReplicaModifications() terra.ListValue[ReplicaModificationsAttributes] {
-	return terra.ReferenceList[ReplicaModificationsAttributes](ssc.ref.Append("replica_modifications"))
+	return terra.ReferenceAsList[ReplicaModificationsAttributes](ssc.ref.Append("replica_modifications"))
 }
 
 func (ssc SourceSelectionCriteriaAttributes) SseKmsEncryptedObjects() terra.ListValue[SseKmsEncryptedObjectsAttributes] {
-	return terra.ReferenceList[SseKmsEncryptedObjectsAttributes](ssc.ref.Append("sse_kms_encrypted_objects"))
+	return terra.ReferenceAsList[SseKmsEncryptedObjectsAttributes](ssc.ref.Append("sse_kms_encrypted_objects"))
 }
 
 type ReplicaModificationsAttributes struct {
@@ -510,7 +510,7 @@ func (rm ReplicaModificationsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rm ReplicaModificationsAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(rm.ref.Append("status"))
+	return terra.ReferenceAsString(rm.ref.Append("status"))
 }
 
 type SseKmsEncryptedObjectsAttributes struct {
@@ -530,7 +530,7 @@ func (skeo SseKmsEncryptedObjectsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (skeo SseKmsEncryptedObjectsAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(skeo.ref.Append("status"))
+	return terra.ReferenceAsString(skeo.ref.Append("status"))
 }
 
 type RuleState struct {

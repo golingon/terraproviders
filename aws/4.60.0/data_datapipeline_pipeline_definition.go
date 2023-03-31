@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataDatapipelinePipelineDefinition creates a new instance of [DataDatapipelinePipelineDefinition].
 func NewDataDatapipelinePipelineDefinition(name string, args DataDatapipelinePipelineDefinitionArgs) *DataDatapipelinePipelineDefinition {
 	return &DataDatapipelinePipelineDefinition{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataDatapipelinePipelineDefinition(name string, args DataDatapipelinePip
 
 var _ terra.DataResource = (*DataDatapipelinePipelineDefinition)(nil)
 
+// DataDatapipelinePipelineDefinition represents the Terraform data resource aws_datapipeline_pipeline_definition.
 type DataDatapipelinePipelineDefinition struct {
 	Name string
 	Args DataDatapipelinePipelineDefinitionArgs
 }
 
+// DataSource returns the Terraform object type for [DataDatapipelinePipelineDefinition].
 func (dpd *DataDatapipelinePipelineDefinition) DataSource() string {
 	return "aws_datapipeline_pipeline_definition"
 }
 
+// LocalName returns the local name for [DataDatapipelinePipelineDefinition].
 func (dpd *DataDatapipelinePipelineDefinition) LocalName() string {
 	return dpd.Name
 }
 
+// Configuration returns the configuration (args) for [DataDatapipelinePipelineDefinition].
 func (dpd *DataDatapipelinePipelineDefinition) Configuration() interface{} {
 	return dpd.Args
 }
 
+// Attributes returns the attributes for [DataDatapipelinePipelineDefinition].
 func (dpd *DataDatapipelinePipelineDefinition) Attributes() dataDatapipelinePipelineDefinitionAttributes {
 	return dataDatapipelinePipelineDefinitionAttributes{ref: terra.ReferenceDataResource(dpd)}
 }
 
+// DataDatapipelinePipelineDefinitionArgs contains the configurations for aws_datapipeline_pipeline_definition.
 type DataDatapipelinePipelineDefinitionArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,22 +60,24 @@ type dataDatapipelinePipelineDefinitionAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_datapipeline_pipeline_definition.
 func (dpd dataDatapipelinePipelineDefinitionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dpd.ref.Append("id"))
+	return terra.ReferenceAsString(dpd.ref.Append("id"))
 }
 
+// PipelineId returns a reference to field pipeline_id of aws_datapipeline_pipeline_definition.
 func (dpd dataDatapipelinePipelineDefinitionAttributes) PipelineId() terra.StringValue {
-	return terra.ReferenceString(dpd.ref.Append("pipeline_id"))
+	return terra.ReferenceAsString(dpd.ref.Append("pipeline_id"))
 }
 
 func (dpd dataDatapipelinePipelineDefinitionAttributes) ParameterObject() terra.SetValue[datadatapipelinepipelinedefinition.ParameterObjectAttributes] {
-	return terra.ReferenceSet[datadatapipelinepipelinedefinition.ParameterObjectAttributes](dpd.ref.Append("parameter_object"))
+	return terra.ReferenceAsSet[datadatapipelinepipelinedefinition.ParameterObjectAttributes](dpd.ref.Append("parameter_object"))
 }
 
 func (dpd dataDatapipelinePipelineDefinitionAttributes) PipelineObject() terra.SetValue[datadatapipelinepipelinedefinition.PipelineObjectAttributes] {
-	return terra.ReferenceSet[datadatapipelinepipelinedefinition.PipelineObjectAttributes](dpd.ref.Append("pipeline_object"))
+	return terra.ReferenceAsSet[datadatapipelinepipelinedefinition.PipelineObjectAttributes](dpd.ref.Append("pipeline_object"))
 }
 
 func (dpd dataDatapipelinePipelineDefinitionAttributes) ParameterValue() terra.SetValue[datadatapipelinepipelinedefinition.ParameterValueAttributes] {
-	return terra.ReferenceSet[datadatapipelinepipelinedefinition.ParameterValueAttributes](dpd.ref.Append("parameter_value"))
+	return terra.ReferenceAsSet[datadatapipelinepipelinedefinition.ParameterValueAttributes](dpd.ref.Append("parameter_value"))
 }

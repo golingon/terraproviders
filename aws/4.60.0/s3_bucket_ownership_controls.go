@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewS3BucketOwnershipControls creates a new instance of [S3BucketOwnershipControls].
 func NewS3BucketOwnershipControls(name string, args S3BucketOwnershipControlsArgs) *S3BucketOwnershipControls {
 	return &S3BucketOwnershipControls{
 		Args: args,
@@ -19,28 +20,51 @@ func NewS3BucketOwnershipControls(name string, args S3BucketOwnershipControlsArg
 
 var _ terra.Resource = (*S3BucketOwnershipControls)(nil)
 
+// S3BucketOwnershipControls represents the Terraform resource aws_s3_bucket_ownership_controls.
 type S3BucketOwnershipControls struct {
-	Name  string
-	Args  S3BucketOwnershipControlsArgs
-	state *s3BucketOwnershipControlsState
+	Name      string
+	Args      S3BucketOwnershipControlsArgs
+	state     *s3BucketOwnershipControlsState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [S3BucketOwnershipControls].
 func (sboc *S3BucketOwnershipControls) Type() string {
 	return "aws_s3_bucket_ownership_controls"
 }
 
+// LocalName returns the local name for [S3BucketOwnershipControls].
 func (sboc *S3BucketOwnershipControls) LocalName() string {
 	return sboc.Name
 }
 
+// Configuration returns the configuration (args) for [S3BucketOwnershipControls].
 func (sboc *S3BucketOwnershipControls) Configuration() interface{} {
 	return sboc.Args
 }
 
+// DependOn is used for other resources to depend on [S3BucketOwnershipControls].
+func (sboc *S3BucketOwnershipControls) DependOn() terra.Reference {
+	return terra.ReferenceResource(sboc)
+}
+
+// Dependencies returns the list of resources [S3BucketOwnershipControls] depends_on.
+func (sboc *S3BucketOwnershipControls) Dependencies() terra.Dependencies {
+	return sboc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [S3BucketOwnershipControls].
+func (sboc *S3BucketOwnershipControls) LifecycleManagement() *terra.Lifecycle {
+	return sboc.Lifecycle
+}
+
+// Attributes returns the attributes for [S3BucketOwnershipControls].
 func (sboc *S3BucketOwnershipControls) Attributes() s3BucketOwnershipControlsAttributes {
 	return s3BucketOwnershipControlsAttributes{ref: terra.ReferenceResource(sboc)}
 }
 
+// ImportState imports the given attribute values into [S3BucketOwnershipControls]'s state.
 func (sboc *S3BucketOwnershipControls) ImportState(av io.Reader) error {
 	sboc.state = &s3BucketOwnershipControlsState{}
 	if err := json.NewDecoder(av).Decode(sboc.state); err != nil {
@@ -49,10 +73,12 @@ func (sboc *S3BucketOwnershipControls) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [S3BucketOwnershipControls] has state.
 func (sboc *S3BucketOwnershipControls) State() (*s3BucketOwnershipControlsState, bool) {
 	return sboc.state, sboc.state != nil
 }
 
+// StateMust returns the state for [S3BucketOwnershipControls]. Panics if the state is nil.
 func (sboc *S3BucketOwnershipControls) StateMust() *s3BucketOwnershipControlsState {
 	if sboc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sboc.Type(), sboc.LocalName()))
@@ -60,10 +86,7 @@ func (sboc *S3BucketOwnershipControls) StateMust() *s3BucketOwnershipControlsSta
 	return sboc.state
 }
 
-func (sboc *S3BucketOwnershipControls) DependOn() terra.Reference {
-	return terra.ReferenceResource(sboc)
-}
-
+// S3BucketOwnershipControlsArgs contains the configurations for aws_s3_bucket_ownership_controls.
 type S3BucketOwnershipControlsArgs struct {
 	// Bucket: string, required
 	Bucket terra.StringValue `hcl:"bucket,attr" validate:"required"`
@@ -71,23 +94,23 @@ type S3BucketOwnershipControlsArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// Rule: required
 	Rule *s3bucketownershipcontrols.Rule `hcl:"rule,block" validate:"required"`
-	// DependsOn contains resources that S3BucketOwnershipControls depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type s3BucketOwnershipControlsAttributes struct {
 	ref terra.Reference
 }
 
+// Bucket returns a reference to field bucket of aws_s3_bucket_ownership_controls.
 func (sboc s3BucketOwnershipControlsAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(sboc.ref.Append("bucket"))
+	return terra.ReferenceAsString(sboc.ref.Append("bucket"))
 }
 
+// Id returns a reference to field id of aws_s3_bucket_ownership_controls.
 func (sboc s3BucketOwnershipControlsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sboc.ref.Append("id"))
+	return terra.ReferenceAsString(sboc.ref.Append("id"))
 }
 
 func (sboc s3BucketOwnershipControlsAttributes) Rule() terra.ListValue[s3bucketownershipcontrols.RuleAttributes] {
-	return terra.ReferenceList[s3bucketownershipcontrols.RuleAttributes](sboc.ref.Append("rule"))
+	return terra.ReferenceAsList[s3bucketownershipcontrols.RuleAttributes](sboc.ref.Append("rule"))
 }
 
 type s3BucketOwnershipControlsState struct {

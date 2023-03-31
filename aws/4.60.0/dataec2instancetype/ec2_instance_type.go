@@ -37,19 +37,19 @@ func (f FpgasAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FpgasAttributes) Count() terra.NumberValue {
-	return terra.ReferenceNumber(f.ref.Append("count"))
+	return terra.ReferenceAsNumber(f.ref.Append("count"))
 }
 
 func (f FpgasAttributes) Manufacturer() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("manufacturer"))
+	return terra.ReferenceAsString(f.ref.Append("manufacturer"))
 }
 
 func (f FpgasAttributes) MemorySize() terra.NumberValue {
-	return terra.ReferenceNumber(f.ref.Append("memory_size"))
+	return terra.ReferenceAsNumber(f.ref.Append("memory_size"))
 }
 
 func (f FpgasAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
 type GpusAttributes struct {
@@ -69,19 +69,19 @@ func (g GpusAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (g GpusAttributes) Count() terra.NumberValue {
-	return terra.ReferenceNumber(g.ref.Append("count"))
+	return terra.ReferenceAsNumber(g.ref.Append("count"))
 }
 
 func (g GpusAttributes) Manufacturer() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("manufacturer"))
+	return terra.ReferenceAsString(g.ref.Append("manufacturer"))
 }
 
 func (g GpusAttributes) MemorySize() terra.NumberValue {
-	return terra.ReferenceNumber(g.ref.Append("memory_size"))
+	return terra.ReferenceAsNumber(g.ref.Append("memory_size"))
 }
 
 func (g GpusAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("name"))
+	return terra.ReferenceAsString(g.ref.Append("name"))
 }
 
 type InferenceAcceleratorsAttributes struct {
@@ -101,15 +101,15 @@ func (ia InferenceAcceleratorsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ia InferenceAcceleratorsAttributes) Count() terra.NumberValue {
-	return terra.ReferenceNumber(ia.ref.Append("count"))
+	return terra.ReferenceAsNumber(ia.ref.Append("count"))
 }
 
 func (ia InferenceAcceleratorsAttributes) Manufacturer() terra.StringValue {
-	return terra.ReferenceString(ia.ref.Append("manufacturer"))
+	return terra.ReferenceAsString(ia.ref.Append("manufacturer"))
 }
 
 func (ia InferenceAcceleratorsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ia.ref.Append("name"))
+	return terra.ReferenceAsString(ia.ref.Append("name"))
 }
 
 type InstanceDisksAttributes struct {
@@ -129,15 +129,15 @@ func (id InstanceDisksAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (id InstanceDisksAttributes) Count() terra.NumberValue {
-	return terra.ReferenceNumber(id.ref.Append("count"))
+	return terra.ReferenceAsNumber(id.ref.Append("count"))
 }
 
 func (id InstanceDisksAttributes) Size() terra.NumberValue {
-	return terra.ReferenceNumber(id.ref.Append("size"))
+	return terra.ReferenceAsNumber(id.ref.Append("size"))
 }
 
 func (id InstanceDisksAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(id.ref.Append("type"))
+	return terra.ReferenceAsString(id.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
@@ -157,7 +157,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type FpgasState struct {

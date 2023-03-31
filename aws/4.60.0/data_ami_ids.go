@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataAmiIds creates a new instance of [DataAmiIds].
 func NewDataAmiIds(name string, args DataAmiIdsArgs) *DataAmiIds {
 	return &DataAmiIds{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataAmiIds(name string, args DataAmiIdsArgs) *DataAmiIds {
 
 var _ terra.DataResource = (*DataAmiIds)(nil)
 
+// DataAmiIds represents the Terraform data resource aws_ami_ids.
 type DataAmiIds struct {
 	Name string
 	Args DataAmiIdsArgs
 }
 
+// DataSource returns the Terraform object type for [DataAmiIds].
 func (ai *DataAmiIds) DataSource() string {
 	return "aws_ami_ids"
 }
 
+// LocalName returns the local name for [DataAmiIds].
 func (ai *DataAmiIds) LocalName() string {
 	return ai.Name
 }
 
+// Configuration returns the configuration (args) for [DataAmiIds].
 func (ai *DataAmiIds) Configuration() interface{} {
 	return ai.Args
 }
 
+// Attributes returns the attributes for [DataAmiIds].
 func (ai *DataAmiIds) Attributes() dataAmiIdsAttributes {
 	return dataAmiIdsAttributes{ref: terra.ReferenceDataResource(ai)}
 }
 
+// DataAmiIdsArgs contains the configurations for aws_ami_ids.
 type DataAmiIdsArgs struct {
 	// ExecutableUsers: list of string, optional
 	ExecutableUsers terra.ListValue[terra.StringValue] `hcl:"executable_users,attr"`
@@ -57,34 +64,40 @@ type dataAmiIdsAttributes struct {
 	ref terra.Reference
 }
 
+// ExecutableUsers returns a reference to field executable_users of aws_ami_ids.
 func (ai dataAmiIdsAttributes) ExecutableUsers() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ai.ref.Append("executable_users"))
+	return terra.ReferenceAsList[terra.StringValue](ai.ref.Append("executable_users"))
 }
 
+// Id returns a reference to field id of aws_ami_ids.
 func (ai dataAmiIdsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("id"))
+	return terra.ReferenceAsString(ai.ref.Append("id"))
 }
 
+// Ids returns a reference to field ids of aws_ami_ids.
 func (ai dataAmiIdsAttributes) Ids() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ai.ref.Append("ids"))
+	return terra.ReferenceAsList[terra.StringValue](ai.ref.Append("ids"))
 }
 
+// NameRegex returns a reference to field name_regex of aws_ami_ids.
 func (ai dataAmiIdsAttributes) NameRegex() terra.StringValue {
-	return terra.ReferenceString(ai.ref.Append("name_regex"))
+	return terra.ReferenceAsString(ai.ref.Append("name_regex"))
 }
 
+// Owners returns a reference to field owners of aws_ami_ids.
 func (ai dataAmiIdsAttributes) Owners() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ai.ref.Append("owners"))
+	return terra.ReferenceAsList[terra.StringValue](ai.ref.Append("owners"))
 }
 
+// SortAscending returns a reference to field sort_ascending of aws_ami_ids.
 func (ai dataAmiIdsAttributes) SortAscending() terra.BoolValue {
-	return terra.ReferenceBool(ai.ref.Append("sort_ascending"))
+	return terra.ReferenceAsBool(ai.ref.Append("sort_ascending"))
 }
 
 func (ai dataAmiIdsAttributes) Filter() terra.SetValue[dataamiids.FilterAttributes] {
-	return terra.ReferenceSet[dataamiids.FilterAttributes](ai.ref.Append("filter"))
+	return terra.ReferenceAsSet[dataamiids.FilterAttributes](ai.ref.Append("filter"))
 }
 
 func (ai dataAmiIdsAttributes) Timeouts() dataamiids.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataamiids.TimeoutsAttributes](ai.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataamiids.TimeoutsAttributes](ai.ref.Append("timeouts"))
 }

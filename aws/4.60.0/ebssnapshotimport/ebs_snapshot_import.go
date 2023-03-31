@@ -60,19 +60,19 @@ func (cd ClientDataAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cd ClientDataAttributes) Comment() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("comment"))
+	return terra.ReferenceAsString(cd.ref.Append("comment"))
 }
 
 func (cd ClientDataAttributes) UploadEnd() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("upload_end"))
+	return terra.ReferenceAsString(cd.ref.Append("upload_end"))
 }
 
 func (cd ClientDataAttributes) UploadSize() terra.NumberValue {
-	return terra.ReferenceNumber(cd.ref.Append("upload_size"))
+	return terra.ReferenceAsNumber(cd.ref.Append("upload_size"))
 }
 
 func (cd ClientDataAttributes) UploadStart() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("upload_start"))
+	return terra.ReferenceAsString(cd.ref.Append("upload_start"))
 }
 
 type DiskContainerAttributes struct {
@@ -92,19 +92,19 @@ func (dc DiskContainerAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dc DiskContainerAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("description"))
+	return terra.ReferenceAsString(dc.ref.Append("description"))
 }
 
 func (dc DiskContainerAttributes) Format() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("format"))
+	return terra.ReferenceAsString(dc.ref.Append("format"))
 }
 
 func (dc DiskContainerAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("url"))
+	return terra.ReferenceAsString(dc.ref.Append("url"))
 }
 
 func (dc DiskContainerAttributes) UserBucket() terra.ListValue[UserBucketAttributes] {
-	return terra.ReferenceList[UserBucketAttributes](dc.ref.Append("user_bucket"))
+	return terra.ReferenceAsList[UserBucketAttributes](dc.ref.Append("user_bucket"))
 }
 
 type UserBucketAttributes struct {
@@ -124,11 +124,11 @@ func (ub UserBucketAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ub UserBucketAttributes) S3Bucket() terra.StringValue {
-	return terra.ReferenceString(ub.ref.Append("s3_bucket"))
+	return terra.ReferenceAsString(ub.ref.Append("s3_bucket"))
 }
 
 func (ub UserBucketAttributes) S3Key() terra.StringValue {
-	return terra.ReferenceString(ub.ref.Append("s3_key"))
+	return terra.ReferenceAsString(ub.ref.Append("s3_key"))
 }
 
 type TimeoutsAttributes struct {
@@ -148,11 +148,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type ClientDataState struct {

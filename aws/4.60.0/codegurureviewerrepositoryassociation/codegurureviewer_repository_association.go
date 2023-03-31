@@ -88,11 +88,11 @@ func (srd S3RepositoryDetailsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (srd S3RepositoryDetailsAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(srd.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(srd.ref.Append("bucket_name"))
 }
 
 func (srd S3RepositoryDetailsAttributes) CodeArtifacts() terra.ListValue[CodeArtifactsAttributes] {
-	return terra.ReferenceList[CodeArtifactsAttributes](srd.ref.Append("code_artifacts"))
+	return terra.ReferenceAsList[CodeArtifactsAttributes](srd.ref.Append("code_artifacts"))
 }
 
 type CodeArtifactsAttributes struct {
@@ -112,11 +112,11 @@ func (ca CodeArtifactsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ca CodeArtifactsAttributes) BuildArtifactsObjectKey() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("build_artifacts_object_key"))
+	return terra.ReferenceAsString(ca.ref.Append("build_artifacts_object_key"))
 }
 
 func (ca CodeArtifactsAttributes) SourceCodeArtifactsObjectKey() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("source_code_artifacts_object_key"))
+	return terra.ReferenceAsString(ca.ref.Append("source_code_artifacts_object_key"))
 }
 
 type KmsKeyDetailsAttributes struct {
@@ -136,11 +136,11 @@ func (kkd KmsKeyDetailsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (kkd KmsKeyDetailsAttributes) EncryptionOption() terra.StringValue {
-	return terra.ReferenceString(kkd.ref.Append("encryption_option"))
+	return terra.ReferenceAsString(kkd.ref.Append("encryption_option"))
 }
 
 func (kkd KmsKeyDetailsAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(kkd.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(kkd.ref.Append("kms_key_id"))
 }
 
 type RepositoryAttributes struct {
@@ -160,19 +160,19 @@ func (r RepositoryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RepositoryAttributes) Bitbucket() terra.ListValue[BitbucketAttributes] {
-	return terra.ReferenceList[BitbucketAttributes](r.ref.Append("bitbucket"))
+	return terra.ReferenceAsList[BitbucketAttributes](r.ref.Append("bitbucket"))
 }
 
 func (r RepositoryAttributes) Codecommit() terra.ListValue[CodecommitAttributes] {
-	return terra.ReferenceList[CodecommitAttributes](r.ref.Append("codecommit"))
+	return terra.ReferenceAsList[CodecommitAttributes](r.ref.Append("codecommit"))
 }
 
 func (r RepositoryAttributes) GithubEnterpriseServer() terra.ListValue[GithubEnterpriseServerAttributes] {
-	return terra.ReferenceList[GithubEnterpriseServerAttributes](r.ref.Append("github_enterprise_server"))
+	return terra.ReferenceAsList[GithubEnterpriseServerAttributes](r.ref.Append("github_enterprise_server"))
 }
 
 func (r RepositoryAttributes) S3Bucket() terra.ListValue[S3BucketAttributes] {
-	return terra.ReferenceList[S3BucketAttributes](r.ref.Append("s3_bucket"))
+	return terra.ReferenceAsList[S3BucketAttributes](r.ref.Append("s3_bucket"))
 }
 
 type BitbucketAttributes struct {
@@ -192,15 +192,15 @@ func (b BitbucketAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (b BitbucketAttributes) ConnectionArn() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("connection_arn"))
+	return terra.ReferenceAsString(b.ref.Append("connection_arn"))
 }
 
 func (b BitbucketAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("name"))
+	return terra.ReferenceAsString(b.ref.Append("name"))
 }
 
 func (b BitbucketAttributes) Owner() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("owner"))
+	return terra.ReferenceAsString(b.ref.Append("owner"))
 }
 
 type CodecommitAttributes struct {
@@ -220,7 +220,7 @@ func (c CodecommitAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c CodecommitAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 type GithubEnterpriseServerAttributes struct {
@@ -240,15 +240,15 @@ func (ges GithubEnterpriseServerAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ges GithubEnterpriseServerAttributes) ConnectionArn() terra.StringValue {
-	return terra.ReferenceString(ges.ref.Append("connection_arn"))
+	return terra.ReferenceAsString(ges.ref.Append("connection_arn"))
 }
 
 func (ges GithubEnterpriseServerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ges.ref.Append("name"))
+	return terra.ReferenceAsString(ges.ref.Append("name"))
 }
 
 func (ges GithubEnterpriseServerAttributes) Owner() terra.StringValue {
-	return terra.ReferenceString(ges.ref.Append("owner"))
+	return terra.ReferenceAsString(ges.ref.Append("owner"))
 }
 
 type S3BucketAttributes struct {
@@ -268,11 +268,11 @@ func (sb S3BucketAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sb S3BucketAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(sb.ref.Append("bucket_name"))
 }
 
 func (sb S3BucketAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("name"))
+	return terra.ReferenceAsString(sb.ref.Append("name"))
 }
 
 type TimeoutsAttributes struct {
@@ -292,15 +292,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type S3RepositoryDetailsState struct {

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataServicecatalogPortfolioConstraints creates a new instance of [DataServicecatalogPortfolioConstraints].
 func NewDataServicecatalogPortfolioConstraints(name string, args DataServicecatalogPortfolioConstraintsArgs) *DataServicecatalogPortfolioConstraints {
 	return &DataServicecatalogPortfolioConstraints{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataServicecatalogPortfolioConstraints(name string, args DataServicecata
 
 var _ terra.DataResource = (*DataServicecatalogPortfolioConstraints)(nil)
 
+// DataServicecatalogPortfolioConstraints represents the Terraform data resource aws_servicecatalog_portfolio_constraints.
 type DataServicecatalogPortfolioConstraints struct {
 	Name string
 	Args DataServicecatalogPortfolioConstraintsArgs
 }
 
+// DataSource returns the Terraform object type for [DataServicecatalogPortfolioConstraints].
 func (spc *DataServicecatalogPortfolioConstraints) DataSource() string {
 	return "aws_servicecatalog_portfolio_constraints"
 }
 
+// LocalName returns the local name for [DataServicecatalogPortfolioConstraints].
 func (spc *DataServicecatalogPortfolioConstraints) LocalName() string {
 	return spc.Name
 }
 
+// Configuration returns the configuration (args) for [DataServicecatalogPortfolioConstraints].
 func (spc *DataServicecatalogPortfolioConstraints) Configuration() interface{} {
 	return spc.Args
 }
 
+// Attributes returns the attributes for [DataServicecatalogPortfolioConstraints].
 func (spc *DataServicecatalogPortfolioConstraints) Attributes() dataServicecatalogPortfolioConstraintsAttributes {
 	return dataServicecatalogPortfolioConstraintsAttributes{ref: terra.ReferenceDataResource(spc)}
 }
 
+// DataServicecatalogPortfolioConstraintsArgs contains the configurations for aws_servicecatalog_portfolio_constraints.
 type DataServicecatalogPortfolioConstraintsArgs struct {
 	// AcceptLanguage: string, optional
 	AcceptLanguage terra.StringValue `hcl:"accept_language,attr"`
@@ -55,26 +62,30 @@ type dataServicecatalogPortfolioConstraintsAttributes struct {
 	ref terra.Reference
 }
 
+// AcceptLanguage returns a reference to field accept_language of aws_servicecatalog_portfolio_constraints.
 func (spc dataServicecatalogPortfolioConstraintsAttributes) AcceptLanguage() terra.StringValue {
-	return terra.ReferenceString(spc.ref.Append("accept_language"))
+	return terra.ReferenceAsString(spc.ref.Append("accept_language"))
 }
 
+// Id returns a reference to field id of aws_servicecatalog_portfolio_constraints.
 func (spc dataServicecatalogPortfolioConstraintsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(spc.ref.Append("id"))
+	return terra.ReferenceAsString(spc.ref.Append("id"))
 }
 
+// PortfolioId returns a reference to field portfolio_id of aws_servicecatalog_portfolio_constraints.
 func (spc dataServicecatalogPortfolioConstraintsAttributes) PortfolioId() terra.StringValue {
-	return terra.ReferenceString(spc.ref.Append("portfolio_id"))
+	return terra.ReferenceAsString(spc.ref.Append("portfolio_id"))
 }
 
+// ProductId returns a reference to field product_id of aws_servicecatalog_portfolio_constraints.
 func (spc dataServicecatalogPortfolioConstraintsAttributes) ProductId() terra.StringValue {
-	return terra.ReferenceString(spc.ref.Append("product_id"))
+	return terra.ReferenceAsString(spc.ref.Append("product_id"))
 }
 
 func (spc dataServicecatalogPortfolioConstraintsAttributes) Details() terra.ListValue[dataservicecatalogportfolioconstraints.DetailsAttributes] {
-	return terra.ReferenceList[dataservicecatalogportfolioconstraints.DetailsAttributes](spc.ref.Append("details"))
+	return terra.ReferenceAsList[dataservicecatalogportfolioconstraints.DetailsAttributes](spc.ref.Append("details"))
 }
 
 func (spc dataServicecatalogPortfolioConstraintsAttributes) Timeouts() dataservicecatalogportfolioconstraints.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataservicecatalogportfolioconstraints.TimeoutsAttributes](spc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataservicecatalogportfolioconstraints.TimeoutsAttributes](spc.ref.Append("timeouts"))
 }

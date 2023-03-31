@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewMacie2Account creates a new instance of [Macie2Account].
 func NewMacie2Account(name string, args Macie2AccountArgs) *Macie2Account {
 	return &Macie2Account{
 		Args: args,
@@ -18,28 +19,51 @@ func NewMacie2Account(name string, args Macie2AccountArgs) *Macie2Account {
 
 var _ terra.Resource = (*Macie2Account)(nil)
 
+// Macie2Account represents the Terraform resource aws_macie2_account.
 type Macie2Account struct {
-	Name  string
-	Args  Macie2AccountArgs
-	state *macie2AccountState
+	Name      string
+	Args      Macie2AccountArgs
+	state     *macie2AccountState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Macie2Account].
 func (ma *Macie2Account) Type() string {
 	return "aws_macie2_account"
 }
 
+// LocalName returns the local name for [Macie2Account].
 func (ma *Macie2Account) LocalName() string {
 	return ma.Name
 }
 
+// Configuration returns the configuration (args) for [Macie2Account].
 func (ma *Macie2Account) Configuration() interface{} {
 	return ma.Args
 }
 
+// DependOn is used for other resources to depend on [Macie2Account].
+func (ma *Macie2Account) DependOn() terra.Reference {
+	return terra.ReferenceResource(ma)
+}
+
+// Dependencies returns the list of resources [Macie2Account] depends_on.
+func (ma *Macie2Account) Dependencies() terra.Dependencies {
+	return ma.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Macie2Account].
+func (ma *Macie2Account) LifecycleManagement() *terra.Lifecycle {
+	return ma.Lifecycle
+}
+
+// Attributes returns the attributes for [Macie2Account].
 func (ma *Macie2Account) Attributes() macie2AccountAttributes {
 	return macie2AccountAttributes{ref: terra.ReferenceResource(ma)}
 }
 
+// ImportState imports the given attribute values into [Macie2Account]'s state.
 func (ma *Macie2Account) ImportState(av io.Reader) error {
 	ma.state = &macie2AccountState{}
 	if err := json.NewDecoder(av).Decode(ma.state); err != nil {
@@ -48,10 +72,12 @@ func (ma *Macie2Account) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Macie2Account] has state.
 func (ma *Macie2Account) State() (*macie2AccountState, bool) {
 	return ma.state, ma.state != nil
 }
 
+// StateMust returns the state for [Macie2Account]. Panics if the state is nil.
 func (ma *Macie2Account) StateMust() *macie2AccountState {
 	if ma.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ma.Type(), ma.LocalName()))
@@ -59,10 +85,7 @@ func (ma *Macie2Account) StateMust() *macie2AccountState {
 	return ma.state
 }
 
-func (ma *Macie2Account) DependOn() terra.Reference {
-	return terra.ReferenceResource(ma)
-}
-
+// Macie2AccountArgs contains the configurations for aws_macie2_account.
 type Macie2AccountArgs struct {
 	// FindingPublishingFrequency: string, optional
 	FindingPublishingFrequency terra.StringValue `hcl:"finding_publishing_frequency,attr"`
@@ -70,35 +93,39 @@ type Macie2AccountArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// Status: string, optional
 	Status terra.StringValue `hcl:"status,attr"`
-	// DependsOn contains resources that Macie2Account depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type macie2AccountAttributes struct {
 	ref terra.Reference
 }
 
+// CreatedAt returns a reference to field created_at of aws_macie2_account.
 func (ma macie2AccountAttributes) CreatedAt() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("created_at"))
+	return terra.ReferenceAsString(ma.ref.Append("created_at"))
 }
 
+// FindingPublishingFrequency returns a reference to field finding_publishing_frequency of aws_macie2_account.
 func (ma macie2AccountAttributes) FindingPublishingFrequency() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("finding_publishing_frequency"))
+	return terra.ReferenceAsString(ma.ref.Append("finding_publishing_frequency"))
 }
 
+// Id returns a reference to field id of aws_macie2_account.
 func (ma macie2AccountAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("id"))
+	return terra.ReferenceAsString(ma.ref.Append("id"))
 }
 
+// ServiceRole returns a reference to field service_role of aws_macie2_account.
 func (ma macie2AccountAttributes) ServiceRole() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("service_role"))
+	return terra.ReferenceAsString(ma.ref.Append("service_role"))
 }
 
+// Status returns a reference to field status of aws_macie2_account.
 func (ma macie2AccountAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("status"))
+	return terra.ReferenceAsString(ma.ref.Append("status"))
 }
 
+// UpdatedAt returns a reference to field updated_at of aws_macie2_account.
 func (ma macie2AccountAttributes) UpdatedAt() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("updated_at"))
+	return terra.ReferenceAsString(ma.ref.Append("updated_at"))
 }
 
 type macie2AccountState struct {

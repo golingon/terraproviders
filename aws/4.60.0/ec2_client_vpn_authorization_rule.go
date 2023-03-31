@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEc2ClientVpnAuthorizationRule creates a new instance of [Ec2ClientVpnAuthorizationRule].
 func NewEc2ClientVpnAuthorizationRule(name string, args Ec2ClientVpnAuthorizationRuleArgs) *Ec2ClientVpnAuthorizationRule {
 	return &Ec2ClientVpnAuthorizationRule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEc2ClientVpnAuthorizationRule(name string, args Ec2ClientVpnAuthorizatio
 
 var _ terra.Resource = (*Ec2ClientVpnAuthorizationRule)(nil)
 
+// Ec2ClientVpnAuthorizationRule represents the Terraform resource aws_ec2_client_vpn_authorization_rule.
 type Ec2ClientVpnAuthorizationRule struct {
-	Name  string
-	Args  Ec2ClientVpnAuthorizationRuleArgs
-	state *ec2ClientVpnAuthorizationRuleState
+	Name      string
+	Args      Ec2ClientVpnAuthorizationRuleArgs
+	state     *ec2ClientVpnAuthorizationRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Ec2ClientVpnAuthorizationRule].
 func (ecvar *Ec2ClientVpnAuthorizationRule) Type() string {
 	return "aws_ec2_client_vpn_authorization_rule"
 }
 
+// LocalName returns the local name for [Ec2ClientVpnAuthorizationRule].
 func (ecvar *Ec2ClientVpnAuthorizationRule) LocalName() string {
 	return ecvar.Name
 }
 
+// Configuration returns the configuration (args) for [Ec2ClientVpnAuthorizationRule].
 func (ecvar *Ec2ClientVpnAuthorizationRule) Configuration() interface{} {
 	return ecvar.Args
 }
 
+// DependOn is used for other resources to depend on [Ec2ClientVpnAuthorizationRule].
+func (ecvar *Ec2ClientVpnAuthorizationRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(ecvar)
+}
+
+// Dependencies returns the list of resources [Ec2ClientVpnAuthorizationRule] depends_on.
+func (ecvar *Ec2ClientVpnAuthorizationRule) Dependencies() terra.Dependencies {
+	return ecvar.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Ec2ClientVpnAuthorizationRule].
+func (ecvar *Ec2ClientVpnAuthorizationRule) LifecycleManagement() *terra.Lifecycle {
+	return ecvar.Lifecycle
+}
+
+// Attributes returns the attributes for [Ec2ClientVpnAuthorizationRule].
 func (ecvar *Ec2ClientVpnAuthorizationRule) Attributes() ec2ClientVpnAuthorizationRuleAttributes {
 	return ec2ClientVpnAuthorizationRuleAttributes{ref: terra.ReferenceResource(ecvar)}
 }
 
+// ImportState imports the given attribute values into [Ec2ClientVpnAuthorizationRule]'s state.
 func (ecvar *Ec2ClientVpnAuthorizationRule) ImportState(av io.Reader) error {
 	ecvar.state = &ec2ClientVpnAuthorizationRuleState{}
 	if err := json.NewDecoder(av).Decode(ecvar.state); err != nil {
@@ -49,10 +73,12 @@ func (ecvar *Ec2ClientVpnAuthorizationRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Ec2ClientVpnAuthorizationRule] has state.
 func (ecvar *Ec2ClientVpnAuthorizationRule) State() (*ec2ClientVpnAuthorizationRuleState, bool) {
 	return ecvar.state, ecvar.state != nil
 }
 
+// StateMust returns the state for [Ec2ClientVpnAuthorizationRule]. Panics if the state is nil.
 func (ecvar *Ec2ClientVpnAuthorizationRule) StateMust() *ec2ClientVpnAuthorizationRuleState {
 	if ecvar.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ecvar.Type(), ecvar.LocalName()))
@@ -60,10 +86,7 @@ func (ecvar *Ec2ClientVpnAuthorizationRule) StateMust() *ec2ClientVpnAuthorizati
 	return ecvar.state
 }
 
-func (ecvar *Ec2ClientVpnAuthorizationRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(ecvar)
-}
-
+// Ec2ClientVpnAuthorizationRuleArgs contains the configurations for aws_ec2_client_vpn_authorization_rule.
 type Ec2ClientVpnAuthorizationRuleArgs struct {
 	// AccessGroupId: string, optional
 	AccessGroupId terra.StringValue `hcl:"access_group_id,attr"`
@@ -79,39 +102,43 @@ type Ec2ClientVpnAuthorizationRuleArgs struct {
 	TargetNetworkCidr terra.StringValue `hcl:"target_network_cidr,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *ec2clientvpnauthorizationrule.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Ec2ClientVpnAuthorizationRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ec2ClientVpnAuthorizationRuleAttributes struct {
 	ref terra.Reference
 }
 
+// AccessGroupId returns a reference to field access_group_id of aws_ec2_client_vpn_authorization_rule.
 func (ecvar ec2ClientVpnAuthorizationRuleAttributes) AccessGroupId() terra.StringValue {
-	return terra.ReferenceString(ecvar.ref.Append("access_group_id"))
+	return terra.ReferenceAsString(ecvar.ref.Append("access_group_id"))
 }
 
+// AuthorizeAllGroups returns a reference to field authorize_all_groups of aws_ec2_client_vpn_authorization_rule.
 func (ecvar ec2ClientVpnAuthorizationRuleAttributes) AuthorizeAllGroups() terra.BoolValue {
-	return terra.ReferenceBool(ecvar.ref.Append("authorize_all_groups"))
+	return terra.ReferenceAsBool(ecvar.ref.Append("authorize_all_groups"))
 }
 
+// ClientVpnEndpointId returns a reference to field client_vpn_endpoint_id of aws_ec2_client_vpn_authorization_rule.
 func (ecvar ec2ClientVpnAuthorizationRuleAttributes) ClientVpnEndpointId() terra.StringValue {
-	return terra.ReferenceString(ecvar.ref.Append("client_vpn_endpoint_id"))
+	return terra.ReferenceAsString(ecvar.ref.Append("client_vpn_endpoint_id"))
 }
 
+// Description returns a reference to field description of aws_ec2_client_vpn_authorization_rule.
 func (ecvar ec2ClientVpnAuthorizationRuleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ecvar.ref.Append("description"))
+	return terra.ReferenceAsString(ecvar.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_ec2_client_vpn_authorization_rule.
 func (ecvar ec2ClientVpnAuthorizationRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ecvar.ref.Append("id"))
+	return terra.ReferenceAsString(ecvar.ref.Append("id"))
 }
 
+// TargetNetworkCidr returns a reference to field target_network_cidr of aws_ec2_client_vpn_authorization_rule.
 func (ecvar ec2ClientVpnAuthorizationRuleAttributes) TargetNetworkCidr() terra.StringValue {
-	return terra.ReferenceString(ecvar.ref.Append("target_network_cidr"))
+	return terra.ReferenceAsString(ecvar.ref.Append("target_network_cidr"))
 }
 
 func (ecvar ec2ClientVpnAuthorizationRuleAttributes) Timeouts() ec2clientvpnauthorizationrule.TimeoutsAttributes {
-	return terra.ReferenceSingle[ec2clientvpnauthorizationrule.TimeoutsAttributes](ecvar.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[ec2clientvpnauthorizationrule.TimeoutsAttributes](ecvar.ref.Append("timeouts"))
 }
 
 type ec2ClientVpnAuthorizationRuleState struct {

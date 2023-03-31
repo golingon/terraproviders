@@ -39,27 +39,27 @@ func (s SecretAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SecretAttributes) Context() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](s.ref.Append("context"))
+	return terra.ReferenceAsMap[terra.StringValue](s.ref.Append("context"))
 }
 
 func (s SecretAttributes) EncryptionAlgorithm() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("encryption_algorithm"))
+	return terra.ReferenceAsString(s.ref.Append("encryption_algorithm"))
 }
 
 func (s SecretAttributes) GrantTokens() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("grant_tokens"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("grant_tokens"))
 }
 
 func (s SecretAttributes) KeyId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("key_id"))
+	return terra.ReferenceAsString(s.ref.Append("key_id"))
 }
 
 func (s SecretAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s SecretAttributes) Payload() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("payload"))
+	return terra.ReferenceAsString(s.ref.Append("payload"))
 }
 
 type SecretState struct {

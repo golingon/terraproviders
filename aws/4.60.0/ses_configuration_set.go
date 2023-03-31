@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSesConfigurationSet creates a new instance of [SesConfigurationSet].
 func NewSesConfigurationSet(name string, args SesConfigurationSetArgs) *SesConfigurationSet {
 	return &SesConfigurationSet{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSesConfigurationSet(name string, args SesConfigurationSetArgs) *SesConfi
 
 var _ terra.Resource = (*SesConfigurationSet)(nil)
 
+// SesConfigurationSet represents the Terraform resource aws_ses_configuration_set.
 type SesConfigurationSet struct {
-	Name  string
-	Args  SesConfigurationSetArgs
-	state *sesConfigurationSetState
+	Name      string
+	Args      SesConfigurationSetArgs
+	state     *sesConfigurationSetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SesConfigurationSet].
 func (scs *SesConfigurationSet) Type() string {
 	return "aws_ses_configuration_set"
 }
 
+// LocalName returns the local name for [SesConfigurationSet].
 func (scs *SesConfigurationSet) LocalName() string {
 	return scs.Name
 }
 
+// Configuration returns the configuration (args) for [SesConfigurationSet].
 func (scs *SesConfigurationSet) Configuration() interface{} {
 	return scs.Args
 }
 
+// DependOn is used for other resources to depend on [SesConfigurationSet].
+func (scs *SesConfigurationSet) DependOn() terra.Reference {
+	return terra.ReferenceResource(scs)
+}
+
+// Dependencies returns the list of resources [SesConfigurationSet] depends_on.
+func (scs *SesConfigurationSet) Dependencies() terra.Dependencies {
+	return scs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SesConfigurationSet].
+func (scs *SesConfigurationSet) LifecycleManagement() *terra.Lifecycle {
+	return scs.Lifecycle
+}
+
+// Attributes returns the attributes for [SesConfigurationSet].
 func (scs *SesConfigurationSet) Attributes() sesConfigurationSetAttributes {
 	return sesConfigurationSetAttributes{ref: terra.ReferenceResource(scs)}
 }
 
+// ImportState imports the given attribute values into [SesConfigurationSet]'s state.
 func (scs *SesConfigurationSet) ImportState(av io.Reader) error {
 	scs.state = &sesConfigurationSetState{}
 	if err := json.NewDecoder(av).Decode(scs.state); err != nil {
@@ -49,10 +73,12 @@ func (scs *SesConfigurationSet) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SesConfigurationSet] has state.
 func (scs *SesConfigurationSet) State() (*sesConfigurationSetState, bool) {
 	return scs.state, scs.state != nil
 }
 
+// StateMust returns the state for [SesConfigurationSet]. Panics if the state is nil.
 func (scs *SesConfigurationSet) StateMust() *sesConfigurationSetState {
 	if scs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", scs.Type(), scs.LocalName()))
@@ -60,10 +86,7 @@ func (scs *SesConfigurationSet) StateMust() *sesConfigurationSetState {
 	return scs.state
 }
 
-func (scs *SesConfigurationSet) DependOn() terra.Reference {
-	return terra.ReferenceResource(scs)
-}
-
+// SesConfigurationSetArgs contains the configurations for aws_ses_configuration_set.
 type SesConfigurationSetArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,43 +100,47 @@ type SesConfigurationSetArgs struct {
 	DeliveryOptions *sesconfigurationset.DeliveryOptions `hcl:"delivery_options,block"`
 	// TrackingOptions: optional
 	TrackingOptions *sesconfigurationset.TrackingOptions `hcl:"tracking_options,block"`
-	// DependsOn contains resources that SesConfigurationSet depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sesConfigurationSetAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ses_configuration_set.
 func (scs sesConfigurationSetAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(scs.ref.Append("arn"))
+	return terra.ReferenceAsString(scs.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_ses_configuration_set.
 func (scs sesConfigurationSetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(scs.ref.Append("id"))
+	return terra.ReferenceAsString(scs.ref.Append("id"))
 }
 
+// LastFreshStart returns a reference to field last_fresh_start of aws_ses_configuration_set.
 func (scs sesConfigurationSetAttributes) LastFreshStart() terra.StringValue {
-	return terra.ReferenceString(scs.ref.Append("last_fresh_start"))
+	return terra.ReferenceAsString(scs.ref.Append("last_fresh_start"))
 }
 
+// Name returns a reference to field name of aws_ses_configuration_set.
 func (scs sesConfigurationSetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(scs.ref.Append("name"))
+	return terra.ReferenceAsString(scs.ref.Append("name"))
 }
 
+// ReputationMetricsEnabled returns a reference to field reputation_metrics_enabled of aws_ses_configuration_set.
 func (scs sesConfigurationSetAttributes) ReputationMetricsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(scs.ref.Append("reputation_metrics_enabled"))
+	return terra.ReferenceAsBool(scs.ref.Append("reputation_metrics_enabled"))
 }
 
+// SendingEnabled returns a reference to field sending_enabled of aws_ses_configuration_set.
 func (scs sesConfigurationSetAttributes) SendingEnabled() terra.BoolValue {
-	return terra.ReferenceBool(scs.ref.Append("sending_enabled"))
+	return terra.ReferenceAsBool(scs.ref.Append("sending_enabled"))
 }
 
 func (scs sesConfigurationSetAttributes) DeliveryOptions() terra.ListValue[sesconfigurationset.DeliveryOptionsAttributes] {
-	return terra.ReferenceList[sesconfigurationset.DeliveryOptionsAttributes](scs.ref.Append("delivery_options"))
+	return terra.ReferenceAsList[sesconfigurationset.DeliveryOptionsAttributes](scs.ref.Append("delivery_options"))
 }
 
 func (scs sesConfigurationSetAttributes) TrackingOptions() terra.ListValue[sesconfigurationset.TrackingOptionsAttributes] {
-	return terra.ReferenceList[sesconfigurationset.TrackingOptionsAttributes](scs.ref.Append("tracking_options"))
+	return terra.ReferenceAsList[sesconfigurationset.TrackingOptionsAttributes](scs.ref.Append("tracking_options"))
 }
 
 type sesConfigurationSetState struct {

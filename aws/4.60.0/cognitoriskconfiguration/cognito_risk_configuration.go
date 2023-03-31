@@ -122,11 +122,11 @@ func (atrc AccountTakeoverRiskConfigurationAttributes) InternalTokens() hclwrite
 }
 
 func (atrc AccountTakeoverRiskConfigurationAttributes) Actions() terra.ListValue[AccountTakeoverRiskConfigurationActionsAttributes] {
-	return terra.ReferenceList[AccountTakeoverRiskConfigurationActionsAttributes](atrc.ref.Append("actions"))
+	return terra.ReferenceAsList[AccountTakeoverRiskConfigurationActionsAttributes](atrc.ref.Append("actions"))
 }
 
 func (atrc AccountTakeoverRiskConfigurationAttributes) NotifyConfiguration() terra.ListValue[NotifyConfigurationAttributes] {
-	return terra.ReferenceList[NotifyConfigurationAttributes](atrc.ref.Append("notify_configuration"))
+	return terra.ReferenceAsList[NotifyConfigurationAttributes](atrc.ref.Append("notify_configuration"))
 }
 
 type AccountTakeoverRiskConfigurationActionsAttributes struct {
@@ -146,15 +146,15 @@ func (a AccountTakeoverRiskConfigurationActionsAttributes) InternalTokens() hclw
 }
 
 func (a AccountTakeoverRiskConfigurationActionsAttributes) HighAction() terra.ListValue[HighActionAttributes] {
-	return terra.ReferenceList[HighActionAttributes](a.ref.Append("high_action"))
+	return terra.ReferenceAsList[HighActionAttributes](a.ref.Append("high_action"))
 }
 
 func (a AccountTakeoverRiskConfigurationActionsAttributes) LowAction() terra.ListValue[LowActionAttributes] {
-	return terra.ReferenceList[LowActionAttributes](a.ref.Append("low_action"))
+	return terra.ReferenceAsList[LowActionAttributes](a.ref.Append("low_action"))
 }
 
 func (a AccountTakeoverRiskConfigurationActionsAttributes) MediumAction() terra.ListValue[MediumActionAttributes] {
-	return terra.ReferenceList[MediumActionAttributes](a.ref.Append("medium_action"))
+	return terra.ReferenceAsList[MediumActionAttributes](a.ref.Append("medium_action"))
 }
 
 type HighActionAttributes struct {
@@ -174,11 +174,11 @@ func (ha HighActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ha HighActionAttributes) EventAction() terra.StringValue {
-	return terra.ReferenceString(ha.ref.Append("event_action"))
+	return terra.ReferenceAsString(ha.ref.Append("event_action"))
 }
 
 func (ha HighActionAttributes) Notify() terra.BoolValue {
-	return terra.ReferenceBool(ha.ref.Append("notify"))
+	return terra.ReferenceAsBool(ha.ref.Append("notify"))
 }
 
 type LowActionAttributes struct {
@@ -198,11 +198,11 @@ func (la LowActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (la LowActionAttributes) EventAction() terra.StringValue {
-	return terra.ReferenceString(la.ref.Append("event_action"))
+	return terra.ReferenceAsString(la.ref.Append("event_action"))
 }
 
 func (la LowActionAttributes) Notify() terra.BoolValue {
-	return terra.ReferenceBool(la.ref.Append("notify"))
+	return terra.ReferenceAsBool(la.ref.Append("notify"))
 }
 
 type MediumActionAttributes struct {
@@ -222,11 +222,11 @@ func (ma MediumActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ma MediumActionAttributes) EventAction() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("event_action"))
+	return terra.ReferenceAsString(ma.ref.Append("event_action"))
 }
 
 func (ma MediumActionAttributes) Notify() terra.BoolValue {
-	return terra.ReferenceBool(ma.ref.Append("notify"))
+	return terra.ReferenceAsBool(ma.ref.Append("notify"))
 }
 
 type NotifyConfigurationAttributes struct {
@@ -246,27 +246,27 @@ func (nc NotifyConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nc NotifyConfigurationAttributes) From() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("from"))
+	return terra.ReferenceAsString(nc.ref.Append("from"))
 }
 
 func (nc NotifyConfigurationAttributes) ReplyTo() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("reply_to"))
+	return terra.ReferenceAsString(nc.ref.Append("reply_to"))
 }
 
 func (nc NotifyConfigurationAttributes) SourceArn() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("source_arn"))
+	return terra.ReferenceAsString(nc.ref.Append("source_arn"))
 }
 
 func (nc NotifyConfigurationAttributes) BlockEmail() terra.ListValue[BlockEmailAttributes] {
-	return terra.ReferenceList[BlockEmailAttributes](nc.ref.Append("block_email"))
+	return terra.ReferenceAsList[BlockEmailAttributes](nc.ref.Append("block_email"))
 }
 
 func (nc NotifyConfigurationAttributes) MfaEmail() terra.ListValue[MfaEmailAttributes] {
-	return terra.ReferenceList[MfaEmailAttributes](nc.ref.Append("mfa_email"))
+	return terra.ReferenceAsList[MfaEmailAttributes](nc.ref.Append("mfa_email"))
 }
 
 func (nc NotifyConfigurationAttributes) NoActionEmail() terra.ListValue[NoActionEmailAttributes] {
-	return terra.ReferenceList[NoActionEmailAttributes](nc.ref.Append("no_action_email"))
+	return terra.ReferenceAsList[NoActionEmailAttributes](nc.ref.Append("no_action_email"))
 }
 
 type BlockEmailAttributes struct {
@@ -286,15 +286,15 @@ func (be BlockEmailAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (be BlockEmailAttributes) HtmlBody() terra.StringValue {
-	return terra.ReferenceString(be.ref.Append("html_body"))
+	return terra.ReferenceAsString(be.ref.Append("html_body"))
 }
 
 func (be BlockEmailAttributes) Subject() terra.StringValue {
-	return terra.ReferenceString(be.ref.Append("subject"))
+	return terra.ReferenceAsString(be.ref.Append("subject"))
 }
 
 func (be BlockEmailAttributes) TextBody() terra.StringValue {
-	return terra.ReferenceString(be.ref.Append("text_body"))
+	return terra.ReferenceAsString(be.ref.Append("text_body"))
 }
 
 type MfaEmailAttributes struct {
@@ -314,15 +314,15 @@ func (me MfaEmailAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (me MfaEmailAttributes) HtmlBody() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("html_body"))
+	return terra.ReferenceAsString(me.ref.Append("html_body"))
 }
 
 func (me MfaEmailAttributes) Subject() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("subject"))
+	return terra.ReferenceAsString(me.ref.Append("subject"))
 }
 
 func (me MfaEmailAttributes) TextBody() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("text_body"))
+	return terra.ReferenceAsString(me.ref.Append("text_body"))
 }
 
 type NoActionEmailAttributes struct {
@@ -342,15 +342,15 @@ func (nae NoActionEmailAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nae NoActionEmailAttributes) HtmlBody() terra.StringValue {
-	return terra.ReferenceString(nae.ref.Append("html_body"))
+	return terra.ReferenceAsString(nae.ref.Append("html_body"))
 }
 
 func (nae NoActionEmailAttributes) Subject() terra.StringValue {
-	return terra.ReferenceString(nae.ref.Append("subject"))
+	return terra.ReferenceAsString(nae.ref.Append("subject"))
 }
 
 func (nae NoActionEmailAttributes) TextBody() terra.StringValue {
-	return terra.ReferenceString(nae.ref.Append("text_body"))
+	return terra.ReferenceAsString(nae.ref.Append("text_body"))
 }
 
 type CompromisedCredentialsRiskConfigurationAttributes struct {
@@ -370,11 +370,11 @@ func (ccrc CompromisedCredentialsRiskConfigurationAttributes) InternalTokens() h
 }
 
 func (ccrc CompromisedCredentialsRiskConfigurationAttributes) EventFilter() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ccrc.ref.Append("event_filter"))
+	return terra.ReferenceAsSet[terra.StringValue](ccrc.ref.Append("event_filter"))
 }
 
 func (ccrc CompromisedCredentialsRiskConfigurationAttributes) Actions() terra.ListValue[CompromisedCredentialsRiskConfigurationActionsAttributes] {
-	return terra.ReferenceList[CompromisedCredentialsRiskConfigurationActionsAttributes](ccrc.ref.Append("actions"))
+	return terra.ReferenceAsList[CompromisedCredentialsRiskConfigurationActionsAttributes](ccrc.ref.Append("actions"))
 }
 
 type CompromisedCredentialsRiskConfigurationActionsAttributes struct {
@@ -394,7 +394,7 @@ func (a CompromisedCredentialsRiskConfigurationActionsAttributes) InternalTokens
 }
 
 func (a CompromisedCredentialsRiskConfigurationActionsAttributes) EventAction() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("event_action"))
+	return terra.ReferenceAsString(a.ref.Append("event_action"))
 }
 
 type RiskExceptionConfigurationAttributes struct {
@@ -414,11 +414,11 @@ func (rec RiskExceptionConfigurationAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (rec RiskExceptionConfigurationAttributes) BlockedIpRangeList() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rec.ref.Append("blocked_ip_range_list"))
+	return terra.ReferenceAsSet[terra.StringValue](rec.ref.Append("blocked_ip_range_list"))
 }
 
 func (rec RiskExceptionConfigurationAttributes) SkippedIpRangeList() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rec.ref.Append("skipped_ip_range_list"))
+	return terra.ReferenceAsSet[terra.StringValue](rec.ref.Append("skipped_ip_range_list"))
 }
 
 type AccountTakeoverRiskConfigurationState struct {

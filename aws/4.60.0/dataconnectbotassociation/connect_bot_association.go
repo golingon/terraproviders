@@ -31,11 +31,11 @@ func (lb LexBotAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lb LexBotAttributes) LexRegion() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("lex_region"))
+	return terra.ReferenceAsString(lb.ref.Append("lex_region"))
 }
 
 func (lb LexBotAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("name"))
+	return terra.ReferenceAsString(lb.ref.Append("name"))
 }
 
 type LexBotState struct {

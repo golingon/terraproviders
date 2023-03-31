@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSecurityhubActionTarget creates a new instance of [SecurityhubActionTarget].
 func NewSecurityhubActionTarget(name string, args SecurityhubActionTargetArgs) *SecurityhubActionTarget {
 	return &SecurityhubActionTarget{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSecurityhubActionTarget(name string, args SecurityhubActionTargetArgs) *
 
 var _ terra.Resource = (*SecurityhubActionTarget)(nil)
 
+// SecurityhubActionTarget represents the Terraform resource aws_securityhub_action_target.
 type SecurityhubActionTarget struct {
-	Name  string
-	Args  SecurityhubActionTargetArgs
-	state *securityhubActionTargetState
+	Name      string
+	Args      SecurityhubActionTargetArgs
+	state     *securityhubActionTargetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SecurityhubActionTarget].
 func (sat *SecurityhubActionTarget) Type() string {
 	return "aws_securityhub_action_target"
 }
 
+// LocalName returns the local name for [SecurityhubActionTarget].
 func (sat *SecurityhubActionTarget) LocalName() string {
 	return sat.Name
 }
 
+// Configuration returns the configuration (args) for [SecurityhubActionTarget].
 func (sat *SecurityhubActionTarget) Configuration() interface{} {
 	return sat.Args
 }
 
+// DependOn is used for other resources to depend on [SecurityhubActionTarget].
+func (sat *SecurityhubActionTarget) DependOn() terra.Reference {
+	return terra.ReferenceResource(sat)
+}
+
+// Dependencies returns the list of resources [SecurityhubActionTarget] depends_on.
+func (sat *SecurityhubActionTarget) Dependencies() terra.Dependencies {
+	return sat.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SecurityhubActionTarget].
+func (sat *SecurityhubActionTarget) LifecycleManagement() *terra.Lifecycle {
+	return sat.Lifecycle
+}
+
+// Attributes returns the attributes for [SecurityhubActionTarget].
 func (sat *SecurityhubActionTarget) Attributes() securityhubActionTargetAttributes {
 	return securityhubActionTargetAttributes{ref: terra.ReferenceResource(sat)}
 }
 
+// ImportState imports the given attribute values into [SecurityhubActionTarget]'s state.
 func (sat *SecurityhubActionTarget) ImportState(av io.Reader) error {
 	sat.state = &securityhubActionTargetState{}
 	if err := json.NewDecoder(av).Decode(sat.state); err != nil {
@@ -48,10 +72,12 @@ func (sat *SecurityhubActionTarget) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SecurityhubActionTarget] has state.
 func (sat *SecurityhubActionTarget) State() (*securityhubActionTargetState, bool) {
 	return sat.state, sat.state != nil
 }
 
+// StateMust returns the state for [SecurityhubActionTarget]. Panics if the state is nil.
 func (sat *SecurityhubActionTarget) StateMust() *securityhubActionTargetState {
 	if sat.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sat.Type(), sat.LocalName()))
@@ -59,10 +85,7 @@ func (sat *SecurityhubActionTarget) StateMust() *securityhubActionTargetState {
 	return sat.state
 }
 
-func (sat *SecurityhubActionTarget) DependOn() terra.Reference {
-	return terra.ReferenceResource(sat)
-}
-
+// SecurityhubActionTargetArgs contains the configurations for aws_securityhub_action_target.
 type SecurityhubActionTargetArgs struct {
 	// Description: string, required
 	Description terra.StringValue `hcl:"description,attr" validate:"required"`
@@ -72,31 +95,34 @@ type SecurityhubActionTargetArgs struct {
 	Identifier terra.StringValue `hcl:"identifier,attr" validate:"required"`
 	// Name: string, required
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
-	// DependsOn contains resources that SecurityhubActionTarget depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type securityhubActionTargetAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_securityhub_action_target.
 func (sat securityhubActionTargetAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sat.ref.Append("arn"))
+	return terra.ReferenceAsString(sat.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_securityhub_action_target.
 func (sat securityhubActionTargetAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sat.ref.Append("description"))
+	return terra.ReferenceAsString(sat.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_securityhub_action_target.
 func (sat securityhubActionTargetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sat.ref.Append("id"))
+	return terra.ReferenceAsString(sat.ref.Append("id"))
 }
 
+// Identifier returns a reference to field identifier of aws_securityhub_action_target.
 func (sat securityhubActionTargetAttributes) Identifier() terra.StringValue {
-	return terra.ReferenceString(sat.ref.Append("identifier"))
+	return terra.ReferenceAsString(sat.ref.Append("identifier"))
 }
 
+// Name returns a reference to field name of aws_securityhub_action_target.
 func (sat securityhubActionTargetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sat.ref.Append("name"))
+	return terra.ReferenceAsString(sat.ref.Append("name"))
 }
 
 type securityhubActionTargetState struct {

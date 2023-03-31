@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSagemakerNotebookInstanceLifecycleConfiguration creates a new instance of [SagemakerNotebookInstanceLifecycleConfiguration].
 func NewSagemakerNotebookInstanceLifecycleConfiguration(name string, args SagemakerNotebookInstanceLifecycleConfigurationArgs) *SagemakerNotebookInstanceLifecycleConfiguration {
 	return &SagemakerNotebookInstanceLifecycleConfiguration{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSagemakerNotebookInstanceLifecycleConfiguration(name string, args Sagema
 
 var _ terra.Resource = (*SagemakerNotebookInstanceLifecycleConfiguration)(nil)
 
+// SagemakerNotebookInstanceLifecycleConfiguration represents the Terraform resource aws_sagemaker_notebook_instance_lifecycle_configuration.
 type SagemakerNotebookInstanceLifecycleConfiguration struct {
-	Name  string
-	Args  SagemakerNotebookInstanceLifecycleConfigurationArgs
-	state *sagemakerNotebookInstanceLifecycleConfigurationState
+	Name      string
+	Args      SagemakerNotebookInstanceLifecycleConfigurationArgs
+	state     *sagemakerNotebookInstanceLifecycleConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SagemakerNotebookInstanceLifecycleConfiguration].
 func (snilc *SagemakerNotebookInstanceLifecycleConfiguration) Type() string {
 	return "aws_sagemaker_notebook_instance_lifecycle_configuration"
 }
 
+// LocalName returns the local name for [SagemakerNotebookInstanceLifecycleConfiguration].
 func (snilc *SagemakerNotebookInstanceLifecycleConfiguration) LocalName() string {
 	return snilc.Name
 }
 
+// Configuration returns the configuration (args) for [SagemakerNotebookInstanceLifecycleConfiguration].
 func (snilc *SagemakerNotebookInstanceLifecycleConfiguration) Configuration() interface{} {
 	return snilc.Args
 }
 
+// DependOn is used for other resources to depend on [SagemakerNotebookInstanceLifecycleConfiguration].
+func (snilc *SagemakerNotebookInstanceLifecycleConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(snilc)
+}
+
+// Dependencies returns the list of resources [SagemakerNotebookInstanceLifecycleConfiguration] depends_on.
+func (snilc *SagemakerNotebookInstanceLifecycleConfiguration) Dependencies() terra.Dependencies {
+	return snilc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SagemakerNotebookInstanceLifecycleConfiguration].
+func (snilc *SagemakerNotebookInstanceLifecycleConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return snilc.Lifecycle
+}
+
+// Attributes returns the attributes for [SagemakerNotebookInstanceLifecycleConfiguration].
 func (snilc *SagemakerNotebookInstanceLifecycleConfiguration) Attributes() sagemakerNotebookInstanceLifecycleConfigurationAttributes {
 	return sagemakerNotebookInstanceLifecycleConfigurationAttributes{ref: terra.ReferenceResource(snilc)}
 }
 
+// ImportState imports the given attribute values into [SagemakerNotebookInstanceLifecycleConfiguration]'s state.
 func (snilc *SagemakerNotebookInstanceLifecycleConfiguration) ImportState(av io.Reader) error {
 	snilc.state = &sagemakerNotebookInstanceLifecycleConfigurationState{}
 	if err := json.NewDecoder(av).Decode(snilc.state); err != nil {
@@ -48,10 +72,12 @@ func (snilc *SagemakerNotebookInstanceLifecycleConfiguration) ImportState(av io.
 	return nil
 }
 
+// State returns the state and a bool indicating if [SagemakerNotebookInstanceLifecycleConfiguration] has state.
 func (snilc *SagemakerNotebookInstanceLifecycleConfiguration) State() (*sagemakerNotebookInstanceLifecycleConfigurationState, bool) {
 	return snilc.state, snilc.state != nil
 }
 
+// StateMust returns the state for [SagemakerNotebookInstanceLifecycleConfiguration]. Panics if the state is nil.
 func (snilc *SagemakerNotebookInstanceLifecycleConfiguration) StateMust() *sagemakerNotebookInstanceLifecycleConfigurationState {
 	if snilc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", snilc.Type(), snilc.LocalName()))
@@ -59,10 +85,7 @@ func (snilc *SagemakerNotebookInstanceLifecycleConfiguration) StateMust() *sagem
 	return snilc.state
 }
 
-func (snilc *SagemakerNotebookInstanceLifecycleConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(snilc)
-}
-
+// SagemakerNotebookInstanceLifecycleConfigurationArgs contains the configurations for aws_sagemaker_notebook_instance_lifecycle_configuration.
 type SagemakerNotebookInstanceLifecycleConfigurationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -72,31 +95,34 @@ type SagemakerNotebookInstanceLifecycleConfigurationArgs struct {
 	OnCreate terra.StringValue `hcl:"on_create,attr"`
 	// OnStart: string, optional
 	OnStart terra.StringValue `hcl:"on_start,attr"`
-	// DependsOn contains resources that SagemakerNotebookInstanceLifecycleConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sagemakerNotebookInstanceLifecycleConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_sagemaker_notebook_instance_lifecycle_configuration.
 func (snilc sagemakerNotebookInstanceLifecycleConfigurationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(snilc.ref.Append("arn"))
+	return terra.ReferenceAsString(snilc.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_sagemaker_notebook_instance_lifecycle_configuration.
 func (snilc sagemakerNotebookInstanceLifecycleConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(snilc.ref.Append("id"))
+	return terra.ReferenceAsString(snilc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_sagemaker_notebook_instance_lifecycle_configuration.
 func (snilc sagemakerNotebookInstanceLifecycleConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(snilc.ref.Append("name"))
+	return terra.ReferenceAsString(snilc.ref.Append("name"))
 }
 
+// OnCreate returns a reference to field on_create of aws_sagemaker_notebook_instance_lifecycle_configuration.
 func (snilc sagemakerNotebookInstanceLifecycleConfigurationAttributes) OnCreate() terra.StringValue {
-	return terra.ReferenceString(snilc.ref.Append("on_create"))
+	return terra.ReferenceAsString(snilc.ref.Append("on_create"))
 }
 
+// OnStart returns a reference to field on_start of aws_sagemaker_notebook_instance_lifecycle_configuration.
 func (snilc sagemakerNotebookInstanceLifecycleConfigurationAttributes) OnStart() terra.StringValue {
-	return terra.ReferenceString(snilc.ref.Append("on_start"))
+	return terra.ReferenceAsString(snilc.ref.Append("on_start"))
 }
 
 type sagemakerNotebookInstanceLifecycleConfigurationState struct {

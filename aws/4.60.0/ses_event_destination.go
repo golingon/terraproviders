@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSesEventDestination creates a new instance of [SesEventDestination].
 func NewSesEventDestination(name string, args SesEventDestinationArgs) *SesEventDestination {
 	return &SesEventDestination{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSesEventDestination(name string, args SesEventDestinationArgs) *SesEvent
 
 var _ terra.Resource = (*SesEventDestination)(nil)
 
+// SesEventDestination represents the Terraform resource aws_ses_event_destination.
 type SesEventDestination struct {
-	Name  string
-	Args  SesEventDestinationArgs
-	state *sesEventDestinationState
+	Name      string
+	Args      SesEventDestinationArgs
+	state     *sesEventDestinationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SesEventDestination].
 func (sed *SesEventDestination) Type() string {
 	return "aws_ses_event_destination"
 }
 
+// LocalName returns the local name for [SesEventDestination].
 func (sed *SesEventDestination) LocalName() string {
 	return sed.Name
 }
 
+// Configuration returns the configuration (args) for [SesEventDestination].
 func (sed *SesEventDestination) Configuration() interface{} {
 	return sed.Args
 }
 
+// DependOn is used for other resources to depend on [SesEventDestination].
+func (sed *SesEventDestination) DependOn() terra.Reference {
+	return terra.ReferenceResource(sed)
+}
+
+// Dependencies returns the list of resources [SesEventDestination] depends_on.
+func (sed *SesEventDestination) Dependencies() terra.Dependencies {
+	return sed.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SesEventDestination].
+func (sed *SesEventDestination) LifecycleManagement() *terra.Lifecycle {
+	return sed.Lifecycle
+}
+
+// Attributes returns the attributes for [SesEventDestination].
 func (sed *SesEventDestination) Attributes() sesEventDestinationAttributes {
 	return sesEventDestinationAttributes{ref: terra.ReferenceResource(sed)}
 }
 
+// ImportState imports the given attribute values into [SesEventDestination]'s state.
 func (sed *SesEventDestination) ImportState(av io.Reader) error {
 	sed.state = &sesEventDestinationState{}
 	if err := json.NewDecoder(av).Decode(sed.state); err != nil {
@@ -49,10 +73,12 @@ func (sed *SesEventDestination) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SesEventDestination] has state.
 func (sed *SesEventDestination) State() (*sesEventDestinationState, bool) {
 	return sed.state, sed.state != nil
 }
 
+// StateMust returns the state for [SesEventDestination]. Panics if the state is nil.
 func (sed *SesEventDestination) StateMust() *sesEventDestinationState {
 	if sed.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sed.Type(), sed.LocalName()))
@@ -60,10 +86,7 @@ func (sed *SesEventDestination) StateMust() *sesEventDestinationState {
 	return sed.state
 }
 
-func (sed *SesEventDestination) DependOn() terra.Reference {
-	return terra.ReferenceResource(sed)
-}
-
+// SesEventDestinationArgs contains the configurations for aws_ses_event_destination.
 type SesEventDestinationArgs struct {
 	// ConfigurationSetName: string, required
 	ConfigurationSetName terra.StringValue `hcl:"configuration_set_name,attr" validate:"required"`
@@ -81,47 +104,51 @@ type SesEventDestinationArgs struct {
 	KinesisDestination *seseventdestination.KinesisDestination `hcl:"kinesis_destination,block"`
 	// SnsDestination: optional
 	SnsDestination *seseventdestination.SnsDestination `hcl:"sns_destination,block"`
-	// DependsOn contains resources that SesEventDestination depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sesEventDestinationAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ses_event_destination.
 func (sed sesEventDestinationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sed.ref.Append("arn"))
+	return terra.ReferenceAsString(sed.ref.Append("arn"))
 }
 
+// ConfigurationSetName returns a reference to field configuration_set_name of aws_ses_event_destination.
 func (sed sesEventDestinationAttributes) ConfigurationSetName() terra.StringValue {
-	return terra.ReferenceString(sed.ref.Append("configuration_set_name"))
+	return terra.ReferenceAsString(sed.ref.Append("configuration_set_name"))
 }
 
+// Enabled returns a reference to field enabled of aws_ses_event_destination.
 func (sed sesEventDestinationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(sed.ref.Append("enabled"))
+	return terra.ReferenceAsBool(sed.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of aws_ses_event_destination.
 func (sed sesEventDestinationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sed.ref.Append("id"))
+	return terra.ReferenceAsString(sed.ref.Append("id"))
 }
 
+// MatchingTypes returns a reference to field matching_types of aws_ses_event_destination.
 func (sed sesEventDestinationAttributes) MatchingTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sed.ref.Append("matching_types"))
+	return terra.ReferenceAsSet[terra.StringValue](sed.ref.Append("matching_types"))
 }
 
+// Name returns a reference to field name of aws_ses_event_destination.
 func (sed sesEventDestinationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sed.ref.Append("name"))
+	return terra.ReferenceAsString(sed.ref.Append("name"))
 }
 
 func (sed sesEventDestinationAttributes) CloudwatchDestination() terra.SetValue[seseventdestination.CloudwatchDestinationAttributes] {
-	return terra.ReferenceSet[seseventdestination.CloudwatchDestinationAttributes](sed.ref.Append("cloudwatch_destination"))
+	return terra.ReferenceAsSet[seseventdestination.CloudwatchDestinationAttributes](sed.ref.Append("cloudwatch_destination"))
 }
 
 func (sed sesEventDestinationAttributes) KinesisDestination() terra.ListValue[seseventdestination.KinesisDestinationAttributes] {
-	return terra.ReferenceList[seseventdestination.KinesisDestinationAttributes](sed.ref.Append("kinesis_destination"))
+	return terra.ReferenceAsList[seseventdestination.KinesisDestinationAttributes](sed.ref.Append("kinesis_destination"))
 }
 
 func (sed sesEventDestinationAttributes) SnsDestination() terra.ListValue[seseventdestination.SnsDestinationAttributes] {
-	return terra.ReferenceList[seseventdestination.SnsDestinationAttributes](sed.ref.Append("sns_destination"))
+	return terra.ReferenceAsList[seseventdestination.SnsDestinationAttributes](sed.ref.Append("sns_destination"))
 }
 
 type sesEventDestinationState struct {

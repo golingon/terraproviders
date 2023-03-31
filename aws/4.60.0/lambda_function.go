@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLambdaFunction creates a new instance of [LambdaFunction].
 func NewLambdaFunction(name string, args LambdaFunctionArgs) *LambdaFunction {
 	return &LambdaFunction{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLambdaFunction(name string, args LambdaFunctionArgs) *LambdaFunction {
 
 var _ terra.Resource = (*LambdaFunction)(nil)
 
+// LambdaFunction represents the Terraform resource aws_lambda_function.
 type LambdaFunction struct {
-	Name  string
-	Args  LambdaFunctionArgs
-	state *lambdaFunctionState
+	Name      string
+	Args      LambdaFunctionArgs
+	state     *lambdaFunctionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LambdaFunction].
 func (lf *LambdaFunction) Type() string {
 	return "aws_lambda_function"
 }
 
+// LocalName returns the local name for [LambdaFunction].
 func (lf *LambdaFunction) LocalName() string {
 	return lf.Name
 }
 
+// Configuration returns the configuration (args) for [LambdaFunction].
 func (lf *LambdaFunction) Configuration() interface{} {
 	return lf.Args
 }
 
+// DependOn is used for other resources to depend on [LambdaFunction].
+func (lf *LambdaFunction) DependOn() terra.Reference {
+	return terra.ReferenceResource(lf)
+}
+
+// Dependencies returns the list of resources [LambdaFunction] depends_on.
+func (lf *LambdaFunction) Dependencies() terra.Dependencies {
+	return lf.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LambdaFunction].
+func (lf *LambdaFunction) LifecycleManagement() *terra.Lifecycle {
+	return lf.Lifecycle
+}
+
+// Attributes returns the attributes for [LambdaFunction].
 func (lf *LambdaFunction) Attributes() lambdaFunctionAttributes {
 	return lambdaFunctionAttributes{ref: terra.ReferenceResource(lf)}
 }
 
+// ImportState imports the given attribute values into [LambdaFunction]'s state.
 func (lf *LambdaFunction) ImportState(av io.Reader) error {
 	lf.state = &lambdaFunctionState{}
 	if err := json.NewDecoder(av).Decode(lf.state); err != nil {
@@ -49,10 +73,12 @@ func (lf *LambdaFunction) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LambdaFunction] has state.
 func (lf *LambdaFunction) State() (*lambdaFunctionState, bool) {
 	return lf.state, lf.state != nil
 }
 
+// StateMust returns the state for [LambdaFunction]. Panics if the state is nil.
 func (lf *LambdaFunction) StateMust() *lambdaFunctionState {
 	if lf.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lf.Type(), lf.LocalName()))
@@ -60,10 +86,7 @@ func (lf *LambdaFunction) StateMust() *lambdaFunctionState {
 	return lf.state
 }
 
-func (lf *LambdaFunction) DependOn() terra.Reference {
-	return terra.ReferenceResource(lf)
-}
-
+// LambdaFunctionArgs contains the configurations for aws_lambda_function.
 type LambdaFunctionArgs struct {
 	// Architectures: list of string, optional
 	Architectures terra.ListValue[terra.StringValue] `hcl:"architectures,attr"`
@@ -135,187 +158,220 @@ type LambdaFunctionArgs struct {
 	TracingConfig *lambdafunction.TracingConfig `hcl:"tracing_config,block"`
 	// VpcConfig: optional
 	VpcConfig *lambdafunction.VpcConfig `hcl:"vpc_config,block"`
-	// DependsOn contains resources that LambdaFunction depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lambdaFunctionAttributes struct {
 	ref terra.Reference
 }
 
+// Architectures returns a reference to field architectures of aws_lambda_function.
 func (lf lambdaFunctionAttributes) Architectures() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lf.ref.Append("architectures"))
+	return terra.ReferenceAsList[terra.StringValue](lf.ref.Append("architectures"))
 }
 
+// Arn returns a reference to field arn of aws_lambda_function.
 func (lf lambdaFunctionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("arn"))
+	return terra.ReferenceAsString(lf.ref.Append("arn"))
 }
 
+// CodeSigningConfigArn returns a reference to field code_signing_config_arn of aws_lambda_function.
 func (lf lambdaFunctionAttributes) CodeSigningConfigArn() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("code_signing_config_arn"))
+	return terra.ReferenceAsString(lf.ref.Append("code_signing_config_arn"))
 }
 
+// Description returns a reference to field description of aws_lambda_function.
 func (lf lambdaFunctionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("description"))
+	return terra.ReferenceAsString(lf.ref.Append("description"))
 }
 
+// Filename returns a reference to field filename of aws_lambda_function.
 func (lf lambdaFunctionAttributes) Filename() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("filename"))
+	return terra.ReferenceAsString(lf.ref.Append("filename"))
 }
 
+// FunctionName returns a reference to field function_name of aws_lambda_function.
 func (lf lambdaFunctionAttributes) FunctionName() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("function_name"))
+	return terra.ReferenceAsString(lf.ref.Append("function_name"))
 }
 
+// Handler returns a reference to field handler of aws_lambda_function.
 func (lf lambdaFunctionAttributes) Handler() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("handler"))
+	return terra.ReferenceAsString(lf.ref.Append("handler"))
 }
 
+// Id returns a reference to field id of aws_lambda_function.
 func (lf lambdaFunctionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("id"))
+	return terra.ReferenceAsString(lf.ref.Append("id"))
 }
 
+// ImageUri returns a reference to field image_uri of aws_lambda_function.
 func (lf lambdaFunctionAttributes) ImageUri() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("image_uri"))
+	return terra.ReferenceAsString(lf.ref.Append("image_uri"))
 }
 
+// InvokeArn returns a reference to field invoke_arn of aws_lambda_function.
 func (lf lambdaFunctionAttributes) InvokeArn() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("invoke_arn"))
+	return terra.ReferenceAsString(lf.ref.Append("invoke_arn"))
 }
 
+// KmsKeyArn returns a reference to field kms_key_arn of aws_lambda_function.
 func (lf lambdaFunctionAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(lf.ref.Append("kms_key_arn"))
 }
 
+// LastModified returns a reference to field last_modified of aws_lambda_function.
 func (lf lambdaFunctionAttributes) LastModified() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("last_modified"))
+	return terra.ReferenceAsString(lf.ref.Append("last_modified"))
 }
 
+// Layers returns a reference to field layers of aws_lambda_function.
 func (lf lambdaFunctionAttributes) Layers() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lf.ref.Append("layers"))
+	return terra.ReferenceAsList[terra.StringValue](lf.ref.Append("layers"))
 }
 
+// MemorySize returns a reference to field memory_size of aws_lambda_function.
 func (lf lambdaFunctionAttributes) MemorySize() terra.NumberValue {
-	return terra.ReferenceNumber(lf.ref.Append("memory_size"))
+	return terra.ReferenceAsNumber(lf.ref.Append("memory_size"))
 }
 
+// PackageType returns a reference to field package_type of aws_lambda_function.
 func (lf lambdaFunctionAttributes) PackageType() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("package_type"))
+	return terra.ReferenceAsString(lf.ref.Append("package_type"))
 }
 
+// Publish returns a reference to field publish of aws_lambda_function.
 func (lf lambdaFunctionAttributes) Publish() terra.BoolValue {
-	return terra.ReferenceBool(lf.ref.Append("publish"))
+	return terra.ReferenceAsBool(lf.ref.Append("publish"))
 }
 
+// QualifiedArn returns a reference to field qualified_arn of aws_lambda_function.
 func (lf lambdaFunctionAttributes) QualifiedArn() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("qualified_arn"))
+	return terra.ReferenceAsString(lf.ref.Append("qualified_arn"))
 }
 
+// QualifiedInvokeArn returns a reference to field qualified_invoke_arn of aws_lambda_function.
 func (lf lambdaFunctionAttributes) QualifiedInvokeArn() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("qualified_invoke_arn"))
+	return terra.ReferenceAsString(lf.ref.Append("qualified_invoke_arn"))
 }
 
+// ReplaceSecurityGroupsOnDestroy returns a reference to field replace_security_groups_on_destroy of aws_lambda_function.
 func (lf lambdaFunctionAttributes) ReplaceSecurityGroupsOnDestroy() terra.BoolValue {
-	return terra.ReferenceBool(lf.ref.Append("replace_security_groups_on_destroy"))
+	return terra.ReferenceAsBool(lf.ref.Append("replace_security_groups_on_destroy"))
 }
 
+// ReplacementSecurityGroupIds returns a reference to field replacement_security_group_ids of aws_lambda_function.
 func (lf lambdaFunctionAttributes) ReplacementSecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](lf.ref.Append("replacement_security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](lf.ref.Append("replacement_security_group_ids"))
 }
 
+// ReservedConcurrentExecutions returns a reference to field reserved_concurrent_executions of aws_lambda_function.
 func (lf lambdaFunctionAttributes) ReservedConcurrentExecutions() terra.NumberValue {
-	return terra.ReferenceNumber(lf.ref.Append("reserved_concurrent_executions"))
+	return terra.ReferenceAsNumber(lf.ref.Append("reserved_concurrent_executions"))
 }
 
+// Role returns a reference to field role of aws_lambda_function.
 func (lf lambdaFunctionAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("role"))
+	return terra.ReferenceAsString(lf.ref.Append("role"))
 }
 
+// Runtime returns a reference to field runtime of aws_lambda_function.
 func (lf lambdaFunctionAttributes) Runtime() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("runtime"))
+	return terra.ReferenceAsString(lf.ref.Append("runtime"))
 }
 
+// S3Bucket returns a reference to field s3_bucket of aws_lambda_function.
 func (lf lambdaFunctionAttributes) S3Bucket() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("s3_bucket"))
+	return terra.ReferenceAsString(lf.ref.Append("s3_bucket"))
 }
 
+// S3Key returns a reference to field s3_key of aws_lambda_function.
 func (lf lambdaFunctionAttributes) S3Key() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("s3_key"))
+	return terra.ReferenceAsString(lf.ref.Append("s3_key"))
 }
 
+// S3ObjectVersion returns a reference to field s3_object_version of aws_lambda_function.
 func (lf lambdaFunctionAttributes) S3ObjectVersion() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("s3_object_version"))
+	return terra.ReferenceAsString(lf.ref.Append("s3_object_version"))
 }
 
+// SigningJobArn returns a reference to field signing_job_arn of aws_lambda_function.
 func (lf lambdaFunctionAttributes) SigningJobArn() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("signing_job_arn"))
+	return terra.ReferenceAsString(lf.ref.Append("signing_job_arn"))
 }
 
+// SigningProfileVersionArn returns a reference to field signing_profile_version_arn of aws_lambda_function.
 func (lf lambdaFunctionAttributes) SigningProfileVersionArn() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("signing_profile_version_arn"))
+	return terra.ReferenceAsString(lf.ref.Append("signing_profile_version_arn"))
 }
 
+// SkipDestroy returns a reference to field skip_destroy of aws_lambda_function.
 func (lf lambdaFunctionAttributes) SkipDestroy() terra.BoolValue {
-	return terra.ReferenceBool(lf.ref.Append("skip_destroy"))
+	return terra.ReferenceAsBool(lf.ref.Append("skip_destroy"))
 }
 
+// SourceCodeHash returns a reference to field source_code_hash of aws_lambda_function.
 func (lf lambdaFunctionAttributes) SourceCodeHash() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("source_code_hash"))
+	return terra.ReferenceAsString(lf.ref.Append("source_code_hash"))
 }
 
+// SourceCodeSize returns a reference to field source_code_size of aws_lambda_function.
 func (lf lambdaFunctionAttributes) SourceCodeSize() terra.NumberValue {
-	return terra.ReferenceNumber(lf.ref.Append("source_code_size"))
+	return terra.ReferenceAsNumber(lf.ref.Append("source_code_size"))
 }
 
+// Tags returns a reference to field tags of aws_lambda_function.
 func (lf lambdaFunctionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lf.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](lf.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_lambda_function.
 func (lf lambdaFunctionAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lf.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](lf.ref.Append("tags_all"))
 }
 
+// Timeout returns a reference to field timeout of aws_lambda_function.
 func (lf lambdaFunctionAttributes) Timeout() terra.NumberValue {
-	return terra.ReferenceNumber(lf.ref.Append("timeout"))
+	return terra.ReferenceAsNumber(lf.ref.Append("timeout"))
 }
 
+// Version returns a reference to field version of aws_lambda_function.
 func (lf lambdaFunctionAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("version"))
+	return terra.ReferenceAsString(lf.ref.Append("version"))
 }
 
 func (lf lambdaFunctionAttributes) DeadLetterConfig() terra.ListValue[lambdafunction.DeadLetterConfigAttributes] {
-	return terra.ReferenceList[lambdafunction.DeadLetterConfigAttributes](lf.ref.Append("dead_letter_config"))
+	return terra.ReferenceAsList[lambdafunction.DeadLetterConfigAttributes](lf.ref.Append("dead_letter_config"))
 }
 
 func (lf lambdaFunctionAttributes) Environment() terra.ListValue[lambdafunction.EnvironmentAttributes] {
-	return terra.ReferenceList[lambdafunction.EnvironmentAttributes](lf.ref.Append("environment"))
+	return terra.ReferenceAsList[lambdafunction.EnvironmentAttributes](lf.ref.Append("environment"))
 }
 
 func (lf lambdaFunctionAttributes) EphemeralStorage() terra.ListValue[lambdafunction.EphemeralStorageAttributes] {
-	return terra.ReferenceList[lambdafunction.EphemeralStorageAttributes](lf.ref.Append("ephemeral_storage"))
+	return terra.ReferenceAsList[lambdafunction.EphemeralStorageAttributes](lf.ref.Append("ephemeral_storage"))
 }
 
 func (lf lambdaFunctionAttributes) FileSystemConfig() terra.ListValue[lambdafunction.FileSystemConfigAttributes] {
-	return terra.ReferenceList[lambdafunction.FileSystemConfigAttributes](lf.ref.Append("file_system_config"))
+	return terra.ReferenceAsList[lambdafunction.FileSystemConfigAttributes](lf.ref.Append("file_system_config"))
 }
 
 func (lf lambdaFunctionAttributes) ImageConfig() terra.ListValue[lambdafunction.ImageConfigAttributes] {
-	return terra.ReferenceList[lambdafunction.ImageConfigAttributes](lf.ref.Append("image_config"))
+	return terra.ReferenceAsList[lambdafunction.ImageConfigAttributes](lf.ref.Append("image_config"))
 }
 
 func (lf lambdaFunctionAttributes) SnapStart() terra.ListValue[lambdafunction.SnapStartAttributes] {
-	return terra.ReferenceList[lambdafunction.SnapStartAttributes](lf.ref.Append("snap_start"))
+	return terra.ReferenceAsList[lambdafunction.SnapStartAttributes](lf.ref.Append("snap_start"))
 }
 
 func (lf lambdaFunctionAttributes) Timeouts() lambdafunction.TimeoutsAttributes {
-	return terra.ReferenceSingle[lambdafunction.TimeoutsAttributes](lf.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[lambdafunction.TimeoutsAttributes](lf.ref.Append("timeouts"))
 }
 
 func (lf lambdaFunctionAttributes) TracingConfig() terra.ListValue[lambdafunction.TracingConfigAttributes] {
-	return terra.ReferenceList[lambdafunction.TracingConfigAttributes](lf.ref.Append("tracing_config"))
+	return terra.ReferenceAsList[lambdafunction.TracingConfigAttributes](lf.ref.Append("tracing_config"))
 }
 
 func (lf lambdaFunctionAttributes) VpcConfig() terra.ListValue[lambdafunction.VpcConfigAttributes] {
-	return terra.ReferenceList[lambdafunction.VpcConfigAttributes](lf.ref.Append("vpc_config"))
+	return terra.ReferenceAsList[lambdafunction.VpcConfigAttributes](lf.ref.Append("vpc_config"))
 }
 
 type lambdaFunctionState struct {

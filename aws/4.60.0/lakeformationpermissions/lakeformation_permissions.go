@@ -89,11 +89,11 @@ func (dl DataLocationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dl DataLocationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("arn"))
+	return terra.ReferenceAsString(dl.ref.Append("arn"))
 }
 
 func (dl DataLocationAttributes) CatalogId() terra.StringValue {
-	return terra.ReferenceString(dl.ref.Append("catalog_id"))
+	return terra.ReferenceAsString(dl.ref.Append("catalog_id"))
 }
 
 type DatabaseAttributes struct {
@@ -113,11 +113,11 @@ func (d DatabaseAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DatabaseAttributes) CatalogId() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("catalog_id"))
+	return terra.ReferenceAsString(d.ref.Append("catalog_id"))
 }
 
 func (d DatabaseAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("name"))
+	return terra.ReferenceAsString(d.ref.Append("name"))
 }
 
 type LfTagAttributes struct {
@@ -137,15 +137,15 @@ func (lt LfTagAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lt LfTagAttributes) CatalogId() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("catalog_id"))
+	return terra.ReferenceAsString(lt.ref.Append("catalog_id"))
 }
 
 func (lt LfTagAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("key"))
+	return terra.ReferenceAsString(lt.ref.Append("key"))
 }
 
 func (lt LfTagAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](lt.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](lt.ref.Append("values"))
 }
 
 type LfTagPolicyAttributes struct {
@@ -165,15 +165,15 @@ func (ltp LfTagPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ltp LfTagPolicyAttributes) CatalogId() terra.StringValue {
-	return terra.ReferenceString(ltp.ref.Append("catalog_id"))
+	return terra.ReferenceAsString(ltp.ref.Append("catalog_id"))
 }
 
 func (ltp LfTagPolicyAttributes) ResourceType() terra.StringValue {
-	return terra.ReferenceString(ltp.ref.Append("resource_type"))
+	return terra.ReferenceAsString(ltp.ref.Append("resource_type"))
 }
 
 func (ltp LfTagPolicyAttributes) Expression() terra.ListValue[ExpressionAttributes] {
-	return terra.ReferenceList[ExpressionAttributes](ltp.ref.Append("expression"))
+	return terra.ReferenceAsList[ExpressionAttributes](ltp.ref.Append("expression"))
 }
 
 type ExpressionAttributes struct {
@@ -193,11 +193,11 @@ func (e ExpressionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e ExpressionAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("key"))
+	return terra.ReferenceAsString(e.ref.Append("key"))
 }
 
 func (e ExpressionAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](e.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](e.ref.Append("values"))
 }
 
 type TableAttributes struct {
@@ -217,19 +217,19 @@ func (t TableAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TableAttributes) CatalogId() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("catalog_id"))
+	return terra.ReferenceAsString(t.ref.Append("catalog_id"))
 }
 
 func (t TableAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("database_name"))
+	return terra.ReferenceAsString(t.ref.Append("database_name"))
 }
 
 func (t TableAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("name"))
+	return terra.ReferenceAsString(t.ref.Append("name"))
 }
 
 func (t TableAttributes) Wildcard() terra.BoolValue {
-	return terra.ReferenceBool(t.ref.Append("wildcard"))
+	return terra.ReferenceAsBool(t.ref.Append("wildcard"))
 }
 
 type TableWithColumnsAttributes struct {
@@ -249,27 +249,27 @@ func (twc TableWithColumnsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (twc TableWithColumnsAttributes) CatalogId() terra.StringValue {
-	return terra.ReferenceString(twc.ref.Append("catalog_id"))
+	return terra.ReferenceAsString(twc.ref.Append("catalog_id"))
 }
 
 func (twc TableWithColumnsAttributes) ColumnNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](twc.ref.Append("column_names"))
+	return terra.ReferenceAsSet[terra.StringValue](twc.ref.Append("column_names"))
 }
 
 func (twc TableWithColumnsAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(twc.ref.Append("database_name"))
+	return terra.ReferenceAsString(twc.ref.Append("database_name"))
 }
 
 func (twc TableWithColumnsAttributes) ExcludedColumnNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](twc.ref.Append("excluded_column_names"))
+	return terra.ReferenceAsSet[terra.StringValue](twc.ref.Append("excluded_column_names"))
 }
 
 func (twc TableWithColumnsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(twc.ref.Append("name"))
+	return terra.ReferenceAsString(twc.ref.Append("name"))
 }
 
 func (twc TableWithColumnsAttributes) Wildcard() terra.BoolValue {
-	return terra.ReferenceBool(twc.ref.Append("wildcard"))
+	return terra.ReferenceAsBool(twc.ref.Append("wildcard"))
 }
 
 type DataLocationState struct {

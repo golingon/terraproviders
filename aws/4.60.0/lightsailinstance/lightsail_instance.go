@@ -33,15 +33,15 @@ func (ao AddOnAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ao AddOnAttributes) SnapshotTime() terra.StringValue {
-	return terra.ReferenceString(ao.ref.Append("snapshot_time"))
+	return terra.ReferenceAsString(ao.ref.Append("snapshot_time"))
 }
 
 func (ao AddOnAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ao.ref.Append("status"))
+	return terra.ReferenceAsString(ao.ref.Append("status"))
 }
 
 func (ao AddOnAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ao.ref.Append("type"))
+	return terra.ReferenceAsString(ao.ref.Append("type"))
 }
 
 type AddOnState struct {

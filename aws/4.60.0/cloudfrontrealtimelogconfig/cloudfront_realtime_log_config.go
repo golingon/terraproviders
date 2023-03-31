@@ -38,11 +38,11 @@ func (e EndpointAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e EndpointAttributes) StreamType() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("stream_type"))
+	return terra.ReferenceAsString(e.ref.Append("stream_type"))
 }
 
 func (e EndpointAttributes) KinesisStreamConfig() terra.ListValue[KinesisStreamConfigAttributes] {
-	return terra.ReferenceList[KinesisStreamConfigAttributes](e.ref.Append("kinesis_stream_config"))
+	return terra.ReferenceAsList[KinesisStreamConfigAttributes](e.ref.Append("kinesis_stream_config"))
 }
 
 type KinesisStreamConfigAttributes struct {
@@ -62,11 +62,11 @@ func (ksc KinesisStreamConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ksc KinesisStreamConfigAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(ksc.ref.Append("role_arn"))
+	return terra.ReferenceAsString(ksc.ref.Append("role_arn"))
 }
 
 func (ksc KinesisStreamConfigAttributes) StreamArn() terra.StringValue {
-	return terra.ReferenceString(ksc.ref.Append("stream_arn"))
+	return terra.ReferenceAsString(ksc.ref.Append("stream_arn"))
 }
 
 type EndpointState struct {

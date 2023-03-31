@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataImagebuilderContainerRecipes creates a new instance of [DataImagebuilderContainerRecipes].
 func NewDataImagebuilderContainerRecipes(name string, args DataImagebuilderContainerRecipesArgs) *DataImagebuilderContainerRecipes {
 	return &DataImagebuilderContainerRecipes{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataImagebuilderContainerRecipes(name string, args DataImagebuilderConta
 
 var _ terra.DataResource = (*DataImagebuilderContainerRecipes)(nil)
 
+// DataImagebuilderContainerRecipes represents the Terraform data resource aws_imagebuilder_container_recipes.
 type DataImagebuilderContainerRecipes struct {
 	Name string
 	Args DataImagebuilderContainerRecipesArgs
 }
 
+// DataSource returns the Terraform object type for [DataImagebuilderContainerRecipes].
 func (icr *DataImagebuilderContainerRecipes) DataSource() string {
 	return "aws_imagebuilder_container_recipes"
 }
 
+// LocalName returns the local name for [DataImagebuilderContainerRecipes].
 func (icr *DataImagebuilderContainerRecipes) LocalName() string {
 	return icr.Name
 }
 
+// Configuration returns the configuration (args) for [DataImagebuilderContainerRecipes].
 func (icr *DataImagebuilderContainerRecipes) Configuration() interface{} {
 	return icr.Args
 }
 
+// Attributes returns the attributes for [DataImagebuilderContainerRecipes].
 func (icr *DataImagebuilderContainerRecipes) Attributes() dataImagebuilderContainerRecipesAttributes {
 	return dataImagebuilderContainerRecipesAttributes{ref: terra.ReferenceDataResource(icr)}
 }
 
+// DataImagebuilderContainerRecipesArgs contains the configurations for aws_imagebuilder_container_recipes.
 type DataImagebuilderContainerRecipesArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -49,22 +56,26 @@ type dataImagebuilderContainerRecipesAttributes struct {
 	ref terra.Reference
 }
 
+// Arns returns a reference to field arns of aws_imagebuilder_container_recipes.
 func (icr dataImagebuilderContainerRecipesAttributes) Arns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](icr.ref.Append("arns"))
+	return terra.ReferenceAsSet[terra.StringValue](icr.ref.Append("arns"))
 }
 
+// Id returns a reference to field id of aws_imagebuilder_container_recipes.
 func (icr dataImagebuilderContainerRecipesAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(icr.ref.Append("id"))
+	return terra.ReferenceAsString(icr.ref.Append("id"))
 }
 
+// Names returns a reference to field names of aws_imagebuilder_container_recipes.
 func (icr dataImagebuilderContainerRecipesAttributes) Names() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](icr.ref.Append("names"))
+	return terra.ReferenceAsSet[terra.StringValue](icr.ref.Append("names"))
 }
 
+// Owner returns a reference to field owner of aws_imagebuilder_container_recipes.
 func (icr dataImagebuilderContainerRecipesAttributes) Owner() terra.StringValue {
-	return terra.ReferenceString(icr.ref.Append("owner"))
+	return terra.ReferenceAsString(icr.ref.Append("owner"))
 }
 
 func (icr dataImagebuilderContainerRecipesAttributes) Filter() terra.SetValue[dataimagebuildercontainerrecipes.FilterAttributes] {
-	return terra.ReferenceSet[dataimagebuildercontainerrecipes.FilterAttributes](icr.ref.Append("filter"))
+	return terra.ReferenceAsSet[dataimagebuildercontainerrecipes.FilterAttributes](icr.ref.Append("filter"))
 }

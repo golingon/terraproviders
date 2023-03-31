@@ -26,15 +26,15 @@ func (l LocationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (l LocationAttributes) Address() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("address"))
+	return terra.ReferenceAsString(l.ref.Append("address"))
 }
 
 func (l LocationAttributes) Latitude() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("latitude"))
+	return terra.ReferenceAsString(l.ref.Append("latitude"))
 }
 
 func (l LocationAttributes) Longitude() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("longitude"))
+	return terra.ReferenceAsString(l.ref.Append("longitude"))
 }
 
 type LocationState struct {

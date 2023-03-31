@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIotTopicRuleDestination creates a new instance of [IotTopicRuleDestination].
 func NewIotTopicRuleDestination(name string, args IotTopicRuleDestinationArgs) *IotTopicRuleDestination {
 	return &IotTopicRuleDestination{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIotTopicRuleDestination(name string, args IotTopicRuleDestinationArgs) *
 
 var _ terra.Resource = (*IotTopicRuleDestination)(nil)
 
+// IotTopicRuleDestination represents the Terraform resource aws_iot_topic_rule_destination.
 type IotTopicRuleDestination struct {
-	Name  string
-	Args  IotTopicRuleDestinationArgs
-	state *iotTopicRuleDestinationState
+	Name      string
+	Args      IotTopicRuleDestinationArgs
+	state     *iotTopicRuleDestinationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IotTopicRuleDestination].
 func (itrd *IotTopicRuleDestination) Type() string {
 	return "aws_iot_topic_rule_destination"
 }
 
+// LocalName returns the local name for [IotTopicRuleDestination].
 func (itrd *IotTopicRuleDestination) LocalName() string {
 	return itrd.Name
 }
 
+// Configuration returns the configuration (args) for [IotTopicRuleDestination].
 func (itrd *IotTopicRuleDestination) Configuration() interface{} {
 	return itrd.Args
 }
 
+// DependOn is used for other resources to depend on [IotTopicRuleDestination].
+func (itrd *IotTopicRuleDestination) DependOn() terra.Reference {
+	return terra.ReferenceResource(itrd)
+}
+
+// Dependencies returns the list of resources [IotTopicRuleDestination] depends_on.
+func (itrd *IotTopicRuleDestination) Dependencies() terra.Dependencies {
+	return itrd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IotTopicRuleDestination].
+func (itrd *IotTopicRuleDestination) LifecycleManagement() *terra.Lifecycle {
+	return itrd.Lifecycle
+}
+
+// Attributes returns the attributes for [IotTopicRuleDestination].
 func (itrd *IotTopicRuleDestination) Attributes() iotTopicRuleDestinationAttributes {
 	return iotTopicRuleDestinationAttributes{ref: terra.ReferenceResource(itrd)}
 }
 
+// ImportState imports the given attribute values into [IotTopicRuleDestination]'s state.
 func (itrd *IotTopicRuleDestination) ImportState(av io.Reader) error {
 	itrd.state = &iotTopicRuleDestinationState{}
 	if err := json.NewDecoder(av).Decode(itrd.state); err != nil {
@@ -49,10 +73,12 @@ func (itrd *IotTopicRuleDestination) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IotTopicRuleDestination] has state.
 func (itrd *IotTopicRuleDestination) State() (*iotTopicRuleDestinationState, bool) {
 	return itrd.state, itrd.state != nil
 }
 
+// StateMust returns the state for [IotTopicRuleDestination]. Panics if the state is nil.
 func (itrd *IotTopicRuleDestination) StateMust() *iotTopicRuleDestinationState {
 	if itrd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", itrd.Type(), itrd.LocalName()))
@@ -60,10 +86,7 @@ func (itrd *IotTopicRuleDestination) StateMust() *iotTopicRuleDestinationState {
 	return itrd.state
 }
 
-func (itrd *IotTopicRuleDestination) DependOn() terra.Reference {
-	return terra.ReferenceResource(itrd)
-}
-
+// IotTopicRuleDestinationArgs contains the configurations for aws_iot_topic_rule_destination.
 type IotTopicRuleDestinationArgs struct {
 	// Enabled: bool, optional
 	Enabled terra.BoolValue `hcl:"enabled,attr"`
@@ -73,31 +96,32 @@ type IotTopicRuleDestinationArgs struct {
 	Timeouts *iottopicruledestination.Timeouts `hcl:"timeouts,block"`
 	// VpcConfiguration: required
 	VpcConfiguration *iottopicruledestination.VpcConfiguration `hcl:"vpc_configuration,block" validate:"required"`
-	// DependsOn contains resources that IotTopicRuleDestination depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iotTopicRuleDestinationAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_iot_topic_rule_destination.
 func (itrd iotTopicRuleDestinationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(itrd.ref.Append("arn"))
+	return terra.ReferenceAsString(itrd.ref.Append("arn"))
 }
 
+// Enabled returns a reference to field enabled of aws_iot_topic_rule_destination.
 func (itrd iotTopicRuleDestinationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(itrd.ref.Append("enabled"))
+	return terra.ReferenceAsBool(itrd.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of aws_iot_topic_rule_destination.
 func (itrd iotTopicRuleDestinationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(itrd.ref.Append("id"))
+	return terra.ReferenceAsString(itrd.ref.Append("id"))
 }
 
 func (itrd iotTopicRuleDestinationAttributes) Timeouts() iottopicruledestination.TimeoutsAttributes {
-	return terra.ReferenceSingle[iottopicruledestination.TimeoutsAttributes](itrd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[iottopicruledestination.TimeoutsAttributes](itrd.ref.Append("timeouts"))
 }
 
 func (itrd iotTopicRuleDestinationAttributes) VpcConfiguration() terra.ListValue[iottopicruledestination.VpcConfigurationAttributes] {
-	return terra.ReferenceList[iottopicruledestination.VpcConfigurationAttributes](itrd.ref.Append("vpc_configuration"))
+	return terra.ReferenceAsList[iottopicruledestination.VpcConfigurationAttributes](itrd.ref.Append("vpc_configuration"))
 }
 
 type iotTopicRuleDestinationState struct {

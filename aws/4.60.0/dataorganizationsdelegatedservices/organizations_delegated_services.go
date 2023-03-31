@@ -26,11 +26,11 @@ func (ds DelegatedServicesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ds DelegatedServicesAttributes) DelegationEnabledDate() terra.StringValue {
-	return terra.ReferenceString(ds.ref.Append("delegation_enabled_date"))
+	return terra.ReferenceAsString(ds.ref.Append("delegation_enabled_date"))
 }
 
 func (ds DelegatedServicesAttributes) ServicePrincipal() terra.StringValue {
-	return terra.ReferenceString(ds.ref.Append("service_principal"))
+	return terra.ReferenceAsString(ds.ref.Append("service_principal"))
 }
 
 type DelegatedServicesState struct {

@@ -38,11 +38,11 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("prefix"))
+	return terra.ReferenceAsString(f.ref.Append("prefix"))
 }
 
 func (f FilterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](f.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](f.ref.Append("tags"))
 }
 
 type TieringAttributes struct {
@@ -62,11 +62,11 @@ func (t TieringAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TieringAttributes) AccessTier() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("access_tier"))
+	return terra.ReferenceAsString(t.ref.Append("access_tier"))
 }
 
 func (t TieringAttributes) Days() terra.NumberValue {
-	return terra.ReferenceNumber(t.ref.Append("days"))
+	return terra.ReferenceAsNumber(t.ref.Append("days"))
 }
 
 type FilterState struct {

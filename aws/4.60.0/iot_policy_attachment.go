@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewIotPolicyAttachment creates a new instance of [IotPolicyAttachment].
 func NewIotPolicyAttachment(name string, args IotPolicyAttachmentArgs) *IotPolicyAttachment {
 	return &IotPolicyAttachment{
 		Args: args,
@@ -18,28 +19,51 @@ func NewIotPolicyAttachment(name string, args IotPolicyAttachmentArgs) *IotPolic
 
 var _ terra.Resource = (*IotPolicyAttachment)(nil)
 
+// IotPolicyAttachment represents the Terraform resource aws_iot_policy_attachment.
 type IotPolicyAttachment struct {
-	Name  string
-	Args  IotPolicyAttachmentArgs
-	state *iotPolicyAttachmentState
+	Name      string
+	Args      IotPolicyAttachmentArgs
+	state     *iotPolicyAttachmentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IotPolicyAttachment].
 func (ipa *IotPolicyAttachment) Type() string {
 	return "aws_iot_policy_attachment"
 }
 
+// LocalName returns the local name for [IotPolicyAttachment].
 func (ipa *IotPolicyAttachment) LocalName() string {
 	return ipa.Name
 }
 
+// Configuration returns the configuration (args) for [IotPolicyAttachment].
 func (ipa *IotPolicyAttachment) Configuration() interface{} {
 	return ipa.Args
 }
 
+// DependOn is used for other resources to depend on [IotPolicyAttachment].
+func (ipa *IotPolicyAttachment) DependOn() terra.Reference {
+	return terra.ReferenceResource(ipa)
+}
+
+// Dependencies returns the list of resources [IotPolicyAttachment] depends_on.
+func (ipa *IotPolicyAttachment) Dependencies() terra.Dependencies {
+	return ipa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IotPolicyAttachment].
+func (ipa *IotPolicyAttachment) LifecycleManagement() *terra.Lifecycle {
+	return ipa.Lifecycle
+}
+
+// Attributes returns the attributes for [IotPolicyAttachment].
 func (ipa *IotPolicyAttachment) Attributes() iotPolicyAttachmentAttributes {
 	return iotPolicyAttachmentAttributes{ref: terra.ReferenceResource(ipa)}
 }
 
+// ImportState imports the given attribute values into [IotPolicyAttachment]'s state.
 func (ipa *IotPolicyAttachment) ImportState(av io.Reader) error {
 	ipa.state = &iotPolicyAttachmentState{}
 	if err := json.NewDecoder(av).Decode(ipa.state); err != nil {
@@ -48,10 +72,12 @@ func (ipa *IotPolicyAttachment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IotPolicyAttachment] has state.
 func (ipa *IotPolicyAttachment) State() (*iotPolicyAttachmentState, bool) {
 	return ipa.state, ipa.state != nil
 }
 
+// StateMust returns the state for [IotPolicyAttachment]. Panics if the state is nil.
 func (ipa *IotPolicyAttachment) StateMust() *iotPolicyAttachmentState {
 	if ipa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ipa.Type(), ipa.LocalName()))
@@ -59,10 +85,7 @@ func (ipa *IotPolicyAttachment) StateMust() *iotPolicyAttachmentState {
 	return ipa.state
 }
 
-func (ipa *IotPolicyAttachment) DependOn() terra.Reference {
-	return terra.ReferenceResource(ipa)
-}
-
+// IotPolicyAttachmentArgs contains the configurations for aws_iot_policy_attachment.
 type IotPolicyAttachmentArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,23 +93,24 @@ type IotPolicyAttachmentArgs struct {
 	Policy terra.StringValue `hcl:"policy,attr" validate:"required"`
 	// Target: string, required
 	Target terra.StringValue `hcl:"target,attr" validate:"required"`
-	// DependsOn contains resources that IotPolicyAttachment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iotPolicyAttachmentAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_iot_policy_attachment.
 func (ipa iotPolicyAttachmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ipa.ref.Append("id"))
+	return terra.ReferenceAsString(ipa.ref.Append("id"))
 }
 
+// Policy returns a reference to field policy of aws_iot_policy_attachment.
 func (ipa iotPolicyAttachmentAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(ipa.ref.Append("policy"))
+	return terra.ReferenceAsString(ipa.ref.Append("policy"))
 }
 
+// Target returns a reference to field target of aws_iot_policy_attachment.
 func (ipa iotPolicyAttachmentAttributes) Target() terra.StringValue {
-	return terra.ReferenceString(ipa.ref.Append("target"))
+	return terra.ReferenceAsString(ipa.ref.Append("target"))
 }
 
 type iotPolicyAttachmentState struct {

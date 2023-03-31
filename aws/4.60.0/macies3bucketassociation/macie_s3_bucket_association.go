@@ -31,11 +31,11 @@ func (ct ClassificationTypeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ct ClassificationTypeAttributes) Continuous() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("continuous"))
+	return terra.ReferenceAsString(ct.ref.Append("continuous"))
 }
 
 func (ct ClassificationTypeAttributes) OneTime() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("one_time"))
+	return terra.ReferenceAsString(ct.ref.Append("one_time"))
 }
 
 type ClassificationTypeState struct {

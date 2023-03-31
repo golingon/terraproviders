@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewGlueSecurityConfiguration creates a new instance of [GlueSecurityConfiguration].
 func NewGlueSecurityConfiguration(name string, args GlueSecurityConfigurationArgs) *GlueSecurityConfiguration {
 	return &GlueSecurityConfiguration{
 		Args: args,
@@ -19,28 +20,51 @@ func NewGlueSecurityConfiguration(name string, args GlueSecurityConfigurationArg
 
 var _ terra.Resource = (*GlueSecurityConfiguration)(nil)
 
+// GlueSecurityConfiguration represents the Terraform resource aws_glue_security_configuration.
 type GlueSecurityConfiguration struct {
-	Name  string
-	Args  GlueSecurityConfigurationArgs
-	state *glueSecurityConfigurationState
+	Name      string
+	Args      GlueSecurityConfigurationArgs
+	state     *glueSecurityConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GlueSecurityConfiguration].
 func (gsc *GlueSecurityConfiguration) Type() string {
 	return "aws_glue_security_configuration"
 }
 
+// LocalName returns the local name for [GlueSecurityConfiguration].
 func (gsc *GlueSecurityConfiguration) LocalName() string {
 	return gsc.Name
 }
 
+// Configuration returns the configuration (args) for [GlueSecurityConfiguration].
 func (gsc *GlueSecurityConfiguration) Configuration() interface{} {
 	return gsc.Args
 }
 
+// DependOn is used for other resources to depend on [GlueSecurityConfiguration].
+func (gsc *GlueSecurityConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(gsc)
+}
+
+// Dependencies returns the list of resources [GlueSecurityConfiguration] depends_on.
+func (gsc *GlueSecurityConfiguration) Dependencies() terra.Dependencies {
+	return gsc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GlueSecurityConfiguration].
+func (gsc *GlueSecurityConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return gsc.Lifecycle
+}
+
+// Attributes returns the attributes for [GlueSecurityConfiguration].
 func (gsc *GlueSecurityConfiguration) Attributes() glueSecurityConfigurationAttributes {
 	return glueSecurityConfigurationAttributes{ref: terra.ReferenceResource(gsc)}
 }
 
+// ImportState imports the given attribute values into [GlueSecurityConfiguration]'s state.
 func (gsc *GlueSecurityConfiguration) ImportState(av io.Reader) error {
 	gsc.state = &glueSecurityConfigurationState{}
 	if err := json.NewDecoder(av).Decode(gsc.state); err != nil {
@@ -49,10 +73,12 @@ func (gsc *GlueSecurityConfiguration) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GlueSecurityConfiguration] has state.
 func (gsc *GlueSecurityConfiguration) State() (*glueSecurityConfigurationState, bool) {
 	return gsc.state, gsc.state != nil
 }
 
+// StateMust returns the state for [GlueSecurityConfiguration]. Panics if the state is nil.
 func (gsc *GlueSecurityConfiguration) StateMust() *glueSecurityConfigurationState {
 	if gsc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", gsc.Type(), gsc.LocalName()))
@@ -60,10 +86,7 @@ func (gsc *GlueSecurityConfiguration) StateMust() *glueSecurityConfigurationStat
 	return gsc.state
 }
 
-func (gsc *GlueSecurityConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(gsc)
-}
-
+// GlueSecurityConfigurationArgs contains the configurations for aws_glue_security_configuration.
 type GlueSecurityConfigurationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -71,23 +94,23 @@ type GlueSecurityConfigurationArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// EncryptionConfiguration: required
 	EncryptionConfiguration *gluesecurityconfiguration.EncryptionConfiguration `hcl:"encryption_configuration,block" validate:"required"`
-	// DependsOn contains resources that GlueSecurityConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type glueSecurityConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_glue_security_configuration.
 func (gsc glueSecurityConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gsc.ref.Append("id"))
+	return terra.ReferenceAsString(gsc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_glue_security_configuration.
 func (gsc glueSecurityConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(gsc.ref.Append("name"))
+	return terra.ReferenceAsString(gsc.ref.Append("name"))
 }
 
 func (gsc glueSecurityConfigurationAttributes) EncryptionConfiguration() terra.ListValue[gluesecurityconfiguration.EncryptionConfigurationAttributes] {
-	return terra.ReferenceList[gluesecurityconfiguration.EncryptionConfigurationAttributes](gsc.ref.Append("encryption_configuration"))
+	return terra.ReferenceAsList[gluesecurityconfiguration.EncryptionConfigurationAttributes](gsc.ref.Append("encryption_configuration"))
 }
 
 type glueSecurityConfigurationState struct {

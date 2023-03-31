@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewLightsailStaticIpAttachment creates a new instance of [LightsailStaticIpAttachment].
 func NewLightsailStaticIpAttachment(name string, args LightsailStaticIpAttachmentArgs) *LightsailStaticIpAttachment {
 	return &LightsailStaticIpAttachment{
 		Args: args,
@@ -18,28 +19,51 @@ func NewLightsailStaticIpAttachment(name string, args LightsailStaticIpAttachmen
 
 var _ terra.Resource = (*LightsailStaticIpAttachment)(nil)
 
+// LightsailStaticIpAttachment represents the Terraform resource aws_lightsail_static_ip_attachment.
 type LightsailStaticIpAttachment struct {
-	Name  string
-	Args  LightsailStaticIpAttachmentArgs
-	state *lightsailStaticIpAttachmentState
+	Name      string
+	Args      LightsailStaticIpAttachmentArgs
+	state     *lightsailStaticIpAttachmentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LightsailStaticIpAttachment].
 func (lsia *LightsailStaticIpAttachment) Type() string {
 	return "aws_lightsail_static_ip_attachment"
 }
 
+// LocalName returns the local name for [LightsailStaticIpAttachment].
 func (lsia *LightsailStaticIpAttachment) LocalName() string {
 	return lsia.Name
 }
 
+// Configuration returns the configuration (args) for [LightsailStaticIpAttachment].
 func (lsia *LightsailStaticIpAttachment) Configuration() interface{} {
 	return lsia.Args
 }
 
+// DependOn is used for other resources to depend on [LightsailStaticIpAttachment].
+func (lsia *LightsailStaticIpAttachment) DependOn() terra.Reference {
+	return terra.ReferenceResource(lsia)
+}
+
+// Dependencies returns the list of resources [LightsailStaticIpAttachment] depends_on.
+func (lsia *LightsailStaticIpAttachment) Dependencies() terra.Dependencies {
+	return lsia.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LightsailStaticIpAttachment].
+func (lsia *LightsailStaticIpAttachment) LifecycleManagement() *terra.Lifecycle {
+	return lsia.Lifecycle
+}
+
+// Attributes returns the attributes for [LightsailStaticIpAttachment].
 func (lsia *LightsailStaticIpAttachment) Attributes() lightsailStaticIpAttachmentAttributes {
 	return lightsailStaticIpAttachmentAttributes{ref: terra.ReferenceResource(lsia)}
 }
 
+// ImportState imports the given attribute values into [LightsailStaticIpAttachment]'s state.
 func (lsia *LightsailStaticIpAttachment) ImportState(av io.Reader) error {
 	lsia.state = &lightsailStaticIpAttachmentState{}
 	if err := json.NewDecoder(av).Decode(lsia.state); err != nil {
@@ -48,10 +72,12 @@ func (lsia *LightsailStaticIpAttachment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LightsailStaticIpAttachment] has state.
 func (lsia *LightsailStaticIpAttachment) State() (*lightsailStaticIpAttachmentState, bool) {
 	return lsia.state, lsia.state != nil
 }
 
+// StateMust returns the state for [LightsailStaticIpAttachment]. Panics if the state is nil.
 func (lsia *LightsailStaticIpAttachment) StateMust() *lightsailStaticIpAttachmentState {
 	if lsia.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lsia.Type(), lsia.LocalName()))
@@ -59,10 +85,7 @@ func (lsia *LightsailStaticIpAttachment) StateMust() *lightsailStaticIpAttachmen
 	return lsia.state
 }
 
-func (lsia *LightsailStaticIpAttachment) DependOn() terra.Reference {
-	return terra.ReferenceResource(lsia)
-}
-
+// LightsailStaticIpAttachmentArgs contains the configurations for aws_lightsail_static_ip_attachment.
 type LightsailStaticIpAttachmentArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,27 +93,29 @@ type LightsailStaticIpAttachmentArgs struct {
 	InstanceName terra.StringValue `hcl:"instance_name,attr" validate:"required"`
 	// StaticIpName: string, required
 	StaticIpName terra.StringValue `hcl:"static_ip_name,attr" validate:"required"`
-	// DependsOn contains resources that LightsailStaticIpAttachment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lightsailStaticIpAttachmentAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_lightsail_static_ip_attachment.
 func (lsia lightsailStaticIpAttachmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lsia.ref.Append("id"))
+	return terra.ReferenceAsString(lsia.ref.Append("id"))
 }
 
+// InstanceName returns a reference to field instance_name of aws_lightsail_static_ip_attachment.
 func (lsia lightsailStaticIpAttachmentAttributes) InstanceName() terra.StringValue {
-	return terra.ReferenceString(lsia.ref.Append("instance_name"))
+	return terra.ReferenceAsString(lsia.ref.Append("instance_name"))
 }
 
+// IpAddress returns a reference to field ip_address of aws_lightsail_static_ip_attachment.
 func (lsia lightsailStaticIpAttachmentAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(lsia.ref.Append("ip_address"))
+	return terra.ReferenceAsString(lsia.ref.Append("ip_address"))
 }
 
+// StaticIpName returns a reference to field static_ip_name of aws_lightsail_static_ip_attachment.
 func (lsia lightsailStaticIpAttachmentAttributes) StaticIpName() terra.StringValue {
-	return terra.ReferenceString(lsia.ref.Append("static_ip_name"))
+	return terra.ReferenceAsString(lsia.ref.Append("static_ip_name"))
 }
 
 type lightsailStaticIpAttachmentState struct {

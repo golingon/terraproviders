@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewApiGatewayRestApiPolicy creates a new instance of [ApiGatewayRestApiPolicy].
 func NewApiGatewayRestApiPolicy(name string, args ApiGatewayRestApiPolicyArgs) *ApiGatewayRestApiPolicy {
 	return &ApiGatewayRestApiPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewApiGatewayRestApiPolicy(name string, args ApiGatewayRestApiPolicyArgs) *
 
 var _ terra.Resource = (*ApiGatewayRestApiPolicy)(nil)
 
+// ApiGatewayRestApiPolicy represents the Terraform resource aws_api_gateway_rest_api_policy.
 type ApiGatewayRestApiPolicy struct {
-	Name  string
-	Args  ApiGatewayRestApiPolicyArgs
-	state *apiGatewayRestApiPolicyState
+	Name      string
+	Args      ApiGatewayRestApiPolicyArgs
+	state     *apiGatewayRestApiPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiGatewayRestApiPolicy].
 func (agrap *ApiGatewayRestApiPolicy) Type() string {
 	return "aws_api_gateway_rest_api_policy"
 }
 
+// LocalName returns the local name for [ApiGatewayRestApiPolicy].
 func (agrap *ApiGatewayRestApiPolicy) LocalName() string {
 	return agrap.Name
 }
 
+// Configuration returns the configuration (args) for [ApiGatewayRestApiPolicy].
 func (agrap *ApiGatewayRestApiPolicy) Configuration() interface{} {
 	return agrap.Args
 }
 
+// DependOn is used for other resources to depend on [ApiGatewayRestApiPolicy].
+func (agrap *ApiGatewayRestApiPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(agrap)
+}
+
+// Dependencies returns the list of resources [ApiGatewayRestApiPolicy] depends_on.
+func (agrap *ApiGatewayRestApiPolicy) Dependencies() terra.Dependencies {
+	return agrap.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiGatewayRestApiPolicy].
+func (agrap *ApiGatewayRestApiPolicy) LifecycleManagement() *terra.Lifecycle {
+	return agrap.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiGatewayRestApiPolicy].
 func (agrap *ApiGatewayRestApiPolicy) Attributes() apiGatewayRestApiPolicyAttributes {
 	return apiGatewayRestApiPolicyAttributes{ref: terra.ReferenceResource(agrap)}
 }
 
+// ImportState imports the given attribute values into [ApiGatewayRestApiPolicy]'s state.
 func (agrap *ApiGatewayRestApiPolicy) ImportState(av io.Reader) error {
 	agrap.state = &apiGatewayRestApiPolicyState{}
 	if err := json.NewDecoder(av).Decode(agrap.state); err != nil {
@@ -48,10 +72,12 @@ func (agrap *ApiGatewayRestApiPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiGatewayRestApiPolicy] has state.
 func (agrap *ApiGatewayRestApiPolicy) State() (*apiGatewayRestApiPolicyState, bool) {
 	return agrap.state, agrap.state != nil
 }
 
+// StateMust returns the state for [ApiGatewayRestApiPolicy]. Panics if the state is nil.
 func (agrap *ApiGatewayRestApiPolicy) StateMust() *apiGatewayRestApiPolicyState {
 	if agrap.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", agrap.Type(), agrap.LocalName()))
@@ -59,10 +85,7 @@ func (agrap *ApiGatewayRestApiPolicy) StateMust() *apiGatewayRestApiPolicyState 
 	return agrap.state
 }
 
-func (agrap *ApiGatewayRestApiPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(agrap)
-}
-
+// ApiGatewayRestApiPolicyArgs contains the configurations for aws_api_gateway_rest_api_policy.
 type ApiGatewayRestApiPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,23 +93,24 @@ type ApiGatewayRestApiPolicyArgs struct {
 	Policy terra.StringValue `hcl:"policy,attr" validate:"required"`
 	// RestApiId: string, required
 	RestApiId terra.StringValue `hcl:"rest_api_id,attr" validate:"required"`
-	// DependsOn contains resources that ApiGatewayRestApiPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiGatewayRestApiPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_api_gateway_rest_api_policy.
 func (agrap apiGatewayRestApiPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(agrap.ref.Append("id"))
+	return terra.ReferenceAsString(agrap.ref.Append("id"))
 }
 
+// Policy returns a reference to field policy of aws_api_gateway_rest_api_policy.
 func (agrap apiGatewayRestApiPolicyAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(agrap.ref.Append("policy"))
+	return terra.ReferenceAsString(agrap.ref.Append("policy"))
 }
 
+// RestApiId returns a reference to field rest_api_id of aws_api_gateway_rest_api_policy.
 func (agrap apiGatewayRestApiPolicyAttributes) RestApiId() terra.StringValue {
-	return terra.ReferenceString(agrap.ref.Append("rest_api_id"))
+	return terra.ReferenceAsString(agrap.ref.Append("rest_api_id"))
 }
 
 type apiGatewayRestApiPolicyState struct {

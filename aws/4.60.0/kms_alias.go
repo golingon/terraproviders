@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewKmsAlias creates a new instance of [KmsAlias].
 func NewKmsAlias(name string, args KmsAliasArgs) *KmsAlias {
 	return &KmsAlias{
 		Args: args,
@@ -18,28 +19,51 @@ func NewKmsAlias(name string, args KmsAliasArgs) *KmsAlias {
 
 var _ terra.Resource = (*KmsAlias)(nil)
 
+// KmsAlias represents the Terraform resource aws_kms_alias.
 type KmsAlias struct {
-	Name  string
-	Args  KmsAliasArgs
-	state *kmsAliasState
+	Name      string
+	Args      KmsAliasArgs
+	state     *kmsAliasState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KmsAlias].
 func (ka *KmsAlias) Type() string {
 	return "aws_kms_alias"
 }
 
+// LocalName returns the local name for [KmsAlias].
 func (ka *KmsAlias) LocalName() string {
 	return ka.Name
 }
 
+// Configuration returns the configuration (args) for [KmsAlias].
 func (ka *KmsAlias) Configuration() interface{} {
 	return ka.Args
 }
 
+// DependOn is used for other resources to depend on [KmsAlias].
+func (ka *KmsAlias) DependOn() terra.Reference {
+	return terra.ReferenceResource(ka)
+}
+
+// Dependencies returns the list of resources [KmsAlias] depends_on.
+func (ka *KmsAlias) Dependencies() terra.Dependencies {
+	return ka.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KmsAlias].
+func (ka *KmsAlias) LifecycleManagement() *terra.Lifecycle {
+	return ka.Lifecycle
+}
+
+// Attributes returns the attributes for [KmsAlias].
 func (ka *KmsAlias) Attributes() kmsAliasAttributes {
 	return kmsAliasAttributes{ref: terra.ReferenceResource(ka)}
 }
 
+// ImportState imports the given attribute values into [KmsAlias]'s state.
 func (ka *KmsAlias) ImportState(av io.Reader) error {
 	ka.state = &kmsAliasState{}
 	if err := json.NewDecoder(av).Decode(ka.state); err != nil {
@@ -48,10 +72,12 @@ func (ka *KmsAlias) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [KmsAlias] has state.
 func (ka *KmsAlias) State() (*kmsAliasState, bool) {
 	return ka.state, ka.state != nil
 }
 
+// StateMust returns the state for [KmsAlias]. Panics if the state is nil.
 func (ka *KmsAlias) StateMust() *kmsAliasState {
 	if ka.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ka.Type(), ka.LocalName()))
@@ -59,10 +85,7 @@ func (ka *KmsAlias) StateMust() *kmsAliasState {
 	return ka.state
 }
 
-func (ka *KmsAlias) DependOn() terra.Reference {
-	return terra.ReferenceResource(ka)
-}
-
+// KmsAliasArgs contains the configurations for aws_kms_alias.
 type KmsAliasArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -72,35 +95,39 @@ type KmsAliasArgs struct {
 	NamePrefix terra.StringValue `hcl:"name_prefix,attr"`
 	// TargetKeyId: string, required
 	TargetKeyId terra.StringValue `hcl:"target_key_id,attr" validate:"required"`
-	// DependsOn contains resources that KmsAlias depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type kmsAliasAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_kms_alias.
 func (ka kmsAliasAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("arn"))
+	return terra.ReferenceAsString(ka.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_kms_alias.
 func (ka kmsAliasAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("id"))
+	return terra.ReferenceAsString(ka.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_kms_alias.
 func (ka kmsAliasAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("name"))
+	return terra.ReferenceAsString(ka.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_kms_alias.
 func (ka kmsAliasAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(ka.ref.Append("name_prefix"))
 }
 
+// TargetKeyArn returns a reference to field target_key_arn of aws_kms_alias.
 func (ka kmsAliasAttributes) TargetKeyArn() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("target_key_arn"))
+	return terra.ReferenceAsString(ka.ref.Append("target_key_arn"))
 }
 
+// TargetKeyId returns a reference to field target_key_id of aws_kms_alias.
 func (ka kmsAliasAttributes) TargetKeyId() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("target_key_id"))
+	return terra.ReferenceAsString(ka.ref.Append("target_key_id"))
 }
 
 type kmsAliasState struct {

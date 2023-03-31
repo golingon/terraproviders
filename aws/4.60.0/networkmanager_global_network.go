@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNetworkmanagerGlobalNetwork creates a new instance of [NetworkmanagerGlobalNetwork].
 func NewNetworkmanagerGlobalNetwork(name string, args NetworkmanagerGlobalNetworkArgs) *NetworkmanagerGlobalNetwork {
 	return &NetworkmanagerGlobalNetwork{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNetworkmanagerGlobalNetwork(name string, args NetworkmanagerGlobalNetwor
 
 var _ terra.Resource = (*NetworkmanagerGlobalNetwork)(nil)
 
+// NetworkmanagerGlobalNetwork represents the Terraform resource aws_networkmanager_global_network.
 type NetworkmanagerGlobalNetwork struct {
-	Name  string
-	Args  NetworkmanagerGlobalNetworkArgs
-	state *networkmanagerGlobalNetworkState
+	Name      string
+	Args      NetworkmanagerGlobalNetworkArgs
+	state     *networkmanagerGlobalNetworkState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NetworkmanagerGlobalNetwork].
 func (ngn *NetworkmanagerGlobalNetwork) Type() string {
 	return "aws_networkmanager_global_network"
 }
 
+// LocalName returns the local name for [NetworkmanagerGlobalNetwork].
 func (ngn *NetworkmanagerGlobalNetwork) LocalName() string {
 	return ngn.Name
 }
 
+// Configuration returns the configuration (args) for [NetworkmanagerGlobalNetwork].
 func (ngn *NetworkmanagerGlobalNetwork) Configuration() interface{} {
 	return ngn.Args
 }
 
+// DependOn is used for other resources to depend on [NetworkmanagerGlobalNetwork].
+func (ngn *NetworkmanagerGlobalNetwork) DependOn() terra.Reference {
+	return terra.ReferenceResource(ngn)
+}
+
+// Dependencies returns the list of resources [NetworkmanagerGlobalNetwork] depends_on.
+func (ngn *NetworkmanagerGlobalNetwork) Dependencies() terra.Dependencies {
+	return ngn.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NetworkmanagerGlobalNetwork].
+func (ngn *NetworkmanagerGlobalNetwork) LifecycleManagement() *terra.Lifecycle {
+	return ngn.Lifecycle
+}
+
+// Attributes returns the attributes for [NetworkmanagerGlobalNetwork].
 func (ngn *NetworkmanagerGlobalNetwork) Attributes() networkmanagerGlobalNetworkAttributes {
 	return networkmanagerGlobalNetworkAttributes{ref: terra.ReferenceResource(ngn)}
 }
 
+// ImportState imports the given attribute values into [NetworkmanagerGlobalNetwork]'s state.
 func (ngn *NetworkmanagerGlobalNetwork) ImportState(av io.Reader) error {
 	ngn.state = &networkmanagerGlobalNetworkState{}
 	if err := json.NewDecoder(av).Decode(ngn.state); err != nil {
@@ -49,10 +73,12 @@ func (ngn *NetworkmanagerGlobalNetwork) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NetworkmanagerGlobalNetwork] has state.
 func (ngn *NetworkmanagerGlobalNetwork) State() (*networkmanagerGlobalNetworkState, bool) {
 	return ngn.state, ngn.state != nil
 }
 
+// StateMust returns the state for [NetworkmanagerGlobalNetwork]. Panics if the state is nil.
 func (ngn *NetworkmanagerGlobalNetwork) StateMust() *networkmanagerGlobalNetworkState {
 	if ngn.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ngn.Type(), ngn.LocalName()))
@@ -60,10 +86,7 @@ func (ngn *NetworkmanagerGlobalNetwork) StateMust() *networkmanagerGlobalNetwork
 	return ngn.state
 }
 
-func (ngn *NetworkmanagerGlobalNetwork) DependOn() terra.Reference {
-	return terra.ReferenceResource(ngn)
-}
-
+// NetworkmanagerGlobalNetworkArgs contains the configurations for aws_networkmanager_global_network.
 type NetworkmanagerGlobalNetworkArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -75,35 +98,38 @@ type NetworkmanagerGlobalNetworkArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Timeouts: optional
 	Timeouts *networkmanagerglobalnetwork.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that NetworkmanagerGlobalNetwork depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type networkmanagerGlobalNetworkAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_networkmanager_global_network.
 func (ngn networkmanagerGlobalNetworkAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ngn.ref.Append("arn"))
+	return terra.ReferenceAsString(ngn.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_networkmanager_global_network.
 func (ngn networkmanagerGlobalNetworkAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ngn.ref.Append("description"))
+	return terra.ReferenceAsString(ngn.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_networkmanager_global_network.
 func (ngn networkmanagerGlobalNetworkAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ngn.ref.Append("id"))
+	return terra.ReferenceAsString(ngn.ref.Append("id"))
 }
 
+// Tags returns a reference to field tags of aws_networkmanager_global_network.
 func (ngn networkmanagerGlobalNetworkAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ngn.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ngn.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_networkmanager_global_network.
 func (ngn networkmanagerGlobalNetworkAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ngn.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ngn.ref.Append("tags_all"))
 }
 
 func (ngn networkmanagerGlobalNetworkAttributes) Timeouts() networkmanagerglobalnetwork.TimeoutsAttributes {
-	return terra.ReferenceSingle[networkmanagerglobalnetwork.TimeoutsAttributes](ngn.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[networkmanagerglobalnetwork.TimeoutsAttributes](ngn.ref.Append("timeouts"))
 }
 
 type networkmanagerGlobalNetworkState struct {

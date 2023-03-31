@@ -115,39 +115,39 @@ func (r RuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("id"))
+	return terra.ReferenceAsString(r.ref.Append("id"))
 }
 
 func (r RuleAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("prefix"))
+	return terra.ReferenceAsString(r.ref.Append("prefix"))
 }
 
 func (r RuleAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("status"))
+	return terra.ReferenceAsString(r.ref.Append("status"))
 }
 
 func (r RuleAttributes) AbortIncompleteMultipartUpload() terra.ListValue[AbortIncompleteMultipartUploadAttributes] {
-	return terra.ReferenceList[AbortIncompleteMultipartUploadAttributes](r.ref.Append("abort_incomplete_multipart_upload"))
+	return terra.ReferenceAsList[AbortIncompleteMultipartUploadAttributes](r.ref.Append("abort_incomplete_multipart_upload"))
 }
 
 func (r RuleAttributes) Expiration() terra.ListValue[ExpirationAttributes] {
-	return terra.ReferenceList[ExpirationAttributes](r.ref.Append("expiration"))
+	return terra.ReferenceAsList[ExpirationAttributes](r.ref.Append("expiration"))
 }
 
 func (r RuleAttributes) Filter() terra.ListValue[FilterAttributes] {
-	return terra.ReferenceList[FilterAttributes](r.ref.Append("filter"))
+	return terra.ReferenceAsList[FilterAttributes](r.ref.Append("filter"))
 }
 
 func (r RuleAttributes) NoncurrentVersionExpiration() terra.ListValue[NoncurrentVersionExpirationAttributes] {
-	return terra.ReferenceList[NoncurrentVersionExpirationAttributes](r.ref.Append("noncurrent_version_expiration"))
+	return terra.ReferenceAsList[NoncurrentVersionExpirationAttributes](r.ref.Append("noncurrent_version_expiration"))
 }
 
 func (r RuleAttributes) NoncurrentVersionTransition() terra.SetValue[NoncurrentVersionTransitionAttributes] {
-	return terra.ReferenceSet[NoncurrentVersionTransitionAttributes](r.ref.Append("noncurrent_version_transition"))
+	return terra.ReferenceAsSet[NoncurrentVersionTransitionAttributes](r.ref.Append("noncurrent_version_transition"))
 }
 
 func (r RuleAttributes) Transition() terra.SetValue[TransitionAttributes] {
-	return terra.ReferenceSet[TransitionAttributes](r.ref.Append("transition"))
+	return terra.ReferenceAsSet[TransitionAttributes](r.ref.Append("transition"))
 }
 
 type AbortIncompleteMultipartUploadAttributes struct {
@@ -167,7 +167,7 @@ func (aimu AbortIncompleteMultipartUploadAttributes) InternalTokens() hclwrite.T
 }
 
 func (aimu AbortIncompleteMultipartUploadAttributes) DaysAfterInitiation() terra.NumberValue {
-	return terra.ReferenceNumber(aimu.ref.Append("days_after_initiation"))
+	return terra.ReferenceAsNumber(aimu.ref.Append("days_after_initiation"))
 }
 
 type ExpirationAttributes struct {
@@ -187,15 +187,15 @@ func (e ExpirationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e ExpirationAttributes) Date() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("date"))
+	return terra.ReferenceAsString(e.ref.Append("date"))
 }
 
 func (e ExpirationAttributes) Days() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("days"))
+	return terra.ReferenceAsNumber(e.ref.Append("days"))
 }
 
 func (e ExpirationAttributes) ExpiredObjectDeleteMarker() terra.BoolValue {
-	return terra.ReferenceBool(e.ref.Append("expired_object_delete_marker"))
+	return terra.ReferenceAsBool(e.ref.Append("expired_object_delete_marker"))
 }
 
 type FilterAttributes struct {
@@ -215,23 +215,23 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) ObjectSizeGreaterThan() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("object_size_greater_than"))
+	return terra.ReferenceAsString(f.ref.Append("object_size_greater_than"))
 }
 
 func (f FilterAttributes) ObjectSizeLessThan() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("object_size_less_than"))
+	return terra.ReferenceAsString(f.ref.Append("object_size_less_than"))
 }
 
 func (f FilterAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("prefix"))
+	return terra.ReferenceAsString(f.ref.Append("prefix"))
 }
 
 func (f FilterAttributes) And() terra.ListValue[AndAttributes] {
-	return terra.ReferenceList[AndAttributes](f.ref.Append("and"))
+	return terra.ReferenceAsList[AndAttributes](f.ref.Append("and"))
 }
 
 func (f FilterAttributes) Tag() terra.ListValue[TagAttributes] {
-	return terra.ReferenceList[TagAttributes](f.ref.Append("tag"))
+	return terra.ReferenceAsList[TagAttributes](f.ref.Append("tag"))
 }
 
 type AndAttributes struct {
@@ -251,19 +251,19 @@ func (a AndAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AndAttributes) ObjectSizeGreaterThan() terra.NumberValue {
-	return terra.ReferenceNumber(a.ref.Append("object_size_greater_than"))
+	return terra.ReferenceAsNumber(a.ref.Append("object_size_greater_than"))
 }
 
 func (a AndAttributes) ObjectSizeLessThan() terra.NumberValue {
-	return terra.ReferenceNumber(a.ref.Append("object_size_less_than"))
+	return terra.ReferenceAsNumber(a.ref.Append("object_size_less_than"))
 }
 
 func (a AndAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("prefix"))
+	return terra.ReferenceAsString(a.ref.Append("prefix"))
 }
 
 func (a AndAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](a.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](a.ref.Append("tags"))
 }
 
 type TagAttributes struct {
@@ -283,11 +283,11 @@ func (t TagAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TagAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("key"))
+	return terra.ReferenceAsString(t.ref.Append("key"))
 }
 
 func (t TagAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("value"))
+	return terra.ReferenceAsString(t.ref.Append("value"))
 }
 
 type NoncurrentVersionExpirationAttributes struct {
@@ -307,11 +307,11 @@ func (nve NoncurrentVersionExpirationAttributes) InternalTokens() hclwrite.Token
 }
 
 func (nve NoncurrentVersionExpirationAttributes) NewerNoncurrentVersions() terra.StringValue {
-	return terra.ReferenceString(nve.ref.Append("newer_noncurrent_versions"))
+	return terra.ReferenceAsString(nve.ref.Append("newer_noncurrent_versions"))
 }
 
 func (nve NoncurrentVersionExpirationAttributes) NoncurrentDays() terra.NumberValue {
-	return terra.ReferenceNumber(nve.ref.Append("noncurrent_days"))
+	return terra.ReferenceAsNumber(nve.ref.Append("noncurrent_days"))
 }
 
 type NoncurrentVersionTransitionAttributes struct {
@@ -331,15 +331,15 @@ func (nvt NoncurrentVersionTransitionAttributes) InternalTokens() hclwrite.Token
 }
 
 func (nvt NoncurrentVersionTransitionAttributes) NewerNoncurrentVersions() terra.StringValue {
-	return terra.ReferenceString(nvt.ref.Append("newer_noncurrent_versions"))
+	return terra.ReferenceAsString(nvt.ref.Append("newer_noncurrent_versions"))
 }
 
 func (nvt NoncurrentVersionTransitionAttributes) NoncurrentDays() terra.NumberValue {
-	return terra.ReferenceNumber(nvt.ref.Append("noncurrent_days"))
+	return terra.ReferenceAsNumber(nvt.ref.Append("noncurrent_days"))
 }
 
 func (nvt NoncurrentVersionTransitionAttributes) StorageClass() terra.StringValue {
-	return terra.ReferenceString(nvt.ref.Append("storage_class"))
+	return terra.ReferenceAsString(nvt.ref.Append("storage_class"))
 }
 
 type TransitionAttributes struct {
@@ -359,15 +359,15 @@ func (t TransitionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TransitionAttributes) Date() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("date"))
+	return terra.ReferenceAsString(t.ref.Append("date"))
 }
 
 func (t TransitionAttributes) Days() terra.NumberValue {
-	return terra.ReferenceNumber(t.ref.Append("days"))
+	return terra.ReferenceAsNumber(t.ref.Append("days"))
 }
 
 func (t TransitionAttributes) StorageClass() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("storage_class"))
+	return terra.ReferenceAsString(t.ref.Append("storage_class"))
 }
 
 type RuleState struct {

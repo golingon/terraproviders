@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDbSubnetGroup creates a new instance of [DbSubnetGroup].
 func NewDbSubnetGroup(name string, args DbSubnetGroupArgs) *DbSubnetGroup {
 	return &DbSubnetGroup{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDbSubnetGroup(name string, args DbSubnetGroupArgs) *DbSubnetGroup {
 
 var _ terra.Resource = (*DbSubnetGroup)(nil)
 
+// DbSubnetGroup represents the Terraform resource aws_db_subnet_group.
 type DbSubnetGroup struct {
-	Name  string
-	Args  DbSubnetGroupArgs
-	state *dbSubnetGroupState
+	Name      string
+	Args      DbSubnetGroupArgs
+	state     *dbSubnetGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DbSubnetGroup].
 func (dsg *DbSubnetGroup) Type() string {
 	return "aws_db_subnet_group"
 }
 
+// LocalName returns the local name for [DbSubnetGroup].
 func (dsg *DbSubnetGroup) LocalName() string {
 	return dsg.Name
 }
 
+// Configuration returns the configuration (args) for [DbSubnetGroup].
 func (dsg *DbSubnetGroup) Configuration() interface{} {
 	return dsg.Args
 }
 
+// DependOn is used for other resources to depend on [DbSubnetGroup].
+func (dsg *DbSubnetGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(dsg)
+}
+
+// Dependencies returns the list of resources [DbSubnetGroup] depends_on.
+func (dsg *DbSubnetGroup) Dependencies() terra.Dependencies {
+	return dsg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DbSubnetGroup].
+func (dsg *DbSubnetGroup) LifecycleManagement() *terra.Lifecycle {
+	return dsg.Lifecycle
+}
+
+// Attributes returns the attributes for [DbSubnetGroup].
 func (dsg *DbSubnetGroup) Attributes() dbSubnetGroupAttributes {
 	return dbSubnetGroupAttributes{ref: terra.ReferenceResource(dsg)}
 }
 
+// ImportState imports the given attribute values into [DbSubnetGroup]'s state.
 func (dsg *DbSubnetGroup) ImportState(av io.Reader) error {
 	dsg.state = &dbSubnetGroupState{}
 	if err := json.NewDecoder(av).Decode(dsg.state); err != nil {
@@ -48,10 +72,12 @@ func (dsg *DbSubnetGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DbSubnetGroup] has state.
 func (dsg *DbSubnetGroup) State() (*dbSubnetGroupState, bool) {
 	return dsg.state, dsg.state != nil
 }
 
+// StateMust returns the state for [DbSubnetGroup]. Panics if the state is nil.
 func (dsg *DbSubnetGroup) StateMust() *dbSubnetGroupState {
 	if dsg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dsg.Type(), dsg.LocalName()))
@@ -59,10 +85,7 @@ func (dsg *DbSubnetGroup) StateMust() *dbSubnetGroupState {
 	return dsg.state
 }
 
-func (dsg *DbSubnetGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(dsg)
-}
-
+// DbSubnetGroupArgs contains the configurations for aws_db_subnet_group.
 type DbSubnetGroupArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -78,47 +101,54 @@ type DbSubnetGroupArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that DbSubnetGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dbSubnetGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_db_subnet_group.
 func (dsg dbSubnetGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dsg.ref.Append("arn"))
+	return terra.ReferenceAsString(dsg.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_db_subnet_group.
 func (dsg dbSubnetGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dsg.ref.Append("description"))
+	return terra.ReferenceAsString(dsg.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_db_subnet_group.
 func (dsg dbSubnetGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dsg.ref.Append("id"))
+	return terra.ReferenceAsString(dsg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_db_subnet_group.
 func (dsg dbSubnetGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dsg.ref.Append("name"))
+	return terra.ReferenceAsString(dsg.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_db_subnet_group.
 func (dsg dbSubnetGroupAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(dsg.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(dsg.ref.Append("name_prefix"))
 }
 
+// SubnetIds returns a reference to field subnet_ids of aws_db_subnet_group.
 func (dsg dbSubnetGroupAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dsg.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](dsg.ref.Append("subnet_ids"))
 }
 
+// SupportedNetworkTypes returns a reference to field supported_network_types of aws_db_subnet_group.
 func (dsg dbSubnetGroupAttributes) SupportedNetworkTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dsg.ref.Append("supported_network_types"))
+	return terra.ReferenceAsSet[terra.StringValue](dsg.ref.Append("supported_network_types"))
 }
 
+// Tags returns a reference to field tags of aws_db_subnet_group.
 func (dsg dbSubnetGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dsg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dsg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_db_subnet_group.
 func (dsg dbSubnetGroupAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dsg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dsg.ref.Append("tags_all"))
 }
 
 type dbSubnetGroupState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAutoscalingGroup creates a new instance of [AutoscalingGroup].
 func NewAutoscalingGroup(name string, args AutoscalingGroupArgs) *AutoscalingGroup {
 	return &AutoscalingGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAutoscalingGroup(name string, args AutoscalingGroupArgs) *AutoscalingGro
 
 var _ terra.Resource = (*AutoscalingGroup)(nil)
 
+// AutoscalingGroup represents the Terraform resource aws_autoscaling_group.
 type AutoscalingGroup struct {
-	Name  string
-	Args  AutoscalingGroupArgs
-	state *autoscalingGroupState
+	Name      string
+	Args      AutoscalingGroupArgs
+	state     *autoscalingGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AutoscalingGroup].
 func (ag *AutoscalingGroup) Type() string {
 	return "aws_autoscaling_group"
 }
 
+// LocalName returns the local name for [AutoscalingGroup].
 func (ag *AutoscalingGroup) LocalName() string {
 	return ag.Name
 }
 
+// Configuration returns the configuration (args) for [AutoscalingGroup].
 func (ag *AutoscalingGroup) Configuration() interface{} {
 	return ag.Args
 }
 
+// DependOn is used for other resources to depend on [AutoscalingGroup].
+func (ag *AutoscalingGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(ag)
+}
+
+// Dependencies returns the list of resources [AutoscalingGroup] depends_on.
+func (ag *AutoscalingGroup) Dependencies() terra.Dependencies {
+	return ag.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AutoscalingGroup].
+func (ag *AutoscalingGroup) LifecycleManagement() *terra.Lifecycle {
+	return ag.Lifecycle
+}
+
+// Attributes returns the attributes for [AutoscalingGroup].
 func (ag *AutoscalingGroup) Attributes() autoscalingGroupAttributes {
 	return autoscalingGroupAttributes{ref: terra.ReferenceResource(ag)}
 }
 
+// ImportState imports the given attribute values into [AutoscalingGroup]'s state.
 func (ag *AutoscalingGroup) ImportState(av io.Reader) error {
 	ag.state = &autoscalingGroupState{}
 	if err := json.NewDecoder(av).Decode(ag.state); err != nil {
@@ -49,10 +73,12 @@ func (ag *AutoscalingGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AutoscalingGroup] has state.
 func (ag *AutoscalingGroup) State() (*autoscalingGroupState, bool) {
 	return ag.state, ag.state != nil
 }
 
+// StateMust returns the state for [AutoscalingGroup]. Panics if the state is nil.
 func (ag *AutoscalingGroup) StateMust() *autoscalingGroupState {
 	if ag.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ag.Type(), ag.LocalName()))
@@ -60,10 +86,7 @@ func (ag *AutoscalingGroup) StateMust() *autoscalingGroupState {
 	return ag.state
 }
 
-func (ag *AutoscalingGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(ag)
-}
-
+// AutoscalingGroupArgs contains the configurations for aws_autoscaling_group.
 type AutoscalingGroupArgs struct {
 	// AvailabilityZones: set of string, optional
 	AvailabilityZones terra.SetValue[terra.StringValue] `hcl:"availability_zones,attr"`
@@ -143,171 +166,202 @@ type AutoscalingGroupArgs struct {
 	Timeouts *autoscalinggroup.Timeouts `hcl:"timeouts,block"`
 	// WarmPool: optional
 	WarmPool *autoscalinggroup.WarmPool `hcl:"warm_pool,block"`
-	// DependsOn contains resources that AutoscalingGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type autoscalingGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("arn"))
+	return terra.ReferenceAsString(ag.ref.Append("arn"))
 }
 
+// AvailabilityZones returns a reference to field availability_zones of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) AvailabilityZones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ag.ref.Append("availability_zones"))
+	return terra.ReferenceAsSet[terra.StringValue](ag.ref.Append("availability_zones"))
 }
 
+// CapacityRebalance returns a reference to field capacity_rebalance of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) CapacityRebalance() terra.BoolValue {
-	return terra.ReferenceBool(ag.ref.Append("capacity_rebalance"))
+	return terra.ReferenceAsBool(ag.ref.Append("capacity_rebalance"))
 }
 
+// Context returns a reference to field context of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) Context() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("context"))
+	return terra.ReferenceAsString(ag.ref.Append("context"))
 }
 
+// DefaultCooldown returns a reference to field default_cooldown of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) DefaultCooldown() terra.NumberValue {
-	return terra.ReferenceNumber(ag.ref.Append("default_cooldown"))
+	return terra.ReferenceAsNumber(ag.ref.Append("default_cooldown"))
 }
 
+// DefaultInstanceWarmup returns a reference to field default_instance_warmup of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) DefaultInstanceWarmup() terra.NumberValue {
-	return terra.ReferenceNumber(ag.ref.Append("default_instance_warmup"))
+	return terra.ReferenceAsNumber(ag.ref.Append("default_instance_warmup"))
 }
 
+// DesiredCapacity returns a reference to field desired_capacity of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) DesiredCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(ag.ref.Append("desired_capacity"))
+	return terra.ReferenceAsNumber(ag.ref.Append("desired_capacity"))
 }
 
+// DesiredCapacityType returns a reference to field desired_capacity_type of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) DesiredCapacityType() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("desired_capacity_type"))
+	return terra.ReferenceAsString(ag.ref.Append("desired_capacity_type"))
 }
 
+// EnabledMetrics returns a reference to field enabled_metrics of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) EnabledMetrics() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ag.ref.Append("enabled_metrics"))
+	return terra.ReferenceAsSet[terra.StringValue](ag.ref.Append("enabled_metrics"))
 }
 
+// ForceDelete returns a reference to field force_delete of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) ForceDelete() terra.BoolValue {
-	return terra.ReferenceBool(ag.ref.Append("force_delete"))
+	return terra.ReferenceAsBool(ag.ref.Append("force_delete"))
 }
 
+// ForceDeleteWarmPool returns a reference to field force_delete_warm_pool of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) ForceDeleteWarmPool() terra.BoolValue {
-	return terra.ReferenceBool(ag.ref.Append("force_delete_warm_pool"))
+	return terra.ReferenceAsBool(ag.ref.Append("force_delete_warm_pool"))
 }
 
+// HealthCheckGracePeriod returns a reference to field health_check_grace_period of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) HealthCheckGracePeriod() terra.NumberValue {
-	return terra.ReferenceNumber(ag.ref.Append("health_check_grace_period"))
+	return terra.ReferenceAsNumber(ag.ref.Append("health_check_grace_period"))
 }
 
+// HealthCheckType returns a reference to field health_check_type of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) HealthCheckType() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("health_check_type"))
+	return terra.ReferenceAsString(ag.ref.Append("health_check_type"))
 }
 
+// Id returns a reference to field id of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("id"))
+	return terra.ReferenceAsString(ag.ref.Append("id"))
 }
 
+// LaunchConfiguration returns a reference to field launch_configuration of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) LaunchConfiguration() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("launch_configuration"))
+	return terra.ReferenceAsString(ag.ref.Append("launch_configuration"))
 }
 
+// LoadBalancers returns a reference to field load_balancers of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) LoadBalancers() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ag.ref.Append("load_balancers"))
+	return terra.ReferenceAsSet[terra.StringValue](ag.ref.Append("load_balancers"))
 }
 
+// MaxInstanceLifetime returns a reference to field max_instance_lifetime of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) MaxInstanceLifetime() terra.NumberValue {
-	return terra.ReferenceNumber(ag.ref.Append("max_instance_lifetime"))
+	return terra.ReferenceAsNumber(ag.ref.Append("max_instance_lifetime"))
 }
 
+// MaxSize returns a reference to field max_size of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) MaxSize() terra.NumberValue {
-	return terra.ReferenceNumber(ag.ref.Append("max_size"))
+	return terra.ReferenceAsNumber(ag.ref.Append("max_size"))
 }
 
+// MetricsGranularity returns a reference to field metrics_granularity of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) MetricsGranularity() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("metrics_granularity"))
+	return terra.ReferenceAsString(ag.ref.Append("metrics_granularity"))
 }
 
+// MinElbCapacity returns a reference to field min_elb_capacity of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) MinElbCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(ag.ref.Append("min_elb_capacity"))
+	return terra.ReferenceAsNumber(ag.ref.Append("min_elb_capacity"))
 }
 
+// MinSize returns a reference to field min_size of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) MinSize() terra.NumberValue {
-	return terra.ReferenceNumber(ag.ref.Append("min_size"))
+	return terra.ReferenceAsNumber(ag.ref.Append("min_size"))
 }
 
+// Name returns a reference to field name of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("name"))
+	return terra.ReferenceAsString(ag.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(ag.ref.Append("name_prefix"))
 }
 
+// PlacementGroup returns a reference to field placement_group of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) PlacementGroup() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("placement_group"))
+	return terra.ReferenceAsString(ag.ref.Append("placement_group"))
 }
 
+// ProtectFromScaleIn returns a reference to field protect_from_scale_in of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) ProtectFromScaleIn() terra.BoolValue {
-	return terra.ReferenceBool(ag.ref.Append("protect_from_scale_in"))
+	return terra.ReferenceAsBool(ag.ref.Append("protect_from_scale_in"))
 }
 
+// ServiceLinkedRoleArn returns a reference to field service_linked_role_arn of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) ServiceLinkedRoleArn() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("service_linked_role_arn"))
+	return terra.ReferenceAsString(ag.ref.Append("service_linked_role_arn"))
 }
 
+// SuspendedProcesses returns a reference to field suspended_processes of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) SuspendedProcesses() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ag.ref.Append("suspended_processes"))
+	return terra.ReferenceAsSet[terra.StringValue](ag.ref.Append("suspended_processes"))
 }
 
+// Tags returns a reference to field tags of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) Tags() terra.SetValue[terra.MapValue[terra.StringValue]] {
-	return terra.ReferenceSet[terra.MapValue[terra.StringValue]](ag.ref.Append("tags"))
+	return terra.ReferenceAsSet[terra.MapValue[terra.StringValue]](ag.ref.Append("tags"))
 }
 
+// TargetGroupArns returns a reference to field target_group_arns of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) TargetGroupArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ag.ref.Append("target_group_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](ag.ref.Append("target_group_arns"))
 }
 
+// TerminationPolicies returns a reference to field termination_policies of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) TerminationPolicies() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ag.ref.Append("termination_policies"))
+	return terra.ReferenceAsList[terra.StringValue](ag.ref.Append("termination_policies"))
 }
 
+// VpcZoneIdentifier returns a reference to field vpc_zone_identifier of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) VpcZoneIdentifier() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ag.ref.Append("vpc_zone_identifier"))
+	return terra.ReferenceAsSet[terra.StringValue](ag.ref.Append("vpc_zone_identifier"))
 }
 
+// WaitForCapacityTimeout returns a reference to field wait_for_capacity_timeout of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) WaitForCapacityTimeout() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("wait_for_capacity_timeout"))
+	return terra.ReferenceAsString(ag.ref.Append("wait_for_capacity_timeout"))
 }
 
+// WaitForElbCapacity returns a reference to field wait_for_elb_capacity of aws_autoscaling_group.
 func (ag autoscalingGroupAttributes) WaitForElbCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(ag.ref.Append("wait_for_elb_capacity"))
+	return terra.ReferenceAsNumber(ag.ref.Append("wait_for_elb_capacity"))
 }
 
 func (ag autoscalingGroupAttributes) InitialLifecycleHook() terra.SetValue[autoscalinggroup.InitialLifecycleHookAttributes] {
-	return terra.ReferenceSet[autoscalinggroup.InitialLifecycleHookAttributes](ag.ref.Append("initial_lifecycle_hook"))
+	return terra.ReferenceAsSet[autoscalinggroup.InitialLifecycleHookAttributes](ag.ref.Append("initial_lifecycle_hook"))
 }
 
 func (ag autoscalingGroupAttributes) InstanceRefresh() terra.ListValue[autoscalinggroup.InstanceRefreshAttributes] {
-	return terra.ReferenceList[autoscalinggroup.InstanceRefreshAttributes](ag.ref.Append("instance_refresh"))
+	return terra.ReferenceAsList[autoscalinggroup.InstanceRefreshAttributes](ag.ref.Append("instance_refresh"))
 }
 
 func (ag autoscalingGroupAttributes) LaunchTemplate() terra.ListValue[autoscalinggroup.LaunchTemplateAttributes] {
-	return terra.ReferenceList[autoscalinggroup.LaunchTemplateAttributes](ag.ref.Append("launch_template"))
+	return terra.ReferenceAsList[autoscalinggroup.LaunchTemplateAttributes](ag.ref.Append("launch_template"))
 }
 
 func (ag autoscalingGroupAttributes) MixedInstancesPolicy() terra.ListValue[autoscalinggroup.MixedInstancesPolicyAttributes] {
-	return terra.ReferenceList[autoscalinggroup.MixedInstancesPolicyAttributes](ag.ref.Append("mixed_instances_policy"))
+	return terra.ReferenceAsList[autoscalinggroup.MixedInstancesPolicyAttributes](ag.ref.Append("mixed_instances_policy"))
 }
 
 func (ag autoscalingGroupAttributes) Tag() terra.SetValue[autoscalinggroup.TagAttributes] {
-	return terra.ReferenceSet[autoscalinggroup.TagAttributes](ag.ref.Append("tag"))
+	return terra.ReferenceAsSet[autoscalinggroup.TagAttributes](ag.ref.Append("tag"))
 }
 
 func (ag autoscalingGroupAttributes) Timeouts() autoscalinggroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[autoscalinggroup.TimeoutsAttributes](ag.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[autoscalinggroup.TimeoutsAttributes](ag.ref.Append("timeouts"))
 }
 
 func (ag autoscalingGroupAttributes) WarmPool() terra.ListValue[autoscalinggroup.WarmPoolAttributes] {
-	return terra.ReferenceList[autoscalinggroup.WarmPoolAttributes](ag.ref.Append("warm_pool"))
+	return terra.ReferenceAsList[autoscalinggroup.WarmPoolAttributes](ag.ref.Append("warm_pool"))
 }
 
 type autoscalingGroupState struct {

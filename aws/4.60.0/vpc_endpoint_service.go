@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewVpcEndpointService creates a new instance of [VpcEndpointService].
 func NewVpcEndpointService(name string, args VpcEndpointServiceArgs) *VpcEndpointService {
 	return &VpcEndpointService{
 		Args: args,
@@ -19,28 +20,51 @@ func NewVpcEndpointService(name string, args VpcEndpointServiceArgs) *VpcEndpoin
 
 var _ terra.Resource = (*VpcEndpointService)(nil)
 
+// VpcEndpointService represents the Terraform resource aws_vpc_endpoint_service.
 type VpcEndpointService struct {
-	Name  string
-	Args  VpcEndpointServiceArgs
-	state *vpcEndpointServiceState
+	Name      string
+	Args      VpcEndpointServiceArgs
+	state     *vpcEndpointServiceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VpcEndpointService].
 func (ves *VpcEndpointService) Type() string {
 	return "aws_vpc_endpoint_service"
 }
 
+// LocalName returns the local name for [VpcEndpointService].
 func (ves *VpcEndpointService) LocalName() string {
 	return ves.Name
 }
 
+// Configuration returns the configuration (args) for [VpcEndpointService].
 func (ves *VpcEndpointService) Configuration() interface{} {
 	return ves.Args
 }
 
+// DependOn is used for other resources to depend on [VpcEndpointService].
+func (ves *VpcEndpointService) DependOn() terra.Reference {
+	return terra.ReferenceResource(ves)
+}
+
+// Dependencies returns the list of resources [VpcEndpointService] depends_on.
+func (ves *VpcEndpointService) Dependencies() terra.Dependencies {
+	return ves.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VpcEndpointService].
+func (ves *VpcEndpointService) LifecycleManagement() *terra.Lifecycle {
+	return ves.Lifecycle
+}
+
+// Attributes returns the attributes for [VpcEndpointService].
 func (ves *VpcEndpointService) Attributes() vpcEndpointServiceAttributes {
 	return vpcEndpointServiceAttributes{ref: terra.ReferenceResource(ves)}
 }
 
+// ImportState imports the given attribute values into [VpcEndpointService]'s state.
 func (ves *VpcEndpointService) ImportState(av io.Reader) error {
 	ves.state = &vpcEndpointServiceState{}
 	if err := json.NewDecoder(av).Decode(ves.state); err != nil {
@@ -49,10 +73,12 @@ func (ves *VpcEndpointService) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VpcEndpointService] has state.
 func (ves *VpcEndpointService) State() (*vpcEndpointServiceState, bool) {
 	return ves.state, ves.state != nil
 }
 
+// StateMust returns the state for [VpcEndpointService]. Panics if the state is nil.
 func (ves *VpcEndpointService) StateMust() *vpcEndpointServiceState {
 	if ves.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ves.Type(), ves.LocalName()))
@@ -60,10 +86,7 @@ func (ves *VpcEndpointService) StateMust() *vpcEndpointServiceState {
 	return ves.state
 }
 
-func (ves *VpcEndpointService) DependOn() terra.Reference {
-	return terra.ReferenceResource(ves)
-}
-
+// VpcEndpointServiceArgs contains the configurations for aws_vpc_endpoint_service.
 type VpcEndpointServiceArgs struct {
 	// AcceptanceRequired: bool, required
 	AcceptanceRequired terra.BoolValue `hcl:"acceptance_required,attr" validate:"required"`
@@ -87,83 +110,97 @@ type VpcEndpointServiceArgs struct {
 	PrivateDnsNameConfiguration []vpcendpointservice.PrivateDnsNameConfiguration `hcl:"private_dns_name_configuration,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *vpcendpointservice.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that VpcEndpointService depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type vpcEndpointServiceAttributes struct {
 	ref terra.Reference
 }
 
+// AcceptanceRequired returns a reference to field acceptance_required of aws_vpc_endpoint_service.
 func (ves vpcEndpointServiceAttributes) AcceptanceRequired() terra.BoolValue {
-	return terra.ReferenceBool(ves.ref.Append("acceptance_required"))
+	return terra.ReferenceAsBool(ves.ref.Append("acceptance_required"))
 }
 
+// AllowedPrincipals returns a reference to field allowed_principals of aws_vpc_endpoint_service.
 func (ves vpcEndpointServiceAttributes) AllowedPrincipals() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ves.ref.Append("allowed_principals"))
+	return terra.ReferenceAsSet[terra.StringValue](ves.ref.Append("allowed_principals"))
 }
 
+// Arn returns a reference to field arn of aws_vpc_endpoint_service.
 func (ves vpcEndpointServiceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ves.ref.Append("arn"))
+	return terra.ReferenceAsString(ves.ref.Append("arn"))
 }
 
+// AvailabilityZones returns a reference to field availability_zones of aws_vpc_endpoint_service.
 func (ves vpcEndpointServiceAttributes) AvailabilityZones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ves.ref.Append("availability_zones"))
+	return terra.ReferenceAsSet[terra.StringValue](ves.ref.Append("availability_zones"))
 }
 
+// BaseEndpointDnsNames returns a reference to field base_endpoint_dns_names of aws_vpc_endpoint_service.
 func (ves vpcEndpointServiceAttributes) BaseEndpointDnsNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ves.ref.Append("base_endpoint_dns_names"))
+	return terra.ReferenceAsSet[terra.StringValue](ves.ref.Append("base_endpoint_dns_names"))
 }
 
+// GatewayLoadBalancerArns returns a reference to field gateway_load_balancer_arns of aws_vpc_endpoint_service.
 func (ves vpcEndpointServiceAttributes) GatewayLoadBalancerArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ves.ref.Append("gateway_load_balancer_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](ves.ref.Append("gateway_load_balancer_arns"))
 }
 
+// Id returns a reference to field id of aws_vpc_endpoint_service.
 func (ves vpcEndpointServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ves.ref.Append("id"))
+	return terra.ReferenceAsString(ves.ref.Append("id"))
 }
 
+// ManagesVpcEndpoints returns a reference to field manages_vpc_endpoints of aws_vpc_endpoint_service.
 func (ves vpcEndpointServiceAttributes) ManagesVpcEndpoints() terra.BoolValue {
-	return terra.ReferenceBool(ves.ref.Append("manages_vpc_endpoints"))
+	return terra.ReferenceAsBool(ves.ref.Append("manages_vpc_endpoints"))
 }
 
+// NetworkLoadBalancerArns returns a reference to field network_load_balancer_arns of aws_vpc_endpoint_service.
 func (ves vpcEndpointServiceAttributes) NetworkLoadBalancerArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ves.ref.Append("network_load_balancer_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](ves.ref.Append("network_load_balancer_arns"))
 }
 
+// PrivateDnsName returns a reference to field private_dns_name of aws_vpc_endpoint_service.
 func (ves vpcEndpointServiceAttributes) PrivateDnsName() terra.StringValue {
-	return terra.ReferenceString(ves.ref.Append("private_dns_name"))
+	return terra.ReferenceAsString(ves.ref.Append("private_dns_name"))
 }
 
+// ServiceName returns a reference to field service_name of aws_vpc_endpoint_service.
 func (ves vpcEndpointServiceAttributes) ServiceName() terra.StringValue {
-	return terra.ReferenceString(ves.ref.Append("service_name"))
+	return terra.ReferenceAsString(ves.ref.Append("service_name"))
 }
 
+// ServiceType returns a reference to field service_type of aws_vpc_endpoint_service.
 func (ves vpcEndpointServiceAttributes) ServiceType() terra.StringValue {
-	return terra.ReferenceString(ves.ref.Append("service_type"))
+	return terra.ReferenceAsString(ves.ref.Append("service_type"))
 }
 
+// State returns a reference to field state of aws_vpc_endpoint_service.
 func (ves vpcEndpointServiceAttributes) State() terra.StringValue {
-	return terra.ReferenceString(ves.ref.Append("state"))
+	return terra.ReferenceAsString(ves.ref.Append("state"))
 }
 
+// SupportedIpAddressTypes returns a reference to field supported_ip_address_types of aws_vpc_endpoint_service.
 func (ves vpcEndpointServiceAttributes) SupportedIpAddressTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ves.ref.Append("supported_ip_address_types"))
+	return terra.ReferenceAsSet[terra.StringValue](ves.ref.Append("supported_ip_address_types"))
 }
 
+// Tags returns a reference to field tags of aws_vpc_endpoint_service.
 func (ves vpcEndpointServiceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ves.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ves.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_vpc_endpoint_service.
 func (ves vpcEndpointServiceAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ves.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ves.ref.Append("tags_all"))
 }
 
 func (ves vpcEndpointServiceAttributes) PrivateDnsNameConfiguration() terra.ListValue[vpcendpointservice.PrivateDnsNameConfigurationAttributes] {
-	return terra.ReferenceList[vpcendpointservice.PrivateDnsNameConfigurationAttributes](ves.ref.Append("private_dns_name_configuration"))
+	return terra.ReferenceAsList[vpcendpointservice.PrivateDnsNameConfigurationAttributes](ves.ref.Append("private_dns_name_configuration"))
 }
 
 func (ves vpcEndpointServiceAttributes) Timeouts() vpcendpointservice.TimeoutsAttributes {
-	return terra.ReferenceSingle[vpcendpointservice.TimeoutsAttributes](ves.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[vpcendpointservice.TimeoutsAttributes](ves.ref.Append("timeouts"))
 }
 
 type vpcEndpointServiceState struct {

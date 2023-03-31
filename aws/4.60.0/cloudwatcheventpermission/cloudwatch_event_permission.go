@@ -33,15 +33,15 @@ func (c ConditionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ConditionAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("key"))
+	return terra.ReferenceAsString(c.ref.Append("key"))
 }
 
 func (c ConditionAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("type"))
+	return terra.ReferenceAsString(c.ref.Append("type"))
 }
 
 func (c ConditionAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("value"))
+	return terra.ReferenceAsString(c.ref.Append("value"))
 }
 
 type ConditionState struct {

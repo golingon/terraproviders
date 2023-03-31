@@ -184,11 +184,11 @@ func (cs ConclusionStatementAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cs ConclusionStatementAttributes) ResponseCard() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("response_card"))
+	return terra.ReferenceAsString(cs.ref.Append("response_card"))
 }
 
 func (cs ConclusionStatementAttributes) Message() terra.SetValue[ConclusionStatementMessageAttributes] {
-	return terra.ReferenceSet[ConclusionStatementMessageAttributes](cs.ref.Append("message"))
+	return terra.ReferenceAsSet[ConclusionStatementMessageAttributes](cs.ref.Append("message"))
 }
 
 type ConclusionStatementMessageAttributes struct {
@@ -208,15 +208,15 @@ func (m ConclusionStatementMessageAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m ConclusionStatementMessageAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("content"))
+	return terra.ReferenceAsString(m.ref.Append("content"))
 }
 
 func (m ConclusionStatementMessageAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("content_type"))
+	return terra.ReferenceAsString(m.ref.Append("content_type"))
 }
 
 func (m ConclusionStatementMessageAttributes) GroupNumber() terra.NumberValue {
-	return terra.ReferenceNumber(m.ref.Append("group_number"))
+	return terra.ReferenceAsNumber(m.ref.Append("group_number"))
 }
 
 type ConfirmationPromptAttributes struct {
@@ -236,15 +236,15 @@ func (cp ConfirmationPromptAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cp ConfirmationPromptAttributes) MaxAttempts() terra.NumberValue {
-	return terra.ReferenceNumber(cp.ref.Append("max_attempts"))
+	return terra.ReferenceAsNumber(cp.ref.Append("max_attempts"))
 }
 
 func (cp ConfirmationPromptAttributes) ResponseCard() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("response_card"))
+	return terra.ReferenceAsString(cp.ref.Append("response_card"))
 }
 
 func (cp ConfirmationPromptAttributes) Message() terra.SetValue[ConfirmationPromptMessageAttributes] {
-	return terra.ReferenceSet[ConfirmationPromptMessageAttributes](cp.ref.Append("message"))
+	return terra.ReferenceAsSet[ConfirmationPromptMessageAttributes](cp.ref.Append("message"))
 }
 
 type ConfirmationPromptMessageAttributes struct {
@@ -264,15 +264,15 @@ func (m ConfirmationPromptMessageAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m ConfirmationPromptMessageAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("content"))
+	return terra.ReferenceAsString(m.ref.Append("content"))
 }
 
 func (m ConfirmationPromptMessageAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("content_type"))
+	return terra.ReferenceAsString(m.ref.Append("content_type"))
 }
 
 func (m ConfirmationPromptMessageAttributes) GroupNumber() terra.NumberValue {
-	return terra.ReferenceNumber(m.ref.Append("group_number"))
+	return terra.ReferenceAsNumber(m.ref.Append("group_number"))
 }
 
 type DialogCodeHookAttributes struct {
@@ -292,11 +292,11 @@ func (dch DialogCodeHookAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dch DialogCodeHookAttributes) MessageVersion() terra.StringValue {
-	return terra.ReferenceString(dch.ref.Append("message_version"))
+	return terra.ReferenceAsString(dch.ref.Append("message_version"))
 }
 
 func (dch DialogCodeHookAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(dch.ref.Append("uri"))
+	return terra.ReferenceAsString(dch.ref.Append("uri"))
 }
 
 type FollowUpPromptAttributes struct {
@@ -316,11 +316,11 @@ func (fup FollowUpPromptAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fup FollowUpPromptAttributes) Prompt() terra.ListValue[PromptAttributes] {
-	return terra.ReferenceList[PromptAttributes](fup.ref.Append("prompt"))
+	return terra.ReferenceAsList[PromptAttributes](fup.ref.Append("prompt"))
 }
 
 func (fup FollowUpPromptAttributes) RejectionStatement() terra.ListValue[FollowUpPromptRejectionStatementAttributes] {
-	return terra.ReferenceList[FollowUpPromptRejectionStatementAttributes](fup.ref.Append("rejection_statement"))
+	return terra.ReferenceAsList[FollowUpPromptRejectionStatementAttributes](fup.ref.Append("rejection_statement"))
 }
 
 type PromptAttributes struct {
@@ -340,15 +340,15 @@ func (p PromptAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p PromptAttributes) MaxAttempts() terra.NumberValue {
-	return terra.ReferenceNumber(p.ref.Append("max_attempts"))
+	return terra.ReferenceAsNumber(p.ref.Append("max_attempts"))
 }
 
 func (p PromptAttributes) ResponseCard() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("response_card"))
+	return terra.ReferenceAsString(p.ref.Append("response_card"))
 }
 
 func (p PromptAttributes) Message() terra.SetValue[PromptMessageAttributes] {
-	return terra.ReferenceSet[PromptMessageAttributes](p.ref.Append("message"))
+	return terra.ReferenceAsSet[PromptMessageAttributes](p.ref.Append("message"))
 }
 
 type PromptMessageAttributes struct {
@@ -368,15 +368,15 @@ func (m PromptMessageAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m PromptMessageAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("content"))
+	return terra.ReferenceAsString(m.ref.Append("content"))
 }
 
 func (m PromptMessageAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("content_type"))
+	return terra.ReferenceAsString(m.ref.Append("content_type"))
 }
 
 func (m PromptMessageAttributes) GroupNumber() terra.NumberValue {
-	return terra.ReferenceNumber(m.ref.Append("group_number"))
+	return terra.ReferenceAsNumber(m.ref.Append("group_number"))
 }
 
 type FollowUpPromptRejectionStatementAttributes struct {
@@ -396,11 +396,11 @@ func (rs FollowUpPromptRejectionStatementAttributes) InternalTokens() hclwrite.T
 }
 
 func (rs FollowUpPromptRejectionStatementAttributes) ResponseCard() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("response_card"))
+	return terra.ReferenceAsString(rs.ref.Append("response_card"))
 }
 
 func (rs FollowUpPromptRejectionStatementAttributes) Message() terra.SetValue[FollowUpPromptRejectionStatementMessageAttributes] {
-	return terra.ReferenceSet[FollowUpPromptRejectionStatementMessageAttributes](rs.ref.Append("message"))
+	return terra.ReferenceAsSet[FollowUpPromptRejectionStatementMessageAttributes](rs.ref.Append("message"))
 }
 
 type FollowUpPromptRejectionStatementMessageAttributes struct {
@@ -420,15 +420,15 @@ func (m FollowUpPromptRejectionStatementMessageAttributes) InternalTokens() hclw
 }
 
 func (m FollowUpPromptRejectionStatementMessageAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("content"))
+	return terra.ReferenceAsString(m.ref.Append("content"))
 }
 
 func (m FollowUpPromptRejectionStatementMessageAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("content_type"))
+	return terra.ReferenceAsString(m.ref.Append("content_type"))
 }
 
 func (m FollowUpPromptRejectionStatementMessageAttributes) GroupNumber() terra.NumberValue {
-	return terra.ReferenceNumber(m.ref.Append("group_number"))
+	return terra.ReferenceAsNumber(m.ref.Append("group_number"))
 }
 
 type FulfillmentActivityAttributes struct {
@@ -448,11 +448,11 @@ func (fa FulfillmentActivityAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fa FulfillmentActivityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(fa.ref.Append("type"))
+	return terra.ReferenceAsString(fa.ref.Append("type"))
 }
 
 func (fa FulfillmentActivityAttributes) CodeHook() terra.ListValue[CodeHookAttributes] {
-	return terra.ReferenceList[CodeHookAttributes](fa.ref.Append("code_hook"))
+	return terra.ReferenceAsList[CodeHookAttributes](fa.ref.Append("code_hook"))
 }
 
 type CodeHookAttributes struct {
@@ -472,11 +472,11 @@ func (ch CodeHookAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ch CodeHookAttributes) MessageVersion() terra.StringValue {
-	return terra.ReferenceString(ch.ref.Append("message_version"))
+	return terra.ReferenceAsString(ch.ref.Append("message_version"))
 }
 
 func (ch CodeHookAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(ch.ref.Append("uri"))
+	return terra.ReferenceAsString(ch.ref.Append("uri"))
 }
 
 type RejectionStatementAttributes struct {
@@ -496,11 +496,11 @@ func (rs RejectionStatementAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rs RejectionStatementAttributes) ResponseCard() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("response_card"))
+	return terra.ReferenceAsString(rs.ref.Append("response_card"))
 }
 
 func (rs RejectionStatementAttributes) Message() terra.SetValue[RejectionStatementMessageAttributes] {
-	return terra.ReferenceSet[RejectionStatementMessageAttributes](rs.ref.Append("message"))
+	return terra.ReferenceAsSet[RejectionStatementMessageAttributes](rs.ref.Append("message"))
 }
 
 type RejectionStatementMessageAttributes struct {
@@ -520,15 +520,15 @@ func (m RejectionStatementMessageAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m RejectionStatementMessageAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("content"))
+	return terra.ReferenceAsString(m.ref.Append("content"))
 }
 
 func (m RejectionStatementMessageAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("content_type"))
+	return terra.ReferenceAsString(m.ref.Append("content_type"))
 }
 
 func (m RejectionStatementMessageAttributes) GroupNumber() terra.NumberValue {
-	return terra.ReferenceNumber(m.ref.Append("group_number"))
+	return terra.ReferenceAsNumber(m.ref.Append("group_number"))
 }
 
 type SlotAttributes struct {
@@ -548,39 +548,39 @@ func (s SlotAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SlotAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("description"))
+	return terra.ReferenceAsString(s.ref.Append("description"))
 }
 
 func (s SlotAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s SlotAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("priority"))
+	return terra.ReferenceAsNumber(s.ref.Append("priority"))
 }
 
 func (s SlotAttributes) ResponseCard() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("response_card"))
+	return terra.ReferenceAsString(s.ref.Append("response_card"))
 }
 
 func (s SlotAttributes) SampleUtterances() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("sample_utterances"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("sample_utterances"))
 }
 
 func (s SlotAttributes) SlotConstraint() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("slot_constraint"))
+	return terra.ReferenceAsString(s.ref.Append("slot_constraint"))
 }
 
 func (s SlotAttributes) SlotType() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("slot_type"))
+	return terra.ReferenceAsString(s.ref.Append("slot_type"))
 }
 
 func (s SlotAttributes) SlotTypeVersion() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("slot_type_version"))
+	return terra.ReferenceAsString(s.ref.Append("slot_type_version"))
 }
 
 func (s SlotAttributes) ValueElicitationPrompt() terra.ListValue[ValueElicitationPromptAttributes] {
-	return terra.ReferenceList[ValueElicitationPromptAttributes](s.ref.Append("value_elicitation_prompt"))
+	return terra.ReferenceAsList[ValueElicitationPromptAttributes](s.ref.Append("value_elicitation_prompt"))
 }
 
 type ValueElicitationPromptAttributes struct {
@@ -600,15 +600,15 @@ func (vep ValueElicitationPromptAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vep ValueElicitationPromptAttributes) MaxAttempts() terra.NumberValue {
-	return terra.ReferenceNumber(vep.ref.Append("max_attempts"))
+	return terra.ReferenceAsNumber(vep.ref.Append("max_attempts"))
 }
 
 func (vep ValueElicitationPromptAttributes) ResponseCard() terra.StringValue {
-	return terra.ReferenceString(vep.ref.Append("response_card"))
+	return terra.ReferenceAsString(vep.ref.Append("response_card"))
 }
 
 func (vep ValueElicitationPromptAttributes) Message() terra.SetValue[ValueElicitationPromptMessageAttributes] {
-	return terra.ReferenceSet[ValueElicitationPromptMessageAttributes](vep.ref.Append("message"))
+	return terra.ReferenceAsSet[ValueElicitationPromptMessageAttributes](vep.ref.Append("message"))
 }
 
 type ValueElicitationPromptMessageAttributes struct {
@@ -628,15 +628,15 @@ func (m ValueElicitationPromptMessageAttributes) InternalTokens() hclwrite.Token
 }
 
 func (m ValueElicitationPromptMessageAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("content"))
+	return terra.ReferenceAsString(m.ref.Append("content"))
 }
 
 func (m ValueElicitationPromptMessageAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("content_type"))
+	return terra.ReferenceAsString(m.ref.Append("content_type"))
 }
 
 func (m ValueElicitationPromptMessageAttributes) GroupNumber() terra.NumberValue {
-	return terra.ReferenceNumber(m.ref.Append("group_number"))
+	return terra.ReferenceAsNumber(m.ref.Append("group_number"))
 }
 
 type TimeoutsAttributes struct {
@@ -656,15 +656,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ConclusionStatementState struct {

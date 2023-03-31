@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMskServerlessCluster creates a new instance of [MskServerlessCluster].
 func NewMskServerlessCluster(name string, args MskServerlessClusterArgs) *MskServerlessCluster {
 	return &MskServerlessCluster{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMskServerlessCluster(name string, args MskServerlessClusterArgs) *MskSer
 
 var _ terra.Resource = (*MskServerlessCluster)(nil)
 
+// MskServerlessCluster represents the Terraform resource aws_msk_serverless_cluster.
 type MskServerlessCluster struct {
-	Name  string
-	Args  MskServerlessClusterArgs
-	state *mskServerlessClusterState
+	Name      string
+	Args      MskServerlessClusterArgs
+	state     *mskServerlessClusterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MskServerlessCluster].
 func (msc *MskServerlessCluster) Type() string {
 	return "aws_msk_serverless_cluster"
 }
 
+// LocalName returns the local name for [MskServerlessCluster].
 func (msc *MskServerlessCluster) LocalName() string {
 	return msc.Name
 }
 
+// Configuration returns the configuration (args) for [MskServerlessCluster].
 func (msc *MskServerlessCluster) Configuration() interface{} {
 	return msc.Args
 }
 
+// DependOn is used for other resources to depend on [MskServerlessCluster].
+func (msc *MskServerlessCluster) DependOn() terra.Reference {
+	return terra.ReferenceResource(msc)
+}
+
+// Dependencies returns the list of resources [MskServerlessCluster] depends_on.
+func (msc *MskServerlessCluster) Dependencies() terra.Dependencies {
+	return msc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MskServerlessCluster].
+func (msc *MskServerlessCluster) LifecycleManagement() *terra.Lifecycle {
+	return msc.Lifecycle
+}
+
+// Attributes returns the attributes for [MskServerlessCluster].
 func (msc *MskServerlessCluster) Attributes() mskServerlessClusterAttributes {
 	return mskServerlessClusterAttributes{ref: terra.ReferenceResource(msc)}
 }
 
+// ImportState imports the given attribute values into [MskServerlessCluster]'s state.
 func (msc *MskServerlessCluster) ImportState(av io.Reader) error {
 	msc.state = &mskServerlessClusterState{}
 	if err := json.NewDecoder(av).Decode(msc.state); err != nil {
@@ -49,10 +73,12 @@ func (msc *MskServerlessCluster) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MskServerlessCluster] has state.
 func (msc *MskServerlessCluster) State() (*mskServerlessClusterState, bool) {
 	return msc.state, msc.state != nil
 }
 
+// StateMust returns the state for [MskServerlessCluster]. Panics if the state is nil.
 func (msc *MskServerlessCluster) StateMust() *mskServerlessClusterState {
 	if msc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", msc.Type(), msc.LocalName()))
@@ -60,10 +86,7 @@ func (msc *MskServerlessCluster) StateMust() *mskServerlessClusterState {
 	return msc.state
 }
 
-func (msc *MskServerlessCluster) DependOn() terra.Reference {
-	return terra.ReferenceResource(msc)
-}
-
+// MskServerlessClusterArgs contains the configurations for aws_msk_serverless_cluster.
 type MskServerlessClusterArgs struct {
 	// ClusterName: string, required
 	ClusterName terra.StringValue `hcl:"cluster_name,attr" validate:"required"`
@@ -79,43 +102,46 @@ type MskServerlessClusterArgs struct {
 	Timeouts *mskserverlesscluster.Timeouts `hcl:"timeouts,block"`
 	// VpcConfig: min=1
 	VpcConfig []mskserverlesscluster.VpcConfig `hcl:"vpc_config,block" validate:"min=1"`
-	// DependsOn contains resources that MskServerlessCluster depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mskServerlessClusterAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_msk_serverless_cluster.
 func (msc mskServerlessClusterAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(msc.ref.Append("arn"))
+	return terra.ReferenceAsString(msc.ref.Append("arn"))
 }
 
+// ClusterName returns a reference to field cluster_name of aws_msk_serverless_cluster.
 func (msc mskServerlessClusterAttributes) ClusterName() terra.StringValue {
-	return terra.ReferenceString(msc.ref.Append("cluster_name"))
+	return terra.ReferenceAsString(msc.ref.Append("cluster_name"))
 }
 
+// Id returns a reference to field id of aws_msk_serverless_cluster.
 func (msc mskServerlessClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(msc.ref.Append("id"))
+	return terra.ReferenceAsString(msc.ref.Append("id"))
 }
 
+// Tags returns a reference to field tags of aws_msk_serverless_cluster.
 func (msc mskServerlessClusterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](msc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](msc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_msk_serverless_cluster.
 func (msc mskServerlessClusterAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](msc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](msc.ref.Append("tags_all"))
 }
 
 func (msc mskServerlessClusterAttributes) ClientAuthentication() terra.ListValue[mskserverlesscluster.ClientAuthenticationAttributes] {
-	return terra.ReferenceList[mskserverlesscluster.ClientAuthenticationAttributes](msc.ref.Append("client_authentication"))
+	return terra.ReferenceAsList[mskserverlesscluster.ClientAuthenticationAttributes](msc.ref.Append("client_authentication"))
 }
 
 func (msc mskServerlessClusterAttributes) Timeouts() mskserverlesscluster.TimeoutsAttributes {
-	return terra.ReferenceSingle[mskserverlesscluster.TimeoutsAttributes](msc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mskserverlesscluster.TimeoutsAttributes](msc.ref.Append("timeouts"))
 }
 
 func (msc mskServerlessClusterAttributes) VpcConfig() terra.ListValue[mskserverlesscluster.VpcConfigAttributes] {
-	return terra.ReferenceList[mskserverlesscluster.VpcConfigAttributes](msc.ref.Append("vpc_config"))
+	return terra.ReferenceAsList[mskserverlesscluster.VpcConfigAttributes](msc.ref.Append("vpc_config"))
 }
 
 type mskServerlessClusterState struct {

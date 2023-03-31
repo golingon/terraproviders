@@ -153,15 +153,15 @@ func (a AlarmsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AlarmsAttributes) AlarmNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](a.ref.Append("alarm_names"))
+	return terra.ReferenceAsSet[terra.StringValue](a.ref.Append("alarm_names"))
 }
 
 func (a AlarmsAttributes) Enable() terra.BoolValue {
-	return terra.ReferenceBool(a.ref.Append("enable"))
+	return terra.ReferenceAsBool(a.ref.Append("enable"))
 }
 
 func (a AlarmsAttributes) Rollback() terra.BoolValue {
-	return terra.ReferenceBool(a.ref.Append("rollback"))
+	return terra.ReferenceAsBool(a.ref.Append("rollback"))
 }
 
 type CapacityProviderStrategyAttributes struct {
@@ -181,15 +181,15 @@ func (cps CapacityProviderStrategyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cps CapacityProviderStrategyAttributes) Base() terra.NumberValue {
-	return terra.ReferenceNumber(cps.ref.Append("base"))
+	return terra.ReferenceAsNumber(cps.ref.Append("base"))
 }
 
 func (cps CapacityProviderStrategyAttributes) CapacityProvider() terra.StringValue {
-	return terra.ReferenceString(cps.ref.Append("capacity_provider"))
+	return terra.ReferenceAsString(cps.ref.Append("capacity_provider"))
 }
 
 func (cps CapacityProviderStrategyAttributes) Weight() terra.NumberValue {
-	return terra.ReferenceNumber(cps.ref.Append("weight"))
+	return terra.ReferenceAsNumber(cps.ref.Append("weight"))
 }
 
 type DeploymentCircuitBreakerAttributes struct {
@@ -209,11 +209,11 @@ func (dcb DeploymentCircuitBreakerAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dcb DeploymentCircuitBreakerAttributes) Enable() terra.BoolValue {
-	return terra.ReferenceBool(dcb.ref.Append("enable"))
+	return terra.ReferenceAsBool(dcb.ref.Append("enable"))
 }
 
 func (dcb DeploymentCircuitBreakerAttributes) Rollback() terra.BoolValue {
-	return terra.ReferenceBool(dcb.ref.Append("rollback"))
+	return terra.ReferenceAsBool(dcb.ref.Append("rollback"))
 }
 
 type DeploymentControllerAttributes struct {
@@ -233,7 +233,7 @@ func (dc DeploymentControllerAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dc DeploymentControllerAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("type"))
+	return terra.ReferenceAsString(dc.ref.Append("type"))
 }
 
 type LoadBalancerAttributes struct {
@@ -253,19 +253,19 @@ func (lb LoadBalancerAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lb LoadBalancerAttributes) ContainerName() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("container_name"))
+	return terra.ReferenceAsString(lb.ref.Append("container_name"))
 }
 
 func (lb LoadBalancerAttributes) ContainerPort() terra.NumberValue {
-	return terra.ReferenceNumber(lb.ref.Append("container_port"))
+	return terra.ReferenceAsNumber(lb.ref.Append("container_port"))
 }
 
 func (lb LoadBalancerAttributes) ElbName() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("elb_name"))
+	return terra.ReferenceAsString(lb.ref.Append("elb_name"))
 }
 
 func (lb LoadBalancerAttributes) TargetGroupArn() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("target_group_arn"))
+	return terra.ReferenceAsString(lb.ref.Append("target_group_arn"))
 }
 
 type NetworkConfigurationAttributes struct {
@@ -285,15 +285,15 @@ func (nc NetworkConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nc NetworkConfigurationAttributes) AssignPublicIp() terra.BoolValue {
-	return terra.ReferenceBool(nc.ref.Append("assign_public_ip"))
+	return terra.ReferenceAsBool(nc.ref.Append("assign_public_ip"))
 }
 
 func (nc NetworkConfigurationAttributes) SecurityGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](nc.ref.Append("security_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](nc.ref.Append("security_groups"))
 }
 
 func (nc NetworkConfigurationAttributes) Subnets() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](nc.ref.Append("subnets"))
+	return terra.ReferenceAsSet[terra.StringValue](nc.ref.Append("subnets"))
 }
 
 type OrderedPlacementStrategyAttributes struct {
@@ -313,11 +313,11 @@ func (ops OrderedPlacementStrategyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ops OrderedPlacementStrategyAttributes) Field() terra.StringValue {
-	return terra.ReferenceString(ops.ref.Append("field"))
+	return terra.ReferenceAsString(ops.ref.Append("field"))
 }
 
 func (ops OrderedPlacementStrategyAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ops.ref.Append("type"))
+	return terra.ReferenceAsString(ops.ref.Append("type"))
 }
 
 type PlacementConstraintsAttributes struct {
@@ -337,11 +337,11 @@ func (pc PlacementConstraintsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pc PlacementConstraintsAttributes) Expression() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("expression"))
+	return terra.ReferenceAsString(pc.ref.Append("expression"))
 }
 
 func (pc PlacementConstraintsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("type"))
+	return terra.ReferenceAsString(pc.ref.Append("type"))
 }
 
 type ServiceConnectConfigurationAttributes struct {
@@ -361,19 +361,19 @@ func (scc ServiceConnectConfigurationAttributes) InternalTokens() hclwrite.Token
 }
 
 func (scc ServiceConnectConfigurationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(scc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(scc.ref.Append("enabled"))
 }
 
 func (scc ServiceConnectConfigurationAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(scc.ref.Append("namespace"))
+	return terra.ReferenceAsString(scc.ref.Append("namespace"))
 }
 
 func (scc ServiceConnectConfigurationAttributes) LogConfiguration() terra.ListValue[LogConfigurationAttributes] {
-	return terra.ReferenceList[LogConfigurationAttributes](scc.ref.Append("log_configuration"))
+	return terra.ReferenceAsList[LogConfigurationAttributes](scc.ref.Append("log_configuration"))
 }
 
 func (scc ServiceConnectConfigurationAttributes) Service() terra.ListValue[ServiceAttributes] {
-	return terra.ReferenceList[ServiceAttributes](scc.ref.Append("service"))
+	return terra.ReferenceAsList[ServiceAttributes](scc.ref.Append("service"))
 }
 
 type LogConfigurationAttributes struct {
@@ -393,15 +393,15 @@ func (lc LogConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lc LogConfigurationAttributes) LogDriver() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("log_driver"))
+	return terra.ReferenceAsString(lc.ref.Append("log_driver"))
 }
 
 func (lc LogConfigurationAttributes) Options() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lc.ref.Append("options"))
+	return terra.ReferenceAsMap[terra.StringValue](lc.ref.Append("options"))
 }
 
 func (lc LogConfigurationAttributes) SecretOption() terra.ListValue[SecretOptionAttributes] {
-	return terra.ReferenceList[SecretOptionAttributes](lc.ref.Append("secret_option"))
+	return terra.ReferenceAsList[SecretOptionAttributes](lc.ref.Append("secret_option"))
 }
 
 type SecretOptionAttributes struct {
@@ -421,11 +421,11 @@ func (so SecretOptionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (so SecretOptionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(so.ref.Append("name"))
+	return terra.ReferenceAsString(so.ref.Append("name"))
 }
 
 func (so SecretOptionAttributes) ValueFrom() terra.StringValue {
-	return terra.ReferenceString(so.ref.Append("value_from"))
+	return terra.ReferenceAsString(so.ref.Append("value_from"))
 }
 
 type ServiceAttributes struct {
@@ -445,19 +445,19 @@ func (s ServiceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s ServiceAttributes) DiscoveryName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("discovery_name"))
+	return terra.ReferenceAsString(s.ref.Append("discovery_name"))
 }
 
 func (s ServiceAttributes) IngressPortOverride() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("ingress_port_override"))
+	return terra.ReferenceAsNumber(s.ref.Append("ingress_port_override"))
 }
 
 func (s ServiceAttributes) PortName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("port_name"))
+	return terra.ReferenceAsString(s.ref.Append("port_name"))
 }
 
 func (s ServiceAttributes) ClientAlias() terra.ListValue[ClientAliasAttributes] {
-	return terra.ReferenceList[ClientAliasAttributes](s.ref.Append("client_alias"))
+	return terra.ReferenceAsList[ClientAliasAttributes](s.ref.Append("client_alias"))
 }
 
 type ClientAliasAttributes struct {
@@ -477,11 +477,11 @@ func (ca ClientAliasAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ca ClientAliasAttributes) DnsName() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("dns_name"))
+	return terra.ReferenceAsString(ca.ref.Append("dns_name"))
 }
 
 func (ca ClientAliasAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(ca.ref.Append("port"))
+	return terra.ReferenceAsNumber(ca.ref.Append("port"))
 }
 
 type ServiceRegistriesAttributes struct {
@@ -501,19 +501,19 @@ func (sr ServiceRegistriesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sr ServiceRegistriesAttributes) ContainerName() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("container_name"))
+	return terra.ReferenceAsString(sr.ref.Append("container_name"))
 }
 
 func (sr ServiceRegistriesAttributes) ContainerPort() terra.NumberValue {
-	return terra.ReferenceNumber(sr.ref.Append("container_port"))
+	return terra.ReferenceAsNumber(sr.ref.Append("container_port"))
 }
 
 func (sr ServiceRegistriesAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(sr.ref.Append("port"))
+	return terra.ReferenceAsNumber(sr.ref.Append("port"))
 }
 
 func (sr ServiceRegistriesAttributes) RegistryArn() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("registry_arn"))
+	return terra.ReferenceAsString(sr.ref.Append("registry_arn"))
 }
 
 type TimeoutsAttributes struct {
@@ -533,15 +533,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AlarmsState struct {

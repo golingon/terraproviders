@@ -291,23 +291,23 @@ func (psc PredictiveScalingConfigurationAttributes) InternalTokens() hclwrite.To
 }
 
 func (psc PredictiveScalingConfigurationAttributes) MaxCapacityBreachBehavior() terra.StringValue {
-	return terra.ReferenceString(psc.ref.Append("max_capacity_breach_behavior"))
+	return terra.ReferenceAsString(psc.ref.Append("max_capacity_breach_behavior"))
 }
 
 func (psc PredictiveScalingConfigurationAttributes) MaxCapacityBuffer() terra.StringValue {
-	return terra.ReferenceString(psc.ref.Append("max_capacity_buffer"))
+	return terra.ReferenceAsString(psc.ref.Append("max_capacity_buffer"))
 }
 
 func (psc PredictiveScalingConfigurationAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(psc.ref.Append("mode"))
+	return terra.ReferenceAsString(psc.ref.Append("mode"))
 }
 
 func (psc PredictiveScalingConfigurationAttributes) SchedulingBufferTime() terra.StringValue {
-	return terra.ReferenceString(psc.ref.Append("scheduling_buffer_time"))
+	return terra.ReferenceAsString(psc.ref.Append("scheduling_buffer_time"))
 }
 
 func (psc PredictiveScalingConfigurationAttributes) MetricSpecification() terra.ListValue[MetricSpecificationAttributes] {
-	return terra.ReferenceList[MetricSpecificationAttributes](psc.ref.Append("metric_specification"))
+	return terra.ReferenceAsList[MetricSpecificationAttributes](psc.ref.Append("metric_specification"))
 }
 
 type MetricSpecificationAttributes struct {
@@ -327,31 +327,31 @@ func (ms MetricSpecificationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ms MetricSpecificationAttributes) TargetValue() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("target_value"))
+	return terra.ReferenceAsNumber(ms.ref.Append("target_value"))
 }
 
 func (ms MetricSpecificationAttributes) CustomizedCapacityMetricSpecification() terra.ListValue[CustomizedCapacityMetricSpecificationAttributes] {
-	return terra.ReferenceList[CustomizedCapacityMetricSpecificationAttributes](ms.ref.Append("customized_capacity_metric_specification"))
+	return terra.ReferenceAsList[CustomizedCapacityMetricSpecificationAttributes](ms.ref.Append("customized_capacity_metric_specification"))
 }
 
 func (ms MetricSpecificationAttributes) CustomizedLoadMetricSpecification() terra.ListValue[CustomizedLoadMetricSpecificationAttributes] {
-	return terra.ReferenceList[CustomizedLoadMetricSpecificationAttributes](ms.ref.Append("customized_load_metric_specification"))
+	return terra.ReferenceAsList[CustomizedLoadMetricSpecificationAttributes](ms.ref.Append("customized_load_metric_specification"))
 }
 
 func (ms MetricSpecificationAttributes) CustomizedScalingMetricSpecification() terra.ListValue[CustomizedScalingMetricSpecificationAttributes] {
-	return terra.ReferenceList[CustomizedScalingMetricSpecificationAttributes](ms.ref.Append("customized_scaling_metric_specification"))
+	return terra.ReferenceAsList[CustomizedScalingMetricSpecificationAttributes](ms.ref.Append("customized_scaling_metric_specification"))
 }
 
 func (ms MetricSpecificationAttributes) PredefinedLoadMetricSpecification() terra.ListValue[PredefinedLoadMetricSpecificationAttributes] {
-	return terra.ReferenceList[PredefinedLoadMetricSpecificationAttributes](ms.ref.Append("predefined_load_metric_specification"))
+	return terra.ReferenceAsList[PredefinedLoadMetricSpecificationAttributes](ms.ref.Append("predefined_load_metric_specification"))
 }
 
 func (ms MetricSpecificationAttributes) PredefinedMetricPairSpecification() terra.ListValue[PredefinedMetricPairSpecificationAttributes] {
-	return terra.ReferenceList[PredefinedMetricPairSpecificationAttributes](ms.ref.Append("predefined_metric_pair_specification"))
+	return terra.ReferenceAsList[PredefinedMetricPairSpecificationAttributes](ms.ref.Append("predefined_metric_pair_specification"))
 }
 
 func (ms MetricSpecificationAttributes) PredefinedScalingMetricSpecification() terra.ListValue[PredefinedScalingMetricSpecificationAttributes] {
-	return terra.ReferenceList[PredefinedScalingMetricSpecificationAttributes](ms.ref.Append("predefined_scaling_metric_specification"))
+	return terra.ReferenceAsList[PredefinedScalingMetricSpecificationAttributes](ms.ref.Append("predefined_scaling_metric_specification"))
 }
 
 type CustomizedCapacityMetricSpecificationAttributes struct {
@@ -371,7 +371,7 @@ func (ccms CustomizedCapacityMetricSpecificationAttributes) InternalTokens() hcl
 }
 
 func (ccms CustomizedCapacityMetricSpecificationAttributes) MetricDataQueries() terra.ListValue[CustomizedCapacityMetricSpecificationMetricDataQueriesAttributes] {
-	return terra.ReferenceList[CustomizedCapacityMetricSpecificationMetricDataQueriesAttributes](ccms.ref.Append("metric_data_queries"))
+	return terra.ReferenceAsList[CustomizedCapacityMetricSpecificationMetricDataQueriesAttributes](ccms.ref.Append("metric_data_queries"))
 }
 
 type CustomizedCapacityMetricSpecificationMetricDataQueriesAttributes struct {
@@ -391,23 +391,23 @@ func (mdq CustomizedCapacityMetricSpecificationMetricDataQueriesAttributes) Inte
 }
 
 func (mdq CustomizedCapacityMetricSpecificationMetricDataQueriesAttributes) Expression() terra.StringValue {
-	return terra.ReferenceString(mdq.ref.Append("expression"))
+	return terra.ReferenceAsString(mdq.ref.Append("expression"))
 }
 
 func (mdq CustomizedCapacityMetricSpecificationMetricDataQueriesAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mdq.ref.Append("id"))
+	return terra.ReferenceAsString(mdq.ref.Append("id"))
 }
 
 func (mdq CustomizedCapacityMetricSpecificationMetricDataQueriesAttributes) Label() terra.StringValue {
-	return terra.ReferenceString(mdq.ref.Append("label"))
+	return terra.ReferenceAsString(mdq.ref.Append("label"))
 }
 
 func (mdq CustomizedCapacityMetricSpecificationMetricDataQueriesAttributes) ReturnData() terra.BoolValue {
-	return terra.ReferenceBool(mdq.ref.Append("return_data"))
+	return terra.ReferenceAsBool(mdq.ref.Append("return_data"))
 }
 
 func (mdq CustomizedCapacityMetricSpecificationMetricDataQueriesAttributes) MetricStat() terra.ListValue[CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatAttributes] {
-	return terra.ReferenceList[CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatAttributes](mdq.ref.Append("metric_stat"))
+	return terra.ReferenceAsList[CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatAttributes](mdq.ref.Append("metric_stat"))
 }
 
 type CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatAttributes struct {
@@ -427,15 +427,15 @@ func (ms CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatAttribu
 }
 
 func (ms CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatAttributes) Stat() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("stat"))
+	return terra.ReferenceAsString(ms.ref.Append("stat"))
 }
 
 func (ms CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("unit"))
+	return terra.ReferenceAsString(ms.ref.Append("unit"))
 }
 
 func (ms CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatAttributes) Metric() terra.ListValue[CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatMetricAttributes] {
-	return terra.ReferenceList[CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatMetricAttributes](ms.ref.Append("metric"))
+	return terra.ReferenceAsList[CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatMetricAttributes](ms.ref.Append("metric"))
 }
 
 type CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatMetricAttributes struct {
@@ -455,15 +455,15 @@ func (m CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatMetricAt
 }
 
 func (m CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatMetricAttributes) MetricName() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("metric_name"))
+	return terra.ReferenceAsString(m.ref.Append("metric_name"))
 }
 
 func (m CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatMetricAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("namespace"))
+	return terra.ReferenceAsString(m.ref.Append("namespace"))
 }
 
 func (m CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatMetricAttributes) Dimensions() terra.SetValue[CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes] {
-	return terra.ReferenceSet[CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes](m.ref.Append("dimensions"))
+	return terra.ReferenceAsSet[CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes](m.ref.Append("dimensions"))
 }
 
 type CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes struct {
@@ -483,11 +483,11 @@ func (d CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatMetricDi
 }
 
 func (d CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("name"))
+	return terra.ReferenceAsString(d.ref.Append("name"))
 }
 
 func (d CustomizedCapacityMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("value"))
+	return terra.ReferenceAsString(d.ref.Append("value"))
 }
 
 type CustomizedLoadMetricSpecificationAttributes struct {
@@ -507,7 +507,7 @@ func (clms CustomizedLoadMetricSpecificationAttributes) InternalTokens() hclwrit
 }
 
 func (clms CustomizedLoadMetricSpecificationAttributes) MetricDataQueries() terra.ListValue[CustomizedLoadMetricSpecificationMetricDataQueriesAttributes] {
-	return terra.ReferenceList[CustomizedLoadMetricSpecificationMetricDataQueriesAttributes](clms.ref.Append("metric_data_queries"))
+	return terra.ReferenceAsList[CustomizedLoadMetricSpecificationMetricDataQueriesAttributes](clms.ref.Append("metric_data_queries"))
 }
 
 type CustomizedLoadMetricSpecificationMetricDataQueriesAttributes struct {
@@ -527,23 +527,23 @@ func (mdq CustomizedLoadMetricSpecificationMetricDataQueriesAttributes) Internal
 }
 
 func (mdq CustomizedLoadMetricSpecificationMetricDataQueriesAttributes) Expression() terra.StringValue {
-	return terra.ReferenceString(mdq.ref.Append("expression"))
+	return terra.ReferenceAsString(mdq.ref.Append("expression"))
 }
 
 func (mdq CustomizedLoadMetricSpecificationMetricDataQueriesAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mdq.ref.Append("id"))
+	return terra.ReferenceAsString(mdq.ref.Append("id"))
 }
 
 func (mdq CustomizedLoadMetricSpecificationMetricDataQueriesAttributes) Label() terra.StringValue {
-	return terra.ReferenceString(mdq.ref.Append("label"))
+	return terra.ReferenceAsString(mdq.ref.Append("label"))
 }
 
 func (mdq CustomizedLoadMetricSpecificationMetricDataQueriesAttributes) ReturnData() terra.BoolValue {
-	return terra.ReferenceBool(mdq.ref.Append("return_data"))
+	return terra.ReferenceAsBool(mdq.ref.Append("return_data"))
 }
 
 func (mdq CustomizedLoadMetricSpecificationMetricDataQueriesAttributes) MetricStat() terra.ListValue[CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatAttributes] {
-	return terra.ReferenceList[CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatAttributes](mdq.ref.Append("metric_stat"))
+	return terra.ReferenceAsList[CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatAttributes](mdq.ref.Append("metric_stat"))
 }
 
 type CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatAttributes struct {
@@ -563,15 +563,15 @@ func (ms CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatAttributes)
 }
 
 func (ms CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatAttributes) Stat() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("stat"))
+	return terra.ReferenceAsString(ms.ref.Append("stat"))
 }
 
 func (ms CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("unit"))
+	return terra.ReferenceAsString(ms.ref.Append("unit"))
 }
 
 func (ms CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatAttributes) Metric() terra.ListValue[CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatMetricAttributes] {
-	return terra.ReferenceList[CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatMetricAttributes](ms.ref.Append("metric"))
+	return terra.ReferenceAsList[CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatMetricAttributes](ms.ref.Append("metric"))
 }
 
 type CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatMetricAttributes struct {
@@ -591,15 +591,15 @@ func (m CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatMetricAttrib
 }
 
 func (m CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatMetricAttributes) MetricName() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("metric_name"))
+	return terra.ReferenceAsString(m.ref.Append("metric_name"))
 }
 
 func (m CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatMetricAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("namespace"))
+	return terra.ReferenceAsString(m.ref.Append("namespace"))
 }
 
 func (m CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatMetricAttributes) Dimensions() terra.SetValue[CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes] {
-	return terra.ReferenceSet[CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes](m.ref.Append("dimensions"))
+	return terra.ReferenceAsSet[CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes](m.ref.Append("dimensions"))
 }
 
 type CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes struct {
@@ -619,11 +619,11 @@ func (d CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatMetricDimens
 }
 
 func (d CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("name"))
+	return terra.ReferenceAsString(d.ref.Append("name"))
 }
 
 func (d CustomizedLoadMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("value"))
+	return terra.ReferenceAsString(d.ref.Append("value"))
 }
 
 type CustomizedScalingMetricSpecificationAttributes struct {
@@ -643,7 +643,7 @@ func (csms CustomizedScalingMetricSpecificationAttributes) InternalTokens() hclw
 }
 
 func (csms CustomizedScalingMetricSpecificationAttributes) MetricDataQueries() terra.ListValue[CustomizedScalingMetricSpecificationMetricDataQueriesAttributes] {
-	return terra.ReferenceList[CustomizedScalingMetricSpecificationMetricDataQueriesAttributes](csms.ref.Append("metric_data_queries"))
+	return terra.ReferenceAsList[CustomizedScalingMetricSpecificationMetricDataQueriesAttributes](csms.ref.Append("metric_data_queries"))
 }
 
 type CustomizedScalingMetricSpecificationMetricDataQueriesAttributes struct {
@@ -663,23 +663,23 @@ func (mdq CustomizedScalingMetricSpecificationMetricDataQueriesAttributes) Inter
 }
 
 func (mdq CustomizedScalingMetricSpecificationMetricDataQueriesAttributes) Expression() terra.StringValue {
-	return terra.ReferenceString(mdq.ref.Append("expression"))
+	return terra.ReferenceAsString(mdq.ref.Append("expression"))
 }
 
 func (mdq CustomizedScalingMetricSpecificationMetricDataQueriesAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mdq.ref.Append("id"))
+	return terra.ReferenceAsString(mdq.ref.Append("id"))
 }
 
 func (mdq CustomizedScalingMetricSpecificationMetricDataQueriesAttributes) Label() terra.StringValue {
-	return terra.ReferenceString(mdq.ref.Append("label"))
+	return terra.ReferenceAsString(mdq.ref.Append("label"))
 }
 
 func (mdq CustomizedScalingMetricSpecificationMetricDataQueriesAttributes) ReturnData() terra.BoolValue {
-	return terra.ReferenceBool(mdq.ref.Append("return_data"))
+	return terra.ReferenceAsBool(mdq.ref.Append("return_data"))
 }
 
 func (mdq CustomizedScalingMetricSpecificationMetricDataQueriesAttributes) MetricStat() terra.ListValue[CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatAttributes] {
-	return terra.ReferenceList[CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatAttributes](mdq.ref.Append("metric_stat"))
+	return terra.ReferenceAsList[CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatAttributes](mdq.ref.Append("metric_stat"))
 }
 
 type CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatAttributes struct {
@@ -699,15 +699,15 @@ func (ms CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatAttribut
 }
 
 func (ms CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatAttributes) Stat() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("stat"))
+	return terra.ReferenceAsString(ms.ref.Append("stat"))
 }
 
 func (ms CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("unit"))
+	return terra.ReferenceAsString(ms.ref.Append("unit"))
 }
 
 func (ms CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatAttributes) Metric() terra.ListValue[CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatMetricAttributes] {
-	return terra.ReferenceList[CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatMetricAttributes](ms.ref.Append("metric"))
+	return terra.ReferenceAsList[CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatMetricAttributes](ms.ref.Append("metric"))
 }
 
 type CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatMetricAttributes struct {
@@ -727,15 +727,15 @@ func (m CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatMetricAtt
 }
 
 func (m CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatMetricAttributes) MetricName() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("metric_name"))
+	return terra.ReferenceAsString(m.ref.Append("metric_name"))
 }
 
 func (m CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatMetricAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("namespace"))
+	return terra.ReferenceAsString(m.ref.Append("namespace"))
 }
 
 func (m CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatMetricAttributes) Dimensions() terra.SetValue[CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes] {
-	return terra.ReferenceSet[CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes](m.ref.Append("dimensions"))
+	return terra.ReferenceAsSet[CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes](m.ref.Append("dimensions"))
 }
 
 type CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes struct {
@@ -755,11 +755,11 @@ func (d CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatMetricDim
 }
 
 func (d CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("name"))
+	return terra.ReferenceAsString(d.ref.Append("name"))
 }
 
 func (d CustomizedScalingMetricSpecificationMetricDataQueriesMetricStatMetricDimensionsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("value"))
+	return terra.ReferenceAsString(d.ref.Append("value"))
 }
 
 type PredefinedLoadMetricSpecificationAttributes struct {
@@ -779,11 +779,11 @@ func (plms PredefinedLoadMetricSpecificationAttributes) InternalTokens() hclwrit
 }
 
 func (plms PredefinedLoadMetricSpecificationAttributes) PredefinedMetricType() terra.StringValue {
-	return terra.ReferenceString(plms.ref.Append("predefined_metric_type"))
+	return terra.ReferenceAsString(plms.ref.Append("predefined_metric_type"))
 }
 
 func (plms PredefinedLoadMetricSpecificationAttributes) ResourceLabel() terra.StringValue {
-	return terra.ReferenceString(plms.ref.Append("resource_label"))
+	return terra.ReferenceAsString(plms.ref.Append("resource_label"))
 }
 
 type PredefinedMetricPairSpecificationAttributes struct {
@@ -803,11 +803,11 @@ func (pmps PredefinedMetricPairSpecificationAttributes) InternalTokens() hclwrit
 }
 
 func (pmps PredefinedMetricPairSpecificationAttributes) PredefinedMetricType() terra.StringValue {
-	return terra.ReferenceString(pmps.ref.Append("predefined_metric_type"))
+	return terra.ReferenceAsString(pmps.ref.Append("predefined_metric_type"))
 }
 
 func (pmps PredefinedMetricPairSpecificationAttributes) ResourceLabel() terra.StringValue {
-	return terra.ReferenceString(pmps.ref.Append("resource_label"))
+	return terra.ReferenceAsString(pmps.ref.Append("resource_label"))
 }
 
 type PredefinedScalingMetricSpecificationAttributes struct {
@@ -827,11 +827,11 @@ func (psms PredefinedScalingMetricSpecificationAttributes) InternalTokens() hclw
 }
 
 func (psms PredefinedScalingMetricSpecificationAttributes) PredefinedMetricType() terra.StringValue {
-	return terra.ReferenceString(psms.ref.Append("predefined_metric_type"))
+	return terra.ReferenceAsString(psms.ref.Append("predefined_metric_type"))
 }
 
 func (psms PredefinedScalingMetricSpecificationAttributes) ResourceLabel() terra.StringValue {
-	return terra.ReferenceString(psms.ref.Append("resource_label"))
+	return terra.ReferenceAsString(psms.ref.Append("resource_label"))
 }
 
 type StepAdjustmentAttributes struct {
@@ -851,15 +851,15 @@ func (sa StepAdjustmentAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sa StepAdjustmentAttributes) MetricIntervalLowerBound() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("metric_interval_lower_bound"))
+	return terra.ReferenceAsString(sa.ref.Append("metric_interval_lower_bound"))
 }
 
 func (sa StepAdjustmentAttributes) MetricIntervalUpperBound() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("metric_interval_upper_bound"))
+	return terra.ReferenceAsString(sa.ref.Append("metric_interval_upper_bound"))
 }
 
 func (sa StepAdjustmentAttributes) ScalingAdjustment() terra.NumberValue {
-	return terra.ReferenceNumber(sa.ref.Append("scaling_adjustment"))
+	return terra.ReferenceAsNumber(sa.ref.Append("scaling_adjustment"))
 }
 
 type TargetTrackingConfigurationAttributes struct {
@@ -879,19 +879,19 @@ func (ttc TargetTrackingConfigurationAttributes) InternalTokens() hclwrite.Token
 }
 
 func (ttc TargetTrackingConfigurationAttributes) DisableScaleIn() terra.BoolValue {
-	return terra.ReferenceBool(ttc.ref.Append("disable_scale_in"))
+	return terra.ReferenceAsBool(ttc.ref.Append("disable_scale_in"))
 }
 
 func (ttc TargetTrackingConfigurationAttributes) TargetValue() terra.NumberValue {
-	return terra.ReferenceNumber(ttc.ref.Append("target_value"))
+	return terra.ReferenceAsNumber(ttc.ref.Append("target_value"))
 }
 
 func (ttc TargetTrackingConfigurationAttributes) CustomizedMetricSpecification() terra.ListValue[CustomizedMetricSpecificationAttributes] {
-	return terra.ReferenceList[CustomizedMetricSpecificationAttributes](ttc.ref.Append("customized_metric_specification"))
+	return terra.ReferenceAsList[CustomizedMetricSpecificationAttributes](ttc.ref.Append("customized_metric_specification"))
 }
 
 func (ttc TargetTrackingConfigurationAttributes) PredefinedMetricSpecification() terra.ListValue[PredefinedMetricSpecificationAttributes] {
-	return terra.ReferenceList[PredefinedMetricSpecificationAttributes](ttc.ref.Append("predefined_metric_specification"))
+	return terra.ReferenceAsList[PredefinedMetricSpecificationAttributes](ttc.ref.Append("predefined_metric_specification"))
 }
 
 type CustomizedMetricSpecificationAttributes struct {
@@ -911,27 +911,27 @@ func (cms CustomizedMetricSpecificationAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (cms CustomizedMetricSpecificationAttributes) MetricName() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("metric_name"))
+	return terra.ReferenceAsString(cms.ref.Append("metric_name"))
 }
 
 func (cms CustomizedMetricSpecificationAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("namespace"))
+	return terra.ReferenceAsString(cms.ref.Append("namespace"))
 }
 
 func (cms CustomizedMetricSpecificationAttributes) Statistic() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("statistic"))
+	return terra.ReferenceAsString(cms.ref.Append("statistic"))
 }
 
 func (cms CustomizedMetricSpecificationAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("unit"))
+	return terra.ReferenceAsString(cms.ref.Append("unit"))
 }
 
 func (cms CustomizedMetricSpecificationAttributes) MetricDimension() terra.ListValue[MetricDimensionAttributes] {
-	return terra.ReferenceList[MetricDimensionAttributes](cms.ref.Append("metric_dimension"))
+	return terra.ReferenceAsList[MetricDimensionAttributes](cms.ref.Append("metric_dimension"))
 }
 
 func (cms CustomizedMetricSpecificationAttributes) Metrics() terra.SetValue[MetricsAttributes] {
-	return terra.ReferenceSet[MetricsAttributes](cms.ref.Append("metrics"))
+	return terra.ReferenceAsSet[MetricsAttributes](cms.ref.Append("metrics"))
 }
 
 type MetricDimensionAttributes struct {
@@ -951,11 +951,11 @@ func (md MetricDimensionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (md MetricDimensionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("name"))
+	return terra.ReferenceAsString(md.ref.Append("name"))
 }
 
 func (md MetricDimensionAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("value"))
+	return terra.ReferenceAsString(md.ref.Append("value"))
 }
 
 type MetricsAttributes struct {
@@ -975,23 +975,23 @@ func (m MetricsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m MetricsAttributes) Expression() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("expression"))
+	return terra.ReferenceAsString(m.ref.Append("expression"))
 }
 
 func (m MetricsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("id"))
+	return terra.ReferenceAsString(m.ref.Append("id"))
 }
 
 func (m MetricsAttributes) Label() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("label"))
+	return terra.ReferenceAsString(m.ref.Append("label"))
 }
 
 func (m MetricsAttributes) ReturnData() terra.BoolValue {
-	return terra.ReferenceBool(m.ref.Append("return_data"))
+	return terra.ReferenceAsBool(m.ref.Append("return_data"))
 }
 
 func (m MetricsAttributes) MetricStat() terra.ListValue[MetricsMetricStatAttributes] {
-	return terra.ReferenceList[MetricsMetricStatAttributes](m.ref.Append("metric_stat"))
+	return terra.ReferenceAsList[MetricsMetricStatAttributes](m.ref.Append("metric_stat"))
 }
 
 type MetricsMetricStatAttributes struct {
@@ -1011,15 +1011,15 @@ func (ms MetricsMetricStatAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ms MetricsMetricStatAttributes) Stat() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("stat"))
+	return terra.ReferenceAsString(ms.ref.Append("stat"))
 }
 
 func (ms MetricsMetricStatAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("unit"))
+	return terra.ReferenceAsString(ms.ref.Append("unit"))
 }
 
 func (ms MetricsMetricStatAttributes) Metric() terra.ListValue[MetricsMetricStatMetricAttributes] {
-	return terra.ReferenceList[MetricsMetricStatMetricAttributes](ms.ref.Append("metric"))
+	return terra.ReferenceAsList[MetricsMetricStatMetricAttributes](ms.ref.Append("metric"))
 }
 
 type MetricsMetricStatMetricAttributes struct {
@@ -1039,15 +1039,15 @@ func (m MetricsMetricStatMetricAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m MetricsMetricStatMetricAttributes) MetricName() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("metric_name"))
+	return terra.ReferenceAsString(m.ref.Append("metric_name"))
 }
 
 func (m MetricsMetricStatMetricAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("namespace"))
+	return terra.ReferenceAsString(m.ref.Append("namespace"))
 }
 
 func (m MetricsMetricStatMetricAttributes) Dimensions() terra.SetValue[MetricsMetricStatMetricDimensionsAttributes] {
-	return terra.ReferenceSet[MetricsMetricStatMetricDimensionsAttributes](m.ref.Append("dimensions"))
+	return terra.ReferenceAsSet[MetricsMetricStatMetricDimensionsAttributes](m.ref.Append("dimensions"))
 }
 
 type MetricsMetricStatMetricDimensionsAttributes struct {
@@ -1067,11 +1067,11 @@ func (d MetricsMetricStatMetricDimensionsAttributes) InternalTokens() hclwrite.T
 }
 
 func (d MetricsMetricStatMetricDimensionsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("name"))
+	return terra.ReferenceAsString(d.ref.Append("name"))
 }
 
 func (d MetricsMetricStatMetricDimensionsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("value"))
+	return terra.ReferenceAsString(d.ref.Append("value"))
 }
 
 type PredefinedMetricSpecificationAttributes struct {
@@ -1091,11 +1091,11 @@ func (pms PredefinedMetricSpecificationAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (pms PredefinedMetricSpecificationAttributes) PredefinedMetricType() terra.StringValue {
-	return terra.ReferenceString(pms.ref.Append("predefined_metric_type"))
+	return terra.ReferenceAsString(pms.ref.Append("predefined_metric_type"))
 }
 
 func (pms PredefinedMetricSpecificationAttributes) ResourceLabel() terra.StringValue {
-	return terra.ReferenceString(pms.ref.Append("resource_label"))
+	return terra.ReferenceAsString(pms.ref.Append("resource_label"))
 }
 
 type PredictiveScalingConfigurationState struct {

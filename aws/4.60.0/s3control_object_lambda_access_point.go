@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewS3ControlObjectLambdaAccessPoint creates a new instance of [S3ControlObjectLambdaAccessPoint].
 func NewS3ControlObjectLambdaAccessPoint(name string, args S3ControlObjectLambdaAccessPointArgs) *S3ControlObjectLambdaAccessPoint {
 	return &S3ControlObjectLambdaAccessPoint{
 		Args: args,
@@ -19,28 +20,51 @@ func NewS3ControlObjectLambdaAccessPoint(name string, args S3ControlObjectLambda
 
 var _ terra.Resource = (*S3ControlObjectLambdaAccessPoint)(nil)
 
+// S3ControlObjectLambdaAccessPoint represents the Terraform resource aws_s3control_object_lambda_access_point.
 type S3ControlObjectLambdaAccessPoint struct {
-	Name  string
-	Args  S3ControlObjectLambdaAccessPointArgs
-	state *s3ControlObjectLambdaAccessPointState
+	Name      string
+	Args      S3ControlObjectLambdaAccessPointArgs
+	state     *s3ControlObjectLambdaAccessPointState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [S3ControlObjectLambdaAccessPoint].
 func (solap *S3ControlObjectLambdaAccessPoint) Type() string {
 	return "aws_s3control_object_lambda_access_point"
 }
 
+// LocalName returns the local name for [S3ControlObjectLambdaAccessPoint].
 func (solap *S3ControlObjectLambdaAccessPoint) LocalName() string {
 	return solap.Name
 }
 
+// Configuration returns the configuration (args) for [S3ControlObjectLambdaAccessPoint].
 func (solap *S3ControlObjectLambdaAccessPoint) Configuration() interface{} {
 	return solap.Args
 }
 
+// DependOn is used for other resources to depend on [S3ControlObjectLambdaAccessPoint].
+func (solap *S3ControlObjectLambdaAccessPoint) DependOn() terra.Reference {
+	return terra.ReferenceResource(solap)
+}
+
+// Dependencies returns the list of resources [S3ControlObjectLambdaAccessPoint] depends_on.
+func (solap *S3ControlObjectLambdaAccessPoint) Dependencies() terra.Dependencies {
+	return solap.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [S3ControlObjectLambdaAccessPoint].
+func (solap *S3ControlObjectLambdaAccessPoint) LifecycleManagement() *terra.Lifecycle {
+	return solap.Lifecycle
+}
+
+// Attributes returns the attributes for [S3ControlObjectLambdaAccessPoint].
 func (solap *S3ControlObjectLambdaAccessPoint) Attributes() s3ControlObjectLambdaAccessPointAttributes {
 	return s3ControlObjectLambdaAccessPointAttributes{ref: terra.ReferenceResource(solap)}
 }
 
+// ImportState imports the given attribute values into [S3ControlObjectLambdaAccessPoint]'s state.
 func (solap *S3ControlObjectLambdaAccessPoint) ImportState(av io.Reader) error {
 	solap.state = &s3ControlObjectLambdaAccessPointState{}
 	if err := json.NewDecoder(av).Decode(solap.state); err != nil {
@@ -49,10 +73,12 @@ func (solap *S3ControlObjectLambdaAccessPoint) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [S3ControlObjectLambdaAccessPoint] has state.
 func (solap *S3ControlObjectLambdaAccessPoint) State() (*s3ControlObjectLambdaAccessPointState, bool) {
 	return solap.state, solap.state != nil
 }
 
+// StateMust returns the state for [S3ControlObjectLambdaAccessPoint]. Panics if the state is nil.
 func (solap *S3ControlObjectLambdaAccessPoint) StateMust() *s3ControlObjectLambdaAccessPointState {
 	if solap.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", solap.Type(), solap.LocalName()))
@@ -60,10 +86,7 @@ func (solap *S3ControlObjectLambdaAccessPoint) StateMust() *s3ControlObjectLambd
 	return solap.state
 }
 
-func (solap *S3ControlObjectLambdaAccessPoint) DependOn() terra.Reference {
-	return terra.ReferenceResource(solap)
-}
-
+// S3ControlObjectLambdaAccessPointArgs contains the configurations for aws_s3control_object_lambda_access_point.
 type S3ControlObjectLambdaAccessPointArgs struct {
 	// AccountId: string, optional
 	AccountId terra.StringValue `hcl:"account_id,attr"`
@@ -73,31 +96,33 @@ type S3ControlObjectLambdaAccessPointArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// Configuration: required
 	Configuration *s3controlobjectlambdaaccesspoint.Configuration `hcl:"configuration,block" validate:"required"`
-	// DependsOn contains resources that S3ControlObjectLambdaAccessPoint depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type s3ControlObjectLambdaAccessPointAttributes struct {
 	ref terra.Reference
 }
 
+// AccountId returns a reference to field account_id of aws_s3control_object_lambda_access_point.
 func (solap s3ControlObjectLambdaAccessPointAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(solap.ref.Append("account_id"))
+	return terra.ReferenceAsString(solap.ref.Append("account_id"))
 }
 
+// Arn returns a reference to field arn of aws_s3control_object_lambda_access_point.
 func (solap s3ControlObjectLambdaAccessPointAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(solap.ref.Append("arn"))
+	return terra.ReferenceAsString(solap.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_s3control_object_lambda_access_point.
 func (solap s3ControlObjectLambdaAccessPointAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(solap.ref.Append("id"))
+	return terra.ReferenceAsString(solap.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_s3control_object_lambda_access_point.
 func (solap s3ControlObjectLambdaAccessPointAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(solap.ref.Append("name"))
+	return terra.ReferenceAsString(solap.ref.Append("name"))
 }
 
 func (solap s3ControlObjectLambdaAccessPointAttributes) Configuration() terra.ListValue[s3controlobjectlambdaaccesspoint.ConfigurationAttributes] {
-	return terra.ReferenceList[s3controlobjectlambdaaccesspoint.ConfigurationAttributes](solap.ref.Append("configuration"))
+	return terra.ReferenceAsList[s3controlobjectlambdaaccesspoint.ConfigurationAttributes](solap.ref.Append("configuration"))
 }
 
 type s3ControlObjectLambdaAccessPointState struct {

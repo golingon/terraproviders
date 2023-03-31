@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSagemakerStudioLifecycleConfig creates a new instance of [SagemakerStudioLifecycleConfig].
 func NewSagemakerStudioLifecycleConfig(name string, args SagemakerStudioLifecycleConfigArgs) *SagemakerStudioLifecycleConfig {
 	return &SagemakerStudioLifecycleConfig{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSagemakerStudioLifecycleConfig(name string, args SagemakerStudioLifecycl
 
 var _ terra.Resource = (*SagemakerStudioLifecycleConfig)(nil)
 
+// SagemakerStudioLifecycleConfig represents the Terraform resource aws_sagemaker_studio_lifecycle_config.
 type SagemakerStudioLifecycleConfig struct {
-	Name  string
-	Args  SagemakerStudioLifecycleConfigArgs
-	state *sagemakerStudioLifecycleConfigState
+	Name      string
+	Args      SagemakerStudioLifecycleConfigArgs
+	state     *sagemakerStudioLifecycleConfigState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SagemakerStudioLifecycleConfig].
 func (sslc *SagemakerStudioLifecycleConfig) Type() string {
 	return "aws_sagemaker_studio_lifecycle_config"
 }
 
+// LocalName returns the local name for [SagemakerStudioLifecycleConfig].
 func (sslc *SagemakerStudioLifecycleConfig) LocalName() string {
 	return sslc.Name
 }
 
+// Configuration returns the configuration (args) for [SagemakerStudioLifecycleConfig].
 func (sslc *SagemakerStudioLifecycleConfig) Configuration() interface{} {
 	return sslc.Args
 }
 
+// DependOn is used for other resources to depend on [SagemakerStudioLifecycleConfig].
+func (sslc *SagemakerStudioLifecycleConfig) DependOn() terra.Reference {
+	return terra.ReferenceResource(sslc)
+}
+
+// Dependencies returns the list of resources [SagemakerStudioLifecycleConfig] depends_on.
+func (sslc *SagemakerStudioLifecycleConfig) Dependencies() terra.Dependencies {
+	return sslc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SagemakerStudioLifecycleConfig].
+func (sslc *SagemakerStudioLifecycleConfig) LifecycleManagement() *terra.Lifecycle {
+	return sslc.Lifecycle
+}
+
+// Attributes returns the attributes for [SagemakerStudioLifecycleConfig].
 func (sslc *SagemakerStudioLifecycleConfig) Attributes() sagemakerStudioLifecycleConfigAttributes {
 	return sagemakerStudioLifecycleConfigAttributes{ref: terra.ReferenceResource(sslc)}
 }
 
+// ImportState imports the given attribute values into [SagemakerStudioLifecycleConfig]'s state.
 func (sslc *SagemakerStudioLifecycleConfig) ImportState(av io.Reader) error {
 	sslc.state = &sagemakerStudioLifecycleConfigState{}
 	if err := json.NewDecoder(av).Decode(sslc.state); err != nil {
@@ -48,10 +72,12 @@ func (sslc *SagemakerStudioLifecycleConfig) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SagemakerStudioLifecycleConfig] has state.
 func (sslc *SagemakerStudioLifecycleConfig) State() (*sagemakerStudioLifecycleConfigState, bool) {
 	return sslc.state, sslc.state != nil
 }
 
+// StateMust returns the state for [SagemakerStudioLifecycleConfig]. Panics if the state is nil.
 func (sslc *SagemakerStudioLifecycleConfig) StateMust() *sagemakerStudioLifecycleConfigState {
 	if sslc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sslc.Type(), sslc.LocalName()))
@@ -59,10 +85,7 @@ func (sslc *SagemakerStudioLifecycleConfig) StateMust() *sagemakerStudioLifecycl
 	return sslc.state
 }
 
-func (sslc *SagemakerStudioLifecycleConfig) DependOn() terra.Reference {
-	return terra.ReferenceResource(sslc)
-}
-
+// SagemakerStudioLifecycleConfigArgs contains the configurations for aws_sagemaker_studio_lifecycle_config.
 type SagemakerStudioLifecycleConfigArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -76,39 +99,44 @@ type SagemakerStudioLifecycleConfigArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that SagemakerStudioLifecycleConfig depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sagemakerStudioLifecycleConfigAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_sagemaker_studio_lifecycle_config.
 func (sslc sagemakerStudioLifecycleConfigAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sslc.ref.Append("arn"))
+	return terra.ReferenceAsString(sslc.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_sagemaker_studio_lifecycle_config.
 func (sslc sagemakerStudioLifecycleConfigAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sslc.ref.Append("id"))
+	return terra.ReferenceAsString(sslc.ref.Append("id"))
 }
 
+// StudioLifecycleConfigAppType returns a reference to field studio_lifecycle_config_app_type of aws_sagemaker_studio_lifecycle_config.
 func (sslc sagemakerStudioLifecycleConfigAttributes) StudioLifecycleConfigAppType() terra.StringValue {
-	return terra.ReferenceString(sslc.ref.Append("studio_lifecycle_config_app_type"))
+	return terra.ReferenceAsString(sslc.ref.Append("studio_lifecycle_config_app_type"))
 }
 
+// StudioLifecycleConfigContent returns a reference to field studio_lifecycle_config_content of aws_sagemaker_studio_lifecycle_config.
 func (sslc sagemakerStudioLifecycleConfigAttributes) StudioLifecycleConfigContent() terra.StringValue {
-	return terra.ReferenceString(sslc.ref.Append("studio_lifecycle_config_content"))
+	return terra.ReferenceAsString(sslc.ref.Append("studio_lifecycle_config_content"))
 }
 
+// StudioLifecycleConfigName returns a reference to field studio_lifecycle_config_name of aws_sagemaker_studio_lifecycle_config.
 func (sslc sagemakerStudioLifecycleConfigAttributes) StudioLifecycleConfigName() terra.StringValue {
-	return terra.ReferenceString(sslc.ref.Append("studio_lifecycle_config_name"))
+	return terra.ReferenceAsString(sslc.ref.Append("studio_lifecycle_config_name"))
 }
 
+// Tags returns a reference to field tags of aws_sagemaker_studio_lifecycle_config.
 func (sslc sagemakerStudioLifecycleConfigAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sslc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sslc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_sagemaker_studio_lifecycle_config.
 func (sslc sagemakerStudioLifecycleConfigAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sslc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sslc.ref.Append("tags_all"))
 }
 
 type sagemakerStudioLifecycleConfigState struct {

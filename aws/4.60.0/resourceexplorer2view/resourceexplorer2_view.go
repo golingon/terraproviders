@@ -34,7 +34,7 @@ func (f FiltersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FiltersAttributes) FilterString() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("filter_string"))
+	return terra.ReferenceAsString(f.ref.Append("filter_string"))
 }
 
 type IncludedPropertyAttributes struct {
@@ -54,7 +54,7 @@ func (ip IncludedPropertyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ip IncludedPropertyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("name"))
+	return terra.ReferenceAsString(ip.ref.Append("name"))
 }
 
 type FiltersState struct {

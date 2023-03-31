@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAuditmanagerControl creates a new instance of [AuditmanagerControl].
 func NewAuditmanagerControl(name string, args AuditmanagerControlArgs) *AuditmanagerControl {
 	return &AuditmanagerControl{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAuditmanagerControl(name string, args AuditmanagerControlArgs) *Auditman
 
 var _ terra.Resource = (*AuditmanagerControl)(nil)
 
+// AuditmanagerControl represents the Terraform resource aws_auditmanager_control.
 type AuditmanagerControl struct {
-	Name  string
-	Args  AuditmanagerControlArgs
-	state *auditmanagerControlState
+	Name      string
+	Args      AuditmanagerControlArgs
+	state     *auditmanagerControlState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AuditmanagerControl].
 func (ac *AuditmanagerControl) Type() string {
 	return "aws_auditmanager_control"
 }
 
+// LocalName returns the local name for [AuditmanagerControl].
 func (ac *AuditmanagerControl) LocalName() string {
 	return ac.Name
 }
 
+// Configuration returns the configuration (args) for [AuditmanagerControl].
 func (ac *AuditmanagerControl) Configuration() interface{} {
 	return ac.Args
 }
 
+// DependOn is used for other resources to depend on [AuditmanagerControl].
+func (ac *AuditmanagerControl) DependOn() terra.Reference {
+	return terra.ReferenceResource(ac)
+}
+
+// Dependencies returns the list of resources [AuditmanagerControl] depends_on.
+func (ac *AuditmanagerControl) Dependencies() terra.Dependencies {
+	return ac.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AuditmanagerControl].
+func (ac *AuditmanagerControl) LifecycleManagement() *terra.Lifecycle {
+	return ac.Lifecycle
+}
+
+// Attributes returns the attributes for [AuditmanagerControl].
 func (ac *AuditmanagerControl) Attributes() auditmanagerControlAttributes {
 	return auditmanagerControlAttributes{ref: terra.ReferenceResource(ac)}
 }
 
+// ImportState imports the given attribute values into [AuditmanagerControl]'s state.
 func (ac *AuditmanagerControl) ImportState(av io.Reader) error {
 	ac.state = &auditmanagerControlState{}
 	if err := json.NewDecoder(av).Decode(ac.state); err != nil {
@@ -49,10 +73,12 @@ func (ac *AuditmanagerControl) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AuditmanagerControl] has state.
 func (ac *AuditmanagerControl) State() (*auditmanagerControlState, bool) {
 	return ac.state, ac.state != nil
 }
 
+// StateMust returns the state for [AuditmanagerControl]. Panics if the state is nil.
 func (ac *AuditmanagerControl) StateMust() *auditmanagerControlState {
 	if ac.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ac.Type(), ac.LocalName()))
@@ -60,10 +86,7 @@ func (ac *AuditmanagerControl) StateMust() *auditmanagerControlState {
 	return ac.state
 }
 
-func (ac *AuditmanagerControl) DependOn() terra.Reference {
-	return terra.ReferenceResource(ac)
-}
-
+// AuditmanagerControlArgs contains the configurations for aws_auditmanager_control.
 type AuditmanagerControlArgs struct {
 	// ActionPlanInstructions: string, optional
 	ActionPlanInstructions terra.StringValue `hcl:"action_plan_instructions,attr"`
@@ -79,55 +102,63 @@ type AuditmanagerControlArgs struct {
 	TestingInformation terra.StringValue `hcl:"testing_information,attr"`
 	// ControlMappingSources: min=0
 	ControlMappingSources []auditmanagercontrol.ControlMappingSources `hcl:"control_mapping_sources,block" validate:"min=0"`
-	// DependsOn contains resources that AuditmanagerControl depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type auditmanagerControlAttributes struct {
 	ref terra.Reference
 }
 
+// ActionPlanInstructions returns a reference to field action_plan_instructions of aws_auditmanager_control.
 func (ac auditmanagerControlAttributes) ActionPlanInstructions() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("action_plan_instructions"))
+	return terra.ReferenceAsString(ac.ref.Append("action_plan_instructions"))
 }
 
+// ActionPlanTitle returns a reference to field action_plan_title of aws_auditmanager_control.
 func (ac auditmanagerControlAttributes) ActionPlanTitle() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("action_plan_title"))
+	return terra.ReferenceAsString(ac.ref.Append("action_plan_title"))
 }
 
+// Arn returns a reference to field arn of aws_auditmanager_control.
 func (ac auditmanagerControlAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("arn"))
+	return terra.ReferenceAsString(ac.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_auditmanager_control.
 func (ac auditmanagerControlAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("description"))
+	return terra.ReferenceAsString(ac.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_auditmanager_control.
 func (ac auditmanagerControlAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("id"))
+	return terra.ReferenceAsString(ac.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_auditmanager_control.
 func (ac auditmanagerControlAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("name"))
+	return terra.ReferenceAsString(ac.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_auditmanager_control.
 func (ac auditmanagerControlAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ac.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ac.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_auditmanager_control.
 func (ac auditmanagerControlAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ac.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ac.ref.Append("tags_all"))
 }
 
+// TestingInformation returns a reference to field testing_information of aws_auditmanager_control.
 func (ac auditmanagerControlAttributes) TestingInformation() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("testing_information"))
+	return terra.ReferenceAsString(ac.ref.Append("testing_information"))
 }
 
+// Type returns a reference to field type of aws_auditmanager_control.
 func (ac auditmanagerControlAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("type"))
+	return terra.ReferenceAsString(ac.ref.Append("type"))
 }
 
 func (ac auditmanagerControlAttributes) ControlMappingSources() terra.SetValue[auditmanagercontrol.ControlMappingSourcesAttributes] {
-	return terra.ReferenceSet[auditmanagercontrol.ControlMappingSourcesAttributes](ac.ref.Append("control_mapping_sources"))
+	return terra.ReferenceAsSet[auditmanagercontrol.ControlMappingSourcesAttributes](ac.ref.Append("control_mapping_sources"))
 }
 
 type auditmanagerControlState struct {

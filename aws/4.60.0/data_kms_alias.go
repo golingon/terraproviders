@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataKmsAlias creates a new instance of [DataKmsAlias].
 func NewDataKmsAlias(name string, args DataKmsAliasArgs) *DataKmsAlias {
 	return &DataKmsAlias{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataKmsAlias(name string, args DataKmsAliasArgs) *DataKmsAlias {
 
 var _ terra.DataResource = (*DataKmsAlias)(nil)
 
+// DataKmsAlias represents the Terraform data resource aws_kms_alias.
 type DataKmsAlias struct {
 	Name string
 	Args DataKmsAliasArgs
 }
 
+// DataSource returns the Terraform object type for [DataKmsAlias].
 func (ka *DataKmsAlias) DataSource() string {
 	return "aws_kms_alias"
 }
 
+// LocalName returns the local name for [DataKmsAlias].
 func (ka *DataKmsAlias) LocalName() string {
 	return ka.Name
 }
 
+// Configuration returns the configuration (args) for [DataKmsAlias].
 func (ka *DataKmsAlias) Configuration() interface{} {
 	return ka.Args
 }
 
+// Attributes returns the attributes for [DataKmsAlias].
 func (ka *DataKmsAlias) Attributes() dataKmsAliasAttributes {
 	return dataKmsAliasAttributes{ref: terra.ReferenceDataResource(ka)}
 }
 
+// DataKmsAliasArgs contains the configurations for aws_kms_alias.
 type DataKmsAliasArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,22 +51,27 @@ type dataKmsAliasAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_kms_alias.
 func (ka dataKmsAliasAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("arn"))
+	return terra.ReferenceAsString(ka.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_kms_alias.
 func (ka dataKmsAliasAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("id"))
+	return terra.ReferenceAsString(ka.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_kms_alias.
 func (ka dataKmsAliasAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("name"))
+	return terra.ReferenceAsString(ka.ref.Append("name"))
 }
 
+// TargetKeyArn returns a reference to field target_key_arn of aws_kms_alias.
 func (ka dataKmsAliasAttributes) TargetKeyArn() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("target_key_arn"))
+	return terra.ReferenceAsString(ka.ref.Append("target_key_arn"))
 }
 
+// TargetKeyId returns a reference to field target_key_id of aws_kms_alias.
 func (ka dataKmsAliasAttributes) TargetKeyId() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("target_key_id"))
+	return terra.ReferenceAsString(ka.ref.Append("target_key_id"))
 }

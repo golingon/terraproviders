@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewApiGatewayMethod creates a new instance of [ApiGatewayMethod].
 func NewApiGatewayMethod(name string, args ApiGatewayMethodArgs) *ApiGatewayMethod {
 	return &ApiGatewayMethod{
 		Args: args,
@@ -18,28 +19,51 @@ func NewApiGatewayMethod(name string, args ApiGatewayMethodArgs) *ApiGatewayMeth
 
 var _ terra.Resource = (*ApiGatewayMethod)(nil)
 
+// ApiGatewayMethod represents the Terraform resource aws_api_gateway_method.
 type ApiGatewayMethod struct {
-	Name  string
-	Args  ApiGatewayMethodArgs
-	state *apiGatewayMethodState
+	Name      string
+	Args      ApiGatewayMethodArgs
+	state     *apiGatewayMethodState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiGatewayMethod].
 func (agm *ApiGatewayMethod) Type() string {
 	return "aws_api_gateway_method"
 }
 
+// LocalName returns the local name for [ApiGatewayMethod].
 func (agm *ApiGatewayMethod) LocalName() string {
 	return agm.Name
 }
 
+// Configuration returns the configuration (args) for [ApiGatewayMethod].
 func (agm *ApiGatewayMethod) Configuration() interface{} {
 	return agm.Args
 }
 
+// DependOn is used for other resources to depend on [ApiGatewayMethod].
+func (agm *ApiGatewayMethod) DependOn() terra.Reference {
+	return terra.ReferenceResource(agm)
+}
+
+// Dependencies returns the list of resources [ApiGatewayMethod] depends_on.
+func (agm *ApiGatewayMethod) Dependencies() terra.Dependencies {
+	return agm.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiGatewayMethod].
+func (agm *ApiGatewayMethod) LifecycleManagement() *terra.Lifecycle {
+	return agm.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiGatewayMethod].
 func (agm *ApiGatewayMethod) Attributes() apiGatewayMethodAttributes {
 	return apiGatewayMethodAttributes{ref: terra.ReferenceResource(agm)}
 }
 
+// ImportState imports the given attribute values into [ApiGatewayMethod]'s state.
 func (agm *ApiGatewayMethod) ImportState(av io.Reader) error {
 	agm.state = &apiGatewayMethodState{}
 	if err := json.NewDecoder(av).Decode(agm.state); err != nil {
@@ -48,10 +72,12 @@ func (agm *ApiGatewayMethod) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiGatewayMethod] has state.
 func (agm *ApiGatewayMethod) State() (*apiGatewayMethodState, bool) {
 	return agm.state, agm.state != nil
 }
 
+// StateMust returns the state for [ApiGatewayMethod]. Panics if the state is nil.
 func (agm *ApiGatewayMethod) StateMust() *apiGatewayMethodState {
 	if agm.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", agm.Type(), agm.LocalName()))
@@ -59,10 +85,7 @@ func (agm *ApiGatewayMethod) StateMust() *apiGatewayMethodState {
 	return agm.state
 }
 
-func (agm *ApiGatewayMethod) DependOn() terra.Reference {
-	return terra.ReferenceResource(agm)
-}
-
+// ApiGatewayMethodArgs contains the configurations for aws_api_gateway_method.
 type ApiGatewayMethodArgs struct {
 	// ApiKeyRequired: bool, optional
 	ApiKeyRequired terra.BoolValue `hcl:"api_key_required,attr"`
@@ -88,59 +111,69 @@ type ApiGatewayMethodArgs struct {
 	ResourceId terra.StringValue `hcl:"resource_id,attr" validate:"required"`
 	// RestApiId: string, required
 	RestApiId terra.StringValue `hcl:"rest_api_id,attr" validate:"required"`
-	// DependsOn contains resources that ApiGatewayMethod depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiGatewayMethodAttributes struct {
 	ref terra.Reference
 }
 
+// ApiKeyRequired returns a reference to field api_key_required of aws_api_gateway_method.
 func (agm apiGatewayMethodAttributes) ApiKeyRequired() terra.BoolValue {
-	return terra.ReferenceBool(agm.ref.Append("api_key_required"))
+	return terra.ReferenceAsBool(agm.ref.Append("api_key_required"))
 }
 
+// Authorization returns a reference to field authorization of aws_api_gateway_method.
 func (agm apiGatewayMethodAttributes) Authorization() terra.StringValue {
-	return terra.ReferenceString(agm.ref.Append("authorization"))
+	return terra.ReferenceAsString(agm.ref.Append("authorization"))
 }
 
+// AuthorizationScopes returns a reference to field authorization_scopes of aws_api_gateway_method.
 func (agm apiGatewayMethodAttributes) AuthorizationScopes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](agm.ref.Append("authorization_scopes"))
+	return terra.ReferenceAsSet[terra.StringValue](agm.ref.Append("authorization_scopes"))
 }
 
+// AuthorizerId returns a reference to field authorizer_id of aws_api_gateway_method.
 func (agm apiGatewayMethodAttributes) AuthorizerId() terra.StringValue {
-	return terra.ReferenceString(agm.ref.Append("authorizer_id"))
+	return terra.ReferenceAsString(agm.ref.Append("authorizer_id"))
 }
 
+// HttpMethod returns a reference to field http_method of aws_api_gateway_method.
 func (agm apiGatewayMethodAttributes) HttpMethod() terra.StringValue {
-	return terra.ReferenceString(agm.ref.Append("http_method"))
+	return terra.ReferenceAsString(agm.ref.Append("http_method"))
 }
 
+// Id returns a reference to field id of aws_api_gateway_method.
 func (agm apiGatewayMethodAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(agm.ref.Append("id"))
+	return terra.ReferenceAsString(agm.ref.Append("id"))
 }
 
+// OperationName returns a reference to field operation_name of aws_api_gateway_method.
 func (agm apiGatewayMethodAttributes) OperationName() terra.StringValue {
-	return terra.ReferenceString(agm.ref.Append("operation_name"))
+	return terra.ReferenceAsString(agm.ref.Append("operation_name"))
 }
 
+// RequestModels returns a reference to field request_models of aws_api_gateway_method.
 func (agm apiGatewayMethodAttributes) RequestModels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](agm.ref.Append("request_models"))
+	return terra.ReferenceAsMap[terra.StringValue](agm.ref.Append("request_models"))
 }
 
+// RequestParameters returns a reference to field request_parameters of aws_api_gateway_method.
 func (agm apiGatewayMethodAttributes) RequestParameters() terra.MapValue[terra.BoolValue] {
-	return terra.ReferenceMap[terra.BoolValue](agm.ref.Append("request_parameters"))
+	return terra.ReferenceAsMap[terra.BoolValue](agm.ref.Append("request_parameters"))
 }
 
+// RequestValidatorId returns a reference to field request_validator_id of aws_api_gateway_method.
 func (agm apiGatewayMethodAttributes) RequestValidatorId() terra.StringValue {
-	return terra.ReferenceString(agm.ref.Append("request_validator_id"))
+	return terra.ReferenceAsString(agm.ref.Append("request_validator_id"))
 }
 
+// ResourceId returns a reference to field resource_id of aws_api_gateway_method.
 func (agm apiGatewayMethodAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(agm.ref.Append("resource_id"))
+	return terra.ReferenceAsString(agm.ref.Append("resource_id"))
 }
 
+// RestApiId returns a reference to field rest_api_id of aws_api_gateway_method.
 func (agm apiGatewayMethodAttributes) RestApiId() terra.StringValue {
-	return terra.ReferenceString(agm.ref.Append("rest_api_id"))
+	return terra.ReferenceAsString(agm.ref.Append("rest_api_id"))
 }
 
 type apiGatewayMethodState struct {

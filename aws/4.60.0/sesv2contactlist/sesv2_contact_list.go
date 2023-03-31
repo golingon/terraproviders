@@ -35,19 +35,19 @@ func (t TopicAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TopicAttributes) DefaultSubscriptionStatus() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("default_subscription_status"))
+	return terra.ReferenceAsString(t.ref.Append("default_subscription_status"))
 }
 
 func (t TopicAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("description"))
+	return terra.ReferenceAsString(t.ref.Append("description"))
 }
 
 func (t TopicAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("display_name"))
+	return terra.ReferenceAsString(t.ref.Append("display_name"))
 }
 
 func (t TopicAttributes) TopicName() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("topic_name"))
+	return terra.ReferenceAsString(t.ref.Append("topic_name"))
 }
 
 type TopicState struct {

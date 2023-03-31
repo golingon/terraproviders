@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewEc2SerialConsoleAccess creates a new instance of [Ec2SerialConsoleAccess].
 func NewEc2SerialConsoleAccess(name string, args Ec2SerialConsoleAccessArgs) *Ec2SerialConsoleAccess {
 	return &Ec2SerialConsoleAccess{
 		Args: args,
@@ -18,28 +19,51 @@ func NewEc2SerialConsoleAccess(name string, args Ec2SerialConsoleAccessArgs) *Ec
 
 var _ terra.Resource = (*Ec2SerialConsoleAccess)(nil)
 
+// Ec2SerialConsoleAccess represents the Terraform resource aws_ec2_serial_console_access.
 type Ec2SerialConsoleAccess struct {
-	Name  string
-	Args  Ec2SerialConsoleAccessArgs
-	state *ec2SerialConsoleAccessState
+	Name      string
+	Args      Ec2SerialConsoleAccessArgs
+	state     *ec2SerialConsoleAccessState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Ec2SerialConsoleAccess].
 func (esca *Ec2SerialConsoleAccess) Type() string {
 	return "aws_ec2_serial_console_access"
 }
 
+// LocalName returns the local name for [Ec2SerialConsoleAccess].
 func (esca *Ec2SerialConsoleAccess) LocalName() string {
 	return esca.Name
 }
 
+// Configuration returns the configuration (args) for [Ec2SerialConsoleAccess].
 func (esca *Ec2SerialConsoleAccess) Configuration() interface{} {
 	return esca.Args
 }
 
+// DependOn is used for other resources to depend on [Ec2SerialConsoleAccess].
+func (esca *Ec2SerialConsoleAccess) DependOn() terra.Reference {
+	return terra.ReferenceResource(esca)
+}
+
+// Dependencies returns the list of resources [Ec2SerialConsoleAccess] depends_on.
+func (esca *Ec2SerialConsoleAccess) Dependencies() terra.Dependencies {
+	return esca.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Ec2SerialConsoleAccess].
+func (esca *Ec2SerialConsoleAccess) LifecycleManagement() *terra.Lifecycle {
+	return esca.Lifecycle
+}
+
+// Attributes returns the attributes for [Ec2SerialConsoleAccess].
 func (esca *Ec2SerialConsoleAccess) Attributes() ec2SerialConsoleAccessAttributes {
 	return ec2SerialConsoleAccessAttributes{ref: terra.ReferenceResource(esca)}
 }
 
+// ImportState imports the given attribute values into [Ec2SerialConsoleAccess]'s state.
 func (esca *Ec2SerialConsoleAccess) ImportState(av io.Reader) error {
 	esca.state = &ec2SerialConsoleAccessState{}
 	if err := json.NewDecoder(av).Decode(esca.state); err != nil {
@@ -48,10 +72,12 @@ func (esca *Ec2SerialConsoleAccess) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Ec2SerialConsoleAccess] has state.
 func (esca *Ec2SerialConsoleAccess) State() (*ec2SerialConsoleAccessState, bool) {
 	return esca.state, esca.state != nil
 }
 
+// StateMust returns the state for [Ec2SerialConsoleAccess]. Panics if the state is nil.
 func (esca *Ec2SerialConsoleAccess) StateMust() *ec2SerialConsoleAccessState {
 	if esca.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", esca.Type(), esca.LocalName()))
@@ -59,28 +85,25 @@ func (esca *Ec2SerialConsoleAccess) StateMust() *ec2SerialConsoleAccessState {
 	return esca.state
 }
 
-func (esca *Ec2SerialConsoleAccess) DependOn() terra.Reference {
-	return terra.ReferenceResource(esca)
-}
-
+// Ec2SerialConsoleAccessArgs contains the configurations for aws_ec2_serial_console_access.
 type Ec2SerialConsoleAccessArgs struct {
 	// Enabled: bool, optional
 	Enabled terra.BoolValue `hcl:"enabled,attr"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that Ec2SerialConsoleAccess depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ec2SerialConsoleAccessAttributes struct {
 	ref terra.Reference
 }
 
+// Enabled returns a reference to field enabled of aws_ec2_serial_console_access.
 func (esca ec2SerialConsoleAccessAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(esca.ref.Append("enabled"))
+	return terra.ReferenceAsBool(esca.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of aws_ec2_serial_console_access.
 func (esca ec2SerialConsoleAccessAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(esca.ref.Append("id"))
+	return terra.ReferenceAsString(esca.ref.Append("id"))
 }
 
 type ec2SerialConsoleAccessState struct {

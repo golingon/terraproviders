@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewEc2TransitGatewayVpcAttachmentAccepter creates a new instance of [Ec2TransitGatewayVpcAttachmentAccepter].
 func NewEc2TransitGatewayVpcAttachmentAccepter(name string, args Ec2TransitGatewayVpcAttachmentAccepterArgs) *Ec2TransitGatewayVpcAttachmentAccepter {
 	return &Ec2TransitGatewayVpcAttachmentAccepter{
 		Args: args,
@@ -18,28 +19,51 @@ func NewEc2TransitGatewayVpcAttachmentAccepter(name string, args Ec2TransitGatew
 
 var _ terra.Resource = (*Ec2TransitGatewayVpcAttachmentAccepter)(nil)
 
+// Ec2TransitGatewayVpcAttachmentAccepter represents the Terraform resource aws_ec2_transit_gateway_vpc_attachment_accepter.
 type Ec2TransitGatewayVpcAttachmentAccepter struct {
-	Name  string
-	Args  Ec2TransitGatewayVpcAttachmentAccepterArgs
-	state *ec2TransitGatewayVpcAttachmentAccepterState
+	Name      string
+	Args      Ec2TransitGatewayVpcAttachmentAccepterArgs
+	state     *ec2TransitGatewayVpcAttachmentAccepterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Ec2TransitGatewayVpcAttachmentAccepter].
 func (etgvaa *Ec2TransitGatewayVpcAttachmentAccepter) Type() string {
 	return "aws_ec2_transit_gateway_vpc_attachment_accepter"
 }
 
+// LocalName returns the local name for [Ec2TransitGatewayVpcAttachmentAccepter].
 func (etgvaa *Ec2TransitGatewayVpcAttachmentAccepter) LocalName() string {
 	return etgvaa.Name
 }
 
+// Configuration returns the configuration (args) for [Ec2TransitGatewayVpcAttachmentAccepter].
 func (etgvaa *Ec2TransitGatewayVpcAttachmentAccepter) Configuration() interface{} {
 	return etgvaa.Args
 }
 
+// DependOn is used for other resources to depend on [Ec2TransitGatewayVpcAttachmentAccepter].
+func (etgvaa *Ec2TransitGatewayVpcAttachmentAccepter) DependOn() terra.Reference {
+	return terra.ReferenceResource(etgvaa)
+}
+
+// Dependencies returns the list of resources [Ec2TransitGatewayVpcAttachmentAccepter] depends_on.
+func (etgvaa *Ec2TransitGatewayVpcAttachmentAccepter) Dependencies() terra.Dependencies {
+	return etgvaa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Ec2TransitGatewayVpcAttachmentAccepter].
+func (etgvaa *Ec2TransitGatewayVpcAttachmentAccepter) LifecycleManagement() *terra.Lifecycle {
+	return etgvaa.Lifecycle
+}
+
+// Attributes returns the attributes for [Ec2TransitGatewayVpcAttachmentAccepter].
 func (etgvaa *Ec2TransitGatewayVpcAttachmentAccepter) Attributes() ec2TransitGatewayVpcAttachmentAccepterAttributes {
 	return ec2TransitGatewayVpcAttachmentAccepterAttributes{ref: terra.ReferenceResource(etgvaa)}
 }
 
+// ImportState imports the given attribute values into [Ec2TransitGatewayVpcAttachmentAccepter]'s state.
 func (etgvaa *Ec2TransitGatewayVpcAttachmentAccepter) ImportState(av io.Reader) error {
 	etgvaa.state = &ec2TransitGatewayVpcAttachmentAccepterState{}
 	if err := json.NewDecoder(av).Decode(etgvaa.state); err != nil {
@@ -48,10 +72,12 @@ func (etgvaa *Ec2TransitGatewayVpcAttachmentAccepter) ImportState(av io.Reader) 
 	return nil
 }
 
+// State returns the state and a bool indicating if [Ec2TransitGatewayVpcAttachmentAccepter] has state.
 func (etgvaa *Ec2TransitGatewayVpcAttachmentAccepter) State() (*ec2TransitGatewayVpcAttachmentAccepterState, bool) {
 	return etgvaa.state, etgvaa.state != nil
 }
 
+// StateMust returns the state for [Ec2TransitGatewayVpcAttachmentAccepter]. Panics if the state is nil.
 func (etgvaa *Ec2TransitGatewayVpcAttachmentAccepter) StateMust() *ec2TransitGatewayVpcAttachmentAccepterState {
 	if etgvaa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", etgvaa.Type(), etgvaa.LocalName()))
@@ -59,10 +85,7 @@ func (etgvaa *Ec2TransitGatewayVpcAttachmentAccepter) StateMust() *ec2TransitGat
 	return etgvaa.state
 }
 
-func (etgvaa *Ec2TransitGatewayVpcAttachmentAccepter) DependOn() terra.Reference {
-	return terra.ReferenceResource(etgvaa)
-}
-
+// Ec2TransitGatewayVpcAttachmentAccepterArgs contains the configurations for aws_ec2_transit_gateway_vpc_attachment_accepter.
 type Ec2TransitGatewayVpcAttachmentAccepterArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -76,63 +99,74 @@ type Ec2TransitGatewayVpcAttachmentAccepterArgs struct {
 	TransitGatewayDefaultRouteTableAssociation terra.BoolValue `hcl:"transit_gateway_default_route_table_association,attr"`
 	// TransitGatewayDefaultRouteTablePropagation: bool, optional
 	TransitGatewayDefaultRouteTablePropagation terra.BoolValue `hcl:"transit_gateway_default_route_table_propagation,attr"`
-	// DependsOn contains resources that Ec2TransitGatewayVpcAttachmentAccepter depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ec2TransitGatewayVpcAttachmentAccepterAttributes struct {
 	ref terra.Reference
 }
 
+// ApplianceModeSupport returns a reference to field appliance_mode_support of aws_ec2_transit_gateway_vpc_attachment_accepter.
 func (etgvaa ec2TransitGatewayVpcAttachmentAccepterAttributes) ApplianceModeSupport() terra.StringValue {
-	return terra.ReferenceString(etgvaa.ref.Append("appliance_mode_support"))
+	return terra.ReferenceAsString(etgvaa.ref.Append("appliance_mode_support"))
 }
 
+// DnsSupport returns a reference to field dns_support of aws_ec2_transit_gateway_vpc_attachment_accepter.
 func (etgvaa ec2TransitGatewayVpcAttachmentAccepterAttributes) DnsSupport() terra.StringValue {
-	return terra.ReferenceString(etgvaa.ref.Append("dns_support"))
+	return terra.ReferenceAsString(etgvaa.ref.Append("dns_support"))
 }
 
+// Id returns a reference to field id of aws_ec2_transit_gateway_vpc_attachment_accepter.
 func (etgvaa ec2TransitGatewayVpcAttachmentAccepterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(etgvaa.ref.Append("id"))
+	return terra.ReferenceAsString(etgvaa.ref.Append("id"))
 }
 
+// Ipv6Support returns a reference to field ipv6_support of aws_ec2_transit_gateway_vpc_attachment_accepter.
 func (etgvaa ec2TransitGatewayVpcAttachmentAccepterAttributes) Ipv6Support() terra.StringValue {
-	return terra.ReferenceString(etgvaa.ref.Append("ipv6_support"))
+	return terra.ReferenceAsString(etgvaa.ref.Append("ipv6_support"))
 }
 
+// SubnetIds returns a reference to field subnet_ids of aws_ec2_transit_gateway_vpc_attachment_accepter.
 func (etgvaa ec2TransitGatewayVpcAttachmentAccepterAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](etgvaa.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](etgvaa.ref.Append("subnet_ids"))
 }
 
+// Tags returns a reference to field tags of aws_ec2_transit_gateway_vpc_attachment_accepter.
 func (etgvaa ec2TransitGatewayVpcAttachmentAccepterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](etgvaa.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](etgvaa.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_ec2_transit_gateway_vpc_attachment_accepter.
 func (etgvaa ec2TransitGatewayVpcAttachmentAccepterAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](etgvaa.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](etgvaa.ref.Append("tags_all"))
 }
 
+// TransitGatewayAttachmentId returns a reference to field transit_gateway_attachment_id of aws_ec2_transit_gateway_vpc_attachment_accepter.
 func (etgvaa ec2TransitGatewayVpcAttachmentAccepterAttributes) TransitGatewayAttachmentId() terra.StringValue {
-	return terra.ReferenceString(etgvaa.ref.Append("transit_gateway_attachment_id"))
+	return terra.ReferenceAsString(etgvaa.ref.Append("transit_gateway_attachment_id"))
 }
 
+// TransitGatewayDefaultRouteTableAssociation returns a reference to field transit_gateway_default_route_table_association of aws_ec2_transit_gateway_vpc_attachment_accepter.
 func (etgvaa ec2TransitGatewayVpcAttachmentAccepterAttributes) TransitGatewayDefaultRouteTableAssociation() terra.BoolValue {
-	return terra.ReferenceBool(etgvaa.ref.Append("transit_gateway_default_route_table_association"))
+	return terra.ReferenceAsBool(etgvaa.ref.Append("transit_gateway_default_route_table_association"))
 }
 
+// TransitGatewayDefaultRouteTablePropagation returns a reference to field transit_gateway_default_route_table_propagation of aws_ec2_transit_gateway_vpc_attachment_accepter.
 func (etgvaa ec2TransitGatewayVpcAttachmentAccepterAttributes) TransitGatewayDefaultRouteTablePropagation() terra.BoolValue {
-	return terra.ReferenceBool(etgvaa.ref.Append("transit_gateway_default_route_table_propagation"))
+	return terra.ReferenceAsBool(etgvaa.ref.Append("transit_gateway_default_route_table_propagation"))
 }
 
+// TransitGatewayId returns a reference to field transit_gateway_id of aws_ec2_transit_gateway_vpc_attachment_accepter.
 func (etgvaa ec2TransitGatewayVpcAttachmentAccepterAttributes) TransitGatewayId() terra.StringValue {
-	return terra.ReferenceString(etgvaa.ref.Append("transit_gateway_id"))
+	return terra.ReferenceAsString(etgvaa.ref.Append("transit_gateway_id"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_ec2_transit_gateway_vpc_attachment_accepter.
 func (etgvaa ec2TransitGatewayVpcAttachmentAccepterAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(etgvaa.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(etgvaa.ref.Append("vpc_id"))
 }
 
+// VpcOwnerId returns a reference to field vpc_owner_id of aws_ec2_transit_gateway_vpc_attachment_accepter.
 func (etgvaa ec2TransitGatewayVpcAttachmentAccepterAttributes) VpcOwnerId() terra.StringValue {
-	return terra.ReferenceString(etgvaa.ref.Append("vpc_owner_id"))
+	return terra.ReferenceAsString(etgvaa.ref.Append("vpc_owner_id"))
 }
 
 type ec2TransitGatewayVpcAttachmentAccepterState struct {

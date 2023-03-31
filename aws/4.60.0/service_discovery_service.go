@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewServiceDiscoveryService creates a new instance of [ServiceDiscoveryService].
 func NewServiceDiscoveryService(name string, args ServiceDiscoveryServiceArgs) *ServiceDiscoveryService {
 	return &ServiceDiscoveryService{
 		Args: args,
@@ -19,28 +20,51 @@ func NewServiceDiscoveryService(name string, args ServiceDiscoveryServiceArgs) *
 
 var _ terra.Resource = (*ServiceDiscoveryService)(nil)
 
+// ServiceDiscoveryService represents the Terraform resource aws_service_discovery_service.
 type ServiceDiscoveryService struct {
-	Name  string
-	Args  ServiceDiscoveryServiceArgs
-	state *serviceDiscoveryServiceState
+	Name      string
+	Args      ServiceDiscoveryServiceArgs
+	state     *serviceDiscoveryServiceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ServiceDiscoveryService].
 func (sds *ServiceDiscoveryService) Type() string {
 	return "aws_service_discovery_service"
 }
 
+// LocalName returns the local name for [ServiceDiscoveryService].
 func (sds *ServiceDiscoveryService) LocalName() string {
 	return sds.Name
 }
 
+// Configuration returns the configuration (args) for [ServiceDiscoveryService].
 func (sds *ServiceDiscoveryService) Configuration() interface{} {
 	return sds.Args
 }
 
+// DependOn is used for other resources to depend on [ServiceDiscoveryService].
+func (sds *ServiceDiscoveryService) DependOn() terra.Reference {
+	return terra.ReferenceResource(sds)
+}
+
+// Dependencies returns the list of resources [ServiceDiscoveryService] depends_on.
+func (sds *ServiceDiscoveryService) Dependencies() terra.Dependencies {
+	return sds.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ServiceDiscoveryService].
+func (sds *ServiceDiscoveryService) LifecycleManagement() *terra.Lifecycle {
+	return sds.Lifecycle
+}
+
+// Attributes returns the attributes for [ServiceDiscoveryService].
 func (sds *ServiceDiscoveryService) Attributes() serviceDiscoveryServiceAttributes {
 	return serviceDiscoveryServiceAttributes{ref: terra.ReferenceResource(sds)}
 }
 
+// ImportState imports the given attribute values into [ServiceDiscoveryService]'s state.
 func (sds *ServiceDiscoveryService) ImportState(av io.Reader) error {
 	sds.state = &serviceDiscoveryServiceState{}
 	if err := json.NewDecoder(av).Decode(sds.state); err != nil {
@@ -49,10 +73,12 @@ func (sds *ServiceDiscoveryService) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ServiceDiscoveryService] has state.
 func (sds *ServiceDiscoveryService) State() (*serviceDiscoveryServiceState, bool) {
 	return sds.state, sds.state != nil
 }
 
+// StateMust returns the state for [ServiceDiscoveryService]. Panics if the state is nil.
 func (sds *ServiceDiscoveryService) StateMust() *serviceDiscoveryServiceState {
 	if sds.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sds.Type(), sds.LocalName()))
@@ -60,10 +86,7 @@ func (sds *ServiceDiscoveryService) StateMust() *serviceDiscoveryServiceState {
 	return sds.state
 }
 
-func (sds *ServiceDiscoveryService) DependOn() terra.Reference {
-	return terra.ReferenceResource(sds)
-}
-
+// ServiceDiscoveryServiceArgs contains the configurations for aws_service_discovery_service.
 type ServiceDiscoveryServiceArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -87,59 +110,66 @@ type ServiceDiscoveryServiceArgs struct {
 	HealthCheckConfig *servicediscoveryservice.HealthCheckConfig `hcl:"health_check_config,block"`
 	// HealthCheckCustomConfig: optional
 	HealthCheckCustomConfig *servicediscoveryservice.HealthCheckCustomConfig `hcl:"health_check_custom_config,block"`
-	// DependsOn contains resources that ServiceDiscoveryService depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type serviceDiscoveryServiceAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_service_discovery_service.
 func (sds serviceDiscoveryServiceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sds.ref.Append("arn"))
+	return terra.ReferenceAsString(sds.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_service_discovery_service.
 func (sds serviceDiscoveryServiceAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sds.ref.Append("description"))
+	return terra.ReferenceAsString(sds.ref.Append("description"))
 }
 
+// ForceDestroy returns a reference to field force_destroy of aws_service_discovery_service.
 func (sds serviceDiscoveryServiceAttributes) ForceDestroy() terra.BoolValue {
-	return terra.ReferenceBool(sds.ref.Append("force_destroy"))
+	return terra.ReferenceAsBool(sds.ref.Append("force_destroy"))
 }
 
+// Id returns a reference to field id of aws_service_discovery_service.
 func (sds serviceDiscoveryServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sds.ref.Append("id"))
+	return terra.ReferenceAsString(sds.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_service_discovery_service.
 func (sds serviceDiscoveryServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sds.ref.Append("name"))
+	return terra.ReferenceAsString(sds.ref.Append("name"))
 }
 
+// NamespaceId returns a reference to field namespace_id of aws_service_discovery_service.
 func (sds serviceDiscoveryServiceAttributes) NamespaceId() terra.StringValue {
-	return terra.ReferenceString(sds.ref.Append("namespace_id"))
+	return terra.ReferenceAsString(sds.ref.Append("namespace_id"))
 }
 
+// Tags returns a reference to field tags of aws_service_discovery_service.
 func (sds serviceDiscoveryServiceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sds.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sds.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_service_discovery_service.
 func (sds serviceDiscoveryServiceAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sds.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sds.ref.Append("tags_all"))
 }
 
+// Type returns a reference to field type of aws_service_discovery_service.
 func (sds serviceDiscoveryServiceAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(sds.ref.Append("type"))
+	return terra.ReferenceAsString(sds.ref.Append("type"))
 }
 
 func (sds serviceDiscoveryServiceAttributes) DnsConfig() terra.ListValue[servicediscoveryservice.DnsConfigAttributes] {
-	return terra.ReferenceList[servicediscoveryservice.DnsConfigAttributes](sds.ref.Append("dns_config"))
+	return terra.ReferenceAsList[servicediscoveryservice.DnsConfigAttributes](sds.ref.Append("dns_config"))
 }
 
 func (sds serviceDiscoveryServiceAttributes) HealthCheckConfig() terra.ListValue[servicediscoveryservice.HealthCheckConfigAttributes] {
-	return terra.ReferenceList[servicediscoveryservice.HealthCheckConfigAttributes](sds.ref.Append("health_check_config"))
+	return terra.ReferenceAsList[servicediscoveryservice.HealthCheckConfigAttributes](sds.ref.Append("health_check_config"))
 }
 
 func (sds serviceDiscoveryServiceAttributes) HealthCheckCustomConfig() terra.ListValue[servicediscoveryservice.HealthCheckCustomConfigAttributes] {
-	return terra.ReferenceList[servicediscoveryservice.HealthCheckCustomConfigAttributes](sds.ref.Append("health_check_custom_config"))
+	return terra.ReferenceAsList[servicediscoveryservice.HealthCheckCustomConfigAttributes](sds.ref.Append("health_check_custom_config"))
 }
 
 type serviceDiscoveryServiceState struct {

@@ -75,11 +75,11 @@ func (dc DeploymentConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dc DeploymentConfigAttributes) AutoRollbackConfiguration() terra.ListValue[AutoRollbackConfigurationAttributes] {
-	return terra.ReferenceList[AutoRollbackConfigurationAttributes](dc.ref.Append("auto_rollback_configuration"))
+	return terra.ReferenceAsList[AutoRollbackConfigurationAttributes](dc.ref.Append("auto_rollback_configuration"))
 }
 
 func (dc DeploymentConfigAttributes) BlueGreenUpdatePolicy() terra.ListValue[BlueGreenUpdatePolicyAttributes] {
-	return terra.ReferenceList[BlueGreenUpdatePolicyAttributes](dc.ref.Append("blue_green_update_policy"))
+	return terra.ReferenceAsList[BlueGreenUpdatePolicyAttributes](dc.ref.Append("blue_green_update_policy"))
 }
 
 type AutoRollbackConfigurationAttributes struct {
@@ -99,7 +99,7 @@ func (arc AutoRollbackConfigurationAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (arc AutoRollbackConfigurationAttributes) Alarms() terra.SetValue[AlarmsAttributes] {
-	return terra.ReferenceSet[AlarmsAttributes](arc.ref.Append("alarms"))
+	return terra.ReferenceAsSet[AlarmsAttributes](arc.ref.Append("alarms"))
 }
 
 type AlarmsAttributes struct {
@@ -119,7 +119,7 @@ func (a AlarmsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AlarmsAttributes) AlarmName() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("alarm_name"))
+	return terra.ReferenceAsString(a.ref.Append("alarm_name"))
 }
 
 type BlueGreenUpdatePolicyAttributes struct {
@@ -139,15 +139,15 @@ func (bgup BlueGreenUpdatePolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (bgup BlueGreenUpdatePolicyAttributes) MaximumExecutionTimeoutInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(bgup.ref.Append("maximum_execution_timeout_in_seconds"))
+	return terra.ReferenceAsNumber(bgup.ref.Append("maximum_execution_timeout_in_seconds"))
 }
 
 func (bgup BlueGreenUpdatePolicyAttributes) TerminationWaitInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(bgup.ref.Append("termination_wait_in_seconds"))
+	return terra.ReferenceAsNumber(bgup.ref.Append("termination_wait_in_seconds"))
 }
 
 func (bgup BlueGreenUpdatePolicyAttributes) TrafficRoutingConfiguration() terra.ListValue[TrafficRoutingConfigurationAttributes] {
-	return terra.ReferenceList[TrafficRoutingConfigurationAttributes](bgup.ref.Append("traffic_routing_configuration"))
+	return terra.ReferenceAsList[TrafficRoutingConfigurationAttributes](bgup.ref.Append("traffic_routing_configuration"))
 }
 
 type TrafficRoutingConfigurationAttributes struct {
@@ -167,19 +167,19 @@ func (trc TrafficRoutingConfigurationAttributes) InternalTokens() hclwrite.Token
 }
 
 func (trc TrafficRoutingConfigurationAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(trc.ref.Append("type"))
+	return terra.ReferenceAsString(trc.ref.Append("type"))
 }
 
 func (trc TrafficRoutingConfigurationAttributes) WaitIntervalInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(trc.ref.Append("wait_interval_in_seconds"))
+	return terra.ReferenceAsNumber(trc.ref.Append("wait_interval_in_seconds"))
 }
 
 func (trc TrafficRoutingConfigurationAttributes) CanarySize() terra.ListValue[CanarySizeAttributes] {
-	return terra.ReferenceList[CanarySizeAttributes](trc.ref.Append("canary_size"))
+	return terra.ReferenceAsList[CanarySizeAttributes](trc.ref.Append("canary_size"))
 }
 
 func (trc TrafficRoutingConfigurationAttributes) LinearStepSize() terra.ListValue[LinearStepSizeAttributes] {
-	return terra.ReferenceList[LinearStepSizeAttributes](trc.ref.Append("linear_step_size"))
+	return terra.ReferenceAsList[LinearStepSizeAttributes](trc.ref.Append("linear_step_size"))
 }
 
 type CanarySizeAttributes struct {
@@ -199,11 +199,11 @@ func (cs CanarySizeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cs CanarySizeAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("type"))
+	return terra.ReferenceAsString(cs.ref.Append("type"))
 }
 
 func (cs CanarySizeAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(cs.ref.Append("value"))
+	return terra.ReferenceAsNumber(cs.ref.Append("value"))
 }
 
 type LinearStepSizeAttributes struct {
@@ -223,11 +223,11 @@ func (lss LinearStepSizeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lss LinearStepSizeAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(lss.ref.Append("type"))
+	return terra.ReferenceAsString(lss.ref.Append("type"))
 }
 
 func (lss LinearStepSizeAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(lss.ref.Append("value"))
+	return terra.ReferenceAsNumber(lss.ref.Append("value"))
 }
 
 type DeploymentConfigState struct {

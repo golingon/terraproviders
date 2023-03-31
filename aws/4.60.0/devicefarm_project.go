@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDevicefarmProject creates a new instance of [DevicefarmProject].
 func NewDevicefarmProject(name string, args DevicefarmProjectArgs) *DevicefarmProject {
 	return &DevicefarmProject{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDevicefarmProject(name string, args DevicefarmProjectArgs) *DevicefarmPr
 
 var _ terra.Resource = (*DevicefarmProject)(nil)
 
+// DevicefarmProject represents the Terraform resource aws_devicefarm_project.
 type DevicefarmProject struct {
-	Name  string
-	Args  DevicefarmProjectArgs
-	state *devicefarmProjectState
+	Name      string
+	Args      DevicefarmProjectArgs
+	state     *devicefarmProjectState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DevicefarmProject].
 func (dp *DevicefarmProject) Type() string {
 	return "aws_devicefarm_project"
 }
 
+// LocalName returns the local name for [DevicefarmProject].
 func (dp *DevicefarmProject) LocalName() string {
 	return dp.Name
 }
 
+// Configuration returns the configuration (args) for [DevicefarmProject].
 func (dp *DevicefarmProject) Configuration() interface{} {
 	return dp.Args
 }
 
+// DependOn is used for other resources to depend on [DevicefarmProject].
+func (dp *DevicefarmProject) DependOn() terra.Reference {
+	return terra.ReferenceResource(dp)
+}
+
+// Dependencies returns the list of resources [DevicefarmProject] depends_on.
+func (dp *DevicefarmProject) Dependencies() terra.Dependencies {
+	return dp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DevicefarmProject].
+func (dp *DevicefarmProject) LifecycleManagement() *terra.Lifecycle {
+	return dp.Lifecycle
+}
+
+// Attributes returns the attributes for [DevicefarmProject].
 func (dp *DevicefarmProject) Attributes() devicefarmProjectAttributes {
 	return devicefarmProjectAttributes{ref: terra.ReferenceResource(dp)}
 }
 
+// ImportState imports the given attribute values into [DevicefarmProject]'s state.
 func (dp *DevicefarmProject) ImportState(av io.Reader) error {
 	dp.state = &devicefarmProjectState{}
 	if err := json.NewDecoder(av).Decode(dp.state); err != nil {
@@ -48,10 +72,12 @@ func (dp *DevicefarmProject) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DevicefarmProject] has state.
 func (dp *DevicefarmProject) State() (*devicefarmProjectState, bool) {
 	return dp.state, dp.state != nil
 }
 
+// StateMust returns the state for [DevicefarmProject]. Panics if the state is nil.
 func (dp *DevicefarmProject) StateMust() *devicefarmProjectState {
 	if dp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dp.Type(), dp.LocalName()))
@@ -59,10 +85,7 @@ func (dp *DevicefarmProject) StateMust() *devicefarmProjectState {
 	return dp.state
 }
 
-func (dp *DevicefarmProject) DependOn() terra.Reference {
-	return terra.ReferenceResource(dp)
-}
-
+// DevicefarmProjectArgs contains the configurations for aws_devicefarm_project.
 type DevicefarmProjectArgs struct {
 	// DefaultJobTimeoutMinutes: number, optional
 	DefaultJobTimeoutMinutes terra.NumberValue `hcl:"default_job_timeout_minutes,attr"`
@@ -74,35 +97,39 @@ type DevicefarmProjectArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that DevicefarmProject depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type devicefarmProjectAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_devicefarm_project.
 func (dp devicefarmProjectAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("arn"))
+	return terra.ReferenceAsString(dp.ref.Append("arn"))
 }
 
+// DefaultJobTimeoutMinutes returns a reference to field default_job_timeout_minutes of aws_devicefarm_project.
 func (dp devicefarmProjectAttributes) DefaultJobTimeoutMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(dp.ref.Append("default_job_timeout_minutes"))
+	return terra.ReferenceAsNumber(dp.ref.Append("default_job_timeout_minutes"))
 }
 
+// Id returns a reference to field id of aws_devicefarm_project.
 func (dp devicefarmProjectAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("id"))
+	return terra.ReferenceAsString(dp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_devicefarm_project.
 func (dp devicefarmProjectAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("name"))
+	return terra.ReferenceAsString(dp.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_devicefarm_project.
 func (dp devicefarmProjectAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dp.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_devicefarm_project.
 func (dp devicefarmProjectAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dp.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dp.ref.Append("tags_all"))
 }
 
 type devicefarmProjectState struct {

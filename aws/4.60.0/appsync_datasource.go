@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAppsyncDatasource creates a new instance of [AppsyncDatasource].
 func NewAppsyncDatasource(name string, args AppsyncDatasourceArgs) *AppsyncDatasource {
 	return &AppsyncDatasource{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAppsyncDatasource(name string, args AppsyncDatasourceArgs) *AppsyncDatas
 
 var _ terra.Resource = (*AppsyncDatasource)(nil)
 
+// AppsyncDatasource represents the Terraform resource aws_appsync_datasource.
 type AppsyncDatasource struct {
-	Name  string
-	Args  AppsyncDatasourceArgs
-	state *appsyncDatasourceState
+	Name      string
+	Args      AppsyncDatasourceArgs
+	state     *appsyncDatasourceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppsyncDatasource].
 func (ad *AppsyncDatasource) Type() string {
 	return "aws_appsync_datasource"
 }
 
+// LocalName returns the local name for [AppsyncDatasource].
 func (ad *AppsyncDatasource) LocalName() string {
 	return ad.Name
 }
 
+// Configuration returns the configuration (args) for [AppsyncDatasource].
 func (ad *AppsyncDatasource) Configuration() interface{} {
 	return ad.Args
 }
 
+// DependOn is used for other resources to depend on [AppsyncDatasource].
+func (ad *AppsyncDatasource) DependOn() terra.Reference {
+	return terra.ReferenceResource(ad)
+}
+
+// Dependencies returns the list of resources [AppsyncDatasource] depends_on.
+func (ad *AppsyncDatasource) Dependencies() terra.Dependencies {
+	return ad.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppsyncDatasource].
+func (ad *AppsyncDatasource) LifecycleManagement() *terra.Lifecycle {
+	return ad.Lifecycle
+}
+
+// Attributes returns the attributes for [AppsyncDatasource].
 func (ad *AppsyncDatasource) Attributes() appsyncDatasourceAttributes {
 	return appsyncDatasourceAttributes{ref: terra.ReferenceResource(ad)}
 }
 
+// ImportState imports the given attribute values into [AppsyncDatasource]'s state.
 func (ad *AppsyncDatasource) ImportState(av io.Reader) error {
 	ad.state = &appsyncDatasourceState{}
 	if err := json.NewDecoder(av).Decode(ad.state); err != nil {
@@ -49,10 +73,12 @@ func (ad *AppsyncDatasource) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppsyncDatasource] has state.
 func (ad *AppsyncDatasource) State() (*appsyncDatasourceState, bool) {
 	return ad.state, ad.state != nil
 }
 
+// StateMust returns the state for [AppsyncDatasource]. Panics if the state is nil.
 func (ad *AppsyncDatasource) StateMust() *appsyncDatasourceState {
 	if ad.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ad.Type(), ad.LocalName()))
@@ -60,10 +86,7 @@ func (ad *AppsyncDatasource) StateMust() *appsyncDatasourceState {
 	return ad.state
 }
 
-func (ad *AppsyncDatasource) DependOn() terra.Reference {
-	return terra.ReferenceResource(ad)
-}
-
+// AppsyncDatasourceArgs contains the configurations for aws_appsync_datasource.
 type AppsyncDatasourceArgs struct {
 	// ApiId: string, required
 	ApiId terra.StringValue `hcl:"api_id,attr" validate:"required"`
@@ -89,63 +112,68 @@ type AppsyncDatasourceArgs struct {
 	LambdaConfig *appsyncdatasource.LambdaConfig `hcl:"lambda_config,block"`
 	// RelationalDatabaseConfig: optional
 	RelationalDatabaseConfig *appsyncdatasource.RelationalDatabaseConfig `hcl:"relational_database_config,block"`
-	// DependsOn contains resources that AppsyncDatasource depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appsyncDatasourceAttributes struct {
 	ref terra.Reference
 }
 
+// ApiId returns a reference to field api_id of aws_appsync_datasource.
 func (ad appsyncDatasourceAttributes) ApiId() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("api_id"))
+	return terra.ReferenceAsString(ad.ref.Append("api_id"))
 }
 
+// Arn returns a reference to field arn of aws_appsync_datasource.
 func (ad appsyncDatasourceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("arn"))
+	return terra.ReferenceAsString(ad.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_appsync_datasource.
 func (ad appsyncDatasourceAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("description"))
+	return terra.ReferenceAsString(ad.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_appsync_datasource.
 func (ad appsyncDatasourceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("id"))
+	return terra.ReferenceAsString(ad.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_appsync_datasource.
 func (ad appsyncDatasourceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("name"))
+	return terra.ReferenceAsString(ad.ref.Append("name"))
 }
 
+// ServiceRoleArn returns a reference to field service_role_arn of aws_appsync_datasource.
 func (ad appsyncDatasourceAttributes) ServiceRoleArn() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("service_role_arn"))
+	return terra.ReferenceAsString(ad.ref.Append("service_role_arn"))
 }
 
+// Type returns a reference to field type of aws_appsync_datasource.
 func (ad appsyncDatasourceAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("type"))
+	return terra.ReferenceAsString(ad.ref.Append("type"))
 }
 
 func (ad appsyncDatasourceAttributes) DynamodbConfig() terra.ListValue[appsyncdatasource.DynamodbConfigAttributes] {
-	return terra.ReferenceList[appsyncdatasource.DynamodbConfigAttributes](ad.ref.Append("dynamodb_config"))
+	return terra.ReferenceAsList[appsyncdatasource.DynamodbConfigAttributes](ad.ref.Append("dynamodb_config"))
 }
 
 func (ad appsyncDatasourceAttributes) ElasticsearchConfig() terra.ListValue[appsyncdatasource.ElasticsearchConfigAttributes] {
-	return terra.ReferenceList[appsyncdatasource.ElasticsearchConfigAttributes](ad.ref.Append("elasticsearch_config"))
+	return terra.ReferenceAsList[appsyncdatasource.ElasticsearchConfigAttributes](ad.ref.Append("elasticsearch_config"))
 }
 
 func (ad appsyncDatasourceAttributes) EventBridgeConfig() terra.ListValue[appsyncdatasource.EventBridgeConfigAttributes] {
-	return terra.ReferenceList[appsyncdatasource.EventBridgeConfigAttributes](ad.ref.Append("event_bridge_config"))
+	return terra.ReferenceAsList[appsyncdatasource.EventBridgeConfigAttributes](ad.ref.Append("event_bridge_config"))
 }
 
 func (ad appsyncDatasourceAttributes) HttpConfig() terra.ListValue[appsyncdatasource.HttpConfigAttributes] {
-	return terra.ReferenceList[appsyncdatasource.HttpConfigAttributes](ad.ref.Append("http_config"))
+	return terra.ReferenceAsList[appsyncdatasource.HttpConfigAttributes](ad.ref.Append("http_config"))
 }
 
 func (ad appsyncDatasourceAttributes) LambdaConfig() terra.ListValue[appsyncdatasource.LambdaConfigAttributes] {
-	return terra.ReferenceList[appsyncdatasource.LambdaConfigAttributes](ad.ref.Append("lambda_config"))
+	return terra.ReferenceAsList[appsyncdatasource.LambdaConfigAttributes](ad.ref.Append("lambda_config"))
 }
 
 func (ad appsyncDatasourceAttributes) RelationalDatabaseConfig() terra.ListValue[appsyncdatasource.RelationalDatabaseConfigAttributes] {
-	return terra.ReferenceList[appsyncdatasource.RelationalDatabaseConfigAttributes](ad.ref.Append("relational_database_config"))
+	return terra.ReferenceAsList[appsyncdatasource.RelationalDatabaseConfigAttributes](ad.ref.Append("relational_database_config"))
 }
 
 type appsyncDatasourceState struct {

@@ -51,11 +51,11 @@ func (ad AutoDeploymentAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ad AutoDeploymentAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(ad.ref.Append("enabled"))
+	return terra.ReferenceAsBool(ad.ref.Append("enabled"))
 }
 
 func (ad AutoDeploymentAttributes) RetainStacksOnAccountRemoval() terra.BoolValue {
-	return terra.ReferenceBool(ad.ref.Append("retain_stacks_on_account_removal"))
+	return terra.ReferenceAsBool(ad.ref.Append("retain_stacks_on_account_removal"))
 }
 
 type OperationPreferencesAttributes struct {
@@ -75,27 +75,27 @@ func (op OperationPreferencesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (op OperationPreferencesAttributes) FailureToleranceCount() terra.NumberValue {
-	return terra.ReferenceNumber(op.ref.Append("failure_tolerance_count"))
+	return terra.ReferenceAsNumber(op.ref.Append("failure_tolerance_count"))
 }
 
 func (op OperationPreferencesAttributes) FailureTolerancePercentage() terra.NumberValue {
-	return terra.ReferenceNumber(op.ref.Append("failure_tolerance_percentage"))
+	return terra.ReferenceAsNumber(op.ref.Append("failure_tolerance_percentage"))
 }
 
 func (op OperationPreferencesAttributes) MaxConcurrentCount() terra.NumberValue {
-	return terra.ReferenceNumber(op.ref.Append("max_concurrent_count"))
+	return terra.ReferenceAsNumber(op.ref.Append("max_concurrent_count"))
 }
 
 func (op OperationPreferencesAttributes) MaxConcurrentPercentage() terra.NumberValue {
-	return terra.ReferenceNumber(op.ref.Append("max_concurrent_percentage"))
+	return terra.ReferenceAsNumber(op.ref.Append("max_concurrent_percentage"))
 }
 
 func (op OperationPreferencesAttributes) RegionConcurrencyType() terra.StringValue {
-	return terra.ReferenceString(op.ref.Append("region_concurrency_type"))
+	return terra.ReferenceAsString(op.ref.Append("region_concurrency_type"))
 }
 
 func (op OperationPreferencesAttributes) RegionOrder() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](op.ref.Append("region_order"))
+	return terra.ReferenceAsList[terra.StringValue](op.ref.Append("region_order"))
 }
 
 type TimeoutsAttributes struct {
@@ -115,7 +115,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AutoDeploymentState struct {

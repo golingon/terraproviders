@@ -42,11 +42,11 @@ func (tg TargetGrantAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tg TargetGrantAttributes) Permission() terra.StringValue {
-	return terra.ReferenceString(tg.ref.Append("permission"))
+	return terra.ReferenceAsString(tg.ref.Append("permission"))
 }
 
 func (tg TargetGrantAttributes) Grantee() terra.ListValue[GranteeAttributes] {
-	return terra.ReferenceList[GranteeAttributes](tg.ref.Append("grantee"))
+	return terra.ReferenceAsList[GranteeAttributes](tg.ref.Append("grantee"))
 }
 
 type GranteeAttributes struct {
@@ -66,23 +66,23 @@ func (g GranteeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (g GranteeAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("display_name"))
+	return terra.ReferenceAsString(g.ref.Append("display_name"))
 }
 
 func (g GranteeAttributes) EmailAddress() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("email_address"))
+	return terra.ReferenceAsString(g.ref.Append("email_address"))
 }
 
 func (g GranteeAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("id"))
+	return terra.ReferenceAsString(g.ref.Append("id"))
 }
 
 func (g GranteeAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("type"))
+	return terra.ReferenceAsString(g.ref.Append("type"))
 }
 
 func (g GranteeAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("uri"))
+	return terra.ReferenceAsString(g.ref.Append("uri"))
 }
 
 type TargetGrantState struct {

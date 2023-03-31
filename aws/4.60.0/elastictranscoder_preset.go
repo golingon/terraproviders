@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewElastictranscoderPreset creates a new instance of [ElastictranscoderPreset].
 func NewElastictranscoderPreset(name string, args ElastictranscoderPresetArgs) *ElastictranscoderPreset {
 	return &ElastictranscoderPreset{
 		Args: args,
@@ -19,28 +20,51 @@ func NewElastictranscoderPreset(name string, args ElastictranscoderPresetArgs) *
 
 var _ terra.Resource = (*ElastictranscoderPreset)(nil)
 
+// ElastictranscoderPreset represents the Terraform resource aws_elastictranscoder_preset.
 type ElastictranscoderPreset struct {
-	Name  string
-	Args  ElastictranscoderPresetArgs
-	state *elastictranscoderPresetState
+	Name      string
+	Args      ElastictranscoderPresetArgs
+	state     *elastictranscoderPresetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ElastictranscoderPreset].
 func (ep *ElastictranscoderPreset) Type() string {
 	return "aws_elastictranscoder_preset"
 }
 
+// LocalName returns the local name for [ElastictranscoderPreset].
 func (ep *ElastictranscoderPreset) LocalName() string {
 	return ep.Name
 }
 
+// Configuration returns the configuration (args) for [ElastictranscoderPreset].
 func (ep *ElastictranscoderPreset) Configuration() interface{} {
 	return ep.Args
 }
 
+// DependOn is used for other resources to depend on [ElastictranscoderPreset].
+func (ep *ElastictranscoderPreset) DependOn() terra.Reference {
+	return terra.ReferenceResource(ep)
+}
+
+// Dependencies returns the list of resources [ElastictranscoderPreset] depends_on.
+func (ep *ElastictranscoderPreset) Dependencies() terra.Dependencies {
+	return ep.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ElastictranscoderPreset].
+func (ep *ElastictranscoderPreset) LifecycleManagement() *terra.Lifecycle {
+	return ep.Lifecycle
+}
+
+// Attributes returns the attributes for [ElastictranscoderPreset].
 func (ep *ElastictranscoderPreset) Attributes() elastictranscoderPresetAttributes {
 	return elastictranscoderPresetAttributes{ref: terra.ReferenceResource(ep)}
 }
 
+// ImportState imports the given attribute values into [ElastictranscoderPreset]'s state.
 func (ep *ElastictranscoderPreset) ImportState(av io.Reader) error {
 	ep.state = &elastictranscoderPresetState{}
 	if err := json.NewDecoder(av).Decode(ep.state); err != nil {
@@ -49,10 +73,12 @@ func (ep *ElastictranscoderPreset) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ElastictranscoderPreset] has state.
 func (ep *ElastictranscoderPreset) State() (*elastictranscoderPresetState, bool) {
 	return ep.state, ep.state != nil
 }
 
+// StateMust returns the state for [ElastictranscoderPreset]. Panics if the state is nil.
 func (ep *ElastictranscoderPreset) StateMust() *elastictranscoderPresetState {
 	if ep.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ep.Type(), ep.LocalName()))
@@ -60,10 +86,7 @@ func (ep *ElastictranscoderPreset) StateMust() *elastictranscoderPresetState {
 	return ep.state
 }
 
-func (ep *ElastictranscoderPreset) DependOn() terra.Reference {
-	return terra.ReferenceResource(ep)
-}
-
+// ElastictranscoderPresetArgs contains the configurations for aws_elastictranscoder_preset.
 type ElastictranscoderPresetArgs struct {
 	// Container: string, required
 	Container terra.StringValue `hcl:"container,attr" validate:"required"`
@@ -87,59 +110,64 @@ type ElastictranscoderPresetArgs struct {
 	Video *elastictranscoderpreset.Video `hcl:"video,block"`
 	// VideoWatermarks: min=0
 	VideoWatermarks []elastictranscoderpreset.VideoWatermarks `hcl:"video_watermarks,block" validate:"min=0"`
-	// DependsOn contains resources that ElastictranscoderPreset depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type elastictranscoderPresetAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_elastictranscoder_preset.
 func (ep elastictranscoderPresetAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("arn"))
+	return terra.ReferenceAsString(ep.ref.Append("arn"))
 }
 
+// Container returns a reference to field container of aws_elastictranscoder_preset.
 func (ep elastictranscoderPresetAttributes) Container() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("container"))
+	return terra.ReferenceAsString(ep.ref.Append("container"))
 }
 
+// Description returns a reference to field description of aws_elastictranscoder_preset.
 func (ep elastictranscoderPresetAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("description"))
+	return terra.ReferenceAsString(ep.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_elastictranscoder_preset.
 func (ep elastictranscoderPresetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("id"))
+	return terra.ReferenceAsString(ep.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_elastictranscoder_preset.
 func (ep elastictranscoderPresetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("name"))
+	return terra.ReferenceAsString(ep.ref.Append("name"))
 }
 
+// Type returns a reference to field type of aws_elastictranscoder_preset.
 func (ep elastictranscoderPresetAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("type"))
+	return terra.ReferenceAsString(ep.ref.Append("type"))
 }
 
+// VideoCodecOptions returns a reference to field video_codec_options of aws_elastictranscoder_preset.
 func (ep elastictranscoderPresetAttributes) VideoCodecOptions() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ep.ref.Append("video_codec_options"))
+	return terra.ReferenceAsMap[terra.StringValue](ep.ref.Append("video_codec_options"))
 }
 
 func (ep elastictranscoderPresetAttributes) Audio() terra.ListValue[elastictranscoderpreset.AudioAttributes] {
-	return terra.ReferenceList[elastictranscoderpreset.AudioAttributes](ep.ref.Append("audio"))
+	return terra.ReferenceAsList[elastictranscoderpreset.AudioAttributes](ep.ref.Append("audio"))
 }
 
 func (ep elastictranscoderPresetAttributes) AudioCodecOptions() terra.ListValue[elastictranscoderpreset.AudioCodecOptionsAttributes] {
-	return terra.ReferenceList[elastictranscoderpreset.AudioCodecOptionsAttributes](ep.ref.Append("audio_codec_options"))
+	return terra.ReferenceAsList[elastictranscoderpreset.AudioCodecOptionsAttributes](ep.ref.Append("audio_codec_options"))
 }
 
 func (ep elastictranscoderPresetAttributes) Thumbnails() terra.ListValue[elastictranscoderpreset.ThumbnailsAttributes] {
-	return terra.ReferenceList[elastictranscoderpreset.ThumbnailsAttributes](ep.ref.Append("thumbnails"))
+	return terra.ReferenceAsList[elastictranscoderpreset.ThumbnailsAttributes](ep.ref.Append("thumbnails"))
 }
 
 func (ep elastictranscoderPresetAttributes) Video() terra.ListValue[elastictranscoderpreset.VideoAttributes] {
-	return terra.ReferenceList[elastictranscoderpreset.VideoAttributes](ep.ref.Append("video"))
+	return terra.ReferenceAsList[elastictranscoderpreset.VideoAttributes](ep.ref.Append("video"))
 }
 
 func (ep elastictranscoderPresetAttributes) VideoWatermarks() terra.SetValue[elastictranscoderpreset.VideoWatermarksAttributes] {
-	return terra.ReferenceSet[elastictranscoderpreset.VideoWatermarksAttributes](ep.ref.Append("video_watermarks"))
+	return terra.ReferenceAsSet[elastictranscoderpreset.VideoWatermarksAttributes](ep.ref.Append("video_watermarks"))
 }
 
 type elastictranscoderPresetState struct {

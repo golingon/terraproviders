@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEfsFileSystem creates a new instance of [EfsFileSystem].
 func NewEfsFileSystem(name string, args EfsFileSystemArgs) *EfsFileSystem {
 	return &EfsFileSystem{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEfsFileSystem(name string, args EfsFileSystemArgs) *EfsFileSystem {
 
 var _ terra.Resource = (*EfsFileSystem)(nil)
 
+// EfsFileSystem represents the Terraform resource aws_efs_file_system.
 type EfsFileSystem struct {
-	Name  string
-	Args  EfsFileSystemArgs
-	state *efsFileSystemState
+	Name      string
+	Args      EfsFileSystemArgs
+	state     *efsFileSystemState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EfsFileSystem].
 func (efs *EfsFileSystem) Type() string {
 	return "aws_efs_file_system"
 }
 
+// LocalName returns the local name for [EfsFileSystem].
 func (efs *EfsFileSystem) LocalName() string {
 	return efs.Name
 }
 
+// Configuration returns the configuration (args) for [EfsFileSystem].
 func (efs *EfsFileSystem) Configuration() interface{} {
 	return efs.Args
 }
 
+// DependOn is used for other resources to depend on [EfsFileSystem].
+func (efs *EfsFileSystem) DependOn() terra.Reference {
+	return terra.ReferenceResource(efs)
+}
+
+// Dependencies returns the list of resources [EfsFileSystem] depends_on.
+func (efs *EfsFileSystem) Dependencies() terra.Dependencies {
+	return efs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EfsFileSystem].
+func (efs *EfsFileSystem) LifecycleManagement() *terra.Lifecycle {
+	return efs.Lifecycle
+}
+
+// Attributes returns the attributes for [EfsFileSystem].
 func (efs *EfsFileSystem) Attributes() efsFileSystemAttributes {
 	return efsFileSystemAttributes{ref: terra.ReferenceResource(efs)}
 }
 
+// ImportState imports the given attribute values into [EfsFileSystem]'s state.
 func (efs *EfsFileSystem) ImportState(av io.Reader) error {
 	efs.state = &efsFileSystemState{}
 	if err := json.NewDecoder(av).Decode(efs.state); err != nil {
@@ -49,10 +73,12 @@ func (efs *EfsFileSystem) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EfsFileSystem] has state.
 func (efs *EfsFileSystem) State() (*efsFileSystemState, bool) {
 	return efs.state, efs.state != nil
 }
 
+// StateMust returns the state for [EfsFileSystem]. Panics if the state is nil.
 func (efs *EfsFileSystem) StateMust() *efsFileSystemState {
 	if efs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", efs.Type(), efs.LocalName()))
@@ -60,10 +86,7 @@ func (efs *EfsFileSystem) StateMust() *efsFileSystemState {
 	return efs.state
 }
 
-func (efs *EfsFileSystem) DependOn() terra.Reference {
-	return terra.ReferenceResource(efs)
-}
-
+// EfsFileSystemArgs contains the configurations for aws_efs_file_system.
 type EfsFileSystemArgs struct {
 	// AvailabilityZoneName: string, optional
 	AvailabilityZoneName terra.StringValue `hcl:"availability_zone_name,attr"`
@@ -89,79 +112,92 @@ type EfsFileSystemArgs struct {
 	SizeInBytes []efsfilesystem.SizeInBytes `hcl:"size_in_bytes,block" validate:"min=0"`
 	// LifecyclePolicy: min=0,max=2
 	LifecyclePolicy []efsfilesystem.LifecyclePolicy `hcl:"lifecycle_policy,block" validate:"min=0,max=2"`
-	// DependsOn contains resources that EfsFileSystem depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type efsFileSystemAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_efs_file_system.
 func (efs efsFileSystemAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(efs.ref.Append("arn"))
+	return terra.ReferenceAsString(efs.ref.Append("arn"))
 }
 
+// AvailabilityZoneId returns a reference to field availability_zone_id of aws_efs_file_system.
 func (efs efsFileSystemAttributes) AvailabilityZoneId() terra.StringValue {
-	return terra.ReferenceString(efs.ref.Append("availability_zone_id"))
+	return terra.ReferenceAsString(efs.ref.Append("availability_zone_id"))
 }
 
+// AvailabilityZoneName returns a reference to field availability_zone_name of aws_efs_file_system.
 func (efs efsFileSystemAttributes) AvailabilityZoneName() terra.StringValue {
-	return terra.ReferenceString(efs.ref.Append("availability_zone_name"))
+	return terra.ReferenceAsString(efs.ref.Append("availability_zone_name"))
 }
 
+// CreationToken returns a reference to field creation_token of aws_efs_file_system.
 func (efs efsFileSystemAttributes) CreationToken() terra.StringValue {
-	return terra.ReferenceString(efs.ref.Append("creation_token"))
+	return terra.ReferenceAsString(efs.ref.Append("creation_token"))
 }
 
+// DnsName returns a reference to field dns_name of aws_efs_file_system.
 func (efs efsFileSystemAttributes) DnsName() terra.StringValue {
-	return terra.ReferenceString(efs.ref.Append("dns_name"))
+	return terra.ReferenceAsString(efs.ref.Append("dns_name"))
 }
 
+// Encrypted returns a reference to field encrypted of aws_efs_file_system.
 func (efs efsFileSystemAttributes) Encrypted() terra.BoolValue {
-	return terra.ReferenceBool(efs.ref.Append("encrypted"))
+	return terra.ReferenceAsBool(efs.ref.Append("encrypted"))
 }
 
+// Id returns a reference to field id of aws_efs_file_system.
 func (efs efsFileSystemAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(efs.ref.Append("id"))
+	return terra.ReferenceAsString(efs.ref.Append("id"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_efs_file_system.
 func (efs efsFileSystemAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(efs.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(efs.ref.Append("kms_key_id"))
 }
 
+// NumberOfMountTargets returns a reference to field number_of_mount_targets of aws_efs_file_system.
 func (efs efsFileSystemAttributes) NumberOfMountTargets() terra.NumberValue {
-	return terra.ReferenceNumber(efs.ref.Append("number_of_mount_targets"))
+	return terra.ReferenceAsNumber(efs.ref.Append("number_of_mount_targets"))
 }
 
+// OwnerId returns a reference to field owner_id of aws_efs_file_system.
 func (efs efsFileSystemAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(efs.ref.Append("owner_id"))
+	return terra.ReferenceAsString(efs.ref.Append("owner_id"))
 }
 
+// PerformanceMode returns a reference to field performance_mode of aws_efs_file_system.
 func (efs efsFileSystemAttributes) PerformanceMode() terra.StringValue {
-	return terra.ReferenceString(efs.ref.Append("performance_mode"))
+	return terra.ReferenceAsString(efs.ref.Append("performance_mode"))
 }
 
+// ProvisionedThroughputInMibps returns a reference to field provisioned_throughput_in_mibps of aws_efs_file_system.
 func (efs efsFileSystemAttributes) ProvisionedThroughputInMibps() terra.NumberValue {
-	return terra.ReferenceNumber(efs.ref.Append("provisioned_throughput_in_mibps"))
+	return terra.ReferenceAsNumber(efs.ref.Append("provisioned_throughput_in_mibps"))
 }
 
+// Tags returns a reference to field tags of aws_efs_file_system.
 func (efs efsFileSystemAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](efs.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](efs.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_efs_file_system.
 func (efs efsFileSystemAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](efs.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](efs.ref.Append("tags_all"))
 }
 
+// ThroughputMode returns a reference to field throughput_mode of aws_efs_file_system.
 func (efs efsFileSystemAttributes) ThroughputMode() terra.StringValue {
-	return terra.ReferenceString(efs.ref.Append("throughput_mode"))
+	return terra.ReferenceAsString(efs.ref.Append("throughput_mode"))
 }
 
 func (efs efsFileSystemAttributes) SizeInBytes() terra.ListValue[efsfilesystem.SizeInBytesAttributes] {
-	return terra.ReferenceList[efsfilesystem.SizeInBytesAttributes](efs.ref.Append("size_in_bytes"))
+	return terra.ReferenceAsList[efsfilesystem.SizeInBytesAttributes](efs.ref.Append("size_in_bytes"))
 }
 
 func (efs efsFileSystemAttributes) LifecyclePolicy() terra.ListValue[efsfilesystem.LifecyclePolicyAttributes] {
-	return terra.ReferenceList[efsfilesystem.LifecyclePolicyAttributes](efs.ref.Append("lifecycle_policy"))
+	return terra.ReferenceAsList[efsfilesystem.LifecyclePolicyAttributes](efs.ref.Append("lifecycle_policy"))
 }
 
 type efsFileSystemState struct {

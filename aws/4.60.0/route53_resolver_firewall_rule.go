@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRoute53ResolverFirewallRule creates a new instance of [Route53ResolverFirewallRule].
 func NewRoute53ResolverFirewallRule(name string, args Route53ResolverFirewallRuleArgs) *Route53ResolverFirewallRule {
 	return &Route53ResolverFirewallRule{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRoute53ResolverFirewallRule(name string, args Route53ResolverFirewallRul
 
 var _ terra.Resource = (*Route53ResolverFirewallRule)(nil)
 
+// Route53ResolverFirewallRule represents the Terraform resource aws_route53_resolver_firewall_rule.
 type Route53ResolverFirewallRule struct {
-	Name  string
-	Args  Route53ResolverFirewallRuleArgs
-	state *route53ResolverFirewallRuleState
+	Name      string
+	Args      Route53ResolverFirewallRuleArgs
+	state     *route53ResolverFirewallRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Route53ResolverFirewallRule].
 func (rrfr *Route53ResolverFirewallRule) Type() string {
 	return "aws_route53_resolver_firewall_rule"
 }
 
+// LocalName returns the local name for [Route53ResolverFirewallRule].
 func (rrfr *Route53ResolverFirewallRule) LocalName() string {
 	return rrfr.Name
 }
 
+// Configuration returns the configuration (args) for [Route53ResolverFirewallRule].
 func (rrfr *Route53ResolverFirewallRule) Configuration() interface{} {
 	return rrfr.Args
 }
 
+// DependOn is used for other resources to depend on [Route53ResolverFirewallRule].
+func (rrfr *Route53ResolverFirewallRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(rrfr)
+}
+
+// Dependencies returns the list of resources [Route53ResolverFirewallRule] depends_on.
+func (rrfr *Route53ResolverFirewallRule) Dependencies() terra.Dependencies {
+	return rrfr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Route53ResolverFirewallRule].
+func (rrfr *Route53ResolverFirewallRule) LifecycleManagement() *terra.Lifecycle {
+	return rrfr.Lifecycle
+}
+
+// Attributes returns the attributes for [Route53ResolverFirewallRule].
 func (rrfr *Route53ResolverFirewallRule) Attributes() route53ResolverFirewallRuleAttributes {
 	return route53ResolverFirewallRuleAttributes{ref: terra.ReferenceResource(rrfr)}
 }
 
+// ImportState imports the given attribute values into [Route53ResolverFirewallRule]'s state.
 func (rrfr *Route53ResolverFirewallRule) ImportState(av io.Reader) error {
 	rrfr.state = &route53ResolverFirewallRuleState{}
 	if err := json.NewDecoder(av).Decode(rrfr.state); err != nil {
@@ -48,10 +72,12 @@ func (rrfr *Route53ResolverFirewallRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Route53ResolverFirewallRule] has state.
 func (rrfr *Route53ResolverFirewallRule) State() (*route53ResolverFirewallRuleState, bool) {
 	return rrfr.state, rrfr.state != nil
 }
 
+// StateMust returns the state for [Route53ResolverFirewallRule]. Panics if the state is nil.
 func (rrfr *Route53ResolverFirewallRule) StateMust() *route53ResolverFirewallRuleState {
 	if rrfr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rrfr.Type(), rrfr.LocalName()))
@@ -59,10 +85,7 @@ func (rrfr *Route53ResolverFirewallRule) StateMust() *route53ResolverFirewallRul
 	return rrfr.state
 }
 
-func (rrfr *Route53ResolverFirewallRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(rrfr)
-}
-
+// Route53ResolverFirewallRuleArgs contains the configurations for aws_route53_resolver_firewall_rule.
 type Route53ResolverFirewallRuleArgs struct {
 	// Action: string, required
 	Action terra.StringValue `hcl:"action,attr" validate:"required"`
@@ -84,51 +107,59 @@ type Route53ResolverFirewallRuleArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// Priority: number, required
 	Priority terra.NumberValue `hcl:"priority,attr" validate:"required"`
-	// DependsOn contains resources that Route53ResolverFirewallRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type route53ResolverFirewallRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Action returns a reference to field action of aws_route53_resolver_firewall_rule.
 func (rrfr route53ResolverFirewallRuleAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(rrfr.ref.Append("action"))
+	return terra.ReferenceAsString(rrfr.ref.Append("action"))
 }
 
+// BlockOverrideDnsType returns a reference to field block_override_dns_type of aws_route53_resolver_firewall_rule.
 func (rrfr route53ResolverFirewallRuleAttributes) BlockOverrideDnsType() terra.StringValue {
-	return terra.ReferenceString(rrfr.ref.Append("block_override_dns_type"))
+	return terra.ReferenceAsString(rrfr.ref.Append("block_override_dns_type"))
 }
 
+// BlockOverrideDomain returns a reference to field block_override_domain of aws_route53_resolver_firewall_rule.
 func (rrfr route53ResolverFirewallRuleAttributes) BlockOverrideDomain() terra.StringValue {
-	return terra.ReferenceString(rrfr.ref.Append("block_override_domain"))
+	return terra.ReferenceAsString(rrfr.ref.Append("block_override_domain"))
 }
 
+// BlockOverrideTtl returns a reference to field block_override_ttl of aws_route53_resolver_firewall_rule.
 func (rrfr route53ResolverFirewallRuleAttributes) BlockOverrideTtl() terra.NumberValue {
-	return terra.ReferenceNumber(rrfr.ref.Append("block_override_ttl"))
+	return terra.ReferenceAsNumber(rrfr.ref.Append("block_override_ttl"))
 }
 
+// BlockResponse returns a reference to field block_response of aws_route53_resolver_firewall_rule.
 func (rrfr route53ResolverFirewallRuleAttributes) BlockResponse() terra.StringValue {
-	return terra.ReferenceString(rrfr.ref.Append("block_response"))
+	return terra.ReferenceAsString(rrfr.ref.Append("block_response"))
 }
 
+// FirewallDomainListId returns a reference to field firewall_domain_list_id of aws_route53_resolver_firewall_rule.
 func (rrfr route53ResolverFirewallRuleAttributes) FirewallDomainListId() terra.StringValue {
-	return terra.ReferenceString(rrfr.ref.Append("firewall_domain_list_id"))
+	return terra.ReferenceAsString(rrfr.ref.Append("firewall_domain_list_id"))
 }
 
+// FirewallRuleGroupId returns a reference to field firewall_rule_group_id of aws_route53_resolver_firewall_rule.
 func (rrfr route53ResolverFirewallRuleAttributes) FirewallRuleGroupId() terra.StringValue {
-	return terra.ReferenceString(rrfr.ref.Append("firewall_rule_group_id"))
+	return terra.ReferenceAsString(rrfr.ref.Append("firewall_rule_group_id"))
 }
 
+// Id returns a reference to field id of aws_route53_resolver_firewall_rule.
 func (rrfr route53ResolverFirewallRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rrfr.ref.Append("id"))
+	return terra.ReferenceAsString(rrfr.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_route53_resolver_firewall_rule.
 func (rrfr route53ResolverFirewallRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rrfr.ref.Append("name"))
+	return terra.ReferenceAsString(rrfr.ref.Append("name"))
 }
 
+// Priority returns a reference to field priority of aws_route53_resolver_firewall_rule.
 func (rrfr route53ResolverFirewallRuleAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(rrfr.ref.Append("priority"))
+	return terra.ReferenceAsNumber(rrfr.ref.Append("priority"))
 }
 
 type route53ResolverFirewallRuleState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewRdsCluster creates a new instance of [RdsCluster].
 func NewRdsCluster(name string, args RdsClusterArgs) *RdsCluster {
 	return &RdsCluster{
 		Args: args,
@@ -19,28 +20,51 @@ func NewRdsCluster(name string, args RdsClusterArgs) *RdsCluster {
 
 var _ terra.Resource = (*RdsCluster)(nil)
 
+// RdsCluster represents the Terraform resource aws_rds_cluster.
 type RdsCluster struct {
-	Name  string
-	Args  RdsClusterArgs
-	state *rdsClusterState
+	Name      string
+	Args      RdsClusterArgs
+	state     *rdsClusterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RdsCluster].
 func (rc *RdsCluster) Type() string {
 	return "aws_rds_cluster"
 }
 
+// LocalName returns the local name for [RdsCluster].
 func (rc *RdsCluster) LocalName() string {
 	return rc.Name
 }
 
+// Configuration returns the configuration (args) for [RdsCluster].
 func (rc *RdsCluster) Configuration() interface{} {
 	return rc.Args
 }
 
+// DependOn is used for other resources to depend on [RdsCluster].
+func (rc *RdsCluster) DependOn() terra.Reference {
+	return terra.ReferenceResource(rc)
+}
+
+// Dependencies returns the list of resources [RdsCluster] depends_on.
+func (rc *RdsCluster) Dependencies() terra.Dependencies {
+	return rc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RdsCluster].
+func (rc *RdsCluster) LifecycleManagement() *terra.Lifecycle {
+	return rc.Lifecycle
+}
+
+// Attributes returns the attributes for [RdsCluster].
 func (rc *RdsCluster) Attributes() rdsClusterAttributes {
 	return rdsClusterAttributes{ref: terra.ReferenceResource(rc)}
 }
 
+// ImportState imports the given attribute values into [RdsCluster]'s state.
 func (rc *RdsCluster) ImportState(av io.Reader) error {
 	rc.state = &rdsClusterState{}
 	if err := json.NewDecoder(av).Decode(rc.state); err != nil {
@@ -49,10 +73,12 @@ func (rc *RdsCluster) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RdsCluster] has state.
 func (rc *RdsCluster) State() (*rdsClusterState, bool) {
 	return rc.state, rc.state != nil
 }
 
+// StateMust returns the state for [RdsCluster]. Panics if the state is nil.
 func (rc *RdsCluster) StateMust() *rdsClusterState {
 	if rc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rc.Type(), rc.LocalName()))
@@ -60,10 +86,7 @@ func (rc *RdsCluster) StateMust() *rdsClusterState {
 	return rc.state
 }
 
-func (rc *RdsCluster) DependOn() terra.Reference {
-	return terra.ReferenceResource(rc)
-}
-
+// RdsClusterArgs contains the configurations for aws_rds_cluster.
 type RdsClusterArgs struct {
 	// AllocatedStorage: number, optional
 	AllocatedStorage terra.NumberValue `hcl:"allocated_storage,attr"`
@@ -163,231 +186,279 @@ type RdsClusterArgs struct {
 	Serverlessv2ScalingConfiguration *rdscluster.Serverlessv2ScalingConfiguration `hcl:"serverlessv2_scaling_configuration,block"`
 	// Timeouts: optional
 	Timeouts *rdscluster.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that RdsCluster depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type rdsClusterAttributes struct {
 	ref terra.Reference
 }
 
+// AllocatedStorage returns a reference to field allocated_storage of aws_rds_cluster.
 func (rc rdsClusterAttributes) AllocatedStorage() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("allocated_storage"))
+	return terra.ReferenceAsNumber(rc.ref.Append("allocated_storage"))
 }
 
+// AllowMajorVersionUpgrade returns a reference to field allow_major_version_upgrade of aws_rds_cluster.
 func (rc rdsClusterAttributes) AllowMajorVersionUpgrade() terra.BoolValue {
-	return terra.ReferenceBool(rc.ref.Append("allow_major_version_upgrade"))
+	return terra.ReferenceAsBool(rc.ref.Append("allow_major_version_upgrade"))
 }
 
+// ApplyImmediately returns a reference to field apply_immediately of aws_rds_cluster.
 func (rc rdsClusterAttributes) ApplyImmediately() terra.BoolValue {
-	return terra.ReferenceBool(rc.ref.Append("apply_immediately"))
+	return terra.ReferenceAsBool(rc.ref.Append("apply_immediately"))
 }
 
+// Arn returns a reference to field arn of aws_rds_cluster.
 func (rc rdsClusterAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("arn"))
+	return terra.ReferenceAsString(rc.ref.Append("arn"))
 }
 
+// AvailabilityZones returns a reference to field availability_zones of aws_rds_cluster.
 func (rc rdsClusterAttributes) AvailabilityZones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rc.ref.Append("availability_zones"))
+	return terra.ReferenceAsSet[terra.StringValue](rc.ref.Append("availability_zones"))
 }
 
+// BacktrackWindow returns a reference to field backtrack_window of aws_rds_cluster.
 func (rc rdsClusterAttributes) BacktrackWindow() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("backtrack_window"))
+	return terra.ReferenceAsNumber(rc.ref.Append("backtrack_window"))
 }
 
+// BackupRetentionPeriod returns a reference to field backup_retention_period of aws_rds_cluster.
 func (rc rdsClusterAttributes) BackupRetentionPeriod() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("backup_retention_period"))
+	return terra.ReferenceAsNumber(rc.ref.Append("backup_retention_period"))
 }
 
+// ClusterIdentifier returns a reference to field cluster_identifier of aws_rds_cluster.
 func (rc rdsClusterAttributes) ClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("cluster_identifier"))
+	return terra.ReferenceAsString(rc.ref.Append("cluster_identifier"))
 }
 
+// ClusterIdentifierPrefix returns a reference to field cluster_identifier_prefix of aws_rds_cluster.
 func (rc rdsClusterAttributes) ClusterIdentifierPrefix() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("cluster_identifier_prefix"))
+	return terra.ReferenceAsString(rc.ref.Append("cluster_identifier_prefix"))
 }
 
+// ClusterMembers returns a reference to field cluster_members of aws_rds_cluster.
 func (rc rdsClusterAttributes) ClusterMembers() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rc.ref.Append("cluster_members"))
+	return terra.ReferenceAsSet[terra.StringValue](rc.ref.Append("cluster_members"))
 }
 
+// ClusterResourceId returns a reference to field cluster_resource_id of aws_rds_cluster.
 func (rc rdsClusterAttributes) ClusterResourceId() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("cluster_resource_id"))
+	return terra.ReferenceAsString(rc.ref.Append("cluster_resource_id"))
 }
 
+// CopyTagsToSnapshot returns a reference to field copy_tags_to_snapshot of aws_rds_cluster.
 func (rc rdsClusterAttributes) CopyTagsToSnapshot() terra.BoolValue {
-	return terra.ReferenceBool(rc.ref.Append("copy_tags_to_snapshot"))
+	return terra.ReferenceAsBool(rc.ref.Append("copy_tags_to_snapshot"))
 }
 
+// DatabaseName returns a reference to field database_name of aws_rds_cluster.
 func (rc rdsClusterAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("database_name"))
+	return terra.ReferenceAsString(rc.ref.Append("database_name"))
 }
 
+// DbClusterInstanceClass returns a reference to field db_cluster_instance_class of aws_rds_cluster.
 func (rc rdsClusterAttributes) DbClusterInstanceClass() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("db_cluster_instance_class"))
+	return terra.ReferenceAsString(rc.ref.Append("db_cluster_instance_class"))
 }
 
+// DbClusterParameterGroupName returns a reference to field db_cluster_parameter_group_name of aws_rds_cluster.
 func (rc rdsClusterAttributes) DbClusterParameterGroupName() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("db_cluster_parameter_group_name"))
+	return terra.ReferenceAsString(rc.ref.Append("db_cluster_parameter_group_name"))
 }
 
+// DbInstanceParameterGroupName returns a reference to field db_instance_parameter_group_name of aws_rds_cluster.
 func (rc rdsClusterAttributes) DbInstanceParameterGroupName() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("db_instance_parameter_group_name"))
+	return terra.ReferenceAsString(rc.ref.Append("db_instance_parameter_group_name"))
 }
 
+// DbSubnetGroupName returns a reference to field db_subnet_group_name of aws_rds_cluster.
 func (rc rdsClusterAttributes) DbSubnetGroupName() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("db_subnet_group_name"))
+	return terra.ReferenceAsString(rc.ref.Append("db_subnet_group_name"))
 }
 
+// DeletionProtection returns a reference to field deletion_protection of aws_rds_cluster.
 func (rc rdsClusterAttributes) DeletionProtection() terra.BoolValue {
-	return terra.ReferenceBool(rc.ref.Append("deletion_protection"))
+	return terra.ReferenceAsBool(rc.ref.Append("deletion_protection"))
 }
 
+// EnableGlobalWriteForwarding returns a reference to field enable_global_write_forwarding of aws_rds_cluster.
 func (rc rdsClusterAttributes) EnableGlobalWriteForwarding() terra.BoolValue {
-	return terra.ReferenceBool(rc.ref.Append("enable_global_write_forwarding"))
+	return terra.ReferenceAsBool(rc.ref.Append("enable_global_write_forwarding"))
 }
 
+// EnableHttpEndpoint returns a reference to field enable_http_endpoint of aws_rds_cluster.
 func (rc rdsClusterAttributes) EnableHttpEndpoint() terra.BoolValue {
-	return terra.ReferenceBool(rc.ref.Append("enable_http_endpoint"))
+	return terra.ReferenceAsBool(rc.ref.Append("enable_http_endpoint"))
 }
 
+// EnabledCloudwatchLogsExports returns a reference to field enabled_cloudwatch_logs_exports of aws_rds_cluster.
 func (rc rdsClusterAttributes) EnabledCloudwatchLogsExports() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rc.ref.Append("enabled_cloudwatch_logs_exports"))
+	return terra.ReferenceAsSet[terra.StringValue](rc.ref.Append("enabled_cloudwatch_logs_exports"))
 }
 
+// Endpoint returns a reference to field endpoint of aws_rds_cluster.
 func (rc rdsClusterAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("endpoint"))
+	return terra.ReferenceAsString(rc.ref.Append("endpoint"))
 }
 
+// Engine returns a reference to field engine of aws_rds_cluster.
 func (rc rdsClusterAttributes) Engine() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("engine"))
+	return terra.ReferenceAsString(rc.ref.Append("engine"))
 }
 
+// EngineMode returns a reference to field engine_mode of aws_rds_cluster.
 func (rc rdsClusterAttributes) EngineMode() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("engine_mode"))
+	return terra.ReferenceAsString(rc.ref.Append("engine_mode"))
 }
 
+// EngineVersion returns a reference to field engine_version of aws_rds_cluster.
 func (rc rdsClusterAttributes) EngineVersion() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("engine_version"))
+	return terra.ReferenceAsString(rc.ref.Append("engine_version"))
 }
 
+// EngineVersionActual returns a reference to field engine_version_actual of aws_rds_cluster.
 func (rc rdsClusterAttributes) EngineVersionActual() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("engine_version_actual"))
+	return terra.ReferenceAsString(rc.ref.Append("engine_version_actual"))
 }
 
+// FinalSnapshotIdentifier returns a reference to field final_snapshot_identifier of aws_rds_cluster.
 func (rc rdsClusterAttributes) FinalSnapshotIdentifier() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("final_snapshot_identifier"))
+	return terra.ReferenceAsString(rc.ref.Append("final_snapshot_identifier"))
 }
 
+// GlobalClusterIdentifier returns a reference to field global_cluster_identifier of aws_rds_cluster.
 func (rc rdsClusterAttributes) GlobalClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("global_cluster_identifier"))
+	return terra.ReferenceAsString(rc.ref.Append("global_cluster_identifier"))
 }
 
+// HostedZoneId returns a reference to field hosted_zone_id of aws_rds_cluster.
 func (rc rdsClusterAttributes) HostedZoneId() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("hosted_zone_id"))
+	return terra.ReferenceAsString(rc.ref.Append("hosted_zone_id"))
 }
 
+// IamDatabaseAuthenticationEnabled returns a reference to field iam_database_authentication_enabled of aws_rds_cluster.
 func (rc rdsClusterAttributes) IamDatabaseAuthenticationEnabled() terra.BoolValue {
-	return terra.ReferenceBool(rc.ref.Append("iam_database_authentication_enabled"))
+	return terra.ReferenceAsBool(rc.ref.Append("iam_database_authentication_enabled"))
 }
 
+// IamRoles returns a reference to field iam_roles of aws_rds_cluster.
 func (rc rdsClusterAttributes) IamRoles() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rc.ref.Append("iam_roles"))
+	return terra.ReferenceAsSet[terra.StringValue](rc.ref.Append("iam_roles"))
 }
 
+// Id returns a reference to field id of aws_rds_cluster.
 func (rc rdsClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("id"))
+	return terra.ReferenceAsString(rc.ref.Append("id"))
 }
 
+// Iops returns a reference to field iops of aws_rds_cluster.
 func (rc rdsClusterAttributes) Iops() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("iops"))
+	return terra.ReferenceAsNumber(rc.ref.Append("iops"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_rds_cluster.
 func (rc rdsClusterAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(rc.ref.Append("kms_key_id"))
 }
 
+// MasterPassword returns a reference to field master_password of aws_rds_cluster.
 func (rc rdsClusterAttributes) MasterPassword() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("master_password"))
+	return terra.ReferenceAsString(rc.ref.Append("master_password"))
 }
 
+// MasterUsername returns a reference to field master_username of aws_rds_cluster.
 func (rc rdsClusterAttributes) MasterUsername() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("master_username"))
+	return terra.ReferenceAsString(rc.ref.Append("master_username"))
 }
 
+// NetworkType returns a reference to field network_type of aws_rds_cluster.
 func (rc rdsClusterAttributes) NetworkType() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("network_type"))
+	return terra.ReferenceAsString(rc.ref.Append("network_type"))
 }
 
+// Port returns a reference to field port of aws_rds_cluster.
 func (rc rdsClusterAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("port"))
+	return terra.ReferenceAsNumber(rc.ref.Append("port"))
 }
 
+// PreferredBackupWindow returns a reference to field preferred_backup_window of aws_rds_cluster.
 func (rc rdsClusterAttributes) PreferredBackupWindow() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("preferred_backup_window"))
+	return terra.ReferenceAsString(rc.ref.Append("preferred_backup_window"))
 }
 
+// PreferredMaintenanceWindow returns a reference to field preferred_maintenance_window of aws_rds_cluster.
 func (rc rdsClusterAttributes) PreferredMaintenanceWindow() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("preferred_maintenance_window"))
+	return terra.ReferenceAsString(rc.ref.Append("preferred_maintenance_window"))
 }
 
+// ReaderEndpoint returns a reference to field reader_endpoint of aws_rds_cluster.
 func (rc rdsClusterAttributes) ReaderEndpoint() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("reader_endpoint"))
+	return terra.ReferenceAsString(rc.ref.Append("reader_endpoint"))
 }
 
+// ReplicationSourceIdentifier returns a reference to field replication_source_identifier of aws_rds_cluster.
 func (rc rdsClusterAttributes) ReplicationSourceIdentifier() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("replication_source_identifier"))
+	return terra.ReferenceAsString(rc.ref.Append("replication_source_identifier"))
 }
 
+// SkipFinalSnapshot returns a reference to field skip_final_snapshot of aws_rds_cluster.
 func (rc rdsClusterAttributes) SkipFinalSnapshot() terra.BoolValue {
-	return terra.ReferenceBool(rc.ref.Append("skip_final_snapshot"))
+	return terra.ReferenceAsBool(rc.ref.Append("skip_final_snapshot"))
 }
 
+// SnapshotIdentifier returns a reference to field snapshot_identifier of aws_rds_cluster.
 func (rc rdsClusterAttributes) SnapshotIdentifier() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("snapshot_identifier"))
+	return terra.ReferenceAsString(rc.ref.Append("snapshot_identifier"))
 }
 
+// SourceRegion returns a reference to field source_region of aws_rds_cluster.
 func (rc rdsClusterAttributes) SourceRegion() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("source_region"))
+	return terra.ReferenceAsString(rc.ref.Append("source_region"))
 }
 
+// StorageEncrypted returns a reference to field storage_encrypted of aws_rds_cluster.
 func (rc rdsClusterAttributes) StorageEncrypted() terra.BoolValue {
-	return terra.ReferenceBool(rc.ref.Append("storage_encrypted"))
+	return terra.ReferenceAsBool(rc.ref.Append("storage_encrypted"))
 }
 
+// StorageType returns a reference to field storage_type of aws_rds_cluster.
 func (rc rdsClusterAttributes) StorageType() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("storage_type"))
+	return terra.ReferenceAsString(rc.ref.Append("storage_type"))
 }
 
+// Tags returns a reference to field tags of aws_rds_cluster.
 func (rc rdsClusterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_rds_cluster.
 func (rc rdsClusterAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](rc.ref.Append("tags_all"))
 }
 
+// VpcSecurityGroupIds returns a reference to field vpc_security_group_ids of aws_rds_cluster.
 func (rc rdsClusterAttributes) VpcSecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rc.ref.Append("vpc_security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](rc.ref.Append("vpc_security_group_ids"))
 }
 
 func (rc rdsClusterAttributes) RestoreToPointInTime() terra.ListValue[rdscluster.RestoreToPointInTimeAttributes] {
-	return terra.ReferenceList[rdscluster.RestoreToPointInTimeAttributes](rc.ref.Append("restore_to_point_in_time"))
+	return terra.ReferenceAsList[rdscluster.RestoreToPointInTimeAttributes](rc.ref.Append("restore_to_point_in_time"))
 }
 
 func (rc rdsClusterAttributes) S3Import() terra.ListValue[rdscluster.S3ImportAttributes] {
-	return terra.ReferenceList[rdscluster.S3ImportAttributes](rc.ref.Append("s3_import"))
+	return terra.ReferenceAsList[rdscluster.S3ImportAttributes](rc.ref.Append("s3_import"))
 }
 
 func (rc rdsClusterAttributes) ScalingConfiguration() terra.ListValue[rdscluster.ScalingConfigurationAttributes] {
-	return terra.ReferenceList[rdscluster.ScalingConfigurationAttributes](rc.ref.Append("scaling_configuration"))
+	return terra.ReferenceAsList[rdscluster.ScalingConfigurationAttributes](rc.ref.Append("scaling_configuration"))
 }
 
 func (rc rdsClusterAttributes) Serverlessv2ScalingConfiguration() terra.ListValue[rdscluster.Serverlessv2ScalingConfigurationAttributes] {
-	return terra.ReferenceList[rdscluster.Serverlessv2ScalingConfigurationAttributes](rc.ref.Append("serverlessv2_scaling_configuration"))
+	return terra.ReferenceAsList[rdscluster.Serverlessv2ScalingConfigurationAttributes](rc.ref.Append("serverlessv2_scaling_configuration"))
 }
 
 func (rc rdsClusterAttributes) Timeouts() rdscluster.TimeoutsAttributes {
-	return terra.ReferenceSingle[rdscluster.TimeoutsAttributes](rc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[rdscluster.TimeoutsAttributes](rc.ref.Append("timeouts"))
 }
 
 type rdsClusterState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewServiceDiscoveryPublicDnsNamespace creates a new instance of [ServiceDiscoveryPublicDnsNamespace].
 func NewServiceDiscoveryPublicDnsNamespace(name string, args ServiceDiscoveryPublicDnsNamespaceArgs) *ServiceDiscoveryPublicDnsNamespace {
 	return &ServiceDiscoveryPublicDnsNamespace{
 		Args: args,
@@ -18,28 +19,51 @@ func NewServiceDiscoveryPublicDnsNamespace(name string, args ServiceDiscoveryPub
 
 var _ terra.Resource = (*ServiceDiscoveryPublicDnsNamespace)(nil)
 
+// ServiceDiscoveryPublicDnsNamespace represents the Terraform resource aws_service_discovery_public_dns_namespace.
 type ServiceDiscoveryPublicDnsNamespace struct {
-	Name  string
-	Args  ServiceDiscoveryPublicDnsNamespaceArgs
-	state *serviceDiscoveryPublicDnsNamespaceState
+	Name      string
+	Args      ServiceDiscoveryPublicDnsNamespaceArgs
+	state     *serviceDiscoveryPublicDnsNamespaceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ServiceDiscoveryPublicDnsNamespace].
 func (sdpdn *ServiceDiscoveryPublicDnsNamespace) Type() string {
 	return "aws_service_discovery_public_dns_namespace"
 }
 
+// LocalName returns the local name for [ServiceDiscoveryPublicDnsNamespace].
 func (sdpdn *ServiceDiscoveryPublicDnsNamespace) LocalName() string {
 	return sdpdn.Name
 }
 
+// Configuration returns the configuration (args) for [ServiceDiscoveryPublicDnsNamespace].
 func (sdpdn *ServiceDiscoveryPublicDnsNamespace) Configuration() interface{} {
 	return sdpdn.Args
 }
 
+// DependOn is used for other resources to depend on [ServiceDiscoveryPublicDnsNamespace].
+func (sdpdn *ServiceDiscoveryPublicDnsNamespace) DependOn() terra.Reference {
+	return terra.ReferenceResource(sdpdn)
+}
+
+// Dependencies returns the list of resources [ServiceDiscoveryPublicDnsNamespace] depends_on.
+func (sdpdn *ServiceDiscoveryPublicDnsNamespace) Dependencies() terra.Dependencies {
+	return sdpdn.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ServiceDiscoveryPublicDnsNamespace].
+func (sdpdn *ServiceDiscoveryPublicDnsNamespace) LifecycleManagement() *terra.Lifecycle {
+	return sdpdn.Lifecycle
+}
+
+// Attributes returns the attributes for [ServiceDiscoveryPublicDnsNamespace].
 func (sdpdn *ServiceDiscoveryPublicDnsNamespace) Attributes() serviceDiscoveryPublicDnsNamespaceAttributes {
 	return serviceDiscoveryPublicDnsNamespaceAttributes{ref: terra.ReferenceResource(sdpdn)}
 }
 
+// ImportState imports the given attribute values into [ServiceDiscoveryPublicDnsNamespace]'s state.
 func (sdpdn *ServiceDiscoveryPublicDnsNamespace) ImportState(av io.Reader) error {
 	sdpdn.state = &serviceDiscoveryPublicDnsNamespaceState{}
 	if err := json.NewDecoder(av).Decode(sdpdn.state); err != nil {
@@ -48,10 +72,12 @@ func (sdpdn *ServiceDiscoveryPublicDnsNamespace) ImportState(av io.Reader) error
 	return nil
 }
 
+// State returns the state and a bool indicating if [ServiceDiscoveryPublicDnsNamespace] has state.
 func (sdpdn *ServiceDiscoveryPublicDnsNamespace) State() (*serviceDiscoveryPublicDnsNamespaceState, bool) {
 	return sdpdn.state, sdpdn.state != nil
 }
 
+// StateMust returns the state for [ServiceDiscoveryPublicDnsNamespace]. Panics if the state is nil.
 func (sdpdn *ServiceDiscoveryPublicDnsNamespace) StateMust() *serviceDiscoveryPublicDnsNamespaceState {
 	if sdpdn.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sdpdn.Type(), sdpdn.LocalName()))
@@ -59,10 +85,7 @@ func (sdpdn *ServiceDiscoveryPublicDnsNamespace) StateMust() *serviceDiscoveryPu
 	return sdpdn.state
 }
 
-func (sdpdn *ServiceDiscoveryPublicDnsNamespace) DependOn() terra.Reference {
-	return terra.ReferenceResource(sdpdn)
-}
-
+// ServiceDiscoveryPublicDnsNamespaceArgs contains the configurations for aws_service_discovery_public_dns_namespace.
 type ServiceDiscoveryPublicDnsNamespaceArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -74,39 +97,44 @@ type ServiceDiscoveryPublicDnsNamespaceArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that ServiceDiscoveryPublicDnsNamespace depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type serviceDiscoveryPublicDnsNamespaceAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_service_discovery_public_dns_namespace.
 func (sdpdn serviceDiscoveryPublicDnsNamespaceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sdpdn.ref.Append("arn"))
+	return terra.ReferenceAsString(sdpdn.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_service_discovery_public_dns_namespace.
 func (sdpdn serviceDiscoveryPublicDnsNamespaceAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sdpdn.ref.Append("description"))
+	return terra.ReferenceAsString(sdpdn.ref.Append("description"))
 }
 
+// HostedZone returns a reference to field hosted_zone of aws_service_discovery_public_dns_namespace.
 func (sdpdn serviceDiscoveryPublicDnsNamespaceAttributes) HostedZone() terra.StringValue {
-	return terra.ReferenceString(sdpdn.ref.Append("hosted_zone"))
+	return terra.ReferenceAsString(sdpdn.ref.Append("hosted_zone"))
 }
 
+// Id returns a reference to field id of aws_service_discovery_public_dns_namespace.
 func (sdpdn serviceDiscoveryPublicDnsNamespaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sdpdn.ref.Append("id"))
+	return terra.ReferenceAsString(sdpdn.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_service_discovery_public_dns_namespace.
 func (sdpdn serviceDiscoveryPublicDnsNamespaceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sdpdn.ref.Append("name"))
+	return terra.ReferenceAsString(sdpdn.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_service_discovery_public_dns_namespace.
 func (sdpdn serviceDiscoveryPublicDnsNamespaceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sdpdn.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sdpdn.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_service_discovery_public_dns_namespace.
 func (sdpdn serviceDiscoveryPublicDnsNamespaceAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sdpdn.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sdpdn.ref.Append("tags_all"))
 }
 
 type serviceDiscoveryPublicDnsNamespaceState struct {

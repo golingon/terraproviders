@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewOpensearchDomainSamlOptions creates a new instance of [OpensearchDomainSamlOptions].
 func NewOpensearchDomainSamlOptions(name string, args OpensearchDomainSamlOptionsArgs) *OpensearchDomainSamlOptions {
 	return &OpensearchDomainSamlOptions{
 		Args: args,
@@ -19,28 +20,51 @@ func NewOpensearchDomainSamlOptions(name string, args OpensearchDomainSamlOption
 
 var _ terra.Resource = (*OpensearchDomainSamlOptions)(nil)
 
+// OpensearchDomainSamlOptions represents the Terraform resource aws_opensearch_domain_saml_options.
 type OpensearchDomainSamlOptions struct {
-	Name  string
-	Args  OpensearchDomainSamlOptionsArgs
-	state *opensearchDomainSamlOptionsState
+	Name      string
+	Args      OpensearchDomainSamlOptionsArgs
+	state     *opensearchDomainSamlOptionsState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [OpensearchDomainSamlOptions].
 func (odso *OpensearchDomainSamlOptions) Type() string {
 	return "aws_opensearch_domain_saml_options"
 }
 
+// LocalName returns the local name for [OpensearchDomainSamlOptions].
 func (odso *OpensearchDomainSamlOptions) LocalName() string {
 	return odso.Name
 }
 
+// Configuration returns the configuration (args) for [OpensearchDomainSamlOptions].
 func (odso *OpensearchDomainSamlOptions) Configuration() interface{} {
 	return odso.Args
 }
 
+// DependOn is used for other resources to depend on [OpensearchDomainSamlOptions].
+func (odso *OpensearchDomainSamlOptions) DependOn() terra.Reference {
+	return terra.ReferenceResource(odso)
+}
+
+// Dependencies returns the list of resources [OpensearchDomainSamlOptions] depends_on.
+func (odso *OpensearchDomainSamlOptions) Dependencies() terra.Dependencies {
+	return odso.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [OpensearchDomainSamlOptions].
+func (odso *OpensearchDomainSamlOptions) LifecycleManagement() *terra.Lifecycle {
+	return odso.Lifecycle
+}
+
+// Attributes returns the attributes for [OpensearchDomainSamlOptions].
 func (odso *OpensearchDomainSamlOptions) Attributes() opensearchDomainSamlOptionsAttributes {
 	return opensearchDomainSamlOptionsAttributes{ref: terra.ReferenceResource(odso)}
 }
 
+// ImportState imports the given attribute values into [OpensearchDomainSamlOptions]'s state.
 func (odso *OpensearchDomainSamlOptions) ImportState(av io.Reader) error {
 	odso.state = &opensearchDomainSamlOptionsState{}
 	if err := json.NewDecoder(av).Decode(odso.state); err != nil {
@@ -49,10 +73,12 @@ func (odso *OpensearchDomainSamlOptions) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [OpensearchDomainSamlOptions] has state.
 func (odso *OpensearchDomainSamlOptions) State() (*opensearchDomainSamlOptionsState, bool) {
 	return odso.state, odso.state != nil
 }
 
+// StateMust returns the state for [OpensearchDomainSamlOptions]. Panics if the state is nil.
 func (odso *OpensearchDomainSamlOptions) StateMust() *opensearchDomainSamlOptionsState {
 	if odso.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", odso.Type(), odso.LocalName()))
@@ -60,10 +86,7 @@ func (odso *OpensearchDomainSamlOptions) StateMust() *opensearchDomainSamlOption
 	return odso.state
 }
 
-func (odso *OpensearchDomainSamlOptions) DependOn() terra.Reference {
-	return terra.ReferenceResource(odso)
-}
-
+// OpensearchDomainSamlOptionsArgs contains the configurations for aws_opensearch_domain_saml_options.
 type OpensearchDomainSamlOptionsArgs struct {
 	// DomainName: string, required
 	DomainName terra.StringValue `hcl:"domain_name,attr" validate:"required"`
@@ -73,27 +96,27 @@ type OpensearchDomainSamlOptionsArgs struct {
 	SamlOptions *opensearchdomainsamloptions.SamlOptions `hcl:"saml_options,block"`
 	// Timeouts: optional
 	Timeouts *opensearchdomainsamloptions.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that OpensearchDomainSamlOptions depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type opensearchDomainSamlOptionsAttributes struct {
 	ref terra.Reference
 }
 
+// DomainName returns a reference to field domain_name of aws_opensearch_domain_saml_options.
 func (odso opensearchDomainSamlOptionsAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(odso.ref.Append("domain_name"))
+	return terra.ReferenceAsString(odso.ref.Append("domain_name"))
 }
 
+// Id returns a reference to field id of aws_opensearch_domain_saml_options.
 func (odso opensearchDomainSamlOptionsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(odso.ref.Append("id"))
+	return terra.ReferenceAsString(odso.ref.Append("id"))
 }
 
 func (odso opensearchDomainSamlOptionsAttributes) SamlOptions() terra.ListValue[opensearchdomainsamloptions.SamlOptionsAttributes] {
-	return terra.ReferenceList[opensearchdomainsamloptions.SamlOptionsAttributes](odso.ref.Append("saml_options"))
+	return terra.ReferenceAsList[opensearchdomainsamloptions.SamlOptionsAttributes](odso.ref.Append("saml_options"))
 }
 
 func (odso opensearchDomainSamlOptionsAttributes) Timeouts() opensearchdomainsamloptions.TimeoutsAttributes {
-	return terra.ReferenceSingle[opensearchdomainsamloptions.TimeoutsAttributes](odso.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[opensearchdomainsamloptions.TimeoutsAttributes](odso.ref.Append("timeouts"))
 }
 
 type opensearchDomainSamlOptionsState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDxConnectionConfirmation creates a new instance of [DxConnectionConfirmation].
 func NewDxConnectionConfirmation(name string, args DxConnectionConfirmationArgs) *DxConnectionConfirmation {
 	return &DxConnectionConfirmation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDxConnectionConfirmation(name string, args DxConnectionConfirmationArgs)
 
 var _ terra.Resource = (*DxConnectionConfirmation)(nil)
 
+// DxConnectionConfirmation represents the Terraform resource aws_dx_connection_confirmation.
 type DxConnectionConfirmation struct {
-	Name  string
-	Args  DxConnectionConfirmationArgs
-	state *dxConnectionConfirmationState
+	Name      string
+	Args      DxConnectionConfirmationArgs
+	state     *dxConnectionConfirmationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DxConnectionConfirmation].
 func (dcc *DxConnectionConfirmation) Type() string {
 	return "aws_dx_connection_confirmation"
 }
 
+// LocalName returns the local name for [DxConnectionConfirmation].
 func (dcc *DxConnectionConfirmation) LocalName() string {
 	return dcc.Name
 }
 
+// Configuration returns the configuration (args) for [DxConnectionConfirmation].
 func (dcc *DxConnectionConfirmation) Configuration() interface{} {
 	return dcc.Args
 }
 
+// DependOn is used for other resources to depend on [DxConnectionConfirmation].
+func (dcc *DxConnectionConfirmation) DependOn() terra.Reference {
+	return terra.ReferenceResource(dcc)
+}
+
+// Dependencies returns the list of resources [DxConnectionConfirmation] depends_on.
+func (dcc *DxConnectionConfirmation) Dependencies() terra.Dependencies {
+	return dcc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DxConnectionConfirmation].
+func (dcc *DxConnectionConfirmation) LifecycleManagement() *terra.Lifecycle {
+	return dcc.Lifecycle
+}
+
+// Attributes returns the attributes for [DxConnectionConfirmation].
 func (dcc *DxConnectionConfirmation) Attributes() dxConnectionConfirmationAttributes {
 	return dxConnectionConfirmationAttributes{ref: terra.ReferenceResource(dcc)}
 }
 
+// ImportState imports the given attribute values into [DxConnectionConfirmation]'s state.
 func (dcc *DxConnectionConfirmation) ImportState(av io.Reader) error {
 	dcc.state = &dxConnectionConfirmationState{}
 	if err := json.NewDecoder(av).Decode(dcc.state); err != nil {
@@ -48,10 +72,12 @@ func (dcc *DxConnectionConfirmation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DxConnectionConfirmation] has state.
 func (dcc *DxConnectionConfirmation) State() (*dxConnectionConfirmationState, bool) {
 	return dcc.state, dcc.state != nil
 }
 
+// StateMust returns the state for [DxConnectionConfirmation]. Panics if the state is nil.
 func (dcc *DxConnectionConfirmation) StateMust() *dxConnectionConfirmationState {
 	if dcc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dcc.Type(), dcc.LocalName()))
@@ -59,28 +85,25 @@ func (dcc *DxConnectionConfirmation) StateMust() *dxConnectionConfirmationState 
 	return dcc.state
 }
 
-func (dcc *DxConnectionConfirmation) DependOn() terra.Reference {
-	return terra.ReferenceResource(dcc)
-}
-
+// DxConnectionConfirmationArgs contains the configurations for aws_dx_connection_confirmation.
 type DxConnectionConfirmationArgs struct {
 	// ConnectionId: string, required
 	ConnectionId terra.StringValue `hcl:"connection_id,attr" validate:"required"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that DxConnectionConfirmation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dxConnectionConfirmationAttributes struct {
 	ref terra.Reference
 }
 
+// ConnectionId returns a reference to field connection_id of aws_dx_connection_confirmation.
 func (dcc dxConnectionConfirmationAttributes) ConnectionId() terra.StringValue {
-	return terra.ReferenceString(dcc.ref.Append("connection_id"))
+	return terra.ReferenceAsString(dcc.ref.Append("connection_id"))
 }
 
+// Id returns a reference to field id of aws_dx_connection_confirmation.
 func (dcc dxConnectionConfirmationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dcc.ref.Append("id"))
+	return terra.ReferenceAsString(dcc.ref.Append("id"))
 }
 
 type dxConnectionConfirmationState struct {

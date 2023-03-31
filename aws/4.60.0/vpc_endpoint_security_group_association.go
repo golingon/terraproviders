@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewVpcEndpointSecurityGroupAssociation creates a new instance of [VpcEndpointSecurityGroupAssociation].
 func NewVpcEndpointSecurityGroupAssociation(name string, args VpcEndpointSecurityGroupAssociationArgs) *VpcEndpointSecurityGroupAssociation {
 	return &VpcEndpointSecurityGroupAssociation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewVpcEndpointSecurityGroupAssociation(name string, args VpcEndpointSecurit
 
 var _ terra.Resource = (*VpcEndpointSecurityGroupAssociation)(nil)
 
+// VpcEndpointSecurityGroupAssociation represents the Terraform resource aws_vpc_endpoint_security_group_association.
 type VpcEndpointSecurityGroupAssociation struct {
-	Name  string
-	Args  VpcEndpointSecurityGroupAssociationArgs
-	state *vpcEndpointSecurityGroupAssociationState
+	Name      string
+	Args      VpcEndpointSecurityGroupAssociationArgs
+	state     *vpcEndpointSecurityGroupAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VpcEndpointSecurityGroupAssociation].
 func (vesga *VpcEndpointSecurityGroupAssociation) Type() string {
 	return "aws_vpc_endpoint_security_group_association"
 }
 
+// LocalName returns the local name for [VpcEndpointSecurityGroupAssociation].
 func (vesga *VpcEndpointSecurityGroupAssociation) LocalName() string {
 	return vesga.Name
 }
 
+// Configuration returns the configuration (args) for [VpcEndpointSecurityGroupAssociation].
 func (vesga *VpcEndpointSecurityGroupAssociation) Configuration() interface{} {
 	return vesga.Args
 }
 
+// DependOn is used for other resources to depend on [VpcEndpointSecurityGroupAssociation].
+func (vesga *VpcEndpointSecurityGroupAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(vesga)
+}
+
+// Dependencies returns the list of resources [VpcEndpointSecurityGroupAssociation] depends_on.
+func (vesga *VpcEndpointSecurityGroupAssociation) Dependencies() terra.Dependencies {
+	return vesga.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VpcEndpointSecurityGroupAssociation].
+func (vesga *VpcEndpointSecurityGroupAssociation) LifecycleManagement() *terra.Lifecycle {
+	return vesga.Lifecycle
+}
+
+// Attributes returns the attributes for [VpcEndpointSecurityGroupAssociation].
 func (vesga *VpcEndpointSecurityGroupAssociation) Attributes() vpcEndpointSecurityGroupAssociationAttributes {
 	return vpcEndpointSecurityGroupAssociationAttributes{ref: terra.ReferenceResource(vesga)}
 }
 
+// ImportState imports the given attribute values into [VpcEndpointSecurityGroupAssociation]'s state.
 func (vesga *VpcEndpointSecurityGroupAssociation) ImportState(av io.Reader) error {
 	vesga.state = &vpcEndpointSecurityGroupAssociationState{}
 	if err := json.NewDecoder(av).Decode(vesga.state); err != nil {
@@ -48,10 +72,12 @@ func (vesga *VpcEndpointSecurityGroupAssociation) ImportState(av io.Reader) erro
 	return nil
 }
 
+// State returns the state and a bool indicating if [VpcEndpointSecurityGroupAssociation] has state.
 func (vesga *VpcEndpointSecurityGroupAssociation) State() (*vpcEndpointSecurityGroupAssociationState, bool) {
 	return vesga.state, vesga.state != nil
 }
 
+// StateMust returns the state for [VpcEndpointSecurityGroupAssociation]. Panics if the state is nil.
 func (vesga *VpcEndpointSecurityGroupAssociation) StateMust() *vpcEndpointSecurityGroupAssociationState {
 	if vesga.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vesga.Type(), vesga.LocalName()))
@@ -59,10 +85,7 @@ func (vesga *VpcEndpointSecurityGroupAssociation) StateMust() *vpcEndpointSecuri
 	return vesga.state
 }
 
-func (vesga *VpcEndpointSecurityGroupAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(vesga)
-}
-
+// VpcEndpointSecurityGroupAssociationArgs contains the configurations for aws_vpc_endpoint_security_group_association.
 type VpcEndpointSecurityGroupAssociationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -72,27 +95,29 @@ type VpcEndpointSecurityGroupAssociationArgs struct {
 	SecurityGroupId terra.StringValue `hcl:"security_group_id,attr" validate:"required"`
 	// VpcEndpointId: string, required
 	VpcEndpointId terra.StringValue `hcl:"vpc_endpoint_id,attr" validate:"required"`
-	// DependsOn contains resources that VpcEndpointSecurityGroupAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type vpcEndpointSecurityGroupAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_vpc_endpoint_security_group_association.
 func (vesga vpcEndpointSecurityGroupAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vesga.ref.Append("id"))
+	return terra.ReferenceAsString(vesga.ref.Append("id"))
 }
 
+// ReplaceDefaultAssociation returns a reference to field replace_default_association of aws_vpc_endpoint_security_group_association.
 func (vesga vpcEndpointSecurityGroupAssociationAttributes) ReplaceDefaultAssociation() terra.BoolValue {
-	return terra.ReferenceBool(vesga.ref.Append("replace_default_association"))
+	return terra.ReferenceAsBool(vesga.ref.Append("replace_default_association"))
 }
 
+// SecurityGroupId returns a reference to field security_group_id of aws_vpc_endpoint_security_group_association.
 func (vesga vpcEndpointSecurityGroupAssociationAttributes) SecurityGroupId() terra.StringValue {
-	return terra.ReferenceString(vesga.ref.Append("security_group_id"))
+	return terra.ReferenceAsString(vesga.ref.Append("security_group_id"))
 }
 
+// VpcEndpointId returns a reference to field vpc_endpoint_id of aws_vpc_endpoint_security_group_association.
 func (vesga vpcEndpointSecurityGroupAssociationAttributes) VpcEndpointId() terra.StringValue {
-	return terra.ReferenceString(vesga.ref.Append("vpc_endpoint_id"))
+	return terra.ReferenceAsString(vesga.ref.Append("vpc_endpoint_id"))
 }
 
 type vpcEndpointSecurityGroupAssociationState struct {

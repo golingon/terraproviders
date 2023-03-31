@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCodebuildReportGroup creates a new instance of [CodebuildReportGroup].
 func NewCodebuildReportGroup(name string, args CodebuildReportGroupArgs) *CodebuildReportGroup {
 	return &CodebuildReportGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCodebuildReportGroup(name string, args CodebuildReportGroupArgs) *Codebu
 
 var _ terra.Resource = (*CodebuildReportGroup)(nil)
 
+// CodebuildReportGroup represents the Terraform resource aws_codebuild_report_group.
 type CodebuildReportGroup struct {
-	Name  string
-	Args  CodebuildReportGroupArgs
-	state *codebuildReportGroupState
+	Name      string
+	Args      CodebuildReportGroupArgs
+	state     *codebuildReportGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CodebuildReportGroup].
 func (crg *CodebuildReportGroup) Type() string {
 	return "aws_codebuild_report_group"
 }
 
+// LocalName returns the local name for [CodebuildReportGroup].
 func (crg *CodebuildReportGroup) LocalName() string {
 	return crg.Name
 }
 
+// Configuration returns the configuration (args) for [CodebuildReportGroup].
 func (crg *CodebuildReportGroup) Configuration() interface{} {
 	return crg.Args
 }
 
+// DependOn is used for other resources to depend on [CodebuildReportGroup].
+func (crg *CodebuildReportGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(crg)
+}
+
+// Dependencies returns the list of resources [CodebuildReportGroup] depends_on.
+func (crg *CodebuildReportGroup) Dependencies() terra.Dependencies {
+	return crg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CodebuildReportGroup].
+func (crg *CodebuildReportGroup) LifecycleManagement() *terra.Lifecycle {
+	return crg.Lifecycle
+}
+
+// Attributes returns the attributes for [CodebuildReportGroup].
 func (crg *CodebuildReportGroup) Attributes() codebuildReportGroupAttributes {
 	return codebuildReportGroupAttributes{ref: terra.ReferenceResource(crg)}
 }
 
+// ImportState imports the given attribute values into [CodebuildReportGroup]'s state.
 func (crg *CodebuildReportGroup) ImportState(av io.Reader) error {
 	crg.state = &codebuildReportGroupState{}
 	if err := json.NewDecoder(av).Decode(crg.state); err != nil {
@@ -49,10 +73,12 @@ func (crg *CodebuildReportGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CodebuildReportGroup] has state.
 func (crg *CodebuildReportGroup) State() (*codebuildReportGroupState, bool) {
 	return crg.state, crg.state != nil
 }
 
+// StateMust returns the state for [CodebuildReportGroup]. Panics if the state is nil.
 func (crg *CodebuildReportGroup) StateMust() *codebuildReportGroupState {
 	if crg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", crg.Type(), crg.LocalName()))
@@ -60,10 +86,7 @@ func (crg *CodebuildReportGroup) StateMust() *codebuildReportGroupState {
 	return crg.state
 }
 
-func (crg *CodebuildReportGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(crg)
-}
-
+// CodebuildReportGroupArgs contains the configurations for aws_codebuild_report_group.
 type CodebuildReportGroupArgs struct {
 	// DeleteReports: bool, optional
 	DeleteReports terra.BoolValue `hcl:"delete_reports,attr"`
@@ -79,47 +102,53 @@ type CodebuildReportGroupArgs struct {
 	Type terra.StringValue `hcl:"type,attr" validate:"required"`
 	// ExportConfig: required
 	ExportConfig *codebuildreportgroup.ExportConfig `hcl:"export_config,block" validate:"required"`
-	// DependsOn contains resources that CodebuildReportGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type codebuildReportGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_codebuild_report_group.
 func (crg codebuildReportGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(crg.ref.Append("arn"))
+	return terra.ReferenceAsString(crg.ref.Append("arn"))
 }
 
+// Created returns a reference to field created of aws_codebuild_report_group.
 func (crg codebuildReportGroupAttributes) Created() terra.StringValue {
-	return terra.ReferenceString(crg.ref.Append("created"))
+	return terra.ReferenceAsString(crg.ref.Append("created"))
 }
 
+// DeleteReports returns a reference to field delete_reports of aws_codebuild_report_group.
 func (crg codebuildReportGroupAttributes) DeleteReports() terra.BoolValue {
-	return terra.ReferenceBool(crg.ref.Append("delete_reports"))
+	return terra.ReferenceAsBool(crg.ref.Append("delete_reports"))
 }
 
+// Id returns a reference to field id of aws_codebuild_report_group.
 func (crg codebuildReportGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crg.ref.Append("id"))
+	return terra.ReferenceAsString(crg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_codebuild_report_group.
 func (crg codebuildReportGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(crg.ref.Append("name"))
+	return terra.ReferenceAsString(crg.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_codebuild_report_group.
 func (crg codebuildReportGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](crg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](crg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_codebuild_report_group.
 func (crg codebuildReportGroupAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](crg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](crg.ref.Append("tags_all"))
 }
 
+// Type returns a reference to field type of aws_codebuild_report_group.
 func (crg codebuildReportGroupAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(crg.ref.Append("type"))
+	return terra.ReferenceAsString(crg.ref.Append("type"))
 }
 
 func (crg codebuildReportGroupAttributes) ExportConfig() terra.ListValue[codebuildreportgroup.ExportConfigAttributes] {
-	return terra.ReferenceList[codebuildreportgroup.ExportConfigAttributes](crg.ref.Append("export_config"))
+	return terra.ReferenceAsList[codebuildreportgroup.ExportConfigAttributes](crg.ref.Append("export_config"))
 }
 
 type codebuildReportGroupState struct {

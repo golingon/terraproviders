@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewGlacierVault creates a new instance of [GlacierVault].
 func NewGlacierVault(name string, args GlacierVaultArgs) *GlacierVault {
 	return &GlacierVault{
 		Args: args,
@@ -19,28 +20,51 @@ func NewGlacierVault(name string, args GlacierVaultArgs) *GlacierVault {
 
 var _ terra.Resource = (*GlacierVault)(nil)
 
+// GlacierVault represents the Terraform resource aws_glacier_vault.
 type GlacierVault struct {
-	Name  string
-	Args  GlacierVaultArgs
-	state *glacierVaultState
+	Name      string
+	Args      GlacierVaultArgs
+	state     *glacierVaultState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GlacierVault].
 func (gv *GlacierVault) Type() string {
 	return "aws_glacier_vault"
 }
 
+// LocalName returns the local name for [GlacierVault].
 func (gv *GlacierVault) LocalName() string {
 	return gv.Name
 }
 
+// Configuration returns the configuration (args) for [GlacierVault].
 func (gv *GlacierVault) Configuration() interface{} {
 	return gv.Args
 }
 
+// DependOn is used for other resources to depend on [GlacierVault].
+func (gv *GlacierVault) DependOn() terra.Reference {
+	return terra.ReferenceResource(gv)
+}
+
+// Dependencies returns the list of resources [GlacierVault] depends_on.
+func (gv *GlacierVault) Dependencies() terra.Dependencies {
+	return gv.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GlacierVault].
+func (gv *GlacierVault) LifecycleManagement() *terra.Lifecycle {
+	return gv.Lifecycle
+}
+
+// Attributes returns the attributes for [GlacierVault].
 func (gv *GlacierVault) Attributes() glacierVaultAttributes {
 	return glacierVaultAttributes{ref: terra.ReferenceResource(gv)}
 }
 
+// ImportState imports the given attribute values into [GlacierVault]'s state.
 func (gv *GlacierVault) ImportState(av io.Reader) error {
 	gv.state = &glacierVaultState{}
 	if err := json.NewDecoder(av).Decode(gv.state); err != nil {
@@ -49,10 +73,12 @@ func (gv *GlacierVault) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GlacierVault] has state.
 func (gv *GlacierVault) State() (*glacierVaultState, bool) {
 	return gv.state, gv.state != nil
 }
 
+// StateMust returns the state for [GlacierVault]. Panics if the state is nil.
 func (gv *GlacierVault) StateMust() *glacierVaultState {
 	if gv.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", gv.Type(), gv.LocalName()))
@@ -60,10 +86,7 @@ func (gv *GlacierVault) StateMust() *glacierVaultState {
 	return gv.state
 }
 
-func (gv *GlacierVault) DependOn() terra.Reference {
-	return terra.ReferenceResource(gv)
-}
-
+// GlacierVaultArgs contains the configurations for aws_glacier_vault.
 type GlacierVaultArgs struct {
 	// AccessPolicy: string, optional
 	AccessPolicy terra.StringValue `hcl:"access_policy,attr"`
@@ -77,43 +100,48 @@ type GlacierVaultArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Notification: optional
 	Notification *glaciervault.Notification `hcl:"notification,block"`
-	// DependsOn contains resources that GlacierVault depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type glacierVaultAttributes struct {
 	ref terra.Reference
 }
 
+// AccessPolicy returns a reference to field access_policy of aws_glacier_vault.
 func (gv glacierVaultAttributes) AccessPolicy() terra.StringValue {
-	return terra.ReferenceString(gv.ref.Append("access_policy"))
+	return terra.ReferenceAsString(gv.ref.Append("access_policy"))
 }
 
+// Arn returns a reference to field arn of aws_glacier_vault.
 func (gv glacierVaultAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(gv.ref.Append("arn"))
+	return terra.ReferenceAsString(gv.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_glacier_vault.
 func (gv glacierVaultAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gv.ref.Append("id"))
+	return terra.ReferenceAsString(gv.ref.Append("id"))
 }
 
+// Location returns a reference to field location of aws_glacier_vault.
 func (gv glacierVaultAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(gv.ref.Append("location"))
+	return terra.ReferenceAsString(gv.ref.Append("location"))
 }
 
+// Name returns a reference to field name of aws_glacier_vault.
 func (gv glacierVaultAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(gv.ref.Append("name"))
+	return terra.ReferenceAsString(gv.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_glacier_vault.
 func (gv glacierVaultAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gv.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](gv.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_glacier_vault.
 func (gv glacierVaultAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gv.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](gv.ref.Append("tags_all"))
 }
 
 func (gv glacierVaultAttributes) Notification() terra.ListValue[glaciervault.NotificationAttributes] {
-	return terra.ReferenceList[glaciervault.NotificationAttributes](gv.ref.Append("notification"))
+	return terra.ReferenceAsList[glaciervault.NotificationAttributes](gv.ref.Append("notification"))
 }
 
 type glacierVaultState struct {

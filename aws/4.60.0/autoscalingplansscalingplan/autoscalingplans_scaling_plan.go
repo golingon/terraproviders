@@ -126,11 +126,11 @@ func (as ApplicationSourceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (as ApplicationSourceAttributes) CloudformationStackArn() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("cloudformation_stack_arn"))
+	return terra.ReferenceAsString(as.ref.Append("cloudformation_stack_arn"))
 }
 
 func (as ApplicationSourceAttributes) TagFilter() terra.SetValue[TagFilterAttributes] {
-	return terra.ReferenceSet[TagFilterAttributes](as.ref.Append("tag_filter"))
+	return terra.ReferenceAsSet[TagFilterAttributes](as.ref.Append("tag_filter"))
 }
 
 type TagFilterAttributes struct {
@@ -150,11 +150,11 @@ func (tf TagFilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tf TagFilterAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(tf.ref.Append("key"))
+	return terra.ReferenceAsString(tf.ref.Append("key"))
 }
 
 func (tf TagFilterAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](tf.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](tf.ref.Append("values"))
 }
 
 type ScalingInstructionAttributes struct {
@@ -174,59 +174,59 @@ func (si ScalingInstructionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (si ScalingInstructionAttributes) DisableDynamicScaling() terra.BoolValue {
-	return terra.ReferenceBool(si.ref.Append("disable_dynamic_scaling"))
+	return terra.ReferenceAsBool(si.ref.Append("disable_dynamic_scaling"))
 }
 
 func (si ScalingInstructionAttributes) MaxCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(si.ref.Append("max_capacity"))
+	return terra.ReferenceAsNumber(si.ref.Append("max_capacity"))
 }
 
 func (si ScalingInstructionAttributes) MinCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(si.ref.Append("min_capacity"))
+	return terra.ReferenceAsNumber(si.ref.Append("min_capacity"))
 }
 
 func (si ScalingInstructionAttributes) PredictiveScalingMaxCapacityBehavior() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("predictive_scaling_max_capacity_behavior"))
+	return terra.ReferenceAsString(si.ref.Append("predictive_scaling_max_capacity_behavior"))
 }
 
 func (si ScalingInstructionAttributes) PredictiveScalingMaxCapacityBuffer() terra.NumberValue {
-	return terra.ReferenceNumber(si.ref.Append("predictive_scaling_max_capacity_buffer"))
+	return terra.ReferenceAsNumber(si.ref.Append("predictive_scaling_max_capacity_buffer"))
 }
 
 func (si ScalingInstructionAttributes) PredictiveScalingMode() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("predictive_scaling_mode"))
+	return terra.ReferenceAsString(si.ref.Append("predictive_scaling_mode"))
 }
 
 func (si ScalingInstructionAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("resource_id"))
+	return terra.ReferenceAsString(si.ref.Append("resource_id"))
 }
 
 func (si ScalingInstructionAttributes) ScalableDimension() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("scalable_dimension"))
+	return terra.ReferenceAsString(si.ref.Append("scalable_dimension"))
 }
 
 func (si ScalingInstructionAttributes) ScalingPolicyUpdateBehavior() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("scaling_policy_update_behavior"))
+	return terra.ReferenceAsString(si.ref.Append("scaling_policy_update_behavior"))
 }
 
 func (si ScalingInstructionAttributes) ScheduledActionBufferTime() terra.NumberValue {
-	return terra.ReferenceNumber(si.ref.Append("scheduled_action_buffer_time"))
+	return terra.ReferenceAsNumber(si.ref.Append("scheduled_action_buffer_time"))
 }
 
 func (si ScalingInstructionAttributes) ServiceNamespace() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("service_namespace"))
+	return terra.ReferenceAsString(si.ref.Append("service_namespace"))
 }
 
 func (si ScalingInstructionAttributes) CustomizedLoadMetricSpecification() terra.ListValue[CustomizedLoadMetricSpecificationAttributes] {
-	return terra.ReferenceList[CustomizedLoadMetricSpecificationAttributes](si.ref.Append("customized_load_metric_specification"))
+	return terra.ReferenceAsList[CustomizedLoadMetricSpecificationAttributes](si.ref.Append("customized_load_metric_specification"))
 }
 
 func (si ScalingInstructionAttributes) PredefinedLoadMetricSpecification() terra.ListValue[PredefinedLoadMetricSpecificationAttributes] {
-	return terra.ReferenceList[PredefinedLoadMetricSpecificationAttributes](si.ref.Append("predefined_load_metric_specification"))
+	return terra.ReferenceAsList[PredefinedLoadMetricSpecificationAttributes](si.ref.Append("predefined_load_metric_specification"))
 }
 
 func (si ScalingInstructionAttributes) TargetTrackingConfiguration() terra.SetValue[TargetTrackingConfigurationAttributes] {
-	return terra.ReferenceSet[TargetTrackingConfigurationAttributes](si.ref.Append("target_tracking_configuration"))
+	return terra.ReferenceAsSet[TargetTrackingConfigurationAttributes](si.ref.Append("target_tracking_configuration"))
 }
 
 type CustomizedLoadMetricSpecificationAttributes struct {
@@ -246,23 +246,23 @@ func (clms CustomizedLoadMetricSpecificationAttributes) InternalTokens() hclwrit
 }
 
 func (clms CustomizedLoadMetricSpecificationAttributes) Dimensions() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](clms.ref.Append("dimensions"))
+	return terra.ReferenceAsMap[terra.StringValue](clms.ref.Append("dimensions"))
 }
 
 func (clms CustomizedLoadMetricSpecificationAttributes) MetricName() terra.StringValue {
-	return terra.ReferenceString(clms.ref.Append("metric_name"))
+	return terra.ReferenceAsString(clms.ref.Append("metric_name"))
 }
 
 func (clms CustomizedLoadMetricSpecificationAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(clms.ref.Append("namespace"))
+	return terra.ReferenceAsString(clms.ref.Append("namespace"))
 }
 
 func (clms CustomizedLoadMetricSpecificationAttributes) Statistic() terra.StringValue {
-	return terra.ReferenceString(clms.ref.Append("statistic"))
+	return terra.ReferenceAsString(clms.ref.Append("statistic"))
 }
 
 func (clms CustomizedLoadMetricSpecificationAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(clms.ref.Append("unit"))
+	return terra.ReferenceAsString(clms.ref.Append("unit"))
 }
 
 type PredefinedLoadMetricSpecificationAttributes struct {
@@ -282,11 +282,11 @@ func (plms PredefinedLoadMetricSpecificationAttributes) InternalTokens() hclwrit
 }
 
 func (plms PredefinedLoadMetricSpecificationAttributes) PredefinedLoadMetricType() terra.StringValue {
-	return terra.ReferenceString(plms.ref.Append("predefined_load_metric_type"))
+	return terra.ReferenceAsString(plms.ref.Append("predefined_load_metric_type"))
 }
 
 func (plms PredefinedLoadMetricSpecificationAttributes) ResourceLabel() terra.StringValue {
-	return terra.ReferenceString(plms.ref.Append("resource_label"))
+	return terra.ReferenceAsString(plms.ref.Append("resource_label"))
 }
 
 type TargetTrackingConfigurationAttributes struct {
@@ -306,31 +306,31 @@ func (ttc TargetTrackingConfigurationAttributes) InternalTokens() hclwrite.Token
 }
 
 func (ttc TargetTrackingConfigurationAttributes) DisableScaleIn() terra.BoolValue {
-	return terra.ReferenceBool(ttc.ref.Append("disable_scale_in"))
+	return terra.ReferenceAsBool(ttc.ref.Append("disable_scale_in"))
 }
 
 func (ttc TargetTrackingConfigurationAttributes) EstimatedInstanceWarmup() terra.NumberValue {
-	return terra.ReferenceNumber(ttc.ref.Append("estimated_instance_warmup"))
+	return terra.ReferenceAsNumber(ttc.ref.Append("estimated_instance_warmup"))
 }
 
 func (ttc TargetTrackingConfigurationAttributes) ScaleInCooldown() terra.NumberValue {
-	return terra.ReferenceNumber(ttc.ref.Append("scale_in_cooldown"))
+	return terra.ReferenceAsNumber(ttc.ref.Append("scale_in_cooldown"))
 }
 
 func (ttc TargetTrackingConfigurationAttributes) ScaleOutCooldown() terra.NumberValue {
-	return terra.ReferenceNumber(ttc.ref.Append("scale_out_cooldown"))
+	return terra.ReferenceAsNumber(ttc.ref.Append("scale_out_cooldown"))
 }
 
 func (ttc TargetTrackingConfigurationAttributes) TargetValue() terra.NumberValue {
-	return terra.ReferenceNumber(ttc.ref.Append("target_value"))
+	return terra.ReferenceAsNumber(ttc.ref.Append("target_value"))
 }
 
 func (ttc TargetTrackingConfigurationAttributes) CustomizedScalingMetricSpecification() terra.ListValue[CustomizedScalingMetricSpecificationAttributes] {
-	return terra.ReferenceList[CustomizedScalingMetricSpecificationAttributes](ttc.ref.Append("customized_scaling_metric_specification"))
+	return terra.ReferenceAsList[CustomizedScalingMetricSpecificationAttributes](ttc.ref.Append("customized_scaling_metric_specification"))
 }
 
 func (ttc TargetTrackingConfigurationAttributes) PredefinedScalingMetricSpecification() terra.ListValue[PredefinedScalingMetricSpecificationAttributes] {
-	return terra.ReferenceList[PredefinedScalingMetricSpecificationAttributes](ttc.ref.Append("predefined_scaling_metric_specification"))
+	return terra.ReferenceAsList[PredefinedScalingMetricSpecificationAttributes](ttc.ref.Append("predefined_scaling_metric_specification"))
 }
 
 type CustomizedScalingMetricSpecificationAttributes struct {
@@ -350,23 +350,23 @@ func (csms CustomizedScalingMetricSpecificationAttributes) InternalTokens() hclw
 }
 
 func (csms CustomizedScalingMetricSpecificationAttributes) Dimensions() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](csms.ref.Append("dimensions"))
+	return terra.ReferenceAsMap[terra.StringValue](csms.ref.Append("dimensions"))
 }
 
 func (csms CustomizedScalingMetricSpecificationAttributes) MetricName() terra.StringValue {
-	return terra.ReferenceString(csms.ref.Append("metric_name"))
+	return terra.ReferenceAsString(csms.ref.Append("metric_name"))
 }
 
 func (csms CustomizedScalingMetricSpecificationAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(csms.ref.Append("namespace"))
+	return terra.ReferenceAsString(csms.ref.Append("namespace"))
 }
 
 func (csms CustomizedScalingMetricSpecificationAttributes) Statistic() terra.StringValue {
-	return terra.ReferenceString(csms.ref.Append("statistic"))
+	return terra.ReferenceAsString(csms.ref.Append("statistic"))
 }
 
 func (csms CustomizedScalingMetricSpecificationAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(csms.ref.Append("unit"))
+	return terra.ReferenceAsString(csms.ref.Append("unit"))
 }
 
 type PredefinedScalingMetricSpecificationAttributes struct {
@@ -386,11 +386,11 @@ func (psms PredefinedScalingMetricSpecificationAttributes) InternalTokens() hclw
 }
 
 func (psms PredefinedScalingMetricSpecificationAttributes) PredefinedScalingMetricType() terra.StringValue {
-	return terra.ReferenceString(psms.ref.Append("predefined_scaling_metric_type"))
+	return terra.ReferenceAsString(psms.ref.Append("predefined_scaling_metric_type"))
 }
 
 func (psms PredefinedScalingMetricSpecificationAttributes) ResourceLabel() terra.StringValue {
-	return terra.ReferenceString(psms.ref.Append("resource_label"))
+	return terra.ReferenceAsString(psms.ref.Append("resource_label"))
 }
 
 type ApplicationSourceState struct {

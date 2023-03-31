@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEcrRepository creates a new instance of [EcrRepository].
 func NewEcrRepository(name string, args EcrRepositoryArgs) *EcrRepository {
 	return &EcrRepository{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEcrRepository(name string, args EcrRepositoryArgs) *EcrRepository {
 
 var _ terra.Resource = (*EcrRepository)(nil)
 
+// EcrRepository represents the Terraform resource aws_ecr_repository.
 type EcrRepository struct {
-	Name  string
-	Args  EcrRepositoryArgs
-	state *ecrRepositoryState
+	Name      string
+	Args      EcrRepositoryArgs
+	state     *ecrRepositoryState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EcrRepository].
 func (er *EcrRepository) Type() string {
 	return "aws_ecr_repository"
 }
 
+// LocalName returns the local name for [EcrRepository].
 func (er *EcrRepository) LocalName() string {
 	return er.Name
 }
 
+// Configuration returns the configuration (args) for [EcrRepository].
 func (er *EcrRepository) Configuration() interface{} {
 	return er.Args
 }
 
+// DependOn is used for other resources to depend on [EcrRepository].
+func (er *EcrRepository) DependOn() terra.Reference {
+	return terra.ReferenceResource(er)
+}
+
+// Dependencies returns the list of resources [EcrRepository] depends_on.
+func (er *EcrRepository) Dependencies() terra.Dependencies {
+	return er.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EcrRepository].
+func (er *EcrRepository) LifecycleManagement() *terra.Lifecycle {
+	return er.Lifecycle
+}
+
+// Attributes returns the attributes for [EcrRepository].
 func (er *EcrRepository) Attributes() ecrRepositoryAttributes {
 	return ecrRepositoryAttributes{ref: terra.ReferenceResource(er)}
 }
 
+// ImportState imports the given attribute values into [EcrRepository]'s state.
 func (er *EcrRepository) ImportState(av io.Reader) error {
 	er.state = &ecrRepositoryState{}
 	if err := json.NewDecoder(av).Decode(er.state); err != nil {
@@ -49,10 +73,12 @@ func (er *EcrRepository) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EcrRepository] has state.
 func (er *EcrRepository) State() (*ecrRepositoryState, bool) {
 	return er.state, er.state != nil
 }
 
+// StateMust returns the state for [EcrRepository]. Panics if the state is nil.
 func (er *EcrRepository) StateMust() *ecrRepositoryState {
 	if er.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", er.Type(), er.LocalName()))
@@ -60,10 +86,7 @@ func (er *EcrRepository) StateMust() *ecrRepositoryState {
 	return er.state
 }
 
-func (er *EcrRepository) DependOn() terra.Reference {
-	return terra.ReferenceResource(er)
-}
-
+// EcrRepositoryArgs contains the configurations for aws_ecr_repository.
 type EcrRepositoryArgs struct {
 	// ForceDelete: bool, optional
 	ForceDelete terra.BoolValue `hcl:"force_delete,attr"`
@@ -83,59 +106,66 @@ type EcrRepositoryArgs struct {
 	ImageScanningConfiguration *ecrrepository.ImageScanningConfiguration `hcl:"image_scanning_configuration,block"`
 	// Timeouts: optional
 	Timeouts *ecrrepository.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that EcrRepository depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ecrRepositoryAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ecr_repository.
 func (er ecrRepositoryAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(er.ref.Append("arn"))
+	return terra.ReferenceAsString(er.ref.Append("arn"))
 }
 
+// ForceDelete returns a reference to field force_delete of aws_ecr_repository.
 func (er ecrRepositoryAttributes) ForceDelete() terra.BoolValue {
-	return terra.ReferenceBool(er.ref.Append("force_delete"))
+	return terra.ReferenceAsBool(er.ref.Append("force_delete"))
 }
 
+// Id returns a reference to field id of aws_ecr_repository.
 func (er ecrRepositoryAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(er.ref.Append("id"))
+	return terra.ReferenceAsString(er.ref.Append("id"))
 }
 
+// ImageTagMutability returns a reference to field image_tag_mutability of aws_ecr_repository.
 func (er ecrRepositoryAttributes) ImageTagMutability() terra.StringValue {
-	return terra.ReferenceString(er.ref.Append("image_tag_mutability"))
+	return terra.ReferenceAsString(er.ref.Append("image_tag_mutability"))
 }
 
+// Name returns a reference to field name of aws_ecr_repository.
 func (er ecrRepositoryAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(er.ref.Append("name"))
+	return terra.ReferenceAsString(er.ref.Append("name"))
 }
 
+// RegistryId returns a reference to field registry_id of aws_ecr_repository.
 func (er ecrRepositoryAttributes) RegistryId() terra.StringValue {
-	return terra.ReferenceString(er.ref.Append("registry_id"))
+	return terra.ReferenceAsString(er.ref.Append("registry_id"))
 }
 
+// RepositoryUrl returns a reference to field repository_url of aws_ecr_repository.
 func (er ecrRepositoryAttributes) RepositoryUrl() terra.StringValue {
-	return terra.ReferenceString(er.ref.Append("repository_url"))
+	return terra.ReferenceAsString(er.ref.Append("repository_url"))
 }
 
+// Tags returns a reference to field tags of aws_ecr_repository.
 func (er ecrRepositoryAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](er.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](er.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_ecr_repository.
 func (er ecrRepositoryAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](er.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](er.ref.Append("tags_all"))
 }
 
 func (er ecrRepositoryAttributes) EncryptionConfiguration() terra.ListValue[ecrrepository.EncryptionConfigurationAttributes] {
-	return terra.ReferenceList[ecrrepository.EncryptionConfigurationAttributes](er.ref.Append("encryption_configuration"))
+	return terra.ReferenceAsList[ecrrepository.EncryptionConfigurationAttributes](er.ref.Append("encryption_configuration"))
 }
 
 func (er ecrRepositoryAttributes) ImageScanningConfiguration() terra.ListValue[ecrrepository.ImageScanningConfigurationAttributes] {
-	return terra.ReferenceList[ecrrepository.ImageScanningConfigurationAttributes](er.ref.Append("image_scanning_configuration"))
+	return terra.ReferenceAsList[ecrrepository.ImageScanningConfigurationAttributes](er.ref.Append("image_scanning_configuration"))
 }
 
 func (er ecrRepositoryAttributes) Timeouts() ecrrepository.TimeoutsAttributes {
-	return terra.ReferenceSingle[ecrrepository.TimeoutsAttributes](er.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[ecrrepository.TimeoutsAttributes](er.ref.Append("timeouts"))
 }
 
 type ecrRepositoryState struct {

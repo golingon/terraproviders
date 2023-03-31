@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewLambdaLayerVersionPermission creates a new instance of [LambdaLayerVersionPermission].
 func NewLambdaLayerVersionPermission(name string, args LambdaLayerVersionPermissionArgs) *LambdaLayerVersionPermission {
 	return &LambdaLayerVersionPermission{
 		Args: args,
@@ -18,28 +19,51 @@ func NewLambdaLayerVersionPermission(name string, args LambdaLayerVersionPermiss
 
 var _ terra.Resource = (*LambdaLayerVersionPermission)(nil)
 
+// LambdaLayerVersionPermission represents the Terraform resource aws_lambda_layer_version_permission.
 type LambdaLayerVersionPermission struct {
-	Name  string
-	Args  LambdaLayerVersionPermissionArgs
-	state *lambdaLayerVersionPermissionState
+	Name      string
+	Args      LambdaLayerVersionPermissionArgs
+	state     *lambdaLayerVersionPermissionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LambdaLayerVersionPermission].
 func (llvp *LambdaLayerVersionPermission) Type() string {
 	return "aws_lambda_layer_version_permission"
 }
 
+// LocalName returns the local name for [LambdaLayerVersionPermission].
 func (llvp *LambdaLayerVersionPermission) LocalName() string {
 	return llvp.Name
 }
 
+// Configuration returns the configuration (args) for [LambdaLayerVersionPermission].
 func (llvp *LambdaLayerVersionPermission) Configuration() interface{} {
 	return llvp.Args
 }
 
+// DependOn is used for other resources to depend on [LambdaLayerVersionPermission].
+func (llvp *LambdaLayerVersionPermission) DependOn() terra.Reference {
+	return terra.ReferenceResource(llvp)
+}
+
+// Dependencies returns the list of resources [LambdaLayerVersionPermission] depends_on.
+func (llvp *LambdaLayerVersionPermission) Dependencies() terra.Dependencies {
+	return llvp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LambdaLayerVersionPermission].
+func (llvp *LambdaLayerVersionPermission) LifecycleManagement() *terra.Lifecycle {
+	return llvp.Lifecycle
+}
+
+// Attributes returns the attributes for [LambdaLayerVersionPermission].
 func (llvp *LambdaLayerVersionPermission) Attributes() lambdaLayerVersionPermissionAttributes {
 	return lambdaLayerVersionPermissionAttributes{ref: terra.ReferenceResource(llvp)}
 }
 
+// ImportState imports the given attribute values into [LambdaLayerVersionPermission]'s state.
 func (llvp *LambdaLayerVersionPermission) ImportState(av io.Reader) error {
 	llvp.state = &lambdaLayerVersionPermissionState{}
 	if err := json.NewDecoder(av).Decode(llvp.state); err != nil {
@@ -48,10 +72,12 @@ func (llvp *LambdaLayerVersionPermission) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LambdaLayerVersionPermission] has state.
 func (llvp *LambdaLayerVersionPermission) State() (*lambdaLayerVersionPermissionState, bool) {
 	return llvp.state, llvp.state != nil
 }
 
+// StateMust returns the state for [LambdaLayerVersionPermission]. Panics if the state is nil.
 func (llvp *LambdaLayerVersionPermission) StateMust() *lambdaLayerVersionPermissionState {
 	if llvp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", llvp.Type(), llvp.LocalName()))
@@ -59,10 +85,7 @@ func (llvp *LambdaLayerVersionPermission) StateMust() *lambdaLayerVersionPermiss
 	return llvp.state
 }
 
-func (llvp *LambdaLayerVersionPermission) DependOn() terra.Reference {
-	return terra.ReferenceResource(llvp)
-}
-
+// LambdaLayerVersionPermissionArgs contains the configurations for aws_lambda_layer_version_permission.
 type LambdaLayerVersionPermissionArgs struct {
 	// Action: string, required
 	Action terra.StringValue `hcl:"action,attr" validate:"required"`
@@ -78,47 +101,54 @@ type LambdaLayerVersionPermissionArgs struct {
 	StatementId terra.StringValue `hcl:"statement_id,attr" validate:"required"`
 	// VersionNumber: number, required
 	VersionNumber terra.NumberValue `hcl:"version_number,attr" validate:"required"`
-	// DependsOn contains resources that LambdaLayerVersionPermission depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lambdaLayerVersionPermissionAttributes struct {
 	ref terra.Reference
 }
 
+// Action returns a reference to field action of aws_lambda_layer_version_permission.
 func (llvp lambdaLayerVersionPermissionAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(llvp.ref.Append("action"))
+	return terra.ReferenceAsString(llvp.ref.Append("action"))
 }
 
+// Id returns a reference to field id of aws_lambda_layer_version_permission.
 func (llvp lambdaLayerVersionPermissionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(llvp.ref.Append("id"))
+	return terra.ReferenceAsString(llvp.ref.Append("id"))
 }
 
+// LayerName returns a reference to field layer_name of aws_lambda_layer_version_permission.
 func (llvp lambdaLayerVersionPermissionAttributes) LayerName() terra.StringValue {
-	return terra.ReferenceString(llvp.ref.Append("layer_name"))
+	return terra.ReferenceAsString(llvp.ref.Append("layer_name"))
 }
 
+// OrganizationId returns a reference to field organization_id of aws_lambda_layer_version_permission.
 func (llvp lambdaLayerVersionPermissionAttributes) OrganizationId() terra.StringValue {
-	return terra.ReferenceString(llvp.ref.Append("organization_id"))
+	return terra.ReferenceAsString(llvp.ref.Append("organization_id"))
 }
 
+// Policy returns a reference to field policy of aws_lambda_layer_version_permission.
 func (llvp lambdaLayerVersionPermissionAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(llvp.ref.Append("policy"))
+	return terra.ReferenceAsString(llvp.ref.Append("policy"))
 }
 
+// Principal returns a reference to field principal of aws_lambda_layer_version_permission.
 func (llvp lambdaLayerVersionPermissionAttributes) Principal() terra.StringValue {
-	return terra.ReferenceString(llvp.ref.Append("principal"))
+	return terra.ReferenceAsString(llvp.ref.Append("principal"))
 }
 
+// RevisionId returns a reference to field revision_id of aws_lambda_layer_version_permission.
 func (llvp lambdaLayerVersionPermissionAttributes) RevisionId() terra.StringValue {
-	return terra.ReferenceString(llvp.ref.Append("revision_id"))
+	return terra.ReferenceAsString(llvp.ref.Append("revision_id"))
 }
 
+// StatementId returns a reference to field statement_id of aws_lambda_layer_version_permission.
 func (llvp lambdaLayerVersionPermissionAttributes) StatementId() terra.StringValue {
-	return terra.ReferenceString(llvp.ref.Append("statement_id"))
+	return terra.ReferenceAsString(llvp.ref.Append("statement_id"))
 }
 
+// VersionNumber returns a reference to field version_number of aws_lambda_layer_version_permission.
 func (llvp lambdaLayerVersionPermissionAttributes) VersionNumber() terra.NumberValue {
-	return terra.ReferenceNumber(llvp.ref.Append("version_number"))
+	return terra.ReferenceAsNumber(llvp.ref.Append("version_number"))
 }
 
 type lambdaLayerVersionPermissionState struct {

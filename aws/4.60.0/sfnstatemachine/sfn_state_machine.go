@@ -38,15 +38,15 @@ func (lc LoggingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lc LoggingConfigurationAttributes) IncludeExecutionData() terra.BoolValue {
-	return terra.ReferenceBool(lc.ref.Append("include_execution_data"))
+	return terra.ReferenceAsBool(lc.ref.Append("include_execution_data"))
 }
 
 func (lc LoggingConfigurationAttributes) Level() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("level"))
+	return terra.ReferenceAsString(lc.ref.Append("level"))
 }
 
 func (lc LoggingConfigurationAttributes) LogDestination() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("log_destination"))
+	return terra.ReferenceAsString(lc.ref.Append("log_destination"))
 }
 
 type TracingConfigurationAttributes struct {
@@ -66,7 +66,7 @@ func (tc TracingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tc TracingConfigurationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(tc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(tc.ref.Append("enabled"))
 }
 
 type LoggingConfigurationState struct {

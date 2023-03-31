@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewIamUser creates a new instance of [IamUser].
 func NewIamUser(name string, args IamUserArgs) *IamUser {
 	return &IamUser{
 		Args: args,
@@ -18,28 +19,51 @@ func NewIamUser(name string, args IamUserArgs) *IamUser {
 
 var _ terra.Resource = (*IamUser)(nil)
 
+// IamUser represents the Terraform resource aws_iam_user.
 type IamUser struct {
-	Name  string
-	Args  IamUserArgs
-	state *iamUserState
+	Name      string
+	Args      IamUserArgs
+	state     *iamUserState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IamUser].
 func (iu *IamUser) Type() string {
 	return "aws_iam_user"
 }
 
+// LocalName returns the local name for [IamUser].
 func (iu *IamUser) LocalName() string {
 	return iu.Name
 }
 
+// Configuration returns the configuration (args) for [IamUser].
 func (iu *IamUser) Configuration() interface{} {
 	return iu.Args
 }
 
+// DependOn is used for other resources to depend on [IamUser].
+func (iu *IamUser) DependOn() terra.Reference {
+	return terra.ReferenceResource(iu)
+}
+
+// Dependencies returns the list of resources [IamUser] depends_on.
+func (iu *IamUser) Dependencies() terra.Dependencies {
+	return iu.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IamUser].
+func (iu *IamUser) LifecycleManagement() *terra.Lifecycle {
+	return iu.Lifecycle
+}
+
+// Attributes returns the attributes for [IamUser].
 func (iu *IamUser) Attributes() iamUserAttributes {
 	return iamUserAttributes{ref: terra.ReferenceResource(iu)}
 }
 
+// ImportState imports the given attribute values into [IamUser]'s state.
 func (iu *IamUser) ImportState(av io.Reader) error {
 	iu.state = &iamUserState{}
 	if err := json.NewDecoder(av).Decode(iu.state); err != nil {
@@ -48,10 +72,12 @@ func (iu *IamUser) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IamUser] has state.
 func (iu *IamUser) State() (*iamUserState, bool) {
 	return iu.state, iu.state != nil
 }
 
+// StateMust returns the state for [IamUser]. Panics if the state is nil.
 func (iu *IamUser) StateMust() *iamUserState {
 	if iu.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", iu.Type(), iu.LocalName()))
@@ -59,10 +85,7 @@ func (iu *IamUser) StateMust() *iamUserState {
 	return iu.state
 }
 
-func (iu *IamUser) DependOn() terra.Reference {
-	return terra.ReferenceResource(iu)
-}
-
+// IamUserArgs contains the configurations for aws_iam_user.
 type IamUserArgs struct {
 	// ForceDestroy: bool, optional
 	ForceDestroy terra.BoolValue `hcl:"force_destroy,attr"`
@@ -78,47 +101,54 @@ type IamUserArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that IamUser depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iamUserAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_iam_user.
 func (iu iamUserAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(iu.ref.Append("arn"))
+	return terra.ReferenceAsString(iu.ref.Append("arn"))
 }
 
+// ForceDestroy returns a reference to field force_destroy of aws_iam_user.
 func (iu iamUserAttributes) ForceDestroy() terra.BoolValue {
-	return terra.ReferenceBool(iu.ref.Append("force_destroy"))
+	return terra.ReferenceAsBool(iu.ref.Append("force_destroy"))
 }
 
+// Id returns a reference to field id of aws_iam_user.
 func (iu iamUserAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(iu.ref.Append("id"))
+	return terra.ReferenceAsString(iu.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_iam_user.
 func (iu iamUserAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(iu.ref.Append("name"))
+	return terra.ReferenceAsString(iu.ref.Append("name"))
 }
 
+// Path returns a reference to field path of aws_iam_user.
 func (iu iamUserAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(iu.ref.Append("path"))
+	return terra.ReferenceAsString(iu.ref.Append("path"))
 }
 
+// PermissionsBoundary returns a reference to field permissions_boundary of aws_iam_user.
 func (iu iamUserAttributes) PermissionsBoundary() terra.StringValue {
-	return terra.ReferenceString(iu.ref.Append("permissions_boundary"))
+	return terra.ReferenceAsString(iu.ref.Append("permissions_boundary"))
 }
 
+// Tags returns a reference to field tags of aws_iam_user.
 func (iu iamUserAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](iu.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](iu.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_iam_user.
 func (iu iamUserAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](iu.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](iu.ref.Append("tags_all"))
 }
 
+// UniqueId returns a reference to field unique_id of aws_iam_user.
 func (iu iamUserAttributes) UniqueId() terra.StringValue {
-	return terra.ReferenceString(iu.ref.Append("unique_id"))
+	return terra.ReferenceAsString(iu.ref.Append("unique_id"))
 }
 
 type iamUserState struct {

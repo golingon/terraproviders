@@ -34,7 +34,7 @@ func (ap AllowedPublishersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ap AllowedPublishersAttributes) SigningProfileVersionArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ap.ref.Append("signing_profile_version_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](ap.ref.Append("signing_profile_version_arns"))
 }
 
 type PoliciesAttributes struct {
@@ -54,7 +54,7 @@ func (p PoliciesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p PoliciesAttributes) UntrustedArtifactOnDeployment() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("untrusted_artifact_on_deployment"))
+	return terra.ReferenceAsString(p.ref.Append("untrusted_artifact_on_deployment"))
 }
 
 type AllowedPublishersState struct {

@@ -47,11 +47,11 @@ func (rs RetryStrategyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rs RetryStrategyAttributes) Attempts() terra.NumberValue {
-	return terra.ReferenceNumber(rs.ref.Append("attempts"))
+	return terra.ReferenceAsNumber(rs.ref.Append("attempts"))
 }
 
 func (rs RetryStrategyAttributes) EvaluateOnExit() terra.ListValue[EvaluateOnExitAttributes] {
-	return terra.ReferenceList[EvaluateOnExitAttributes](rs.ref.Append("evaluate_on_exit"))
+	return terra.ReferenceAsList[EvaluateOnExitAttributes](rs.ref.Append("evaluate_on_exit"))
 }
 
 type EvaluateOnExitAttributes struct {
@@ -71,19 +71,19 @@ func (eoe EvaluateOnExitAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (eoe EvaluateOnExitAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(eoe.ref.Append("action"))
+	return terra.ReferenceAsString(eoe.ref.Append("action"))
 }
 
 func (eoe EvaluateOnExitAttributes) OnExitCode() terra.StringValue {
-	return terra.ReferenceString(eoe.ref.Append("on_exit_code"))
+	return terra.ReferenceAsString(eoe.ref.Append("on_exit_code"))
 }
 
 func (eoe EvaluateOnExitAttributes) OnReason() terra.StringValue {
-	return terra.ReferenceString(eoe.ref.Append("on_reason"))
+	return terra.ReferenceAsString(eoe.ref.Append("on_reason"))
 }
 
 func (eoe EvaluateOnExitAttributes) OnStatusReason() terra.StringValue {
-	return terra.ReferenceString(eoe.ref.Append("on_status_reason"))
+	return terra.ReferenceAsString(eoe.ref.Append("on_status_reason"))
 }
 
 type TimeoutAttributes struct {
@@ -103,7 +103,7 @@ func (t TimeoutAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutAttributes) AttemptDurationSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(t.ref.Append("attempt_duration_seconds"))
+	return terra.ReferenceAsNumber(t.ref.Append("attempt_duration_seconds"))
 }
 
 type RetryStrategyState struct {

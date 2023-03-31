@@ -29,7 +29,7 @@ func (imsc InstanceMetadataServiceConfigurationAttributes) InternalTokens() hclw
 }
 
 func (imsc InstanceMetadataServiceConfigurationAttributes) MinimumInstanceMetadataServiceVersion() terra.StringValue {
-	return terra.ReferenceString(imsc.ref.Append("minimum_instance_metadata_service_version"))
+	return terra.ReferenceAsString(imsc.ref.Append("minimum_instance_metadata_service_version"))
 }
 
 type InstanceMetadataServiceConfigurationState struct {

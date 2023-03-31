@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewS3BucketObject creates a new instance of [S3BucketObject].
 func NewS3BucketObject(name string, args S3BucketObjectArgs) *S3BucketObject {
 	return &S3BucketObject{
 		Args: args,
@@ -18,28 +19,51 @@ func NewS3BucketObject(name string, args S3BucketObjectArgs) *S3BucketObject {
 
 var _ terra.Resource = (*S3BucketObject)(nil)
 
+// S3BucketObject represents the Terraform resource aws_s3_bucket_object.
 type S3BucketObject struct {
-	Name  string
-	Args  S3BucketObjectArgs
-	state *s3BucketObjectState
+	Name      string
+	Args      S3BucketObjectArgs
+	state     *s3BucketObjectState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [S3BucketObject].
 func (sbo *S3BucketObject) Type() string {
 	return "aws_s3_bucket_object"
 }
 
+// LocalName returns the local name for [S3BucketObject].
 func (sbo *S3BucketObject) LocalName() string {
 	return sbo.Name
 }
 
+// Configuration returns the configuration (args) for [S3BucketObject].
 func (sbo *S3BucketObject) Configuration() interface{} {
 	return sbo.Args
 }
 
+// DependOn is used for other resources to depend on [S3BucketObject].
+func (sbo *S3BucketObject) DependOn() terra.Reference {
+	return terra.ReferenceResource(sbo)
+}
+
+// Dependencies returns the list of resources [S3BucketObject] depends_on.
+func (sbo *S3BucketObject) Dependencies() terra.Dependencies {
+	return sbo.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [S3BucketObject].
+func (sbo *S3BucketObject) LifecycleManagement() *terra.Lifecycle {
+	return sbo.Lifecycle
+}
+
+// Attributes returns the attributes for [S3BucketObject].
 func (sbo *S3BucketObject) Attributes() s3BucketObjectAttributes {
 	return s3BucketObjectAttributes{ref: terra.ReferenceResource(sbo)}
 }
 
+// ImportState imports the given attribute values into [S3BucketObject]'s state.
 func (sbo *S3BucketObject) ImportState(av io.Reader) error {
 	sbo.state = &s3BucketObjectState{}
 	if err := json.NewDecoder(av).Decode(sbo.state); err != nil {
@@ -48,10 +72,12 @@ func (sbo *S3BucketObject) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [S3BucketObject] has state.
 func (sbo *S3BucketObject) State() (*s3BucketObjectState, bool) {
 	return sbo.state, sbo.state != nil
 }
 
+// StateMust returns the state for [S3BucketObject]. Panics if the state is nil.
 func (sbo *S3BucketObject) StateMust() *s3BucketObjectState {
 	if sbo.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sbo.Type(), sbo.LocalName()))
@@ -59,10 +85,7 @@ func (sbo *S3BucketObject) StateMust() *s3BucketObjectState {
 	return sbo.state
 }
 
-func (sbo *S3BucketObject) DependOn() terra.Reference {
-	return terra.ReferenceResource(sbo)
-}
-
+// S3BucketObjectArgs contains the configurations for aws_s3_bucket_object.
 type S3BucketObjectArgs struct {
 	// Acl: string, optional
 	Acl terra.StringValue `hcl:"acl,attr"`
@@ -116,119 +139,144 @@ type S3BucketObjectArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// WebsiteRedirect: string, optional
 	WebsiteRedirect terra.StringValue `hcl:"website_redirect,attr"`
-	// DependsOn contains resources that S3BucketObject depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type s3BucketObjectAttributes struct {
 	ref terra.Reference
 }
 
+// Acl returns a reference to field acl of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) Acl() terra.StringValue {
-	return terra.ReferenceString(sbo.ref.Append("acl"))
+	return terra.ReferenceAsString(sbo.ref.Append("acl"))
 }
 
+// Bucket returns a reference to field bucket of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(sbo.ref.Append("bucket"))
+	return terra.ReferenceAsString(sbo.ref.Append("bucket"))
 }
 
+// BucketKeyEnabled returns a reference to field bucket_key_enabled of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) BucketKeyEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sbo.ref.Append("bucket_key_enabled"))
+	return terra.ReferenceAsBool(sbo.ref.Append("bucket_key_enabled"))
 }
 
+// CacheControl returns a reference to field cache_control of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) CacheControl() terra.StringValue {
-	return terra.ReferenceString(sbo.ref.Append("cache_control"))
+	return terra.ReferenceAsString(sbo.ref.Append("cache_control"))
 }
 
+// Content returns a reference to field content of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(sbo.ref.Append("content"))
+	return terra.ReferenceAsString(sbo.ref.Append("content"))
 }
 
+// ContentBase64 returns a reference to field content_base64 of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) ContentBase64() terra.StringValue {
-	return terra.ReferenceString(sbo.ref.Append("content_base64"))
+	return terra.ReferenceAsString(sbo.ref.Append("content_base64"))
 }
 
+// ContentDisposition returns a reference to field content_disposition of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) ContentDisposition() terra.StringValue {
-	return terra.ReferenceString(sbo.ref.Append("content_disposition"))
+	return terra.ReferenceAsString(sbo.ref.Append("content_disposition"))
 }
 
+// ContentEncoding returns a reference to field content_encoding of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) ContentEncoding() terra.StringValue {
-	return terra.ReferenceString(sbo.ref.Append("content_encoding"))
+	return terra.ReferenceAsString(sbo.ref.Append("content_encoding"))
 }
 
+// ContentLanguage returns a reference to field content_language of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) ContentLanguage() terra.StringValue {
-	return terra.ReferenceString(sbo.ref.Append("content_language"))
+	return terra.ReferenceAsString(sbo.ref.Append("content_language"))
 }
 
+// ContentType returns a reference to field content_type of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(sbo.ref.Append("content_type"))
+	return terra.ReferenceAsString(sbo.ref.Append("content_type"))
 }
 
+// Etag returns a reference to field etag of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(sbo.ref.Append("etag"))
+	return terra.ReferenceAsString(sbo.ref.Append("etag"))
 }
 
+// ForceDestroy returns a reference to field force_destroy of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) ForceDestroy() terra.BoolValue {
-	return terra.ReferenceBool(sbo.ref.Append("force_destroy"))
+	return terra.ReferenceAsBool(sbo.ref.Append("force_destroy"))
 }
 
+// Id returns a reference to field id of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sbo.ref.Append("id"))
+	return terra.ReferenceAsString(sbo.ref.Append("id"))
 }
 
+// Key returns a reference to field key of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(sbo.ref.Append("key"))
+	return terra.ReferenceAsString(sbo.ref.Append("key"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(sbo.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(sbo.ref.Append("kms_key_id"))
 }
 
+// Metadata returns a reference to field metadata of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) Metadata() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sbo.ref.Append("metadata"))
+	return terra.ReferenceAsMap[terra.StringValue](sbo.ref.Append("metadata"))
 }
 
+// ObjectLockLegalHoldStatus returns a reference to field object_lock_legal_hold_status of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) ObjectLockLegalHoldStatus() terra.StringValue {
-	return terra.ReferenceString(sbo.ref.Append("object_lock_legal_hold_status"))
+	return terra.ReferenceAsString(sbo.ref.Append("object_lock_legal_hold_status"))
 }
 
+// ObjectLockMode returns a reference to field object_lock_mode of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) ObjectLockMode() terra.StringValue {
-	return terra.ReferenceString(sbo.ref.Append("object_lock_mode"))
+	return terra.ReferenceAsString(sbo.ref.Append("object_lock_mode"))
 }
 
+// ObjectLockRetainUntilDate returns a reference to field object_lock_retain_until_date of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) ObjectLockRetainUntilDate() terra.StringValue {
-	return terra.ReferenceString(sbo.ref.Append("object_lock_retain_until_date"))
+	return terra.ReferenceAsString(sbo.ref.Append("object_lock_retain_until_date"))
 }
 
+// ServerSideEncryption returns a reference to field server_side_encryption of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) ServerSideEncryption() terra.StringValue {
-	return terra.ReferenceString(sbo.ref.Append("server_side_encryption"))
+	return terra.ReferenceAsString(sbo.ref.Append("server_side_encryption"))
 }
 
+// Source returns a reference to field source of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) Source() terra.StringValue {
-	return terra.ReferenceString(sbo.ref.Append("source"))
+	return terra.ReferenceAsString(sbo.ref.Append("source"))
 }
 
+// SourceHash returns a reference to field source_hash of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) SourceHash() terra.StringValue {
-	return terra.ReferenceString(sbo.ref.Append("source_hash"))
+	return terra.ReferenceAsString(sbo.ref.Append("source_hash"))
 }
 
+// StorageClass returns a reference to field storage_class of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) StorageClass() terra.StringValue {
-	return terra.ReferenceString(sbo.ref.Append("storage_class"))
+	return terra.ReferenceAsString(sbo.ref.Append("storage_class"))
 }
 
+// Tags returns a reference to field tags of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sbo.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sbo.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sbo.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sbo.ref.Append("tags_all"))
 }
 
+// VersionId returns a reference to field version_id of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) VersionId() terra.StringValue {
-	return terra.ReferenceString(sbo.ref.Append("version_id"))
+	return terra.ReferenceAsString(sbo.ref.Append("version_id"))
 }
 
+// WebsiteRedirect returns a reference to field website_redirect of aws_s3_bucket_object.
 func (sbo s3BucketObjectAttributes) WebsiteRedirect() terra.StringValue {
-	return terra.ReferenceString(sbo.ref.Append("website_redirect"))
+	return terra.ReferenceAsString(sbo.ref.Append("website_redirect"))
 }
 
 type s3BucketObjectState struct {

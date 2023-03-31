@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEcsTaskDefinition creates a new instance of [EcsTaskDefinition].
 func NewEcsTaskDefinition(name string, args EcsTaskDefinitionArgs) *EcsTaskDefinition {
 	return &EcsTaskDefinition{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEcsTaskDefinition(name string, args EcsTaskDefinitionArgs) *EcsTaskDefin
 
 var _ terra.Resource = (*EcsTaskDefinition)(nil)
 
+// EcsTaskDefinition represents the Terraform resource aws_ecs_task_definition.
 type EcsTaskDefinition struct {
-	Name  string
-	Args  EcsTaskDefinitionArgs
-	state *ecsTaskDefinitionState
+	Name      string
+	Args      EcsTaskDefinitionArgs
+	state     *ecsTaskDefinitionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EcsTaskDefinition].
 func (etd *EcsTaskDefinition) Type() string {
 	return "aws_ecs_task_definition"
 }
 
+// LocalName returns the local name for [EcsTaskDefinition].
 func (etd *EcsTaskDefinition) LocalName() string {
 	return etd.Name
 }
 
+// Configuration returns the configuration (args) for [EcsTaskDefinition].
 func (etd *EcsTaskDefinition) Configuration() interface{} {
 	return etd.Args
 }
 
+// DependOn is used for other resources to depend on [EcsTaskDefinition].
+func (etd *EcsTaskDefinition) DependOn() terra.Reference {
+	return terra.ReferenceResource(etd)
+}
+
+// Dependencies returns the list of resources [EcsTaskDefinition] depends_on.
+func (etd *EcsTaskDefinition) Dependencies() terra.Dependencies {
+	return etd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EcsTaskDefinition].
+func (etd *EcsTaskDefinition) LifecycleManagement() *terra.Lifecycle {
+	return etd.Lifecycle
+}
+
+// Attributes returns the attributes for [EcsTaskDefinition].
 func (etd *EcsTaskDefinition) Attributes() ecsTaskDefinitionAttributes {
 	return ecsTaskDefinitionAttributes{ref: terra.ReferenceResource(etd)}
 }
 
+// ImportState imports the given attribute values into [EcsTaskDefinition]'s state.
 func (etd *EcsTaskDefinition) ImportState(av io.Reader) error {
 	etd.state = &ecsTaskDefinitionState{}
 	if err := json.NewDecoder(av).Decode(etd.state); err != nil {
@@ -49,10 +73,12 @@ func (etd *EcsTaskDefinition) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EcsTaskDefinition] has state.
 func (etd *EcsTaskDefinition) State() (*ecsTaskDefinitionState, bool) {
 	return etd.state, etd.state != nil
 }
 
+// StateMust returns the state for [EcsTaskDefinition]. Panics if the state is nil.
 func (etd *EcsTaskDefinition) StateMust() *ecsTaskDefinitionState {
 	if etd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", etd.Type(), etd.LocalName()))
@@ -60,10 +86,7 @@ func (etd *EcsTaskDefinition) StateMust() *ecsTaskDefinitionState {
 	return etd.state
 }
 
-func (etd *EcsTaskDefinition) DependOn() terra.Reference {
-	return terra.ReferenceResource(etd)
-}
-
+// EcsTaskDefinitionArgs contains the configurations for aws_ecs_task_definition.
 type EcsTaskDefinitionArgs struct {
 	// ContainerDefinitions: string, required
 	ContainerDefinitions terra.StringValue `hcl:"container_definitions,attr" validate:"required"`
@@ -105,103 +128,118 @@ type EcsTaskDefinitionArgs struct {
 	RuntimePlatform *ecstaskdefinition.RuntimePlatform `hcl:"runtime_platform,block"`
 	// Volume: min=0
 	Volume []ecstaskdefinition.Volume `hcl:"volume,block" validate:"min=0"`
-	// DependsOn contains resources that EcsTaskDefinition depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ecsTaskDefinitionAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ecs_task_definition.
 func (etd ecsTaskDefinitionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(etd.ref.Append("arn"))
+	return terra.ReferenceAsString(etd.ref.Append("arn"))
 }
 
+// ArnWithoutRevision returns a reference to field arn_without_revision of aws_ecs_task_definition.
 func (etd ecsTaskDefinitionAttributes) ArnWithoutRevision() terra.StringValue {
-	return terra.ReferenceString(etd.ref.Append("arn_without_revision"))
+	return terra.ReferenceAsString(etd.ref.Append("arn_without_revision"))
 }
 
+// ContainerDefinitions returns a reference to field container_definitions of aws_ecs_task_definition.
 func (etd ecsTaskDefinitionAttributes) ContainerDefinitions() terra.StringValue {
-	return terra.ReferenceString(etd.ref.Append("container_definitions"))
+	return terra.ReferenceAsString(etd.ref.Append("container_definitions"))
 }
 
+// Cpu returns a reference to field cpu of aws_ecs_task_definition.
 func (etd ecsTaskDefinitionAttributes) Cpu() terra.StringValue {
-	return terra.ReferenceString(etd.ref.Append("cpu"))
+	return terra.ReferenceAsString(etd.ref.Append("cpu"))
 }
 
+// ExecutionRoleArn returns a reference to field execution_role_arn of aws_ecs_task_definition.
 func (etd ecsTaskDefinitionAttributes) ExecutionRoleArn() terra.StringValue {
-	return terra.ReferenceString(etd.ref.Append("execution_role_arn"))
+	return terra.ReferenceAsString(etd.ref.Append("execution_role_arn"))
 }
 
+// Family returns a reference to field family of aws_ecs_task_definition.
 func (etd ecsTaskDefinitionAttributes) Family() terra.StringValue {
-	return terra.ReferenceString(etd.ref.Append("family"))
+	return terra.ReferenceAsString(etd.ref.Append("family"))
 }
 
+// Id returns a reference to field id of aws_ecs_task_definition.
 func (etd ecsTaskDefinitionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(etd.ref.Append("id"))
+	return terra.ReferenceAsString(etd.ref.Append("id"))
 }
 
+// IpcMode returns a reference to field ipc_mode of aws_ecs_task_definition.
 func (etd ecsTaskDefinitionAttributes) IpcMode() terra.StringValue {
-	return terra.ReferenceString(etd.ref.Append("ipc_mode"))
+	return terra.ReferenceAsString(etd.ref.Append("ipc_mode"))
 }
 
+// Memory returns a reference to field memory of aws_ecs_task_definition.
 func (etd ecsTaskDefinitionAttributes) Memory() terra.StringValue {
-	return terra.ReferenceString(etd.ref.Append("memory"))
+	return terra.ReferenceAsString(etd.ref.Append("memory"))
 }
 
+// NetworkMode returns a reference to field network_mode of aws_ecs_task_definition.
 func (etd ecsTaskDefinitionAttributes) NetworkMode() terra.StringValue {
-	return terra.ReferenceString(etd.ref.Append("network_mode"))
+	return terra.ReferenceAsString(etd.ref.Append("network_mode"))
 }
 
+// PidMode returns a reference to field pid_mode of aws_ecs_task_definition.
 func (etd ecsTaskDefinitionAttributes) PidMode() terra.StringValue {
-	return terra.ReferenceString(etd.ref.Append("pid_mode"))
+	return terra.ReferenceAsString(etd.ref.Append("pid_mode"))
 }
 
+// RequiresCompatibilities returns a reference to field requires_compatibilities of aws_ecs_task_definition.
 func (etd ecsTaskDefinitionAttributes) RequiresCompatibilities() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](etd.ref.Append("requires_compatibilities"))
+	return terra.ReferenceAsSet[terra.StringValue](etd.ref.Append("requires_compatibilities"))
 }
 
+// Revision returns a reference to field revision of aws_ecs_task_definition.
 func (etd ecsTaskDefinitionAttributes) Revision() terra.NumberValue {
-	return terra.ReferenceNumber(etd.ref.Append("revision"))
+	return terra.ReferenceAsNumber(etd.ref.Append("revision"))
 }
 
+// SkipDestroy returns a reference to field skip_destroy of aws_ecs_task_definition.
 func (etd ecsTaskDefinitionAttributes) SkipDestroy() terra.BoolValue {
-	return terra.ReferenceBool(etd.ref.Append("skip_destroy"))
+	return terra.ReferenceAsBool(etd.ref.Append("skip_destroy"))
 }
 
+// Tags returns a reference to field tags of aws_ecs_task_definition.
 func (etd ecsTaskDefinitionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](etd.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](etd.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_ecs_task_definition.
 func (etd ecsTaskDefinitionAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](etd.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](etd.ref.Append("tags_all"))
 }
 
+// TaskRoleArn returns a reference to field task_role_arn of aws_ecs_task_definition.
 func (etd ecsTaskDefinitionAttributes) TaskRoleArn() terra.StringValue {
-	return terra.ReferenceString(etd.ref.Append("task_role_arn"))
+	return terra.ReferenceAsString(etd.ref.Append("task_role_arn"))
 }
 
 func (etd ecsTaskDefinitionAttributes) EphemeralStorage() terra.ListValue[ecstaskdefinition.EphemeralStorageAttributes] {
-	return terra.ReferenceList[ecstaskdefinition.EphemeralStorageAttributes](etd.ref.Append("ephemeral_storage"))
+	return terra.ReferenceAsList[ecstaskdefinition.EphemeralStorageAttributes](etd.ref.Append("ephemeral_storage"))
 }
 
 func (etd ecsTaskDefinitionAttributes) InferenceAccelerator() terra.SetValue[ecstaskdefinition.InferenceAcceleratorAttributes] {
-	return terra.ReferenceSet[ecstaskdefinition.InferenceAcceleratorAttributes](etd.ref.Append("inference_accelerator"))
+	return terra.ReferenceAsSet[ecstaskdefinition.InferenceAcceleratorAttributes](etd.ref.Append("inference_accelerator"))
 }
 
 func (etd ecsTaskDefinitionAttributes) PlacementConstraints() terra.SetValue[ecstaskdefinition.PlacementConstraintsAttributes] {
-	return terra.ReferenceSet[ecstaskdefinition.PlacementConstraintsAttributes](etd.ref.Append("placement_constraints"))
+	return terra.ReferenceAsSet[ecstaskdefinition.PlacementConstraintsAttributes](etd.ref.Append("placement_constraints"))
 }
 
 func (etd ecsTaskDefinitionAttributes) ProxyConfiguration() terra.ListValue[ecstaskdefinition.ProxyConfigurationAttributes] {
-	return terra.ReferenceList[ecstaskdefinition.ProxyConfigurationAttributes](etd.ref.Append("proxy_configuration"))
+	return terra.ReferenceAsList[ecstaskdefinition.ProxyConfigurationAttributes](etd.ref.Append("proxy_configuration"))
 }
 
 func (etd ecsTaskDefinitionAttributes) RuntimePlatform() terra.ListValue[ecstaskdefinition.RuntimePlatformAttributes] {
-	return terra.ReferenceList[ecstaskdefinition.RuntimePlatformAttributes](etd.ref.Append("runtime_platform"))
+	return terra.ReferenceAsList[ecstaskdefinition.RuntimePlatformAttributes](etd.ref.Append("runtime_platform"))
 }
 
 func (etd ecsTaskDefinitionAttributes) Volume() terra.SetValue[ecstaskdefinition.VolumeAttributes] {
-	return terra.ReferenceSet[ecstaskdefinition.VolumeAttributes](etd.ref.Append("volume"))
+	return terra.ReferenceAsSet[ecstaskdefinition.VolumeAttributes](etd.ref.Append("volume"))
 }
 
 type ecsTaskDefinitionState struct {

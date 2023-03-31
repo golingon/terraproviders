@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewEfsFileSystemPolicy creates a new instance of [EfsFileSystemPolicy].
 func NewEfsFileSystemPolicy(name string, args EfsFileSystemPolicyArgs) *EfsFileSystemPolicy {
 	return &EfsFileSystemPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewEfsFileSystemPolicy(name string, args EfsFileSystemPolicyArgs) *EfsFileS
 
 var _ terra.Resource = (*EfsFileSystemPolicy)(nil)
 
+// EfsFileSystemPolicy represents the Terraform resource aws_efs_file_system_policy.
 type EfsFileSystemPolicy struct {
-	Name  string
-	Args  EfsFileSystemPolicyArgs
-	state *efsFileSystemPolicyState
+	Name      string
+	Args      EfsFileSystemPolicyArgs
+	state     *efsFileSystemPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EfsFileSystemPolicy].
 func (efsp *EfsFileSystemPolicy) Type() string {
 	return "aws_efs_file_system_policy"
 }
 
+// LocalName returns the local name for [EfsFileSystemPolicy].
 func (efsp *EfsFileSystemPolicy) LocalName() string {
 	return efsp.Name
 }
 
+// Configuration returns the configuration (args) for [EfsFileSystemPolicy].
 func (efsp *EfsFileSystemPolicy) Configuration() interface{} {
 	return efsp.Args
 }
 
+// DependOn is used for other resources to depend on [EfsFileSystemPolicy].
+func (efsp *EfsFileSystemPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(efsp)
+}
+
+// Dependencies returns the list of resources [EfsFileSystemPolicy] depends_on.
+func (efsp *EfsFileSystemPolicy) Dependencies() terra.Dependencies {
+	return efsp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EfsFileSystemPolicy].
+func (efsp *EfsFileSystemPolicy) LifecycleManagement() *terra.Lifecycle {
+	return efsp.Lifecycle
+}
+
+// Attributes returns the attributes for [EfsFileSystemPolicy].
 func (efsp *EfsFileSystemPolicy) Attributes() efsFileSystemPolicyAttributes {
 	return efsFileSystemPolicyAttributes{ref: terra.ReferenceResource(efsp)}
 }
 
+// ImportState imports the given attribute values into [EfsFileSystemPolicy]'s state.
 func (efsp *EfsFileSystemPolicy) ImportState(av io.Reader) error {
 	efsp.state = &efsFileSystemPolicyState{}
 	if err := json.NewDecoder(av).Decode(efsp.state); err != nil {
@@ -48,10 +72,12 @@ func (efsp *EfsFileSystemPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EfsFileSystemPolicy] has state.
 func (efsp *EfsFileSystemPolicy) State() (*efsFileSystemPolicyState, bool) {
 	return efsp.state, efsp.state != nil
 }
 
+// StateMust returns the state for [EfsFileSystemPolicy]. Panics if the state is nil.
 func (efsp *EfsFileSystemPolicy) StateMust() *efsFileSystemPolicyState {
 	if efsp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", efsp.Type(), efsp.LocalName()))
@@ -59,10 +85,7 @@ func (efsp *EfsFileSystemPolicy) StateMust() *efsFileSystemPolicyState {
 	return efsp.state
 }
 
-func (efsp *EfsFileSystemPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(efsp)
-}
-
+// EfsFileSystemPolicyArgs contains the configurations for aws_efs_file_system_policy.
 type EfsFileSystemPolicyArgs struct {
 	// BypassPolicyLockoutSafetyCheck: bool, optional
 	BypassPolicyLockoutSafetyCheck terra.BoolValue `hcl:"bypass_policy_lockout_safety_check,attr"`
@@ -72,27 +95,29 @@ type EfsFileSystemPolicyArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// Policy: string, required
 	Policy terra.StringValue `hcl:"policy,attr" validate:"required"`
-	// DependsOn contains resources that EfsFileSystemPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type efsFileSystemPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// BypassPolicyLockoutSafetyCheck returns a reference to field bypass_policy_lockout_safety_check of aws_efs_file_system_policy.
 func (efsp efsFileSystemPolicyAttributes) BypassPolicyLockoutSafetyCheck() terra.BoolValue {
-	return terra.ReferenceBool(efsp.ref.Append("bypass_policy_lockout_safety_check"))
+	return terra.ReferenceAsBool(efsp.ref.Append("bypass_policy_lockout_safety_check"))
 }
 
+// FileSystemId returns a reference to field file_system_id of aws_efs_file_system_policy.
 func (efsp efsFileSystemPolicyAttributes) FileSystemId() terra.StringValue {
-	return terra.ReferenceString(efsp.ref.Append("file_system_id"))
+	return terra.ReferenceAsString(efsp.ref.Append("file_system_id"))
 }
 
+// Id returns a reference to field id of aws_efs_file_system_policy.
 func (efsp efsFileSystemPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(efsp.ref.Append("id"))
+	return terra.ReferenceAsString(efsp.ref.Append("id"))
 }
 
+// Policy returns a reference to field policy of aws_efs_file_system_policy.
 func (efsp efsFileSystemPolicyAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(efsp.ref.Append("policy"))
+	return terra.ReferenceAsString(efsp.ref.Append("policy"))
 }
 
 type efsFileSystemPolicyState struct {

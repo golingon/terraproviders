@@ -31,11 +31,11 @@ func (kc KinesisConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (kc KinesisConfigurationAttributes) AggregationEnabled() terra.BoolValue {
-	return terra.ReferenceBool(kc.ref.Append("aggregation_enabled"))
+	return terra.ReferenceAsBool(kc.ref.Append("aggregation_enabled"))
 }
 
 func (kc KinesisConfigurationAttributes) StreamArn() terra.StringValue {
-	return terra.ReferenceString(kc.ref.Append("stream_arn"))
+	return terra.ReferenceAsString(kc.ref.Append("stream_arn"))
 }
 
 type KinesisConfigurationState struct {

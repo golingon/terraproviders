@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewGlueMlTransform creates a new instance of [GlueMlTransform].
 func NewGlueMlTransform(name string, args GlueMlTransformArgs) *GlueMlTransform {
 	return &GlueMlTransform{
 		Args: args,
@@ -19,28 +20,51 @@ func NewGlueMlTransform(name string, args GlueMlTransformArgs) *GlueMlTransform 
 
 var _ terra.Resource = (*GlueMlTransform)(nil)
 
+// GlueMlTransform represents the Terraform resource aws_glue_ml_transform.
 type GlueMlTransform struct {
-	Name  string
-	Args  GlueMlTransformArgs
-	state *glueMlTransformState
+	Name      string
+	Args      GlueMlTransformArgs
+	state     *glueMlTransformState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GlueMlTransform].
 func (gmt *GlueMlTransform) Type() string {
 	return "aws_glue_ml_transform"
 }
 
+// LocalName returns the local name for [GlueMlTransform].
 func (gmt *GlueMlTransform) LocalName() string {
 	return gmt.Name
 }
 
+// Configuration returns the configuration (args) for [GlueMlTransform].
 func (gmt *GlueMlTransform) Configuration() interface{} {
 	return gmt.Args
 }
 
+// DependOn is used for other resources to depend on [GlueMlTransform].
+func (gmt *GlueMlTransform) DependOn() terra.Reference {
+	return terra.ReferenceResource(gmt)
+}
+
+// Dependencies returns the list of resources [GlueMlTransform] depends_on.
+func (gmt *GlueMlTransform) Dependencies() terra.Dependencies {
+	return gmt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GlueMlTransform].
+func (gmt *GlueMlTransform) LifecycleManagement() *terra.Lifecycle {
+	return gmt.Lifecycle
+}
+
+// Attributes returns the attributes for [GlueMlTransform].
 func (gmt *GlueMlTransform) Attributes() glueMlTransformAttributes {
 	return glueMlTransformAttributes{ref: terra.ReferenceResource(gmt)}
 }
 
+// ImportState imports the given attribute values into [GlueMlTransform]'s state.
 func (gmt *GlueMlTransform) ImportState(av io.Reader) error {
 	gmt.state = &glueMlTransformState{}
 	if err := json.NewDecoder(av).Decode(gmt.state); err != nil {
@@ -49,10 +73,12 @@ func (gmt *GlueMlTransform) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GlueMlTransform] has state.
 func (gmt *GlueMlTransform) State() (*glueMlTransformState, bool) {
 	return gmt.state, gmt.state != nil
 }
 
+// StateMust returns the state for [GlueMlTransform]. Panics if the state is nil.
 func (gmt *GlueMlTransform) StateMust() *glueMlTransformState {
 	if gmt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", gmt.Type(), gmt.LocalName()))
@@ -60,10 +86,7 @@ func (gmt *GlueMlTransform) StateMust() *glueMlTransformState {
 	return gmt.state
 }
 
-func (gmt *GlueMlTransform) DependOn() terra.Reference {
-	return terra.ReferenceResource(gmt)
-}
-
+// GlueMlTransformArgs contains the configurations for aws_glue_ml_transform.
 type GlueMlTransformArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -95,79 +118,91 @@ type GlueMlTransformArgs struct {
 	InputRecordTables []gluemltransform.InputRecordTables `hcl:"input_record_tables,block" validate:"min=1"`
 	// Parameters: required
 	Parameters *gluemltransform.Parameters `hcl:"parameters,block" validate:"required"`
-	// DependsOn contains resources that GlueMlTransform depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type glueMlTransformAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_glue_ml_transform.
 func (gmt glueMlTransformAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(gmt.ref.Append("arn"))
+	return terra.ReferenceAsString(gmt.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_glue_ml_transform.
 func (gmt glueMlTransformAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(gmt.ref.Append("description"))
+	return terra.ReferenceAsString(gmt.ref.Append("description"))
 }
 
+// GlueVersion returns a reference to field glue_version of aws_glue_ml_transform.
 func (gmt glueMlTransformAttributes) GlueVersion() terra.StringValue {
-	return terra.ReferenceString(gmt.ref.Append("glue_version"))
+	return terra.ReferenceAsString(gmt.ref.Append("glue_version"))
 }
 
+// Id returns a reference to field id of aws_glue_ml_transform.
 func (gmt glueMlTransformAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gmt.ref.Append("id"))
+	return terra.ReferenceAsString(gmt.ref.Append("id"))
 }
 
+// LabelCount returns a reference to field label_count of aws_glue_ml_transform.
 func (gmt glueMlTransformAttributes) LabelCount() terra.NumberValue {
-	return terra.ReferenceNumber(gmt.ref.Append("label_count"))
+	return terra.ReferenceAsNumber(gmt.ref.Append("label_count"))
 }
 
+// MaxCapacity returns a reference to field max_capacity of aws_glue_ml_transform.
 func (gmt glueMlTransformAttributes) MaxCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(gmt.ref.Append("max_capacity"))
+	return terra.ReferenceAsNumber(gmt.ref.Append("max_capacity"))
 }
 
+// MaxRetries returns a reference to field max_retries of aws_glue_ml_transform.
 func (gmt glueMlTransformAttributes) MaxRetries() terra.NumberValue {
-	return terra.ReferenceNumber(gmt.ref.Append("max_retries"))
+	return terra.ReferenceAsNumber(gmt.ref.Append("max_retries"))
 }
 
+// Name returns a reference to field name of aws_glue_ml_transform.
 func (gmt glueMlTransformAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(gmt.ref.Append("name"))
+	return terra.ReferenceAsString(gmt.ref.Append("name"))
 }
 
+// NumberOfWorkers returns a reference to field number_of_workers of aws_glue_ml_transform.
 func (gmt glueMlTransformAttributes) NumberOfWorkers() terra.NumberValue {
-	return terra.ReferenceNumber(gmt.ref.Append("number_of_workers"))
+	return terra.ReferenceAsNumber(gmt.ref.Append("number_of_workers"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_glue_ml_transform.
 func (gmt glueMlTransformAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(gmt.ref.Append("role_arn"))
+	return terra.ReferenceAsString(gmt.ref.Append("role_arn"))
 }
 
+// Tags returns a reference to field tags of aws_glue_ml_transform.
 func (gmt glueMlTransformAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gmt.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](gmt.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_glue_ml_transform.
 func (gmt glueMlTransformAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gmt.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](gmt.ref.Append("tags_all"))
 }
 
+// Timeout returns a reference to field timeout of aws_glue_ml_transform.
 func (gmt glueMlTransformAttributes) Timeout() terra.NumberValue {
-	return terra.ReferenceNumber(gmt.ref.Append("timeout"))
+	return terra.ReferenceAsNumber(gmt.ref.Append("timeout"))
 }
 
+// WorkerType returns a reference to field worker_type of aws_glue_ml_transform.
 func (gmt glueMlTransformAttributes) WorkerType() terra.StringValue {
-	return terra.ReferenceString(gmt.ref.Append("worker_type"))
+	return terra.ReferenceAsString(gmt.ref.Append("worker_type"))
 }
 
 func (gmt glueMlTransformAttributes) Schema() terra.ListValue[gluemltransform.SchemaAttributes] {
-	return terra.ReferenceList[gluemltransform.SchemaAttributes](gmt.ref.Append("schema"))
+	return terra.ReferenceAsList[gluemltransform.SchemaAttributes](gmt.ref.Append("schema"))
 }
 
 func (gmt glueMlTransformAttributes) InputRecordTables() terra.ListValue[gluemltransform.InputRecordTablesAttributes] {
-	return terra.ReferenceList[gluemltransform.InputRecordTablesAttributes](gmt.ref.Append("input_record_tables"))
+	return terra.ReferenceAsList[gluemltransform.InputRecordTablesAttributes](gmt.ref.Append("input_record_tables"))
 }
 
 func (gmt glueMlTransformAttributes) Parameters() terra.ListValue[gluemltransform.ParametersAttributes] {
-	return terra.ReferenceList[gluemltransform.ParametersAttributes](gmt.ref.Append("parameters"))
+	return terra.ReferenceAsList[gluemltransform.ParametersAttributes](gmt.ref.Append("parameters"))
 }
 
 type glueMlTransformState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDbSecurityGroup creates a new instance of [DbSecurityGroup].
 func NewDbSecurityGroup(name string, args DbSecurityGroupArgs) *DbSecurityGroup {
 	return &DbSecurityGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDbSecurityGroup(name string, args DbSecurityGroupArgs) *DbSecurityGroup 
 
 var _ terra.Resource = (*DbSecurityGroup)(nil)
 
+// DbSecurityGroup represents the Terraform resource aws_db_security_group.
 type DbSecurityGroup struct {
-	Name  string
-	Args  DbSecurityGroupArgs
-	state *dbSecurityGroupState
+	Name      string
+	Args      DbSecurityGroupArgs
+	state     *dbSecurityGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DbSecurityGroup].
 func (dsg *DbSecurityGroup) Type() string {
 	return "aws_db_security_group"
 }
 
+// LocalName returns the local name for [DbSecurityGroup].
 func (dsg *DbSecurityGroup) LocalName() string {
 	return dsg.Name
 }
 
+// Configuration returns the configuration (args) for [DbSecurityGroup].
 func (dsg *DbSecurityGroup) Configuration() interface{} {
 	return dsg.Args
 }
 
+// DependOn is used for other resources to depend on [DbSecurityGroup].
+func (dsg *DbSecurityGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(dsg)
+}
+
+// Dependencies returns the list of resources [DbSecurityGroup] depends_on.
+func (dsg *DbSecurityGroup) Dependencies() terra.Dependencies {
+	return dsg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DbSecurityGroup].
+func (dsg *DbSecurityGroup) LifecycleManagement() *terra.Lifecycle {
+	return dsg.Lifecycle
+}
+
+// Attributes returns the attributes for [DbSecurityGroup].
 func (dsg *DbSecurityGroup) Attributes() dbSecurityGroupAttributes {
 	return dbSecurityGroupAttributes{ref: terra.ReferenceResource(dsg)}
 }
 
+// ImportState imports the given attribute values into [DbSecurityGroup]'s state.
 func (dsg *DbSecurityGroup) ImportState(av io.Reader) error {
 	dsg.state = &dbSecurityGroupState{}
 	if err := json.NewDecoder(av).Decode(dsg.state); err != nil {
@@ -49,10 +73,12 @@ func (dsg *DbSecurityGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DbSecurityGroup] has state.
 func (dsg *DbSecurityGroup) State() (*dbSecurityGroupState, bool) {
 	return dsg.state, dsg.state != nil
 }
 
+// StateMust returns the state for [DbSecurityGroup]. Panics if the state is nil.
 func (dsg *DbSecurityGroup) StateMust() *dbSecurityGroupState {
 	if dsg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dsg.Type(), dsg.LocalName()))
@@ -60,10 +86,7 @@ func (dsg *DbSecurityGroup) StateMust() *dbSecurityGroupState {
 	return dsg.state
 }
 
-func (dsg *DbSecurityGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(dsg)
-}
-
+// DbSecurityGroupArgs contains the configurations for aws_db_security_group.
 type DbSecurityGroupArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -77,39 +100,43 @@ type DbSecurityGroupArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Ingress: min=1
 	Ingress []dbsecuritygroup.Ingress `hcl:"ingress,block" validate:"min=1"`
-	// DependsOn contains resources that DbSecurityGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dbSecurityGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_db_security_group.
 func (dsg dbSecurityGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dsg.ref.Append("arn"))
+	return terra.ReferenceAsString(dsg.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_db_security_group.
 func (dsg dbSecurityGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dsg.ref.Append("description"))
+	return terra.ReferenceAsString(dsg.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_db_security_group.
 func (dsg dbSecurityGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dsg.ref.Append("id"))
+	return terra.ReferenceAsString(dsg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_db_security_group.
 func (dsg dbSecurityGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dsg.ref.Append("name"))
+	return terra.ReferenceAsString(dsg.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_db_security_group.
 func (dsg dbSecurityGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dsg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dsg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_db_security_group.
 func (dsg dbSecurityGroupAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dsg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dsg.ref.Append("tags_all"))
 }
 
 func (dsg dbSecurityGroupAttributes) Ingress() terra.SetValue[dbsecuritygroup.IngressAttributes] {
-	return terra.ReferenceSet[dbsecuritygroup.IngressAttributes](dsg.ref.Append("ingress"))
+	return terra.ReferenceAsSet[dbsecuritygroup.IngressAttributes](dsg.ref.Append("ingress"))
 }
 
 type dbSecurityGroupState struct {

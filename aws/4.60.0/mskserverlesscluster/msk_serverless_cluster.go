@@ -53,7 +53,7 @@ func (ca ClientAuthenticationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ca ClientAuthenticationAttributes) Sasl() terra.ListValue[SaslAttributes] {
-	return terra.ReferenceList[SaslAttributes](ca.ref.Append("sasl"))
+	return terra.ReferenceAsList[SaslAttributes](ca.ref.Append("sasl"))
 }
 
 type SaslAttributes struct {
@@ -73,7 +73,7 @@ func (s SaslAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SaslAttributes) Iam() terra.ListValue[IamAttributes] {
-	return terra.ReferenceList[IamAttributes](s.ref.Append("iam"))
+	return terra.ReferenceAsList[IamAttributes](s.ref.Append("iam"))
 }
 
 type IamAttributes struct {
@@ -93,7 +93,7 @@ func (i IamAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i IamAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(i.ref.Append("enabled"))
+	return terra.ReferenceAsBool(i.ref.Append("enabled"))
 }
 
 type TimeoutsAttributes struct {
@@ -113,11 +113,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type VpcConfigAttributes struct {
@@ -137,11 +137,11 @@ func (vc VpcConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vc VpcConfigAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("security_group_ids"))
 }
 
 func (vc VpcConfigAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("subnet_ids"))
 }
 
 type ClientAuthenticationState struct {

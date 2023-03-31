@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDefaultSecurityGroup creates a new instance of [DefaultSecurityGroup].
 func NewDefaultSecurityGroup(name string, args DefaultSecurityGroupArgs) *DefaultSecurityGroup {
 	return &DefaultSecurityGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDefaultSecurityGroup(name string, args DefaultSecurityGroupArgs) *Defaul
 
 var _ terra.Resource = (*DefaultSecurityGroup)(nil)
 
+// DefaultSecurityGroup represents the Terraform resource aws_default_security_group.
 type DefaultSecurityGroup struct {
-	Name  string
-	Args  DefaultSecurityGroupArgs
-	state *defaultSecurityGroupState
+	Name      string
+	Args      DefaultSecurityGroupArgs
+	state     *defaultSecurityGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DefaultSecurityGroup].
 func (dsg *DefaultSecurityGroup) Type() string {
 	return "aws_default_security_group"
 }
 
+// LocalName returns the local name for [DefaultSecurityGroup].
 func (dsg *DefaultSecurityGroup) LocalName() string {
 	return dsg.Name
 }
 
+// Configuration returns the configuration (args) for [DefaultSecurityGroup].
 func (dsg *DefaultSecurityGroup) Configuration() interface{} {
 	return dsg.Args
 }
 
+// DependOn is used for other resources to depend on [DefaultSecurityGroup].
+func (dsg *DefaultSecurityGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(dsg)
+}
+
+// Dependencies returns the list of resources [DefaultSecurityGroup] depends_on.
+func (dsg *DefaultSecurityGroup) Dependencies() terra.Dependencies {
+	return dsg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DefaultSecurityGroup].
+func (dsg *DefaultSecurityGroup) LifecycleManagement() *terra.Lifecycle {
+	return dsg.Lifecycle
+}
+
+// Attributes returns the attributes for [DefaultSecurityGroup].
 func (dsg *DefaultSecurityGroup) Attributes() defaultSecurityGroupAttributes {
 	return defaultSecurityGroupAttributes{ref: terra.ReferenceResource(dsg)}
 }
 
+// ImportState imports the given attribute values into [DefaultSecurityGroup]'s state.
 func (dsg *DefaultSecurityGroup) ImportState(av io.Reader) error {
 	dsg.state = &defaultSecurityGroupState{}
 	if err := json.NewDecoder(av).Decode(dsg.state); err != nil {
@@ -49,10 +73,12 @@ func (dsg *DefaultSecurityGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DefaultSecurityGroup] has state.
 func (dsg *DefaultSecurityGroup) State() (*defaultSecurityGroupState, bool) {
 	return dsg.state, dsg.state != nil
 }
 
+// StateMust returns the state for [DefaultSecurityGroup]. Panics if the state is nil.
 func (dsg *DefaultSecurityGroup) StateMust() *defaultSecurityGroupState {
 	if dsg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dsg.Type(), dsg.LocalName()))
@@ -60,10 +86,7 @@ func (dsg *DefaultSecurityGroup) StateMust() *defaultSecurityGroupState {
 	return dsg.state
 }
 
-func (dsg *DefaultSecurityGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(dsg)
-}
-
+// DefaultSecurityGroupArgs contains the configurations for aws_default_security_group.
 type DefaultSecurityGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,59 +102,67 @@ type DefaultSecurityGroupArgs struct {
 	Egress []defaultsecuritygroup.Egress `hcl:"egress,block" validate:"min=0"`
 	// Ingress: min=0
 	Ingress []defaultsecuritygroup.Ingress `hcl:"ingress,block" validate:"min=0"`
-	// DependsOn contains resources that DefaultSecurityGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type defaultSecurityGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_default_security_group.
 func (dsg defaultSecurityGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dsg.ref.Append("arn"))
+	return terra.ReferenceAsString(dsg.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_default_security_group.
 func (dsg defaultSecurityGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dsg.ref.Append("description"))
+	return terra.ReferenceAsString(dsg.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_default_security_group.
 func (dsg defaultSecurityGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dsg.ref.Append("id"))
+	return terra.ReferenceAsString(dsg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_default_security_group.
 func (dsg defaultSecurityGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dsg.ref.Append("name"))
+	return terra.ReferenceAsString(dsg.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_default_security_group.
 func (dsg defaultSecurityGroupAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(dsg.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(dsg.ref.Append("name_prefix"))
 }
 
+// OwnerId returns a reference to field owner_id of aws_default_security_group.
 func (dsg defaultSecurityGroupAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(dsg.ref.Append("owner_id"))
+	return terra.ReferenceAsString(dsg.ref.Append("owner_id"))
 }
 
+// RevokeRulesOnDelete returns a reference to field revoke_rules_on_delete of aws_default_security_group.
 func (dsg defaultSecurityGroupAttributes) RevokeRulesOnDelete() terra.BoolValue {
-	return terra.ReferenceBool(dsg.ref.Append("revoke_rules_on_delete"))
+	return terra.ReferenceAsBool(dsg.ref.Append("revoke_rules_on_delete"))
 }
 
+// Tags returns a reference to field tags of aws_default_security_group.
 func (dsg defaultSecurityGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dsg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dsg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_default_security_group.
 func (dsg defaultSecurityGroupAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dsg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dsg.ref.Append("tags_all"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_default_security_group.
 func (dsg defaultSecurityGroupAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(dsg.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(dsg.ref.Append("vpc_id"))
 }
 
 func (dsg defaultSecurityGroupAttributes) Egress() terra.SetValue[defaultsecuritygroup.EgressAttributes] {
-	return terra.ReferenceSet[defaultsecuritygroup.EgressAttributes](dsg.ref.Append("egress"))
+	return terra.ReferenceAsSet[defaultsecuritygroup.EgressAttributes](dsg.ref.Append("egress"))
 }
 
 func (dsg defaultSecurityGroupAttributes) Ingress() terra.SetValue[defaultsecuritygroup.IngressAttributes] {
-	return terra.ReferenceSet[defaultsecuritygroup.IngressAttributes](dsg.ref.Append("ingress"))
+	return terra.ReferenceAsSet[defaultsecuritygroup.IngressAttributes](dsg.ref.Append("ingress"))
 }
 
 type defaultSecurityGroupState struct {

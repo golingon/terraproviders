@@ -26,27 +26,27 @@ func (r RouterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RouterAttributes) Platform() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("platform"))
+	return terra.ReferenceAsString(r.ref.Append("platform"))
 }
 
 func (r RouterAttributes) RouterTypeIdentifier() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("router_type_identifier"))
+	return terra.ReferenceAsString(r.ref.Append("router_type_identifier"))
 }
 
 func (r RouterAttributes) Software() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("software"))
+	return terra.ReferenceAsString(r.ref.Append("software"))
 }
 
 func (r RouterAttributes) Vendor() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("vendor"))
+	return terra.ReferenceAsString(r.ref.Append("vendor"))
 }
 
 func (r RouterAttributes) XsltTemplateName() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("xslt_template_name"))
+	return terra.ReferenceAsString(r.ref.Append("xslt_template_name"))
 }
 
 func (r RouterAttributes) XsltTemplateNameForMacSec() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("xslt_template_name_for_mac_sec"))
+	return terra.ReferenceAsString(r.ref.Append("xslt_template_name_for_mac_sec"))
 }
 
 type RouterState struct {

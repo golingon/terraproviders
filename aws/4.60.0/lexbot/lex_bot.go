@@ -74,11 +74,11 @@ func (as AbortStatementAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (as AbortStatementAttributes) ResponseCard() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("response_card"))
+	return terra.ReferenceAsString(as.ref.Append("response_card"))
 }
 
 func (as AbortStatementAttributes) Message() terra.SetValue[AbortStatementMessageAttributes] {
-	return terra.ReferenceSet[AbortStatementMessageAttributes](as.ref.Append("message"))
+	return terra.ReferenceAsSet[AbortStatementMessageAttributes](as.ref.Append("message"))
 }
 
 type AbortStatementMessageAttributes struct {
@@ -98,15 +98,15 @@ func (m AbortStatementMessageAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m AbortStatementMessageAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("content"))
+	return terra.ReferenceAsString(m.ref.Append("content"))
 }
 
 func (m AbortStatementMessageAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("content_type"))
+	return terra.ReferenceAsString(m.ref.Append("content_type"))
 }
 
 func (m AbortStatementMessageAttributes) GroupNumber() terra.NumberValue {
-	return terra.ReferenceNumber(m.ref.Append("group_number"))
+	return terra.ReferenceAsNumber(m.ref.Append("group_number"))
 }
 
 type ClarificationPromptAttributes struct {
@@ -126,15 +126,15 @@ func (cp ClarificationPromptAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cp ClarificationPromptAttributes) MaxAttempts() terra.NumberValue {
-	return terra.ReferenceNumber(cp.ref.Append("max_attempts"))
+	return terra.ReferenceAsNumber(cp.ref.Append("max_attempts"))
 }
 
 func (cp ClarificationPromptAttributes) ResponseCard() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("response_card"))
+	return terra.ReferenceAsString(cp.ref.Append("response_card"))
 }
 
 func (cp ClarificationPromptAttributes) Message() terra.SetValue[ClarificationPromptMessageAttributes] {
-	return terra.ReferenceSet[ClarificationPromptMessageAttributes](cp.ref.Append("message"))
+	return terra.ReferenceAsSet[ClarificationPromptMessageAttributes](cp.ref.Append("message"))
 }
 
 type ClarificationPromptMessageAttributes struct {
@@ -154,15 +154,15 @@ func (m ClarificationPromptMessageAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m ClarificationPromptMessageAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("content"))
+	return terra.ReferenceAsString(m.ref.Append("content"))
 }
 
 func (m ClarificationPromptMessageAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("content_type"))
+	return terra.ReferenceAsString(m.ref.Append("content_type"))
 }
 
 func (m ClarificationPromptMessageAttributes) GroupNumber() terra.NumberValue {
-	return terra.ReferenceNumber(m.ref.Append("group_number"))
+	return terra.ReferenceAsNumber(m.ref.Append("group_number"))
 }
 
 type IntentAttributes struct {
@@ -182,11 +182,11 @@ func (i IntentAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i IntentAttributes) IntentName() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("intent_name"))
+	return terra.ReferenceAsString(i.ref.Append("intent_name"))
 }
 
 func (i IntentAttributes) IntentVersion() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("intent_version"))
+	return terra.ReferenceAsString(i.ref.Append("intent_version"))
 }
 
 type TimeoutsAttributes struct {
@@ -206,15 +206,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AbortStatementState struct {

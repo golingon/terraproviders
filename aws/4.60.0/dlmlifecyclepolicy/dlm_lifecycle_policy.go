@@ -199,35 +199,35 @@ func (pd PolicyDetailsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pd PolicyDetailsAttributes) PolicyType() terra.StringValue {
-	return terra.ReferenceString(pd.ref.Append("policy_type"))
+	return terra.ReferenceAsString(pd.ref.Append("policy_type"))
 }
 
 func (pd PolicyDetailsAttributes) ResourceLocations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](pd.ref.Append("resource_locations"))
+	return terra.ReferenceAsList[terra.StringValue](pd.ref.Append("resource_locations"))
 }
 
 func (pd PolicyDetailsAttributes) ResourceTypes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](pd.ref.Append("resource_types"))
+	return terra.ReferenceAsList[terra.StringValue](pd.ref.Append("resource_types"))
 }
 
 func (pd PolicyDetailsAttributes) TargetTags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](pd.ref.Append("target_tags"))
+	return terra.ReferenceAsMap[terra.StringValue](pd.ref.Append("target_tags"))
 }
 
 func (pd PolicyDetailsAttributes) Action() terra.ListValue[ActionAttributes] {
-	return terra.ReferenceList[ActionAttributes](pd.ref.Append("action"))
+	return terra.ReferenceAsList[ActionAttributes](pd.ref.Append("action"))
 }
 
 func (pd PolicyDetailsAttributes) EventSource() terra.ListValue[EventSourceAttributes] {
-	return terra.ReferenceList[EventSourceAttributes](pd.ref.Append("event_source"))
+	return terra.ReferenceAsList[EventSourceAttributes](pd.ref.Append("event_source"))
 }
 
 func (pd PolicyDetailsAttributes) Parameters() terra.ListValue[PolicyDetailsParametersAttributes] {
-	return terra.ReferenceList[PolicyDetailsParametersAttributes](pd.ref.Append("parameters"))
+	return terra.ReferenceAsList[PolicyDetailsParametersAttributes](pd.ref.Append("parameters"))
 }
 
 func (pd PolicyDetailsAttributes) Schedule() terra.ListValue[ScheduleAttributes] {
-	return terra.ReferenceList[ScheduleAttributes](pd.ref.Append("schedule"))
+	return terra.ReferenceAsList[ScheduleAttributes](pd.ref.Append("schedule"))
 }
 
 type ActionAttributes struct {
@@ -247,11 +247,11 @@ func (a ActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a ActionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("name"))
+	return terra.ReferenceAsString(a.ref.Append("name"))
 }
 
 func (a ActionAttributes) CrossRegionCopy() terra.SetValue[CrossRegionCopyAttributes] {
-	return terra.ReferenceSet[CrossRegionCopyAttributes](a.ref.Append("cross_region_copy"))
+	return terra.ReferenceAsSet[CrossRegionCopyAttributes](a.ref.Append("cross_region_copy"))
 }
 
 type CrossRegionCopyAttributes struct {
@@ -271,15 +271,15 @@ func (crc CrossRegionCopyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (crc CrossRegionCopyAttributes) Target() terra.StringValue {
-	return terra.ReferenceString(crc.ref.Append("target"))
+	return terra.ReferenceAsString(crc.ref.Append("target"))
 }
 
 func (crc CrossRegionCopyAttributes) EncryptionConfiguration() terra.ListValue[EncryptionConfigurationAttributes] {
-	return terra.ReferenceList[EncryptionConfigurationAttributes](crc.ref.Append("encryption_configuration"))
+	return terra.ReferenceAsList[EncryptionConfigurationAttributes](crc.ref.Append("encryption_configuration"))
 }
 
 func (crc CrossRegionCopyAttributes) RetainRule() terra.ListValue[CrossRegionCopyRetainRuleAttributes] {
-	return terra.ReferenceList[CrossRegionCopyRetainRuleAttributes](crc.ref.Append("retain_rule"))
+	return terra.ReferenceAsList[CrossRegionCopyRetainRuleAttributes](crc.ref.Append("retain_rule"))
 }
 
 type EncryptionConfigurationAttributes struct {
@@ -299,11 +299,11 @@ func (ec EncryptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec EncryptionConfigurationAttributes) CmkArn() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("cmk_arn"))
+	return terra.ReferenceAsString(ec.ref.Append("cmk_arn"))
 }
 
 func (ec EncryptionConfigurationAttributes) Encrypted() terra.BoolValue {
-	return terra.ReferenceBool(ec.ref.Append("encrypted"))
+	return terra.ReferenceAsBool(ec.ref.Append("encrypted"))
 }
 
 type CrossRegionCopyRetainRuleAttributes struct {
@@ -323,11 +323,11 @@ func (rr CrossRegionCopyRetainRuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rr CrossRegionCopyRetainRuleAttributes) Interval() terra.NumberValue {
-	return terra.ReferenceNumber(rr.ref.Append("interval"))
+	return terra.ReferenceAsNumber(rr.ref.Append("interval"))
 }
 
 func (rr CrossRegionCopyRetainRuleAttributes) IntervalUnit() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("interval_unit"))
+	return terra.ReferenceAsString(rr.ref.Append("interval_unit"))
 }
 
 type EventSourceAttributes struct {
@@ -347,11 +347,11 @@ func (es EventSourceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (es EventSourceAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("type"))
+	return terra.ReferenceAsString(es.ref.Append("type"))
 }
 
 func (es EventSourceAttributes) Parameters() terra.ListValue[EventSourceParametersAttributes] {
-	return terra.ReferenceList[EventSourceParametersAttributes](es.ref.Append("parameters"))
+	return terra.ReferenceAsList[EventSourceParametersAttributes](es.ref.Append("parameters"))
 }
 
 type EventSourceParametersAttributes struct {
@@ -371,15 +371,15 @@ func (p EventSourceParametersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p EventSourceParametersAttributes) DescriptionRegex() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("description_regex"))
+	return terra.ReferenceAsString(p.ref.Append("description_regex"))
 }
 
 func (p EventSourceParametersAttributes) EventType() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("event_type"))
+	return terra.ReferenceAsString(p.ref.Append("event_type"))
 }
 
 func (p EventSourceParametersAttributes) SnapshotOwner() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](p.ref.Append("snapshot_owner"))
+	return terra.ReferenceAsSet[terra.StringValue](p.ref.Append("snapshot_owner"))
 }
 
 type PolicyDetailsParametersAttributes struct {
@@ -399,11 +399,11 @@ func (p PolicyDetailsParametersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p PolicyDetailsParametersAttributes) ExcludeBootVolume() terra.BoolValue {
-	return terra.ReferenceBool(p.ref.Append("exclude_boot_volume"))
+	return terra.ReferenceAsBool(p.ref.Append("exclude_boot_volume"))
 }
 
 func (p PolicyDetailsParametersAttributes) NoReboot() terra.BoolValue {
-	return terra.ReferenceBool(p.ref.Append("no_reboot"))
+	return terra.ReferenceAsBool(p.ref.Append("no_reboot"))
 }
 
 type ScheduleAttributes struct {
@@ -423,43 +423,43 @@ func (s ScheduleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s ScheduleAttributes) CopyTags() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("copy_tags"))
+	return terra.ReferenceAsBool(s.ref.Append("copy_tags"))
 }
 
 func (s ScheduleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s ScheduleAttributes) TagsToAdd() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](s.ref.Append("tags_to_add"))
+	return terra.ReferenceAsMap[terra.StringValue](s.ref.Append("tags_to_add"))
 }
 
 func (s ScheduleAttributes) VariableTags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](s.ref.Append("variable_tags"))
+	return terra.ReferenceAsMap[terra.StringValue](s.ref.Append("variable_tags"))
 }
 
 func (s ScheduleAttributes) CreateRule() terra.ListValue[CreateRuleAttributes] {
-	return terra.ReferenceList[CreateRuleAttributes](s.ref.Append("create_rule"))
+	return terra.ReferenceAsList[CreateRuleAttributes](s.ref.Append("create_rule"))
 }
 
 func (s ScheduleAttributes) CrossRegionCopyRule() terra.SetValue[CrossRegionCopyRuleAttributes] {
-	return terra.ReferenceSet[CrossRegionCopyRuleAttributes](s.ref.Append("cross_region_copy_rule"))
+	return terra.ReferenceAsSet[CrossRegionCopyRuleAttributes](s.ref.Append("cross_region_copy_rule"))
 }
 
 func (s ScheduleAttributes) DeprecateRule() terra.ListValue[ScheduleDeprecateRuleAttributes] {
-	return terra.ReferenceList[ScheduleDeprecateRuleAttributes](s.ref.Append("deprecate_rule"))
+	return terra.ReferenceAsList[ScheduleDeprecateRuleAttributes](s.ref.Append("deprecate_rule"))
 }
 
 func (s ScheduleAttributes) FastRestoreRule() terra.ListValue[FastRestoreRuleAttributes] {
-	return terra.ReferenceList[FastRestoreRuleAttributes](s.ref.Append("fast_restore_rule"))
+	return terra.ReferenceAsList[FastRestoreRuleAttributes](s.ref.Append("fast_restore_rule"))
 }
 
 func (s ScheduleAttributes) RetainRule() terra.ListValue[ScheduleRetainRuleAttributes] {
-	return terra.ReferenceList[ScheduleRetainRuleAttributes](s.ref.Append("retain_rule"))
+	return terra.ReferenceAsList[ScheduleRetainRuleAttributes](s.ref.Append("retain_rule"))
 }
 
 func (s ScheduleAttributes) ShareRule() terra.ListValue[ShareRuleAttributes] {
-	return terra.ReferenceList[ShareRuleAttributes](s.ref.Append("share_rule"))
+	return terra.ReferenceAsList[ShareRuleAttributes](s.ref.Append("share_rule"))
 }
 
 type CreateRuleAttributes struct {
@@ -479,23 +479,23 @@ func (cr CreateRuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cr CreateRuleAttributes) CronExpression() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("cron_expression"))
+	return terra.ReferenceAsString(cr.ref.Append("cron_expression"))
 }
 
 func (cr CreateRuleAttributes) Interval() terra.NumberValue {
-	return terra.ReferenceNumber(cr.ref.Append("interval"))
+	return terra.ReferenceAsNumber(cr.ref.Append("interval"))
 }
 
 func (cr CreateRuleAttributes) IntervalUnit() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("interval_unit"))
+	return terra.ReferenceAsString(cr.ref.Append("interval_unit"))
 }
 
 func (cr CreateRuleAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("location"))
+	return terra.ReferenceAsString(cr.ref.Append("location"))
 }
 
 func (cr CreateRuleAttributes) Times() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cr.ref.Append("times"))
+	return terra.ReferenceAsList[terra.StringValue](cr.ref.Append("times"))
 }
 
 type CrossRegionCopyRuleAttributes struct {
@@ -515,27 +515,27 @@ func (crcr CrossRegionCopyRuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (crcr CrossRegionCopyRuleAttributes) CmkArn() terra.StringValue {
-	return terra.ReferenceString(crcr.ref.Append("cmk_arn"))
+	return terra.ReferenceAsString(crcr.ref.Append("cmk_arn"))
 }
 
 func (crcr CrossRegionCopyRuleAttributes) CopyTags() terra.BoolValue {
-	return terra.ReferenceBool(crcr.ref.Append("copy_tags"))
+	return terra.ReferenceAsBool(crcr.ref.Append("copy_tags"))
 }
 
 func (crcr CrossRegionCopyRuleAttributes) Encrypted() terra.BoolValue {
-	return terra.ReferenceBool(crcr.ref.Append("encrypted"))
+	return terra.ReferenceAsBool(crcr.ref.Append("encrypted"))
 }
 
 func (crcr CrossRegionCopyRuleAttributes) Target() terra.StringValue {
-	return terra.ReferenceString(crcr.ref.Append("target"))
+	return terra.ReferenceAsString(crcr.ref.Append("target"))
 }
 
 func (crcr CrossRegionCopyRuleAttributes) DeprecateRule() terra.ListValue[CrossRegionCopyRuleDeprecateRuleAttributes] {
-	return terra.ReferenceList[CrossRegionCopyRuleDeprecateRuleAttributes](crcr.ref.Append("deprecate_rule"))
+	return terra.ReferenceAsList[CrossRegionCopyRuleDeprecateRuleAttributes](crcr.ref.Append("deprecate_rule"))
 }
 
 func (crcr CrossRegionCopyRuleAttributes) RetainRule() terra.ListValue[CrossRegionCopyRuleRetainRuleAttributes] {
-	return terra.ReferenceList[CrossRegionCopyRuleRetainRuleAttributes](crcr.ref.Append("retain_rule"))
+	return terra.ReferenceAsList[CrossRegionCopyRuleRetainRuleAttributes](crcr.ref.Append("retain_rule"))
 }
 
 type CrossRegionCopyRuleDeprecateRuleAttributes struct {
@@ -555,11 +555,11 @@ func (dr CrossRegionCopyRuleDeprecateRuleAttributes) InternalTokens() hclwrite.T
 }
 
 func (dr CrossRegionCopyRuleDeprecateRuleAttributes) Interval() terra.NumberValue {
-	return terra.ReferenceNumber(dr.ref.Append("interval"))
+	return terra.ReferenceAsNumber(dr.ref.Append("interval"))
 }
 
 func (dr CrossRegionCopyRuleDeprecateRuleAttributes) IntervalUnit() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("interval_unit"))
+	return terra.ReferenceAsString(dr.ref.Append("interval_unit"))
 }
 
 type CrossRegionCopyRuleRetainRuleAttributes struct {
@@ -579,11 +579,11 @@ func (rr CrossRegionCopyRuleRetainRuleAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (rr CrossRegionCopyRuleRetainRuleAttributes) Interval() terra.NumberValue {
-	return terra.ReferenceNumber(rr.ref.Append("interval"))
+	return terra.ReferenceAsNumber(rr.ref.Append("interval"))
 }
 
 func (rr CrossRegionCopyRuleRetainRuleAttributes) IntervalUnit() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("interval_unit"))
+	return terra.ReferenceAsString(rr.ref.Append("interval_unit"))
 }
 
 type ScheduleDeprecateRuleAttributes struct {
@@ -603,15 +603,15 @@ func (dr ScheduleDeprecateRuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dr ScheduleDeprecateRuleAttributes) Count() terra.NumberValue {
-	return terra.ReferenceNumber(dr.ref.Append("count"))
+	return terra.ReferenceAsNumber(dr.ref.Append("count"))
 }
 
 func (dr ScheduleDeprecateRuleAttributes) Interval() terra.NumberValue {
-	return terra.ReferenceNumber(dr.ref.Append("interval"))
+	return terra.ReferenceAsNumber(dr.ref.Append("interval"))
 }
 
 func (dr ScheduleDeprecateRuleAttributes) IntervalUnit() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("interval_unit"))
+	return terra.ReferenceAsString(dr.ref.Append("interval_unit"))
 }
 
 type FastRestoreRuleAttributes struct {
@@ -631,19 +631,19 @@ func (frr FastRestoreRuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (frr FastRestoreRuleAttributes) AvailabilityZones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](frr.ref.Append("availability_zones"))
+	return terra.ReferenceAsSet[terra.StringValue](frr.ref.Append("availability_zones"))
 }
 
 func (frr FastRestoreRuleAttributes) Count() terra.NumberValue {
-	return terra.ReferenceNumber(frr.ref.Append("count"))
+	return terra.ReferenceAsNumber(frr.ref.Append("count"))
 }
 
 func (frr FastRestoreRuleAttributes) Interval() terra.NumberValue {
-	return terra.ReferenceNumber(frr.ref.Append("interval"))
+	return terra.ReferenceAsNumber(frr.ref.Append("interval"))
 }
 
 func (frr FastRestoreRuleAttributes) IntervalUnit() terra.StringValue {
-	return terra.ReferenceString(frr.ref.Append("interval_unit"))
+	return terra.ReferenceAsString(frr.ref.Append("interval_unit"))
 }
 
 type ScheduleRetainRuleAttributes struct {
@@ -663,15 +663,15 @@ func (rr ScheduleRetainRuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rr ScheduleRetainRuleAttributes) Count() terra.NumberValue {
-	return terra.ReferenceNumber(rr.ref.Append("count"))
+	return terra.ReferenceAsNumber(rr.ref.Append("count"))
 }
 
 func (rr ScheduleRetainRuleAttributes) Interval() terra.NumberValue {
-	return terra.ReferenceNumber(rr.ref.Append("interval"))
+	return terra.ReferenceAsNumber(rr.ref.Append("interval"))
 }
 
 func (rr ScheduleRetainRuleAttributes) IntervalUnit() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("interval_unit"))
+	return terra.ReferenceAsString(rr.ref.Append("interval_unit"))
 }
 
 type ShareRuleAttributes struct {
@@ -691,15 +691,15 @@ func (sr ShareRuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sr ShareRuleAttributes) TargetAccounts() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sr.ref.Append("target_accounts"))
+	return terra.ReferenceAsSet[terra.StringValue](sr.ref.Append("target_accounts"))
 }
 
 func (sr ShareRuleAttributes) UnshareInterval() terra.NumberValue {
-	return terra.ReferenceNumber(sr.ref.Append("unshare_interval"))
+	return terra.ReferenceAsNumber(sr.ref.Append("unshare_interval"))
 }
 
 func (sr ShareRuleAttributes) UnshareIntervalUnit() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("unshare_interval_unit"))
+	return terra.ReferenceAsString(sr.ref.Append("unshare_interval_unit"))
 }
 
 type PolicyDetailsState struct {

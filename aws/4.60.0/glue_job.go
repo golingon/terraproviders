@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewGlueJob creates a new instance of [GlueJob].
 func NewGlueJob(name string, args GlueJobArgs) *GlueJob {
 	return &GlueJob{
 		Args: args,
@@ -19,28 +20,51 @@ func NewGlueJob(name string, args GlueJobArgs) *GlueJob {
 
 var _ terra.Resource = (*GlueJob)(nil)
 
+// GlueJob represents the Terraform resource aws_glue_job.
 type GlueJob struct {
-	Name  string
-	Args  GlueJobArgs
-	state *glueJobState
+	Name      string
+	Args      GlueJobArgs
+	state     *glueJobState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GlueJob].
 func (gj *GlueJob) Type() string {
 	return "aws_glue_job"
 }
 
+// LocalName returns the local name for [GlueJob].
 func (gj *GlueJob) LocalName() string {
 	return gj.Name
 }
 
+// Configuration returns the configuration (args) for [GlueJob].
 func (gj *GlueJob) Configuration() interface{} {
 	return gj.Args
 }
 
+// DependOn is used for other resources to depend on [GlueJob].
+func (gj *GlueJob) DependOn() terra.Reference {
+	return terra.ReferenceResource(gj)
+}
+
+// Dependencies returns the list of resources [GlueJob] depends_on.
+func (gj *GlueJob) Dependencies() terra.Dependencies {
+	return gj.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GlueJob].
+func (gj *GlueJob) LifecycleManagement() *terra.Lifecycle {
+	return gj.Lifecycle
+}
+
+// Attributes returns the attributes for [GlueJob].
 func (gj *GlueJob) Attributes() glueJobAttributes {
 	return glueJobAttributes{ref: terra.ReferenceResource(gj)}
 }
 
+// ImportState imports the given attribute values into [GlueJob]'s state.
 func (gj *GlueJob) ImportState(av io.Reader) error {
 	gj.state = &glueJobState{}
 	if err := json.NewDecoder(av).Decode(gj.state); err != nil {
@@ -49,10 +73,12 @@ func (gj *GlueJob) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GlueJob] has state.
 func (gj *GlueJob) State() (*glueJobState, bool) {
 	return gj.state, gj.state != nil
 }
 
+// StateMust returns the state for [GlueJob]. Panics if the state is nil.
 func (gj *GlueJob) StateMust() *glueJobState {
 	if gj.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", gj.Type(), gj.LocalName()))
@@ -60,10 +86,7 @@ func (gj *GlueJob) StateMust() *glueJobState {
 	return gj.state
 }
 
-func (gj *GlueJob) DependOn() terra.Reference {
-	return terra.ReferenceResource(gj)
-}
-
+// GlueJobArgs contains the configurations for aws_glue_job.
 type GlueJobArgs struct {
 	// Connections: list of string, optional
 	Connections terra.ListValue[terra.StringValue] `hcl:"connections,attr"`
@@ -105,95 +128,111 @@ type GlueJobArgs struct {
 	ExecutionProperty *gluejob.ExecutionProperty `hcl:"execution_property,block"`
 	// NotificationProperty: optional
 	NotificationProperty *gluejob.NotificationProperty `hcl:"notification_property,block"`
-	// DependsOn contains resources that GlueJob depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type glueJobAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_glue_job.
 func (gj glueJobAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(gj.ref.Append("arn"))
+	return terra.ReferenceAsString(gj.ref.Append("arn"))
 }
 
+// Connections returns a reference to field connections of aws_glue_job.
 func (gj glueJobAttributes) Connections() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](gj.ref.Append("connections"))
+	return terra.ReferenceAsList[terra.StringValue](gj.ref.Append("connections"))
 }
 
+// DefaultArguments returns a reference to field default_arguments of aws_glue_job.
 func (gj glueJobAttributes) DefaultArguments() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gj.ref.Append("default_arguments"))
+	return terra.ReferenceAsMap[terra.StringValue](gj.ref.Append("default_arguments"))
 }
 
+// Description returns a reference to field description of aws_glue_job.
 func (gj glueJobAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(gj.ref.Append("description"))
+	return terra.ReferenceAsString(gj.ref.Append("description"))
 }
 
+// ExecutionClass returns a reference to field execution_class of aws_glue_job.
 func (gj glueJobAttributes) ExecutionClass() terra.StringValue {
-	return terra.ReferenceString(gj.ref.Append("execution_class"))
+	return terra.ReferenceAsString(gj.ref.Append("execution_class"))
 }
 
+// GlueVersion returns a reference to field glue_version of aws_glue_job.
 func (gj glueJobAttributes) GlueVersion() terra.StringValue {
-	return terra.ReferenceString(gj.ref.Append("glue_version"))
+	return terra.ReferenceAsString(gj.ref.Append("glue_version"))
 }
 
+// Id returns a reference to field id of aws_glue_job.
 func (gj glueJobAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gj.ref.Append("id"))
+	return terra.ReferenceAsString(gj.ref.Append("id"))
 }
 
+// MaxCapacity returns a reference to field max_capacity of aws_glue_job.
 func (gj glueJobAttributes) MaxCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(gj.ref.Append("max_capacity"))
+	return terra.ReferenceAsNumber(gj.ref.Append("max_capacity"))
 }
 
+// MaxRetries returns a reference to field max_retries of aws_glue_job.
 func (gj glueJobAttributes) MaxRetries() terra.NumberValue {
-	return terra.ReferenceNumber(gj.ref.Append("max_retries"))
+	return terra.ReferenceAsNumber(gj.ref.Append("max_retries"))
 }
 
+// Name returns a reference to field name of aws_glue_job.
 func (gj glueJobAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(gj.ref.Append("name"))
+	return terra.ReferenceAsString(gj.ref.Append("name"))
 }
 
+// NonOverridableArguments returns a reference to field non_overridable_arguments of aws_glue_job.
 func (gj glueJobAttributes) NonOverridableArguments() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gj.ref.Append("non_overridable_arguments"))
+	return terra.ReferenceAsMap[terra.StringValue](gj.ref.Append("non_overridable_arguments"))
 }
 
+// NumberOfWorkers returns a reference to field number_of_workers of aws_glue_job.
 func (gj glueJobAttributes) NumberOfWorkers() terra.NumberValue {
-	return terra.ReferenceNumber(gj.ref.Append("number_of_workers"))
+	return terra.ReferenceAsNumber(gj.ref.Append("number_of_workers"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_glue_job.
 func (gj glueJobAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(gj.ref.Append("role_arn"))
+	return terra.ReferenceAsString(gj.ref.Append("role_arn"))
 }
 
+// SecurityConfiguration returns a reference to field security_configuration of aws_glue_job.
 func (gj glueJobAttributes) SecurityConfiguration() terra.StringValue {
-	return terra.ReferenceString(gj.ref.Append("security_configuration"))
+	return terra.ReferenceAsString(gj.ref.Append("security_configuration"))
 }
 
+// Tags returns a reference to field tags of aws_glue_job.
 func (gj glueJobAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gj.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](gj.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_glue_job.
 func (gj glueJobAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gj.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](gj.ref.Append("tags_all"))
 }
 
+// Timeout returns a reference to field timeout of aws_glue_job.
 func (gj glueJobAttributes) Timeout() terra.NumberValue {
-	return terra.ReferenceNumber(gj.ref.Append("timeout"))
+	return terra.ReferenceAsNumber(gj.ref.Append("timeout"))
 }
 
+// WorkerType returns a reference to field worker_type of aws_glue_job.
 func (gj glueJobAttributes) WorkerType() terra.StringValue {
-	return terra.ReferenceString(gj.ref.Append("worker_type"))
+	return terra.ReferenceAsString(gj.ref.Append("worker_type"))
 }
 
 func (gj glueJobAttributes) Command() terra.ListValue[gluejob.CommandAttributes] {
-	return terra.ReferenceList[gluejob.CommandAttributes](gj.ref.Append("command"))
+	return terra.ReferenceAsList[gluejob.CommandAttributes](gj.ref.Append("command"))
 }
 
 func (gj glueJobAttributes) ExecutionProperty() terra.ListValue[gluejob.ExecutionPropertyAttributes] {
-	return terra.ReferenceList[gluejob.ExecutionPropertyAttributes](gj.ref.Append("execution_property"))
+	return terra.ReferenceAsList[gluejob.ExecutionPropertyAttributes](gj.ref.Append("execution_property"))
 }
 
 func (gj glueJobAttributes) NotificationProperty() terra.ListValue[gluejob.NotificationPropertyAttributes] {
-	return terra.ReferenceList[gluejob.NotificationPropertyAttributes](gj.ref.Append("notification_property"))
+	return terra.ReferenceAsList[gluejob.NotificationPropertyAttributes](gj.ref.Append("notification_property"))
 }
 
 type glueJobState struct {

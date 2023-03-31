@@ -46,19 +46,19 @@ func (rm RoleMappingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rm RoleMappingAttributes) AmbiguousRoleResolution() terra.StringValue {
-	return terra.ReferenceString(rm.ref.Append("ambiguous_role_resolution"))
+	return terra.ReferenceAsString(rm.ref.Append("ambiguous_role_resolution"))
 }
 
 func (rm RoleMappingAttributes) IdentityProvider() terra.StringValue {
-	return terra.ReferenceString(rm.ref.Append("identity_provider"))
+	return terra.ReferenceAsString(rm.ref.Append("identity_provider"))
 }
 
 func (rm RoleMappingAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(rm.ref.Append("type"))
+	return terra.ReferenceAsString(rm.ref.Append("type"))
 }
 
 func (rm RoleMappingAttributes) MappingRule() terra.ListValue[MappingRuleAttributes] {
-	return terra.ReferenceList[MappingRuleAttributes](rm.ref.Append("mapping_rule"))
+	return terra.ReferenceAsList[MappingRuleAttributes](rm.ref.Append("mapping_rule"))
 }
 
 type MappingRuleAttributes struct {
@@ -78,19 +78,19 @@ func (mr MappingRuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mr MappingRuleAttributes) Claim() terra.StringValue {
-	return terra.ReferenceString(mr.ref.Append("claim"))
+	return terra.ReferenceAsString(mr.ref.Append("claim"))
 }
 
 func (mr MappingRuleAttributes) MatchType() terra.StringValue {
-	return terra.ReferenceString(mr.ref.Append("match_type"))
+	return terra.ReferenceAsString(mr.ref.Append("match_type"))
 }
 
 func (mr MappingRuleAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(mr.ref.Append("role_arn"))
+	return terra.ReferenceAsString(mr.ref.Append("role_arn"))
 }
 
 func (mr MappingRuleAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(mr.ref.Append("value"))
+	return terra.ReferenceAsString(mr.ref.Append("value"))
 }
 
 type RoleMappingState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewKinesisStream creates a new instance of [KinesisStream].
 func NewKinesisStream(name string, args KinesisStreamArgs) *KinesisStream {
 	return &KinesisStream{
 		Args: args,
@@ -19,28 +20,51 @@ func NewKinesisStream(name string, args KinesisStreamArgs) *KinesisStream {
 
 var _ terra.Resource = (*KinesisStream)(nil)
 
+// KinesisStream represents the Terraform resource aws_kinesis_stream.
 type KinesisStream struct {
-	Name  string
-	Args  KinesisStreamArgs
-	state *kinesisStreamState
+	Name      string
+	Args      KinesisStreamArgs
+	state     *kinesisStreamState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KinesisStream].
 func (ks *KinesisStream) Type() string {
 	return "aws_kinesis_stream"
 }
 
+// LocalName returns the local name for [KinesisStream].
 func (ks *KinesisStream) LocalName() string {
 	return ks.Name
 }
 
+// Configuration returns the configuration (args) for [KinesisStream].
 func (ks *KinesisStream) Configuration() interface{} {
 	return ks.Args
 }
 
+// DependOn is used for other resources to depend on [KinesisStream].
+func (ks *KinesisStream) DependOn() terra.Reference {
+	return terra.ReferenceResource(ks)
+}
+
+// Dependencies returns the list of resources [KinesisStream] depends_on.
+func (ks *KinesisStream) Dependencies() terra.Dependencies {
+	return ks.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KinesisStream].
+func (ks *KinesisStream) LifecycleManagement() *terra.Lifecycle {
+	return ks.Lifecycle
+}
+
+// Attributes returns the attributes for [KinesisStream].
 func (ks *KinesisStream) Attributes() kinesisStreamAttributes {
 	return kinesisStreamAttributes{ref: terra.ReferenceResource(ks)}
 }
 
+// ImportState imports the given attribute values into [KinesisStream]'s state.
 func (ks *KinesisStream) ImportState(av io.Reader) error {
 	ks.state = &kinesisStreamState{}
 	if err := json.NewDecoder(av).Decode(ks.state); err != nil {
@@ -49,10 +73,12 @@ func (ks *KinesisStream) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [KinesisStream] has state.
 func (ks *KinesisStream) State() (*kinesisStreamState, bool) {
 	return ks.state, ks.state != nil
 }
 
+// StateMust returns the state for [KinesisStream]. Panics if the state is nil.
 func (ks *KinesisStream) StateMust() *kinesisStreamState {
 	if ks.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ks.Type(), ks.LocalName()))
@@ -60,10 +86,7 @@ func (ks *KinesisStream) StateMust() *kinesisStreamState {
 	return ks.state
 }
 
-func (ks *KinesisStream) DependOn() terra.Reference {
-	return terra.ReferenceResource(ks)
-}
-
+// KinesisStreamArgs contains the configurations for aws_kinesis_stream.
 type KinesisStreamArgs struct {
 	// Arn: string, optional
 	Arn terra.StringValue `hcl:"arn,attr"`
@@ -91,63 +114,72 @@ type KinesisStreamArgs struct {
 	StreamModeDetails *kinesisstream.StreamModeDetails `hcl:"stream_mode_details,block"`
 	// Timeouts: optional
 	Timeouts *kinesisstream.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that KinesisStream depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type kinesisStreamAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_kinesis_stream.
 func (ks kinesisStreamAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("arn"))
+	return terra.ReferenceAsString(ks.ref.Append("arn"))
 }
 
+// EncryptionType returns a reference to field encryption_type of aws_kinesis_stream.
 func (ks kinesisStreamAttributes) EncryptionType() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("encryption_type"))
+	return terra.ReferenceAsString(ks.ref.Append("encryption_type"))
 }
 
+// EnforceConsumerDeletion returns a reference to field enforce_consumer_deletion of aws_kinesis_stream.
 func (ks kinesisStreamAttributes) EnforceConsumerDeletion() terra.BoolValue {
-	return terra.ReferenceBool(ks.ref.Append("enforce_consumer_deletion"))
+	return terra.ReferenceAsBool(ks.ref.Append("enforce_consumer_deletion"))
 }
 
+// Id returns a reference to field id of aws_kinesis_stream.
 func (ks kinesisStreamAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("id"))
+	return terra.ReferenceAsString(ks.ref.Append("id"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_kinesis_stream.
 func (ks kinesisStreamAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(ks.ref.Append("kms_key_id"))
 }
 
+// Name returns a reference to field name of aws_kinesis_stream.
 func (ks kinesisStreamAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("name"))
+	return terra.ReferenceAsString(ks.ref.Append("name"))
 }
 
+// RetentionPeriod returns a reference to field retention_period of aws_kinesis_stream.
 func (ks kinesisStreamAttributes) RetentionPeriod() terra.NumberValue {
-	return terra.ReferenceNumber(ks.ref.Append("retention_period"))
+	return terra.ReferenceAsNumber(ks.ref.Append("retention_period"))
 }
 
+// ShardCount returns a reference to field shard_count of aws_kinesis_stream.
 func (ks kinesisStreamAttributes) ShardCount() terra.NumberValue {
-	return terra.ReferenceNumber(ks.ref.Append("shard_count"))
+	return terra.ReferenceAsNumber(ks.ref.Append("shard_count"))
 }
 
+// ShardLevelMetrics returns a reference to field shard_level_metrics of aws_kinesis_stream.
 func (ks kinesisStreamAttributes) ShardLevelMetrics() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ks.ref.Append("shard_level_metrics"))
+	return terra.ReferenceAsSet[terra.StringValue](ks.ref.Append("shard_level_metrics"))
 }
 
+// Tags returns a reference to field tags of aws_kinesis_stream.
 func (ks kinesisStreamAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ks.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ks.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_kinesis_stream.
 func (ks kinesisStreamAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ks.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ks.ref.Append("tags_all"))
 }
 
 func (ks kinesisStreamAttributes) StreamModeDetails() terra.ListValue[kinesisstream.StreamModeDetailsAttributes] {
-	return terra.ReferenceList[kinesisstream.StreamModeDetailsAttributes](ks.ref.Append("stream_mode_details"))
+	return terra.ReferenceAsList[kinesisstream.StreamModeDetailsAttributes](ks.ref.Append("stream_mode_details"))
 }
 
 func (ks kinesisStreamAttributes) Timeouts() kinesisstream.TimeoutsAttributes {
-	return terra.ReferenceSingle[kinesisstream.TimeoutsAttributes](ks.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[kinesisstream.TimeoutsAttributes](ks.ref.Append("timeouts"))
 }
 
 type kinesisStreamState struct {

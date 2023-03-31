@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCodepipeline creates a new instance of [Codepipeline].
 func NewCodepipeline(name string, args CodepipelineArgs) *Codepipeline {
 	return &Codepipeline{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCodepipeline(name string, args CodepipelineArgs) *Codepipeline {
 
 var _ terra.Resource = (*Codepipeline)(nil)
 
+// Codepipeline represents the Terraform resource aws_codepipeline.
 type Codepipeline struct {
-	Name  string
-	Args  CodepipelineArgs
-	state *codepipelineState
+	Name      string
+	Args      CodepipelineArgs
+	state     *codepipelineState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Codepipeline].
 func (c *Codepipeline) Type() string {
 	return "aws_codepipeline"
 }
 
+// LocalName returns the local name for [Codepipeline].
 func (c *Codepipeline) LocalName() string {
 	return c.Name
 }
 
+// Configuration returns the configuration (args) for [Codepipeline].
 func (c *Codepipeline) Configuration() interface{} {
 	return c.Args
 }
 
+// DependOn is used for other resources to depend on [Codepipeline].
+func (c *Codepipeline) DependOn() terra.Reference {
+	return terra.ReferenceResource(c)
+}
+
+// Dependencies returns the list of resources [Codepipeline] depends_on.
+func (c *Codepipeline) Dependencies() terra.Dependencies {
+	return c.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Codepipeline].
+func (c *Codepipeline) LifecycleManagement() *terra.Lifecycle {
+	return c.Lifecycle
+}
+
+// Attributes returns the attributes for [Codepipeline].
 func (c *Codepipeline) Attributes() codepipelineAttributes {
 	return codepipelineAttributes{ref: terra.ReferenceResource(c)}
 }
 
+// ImportState imports the given attribute values into [Codepipeline]'s state.
 func (c *Codepipeline) ImportState(av io.Reader) error {
 	c.state = &codepipelineState{}
 	if err := json.NewDecoder(av).Decode(c.state); err != nil {
@@ -49,10 +73,12 @@ func (c *Codepipeline) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Codepipeline] has state.
 func (c *Codepipeline) State() (*codepipelineState, bool) {
 	return c.state, c.state != nil
 }
 
+// StateMust returns the state for [Codepipeline]. Panics if the state is nil.
 func (c *Codepipeline) StateMust() *codepipelineState {
 	if c.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", c.Type(), c.LocalName()))
@@ -60,10 +86,7 @@ func (c *Codepipeline) StateMust() *codepipelineState {
 	return c.state
 }
 
-func (c *Codepipeline) DependOn() terra.Reference {
-	return terra.ReferenceResource(c)
-}
-
+// CodepipelineArgs contains the configurations for aws_codepipeline.
 type CodepipelineArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,47 @@ type CodepipelineArgs struct {
 	ArtifactStore []codepipeline.ArtifactStore `hcl:"artifact_store,block" validate:"min=1"`
 	// Stage: min=2
 	Stage []codepipeline.Stage `hcl:"stage,block" validate:"min=2"`
-	// DependsOn contains resources that Codepipeline depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type codepipelineAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_codepipeline.
 func (c codepipelineAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("arn"))
+	return terra.ReferenceAsString(c.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_codepipeline.
 func (c codepipelineAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("id"))
+	return terra.ReferenceAsString(c.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_codepipeline.
 func (c codepipelineAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_codepipeline.
 func (c codepipelineAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("role_arn"))
+	return terra.ReferenceAsString(c.ref.Append("role_arn"))
 }
 
+// Tags returns a reference to field tags of aws_codepipeline.
 func (c codepipelineAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](c.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](c.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_codepipeline.
 func (c codepipelineAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](c.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](c.ref.Append("tags_all"))
 }
 
 func (c codepipelineAttributes) ArtifactStore() terra.SetValue[codepipeline.ArtifactStoreAttributes] {
-	return terra.ReferenceSet[codepipeline.ArtifactStoreAttributes](c.ref.Append("artifact_store"))
+	return terra.ReferenceAsSet[codepipeline.ArtifactStoreAttributes](c.ref.Append("artifact_store"))
 }
 
 func (c codepipelineAttributes) Stage() terra.ListValue[codepipeline.StageAttributes] {
-	return terra.ReferenceList[codepipeline.StageAttributes](c.ref.Append("stage"))
+	return terra.ReferenceAsList[codepipeline.StageAttributes](c.ref.Append("stage"))
 }
 
 type codepipelineState struct {

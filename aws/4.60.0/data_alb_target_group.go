@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataAlbTargetGroup creates a new instance of [DataAlbTargetGroup].
 func NewDataAlbTargetGroup(name string, args DataAlbTargetGroupArgs) *DataAlbTargetGroup {
 	return &DataAlbTargetGroup{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataAlbTargetGroup(name string, args DataAlbTargetGroupArgs) *DataAlbTar
 
 var _ terra.DataResource = (*DataAlbTargetGroup)(nil)
 
+// DataAlbTargetGroup represents the Terraform data resource aws_alb_target_group.
 type DataAlbTargetGroup struct {
 	Name string
 	Args DataAlbTargetGroupArgs
 }
 
+// DataSource returns the Terraform object type for [DataAlbTargetGroup].
 func (atg *DataAlbTargetGroup) DataSource() string {
 	return "aws_alb_target_group"
 }
 
+// LocalName returns the local name for [DataAlbTargetGroup].
 func (atg *DataAlbTargetGroup) LocalName() string {
 	return atg.Name
 }
 
+// Configuration returns the configuration (args) for [DataAlbTargetGroup].
 func (atg *DataAlbTargetGroup) Configuration() interface{} {
 	return atg.Args
 }
 
+// Attributes returns the attributes for [DataAlbTargetGroup].
 func (atg *DataAlbTargetGroup) Attributes() dataAlbTargetGroupAttributes {
 	return dataAlbTargetGroupAttributes{ref: terra.ReferenceDataResource(atg)}
 }
 
+// DataAlbTargetGroupArgs contains the configurations for aws_alb_target_group.
 type DataAlbTargetGroupArgs struct {
 	// Arn: string, optional
 	Arn terra.StringValue `hcl:"arn,attr"`
@@ -57,86 +64,104 @@ type dataAlbTargetGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_alb_target_group.
 func (atg dataAlbTargetGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(atg.ref.Append("arn"))
+	return terra.ReferenceAsString(atg.ref.Append("arn"))
 }
 
+// ArnSuffix returns a reference to field arn_suffix of aws_alb_target_group.
 func (atg dataAlbTargetGroupAttributes) ArnSuffix() terra.StringValue {
-	return terra.ReferenceString(atg.ref.Append("arn_suffix"))
+	return terra.ReferenceAsString(atg.ref.Append("arn_suffix"))
 }
 
+// ConnectionTermination returns a reference to field connection_termination of aws_alb_target_group.
 func (atg dataAlbTargetGroupAttributes) ConnectionTermination() terra.BoolValue {
-	return terra.ReferenceBool(atg.ref.Append("connection_termination"))
+	return terra.ReferenceAsBool(atg.ref.Append("connection_termination"))
 }
 
+// DeregistrationDelay returns a reference to field deregistration_delay of aws_alb_target_group.
 func (atg dataAlbTargetGroupAttributes) DeregistrationDelay() terra.NumberValue {
-	return terra.ReferenceNumber(atg.ref.Append("deregistration_delay"))
+	return terra.ReferenceAsNumber(atg.ref.Append("deregistration_delay"))
 }
 
+// Id returns a reference to field id of aws_alb_target_group.
 func (atg dataAlbTargetGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(atg.ref.Append("id"))
+	return terra.ReferenceAsString(atg.ref.Append("id"))
 }
 
+// LambdaMultiValueHeadersEnabled returns a reference to field lambda_multi_value_headers_enabled of aws_alb_target_group.
 func (atg dataAlbTargetGroupAttributes) LambdaMultiValueHeadersEnabled() terra.BoolValue {
-	return terra.ReferenceBool(atg.ref.Append("lambda_multi_value_headers_enabled"))
+	return terra.ReferenceAsBool(atg.ref.Append("lambda_multi_value_headers_enabled"))
 }
 
+// LoadBalancingAlgorithmType returns a reference to field load_balancing_algorithm_type of aws_alb_target_group.
 func (atg dataAlbTargetGroupAttributes) LoadBalancingAlgorithmType() terra.StringValue {
-	return terra.ReferenceString(atg.ref.Append("load_balancing_algorithm_type"))
+	return terra.ReferenceAsString(atg.ref.Append("load_balancing_algorithm_type"))
 }
 
+// LoadBalancingCrossZoneEnabled returns a reference to field load_balancing_cross_zone_enabled of aws_alb_target_group.
 func (atg dataAlbTargetGroupAttributes) LoadBalancingCrossZoneEnabled() terra.StringValue {
-	return terra.ReferenceString(atg.ref.Append("load_balancing_cross_zone_enabled"))
+	return terra.ReferenceAsString(atg.ref.Append("load_balancing_cross_zone_enabled"))
 }
 
+// Name returns a reference to field name of aws_alb_target_group.
 func (atg dataAlbTargetGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(atg.ref.Append("name"))
+	return terra.ReferenceAsString(atg.ref.Append("name"))
 }
 
+// Port returns a reference to field port of aws_alb_target_group.
 func (atg dataAlbTargetGroupAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(atg.ref.Append("port"))
+	return terra.ReferenceAsNumber(atg.ref.Append("port"))
 }
 
+// PreserveClientIp returns a reference to field preserve_client_ip of aws_alb_target_group.
 func (atg dataAlbTargetGroupAttributes) PreserveClientIp() terra.StringValue {
-	return terra.ReferenceString(atg.ref.Append("preserve_client_ip"))
+	return terra.ReferenceAsString(atg.ref.Append("preserve_client_ip"))
 }
 
+// Protocol returns a reference to field protocol of aws_alb_target_group.
 func (atg dataAlbTargetGroupAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(atg.ref.Append("protocol"))
+	return terra.ReferenceAsString(atg.ref.Append("protocol"))
 }
 
+// ProtocolVersion returns a reference to field protocol_version of aws_alb_target_group.
 func (atg dataAlbTargetGroupAttributes) ProtocolVersion() terra.StringValue {
-	return terra.ReferenceString(atg.ref.Append("protocol_version"))
+	return terra.ReferenceAsString(atg.ref.Append("protocol_version"))
 }
 
+// ProxyProtocolV2 returns a reference to field proxy_protocol_v2 of aws_alb_target_group.
 func (atg dataAlbTargetGroupAttributes) ProxyProtocolV2() terra.BoolValue {
-	return terra.ReferenceBool(atg.ref.Append("proxy_protocol_v2"))
+	return terra.ReferenceAsBool(atg.ref.Append("proxy_protocol_v2"))
 }
 
+// SlowStart returns a reference to field slow_start of aws_alb_target_group.
 func (atg dataAlbTargetGroupAttributes) SlowStart() terra.NumberValue {
-	return terra.ReferenceNumber(atg.ref.Append("slow_start"))
+	return terra.ReferenceAsNumber(atg.ref.Append("slow_start"))
 }
 
+// Tags returns a reference to field tags of aws_alb_target_group.
 func (atg dataAlbTargetGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](atg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](atg.ref.Append("tags"))
 }
 
+// TargetType returns a reference to field target_type of aws_alb_target_group.
 func (atg dataAlbTargetGroupAttributes) TargetType() terra.StringValue {
-	return terra.ReferenceString(atg.ref.Append("target_type"))
+	return terra.ReferenceAsString(atg.ref.Append("target_type"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_alb_target_group.
 func (atg dataAlbTargetGroupAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(atg.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(atg.ref.Append("vpc_id"))
 }
 
 func (atg dataAlbTargetGroupAttributes) HealthCheck() terra.ListValue[dataalbtargetgroup.HealthCheckAttributes] {
-	return terra.ReferenceList[dataalbtargetgroup.HealthCheckAttributes](atg.ref.Append("health_check"))
+	return terra.ReferenceAsList[dataalbtargetgroup.HealthCheckAttributes](atg.ref.Append("health_check"))
 }
 
 func (atg dataAlbTargetGroupAttributes) Stickiness() terra.ListValue[dataalbtargetgroup.StickinessAttributes] {
-	return terra.ReferenceList[dataalbtargetgroup.StickinessAttributes](atg.ref.Append("stickiness"))
+	return terra.ReferenceAsList[dataalbtargetgroup.StickinessAttributes](atg.ref.Append("stickiness"))
 }
 
 func (atg dataAlbTargetGroupAttributes) Timeouts() dataalbtargetgroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataalbtargetgroup.TimeoutsAttributes](atg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataalbtargetgroup.TimeoutsAttributes](atg.ref.Append("timeouts"))
 }

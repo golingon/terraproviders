@@ -38,11 +38,11 @@ func (ipc IpamPoolCidrsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ipc IpamPoolCidrsAttributes) Cidr() terra.StringValue {
-	return terra.ReferenceString(ipc.ref.Append("cidr"))
+	return terra.ReferenceAsString(ipc.ref.Append("cidr"))
 }
 
 func (ipc IpamPoolCidrsAttributes) State() terra.StringValue {
-	return terra.ReferenceString(ipc.ref.Append("state"))
+	return terra.ReferenceAsString(ipc.ref.Append("state"))
 }
 
 type FilterAttributes struct {
@@ -62,11 +62,11 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
 func (f FilterAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](f.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](f.ref.Append("values"))
 }
 
 type TimeoutsAttributes struct {
@@ -86,7 +86,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type IpamPoolCidrsState struct {

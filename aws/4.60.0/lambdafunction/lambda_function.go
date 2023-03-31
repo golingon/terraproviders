@@ -81,7 +81,7 @@ func (dlc DeadLetterConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dlc DeadLetterConfigAttributes) TargetArn() terra.StringValue {
-	return terra.ReferenceString(dlc.ref.Append("target_arn"))
+	return terra.ReferenceAsString(dlc.ref.Append("target_arn"))
 }
 
 type EnvironmentAttributes struct {
@@ -101,7 +101,7 @@ func (e EnvironmentAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e EnvironmentAttributes) Variables() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](e.ref.Append("variables"))
+	return terra.ReferenceAsMap[terra.StringValue](e.ref.Append("variables"))
 }
 
 type EphemeralStorageAttributes struct {
@@ -121,7 +121,7 @@ func (es EphemeralStorageAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (es EphemeralStorageAttributes) Size() terra.NumberValue {
-	return terra.ReferenceNumber(es.ref.Append("size"))
+	return terra.ReferenceAsNumber(es.ref.Append("size"))
 }
 
 type FileSystemConfigAttributes struct {
@@ -141,11 +141,11 @@ func (fsc FileSystemConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fsc FileSystemConfigAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(fsc.ref.Append("arn"))
+	return terra.ReferenceAsString(fsc.ref.Append("arn"))
 }
 
 func (fsc FileSystemConfigAttributes) LocalMountPath() terra.StringValue {
-	return terra.ReferenceString(fsc.ref.Append("local_mount_path"))
+	return terra.ReferenceAsString(fsc.ref.Append("local_mount_path"))
 }
 
 type ImageConfigAttributes struct {
@@ -165,15 +165,15 @@ func (ic ImageConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ic ImageConfigAttributes) Command() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ic.ref.Append("command"))
+	return terra.ReferenceAsList[terra.StringValue](ic.ref.Append("command"))
 }
 
 func (ic ImageConfigAttributes) EntryPoint() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ic.ref.Append("entry_point"))
+	return terra.ReferenceAsList[terra.StringValue](ic.ref.Append("entry_point"))
 }
 
 func (ic ImageConfigAttributes) WorkingDirectory() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("working_directory"))
+	return terra.ReferenceAsString(ic.ref.Append("working_directory"))
 }
 
 type SnapStartAttributes struct {
@@ -193,11 +193,11 @@ func (ss SnapStartAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ss SnapStartAttributes) ApplyOn() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("apply_on"))
+	return terra.ReferenceAsString(ss.ref.Append("apply_on"))
 }
 
 func (ss SnapStartAttributes) OptimizationStatus() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("optimization_status"))
+	return terra.ReferenceAsString(ss.ref.Append("optimization_status"))
 }
 
 type TimeoutsAttributes struct {
@@ -217,15 +217,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type TracingConfigAttributes struct {
@@ -245,7 +245,7 @@ func (tc TracingConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tc TracingConfigAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("mode"))
+	return terra.ReferenceAsString(tc.ref.Append("mode"))
 }
 
 type VpcConfigAttributes struct {
@@ -265,15 +265,15 @@ func (vc VpcConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vc VpcConfigAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("security_group_ids"))
 }
 
 func (vc VpcConfigAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("subnet_ids"))
 }
 
 func (vc VpcConfigAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(vc.ref.Append("vpc_id"))
 }
 
 type DeadLetterConfigState struct {

@@ -49,15 +49,15 @@ func (ldi LocalDomainInfoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ldi LocalDomainInfoAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(ldi.ref.Append("domain_name"))
+	return terra.ReferenceAsString(ldi.ref.Append("domain_name"))
 }
 
 func (ldi LocalDomainInfoAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(ldi.ref.Append("owner_id"))
+	return terra.ReferenceAsString(ldi.ref.Append("owner_id"))
 }
 
 func (ldi LocalDomainInfoAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(ldi.ref.Append("region"))
+	return terra.ReferenceAsString(ldi.ref.Append("region"))
 }
 
 type RemoteDomainInfoAttributes struct {
@@ -77,15 +77,15 @@ func (rdi RemoteDomainInfoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rdi RemoteDomainInfoAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(rdi.ref.Append("domain_name"))
+	return terra.ReferenceAsString(rdi.ref.Append("domain_name"))
 }
 
 func (rdi RemoteDomainInfoAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(rdi.ref.Append("owner_id"))
+	return terra.ReferenceAsString(rdi.ref.Append("owner_id"))
 }
 
 func (rdi RemoteDomainInfoAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(rdi.ref.Append("region"))
+	return terra.ReferenceAsString(rdi.ref.Append("region"))
 }
 
 type TimeoutsAttributes struct {
@@ -105,11 +105,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type LocalDomainInfoState struct {

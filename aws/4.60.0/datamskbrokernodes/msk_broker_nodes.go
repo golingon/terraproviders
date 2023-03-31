@@ -26,27 +26,27 @@ func (nil NodeInfoListAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nil NodeInfoListAttributes) AttachedEniId() terra.StringValue {
-	return terra.ReferenceString(nil.ref.Append("attached_eni_id"))
+	return terra.ReferenceAsString(nil.ref.Append("attached_eni_id"))
 }
 
 func (nil NodeInfoListAttributes) BrokerId() terra.NumberValue {
-	return terra.ReferenceNumber(nil.ref.Append("broker_id"))
+	return terra.ReferenceAsNumber(nil.ref.Append("broker_id"))
 }
 
 func (nil NodeInfoListAttributes) ClientSubnet() terra.StringValue {
-	return terra.ReferenceString(nil.ref.Append("client_subnet"))
+	return terra.ReferenceAsString(nil.ref.Append("client_subnet"))
 }
 
 func (nil NodeInfoListAttributes) ClientVpcIpAddress() terra.StringValue {
-	return terra.ReferenceString(nil.ref.Append("client_vpc_ip_address"))
+	return terra.ReferenceAsString(nil.ref.Append("client_vpc_ip_address"))
 }
 
 func (nil NodeInfoListAttributes) Endpoints() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](nil.ref.Append("endpoints"))
+	return terra.ReferenceAsSet[terra.StringValue](nil.ref.Append("endpoints"))
 }
 
 func (nil NodeInfoListAttributes) NodeArn() terra.StringValue {
-	return terra.ReferenceString(nil.ref.Append("node_arn"))
+	return terra.ReferenceAsString(nil.ref.Append("node_arn"))
 }
 
 type NodeInfoListState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewLightsailLbAttachment creates a new instance of [LightsailLbAttachment].
 func NewLightsailLbAttachment(name string, args LightsailLbAttachmentArgs) *LightsailLbAttachment {
 	return &LightsailLbAttachment{
 		Args: args,
@@ -18,28 +19,51 @@ func NewLightsailLbAttachment(name string, args LightsailLbAttachmentArgs) *Ligh
 
 var _ terra.Resource = (*LightsailLbAttachment)(nil)
 
+// LightsailLbAttachment represents the Terraform resource aws_lightsail_lb_attachment.
 type LightsailLbAttachment struct {
-	Name  string
-	Args  LightsailLbAttachmentArgs
-	state *lightsailLbAttachmentState
+	Name      string
+	Args      LightsailLbAttachmentArgs
+	state     *lightsailLbAttachmentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LightsailLbAttachment].
 func (lla *LightsailLbAttachment) Type() string {
 	return "aws_lightsail_lb_attachment"
 }
 
+// LocalName returns the local name for [LightsailLbAttachment].
 func (lla *LightsailLbAttachment) LocalName() string {
 	return lla.Name
 }
 
+// Configuration returns the configuration (args) for [LightsailLbAttachment].
 func (lla *LightsailLbAttachment) Configuration() interface{} {
 	return lla.Args
 }
 
+// DependOn is used for other resources to depend on [LightsailLbAttachment].
+func (lla *LightsailLbAttachment) DependOn() terra.Reference {
+	return terra.ReferenceResource(lla)
+}
+
+// Dependencies returns the list of resources [LightsailLbAttachment] depends_on.
+func (lla *LightsailLbAttachment) Dependencies() terra.Dependencies {
+	return lla.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LightsailLbAttachment].
+func (lla *LightsailLbAttachment) LifecycleManagement() *terra.Lifecycle {
+	return lla.Lifecycle
+}
+
+// Attributes returns the attributes for [LightsailLbAttachment].
 func (lla *LightsailLbAttachment) Attributes() lightsailLbAttachmentAttributes {
 	return lightsailLbAttachmentAttributes{ref: terra.ReferenceResource(lla)}
 }
 
+// ImportState imports the given attribute values into [LightsailLbAttachment]'s state.
 func (lla *LightsailLbAttachment) ImportState(av io.Reader) error {
 	lla.state = &lightsailLbAttachmentState{}
 	if err := json.NewDecoder(av).Decode(lla.state); err != nil {
@@ -48,10 +72,12 @@ func (lla *LightsailLbAttachment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LightsailLbAttachment] has state.
 func (lla *LightsailLbAttachment) State() (*lightsailLbAttachmentState, bool) {
 	return lla.state, lla.state != nil
 }
 
+// StateMust returns the state for [LightsailLbAttachment]. Panics if the state is nil.
 func (lla *LightsailLbAttachment) StateMust() *lightsailLbAttachmentState {
 	if lla.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lla.Type(), lla.LocalName()))
@@ -59,10 +85,7 @@ func (lla *LightsailLbAttachment) StateMust() *lightsailLbAttachmentState {
 	return lla.state
 }
 
-func (lla *LightsailLbAttachment) DependOn() terra.Reference {
-	return terra.ReferenceResource(lla)
-}
-
+// LightsailLbAttachmentArgs contains the configurations for aws_lightsail_lb_attachment.
 type LightsailLbAttachmentArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,23 +93,24 @@ type LightsailLbAttachmentArgs struct {
 	InstanceName terra.StringValue `hcl:"instance_name,attr" validate:"required"`
 	// LbName: string, required
 	LbName terra.StringValue `hcl:"lb_name,attr" validate:"required"`
-	// DependsOn contains resources that LightsailLbAttachment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lightsailLbAttachmentAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_lightsail_lb_attachment.
 func (lla lightsailLbAttachmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lla.ref.Append("id"))
+	return terra.ReferenceAsString(lla.ref.Append("id"))
 }
 
+// InstanceName returns a reference to field instance_name of aws_lightsail_lb_attachment.
 func (lla lightsailLbAttachmentAttributes) InstanceName() terra.StringValue {
-	return terra.ReferenceString(lla.ref.Append("instance_name"))
+	return terra.ReferenceAsString(lla.ref.Append("instance_name"))
 }
 
+// LbName returns a reference to field lb_name of aws_lightsail_lb_attachment.
 func (lla lightsailLbAttachmentAttributes) LbName() terra.StringValue {
-	return terra.ReferenceString(lla.ref.Append("lb_name"))
+	return terra.ReferenceAsString(lla.ref.Append("lb_name"))
 }
 
 type lightsailLbAttachmentState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApprunnerService creates a new instance of [ApprunnerService].
 func NewApprunnerService(name string, args ApprunnerServiceArgs) *ApprunnerService {
 	return &ApprunnerService{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApprunnerService(name string, args ApprunnerServiceArgs) *ApprunnerServi
 
 var _ terra.Resource = (*ApprunnerService)(nil)
 
+// ApprunnerService represents the Terraform resource aws_apprunner_service.
 type ApprunnerService struct {
-	Name  string
-	Args  ApprunnerServiceArgs
-	state *apprunnerServiceState
+	Name      string
+	Args      ApprunnerServiceArgs
+	state     *apprunnerServiceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApprunnerService].
 func (as *ApprunnerService) Type() string {
 	return "aws_apprunner_service"
 }
 
+// LocalName returns the local name for [ApprunnerService].
 func (as *ApprunnerService) LocalName() string {
 	return as.Name
 }
 
+// Configuration returns the configuration (args) for [ApprunnerService].
 func (as *ApprunnerService) Configuration() interface{} {
 	return as.Args
 }
 
+// DependOn is used for other resources to depend on [ApprunnerService].
+func (as *ApprunnerService) DependOn() terra.Reference {
+	return terra.ReferenceResource(as)
+}
+
+// Dependencies returns the list of resources [ApprunnerService] depends_on.
+func (as *ApprunnerService) Dependencies() terra.Dependencies {
+	return as.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApprunnerService].
+func (as *ApprunnerService) LifecycleManagement() *terra.Lifecycle {
+	return as.Lifecycle
+}
+
+// Attributes returns the attributes for [ApprunnerService].
 func (as *ApprunnerService) Attributes() apprunnerServiceAttributes {
 	return apprunnerServiceAttributes{ref: terra.ReferenceResource(as)}
 }
 
+// ImportState imports the given attribute values into [ApprunnerService]'s state.
 func (as *ApprunnerService) ImportState(av io.Reader) error {
 	as.state = &apprunnerServiceState{}
 	if err := json.NewDecoder(av).Decode(as.state); err != nil {
@@ -49,10 +73,12 @@ func (as *ApprunnerService) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApprunnerService] has state.
 func (as *ApprunnerService) State() (*apprunnerServiceState, bool) {
 	return as.state, as.state != nil
 }
 
+// StateMust returns the state for [ApprunnerService]. Panics if the state is nil.
 func (as *ApprunnerService) StateMust() *apprunnerServiceState {
 	if as.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", as.Type(), as.LocalName()))
@@ -60,10 +86,7 @@ func (as *ApprunnerService) StateMust() *apprunnerServiceState {
 	return as.state
 }
 
-func (as *ApprunnerService) DependOn() terra.Reference {
-	return terra.ReferenceResource(as)
-}
-
+// ApprunnerServiceArgs contains the configurations for aws_apprunner_service.
 type ApprunnerServiceArgs struct {
 	// AutoScalingConfigurationArn: string, optional
 	AutoScalingConfigurationArn terra.StringValue `hcl:"auto_scaling_configuration_arn,attr"`
@@ -87,71 +110,78 @@ type ApprunnerServiceArgs struct {
 	ObservabilityConfiguration *apprunnerservice.ObservabilityConfiguration `hcl:"observability_configuration,block"`
 	// SourceConfiguration: required
 	SourceConfiguration *apprunnerservice.SourceConfiguration `hcl:"source_configuration,block" validate:"required"`
-	// DependsOn contains resources that ApprunnerService depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apprunnerServiceAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_apprunner_service.
 func (as apprunnerServiceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("arn"))
+	return terra.ReferenceAsString(as.ref.Append("arn"))
 }
 
+// AutoScalingConfigurationArn returns a reference to field auto_scaling_configuration_arn of aws_apprunner_service.
 func (as apprunnerServiceAttributes) AutoScalingConfigurationArn() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("auto_scaling_configuration_arn"))
+	return terra.ReferenceAsString(as.ref.Append("auto_scaling_configuration_arn"))
 }
 
+// Id returns a reference to field id of aws_apprunner_service.
 func (as apprunnerServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("id"))
+	return terra.ReferenceAsString(as.ref.Append("id"))
 }
 
+// ServiceId returns a reference to field service_id of aws_apprunner_service.
 func (as apprunnerServiceAttributes) ServiceId() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("service_id"))
+	return terra.ReferenceAsString(as.ref.Append("service_id"))
 }
 
+// ServiceName returns a reference to field service_name of aws_apprunner_service.
 func (as apprunnerServiceAttributes) ServiceName() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("service_name"))
+	return terra.ReferenceAsString(as.ref.Append("service_name"))
 }
 
+// ServiceUrl returns a reference to field service_url of aws_apprunner_service.
 func (as apprunnerServiceAttributes) ServiceUrl() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("service_url"))
+	return terra.ReferenceAsString(as.ref.Append("service_url"))
 }
 
+// Status returns a reference to field status of aws_apprunner_service.
 func (as apprunnerServiceAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("status"))
+	return terra.ReferenceAsString(as.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of aws_apprunner_service.
 func (as apprunnerServiceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](as.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](as.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_apprunner_service.
 func (as apprunnerServiceAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](as.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](as.ref.Append("tags_all"))
 }
 
 func (as apprunnerServiceAttributes) EncryptionConfiguration() terra.ListValue[apprunnerservice.EncryptionConfigurationAttributes] {
-	return terra.ReferenceList[apprunnerservice.EncryptionConfigurationAttributes](as.ref.Append("encryption_configuration"))
+	return terra.ReferenceAsList[apprunnerservice.EncryptionConfigurationAttributes](as.ref.Append("encryption_configuration"))
 }
 
 func (as apprunnerServiceAttributes) HealthCheckConfiguration() terra.ListValue[apprunnerservice.HealthCheckConfigurationAttributes] {
-	return terra.ReferenceList[apprunnerservice.HealthCheckConfigurationAttributes](as.ref.Append("health_check_configuration"))
+	return terra.ReferenceAsList[apprunnerservice.HealthCheckConfigurationAttributes](as.ref.Append("health_check_configuration"))
 }
 
 func (as apprunnerServiceAttributes) InstanceConfiguration() terra.ListValue[apprunnerservice.InstanceConfigurationAttributes] {
-	return terra.ReferenceList[apprunnerservice.InstanceConfigurationAttributes](as.ref.Append("instance_configuration"))
+	return terra.ReferenceAsList[apprunnerservice.InstanceConfigurationAttributes](as.ref.Append("instance_configuration"))
 }
 
 func (as apprunnerServiceAttributes) NetworkConfiguration() terra.ListValue[apprunnerservice.NetworkConfigurationAttributes] {
-	return terra.ReferenceList[apprunnerservice.NetworkConfigurationAttributes](as.ref.Append("network_configuration"))
+	return terra.ReferenceAsList[apprunnerservice.NetworkConfigurationAttributes](as.ref.Append("network_configuration"))
 }
 
 func (as apprunnerServiceAttributes) ObservabilityConfiguration() terra.ListValue[apprunnerservice.ObservabilityConfigurationAttributes] {
-	return terra.ReferenceList[apprunnerservice.ObservabilityConfigurationAttributes](as.ref.Append("observability_configuration"))
+	return terra.ReferenceAsList[apprunnerservice.ObservabilityConfigurationAttributes](as.ref.Append("observability_configuration"))
 }
 
 func (as apprunnerServiceAttributes) SourceConfiguration() terra.ListValue[apprunnerservice.SourceConfigurationAttributes] {
-	return terra.ReferenceList[apprunnerservice.SourceConfigurationAttributes](as.ref.Append("source_configuration"))
+	return terra.ReferenceAsList[apprunnerservice.SourceConfigurationAttributes](as.ref.Append("source_configuration"))
 }
 
 type apprunnerServiceState struct {

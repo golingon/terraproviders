@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataMskconnectCustomPlugin creates a new instance of [DataMskconnectCustomPlugin].
 func NewDataMskconnectCustomPlugin(name string, args DataMskconnectCustomPluginArgs) *DataMskconnectCustomPlugin {
 	return &DataMskconnectCustomPlugin{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataMskconnectCustomPlugin(name string, args DataMskconnectCustomPluginA
 
 var _ terra.DataResource = (*DataMskconnectCustomPlugin)(nil)
 
+// DataMskconnectCustomPlugin represents the Terraform data resource aws_mskconnect_custom_plugin.
 type DataMskconnectCustomPlugin struct {
 	Name string
 	Args DataMskconnectCustomPluginArgs
 }
 
+// DataSource returns the Terraform object type for [DataMskconnectCustomPlugin].
 func (mcp *DataMskconnectCustomPlugin) DataSource() string {
 	return "aws_mskconnect_custom_plugin"
 }
 
+// LocalName returns the local name for [DataMskconnectCustomPlugin].
 func (mcp *DataMskconnectCustomPlugin) LocalName() string {
 	return mcp.Name
 }
 
+// Configuration returns the configuration (args) for [DataMskconnectCustomPlugin].
 func (mcp *DataMskconnectCustomPlugin) Configuration() interface{} {
 	return mcp.Args
 }
 
+// Attributes returns the attributes for [DataMskconnectCustomPlugin].
 func (mcp *DataMskconnectCustomPlugin) Attributes() dataMskconnectCustomPluginAttributes {
 	return dataMskconnectCustomPluginAttributes{ref: terra.ReferenceDataResource(mcp)}
 }
 
+// DataMskconnectCustomPluginArgs contains the configurations for aws_mskconnect_custom_plugin.
 type DataMskconnectCustomPluginArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,26 +51,32 @@ type dataMskconnectCustomPluginAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_mskconnect_custom_plugin.
 func (mcp dataMskconnectCustomPluginAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(mcp.ref.Append("arn"))
+	return terra.ReferenceAsString(mcp.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_mskconnect_custom_plugin.
 func (mcp dataMskconnectCustomPluginAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mcp.ref.Append("description"))
+	return terra.ReferenceAsString(mcp.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_mskconnect_custom_plugin.
 func (mcp dataMskconnectCustomPluginAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mcp.ref.Append("id"))
+	return terra.ReferenceAsString(mcp.ref.Append("id"))
 }
 
+// LatestRevision returns a reference to field latest_revision of aws_mskconnect_custom_plugin.
 func (mcp dataMskconnectCustomPluginAttributes) LatestRevision() terra.NumberValue {
-	return terra.ReferenceNumber(mcp.ref.Append("latest_revision"))
+	return terra.ReferenceAsNumber(mcp.ref.Append("latest_revision"))
 }
 
+// Name returns a reference to field name of aws_mskconnect_custom_plugin.
 func (mcp dataMskconnectCustomPluginAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mcp.ref.Append("name"))
+	return terra.ReferenceAsString(mcp.ref.Append("name"))
 }
 
+// State returns a reference to field state of aws_mskconnect_custom_plugin.
 func (mcp dataMskconnectCustomPluginAttributes) State() terra.StringValue {
-	return terra.ReferenceString(mcp.ref.Append("state"))
+	return terra.ReferenceAsString(mcp.ref.Append("state"))
 }

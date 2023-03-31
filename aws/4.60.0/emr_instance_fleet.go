@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEmrInstanceFleet creates a new instance of [EmrInstanceFleet].
 func NewEmrInstanceFleet(name string, args EmrInstanceFleetArgs) *EmrInstanceFleet {
 	return &EmrInstanceFleet{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEmrInstanceFleet(name string, args EmrInstanceFleetArgs) *EmrInstanceFle
 
 var _ terra.Resource = (*EmrInstanceFleet)(nil)
 
+// EmrInstanceFleet represents the Terraform resource aws_emr_instance_fleet.
 type EmrInstanceFleet struct {
-	Name  string
-	Args  EmrInstanceFleetArgs
-	state *emrInstanceFleetState
+	Name      string
+	Args      EmrInstanceFleetArgs
+	state     *emrInstanceFleetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EmrInstanceFleet].
 func (eif *EmrInstanceFleet) Type() string {
 	return "aws_emr_instance_fleet"
 }
 
+// LocalName returns the local name for [EmrInstanceFleet].
 func (eif *EmrInstanceFleet) LocalName() string {
 	return eif.Name
 }
 
+// Configuration returns the configuration (args) for [EmrInstanceFleet].
 func (eif *EmrInstanceFleet) Configuration() interface{} {
 	return eif.Args
 }
 
+// DependOn is used for other resources to depend on [EmrInstanceFleet].
+func (eif *EmrInstanceFleet) DependOn() terra.Reference {
+	return terra.ReferenceResource(eif)
+}
+
+// Dependencies returns the list of resources [EmrInstanceFleet] depends_on.
+func (eif *EmrInstanceFleet) Dependencies() terra.Dependencies {
+	return eif.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EmrInstanceFleet].
+func (eif *EmrInstanceFleet) LifecycleManagement() *terra.Lifecycle {
+	return eif.Lifecycle
+}
+
+// Attributes returns the attributes for [EmrInstanceFleet].
 func (eif *EmrInstanceFleet) Attributes() emrInstanceFleetAttributes {
 	return emrInstanceFleetAttributes{ref: terra.ReferenceResource(eif)}
 }
 
+// ImportState imports the given attribute values into [EmrInstanceFleet]'s state.
 func (eif *EmrInstanceFleet) ImportState(av io.Reader) error {
 	eif.state = &emrInstanceFleetState{}
 	if err := json.NewDecoder(av).Decode(eif.state); err != nil {
@@ -49,10 +73,12 @@ func (eif *EmrInstanceFleet) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EmrInstanceFleet] has state.
 func (eif *EmrInstanceFleet) State() (*emrInstanceFleetState, bool) {
 	return eif.state, eif.state != nil
 }
 
+// StateMust returns the state for [EmrInstanceFleet]. Panics if the state is nil.
 func (eif *EmrInstanceFleet) StateMust() *emrInstanceFleetState {
 	if eif.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", eif.Type(), eif.LocalName()))
@@ -60,10 +86,7 @@ func (eif *EmrInstanceFleet) StateMust() *emrInstanceFleetState {
 	return eif.state
 }
 
-func (eif *EmrInstanceFleet) DependOn() terra.Reference {
-	return terra.ReferenceResource(eif)
-}
-
+// EmrInstanceFleetArgs contains the configurations for aws_emr_instance_fleet.
 type EmrInstanceFleetArgs struct {
 	// ClusterId: string, required
 	ClusterId terra.StringValue `hcl:"cluster_id,attr" validate:"required"`
@@ -79,47 +102,52 @@ type EmrInstanceFleetArgs struct {
 	InstanceTypeConfigs []emrinstancefleet.InstanceTypeConfigs `hcl:"instance_type_configs,block" validate:"min=0"`
 	// LaunchSpecifications: optional
 	LaunchSpecifications *emrinstancefleet.LaunchSpecifications `hcl:"launch_specifications,block"`
-	// DependsOn contains resources that EmrInstanceFleet depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type emrInstanceFleetAttributes struct {
 	ref terra.Reference
 }
 
+// ClusterId returns a reference to field cluster_id of aws_emr_instance_fleet.
 func (eif emrInstanceFleetAttributes) ClusterId() terra.StringValue {
-	return terra.ReferenceString(eif.ref.Append("cluster_id"))
+	return terra.ReferenceAsString(eif.ref.Append("cluster_id"))
 }
 
+// Id returns a reference to field id of aws_emr_instance_fleet.
 func (eif emrInstanceFleetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(eif.ref.Append("id"))
+	return terra.ReferenceAsString(eif.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_emr_instance_fleet.
 func (eif emrInstanceFleetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(eif.ref.Append("name"))
+	return terra.ReferenceAsString(eif.ref.Append("name"))
 }
 
+// ProvisionedOnDemandCapacity returns a reference to field provisioned_on_demand_capacity of aws_emr_instance_fleet.
 func (eif emrInstanceFleetAttributes) ProvisionedOnDemandCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(eif.ref.Append("provisioned_on_demand_capacity"))
+	return terra.ReferenceAsNumber(eif.ref.Append("provisioned_on_demand_capacity"))
 }
 
+// ProvisionedSpotCapacity returns a reference to field provisioned_spot_capacity of aws_emr_instance_fleet.
 func (eif emrInstanceFleetAttributes) ProvisionedSpotCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(eif.ref.Append("provisioned_spot_capacity"))
+	return terra.ReferenceAsNumber(eif.ref.Append("provisioned_spot_capacity"))
 }
 
+// TargetOnDemandCapacity returns a reference to field target_on_demand_capacity of aws_emr_instance_fleet.
 func (eif emrInstanceFleetAttributes) TargetOnDemandCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(eif.ref.Append("target_on_demand_capacity"))
+	return terra.ReferenceAsNumber(eif.ref.Append("target_on_demand_capacity"))
 }
 
+// TargetSpotCapacity returns a reference to field target_spot_capacity of aws_emr_instance_fleet.
 func (eif emrInstanceFleetAttributes) TargetSpotCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(eif.ref.Append("target_spot_capacity"))
+	return terra.ReferenceAsNumber(eif.ref.Append("target_spot_capacity"))
 }
 
 func (eif emrInstanceFleetAttributes) InstanceTypeConfigs() terra.SetValue[emrinstancefleet.InstanceTypeConfigsAttributes] {
-	return terra.ReferenceSet[emrinstancefleet.InstanceTypeConfigsAttributes](eif.ref.Append("instance_type_configs"))
+	return terra.ReferenceAsSet[emrinstancefleet.InstanceTypeConfigsAttributes](eif.ref.Append("instance_type_configs"))
 }
 
 func (eif emrInstanceFleetAttributes) LaunchSpecifications() terra.ListValue[emrinstancefleet.LaunchSpecificationsAttributes] {
-	return terra.ReferenceList[emrinstancefleet.LaunchSpecificationsAttributes](eif.ref.Append("launch_specifications"))
+	return terra.ReferenceAsList[emrinstancefleet.LaunchSpecificationsAttributes](eif.ref.Append("launch_specifications"))
 }
 
 type emrInstanceFleetState struct {

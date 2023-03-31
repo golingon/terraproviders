@@ -38,7 +38,7 @@ func (fg FilterGroupAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fg FilterGroupAttributes) Filter() terra.ListValue[FilterAttributes] {
-	return terra.ReferenceList[FilterAttributes](fg.ref.Append("filter"))
+	return terra.ReferenceAsList[FilterAttributes](fg.ref.Append("filter"))
 }
 
 type FilterAttributes struct {
@@ -58,15 +58,15 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) ExcludeMatchedPattern() terra.BoolValue {
-	return terra.ReferenceBool(f.ref.Append("exclude_matched_pattern"))
+	return terra.ReferenceAsBool(f.ref.Append("exclude_matched_pattern"))
 }
 
 func (f FilterAttributes) Pattern() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("pattern"))
+	return terra.ReferenceAsString(f.ref.Append("pattern"))
 }
 
 func (f FilterAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("type"))
+	return terra.ReferenceAsString(f.ref.Append("type"))
 }
 
 type FilterGroupState struct {

@@ -139,19 +139,19 @@ func (ap AuthParametersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ap AuthParametersAttributes) ApiKey() terra.ListValue[ApiKeyAttributes] {
-	return terra.ReferenceList[ApiKeyAttributes](ap.ref.Append("api_key"))
+	return terra.ReferenceAsList[ApiKeyAttributes](ap.ref.Append("api_key"))
 }
 
 func (ap AuthParametersAttributes) Basic() terra.ListValue[BasicAttributes] {
-	return terra.ReferenceList[BasicAttributes](ap.ref.Append("basic"))
+	return terra.ReferenceAsList[BasicAttributes](ap.ref.Append("basic"))
 }
 
 func (ap AuthParametersAttributes) InvocationHttpParameters() terra.ListValue[InvocationHttpParametersAttributes] {
-	return terra.ReferenceList[InvocationHttpParametersAttributes](ap.ref.Append("invocation_http_parameters"))
+	return terra.ReferenceAsList[InvocationHttpParametersAttributes](ap.ref.Append("invocation_http_parameters"))
 }
 
 func (ap AuthParametersAttributes) Oauth() terra.ListValue[OauthAttributes] {
-	return terra.ReferenceList[OauthAttributes](ap.ref.Append("oauth"))
+	return terra.ReferenceAsList[OauthAttributes](ap.ref.Append("oauth"))
 }
 
 type ApiKeyAttributes struct {
@@ -171,11 +171,11 @@ func (ak ApiKeyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ak ApiKeyAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(ak.ref.Append("key"))
+	return terra.ReferenceAsString(ak.ref.Append("key"))
 }
 
 func (ak ApiKeyAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(ak.ref.Append("value"))
+	return terra.ReferenceAsString(ak.ref.Append("value"))
 }
 
 type BasicAttributes struct {
@@ -195,11 +195,11 @@ func (b BasicAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (b BasicAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("password"))
+	return terra.ReferenceAsString(b.ref.Append("password"))
 }
 
 func (b BasicAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("username"))
+	return terra.ReferenceAsString(b.ref.Append("username"))
 }
 
 type InvocationHttpParametersAttributes struct {
@@ -219,15 +219,15 @@ func (ihp InvocationHttpParametersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ihp InvocationHttpParametersAttributes) Body() terra.ListValue[InvocationHttpParametersBodyAttributes] {
-	return terra.ReferenceList[InvocationHttpParametersBodyAttributes](ihp.ref.Append("body"))
+	return terra.ReferenceAsList[InvocationHttpParametersBodyAttributes](ihp.ref.Append("body"))
 }
 
 func (ihp InvocationHttpParametersAttributes) Header() terra.ListValue[InvocationHttpParametersHeaderAttributes] {
-	return terra.ReferenceList[InvocationHttpParametersHeaderAttributes](ihp.ref.Append("header"))
+	return terra.ReferenceAsList[InvocationHttpParametersHeaderAttributes](ihp.ref.Append("header"))
 }
 
 func (ihp InvocationHttpParametersAttributes) QueryString() terra.ListValue[InvocationHttpParametersQueryStringAttributes] {
-	return terra.ReferenceList[InvocationHttpParametersQueryStringAttributes](ihp.ref.Append("query_string"))
+	return terra.ReferenceAsList[InvocationHttpParametersQueryStringAttributes](ihp.ref.Append("query_string"))
 }
 
 type InvocationHttpParametersBodyAttributes struct {
@@ -247,15 +247,15 @@ func (b InvocationHttpParametersBodyAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (b InvocationHttpParametersBodyAttributes) IsValueSecret() terra.BoolValue {
-	return terra.ReferenceBool(b.ref.Append("is_value_secret"))
+	return terra.ReferenceAsBool(b.ref.Append("is_value_secret"))
 }
 
 func (b InvocationHttpParametersBodyAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("key"))
+	return terra.ReferenceAsString(b.ref.Append("key"))
 }
 
 func (b InvocationHttpParametersBodyAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("value"))
+	return terra.ReferenceAsString(b.ref.Append("value"))
 }
 
 type InvocationHttpParametersHeaderAttributes struct {
@@ -275,15 +275,15 @@ func (h InvocationHttpParametersHeaderAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (h InvocationHttpParametersHeaderAttributes) IsValueSecret() terra.BoolValue {
-	return terra.ReferenceBool(h.ref.Append("is_value_secret"))
+	return terra.ReferenceAsBool(h.ref.Append("is_value_secret"))
 }
 
 func (h InvocationHttpParametersHeaderAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("key"))
+	return terra.ReferenceAsString(h.ref.Append("key"))
 }
 
 func (h InvocationHttpParametersHeaderAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("value"))
+	return terra.ReferenceAsString(h.ref.Append("value"))
 }
 
 type InvocationHttpParametersQueryStringAttributes struct {
@@ -303,15 +303,15 @@ func (qs InvocationHttpParametersQueryStringAttributes) InternalTokens() hclwrit
 }
 
 func (qs InvocationHttpParametersQueryStringAttributes) IsValueSecret() terra.BoolValue {
-	return terra.ReferenceBool(qs.ref.Append("is_value_secret"))
+	return terra.ReferenceAsBool(qs.ref.Append("is_value_secret"))
 }
 
 func (qs InvocationHttpParametersQueryStringAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(qs.ref.Append("key"))
+	return terra.ReferenceAsString(qs.ref.Append("key"))
 }
 
 func (qs InvocationHttpParametersQueryStringAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(qs.ref.Append("value"))
+	return terra.ReferenceAsString(qs.ref.Append("value"))
 }
 
 type OauthAttributes struct {
@@ -331,19 +331,19 @@ func (o OauthAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (o OauthAttributes) AuthorizationEndpoint() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("authorization_endpoint"))
+	return terra.ReferenceAsString(o.ref.Append("authorization_endpoint"))
 }
 
 func (o OauthAttributes) HttpMethod() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("http_method"))
+	return terra.ReferenceAsString(o.ref.Append("http_method"))
 }
 
 func (o OauthAttributes) ClientParameters() terra.ListValue[ClientParametersAttributes] {
-	return terra.ReferenceList[ClientParametersAttributes](o.ref.Append("client_parameters"))
+	return terra.ReferenceAsList[ClientParametersAttributes](o.ref.Append("client_parameters"))
 }
 
 func (o OauthAttributes) OauthHttpParameters() terra.ListValue[OauthHttpParametersAttributes] {
-	return terra.ReferenceList[OauthHttpParametersAttributes](o.ref.Append("oauth_http_parameters"))
+	return terra.ReferenceAsList[OauthHttpParametersAttributes](o.ref.Append("oauth_http_parameters"))
 }
 
 type ClientParametersAttributes struct {
@@ -363,11 +363,11 @@ func (cp ClientParametersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cp ClientParametersAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("client_id"))
+	return terra.ReferenceAsString(cp.ref.Append("client_id"))
 }
 
 func (cp ClientParametersAttributes) ClientSecret() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("client_secret"))
+	return terra.ReferenceAsString(cp.ref.Append("client_secret"))
 }
 
 type OauthHttpParametersAttributes struct {
@@ -387,15 +387,15 @@ func (ohp OauthHttpParametersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ohp OauthHttpParametersAttributes) Body() terra.ListValue[OauthHttpParametersBodyAttributes] {
-	return terra.ReferenceList[OauthHttpParametersBodyAttributes](ohp.ref.Append("body"))
+	return terra.ReferenceAsList[OauthHttpParametersBodyAttributes](ohp.ref.Append("body"))
 }
 
 func (ohp OauthHttpParametersAttributes) Header() terra.ListValue[OauthHttpParametersHeaderAttributes] {
-	return terra.ReferenceList[OauthHttpParametersHeaderAttributes](ohp.ref.Append("header"))
+	return terra.ReferenceAsList[OauthHttpParametersHeaderAttributes](ohp.ref.Append("header"))
 }
 
 func (ohp OauthHttpParametersAttributes) QueryString() terra.ListValue[OauthHttpParametersQueryStringAttributes] {
-	return terra.ReferenceList[OauthHttpParametersQueryStringAttributes](ohp.ref.Append("query_string"))
+	return terra.ReferenceAsList[OauthHttpParametersQueryStringAttributes](ohp.ref.Append("query_string"))
 }
 
 type OauthHttpParametersBodyAttributes struct {
@@ -415,15 +415,15 @@ func (b OauthHttpParametersBodyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (b OauthHttpParametersBodyAttributes) IsValueSecret() terra.BoolValue {
-	return terra.ReferenceBool(b.ref.Append("is_value_secret"))
+	return terra.ReferenceAsBool(b.ref.Append("is_value_secret"))
 }
 
 func (b OauthHttpParametersBodyAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("key"))
+	return terra.ReferenceAsString(b.ref.Append("key"))
 }
 
 func (b OauthHttpParametersBodyAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("value"))
+	return terra.ReferenceAsString(b.ref.Append("value"))
 }
 
 type OauthHttpParametersHeaderAttributes struct {
@@ -443,15 +443,15 @@ func (h OauthHttpParametersHeaderAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (h OauthHttpParametersHeaderAttributes) IsValueSecret() terra.BoolValue {
-	return terra.ReferenceBool(h.ref.Append("is_value_secret"))
+	return terra.ReferenceAsBool(h.ref.Append("is_value_secret"))
 }
 
 func (h OauthHttpParametersHeaderAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("key"))
+	return terra.ReferenceAsString(h.ref.Append("key"))
 }
 
 func (h OauthHttpParametersHeaderAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("value"))
+	return terra.ReferenceAsString(h.ref.Append("value"))
 }
 
 type OauthHttpParametersQueryStringAttributes struct {
@@ -471,15 +471,15 @@ func (qs OauthHttpParametersQueryStringAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (qs OauthHttpParametersQueryStringAttributes) IsValueSecret() terra.BoolValue {
-	return terra.ReferenceBool(qs.ref.Append("is_value_secret"))
+	return terra.ReferenceAsBool(qs.ref.Append("is_value_secret"))
 }
 
 func (qs OauthHttpParametersQueryStringAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(qs.ref.Append("key"))
+	return terra.ReferenceAsString(qs.ref.Append("key"))
 }
 
 func (qs OauthHttpParametersQueryStringAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(qs.ref.Append("value"))
+	return terra.ReferenceAsString(qs.ref.Append("value"))
 }
 
 type AuthParametersState struct {

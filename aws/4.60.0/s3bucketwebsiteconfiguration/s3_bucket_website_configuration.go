@@ -68,7 +68,7 @@ func (ed ErrorDocumentAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ed ErrorDocumentAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(ed.ref.Append("key"))
+	return terra.ReferenceAsString(ed.ref.Append("key"))
 }
 
 type IndexDocumentAttributes struct {
@@ -88,7 +88,7 @@ func (id IndexDocumentAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (id IndexDocumentAttributes) Suffix() terra.StringValue {
-	return terra.ReferenceString(id.ref.Append("suffix"))
+	return terra.ReferenceAsString(id.ref.Append("suffix"))
 }
 
 type RedirectAllRequestsToAttributes struct {
@@ -108,11 +108,11 @@ func (rart RedirectAllRequestsToAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rart RedirectAllRequestsToAttributes) HostName() terra.StringValue {
-	return terra.ReferenceString(rart.ref.Append("host_name"))
+	return terra.ReferenceAsString(rart.ref.Append("host_name"))
 }
 
 func (rart RedirectAllRequestsToAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(rart.ref.Append("protocol"))
+	return terra.ReferenceAsString(rart.ref.Append("protocol"))
 }
 
 type RoutingRuleAttributes struct {
@@ -132,11 +132,11 @@ func (rr RoutingRuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rr RoutingRuleAttributes) Condition() terra.ListValue[ConditionAttributes] {
-	return terra.ReferenceList[ConditionAttributes](rr.ref.Append("condition"))
+	return terra.ReferenceAsList[ConditionAttributes](rr.ref.Append("condition"))
 }
 
 func (rr RoutingRuleAttributes) Redirect() terra.ListValue[RedirectAttributes] {
-	return terra.ReferenceList[RedirectAttributes](rr.ref.Append("redirect"))
+	return terra.ReferenceAsList[RedirectAttributes](rr.ref.Append("redirect"))
 }
 
 type ConditionAttributes struct {
@@ -156,11 +156,11 @@ func (c ConditionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ConditionAttributes) HttpErrorCodeReturnedEquals() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("http_error_code_returned_equals"))
+	return terra.ReferenceAsString(c.ref.Append("http_error_code_returned_equals"))
 }
 
 func (c ConditionAttributes) KeyPrefixEquals() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("key_prefix_equals"))
+	return terra.ReferenceAsString(c.ref.Append("key_prefix_equals"))
 }
 
 type RedirectAttributes struct {
@@ -180,23 +180,23 @@ func (r RedirectAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RedirectAttributes) HostName() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("host_name"))
+	return terra.ReferenceAsString(r.ref.Append("host_name"))
 }
 
 func (r RedirectAttributes) HttpRedirectCode() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("http_redirect_code"))
+	return terra.ReferenceAsString(r.ref.Append("http_redirect_code"))
 }
 
 func (r RedirectAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("protocol"))
+	return terra.ReferenceAsString(r.ref.Append("protocol"))
 }
 
 func (r RedirectAttributes) ReplaceKeyPrefixWith() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("replace_key_prefix_with"))
+	return terra.ReferenceAsString(r.ref.Append("replace_key_prefix_with"))
 }
 
 func (r RedirectAttributes) ReplaceKeyWith() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("replace_key_with"))
+	return terra.ReferenceAsString(r.ref.Append("replace_key_with"))
 }
 
 type ErrorDocumentState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRoute53RecoverycontrolconfigRoutingControl creates a new instance of [Route53RecoverycontrolconfigRoutingControl].
 func NewRoute53RecoverycontrolconfigRoutingControl(name string, args Route53RecoverycontrolconfigRoutingControlArgs) *Route53RecoverycontrolconfigRoutingControl {
 	return &Route53RecoverycontrolconfigRoutingControl{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRoute53RecoverycontrolconfigRoutingControl(name string, args Route53Reco
 
 var _ terra.Resource = (*Route53RecoverycontrolconfigRoutingControl)(nil)
 
+// Route53RecoverycontrolconfigRoutingControl represents the Terraform resource aws_route53recoverycontrolconfig_routing_control.
 type Route53RecoverycontrolconfigRoutingControl struct {
-	Name  string
-	Args  Route53RecoverycontrolconfigRoutingControlArgs
-	state *route53RecoverycontrolconfigRoutingControlState
+	Name      string
+	Args      Route53RecoverycontrolconfigRoutingControlArgs
+	state     *route53RecoverycontrolconfigRoutingControlState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Route53RecoverycontrolconfigRoutingControl].
 func (rrc *Route53RecoverycontrolconfigRoutingControl) Type() string {
 	return "aws_route53recoverycontrolconfig_routing_control"
 }
 
+// LocalName returns the local name for [Route53RecoverycontrolconfigRoutingControl].
 func (rrc *Route53RecoverycontrolconfigRoutingControl) LocalName() string {
 	return rrc.Name
 }
 
+// Configuration returns the configuration (args) for [Route53RecoverycontrolconfigRoutingControl].
 func (rrc *Route53RecoverycontrolconfigRoutingControl) Configuration() interface{} {
 	return rrc.Args
 }
 
+// DependOn is used for other resources to depend on [Route53RecoverycontrolconfigRoutingControl].
+func (rrc *Route53RecoverycontrolconfigRoutingControl) DependOn() terra.Reference {
+	return terra.ReferenceResource(rrc)
+}
+
+// Dependencies returns the list of resources [Route53RecoverycontrolconfigRoutingControl] depends_on.
+func (rrc *Route53RecoverycontrolconfigRoutingControl) Dependencies() terra.Dependencies {
+	return rrc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Route53RecoverycontrolconfigRoutingControl].
+func (rrc *Route53RecoverycontrolconfigRoutingControl) LifecycleManagement() *terra.Lifecycle {
+	return rrc.Lifecycle
+}
+
+// Attributes returns the attributes for [Route53RecoverycontrolconfigRoutingControl].
 func (rrc *Route53RecoverycontrolconfigRoutingControl) Attributes() route53RecoverycontrolconfigRoutingControlAttributes {
 	return route53RecoverycontrolconfigRoutingControlAttributes{ref: terra.ReferenceResource(rrc)}
 }
 
+// ImportState imports the given attribute values into [Route53RecoverycontrolconfigRoutingControl]'s state.
 func (rrc *Route53RecoverycontrolconfigRoutingControl) ImportState(av io.Reader) error {
 	rrc.state = &route53RecoverycontrolconfigRoutingControlState{}
 	if err := json.NewDecoder(av).Decode(rrc.state); err != nil {
@@ -48,10 +72,12 @@ func (rrc *Route53RecoverycontrolconfigRoutingControl) ImportState(av io.Reader)
 	return nil
 }
 
+// State returns the state and a bool indicating if [Route53RecoverycontrolconfigRoutingControl] has state.
 func (rrc *Route53RecoverycontrolconfigRoutingControl) State() (*route53RecoverycontrolconfigRoutingControlState, bool) {
 	return rrc.state, rrc.state != nil
 }
 
+// StateMust returns the state for [Route53RecoverycontrolconfigRoutingControl]. Panics if the state is nil.
 func (rrc *Route53RecoverycontrolconfigRoutingControl) StateMust() *route53RecoverycontrolconfigRoutingControlState {
 	if rrc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rrc.Type(), rrc.LocalName()))
@@ -59,10 +85,7 @@ func (rrc *Route53RecoverycontrolconfigRoutingControl) StateMust() *route53Recov
 	return rrc.state
 }
 
-func (rrc *Route53RecoverycontrolconfigRoutingControl) DependOn() terra.Reference {
-	return terra.ReferenceResource(rrc)
-}
-
+// Route53RecoverycontrolconfigRoutingControlArgs contains the configurations for aws_route53recoverycontrolconfig_routing_control.
 type Route53RecoverycontrolconfigRoutingControlArgs struct {
 	// ClusterArn: string, required
 	ClusterArn terra.StringValue `hcl:"cluster_arn,attr" validate:"required"`
@@ -72,35 +95,39 @@ type Route53RecoverycontrolconfigRoutingControlArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// Name: string, required
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
-	// DependsOn contains resources that Route53RecoverycontrolconfigRoutingControl depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type route53RecoverycontrolconfigRoutingControlAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_route53recoverycontrolconfig_routing_control.
 func (rrc route53RecoverycontrolconfigRoutingControlAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rrc.ref.Append("arn"))
+	return terra.ReferenceAsString(rrc.ref.Append("arn"))
 }
 
+// ClusterArn returns a reference to field cluster_arn of aws_route53recoverycontrolconfig_routing_control.
 func (rrc route53RecoverycontrolconfigRoutingControlAttributes) ClusterArn() terra.StringValue {
-	return terra.ReferenceString(rrc.ref.Append("cluster_arn"))
+	return terra.ReferenceAsString(rrc.ref.Append("cluster_arn"))
 }
 
+// ControlPanelArn returns a reference to field control_panel_arn of aws_route53recoverycontrolconfig_routing_control.
 func (rrc route53RecoverycontrolconfigRoutingControlAttributes) ControlPanelArn() terra.StringValue {
-	return terra.ReferenceString(rrc.ref.Append("control_panel_arn"))
+	return terra.ReferenceAsString(rrc.ref.Append("control_panel_arn"))
 }
 
+// Id returns a reference to field id of aws_route53recoverycontrolconfig_routing_control.
 func (rrc route53RecoverycontrolconfigRoutingControlAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rrc.ref.Append("id"))
+	return terra.ReferenceAsString(rrc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_route53recoverycontrolconfig_routing_control.
 func (rrc route53RecoverycontrolconfigRoutingControlAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rrc.ref.Append("name"))
+	return terra.ReferenceAsString(rrc.ref.Append("name"))
 }
 
+// Status returns a reference to field status of aws_route53recoverycontrolconfig_routing_control.
 func (rrc route53RecoverycontrolconfigRoutingControlAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(rrc.ref.Append("status"))
+	return terra.ReferenceAsString(rrc.ref.Append("status"))
 }
 
 type route53RecoverycontrolconfigRoutingControlState struct {

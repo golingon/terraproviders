@@ -88,23 +88,23 @@ func (sspc StepScalingPolicyConfigurationAttributes) InternalTokens() hclwrite.T
 }
 
 func (sspc StepScalingPolicyConfigurationAttributes) AdjustmentType() terra.StringValue {
-	return terra.ReferenceString(sspc.ref.Append("adjustment_type"))
+	return terra.ReferenceAsString(sspc.ref.Append("adjustment_type"))
 }
 
 func (sspc StepScalingPolicyConfigurationAttributes) Cooldown() terra.NumberValue {
-	return terra.ReferenceNumber(sspc.ref.Append("cooldown"))
+	return terra.ReferenceAsNumber(sspc.ref.Append("cooldown"))
 }
 
 func (sspc StepScalingPolicyConfigurationAttributes) MetricAggregationType() terra.StringValue {
-	return terra.ReferenceString(sspc.ref.Append("metric_aggregation_type"))
+	return terra.ReferenceAsString(sspc.ref.Append("metric_aggregation_type"))
 }
 
 func (sspc StepScalingPolicyConfigurationAttributes) MinAdjustmentMagnitude() terra.NumberValue {
-	return terra.ReferenceNumber(sspc.ref.Append("min_adjustment_magnitude"))
+	return terra.ReferenceAsNumber(sspc.ref.Append("min_adjustment_magnitude"))
 }
 
 func (sspc StepScalingPolicyConfigurationAttributes) StepAdjustment() terra.SetValue[StepAdjustmentAttributes] {
-	return terra.ReferenceSet[StepAdjustmentAttributes](sspc.ref.Append("step_adjustment"))
+	return terra.ReferenceAsSet[StepAdjustmentAttributes](sspc.ref.Append("step_adjustment"))
 }
 
 type StepAdjustmentAttributes struct {
@@ -124,15 +124,15 @@ func (sa StepAdjustmentAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sa StepAdjustmentAttributes) MetricIntervalLowerBound() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("metric_interval_lower_bound"))
+	return terra.ReferenceAsString(sa.ref.Append("metric_interval_lower_bound"))
 }
 
 func (sa StepAdjustmentAttributes) MetricIntervalUpperBound() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("metric_interval_upper_bound"))
+	return terra.ReferenceAsString(sa.ref.Append("metric_interval_upper_bound"))
 }
 
 func (sa StepAdjustmentAttributes) ScalingAdjustment() terra.NumberValue {
-	return terra.ReferenceNumber(sa.ref.Append("scaling_adjustment"))
+	return terra.ReferenceAsNumber(sa.ref.Append("scaling_adjustment"))
 }
 
 type TargetTrackingScalingPolicyConfigurationAttributes struct {
@@ -152,27 +152,27 @@ func (ttspc TargetTrackingScalingPolicyConfigurationAttributes) InternalTokens()
 }
 
 func (ttspc TargetTrackingScalingPolicyConfigurationAttributes) DisableScaleIn() terra.BoolValue {
-	return terra.ReferenceBool(ttspc.ref.Append("disable_scale_in"))
+	return terra.ReferenceAsBool(ttspc.ref.Append("disable_scale_in"))
 }
 
 func (ttspc TargetTrackingScalingPolicyConfigurationAttributes) ScaleInCooldown() terra.NumberValue {
-	return terra.ReferenceNumber(ttspc.ref.Append("scale_in_cooldown"))
+	return terra.ReferenceAsNumber(ttspc.ref.Append("scale_in_cooldown"))
 }
 
 func (ttspc TargetTrackingScalingPolicyConfigurationAttributes) ScaleOutCooldown() terra.NumberValue {
-	return terra.ReferenceNumber(ttspc.ref.Append("scale_out_cooldown"))
+	return terra.ReferenceAsNumber(ttspc.ref.Append("scale_out_cooldown"))
 }
 
 func (ttspc TargetTrackingScalingPolicyConfigurationAttributes) TargetValue() terra.NumberValue {
-	return terra.ReferenceNumber(ttspc.ref.Append("target_value"))
+	return terra.ReferenceAsNumber(ttspc.ref.Append("target_value"))
 }
 
 func (ttspc TargetTrackingScalingPolicyConfigurationAttributes) CustomizedMetricSpecification() terra.ListValue[CustomizedMetricSpecificationAttributes] {
-	return terra.ReferenceList[CustomizedMetricSpecificationAttributes](ttspc.ref.Append("customized_metric_specification"))
+	return terra.ReferenceAsList[CustomizedMetricSpecificationAttributes](ttspc.ref.Append("customized_metric_specification"))
 }
 
 func (ttspc TargetTrackingScalingPolicyConfigurationAttributes) PredefinedMetricSpecification() terra.ListValue[PredefinedMetricSpecificationAttributes] {
-	return terra.ReferenceList[PredefinedMetricSpecificationAttributes](ttspc.ref.Append("predefined_metric_specification"))
+	return terra.ReferenceAsList[PredefinedMetricSpecificationAttributes](ttspc.ref.Append("predefined_metric_specification"))
 }
 
 type CustomizedMetricSpecificationAttributes struct {
@@ -192,23 +192,23 @@ func (cms CustomizedMetricSpecificationAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (cms CustomizedMetricSpecificationAttributes) MetricName() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("metric_name"))
+	return terra.ReferenceAsString(cms.ref.Append("metric_name"))
 }
 
 func (cms CustomizedMetricSpecificationAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("namespace"))
+	return terra.ReferenceAsString(cms.ref.Append("namespace"))
 }
 
 func (cms CustomizedMetricSpecificationAttributes) Statistic() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("statistic"))
+	return terra.ReferenceAsString(cms.ref.Append("statistic"))
 }
 
 func (cms CustomizedMetricSpecificationAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("unit"))
+	return terra.ReferenceAsString(cms.ref.Append("unit"))
 }
 
 func (cms CustomizedMetricSpecificationAttributes) Dimensions() terra.SetValue[DimensionsAttributes] {
-	return terra.ReferenceSet[DimensionsAttributes](cms.ref.Append("dimensions"))
+	return terra.ReferenceAsSet[DimensionsAttributes](cms.ref.Append("dimensions"))
 }
 
 type DimensionsAttributes struct {
@@ -228,11 +228,11 @@ func (d DimensionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DimensionsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("name"))
+	return terra.ReferenceAsString(d.ref.Append("name"))
 }
 
 func (d DimensionsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("value"))
+	return terra.ReferenceAsString(d.ref.Append("value"))
 }
 
 type PredefinedMetricSpecificationAttributes struct {
@@ -252,11 +252,11 @@ func (pms PredefinedMetricSpecificationAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (pms PredefinedMetricSpecificationAttributes) PredefinedMetricType() terra.StringValue {
-	return terra.ReferenceString(pms.ref.Append("predefined_metric_type"))
+	return terra.ReferenceAsString(pms.ref.Append("predefined_metric_type"))
 }
 
 func (pms PredefinedMetricSpecificationAttributes) ResourceLabel() terra.StringValue {
-	return terra.ReferenceString(pms.ref.Append("resource_label"))
+	return terra.ReferenceAsString(pms.ref.Append("resource_label"))
 }
 
 type StepScalingPolicyConfigurationState struct {

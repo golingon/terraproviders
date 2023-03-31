@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudtrailEventDataStore creates a new instance of [CloudtrailEventDataStore].
 func NewCloudtrailEventDataStore(name string, args CloudtrailEventDataStoreArgs) *CloudtrailEventDataStore {
 	return &CloudtrailEventDataStore{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudtrailEventDataStore(name string, args CloudtrailEventDataStoreArgs)
 
 var _ terra.Resource = (*CloudtrailEventDataStore)(nil)
 
+// CloudtrailEventDataStore represents the Terraform resource aws_cloudtrail_event_data_store.
 type CloudtrailEventDataStore struct {
-	Name  string
-	Args  CloudtrailEventDataStoreArgs
-	state *cloudtrailEventDataStoreState
+	Name      string
+	Args      CloudtrailEventDataStoreArgs
+	state     *cloudtrailEventDataStoreState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudtrailEventDataStore].
 func (ceds *CloudtrailEventDataStore) Type() string {
 	return "aws_cloudtrail_event_data_store"
 }
 
+// LocalName returns the local name for [CloudtrailEventDataStore].
 func (ceds *CloudtrailEventDataStore) LocalName() string {
 	return ceds.Name
 }
 
+// Configuration returns the configuration (args) for [CloudtrailEventDataStore].
 func (ceds *CloudtrailEventDataStore) Configuration() interface{} {
 	return ceds.Args
 }
 
+// DependOn is used for other resources to depend on [CloudtrailEventDataStore].
+func (ceds *CloudtrailEventDataStore) DependOn() terra.Reference {
+	return terra.ReferenceResource(ceds)
+}
+
+// Dependencies returns the list of resources [CloudtrailEventDataStore] depends_on.
+func (ceds *CloudtrailEventDataStore) Dependencies() terra.Dependencies {
+	return ceds.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudtrailEventDataStore].
+func (ceds *CloudtrailEventDataStore) LifecycleManagement() *terra.Lifecycle {
+	return ceds.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudtrailEventDataStore].
 func (ceds *CloudtrailEventDataStore) Attributes() cloudtrailEventDataStoreAttributes {
 	return cloudtrailEventDataStoreAttributes{ref: terra.ReferenceResource(ceds)}
 }
 
+// ImportState imports the given attribute values into [CloudtrailEventDataStore]'s state.
 func (ceds *CloudtrailEventDataStore) ImportState(av io.Reader) error {
 	ceds.state = &cloudtrailEventDataStoreState{}
 	if err := json.NewDecoder(av).Decode(ceds.state); err != nil {
@@ -49,10 +73,12 @@ func (ceds *CloudtrailEventDataStore) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudtrailEventDataStore] has state.
 func (ceds *CloudtrailEventDataStore) State() (*cloudtrailEventDataStoreState, bool) {
 	return ceds.state, ceds.state != nil
 }
 
+// StateMust returns the state for [CloudtrailEventDataStore]. Panics if the state is nil.
 func (ceds *CloudtrailEventDataStore) StateMust() *cloudtrailEventDataStoreState {
 	if ceds.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ceds.Type(), ceds.LocalName()))
@@ -60,10 +86,7 @@ func (ceds *CloudtrailEventDataStore) StateMust() *cloudtrailEventDataStoreState
 	return ceds.state
 }
 
-func (ceds *CloudtrailEventDataStore) DependOn() terra.Reference {
-	return terra.ReferenceResource(ceds)
-}
-
+// CloudtrailEventDataStoreArgs contains the configurations for aws_cloudtrail_event_data_store.
 type CloudtrailEventDataStoreArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -87,59 +110,67 @@ type CloudtrailEventDataStoreArgs struct {
 	AdvancedEventSelector []cloudtraileventdatastore.AdvancedEventSelector `hcl:"advanced_event_selector,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *cloudtraileventdatastore.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CloudtrailEventDataStore depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudtrailEventDataStoreAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_cloudtrail_event_data_store.
 func (ceds cloudtrailEventDataStoreAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ceds.ref.Append("arn"))
+	return terra.ReferenceAsString(ceds.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_cloudtrail_event_data_store.
 func (ceds cloudtrailEventDataStoreAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ceds.ref.Append("id"))
+	return terra.ReferenceAsString(ceds.ref.Append("id"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_cloudtrail_event_data_store.
 func (ceds cloudtrailEventDataStoreAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(ceds.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(ceds.ref.Append("kms_key_id"))
 }
 
+// MultiRegionEnabled returns a reference to field multi_region_enabled of aws_cloudtrail_event_data_store.
 func (ceds cloudtrailEventDataStoreAttributes) MultiRegionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ceds.ref.Append("multi_region_enabled"))
+	return terra.ReferenceAsBool(ceds.ref.Append("multi_region_enabled"))
 }
 
+// Name returns a reference to field name of aws_cloudtrail_event_data_store.
 func (ceds cloudtrailEventDataStoreAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ceds.ref.Append("name"))
+	return terra.ReferenceAsString(ceds.ref.Append("name"))
 }
 
+// OrganizationEnabled returns a reference to field organization_enabled of aws_cloudtrail_event_data_store.
 func (ceds cloudtrailEventDataStoreAttributes) OrganizationEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ceds.ref.Append("organization_enabled"))
+	return terra.ReferenceAsBool(ceds.ref.Append("organization_enabled"))
 }
 
+// RetentionPeriod returns a reference to field retention_period of aws_cloudtrail_event_data_store.
 func (ceds cloudtrailEventDataStoreAttributes) RetentionPeriod() terra.NumberValue {
-	return terra.ReferenceNumber(ceds.ref.Append("retention_period"))
+	return terra.ReferenceAsNumber(ceds.ref.Append("retention_period"))
 }
 
+// Tags returns a reference to field tags of aws_cloudtrail_event_data_store.
 func (ceds cloudtrailEventDataStoreAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ceds.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ceds.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_cloudtrail_event_data_store.
 func (ceds cloudtrailEventDataStoreAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ceds.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ceds.ref.Append("tags_all"))
 }
 
+// TerminationProtectionEnabled returns a reference to field termination_protection_enabled of aws_cloudtrail_event_data_store.
 func (ceds cloudtrailEventDataStoreAttributes) TerminationProtectionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ceds.ref.Append("termination_protection_enabled"))
+	return terra.ReferenceAsBool(ceds.ref.Append("termination_protection_enabled"))
 }
 
 func (ceds cloudtrailEventDataStoreAttributes) AdvancedEventSelector() terra.ListValue[cloudtraileventdatastore.AdvancedEventSelectorAttributes] {
-	return terra.ReferenceList[cloudtraileventdatastore.AdvancedEventSelectorAttributes](ceds.ref.Append("advanced_event_selector"))
+	return terra.ReferenceAsList[cloudtraileventdatastore.AdvancedEventSelectorAttributes](ceds.ref.Append("advanced_event_selector"))
 }
 
 func (ceds cloudtrailEventDataStoreAttributes) Timeouts() cloudtraileventdatastore.TimeoutsAttributes {
-	return terra.ReferenceSingle[cloudtraileventdatastore.TimeoutsAttributes](ceds.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cloudtraileventdatastore.TimeoutsAttributes](ceds.ref.Append("timeouts"))
 }
 
 type cloudtrailEventDataStoreState struct {

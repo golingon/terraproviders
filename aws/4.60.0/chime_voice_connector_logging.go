@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewChimeVoiceConnectorLogging creates a new instance of [ChimeVoiceConnectorLogging].
 func NewChimeVoiceConnectorLogging(name string, args ChimeVoiceConnectorLoggingArgs) *ChimeVoiceConnectorLogging {
 	return &ChimeVoiceConnectorLogging{
 		Args: args,
@@ -18,28 +19,51 @@ func NewChimeVoiceConnectorLogging(name string, args ChimeVoiceConnectorLoggingA
 
 var _ terra.Resource = (*ChimeVoiceConnectorLogging)(nil)
 
+// ChimeVoiceConnectorLogging represents the Terraform resource aws_chime_voice_connector_logging.
 type ChimeVoiceConnectorLogging struct {
-	Name  string
-	Args  ChimeVoiceConnectorLoggingArgs
-	state *chimeVoiceConnectorLoggingState
+	Name      string
+	Args      ChimeVoiceConnectorLoggingArgs
+	state     *chimeVoiceConnectorLoggingState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ChimeVoiceConnectorLogging].
 func (cvcl *ChimeVoiceConnectorLogging) Type() string {
 	return "aws_chime_voice_connector_logging"
 }
 
+// LocalName returns the local name for [ChimeVoiceConnectorLogging].
 func (cvcl *ChimeVoiceConnectorLogging) LocalName() string {
 	return cvcl.Name
 }
 
+// Configuration returns the configuration (args) for [ChimeVoiceConnectorLogging].
 func (cvcl *ChimeVoiceConnectorLogging) Configuration() interface{} {
 	return cvcl.Args
 }
 
+// DependOn is used for other resources to depend on [ChimeVoiceConnectorLogging].
+func (cvcl *ChimeVoiceConnectorLogging) DependOn() terra.Reference {
+	return terra.ReferenceResource(cvcl)
+}
+
+// Dependencies returns the list of resources [ChimeVoiceConnectorLogging] depends_on.
+func (cvcl *ChimeVoiceConnectorLogging) Dependencies() terra.Dependencies {
+	return cvcl.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ChimeVoiceConnectorLogging].
+func (cvcl *ChimeVoiceConnectorLogging) LifecycleManagement() *terra.Lifecycle {
+	return cvcl.Lifecycle
+}
+
+// Attributes returns the attributes for [ChimeVoiceConnectorLogging].
 func (cvcl *ChimeVoiceConnectorLogging) Attributes() chimeVoiceConnectorLoggingAttributes {
 	return chimeVoiceConnectorLoggingAttributes{ref: terra.ReferenceResource(cvcl)}
 }
 
+// ImportState imports the given attribute values into [ChimeVoiceConnectorLogging]'s state.
 func (cvcl *ChimeVoiceConnectorLogging) ImportState(av io.Reader) error {
 	cvcl.state = &chimeVoiceConnectorLoggingState{}
 	if err := json.NewDecoder(av).Decode(cvcl.state); err != nil {
@@ -48,10 +72,12 @@ func (cvcl *ChimeVoiceConnectorLogging) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ChimeVoiceConnectorLogging] has state.
 func (cvcl *ChimeVoiceConnectorLogging) State() (*chimeVoiceConnectorLoggingState, bool) {
 	return cvcl.state, cvcl.state != nil
 }
 
+// StateMust returns the state for [ChimeVoiceConnectorLogging]. Panics if the state is nil.
 func (cvcl *ChimeVoiceConnectorLogging) StateMust() *chimeVoiceConnectorLoggingState {
 	if cvcl.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cvcl.Type(), cvcl.LocalName()))
@@ -59,10 +85,7 @@ func (cvcl *ChimeVoiceConnectorLogging) StateMust() *chimeVoiceConnectorLoggingS
 	return cvcl.state
 }
 
-func (cvcl *ChimeVoiceConnectorLogging) DependOn() terra.Reference {
-	return terra.ReferenceResource(cvcl)
-}
-
+// ChimeVoiceConnectorLoggingArgs contains the configurations for aws_chime_voice_connector_logging.
 type ChimeVoiceConnectorLoggingArgs struct {
 	// EnableMediaMetricLogs: bool, optional
 	EnableMediaMetricLogs terra.BoolValue `hcl:"enable_media_metric_logs,attr"`
@@ -72,27 +95,29 @@ type ChimeVoiceConnectorLoggingArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// VoiceConnectorId: string, required
 	VoiceConnectorId terra.StringValue `hcl:"voice_connector_id,attr" validate:"required"`
-	// DependsOn contains resources that ChimeVoiceConnectorLogging depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type chimeVoiceConnectorLoggingAttributes struct {
 	ref terra.Reference
 }
 
+// EnableMediaMetricLogs returns a reference to field enable_media_metric_logs of aws_chime_voice_connector_logging.
 func (cvcl chimeVoiceConnectorLoggingAttributes) EnableMediaMetricLogs() terra.BoolValue {
-	return terra.ReferenceBool(cvcl.ref.Append("enable_media_metric_logs"))
+	return terra.ReferenceAsBool(cvcl.ref.Append("enable_media_metric_logs"))
 }
 
+// EnableSipLogs returns a reference to field enable_sip_logs of aws_chime_voice_connector_logging.
 func (cvcl chimeVoiceConnectorLoggingAttributes) EnableSipLogs() terra.BoolValue {
-	return terra.ReferenceBool(cvcl.ref.Append("enable_sip_logs"))
+	return terra.ReferenceAsBool(cvcl.ref.Append("enable_sip_logs"))
 }
 
+// Id returns a reference to field id of aws_chime_voice_connector_logging.
 func (cvcl chimeVoiceConnectorLoggingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cvcl.ref.Append("id"))
+	return terra.ReferenceAsString(cvcl.ref.Append("id"))
 }
 
+// VoiceConnectorId returns a reference to field voice_connector_id of aws_chime_voice_connector_logging.
 func (cvcl chimeVoiceConnectorLoggingAttributes) VoiceConnectorId() terra.StringValue {
-	return terra.ReferenceString(cvcl.ref.Append("voice_connector_id"))
+	return terra.ReferenceAsString(cvcl.ref.Append("voice_connector_id"))
 }
 
 type chimeVoiceConnectorLoggingState struct {

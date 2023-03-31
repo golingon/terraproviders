@@ -49,15 +49,15 @@ func (ec EndpointConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec EndpointConfigurationAttributes) ClientIpPreservationEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ec.ref.Append("client_ip_preservation_enabled"))
+	return terra.ReferenceAsBool(ec.ref.Append("client_ip_preservation_enabled"))
 }
 
 func (ec EndpointConfigurationAttributes) EndpointId() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("endpoint_id"))
+	return terra.ReferenceAsString(ec.ref.Append("endpoint_id"))
 }
 
 func (ec EndpointConfigurationAttributes) Weight() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("weight"))
+	return terra.ReferenceAsNumber(ec.ref.Append("weight"))
 }
 
 type PortOverrideAttributes struct {
@@ -77,11 +77,11 @@ func (po PortOverrideAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (po PortOverrideAttributes) EndpointPort() terra.NumberValue {
-	return terra.ReferenceNumber(po.ref.Append("endpoint_port"))
+	return terra.ReferenceAsNumber(po.ref.Append("endpoint_port"))
 }
 
 func (po PortOverrideAttributes) ListenerPort() terra.NumberValue {
-	return terra.ReferenceNumber(po.ref.Append("listener_port"))
+	return terra.ReferenceAsNumber(po.ref.Append("listener_port"))
 }
 
 type TimeoutsAttributes struct {
@@ -101,15 +101,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type EndpointConfigurationState struct {

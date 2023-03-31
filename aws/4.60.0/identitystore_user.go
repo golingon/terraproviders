@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIdentitystoreUser creates a new instance of [IdentitystoreUser].
 func NewIdentitystoreUser(name string, args IdentitystoreUserArgs) *IdentitystoreUser {
 	return &IdentitystoreUser{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIdentitystoreUser(name string, args IdentitystoreUserArgs) *Identitystor
 
 var _ terra.Resource = (*IdentitystoreUser)(nil)
 
+// IdentitystoreUser represents the Terraform resource aws_identitystore_user.
 type IdentitystoreUser struct {
-	Name  string
-	Args  IdentitystoreUserArgs
-	state *identitystoreUserState
+	Name      string
+	Args      IdentitystoreUserArgs
+	state     *identitystoreUserState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IdentitystoreUser].
 func (iu *IdentitystoreUser) Type() string {
 	return "aws_identitystore_user"
 }
 
+// LocalName returns the local name for [IdentitystoreUser].
 func (iu *IdentitystoreUser) LocalName() string {
 	return iu.Name
 }
 
+// Configuration returns the configuration (args) for [IdentitystoreUser].
 func (iu *IdentitystoreUser) Configuration() interface{} {
 	return iu.Args
 }
 
+// DependOn is used for other resources to depend on [IdentitystoreUser].
+func (iu *IdentitystoreUser) DependOn() terra.Reference {
+	return terra.ReferenceResource(iu)
+}
+
+// Dependencies returns the list of resources [IdentitystoreUser] depends_on.
+func (iu *IdentitystoreUser) Dependencies() terra.Dependencies {
+	return iu.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IdentitystoreUser].
+func (iu *IdentitystoreUser) LifecycleManagement() *terra.Lifecycle {
+	return iu.Lifecycle
+}
+
+// Attributes returns the attributes for [IdentitystoreUser].
 func (iu *IdentitystoreUser) Attributes() identitystoreUserAttributes {
 	return identitystoreUserAttributes{ref: terra.ReferenceResource(iu)}
 }
 
+// ImportState imports the given attribute values into [IdentitystoreUser]'s state.
 func (iu *IdentitystoreUser) ImportState(av io.Reader) error {
 	iu.state = &identitystoreUserState{}
 	if err := json.NewDecoder(av).Decode(iu.state); err != nil {
@@ -49,10 +73,12 @@ func (iu *IdentitystoreUser) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IdentitystoreUser] has state.
 func (iu *IdentitystoreUser) State() (*identitystoreUserState, bool) {
 	return iu.state, iu.state != nil
 }
 
+// StateMust returns the state for [IdentitystoreUser]. Panics if the state is nil.
 func (iu *IdentitystoreUser) StateMust() *identitystoreUserState {
 	if iu.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", iu.Type(), iu.LocalName()))
@@ -60,10 +86,7 @@ func (iu *IdentitystoreUser) StateMust() *identitystoreUserState {
 	return iu.state
 }
 
-func (iu *IdentitystoreUser) DependOn() terra.Reference {
-	return terra.ReferenceResource(iu)
-}
-
+// IdentitystoreUserArgs contains the configurations for aws_identitystore_user.
 type IdentitystoreUserArgs struct {
 	// DisplayName: string, required
 	DisplayName terra.StringValue `hcl:"display_name,attr" validate:"required"`
@@ -97,79 +120,89 @@ type IdentitystoreUserArgs struct {
 	Name *identitystoreuser.Name `hcl:"name,block" validate:"required"`
 	// PhoneNumbers: optional
 	PhoneNumbers *identitystoreuser.PhoneNumbers `hcl:"phone_numbers,block"`
-	// DependsOn contains resources that IdentitystoreUser depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type identitystoreUserAttributes struct {
 	ref terra.Reference
 }
 
+// DisplayName returns a reference to field display_name of aws_identitystore_user.
 func (iu identitystoreUserAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(iu.ref.Append("display_name"))
+	return terra.ReferenceAsString(iu.ref.Append("display_name"))
 }
 
+// Id returns a reference to field id of aws_identitystore_user.
 func (iu identitystoreUserAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(iu.ref.Append("id"))
+	return terra.ReferenceAsString(iu.ref.Append("id"))
 }
 
+// IdentityStoreId returns a reference to field identity_store_id of aws_identitystore_user.
 func (iu identitystoreUserAttributes) IdentityStoreId() terra.StringValue {
-	return terra.ReferenceString(iu.ref.Append("identity_store_id"))
+	return terra.ReferenceAsString(iu.ref.Append("identity_store_id"))
 }
 
+// Locale returns a reference to field locale of aws_identitystore_user.
 func (iu identitystoreUserAttributes) Locale() terra.StringValue {
-	return terra.ReferenceString(iu.ref.Append("locale"))
+	return terra.ReferenceAsString(iu.ref.Append("locale"))
 }
 
+// Nickname returns a reference to field nickname of aws_identitystore_user.
 func (iu identitystoreUserAttributes) Nickname() terra.StringValue {
-	return terra.ReferenceString(iu.ref.Append("nickname"))
+	return terra.ReferenceAsString(iu.ref.Append("nickname"))
 }
 
+// PreferredLanguage returns a reference to field preferred_language of aws_identitystore_user.
 func (iu identitystoreUserAttributes) PreferredLanguage() terra.StringValue {
-	return terra.ReferenceString(iu.ref.Append("preferred_language"))
+	return terra.ReferenceAsString(iu.ref.Append("preferred_language"))
 }
 
+// ProfileUrl returns a reference to field profile_url of aws_identitystore_user.
 func (iu identitystoreUserAttributes) ProfileUrl() terra.StringValue {
-	return terra.ReferenceString(iu.ref.Append("profile_url"))
+	return terra.ReferenceAsString(iu.ref.Append("profile_url"))
 }
 
+// Timezone returns a reference to field timezone of aws_identitystore_user.
 func (iu identitystoreUserAttributes) Timezone() terra.StringValue {
-	return terra.ReferenceString(iu.ref.Append("timezone"))
+	return terra.ReferenceAsString(iu.ref.Append("timezone"))
 }
 
+// Title returns a reference to field title of aws_identitystore_user.
 func (iu identitystoreUserAttributes) Title() terra.StringValue {
-	return terra.ReferenceString(iu.ref.Append("title"))
+	return terra.ReferenceAsString(iu.ref.Append("title"))
 }
 
+// UserId returns a reference to field user_id of aws_identitystore_user.
 func (iu identitystoreUserAttributes) UserId() terra.StringValue {
-	return terra.ReferenceString(iu.ref.Append("user_id"))
+	return terra.ReferenceAsString(iu.ref.Append("user_id"))
 }
 
+// UserName returns a reference to field user_name of aws_identitystore_user.
 func (iu identitystoreUserAttributes) UserName() terra.StringValue {
-	return terra.ReferenceString(iu.ref.Append("user_name"))
+	return terra.ReferenceAsString(iu.ref.Append("user_name"))
 }
 
+// UserType returns a reference to field user_type of aws_identitystore_user.
 func (iu identitystoreUserAttributes) UserType() terra.StringValue {
-	return terra.ReferenceString(iu.ref.Append("user_type"))
+	return terra.ReferenceAsString(iu.ref.Append("user_type"))
 }
 
 func (iu identitystoreUserAttributes) ExternalIds() terra.ListValue[identitystoreuser.ExternalIdsAttributes] {
-	return terra.ReferenceList[identitystoreuser.ExternalIdsAttributes](iu.ref.Append("external_ids"))
+	return terra.ReferenceAsList[identitystoreuser.ExternalIdsAttributes](iu.ref.Append("external_ids"))
 }
 
 func (iu identitystoreUserAttributes) Addresses() terra.ListValue[identitystoreuser.AddressesAttributes] {
-	return terra.ReferenceList[identitystoreuser.AddressesAttributes](iu.ref.Append("addresses"))
+	return terra.ReferenceAsList[identitystoreuser.AddressesAttributes](iu.ref.Append("addresses"))
 }
 
 func (iu identitystoreUserAttributes) Emails() terra.ListValue[identitystoreuser.EmailsAttributes] {
-	return terra.ReferenceList[identitystoreuser.EmailsAttributes](iu.ref.Append("emails"))
+	return terra.ReferenceAsList[identitystoreuser.EmailsAttributes](iu.ref.Append("emails"))
 }
 
 func (iu identitystoreUserAttributes) Name() terra.ListValue[identitystoreuser.NameAttributes] {
-	return terra.ReferenceList[identitystoreuser.NameAttributes](iu.ref.Append("name"))
+	return terra.ReferenceAsList[identitystoreuser.NameAttributes](iu.ref.Append("name"))
 }
 
 func (iu identitystoreUserAttributes) PhoneNumbers() terra.ListValue[identitystoreuser.PhoneNumbersAttributes] {
-	return terra.ReferenceList[identitystoreuser.PhoneNumbersAttributes](iu.ref.Append("phone_numbers"))
+	return terra.ReferenceAsList[identitystoreuser.PhoneNumbersAttributes](iu.ref.Append("phone_numbers"))
 }
 
 type identitystoreUserState struct {

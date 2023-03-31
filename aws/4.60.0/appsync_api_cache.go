@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAppsyncApiCache creates a new instance of [AppsyncApiCache].
 func NewAppsyncApiCache(name string, args AppsyncApiCacheArgs) *AppsyncApiCache {
 	return &AppsyncApiCache{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAppsyncApiCache(name string, args AppsyncApiCacheArgs) *AppsyncApiCache 
 
 var _ terra.Resource = (*AppsyncApiCache)(nil)
 
+// AppsyncApiCache represents the Terraform resource aws_appsync_api_cache.
 type AppsyncApiCache struct {
-	Name  string
-	Args  AppsyncApiCacheArgs
-	state *appsyncApiCacheState
+	Name      string
+	Args      AppsyncApiCacheArgs
+	state     *appsyncApiCacheState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppsyncApiCache].
 func (aac *AppsyncApiCache) Type() string {
 	return "aws_appsync_api_cache"
 }
 
+// LocalName returns the local name for [AppsyncApiCache].
 func (aac *AppsyncApiCache) LocalName() string {
 	return aac.Name
 }
 
+// Configuration returns the configuration (args) for [AppsyncApiCache].
 func (aac *AppsyncApiCache) Configuration() interface{} {
 	return aac.Args
 }
 
+// DependOn is used for other resources to depend on [AppsyncApiCache].
+func (aac *AppsyncApiCache) DependOn() terra.Reference {
+	return terra.ReferenceResource(aac)
+}
+
+// Dependencies returns the list of resources [AppsyncApiCache] depends_on.
+func (aac *AppsyncApiCache) Dependencies() terra.Dependencies {
+	return aac.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppsyncApiCache].
+func (aac *AppsyncApiCache) LifecycleManagement() *terra.Lifecycle {
+	return aac.Lifecycle
+}
+
+// Attributes returns the attributes for [AppsyncApiCache].
 func (aac *AppsyncApiCache) Attributes() appsyncApiCacheAttributes {
 	return appsyncApiCacheAttributes{ref: terra.ReferenceResource(aac)}
 }
 
+// ImportState imports the given attribute values into [AppsyncApiCache]'s state.
 func (aac *AppsyncApiCache) ImportState(av io.Reader) error {
 	aac.state = &appsyncApiCacheState{}
 	if err := json.NewDecoder(av).Decode(aac.state); err != nil {
@@ -48,10 +72,12 @@ func (aac *AppsyncApiCache) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppsyncApiCache] has state.
 func (aac *AppsyncApiCache) State() (*appsyncApiCacheState, bool) {
 	return aac.state, aac.state != nil
 }
 
+// StateMust returns the state for [AppsyncApiCache]. Panics if the state is nil.
 func (aac *AppsyncApiCache) StateMust() *appsyncApiCacheState {
 	if aac.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", aac.Type(), aac.LocalName()))
@@ -59,10 +85,7 @@ func (aac *AppsyncApiCache) StateMust() *appsyncApiCacheState {
 	return aac.state
 }
 
-func (aac *AppsyncApiCache) DependOn() terra.Reference {
-	return terra.ReferenceResource(aac)
-}
-
+// AppsyncApiCacheArgs contains the configurations for aws_appsync_api_cache.
 type AppsyncApiCacheArgs struct {
 	// ApiCachingBehavior: string, required
 	ApiCachingBehavior terra.StringValue `hcl:"api_caching_behavior,attr" validate:"required"`
@@ -78,39 +101,44 @@ type AppsyncApiCacheArgs struct {
 	Ttl terra.NumberValue `hcl:"ttl,attr" validate:"required"`
 	// Type: string, required
 	Type terra.StringValue `hcl:"type,attr" validate:"required"`
-	// DependsOn contains resources that AppsyncApiCache depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appsyncApiCacheAttributes struct {
 	ref terra.Reference
 }
 
+// ApiCachingBehavior returns a reference to field api_caching_behavior of aws_appsync_api_cache.
 func (aac appsyncApiCacheAttributes) ApiCachingBehavior() terra.StringValue {
-	return terra.ReferenceString(aac.ref.Append("api_caching_behavior"))
+	return terra.ReferenceAsString(aac.ref.Append("api_caching_behavior"))
 }
 
+// ApiId returns a reference to field api_id of aws_appsync_api_cache.
 func (aac appsyncApiCacheAttributes) ApiId() terra.StringValue {
-	return terra.ReferenceString(aac.ref.Append("api_id"))
+	return terra.ReferenceAsString(aac.ref.Append("api_id"))
 }
 
+// AtRestEncryptionEnabled returns a reference to field at_rest_encryption_enabled of aws_appsync_api_cache.
 func (aac appsyncApiCacheAttributes) AtRestEncryptionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(aac.ref.Append("at_rest_encryption_enabled"))
+	return terra.ReferenceAsBool(aac.ref.Append("at_rest_encryption_enabled"))
 }
 
+// Id returns a reference to field id of aws_appsync_api_cache.
 func (aac appsyncApiCacheAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aac.ref.Append("id"))
+	return terra.ReferenceAsString(aac.ref.Append("id"))
 }
 
+// TransitEncryptionEnabled returns a reference to field transit_encryption_enabled of aws_appsync_api_cache.
 func (aac appsyncApiCacheAttributes) TransitEncryptionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(aac.ref.Append("transit_encryption_enabled"))
+	return terra.ReferenceAsBool(aac.ref.Append("transit_encryption_enabled"))
 }
 
+// Ttl returns a reference to field ttl of aws_appsync_api_cache.
 func (aac appsyncApiCacheAttributes) Ttl() terra.NumberValue {
-	return terra.ReferenceNumber(aac.ref.Append("ttl"))
+	return terra.ReferenceAsNumber(aac.ref.Append("ttl"))
 }
 
+// Type returns a reference to field type of aws_appsync_api_cache.
 func (aac appsyncApiCacheAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(aac.ref.Append("type"))
+	return terra.ReferenceAsString(aac.ref.Append("type"))
 }
 
 type appsyncApiCacheState struct {

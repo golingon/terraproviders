@@ -31,27 +31,27 @@ func (d DetailsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DetailsAttributes) ConstraintId() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("constraint_id"))
+	return terra.ReferenceAsString(d.ref.Append("constraint_id"))
 }
 
 func (d DetailsAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("description"))
+	return terra.ReferenceAsString(d.ref.Append("description"))
 }
 
 func (d DetailsAttributes) Owner() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("owner"))
+	return terra.ReferenceAsString(d.ref.Append("owner"))
 }
 
 func (d DetailsAttributes) PortfolioId() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("portfolio_id"))
+	return terra.ReferenceAsString(d.ref.Append("portfolio_id"))
 }
 
 func (d DetailsAttributes) ProductId() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("product_id"))
+	return terra.ReferenceAsString(d.ref.Append("product_id"))
 }
 
 func (d DetailsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("type"))
+	return terra.ReferenceAsString(d.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
@@ -71,7 +71,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type DetailsState struct {

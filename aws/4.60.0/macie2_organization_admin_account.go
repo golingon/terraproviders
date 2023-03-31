@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewMacie2OrganizationAdminAccount creates a new instance of [Macie2OrganizationAdminAccount].
 func NewMacie2OrganizationAdminAccount(name string, args Macie2OrganizationAdminAccountArgs) *Macie2OrganizationAdminAccount {
 	return &Macie2OrganizationAdminAccount{
 		Args: args,
@@ -18,28 +19,51 @@ func NewMacie2OrganizationAdminAccount(name string, args Macie2OrganizationAdmin
 
 var _ terra.Resource = (*Macie2OrganizationAdminAccount)(nil)
 
+// Macie2OrganizationAdminAccount represents the Terraform resource aws_macie2_organization_admin_account.
 type Macie2OrganizationAdminAccount struct {
-	Name  string
-	Args  Macie2OrganizationAdminAccountArgs
-	state *macie2OrganizationAdminAccountState
+	Name      string
+	Args      Macie2OrganizationAdminAccountArgs
+	state     *macie2OrganizationAdminAccountState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Macie2OrganizationAdminAccount].
 func (moaa *Macie2OrganizationAdminAccount) Type() string {
 	return "aws_macie2_organization_admin_account"
 }
 
+// LocalName returns the local name for [Macie2OrganizationAdminAccount].
 func (moaa *Macie2OrganizationAdminAccount) LocalName() string {
 	return moaa.Name
 }
 
+// Configuration returns the configuration (args) for [Macie2OrganizationAdminAccount].
 func (moaa *Macie2OrganizationAdminAccount) Configuration() interface{} {
 	return moaa.Args
 }
 
+// DependOn is used for other resources to depend on [Macie2OrganizationAdminAccount].
+func (moaa *Macie2OrganizationAdminAccount) DependOn() terra.Reference {
+	return terra.ReferenceResource(moaa)
+}
+
+// Dependencies returns the list of resources [Macie2OrganizationAdminAccount] depends_on.
+func (moaa *Macie2OrganizationAdminAccount) Dependencies() terra.Dependencies {
+	return moaa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Macie2OrganizationAdminAccount].
+func (moaa *Macie2OrganizationAdminAccount) LifecycleManagement() *terra.Lifecycle {
+	return moaa.Lifecycle
+}
+
+// Attributes returns the attributes for [Macie2OrganizationAdminAccount].
 func (moaa *Macie2OrganizationAdminAccount) Attributes() macie2OrganizationAdminAccountAttributes {
 	return macie2OrganizationAdminAccountAttributes{ref: terra.ReferenceResource(moaa)}
 }
 
+// ImportState imports the given attribute values into [Macie2OrganizationAdminAccount]'s state.
 func (moaa *Macie2OrganizationAdminAccount) ImportState(av io.Reader) error {
 	moaa.state = &macie2OrganizationAdminAccountState{}
 	if err := json.NewDecoder(av).Decode(moaa.state); err != nil {
@@ -48,10 +72,12 @@ func (moaa *Macie2OrganizationAdminAccount) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Macie2OrganizationAdminAccount] has state.
 func (moaa *Macie2OrganizationAdminAccount) State() (*macie2OrganizationAdminAccountState, bool) {
 	return moaa.state, moaa.state != nil
 }
 
+// StateMust returns the state for [Macie2OrganizationAdminAccount]. Panics if the state is nil.
 func (moaa *Macie2OrganizationAdminAccount) StateMust() *macie2OrganizationAdminAccountState {
 	if moaa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", moaa.Type(), moaa.LocalName()))
@@ -59,28 +85,25 @@ func (moaa *Macie2OrganizationAdminAccount) StateMust() *macie2OrganizationAdmin
 	return moaa.state
 }
 
-func (moaa *Macie2OrganizationAdminAccount) DependOn() terra.Reference {
-	return terra.ReferenceResource(moaa)
-}
-
+// Macie2OrganizationAdminAccountArgs contains the configurations for aws_macie2_organization_admin_account.
 type Macie2OrganizationAdminAccountArgs struct {
 	// AdminAccountId: string, required
 	AdminAccountId terra.StringValue `hcl:"admin_account_id,attr" validate:"required"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that Macie2OrganizationAdminAccount depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type macie2OrganizationAdminAccountAttributes struct {
 	ref terra.Reference
 }
 
+// AdminAccountId returns a reference to field admin_account_id of aws_macie2_organization_admin_account.
 func (moaa macie2OrganizationAdminAccountAttributes) AdminAccountId() terra.StringValue {
-	return terra.ReferenceString(moaa.ref.Append("admin_account_id"))
+	return terra.ReferenceAsString(moaa.ref.Append("admin_account_id"))
 }
 
+// Id returns a reference to field id of aws_macie2_organization_admin_account.
 func (moaa macie2OrganizationAdminAccountAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(moaa.ref.Append("id"))
+	return terra.ReferenceAsString(moaa.ref.Append("id"))
 }
 
 type macie2OrganizationAdminAccountState struct {

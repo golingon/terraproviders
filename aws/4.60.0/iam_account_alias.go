@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewIamAccountAlias creates a new instance of [IamAccountAlias].
 func NewIamAccountAlias(name string, args IamAccountAliasArgs) *IamAccountAlias {
 	return &IamAccountAlias{
 		Args: args,
@@ -18,28 +19,51 @@ func NewIamAccountAlias(name string, args IamAccountAliasArgs) *IamAccountAlias 
 
 var _ terra.Resource = (*IamAccountAlias)(nil)
 
+// IamAccountAlias represents the Terraform resource aws_iam_account_alias.
 type IamAccountAlias struct {
-	Name  string
-	Args  IamAccountAliasArgs
-	state *iamAccountAliasState
+	Name      string
+	Args      IamAccountAliasArgs
+	state     *iamAccountAliasState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IamAccountAlias].
 func (iaa *IamAccountAlias) Type() string {
 	return "aws_iam_account_alias"
 }
 
+// LocalName returns the local name for [IamAccountAlias].
 func (iaa *IamAccountAlias) LocalName() string {
 	return iaa.Name
 }
 
+// Configuration returns the configuration (args) for [IamAccountAlias].
 func (iaa *IamAccountAlias) Configuration() interface{} {
 	return iaa.Args
 }
 
+// DependOn is used for other resources to depend on [IamAccountAlias].
+func (iaa *IamAccountAlias) DependOn() terra.Reference {
+	return terra.ReferenceResource(iaa)
+}
+
+// Dependencies returns the list of resources [IamAccountAlias] depends_on.
+func (iaa *IamAccountAlias) Dependencies() terra.Dependencies {
+	return iaa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IamAccountAlias].
+func (iaa *IamAccountAlias) LifecycleManagement() *terra.Lifecycle {
+	return iaa.Lifecycle
+}
+
+// Attributes returns the attributes for [IamAccountAlias].
 func (iaa *IamAccountAlias) Attributes() iamAccountAliasAttributes {
 	return iamAccountAliasAttributes{ref: terra.ReferenceResource(iaa)}
 }
 
+// ImportState imports the given attribute values into [IamAccountAlias]'s state.
 func (iaa *IamAccountAlias) ImportState(av io.Reader) error {
 	iaa.state = &iamAccountAliasState{}
 	if err := json.NewDecoder(av).Decode(iaa.state); err != nil {
@@ -48,10 +72,12 @@ func (iaa *IamAccountAlias) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IamAccountAlias] has state.
 func (iaa *IamAccountAlias) State() (*iamAccountAliasState, bool) {
 	return iaa.state, iaa.state != nil
 }
 
+// StateMust returns the state for [IamAccountAlias]. Panics if the state is nil.
 func (iaa *IamAccountAlias) StateMust() *iamAccountAliasState {
 	if iaa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", iaa.Type(), iaa.LocalName()))
@@ -59,28 +85,25 @@ func (iaa *IamAccountAlias) StateMust() *iamAccountAliasState {
 	return iaa.state
 }
 
-func (iaa *IamAccountAlias) DependOn() terra.Reference {
-	return terra.ReferenceResource(iaa)
-}
-
+// IamAccountAliasArgs contains the configurations for aws_iam_account_alias.
 type IamAccountAliasArgs struct {
 	// AccountAlias: string, required
 	AccountAlias terra.StringValue `hcl:"account_alias,attr" validate:"required"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that IamAccountAlias depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iamAccountAliasAttributes struct {
 	ref terra.Reference
 }
 
+// AccountAlias returns a reference to field account_alias of aws_iam_account_alias.
 func (iaa iamAccountAliasAttributes) AccountAlias() terra.StringValue {
-	return terra.ReferenceString(iaa.ref.Append("account_alias"))
+	return terra.ReferenceAsString(iaa.ref.Append("account_alias"))
 }
 
+// Id returns a reference to field id of aws_iam_account_alias.
 func (iaa iamAccountAliasAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(iaa.ref.Append("id"))
+	return terra.ReferenceAsString(iaa.ref.Append("id"))
 }
 
 type iamAccountAliasState struct {

@@ -29,7 +29,7 @@ func (sdp SnapshotDeliveryPropertiesAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (sdp SnapshotDeliveryPropertiesAttributes) DeliveryFrequency() terra.StringValue {
-	return terra.ReferenceString(sdp.ref.Append("delivery_frequency"))
+	return terra.ReferenceAsString(sdp.ref.Append("delivery_frequency"))
 }
 
 type SnapshotDeliveryPropertiesState struct {

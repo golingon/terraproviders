@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewLambdaInvocation creates a new instance of [LambdaInvocation].
 func NewLambdaInvocation(name string, args LambdaInvocationArgs) *LambdaInvocation {
 	return &LambdaInvocation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewLambdaInvocation(name string, args LambdaInvocationArgs) *LambdaInvocati
 
 var _ terra.Resource = (*LambdaInvocation)(nil)
 
+// LambdaInvocation represents the Terraform resource aws_lambda_invocation.
 type LambdaInvocation struct {
-	Name  string
-	Args  LambdaInvocationArgs
-	state *lambdaInvocationState
+	Name      string
+	Args      LambdaInvocationArgs
+	state     *lambdaInvocationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LambdaInvocation].
 func (li *LambdaInvocation) Type() string {
 	return "aws_lambda_invocation"
 }
 
+// LocalName returns the local name for [LambdaInvocation].
 func (li *LambdaInvocation) LocalName() string {
 	return li.Name
 }
 
+// Configuration returns the configuration (args) for [LambdaInvocation].
 func (li *LambdaInvocation) Configuration() interface{} {
 	return li.Args
 }
 
+// DependOn is used for other resources to depend on [LambdaInvocation].
+func (li *LambdaInvocation) DependOn() terra.Reference {
+	return terra.ReferenceResource(li)
+}
+
+// Dependencies returns the list of resources [LambdaInvocation] depends_on.
+func (li *LambdaInvocation) Dependencies() terra.Dependencies {
+	return li.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LambdaInvocation].
+func (li *LambdaInvocation) LifecycleManagement() *terra.Lifecycle {
+	return li.Lifecycle
+}
+
+// Attributes returns the attributes for [LambdaInvocation].
 func (li *LambdaInvocation) Attributes() lambdaInvocationAttributes {
 	return lambdaInvocationAttributes{ref: terra.ReferenceResource(li)}
 }
 
+// ImportState imports the given attribute values into [LambdaInvocation]'s state.
 func (li *LambdaInvocation) ImportState(av io.Reader) error {
 	li.state = &lambdaInvocationState{}
 	if err := json.NewDecoder(av).Decode(li.state); err != nil {
@@ -48,10 +72,12 @@ func (li *LambdaInvocation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LambdaInvocation] has state.
 func (li *LambdaInvocation) State() (*lambdaInvocationState, bool) {
 	return li.state, li.state != nil
 }
 
+// StateMust returns the state for [LambdaInvocation]. Panics if the state is nil.
 func (li *LambdaInvocation) StateMust() *lambdaInvocationState {
 	if li.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", li.Type(), li.LocalName()))
@@ -59,10 +85,7 @@ func (li *LambdaInvocation) StateMust() *lambdaInvocationState {
 	return li.state
 }
 
-func (li *LambdaInvocation) DependOn() terra.Reference {
-	return terra.ReferenceResource(li)
-}
-
+// LambdaInvocationArgs contains the configurations for aws_lambda_invocation.
 type LambdaInvocationArgs struct {
 	// FunctionName: string, required
 	FunctionName terra.StringValue `hcl:"function_name,attr" validate:"required"`
@@ -74,35 +97,39 @@ type LambdaInvocationArgs struct {
 	Qualifier terra.StringValue `hcl:"qualifier,attr"`
 	// Triggers: map of string, optional
 	Triggers terra.MapValue[terra.StringValue] `hcl:"triggers,attr"`
-	// DependsOn contains resources that LambdaInvocation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lambdaInvocationAttributes struct {
 	ref terra.Reference
 }
 
+// FunctionName returns a reference to field function_name of aws_lambda_invocation.
 func (li lambdaInvocationAttributes) FunctionName() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("function_name"))
+	return terra.ReferenceAsString(li.ref.Append("function_name"))
 }
 
+// Id returns a reference to field id of aws_lambda_invocation.
 func (li lambdaInvocationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("id"))
+	return terra.ReferenceAsString(li.ref.Append("id"))
 }
 
+// Input returns a reference to field input of aws_lambda_invocation.
 func (li lambdaInvocationAttributes) Input() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("input"))
+	return terra.ReferenceAsString(li.ref.Append("input"))
 }
 
+// Qualifier returns a reference to field qualifier of aws_lambda_invocation.
 func (li lambdaInvocationAttributes) Qualifier() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("qualifier"))
+	return terra.ReferenceAsString(li.ref.Append("qualifier"))
 }
 
+// Result returns a reference to field result of aws_lambda_invocation.
 func (li lambdaInvocationAttributes) Result() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("result"))
+	return terra.ReferenceAsString(li.ref.Append("result"))
 }
 
+// Triggers returns a reference to field triggers of aws_lambda_invocation.
 func (li lambdaInvocationAttributes) Triggers() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](li.ref.Append("triggers"))
+	return terra.ReferenceAsMap[terra.StringValue](li.ref.Append("triggers"))
 }
 
 type lambdaInvocationState struct {

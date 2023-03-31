@@ -70,19 +70,19 @@ func (r ResourcesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r ResourcesAttributes) ComponentId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("component_id"))
+	return terra.ReferenceAsString(r.ref.Append("component_id"))
 }
 
 func (r ResourcesAttributes) ReadinessScopes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("readiness_scopes"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("readiness_scopes"))
 }
 
 func (r ResourcesAttributes) ResourceArn() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("resource_arn"))
+	return terra.ReferenceAsString(r.ref.Append("resource_arn"))
 }
 
 func (r ResourcesAttributes) DnsTargetResource() terra.ListValue[DnsTargetResourceAttributes] {
-	return terra.ReferenceList[DnsTargetResourceAttributes](r.ref.Append("dns_target_resource"))
+	return terra.ReferenceAsList[DnsTargetResourceAttributes](r.ref.Append("dns_target_resource"))
 }
 
 type DnsTargetResourceAttributes struct {
@@ -102,23 +102,23 @@ func (dtr DnsTargetResourceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dtr DnsTargetResourceAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(dtr.ref.Append("domain_name"))
+	return terra.ReferenceAsString(dtr.ref.Append("domain_name"))
 }
 
 func (dtr DnsTargetResourceAttributes) HostedZoneArn() terra.StringValue {
-	return terra.ReferenceString(dtr.ref.Append("hosted_zone_arn"))
+	return terra.ReferenceAsString(dtr.ref.Append("hosted_zone_arn"))
 }
 
 func (dtr DnsTargetResourceAttributes) RecordSetId() terra.StringValue {
-	return terra.ReferenceString(dtr.ref.Append("record_set_id"))
+	return terra.ReferenceAsString(dtr.ref.Append("record_set_id"))
 }
 
 func (dtr DnsTargetResourceAttributes) RecordType() terra.StringValue {
-	return terra.ReferenceString(dtr.ref.Append("record_type"))
+	return terra.ReferenceAsString(dtr.ref.Append("record_type"))
 }
 
 func (dtr DnsTargetResourceAttributes) TargetResource() terra.ListValue[TargetResourceAttributes] {
-	return terra.ReferenceList[TargetResourceAttributes](dtr.ref.Append("target_resource"))
+	return terra.ReferenceAsList[TargetResourceAttributes](dtr.ref.Append("target_resource"))
 }
 
 type TargetResourceAttributes struct {
@@ -138,11 +138,11 @@ func (tr TargetResourceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tr TargetResourceAttributes) NlbResource() terra.ListValue[NlbResourceAttributes] {
-	return terra.ReferenceList[NlbResourceAttributes](tr.ref.Append("nlb_resource"))
+	return terra.ReferenceAsList[NlbResourceAttributes](tr.ref.Append("nlb_resource"))
 }
 
 func (tr TargetResourceAttributes) R53Resource() terra.ListValue[R53ResourceAttributes] {
-	return terra.ReferenceList[R53ResourceAttributes](tr.ref.Append("r53_resource"))
+	return terra.ReferenceAsList[R53ResourceAttributes](tr.ref.Append("r53_resource"))
 }
 
 type NlbResourceAttributes struct {
@@ -162,7 +162,7 @@ func (nr NlbResourceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nr NlbResourceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(nr.ref.Append("arn"))
+	return terra.ReferenceAsString(nr.ref.Append("arn"))
 }
 
 type R53ResourceAttributes struct {
@@ -182,11 +182,11 @@ func (rr R53ResourceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rr R53ResourceAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("domain_name"))
+	return terra.ReferenceAsString(rr.ref.Append("domain_name"))
 }
 
 func (rr R53ResourceAttributes) RecordSetId() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("record_set_id"))
+	return terra.ReferenceAsString(rr.ref.Append("record_set_id"))
 }
 
 type TimeoutsAttributes struct {
@@ -206,7 +206,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type ResourcesState struct {

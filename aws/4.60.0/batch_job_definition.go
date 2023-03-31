@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBatchJobDefinition creates a new instance of [BatchJobDefinition].
 func NewBatchJobDefinition(name string, args BatchJobDefinitionArgs) *BatchJobDefinition {
 	return &BatchJobDefinition{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBatchJobDefinition(name string, args BatchJobDefinitionArgs) *BatchJobDe
 
 var _ terra.Resource = (*BatchJobDefinition)(nil)
 
+// BatchJobDefinition represents the Terraform resource aws_batch_job_definition.
 type BatchJobDefinition struct {
-	Name  string
-	Args  BatchJobDefinitionArgs
-	state *batchJobDefinitionState
+	Name      string
+	Args      BatchJobDefinitionArgs
+	state     *batchJobDefinitionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BatchJobDefinition].
 func (bjd *BatchJobDefinition) Type() string {
 	return "aws_batch_job_definition"
 }
 
+// LocalName returns the local name for [BatchJobDefinition].
 func (bjd *BatchJobDefinition) LocalName() string {
 	return bjd.Name
 }
 
+// Configuration returns the configuration (args) for [BatchJobDefinition].
 func (bjd *BatchJobDefinition) Configuration() interface{} {
 	return bjd.Args
 }
 
+// DependOn is used for other resources to depend on [BatchJobDefinition].
+func (bjd *BatchJobDefinition) DependOn() terra.Reference {
+	return terra.ReferenceResource(bjd)
+}
+
+// Dependencies returns the list of resources [BatchJobDefinition] depends_on.
+func (bjd *BatchJobDefinition) Dependencies() terra.Dependencies {
+	return bjd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BatchJobDefinition].
+func (bjd *BatchJobDefinition) LifecycleManagement() *terra.Lifecycle {
+	return bjd.Lifecycle
+}
+
+// Attributes returns the attributes for [BatchJobDefinition].
 func (bjd *BatchJobDefinition) Attributes() batchJobDefinitionAttributes {
 	return batchJobDefinitionAttributes{ref: terra.ReferenceResource(bjd)}
 }
 
+// ImportState imports the given attribute values into [BatchJobDefinition]'s state.
 func (bjd *BatchJobDefinition) ImportState(av io.Reader) error {
 	bjd.state = &batchJobDefinitionState{}
 	if err := json.NewDecoder(av).Decode(bjd.state); err != nil {
@@ -49,10 +73,12 @@ func (bjd *BatchJobDefinition) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BatchJobDefinition] has state.
 func (bjd *BatchJobDefinition) State() (*batchJobDefinitionState, bool) {
 	return bjd.state, bjd.state != nil
 }
 
+// StateMust returns the state for [BatchJobDefinition]. Panics if the state is nil.
 func (bjd *BatchJobDefinition) StateMust() *batchJobDefinitionState {
 	if bjd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bjd.Type(), bjd.LocalName()))
@@ -60,10 +86,7 @@ func (bjd *BatchJobDefinition) StateMust() *batchJobDefinitionState {
 	return bjd.state
 }
 
-func (bjd *BatchJobDefinition) DependOn() terra.Reference {
-	return terra.ReferenceResource(bjd)
-}
-
+// BatchJobDefinitionArgs contains the configurations for aws_batch_job_definition.
 type BatchJobDefinitionArgs struct {
 	// ContainerProperties: string, optional
 	ContainerProperties terra.StringValue `hcl:"container_properties,attr"`
@@ -87,63 +110,72 @@ type BatchJobDefinitionArgs struct {
 	RetryStrategy *batchjobdefinition.RetryStrategy `hcl:"retry_strategy,block"`
 	// Timeout: optional
 	Timeout *batchjobdefinition.Timeout `hcl:"timeout,block"`
-	// DependsOn contains resources that BatchJobDefinition depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type batchJobDefinitionAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_batch_job_definition.
 func (bjd batchJobDefinitionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(bjd.ref.Append("arn"))
+	return terra.ReferenceAsString(bjd.ref.Append("arn"))
 }
 
+// ContainerProperties returns a reference to field container_properties of aws_batch_job_definition.
 func (bjd batchJobDefinitionAttributes) ContainerProperties() terra.StringValue {
-	return terra.ReferenceString(bjd.ref.Append("container_properties"))
+	return terra.ReferenceAsString(bjd.ref.Append("container_properties"))
 }
 
+// Id returns a reference to field id of aws_batch_job_definition.
 func (bjd batchJobDefinitionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bjd.ref.Append("id"))
+	return terra.ReferenceAsString(bjd.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_batch_job_definition.
 func (bjd batchJobDefinitionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bjd.ref.Append("name"))
+	return terra.ReferenceAsString(bjd.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of aws_batch_job_definition.
 func (bjd batchJobDefinitionAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bjd.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](bjd.ref.Append("parameters"))
 }
 
+// PlatformCapabilities returns a reference to field platform_capabilities of aws_batch_job_definition.
 func (bjd batchJobDefinitionAttributes) PlatformCapabilities() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](bjd.ref.Append("platform_capabilities"))
+	return terra.ReferenceAsSet[terra.StringValue](bjd.ref.Append("platform_capabilities"))
 }
 
+// PropagateTags returns a reference to field propagate_tags of aws_batch_job_definition.
 func (bjd batchJobDefinitionAttributes) PropagateTags() terra.BoolValue {
-	return terra.ReferenceBool(bjd.ref.Append("propagate_tags"))
+	return terra.ReferenceAsBool(bjd.ref.Append("propagate_tags"))
 }
 
+// Revision returns a reference to field revision of aws_batch_job_definition.
 func (bjd batchJobDefinitionAttributes) Revision() terra.NumberValue {
-	return terra.ReferenceNumber(bjd.ref.Append("revision"))
+	return terra.ReferenceAsNumber(bjd.ref.Append("revision"))
 }
 
+// Tags returns a reference to field tags of aws_batch_job_definition.
 func (bjd batchJobDefinitionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bjd.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](bjd.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_batch_job_definition.
 func (bjd batchJobDefinitionAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bjd.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](bjd.ref.Append("tags_all"))
 }
 
+// Type returns a reference to field type of aws_batch_job_definition.
 func (bjd batchJobDefinitionAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(bjd.ref.Append("type"))
+	return terra.ReferenceAsString(bjd.ref.Append("type"))
 }
 
 func (bjd batchJobDefinitionAttributes) RetryStrategy() terra.ListValue[batchjobdefinition.RetryStrategyAttributes] {
-	return terra.ReferenceList[batchjobdefinition.RetryStrategyAttributes](bjd.ref.Append("retry_strategy"))
+	return terra.ReferenceAsList[batchjobdefinition.RetryStrategyAttributes](bjd.ref.Append("retry_strategy"))
 }
 
 func (bjd batchJobDefinitionAttributes) Timeout() terra.ListValue[batchjobdefinition.TimeoutAttributes] {
-	return terra.ReferenceList[batchjobdefinition.TimeoutAttributes](bjd.ref.Append("timeout"))
+	return terra.ReferenceAsList[batchjobdefinition.TimeoutAttributes](bjd.ref.Append("timeout"))
 }
 
 type batchJobDefinitionState struct {

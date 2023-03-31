@@ -26,11 +26,11 @@ func (ts ThrottleSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ts ThrottleSettingsAttributes) BurstLimit() terra.NumberValue {
-	return terra.ReferenceNumber(ts.ref.Append("burst_limit"))
+	return terra.ReferenceAsNumber(ts.ref.Append("burst_limit"))
 }
 
 func (ts ThrottleSettingsAttributes) RateLimit() terra.NumberValue {
-	return terra.ReferenceNumber(ts.ref.Append("rate_limit"))
+	return terra.ReferenceAsNumber(ts.ref.Append("rate_limit"))
 }
 
 type ThrottleSettingsState struct {

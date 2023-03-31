@@ -31,15 +31,15 @@ func (a AttachmentAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AttachmentAttributes) AttachmentId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("attachment_id"))
+	return terra.ReferenceAsString(a.ref.Append("attachment_id"))
 }
 
 func (a AttachmentAttributes) DeviceIndex() terra.NumberValue {
-	return terra.ReferenceNumber(a.ref.Append("device_index"))
+	return terra.ReferenceAsNumber(a.ref.Append("device_index"))
 }
 
 func (a AttachmentAttributes) Instance() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("instance"))
+	return terra.ReferenceAsString(a.ref.Append("instance"))
 }
 
 type AttachmentState struct {

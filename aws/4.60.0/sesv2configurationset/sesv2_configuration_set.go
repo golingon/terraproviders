@@ -68,11 +68,11 @@ func (do DeliveryOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (do DeliveryOptionsAttributes) SendingPoolName() terra.StringValue {
-	return terra.ReferenceString(do.ref.Append("sending_pool_name"))
+	return terra.ReferenceAsString(do.ref.Append("sending_pool_name"))
 }
 
 func (do DeliveryOptionsAttributes) TlsPolicy() terra.StringValue {
-	return terra.ReferenceString(do.ref.Append("tls_policy"))
+	return terra.ReferenceAsString(do.ref.Append("tls_policy"))
 }
 
 type ReputationOptionsAttributes struct {
@@ -92,11 +92,11 @@ func (ro ReputationOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ro ReputationOptionsAttributes) LastFreshStart() terra.StringValue {
-	return terra.ReferenceString(ro.ref.Append("last_fresh_start"))
+	return terra.ReferenceAsString(ro.ref.Append("last_fresh_start"))
 }
 
 func (ro ReputationOptionsAttributes) ReputationMetricsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ro.ref.Append("reputation_metrics_enabled"))
+	return terra.ReferenceAsBool(ro.ref.Append("reputation_metrics_enabled"))
 }
 
 type SendingOptionsAttributes struct {
@@ -116,7 +116,7 @@ func (so SendingOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (so SendingOptionsAttributes) SendingEnabled() terra.BoolValue {
-	return terra.ReferenceBool(so.ref.Append("sending_enabled"))
+	return terra.ReferenceAsBool(so.ref.Append("sending_enabled"))
 }
 
 type SuppressionOptionsAttributes struct {
@@ -136,7 +136,7 @@ func (so SuppressionOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (so SuppressionOptionsAttributes) SuppressedReasons() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](so.ref.Append("suppressed_reasons"))
+	return terra.ReferenceAsList[terra.StringValue](so.ref.Append("suppressed_reasons"))
 }
 
 type TrackingOptionsAttributes struct {
@@ -156,7 +156,7 @@ func (to TrackingOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (to TrackingOptionsAttributes) CustomRedirectDomain() terra.StringValue {
-	return terra.ReferenceString(to.ref.Append("custom_redirect_domain"))
+	return terra.ReferenceAsString(to.ref.Append("custom_redirect_domain"))
 }
 
 type VdmOptionsAttributes struct {
@@ -176,11 +176,11 @@ func (vo VdmOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vo VdmOptionsAttributes) DashboardOptions() terra.ListValue[DashboardOptionsAttributes] {
-	return terra.ReferenceList[DashboardOptionsAttributes](vo.ref.Append("dashboard_options"))
+	return terra.ReferenceAsList[DashboardOptionsAttributes](vo.ref.Append("dashboard_options"))
 }
 
 func (vo VdmOptionsAttributes) GuardianOptions() terra.ListValue[GuardianOptionsAttributes] {
-	return terra.ReferenceList[GuardianOptionsAttributes](vo.ref.Append("guardian_options"))
+	return terra.ReferenceAsList[GuardianOptionsAttributes](vo.ref.Append("guardian_options"))
 }
 
 type DashboardOptionsAttributes struct {
@@ -200,7 +200,7 @@ func (do DashboardOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (do DashboardOptionsAttributes) EngagementMetrics() terra.StringValue {
-	return terra.ReferenceString(do.ref.Append("engagement_metrics"))
+	return terra.ReferenceAsString(do.ref.Append("engagement_metrics"))
 }
 
 type GuardianOptionsAttributes struct {
@@ -220,7 +220,7 @@ func (_go GuardianOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (_go GuardianOptionsAttributes) OptimizedSharedDelivery() terra.StringValue {
-	return terra.ReferenceString(_go.ref.Append("optimized_shared_delivery"))
+	return terra.ReferenceAsString(_go.ref.Append("optimized_shared_delivery"))
 }
 
 type DeliveryOptionsState struct {

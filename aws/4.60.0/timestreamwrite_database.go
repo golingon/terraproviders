@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewTimestreamwriteDatabase creates a new instance of [TimestreamwriteDatabase].
 func NewTimestreamwriteDatabase(name string, args TimestreamwriteDatabaseArgs) *TimestreamwriteDatabase {
 	return &TimestreamwriteDatabase{
 		Args: args,
@@ -18,28 +19,51 @@ func NewTimestreamwriteDatabase(name string, args TimestreamwriteDatabaseArgs) *
 
 var _ terra.Resource = (*TimestreamwriteDatabase)(nil)
 
+// TimestreamwriteDatabase represents the Terraform resource aws_timestreamwrite_database.
 type TimestreamwriteDatabase struct {
-	Name  string
-	Args  TimestreamwriteDatabaseArgs
-	state *timestreamwriteDatabaseState
+	Name      string
+	Args      TimestreamwriteDatabaseArgs
+	state     *timestreamwriteDatabaseState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [TimestreamwriteDatabase].
 func (td *TimestreamwriteDatabase) Type() string {
 	return "aws_timestreamwrite_database"
 }
 
+// LocalName returns the local name for [TimestreamwriteDatabase].
 func (td *TimestreamwriteDatabase) LocalName() string {
 	return td.Name
 }
 
+// Configuration returns the configuration (args) for [TimestreamwriteDatabase].
 func (td *TimestreamwriteDatabase) Configuration() interface{} {
 	return td.Args
 }
 
+// DependOn is used for other resources to depend on [TimestreamwriteDatabase].
+func (td *TimestreamwriteDatabase) DependOn() terra.Reference {
+	return terra.ReferenceResource(td)
+}
+
+// Dependencies returns the list of resources [TimestreamwriteDatabase] depends_on.
+func (td *TimestreamwriteDatabase) Dependencies() terra.Dependencies {
+	return td.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [TimestreamwriteDatabase].
+func (td *TimestreamwriteDatabase) LifecycleManagement() *terra.Lifecycle {
+	return td.Lifecycle
+}
+
+// Attributes returns the attributes for [TimestreamwriteDatabase].
 func (td *TimestreamwriteDatabase) Attributes() timestreamwriteDatabaseAttributes {
 	return timestreamwriteDatabaseAttributes{ref: terra.ReferenceResource(td)}
 }
 
+// ImportState imports the given attribute values into [TimestreamwriteDatabase]'s state.
 func (td *TimestreamwriteDatabase) ImportState(av io.Reader) error {
 	td.state = &timestreamwriteDatabaseState{}
 	if err := json.NewDecoder(av).Decode(td.state); err != nil {
@@ -48,10 +72,12 @@ func (td *TimestreamwriteDatabase) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [TimestreamwriteDatabase] has state.
 func (td *TimestreamwriteDatabase) State() (*timestreamwriteDatabaseState, bool) {
 	return td.state, td.state != nil
 }
 
+// StateMust returns the state for [TimestreamwriteDatabase]. Panics if the state is nil.
 func (td *TimestreamwriteDatabase) StateMust() *timestreamwriteDatabaseState {
 	if td.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", td.Type(), td.LocalName()))
@@ -59,10 +85,7 @@ func (td *TimestreamwriteDatabase) StateMust() *timestreamwriteDatabaseState {
 	return td.state
 }
 
-func (td *TimestreamwriteDatabase) DependOn() terra.Reference {
-	return terra.ReferenceResource(td)
-}
-
+// TimestreamwriteDatabaseArgs contains the configurations for aws_timestreamwrite_database.
 type TimestreamwriteDatabaseArgs struct {
 	// DatabaseName: string, required
 	DatabaseName terra.StringValue `hcl:"database_name,attr" validate:"required"`
@@ -74,39 +97,44 @@ type TimestreamwriteDatabaseArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that TimestreamwriteDatabase depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type timestreamwriteDatabaseAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_timestreamwrite_database.
 func (td timestreamwriteDatabaseAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(td.ref.Append("arn"))
+	return terra.ReferenceAsString(td.ref.Append("arn"))
 }
 
+// DatabaseName returns a reference to field database_name of aws_timestreamwrite_database.
 func (td timestreamwriteDatabaseAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(td.ref.Append("database_name"))
+	return terra.ReferenceAsString(td.ref.Append("database_name"))
 }
 
+// Id returns a reference to field id of aws_timestreamwrite_database.
 func (td timestreamwriteDatabaseAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(td.ref.Append("id"))
+	return terra.ReferenceAsString(td.ref.Append("id"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_timestreamwrite_database.
 func (td timestreamwriteDatabaseAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(td.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(td.ref.Append("kms_key_id"))
 }
 
+// TableCount returns a reference to field table_count of aws_timestreamwrite_database.
 func (td timestreamwriteDatabaseAttributes) TableCount() terra.NumberValue {
-	return terra.ReferenceNumber(td.ref.Append("table_count"))
+	return terra.ReferenceAsNumber(td.ref.Append("table_count"))
 }
 
+// Tags returns a reference to field tags of aws_timestreamwrite_database.
 func (td timestreamwriteDatabaseAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](td.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](td.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_timestreamwrite_database.
 func (td timestreamwriteDatabaseAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](td.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](td.ref.Append("tags_all"))
 }
 
 type timestreamwriteDatabaseState struct {

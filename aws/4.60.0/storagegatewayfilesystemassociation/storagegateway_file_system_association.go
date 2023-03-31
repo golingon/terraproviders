@@ -29,7 +29,7 @@ func (ca CacheAttributesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ca CacheAttributesAttributes) CacheStaleTimeoutInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(ca.ref.Append("cache_stale_timeout_in_seconds"))
+	return terra.ReferenceAsNumber(ca.ref.Append("cache_stale_timeout_in_seconds"))
 }
 
 type CacheAttributesState struct {

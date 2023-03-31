@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRedshiftClusterSnapshot creates a new instance of [RedshiftClusterSnapshot].
 func NewRedshiftClusterSnapshot(name string, args RedshiftClusterSnapshotArgs) *RedshiftClusterSnapshot {
 	return &RedshiftClusterSnapshot{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRedshiftClusterSnapshot(name string, args RedshiftClusterSnapshotArgs) *
 
 var _ terra.Resource = (*RedshiftClusterSnapshot)(nil)
 
+// RedshiftClusterSnapshot represents the Terraform resource aws_redshift_cluster_snapshot.
 type RedshiftClusterSnapshot struct {
-	Name  string
-	Args  RedshiftClusterSnapshotArgs
-	state *redshiftClusterSnapshotState
+	Name      string
+	Args      RedshiftClusterSnapshotArgs
+	state     *redshiftClusterSnapshotState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RedshiftClusterSnapshot].
 func (rcs *RedshiftClusterSnapshot) Type() string {
 	return "aws_redshift_cluster_snapshot"
 }
 
+// LocalName returns the local name for [RedshiftClusterSnapshot].
 func (rcs *RedshiftClusterSnapshot) LocalName() string {
 	return rcs.Name
 }
 
+// Configuration returns the configuration (args) for [RedshiftClusterSnapshot].
 func (rcs *RedshiftClusterSnapshot) Configuration() interface{} {
 	return rcs.Args
 }
 
+// DependOn is used for other resources to depend on [RedshiftClusterSnapshot].
+func (rcs *RedshiftClusterSnapshot) DependOn() terra.Reference {
+	return terra.ReferenceResource(rcs)
+}
+
+// Dependencies returns the list of resources [RedshiftClusterSnapshot] depends_on.
+func (rcs *RedshiftClusterSnapshot) Dependencies() terra.Dependencies {
+	return rcs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RedshiftClusterSnapshot].
+func (rcs *RedshiftClusterSnapshot) LifecycleManagement() *terra.Lifecycle {
+	return rcs.Lifecycle
+}
+
+// Attributes returns the attributes for [RedshiftClusterSnapshot].
 func (rcs *RedshiftClusterSnapshot) Attributes() redshiftClusterSnapshotAttributes {
 	return redshiftClusterSnapshotAttributes{ref: terra.ReferenceResource(rcs)}
 }
 
+// ImportState imports the given attribute values into [RedshiftClusterSnapshot]'s state.
 func (rcs *RedshiftClusterSnapshot) ImportState(av io.Reader) error {
 	rcs.state = &redshiftClusterSnapshotState{}
 	if err := json.NewDecoder(av).Decode(rcs.state); err != nil {
@@ -48,10 +72,12 @@ func (rcs *RedshiftClusterSnapshot) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RedshiftClusterSnapshot] has state.
 func (rcs *RedshiftClusterSnapshot) State() (*redshiftClusterSnapshotState, bool) {
 	return rcs.state, rcs.state != nil
 }
 
+// StateMust returns the state for [RedshiftClusterSnapshot]. Panics if the state is nil.
 func (rcs *RedshiftClusterSnapshot) StateMust() *redshiftClusterSnapshotState {
 	if rcs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rcs.Type(), rcs.LocalName()))
@@ -59,10 +85,7 @@ func (rcs *RedshiftClusterSnapshot) StateMust() *redshiftClusterSnapshotState {
 	return rcs.state
 }
 
-func (rcs *RedshiftClusterSnapshot) DependOn() terra.Reference {
-	return terra.ReferenceResource(rcs)
-}
-
+// RedshiftClusterSnapshotArgs contains the configurations for aws_redshift_cluster_snapshot.
 type RedshiftClusterSnapshotArgs struct {
 	// ClusterIdentifier: string, required
 	ClusterIdentifier terra.StringValue `hcl:"cluster_identifier,attr" validate:"required"`
@@ -76,47 +99,54 @@ type RedshiftClusterSnapshotArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that RedshiftClusterSnapshot depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type redshiftClusterSnapshotAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_redshift_cluster_snapshot.
 func (rcs redshiftClusterSnapshotAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rcs.ref.Append("arn"))
+	return terra.ReferenceAsString(rcs.ref.Append("arn"))
 }
 
+// ClusterIdentifier returns a reference to field cluster_identifier of aws_redshift_cluster_snapshot.
 func (rcs redshiftClusterSnapshotAttributes) ClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(rcs.ref.Append("cluster_identifier"))
+	return terra.ReferenceAsString(rcs.ref.Append("cluster_identifier"))
 }
 
+// Id returns a reference to field id of aws_redshift_cluster_snapshot.
 func (rcs redshiftClusterSnapshotAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rcs.ref.Append("id"))
+	return terra.ReferenceAsString(rcs.ref.Append("id"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_redshift_cluster_snapshot.
 func (rcs redshiftClusterSnapshotAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(rcs.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(rcs.ref.Append("kms_key_id"))
 }
 
+// ManualSnapshotRetentionPeriod returns a reference to field manual_snapshot_retention_period of aws_redshift_cluster_snapshot.
 func (rcs redshiftClusterSnapshotAttributes) ManualSnapshotRetentionPeriod() terra.NumberValue {
-	return terra.ReferenceNumber(rcs.ref.Append("manual_snapshot_retention_period"))
+	return terra.ReferenceAsNumber(rcs.ref.Append("manual_snapshot_retention_period"))
 }
 
+// OwnerAccount returns a reference to field owner_account of aws_redshift_cluster_snapshot.
 func (rcs redshiftClusterSnapshotAttributes) OwnerAccount() terra.StringValue {
-	return terra.ReferenceString(rcs.ref.Append("owner_account"))
+	return terra.ReferenceAsString(rcs.ref.Append("owner_account"))
 }
 
+// SnapshotIdentifier returns a reference to field snapshot_identifier of aws_redshift_cluster_snapshot.
 func (rcs redshiftClusterSnapshotAttributes) SnapshotIdentifier() terra.StringValue {
-	return terra.ReferenceString(rcs.ref.Append("snapshot_identifier"))
+	return terra.ReferenceAsString(rcs.ref.Append("snapshot_identifier"))
 }
 
+// Tags returns a reference to field tags of aws_redshift_cluster_snapshot.
 func (rcs redshiftClusterSnapshotAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rcs.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rcs.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_redshift_cluster_snapshot.
 func (rcs redshiftClusterSnapshotAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rcs.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](rcs.ref.Append("tags_all"))
 }
 
 type redshiftClusterSnapshotState struct {

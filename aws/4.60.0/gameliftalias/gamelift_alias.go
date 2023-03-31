@@ -33,15 +33,15 @@ func (rs RoutingStrategyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rs RoutingStrategyAttributes) FleetId() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("fleet_id"))
+	return terra.ReferenceAsString(rs.ref.Append("fleet_id"))
 }
 
 func (rs RoutingStrategyAttributes) Message() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("message"))
+	return terra.ReferenceAsString(rs.ref.Append("message"))
 }
 
 func (rs RoutingStrategyAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("type"))
+	return terra.ReferenceAsString(rs.ref.Append("type"))
 }
 
 type RoutingStrategyState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAcmCertificateValidation creates a new instance of [AcmCertificateValidation].
 func NewAcmCertificateValidation(name string, args AcmCertificateValidationArgs) *AcmCertificateValidation {
 	return &AcmCertificateValidation{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAcmCertificateValidation(name string, args AcmCertificateValidationArgs)
 
 var _ terra.Resource = (*AcmCertificateValidation)(nil)
 
+// AcmCertificateValidation represents the Terraform resource aws_acm_certificate_validation.
 type AcmCertificateValidation struct {
-	Name  string
-	Args  AcmCertificateValidationArgs
-	state *acmCertificateValidationState
+	Name      string
+	Args      AcmCertificateValidationArgs
+	state     *acmCertificateValidationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AcmCertificateValidation].
 func (acv *AcmCertificateValidation) Type() string {
 	return "aws_acm_certificate_validation"
 }
 
+// LocalName returns the local name for [AcmCertificateValidation].
 func (acv *AcmCertificateValidation) LocalName() string {
 	return acv.Name
 }
 
+// Configuration returns the configuration (args) for [AcmCertificateValidation].
 func (acv *AcmCertificateValidation) Configuration() interface{} {
 	return acv.Args
 }
 
+// DependOn is used for other resources to depend on [AcmCertificateValidation].
+func (acv *AcmCertificateValidation) DependOn() terra.Reference {
+	return terra.ReferenceResource(acv)
+}
+
+// Dependencies returns the list of resources [AcmCertificateValidation] depends_on.
+func (acv *AcmCertificateValidation) Dependencies() terra.Dependencies {
+	return acv.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AcmCertificateValidation].
+func (acv *AcmCertificateValidation) LifecycleManagement() *terra.Lifecycle {
+	return acv.Lifecycle
+}
+
+// Attributes returns the attributes for [AcmCertificateValidation].
 func (acv *AcmCertificateValidation) Attributes() acmCertificateValidationAttributes {
 	return acmCertificateValidationAttributes{ref: terra.ReferenceResource(acv)}
 }
 
+// ImportState imports the given attribute values into [AcmCertificateValidation]'s state.
 func (acv *AcmCertificateValidation) ImportState(av io.Reader) error {
 	acv.state = &acmCertificateValidationState{}
 	if err := json.NewDecoder(av).Decode(acv.state); err != nil {
@@ -49,10 +73,12 @@ func (acv *AcmCertificateValidation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AcmCertificateValidation] has state.
 func (acv *AcmCertificateValidation) State() (*acmCertificateValidationState, bool) {
 	return acv.state, acv.state != nil
 }
 
+// StateMust returns the state for [AcmCertificateValidation]. Panics if the state is nil.
 func (acv *AcmCertificateValidation) StateMust() *acmCertificateValidationState {
 	if acv.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", acv.Type(), acv.LocalName()))
@@ -60,10 +86,7 @@ func (acv *AcmCertificateValidation) StateMust() *acmCertificateValidationState 
 	return acv.state
 }
 
-func (acv *AcmCertificateValidation) DependOn() terra.Reference {
-	return terra.ReferenceResource(acv)
-}
-
+// AcmCertificateValidationArgs contains the configurations for aws_acm_certificate_validation.
 type AcmCertificateValidationArgs struct {
 	// CertificateArn: string, required
 	CertificateArn terra.StringValue `hcl:"certificate_arn,attr" validate:"required"`
@@ -73,27 +96,28 @@ type AcmCertificateValidationArgs struct {
 	ValidationRecordFqdns terra.SetValue[terra.StringValue] `hcl:"validation_record_fqdns,attr"`
 	// Timeouts: optional
 	Timeouts *acmcertificatevalidation.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that AcmCertificateValidation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type acmCertificateValidationAttributes struct {
 	ref terra.Reference
 }
 
+// CertificateArn returns a reference to field certificate_arn of aws_acm_certificate_validation.
 func (acv acmCertificateValidationAttributes) CertificateArn() terra.StringValue {
-	return terra.ReferenceString(acv.ref.Append("certificate_arn"))
+	return terra.ReferenceAsString(acv.ref.Append("certificate_arn"))
 }
 
+// Id returns a reference to field id of aws_acm_certificate_validation.
 func (acv acmCertificateValidationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(acv.ref.Append("id"))
+	return terra.ReferenceAsString(acv.ref.Append("id"))
 }
 
+// ValidationRecordFqdns returns a reference to field validation_record_fqdns of aws_acm_certificate_validation.
 func (acv acmCertificateValidationAttributes) ValidationRecordFqdns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](acv.ref.Append("validation_record_fqdns"))
+	return terra.ReferenceAsSet[terra.StringValue](acv.ref.Append("validation_record_fqdns"))
 }
 
 func (acv acmCertificateValidationAttributes) Timeouts() acmcertificatevalidation.TimeoutsAttributes {
-	return terra.ReferenceSingle[acmcertificatevalidation.TimeoutsAttributes](acv.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[acmcertificatevalidation.TimeoutsAttributes](acv.ref.Append("timeouts"))
 }
 
 type acmCertificateValidationState struct {

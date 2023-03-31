@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataAmi creates a new instance of [DataAmi].
 func NewDataAmi(name string, args DataAmiArgs) *DataAmi {
 	return &DataAmi{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataAmi(name string, args DataAmiArgs) *DataAmi {
 
 var _ terra.DataResource = (*DataAmi)(nil)
 
+// DataAmi represents the Terraform data resource aws_ami.
 type DataAmi struct {
 	Name string
 	Args DataAmiArgs
 }
 
+// DataSource returns the Terraform object type for [DataAmi].
 func (a *DataAmi) DataSource() string {
 	return "aws_ami"
 }
 
+// LocalName returns the local name for [DataAmi].
 func (a *DataAmi) LocalName() string {
 	return a.Name
 }
 
+// Configuration returns the configuration (args) for [DataAmi].
 func (a *DataAmi) Configuration() interface{} {
 	return a.Args
 }
 
+// Attributes returns the attributes for [DataAmi].
 func (a *DataAmi) Attributes() dataAmiAttributes {
 	return dataAmiAttributes{ref: terra.ReferenceDataResource(a)}
 }
 
+// DataAmiArgs contains the configurations for aws_ami.
 type DataAmiArgs struct {
 	// ExecutableUsers: list of string, optional
 	ExecutableUsers terra.ListValue[terra.StringValue] `hcl:"executable_users,attr"`
@@ -65,162 +72,198 @@ type dataAmiAttributes struct {
 	ref terra.Reference
 }
 
+// Architecture returns a reference to field architecture of aws_ami.
 func (a dataAmiAttributes) Architecture() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("architecture"))
+	return terra.ReferenceAsString(a.ref.Append("architecture"))
 }
 
+// Arn returns a reference to field arn of aws_ami.
 func (a dataAmiAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("arn"))
+	return terra.ReferenceAsString(a.ref.Append("arn"))
 }
 
+// BootMode returns a reference to field boot_mode of aws_ami.
 func (a dataAmiAttributes) BootMode() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("boot_mode"))
+	return terra.ReferenceAsString(a.ref.Append("boot_mode"))
 }
 
+// CreationDate returns a reference to field creation_date of aws_ami.
 func (a dataAmiAttributes) CreationDate() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("creation_date"))
+	return terra.ReferenceAsString(a.ref.Append("creation_date"))
 }
 
+// DeprecationTime returns a reference to field deprecation_time of aws_ami.
 func (a dataAmiAttributes) DeprecationTime() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("deprecation_time"))
+	return terra.ReferenceAsString(a.ref.Append("deprecation_time"))
 }
 
+// Description returns a reference to field description of aws_ami.
 func (a dataAmiAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("description"))
+	return terra.ReferenceAsString(a.ref.Append("description"))
 }
 
+// EnaSupport returns a reference to field ena_support of aws_ami.
 func (a dataAmiAttributes) EnaSupport() terra.BoolValue {
-	return terra.ReferenceBool(a.ref.Append("ena_support"))
+	return terra.ReferenceAsBool(a.ref.Append("ena_support"))
 }
 
+// ExecutableUsers returns a reference to field executable_users of aws_ami.
 func (a dataAmiAttributes) ExecutableUsers() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](a.ref.Append("executable_users"))
+	return terra.ReferenceAsList[terra.StringValue](a.ref.Append("executable_users"))
 }
 
+// Hypervisor returns a reference to field hypervisor of aws_ami.
 func (a dataAmiAttributes) Hypervisor() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("hypervisor"))
+	return terra.ReferenceAsString(a.ref.Append("hypervisor"))
 }
 
+// Id returns a reference to field id of aws_ami.
 func (a dataAmiAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("id"))
+	return terra.ReferenceAsString(a.ref.Append("id"))
 }
 
+// ImageId returns a reference to field image_id of aws_ami.
 func (a dataAmiAttributes) ImageId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("image_id"))
+	return terra.ReferenceAsString(a.ref.Append("image_id"))
 }
 
+// ImageLocation returns a reference to field image_location of aws_ami.
 func (a dataAmiAttributes) ImageLocation() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("image_location"))
+	return terra.ReferenceAsString(a.ref.Append("image_location"))
 }
 
+// ImageOwnerAlias returns a reference to field image_owner_alias of aws_ami.
 func (a dataAmiAttributes) ImageOwnerAlias() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("image_owner_alias"))
+	return terra.ReferenceAsString(a.ref.Append("image_owner_alias"))
 }
 
+// ImageType returns a reference to field image_type of aws_ami.
 func (a dataAmiAttributes) ImageType() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("image_type"))
+	return terra.ReferenceAsString(a.ref.Append("image_type"))
 }
 
+// ImdsSupport returns a reference to field imds_support of aws_ami.
 func (a dataAmiAttributes) ImdsSupport() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("imds_support"))
+	return terra.ReferenceAsString(a.ref.Append("imds_support"))
 }
 
+// IncludeDeprecated returns a reference to field include_deprecated of aws_ami.
 func (a dataAmiAttributes) IncludeDeprecated() terra.BoolValue {
-	return terra.ReferenceBool(a.ref.Append("include_deprecated"))
+	return terra.ReferenceAsBool(a.ref.Append("include_deprecated"))
 }
 
+// KernelId returns a reference to field kernel_id of aws_ami.
 func (a dataAmiAttributes) KernelId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("kernel_id"))
+	return terra.ReferenceAsString(a.ref.Append("kernel_id"))
 }
 
+// MostRecent returns a reference to field most_recent of aws_ami.
 func (a dataAmiAttributes) MostRecent() terra.BoolValue {
-	return terra.ReferenceBool(a.ref.Append("most_recent"))
+	return terra.ReferenceAsBool(a.ref.Append("most_recent"))
 }
 
+// Name returns a reference to field name of aws_ami.
 func (a dataAmiAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("name"))
+	return terra.ReferenceAsString(a.ref.Append("name"))
 }
 
+// NameRegex returns a reference to field name_regex of aws_ami.
 func (a dataAmiAttributes) NameRegex() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("name_regex"))
+	return terra.ReferenceAsString(a.ref.Append("name_regex"))
 }
 
+// OwnerId returns a reference to field owner_id of aws_ami.
 func (a dataAmiAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("owner_id"))
+	return terra.ReferenceAsString(a.ref.Append("owner_id"))
 }
 
+// Owners returns a reference to field owners of aws_ami.
 func (a dataAmiAttributes) Owners() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](a.ref.Append("owners"))
+	return terra.ReferenceAsList[terra.StringValue](a.ref.Append("owners"))
 }
 
+// Platform returns a reference to field platform of aws_ami.
 func (a dataAmiAttributes) Platform() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("platform"))
+	return terra.ReferenceAsString(a.ref.Append("platform"))
 }
 
+// PlatformDetails returns a reference to field platform_details of aws_ami.
 func (a dataAmiAttributes) PlatformDetails() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("platform_details"))
+	return terra.ReferenceAsString(a.ref.Append("platform_details"))
 }
 
+// Public returns a reference to field public of aws_ami.
 func (a dataAmiAttributes) Public() terra.BoolValue {
-	return terra.ReferenceBool(a.ref.Append("public"))
+	return terra.ReferenceAsBool(a.ref.Append("public"))
 }
 
+// RamdiskId returns a reference to field ramdisk_id of aws_ami.
 func (a dataAmiAttributes) RamdiskId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("ramdisk_id"))
+	return terra.ReferenceAsString(a.ref.Append("ramdisk_id"))
 }
 
+// RootDeviceName returns a reference to field root_device_name of aws_ami.
 func (a dataAmiAttributes) RootDeviceName() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("root_device_name"))
+	return terra.ReferenceAsString(a.ref.Append("root_device_name"))
 }
 
+// RootDeviceType returns a reference to field root_device_type of aws_ami.
 func (a dataAmiAttributes) RootDeviceType() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("root_device_type"))
+	return terra.ReferenceAsString(a.ref.Append("root_device_type"))
 }
 
+// RootSnapshotId returns a reference to field root_snapshot_id of aws_ami.
 func (a dataAmiAttributes) RootSnapshotId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("root_snapshot_id"))
+	return terra.ReferenceAsString(a.ref.Append("root_snapshot_id"))
 }
 
+// SriovNetSupport returns a reference to field sriov_net_support of aws_ami.
 func (a dataAmiAttributes) SriovNetSupport() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("sriov_net_support"))
+	return terra.ReferenceAsString(a.ref.Append("sriov_net_support"))
 }
 
+// State returns a reference to field state of aws_ami.
 func (a dataAmiAttributes) State() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("state"))
+	return terra.ReferenceAsString(a.ref.Append("state"))
 }
 
+// StateReason returns a reference to field state_reason of aws_ami.
 func (a dataAmiAttributes) StateReason() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](a.ref.Append("state_reason"))
+	return terra.ReferenceAsMap[terra.StringValue](a.ref.Append("state_reason"))
 }
 
+// Tags returns a reference to field tags of aws_ami.
 func (a dataAmiAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](a.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](a.ref.Append("tags"))
 }
 
+// TpmSupport returns a reference to field tpm_support of aws_ami.
 func (a dataAmiAttributes) TpmSupport() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("tpm_support"))
+	return terra.ReferenceAsString(a.ref.Append("tpm_support"))
 }
 
+// UsageOperation returns a reference to field usage_operation of aws_ami.
 func (a dataAmiAttributes) UsageOperation() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("usage_operation"))
+	return terra.ReferenceAsString(a.ref.Append("usage_operation"))
 }
 
+// VirtualizationType returns a reference to field virtualization_type of aws_ami.
 func (a dataAmiAttributes) VirtualizationType() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("virtualization_type"))
+	return terra.ReferenceAsString(a.ref.Append("virtualization_type"))
 }
 
 func (a dataAmiAttributes) BlockDeviceMappings() terra.SetValue[dataami.BlockDeviceMappingsAttributes] {
-	return terra.ReferenceSet[dataami.BlockDeviceMappingsAttributes](a.ref.Append("block_device_mappings"))
+	return terra.ReferenceAsSet[dataami.BlockDeviceMappingsAttributes](a.ref.Append("block_device_mappings"))
 }
 
 func (a dataAmiAttributes) ProductCodes() terra.SetValue[dataami.ProductCodesAttributes] {
-	return terra.ReferenceSet[dataami.ProductCodesAttributes](a.ref.Append("product_codes"))
+	return terra.ReferenceAsSet[dataami.ProductCodesAttributes](a.ref.Append("product_codes"))
 }
 
 func (a dataAmiAttributes) Filter() terra.SetValue[dataami.FilterAttributes] {
-	return terra.ReferenceSet[dataami.FilterAttributes](a.ref.Append("filter"))
+	return terra.ReferenceAsSet[dataami.FilterAttributes](a.ref.Append("filter"))
 }
 
 func (a dataAmiAttributes) Timeouts() dataami.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataami.TimeoutsAttributes](a.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataami.TimeoutsAttributes](a.ref.Append("timeouts"))
 }

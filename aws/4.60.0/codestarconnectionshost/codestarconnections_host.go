@@ -44,15 +44,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type VpcConfigurationAttributes struct {
@@ -72,19 +72,19 @@ func (vc VpcConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vc VpcConfigurationAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("security_group_ids"))
 }
 
 func (vc VpcConfigurationAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("subnet_ids"))
 }
 
 func (vc VpcConfigurationAttributes) TlsCertificate() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("tls_certificate"))
+	return terra.ReferenceAsString(vc.ref.Append("tls_certificate"))
 }
 
 func (vc VpcConfigurationAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(vc.ref.Append("vpc_id"))
 }
 
 type TimeoutsState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewVpc creates a new instance of [Vpc].
 func NewVpc(name string, args VpcArgs) *Vpc {
 	return &Vpc{
 		Args: args,
@@ -18,28 +19,51 @@ func NewVpc(name string, args VpcArgs) *Vpc {
 
 var _ terra.Resource = (*Vpc)(nil)
 
+// Vpc represents the Terraform resource aws_vpc.
 type Vpc struct {
-	Name  string
-	Args  VpcArgs
-	state *vpcState
+	Name      string
+	Args      VpcArgs
+	state     *vpcState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Vpc].
 func (v *Vpc) Type() string {
 	return "aws_vpc"
 }
 
+// LocalName returns the local name for [Vpc].
 func (v *Vpc) LocalName() string {
 	return v.Name
 }
 
+// Configuration returns the configuration (args) for [Vpc].
 func (v *Vpc) Configuration() interface{} {
 	return v.Args
 }
 
+// DependOn is used for other resources to depend on [Vpc].
+func (v *Vpc) DependOn() terra.Reference {
+	return terra.ReferenceResource(v)
+}
+
+// Dependencies returns the list of resources [Vpc] depends_on.
+func (v *Vpc) Dependencies() terra.Dependencies {
+	return v.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Vpc].
+func (v *Vpc) LifecycleManagement() *terra.Lifecycle {
+	return v.Lifecycle
+}
+
+// Attributes returns the attributes for [Vpc].
 func (v *Vpc) Attributes() vpcAttributes {
 	return vpcAttributes{ref: terra.ReferenceResource(v)}
 }
 
+// ImportState imports the given attribute values into [Vpc]'s state.
 func (v *Vpc) ImportState(av io.Reader) error {
 	v.state = &vpcState{}
 	if err := json.NewDecoder(av).Decode(v.state); err != nil {
@@ -48,10 +72,12 @@ func (v *Vpc) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Vpc] has state.
 func (v *Vpc) State() (*vpcState, bool) {
 	return v.state, v.state != nil
 }
 
+// StateMust returns the state for [Vpc]. Panics if the state is nil.
 func (v *Vpc) StateMust() *vpcState {
 	if v.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", v.Type(), v.LocalName()))
@@ -59,10 +85,7 @@ func (v *Vpc) StateMust() *vpcState {
 	return v.state
 }
 
-func (v *Vpc) DependOn() terra.Reference {
-	return terra.ReferenceResource(v)
-}
-
+// VpcArgs contains the configurations for aws_vpc.
 type VpcArgs struct {
 	// AssignGeneratedIpv6CidrBlock: bool, optional
 	AssignGeneratedIpv6CidrBlock terra.BoolValue `hcl:"assign_generated_ipv6_cidr_block,attr"`
@@ -98,111 +121,134 @@ type VpcArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that Vpc depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type vpcAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_vpc.
 func (v vpcAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("arn"))
+	return terra.ReferenceAsString(v.ref.Append("arn"))
 }
 
+// AssignGeneratedIpv6CidrBlock returns a reference to field assign_generated_ipv6_cidr_block of aws_vpc.
 func (v vpcAttributes) AssignGeneratedIpv6CidrBlock() terra.BoolValue {
-	return terra.ReferenceBool(v.ref.Append("assign_generated_ipv6_cidr_block"))
+	return terra.ReferenceAsBool(v.ref.Append("assign_generated_ipv6_cidr_block"))
 }
 
+// CidrBlock returns a reference to field cidr_block of aws_vpc.
 func (v vpcAttributes) CidrBlock() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("cidr_block"))
+	return terra.ReferenceAsString(v.ref.Append("cidr_block"))
 }
 
+// DefaultNetworkAclId returns a reference to field default_network_acl_id of aws_vpc.
 func (v vpcAttributes) DefaultNetworkAclId() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("default_network_acl_id"))
+	return terra.ReferenceAsString(v.ref.Append("default_network_acl_id"))
 }
 
+// DefaultRouteTableId returns a reference to field default_route_table_id of aws_vpc.
 func (v vpcAttributes) DefaultRouteTableId() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("default_route_table_id"))
+	return terra.ReferenceAsString(v.ref.Append("default_route_table_id"))
 }
 
+// DefaultSecurityGroupId returns a reference to field default_security_group_id of aws_vpc.
 func (v vpcAttributes) DefaultSecurityGroupId() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("default_security_group_id"))
+	return terra.ReferenceAsString(v.ref.Append("default_security_group_id"))
 }
 
+// DhcpOptionsId returns a reference to field dhcp_options_id of aws_vpc.
 func (v vpcAttributes) DhcpOptionsId() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("dhcp_options_id"))
+	return terra.ReferenceAsString(v.ref.Append("dhcp_options_id"))
 }
 
+// EnableClassiclink returns a reference to field enable_classiclink of aws_vpc.
 func (v vpcAttributes) EnableClassiclink() terra.BoolValue {
-	return terra.ReferenceBool(v.ref.Append("enable_classiclink"))
+	return terra.ReferenceAsBool(v.ref.Append("enable_classiclink"))
 }
 
+// EnableClassiclinkDnsSupport returns a reference to field enable_classiclink_dns_support of aws_vpc.
 func (v vpcAttributes) EnableClassiclinkDnsSupport() terra.BoolValue {
-	return terra.ReferenceBool(v.ref.Append("enable_classiclink_dns_support"))
+	return terra.ReferenceAsBool(v.ref.Append("enable_classiclink_dns_support"))
 }
 
+// EnableDnsHostnames returns a reference to field enable_dns_hostnames of aws_vpc.
 func (v vpcAttributes) EnableDnsHostnames() terra.BoolValue {
-	return terra.ReferenceBool(v.ref.Append("enable_dns_hostnames"))
+	return terra.ReferenceAsBool(v.ref.Append("enable_dns_hostnames"))
 }
 
+// EnableDnsSupport returns a reference to field enable_dns_support of aws_vpc.
 func (v vpcAttributes) EnableDnsSupport() terra.BoolValue {
-	return terra.ReferenceBool(v.ref.Append("enable_dns_support"))
+	return terra.ReferenceAsBool(v.ref.Append("enable_dns_support"))
 }
 
+// EnableNetworkAddressUsageMetrics returns a reference to field enable_network_address_usage_metrics of aws_vpc.
 func (v vpcAttributes) EnableNetworkAddressUsageMetrics() terra.BoolValue {
-	return terra.ReferenceBool(v.ref.Append("enable_network_address_usage_metrics"))
+	return terra.ReferenceAsBool(v.ref.Append("enable_network_address_usage_metrics"))
 }
 
+// Id returns a reference to field id of aws_vpc.
 func (v vpcAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("id"))
+	return terra.ReferenceAsString(v.ref.Append("id"))
 }
 
+// InstanceTenancy returns a reference to field instance_tenancy of aws_vpc.
 func (v vpcAttributes) InstanceTenancy() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("instance_tenancy"))
+	return terra.ReferenceAsString(v.ref.Append("instance_tenancy"))
 }
 
+// Ipv4IpamPoolId returns a reference to field ipv4_ipam_pool_id of aws_vpc.
 func (v vpcAttributes) Ipv4IpamPoolId() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("ipv4_ipam_pool_id"))
+	return terra.ReferenceAsString(v.ref.Append("ipv4_ipam_pool_id"))
 }
 
+// Ipv4NetmaskLength returns a reference to field ipv4_netmask_length of aws_vpc.
 func (v vpcAttributes) Ipv4NetmaskLength() terra.NumberValue {
-	return terra.ReferenceNumber(v.ref.Append("ipv4_netmask_length"))
+	return terra.ReferenceAsNumber(v.ref.Append("ipv4_netmask_length"))
 }
 
+// Ipv6AssociationId returns a reference to field ipv6_association_id of aws_vpc.
 func (v vpcAttributes) Ipv6AssociationId() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("ipv6_association_id"))
+	return terra.ReferenceAsString(v.ref.Append("ipv6_association_id"))
 }
 
+// Ipv6CidrBlock returns a reference to field ipv6_cidr_block of aws_vpc.
 func (v vpcAttributes) Ipv6CidrBlock() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("ipv6_cidr_block"))
+	return terra.ReferenceAsString(v.ref.Append("ipv6_cidr_block"))
 }
 
+// Ipv6CidrBlockNetworkBorderGroup returns a reference to field ipv6_cidr_block_network_border_group of aws_vpc.
 func (v vpcAttributes) Ipv6CidrBlockNetworkBorderGroup() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("ipv6_cidr_block_network_border_group"))
+	return terra.ReferenceAsString(v.ref.Append("ipv6_cidr_block_network_border_group"))
 }
 
+// Ipv6IpamPoolId returns a reference to field ipv6_ipam_pool_id of aws_vpc.
 func (v vpcAttributes) Ipv6IpamPoolId() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("ipv6_ipam_pool_id"))
+	return terra.ReferenceAsString(v.ref.Append("ipv6_ipam_pool_id"))
 }
 
+// Ipv6NetmaskLength returns a reference to field ipv6_netmask_length of aws_vpc.
 func (v vpcAttributes) Ipv6NetmaskLength() terra.NumberValue {
-	return terra.ReferenceNumber(v.ref.Append("ipv6_netmask_length"))
+	return terra.ReferenceAsNumber(v.ref.Append("ipv6_netmask_length"))
 }
 
+// MainRouteTableId returns a reference to field main_route_table_id of aws_vpc.
 func (v vpcAttributes) MainRouteTableId() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("main_route_table_id"))
+	return terra.ReferenceAsString(v.ref.Append("main_route_table_id"))
 }
 
+// OwnerId returns a reference to field owner_id of aws_vpc.
 func (v vpcAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("owner_id"))
+	return terra.ReferenceAsString(v.ref.Append("owner_id"))
 }
 
+// Tags returns a reference to field tags of aws_vpc.
 func (v vpcAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](v.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](v.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_vpc.
 func (v vpcAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](v.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](v.ref.Append("tags_all"))
 }
 
 type vpcState struct {

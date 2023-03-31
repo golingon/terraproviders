@@ -31,11 +31,11 @@ func (ic InsightsConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ic InsightsConfigurationAttributes) InsightsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ic.ref.Append("insights_enabled"))
+	return terra.ReferenceAsBool(ic.ref.Append("insights_enabled"))
 }
 
 func (ic InsightsConfigurationAttributes) NotificationsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ic.ref.Append("notifications_enabled"))
+	return terra.ReferenceAsBool(ic.ref.Append("notifications_enabled"))
 }
 
 type InsightsConfigurationState struct {

@@ -397,23 +397,23 @@ func (s SpecAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SpecAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("priority"))
+	return terra.ReferenceAsNumber(s.ref.Append("priority"))
 }
 
 func (s SpecAttributes) GrpcRoute() terra.ListValue[GrpcRouteAttributes] {
-	return terra.ReferenceList[GrpcRouteAttributes](s.ref.Append("grpc_route"))
+	return terra.ReferenceAsList[GrpcRouteAttributes](s.ref.Append("grpc_route"))
 }
 
 func (s SpecAttributes) Http2Route() terra.ListValue[Http2RouteAttributes] {
-	return terra.ReferenceList[Http2RouteAttributes](s.ref.Append("http2_route"))
+	return terra.ReferenceAsList[Http2RouteAttributes](s.ref.Append("http2_route"))
 }
 
 func (s SpecAttributes) HttpRoute() terra.ListValue[HttpRouteAttributes] {
-	return terra.ReferenceList[HttpRouteAttributes](s.ref.Append("http_route"))
+	return terra.ReferenceAsList[HttpRouteAttributes](s.ref.Append("http_route"))
 }
 
 func (s SpecAttributes) TcpRoute() terra.ListValue[TcpRouteAttributes] {
-	return terra.ReferenceList[TcpRouteAttributes](s.ref.Append("tcp_route"))
+	return terra.ReferenceAsList[TcpRouteAttributes](s.ref.Append("tcp_route"))
 }
 
 type GrpcRouteAttributes struct {
@@ -433,19 +433,19 @@ func (gr GrpcRouteAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (gr GrpcRouteAttributes) Action() terra.ListValue[GrpcRouteActionAttributes] {
-	return terra.ReferenceList[GrpcRouteActionAttributes](gr.ref.Append("action"))
+	return terra.ReferenceAsList[GrpcRouteActionAttributes](gr.ref.Append("action"))
 }
 
 func (gr GrpcRouteAttributes) Match() terra.ListValue[GrpcRouteMatchAttributes] {
-	return terra.ReferenceList[GrpcRouteMatchAttributes](gr.ref.Append("match"))
+	return terra.ReferenceAsList[GrpcRouteMatchAttributes](gr.ref.Append("match"))
 }
 
 func (gr GrpcRouteAttributes) RetryPolicy() terra.ListValue[GrpcRouteRetryPolicyAttributes] {
-	return terra.ReferenceList[GrpcRouteRetryPolicyAttributes](gr.ref.Append("retry_policy"))
+	return terra.ReferenceAsList[GrpcRouteRetryPolicyAttributes](gr.ref.Append("retry_policy"))
 }
 
 func (gr GrpcRouteAttributes) Timeout() terra.ListValue[GrpcRouteTimeoutAttributes] {
-	return terra.ReferenceList[GrpcRouteTimeoutAttributes](gr.ref.Append("timeout"))
+	return terra.ReferenceAsList[GrpcRouteTimeoutAttributes](gr.ref.Append("timeout"))
 }
 
 type GrpcRouteActionAttributes struct {
@@ -465,7 +465,7 @@ func (a GrpcRouteActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a GrpcRouteActionAttributes) WeightedTarget() terra.SetValue[GrpcRouteActionWeightedTargetAttributes] {
-	return terra.ReferenceSet[GrpcRouteActionWeightedTargetAttributes](a.ref.Append("weighted_target"))
+	return terra.ReferenceAsSet[GrpcRouteActionWeightedTargetAttributes](a.ref.Append("weighted_target"))
 }
 
 type GrpcRouteActionWeightedTargetAttributes struct {
@@ -485,15 +485,15 @@ func (wt GrpcRouteActionWeightedTargetAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (wt GrpcRouteActionWeightedTargetAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(wt.ref.Append("port"))
+	return terra.ReferenceAsNumber(wt.ref.Append("port"))
 }
 
 func (wt GrpcRouteActionWeightedTargetAttributes) VirtualNode() terra.StringValue {
-	return terra.ReferenceString(wt.ref.Append("virtual_node"))
+	return terra.ReferenceAsString(wt.ref.Append("virtual_node"))
 }
 
 func (wt GrpcRouteActionWeightedTargetAttributes) Weight() terra.NumberValue {
-	return terra.ReferenceNumber(wt.ref.Append("weight"))
+	return terra.ReferenceAsNumber(wt.ref.Append("weight"))
 }
 
 type GrpcRouteMatchAttributes struct {
@@ -513,23 +513,23 @@ func (m GrpcRouteMatchAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m GrpcRouteMatchAttributes) MethodName() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("method_name"))
+	return terra.ReferenceAsString(m.ref.Append("method_name"))
 }
 
 func (m GrpcRouteMatchAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(m.ref.Append("port"))
+	return terra.ReferenceAsNumber(m.ref.Append("port"))
 }
 
 func (m GrpcRouteMatchAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("prefix"))
+	return terra.ReferenceAsString(m.ref.Append("prefix"))
 }
 
 func (m GrpcRouteMatchAttributes) ServiceName() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("service_name"))
+	return terra.ReferenceAsString(m.ref.Append("service_name"))
 }
 
 func (m GrpcRouteMatchAttributes) Metadata() terra.SetValue[MetadataAttributes] {
-	return terra.ReferenceSet[MetadataAttributes](m.ref.Append("metadata"))
+	return terra.ReferenceAsSet[MetadataAttributes](m.ref.Append("metadata"))
 }
 
 type MetadataAttributes struct {
@@ -549,15 +549,15 @@ func (m MetadataAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m MetadataAttributes) Invert() terra.BoolValue {
-	return terra.ReferenceBool(m.ref.Append("invert"))
+	return terra.ReferenceAsBool(m.ref.Append("invert"))
 }
 
 func (m MetadataAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("name"))
+	return terra.ReferenceAsString(m.ref.Append("name"))
 }
 
 func (m MetadataAttributes) Match() terra.ListValue[MetadataMatchAttributes] {
-	return terra.ReferenceList[MetadataMatchAttributes](m.ref.Append("match"))
+	return terra.ReferenceAsList[MetadataMatchAttributes](m.ref.Append("match"))
 }
 
 type MetadataMatchAttributes struct {
@@ -577,23 +577,23 @@ func (m MetadataMatchAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m MetadataMatchAttributes) Exact() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("exact"))
+	return terra.ReferenceAsString(m.ref.Append("exact"))
 }
 
 func (m MetadataMatchAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("prefix"))
+	return terra.ReferenceAsString(m.ref.Append("prefix"))
 }
 
 func (m MetadataMatchAttributes) Regex() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("regex"))
+	return terra.ReferenceAsString(m.ref.Append("regex"))
 }
 
 func (m MetadataMatchAttributes) Suffix() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("suffix"))
+	return terra.ReferenceAsString(m.ref.Append("suffix"))
 }
 
 func (m MetadataMatchAttributes) Range() terra.ListValue[MetadataMatchRangeAttributes] {
-	return terra.ReferenceList[MetadataMatchRangeAttributes](m.ref.Append("range"))
+	return terra.ReferenceAsList[MetadataMatchRangeAttributes](m.ref.Append("range"))
 }
 
 type MetadataMatchRangeAttributes struct {
@@ -613,11 +613,11 @@ func (r MetadataMatchRangeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r MetadataMatchRangeAttributes) End() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("end"))
+	return terra.ReferenceAsNumber(r.ref.Append("end"))
 }
 
 func (r MetadataMatchRangeAttributes) Start() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("start"))
+	return terra.ReferenceAsNumber(r.ref.Append("start"))
 }
 
 type GrpcRouteRetryPolicyAttributes struct {
@@ -637,23 +637,23 @@ func (rp GrpcRouteRetryPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rp GrpcRouteRetryPolicyAttributes) GrpcRetryEvents() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rp.ref.Append("grpc_retry_events"))
+	return terra.ReferenceAsSet[terra.StringValue](rp.ref.Append("grpc_retry_events"))
 }
 
 func (rp GrpcRouteRetryPolicyAttributes) HttpRetryEvents() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rp.ref.Append("http_retry_events"))
+	return terra.ReferenceAsSet[terra.StringValue](rp.ref.Append("http_retry_events"))
 }
 
 func (rp GrpcRouteRetryPolicyAttributes) MaxRetries() terra.NumberValue {
-	return terra.ReferenceNumber(rp.ref.Append("max_retries"))
+	return terra.ReferenceAsNumber(rp.ref.Append("max_retries"))
 }
 
 func (rp GrpcRouteRetryPolicyAttributes) TcpRetryEvents() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rp.ref.Append("tcp_retry_events"))
+	return terra.ReferenceAsSet[terra.StringValue](rp.ref.Append("tcp_retry_events"))
 }
 
 func (rp GrpcRouteRetryPolicyAttributes) PerRetryTimeout() terra.ListValue[GrpcRouteRetryPolicyPerRetryTimeoutAttributes] {
-	return terra.ReferenceList[GrpcRouteRetryPolicyPerRetryTimeoutAttributes](rp.ref.Append("per_retry_timeout"))
+	return terra.ReferenceAsList[GrpcRouteRetryPolicyPerRetryTimeoutAttributes](rp.ref.Append("per_retry_timeout"))
 }
 
 type GrpcRouteRetryPolicyPerRetryTimeoutAttributes struct {
@@ -673,11 +673,11 @@ func (prt GrpcRouteRetryPolicyPerRetryTimeoutAttributes) InternalTokens() hclwri
 }
 
 func (prt GrpcRouteRetryPolicyPerRetryTimeoutAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(prt.ref.Append("unit"))
+	return terra.ReferenceAsString(prt.ref.Append("unit"))
 }
 
 func (prt GrpcRouteRetryPolicyPerRetryTimeoutAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(prt.ref.Append("value"))
+	return terra.ReferenceAsNumber(prt.ref.Append("value"))
 }
 
 type GrpcRouteTimeoutAttributes struct {
@@ -697,11 +697,11 @@ func (t GrpcRouteTimeoutAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t GrpcRouteTimeoutAttributes) Idle() terra.ListValue[GrpcRouteTimeoutIdleAttributes] {
-	return terra.ReferenceList[GrpcRouteTimeoutIdleAttributes](t.ref.Append("idle"))
+	return terra.ReferenceAsList[GrpcRouteTimeoutIdleAttributes](t.ref.Append("idle"))
 }
 
 func (t GrpcRouteTimeoutAttributes) PerRequest() terra.ListValue[GrpcRouteTimeoutPerRequestAttributes] {
-	return terra.ReferenceList[GrpcRouteTimeoutPerRequestAttributes](t.ref.Append("per_request"))
+	return terra.ReferenceAsList[GrpcRouteTimeoutPerRequestAttributes](t.ref.Append("per_request"))
 }
 
 type GrpcRouteTimeoutIdleAttributes struct {
@@ -721,11 +721,11 @@ func (i GrpcRouteTimeoutIdleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i GrpcRouteTimeoutIdleAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("unit"))
+	return terra.ReferenceAsString(i.ref.Append("unit"))
 }
 
 func (i GrpcRouteTimeoutIdleAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("value"))
+	return terra.ReferenceAsNumber(i.ref.Append("value"))
 }
 
 type GrpcRouteTimeoutPerRequestAttributes struct {
@@ -745,11 +745,11 @@ func (pr GrpcRouteTimeoutPerRequestAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (pr GrpcRouteTimeoutPerRequestAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(pr.ref.Append("unit"))
+	return terra.ReferenceAsString(pr.ref.Append("unit"))
 }
 
 func (pr GrpcRouteTimeoutPerRequestAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("value"))
+	return terra.ReferenceAsNumber(pr.ref.Append("value"))
 }
 
 type Http2RouteAttributes struct {
@@ -769,19 +769,19 @@ func (hr Http2RouteAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hr Http2RouteAttributes) Action() terra.ListValue[Http2RouteActionAttributes] {
-	return terra.ReferenceList[Http2RouteActionAttributes](hr.ref.Append("action"))
+	return terra.ReferenceAsList[Http2RouteActionAttributes](hr.ref.Append("action"))
 }
 
 func (hr Http2RouteAttributes) Match() terra.ListValue[Http2RouteMatchAttributes] {
-	return terra.ReferenceList[Http2RouteMatchAttributes](hr.ref.Append("match"))
+	return terra.ReferenceAsList[Http2RouteMatchAttributes](hr.ref.Append("match"))
 }
 
 func (hr Http2RouteAttributes) RetryPolicy() terra.ListValue[Http2RouteRetryPolicyAttributes] {
-	return terra.ReferenceList[Http2RouteRetryPolicyAttributes](hr.ref.Append("retry_policy"))
+	return terra.ReferenceAsList[Http2RouteRetryPolicyAttributes](hr.ref.Append("retry_policy"))
 }
 
 func (hr Http2RouteAttributes) Timeout() terra.ListValue[Http2RouteTimeoutAttributes] {
-	return terra.ReferenceList[Http2RouteTimeoutAttributes](hr.ref.Append("timeout"))
+	return terra.ReferenceAsList[Http2RouteTimeoutAttributes](hr.ref.Append("timeout"))
 }
 
 type Http2RouteActionAttributes struct {
@@ -801,7 +801,7 @@ func (a Http2RouteActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a Http2RouteActionAttributes) WeightedTarget() terra.SetValue[Http2RouteActionWeightedTargetAttributes] {
-	return terra.ReferenceSet[Http2RouteActionWeightedTargetAttributes](a.ref.Append("weighted_target"))
+	return terra.ReferenceAsSet[Http2RouteActionWeightedTargetAttributes](a.ref.Append("weighted_target"))
 }
 
 type Http2RouteActionWeightedTargetAttributes struct {
@@ -821,15 +821,15 @@ func (wt Http2RouteActionWeightedTargetAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (wt Http2RouteActionWeightedTargetAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(wt.ref.Append("port"))
+	return terra.ReferenceAsNumber(wt.ref.Append("port"))
 }
 
 func (wt Http2RouteActionWeightedTargetAttributes) VirtualNode() terra.StringValue {
-	return terra.ReferenceString(wt.ref.Append("virtual_node"))
+	return terra.ReferenceAsString(wt.ref.Append("virtual_node"))
 }
 
 func (wt Http2RouteActionWeightedTargetAttributes) Weight() terra.NumberValue {
-	return terra.ReferenceNumber(wt.ref.Append("weight"))
+	return terra.ReferenceAsNumber(wt.ref.Append("weight"))
 }
 
 type Http2RouteMatchAttributes struct {
@@ -849,23 +849,23 @@ func (m Http2RouteMatchAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m Http2RouteMatchAttributes) Method() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("method"))
+	return terra.ReferenceAsString(m.ref.Append("method"))
 }
 
 func (m Http2RouteMatchAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(m.ref.Append("port"))
+	return terra.ReferenceAsNumber(m.ref.Append("port"))
 }
 
 func (m Http2RouteMatchAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("prefix"))
+	return terra.ReferenceAsString(m.ref.Append("prefix"))
 }
 
 func (m Http2RouteMatchAttributes) Scheme() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("scheme"))
+	return terra.ReferenceAsString(m.ref.Append("scheme"))
 }
 
 func (m Http2RouteMatchAttributes) Header() terra.SetValue[Http2RouteMatchHeaderAttributes] {
-	return terra.ReferenceSet[Http2RouteMatchHeaderAttributes](m.ref.Append("header"))
+	return terra.ReferenceAsSet[Http2RouteMatchHeaderAttributes](m.ref.Append("header"))
 }
 
 type Http2RouteMatchHeaderAttributes struct {
@@ -885,15 +885,15 @@ func (h Http2RouteMatchHeaderAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (h Http2RouteMatchHeaderAttributes) Invert() terra.BoolValue {
-	return terra.ReferenceBool(h.ref.Append("invert"))
+	return terra.ReferenceAsBool(h.ref.Append("invert"))
 }
 
 func (h Http2RouteMatchHeaderAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("name"))
+	return terra.ReferenceAsString(h.ref.Append("name"))
 }
 
 func (h Http2RouteMatchHeaderAttributes) Match() terra.ListValue[Http2RouteMatchHeaderMatchAttributes] {
-	return terra.ReferenceList[Http2RouteMatchHeaderMatchAttributes](h.ref.Append("match"))
+	return terra.ReferenceAsList[Http2RouteMatchHeaderMatchAttributes](h.ref.Append("match"))
 }
 
 type Http2RouteMatchHeaderMatchAttributes struct {
@@ -913,23 +913,23 @@ func (m Http2RouteMatchHeaderMatchAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m Http2RouteMatchHeaderMatchAttributes) Exact() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("exact"))
+	return terra.ReferenceAsString(m.ref.Append("exact"))
 }
 
 func (m Http2RouteMatchHeaderMatchAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("prefix"))
+	return terra.ReferenceAsString(m.ref.Append("prefix"))
 }
 
 func (m Http2RouteMatchHeaderMatchAttributes) Regex() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("regex"))
+	return terra.ReferenceAsString(m.ref.Append("regex"))
 }
 
 func (m Http2RouteMatchHeaderMatchAttributes) Suffix() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("suffix"))
+	return terra.ReferenceAsString(m.ref.Append("suffix"))
 }
 
 func (m Http2RouteMatchHeaderMatchAttributes) Range() terra.ListValue[Http2RouteMatchHeaderMatchRangeAttributes] {
-	return terra.ReferenceList[Http2RouteMatchHeaderMatchRangeAttributes](m.ref.Append("range"))
+	return terra.ReferenceAsList[Http2RouteMatchHeaderMatchRangeAttributes](m.ref.Append("range"))
 }
 
 type Http2RouteMatchHeaderMatchRangeAttributes struct {
@@ -949,11 +949,11 @@ func (r Http2RouteMatchHeaderMatchRangeAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (r Http2RouteMatchHeaderMatchRangeAttributes) End() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("end"))
+	return terra.ReferenceAsNumber(r.ref.Append("end"))
 }
 
 func (r Http2RouteMatchHeaderMatchRangeAttributes) Start() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("start"))
+	return terra.ReferenceAsNumber(r.ref.Append("start"))
 }
 
 type Http2RouteRetryPolicyAttributes struct {
@@ -973,19 +973,19 @@ func (rp Http2RouteRetryPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rp Http2RouteRetryPolicyAttributes) HttpRetryEvents() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rp.ref.Append("http_retry_events"))
+	return terra.ReferenceAsSet[terra.StringValue](rp.ref.Append("http_retry_events"))
 }
 
 func (rp Http2RouteRetryPolicyAttributes) MaxRetries() terra.NumberValue {
-	return terra.ReferenceNumber(rp.ref.Append("max_retries"))
+	return terra.ReferenceAsNumber(rp.ref.Append("max_retries"))
 }
 
 func (rp Http2RouteRetryPolicyAttributes) TcpRetryEvents() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rp.ref.Append("tcp_retry_events"))
+	return terra.ReferenceAsSet[terra.StringValue](rp.ref.Append("tcp_retry_events"))
 }
 
 func (rp Http2RouteRetryPolicyAttributes) PerRetryTimeout() terra.ListValue[Http2RouteRetryPolicyPerRetryTimeoutAttributes] {
-	return terra.ReferenceList[Http2RouteRetryPolicyPerRetryTimeoutAttributes](rp.ref.Append("per_retry_timeout"))
+	return terra.ReferenceAsList[Http2RouteRetryPolicyPerRetryTimeoutAttributes](rp.ref.Append("per_retry_timeout"))
 }
 
 type Http2RouteRetryPolicyPerRetryTimeoutAttributes struct {
@@ -1005,11 +1005,11 @@ func (prt Http2RouteRetryPolicyPerRetryTimeoutAttributes) InternalTokens() hclwr
 }
 
 func (prt Http2RouteRetryPolicyPerRetryTimeoutAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(prt.ref.Append("unit"))
+	return terra.ReferenceAsString(prt.ref.Append("unit"))
 }
 
 func (prt Http2RouteRetryPolicyPerRetryTimeoutAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(prt.ref.Append("value"))
+	return terra.ReferenceAsNumber(prt.ref.Append("value"))
 }
 
 type Http2RouteTimeoutAttributes struct {
@@ -1029,11 +1029,11 @@ func (t Http2RouteTimeoutAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t Http2RouteTimeoutAttributes) Idle() terra.ListValue[Http2RouteTimeoutIdleAttributes] {
-	return terra.ReferenceList[Http2RouteTimeoutIdleAttributes](t.ref.Append("idle"))
+	return terra.ReferenceAsList[Http2RouteTimeoutIdleAttributes](t.ref.Append("idle"))
 }
 
 func (t Http2RouteTimeoutAttributes) PerRequest() terra.ListValue[Http2RouteTimeoutPerRequestAttributes] {
-	return terra.ReferenceList[Http2RouteTimeoutPerRequestAttributes](t.ref.Append("per_request"))
+	return terra.ReferenceAsList[Http2RouteTimeoutPerRequestAttributes](t.ref.Append("per_request"))
 }
 
 type Http2RouteTimeoutIdleAttributes struct {
@@ -1053,11 +1053,11 @@ func (i Http2RouteTimeoutIdleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i Http2RouteTimeoutIdleAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("unit"))
+	return terra.ReferenceAsString(i.ref.Append("unit"))
 }
 
 func (i Http2RouteTimeoutIdleAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("value"))
+	return terra.ReferenceAsNumber(i.ref.Append("value"))
 }
 
 type Http2RouteTimeoutPerRequestAttributes struct {
@@ -1077,11 +1077,11 @@ func (pr Http2RouteTimeoutPerRequestAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (pr Http2RouteTimeoutPerRequestAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(pr.ref.Append("unit"))
+	return terra.ReferenceAsString(pr.ref.Append("unit"))
 }
 
 func (pr Http2RouteTimeoutPerRequestAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("value"))
+	return terra.ReferenceAsNumber(pr.ref.Append("value"))
 }
 
 type HttpRouteAttributes struct {
@@ -1101,19 +1101,19 @@ func (hr HttpRouteAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hr HttpRouteAttributes) Action() terra.ListValue[HttpRouteActionAttributes] {
-	return terra.ReferenceList[HttpRouteActionAttributes](hr.ref.Append("action"))
+	return terra.ReferenceAsList[HttpRouteActionAttributes](hr.ref.Append("action"))
 }
 
 func (hr HttpRouteAttributes) Match() terra.ListValue[HttpRouteMatchAttributes] {
-	return terra.ReferenceList[HttpRouteMatchAttributes](hr.ref.Append("match"))
+	return terra.ReferenceAsList[HttpRouteMatchAttributes](hr.ref.Append("match"))
 }
 
 func (hr HttpRouteAttributes) RetryPolicy() terra.ListValue[HttpRouteRetryPolicyAttributes] {
-	return terra.ReferenceList[HttpRouteRetryPolicyAttributes](hr.ref.Append("retry_policy"))
+	return terra.ReferenceAsList[HttpRouteRetryPolicyAttributes](hr.ref.Append("retry_policy"))
 }
 
 func (hr HttpRouteAttributes) Timeout() terra.ListValue[HttpRouteTimeoutAttributes] {
-	return terra.ReferenceList[HttpRouteTimeoutAttributes](hr.ref.Append("timeout"))
+	return terra.ReferenceAsList[HttpRouteTimeoutAttributes](hr.ref.Append("timeout"))
 }
 
 type HttpRouteActionAttributes struct {
@@ -1133,7 +1133,7 @@ func (a HttpRouteActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a HttpRouteActionAttributes) WeightedTarget() terra.SetValue[HttpRouteActionWeightedTargetAttributes] {
-	return terra.ReferenceSet[HttpRouteActionWeightedTargetAttributes](a.ref.Append("weighted_target"))
+	return terra.ReferenceAsSet[HttpRouteActionWeightedTargetAttributes](a.ref.Append("weighted_target"))
 }
 
 type HttpRouteActionWeightedTargetAttributes struct {
@@ -1153,15 +1153,15 @@ func (wt HttpRouteActionWeightedTargetAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (wt HttpRouteActionWeightedTargetAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(wt.ref.Append("port"))
+	return terra.ReferenceAsNumber(wt.ref.Append("port"))
 }
 
 func (wt HttpRouteActionWeightedTargetAttributes) VirtualNode() terra.StringValue {
-	return terra.ReferenceString(wt.ref.Append("virtual_node"))
+	return terra.ReferenceAsString(wt.ref.Append("virtual_node"))
 }
 
 func (wt HttpRouteActionWeightedTargetAttributes) Weight() terra.NumberValue {
-	return terra.ReferenceNumber(wt.ref.Append("weight"))
+	return terra.ReferenceAsNumber(wt.ref.Append("weight"))
 }
 
 type HttpRouteMatchAttributes struct {
@@ -1181,23 +1181,23 @@ func (m HttpRouteMatchAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m HttpRouteMatchAttributes) Method() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("method"))
+	return terra.ReferenceAsString(m.ref.Append("method"))
 }
 
 func (m HttpRouteMatchAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(m.ref.Append("port"))
+	return terra.ReferenceAsNumber(m.ref.Append("port"))
 }
 
 func (m HttpRouteMatchAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("prefix"))
+	return terra.ReferenceAsString(m.ref.Append("prefix"))
 }
 
 func (m HttpRouteMatchAttributes) Scheme() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("scheme"))
+	return terra.ReferenceAsString(m.ref.Append("scheme"))
 }
 
 func (m HttpRouteMatchAttributes) Header() terra.SetValue[HttpRouteMatchHeaderAttributes] {
-	return terra.ReferenceSet[HttpRouteMatchHeaderAttributes](m.ref.Append("header"))
+	return terra.ReferenceAsSet[HttpRouteMatchHeaderAttributes](m.ref.Append("header"))
 }
 
 type HttpRouteMatchHeaderAttributes struct {
@@ -1217,15 +1217,15 @@ func (h HttpRouteMatchHeaderAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (h HttpRouteMatchHeaderAttributes) Invert() terra.BoolValue {
-	return terra.ReferenceBool(h.ref.Append("invert"))
+	return terra.ReferenceAsBool(h.ref.Append("invert"))
 }
 
 func (h HttpRouteMatchHeaderAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("name"))
+	return terra.ReferenceAsString(h.ref.Append("name"))
 }
 
 func (h HttpRouteMatchHeaderAttributes) Match() terra.ListValue[HttpRouteMatchHeaderMatchAttributes] {
-	return terra.ReferenceList[HttpRouteMatchHeaderMatchAttributes](h.ref.Append("match"))
+	return terra.ReferenceAsList[HttpRouteMatchHeaderMatchAttributes](h.ref.Append("match"))
 }
 
 type HttpRouteMatchHeaderMatchAttributes struct {
@@ -1245,23 +1245,23 @@ func (m HttpRouteMatchHeaderMatchAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m HttpRouteMatchHeaderMatchAttributes) Exact() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("exact"))
+	return terra.ReferenceAsString(m.ref.Append("exact"))
 }
 
 func (m HttpRouteMatchHeaderMatchAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("prefix"))
+	return terra.ReferenceAsString(m.ref.Append("prefix"))
 }
 
 func (m HttpRouteMatchHeaderMatchAttributes) Regex() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("regex"))
+	return terra.ReferenceAsString(m.ref.Append("regex"))
 }
 
 func (m HttpRouteMatchHeaderMatchAttributes) Suffix() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("suffix"))
+	return terra.ReferenceAsString(m.ref.Append("suffix"))
 }
 
 func (m HttpRouteMatchHeaderMatchAttributes) Range() terra.ListValue[HttpRouteMatchHeaderMatchRangeAttributes] {
-	return terra.ReferenceList[HttpRouteMatchHeaderMatchRangeAttributes](m.ref.Append("range"))
+	return terra.ReferenceAsList[HttpRouteMatchHeaderMatchRangeAttributes](m.ref.Append("range"))
 }
 
 type HttpRouteMatchHeaderMatchRangeAttributes struct {
@@ -1281,11 +1281,11 @@ func (r HttpRouteMatchHeaderMatchRangeAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (r HttpRouteMatchHeaderMatchRangeAttributes) End() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("end"))
+	return terra.ReferenceAsNumber(r.ref.Append("end"))
 }
 
 func (r HttpRouteMatchHeaderMatchRangeAttributes) Start() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("start"))
+	return terra.ReferenceAsNumber(r.ref.Append("start"))
 }
 
 type HttpRouteRetryPolicyAttributes struct {
@@ -1305,19 +1305,19 @@ func (rp HttpRouteRetryPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rp HttpRouteRetryPolicyAttributes) HttpRetryEvents() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rp.ref.Append("http_retry_events"))
+	return terra.ReferenceAsSet[terra.StringValue](rp.ref.Append("http_retry_events"))
 }
 
 func (rp HttpRouteRetryPolicyAttributes) MaxRetries() terra.NumberValue {
-	return terra.ReferenceNumber(rp.ref.Append("max_retries"))
+	return terra.ReferenceAsNumber(rp.ref.Append("max_retries"))
 }
 
 func (rp HttpRouteRetryPolicyAttributes) TcpRetryEvents() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rp.ref.Append("tcp_retry_events"))
+	return terra.ReferenceAsSet[terra.StringValue](rp.ref.Append("tcp_retry_events"))
 }
 
 func (rp HttpRouteRetryPolicyAttributes) PerRetryTimeout() terra.ListValue[HttpRouteRetryPolicyPerRetryTimeoutAttributes] {
-	return terra.ReferenceList[HttpRouteRetryPolicyPerRetryTimeoutAttributes](rp.ref.Append("per_retry_timeout"))
+	return terra.ReferenceAsList[HttpRouteRetryPolicyPerRetryTimeoutAttributes](rp.ref.Append("per_retry_timeout"))
 }
 
 type HttpRouteRetryPolicyPerRetryTimeoutAttributes struct {
@@ -1337,11 +1337,11 @@ func (prt HttpRouteRetryPolicyPerRetryTimeoutAttributes) InternalTokens() hclwri
 }
 
 func (prt HttpRouteRetryPolicyPerRetryTimeoutAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(prt.ref.Append("unit"))
+	return terra.ReferenceAsString(prt.ref.Append("unit"))
 }
 
 func (prt HttpRouteRetryPolicyPerRetryTimeoutAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(prt.ref.Append("value"))
+	return terra.ReferenceAsNumber(prt.ref.Append("value"))
 }
 
 type HttpRouteTimeoutAttributes struct {
@@ -1361,11 +1361,11 @@ func (t HttpRouteTimeoutAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t HttpRouteTimeoutAttributes) Idle() terra.ListValue[HttpRouteTimeoutIdleAttributes] {
-	return terra.ReferenceList[HttpRouteTimeoutIdleAttributes](t.ref.Append("idle"))
+	return terra.ReferenceAsList[HttpRouteTimeoutIdleAttributes](t.ref.Append("idle"))
 }
 
 func (t HttpRouteTimeoutAttributes) PerRequest() terra.ListValue[HttpRouteTimeoutPerRequestAttributes] {
-	return terra.ReferenceList[HttpRouteTimeoutPerRequestAttributes](t.ref.Append("per_request"))
+	return terra.ReferenceAsList[HttpRouteTimeoutPerRequestAttributes](t.ref.Append("per_request"))
 }
 
 type HttpRouteTimeoutIdleAttributes struct {
@@ -1385,11 +1385,11 @@ func (i HttpRouteTimeoutIdleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i HttpRouteTimeoutIdleAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("unit"))
+	return terra.ReferenceAsString(i.ref.Append("unit"))
 }
 
 func (i HttpRouteTimeoutIdleAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("value"))
+	return terra.ReferenceAsNumber(i.ref.Append("value"))
 }
 
 type HttpRouteTimeoutPerRequestAttributes struct {
@@ -1409,11 +1409,11 @@ func (pr HttpRouteTimeoutPerRequestAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (pr HttpRouteTimeoutPerRequestAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(pr.ref.Append("unit"))
+	return terra.ReferenceAsString(pr.ref.Append("unit"))
 }
 
 func (pr HttpRouteTimeoutPerRequestAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("value"))
+	return terra.ReferenceAsNumber(pr.ref.Append("value"))
 }
 
 type TcpRouteAttributes struct {
@@ -1433,15 +1433,15 @@ func (tr TcpRouteAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tr TcpRouteAttributes) Action() terra.ListValue[TcpRouteActionAttributes] {
-	return terra.ReferenceList[TcpRouteActionAttributes](tr.ref.Append("action"))
+	return terra.ReferenceAsList[TcpRouteActionAttributes](tr.ref.Append("action"))
 }
 
 func (tr TcpRouteAttributes) Match() terra.ListValue[TcpRouteMatchAttributes] {
-	return terra.ReferenceList[TcpRouteMatchAttributes](tr.ref.Append("match"))
+	return terra.ReferenceAsList[TcpRouteMatchAttributes](tr.ref.Append("match"))
 }
 
 func (tr TcpRouteAttributes) Timeout() terra.ListValue[TcpRouteTimeoutAttributes] {
-	return terra.ReferenceList[TcpRouteTimeoutAttributes](tr.ref.Append("timeout"))
+	return terra.ReferenceAsList[TcpRouteTimeoutAttributes](tr.ref.Append("timeout"))
 }
 
 type TcpRouteActionAttributes struct {
@@ -1461,7 +1461,7 @@ func (a TcpRouteActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a TcpRouteActionAttributes) WeightedTarget() terra.SetValue[TcpRouteActionWeightedTargetAttributes] {
-	return terra.ReferenceSet[TcpRouteActionWeightedTargetAttributes](a.ref.Append("weighted_target"))
+	return terra.ReferenceAsSet[TcpRouteActionWeightedTargetAttributes](a.ref.Append("weighted_target"))
 }
 
 type TcpRouteActionWeightedTargetAttributes struct {
@@ -1481,15 +1481,15 @@ func (wt TcpRouteActionWeightedTargetAttributes) InternalTokens() hclwrite.Token
 }
 
 func (wt TcpRouteActionWeightedTargetAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(wt.ref.Append("port"))
+	return terra.ReferenceAsNumber(wt.ref.Append("port"))
 }
 
 func (wt TcpRouteActionWeightedTargetAttributes) VirtualNode() terra.StringValue {
-	return terra.ReferenceString(wt.ref.Append("virtual_node"))
+	return terra.ReferenceAsString(wt.ref.Append("virtual_node"))
 }
 
 func (wt TcpRouteActionWeightedTargetAttributes) Weight() terra.NumberValue {
-	return terra.ReferenceNumber(wt.ref.Append("weight"))
+	return terra.ReferenceAsNumber(wt.ref.Append("weight"))
 }
 
 type TcpRouteMatchAttributes struct {
@@ -1509,7 +1509,7 @@ func (m TcpRouteMatchAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m TcpRouteMatchAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(m.ref.Append("port"))
+	return terra.ReferenceAsNumber(m.ref.Append("port"))
 }
 
 type TcpRouteTimeoutAttributes struct {
@@ -1529,7 +1529,7 @@ func (t TcpRouteTimeoutAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TcpRouteTimeoutAttributes) Idle() terra.ListValue[TcpRouteTimeoutIdleAttributes] {
-	return terra.ReferenceList[TcpRouteTimeoutIdleAttributes](t.ref.Append("idle"))
+	return terra.ReferenceAsList[TcpRouteTimeoutIdleAttributes](t.ref.Append("idle"))
 }
 
 type TcpRouteTimeoutIdleAttributes struct {
@@ -1549,11 +1549,11 @@ func (i TcpRouteTimeoutIdleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i TcpRouteTimeoutIdleAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("unit"))
+	return terra.ReferenceAsString(i.ref.Append("unit"))
 }
 
 func (i TcpRouteTimeoutIdleAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("value"))
+	return terra.ReferenceAsNumber(i.ref.Append("value"))
 }
 
 type SpecState struct {

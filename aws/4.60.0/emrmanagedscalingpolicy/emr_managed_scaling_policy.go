@@ -37,23 +37,23 @@ func (cl ComputeLimitsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cl ComputeLimitsAttributes) MaximumCapacityUnits() terra.NumberValue {
-	return terra.ReferenceNumber(cl.ref.Append("maximum_capacity_units"))
+	return terra.ReferenceAsNumber(cl.ref.Append("maximum_capacity_units"))
 }
 
 func (cl ComputeLimitsAttributes) MaximumCoreCapacityUnits() terra.NumberValue {
-	return terra.ReferenceNumber(cl.ref.Append("maximum_core_capacity_units"))
+	return terra.ReferenceAsNumber(cl.ref.Append("maximum_core_capacity_units"))
 }
 
 func (cl ComputeLimitsAttributes) MaximumOndemandCapacityUnits() terra.NumberValue {
-	return terra.ReferenceNumber(cl.ref.Append("maximum_ondemand_capacity_units"))
+	return terra.ReferenceAsNumber(cl.ref.Append("maximum_ondemand_capacity_units"))
 }
 
 func (cl ComputeLimitsAttributes) MinimumCapacityUnits() terra.NumberValue {
-	return terra.ReferenceNumber(cl.ref.Append("minimum_capacity_units"))
+	return terra.ReferenceAsNumber(cl.ref.Append("minimum_capacity_units"))
 }
 
 func (cl ComputeLimitsAttributes) UnitType() terra.StringValue {
-	return terra.ReferenceString(cl.ref.Append("unit_type"))
+	return terra.ReferenceAsString(cl.ref.Append("unit_type"))
 }
 
 type ComputeLimitsState struct {

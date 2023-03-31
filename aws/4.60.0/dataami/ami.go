@@ -40,19 +40,19 @@ func (bdm BlockDeviceMappingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (bdm BlockDeviceMappingsAttributes) DeviceName() terra.StringValue {
-	return terra.ReferenceString(bdm.ref.Append("device_name"))
+	return terra.ReferenceAsString(bdm.ref.Append("device_name"))
 }
 
 func (bdm BlockDeviceMappingsAttributes) Ebs() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bdm.ref.Append("ebs"))
+	return terra.ReferenceAsMap[terra.StringValue](bdm.ref.Append("ebs"))
 }
 
 func (bdm BlockDeviceMappingsAttributes) NoDevice() terra.StringValue {
-	return terra.ReferenceString(bdm.ref.Append("no_device"))
+	return terra.ReferenceAsString(bdm.ref.Append("no_device"))
 }
 
 func (bdm BlockDeviceMappingsAttributes) VirtualName() terra.StringValue {
-	return terra.ReferenceString(bdm.ref.Append("virtual_name"))
+	return terra.ReferenceAsString(bdm.ref.Append("virtual_name"))
 }
 
 type ProductCodesAttributes struct {
@@ -72,11 +72,11 @@ func (pc ProductCodesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pc ProductCodesAttributes) ProductCodeId() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("product_code_id"))
+	return terra.ReferenceAsString(pc.ref.Append("product_code_id"))
 }
 
 func (pc ProductCodesAttributes) ProductCodeType() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("product_code_type"))
+	return terra.ReferenceAsString(pc.ref.Append("product_code_type"))
 }
 
 type FilterAttributes struct {
@@ -96,11 +96,11 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
 func (f FilterAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](f.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](f.ref.Append("values"))
 }
 
 type TimeoutsAttributes struct {
@@ -120,7 +120,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type BlockDeviceMappingsState struct {

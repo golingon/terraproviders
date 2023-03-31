@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewChimeVoiceConnectorTermination creates a new instance of [ChimeVoiceConnectorTermination].
 func NewChimeVoiceConnectorTermination(name string, args ChimeVoiceConnectorTerminationArgs) *ChimeVoiceConnectorTermination {
 	return &ChimeVoiceConnectorTermination{
 		Args: args,
@@ -18,28 +19,51 @@ func NewChimeVoiceConnectorTermination(name string, args ChimeVoiceConnectorTerm
 
 var _ terra.Resource = (*ChimeVoiceConnectorTermination)(nil)
 
+// ChimeVoiceConnectorTermination represents the Terraform resource aws_chime_voice_connector_termination.
 type ChimeVoiceConnectorTermination struct {
-	Name  string
-	Args  ChimeVoiceConnectorTerminationArgs
-	state *chimeVoiceConnectorTerminationState
+	Name      string
+	Args      ChimeVoiceConnectorTerminationArgs
+	state     *chimeVoiceConnectorTerminationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ChimeVoiceConnectorTermination].
 func (cvct *ChimeVoiceConnectorTermination) Type() string {
 	return "aws_chime_voice_connector_termination"
 }
 
+// LocalName returns the local name for [ChimeVoiceConnectorTermination].
 func (cvct *ChimeVoiceConnectorTermination) LocalName() string {
 	return cvct.Name
 }
 
+// Configuration returns the configuration (args) for [ChimeVoiceConnectorTermination].
 func (cvct *ChimeVoiceConnectorTermination) Configuration() interface{} {
 	return cvct.Args
 }
 
+// DependOn is used for other resources to depend on [ChimeVoiceConnectorTermination].
+func (cvct *ChimeVoiceConnectorTermination) DependOn() terra.Reference {
+	return terra.ReferenceResource(cvct)
+}
+
+// Dependencies returns the list of resources [ChimeVoiceConnectorTermination] depends_on.
+func (cvct *ChimeVoiceConnectorTermination) Dependencies() terra.Dependencies {
+	return cvct.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ChimeVoiceConnectorTermination].
+func (cvct *ChimeVoiceConnectorTermination) LifecycleManagement() *terra.Lifecycle {
+	return cvct.Lifecycle
+}
+
+// Attributes returns the attributes for [ChimeVoiceConnectorTermination].
 func (cvct *ChimeVoiceConnectorTermination) Attributes() chimeVoiceConnectorTerminationAttributes {
 	return chimeVoiceConnectorTerminationAttributes{ref: terra.ReferenceResource(cvct)}
 }
 
+// ImportState imports the given attribute values into [ChimeVoiceConnectorTermination]'s state.
 func (cvct *ChimeVoiceConnectorTermination) ImportState(av io.Reader) error {
 	cvct.state = &chimeVoiceConnectorTerminationState{}
 	if err := json.NewDecoder(av).Decode(cvct.state); err != nil {
@@ -48,10 +72,12 @@ func (cvct *ChimeVoiceConnectorTermination) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ChimeVoiceConnectorTermination] has state.
 func (cvct *ChimeVoiceConnectorTermination) State() (*chimeVoiceConnectorTerminationState, bool) {
 	return cvct.state, cvct.state != nil
 }
 
+// StateMust returns the state for [ChimeVoiceConnectorTermination]. Panics if the state is nil.
 func (cvct *ChimeVoiceConnectorTermination) StateMust() *chimeVoiceConnectorTerminationState {
 	if cvct.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cvct.Type(), cvct.LocalName()))
@@ -59,10 +85,7 @@ func (cvct *ChimeVoiceConnectorTermination) StateMust() *chimeVoiceConnectorTerm
 	return cvct.state
 }
 
-func (cvct *ChimeVoiceConnectorTermination) DependOn() terra.Reference {
-	return terra.ReferenceResource(cvct)
-}
-
+// ChimeVoiceConnectorTerminationArgs contains the configurations for aws_chime_voice_connector_termination.
 type ChimeVoiceConnectorTerminationArgs struct {
 	// CallingRegions: set of string, required
 	CallingRegions terra.SetValue[terra.StringValue] `hcl:"calling_regions,attr" validate:"required"`
@@ -78,39 +101,44 @@ type ChimeVoiceConnectorTerminationArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// VoiceConnectorId: string, required
 	VoiceConnectorId terra.StringValue `hcl:"voice_connector_id,attr" validate:"required"`
-	// DependsOn contains resources that ChimeVoiceConnectorTermination depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type chimeVoiceConnectorTerminationAttributes struct {
 	ref terra.Reference
 }
 
+// CallingRegions returns a reference to field calling_regions of aws_chime_voice_connector_termination.
 func (cvct chimeVoiceConnectorTerminationAttributes) CallingRegions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cvct.ref.Append("calling_regions"))
+	return terra.ReferenceAsSet[terra.StringValue](cvct.ref.Append("calling_regions"))
 }
 
+// CidrAllowList returns a reference to field cidr_allow_list of aws_chime_voice_connector_termination.
 func (cvct chimeVoiceConnectorTerminationAttributes) CidrAllowList() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cvct.ref.Append("cidr_allow_list"))
+	return terra.ReferenceAsSet[terra.StringValue](cvct.ref.Append("cidr_allow_list"))
 }
 
+// CpsLimit returns a reference to field cps_limit of aws_chime_voice_connector_termination.
 func (cvct chimeVoiceConnectorTerminationAttributes) CpsLimit() terra.NumberValue {
-	return terra.ReferenceNumber(cvct.ref.Append("cps_limit"))
+	return terra.ReferenceAsNumber(cvct.ref.Append("cps_limit"))
 }
 
+// DefaultPhoneNumber returns a reference to field default_phone_number of aws_chime_voice_connector_termination.
 func (cvct chimeVoiceConnectorTerminationAttributes) DefaultPhoneNumber() terra.StringValue {
-	return terra.ReferenceString(cvct.ref.Append("default_phone_number"))
+	return terra.ReferenceAsString(cvct.ref.Append("default_phone_number"))
 }
 
+// Disabled returns a reference to field disabled of aws_chime_voice_connector_termination.
 func (cvct chimeVoiceConnectorTerminationAttributes) Disabled() terra.BoolValue {
-	return terra.ReferenceBool(cvct.ref.Append("disabled"))
+	return terra.ReferenceAsBool(cvct.ref.Append("disabled"))
 }
 
+// Id returns a reference to field id of aws_chime_voice_connector_termination.
 func (cvct chimeVoiceConnectorTerminationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cvct.ref.Append("id"))
+	return terra.ReferenceAsString(cvct.ref.Append("id"))
 }
 
+// VoiceConnectorId returns a reference to field voice_connector_id of aws_chime_voice_connector_termination.
 func (cvct chimeVoiceConnectorTerminationAttributes) VoiceConnectorId() terra.StringValue {
-	return terra.ReferenceString(cvct.ref.Append("voice_connector_id"))
+	return terra.ReferenceAsString(cvct.ref.Append("voice_connector_id"))
 }
 
 type chimeVoiceConnectorTerminationState struct {

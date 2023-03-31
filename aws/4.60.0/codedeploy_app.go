@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCodedeployApp creates a new instance of [CodedeployApp].
 func NewCodedeployApp(name string, args CodedeployAppArgs) *CodedeployApp {
 	return &CodedeployApp{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCodedeployApp(name string, args CodedeployAppArgs) *CodedeployApp {
 
 var _ terra.Resource = (*CodedeployApp)(nil)
 
+// CodedeployApp represents the Terraform resource aws_codedeploy_app.
 type CodedeployApp struct {
-	Name  string
-	Args  CodedeployAppArgs
-	state *codedeployAppState
+	Name      string
+	Args      CodedeployAppArgs
+	state     *codedeployAppState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CodedeployApp].
 func (ca *CodedeployApp) Type() string {
 	return "aws_codedeploy_app"
 }
 
+// LocalName returns the local name for [CodedeployApp].
 func (ca *CodedeployApp) LocalName() string {
 	return ca.Name
 }
 
+// Configuration returns the configuration (args) for [CodedeployApp].
 func (ca *CodedeployApp) Configuration() interface{} {
 	return ca.Args
 }
 
+// DependOn is used for other resources to depend on [CodedeployApp].
+func (ca *CodedeployApp) DependOn() terra.Reference {
+	return terra.ReferenceResource(ca)
+}
+
+// Dependencies returns the list of resources [CodedeployApp] depends_on.
+func (ca *CodedeployApp) Dependencies() terra.Dependencies {
+	return ca.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CodedeployApp].
+func (ca *CodedeployApp) LifecycleManagement() *terra.Lifecycle {
+	return ca.Lifecycle
+}
+
+// Attributes returns the attributes for [CodedeployApp].
 func (ca *CodedeployApp) Attributes() codedeployAppAttributes {
 	return codedeployAppAttributes{ref: terra.ReferenceResource(ca)}
 }
 
+// ImportState imports the given attribute values into [CodedeployApp]'s state.
 func (ca *CodedeployApp) ImportState(av io.Reader) error {
 	ca.state = &codedeployAppState{}
 	if err := json.NewDecoder(av).Decode(ca.state); err != nil {
@@ -48,10 +72,12 @@ func (ca *CodedeployApp) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CodedeployApp] has state.
 func (ca *CodedeployApp) State() (*codedeployAppState, bool) {
 	return ca.state, ca.state != nil
 }
 
+// StateMust returns the state for [CodedeployApp]. Panics if the state is nil.
 func (ca *CodedeployApp) StateMust() *codedeployAppState {
 	if ca.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ca.Type(), ca.LocalName()))
@@ -59,10 +85,7 @@ func (ca *CodedeployApp) StateMust() *codedeployAppState {
 	return ca.state
 }
 
-func (ca *CodedeployApp) DependOn() terra.Reference {
-	return terra.ReferenceResource(ca)
-}
-
+// CodedeployAppArgs contains the configurations for aws_codedeploy_app.
 type CodedeployAppArgs struct {
 	// ComputePlatform: string, optional
 	ComputePlatform terra.StringValue `hcl:"compute_platform,attr"`
@@ -74,47 +97,54 @@ type CodedeployAppArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that CodedeployApp depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type codedeployAppAttributes struct {
 	ref terra.Reference
 }
 
+// ApplicationId returns a reference to field application_id of aws_codedeploy_app.
 func (ca codedeployAppAttributes) ApplicationId() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("application_id"))
+	return terra.ReferenceAsString(ca.ref.Append("application_id"))
 }
 
+// Arn returns a reference to field arn of aws_codedeploy_app.
 func (ca codedeployAppAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("arn"))
+	return terra.ReferenceAsString(ca.ref.Append("arn"))
 }
 
+// ComputePlatform returns a reference to field compute_platform of aws_codedeploy_app.
 func (ca codedeployAppAttributes) ComputePlatform() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("compute_platform"))
+	return terra.ReferenceAsString(ca.ref.Append("compute_platform"))
 }
 
+// GithubAccountName returns a reference to field github_account_name of aws_codedeploy_app.
 func (ca codedeployAppAttributes) GithubAccountName() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("github_account_name"))
+	return terra.ReferenceAsString(ca.ref.Append("github_account_name"))
 }
 
+// Id returns a reference to field id of aws_codedeploy_app.
 func (ca codedeployAppAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("id"))
+	return terra.ReferenceAsString(ca.ref.Append("id"))
 }
 
+// LinkedToGithub returns a reference to field linked_to_github of aws_codedeploy_app.
 func (ca codedeployAppAttributes) LinkedToGithub() terra.BoolValue {
-	return terra.ReferenceBool(ca.ref.Append("linked_to_github"))
+	return terra.ReferenceAsBool(ca.ref.Append("linked_to_github"))
 }
 
+// Name returns a reference to field name of aws_codedeploy_app.
 func (ca codedeployAppAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("name"))
+	return terra.ReferenceAsString(ca.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_codedeploy_app.
 func (ca codedeployAppAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ca.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ca.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_codedeploy_app.
 func (ca codedeployAppAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ca.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ca.ref.Append("tags_all"))
 }
 
 type codedeployAppState struct {

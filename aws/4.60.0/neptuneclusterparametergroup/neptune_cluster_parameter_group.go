@@ -33,15 +33,15 @@ func (p ParameterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p ParameterAttributes) ApplyMethod() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("apply_method"))
+	return terra.ReferenceAsString(p.ref.Append("apply_method"))
 }
 
 func (p ParameterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("name"))
+	return terra.ReferenceAsString(p.ref.Append("name"))
 }
 
 func (p ParameterAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("value"))
+	return terra.ReferenceAsString(p.ref.Append("value"))
 }
 
 type ParameterState struct {

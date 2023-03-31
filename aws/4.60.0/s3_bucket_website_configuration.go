@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewS3BucketWebsiteConfiguration creates a new instance of [S3BucketWebsiteConfiguration].
 func NewS3BucketWebsiteConfiguration(name string, args S3BucketWebsiteConfigurationArgs) *S3BucketWebsiteConfiguration {
 	return &S3BucketWebsiteConfiguration{
 		Args: args,
@@ -19,28 +20,51 @@ func NewS3BucketWebsiteConfiguration(name string, args S3BucketWebsiteConfigurat
 
 var _ terra.Resource = (*S3BucketWebsiteConfiguration)(nil)
 
+// S3BucketWebsiteConfiguration represents the Terraform resource aws_s3_bucket_website_configuration.
 type S3BucketWebsiteConfiguration struct {
-	Name  string
-	Args  S3BucketWebsiteConfigurationArgs
-	state *s3BucketWebsiteConfigurationState
+	Name      string
+	Args      S3BucketWebsiteConfigurationArgs
+	state     *s3BucketWebsiteConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [S3BucketWebsiteConfiguration].
 func (sbwc *S3BucketWebsiteConfiguration) Type() string {
 	return "aws_s3_bucket_website_configuration"
 }
 
+// LocalName returns the local name for [S3BucketWebsiteConfiguration].
 func (sbwc *S3BucketWebsiteConfiguration) LocalName() string {
 	return sbwc.Name
 }
 
+// Configuration returns the configuration (args) for [S3BucketWebsiteConfiguration].
 func (sbwc *S3BucketWebsiteConfiguration) Configuration() interface{} {
 	return sbwc.Args
 }
 
+// DependOn is used for other resources to depend on [S3BucketWebsiteConfiguration].
+func (sbwc *S3BucketWebsiteConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(sbwc)
+}
+
+// Dependencies returns the list of resources [S3BucketWebsiteConfiguration] depends_on.
+func (sbwc *S3BucketWebsiteConfiguration) Dependencies() terra.Dependencies {
+	return sbwc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [S3BucketWebsiteConfiguration].
+func (sbwc *S3BucketWebsiteConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return sbwc.Lifecycle
+}
+
+// Attributes returns the attributes for [S3BucketWebsiteConfiguration].
 func (sbwc *S3BucketWebsiteConfiguration) Attributes() s3BucketWebsiteConfigurationAttributes {
 	return s3BucketWebsiteConfigurationAttributes{ref: terra.ReferenceResource(sbwc)}
 }
 
+// ImportState imports the given attribute values into [S3BucketWebsiteConfiguration]'s state.
 func (sbwc *S3BucketWebsiteConfiguration) ImportState(av io.Reader) error {
 	sbwc.state = &s3BucketWebsiteConfigurationState{}
 	if err := json.NewDecoder(av).Decode(sbwc.state); err != nil {
@@ -49,10 +73,12 @@ func (sbwc *S3BucketWebsiteConfiguration) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [S3BucketWebsiteConfiguration] has state.
 func (sbwc *S3BucketWebsiteConfiguration) State() (*s3BucketWebsiteConfigurationState, bool) {
 	return sbwc.state, sbwc.state != nil
 }
 
+// StateMust returns the state for [S3BucketWebsiteConfiguration]. Panics if the state is nil.
 func (sbwc *S3BucketWebsiteConfiguration) StateMust() *s3BucketWebsiteConfigurationState {
 	if sbwc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sbwc.Type(), sbwc.LocalName()))
@@ -60,10 +86,7 @@ func (sbwc *S3BucketWebsiteConfiguration) StateMust() *s3BucketWebsiteConfigurat
 	return sbwc.state
 }
 
-func (sbwc *S3BucketWebsiteConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(sbwc)
-}
-
+// S3BucketWebsiteConfigurationArgs contains the configurations for aws_s3_bucket_website_configuration.
 type S3BucketWebsiteConfigurationArgs struct {
 	// Bucket: string, required
 	Bucket terra.StringValue `hcl:"bucket,attr" validate:"required"`
@@ -81,51 +104,55 @@ type S3BucketWebsiteConfigurationArgs struct {
 	RedirectAllRequestsTo *s3bucketwebsiteconfiguration.RedirectAllRequestsTo `hcl:"redirect_all_requests_to,block"`
 	// RoutingRule: min=0
 	RoutingRule []s3bucketwebsiteconfiguration.RoutingRule `hcl:"routing_rule,block" validate:"min=0"`
-	// DependsOn contains resources that S3BucketWebsiteConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type s3BucketWebsiteConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// Bucket returns a reference to field bucket of aws_s3_bucket_website_configuration.
 func (sbwc s3BucketWebsiteConfigurationAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(sbwc.ref.Append("bucket"))
+	return terra.ReferenceAsString(sbwc.ref.Append("bucket"))
 }
 
+// ExpectedBucketOwner returns a reference to field expected_bucket_owner of aws_s3_bucket_website_configuration.
 func (sbwc s3BucketWebsiteConfigurationAttributes) ExpectedBucketOwner() terra.StringValue {
-	return terra.ReferenceString(sbwc.ref.Append("expected_bucket_owner"))
+	return terra.ReferenceAsString(sbwc.ref.Append("expected_bucket_owner"))
 }
 
+// Id returns a reference to field id of aws_s3_bucket_website_configuration.
 func (sbwc s3BucketWebsiteConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sbwc.ref.Append("id"))
+	return terra.ReferenceAsString(sbwc.ref.Append("id"))
 }
 
+// RoutingRules returns a reference to field routing_rules of aws_s3_bucket_website_configuration.
 func (sbwc s3BucketWebsiteConfigurationAttributes) RoutingRules() terra.StringValue {
-	return terra.ReferenceString(sbwc.ref.Append("routing_rules"))
+	return terra.ReferenceAsString(sbwc.ref.Append("routing_rules"))
 }
 
+// WebsiteDomain returns a reference to field website_domain of aws_s3_bucket_website_configuration.
 func (sbwc s3BucketWebsiteConfigurationAttributes) WebsiteDomain() terra.StringValue {
-	return terra.ReferenceString(sbwc.ref.Append("website_domain"))
+	return terra.ReferenceAsString(sbwc.ref.Append("website_domain"))
 }
 
+// WebsiteEndpoint returns a reference to field website_endpoint of aws_s3_bucket_website_configuration.
 func (sbwc s3BucketWebsiteConfigurationAttributes) WebsiteEndpoint() terra.StringValue {
-	return terra.ReferenceString(sbwc.ref.Append("website_endpoint"))
+	return terra.ReferenceAsString(sbwc.ref.Append("website_endpoint"))
 }
 
 func (sbwc s3BucketWebsiteConfigurationAttributes) ErrorDocument() terra.ListValue[s3bucketwebsiteconfiguration.ErrorDocumentAttributes] {
-	return terra.ReferenceList[s3bucketwebsiteconfiguration.ErrorDocumentAttributes](sbwc.ref.Append("error_document"))
+	return terra.ReferenceAsList[s3bucketwebsiteconfiguration.ErrorDocumentAttributes](sbwc.ref.Append("error_document"))
 }
 
 func (sbwc s3BucketWebsiteConfigurationAttributes) IndexDocument() terra.ListValue[s3bucketwebsiteconfiguration.IndexDocumentAttributes] {
-	return terra.ReferenceList[s3bucketwebsiteconfiguration.IndexDocumentAttributes](sbwc.ref.Append("index_document"))
+	return terra.ReferenceAsList[s3bucketwebsiteconfiguration.IndexDocumentAttributes](sbwc.ref.Append("index_document"))
 }
 
 func (sbwc s3BucketWebsiteConfigurationAttributes) RedirectAllRequestsTo() terra.ListValue[s3bucketwebsiteconfiguration.RedirectAllRequestsToAttributes] {
-	return terra.ReferenceList[s3bucketwebsiteconfiguration.RedirectAllRequestsToAttributes](sbwc.ref.Append("redirect_all_requests_to"))
+	return terra.ReferenceAsList[s3bucketwebsiteconfiguration.RedirectAllRequestsToAttributes](sbwc.ref.Append("redirect_all_requests_to"))
 }
 
 func (sbwc s3BucketWebsiteConfigurationAttributes) RoutingRule() terra.ListValue[s3bucketwebsiteconfiguration.RoutingRuleAttributes] {
-	return terra.ReferenceList[s3bucketwebsiteconfiguration.RoutingRuleAttributes](sbwc.ref.Append("routing_rule"))
+	return terra.ReferenceAsList[s3bucketwebsiteconfiguration.RoutingRuleAttributes](sbwc.ref.Append("routing_rule"))
 }
 
 type s3BucketWebsiteConfigurationState struct {

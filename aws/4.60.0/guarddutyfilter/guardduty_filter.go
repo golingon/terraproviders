@@ -46,7 +46,7 @@ func (fc FindingCriteriaAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fc FindingCriteriaAttributes) Criterion() terra.SetValue[CriterionAttributes] {
-	return terra.ReferenceSet[CriterionAttributes](fc.ref.Append("criterion"))
+	return terra.ReferenceAsSet[CriterionAttributes](fc.ref.Append("criterion"))
 }
 
 type CriterionAttributes struct {
@@ -66,31 +66,31 @@ func (c CriterionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c CriterionAttributes) Equals() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](c.ref.Append("equals"))
+	return terra.ReferenceAsList[terra.StringValue](c.ref.Append("equals"))
 }
 
 func (c CriterionAttributes) Field() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("field"))
+	return terra.ReferenceAsString(c.ref.Append("field"))
 }
 
 func (c CriterionAttributes) GreaterThan() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("greater_than"))
+	return terra.ReferenceAsString(c.ref.Append("greater_than"))
 }
 
 func (c CriterionAttributes) GreaterThanOrEqual() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("greater_than_or_equal"))
+	return terra.ReferenceAsString(c.ref.Append("greater_than_or_equal"))
 }
 
 func (c CriterionAttributes) LessThan() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("less_than"))
+	return terra.ReferenceAsString(c.ref.Append("less_than"))
 }
 
 func (c CriterionAttributes) LessThanOrEqual() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("less_than_or_equal"))
+	return terra.ReferenceAsString(c.ref.Append("less_than_or_equal"))
 }
 
 func (c CriterionAttributes) NotEquals() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](c.ref.Append("not_equals"))
+	return terra.ReferenceAsList[terra.StringValue](c.ref.Append("not_equals"))
 }
 
 type FindingCriteriaState struct {

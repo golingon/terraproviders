@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSwfDomain creates a new instance of [SwfDomain].
 func NewSwfDomain(name string, args SwfDomainArgs) *SwfDomain {
 	return &SwfDomain{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSwfDomain(name string, args SwfDomainArgs) *SwfDomain {
 
 var _ terra.Resource = (*SwfDomain)(nil)
 
+// SwfDomain represents the Terraform resource aws_swf_domain.
 type SwfDomain struct {
-	Name  string
-	Args  SwfDomainArgs
-	state *swfDomainState
+	Name      string
+	Args      SwfDomainArgs
+	state     *swfDomainState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SwfDomain].
 func (sd *SwfDomain) Type() string {
 	return "aws_swf_domain"
 }
 
+// LocalName returns the local name for [SwfDomain].
 func (sd *SwfDomain) LocalName() string {
 	return sd.Name
 }
 
+// Configuration returns the configuration (args) for [SwfDomain].
 func (sd *SwfDomain) Configuration() interface{} {
 	return sd.Args
 }
 
+// DependOn is used for other resources to depend on [SwfDomain].
+func (sd *SwfDomain) DependOn() terra.Reference {
+	return terra.ReferenceResource(sd)
+}
+
+// Dependencies returns the list of resources [SwfDomain] depends_on.
+func (sd *SwfDomain) Dependencies() terra.Dependencies {
+	return sd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SwfDomain].
+func (sd *SwfDomain) LifecycleManagement() *terra.Lifecycle {
+	return sd.Lifecycle
+}
+
+// Attributes returns the attributes for [SwfDomain].
 func (sd *SwfDomain) Attributes() swfDomainAttributes {
 	return swfDomainAttributes{ref: terra.ReferenceResource(sd)}
 }
 
+// ImportState imports the given attribute values into [SwfDomain]'s state.
 func (sd *SwfDomain) ImportState(av io.Reader) error {
 	sd.state = &swfDomainState{}
 	if err := json.NewDecoder(av).Decode(sd.state); err != nil {
@@ -48,10 +72,12 @@ func (sd *SwfDomain) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SwfDomain] has state.
 func (sd *SwfDomain) State() (*swfDomainState, bool) {
 	return sd.state, sd.state != nil
 }
 
+// StateMust returns the state for [SwfDomain]. Panics if the state is nil.
 func (sd *SwfDomain) StateMust() *swfDomainState {
 	if sd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sd.Type(), sd.LocalName()))
@@ -59,10 +85,7 @@ func (sd *SwfDomain) StateMust() *swfDomainState {
 	return sd.state
 }
 
-func (sd *SwfDomain) DependOn() terra.Reference {
-	return terra.ReferenceResource(sd)
-}
-
+// SwfDomainArgs contains the configurations for aws_swf_domain.
 type SwfDomainArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -78,43 +101,49 @@ type SwfDomainArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// WorkflowExecutionRetentionPeriodInDays: string, required
 	WorkflowExecutionRetentionPeriodInDays terra.StringValue `hcl:"workflow_execution_retention_period_in_days,attr" validate:"required"`
-	// DependsOn contains resources that SwfDomain depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type swfDomainAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_swf_domain.
 func (sd swfDomainAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("arn"))
+	return terra.ReferenceAsString(sd.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_swf_domain.
 func (sd swfDomainAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("description"))
+	return terra.ReferenceAsString(sd.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_swf_domain.
 func (sd swfDomainAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("id"))
+	return terra.ReferenceAsString(sd.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_swf_domain.
 func (sd swfDomainAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("name"))
+	return terra.ReferenceAsString(sd.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_swf_domain.
 func (sd swfDomainAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(sd.ref.Append("name_prefix"))
 }
 
+// Tags returns a reference to field tags of aws_swf_domain.
 func (sd swfDomainAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sd.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sd.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_swf_domain.
 func (sd swfDomainAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sd.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sd.ref.Append("tags_all"))
 }
 
+// WorkflowExecutionRetentionPeriodInDays returns a reference to field workflow_execution_retention_period_in_days of aws_swf_domain.
 func (sd swfDomainAttributes) WorkflowExecutionRetentionPeriodInDays() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("workflow_execution_retention_period_in_days"))
+	return terra.ReferenceAsString(sd.ref.Append("workflow_execution_retention_period_in_days"))
 }
 
 type swfDomainState struct {

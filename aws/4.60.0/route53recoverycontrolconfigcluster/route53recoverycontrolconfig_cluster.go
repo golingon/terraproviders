@@ -26,11 +26,11 @@ func (ce ClusterEndpointsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ce ClusterEndpointsAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(ce.ref.Append("endpoint"))
+	return terra.ReferenceAsString(ce.ref.Append("endpoint"))
 }
 
 func (ce ClusterEndpointsAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(ce.ref.Append("region"))
+	return terra.ReferenceAsString(ce.ref.Append("region"))
 }
 
 type ClusterEndpointsState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewImagebuilderDistributionConfiguration creates a new instance of [ImagebuilderDistributionConfiguration].
 func NewImagebuilderDistributionConfiguration(name string, args ImagebuilderDistributionConfigurationArgs) *ImagebuilderDistributionConfiguration {
 	return &ImagebuilderDistributionConfiguration{
 		Args: args,
@@ -19,28 +20,51 @@ func NewImagebuilderDistributionConfiguration(name string, args ImagebuilderDist
 
 var _ terra.Resource = (*ImagebuilderDistributionConfiguration)(nil)
 
+// ImagebuilderDistributionConfiguration represents the Terraform resource aws_imagebuilder_distribution_configuration.
 type ImagebuilderDistributionConfiguration struct {
-	Name  string
-	Args  ImagebuilderDistributionConfigurationArgs
-	state *imagebuilderDistributionConfigurationState
+	Name      string
+	Args      ImagebuilderDistributionConfigurationArgs
+	state     *imagebuilderDistributionConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ImagebuilderDistributionConfiguration].
 func (idc *ImagebuilderDistributionConfiguration) Type() string {
 	return "aws_imagebuilder_distribution_configuration"
 }
 
+// LocalName returns the local name for [ImagebuilderDistributionConfiguration].
 func (idc *ImagebuilderDistributionConfiguration) LocalName() string {
 	return idc.Name
 }
 
+// Configuration returns the configuration (args) for [ImagebuilderDistributionConfiguration].
 func (idc *ImagebuilderDistributionConfiguration) Configuration() interface{} {
 	return idc.Args
 }
 
+// DependOn is used for other resources to depend on [ImagebuilderDistributionConfiguration].
+func (idc *ImagebuilderDistributionConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(idc)
+}
+
+// Dependencies returns the list of resources [ImagebuilderDistributionConfiguration] depends_on.
+func (idc *ImagebuilderDistributionConfiguration) Dependencies() terra.Dependencies {
+	return idc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ImagebuilderDistributionConfiguration].
+func (idc *ImagebuilderDistributionConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return idc.Lifecycle
+}
+
+// Attributes returns the attributes for [ImagebuilderDistributionConfiguration].
 func (idc *ImagebuilderDistributionConfiguration) Attributes() imagebuilderDistributionConfigurationAttributes {
 	return imagebuilderDistributionConfigurationAttributes{ref: terra.ReferenceResource(idc)}
 }
 
+// ImportState imports the given attribute values into [ImagebuilderDistributionConfiguration]'s state.
 func (idc *ImagebuilderDistributionConfiguration) ImportState(av io.Reader) error {
 	idc.state = &imagebuilderDistributionConfigurationState{}
 	if err := json.NewDecoder(av).Decode(idc.state); err != nil {
@@ -49,10 +73,12 @@ func (idc *ImagebuilderDistributionConfiguration) ImportState(av io.Reader) erro
 	return nil
 }
 
+// State returns the state and a bool indicating if [ImagebuilderDistributionConfiguration] has state.
 func (idc *ImagebuilderDistributionConfiguration) State() (*imagebuilderDistributionConfigurationState, bool) {
 	return idc.state, idc.state != nil
 }
 
+// StateMust returns the state for [ImagebuilderDistributionConfiguration]. Panics if the state is nil.
 func (idc *ImagebuilderDistributionConfiguration) StateMust() *imagebuilderDistributionConfigurationState {
 	if idc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", idc.Type(), idc.LocalName()))
@@ -60,10 +86,7 @@ func (idc *ImagebuilderDistributionConfiguration) StateMust() *imagebuilderDistr
 	return idc.state
 }
 
-func (idc *ImagebuilderDistributionConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(idc)
-}
-
+// ImagebuilderDistributionConfigurationArgs contains the configurations for aws_imagebuilder_distribution_configuration.
 type ImagebuilderDistributionConfigurationArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -77,47 +100,53 @@ type ImagebuilderDistributionConfigurationArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Distribution: min=1
 	Distribution []imagebuilderdistributionconfiguration.Distribution `hcl:"distribution,block" validate:"min=1"`
-	// DependsOn contains resources that ImagebuilderDistributionConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type imagebuilderDistributionConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_imagebuilder_distribution_configuration.
 func (idc imagebuilderDistributionConfigurationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("arn"))
+	return terra.ReferenceAsString(idc.ref.Append("arn"))
 }
 
+// DateCreated returns a reference to field date_created of aws_imagebuilder_distribution_configuration.
 func (idc imagebuilderDistributionConfigurationAttributes) DateCreated() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("date_created"))
+	return terra.ReferenceAsString(idc.ref.Append("date_created"))
 }
 
+// DateUpdated returns a reference to field date_updated of aws_imagebuilder_distribution_configuration.
 func (idc imagebuilderDistributionConfigurationAttributes) DateUpdated() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("date_updated"))
+	return terra.ReferenceAsString(idc.ref.Append("date_updated"))
 }
 
+// Description returns a reference to field description of aws_imagebuilder_distribution_configuration.
 func (idc imagebuilderDistributionConfigurationAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("description"))
+	return terra.ReferenceAsString(idc.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_imagebuilder_distribution_configuration.
 func (idc imagebuilderDistributionConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("id"))
+	return terra.ReferenceAsString(idc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_imagebuilder_distribution_configuration.
 func (idc imagebuilderDistributionConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("name"))
+	return terra.ReferenceAsString(idc.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_imagebuilder_distribution_configuration.
 func (idc imagebuilderDistributionConfigurationAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](idc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](idc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_imagebuilder_distribution_configuration.
 func (idc imagebuilderDistributionConfigurationAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](idc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](idc.ref.Append("tags_all"))
 }
 
 func (idc imagebuilderDistributionConfigurationAttributes) Distribution() terra.SetValue[imagebuilderdistributionconfiguration.DistributionAttributes] {
-	return terra.ReferenceSet[imagebuilderdistributionconfiguration.DistributionAttributes](idc.ref.Append("distribution"))
+	return terra.ReferenceAsSet[imagebuilderdistributionconfiguration.DistributionAttributes](idc.ref.Append("distribution"))
 }
 
 type imagebuilderDistributionConfigurationState struct {

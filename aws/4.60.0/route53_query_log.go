@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRoute53QueryLog creates a new instance of [Route53QueryLog].
 func NewRoute53QueryLog(name string, args Route53QueryLogArgs) *Route53QueryLog {
 	return &Route53QueryLog{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRoute53QueryLog(name string, args Route53QueryLogArgs) *Route53QueryLog 
 
 var _ terra.Resource = (*Route53QueryLog)(nil)
 
+// Route53QueryLog represents the Terraform resource aws_route53_query_log.
 type Route53QueryLog struct {
-	Name  string
-	Args  Route53QueryLogArgs
-	state *route53QueryLogState
+	Name      string
+	Args      Route53QueryLogArgs
+	state     *route53QueryLogState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Route53QueryLog].
 func (rql *Route53QueryLog) Type() string {
 	return "aws_route53_query_log"
 }
 
+// LocalName returns the local name for [Route53QueryLog].
 func (rql *Route53QueryLog) LocalName() string {
 	return rql.Name
 }
 
+// Configuration returns the configuration (args) for [Route53QueryLog].
 func (rql *Route53QueryLog) Configuration() interface{} {
 	return rql.Args
 }
 
+// DependOn is used for other resources to depend on [Route53QueryLog].
+func (rql *Route53QueryLog) DependOn() terra.Reference {
+	return terra.ReferenceResource(rql)
+}
+
+// Dependencies returns the list of resources [Route53QueryLog] depends_on.
+func (rql *Route53QueryLog) Dependencies() terra.Dependencies {
+	return rql.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Route53QueryLog].
+func (rql *Route53QueryLog) LifecycleManagement() *terra.Lifecycle {
+	return rql.Lifecycle
+}
+
+// Attributes returns the attributes for [Route53QueryLog].
 func (rql *Route53QueryLog) Attributes() route53QueryLogAttributes {
 	return route53QueryLogAttributes{ref: terra.ReferenceResource(rql)}
 }
 
+// ImportState imports the given attribute values into [Route53QueryLog]'s state.
 func (rql *Route53QueryLog) ImportState(av io.Reader) error {
 	rql.state = &route53QueryLogState{}
 	if err := json.NewDecoder(av).Decode(rql.state); err != nil {
@@ -48,10 +72,12 @@ func (rql *Route53QueryLog) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Route53QueryLog] has state.
 func (rql *Route53QueryLog) State() (*route53QueryLogState, bool) {
 	return rql.state, rql.state != nil
 }
 
+// StateMust returns the state for [Route53QueryLog]. Panics if the state is nil.
 func (rql *Route53QueryLog) StateMust() *route53QueryLogState {
 	if rql.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rql.Type(), rql.LocalName()))
@@ -59,10 +85,7 @@ func (rql *Route53QueryLog) StateMust() *route53QueryLogState {
 	return rql.state
 }
 
-func (rql *Route53QueryLog) DependOn() terra.Reference {
-	return terra.ReferenceResource(rql)
-}
-
+// Route53QueryLogArgs contains the configurations for aws_route53_query_log.
 type Route53QueryLogArgs struct {
 	// CloudwatchLogGroupArn: string, required
 	CloudwatchLogGroupArn terra.StringValue `hcl:"cloudwatch_log_group_arn,attr" validate:"required"`
@@ -70,27 +93,29 @@ type Route53QueryLogArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// ZoneId: string, required
 	ZoneId terra.StringValue `hcl:"zone_id,attr" validate:"required"`
-	// DependsOn contains resources that Route53QueryLog depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type route53QueryLogAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_route53_query_log.
 func (rql route53QueryLogAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rql.ref.Append("arn"))
+	return terra.ReferenceAsString(rql.ref.Append("arn"))
 }
 
+// CloudwatchLogGroupArn returns a reference to field cloudwatch_log_group_arn of aws_route53_query_log.
 func (rql route53QueryLogAttributes) CloudwatchLogGroupArn() terra.StringValue {
-	return terra.ReferenceString(rql.ref.Append("cloudwatch_log_group_arn"))
+	return terra.ReferenceAsString(rql.ref.Append("cloudwatch_log_group_arn"))
 }
 
+// Id returns a reference to field id of aws_route53_query_log.
 func (rql route53QueryLogAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rql.ref.Append("id"))
+	return terra.ReferenceAsString(rql.ref.Append("id"))
 }
 
+// ZoneId returns a reference to field zone_id of aws_route53_query_log.
 func (rql route53QueryLogAttributes) ZoneId() terra.StringValue {
-	return terra.ReferenceString(rql.ref.Append("zone_id"))
+	return terra.ReferenceAsString(rql.ref.Append("zone_id"))
 }
 
 type route53QueryLogState struct {

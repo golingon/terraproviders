@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewXrayGroup creates a new instance of [XrayGroup].
 func NewXrayGroup(name string, args XrayGroupArgs) *XrayGroup {
 	return &XrayGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewXrayGroup(name string, args XrayGroupArgs) *XrayGroup {
 
 var _ terra.Resource = (*XrayGroup)(nil)
 
+// XrayGroup represents the Terraform resource aws_xray_group.
 type XrayGroup struct {
-	Name  string
-	Args  XrayGroupArgs
-	state *xrayGroupState
+	Name      string
+	Args      XrayGroupArgs
+	state     *xrayGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [XrayGroup].
 func (xg *XrayGroup) Type() string {
 	return "aws_xray_group"
 }
 
+// LocalName returns the local name for [XrayGroup].
 func (xg *XrayGroup) LocalName() string {
 	return xg.Name
 }
 
+// Configuration returns the configuration (args) for [XrayGroup].
 func (xg *XrayGroup) Configuration() interface{} {
 	return xg.Args
 }
 
+// DependOn is used for other resources to depend on [XrayGroup].
+func (xg *XrayGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(xg)
+}
+
+// Dependencies returns the list of resources [XrayGroup] depends_on.
+func (xg *XrayGroup) Dependencies() terra.Dependencies {
+	return xg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [XrayGroup].
+func (xg *XrayGroup) LifecycleManagement() *terra.Lifecycle {
+	return xg.Lifecycle
+}
+
+// Attributes returns the attributes for [XrayGroup].
 func (xg *XrayGroup) Attributes() xrayGroupAttributes {
 	return xrayGroupAttributes{ref: terra.ReferenceResource(xg)}
 }
 
+// ImportState imports the given attribute values into [XrayGroup]'s state.
 func (xg *XrayGroup) ImportState(av io.Reader) error {
 	xg.state = &xrayGroupState{}
 	if err := json.NewDecoder(av).Decode(xg.state); err != nil {
@@ -49,10 +73,12 @@ func (xg *XrayGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [XrayGroup] has state.
 func (xg *XrayGroup) State() (*xrayGroupState, bool) {
 	return xg.state, xg.state != nil
 }
 
+// StateMust returns the state for [XrayGroup]. Panics if the state is nil.
 func (xg *XrayGroup) StateMust() *xrayGroupState {
 	if xg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", xg.Type(), xg.LocalName()))
@@ -60,10 +86,7 @@ func (xg *XrayGroup) StateMust() *xrayGroupState {
 	return xg.state
 }
 
-func (xg *XrayGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(xg)
-}
-
+// XrayGroupArgs contains the configurations for aws_xray_group.
 type XrayGroupArgs struct {
 	// FilterExpression: string, required
 	FilterExpression terra.StringValue `hcl:"filter_expression,attr" validate:"required"`
@@ -77,39 +100,43 @@ type XrayGroupArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// InsightsConfiguration: optional
 	InsightsConfiguration *xraygroup.InsightsConfiguration `hcl:"insights_configuration,block"`
-	// DependsOn contains resources that XrayGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type xrayGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_xray_group.
 func (xg xrayGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(xg.ref.Append("arn"))
+	return terra.ReferenceAsString(xg.ref.Append("arn"))
 }
 
+// FilterExpression returns a reference to field filter_expression of aws_xray_group.
 func (xg xrayGroupAttributes) FilterExpression() terra.StringValue {
-	return terra.ReferenceString(xg.ref.Append("filter_expression"))
+	return terra.ReferenceAsString(xg.ref.Append("filter_expression"))
 }
 
+// GroupName returns a reference to field group_name of aws_xray_group.
 func (xg xrayGroupAttributes) GroupName() terra.StringValue {
-	return terra.ReferenceString(xg.ref.Append("group_name"))
+	return terra.ReferenceAsString(xg.ref.Append("group_name"))
 }
 
+// Id returns a reference to field id of aws_xray_group.
 func (xg xrayGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(xg.ref.Append("id"))
+	return terra.ReferenceAsString(xg.ref.Append("id"))
 }
 
+// Tags returns a reference to field tags of aws_xray_group.
 func (xg xrayGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](xg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](xg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_xray_group.
 func (xg xrayGroupAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](xg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](xg.ref.Append("tags_all"))
 }
 
 func (xg xrayGroupAttributes) InsightsConfiguration() terra.ListValue[xraygroup.InsightsConfigurationAttributes] {
-	return terra.ReferenceList[xraygroup.InsightsConfigurationAttributes](xg.ref.Append("insights_configuration"))
+	return terra.ReferenceAsList[xraygroup.InsightsConfigurationAttributes](xg.ref.Append("insights_configuration"))
 }
 
 type xrayGroupState struct {

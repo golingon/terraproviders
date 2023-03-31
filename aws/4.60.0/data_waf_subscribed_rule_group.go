@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataWafSubscribedRuleGroup creates a new instance of [DataWafSubscribedRuleGroup].
 func NewDataWafSubscribedRuleGroup(name string, args DataWafSubscribedRuleGroupArgs) *DataWafSubscribedRuleGroup {
 	return &DataWafSubscribedRuleGroup{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataWafSubscribedRuleGroup(name string, args DataWafSubscribedRuleGroupA
 
 var _ terra.DataResource = (*DataWafSubscribedRuleGroup)(nil)
 
+// DataWafSubscribedRuleGroup represents the Terraform data resource aws_waf_subscribed_rule_group.
 type DataWafSubscribedRuleGroup struct {
 	Name string
 	Args DataWafSubscribedRuleGroupArgs
 }
 
+// DataSource returns the Terraform object type for [DataWafSubscribedRuleGroup].
 func (wsrg *DataWafSubscribedRuleGroup) DataSource() string {
 	return "aws_waf_subscribed_rule_group"
 }
 
+// LocalName returns the local name for [DataWafSubscribedRuleGroup].
 func (wsrg *DataWafSubscribedRuleGroup) LocalName() string {
 	return wsrg.Name
 }
 
+// Configuration returns the configuration (args) for [DataWafSubscribedRuleGroup].
 func (wsrg *DataWafSubscribedRuleGroup) Configuration() interface{} {
 	return wsrg.Args
 }
 
+// Attributes returns the attributes for [DataWafSubscribedRuleGroup].
 func (wsrg *DataWafSubscribedRuleGroup) Attributes() dataWafSubscribedRuleGroupAttributes {
 	return dataWafSubscribedRuleGroupAttributes{ref: terra.ReferenceDataResource(wsrg)}
 }
 
+// DataWafSubscribedRuleGroupArgs contains the configurations for aws_waf_subscribed_rule_group.
 type DataWafSubscribedRuleGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -46,14 +53,17 @@ type dataWafSubscribedRuleGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_waf_subscribed_rule_group.
 func (wsrg dataWafSubscribedRuleGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(wsrg.ref.Append("id"))
+	return terra.ReferenceAsString(wsrg.ref.Append("id"))
 }
 
+// MetricName returns a reference to field metric_name of aws_waf_subscribed_rule_group.
 func (wsrg dataWafSubscribedRuleGroupAttributes) MetricName() terra.StringValue {
-	return terra.ReferenceString(wsrg.ref.Append("metric_name"))
+	return terra.ReferenceAsString(wsrg.ref.Append("metric_name"))
 }
 
+// Name returns a reference to field name of aws_waf_subscribed_rule_group.
 func (wsrg dataWafSubscribedRuleGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(wsrg.ref.Append("name"))
+	return terra.ReferenceAsString(wsrg.ref.Append("name"))
 }

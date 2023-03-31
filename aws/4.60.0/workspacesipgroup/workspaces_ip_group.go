@@ -31,11 +31,11 @@ func (r RulesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RulesAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("description"))
+	return terra.ReferenceAsString(r.ref.Append("description"))
 }
 
 func (r RulesAttributes) Source() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("source"))
+	return terra.ReferenceAsString(r.ref.Append("source"))
 }
 
 type RulesState struct {

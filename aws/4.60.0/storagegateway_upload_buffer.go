@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewStoragegatewayUploadBuffer creates a new instance of [StoragegatewayUploadBuffer].
 func NewStoragegatewayUploadBuffer(name string, args StoragegatewayUploadBufferArgs) *StoragegatewayUploadBuffer {
 	return &StoragegatewayUploadBuffer{
 		Args: args,
@@ -18,28 +19,51 @@ func NewStoragegatewayUploadBuffer(name string, args StoragegatewayUploadBufferA
 
 var _ terra.Resource = (*StoragegatewayUploadBuffer)(nil)
 
+// StoragegatewayUploadBuffer represents the Terraform resource aws_storagegateway_upload_buffer.
 type StoragegatewayUploadBuffer struct {
-	Name  string
-	Args  StoragegatewayUploadBufferArgs
-	state *storagegatewayUploadBufferState
+	Name      string
+	Args      StoragegatewayUploadBufferArgs
+	state     *storagegatewayUploadBufferState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StoragegatewayUploadBuffer].
 func (sub *StoragegatewayUploadBuffer) Type() string {
 	return "aws_storagegateway_upload_buffer"
 }
 
+// LocalName returns the local name for [StoragegatewayUploadBuffer].
 func (sub *StoragegatewayUploadBuffer) LocalName() string {
 	return sub.Name
 }
 
+// Configuration returns the configuration (args) for [StoragegatewayUploadBuffer].
 func (sub *StoragegatewayUploadBuffer) Configuration() interface{} {
 	return sub.Args
 }
 
+// DependOn is used for other resources to depend on [StoragegatewayUploadBuffer].
+func (sub *StoragegatewayUploadBuffer) DependOn() terra.Reference {
+	return terra.ReferenceResource(sub)
+}
+
+// Dependencies returns the list of resources [StoragegatewayUploadBuffer] depends_on.
+func (sub *StoragegatewayUploadBuffer) Dependencies() terra.Dependencies {
+	return sub.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StoragegatewayUploadBuffer].
+func (sub *StoragegatewayUploadBuffer) LifecycleManagement() *terra.Lifecycle {
+	return sub.Lifecycle
+}
+
+// Attributes returns the attributes for [StoragegatewayUploadBuffer].
 func (sub *StoragegatewayUploadBuffer) Attributes() storagegatewayUploadBufferAttributes {
 	return storagegatewayUploadBufferAttributes{ref: terra.ReferenceResource(sub)}
 }
 
+// ImportState imports the given attribute values into [StoragegatewayUploadBuffer]'s state.
 func (sub *StoragegatewayUploadBuffer) ImportState(av io.Reader) error {
 	sub.state = &storagegatewayUploadBufferState{}
 	if err := json.NewDecoder(av).Decode(sub.state); err != nil {
@@ -48,10 +72,12 @@ func (sub *StoragegatewayUploadBuffer) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [StoragegatewayUploadBuffer] has state.
 func (sub *StoragegatewayUploadBuffer) State() (*storagegatewayUploadBufferState, bool) {
 	return sub.state, sub.state != nil
 }
 
+// StateMust returns the state for [StoragegatewayUploadBuffer]. Panics if the state is nil.
 func (sub *StoragegatewayUploadBuffer) StateMust() *storagegatewayUploadBufferState {
 	if sub.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sub.Type(), sub.LocalName()))
@@ -59,10 +85,7 @@ func (sub *StoragegatewayUploadBuffer) StateMust() *storagegatewayUploadBufferSt
 	return sub.state
 }
 
-func (sub *StoragegatewayUploadBuffer) DependOn() terra.Reference {
-	return terra.ReferenceResource(sub)
-}
-
+// StoragegatewayUploadBufferArgs contains the configurations for aws_storagegateway_upload_buffer.
 type StoragegatewayUploadBufferArgs struct {
 	// DiskId: string, optional
 	DiskId terra.StringValue `hcl:"disk_id,attr"`
@@ -72,27 +95,29 @@ type StoragegatewayUploadBufferArgs struct {
 	GatewayArn terra.StringValue `hcl:"gateway_arn,attr" validate:"required"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that StoragegatewayUploadBuffer depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type storagegatewayUploadBufferAttributes struct {
 	ref terra.Reference
 }
 
+// DiskId returns a reference to field disk_id of aws_storagegateway_upload_buffer.
 func (sub storagegatewayUploadBufferAttributes) DiskId() terra.StringValue {
-	return terra.ReferenceString(sub.ref.Append("disk_id"))
+	return terra.ReferenceAsString(sub.ref.Append("disk_id"))
 }
 
+// DiskPath returns a reference to field disk_path of aws_storagegateway_upload_buffer.
 func (sub storagegatewayUploadBufferAttributes) DiskPath() terra.StringValue {
-	return terra.ReferenceString(sub.ref.Append("disk_path"))
+	return terra.ReferenceAsString(sub.ref.Append("disk_path"))
 }
 
+// GatewayArn returns a reference to field gateway_arn of aws_storagegateway_upload_buffer.
 func (sub storagegatewayUploadBufferAttributes) GatewayArn() terra.StringValue {
-	return terra.ReferenceString(sub.ref.Append("gateway_arn"))
+	return terra.ReferenceAsString(sub.ref.Append("gateway_arn"))
 }
 
+// Id returns a reference to field id of aws_storagegateway_upload_buffer.
 func (sub storagegatewayUploadBufferAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sub.ref.Append("id"))
+	return terra.ReferenceAsString(sub.ref.Append("id"))
 }
 
 type storagegatewayUploadBufferState struct {

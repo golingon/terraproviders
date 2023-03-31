@@ -71,7 +71,7 @@ func (da DefaultActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (da DefaultActionAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("type"))
+	return terra.ReferenceAsString(da.ref.Append("type"))
 }
 
 type LoggingConfigurationAttributes struct {
@@ -91,11 +91,11 @@ func (lc LoggingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lc LoggingConfigurationAttributes) LogDestination() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("log_destination"))
+	return terra.ReferenceAsString(lc.ref.Append("log_destination"))
 }
 
 func (lc LoggingConfigurationAttributes) RedactedFields() terra.ListValue[RedactedFieldsAttributes] {
-	return terra.ReferenceList[RedactedFieldsAttributes](lc.ref.Append("redacted_fields"))
+	return terra.ReferenceAsList[RedactedFieldsAttributes](lc.ref.Append("redacted_fields"))
 }
 
 type RedactedFieldsAttributes struct {
@@ -115,7 +115,7 @@ func (rf RedactedFieldsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rf RedactedFieldsAttributes) FieldToMatch() terra.SetValue[FieldToMatchAttributes] {
-	return terra.ReferenceSet[FieldToMatchAttributes](rf.ref.Append("field_to_match"))
+	return terra.ReferenceAsSet[FieldToMatchAttributes](rf.ref.Append("field_to_match"))
 }
 
 type FieldToMatchAttributes struct {
@@ -135,11 +135,11 @@ func (ftm FieldToMatchAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ftm FieldToMatchAttributes) Data() terra.StringValue {
-	return terra.ReferenceString(ftm.ref.Append("data"))
+	return terra.ReferenceAsString(ftm.ref.Append("data"))
 }
 
 func (ftm FieldToMatchAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ftm.ref.Append("type"))
+	return terra.ReferenceAsString(ftm.ref.Append("type"))
 }
 
 type RulesAttributes struct {
@@ -159,23 +159,23 @@ func (r RulesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RulesAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("priority"))
+	return terra.ReferenceAsNumber(r.ref.Append("priority"))
 }
 
 func (r RulesAttributes) RuleId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("rule_id"))
+	return terra.ReferenceAsString(r.ref.Append("rule_id"))
 }
 
 func (r RulesAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("type"))
+	return terra.ReferenceAsString(r.ref.Append("type"))
 }
 
 func (r RulesAttributes) Action() terra.ListValue[ActionAttributes] {
-	return terra.ReferenceList[ActionAttributes](r.ref.Append("action"))
+	return terra.ReferenceAsList[ActionAttributes](r.ref.Append("action"))
 }
 
 func (r RulesAttributes) OverrideAction() terra.ListValue[OverrideActionAttributes] {
-	return terra.ReferenceList[OverrideActionAttributes](r.ref.Append("override_action"))
+	return terra.ReferenceAsList[OverrideActionAttributes](r.ref.Append("override_action"))
 }
 
 type ActionAttributes struct {
@@ -195,7 +195,7 @@ func (a ActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a ActionAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("type"))
+	return terra.ReferenceAsString(a.ref.Append("type"))
 }
 
 type OverrideActionAttributes struct {
@@ -215,7 +215,7 @@ func (oa OverrideActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (oa OverrideActionAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("type"))
+	return terra.ReferenceAsString(oa.ref.Append("type"))
 }
 
 type DefaultActionState struct {

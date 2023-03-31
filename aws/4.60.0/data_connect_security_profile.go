@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataConnectSecurityProfile creates a new instance of [DataConnectSecurityProfile].
 func NewDataConnectSecurityProfile(name string, args DataConnectSecurityProfileArgs) *DataConnectSecurityProfile {
 	return &DataConnectSecurityProfile{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataConnectSecurityProfile(name string, args DataConnectSecurityProfileA
 
 var _ terra.DataResource = (*DataConnectSecurityProfile)(nil)
 
+// DataConnectSecurityProfile represents the Terraform data resource aws_connect_security_profile.
 type DataConnectSecurityProfile struct {
 	Name string
 	Args DataConnectSecurityProfileArgs
 }
 
+// DataSource returns the Terraform object type for [DataConnectSecurityProfile].
 func (csp *DataConnectSecurityProfile) DataSource() string {
 	return "aws_connect_security_profile"
 }
 
+// LocalName returns the local name for [DataConnectSecurityProfile].
 func (csp *DataConnectSecurityProfile) LocalName() string {
 	return csp.Name
 }
 
+// Configuration returns the configuration (args) for [DataConnectSecurityProfile].
 func (csp *DataConnectSecurityProfile) Configuration() interface{} {
 	return csp.Args
 }
 
+// Attributes returns the attributes for [DataConnectSecurityProfile].
 func (csp *DataConnectSecurityProfile) Attributes() dataConnectSecurityProfileAttributes {
 	return dataConnectSecurityProfileAttributes{ref: terra.ReferenceDataResource(csp)}
 }
 
+// DataConnectSecurityProfileArgs contains the configurations for aws_connect_security_profile.
 type DataConnectSecurityProfileArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -50,38 +57,47 @@ type dataConnectSecurityProfileAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_connect_security_profile.
 func (csp dataConnectSecurityProfileAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("arn"))
+	return terra.ReferenceAsString(csp.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_connect_security_profile.
 func (csp dataConnectSecurityProfileAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("description"))
+	return terra.ReferenceAsString(csp.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_connect_security_profile.
 func (csp dataConnectSecurityProfileAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("id"))
+	return terra.ReferenceAsString(csp.ref.Append("id"))
 }
 
+// InstanceId returns a reference to field instance_id of aws_connect_security_profile.
 func (csp dataConnectSecurityProfileAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("instance_id"))
+	return terra.ReferenceAsString(csp.ref.Append("instance_id"))
 }
 
+// Name returns a reference to field name of aws_connect_security_profile.
 func (csp dataConnectSecurityProfileAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("name"))
+	return terra.ReferenceAsString(csp.ref.Append("name"))
 }
 
+// OrganizationResourceId returns a reference to field organization_resource_id of aws_connect_security_profile.
 func (csp dataConnectSecurityProfileAttributes) OrganizationResourceId() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("organization_resource_id"))
+	return terra.ReferenceAsString(csp.ref.Append("organization_resource_id"))
 }
 
+// Permissions returns a reference to field permissions of aws_connect_security_profile.
 func (csp dataConnectSecurityProfileAttributes) Permissions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](csp.ref.Append("permissions"))
+	return terra.ReferenceAsSet[terra.StringValue](csp.ref.Append("permissions"))
 }
 
+// SecurityProfileId returns a reference to field security_profile_id of aws_connect_security_profile.
 func (csp dataConnectSecurityProfileAttributes) SecurityProfileId() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("security_profile_id"))
+	return terra.ReferenceAsString(csp.ref.Append("security_profile_id"))
 }
 
+// Tags returns a reference to field tags of aws_connect_security_profile.
 func (csp dataConnectSecurityProfileAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](csp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](csp.ref.Append("tags"))
 }

@@ -50,7 +50,7 @@ func (rc ReplicationConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rc ReplicationConfigurationAttributes) Rule() terra.ListValue[RuleAttributes] {
-	return terra.ReferenceList[RuleAttributes](rc.ref.Append("rule"))
+	return terra.ReferenceAsList[RuleAttributes](rc.ref.Append("rule"))
 }
 
 type RuleAttributes struct {
@@ -70,11 +70,11 @@ func (r RuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RuleAttributes) Destination() terra.ListValue[DestinationAttributes] {
-	return terra.ReferenceList[DestinationAttributes](r.ref.Append("destination"))
+	return terra.ReferenceAsList[DestinationAttributes](r.ref.Append("destination"))
 }
 
 func (r RuleAttributes) RepositoryFilter() terra.ListValue[RepositoryFilterAttributes] {
-	return terra.ReferenceList[RepositoryFilterAttributes](r.ref.Append("repository_filter"))
+	return terra.ReferenceAsList[RepositoryFilterAttributes](r.ref.Append("repository_filter"))
 }
 
 type DestinationAttributes struct {
@@ -94,11 +94,11 @@ func (d DestinationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DestinationAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("region"))
+	return terra.ReferenceAsString(d.ref.Append("region"))
 }
 
 func (d DestinationAttributes) RegistryId() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("registry_id"))
+	return terra.ReferenceAsString(d.ref.Append("registry_id"))
 }
 
 type RepositoryFilterAttributes struct {
@@ -118,11 +118,11 @@ func (rf RepositoryFilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rf RepositoryFilterAttributes) Filter() terra.StringValue {
-	return terra.ReferenceString(rf.ref.Append("filter"))
+	return terra.ReferenceAsString(rf.ref.Append("filter"))
 }
 
 func (rf RepositoryFilterAttributes) FilterType() terra.StringValue {
-	return terra.ReferenceString(rf.ref.Append("filter_type"))
+	return terra.ReferenceAsString(rf.ref.Append("filter_type"))
 }
 
 type ReplicationConfigurationState struct {

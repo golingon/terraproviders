@@ -80,27 +80,27 @@ func (itc InstanceTypeConfigsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (itc InstanceTypeConfigsAttributes) BidPrice() terra.StringValue {
-	return terra.ReferenceString(itc.ref.Append("bid_price"))
+	return terra.ReferenceAsString(itc.ref.Append("bid_price"))
 }
 
 func (itc InstanceTypeConfigsAttributes) BidPriceAsPercentageOfOnDemandPrice() terra.NumberValue {
-	return terra.ReferenceNumber(itc.ref.Append("bid_price_as_percentage_of_on_demand_price"))
+	return terra.ReferenceAsNumber(itc.ref.Append("bid_price_as_percentage_of_on_demand_price"))
 }
 
 func (itc InstanceTypeConfigsAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(itc.ref.Append("instance_type"))
+	return terra.ReferenceAsString(itc.ref.Append("instance_type"))
 }
 
 func (itc InstanceTypeConfigsAttributes) WeightedCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(itc.ref.Append("weighted_capacity"))
+	return terra.ReferenceAsNumber(itc.ref.Append("weighted_capacity"))
 }
 
 func (itc InstanceTypeConfigsAttributes) Configurations() terra.SetValue[ConfigurationsAttributes] {
-	return terra.ReferenceSet[ConfigurationsAttributes](itc.ref.Append("configurations"))
+	return terra.ReferenceAsSet[ConfigurationsAttributes](itc.ref.Append("configurations"))
 }
 
 func (itc InstanceTypeConfigsAttributes) EbsConfig() terra.SetValue[EbsConfigAttributes] {
-	return terra.ReferenceSet[EbsConfigAttributes](itc.ref.Append("ebs_config"))
+	return terra.ReferenceAsSet[EbsConfigAttributes](itc.ref.Append("ebs_config"))
 }
 
 type ConfigurationsAttributes struct {
@@ -120,11 +120,11 @@ func (c ConfigurationsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ConfigurationsAttributes) Classification() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("classification"))
+	return terra.ReferenceAsString(c.ref.Append("classification"))
 }
 
 func (c ConfigurationsAttributes) Properties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](c.ref.Append("properties"))
+	return terra.ReferenceAsMap[terra.StringValue](c.ref.Append("properties"))
 }
 
 type EbsConfigAttributes struct {
@@ -144,19 +144,19 @@ func (ec EbsConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec EbsConfigAttributes) Iops() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("iops"))
+	return terra.ReferenceAsNumber(ec.ref.Append("iops"))
 }
 
 func (ec EbsConfigAttributes) Size() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("size"))
+	return terra.ReferenceAsNumber(ec.ref.Append("size"))
 }
 
 func (ec EbsConfigAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("type"))
+	return terra.ReferenceAsString(ec.ref.Append("type"))
 }
 
 func (ec EbsConfigAttributes) VolumesPerInstance() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("volumes_per_instance"))
+	return terra.ReferenceAsNumber(ec.ref.Append("volumes_per_instance"))
 }
 
 type LaunchSpecificationsAttributes struct {
@@ -176,11 +176,11 @@ func (ls LaunchSpecificationsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ls LaunchSpecificationsAttributes) OnDemandSpecification() terra.ListValue[OnDemandSpecificationAttributes] {
-	return terra.ReferenceList[OnDemandSpecificationAttributes](ls.ref.Append("on_demand_specification"))
+	return terra.ReferenceAsList[OnDemandSpecificationAttributes](ls.ref.Append("on_demand_specification"))
 }
 
 func (ls LaunchSpecificationsAttributes) SpotSpecification() terra.ListValue[SpotSpecificationAttributes] {
-	return terra.ReferenceList[SpotSpecificationAttributes](ls.ref.Append("spot_specification"))
+	return terra.ReferenceAsList[SpotSpecificationAttributes](ls.ref.Append("spot_specification"))
 }
 
 type OnDemandSpecificationAttributes struct {
@@ -200,7 +200,7 @@ func (ods OnDemandSpecificationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ods OnDemandSpecificationAttributes) AllocationStrategy() terra.StringValue {
-	return terra.ReferenceString(ods.ref.Append("allocation_strategy"))
+	return terra.ReferenceAsString(ods.ref.Append("allocation_strategy"))
 }
 
 type SpotSpecificationAttributes struct {
@@ -220,19 +220,19 @@ func (ss SpotSpecificationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ss SpotSpecificationAttributes) AllocationStrategy() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("allocation_strategy"))
+	return terra.ReferenceAsString(ss.ref.Append("allocation_strategy"))
 }
 
 func (ss SpotSpecificationAttributes) BlockDurationMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("block_duration_minutes"))
+	return terra.ReferenceAsNumber(ss.ref.Append("block_duration_minutes"))
 }
 
 func (ss SpotSpecificationAttributes) TimeoutAction() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("timeout_action"))
+	return terra.ReferenceAsString(ss.ref.Append("timeout_action"))
 }
 
 func (ss SpotSpecificationAttributes) TimeoutDurationMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("timeout_duration_minutes"))
+	return terra.ReferenceAsNumber(ss.ref.Append("timeout_duration_minutes"))
 }
 
 type InstanceTypeConfigsState struct {

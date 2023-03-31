@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRdsClusterEndpoint creates a new instance of [RdsClusterEndpoint].
 func NewRdsClusterEndpoint(name string, args RdsClusterEndpointArgs) *RdsClusterEndpoint {
 	return &RdsClusterEndpoint{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRdsClusterEndpoint(name string, args RdsClusterEndpointArgs) *RdsCluster
 
 var _ terra.Resource = (*RdsClusterEndpoint)(nil)
 
+// RdsClusterEndpoint represents the Terraform resource aws_rds_cluster_endpoint.
 type RdsClusterEndpoint struct {
-	Name  string
-	Args  RdsClusterEndpointArgs
-	state *rdsClusterEndpointState
+	Name      string
+	Args      RdsClusterEndpointArgs
+	state     *rdsClusterEndpointState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RdsClusterEndpoint].
 func (rce *RdsClusterEndpoint) Type() string {
 	return "aws_rds_cluster_endpoint"
 }
 
+// LocalName returns the local name for [RdsClusterEndpoint].
 func (rce *RdsClusterEndpoint) LocalName() string {
 	return rce.Name
 }
 
+// Configuration returns the configuration (args) for [RdsClusterEndpoint].
 func (rce *RdsClusterEndpoint) Configuration() interface{} {
 	return rce.Args
 }
 
+// DependOn is used for other resources to depend on [RdsClusterEndpoint].
+func (rce *RdsClusterEndpoint) DependOn() terra.Reference {
+	return terra.ReferenceResource(rce)
+}
+
+// Dependencies returns the list of resources [RdsClusterEndpoint] depends_on.
+func (rce *RdsClusterEndpoint) Dependencies() terra.Dependencies {
+	return rce.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RdsClusterEndpoint].
+func (rce *RdsClusterEndpoint) LifecycleManagement() *terra.Lifecycle {
+	return rce.Lifecycle
+}
+
+// Attributes returns the attributes for [RdsClusterEndpoint].
 func (rce *RdsClusterEndpoint) Attributes() rdsClusterEndpointAttributes {
 	return rdsClusterEndpointAttributes{ref: terra.ReferenceResource(rce)}
 }
 
+// ImportState imports the given attribute values into [RdsClusterEndpoint]'s state.
 func (rce *RdsClusterEndpoint) ImportState(av io.Reader) error {
 	rce.state = &rdsClusterEndpointState{}
 	if err := json.NewDecoder(av).Decode(rce.state); err != nil {
@@ -48,10 +72,12 @@ func (rce *RdsClusterEndpoint) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RdsClusterEndpoint] has state.
 func (rce *RdsClusterEndpoint) State() (*rdsClusterEndpointState, bool) {
 	return rce.state, rce.state != nil
 }
 
+// StateMust returns the state for [RdsClusterEndpoint]. Panics if the state is nil.
 func (rce *RdsClusterEndpoint) StateMust() *rdsClusterEndpointState {
 	if rce.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rce.Type(), rce.LocalName()))
@@ -59,10 +85,7 @@ func (rce *RdsClusterEndpoint) StateMust() *rdsClusterEndpointState {
 	return rce.state
 }
 
-func (rce *RdsClusterEndpoint) DependOn() terra.Reference {
-	return terra.ReferenceResource(rce)
-}
-
+// RdsClusterEndpointArgs contains the configurations for aws_rds_cluster_endpoint.
 type RdsClusterEndpointArgs struct {
 	// ClusterEndpointIdentifier: string, required
 	ClusterEndpointIdentifier terra.StringValue `hcl:"cluster_endpoint_identifier,attr" validate:"required"`
@@ -80,51 +103,59 @@ type RdsClusterEndpointArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that RdsClusterEndpoint depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type rdsClusterEndpointAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_rds_cluster_endpoint.
 func (rce rdsClusterEndpointAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rce.ref.Append("arn"))
+	return terra.ReferenceAsString(rce.ref.Append("arn"))
 }
 
+// ClusterEndpointIdentifier returns a reference to field cluster_endpoint_identifier of aws_rds_cluster_endpoint.
 func (rce rdsClusterEndpointAttributes) ClusterEndpointIdentifier() terra.StringValue {
-	return terra.ReferenceString(rce.ref.Append("cluster_endpoint_identifier"))
+	return terra.ReferenceAsString(rce.ref.Append("cluster_endpoint_identifier"))
 }
 
+// ClusterIdentifier returns a reference to field cluster_identifier of aws_rds_cluster_endpoint.
 func (rce rdsClusterEndpointAttributes) ClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(rce.ref.Append("cluster_identifier"))
+	return terra.ReferenceAsString(rce.ref.Append("cluster_identifier"))
 }
 
+// CustomEndpointType returns a reference to field custom_endpoint_type of aws_rds_cluster_endpoint.
 func (rce rdsClusterEndpointAttributes) CustomEndpointType() terra.StringValue {
-	return terra.ReferenceString(rce.ref.Append("custom_endpoint_type"))
+	return terra.ReferenceAsString(rce.ref.Append("custom_endpoint_type"))
 }
 
+// Endpoint returns a reference to field endpoint of aws_rds_cluster_endpoint.
 func (rce rdsClusterEndpointAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(rce.ref.Append("endpoint"))
+	return terra.ReferenceAsString(rce.ref.Append("endpoint"))
 }
 
+// ExcludedMembers returns a reference to field excluded_members of aws_rds_cluster_endpoint.
 func (rce rdsClusterEndpointAttributes) ExcludedMembers() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rce.ref.Append("excluded_members"))
+	return terra.ReferenceAsSet[terra.StringValue](rce.ref.Append("excluded_members"))
 }
 
+// Id returns a reference to field id of aws_rds_cluster_endpoint.
 func (rce rdsClusterEndpointAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rce.ref.Append("id"))
+	return terra.ReferenceAsString(rce.ref.Append("id"))
 }
 
+// StaticMembers returns a reference to field static_members of aws_rds_cluster_endpoint.
 func (rce rdsClusterEndpointAttributes) StaticMembers() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rce.ref.Append("static_members"))
+	return terra.ReferenceAsSet[terra.StringValue](rce.ref.Append("static_members"))
 }
 
+// Tags returns a reference to field tags of aws_rds_cluster_endpoint.
 func (rce rdsClusterEndpointAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rce.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rce.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_rds_cluster_endpoint.
 func (rce rdsClusterEndpointAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rce.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](rce.ref.Append("tags_all"))
 }
 
 type rdsClusterEndpointState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewConfigConformancePack creates a new instance of [ConfigConformancePack].
 func NewConfigConformancePack(name string, args ConfigConformancePackArgs) *ConfigConformancePack {
 	return &ConfigConformancePack{
 		Args: args,
@@ -19,28 +20,51 @@ func NewConfigConformancePack(name string, args ConfigConformancePackArgs) *Conf
 
 var _ terra.Resource = (*ConfigConformancePack)(nil)
 
+// ConfigConformancePack represents the Terraform resource aws_config_conformance_pack.
 type ConfigConformancePack struct {
-	Name  string
-	Args  ConfigConformancePackArgs
-	state *configConformancePackState
+	Name      string
+	Args      ConfigConformancePackArgs
+	state     *configConformancePackState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ConfigConformancePack].
 func (ccp *ConfigConformancePack) Type() string {
 	return "aws_config_conformance_pack"
 }
 
+// LocalName returns the local name for [ConfigConformancePack].
 func (ccp *ConfigConformancePack) LocalName() string {
 	return ccp.Name
 }
 
+// Configuration returns the configuration (args) for [ConfigConformancePack].
 func (ccp *ConfigConformancePack) Configuration() interface{} {
 	return ccp.Args
 }
 
+// DependOn is used for other resources to depend on [ConfigConformancePack].
+func (ccp *ConfigConformancePack) DependOn() terra.Reference {
+	return terra.ReferenceResource(ccp)
+}
+
+// Dependencies returns the list of resources [ConfigConformancePack] depends_on.
+func (ccp *ConfigConformancePack) Dependencies() terra.Dependencies {
+	return ccp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ConfigConformancePack].
+func (ccp *ConfigConformancePack) LifecycleManagement() *terra.Lifecycle {
+	return ccp.Lifecycle
+}
+
+// Attributes returns the attributes for [ConfigConformancePack].
 func (ccp *ConfigConformancePack) Attributes() configConformancePackAttributes {
 	return configConformancePackAttributes{ref: terra.ReferenceResource(ccp)}
 }
 
+// ImportState imports the given attribute values into [ConfigConformancePack]'s state.
 func (ccp *ConfigConformancePack) ImportState(av io.Reader) error {
 	ccp.state = &configConformancePackState{}
 	if err := json.NewDecoder(av).Decode(ccp.state); err != nil {
@@ -49,10 +73,12 @@ func (ccp *ConfigConformancePack) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ConfigConformancePack] has state.
 func (ccp *ConfigConformancePack) State() (*configConformancePackState, bool) {
 	return ccp.state, ccp.state != nil
 }
 
+// StateMust returns the state for [ConfigConformancePack]. Panics if the state is nil.
 func (ccp *ConfigConformancePack) StateMust() *configConformancePackState {
 	if ccp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ccp.Type(), ccp.LocalName()))
@@ -60,10 +86,7 @@ func (ccp *ConfigConformancePack) StateMust() *configConformancePackState {
 	return ccp.state
 }
 
-func (ccp *ConfigConformancePack) DependOn() terra.Reference {
-	return terra.ReferenceResource(ccp)
-}
-
+// ConfigConformancePackArgs contains the configurations for aws_config_conformance_pack.
 type ConfigConformancePackArgs struct {
 	// DeliveryS3Bucket: string, optional
 	DeliveryS3Bucket terra.StringValue `hcl:"delivery_s3_bucket,attr"`
@@ -79,43 +102,48 @@ type ConfigConformancePackArgs struct {
 	TemplateS3Uri terra.StringValue `hcl:"template_s3_uri,attr"`
 	// InputParameter: min=0,max=60
 	InputParameter []configconformancepack.InputParameter `hcl:"input_parameter,block" validate:"min=0,max=60"`
-	// DependsOn contains resources that ConfigConformancePack depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type configConformancePackAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_config_conformance_pack.
 func (ccp configConformancePackAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ccp.ref.Append("arn"))
+	return terra.ReferenceAsString(ccp.ref.Append("arn"))
 }
 
+// DeliveryS3Bucket returns a reference to field delivery_s3_bucket of aws_config_conformance_pack.
 func (ccp configConformancePackAttributes) DeliveryS3Bucket() terra.StringValue {
-	return terra.ReferenceString(ccp.ref.Append("delivery_s3_bucket"))
+	return terra.ReferenceAsString(ccp.ref.Append("delivery_s3_bucket"))
 }
 
+// DeliveryS3KeyPrefix returns a reference to field delivery_s3_key_prefix of aws_config_conformance_pack.
 func (ccp configConformancePackAttributes) DeliveryS3KeyPrefix() terra.StringValue {
-	return terra.ReferenceString(ccp.ref.Append("delivery_s3_key_prefix"))
+	return terra.ReferenceAsString(ccp.ref.Append("delivery_s3_key_prefix"))
 }
 
+// Id returns a reference to field id of aws_config_conformance_pack.
 func (ccp configConformancePackAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ccp.ref.Append("id"))
+	return terra.ReferenceAsString(ccp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_config_conformance_pack.
 func (ccp configConformancePackAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ccp.ref.Append("name"))
+	return terra.ReferenceAsString(ccp.ref.Append("name"))
 }
 
+// TemplateBody returns a reference to field template_body of aws_config_conformance_pack.
 func (ccp configConformancePackAttributes) TemplateBody() terra.StringValue {
-	return terra.ReferenceString(ccp.ref.Append("template_body"))
+	return terra.ReferenceAsString(ccp.ref.Append("template_body"))
 }
 
+// TemplateS3Uri returns a reference to field template_s3_uri of aws_config_conformance_pack.
 func (ccp configConformancePackAttributes) TemplateS3Uri() terra.StringValue {
-	return terra.ReferenceString(ccp.ref.Append("template_s3_uri"))
+	return terra.ReferenceAsString(ccp.ref.Append("template_s3_uri"))
 }
 
 func (ccp configConformancePackAttributes) InputParameter() terra.SetValue[configconformancepack.InputParameterAttributes] {
-	return terra.ReferenceSet[configconformancepack.InputParameterAttributes](ccp.ref.Append("input_parameter"))
+	return terra.ReferenceAsSet[configconformancepack.InputParameterAttributes](ccp.ref.Append("input_parameter"))
 }
 
 type configConformancePackState struct {

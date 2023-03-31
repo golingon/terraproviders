@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataWafRule creates a new instance of [DataWafRule].
 func NewDataWafRule(name string, args DataWafRuleArgs) *DataWafRule {
 	return &DataWafRule{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataWafRule(name string, args DataWafRuleArgs) *DataWafRule {
 
 var _ terra.DataResource = (*DataWafRule)(nil)
 
+// DataWafRule represents the Terraform data resource aws_waf_rule.
 type DataWafRule struct {
 	Name string
 	Args DataWafRuleArgs
 }
 
+// DataSource returns the Terraform object type for [DataWafRule].
 func (wr *DataWafRule) DataSource() string {
 	return "aws_waf_rule"
 }
 
+// LocalName returns the local name for [DataWafRule].
 func (wr *DataWafRule) LocalName() string {
 	return wr.Name
 }
 
+// Configuration returns the configuration (args) for [DataWafRule].
 func (wr *DataWafRule) Configuration() interface{} {
 	return wr.Args
 }
 
+// Attributes returns the attributes for [DataWafRule].
 func (wr *DataWafRule) Attributes() dataWafRuleAttributes {
 	return dataWafRuleAttributes{ref: terra.ReferenceDataResource(wr)}
 }
 
+// DataWafRuleArgs contains the configurations for aws_waf_rule.
 type DataWafRuleArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,10 +51,12 @@ type dataWafRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_waf_rule.
 func (wr dataWafRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(wr.ref.Append("id"))
+	return terra.ReferenceAsString(wr.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_waf_rule.
 func (wr dataWafRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(wr.ref.Append("name"))
+	return terra.ReferenceAsString(wr.ref.Append("name"))
 }

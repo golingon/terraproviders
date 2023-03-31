@@ -254,27 +254,27 @@ func (oes OnExceptionStepsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (oes OnExceptionStepsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(oes.ref.Append("type"))
+	return terra.ReferenceAsString(oes.ref.Append("type"))
 }
 
 func (oes OnExceptionStepsAttributes) CopyStepDetails() terra.ListValue[OnExceptionStepsCopyStepDetailsAttributes] {
-	return terra.ReferenceList[OnExceptionStepsCopyStepDetailsAttributes](oes.ref.Append("copy_step_details"))
+	return terra.ReferenceAsList[OnExceptionStepsCopyStepDetailsAttributes](oes.ref.Append("copy_step_details"))
 }
 
 func (oes OnExceptionStepsAttributes) CustomStepDetails() terra.ListValue[OnExceptionStepsCustomStepDetailsAttributes] {
-	return terra.ReferenceList[OnExceptionStepsCustomStepDetailsAttributes](oes.ref.Append("custom_step_details"))
+	return terra.ReferenceAsList[OnExceptionStepsCustomStepDetailsAttributes](oes.ref.Append("custom_step_details"))
 }
 
 func (oes OnExceptionStepsAttributes) DecryptStepDetails() terra.ListValue[OnExceptionStepsDecryptStepDetailsAttributes] {
-	return terra.ReferenceList[OnExceptionStepsDecryptStepDetailsAttributes](oes.ref.Append("decrypt_step_details"))
+	return terra.ReferenceAsList[OnExceptionStepsDecryptStepDetailsAttributes](oes.ref.Append("decrypt_step_details"))
 }
 
 func (oes OnExceptionStepsAttributes) DeleteStepDetails() terra.ListValue[OnExceptionStepsDeleteStepDetailsAttributes] {
-	return terra.ReferenceList[OnExceptionStepsDeleteStepDetailsAttributes](oes.ref.Append("delete_step_details"))
+	return terra.ReferenceAsList[OnExceptionStepsDeleteStepDetailsAttributes](oes.ref.Append("delete_step_details"))
 }
 
 func (oes OnExceptionStepsAttributes) TagStepDetails() terra.ListValue[OnExceptionStepsTagStepDetailsAttributes] {
-	return terra.ReferenceList[OnExceptionStepsTagStepDetailsAttributes](oes.ref.Append("tag_step_details"))
+	return terra.ReferenceAsList[OnExceptionStepsTagStepDetailsAttributes](oes.ref.Append("tag_step_details"))
 }
 
 type OnExceptionStepsCopyStepDetailsAttributes struct {
@@ -294,19 +294,19 @@ func (csd OnExceptionStepsCopyStepDetailsAttributes) InternalTokens() hclwrite.T
 }
 
 func (csd OnExceptionStepsCopyStepDetailsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(csd.ref.Append("name"))
+	return terra.ReferenceAsString(csd.ref.Append("name"))
 }
 
 func (csd OnExceptionStepsCopyStepDetailsAttributes) OverwriteExisting() terra.StringValue {
-	return terra.ReferenceString(csd.ref.Append("overwrite_existing"))
+	return terra.ReferenceAsString(csd.ref.Append("overwrite_existing"))
 }
 
 func (csd OnExceptionStepsCopyStepDetailsAttributes) SourceFileLocation() terra.StringValue {
-	return terra.ReferenceString(csd.ref.Append("source_file_location"))
+	return terra.ReferenceAsString(csd.ref.Append("source_file_location"))
 }
 
 func (csd OnExceptionStepsCopyStepDetailsAttributes) DestinationFileLocation() terra.ListValue[OnExceptionStepsCopyStepDetailsDestinationFileLocationAttributes] {
-	return terra.ReferenceList[OnExceptionStepsCopyStepDetailsDestinationFileLocationAttributes](csd.ref.Append("destination_file_location"))
+	return terra.ReferenceAsList[OnExceptionStepsCopyStepDetailsDestinationFileLocationAttributes](csd.ref.Append("destination_file_location"))
 }
 
 type OnExceptionStepsCopyStepDetailsDestinationFileLocationAttributes struct {
@@ -326,11 +326,11 @@ func (dfl OnExceptionStepsCopyStepDetailsDestinationFileLocationAttributes) Inte
 }
 
 func (dfl OnExceptionStepsCopyStepDetailsDestinationFileLocationAttributes) EfsFileLocation() terra.ListValue[OnExceptionStepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes] {
-	return terra.ReferenceList[OnExceptionStepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes](dfl.ref.Append("efs_file_location"))
+	return terra.ReferenceAsList[OnExceptionStepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes](dfl.ref.Append("efs_file_location"))
 }
 
 func (dfl OnExceptionStepsCopyStepDetailsDestinationFileLocationAttributes) S3FileLocation() terra.ListValue[OnExceptionStepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes] {
-	return terra.ReferenceList[OnExceptionStepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes](dfl.ref.Append("s3_file_location"))
+	return terra.ReferenceAsList[OnExceptionStepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes](dfl.ref.Append("s3_file_location"))
 }
 
 type OnExceptionStepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes struct {
@@ -350,11 +350,11 @@ func (efl OnExceptionStepsCopyStepDetailsDestinationFileLocationEfsFileLocationA
 }
 
 func (efl OnExceptionStepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes) FileSystemId() terra.StringValue {
-	return terra.ReferenceString(efl.ref.Append("file_system_id"))
+	return terra.ReferenceAsString(efl.ref.Append("file_system_id"))
 }
 
 func (efl OnExceptionStepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(efl.ref.Append("path"))
+	return terra.ReferenceAsString(efl.ref.Append("path"))
 }
 
 type OnExceptionStepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes struct {
@@ -374,11 +374,11 @@ func (sfl OnExceptionStepsCopyStepDetailsDestinationFileLocationS3FileLocationAt
 }
 
 func (sfl OnExceptionStepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(sfl.ref.Append("bucket"))
+	return terra.ReferenceAsString(sfl.ref.Append("bucket"))
 }
 
 func (sfl OnExceptionStepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(sfl.ref.Append("key"))
+	return terra.ReferenceAsString(sfl.ref.Append("key"))
 }
 
 type OnExceptionStepsCustomStepDetailsAttributes struct {
@@ -398,19 +398,19 @@ func (csd OnExceptionStepsCustomStepDetailsAttributes) InternalTokens() hclwrite
 }
 
 func (csd OnExceptionStepsCustomStepDetailsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(csd.ref.Append("name"))
+	return terra.ReferenceAsString(csd.ref.Append("name"))
 }
 
 func (csd OnExceptionStepsCustomStepDetailsAttributes) SourceFileLocation() terra.StringValue {
-	return terra.ReferenceString(csd.ref.Append("source_file_location"))
+	return terra.ReferenceAsString(csd.ref.Append("source_file_location"))
 }
 
 func (csd OnExceptionStepsCustomStepDetailsAttributes) Target() terra.StringValue {
-	return terra.ReferenceString(csd.ref.Append("target"))
+	return terra.ReferenceAsString(csd.ref.Append("target"))
 }
 
 func (csd OnExceptionStepsCustomStepDetailsAttributes) TimeoutSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(csd.ref.Append("timeout_seconds"))
+	return terra.ReferenceAsNumber(csd.ref.Append("timeout_seconds"))
 }
 
 type OnExceptionStepsDecryptStepDetailsAttributes struct {
@@ -430,23 +430,23 @@ func (dsd OnExceptionStepsDecryptStepDetailsAttributes) InternalTokens() hclwrit
 }
 
 func (dsd OnExceptionStepsDecryptStepDetailsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dsd.ref.Append("name"))
+	return terra.ReferenceAsString(dsd.ref.Append("name"))
 }
 
 func (dsd OnExceptionStepsDecryptStepDetailsAttributes) OverwriteExisting() terra.StringValue {
-	return terra.ReferenceString(dsd.ref.Append("overwrite_existing"))
+	return terra.ReferenceAsString(dsd.ref.Append("overwrite_existing"))
 }
 
 func (dsd OnExceptionStepsDecryptStepDetailsAttributes) SourceFileLocation() terra.StringValue {
-	return terra.ReferenceString(dsd.ref.Append("source_file_location"))
+	return terra.ReferenceAsString(dsd.ref.Append("source_file_location"))
 }
 
 func (dsd OnExceptionStepsDecryptStepDetailsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(dsd.ref.Append("type"))
+	return terra.ReferenceAsString(dsd.ref.Append("type"))
 }
 
 func (dsd OnExceptionStepsDecryptStepDetailsAttributes) DestinationFileLocation() terra.ListValue[OnExceptionStepsDecryptStepDetailsDestinationFileLocationAttributes] {
-	return terra.ReferenceList[OnExceptionStepsDecryptStepDetailsDestinationFileLocationAttributes](dsd.ref.Append("destination_file_location"))
+	return terra.ReferenceAsList[OnExceptionStepsDecryptStepDetailsDestinationFileLocationAttributes](dsd.ref.Append("destination_file_location"))
 }
 
 type OnExceptionStepsDecryptStepDetailsDestinationFileLocationAttributes struct {
@@ -466,11 +466,11 @@ func (dfl OnExceptionStepsDecryptStepDetailsDestinationFileLocationAttributes) I
 }
 
 func (dfl OnExceptionStepsDecryptStepDetailsDestinationFileLocationAttributes) EfsFileLocation() terra.ListValue[OnExceptionStepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes] {
-	return terra.ReferenceList[OnExceptionStepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes](dfl.ref.Append("efs_file_location"))
+	return terra.ReferenceAsList[OnExceptionStepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes](dfl.ref.Append("efs_file_location"))
 }
 
 func (dfl OnExceptionStepsDecryptStepDetailsDestinationFileLocationAttributes) S3FileLocation() terra.ListValue[OnExceptionStepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes] {
-	return terra.ReferenceList[OnExceptionStepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes](dfl.ref.Append("s3_file_location"))
+	return terra.ReferenceAsList[OnExceptionStepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes](dfl.ref.Append("s3_file_location"))
 }
 
 type OnExceptionStepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes struct {
@@ -490,11 +490,11 @@ func (efl OnExceptionStepsDecryptStepDetailsDestinationFileLocationEfsFileLocati
 }
 
 func (efl OnExceptionStepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes) FileSystemId() terra.StringValue {
-	return terra.ReferenceString(efl.ref.Append("file_system_id"))
+	return terra.ReferenceAsString(efl.ref.Append("file_system_id"))
 }
 
 func (efl OnExceptionStepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(efl.ref.Append("path"))
+	return terra.ReferenceAsString(efl.ref.Append("path"))
 }
 
 type OnExceptionStepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes struct {
@@ -514,11 +514,11 @@ func (sfl OnExceptionStepsDecryptStepDetailsDestinationFileLocationS3FileLocatio
 }
 
 func (sfl OnExceptionStepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(sfl.ref.Append("bucket"))
+	return terra.ReferenceAsString(sfl.ref.Append("bucket"))
 }
 
 func (sfl OnExceptionStepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(sfl.ref.Append("key"))
+	return terra.ReferenceAsString(sfl.ref.Append("key"))
 }
 
 type OnExceptionStepsDeleteStepDetailsAttributes struct {
@@ -538,11 +538,11 @@ func (dsd OnExceptionStepsDeleteStepDetailsAttributes) InternalTokens() hclwrite
 }
 
 func (dsd OnExceptionStepsDeleteStepDetailsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dsd.ref.Append("name"))
+	return terra.ReferenceAsString(dsd.ref.Append("name"))
 }
 
 func (dsd OnExceptionStepsDeleteStepDetailsAttributes) SourceFileLocation() terra.StringValue {
-	return terra.ReferenceString(dsd.ref.Append("source_file_location"))
+	return terra.ReferenceAsString(dsd.ref.Append("source_file_location"))
 }
 
 type OnExceptionStepsTagStepDetailsAttributes struct {
@@ -562,15 +562,15 @@ func (tsd OnExceptionStepsTagStepDetailsAttributes) InternalTokens() hclwrite.To
 }
 
 func (tsd OnExceptionStepsTagStepDetailsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(tsd.ref.Append("name"))
+	return terra.ReferenceAsString(tsd.ref.Append("name"))
 }
 
 func (tsd OnExceptionStepsTagStepDetailsAttributes) SourceFileLocation() terra.StringValue {
-	return terra.ReferenceString(tsd.ref.Append("source_file_location"))
+	return terra.ReferenceAsString(tsd.ref.Append("source_file_location"))
 }
 
 func (tsd OnExceptionStepsTagStepDetailsAttributes) Tags() terra.ListValue[OnExceptionStepsTagStepDetailsTagsAttributes] {
-	return terra.ReferenceList[OnExceptionStepsTagStepDetailsTagsAttributes](tsd.ref.Append("tags"))
+	return terra.ReferenceAsList[OnExceptionStepsTagStepDetailsTagsAttributes](tsd.ref.Append("tags"))
 }
 
 type OnExceptionStepsTagStepDetailsTagsAttributes struct {
@@ -590,11 +590,11 @@ func (t OnExceptionStepsTagStepDetailsTagsAttributes) InternalTokens() hclwrite.
 }
 
 func (t OnExceptionStepsTagStepDetailsTagsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("key"))
+	return terra.ReferenceAsString(t.ref.Append("key"))
 }
 
 func (t OnExceptionStepsTagStepDetailsTagsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("value"))
+	return terra.ReferenceAsString(t.ref.Append("value"))
 }
 
 type StepsAttributes struct {
@@ -614,27 +614,27 @@ func (s StepsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s StepsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("type"))
+	return terra.ReferenceAsString(s.ref.Append("type"))
 }
 
 func (s StepsAttributes) CopyStepDetails() terra.ListValue[StepsCopyStepDetailsAttributes] {
-	return terra.ReferenceList[StepsCopyStepDetailsAttributes](s.ref.Append("copy_step_details"))
+	return terra.ReferenceAsList[StepsCopyStepDetailsAttributes](s.ref.Append("copy_step_details"))
 }
 
 func (s StepsAttributes) CustomStepDetails() terra.ListValue[StepsCustomStepDetailsAttributes] {
-	return terra.ReferenceList[StepsCustomStepDetailsAttributes](s.ref.Append("custom_step_details"))
+	return terra.ReferenceAsList[StepsCustomStepDetailsAttributes](s.ref.Append("custom_step_details"))
 }
 
 func (s StepsAttributes) DecryptStepDetails() terra.ListValue[StepsDecryptStepDetailsAttributes] {
-	return terra.ReferenceList[StepsDecryptStepDetailsAttributes](s.ref.Append("decrypt_step_details"))
+	return terra.ReferenceAsList[StepsDecryptStepDetailsAttributes](s.ref.Append("decrypt_step_details"))
 }
 
 func (s StepsAttributes) DeleteStepDetails() terra.ListValue[StepsDeleteStepDetailsAttributes] {
-	return terra.ReferenceList[StepsDeleteStepDetailsAttributes](s.ref.Append("delete_step_details"))
+	return terra.ReferenceAsList[StepsDeleteStepDetailsAttributes](s.ref.Append("delete_step_details"))
 }
 
 func (s StepsAttributes) TagStepDetails() terra.ListValue[StepsTagStepDetailsAttributes] {
-	return terra.ReferenceList[StepsTagStepDetailsAttributes](s.ref.Append("tag_step_details"))
+	return terra.ReferenceAsList[StepsTagStepDetailsAttributes](s.ref.Append("tag_step_details"))
 }
 
 type StepsCopyStepDetailsAttributes struct {
@@ -654,19 +654,19 @@ func (csd StepsCopyStepDetailsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (csd StepsCopyStepDetailsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(csd.ref.Append("name"))
+	return terra.ReferenceAsString(csd.ref.Append("name"))
 }
 
 func (csd StepsCopyStepDetailsAttributes) OverwriteExisting() terra.StringValue {
-	return terra.ReferenceString(csd.ref.Append("overwrite_existing"))
+	return terra.ReferenceAsString(csd.ref.Append("overwrite_existing"))
 }
 
 func (csd StepsCopyStepDetailsAttributes) SourceFileLocation() terra.StringValue {
-	return terra.ReferenceString(csd.ref.Append("source_file_location"))
+	return terra.ReferenceAsString(csd.ref.Append("source_file_location"))
 }
 
 func (csd StepsCopyStepDetailsAttributes) DestinationFileLocation() terra.ListValue[StepsCopyStepDetailsDestinationFileLocationAttributes] {
-	return terra.ReferenceList[StepsCopyStepDetailsDestinationFileLocationAttributes](csd.ref.Append("destination_file_location"))
+	return terra.ReferenceAsList[StepsCopyStepDetailsDestinationFileLocationAttributes](csd.ref.Append("destination_file_location"))
 }
 
 type StepsCopyStepDetailsDestinationFileLocationAttributes struct {
@@ -686,11 +686,11 @@ func (dfl StepsCopyStepDetailsDestinationFileLocationAttributes) InternalTokens(
 }
 
 func (dfl StepsCopyStepDetailsDestinationFileLocationAttributes) EfsFileLocation() terra.ListValue[StepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes] {
-	return terra.ReferenceList[StepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes](dfl.ref.Append("efs_file_location"))
+	return terra.ReferenceAsList[StepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes](dfl.ref.Append("efs_file_location"))
 }
 
 func (dfl StepsCopyStepDetailsDestinationFileLocationAttributes) S3FileLocation() terra.ListValue[StepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes] {
-	return terra.ReferenceList[StepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes](dfl.ref.Append("s3_file_location"))
+	return terra.ReferenceAsList[StepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes](dfl.ref.Append("s3_file_location"))
 }
 
 type StepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes struct {
@@ -710,11 +710,11 @@ func (efl StepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes) 
 }
 
 func (efl StepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes) FileSystemId() terra.StringValue {
-	return terra.ReferenceString(efl.ref.Append("file_system_id"))
+	return terra.ReferenceAsString(efl.ref.Append("file_system_id"))
 }
 
 func (efl StepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(efl.ref.Append("path"))
+	return terra.ReferenceAsString(efl.ref.Append("path"))
 }
 
 type StepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes struct {
@@ -734,11 +734,11 @@ func (sfl StepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes) I
 }
 
 func (sfl StepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(sfl.ref.Append("bucket"))
+	return terra.ReferenceAsString(sfl.ref.Append("bucket"))
 }
 
 func (sfl StepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(sfl.ref.Append("key"))
+	return terra.ReferenceAsString(sfl.ref.Append("key"))
 }
 
 type StepsCustomStepDetailsAttributes struct {
@@ -758,19 +758,19 @@ func (csd StepsCustomStepDetailsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (csd StepsCustomStepDetailsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(csd.ref.Append("name"))
+	return terra.ReferenceAsString(csd.ref.Append("name"))
 }
 
 func (csd StepsCustomStepDetailsAttributes) SourceFileLocation() terra.StringValue {
-	return terra.ReferenceString(csd.ref.Append("source_file_location"))
+	return terra.ReferenceAsString(csd.ref.Append("source_file_location"))
 }
 
 func (csd StepsCustomStepDetailsAttributes) Target() terra.StringValue {
-	return terra.ReferenceString(csd.ref.Append("target"))
+	return terra.ReferenceAsString(csd.ref.Append("target"))
 }
 
 func (csd StepsCustomStepDetailsAttributes) TimeoutSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(csd.ref.Append("timeout_seconds"))
+	return terra.ReferenceAsNumber(csd.ref.Append("timeout_seconds"))
 }
 
 type StepsDecryptStepDetailsAttributes struct {
@@ -790,23 +790,23 @@ func (dsd StepsDecryptStepDetailsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dsd StepsDecryptStepDetailsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dsd.ref.Append("name"))
+	return terra.ReferenceAsString(dsd.ref.Append("name"))
 }
 
 func (dsd StepsDecryptStepDetailsAttributes) OverwriteExisting() terra.StringValue {
-	return terra.ReferenceString(dsd.ref.Append("overwrite_existing"))
+	return terra.ReferenceAsString(dsd.ref.Append("overwrite_existing"))
 }
 
 func (dsd StepsDecryptStepDetailsAttributes) SourceFileLocation() terra.StringValue {
-	return terra.ReferenceString(dsd.ref.Append("source_file_location"))
+	return terra.ReferenceAsString(dsd.ref.Append("source_file_location"))
 }
 
 func (dsd StepsDecryptStepDetailsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(dsd.ref.Append("type"))
+	return terra.ReferenceAsString(dsd.ref.Append("type"))
 }
 
 func (dsd StepsDecryptStepDetailsAttributes) DestinationFileLocation() terra.ListValue[StepsDecryptStepDetailsDestinationFileLocationAttributes] {
-	return terra.ReferenceList[StepsDecryptStepDetailsDestinationFileLocationAttributes](dsd.ref.Append("destination_file_location"))
+	return terra.ReferenceAsList[StepsDecryptStepDetailsDestinationFileLocationAttributes](dsd.ref.Append("destination_file_location"))
 }
 
 type StepsDecryptStepDetailsDestinationFileLocationAttributes struct {
@@ -826,11 +826,11 @@ func (dfl StepsDecryptStepDetailsDestinationFileLocationAttributes) InternalToke
 }
 
 func (dfl StepsDecryptStepDetailsDestinationFileLocationAttributes) EfsFileLocation() terra.ListValue[StepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes] {
-	return terra.ReferenceList[StepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes](dfl.ref.Append("efs_file_location"))
+	return terra.ReferenceAsList[StepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes](dfl.ref.Append("efs_file_location"))
 }
 
 func (dfl StepsDecryptStepDetailsDestinationFileLocationAttributes) S3FileLocation() terra.ListValue[StepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes] {
-	return terra.ReferenceList[StepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes](dfl.ref.Append("s3_file_location"))
+	return terra.ReferenceAsList[StepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes](dfl.ref.Append("s3_file_location"))
 }
 
 type StepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes struct {
@@ -850,11 +850,11 @@ func (efl StepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttribute
 }
 
 func (efl StepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes) FileSystemId() terra.StringValue {
-	return terra.ReferenceString(efl.ref.Append("file_system_id"))
+	return terra.ReferenceAsString(efl.ref.Append("file_system_id"))
 }
 
 func (efl StepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(efl.ref.Append("path"))
+	return terra.ReferenceAsString(efl.ref.Append("path"))
 }
 
 type StepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes struct {
@@ -874,11 +874,11 @@ func (sfl StepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes
 }
 
 func (sfl StepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(sfl.ref.Append("bucket"))
+	return terra.ReferenceAsString(sfl.ref.Append("bucket"))
 }
 
 func (sfl StepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(sfl.ref.Append("key"))
+	return terra.ReferenceAsString(sfl.ref.Append("key"))
 }
 
 type StepsDeleteStepDetailsAttributes struct {
@@ -898,11 +898,11 @@ func (dsd StepsDeleteStepDetailsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dsd StepsDeleteStepDetailsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dsd.ref.Append("name"))
+	return terra.ReferenceAsString(dsd.ref.Append("name"))
 }
 
 func (dsd StepsDeleteStepDetailsAttributes) SourceFileLocation() terra.StringValue {
-	return terra.ReferenceString(dsd.ref.Append("source_file_location"))
+	return terra.ReferenceAsString(dsd.ref.Append("source_file_location"))
 }
 
 type StepsTagStepDetailsAttributes struct {
@@ -922,15 +922,15 @@ func (tsd StepsTagStepDetailsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tsd StepsTagStepDetailsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(tsd.ref.Append("name"))
+	return terra.ReferenceAsString(tsd.ref.Append("name"))
 }
 
 func (tsd StepsTagStepDetailsAttributes) SourceFileLocation() terra.StringValue {
-	return terra.ReferenceString(tsd.ref.Append("source_file_location"))
+	return terra.ReferenceAsString(tsd.ref.Append("source_file_location"))
 }
 
 func (tsd StepsTagStepDetailsAttributes) Tags() terra.ListValue[StepsTagStepDetailsTagsAttributes] {
-	return terra.ReferenceList[StepsTagStepDetailsTagsAttributes](tsd.ref.Append("tags"))
+	return terra.ReferenceAsList[StepsTagStepDetailsTagsAttributes](tsd.ref.Append("tags"))
 }
 
 type StepsTagStepDetailsTagsAttributes struct {
@@ -950,11 +950,11 @@ func (t StepsTagStepDetailsTagsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t StepsTagStepDetailsTagsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("key"))
+	return terra.ReferenceAsString(t.ref.Append("key"))
 }
 
 func (t StepsTagStepDetailsTagsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("value"))
+	return terra.ReferenceAsString(t.ref.Append("value"))
 }
 
 type OnExceptionStepsState struct {

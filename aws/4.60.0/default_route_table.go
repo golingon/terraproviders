@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDefaultRouteTable creates a new instance of [DefaultRouteTable].
 func NewDefaultRouteTable(name string, args DefaultRouteTableArgs) *DefaultRouteTable {
 	return &DefaultRouteTable{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDefaultRouteTable(name string, args DefaultRouteTableArgs) *DefaultRoute
 
 var _ terra.Resource = (*DefaultRouteTable)(nil)
 
+// DefaultRouteTable represents the Terraform resource aws_default_route_table.
 type DefaultRouteTable struct {
-	Name  string
-	Args  DefaultRouteTableArgs
-	state *defaultRouteTableState
+	Name      string
+	Args      DefaultRouteTableArgs
+	state     *defaultRouteTableState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DefaultRouteTable].
 func (drt *DefaultRouteTable) Type() string {
 	return "aws_default_route_table"
 }
 
+// LocalName returns the local name for [DefaultRouteTable].
 func (drt *DefaultRouteTable) LocalName() string {
 	return drt.Name
 }
 
+// Configuration returns the configuration (args) for [DefaultRouteTable].
 func (drt *DefaultRouteTable) Configuration() interface{} {
 	return drt.Args
 }
 
+// DependOn is used for other resources to depend on [DefaultRouteTable].
+func (drt *DefaultRouteTable) DependOn() terra.Reference {
+	return terra.ReferenceResource(drt)
+}
+
+// Dependencies returns the list of resources [DefaultRouteTable] depends_on.
+func (drt *DefaultRouteTable) Dependencies() terra.Dependencies {
+	return drt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DefaultRouteTable].
+func (drt *DefaultRouteTable) LifecycleManagement() *terra.Lifecycle {
+	return drt.Lifecycle
+}
+
+// Attributes returns the attributes for [DefaultRouteTable].
 func (drt *DefaultRouteTable) Attributes() defaultRouteTableAttributes {
 	return defaultRouteTableAttributes{ref: terra.ReferenceResource(drt)}
 }
 
+// ImportState imports the given attribute values into [DefaultRouteTable]'s state.
 func (drt *DefaultRouteTable) ImportState(av io.Reader) error {
 	drt.state = &defaultRouteTableState{}
 	if err := json.NewDecoder(av).Decode(drt.state); err != nil {
@@ -49,10 +73,12 @@ func (drt *DefaultRouteTable) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DefaultRouteTable] has state.
 func (drt *DefaultRouteTable) State() (*defaultRouteTableState, bool) {
 	return drt.state, drt.state != nil
 }
 
+// StateMust returns the state for [DefaultRouteTable]. Panics if the state is nil.
 func (drt *DefaultRouteTable) StateMust() *defaultRouteTableState {
 	if drt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", drt.Type(), drt.LocalName()))
@@ -60,10 +86,7 @@ func (drt *DefaultRouteTable) StateMust() *defaultRouteTableState {
 	return drt.state
 }
 
-func (drt *DefaultRouteTable) DependOn() terra.Reference {
-	return terra.ReferenceResource(drt)
-}
-
+// DefaultRouteTableArgs contains the configurations for aws_default_route_table.
 type DefaultRouteTableArgs struct {
 	// DefaultRouteTableId: string, required
 	DefaultRouteTableId terra.StringValue `hcl:"default_route_table_id,attr" validate:"required"`
@@ -79,51 +102,57 @@ type DefaultRouteTableArgs struct {
 	Route []defaultroutetable.Route `hcl:"route,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *defaultroutetable.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DefaultRouteTable depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type defaultRouteTableAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_default_route_table.
 func (drt defaultRouteTableAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(drt.ref.Append("arn"))
+	return terra.ReferenceAsString(drt.ref.Append("arn"))
 }
 
+// DefaultRouteTableId returns a reference to field default_route_table_id of aws_default_route_table.
 func (drt defaultRouteTableAttributes) DefaultRouteTableId() terra.StringValue {
-	return terra.ReferenceString(drt.ref.Append("default_route_table_id"))
+	return terra.ReferenceAsString(drt.ref.Append("default_route_table_id"))
 }
 
+// Id returns a reference to field id of aws_default_route_table.
 func (drt defaultRouteTableAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(drt.ref.Append("id"))
+	return terra.ReferenceAsString(drt.ref.Append("id"))
 }
 
+// OwnerId returns a reference to field owner_id of aws_default_route_table.
 func (drt defaultRouteTableAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(drt.ref.Append("owner_id"))
+	return terra.ReferenceAsString(drt.ref.Append("owner_id"))
 }
 
+// PropagatingVgws returns a reference to field propagating_vgws of aws_default_route_table.
 func (drt defaultRouteTableAttributes) PropagatingVgws() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](drt.ref.Append("propagating_vgws"))
+	return terra.ReferenceAsSet[terra.StringValue](drt.ref.Append("propagating_vgws"))
 }
 
+// Tags returns a reference to field tags of aws_default_route_table.
 func (drt defaultRouteTableAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](drt.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](drt.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_default_route_table.
 func (drt defaultRouteTableAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](drt.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](drt.ref.Append("tags_all"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_default_route_table.
 func (drt defaultRouteTableAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(drt.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(drt.ref.Append("vpc_id"))
 }
 
 func (drt defaultRouteTableAttributes) Route() terra.SetValue[defaultroutetable.RouteAttributes] {
-	return terra.ReferenceSet[defaultroutetable.RouteAttributes](drt.ref.Append("route"))
+	return terra.ReferenceAsSet[defaultroutetable.RouteAttributes](drt.ref.Append("route"))
 }
 
 func (drt defaultRouteTableAttributes) Timeouts() defaultroutetable.TimeoutsAttributes {
-	return terra.ReferenceSingle[defaultroutetable.TimeoutsAttributes](drt.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[defaultroutetable.TimeoutsAttributes](drt.ref.Append("timeouts"))
 }
 
 type defaultRouteTableState struct {

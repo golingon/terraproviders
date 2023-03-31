@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudformationStackSet creates a new instance of [CloudformationStackSet].
 func NewCloudformationStackSet(name string, args CloudformationStackSetArgs) *CloudformationStackSet {
 	return &CloudformationStackSet{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudformationStackSet(name string, args CloudformationStackSetArgs) *Cl
 
 var _ terra.Resource = (*CloudformationStackSet)(nil)
 
+// CloudformationStackSet represents the Terraform resource aws_cloudformation_stack_set.
 type CloudformationStackSet struct {
-	Name  string
-	Args  CloudformationStackSetArgs
-	state *cloudformationStackSetState
+	Name      string
+	Args      CloudformationStackSetArgs
+	state     *cloudformationStackSetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudformationStackSet].
 func (css *CloudformationStackSet) Type() string {
 	return "aws_cloudformation_stack_set"
 }
 
+// LocalName returns the local name for [CloudformationStackSet].
 func (css *CloudformationStackSet) LocalName() string {
 	return css.Name
 }
 
+// Configuration returns the configuration (args) for [CloudformationStackSet].
 func (css *CloudformationStackSet) Configuration() interface{} {
 	return css.Args
 }
 
+// DependOn is used for other resources to depend on [CloudformationStackSet].
+func (css *CloudformationStackSet) DependOn() terra.Reference {
+	return terra.ReferenceResource(css)
+}
+
+// Dependencies returns the list of resources [CloudformationStackSet] depends_on.
+func (css *CloudformationStackSet) Dependencies() terra.Dependencies {
+	return css.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudformationStackSet].
+func (css *CloudformationStackSet) LifecycleManagement() *terra.Lifecycle {
+	return css.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudformationStackSet].
 func (css *CloudformationStackSet) Attributes() cloudformationStackSetAttributes {
 	return cloudformationStackSetAttributes{ref: terra.ReferenceResource(css)}
 }
 
+// ImportState imports the given attribute values into [CloudformationStackSet]'s state.
 func (css *CloudformationStackSet) ImportState(av io.Reader) error {
 	css.state = &cloudformationStackSetState{}
 	if err := json.NewDecoder(av).Decode(css.state); err != nil {
@@ -49,10 +73,12 @@ func (css *CloudformationStackSet) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudformationStackSet] has state.
 func (css *CloudformationStackSet) State() (*cloudformationStackSetState, bool) {
 	return css.state, css.state != nil
 }
 
+// StateMust returns the state for [CloudformationStackSet]. Panics if the state is nil.
 func (css *CloudformationStackSet) StateMust() *cloudformationStackSetState {
 	if css.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", css.Type(), css.LocalName()))
@@ -60,10 +86,7 @@ func (css *CloudformationStackSet) StateMust() *cloudformationStackSetState {
 	return css.state
 }
 
-func (css *CloudformationStackSet) DependOn() terra.Reference {
-	return terra.ReferenceResource(css)
-}
-
+// CloudformationStackSetArgs contains the configurations for aws_cloudformation_stack_set.
 type CloudformationStackSetArgs struct {
 	// AdministrationRoleArn: string, optional
 	AdministrationRoleArn terra.StringValue `hcl:"administration_role_arn,attr"`
@@ -97,83 +120,96 @@ type CloudformationStackSetArgs struct {
 	OperationPreferences *cloudformationstackset.OperationPreferences `hcl:"operation_preferences,block"`
 	// Timeouts: optional
 	Timeouts *cloudformationstackset.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CloudformationStackSet depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudformationStackSetAttributes struct {
 	ref terra.Reference
 }
 
+// AdministrationRoleArn returns a reference to field administration_role_arn of aws_cloudformation_stack_set.
 func (css cloudformationStackSetAttributes) AdministrationRoleArn() terra.StringValue {
-	return terra.ReferenceString(css.ref.Append("administration_role_arn"))
+	return terra.ReferenceAsString(css.ref.Append("administration_role_arn"))
 }
 
+// Arn returns a reference to field arn of aws_cloudformation_stack_set.
 func (css cloudformationStackSetAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(css.ref.Append("arn"))
+	return terra.ReferenceAsString(css.ref.Append("arn"))
 }
 
+// CallAs returns a reference to field call_as of aws_cloudformation_stack_set.
 func (css cloudformationStackSetAttributes) CallAs() terra.StringValue {
-	return terra.ReferenceString(css.ref.Append("call_as"))
+	return terra.ReferenceAsString(css.ref.Append("call_as"))
 }
 
+// Capabilities returns a reference to field capabilities of aws_cloudformation_stack_set.
 func (css cloudformationStackSetAttributes) Capabilities() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](css.ref.Append("capabilities"))
+	return terra.ReferenceAsSet[terra.StringValue](css.ref.Append("capabilities"))
 }
 
+// Description returns a reference to field description of aws_cloudformation_stack_set.
 func (css cloudformationStackSetAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(css.ref.Append("description"))
+	return terra.ReferenceAsString(css.ref.Append("description"))
 }
 
+// ExecutionRoleName returns a reference to field execution_role_name of aws_cloudformation_stack_set.
 func (css cloudformationStackSetAttributes) ExecutionRoleName() terra.StringValue {
-	return terra.ReferenceString(css.ref.Append("execution_role_name"))
+	return terra.ReferenceAsString(css.ref.Append("execution_role_name"))
 }
 
+// Id returns a reference to field id of aws_cloudformation_stack_set.
 func (css cloudformationStackSetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(css.ref.Append("id"))
+	return terra.ReferenceAsString(css.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_cloudformation_stack_set.
 func (css cloudformationStackSetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(css.ref.Append("name"))
+	return terra.ReferenceAsString(css.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of aws_cloudformation_stack_set.
 func (css cloudformationStackSetAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](css.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](css.ref.Append("parameters"))
 }
 
+// PermissionModel returns a reference to field permission_model of aws_cloudformation_stack_set.
 func (css cloudformationStackSetAttributes) PermissionModel() terra.StringValue {
-	return terra.ReferenceString(css.ref.Append("permission_model"))
+	return terra.ReferenceAsString(css.ref.Append("permission_model"))
 }
 
+// StackSetId returns a reference to field stack_set_id of aws_cloudformation_stack_set.
 func (css cloudformationStackSetAttributes) StackSetId() terra.StringValue {
-	return terra.ReferenceString(css.ref.Append("stack_set_id"))
+	return terra.ReferenceAsString(css.ref.Append("stack_set_id"))
 }
 
+// Tags returns a reference to field tags of aws_cloudformation_stack_set.
 func (css cloudformationStackSetAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](css.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](css.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_cloudformation_stack_set.
 func (css cloudformationStackSetAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](css.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](css.ref.Append("tags_all"))
 }
 
+// TemplateBody returns a reference to field template_body of aws_cloudformation_stack_set.
 func (css cloudformationStackSetAttributes) TemplateBody() terra.StringValue {
-	return terra.ReferenceString(css.ref.Append("template_body"))
+	return terra.ReferenceAsString(css.ref.Append("template_body"))
 }
 
+// TemplateUrl returns a reference to field template_url of aws_cloudformation_stack_set.
 func (css cloudformationStackSetAttributes) TemplateUrl() terra.StringValue {
-	return terra.ReferenceString(css.ref.Append("template_url"))
+	return terra.ReferenceAsString(css.ref.Append("template_url"))
 }
 
 func (css cloudformationStackSetAttributes) AutoDeployment() terra.ListValue[cloudformationstackset.AutoDeploymentAttributes] {
-	return terra.ReferenceList[cloudformationstackset.AutoDeploymentAttributes](css.ref.Append("auto_deployment"))
+	return terra.ReferenceAsList[cloudformationstackset.AutoDeploymentAttributes](css.ref.Append("auto_deployment"))
 }
 
 func (css cloudformationStackSetAttributes) OperationPreferences() terra.ListValue[cloudformationstackset.OperationPreferencesAttributes] {
-	return terra.ReferenceList[cloudformationstackset.OperationPreferencesAttributes](css.ref.Append("operation_preferences"))
+	return terra.ReferenceAsList[cloudformationstackset.OperationPreferencesAttributes](css.ref.Append("operation_preferences"))
 }
 
 func (css cloudformationStackSetAttributes) Timeouts() cloudformationstackset.TimeoutsAttributes {
-	return terra.ReferenceSingle[cloudformationstackset.TimeoutsAttributes](css.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cloudformationstackset.TimeoutsAttributes](css.ref.Append("timeouts"))
 }
 
 type cloudformationStackSetState struct {

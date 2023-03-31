@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataMemorydbAcl creates a new instance of [DataMemorydbAcl].
 func NewDataMemorydbAcl(name string, args DataMemorydbAclArgs) *DataMemorydbAcl {
 	return &DataMemorydbAcl{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataMemorydbAcl(name string, args DataMemorydbAclArgs) *DataMemorydbAcl 
 
 var _ terra.DataResource = (*DataMemorydbAcl)(nil)
 
+// DataMemorydbAcl represents the Terraform data resource aws_memorydb_acl.
 type DataMemorydbAcl struct {
 	Name string
 	Args DataMemorydbAclArgs
 }
 
+// DataSource returns the Terraform object type for [DataMemorydbAcl].
 func (ma *DataMemorydbAcl) DataSource() string {
 	return "aws_memorydb_acl"
 }
 
+// LocalName returns the local name for [DataMemorydbAcl].
 func (ma *DataMemorydbAcl) LocalName() string {
 	return ma.Name
 }
 
+// Configuration returns the configuration (args) for [DataMemorydbAcl].
 func (ma *DataMemorydbAcl) Configuration() interface{} {
 	return ma.Args
 }
 
+// Attributes returns the attributes for [DataMemorydbAcl].
 func (ma *DataMemorydbAcl) Attributes() dataMemorydbAclAttributes {
 	return dataMemorydbAclAttributes{ref: terra.ReferenceDataResource(ma)}
 }
 
+// DataMemorydbAclArgs contains the configurations for aws_memorydb_acl.
 type DataMemorydbAclArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -46,26 +53,32 @@ type dataMemorydbAclAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_memorydb_acl.
 func (ma dataMemorydbAclAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("arn"))
+	return terra.ReferenceAsString(ma.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_memorydb_acl.
 func (ma dataMemorydbAclAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("id"))
+	return terra.ReferenceAsString(ma.ref.Append("id"))
 }
 
+// MinimumEngineVersion returns a reference to field minimum_engine_version of aws_memorydb_acl.
 func (ma dataMemorydbAclAttributes) MinimumEngineVersion() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("minimum_engine_version"))
+	return terra.ReferenceAsString(ma.ref.Append("minimum_engine_version"))
 }
 
+// Name returns a reference to field name of aws_memorydb_acl.
 func (ma dataMemorydbAclAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("name"))
+	return terra.ReferenceAsString(ma.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_memorydb_acl.
 func (ma dataMemorydbAclAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ma.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ma.ref.Append("tags"))
 }
 
+// UserNames returns a reference to field user_names of aws_memorydb_acl.
 func (ma dataMemorydbAclAttributes) UserNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ma.ref.Append("user_names"))
+	return terra.ReferenceAsSet[terra.StringValue](ma.ref.Append("user_names"))
 }

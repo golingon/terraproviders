@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataEc2InstanceTypeOffering creates a new instance of [DataEc2InstanceTypeOffering].
 func NewDataEc2InstanceTypeOffering(name string, args DataEc2InstanceTypeOfferingArgs) *DataEc2InstanceTypeOffering {
 	return &DataEc2InstanceTypeOffering{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataEc2InstanceTypeOffering(name string, args DataEc2InstanceTypeOfferin
 
 var _ terra.DataResource = (*DataEc2InstanceTypeOffering)(nil)
 
+// DataEc2InstanceTypeOffering represents the Terraform data resource aws_ec2_instance_type_offering.
 type DataEc2InstanceTypeOffering struct {
 	Name string
 	Args DataEc2InstanceTypeOfferingArgs
 }
 
+// DataSource returns the Terraform object type for [DataEc2InstanceTypeOffering].
 func (eito *DataEc2InstanceTypeOffering) DataSource() string {
 	return "aws_ec2_instance_type_offering"
 }
 
+// LocalName returns the local name for [DataEc2InstanceTypeOffering].
 func (eito *DataEc2InstanceTypeOffering) LocalName() string {
 	return eito.Name
 }
 
+// Configuration returns the configuration (args) for [DataEc2InstanceTypeOffering].
 func (eito *DataEc2InstanceTypeOffering) Configuration() interface{} {
 	return eito.Args
 }
 
+// Attributes returns the attributes for [DataEc2InstanceTypeOffering].
 func (eito *DataEc2InstanceTypeOffering) Attributes() dataEc2InstanceTypeOfferingAttributes {
 	return dataEc2InstanceTypeOfferingAttributes{ref: terra.ReferenceDataResource(eito)}
 }
 
+// DataEc2InstanceTypeOfferingArgs contains the configurations for aws_ec2_instance_type_offering.
 type DataEc2InstanceTypeOfferingArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,26 +60,30 @@ type dataEc2InstanceTypeOfferingAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_ec2_instance_type_offering.
 func (eito dataEc2InstanceTypeOfferingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(eito.ref.Append("id"))
+	return terra.ReferenceAsString(eito.ref.Append("id"))
 }
 
+// InstanceType returns a reference to field instance_type of aws_ec2_instance_type_offering.
 func (eito dataEc2InstanceTypeOfferingAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(eito.ref.Append("instance_type"))
+	return terra.ReferenceAsString(eito.ref.Append("instance_type"))
 }
 
+// LocationType returns a reference to field location_type of aws_ec2_instance_type_offering.
 func (eito dataEc2InstanceTypeOfferingAttributes) LocationType() terra.StringValue {
-	return terra.ReferenceString(eito.ref.Append("location_type"))
+	return terra.ReferenceAsString(eito.ref.Append("location_type"))
 }
 
+// PreferredInstanceTypes returns a reference to field preferred_instance_types of aws_ec2_instance_type_offering.
 func (eito dataEc2InstanceTypeOfferingAttributes) PreferredInstanceTypes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](eito.ref.Append("preferred_instance_types"))
+	return terra.ReferenceAsList[terra.StringValue](eito.ref.Append("preferred_instance_types"))
 }
 
 func (eito dataEc2InstanceTypeOfferingAttributes) Filter() terra.SetValue[dataec2instancetypeoffering.FilterAttributes] {
-	return terra.ReferenceSet[dataec2instancetypeoffering.FilterAttributes](eito.ref.Append("filter"))
+	return terra.ReferenceAsSet[dataec2instancetypeoffering.FilterAttributes](eito.ref.Append("filter"))
 }
 
 func (eito dataEc2InstanceTypeOfferingAttributes) Timeouts() dataec2instancetypeoffering.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataec2instancetypeoffering.TimeoutsAttributes](eito.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataec2instancetypeoffering.TimeoutsAttributes](eito.ref.Append("timeouts"))
 }

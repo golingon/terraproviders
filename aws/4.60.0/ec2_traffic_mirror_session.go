@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewEc2TrafficMirrorSession creates a new instance of [Ec2TrafficMirrorSession].
 func NewEc2TrafficMirrorSession(name string, args Ec2TrafficMirrorSessionArgs) *Ec2TrafficMirrorSession {
 	return &Ec2TrafficMirrorSession{
 		Args: args,
@@ -18,28 +19,51 @@ func NewEc2TrafficMirrorSession(name string, args Ec2TrafficMirrorSessionArgs) *
 
 var _ terra.Resource = (*Ec2TrafficMirrorSession)(nil)
 
+// Ec2TrafficMirrorSession represents the Terraform resource aws_ec2_traffic_mirror_session.
 type Ec2TrafficMirrorSession struct {
-	Name  string
-	Args  Ec2TrafficMirrorSessionArgs
-	state *ec2TrafficMirrorSessionState
+	Name      string
+	Args      Ec2TrafficMirrorSessionArgs
+	state     *ec2TrafficMirrorSessionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Ec2TrafficMirrorSession].
 func (etms *Ec2TrafficMirrorSession) Type() string {
 	return "aws_ec2_traffic_mirror_session"
 }
 
+// LocalName returns the local name for [Ec2TrafficMirrorSession].
 func (etms *Ec2TrafficMirrorSession) LocalName() string {
 	return etms.Name
 }
 
+// Configuration returns the configuration (args) for [Ec2TrafficMirrorSession].
 func (etms *Ec2TrafficMirrorSession) Configuration() interface{} {
 	return etms.Args
 }
 
+// DependOn is used for other resources to depend on [Ec2TrafficMirrorSession].
+func (etms *Ec2TrafficMirrorSession) DependOn() terra.Reference {
+	return terra.ReferenceResource(etms)
+}
+
+// Dependencies returns the list of resources [Ec2TrafficMirrorSession] depends_on.
+func (etms *Ec2TrafficMirrorSession) Dependencies() terra.Dependencies {
+	return etms.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Ec2TrafficMirrorSession].
+func (etms *Ec2TrafficMirrorSession) LifecycleManagement() *terra.Lifecycle {
+	return etms.Lifecycle
+}
+
+// Attributes returns the attributes for [Ec2TrafficMirrorSession].
 func (etms *Ec2TrafficMirrorSession) Attributes() ec2TrafficMirrorSessionAttributes {
 	return ec2TrafficMirrorSessionAttributes{ref: terra.ReferenceResource(etms)}
 }
 
+// ImportState imports the given attribute values into [Ec2TrafficMirrorSession]'s state.
 func (etms *Ec2TrafficMirrorSession) ImportState(av io.Reader) error {
 	etms.state = &ec2TrafficMirrorSessionState{}
 	if err := json.NewDecoder(av).Decode(etms.state); err != nil {
@@ -48,10 +72,12 @@ func (etms *Ec2TrafficMirrorSession) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Ec2TrafficMirrorSession] has state.
 func (etms *Ec2TrafficMirrorSession) State() (*ec2TrafficMirrorSessionState, bool) {
 	return etms.state, etms.state != nil
 }
 
+// StateMust returns the state for [Ec2TrafficMirrorSession]. Panics if the state is nil.
 func (etms *Ec2TrafficMirrorSession) StateMust() *ec2TrafficMirrorSessionState {
 	if etms.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", etms.Type(), etms.LocalName()))
@@ -59,10 +85,7 @@ func (etms *Ec2TrafficMirrorSession) StateMust() *ec2TrafficMirrorSessionState {
 	return etms.state
 }
 
-func (etms *Ec2TrafficMirrorSession) DependOn() terra.Reference {
-	return terra.ReferenceResource(etms)
-}
-
+// Ec2TrafficMirrorSessionArgs contains the configurations for aws_ec2_traffic_mirror_session.
 type Ec2TrafficMirrorSessionArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -84,59 +107,69 @@ type Ec2TrafficMirrorSessionArgs struct {
 	TrafficMirrorTargetId terra.StringValue `hcl:"traffic_mirror_target_id,attr" validate:"required"`
 	// VirtualNetworkId: number, optional
 	VirtualNetworkId terra.NumberValue `hcl:"virtual_network_id,attr"`
-	// DependsOn contains resources that Ec2TrafficMirrorSession depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ec2TrafficMirrorSessionAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ec2_traffic_mirror_session.
 func (etms ec2TrafficMirrorSessionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(etms.ref.Append("arn"))
+	return terra.ReferenceAsString(etms.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_ec2_traffic_mirror_session.
 func (etms ec2TrafficMirrorSessionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(etms.ref.Append("description"))
+	return terra.ReferenceAsString(etms.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_ec2_traffic_mirror_session.
 func (etms ec2TrafficMirrorSessionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(etms.ref.Append("id"))
+	return terra.ReferenceAsString(etms.ref.Append("id"))
 }
 
+// NetworkInterfaceId returns a reference to field network_interface_id of aws_ec2_traffic_mirror_session.
 func (etms ec2TrafficMirrorSessionAttributes) NetworkInterfaceId() terra.StringValue {
-	return terra.ReferenceString(etms.ref.Append("network_interface_id"))
+	return terra.ReferenceAsString(etms.ref.Append("network_interface_id"))
 }
 
+// OwnerId returns a reference to field owner_id of aws_ec2_traffic_mirror_session.
 func (etms ec2TrafficMirrorSessionAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(etms.ref.Append("owner_id"))
+	return terra.ReferenceAsString(etms.ref.Append("owner_id"))
 }
 
+// PacketLength returns a reference to field packet_length of aws_ec2_traffic_mirror_session.
 func (etms ec2TrafficMirrorSessionAttributes) PacketLength() terra.NumberValue {
-	return terra.ReferenceNumber(etms.ref.Append("packet_length"))
+	return terra.ReferenceAsNumber(etms.ref.Append("packet_length"))
 }
 
+// SessionNumber returns a reference to field session_number of aws_ec2_traffic_mirror_session.
 func (etms ec2TrafficMirrorSessionAttributes) SessionNumber() terra.NumberValue {
-	return terra.ReferenceNumber(etms.ref.Append("session_number"))
+	return terra.ReferenceAsNumber(etms.ref.Append("session_number"))
 }
 
+// Tags returns a reference to field tags of aws_ec2_traffic_mirror_session.
 func (etms ec2TrafficMirrorSessionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](etms.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](etms.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_ec2_traffic_mirror_session.
 func (etms ec2TrafficMirrorSessionAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](etms.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](etms.ref.Append("tags_all"))
 }
 
+// TrafficMirrorFilterId returns a reference to field traffic_mirror_filter_id of aws_ec2_traffic_mirror_session.
 func (etms ec2TrafficMirrorSessionAttributes) TrafficMirrorFilterId() terra.StringValue {
-	return terra.ReferenceString(etms.ref.Append("traffic_mirror_filter_id"))
+	return terra.ReferenceAsString(etms.ref.Append("traffic_mirror_filter_id"))
 }
 
+// TrafficMirrorTargetId returns a reference to field traffic_mirror_target_id of aws_ec2_traffic_mirror_session.
 func (etms ec2TrafficMirrorSessionAttributes) TrafficMirrorTargetId() terra.StringValue {
-	return terra.ReferenceString(etms.ref.Append("traffic_mirror_target_id"))
+	return terra.ReferenceAsString(etms.ref.Append("traffic_mirror_target_id"))
 }
 
+// VirtualNetworkId returns a reference to field virtual_network_id of aws_ec2_traffic_mirror_session.
 func (etms ec2TrafficMirrorSessionAttributes) VirtualNetworkId() terra.NumberValue {
-	return terra.ReferenceNumber(etms.ref.Append("virtual_network_id"))
+	return terra.ReferenceAsNumber(etms.ref.Append("virtual_network_id"))
 }
 
 type ec2TrafficMirrorSessionState struct {

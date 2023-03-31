@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBackupReportPlan creates a new instance of [BackupReportPlan].
 func NewBackupReportPlan(name string, args BackupReportPlanArgs) *BackupReportPlan {
 	return &BackupReportPlan{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBackupReportPlan(name string, args BackupReportPlanArgs) *BackupReportPl
 
 var _ terra.Resource = (*BackupReportPlan)(nil)
 
+// BackupReportPlan represents the Terraform resource aws_backup_report_plan.
 type BackupReportPlan struct {
-	Name  string
-	Args  BackupReportPlanArgs
-	state *backupReportPlanState
+	Name      string
+	Args      BackupReportPlanArgs
+	state     *backupReportPlanState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BackupReportPlan].
 func (brp *BackupReportPlan) Type() string {
 	return "aws_backup_report_plan"
 }
 
+// LocalName returns the local name for [BackupReportPlan].
 func (brp *BackupReportPlan) LocalName() string {
 	return brp.Name
 }
 
+// Configuration returns the configuration (args) for [BackupReportPlan].
 func (brp *BackupReportPlan) Configuration() interface{} {
 	return brp.Args
 }
 
+// DependOn is used for other resources to depend on [BackupReportPlan].
+func (brp *BackupReportPlan) DependOn() terra.Reference {
+	return terra.ReferenceResource(brp)
+}
+
+// Dependencies returns the list of resources [BackupReportPlan] depends_on.
+func (brp *BackupReportPlan) Dependencies() terra.Dependencies {
+	return brp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BackupReportPlan].
+func (brp *BackupReportPlan) LifecycleManagement() *terra.Lifecycle {
+	return brp.Lifecycle
+}
+
+// Attributes returns the attributes for [BackupReportPlan].
 func (brp *BackupReportPlan) Attributes() backupReportPlanAttributes {
 	return backupReportPlanAttributes{ref: terra.ReferenceResource(brp)}
 }
 
+// ImportState imports the given attribute values into [BackupReportPlan]'s state.
 func (brp *BackupReportPlan) ImportState(av io.Reader) error {
 	brp.state = &backupReportPlanState{}
 	if err := json.NewDecoder(av).Decode(brp.state); err != nil {
@@ -49,10 +73,12 @@ func (brp *BackupReportPlan) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BackupReportPlan] has state.
 func (brp *BackupReportPlan) State() (*backupReportPlanState, bool) {
 	return brp.state, brp.state != nil
 }
 
+// StateMust returns the state for [BackupReportPlan]. Panics if the state is nil.
 func (brp *BackupReportPlan) StateMust() *backupReportPlanState {
 	if brp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", brp.Type(), brp.LocalName()))
@@ -60,10 +86,7 @@ func (brp *BackupReportPlan) StateMust() *backupReportPlanState {
 	return brp.state
 }
 
-func (brp *BackupReportPlan) DependOn() terra.Reference {
-	return terra.ReferenceResource(brp)
-}
-
+// BackupReportPlanArgs contains the configurations for aws_backup_report_plan.
 type BackupReportPlanArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -79,51 +102,57 @@ type BackupReportPlanArgs struct {
 	ReportDeliveryChannel *backupreportplan.ReportDeliveryChannel `hcl:"report_delivery_channel,block" validate:"required"`
 	// ReportSetting: required
 	ReportSetting *backupreportplan.ReportSetting `hcl:"report_setting,block" validate:"required"`
-	// DependsOn contains resources that BackupReportPlan depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type backupReportPlanAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_backup_report_plan.
 func (brp backupReportPlanAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(brp.ref.Append("arn"))
+	return terra.ReferenceAsString(brp.ref.Append("arn"))
 }
 
+// CreationTime returns a reference to field creation_time of aws_backup_report_plan.
 func (brp backupReportPlanAttributes) CreationTime() terra.StringValue {
-	return terra.ReferenceString(brp.ref.Append("creation_time"))
+	return terra.ReferenceAsString(brp.ref.Append("creation_time"))
 }
 
+// DeploymentStatus returns a reference to field deployment_status of aws_backup_report_plan.
 func (brp backupReportPlanAttributes) DeploymentStatus() terra.StringValue {
-	return terra.ReferenceString(brp.ref.Append("deployment_status"))
+	return terra.ReferenceAsString(brp.ref.Append("deployment_status"))
 }
 
+// Description returns a reference to field description of aws_backup_report_plan.
 func (brp backupReportPlanAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(brp.ref.Append("description"))
+	return terra.ReferenceAsString(brp.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_backup_report_plan.
 func (brp backupReportPlanAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(brp.ref.Append("id"))
+	return terra.ReferenceAsString(brp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_backup_report_plan.
 func (brp backupReportPlanAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(brp.ref.Append("name"))
+	return terra.ReferenceAsString(brp.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_backup_report_plan.
 func (brp backupReportPlanAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](brp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](brp.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_backup_report_plan.
 func (brp backupReportPlanAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](brp.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](brp.ref.Append("tags_all"))
 }
 
 func (brp backupReportPlanAttributes) ReportDeliveryChannel() terra.ListValue[backupreportplan.ReportDeliveryChannelAttributes] {
-	return terra.ReferenceList[backupreportplan.ReportDeliveryChannelAttributes](brp.ref.Append("report_delivery_channel"))
+	return terra.ReferenceAsList[backupreportplan.ReportDeliveryChannelAttributes](brp.ref.Append("report_delivery_channel"))
 }
 
 func (brp backupReportPlanAttributes) ReportSetting() terra.ListValue[backupreportplan.ReportSettingAttributes] {
-	return terra.ReferenceList[backupreportplan.ReportSettingAttributes](brp.ref.Append("report_setting"))
+	return terra.ReferenceAsList[backupreportplan.ReportSettingAttributes](brp.ref.Append("report_setting"))
 }
 
 type backupReportPlanState struct {

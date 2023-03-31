@@ -26,19 +26,19 @@ func (dvo DomainValidationOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dvo DomainValidationOptionsAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(dvo.ref.Append("domain_name"))
+	return terra.ReferenceAsString(dvo.ref.Append("domain_name"))
 }
 
 func (dvo DomainValidationOptionsAttributes) ResourceRecordName() terra.StringValue {
-	return terra.ReferenceString(dvo.ref.Append("resource_record_name"))
+	return terra.ReferenceAsString(dvo.ref.Append("resource_record_name"))
 }
 
 func (dvo DomainValidationOptionsAttributes) ResourceRecordType() terra.StringValue {
-	return terra.ReferenceString(dvo.ref.Append("resource_record_type"))
+	return terra.ReferenceAsString(dvo.ref.Append("resource_record_type"))
 }
 
 func (dvo DomainValidationOptionsAttributes) ResourceRecordValue() terra.StringValue {
-	return terra.ReferenceString(dvo.ref.Append("resource_record_value"))
+	return terra.ReferenceAsString(dvo.ref.Append("resource_record_value"))
 }
 
 type DomainValidationOptionsState struct {

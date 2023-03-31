@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewLightsailKeyPair creates a new instance of [LightsailKeyPair].
 func NewLightsailKeyPair(name string, args LightsailKeyPairArgs) *LightsailKeyPair {
 	return &LightsailKeyPair{
 		Args: args,
@@ -18,28 +19,51 @@ func NewLightsailKeyPair(name string, args LightsailKeyPairArgs) *LightsailKeyPa
 
 var _ terra.Resource = (*LightsailKeyPair)(nil)
 
+// LightsailKeyPair represents the Terraform resource aws_lightsail_key_pair.
 type LightsailKeyPair struct {
-	Name  string
-	Args  LightsailKeyPairArgs
-	state *lightsailKeyPairState
+	Name      string
+	Args      LightsailKeyPairArgs
+	state     *lightsailKeyPairState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LightsailKeyPair].
 func (lkp *LightsailKeyPair) Type() string {
 	return "aws_lightsail_key_pair"
 }
 
+// LocalName returns the local name for [LightsailKeyPair].
 func (lkp *LightsailKeyPair) LocalName() string {
 	return lkp.Name
 }
 
+// Configuration returns the configuration (args) for [LightsailKeyPair].
 func (lkp *LightsailKeyPair) Configuration() interface{} {
 	return lkp.Args
 }
 
+// DependOn is used for other resources to depend on [LightsailKeyPair].
+func (lkp *LightsailKeyPair) DependOn() terra.Reference {
+	return terra.ReferenceResource(lkp)
+}
+
+// Dependencies returns the list of resources [LightsailKeyPair] depends_on.
+func (lkp *LightsailKeyPair) Dependencies() terra.Dependencies {
+	return lkp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LightsailKeyPair].
+func (lkp *LightsailKeyPair) LifecycleManagement() *terra.Lifecycle {
+	return lkp.Lifecycle
+}
+
+// Attributes returns the attributes for [LightsailKeyPair].
 func (lkp *LightsailKeyPair) Attributes() lightsailKeyPairAttributes {
 	return lightsailKeyPairAttributes{ref: terra.ReferenceResource(lkp)}
 }
 
+// ImportState imports the given attribute values into [LightsailKeyPair]'s state.
 func (lkp *LightsailKeyPair) ImportState(av io.Reader) error {
 	lkp.state = &lightsailKeyPairState{}
 	if err := json.NewDecoder(av).Decode(lkp.state); err != nil {
@@ -48,10 +72,12 @@ func (lkp *LightsailKeyPair) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LightsailKeyPair] has state.
 func (lkp *LightsailKeyPair) State() (*lightsailKeyPairState, bool) {
 	return lkp.state, lkp.state != nil
 }
 
+// StateMust returns the state for [LightsailKeyPair]. Panics if the state is nil.
 func (lkp *LightsailKeyPair) StateMust() *lightsailKeyPairState {
 	if lkp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lkp.Type(), lkp.LocalName()))
@@ -59,10 +85,7 @@ func (lkp *LightsailKeyPair) StateMust() *lightsailKeyPairState {
 	return lkp.state
 }
 
-func (lkp *LightsailKeyPair) DependOn() terra.Reference {
-	return terra.ReferenceResource(lkp)
-}
-
+// LightsailKeyPairArgs contains the configurations for aws_lightsail_key_pair.
 type LightsailKeyPairArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -74,51 +97,59 @@ type LightsailKeyPairArgs struct {
 	PgpKey terra.StringValue `hcl:"pgp_key,attr"`
 	// PublicKey: string, optional
 	PublicKey terra.StringValue `hcl:"public_key,attr"`
-	// DependsOn contains resources that LightsailKeyPair depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lightsailKeyPairAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_lightsail_key_pair.
 func (lkp lightsailKeyPairAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(lkp.ref.Append("arn"))
+	return terra.ReferenceAsString(lkp.ref.Append("arn"))
 }
 
+// EncryptedFingerprint returns a reference to field encrypted_fingerprint of aws_lightsail_key_pair.
 func (lkp lightsailKeyPairAttributes) EncryptedFingerprint() terra.StringValue {
-	return terra.ReferenceString(lkp.ref.Append("encrypted_fingerprint"))
+	return terra.ReferenceAsString(lkp.ref.Append("encrypted_fingerprint"))
 }
 
+// EncryptedPrivateKey returns a reference to field encrypted_private_key of aws_lightsail_key_pair.
 func (lkp lightsailKeyPairAttributes) EncryptedPrivateKey() terra.StringValue {
-	return terra.ReferenceString(lkp.ref.Append("encrypted_private_key"))
+	return terra.ReferenceAsString(lkp.ref.Append("encrypted_private_key"))
 }
 
+// Fingerprint returns a reference to field fingerprint of aws_lightsail_key_pair.
 func (lkp lightsailKeyPairAttributes) Fingerprint() terra.StringValue {
-	return terra.ReferenceString(lkp.ref.Append("fingerprint"))
+	return terra.ReferenceAsString(lkp.ref.Append("fingerprint"))
 }
 
+// Id returns a reference to field id of aws_lightsail_key_pair.
 func (lkp lightsailKeyPairAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lkp.ref.Append("id"))
+	return terra.ReferenceAsString(lkp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_lightsail_key_pair.
 func (lkp lightsailKeyPairAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lkp.ref.Append("name"))
+	return terra.ReferenceAsString(lkp.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_lightsail_key_pair.
 func (lkp lightsailKeyPairAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(lkp.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(lkp.ref.Append("name_prefix"))
 }
 
+// PgpKey returns a reference to field pgp_key of aws_lightsail_key_pair.
 func (lkp lightsailKeyPairAttributes) PgpKey() terra.StringValue {
-	return terra.ReferenceString(lkp.ref.Append("pgp_key"))
+	return terra.ReferenceAsString(lkp.ref.Append("pgp_key"))
 }
 
+// PrivateKey returns a reference to field private_key of aws_lightsail_key_pair.
 func (lkp lightsailKeyPairAttributes) PrivateKey() terra.StringValue {
-	return terra.ReferenceString(lkp.ref.Append("private_key"))
+	return terra.ReferenceAsString(lkp.ref.Append("private_key"))
 }
 
+// PublicKey returns a reference to field public_key of aws_lightsail_key_pair.
 func (lkp lightsailKeyPairAttributes) PublicKey() terra.StringValue {
-	return terra.ReferenceString(lkp.ref.Append("public_key"))
+	return terra.ReferenceAsString(lkp.ref.Append("public_key"))
 }
 
 type lightsailKeyPairState struct {

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataKendraIndex creates a new instance of [DataKendraIndex].
 func NewDataKendraIndex(name string, args DataKendraIndexArgs) *DataKendraIndex {
 	return &DataKendraIndex{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataKendraIndex(name string, args DataKendraIndexArgs) *DataKendraIndex 
 
 var _ terra.DataResource = (*DataKendraIndex)(nil)
 
+// DataKendraIndex represents the Terraform data resource aws_kendra_index.
 type DataKendraIndex struct {
 	Name string
 	Args DataKendraIndexArgs
 }
 
+// DataSource returns the Terraform object type for [DataKendraIndex].
 func (ki *DataKendraIndex) DataSource() string {
 	return "aws_kendra_index"
 }
 
+// LocalName returns the local name for [DataKendraIndex].
 func (ki *DataKendraIndex) LocalName() string {
 	return ki.Name
 }
 
+// Configuration returns the configuration (args) for [DataKendraIndex].
 func (ki *DataKendraIndex) Configuration() interface{} {
 	return ki.Args
 }
 
+// Attributes returns the attributes for [DataKendraIndex].
 func (ki *DataKendraIndex) Attributes() dataKendraIndexAttributes {
 	return dataKendraIndexAttributes{ref: terra.ReferenceDataResource(ki)}
 }
 
+// DataKendraIndexArgs contains the configurations for aws_kendra_index.
 type DataKendraIndexArgs struct {
 	// Id: string, required
 	Id terra.StringValue `hcl:"id,attr" validate:"required"`
@@ -59,74 +66,86 @@ type dataKendraIndexAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_kendra_index.
 func (ki dataKendraIndexAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ki.ref.Append("arn"))
+	return terra.ReferenceAsString(ki.ref.Append("arn"))
 }
 
+// CreatedAt returns a reference to field created_at of aws_kendra_index.
 func (ki dataKendraIndexAttributes) CreatedAt() terra.StringValue {
-	return terra.ReferenceString(ki.ref.Append("created_at"))
+	return terra.ReferenceAsString(ki.ref.Append("created_at"))
 }
 
+// Description returns a reference to field description of aws_kendra_index.
 func (ki dataKendraIndexAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ki.ref.Append("description"))
+	return terra.ReferenceAsString(ki.ref.Append("description"))
 }
 
+// Edition returns a reference to field edition of aws_kendra_index.
 func (ki dataKendraIndexAttributes) Edition() terra.StringValue {
-	return terra.ReferenceString(ki.ref.Append("edition"))
+	return terra.ReferenceAsString(ki.ref.Append("edition"))
 }
 
+// ErrorMessage returns a reference to field error_message of aws_kendra_index.
 func (ki dataKendraIndexAttributes) ErrorMessage() terra.StringValue {
-	return terra.ReferenceString(ki.ref.Append("error_message"))
+	return terra.ReferenceAsString(ki.ref.Append("error_message"))
 }
 
+// Id returns a reference to field id of aws_kendra_index.
 func (ki dataKendraIndexAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ki.ref.Append("id"))
+	return terra.ReferenceAsString(ki.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_kendra_index.
 func (ki dataKendraIndexAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ki.ref.Append("name"))
+	return terra.ReferenceAsString(ki.ref.Append("name"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_kendra_index.
 func (ki dataKendraIndexAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(ki.ref.Append("role_arn"))
+	return terra.ReferenceAsString(ki.ref.Append("role_arn"))
 }
 
+// Status returns a reference to field status of aws_kendra_index.
 func (ki dataKendraIndexAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ki.ref.Append("status"))
+	return terra.ReferenceAsString(ki.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of aws_kendra_index.
 func (ki dataKendraIndexAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ki.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ki.ref.Append("tags"))
 }
 
+// UpdatedAt returns a reference to field updated_at of aws_kendra_index.
 func (ki dataKendraIndexAttributes) UpdatedAt() terra.StringValue {
-	return terra.ReferenceString(ki.ref.Append("updated_at"))
+	return terra.ReferenceAsString(ki.ref.Append("updated_at"))
 }
 
+// UserContextPolicy returns a reference to field user_context_policy of aws_kendra_index.
 func (ki dataKendraIndexAttributes) UserContextPolicy() terra.StringValue {
-	return terra.ReferenceString(ki.ref.Append("user_context_policy"))
+	return terra.ReferenceAsString(ki.ref.Append("user_context_policy"))
 }
 
 func (ki dataKendraIndexAttributes) CapacityUnits() terra.ListValue[datakendraindex.CapacityUnitsAttributes] {
-	return terra.ReferenceList[datakendraindex.CapacityUnitsAttributes](ki.ref.Append("capacity_units"))
+	return terra.ReferenceAsList[datakendraindex.CapacityUnitsAttributes](ki.ref.Append("capacity_units"))
 }
 
 func (ki dataKendraIndexAttributes) DocumentMetadataConfigurationUpdates() terra.SetValue[datakendraindex.DocumentMetadataConfigurationUpdatesAttributes] {
-	return terra.ReferenceSet[datakendraindex.DocumentMetadataConfigurationUpdatesAttributes](ki.ref.Append("document_metadata_configuration_updates"))
+	return terra.ReferenceAsSet[datakendraindex.DocumentMetadataConfigurationUpdatesAttributes](ki.ref.Append("document_metadata_configuration_updates"))
 }
 
 func (ki dataKendraIndexAttributes) IndexStatistics() terra.ListValue[datakendraindex.IndexStatisticsAttributes] {
-	return terra.ReferenceList[datakendraindex.IndexStatisticsAttributes](ki.ref.Append("index_statistics"))
+	return terra.ReferenceAsList[datakendraindex.IndexStatisticsAttributes](ki.ref.Append("index_statistics"))
 }
 
 func (ki dataKendraIndexAttributes) ServerSideEncryptionConfiguration() terra.ListValue[datakendraindex.ServerSideEncryptionConfigurationAttributes] {
-	return terra.ReferenceList[datakendraindex.ServerSideEncryptionConfigurationAttributes](ki.ref.Append("server_side_encryption_configuration"))
+	return terra.ReferenceAsList[datakendraindex.ServerSideEncryptionConfigurationAttributes](ki.ref.Append("server_side_encryption_configuration"))
 }
 
 func (ki dataKendraIndexAttributes) UserGroupResolutionConfiguration() terra.ListValue[datakendraindex.UserGroupResolutionConfigurationAttributes] {
-	return terra.ReferenceList[datakendraindex.UserGroupResolutionConfigurationAttributes](ki.ref.Append("user_group_resolution_configuration"))
+	return terra.ReferenceAsList[datakendraindex.UserGroupResolutionConfigurationAttributes](ki.ref.Append("user_group_resolution_configuration"))
 }
 
 func (ki dataKendraIndexAttributes) UserTokenConfigurations() terra.ListValue[datakendraindex.UserTokenConfigurationsAttributes] {
-	return terra.ReferenceList[datakendraindex.UserTokenConfigurationsAttributes](ki.ref.Append("user_token_configurations"))
+	return terra.ReferenceAsList[datakendraindex.UserTokenConfigurationsAttributes](ki.ref.Append("user_token_configurations"))
 }

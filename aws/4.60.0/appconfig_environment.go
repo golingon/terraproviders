@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAppconfigEnvironment creates a new instance of [AppconfigEnvironment].
 func NewAppconfigEnvironment(name string, args AppconfigEnvironmentArgs) *AppconfigEnvironment {
 	return &AppconfigEnvironment{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAppconfigEnvironment(name string, args AppconfigEnvironmentArgs) *Appcon
 
 var _ terra.Resource = (*AppconfigEnvironment)(nil)
 
+// AppconfigEnvironment represents the Terraform resource aws_appconfig_environment.
 type AppconfigEnvironment struct {
-	Name  string
-	Args  AppconfigEnvironmentArgs
-	state *appconfigEnvironmentState
+	Name      string
+	Args      AppconfigEnvironmentArgs
+	state     *appconfigEnvironmentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppconfigEnvironment].
 func (ae *AppconfigEnvironment) Type() string {
 	return "aws_appconfig_environment"
 }
 
+// LocalName returns the local name for [AppconfigEnvironment].
 func (ae *AppconfigEnvironment) LocalName() string {
 	return ae.Name
 }
 
+// Configuration returns the configuration (args) for [AppconfigEnvironment].
 func (ae *AppconfigEnvironment) Configuration() interface{} {
 	return ae.Args
 }
 
+// DependOn is used for other resources to depend on [AppconfigEnvironment].
+func (ae *AppconfigEnvironment) DependOn() terra.Reference {
+	return terra.ReferenceResource(ae)
+}
+
+// Dependencies returns the list of resources [AppconfigEnvironment] depends_on.
+func (ae *AppconfigEnvironment) Dependencies() terra.Dependencies {
+	return ae.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppconfigEnvironment].
+func (ae *AppconfigEnvironment) LifecycleManagement() *terra.Lifecycle {
+	return ae.Lifecycle
+}
+
+// Attributes returns the attributes for [AppconfigEnvironment].
 func (ae *AppconfigEnvironment) Attributes() appconfigEnvironmentAttributes {
 	return appconfigEnvironmentAttributes{ref: terra.ReferenceResource(ae)}
 }
 
+// ImportState imports the given attribute values into [AppconfigEnvironment]'s state.
 func (ae *AppconfigEnvironment) ImportState(av io.Reader) error {
 	ae.state = &appconfigEnvironmentState{}
 	if err := json.NewDecoder(av).Decode(ae.state); err != nil {
@@ -49,10 +73,12 @@ func (ae *AppconfigEnvironment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppconfigEnvironment] has state.
 func (ae *AppconfigEnvironment) State() (*appconfigEnvironmentState, bool) {
 	return ae.state, ae.state != nil
 }
 
+// StateMust returns the state for [AppconfigEnvironment]. Panics if the state is nil.
 func (ae *AppconfigEnvironment) StateMust() *appconfigEnvironmentState {
 	if ae.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ae.Type(), ae.LocalName()))
@@ -60,10 +86,7 @@ func (ae *AppconfigEnvironment) StateMust() *appconfigEnvironmentState {
 	return ae.state
 }
 
-func (ae *AppconfigEnvironment) DependOn() terra.Reference {
-	return terra.ReferenceResource(ae)
-}
-
+// AppconfigEnvironmentArgs contains the configurations for aws_appconfig_environment.
 type AppconfigEnvironmentArgs struct {
 	// ApplicationId: string, required
 	ApplicationId terra.StringValue `hcl:"application_id,attr" validate:"required"`
@@ -79,51 +102,58 @@ type AppconfigEnvironmentArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Monitor: min=0,max=5
 	Monitor []appconfigenvironment.Monitor `hcl:"monitor,block" validate:"min=0,max=5"`
-	// DependsOn contains resources that AppconfigEnvironment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appconfigEnvironmentAttributes struct {
 	ref terra.Reference
 }
 
+// ApplicationId returns a reference to field application_id of aws_appconfig_environment.
 func (ae appconfigEnvironmentAttributes) ApplicationId() terra.StringValue {
-	return terra.ReferenceString(ae.ref.Append("application_id"))
+	return terra.ReferenceAsString(ae.ref.Append("application_id"))
 }
 
+// Arn returns a reference to field arn of aws_appconfig_environment.
 func (ae appconfigEnvironmentAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ae.ref.Append("arn"))
+	return terra.ReferenceAsString(ae.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_appconfig_environment.
 func (ae appconfigEnvironmentAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ae.ref.Append("description"))
+	return terra.ReferenceAsString(ae.ref.Append("description"))
 }
 
+// EnvironmentId returns a reference to field environment_id of aws_appconfig_environment.
 func (ae appconfigEnvironmentAttributes) EnvironmentId() terra.StringValue {
-	return terra.ReferenceString(ae.ref.Append("environment_id"))
+	return terra.ReferenceAsString(ae.ref.Append("environment_id"))
 }
 
+// Id returns a reference to field id of aws_appconfig_environment.
 func (ae appconfigEnvironmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ae.ref.Append("id"))
+	return terra.ReferenceAsString(ae.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_appconfig_environment.
 func (ae appconfigEnvironmentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ae.ref.Append("name"))
+	return terra.ReferenceAsString(ae.ref.Append("name"))
 }
 
+// State returns a reference to field state of aws_appconfig_environment.
 func (ae appconfigEnvironmentAttributes) State() terra.StringValue {
-	return terra.ReferenceString(ae.ref.Append("state"))
+	return terra.ReferenceAsString(ae.ref.Append("state"))
 }
 
+// Tags returns a reference to field tags of aws_appconfig_environment.
 func (ae appconfigEnvironmentAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ae.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ae.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_appconfig_environment.
 func (ae appconfigEnvironmentAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ae.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ae.ref.Append("tags_all"))
 }
 
 func (ae appconfigEnvironmentAttributes) Monitor() terra.SetValue[appconfigenvironment.MonitorAttributes] {
-	return terra.ReferenceSet[appconfigenvironment.MonitorAttributes](ae.ref.Append("monitor"))
+	return terra.ReferenceAsSet[appconfigenvironment.MonitorAttributes](ae.ref.Append("monitor"))
 }
 
 type appconfigEnvironmentState struct {

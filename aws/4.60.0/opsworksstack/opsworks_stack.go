@@ -44,27 +44,27 @@ func (ccs CustomCookbooksSourceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ccs CustomCookbooksSourceAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(ccs.ref.Append("password"))
+	return terra.ReferenceAsString(ccs.ref.Append("password"))
 }
 
 func (ccs CustomCookbooksSourceAttributes) Revision() terra.StringValue {
-	return terra.ReferenceString(ccs.ref.Append("revision"))
+	return terra.ReferenceAsString(ccs.ref.Append("revision"))
 }
 
 func (ccs CustomCookbooksSourceAttributes) SshKey() terra.StringValue {
-	return terra.ReferenceString(ccs.ref.Append("ssh_key"))
+	return terra.ReferenceAsString(ccs.ref.Append("ssh_key"))
 }
 
 func (ccs CustomCookbooksSourceAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ccs.ref.Append("type"))
+	return terra.ReferenceAsString(ccs.ref.Append("type"))
 }
 
 func (ccs CustomCookbooksSourceAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(ccs.ref.Append("url"))
+	return terra.ReferenceAsString(ccs.ref.Append("url"))
 }
 
 func (ccs CustomCookbooksSourceAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(ccs.ref.Append("username"))
+	return terra.ReferenceAsString(ccs.ref.Append("username"))
 }
 
 type TimeoutsAttributes struct {
@@ -84,7 +84,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 type CustomCookbooksSourceState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudformationStackSetInstance creates a new instance of [CloudformationStackSetInstance].
 func NewCloudformationStackSetInstance(name string, args CloudformationStackSetInstanceArgs) *CloudformationStackSetInstance {
 	return &CloudformationStackSetInstance{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudformationStackSetInstance(name string, args CloudformationStackSetI
 
 var _ terra.Resource = (*CloudformationStackSetInstance)(nil)
 
+// CloudformationStackSetInstance represents the Terraform resource aws_cloudformation_stack_set_instance.
 type CloudformationStackSetInstance struct {
-	Name  string
-	Args  CloudformationStackSetInstanceArgs
-	state *cloudformationStackSetInstanceState
+	Name      string
+	Args      CloudformationStackSetInstanceArgs
+	state     *cloudformationStackSetInstanceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudformationStackSetInstance].
 func (cssi *CloudformationStackSetInstance) Type() string {
 	return "aws_cloudformation_stack_set_instance"
 }
 
+// LocalName returns the local name for [CloudformationStackSetInstance].
 func (cssi *CloudformationStackSetInstance) LocalName() string {
 	return cssi.Name
 }
 
+// Configuration returns the configuration (args) for [CloudformationStackSetInstance].
 func (cssi *CloudformationStackSetInstance) Configuration() interface{} {
 	return cssi.Args
 }
 
+// DependOn is used for other resources to depend on [CloudformationStackSetInstance].
+func (cssi *CloudformationStackSetInstance) DependOn() terra.Reference {
+	return terra.ReferenceResource(cssi)
+}
+
+// Dependencies returns the list of resources [CloudformationStackSetInstance] depends_on.
+func (cssi *CloudformationStackSetInstance) Dependencies() terra.Dependencies {
+	return cssi.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudformationStackSetInstance].
+func (cssi *CloudformationStackSetInstance) LifecycleManagement() *terra.Lifecycle {
+	return cssi.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudformationStackSetInstance].
 func (cssi *CloudformationStackSetInstance) Attributes() cloudformationStackSetInstanceAttributes {
 	return cloudformationStackSetInstanceAttributes{ref: terra.ReferenceResource(cssi)}
 }
 
+// ImportState imports the given attribute values into [CloudformationStackSetInstance]'s state.
 func (cssi *CloudformationStackSetInstance) ImportState(av io.Reader) error {
 	cssi.state = &cloudformationStackSetInstanceState{}
 	if err := json.NewDecoder(av).Decode(cssi.state); err != nil {
@@ -49,10 +73,12 @@ func (cssi *CloudformationStackSetInstance) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudformationStackSetInstance] has state.
 func (cssi *CloudformationStackSetInstance) State() (*cloudformationStackSetInstanceState, bool) {
 	return cssi.state, cssi.state != nil
 }
 
+// StateMust returns the state for [CloudformationStackSetInstance]. Panics if the state is nil.
 func (cssi *CloudformationStackSetInstance) StateMust() *cloudformationStackSetInstanceState {
 	if cssi.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cssi.Type(), cssi.LocalName()))
@@ -60,10 +86,7 @@ func (cssi *CloudformationStackSetInstance) StateMust() *cloudformationStackSetI
 	return cssi.state
 }
 
-func (cssi *CloudformationStackSetInstance) DependOn() terra.Reference {
-	return terra.ReferenceResource(cssi)
-}
-
+// CloudformationStackSetInstanceArgs contains the configurations for aws_cloudformation_stack_set_instance.
 type CloudformationStackSetInstanceArgs struct {
 	// AccountId: string, optional
 	AccountId terra.StringValue `hcl:"account_id,attr"`
@@ -85,59 +108,66 @@ type CloudformationStackSetInstanceArgs struct {
 	OperationPreferences *cloudformationstacksetinstance.OperationPreferences `hcl:"operation_preferences,block"`
 	// Timeouts: optional
 	Timeouts *cloudformationstacksetinstance.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CloudformationStackSetInstance depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudformationStackSetInstanceAttributes struct {
 	ref terra.Reference
 }
 
+// AccountId returns a reference to field account_id of aws_cloudformation_stack_set_instance.
 func (cssi cloudformationStackSetInstanceAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(cssi.ref.Append("account_id"))
+	return terra.ReferenceAsString(cssi.ref.Append("account_id"))
 }
 
+// CallAs returns a reference to field call_as of aws_cloudformation_stack_set_instance.
 func (cssi cloudformationStackSetInstanceAttributes) CallAs() terra.StringValue {
-	return terra.ReferenceString(cssi.ref.Append("call_as"))
+	return terra.ReferenceAsString(cssi.ref.Append("call_as"))
 }
 
+// Id returns a reference to field id of aws_cloudformation_stack_set_instance.
 func (cssi cloudformationStackSetInstanceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cssi.ref.Append("id"))
+	return terra.ReferenceAsString(cssi.ref.Append("id"))
 }
 
+// OrganizationalUnitId returns a reference to field organizational_unit_id of aws_cloudformation_stack_set_instance.
 func (cssi cloudformationStackSetInstanceAttributes) OrganizationalUnitId() terra.StringValue {
-	return terra.ReferenceString(cssi.ref.Append("organizational_unit_id"))
+	return terra.ReferenceAsString(cssi.ref.Append("organizational_unit_id"))
 }
 
+// ParameterOverrides returns a reference to field parameter_overrides of aws_cloudformation_stack_set_instance.
 func (cssi cloudformationStackSetInstanceAttributes) ParameterOverrides() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cssi.ref.Append("parameter_overrides"))
+	return terra.ReferenceAsMap[terra.StringValue](cssi.ref.Append("parameter_overrides"))
 }
 
+// Region returns a reference to field region of aws_cloudformation_stack_set_instance.
 func (cssi cloudformationStackSetInstanceAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(cssi.ref.Append("region"))
+	return terra.ReferenceAsString(cssi.ref.Append("region"))
 }
 
+// RetainStack returns a reference to field retain_stack of aws_cloudformation_stack_set_instance.
 func (cssi cloudformationStackSetInstanceAttributes) RetainStack() terra.BoolValue {
-	return terra.ReferenceBool(cssi.ref.Append("retain_stack"))
+	return terra.ReferenceAsBool(cssi.ref.Append("retain_stack"))
 }
 
+// StackId returns a reference to field stack_id of aws_cloudformation_stack_set_instance.
 func (cssi cloudformationStackSetInstanceAttributes) StackId() terra.StringValue {
-	return terra.ReferenceString(cssi.ref.Append("stack_id"))
+	return terra.ReferenceAsString(cssi.ref.Append("stack_id"))
 }
 
+// StackSetName returns a reference to field stack_set_name of aws_cloudformation_stack_set_instance.
 func (cssi cloudformationStackSetInstanceAttributes) StackSetName() terra.StringValue {
-	return terra.ReferenceString(cssi.ref.Append("stack_set_name"))
+	return terra.ReferenceAsString(cssi.ref.Append("stack_set_name"))
 }
 
 func (cssi cloudformationStackSetInstanceAttributes) DeploymentTargets() terra.ListValue[cloudformationstacksetinstance.DeploymentTargetsAttributes] {
-	return terra.ReferenceList[cloudformationstacksetinstance.DeploymentTargetsAttributes](cssi.ref.Append("deployment_targets"))
+	return terra.ReferenceAsList[cloudformationstacksetinstance.DeploymentTargetsAttributes](cssi.ref.Append("deployment_targets"))
 }
 
 func (cssi cloudformationStackSetInstanceAttributes) OperationPreferences() terra.ListValue[cloudformationstacksetinstance.OperationPreferencesAttributes] {
-	return terra.ReferenceList[cloudformationstacksetinstance.OperationPreferencesAttributes](cssi.ref.Append("operation_preferences"))
+	return terra.ReferenceAsList[cloudformationstacksetinstance.OperationPreferencesAttributes](cssi.ref.Append("operation_preferences"))
 }
 
 func (cssi cloudformationStackSetInstanceAttributes) Timeouts() cloudformationstacksetinstance.TimeoutsAttributes {
-	return terra.ReferenceSingle[cloudformationstacksetinstance.TimeoutsAttributes](cssi.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cloudformationstacksetinstance.TimeoutsAttributes](cssi.ref.Append("timeouts"))
 }
 
 type cloudformationStackSetInstanceState struct {

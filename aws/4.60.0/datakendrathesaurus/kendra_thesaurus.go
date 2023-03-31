@@ -26,11 +26,11 @@ func (ssp SourceS3PathAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ssp SourceS3PathAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("bucket"))
+	return terra.ReferenceAsString(ssp.ref.Append("bucket"))
 }
 
 func (ssp SourceS3PathAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("key"))
+	return terra.ReferenceAsString(ssp.ref.Append("key"))
 }
 
 type SourceS3PathState struct {

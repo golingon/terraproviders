@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDlmLifecyclePolicy creates a new instance of [DlmLifecyclePolicy].
 func NewDlmLifecyclePolicy(name string, args DlmLifecyclePolicyArgs) *DlmLifecyclePolicy {
 	return &DlmLifecyclePolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDlmLifecyclePolicy(name string, args DlmLifecyclePolicyArgs) *DlmLifecyc
 
 var _ terra.Resource = (*DlmLifecyclePolicy)(nil)
 
+// DlmLifecyclePolicy represents the Terraform resource aws_dlm_lifecycle_policy.
 type DlmLifecyclePolicy struct {
-	Name  string
-	Args  DlmLifecyclePolicyArgs
-	state *dlmLifecyclePolicyState
+	Name      string
+	Args      DlmLifecyclePolicyArgs
+	state     *dlmLifecyclePolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DlmLifecyclePolicy].
 func (dlp *DlmLifecyclePolicy) Type() string {
 	return "aws_dlm_lifecycle_policy"
 }
 
+// LocalName returns the local name for [DlmLifecyclePolicy].
 func (dlp *DlmLifecyclePolicy) LocalName() string {
 	return dlp.Name
 }
 
+// Configuration returns the configuration (args) for [DlmLifecyclePolicy].
 func (dlp *DlmLifecyclePolicy) Configuration() interface{} {
 	return dlp.Args
 }
 
+// DependOn is used for other resources to depend on [DlmLifecyclePolicy].
+func (dlp *DlmLifecyclePolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(dlp)
+}
+
+// Dependencies returns the list of resources [DlmLifecyclePolicy] depends_on.
+func (dlp *DlmLifecyclePolicy) Dependencies() terra.Dependencies {
+	return dlp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DlmLifecyclePolicy].
+func (dlp *DlmLifecyclePolicy) LifecycleManagement() *terra.Lifecycle {
+	return dlp.Lifecycle
+}
+
+// Attributes returns the attributes for [DlmLifecyclePolicy].
 func (dlp *DlmLifecyclePolicy) Attributes() dlmLifecyclePolicyAttributes {
 	return dlmLifecyclePolicyAttributes{ref: terra.ReferenceResource(dlp)}
 }
 
+// ImportState imports the given attribute values into [DlmLifecyclePolicy]'s state.
 func (dlp *DlmLifecyclePolicy) ImportState(av io.Reader) error {
 	dlp.state = &dlmLifecyclePolicyState{}
 	if err := json.NewDecoder(av).Decode(dlp.state); err != nil {
@@ -49,10 +73,12 @@ func (dlp *DlmLifecyclePolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DlmLifecyclePolicy] has state.
 func (dlp *DlmLifecyclePolicy) State() (*dlmLifecyclePolicyState, bool) {
 	return dlp.state, dlp.state != nil
 }
 
+// StateMust returns the state for [DlmLifecyclePolicy]. Panics if the state is nil.
 func (dlp *DlmLifecyclePolicy) StateMust() *dlmLifecyclePolicyState {
 	if dlp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dlp.Type(), dlp.LocalName()))
@@ -60,10 +86,7 @@ func (dlp *DlmLifecyclePolicy) StateMust() *dlmLifecyclePolicyState {
 	return dlp.state
 }
 
-func (dlp *DlmLifecyclePolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(dlp)
-}
-
+// DlmLifecyclePolicyArgs contains the configurations for aws_dlm_lifecycle_policy.
 type DlmLifecyclePolicyArgs struct {
 	// Description: string, required
 	Description terra.StringValue `hcl:"description,attr" validate:"required"`
@@ -79,43 +102,48 @@ type DlmLifecyclePolicyArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// PolicyDetails: required
 	PolicyDetails *dlmlifecyclepolicy.PolicyDetails `hcl:"policy_details,block" validate:"required"`
-	// DependsOn contains resources that DlmLifecyclePolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dlmLifecyclePolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_dlm_lifecycle_policy.
 func (dlp dlmLifecyclePolicyAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dlp.ref.Append("arn"))
+	return terra.ReferenceAsString(dlp.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_dlm_lifecycle_policy.
 func (dlp dlmLifecyclePolicyAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dlp.ref.Append("description"))
+	return terra.ReferenceAsString(dlp.ref.Append("description"))
 }
 
+// ExecutionRoleArn returns a reference to field execution_role_arn of aws_dlm_lifecycle_policy.
 func (dlp dlmLifecyclePolicyAttributes) ExecutionRoleArn() terra.StringValue {
-	return terra.ReferenceString(dlp.ref.Append("execution_role_arn"))
+	return terra.ReferenceAsString(dlp.ref.Append("execution_role_arn"))
 }
 
+// Id returns a reference to field id of aws_dlm_lifecycle_policy.
 func (dlp dlmLifecyclePolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dlp.ref.Append("id"))
+	return terra.ReferenceAsString(dlp.ref.Append("id"))
 }
 
+// State returns a reference to field state of aws_dlm_lifecycle_policy.
 func (dlp dlmLifecyclePolicyAttributes) State() terra.StringValue {
-	return terra.ReferenceString(dlp.ref.Append("state"))
+	return terra.ReferenceAsString(dlp.ref.Append("state"))
 }
 
+// Tags returns a reference to field tags of aws_dlm_lifecycle_policy.
 func (dlp dlmLifecyclePolicyAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dlp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dlp.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_dlm_lifecycle_policy.
 func (dlp dlmLifecyclePolicyAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dlp.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dlp.ref.Append("tags_all"))
 }
 
 func (dlp dlmLifecyclePolicyAttributes) PolicyDetails() terra.ListValue[dlmlifecyclepolicy.PolicyDetailsAttributes] {
-	return terra.ReferenceList[dlmlifecyclepolicy.PolicyDetailsAttributes](dlp.ref.Append("policy_details"))
+	return terra.ReferenceAsList[dlmlifecyclepolicy.PolicyDetailsAttributes](dlp.ref.Append("policy_details"))
 }
 
 type dlmLifecyclePolicyState struct {

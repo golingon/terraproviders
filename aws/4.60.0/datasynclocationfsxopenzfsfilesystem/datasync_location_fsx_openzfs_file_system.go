@@ -39,7 +39,7 @@ func (p ProtocolAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p ProtocolAttributes) Nfs() terra.ListValue[NfsAttributes] {
-	return terra.ReferenceList[NfsAttributes](p.ref.Append("nfs"))
+	return terra.ReferenceAsList[NfsAttributes](p.ref.Append("nfs"))
 }
 
 type NfsAttributes struct {
@@ -59,7 +59,7 @@ func (n NfsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (n NfsAttributes) MountOptions() terra.ListValue[MountOptionsAttributes] {
-	return terra.ReferenceList[MountOptionsAttributes](n.ref.Append("mount_options"))
+	return terra.ReferenceAsList[MountOptionsAttributes](n.ref.Append("mount_options"))
 }
 
 type MountOptionsAttributes struct {
@@ -79,7 +79,7 @@ func (mo MountOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mo MountOptionsAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(mo.ref.Append("version"))
+	return terra.ReferenceAsString(mo.ref.Append("version"))
 }
 
 type ProtocolState struct {

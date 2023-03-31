@@ -26,23 +26,23 @@ func (wp WorkspacePropertiesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (wp WorkspacePropertiesAttributes) ComputeTypeName() terra.StringValue {
-	return terra.ReferenceString(wp.ref.Append("compute_type_name"))
+	return terra.ReferenceAsString(wp.ref.Append("compute_type_name"))
 }
 
 func (wp WorkspacePropertiesAttributes) RootVolumeSizeGib() terra.NumberValue {
-	return terra.ReferenceNumber(wp.ref.Append("root_volume_size_gib"))
+	return terra.ReferenceAsNumber(wp.ref.Append("root_volume_size_gib"))
 }
 
 func (wp WorkspacePropertiesAttributes) RunningMode() terra.StringValue {
-	return terra.ReferenceString(wp.ref.Append("running_mode"))
+	return terra.ReferenceAsString(wp.ref.Append("running_mode"))
 }
 
 func (wp WorkspacePropertiesAttributes) RunningModeAutoStopTimeoutInMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(wp.ref.Append("running_mode_auto_stop_timeout_in_minutes"))
+	return terra.ReferenceAsNumber(wp.ref.Append("running_mode_auto_stop_timeout_in_minutes"))
 }
 
 func (wp WorkspacePropertiesAttributes) UserVolumeSizeGib() terra.NumberValue {
-	return terra.ReferenceNumber(wp.ref.Append("user_volume_size_gib"))
+	return terra.ReferenceAsNumber(wp.ref.Append("user_volume_size_gib"))
 }
 
 type WorkspacePropertiesState struct {

@@ -38,11 +38,11 @@ func (dpr DestinationPortRangeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dpr DestinationPortRangeAttributes) FromPort() terra.NumberValue {
-	return terra.ReferenceNumber(dpr.ref.Append("from_port"))
+	return terra.ReferenceAsNumber(dpr.ref.Append("from_port"))
 }
 
 func (dpr DestinationPortRangeAttributes) ToPort() terra.NumberValue {
-	return terra.ReferenceNumber(dpr.ref.Append("to_port"))
+	return terra.ReferenceAsNumber(dpr.ref.Append("to_port"))
 }
 
 type SourcePortRangeAttributes struct {
@@ -62,11 +62,11 @@ func (spr SourcePortRangeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (spr SourcePortRangeAttributes) FromPort() terra.NumberValue {
-	return terra.ReferenceNumber(spr.ref.Append("from_port"))
+	return terra.ReferenceAsNumber(spr.ref.Append("from_port"))
 }
 
 func (spr SourcePortRangeAttributes) ToPort() terra.NumberValue {
-	return terra.ReferenceNumber(spr.ref.Append("to_port"))
+	return terra.ReferenceAsNumber(spr.ref.Append("to_port"))
 }
 
 type DestinationPortRangeState struct {

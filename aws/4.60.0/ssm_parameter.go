@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSsmParameter creates a new instance of [SsmParameter].
 func NewSsmParameter(name string, args SsmParameterArgs) *SsmParameter {
 	return &SsmParameter{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSsmParameter(name string, args SsmParameterArgs) *SsmParameter {
 
 var _ terra.Resource = (*SsmParameter)(nil)
 
+// SsmParameter represents the Terraform resource aws_ssm_parameter.
 type SsmParameter struct {
-	Name  string
-	Args  SsmParameterArgs
-	state *ssmParameterState
+	Name      string
+	Args      SsmParameterArgs
+	state     *ssmParameterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SsmParameter].
 func (sp *SsmParameter) Type() string {
 	return "aws_ssm_parameter"
 }
 
+// LocalName returns the local name for [SsmParameter].
 func (sp *SsmParameter) LocalName() string {
 	return sp.Name
 }
 
+// Configuration returns the configuration (args) for [SsmParameter].
 func (sp *SsmParameter) Configuration() interface{} {
 	return sp.Args
 }
 
+// DependOn is used for other resources to depend on [SsmParameter].
+func (sp *SsmParameter) DependOn() terra.Reference {
+	return terra.ReferenceResource(sp)
+}
+
+// Dependencies returns the list of resources [SsmParameter] depends_on.
+func (sp *SsmParameter) Dependencies() terra.Dependencies {
+	return sp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SsmParameter].
+func (sp *SsmParameter) LifecycleManagement() *terra.Lifecycle {
+	return sp.Lifecycle
+}
+
+// Attributes returns the attributes for [SsmParameter].
 func (sp *SsmParameter) Attributes() ssmParameterAttributes {
 	return ssmParameterAttributes{ref: terra.ReferenceResource(sp)}
 }
 
+// ImportState imports the given attribute values into [SsmParameter]'s state.
 func (sp *SsmParameter) ImportState(av io.Reader) error {
 	sp.state = &ssmParameterState{}
 	if err := json.NewDecoder(av).Decode(sp.state); err != nil {
@@ -48,10 +72,12 @@ func (sp *SsmParameter) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SsmParameter] has state.
 func (sp *SsmParameter) State() (*ssmParameterState, bool) {
 	return sp.state, sp.state != nil
 }
 
+// StateMust returns the state for [SsmParameter]. Panics if the state is nil.
 func (sp *SsmParameter) StateMust() *ssmParameterState {
 	if sp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sp.Type(), sp.LocalName()))
@@ -59,10 +85,7 @@ func (sp *SsmParameter) StateMust() *ssmParameterState {
 	return sp.state
 }
 
-func (sp *SsmParameter) DependOn() terra.Reference {
-	return terra.ReferenceResource(sp)
-}
-
+// SsmParameterArgs contains the configurations for aws_ssm_parameter.
 type SsmParameterArgs struct {
 	// AllowedPattern: string, optional
 	AllowedPattern terra.StringValue `hcl:"allowed_pattern,attr"`
@@ -92,71 +115,84 @@ type SsmParameterArgs struct {
 	Type terra.StringValue `hcl:"type,attr" validate:"required"`
 	// Value: string, optional
 	Value terra.StringValue `hcl:"value,attr"`
-	// DependsOn contains resources that SsmParameter depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ssmParameterAttributes struct {
 	ref terra.Reference
 }
 
+// AllowedPattern returns a reference to field allowed_pattern of aws_ssm_parameter.
 func (sp ssmParameterAttributes) AllowedPattern() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("allowed_pattern"))
+	return terra.ReferenceAsString(sp.ref.Append("allowed_pattern"))
 }
 
+// Arn returns a reference to field arn of aws_ssm_parameter.
 func (sp ssmParameterAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("arn"))
+	return terra.ReferenceAsString(sp.ref.Append("arn"))
 }
 
+// DataType returns a reference to field data_type of aws_ssm_parameter.
 func (sp ssmParameterAttributes) DataType() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("data_type"))
+	return terra.ReferenceAsString(sp.ref.Append("data_type"))
 }
 
+// Description returns a reference to field description of aws_ssm_parameter.
 func (sp ssmParameterAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("description"))
+	return terra.ReferenceAsString(sp.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_ssm_parameter.
 func (sp ssmParameterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("id"))
+	return terra.ReferenceAsString(sp.ref.Append("id"))
 }
 
+// InsecureValue returns a reference to field insecure_value of aws_ssm_parameter.
 func (sp ssmParameterAttributes) InsecureValue() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("insecure_value"))
+	return terra.ReferenceAsString(sp.ref.Append("insecure_value"))
 }
 
+// KeyId returns a reference to field key_id of aws_ssm_parameter.
 func (sp ssmParameterAttributes) KeyId() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("key_id"))
+	return terra.ReferenceAsString(sp.ref.Append("key_id"))
 }
 
+// Name returns a reference to field name of aws_ssm_parameter.
 func (sp ssmParameterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("name"))
+	return terra.ReferenceAsString(sp.ref.Append("name"))
 }
 
+// Overwrite returns a reference to field overwrite of aws_ssm_parameter.
 func (sp ssmParameterAttributes) Overwrite() terra.BoolValue {
-	return terra.ReferenceBool(sp.ref.Append("overwrite"))
+	return terra.ReferenceAsBool(sp.ref.Append("overwrite"))
 }
 
+// Tags returns a reference to field tags of aws_ssm_parameter.
 func (sp ssmParameterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sp.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_ssm_parameter.
 func (sp ssmParameterAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sp.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sp.ref.Append("tags_all"))
 }
 
+// Tier returns a reference to field tier of aws_ssm_parameter.
 func (sp ssmParameterAttributes) Tier() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("tier"))
+	return terra.ReferenceAsString(sp.ref.Append("tier"))
 }
 
+// Type returns a reference to field type of aws_ssm_parameter.
 func (sp ssmParameterAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("type"))
+	return terra.ReferenceAsString(sp.ref.Append("type"))
 }
 
+// Value returns a reference to field value of aws_ssm_parameter.
 func (sp ssmParameterAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("value"))
+	return terra.ReferenceAsString(sp.ref.Append("value"))
 }
 
+// Version returns a reference to field version of aws_ssm_parameter.
 func (sp ssmParameterAttributes) Version() terra.NumberValue {
-	return terra.ReferenceNumber(sp.ref.Append("version"))
+	return terra.ReferenceAsNumber(sp.ref.Append("version"))
 }
 
 type ssmParameterState struct {

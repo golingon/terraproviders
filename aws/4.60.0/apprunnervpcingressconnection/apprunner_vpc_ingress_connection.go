@@ -31,11 +31,11 @@ func (ivc IngressVpcConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ivc IngressVpcConfigurationAttributes) VpcEndpointId() terra.StringValue {
-	return terra.ReferenceString(ivc.ref.Append("vpc_endpoint_id"))
+	return terra.ReferenceAsString(ivc.ref.Append("vpc_endpoint_id"))
 }
 
 func (ivc IngressVpcConfigurationAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(ivc.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(ivc.ref.Append("vpc_id"))
 }
 
 type IngressVpcConfigurationState struct {

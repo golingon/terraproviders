@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEfsReplicationConfiguration creates a new instance of [EfsReplicationConfiguration].
 func NewEfsReplicationConfiguration(name string, args EfsReplicationConfigurationArgs) *EfsReplicationConfiguration {
 	return &EfsReplicationConfiguration{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEfsReplicationConfiguration(name string, args EfsReplicationConfiguratio
 
 var _ terra.Resource = (*EfsReplicationConfiguration)(nil)
 
+// EfsReplicationConfiguration represents the Terraform resource aws_efs_replication_configuration.
 type EfsReplicationConfiguration struct {
-	Name  string
-	Args  EfsReplicationConfigurationArgs
-	state *efsReplicationConfigurationState
+	Name      string
+	Args      EfsReplicationConfigurationArgs
+	state     *efsReplicationConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EfsReplicationConfiguration].
 func (erc *EfsReplicationConfiguration) Type() string {
 	return "aws_efs_replication_configuration"
 }
 
+// LocalName returns the local name for [EfsReplicationConfiguration].
 func (erc *EfsReplicationConfiguration) LocalName() string {
 	return erc.Name
 }
 
+// Configuration returns the configuration (args) for [EfsReplicationConfiguration].
 func (erc *EfsReplicationConfiguration) Configuration() interface{} {
 	return erc.Args
 }
 
+// DependOn is used for other resources to depend on [EfsReplicationConfiguration].
+func (erc *EfsReplicationConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(erc)
+}
+
+// Dependencies returns the list of resources [EfsReplicationConfiguration] depends_on.
+func (erc *EfsReplicationConfiguration) Dependencies() terra.Dependencies {
+	return erc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EfsReplicationConfiguration].
+func (erc *EfsReplicationConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return erc.Lifecycle
+}
+
+// Attributes returns the attributes for [EfsReplicationConfiguration].
 func (erc *EfsReplicationConfiguration) Attributes() efsReplicationConfigurationAttributes {
 	return efsReplicationConfigurationAttributes{ref: terra.ReferenceResource(erc)}
 }
 
+// ImportState imports the given attribute values into [EfsReplicationConfiguration]'s state.
 func (erc *EfsReplicationConfiguration) ImportState(av io.Reader) error {
 	erc.state = &efsReplicationConfigurationState{}
 	if err := json.NewDecoder(av).Decode(erc.state); err != nil {
@@ -49,10 +73,12 @@ func (erc *EfsReplicationConfiguration) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EfsReplicationConfiguration] has state.
 func (erc *EfsReplicationConfiguration) State() (*efsReplicationConfigurationState, bool) {
 	return erc.state, erc.state != nil
 }
 
+// StateMust returns the state for [EfsReplicationConfiguration]. Panics if the state is nil.
 func (erc *EfsReplicationConfiguration) StateMust() *efsReplicationConfigurationState {
 	if erc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", erc.Type(), erc.LocalName()))
@@ -60,10 +86,7 @@ func (erc *EfsReplicationConfiguration) StateMust() *efsReplicationConfiguration
 	return erc.state
 }
 
-func (erc *EfsReplicationConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(erc)
-}
-
+// EfsReplicationConfigurationArgs contains the configurations for aws_efs_replication_configuration.
 type EfsReplicationConfigurationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -73,43 +96,47 @@ type EfsReplicationConfigurationArgs struct {
 	Destination *efsreplicationconfiguration.Destination `hcl:"destination,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *efsreplicationconfiguration.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that EfsReplicationConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type efsReplicationConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// CreationTime returns a reference to field creation_time of aws_efs_replication_configuration.
 func (erc efsReplicationConfigurationAttributes) CreationTime() terra.StringValue {
-	return terra.ReferenceString(erc.ref.Append("creation_time"))
+	return terra.ReferenceAsString(erc.ref.Append("creation_time"))
 }
 
+// Id returns a reference to field id of aws_efs_replication_configuration.
 func (erc efsReplicationConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(erc.ref.Append("id"))
+	return terra.ReferenceAsString(erc.ref.Append("id"))
 }
 
+// OriginalSourceFileSystemArn returns a reference to field original_source_file_system_arn of aws_efs_replication_configuration.
 func (erc efsReplicationConfigurationAttributes) OriginalSourceFileSystemArn() terra.StringValue {
-	return terra.ReferenceString(erc.ref.Append("original_source_file_system_arn"))
+	return terra.ReferenceAsString(erc.ref.Append("original_source_file_system_arn"))
 }
 
+// SourceFileSystemArn returns a reference to field source_file_system_arn of aws_efs_replication_configuration.
 func (erc efsReplicationConfigurationAttributes) SourceFileSystemArn() terra.StringValue {
-	return terra.ReferenceString(erc.ref.Append("source_file_system_arn"))
+	return terra.ReferenceAsString(erc.ref.Append("source_file_system_arn"))
 }
 
+// SourceFileSystemId returns a reference to field source_file_system_id of aws_efs_replication_configuration.
 func (erc efsReplicationConfigurationAttributes) SourceFileSystemId() terra.StringValue {
-	return terra.ReferenceString(erc.ref.Append("source_file_system_id"))
+	return terra.ReferenceAsString(erc.ref.Append("source_file_system_id"))
 }
 
+// SourceFileSystemRegion returns a reference to field source_file_system_region of aws_efs_replication_configuration.
 func (erc efsReplicationConfigurationAttributes) SourceFileSystemRegion() terra.StringValue {
-	return terra.ReferenceString(erc.ref.Append("source_file_system_region"))
+	return terra.ReferenceAsString(erc.ref.Append("source_file_system_region"))
 }
 
 func (erc efsReplicationConfigurationAttributes) Destination() terra.ListValue[efsreplicationconfiguration.DestinationAttributes] {
-	return terra.ReferenceList[efsreplicationconfiguration.DestinationAttributes](erc.ref.Append("destination"))
+	return terra.ReferenceAsList[efsreplicationconfiguration.DestinationAttributes](erc.ref.Append("destination"))
 }
 
 func (erc efsReplicationConfigurationAttributes) Timeouts() efsreplicationconfiguration.TimeoutsAttributes {
-	return terra.ReferenceSingle[efsreplicationconfiguration.TimeoutsAttributes](erc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[efsreplicationconfiguration.TimeoutsAttributes](erc.ref.Append("timeouts"))
 }
 
 type efsReplicationConfigurationState struct {

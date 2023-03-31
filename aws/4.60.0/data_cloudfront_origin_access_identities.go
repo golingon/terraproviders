@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataCloudfrontOriginAccessIdentities creates a new instance of [DataCloudfrontOriginAccessIdentities].
 func NewDataCloudfrontOriginAccessIdentities(name string, args DataCloudfrontOriginAccessIdentitiesArgs) *DataCloudfrontOriginAccessIdentities {
 	return &DataCloudfrontOriginAccessIdentities{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataCloudfrontOriginAccessIdentities(name string, args DataCloudfrontOri
 
 var _ terra.DataResource = (*DataCloudfrontOriginAccessIdentities)(nil)
 
+// DataCloudfrontOriginAccessIdentities represents the Terraform data resource aws_cloudfront_origin_access_identities.
 type DataCloudfrontOriginAccessIdentities struct {
 	Name string
 	Args DataCloudfrontOriginAccessIdentitiesArgs
 }
 
+// DataSource returns the Terraform object type for [DataCloudfrontOriginAccessIdentities].
 func (coai *DataCloudfrontOriginAccessIdentities) DataSource() string {
 	return "aws_cloudfront_origin_access_identities"
 }
 
+// LocalName returns the local name for [DataCloudfrontOriginAccessIdentities].
 func (coai *DataCloudfrontOriginAccessIdentities) LocalName() string {
 	return coai.Name
 }
 
+// Configuration returns the configuration (args) for [DataCloudfrontOriginAccessIdentities].
 func (coai *DataCloudfrontOriginAccessIdentities) Configuration() interface{} {
 	return coai.Args
 }
 
+// Attributes returns the attributes for [DataCloudfrontOriginAccessIdentities].
 func (coai *DataCloudfrontOriginAccessIdentities) Attributes() dataCloudfrontOriginAccessIdentitiesAttributes {
 	return dataCloudfrontOriginAccessIdentitiesAttributes{ref: terra.ReferenceDataResource(coai)}
 }
 
+// DataCloudfrontOriginAccessIdentitiesArgs contains the configurations for aws_cloudfront_origin_access_identities.
 type DataCloudfrontOriginAccessIdentitiesArgs struct {
 	// Comments: set of string, optional
 	Comments terra.SetValue[terra.StringValue] `hcl:"comments,attr"`
@@ -44,22 +51,27 @@ type dataCloudfrontOriginAccessIdentitiesAttributes struct {
 	ref terra.Reference
 }
 
+// Comments returns a reference to field comments of aws_cloudfront_origin_access_identities.
 func (coai dataCloudfrontOriginAccessIdentitiesAttributes) Comments() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](coai.ref.Append("comments"))
+	return terra.ReferenceAsSet[terra.StringValue](coai.ref.Append("comments"))
 }
 
+// IamArns returns a reference to field iam_arns of aws_cloudfront_origin_access_identities.
 func (coai dataCloudfrontOriginAccessIdentitiesAttributes) IamArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](coai.ref.Append("iam_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](coai.ref.Append("iam_arns"))
 }
 
+// Id returns a reference to field id of aws_cloudfront_origin_access_identities.
 func (coai dataCloudfrontOriginAccessIdentitiesAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(coai.ref.Append("id"))
+	return terra.ReferenceAsString(coai.ref.Append("id"))
 }
 
+// Ids returns a reference to field ids of aws_cloudfront_origin_access_identities.
 func (coai dataCloudfrontOriginAccessIdentitiesAttributes) Ids() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](coai.ref.Append("ids"))
+	return terra.ReferenceAsSet[terra.StringValue](coai.ref.Append("ids"))
 }
 
+// S3CanonicalUserIds returns a reference to field s3_canonical_user_ids of aws_cloudfront_origin_access_identities.
 func (coai dataCloudfrontOriginAccessIdentitiesAttributes) S3CanonicalUserIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](coai.ref.Append("s3_canonical_user_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](coai.ref.Append("s3_canonical_user_ids"))
 }

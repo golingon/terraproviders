@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewKeyPair creates a new instance of [KeyPair].
 func NewKeyPair(name string, args KeyPairArgs) *KeyPair {
 	return &KeyPair{
 		Args: args,
@@ -18,28 +19,51 @@ func NewKeyPair(name string, args KeyPairArgs) *KeyPair {
 
 var _ terra.Resource = (*KeyPair)(nil)
 
+// KeyPair represents the Terraform resource aws_key_pair.
 type KeyPair struct {
-	Name  string
-	Args  KeyPairArgs
-	state *keyPairState
+	Name      string
+	Args      KeyPairArgs
+	state     *keyPairState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KeyPair].
 func (kp *KeyPair) Type() string {
 	return "aws_key_pair"
 }
 
+// LocalName returns the local name for [KeyPair].
 func (kp *KeyPair) LocalName() string {
 	return kp.Name
 }
 
+// Configuration returns the configuration (args) for [KeyPair].
 func (kp *KeyPair) Configuration() interface{} {
 	return kp.Args
 }
 
+// DependOn is used for other resources to depend on [KeyPair].
+func (kp *KeyPair) DependOn() terra.Reference {
+	return terra.ReferenceResource(kp)
+}
+
+// Dependencies returns the list of resources [KeyPair] depends_on.
+func (kp *KeyPair) Dependencies() terra.Dependencies {
+	return kp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KeyPair].
+func (kp *KeyPair) LifecycleManagement() *terra.Lifecycle {
+	return kp.Lifecycle
+}
+
+// Attributes returns the attributes for [KeyPair].
 func (kp *KeyPair) Attributes() keyPairAttributes {
 	return keyPairAttributes{ref: terra.ReferenceResource(kp)}
 }
 
+// ImportState imports the given attribute values into [KeyPair]'s state.
 func (kp *KeyPair) ImportState(av io.Reader) error {
 	kp.state = &keyPairState{}
 	if err := json.NewDecoder(av).Decode(kp.state); err != nil {
@@ -48,10 +72,12 @@ func (kp *KeyPair) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [KeyPair] has state.
 func (kp *KeyPair) State() (*keyPairState, bool) {
 	return kp.state, kp.state != nil
 }
 
+// StateMust returns the state for [KeyPair]. Panics if the state is nil.
 func (kp *KeyPair) StateMust() *keyPairState {
 	if kp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", kp.Type(), kp.LocalName()))
@@ -59,10 +85,7 @@ func (kp *KeyPair) StateMust() *keyPairState {
 	return kp.state
 }
 
-func (kp *KeyPair) DependOn() terra.Reference {
-	return terra.ReferenceResource(kp)
-}
-
+// KeyPairArgs contains the configurations for aws_key_pair.
 type KeyPairArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -76,51 +99,59 @@ type KeyPairArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that KeyPair depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type keyPairAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_key_pair.
 func (kp keyPairAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(kp.ref.Append("arn"))
+	return terra.ReferenceAsString(kp.ref.Append("arn"))
 }
 
+// Fingerprint returns a reference to field fingerprint of aws_key_pair.
 func (kp keyPairAttributes) Fingerprint() terra.StringValue {
-	return terra.ReferenceString(kp.ref.Append("fingerprint"))
+	return terra.ReferenceAsString(kp.ref.Append("fingerprint"))
 }
 
+// Id returns a reference to field id of aws_key_pair.
 func (kp keyPairAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kp.ref.Append("id"))
+	return terra.ReferenceAsString(kp.ref.Append("id"))
 }
 
+// KeyName returns a reference to field key_name of aws_key_pair.
 func (kp keyPairAttributes) KeyName() terra.StringValue {
-	return terra.ReferenceString(kp.ref.Append("key_name"))
+	return terra.ReferenceAsString(kp.ref.Append("key_name"))
 }
 
+// KeyNamePrefix returns a reference to field key_name_prefix of aws_key_pair.
 func (kp keyPairAttributes) KeyNamePrefix() terra.StringValue {
-	return terra.ReferenceString(kp.ref.Append("key_name_prefix"))
+	return terra.ReferenceAsString(kp.ref.Append("key_name_prefix"))
 }
 
+// KeyPairId returns a reference to field key_pair_id of aws_key_pair.
 func (kp keyPairAttributes) KeyPairId() terra.StringValue {
-	return terra.ReferenceString(kp.ref.Append("key_pair_id"))
+	return terra.ReferenceAsString(kp.ref.Append("key_pair_id"))
 }
 
+// KeyType returns a reference to field key_type of aws_key_pair.
 func (kp keyPairAttributes) KeyType() terra.StringValue {
-	return terra.ReferenceString(kp.ref.Append("key_type"))
+	return terra.ReferenceAsString(kp.ref.Append("key_type"))
 }
 
+// PublicKey returns a reference to field public_key of aws_key_pair.
 func (kp keyPairAttributes) PublicKey() terra.StringValue {
-	return terra.ReferenceString(kp.ref.Append("public_key"))
+	return terra.ReferenceAsString(kp.ref.Append("public_key"))
 }
 
+// Tags returns a reference to field tags of aws_key_pair.
 func (kp keyPairAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](kp.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_key_pair.
 func (kp keyPairAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kp.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](kp.ref.Append("tags_all"))
 }
 
 type keyPairState struct {

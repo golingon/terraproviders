@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApigatewayv2Route creates a new instance of [Apigatewayv2Route].
 func NewApigatewayv2Route(name string, args Apigatewayv2RouteArgs) *Apigatewayv2Route {
 	return &Apigatewayv2Route{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApigatewayv2Route(name string, args Apigatewayv2RouteArgs) *Apigatewayv2
 
 var _ terra.Resource = (*Apigatewayv2Route)(nil)
 
+// Apigatewayv2Route represents the Terraform resource aws_apigatewayv2_route.
 type Apigatewayv2Route struct {
-	Name  string
-	Args  Apigatewayv2RouteArgs
-	state *apigatewayv2RouteState
+	Name      string
+	Args      Apigatewayv2RouteArgs
+	state     *apigatewayv2RouteState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Apigatewayv2Route].
 func (ar *Apigatewayv2Route) Type() string {
 	return "aws_apigatewayv2_route"
 }
 
+// LocalName returns the local name for [Apigatewayv2Route].
 func (ar *Apigatewayv2Route) LocalName() string {
 	return ar.Name
 }
 
+// Configuration returns the configuration (args) for [Apigatewayv2Route].
 func (ar *Apigatewayv2Route) Configuration() interface{} {
 	return ar.Args
 }
 
+// DependOn is used for other resources to depend on [Apigatewayv2Route].
+func (ar *Apigatewayv2Route) DependOn() terra.Reference {
+	return terra.ReferenceResource(ar)
+}
+
+// Dependencies returns the list of resources [Apigatewayv2Route] depends_on.
+func (ar *Apigatewayv2Route) Dependencies() terra.Dependencies {
+	return ar.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Apigatewayv2Route].
+func (ar *Apigatewayv2Route) LifecycleManagement() *terra.Lifecycle {
+	return ar.Lifecycle
+}
+
+// Attributes returns the attributes for [Apigatewayv2Route].
 func (ar *Apigatewayv2Route) Attributes() apigatewayv2RouteAttributes {
 	return apigatewayv2RouteAttributes{ref: terra.ReferenceResource(ar)}
 }
 
+// ImportState imports the given attribute values into [Apigatewayv2Route]'s state.
 func (ar *Apigatewayv2Route) ImportState(av io.Reader) error {
 	ar.state = &apigatewayv2RouteState{}
 	if err := json.NewDecoder(av).Decode(ar.state); err != nil {
@@ -49,10 +73,12 @@ func (ar *Apigatewayv2Route) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Apigatewayv2Route] has state.
 func (ar *Apigatewayv2Route) State() (*apigatewayv2RouteState, bool) {
 	return ar.state, ar.state != nil
 }
 
+// StateMust returns the state for [Apigatewayv2Route]. Panics if the state is nil.
 func (ar *Apigatewayv2Route) StateMust() *apigatewayv2RouteState {
 	if ar.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ar.Type(), ar.LocalName()))
@@ -60,10 +86,7 @@ func (ar *Apigatewayv2Route) StateMust() *apigatewayv2RouteState {
 	return ar.state
 }
 
-func (ar *Apigatewayv2Route) DependOn() terra.Reference {
-	return terra.ReferenceResource(ar)
-}
-
+// Apigatewayv2RouteArgs contains the configurations for aws_apigatewayv2_route.
 type Apigatewayv2RouteArgs struct {
 	// ApiId: string, required
 	ApiId terra.StringValue `hcl:"api_id,attr" validate:"required"`
@@ -91,63 +114,73 @@ type Apigatewayv2RouteArgs struct {
 	Target terra.StringValue `hcl:"target,attr"`
 	// RequestParameter: min=0
 	RequestParameter []apigatewayv2route.RequestParameter `hcl:"request_parameter,block" validate:"min=0"`
-	// DependsOn contains resources that Apigatewayv2Route depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apigatewayv2RouteAttributes struct {
 	ref terra.Reference
 }
 
+// ApiId returns a reference to field api_id of aws_apigatewayv2_route.
 func (ar apigatewayv2RouteAttributes) ApiId() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("api_id"))
+	return terra.ReferenceAsString(ar.ref.Append("api_id"))
 }
 
+// ApiKeyRequired returns a reference to field api_key_required of aws_apigatewayv2_route.
 func (ar apigatewayv2RouteAttributes) ApiKeyRequired() terra.BoolValue {
-	return terra.ReferenceBool(ar.ref.Append("api_key_required"))
+	return terra.ReferenceAsBool(ar.ref.Append("api_key_required"))
 }
 
+// AuthorizationScopes returns a reference to field authorization_scopes of aws_apigatewayv2_route.
 func (ar apigatewayv2RouteAttributes) AuthorizationScopes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ar.ref.Append("authorization_scopes"))
+	return terra.ReferenceAsSet[terra.StringValue](ar.ref.Append("authorization_scopes"))
 }
 
+// AuthorizationType returns a reference to field authorization_type of aws_apigatewayv2_route.
 func (ar apigatewayv2RouteAttributes) AuthorizationType() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("authorization_type"))
+	return terra.ReferenceAsString(ar.ref.Append("authorization_type"))
 }
 
+// AuthorizerId returns a reference to field authorizer_id of aws_apigatewayv2_route.
 func (ar apigatewayv2RouteAttributes) AuthorizerId() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("authorizer_id"))
+	return terra.ReferenceAsString(ar.ref.Append("authorizer_id"))
 }
 
+// Id returns a reference to field id of aws_apigatewayv2_route.
 func (ar apigatewayv2RouteAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("id"))
+	return terra.ReferenceAsString(ar.ref.Append("id"))
 }
 
+// ModelSelectionExpression returns a reference to field model_selection_expression of aws_apigatewayv2_route.
 func (ar apigatewayv2RouteAttributes) ModelSelectionExpression() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("model_selection_expression"))
+	return terra.ReferenceAsString(ar.ref.Append("model_selection_expression"))
 }
 
+// OperationName returns a reference to field operation_name of aws_apigatewayv2_route.
 func (ar apigatewayv2RouteAttributes) OperationName() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("operation_name"))
+	return terra.ReferenceAsString(ar.ref.Append("operation_name"))
 }
 
+// RequestModels returns a reference to field request_models of aws_apigatewayv2_route.
 func (ar apigatewayv2RouteAttributes) RequestModels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ar.ref.Append("request_models"))
+	return terra.ReferenceAsMap[terra.StringValue](ar.ref.Append("request_models"))
 }
 
+// RouteKey returns a reference to field route_key of aws_apigatewayv2_route.
 func (ar apigatewayv2RouteAttributes) RouteKey() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("route_key"))
+	return terra.ReferenceAsString(ar.ref.Append("route_key"))
 }
 
+// RouteResponseSelectionExpression returns a reference to field route_response_selection_expression of aws_apigatewayv2_route.
 func (ar apigatewayv2RouteAttributes) RouteResponseSelectionExpression() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("route_response_selection_expression"))
+	return terra.ReferenceAsString(ar.ref.Append("route_response_selection_expression"))
 }
 
+// Target returns a reference to field target of aws_apigatewayv2_route.
 func (ar apigatewayv2RouteAttributes) Target() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("target"))
+	return terra.ReferenceAsString(ar.ref.Append("target"))
 }
 
 func (ar apigatewayv2RouteAttributes) RequestParameter() terra.SetValue[apigatewayv2route.RequestParameterAttributes] {
-	return terra.ReferenceSet[apigatewayv2route.RequestParameterAttributes](ar.ref.Append("request_parameter"))
+	return terra.ReferenceAsSet[apigatewayv2route.RequestParameterAttributes](ar.ref.Append("request_parameter"))
 }
 
 type apigatewayv2RouteState struct {

@@ -43,15 +43,15 @@ func (m MetadataAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m MetadataAttributes) CreationDate() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("creation_date"))
+	return terra.ReferenceAsString(m.ref.Append("creation_date"))
 }
 
 func (m MetadataAttributes) ParentGroupName() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("parent_group_name"))
+	return terra.ReferenceAsString(m.ref.Append("parent_group_name"))
 }
 
 func (m MetadataAttributes) RootToParentGroups() terra.ListValue[RootToParentGroupsAttributes] {
-	return terra.ReferenceList[RootToParentGroupsAttributes](m.ref.Append("root_to_parent_groups"))
+	return terra.ReferenceAsList[RootToParentGroupsAttributes](m.ref.Append("root_to_parent_groups"))
 }
 
 type RootToParentGroupsAttributes struct {
@@ -71,11 +71,11 @@ func (rtpg RootToParentGroupsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rtpg RootToParentGroupsAttributes) GroupArn() terra.StringValue {
-	return terra.ReferenceString(rtpg.ref.Append("group_arn"))
+	return terra.ReferenceAsString(rtpg.ref.Append("group_arn"))
 }
 
 func (rtpg RootToParentGroupsAttributes) GroupName() terra.StringValue {
-	return terra.ReferenceString(rtpg.ref.Append("group_name"))
+	return terra.ReferenceAsString(rtpg.ref.Append("group_name"))
 }
 
 type PropertiesAttributes struct {
@@ -95,11 +95,11 @@ func (p PropertiesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p PropertiesAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("description"))
+	return terra.ReferenceAsString(p.ref.Append("description"))
 }
 
 func (p PropertiesAttributes) AttributePayload() terra.ListValue[AttributePayloadAttributes] {
-	return terra.ReferenceList[AttributePayloadAttributes](p.ref.Append("attribute_payload"))
+	return terra.ReferenceAsList[AttributePayloadAttributes](p.ref.Append("attribute_payload"))
 }
 
 type AttributePayloadAttributes struct {
@@ -119,7 +119,7 @@ func (ap AttributePayloadAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ap AttributePayloadAttributes) Attributes() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ap.ref.Append("attributes"))
+	return terra.ReferenceAsMap[terra.StringValue](ap.ref.Append("attributes"))
 }
 
 type MetadataState struct {

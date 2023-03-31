@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSchedulerSchedule creates a new instance of [SchedulerSchedule].
 func NewSchedulerSchedule(name string, args SchedulerScheduleArgs) *SchedulerSchedule {
 	return &SchedulerSchedule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSchedulerSchedule(name string, args SchedulerScheduleArgs) *SchedulerSch
 
 var _ terra.Resource = (*SchedulerSchedule)(nil)
 
+// SchedulerSchedule represents the Terraform resource aws_scheduler_schedule.
 type SchedulerSchedule struct {
-	Name  string
-	Args  SchedulerScheduleArgs
-	state *schedulerScheduleState
+	Name      string
+	Args      SchedulerScheduleArgs
+	state     *schedulerScheduleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SchedulerSchedule].
 func (ss *SchedulerSchedule) Type() string {
 	return "aws_scheduler_schedule"
 }
 
+// LocalName returns the local name for [SchedulerSchedule].
 func (ss *SchedulerSchedule) LocalName() string {
 	return ss.Name
 }
 
+// Configuration returns the configuration (args) for [SchedulerSchedule].
 func (ss *SchedulerSchedule) Configuration() interface{} {
 	return ss.Args
 }
 
+// DependOn is used for other resources to depend on [SchedulerSchedule].
+func (ss *SchedulerSchedule) DependOn() terra.Reference {
+	return terra.ReferenceResource(ss)
+}
+
+// Dependencies returns the list of resources [SchedulerSchedule] depends_on.
+func (ss *SchedulerSchedule) Dependencies() terra.Dependencies {
+	return ss.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SchedulerSchedule].
+func (ss *SchedulerSchedule) LifecycleManagement() *terra.Lifecycle {
+	return ss.Lifecycle
+}
+
+// Attributes returns the attributes for [SchedulerSchedule].
 func (ss *SchedulerSchedule) Attributes() schedulerScheduleAttributes {
 	return schedulerScheduleAttributes{ref: terra.ReferenceResource(ss)}
 }
 
+// ImportState imports the given attribute values into [SchedulerSchedule]'s state.
 func (ss *SchedulerSchedule) ImportState(av io.Reader) error {
 	ss.state = &schedulerScheduleState{}
 	if err := json.NewDecoder(av).Decode(ss.state); err != nil {
@@ -49,10 +73,12 @@ func (ss *SchedulerSchedule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SchedulerSchedule] has state.
 func (ss *SchedulerSchedule) State() (*schedulerScheduleState, bool) {
 	return ss.state, ss.state != nil
 }
 
+// StateMust returns the state for [SchedulerSchedule]. Panics if the state is nil.
 func (ss *SchedulerSchedule) StateMust() *schedulerScheduleState {
 	if ss.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ss.Type(), ss.LocalName()))
@@ -60,10 +86,7 @@ func (ss *SchedulerSchedule) StateMust() *schedulerScheduleState {
 	return ss.state
 }
 
-func (ss *SchedulerSchedule) DependOn() terra.Reference {
-	return terra.ReferenceResource(ss)
-}
-
+// SchedulerScheduleArgs contains the configurations for aws_scheduler_schedule.
 type SchedulerScheduleArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -91,67 +114,77 @@ type SchedulerScheduleArgs struct {
 	FlexibleTimeWindow *schedulerschedule.FlexibleTimeWindow `hcl:"flexible_time_window,block" validate:"required"`
 	// Target: required
 	Target *schedulerschedule.Target `hcl:"target,block" validate:"required"`
-	// DependsOn contains resources that SchedulerSchedule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type schedulerScheduleAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_scheduler_schedule.
 func (ss schedulerScheduleAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("arn"))
+	return terra.ReferenceAsString(ss.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_scheduler_schedule.
 func (ss schedulerScheduleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("description"))
+	return terra.ReferenceAsString(ss.ref.Append("description"))
 }
 
+// EndDate returns a reference to field end_date of aws_scheduler_schedule.
 func (ss schedulerScheduleAttributes) EndDate() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("end_date"))
+	return terra.ReferenceAsString(ss.ref.Append("end_date"))
 }
 
+// GroupName returns a reference to field group_name of aws_scheduler_schedule.
 func (ss schedulerScheduleAttributes) GroupName() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("group_name"))
+	return terra.ReferenceAsString(ss.ref.Append("group_name"))
 }
 
+// Id returns a reference to field id of aws_scheduler_schedule.
 func (ss schedulerScheduleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("id"))
+	return terra.ReferenceAsString(ss.ref.Append("id"))
 }
 
+// KmsKeyArn returns a reference to field kms_key_arn of aws_scheduler_schedule.
 func (ss schedulerScheduleAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(ss.ref.Append("kms_key_arn"))
 }
 
+// Name returns a reference to field name of aws_scheduler_schedule.
 func (ss schedulerScheduleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("name"))
+	return terra.ReferenceAsString(ss.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_scheduler_schedule.
 func (ss schedulerScheduleAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(ss.ref.Append("name_prefix"))
 }
 
+// ScheduleExpression returns a reference to field schedule_expression of aws_scheduler_schedule.
 func (ss schedulerScheduleAttributes) ScheduleExpression() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("schedule_expression"))
+	return terra.ReferenceAsString(ss.ref.Append("schedule_expression"))
 }
 
+// ScheduleExpressionTimezone returns a reference to field schedule_expression_timezone of aws_scheduler_schedule.
 func (ss schedulerScheduleAttributes) ScheduleExpressionTimezone() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("schedule_expression_timezone"))
+	return terra.ReferenceAsString(ss.ref.Append("schedule_expression_timezone"))
 }
 
+// StartDate returns a reference to field start_date of aws_scheduler_schedule.
 func (ss schedulerScheduleAttributes) StartDate() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("start_date"))
+	return terra.ReferenceAsString(ss.ref.Append("start_date"))
 }
 
+// State returns a reference to field state of aws_scheduler_schedule.
 func (ss schedulerScheduleAttributes) State() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("state"))
+	return terra.ReferenceAsString(ss.ref.Append("state"))
 }
 
 func (ss schedulerScheduleAttributes) FlexibleTimeWindow() terra.ListValue[schedulerschedule.FlexibleTimeWindowAttributes] {
-	return terra.ReferenceList[schedulerschedule.FlexibleTimeWindowAttributes](ss.ref.Append("flexible_time_window"))
+	return terra.ReferenceAsList[schedulerschedule.FlexibleTimeWindowAttributes](ss.ref.Append("flexible_time_window"))
 }
 
 func (ss schedulerScheduleAttributes) Target() terra.ListValue[schedulerschedule.TargetAttributes] {
-	return terra.ReferenceList[schedulerschedule.TargetAttributes](ss.ref.Append("target"))
+	return terra.ReferenceAsList[schedulerschedule.TargetAttributes](ss.ref.Append("target"))
 }
 
 type schedulerScheduleState struct {

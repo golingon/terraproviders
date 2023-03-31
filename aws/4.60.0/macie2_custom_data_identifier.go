@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewMacie2CustomDataIdentifier creates a new instance of [Macie2CustomDataIdentifier].
 func NewMacie2CustomDataIdentifier(name string, args Macie2CustomDataIdentifierArgs) *Macie2CustomDataIdentifier {
 	return &Macie2CustomDataIdentifier{
 		Args: args,
@@ -18,28 +19,51 @@ func NewMacie2CustomDataIdentifier(name string, args Macie2CustomDataIdentifierA
 
 var _ terra.Resource = (*Macie2CustomDataIdentifier)(nil)
 
+// Macie2CustomDataIdentifier represents the Terraform resource aws_macie2_custom_data_identifier.
 type Macie2CustomDataIdentifier struct {
-	Name  string
-	Args  Macie2CustomDataIdentifierArgs
-	state *macie2CustomDataIdentifierState
+	Name      string
+	Args      Macie2CustomDataIdentifierArgs
+	state     *macie2CustomDataIdentifierState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Macie2CustomDataIdentifier].
 func (mcdi *Macie2CustomDataIdentifier) Type() string {
 	return "aws_macie2_custom_data_identifier"
 }
 
+// LocalName returns the local name for [Macie2CustomDataIdentifier].
 func (mcdi *Macie2CustomDataIdentifier) LocalName() string {
 	return mcdi.Name
 }
 
+// Configuration returns the configuration (args) for [Macie2CustomDataIdentifier].
 func (mcdi *Macie2CustomDataIdentifier) Configuration() interface{} {
 	return mcdi.Args
 }
 
+// DependOn is used for other resources to depend on [Macie2CustomDataIdentifier].
+func (mcdi *Macie2CustomDataIdentifier) DependOn() terra.Reference {
+	return terra.ReferenceResource(mcdi)
+}
+
+// Dependencies returns the list of resources [Macie2CustomDataIdentifier] depends_on.
+func (mcdi *Macie2CustomDataIdentifier) Dependencies() terra.Dependencies {
+	return mcdi.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Macie2CustomDataIdentifier].
+func (mcdi *Macie2CustomDataIdentifier) LifecycleManagement() *terra.Lifecycle {
+	return mcdi.Lifecycle
+}
+
+// Attributes returns the attributes for [Macie2CustomDataIdentifier].
 func (mcdi *Macie2CustomDataIdentifier) Attributes() macie2CustomDataIdentifierAttributes {
 	return macie2CustomDataIdentifierAttributes{ref: terra.ReferenceResource(mcdi)}
 }
 
+// ImportState imports the given attribute values into [Macie2CustomDataIdentifier]'s state.
 func (mcdi *Macie2CustomDataIdentifier) ImportState(av io.Reader) error {
 	mcdi.state = &macie2CustomDataIdentifierState{}
 	if err := json.NewDecoder(av).Decode(mcdi.state); err != nil {
@@ -48,10 +72,12 @@ func (mcdi *Macie2CustomDataIdentifier) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Macie2CustomDataIdentifier] has state.
 func (mcdi *Macie2CustomDataIdentifier) State() (*macie2CustomDataIdentifierState, bool) {
 	return mcdi.state, mcdi.state != nil
 }
 
+// StateMust returns the state for [Macie2CustomDataIdentifier]. Panics if the state is nil.
 func (mcdi *Macie2CustomDataIdentifier) StateMust() *macie2CustomDataIdentifierState {
 	if mcdi.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mcdi.Type(), mcdi.LocalName()))
@@ -59,10 +85,7 @@ func (mcdi *Macie2CustomDataIdentifier) StateMust() *macie2CustomDataIdentifierS
 	return mcdi.state
 }
 
-func (mcdi *Macie2CustomDataIdentifier) DependOn() terra.Reference {
-	return terra.ReferenceResource(mcdi)
-}
-
+// Macie2CustomDataIdentifierArgs contains the configurations for aws_macie2_custom_data_identifier.
 type Macie2CustomDataIdentifierArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -84,59 +107,69 @@ type Macie2CustomDataIdentifierArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that Macie2CustomDataIdentifier depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type macie2CustomDataIdentifierAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_macie2_custom_data_identifier.
 func (mcdi macie2CustomDataIdentifierAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(mcdi.ref.Append("arn"))
+	return terra.ReferenceAsString(mcdi.ref.Append("arn"))
 }
 
+// CreatedAt returns a reference to field created_at of aws_macie2_custom_data_identifier.
 func (mcdi macie2CustomDataIdentifierAttributes) CreatedAt() terra.StringValue {
-	return terra.ReferenceString(mcdi.ref.Append("created_at"))
+	return terra.ReferenceAsString(mcdi.ref.Append("created_at"))
 }
 
+// Description returns a reference to field description of aws_macie2_custom_data_identifier.
 func (mcdi macie2CustomDataIdentifierAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mcdi.ref.Append("description"))
+	return terra.ReferenceAsString(mcdi.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_macie2_custom_data_identifier.
 func (mcdi macie2CustomDataIdentifierAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mcdi.ref.Append("id"))
+	return terra.ReferenceAsString(mcdi.ref.Append("id"))
 }
 
+// IgnoreWords returns a reference to field ignore_words of aws_macie2_custom_data_identifier.
 func (mcdi macie2CustomDataIdentifierAttributes) IgnoreWords() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](mcdi.ref.Append("ignore_words"))
+	return terra.ReferenceAsSet[terra.StringValue](mcdi.ref.Append("ignore_words"))
 }
 
+// Keywords returns a reference to field keywords of aws_macie2_custom_data_identifier.
 func (mcdi macie2CustomDataIdentifierAttributes) Keywords() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](mcdi.ref.Append("keywords"))
+	return terra.ReferenceAsSet[terra.StringValue](mcdi.ref.Append("keywords"))
 }
 
+// MaximumMatchDistance returns a reference to field maximum_match_distance of aws_macie2_custom_data_identifier.
 func (mcdi macie2CustomDataIdentifierAttributes) MaximumMatchDistance() terra.NumberValue {
-	return terra.ReferenceNumber(mcdi.ref.Append("maximum_match_distance"))
+	return terra.ReferenceAsNumber(mcdi.ref.Append("maximum_match_distance"))
 }
 
+// Name returns a reference to field name of aws_macie2_custom_data_identifier.
 func (mcdi macie2CustomDataIdentifierAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mcdi.ref.Append("name"))
+	return terra.ReferenceAsString(mcdi.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_macie2_custom_data_identifier.
 func (mcdi macie2CustomDataIdentifierAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(mcdi.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(mcdi.ref.Append("name_prefix"))
 }
 
+// Regex returns a reference to field regex of aws_macie2_custom_data_identifier.
 func (mcdi macie2CustomDataIdentifierAttributes) Regex() terra.StringValue {
-	return terra.ReferenceString(mcdi.ref.Append("regex"))
+	return terra.ReferenceAsString(mcdi.ref.Append("regex"))
 }
 
+// Tags returns a reference to field tags of aws_macie2_custom_data_identifier.
 func (mcdi macie2CustomDataIdentifierAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mcdi.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mcdi.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_macie2_custom_data_identifier.
 func (mcdi macie2CustomDataIdentifierAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mcdi.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](mcdi.ref.Append("tags_all"))
 }
 
 type macie2CustomDataIdentifierState struct {

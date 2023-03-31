@@ -54,15 +54,15 @@ func (dc DnsConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dc DnsConfigAttributes) NamespaceId() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("namespace_id"))
+	return terra.ReferenceAsString(dc.ref.Append("namespace_id"))
 }
 
 func (dc DnsConfigAttributes) RoutingPolicy() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("routing_policy"))
+	return terra.ReferenceAsString(dc.ref.Append("routing_policy"))
 }
 
 func (dc DnsConfigAttributes) DnsRecords() terra.ListValue[DnsRecordsAttributes] {
-	return terra.ReferenceList[DnsRecordsAttributes](dc.ref.Append("dns_records"))
+	return terra.ReferenceAsList[DnsRecordsAttributes](dc.ref.Append("dns_records"))
 }
 
 type DnsRecordsAttributes struct {
@@ -82,11 +82,11 @@ func (dr DnsRecordsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dr DnsRecordsAttributes) Ttl() terra.NumberValue {
-	return terra.ReferenceNumber(dr.ref.Append("ttl"))
+	return terra.ReferenceAsNumber(dr.ref.Append("ttl"))
 }
 
 func (dr DnsRecordsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("type"))
+	return terra.ReferenceAsString(dr.ref.Append("type"))
 }
 
 type HealthCheckConfigAttributes struct {
@@ -106,15 +106,15 @@ func (hcc HealthCheckConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hcc HealthCheckConfigAttributes) FailureThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(hcc.ref.Append("failure_threshold"))
+	return terra.ReferenceAsNumber(hcc.ref.Append("failure_threshold"))
 }
 
 func (hcc HealthCheckConfigAttributes) ResourcePath() terra.StringValue {
-	return terra.ReferenceString(hcc.ref.Append("resource_path"))
+	return terra.ReferenceAsString(hcc.ref.Append("resource_path"))
 }
 
 func (hcc HealthCheckConfigAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(hcc.ref.Append("type"))
+	return terra.ReferenceAsString(hcc.ref.Append("type"))
 }
 
 type HealthCheckCustomConfigAttributes struct {
@@ -134,7 +134,7 @@ func (hccc HealthCheckCustomConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hccc HealthCheckCustomConfigAttributes) FailureThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(hccc.ref.Append("failure_threshold"))
+	return terra.ReferenceAsNumber(hccc.ref.Append("failure_threshold"))
 }
 
 type DnsConfigState struct {

@@ -39,27 +39,27 @@ func (mt MetricTransformationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mt MetricTransformationAttributes) DefaultValue() terra.StringValue {
-	return terra.ReferenceString(mt.ref.Append("default_value"))
+	return terra.ReferenceAsString(mt.ref.Append("default_value"))
 }
 
 func (mt MetricTransformationAttributes) Dimensions() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mt.ref.Append("dimensions"))
+	return terra.ReferenceAsMap[terra.StringValue](mt.ref.Append("dimensions"))
 }
 
 func (mt MetricTransformationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mt.ref.Append("name"))
+	return terra.ReferenceAsString(mt.ref.Append("name"))
 }
 
 func (mt MetricTransformationAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(mt.ref.Append("namespace"))
+	return terra.ReferenceAsString(mt.ref.Append("namespace"))
 }
 
 func (mt MetricTransformationAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(mt.ref.Append("unit"))
+	return terra.ReferenceAsString(mt.ref.Append("unit"))
 }
 
 func (mt MetricTransformationAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(mt.ref.Append("value"))
+	return terra.ReferenceAsString(mt.ref.Append("value"))
 }
 
 type MetricTransformationState struct {

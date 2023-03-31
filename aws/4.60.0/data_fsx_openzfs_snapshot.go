@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataFsxOpenzfsSnapshot creates a new instance of [DataFsxOpenzfsSnapshot].
 func NewDataFsxOpenzfsSnapshot(name string, args DataFsxOpenzfsSnapshotArgs) *DataFsxOpenzfsSnapshot {
 	return &DataFsxOpenzfsSnapshot{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataFsxOpenzfsSnapshot(name string, args DataFsxOpenzfsSnapshotArgs) *Da
 
 var _ terra.DataResource = (*DataFsxOpenzfsSnapshot)(nil)
 
+// DataFsxOpenzfsSnapshot represents the Terraform data resource aws_fsx_openzfs_snapshot.
 type DataFsxOpenzfsSnapshot struct {
 	Name string
 	Args DataFsxOpenzfsSnapshotArgs
 }
 
+// DataSource returns the Terraform object type for [DataFsxOpenzfsSnapshot].
 func (fos *DataFsxOpenzfsSnapshot) DataSource() string {
 	return "aws_fsx_openzfs_snapshot"
 }
 
+// LocalName returns the local name for [DataFsxOpenzfsSnapshot].
 func (fos *DataFsxOpenzfsSnapshot) LocalName() string {
 	return fos.Name
 }
 
+// Configuration returns the configuration (args) for [DataFsxOpenzfsSnapshot].
 func (fos *DataFsxOpenzfsSnapshot) Configuration() interface{} {
 	return fos.Args
 }
 
+// Attributes returns the attributes for [DataFsxOpenzfsSnapshot].
 func (fos *DataFsxOpenzfsSnapshot) Attributes() dataFsxOpenzfsSnapshotAttributes {
 	return dataFsxOpenzfsSnapshotAttributes{ref: terra.ReferenceDataResource(fos)}
 }
 
+// DataFsxOpenzfsSnapshotArgs contains the configurations for aws_fsx_openzfs_snapshot.
 type DataFsxOpenzfsSnapshotArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -55,42 +62,51 @@ type dataFsxOpenzfsSnapshotAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_fsx_openzfs_snapshot.
 func (fos dataFsxOpenzfsSnapshotAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(fos.ref.Append("arn"))
+	return terra.ReferenceAsString(fos.ref.Append("arn"))
 }
 
+// CreationTime returns a reference to field creation_time of aws_fsx_openzfs_snapshot.
 func (fos dataFsxOpenzfsSnapshotAttributes) CreationTime() terra.StringValue {
-	return terra.ReferenceString(fos.ref.Append("creation_time"))
+	return terra.ReferenceAsString(fos.ref.Append("creation_time"))
 }
 
+// Id returns a reference to field id of aws_fsx_openzfs_snapshot.
 func (fos dataFsxOpenzfsSnapshotAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(fos.ref.Append("id"))
+	return terra.ReferenceAsString(fos.ref.Append("id"))
 }
 
+// MostRecent returns a reference to field most_recent of aws_fsx_openzfs_snapshot.
 func (fos dataFsxOpenzfsSnapshotAttributes) MostRecent() terra.BoolValue {
-	return terra.ReferenceBool(fos.ref.Append("most_recent"))
+	return terra.ReferenceAsBool(fos.ref.Append("most_recent"))
 }
 
+// Name returns a reference to field name of aws_fsx_openzfs_snapshot.
 func (fos dataFsxOpenzfsSnapshotAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(fos.ref.Append("name"))
+	return terra.ReferenceAsString(fos.ref.Append("name"))
 }
 
+// SnapshotId returns a reference to field snapshot_id of aws_fsx_openzfs_snapshot.
 func (fos dataFsxOpenzfsSnapshotAttributes) SnapshotId() terra.StringValue {
-	return terra.ReferenceString(fos.ref.Append("snapshot_id"))
+	return terra.ReferenceAsString(fos.ref.Append("snapshot_id"))
 }
 
+// SnapshotIds returns a reference to field snapshot_ids of aws_fsx_openzfs_snapshot.
 func (fos dataFsxOpenzfsSnapshotAttributes) SnapshotIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](fos.ref.Append("snapshot_ids"))
+	return terra.ReferenceAsList[terra.StringValue](fos.ref.Append("snapshot_ids"))
 }
 
+// Tags returns a reference to field tags of aws_fsx_openzfs_snapshot.
 func (fos dataFsxOpenzfsSnapshotAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](fos.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](fos.ref.Append("tags"))
 }
 
+// VolumeId returns a reference to field volume_id of aws_fsx_openzfs_snapshot.
 func (fos dataFsxOpenzfsSnapshotAttributes) VolumeId() terra.StringValue {
-	return terra.ReferenceString(fos.ref.Append("volume_id"))
+	return terra.ReferenceAsString(fos.ref.Append("volume_id"))
 }
 
 func (fos dataFsxOpenzfsSnapshotAttributes) Filter() terra.SetValue[datafsxopenzfssnapshot.FilterAttributes] {
-	return terra.ReferenceSet[datafsxopenzfssnapshot.FilterAttributes](fos.ref.Append("filter"))
+	return terra.ReferenceAsSet[datafsxopenzfssnapshot.FilterAttributes](fos.ref.Append("filter"))
 }

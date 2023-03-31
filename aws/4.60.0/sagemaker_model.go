@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSagemakerModel creates a new instance of [SagemakerModel].
 func NewSagemakerModel(name string, args SagemakerModelArgs) *SagemakerModel {
 	return &SagemakerModel{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSagemakerModel(name string, args SagemakerModelArgs) *SagemakerModel {
 
 var _ terra.Resource = (*SagemakerModel)(nil)
 
+// SagemakerModel represents the Terraform resource aws_sagemaker_model.
 type SagemakerModel struct {
-	Name  string
-	Args  SagemakerModelArgs
-	state *sagemakerModelState
+	Name      string
+	Args      SagemakerModelArgs
+	state     *sagemakerModelState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SagemakerModel].
 func (sm *SagemakerModel) Type() string {
 	return "aws_sagemaker_model"
 }
 
+// LocalName returns the local name for [SagemakerModel].
 func (sm *SagemakerModel) LocalName() string {
 	return sm.Name
 }
 
+// Configuration returns the configuration (args) for [SagemakerModel].
 func (sm *SagemakerModel) Configuration() interface{} {
 	return sm.Args
 }
 
+// DependOn is used for other resources to depend on [SagemakerModel].
+func (sm *SagemakerModel) DependOn() terra.Reference {
+	return terra.ReferenceResource(sm)
+}
+
+// Dependencies returns the list of resources [SagemakerModel] depends_on.
+func (sm *SagemakerModel) Dependencies() terra.Dependencies {
+	return sm.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SagemakerModel].
+func (sm *SagemakerModel) LifecycleManagement() *terra.Lifecycle {
+	return sm.Lifecycle
+}
+
+// Attributes returns the attributes for [SagemakerModel].
 func (sm *SagemakerModel) Attributes() sagemakerModelAttributes {
 	return sagemakerModelAttributes{ref: terra.ReferenceResource(sm)}
 }
 
+// ImportState imports the given attribute values into [SagemakerModel]'s state.
 func (sm *SagemakerModel) ImportState(av io.Reader) error {
 	sm.state = &sagemakerModelState{}
 	if err := json.NewDecoder(av).Decode(sm.state); err != nil {
@@ -49,10 +73,12 @@ func (sm *SagemakerModel) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SagemakerModel] has state.
 func (sm *SagemakerModel) State() (*sagemakerModelState, bool) {
 	return sm.state, sm.state != nil
 }
 
+// StateMust returns the state for [SagemakerModel]. Panics if the state is nil.
 func (sm *SagemakerModel) StateMust() *sagemakerModelState {
 	if sm.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sm.Type(), sm.LocalName()))
@@ -60,10 +86,7 @@ func (sm *SagemakerModel) StateMust() *sagemakerModelState {
 	return sm.state
 }
 
-func (sm *SagemakerModel) DependOn() terra.Reference {
-	return terra.ReferenceResource(sm)
-}
-
+// SagemakerModelArgs contains the configurations for aws_sagemaker_model.
 type SagemakerModelArgs struct {
 	// EnableNetworkIsolation: bool, optional
 	EnableNetworkIsolation terra.BoolValue `hcl:"enable_network_isolation,attr"`
@@ -85,55 +108,60 @@ type SagemakerModelArgs struct {
 	PrimaryContainer *sagemakermodel.PrimaryContainer `hcl:"primary_container,block"`
 	// VpcConfig: optional
 	VpcConfig *sagemakermodel.VpcConfig `hcl:"vpc_config,block"`
-	// DependsOn contains resources that SagemakerModel depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sagemakerModelAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_sagemaker_model.
 func (sm sagemakerModelAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sm.ref.Append("arn"))
+	return terra.ReferenceAsString(sm.ref.Append("arn"))
 }
 
+// EnableNetworkIsolation returns a reference to field enable_network_isolation of aws_sagemaker_model.
 func (sm sagemakerModelAttributes) EnableNetworkIsolation() terra.BoolValue {
-	return terra.ReferenceBool(sm.ref.Append("enable_network_isolation"))
+	return terra.ReferenceAsBool(sm.ref.Append("enable_network_isolation"))
 }
 
+// ExecutionRoleArn returns a reference to field execution_role_arn of aws_sagemaker_model.
 func (sm sagemakerModelAttributes) ExecutionRoleArn() terra.StringValue {
-	return terra.ReferenceString(sm.ref.Append("execution_role_arn"))
+	return terra.ReferenceAsString(sm.ref.Append("execution_role_arn"))
 }
 
+// Id returns a reference to field id of aws_sagemaker_model.
 func (sm sagemakerModelAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sm.ref.Append("id"))
+	return terra.ReferenceAsString(sm.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_sagemaker_model.
 func (sm sagemakerModelAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sm.ref.Append("name"))
+	return terra.ReferenceAsString(sm.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_sagemaker_model.
 func (sm sagemakerModelAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sm.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sm.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_sagemaker_model.
 func (sm sagemakerModelAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sm.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sm.ref.Append("tags_all"))
 }
 
 func (sm sagemakerModelAttributes) Container() terra.ListValue[sagemakermodel.ContainerAttributes] {
-	return terra.ReferenceList[sagemakermodel.ContainerAttributes](sm.ref.Append("container"))
+	return terra.ReferenceAsList[sagemakermodel.ContainerAttributes](sm.ref.Append("container"))
 }
 
 func (sm sagemakerModelAttributes) InferenceExecutionConfig() terra.ListValue[sagemakermodel.InferenceExecutionConfigAttributes] {
-	return terra.ReferenceList[sagemakermodel.InferenceExecutionConfigAttributes](sm.ref.Append("inference_execution_config"))
+	return terra.ReferenceAsList[sagemakermodel.InferenceExecutionConfigAttributes](sm.ref.Append("inference_execution_config"))
 }
 
 func (sm sagemakerModelAttributes) PrimaryContainer() terra.ListValue[sagemakermodel.PrimaryContainerAttributes] {
-	return terra.ReferenceList[sagemakermodel.PrimaryContainerAttributes](sm.ref.Append("primary_container"))
+	return terra.ReferenceAsList[sagemakermodel.PrimaryContainerAttributes](sm.ref.Append("primary_container"))
 }
 
 func (sm sagemakerModelAttributes) VpcConfig() terra.ListValue[sagemakermodel.VpcConfigAttributes] {
-	return terra.ReferenceList[sagemakermodel.VpcConfigAttributes](sm.ref.Append("vpc_config"))
+	return terra.ReferenceAsList[sagemakermodel.VpcConfigAttributes](sm.ref.Append("vpc_config"))
 }
 
 type sagemakerModelState struct {

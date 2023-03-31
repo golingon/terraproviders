@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewGrafanaRoleAssociation creates a new instance of [GrafanaRoleAssociation].
 func NewGrafanaRoleAssociation(name string, args GrafanaRoleAssociationArgs) *GrafanaRoleAssociation {
 	return &GrafanaRoleAssociation{
 		Args: args,
@@ -19,28 +20,51 @@ func NewGrafanaRoleAssociation(name string, args GrafanaRoleAssociationArgs) *Gr
 
 var _ terra.Resource = (*GrafanaRoleAssociation)(nil)
 
+// GrafanaRoleAssociation represents the Terraform resource aws_grafana_role_association.
 type GrafanaRoleAssociation struct {
-	Name  string
-	Args  GrafanaRoleAssociationArgs
-	state *grafanaRoleAssociationState
+	Name      string
+	Args      GrafanaRoleAssociationArgs
+	state     *grafanaRoleAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GrafanaRoleAssociation].
 func (gra *GrafanaRoleAssociation) Type() string {
 	return "aws_grafana_role_association"
 }
 
+// LocalName returns the local name for [GrafanaRoleAssociation].
 func (gra *GrafanaRoleAssociation) LocalName() string {
 	return gra.Name
 }
 
+// Configuration returns the configuration (args) for [GrafanaRoleAssociation].
 func (gra *GrafanaRoleAssociation) Configuration() interface{} {
 	return gra.Args
 }
 
+// DependOn is used for other resources to depend on [GrafanaRoleAssociation].
+func (gra *GrafanaRoleAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(gra)
+}
+
+// Dependencies returns the list of resources [GrafanaRoleAssociation] depends_on.
+func (gra *GrafanaRoleAssociation) Dependencies() terra.Dependencies {
+	return gra.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GrafanaRoleAssociation].
+func (gra *GrafanaRoleAssociation) LifecycleManagement() *terra.Lifecycle {
+	return gra.Lifecycle
+}
+
+// Attributes returns the attributes for [GrafanaRoleAssociation].
 func (gra *GrafanaRoleAssociation) Attributes() grafanaRoleAssociationAttributes {
 	return grafanaRoleAssociationAttributes{ref: terra.ReferenceResource(gra)}
 }
 
+// ImportState imports the given attribute values into [GrafanaRoleAssociation]'s state.
 func (gra *GrafanaRoleAssociation) ImportState(av io.Reader) error {
 	gra.state = &grafanaRoleAssociationState{}
 	if err := json.NewDecoder(av).Decode(gra.state); err != nil {
@@ -49,10 +73,12 @@ func (gra *GrafanaRoleAssociation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GrafanaRoleAssociation] has state.
 func (gra *GrafanaRoleAssociation) State() (*grafanaRoleAssociationState, bool) {
 	return gra.state, gra.state != nil
 }
 
+// StateMust returns the state for [GrafanaRoleAssociation]. Panics if the state is nil.
 func (gra *GrafanaRoleAssociation) StateMust() *grafanaRoleAssociationState {
 	if gra.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", gra.Type(), gra.LocalName()))
@@ -60,10 +86,7 @@ func (gra *GrafanaRoleAssociation) StateMust() *grafanaRoleAssociationState {
 	return gra.state
 }
 
-func (gra *GrafanaRoleAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(gra)
-}
-
+// GrafanaRoleAssociationArgs contains the configurations for aws_grafana_role_association.
 type GrafanaRoleAssociationArgs struct {
 	// GroupIds: set of string, optional
 	GroupIds terra.SetValue[terra.StringValue] `hcl:"group_ids,attr"`
@@ -77,35 +100,38 @@ type GrafanaRoleAssociationArgs struct {
 	WorkspaceId terra.StringValue `hcl:"workspace_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *grafanaroleassociation.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that GrafanaRoleAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type grafanaRoleAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// GroupIds returns a reference to field group_ids of aws_grafana_role_association.
 func (gra grafanaRoleAssociationAttributes) GroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](gra.ref.Append("group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](gra.ref.Append("group_ids"))
 }
 
+// Id returns a reference to field id of aws_grafana_role_association.
 func (gra grafanaRoleAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gra.ref.Append("id"))
+	return terra.ReferenceAsString(gra.ref.Append("id"))
 }
 
+// Role returns a reference to field role of aws_grafana_role_association.
 func (gra grafanaRoleAssociationAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(gra.ref.Append("role"))
+	return terra.ReferenceAsString(gra.ref.Append("role"))
 }
 
+// UserIds returns a reference to field user_ids of aws_grafana_role_association.
 func (gra grafanaRoleAssociationAttributes) UserIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](gra.ref.Append("user_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](gra.ref.Append("user_ids"))
 }
 
+// WorkspaceId returns a reference to field workspace_id of aws_grafana_role_association.
 func (gra grafanaRoleAssociationAttributes) WorkspaceId() terra.StringValue {
-	return terra.ReferenceString(gra.ref.Append("workspace_id"))
+	return terra.ReferenceAsString(gra.ref.Append("workspace_id"))
 }
 
 func (gra grafanaRoleAssociationAttributes) Timeouts() grafanaroleassociation.TimeoutsAttributes {
-	return terra.ReferenceSingle[grafanaroleassociation.TimeoutsAttributes](gra.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[grafanaroleassociation.TimeoutsAttributes](gra.ref.Append("timeouts"))
 }
 
 type grafanaRoleAssociationState struct {

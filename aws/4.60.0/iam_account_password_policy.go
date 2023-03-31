@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewIamAccountPasswordPolicy creates a new instance of [IamAccountPasswordPolicy].
 func NewIamAccountPasswordPolicy(name string, args IamAccountPasswordPolicyArgs) *IamAccountPasswordPolicy {
 	return &IamAccountPasswordPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewIamAccountPasswordPolicy(name string, args IamAccountPasswordPolicyArgs)
 
 var _ terra.Resource = (*IamAccountPasswordPolicy)(nil)
 
+// IamAccountPasswordPolicy represents the Terraform resource aws_iam_account_password_policy.
 type IamAccountPasswordPolicy struct {
-	Name  string
-	Args  IamAccountPasswordPolicyArgs
-	state *iamAccountPasswordPolicyState
+	Name      string
+	Args      IamAccountPasswordPolicyArgs
+	state     *iamAccountPasswordPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IamAccountPasswordPolicy].
 func (iapp *IamAccountPasswordPolicy) Type() string {
 	return "aws_iam_account_password_policy"
 }
 
+// LocalName returns the local name for [IamAccountPasswordPolicy].
 func (iapp *IamAccountPasswordPolicy) LocalName() string {
 	return iapp.Name
 }
 
+// Configuration returns the configuration (args) for [IamAccountPasswordPolicy].
 func (iapp *IamAccountPasswordPolicy) Configuration() interface{} {
 	return iapp.Args
 }
 
+// DependOn is used for other resources to depend on [IamAccountPasswordPolicy].
+func (iapp *IamAccountPasswordPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(iapp)
+}
+
+// Dependencies returns the list of resources [IamAccountPasswordPolicy] depends_on.
+func (iapp *IamAccountPasswordPolicy) Dependencies() terra.Dependencies {
+	return iapp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IamAccountPasswordPolicy].
+func (iapp *IamAccountPasswordPolicy) LifecycleManagement() *terra.Lifecycle {
+	return iapp.Lifecycle
+}
+
+// Attributes returns the attributes for [IamAccountPasswordPolicy].
 func (iapp *IamAccountPasswordPolicy) Attributes() iamAccountPasswordPolicyAttributes {
 	return iamAccountPasswordPolicyAttributes{ref: terra.ReferenceResource(iapp)}
 }
 
+// ImportState imports the given attribute values into [IamAccountPasswordPolicy]'s state.
 func (iapp *IamAccountPasswordPolicy) ImportState(av io.Reader) error {
 	iapp.state = &iamAccountPasswordPolicyState{}
 	if err := json.NewDecoder(av).Decode(iapp.state); err != nil {
@@ -48,10 +72,12 @@ func (iapp *IamAccountPasswordPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IamAccountPasswordPolicy] has state.
 func (iapp *IamAccountPasswordPolicy) State() (*iamAccountPasswordPolicyState, bool) {
 	return iapp.state, iapp.state != nil
 }
 
+// StateMust returns the state for [IamAccountPasswordPolicy]. Panics if the state is nil.
 func (iapp *IamAccountPasswordPolicy) StateMust() *iamAccountPasswordPolicyState {
 	if iapp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", iapp.Type(), iapp.LocalName()))
@@ -59,10 +85,7 @@ func (iapp *IamAccountPasswordPolicy) StateMust() *iamAccountPasswordPolicyState
 	return iapp.state
 }
 
-func (iapp *IamAccountPasswordPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(iapp)
-}
-
+// IamAccountPasswordPolicyArgs contains the configurations for aws_iam_account_password_policy.
 type IamAccountPasswordPolicyArgs struct {
 	// AllowUsersToChangePassword: bool, optional
 	AllowUsersToChangePassword terra.BoolValue `hcl:"allow_users_to_change_password,attr"`
@@ -84,55 +107,64 @@ type IamAccountPasswordPolicyArgs struct {
 	RequireSymbols terra.BoolValue `hcl:"require_symbols,attr"`
 	// RequireUppercaseCharacters: bool, optional
 	RequireUppercaseCharacters terra.BoolValue `hcl:"require_uppercase_characters,attr"`
-	// DependsOn contains resources that IamAccountPasswordPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iamAccountPasswordPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// AllowUsersToChangePassword returns a reference to field allow_users_to_change_password of aws_iam_account_password_policy.
 func (iapp iamAccountPasswordPolicyAttributes) AllowUsersToChangePassword() terra.BoolValue {
-	return terra.ReferenceBool(iapp.ref.Append("allow_users_to_change_password"))
+	return terra.ReferenceAsBool(iapp.ref.Append("allow_users_to_change_password"))
 }
 
+// ExpirePasswords returns a reference to field expire_passwords of aws_iam_account_password_policy.
 func (iapp iamAccountPasswordPolicyAttributes) ExpirePasswords() terra.BoolValue {
-	return terra.ReferenceBool(iapp.ref.Append("expire_passwords"))
+	return terra.ReferenceAsBool(iapp.ref.Append("expire_passwords"))
 }
 
+// HardExpiry returns a reference to field hard_expiry of aws_iam_account_password_policy.
 func (iapp iamAccountPasswordPolicyAttributes) HardExpiry() terra.BoolValue {
-	return terra.ReferenceBool(iapp.ref.Append("hard_expiry"))
+	return terra.ReferenceAsBool(iapp.ref.Append("hard_expiry"))
 }
 
+// Id returns a reference to field id of aws_iam_account_password_policy.
 func (iapp iamAccountPasswordPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(iapp.ref.Append("id"))
+	return terra.ReferenceAsString(iapp.ref.Append("id"))
 }
 
+// MaxPasswordAge returns a reference to field max_password_age of aws_iam_account_password_policy.
 func (iapp iamAccountPasswordPolicyAttributes) MaxPasswordAge() terra.NumberValue {
-	return terra.ReferenceNumber(iapp.ref.Append("max_password_age"))
+	return terra.ReferenceAsNumber(iapp.ref.Append("max_password_age"))
 }
 
+// MinimumPasswordLength returns a reference to field minimum_password_length of aws_iam_account_password_policy.
 func (iapp iamAccountPasswordPolicyAttributes) MinimumPasswordLength() terra.NumberValue {
-	return terra.ReferenceNumber(iapp.ref.Append("minimum_password_length"))
+	return terra.ReferenceAsNumber(iapp.ref.Append("minimum_password_length"))
 }
 
+// PasswordReusePrevention returns a reference to field password_reuse_prevention of aws_iam_account_password_policy.
 func (iapp iamAccountPasswordPolicyAttributes) PasswordReusePrevention() terra.NumberValue {
-	return terra.ReferenceNumber(iapp.ref.Append("password_reuse_prevention"))
+	return terra.ReferenceAsNumber(iapp.ref.Append("password_reuse_prevention"))
 }
 
+// RequireLowercaseCharacters returns a reference to field require_lowercase_characters of aws_iam_account_password_policy.
 func (iapp iamAccountPasswordPolicyAttributes) RequireLowercaseCharacters() terra.BoolValue {
-	return terra.ReferenceBool(iapp.ref.Append("require_lowercase_characters"))
+	return terra.ReferenceAsBool(iapp.ref.Append("require_lowercase_characters"))
 }
 
+// RequireNumbers returns a reference to field require_numbers of aws_iam_account_password_policy.
 func (iapp iamAccountPasswordPolicyAttributes) RequireNumbers() terra.BoolValue {
-	return terra.ReferenceBool(iapp.ref.Append("require_numbers"))
+	return terra.ReferenceAsBool(iapp.ref.Append("require_numbers"))
 }
 
+// RequireSymbols returns a reference to field require_symbols of aws_iam_account_password_policy.
 func (iapp iamAccountPasswordPolicyAttributes) RequireSymbols() terra.BoolValue {
-	return terra.ReferenceBool(iapp.ref.Append("require_symbols"))
+	return terra.ReferenceAsBool(iapp.ref.Append("require_symbols"))
 }
 
+// RequireUppercaseCharacters returns a reference to field require_uppercase_characters of aws_iam_account_password_policy.
 func (iapp iamAccountPasswordPolicyAttributes) RequireUppercaseCharacters() terra.BoolValue {
-	return terra.ReferenceBool(iapp.ref.Append("require_uppercase_characters"))
+	return terra.ReferenceAsBool(iapp.ref.Append("require_uppercase_characters"))
 }
 
 type iamAccountPasswordPolicyState struct {

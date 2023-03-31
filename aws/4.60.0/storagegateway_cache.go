@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewStoragegatewayCache creates a new instance of [StoragegatewayCache].
 func NewStoragegatewayCache(name string, args StoragegatewayCacheArgs) *StoragegatewayCache {
 	return &StoragegatewayCache{
 		Args: args,
@@ -18,28 +19,51 @@ func NewStoragegatewayCache(name string, args StoragegatewayCacheArgs) *Storageg
 
 var _ terra.Resource = (*StoragegatewayCache)(nil)
 
+// StoragegatewayCache represents the Terraform resource aws_storagegateway_cache.
 type StoragegatewayCache struct {
-	Name  string
-	Args  StoragegatewayCacheArgs
-	state *storagegatewayCacheState
+	Name      string
+	Args      StoragegatewayCacheArgs
+	state     *storagegatewayCacheState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StoragegatewayCache].
 func (sc *StoragegatewayCache) Type() string {
 	return "aws_storagegateway_cache"
 }
 
+// LocalName returns the local name for [StoragegatewayCache].
 func (sc *StoragegatewayCache) LocalName() string {
 	return sc.Name
 }
 
+// Configuration returns the configuration (args) for [StoragegatewayCache].
 func (sc *StoragegatewayCache) Configuration() interface{} {
 	return sc.Args
 }
 
+// DependOn is used for other resources to depend on [StoragegatewayCache].
+func (sc *StoragegatewayCache) DependOn() terra.Reference {
+	return terra.ReferenceResource(sc)
+}
+
+// Dependencies returns the list of resources [StoragegatewayCache] depends_on.
+func (sc *StoragegatewayCache) Dependencies() terra.Dependencies {
+	return sc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StoragegatewayCache].
+func (sc *StoragegatewayCache) LifecycleManagement() *terra.Lifecycle {
+	return sc.Lifecycle
+}
+
+// Attributes returns the attributes for [StoragegatewayCache].
 func (sc *StoragegatewayCache) Attributes() storagegatewayCacheAttributes {
 	return storagegatewayCacheAttributes{ref: terra.ReferenceResource(sc)}
 }
 
+// ImportState imports the given attribute values into [StoragegatewayCache]'s state.
 func (sc *StoragegatewayCache) ImportState(av io.Reader) error {
 	sc.state = &storagegatewayCacheState{}
 	if err := json.NewDecoder(av).Decode(sc.state); err != nil {
@@ -48,10 +72,12 @@ func (sc *StoragegatewayCache) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [StoragegatewayCache] has state.
 func (sc *StoragegatewayCache) State() (*storagegatewayCacheState, bool) {
 	return sc.state, sc.state != nil
 }
 
+// StateMust returns the state for [StoragegatewayCache]. Panics if the state is nil.
 func (sc *StoragegatewayCache) StateMust() *storagegatewayCacheState {
 	if sc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sc.Type(), sc.LocalName()))
@@ -59,10 +85,7 @@ func (sc *StoragegatewayCache) StateMust() *storagegatewayCacheState {
 	return sc.state
 }
 
-func (sc *StoragegatewayCache) DependOn() terra.Reference {
-	return terra.ReferenceResource(sc)
-}
-
+// StoragegatewayCacheArgs contains the configurations for aws_storagegateway_cache.
 type StoragegatewayCacheArgs struct {
 	// DiskId: string, required
 	DiskId terra.StringValue `hcl:"disk_id,attr" validate:"required"`
@@ -70,23 +93,24 @@ type StoragegatewayCacheArgs struct {
 	GatewayArn terra.StringValue `hcl:"gateway_arn,attr" validate:"required"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that StoragegatewayCache depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type storagegatewayCacheAttributes struct {
 	ref terra.Reference
 }
 
+// DiskId returns a reference to field disk_id of aws_storagegateway_cache.
 func (sc storagegatewayCacheAttributes) DiskId() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("disk_id"))
+	return terra.ReferenceAsString(sc.ref.Append("disk_id"))
 }
 
+// GatewayArn returns a reference to field gateway_arn of aws_storagegateway_cache.
 func (sc storagegatewayCacheAttributes) GatewayArn() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("gateway_arn"))
+	return terra.ReferenceAsString(sc.ref.Append("gateway_arn"))
 }
 
+// Id returns a reference to field id of aws_storagegateway_cache.
 func (sc storagegatewayCacheAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("id"))
+	return terra.ReferenceAsString(sc.ref.Append("id"))
 }
 
 type storagegatewayCacheState struct {

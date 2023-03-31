@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAutoscalingAttachment creates a new instance of [AutoscalingAttachment].
 func NewAutoscalingAttachment(name string, args AutoscalingAttachmentArgs) *AutoscalingAttachment {
 	return &AutoscalingAttachment{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAutoscalingAttachment(name string, args AutoscalingAttachmentArgs) *Auto
 
 var _ terra.Resource = (*AutoscalingAttachment)(nil)
 
+// AutoscalingAttachment represents the Terraform resource aws_autoscaling_attachment.
 type AutoscalingAttachment struct {
-	Name  string
-	Args  AutoscalingAttachmentArgs
-	state *autoscalingAttachmentState
+	Name      string
+	Args      AutoscalingAttachmentArgs
+	state     *autoscalingAttachmentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AutoscalingAttachment].
 func (aa *AutoscalingAttachment) Type() string {
 	return "aws_autoscaling_attachment"
 }
 
+// LocalName returns the local name for [AutoscalingAttachment].
 func (aa *AutoscalingAttachment) LocalName() string {
 	return aa.Name
 }
 
+// Configuration returns the configuration (args) for [AutoscalingAttachment].
 func (aa *AutoscalingAttachment) Configuration() interface{} {
 	return aa.Args
 }
 
+// DependOn is used for other resources to depend on [AutoscalingAttachment].
+func (aa *AutoscalingAttachment) DependOn() terra.Reference {
+	return terra.ReferenceResource(aa)
+}
+
+// Dependencies returns the list of resources [AutoscalingAttachment] depends_on.
+func (aa *AutoscalingAttachment) Dependencies() terra.Dependencies {
+	return aa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AutoscalingAttachment].
+func (aa *AutoscalingAttachment) LifecycleManagement() *terra.Lifecycle {
+	return aa.Lifecycle
+}
+
+// Attributes returns the attributes for [AutoscalingAttachment].
 func (aa *AutoscalingAttachment) Attributes() autoscalingAttachmentAttributes {
 	return autoscalingAttachmentAttributes{ref: terra.ReferenceResource(aa)}
 }
 
+// ImportState imports the given attribute values into [AutoscalingAttachment]'s state.
 func (aa *AutoscalingAttachment) ImportState(av io.Reader) error {
 	aa.state = &autoscalingAttachmentState{}
 	if err := json.NewDecoder(av).Decode(aa.state); err != nil {
@@ -48,10 +72,12 @@ func (aa *AutoscalingAttachment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AutoscalingAttachment] has state.
 func (aa *AutoscalingAttachment) State() (*autoscalingAttachmentState, bool) {
 	return aa.state, aa.state != nil
 }
 
+// StateMust returns the state for [AutoscalingAttachment]. Panics if the state is nil.
 func (aa *AutoscalingAttachment) StateMust() *autoscalingAttachmentState {
 	if aa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", aa.Type(), aa.LocalName()))
@@ -59,10 +85,7 @@ func (aa *AutoscalingAttachment) StateMust() *autoscalingAttachmentState {
 	return aa.state
 }
 
-func (aa *AutoscalingAttachment) DependOn() terra.Reference {
-	return terra.ReferenceResource(aa)
-}
-
+// AutoscalingAttachmentArgs contains the configurations for aws_autoscaling_attachment.
 type AutoscalingAttachmentArgs struct {
 	// AlbTargetGroupArn: string, optional
 	AlbTargetGroupArn terra.StringValue `hcl:"alb_target_group_arn,attr"`
@@ -74,31 +97,34 @@ type AutoscalingAttachmentArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// LbTargetGroupArn: string, optional
 	LbTargetGroupArn terra.StringValue `hcl:"lb_target_group_arn,attr"`
-	// DependsOn contains resources that AutoscalingAttachment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type autoscalingAttachmentAttributes struct {
 	ref terra.Reference
 }
 
+// AlbTargetGroupArn returns a reference to field alb_target_group_arn of aws_autoscaling_attachment.
 func (aa autoscalingAttachmentAttributes) AlbTargetGroupArn() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("alb_target_group_arn"))
+	return terra.ReferenceAsString(aa.ref.Append("alb_target_group_arn"))
 }
 
+// AutoscalingGroupName returns a reference to field autoscaling_group_name of aws_autoscaling_attachment.
 func (aa autoscalingAttachmentAttributes) AutoscalingGroupName() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("autoscaling_group_name"))
+	return terra.ReferenceAsString(aa.ref.Append("autoscaling_group_name"))
 }
 
+// Elb returns a reference to field elb of aws_autoscaling_attachment.
 func (aa autoscalingAttachmentAttributes) Elb() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("elb"))
+	return terra.ReferenceAsString(aa.ref.Append("elb"))
 }
 
+// Id returns a reference to field id of aws_autoscaling_attachment.
 func (aa autoscalingAttachmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("id"))
+	return terra.ReferenceAsString(aa.ref.Append("id"))
 }
 
+// LbTargetGroupArn returns a reference to field lb_target_group_arn of aws_autoscaling_attachment.
 func (aa autoscalingAttachmentAttributes) LbTargetGroupArn() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("lb_target_group_arn"))
+	return terra.ReferenceAsString(aa.ref.Append("lb_target_group_arn"))
 }
 
 type autoscalingAttachmentState struct {

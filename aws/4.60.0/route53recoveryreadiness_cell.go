@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewRoute53RecoveryreadinessCell creates a new instance of [Route53RecoveryreadinessCell].
 func NewRoute53RecoveryreadinessCell(name string, args Route53RecoveryreadinessCellArgs) *Route53RecoveryreadinessCell {
 	return &Route53RecoveryreadinessCell{
 		Args: args,
@@ -19,28 +20,51 @@ func NewRoute53RecoveryreadinessCell(name string, args Route53RecoveryreadinessC
 
 var _ terra.Resource = (*Route53RecoveryreadinessCell)(nil)
 
+// Route53RecoveryreadinessCell represents the Terraform resource aws_route53recoveryreadiness_cell.
 type Route53RecoveryreadinessCell struct {
-	Name  string
-	Args  Route53RecoveryreadinessCellArgs
-	state *route53RecoveryreadinessCellState
+	Name      string
+	Args      Route53RecoveryreadinessCellArgs
+	state     *route53RecoveryreadinessCellState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Route53RecoveryreadinessCell].
 func (rc *Route53RecoveryreadinessCell) Type() string {
 	return "aws_route53recoveryreadiness_cell"
 }
 
+// LocalName returns the local name for [Route53RecoveryreadinessCell].
 func (rc *Route53RecoveryreadinessCell) LocalName() string {
 	return rc.Name
 }
 
+// Configuration returns the configuration (args) for [Route53RecoveryreadinessCell].
 func (rc *Route53RecoveryreadinessCell) Configuration() interface{} {
 	return rc.Args
 }
 
+// DependOn is used for other resources to depend on [Route53RecoveryreadinessCell].
+func (rc *Route53RecoveryreadinessCell) DependOn() terra.Reference {
+	return terra.ReferenceResource(rc)
+}
+
+// Dependencies returns the list of resources [Route53RecoveryreadinessCell] depends_on.
+func (rc *Route53RecoveryreadinessCell) Dependencies() terra.Dependencies {
+	return rc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Route53RecoveryreadinessCell].
+func (rc *Route53RecoveryreadinessCell) LifecycleManagement() *terra.Lifecycle {
+	return rc.Lifecycle
+}
+
+// Attributes returns the attributes for [Route53RecoveryreadinessCell].
 func (rc *Route53RecoveryreadinessCell) Attributes() route53RecoveryreadinessCellAttributes {
 	return route53RecoveryreadinessCellAttributes{ref: terra.ReferenceResource(rc)}
 }
 
+// ImportState imports the given attribute values into [Route53RecoveryreadinessCell]'s state.
 func (rc *Route53RecoveryreadinessCell) ImportState(av io.Reader) error {
 	rc.state = &route53RecoveryreadinessCellState{}
 	if err := json.NewDecoder(av).Decode(rc.state); err != nil {
@@ -49,10 +73,12 @@ func (rc *Route53RecoveryreadinessCell) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Route53RecoveryreadinessCell] has state.
 func (rc *Route53RecoveryreadinessCell) State() (*route53RecoveryreadinessCellState, bool) {
 	return rc.state, rc.state != nil
 }
 
+// StateMust returns the state for [Route53RecoveryreadinessCell]. Panics if the state is nil.
 func (rc *Route53RecoveryreadinessCell) StateMust() *route53RecoveryreadinessCellState {
 	if rc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rc.Type(), rc.LocalName()))
@@ -60,10 +86,7 @@ func (rc *Route53RecoveryreadinessCell) StateMust() *route53RecoveryreadinessCel
 	return rc.state
 }
 
-func (rc *Route53RecoveryreadinessCell) DependOn() terra.Reference {
-	return terra.ReferenceResource(rc)
-}
-
+// Route53RecoveryreadinessCellArgs contains the configurations for aws_route53recoveryreadiness_cell.
 type Route53RecoveryreadinessCellArgs struct {
 	// CellName: string, required
 	CellName terra.StringValue `hcl:"cell_name,attr" validate:"required"`
@@ -77,43 +100,48 @@ type Route53RecoveryreadinessCellArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Timeouts: optional
 	Timeouts *route53recoveryreadinesscell.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Route53RecoveryreadinessCell depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type route53RecoveryreadinessCellAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_route53recoveryreadiness_cell.
 func (rc route53RecoveryreadinessCellAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("arn"))
+	return terra.ReferenceAsString(rc.ref.Append("arn"))
 }
 
+// CellName returns a reference to field cell_name of aws_route53recoveryreadiness_cell.
 func (rc route53RecoveryreadinessCellAttributes) CellName() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("cell_name"))
+	return terra.ReferenceAsString(rc.ref.Append("cell_name"))
 }
 
+// Cells returns a reference to field cells of aws_route53recoveryreadiness_cell.
 func (rc route53RecoveryreadinessCellAttributes) Cells() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rc.ref.Append("cells"))
+	return terra.ReferenceAsList[terra.StringValue](rc.ref.Append("cells"))
 }
 
+// Id returns a reference to field id of aws_route53recoveryreadiness_cell.
 func (rc route53RecoveryreadinessCellAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("id"))
+	return terra.ReferenceAsString(rc.ref.Append("id"))
 }
 
+// ParentReadinessScopes returns a reference to field parent_readiness_scopes of aws_route53recoveryreadiness_cell.
 func (rc route53RecoveryreadinessCellAttributes) ParentReadinessScopes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rc.ref.Append("parent_readiness_scopes"))
+	return terra.ReferenceAsList[terra.StringValue](rc.ref.Append("parent_readiness_scopes"))
 }
 
+// Tags returns a reference to field tags of aws_route53recoveryreadiness_cell.
 func (rc route53RecoveryreadinessCellAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_route53recoveryreadiness_cell.
 func (rc route53RecoveryreadinessCellAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](rc.ref.Append("tags_all"))
 }
 
 func (rc route53RecoveryreadinessCellAttributes) Timeouts() route53recoveryreadinesscell.TimeoutsAttributes {
-	return terra.ReferenceSingle[route53recoveryreadinesscell.TimeoutsAttributes](rc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[route53recoveryreadinesscell.TimeoutsAttributes](rc.ref.Append("timeouts"))
 }
 
 type route53RecoveryreadinessCellState struct {

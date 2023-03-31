@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDbClusterSnapshot creates a new instance of [DbClusterSnapshot].
 func NewDbClusterSnapshot(name string, args DbClusterSnapshotArgs) *DbClusterSnapshot {
 	return &DbClusterSnapshot{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDbClusterSnapshot(name string, args DbClusterSnapshotArgs) *DbClusterSna
 
 var _ terra.Resource = (*DbClusterSnapshot)(nil)
 
+// DbClusterSnapshot represents the Terraform resource aws_db_cluster_snapshot.
 type DbClusterSnapshot struct {
-	Name  string
-	Args  DbClusterSnapshotArgs
-	state *dbClusterSnapshotState
+	Name      string
+	Args      DbClusterSnapshotArgs
+	state     *dbClusterSnapshotState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DbClusterSnapshot].
 func (dcs *DbClusterSnapshot) Type() string {
 	return "aws_db_cluster_snapshot"
 }
 
+// LocalName returns the local name for [DbClusterSnapshot].
 func (dcs *DbClusterSnapshot) LocalName() string {
 	return dcs.Name
 }
 
+// Configuration returns the configuration (args) for [DbClusterSnapshot].
 func (dcs *DbClusterSnapshot) Configuration() interface{} {
 	return dcs.Args
 }
 
+// DependOn is used for other resources to depend on [DbClusterSnapshot].
+func (dcs *DbClusterSnapshot) DependOn() terra.Reference {
+	return terra.ReferenceResource(dcs)
+}
+
+// Dependencies returns the list of resources [DbClusterSnapshot] depends_on.
+func (dcs *DbClusterSnapshot) Dependencies() terra.Dependencies {
+	return dcs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DbClusterSnapshot].
+func (dcs *DbClusterSnapshot) LifecycleManagement() *terra.Lifecycle {
+	return dcs.Lifecycle
+}
+
+// Attributes returns the attributes for [DbClusterSnapshot].
 func (dcs *DbClusterSnapshot) Attributes() dbClusterSnapshotAttributes {
 	return dbClusterSnapshotAttributes{ref: terra.ReferenceResource(dcs)}
 }
 
+// ImportState imports the given attribute values into [DbClusterSnapshot]'s state.
 func (dcs *DbClusterSnapshot) ImportState(av io.Reader) error {
 	dcs.state = &dbClusterSnapshotState{}
 	if err := json.NewDecoder(av).Decode(dcs.state); err != nil {
@@ -49,10 +73,12 @@ func (dcs *DbClusterSnapshot) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DbClusterSnapshot] has state.
 func (dcs *DbClusterSnapshot) State() (*dbClusterSnapshotState, bool) {
 	return dcs.state, dcs.state != nil
 }
 
+// StateMust returns the state for [DbClusterSnapshot]. Panics if the state is nil.
 func (dcs *DbClusterSnapshot) StateMust() *dbClusterSnapshotState {
 	if dcs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dcs.Type(), dcs.LocalName()))
@@ -60,10 +86,7 @@ func (dcs *DbClusterSnapshot) StateMust() *dbClusterSnapshotState {
 	return dcs.state
 }
 
-func (dcs *DbClusterSnapshot) DependOn() terra.Reference {
-	return terra.ReferenceResource(dcs)
-}
-
+// DbClusterSnapshotArgs contains the configurations for aws_db_cluster_snapshot.
 type DbClusterSnapshotArgs struct {
 	// DbClusterIdentifier: string, required
 	DbClusterIdentifier terra.StringValue `hcl:"db_cluster_identifier,attr" validate:"required"`
@@ -77,87 +100,103 @@ type DbClusterSnapshotArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Timeouts: optional
 	Timeouts *dbclustersnapshot.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DbClusterSnapshot depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dbClusterSnapshotAttributes struct {
 	ref terra.Reference
 }
 
+// AllocatedStorage returns a reference to field allocated_storage of aws_db_cluster_snapshot.
 func (dcs dbClusterSnapshotAttributes) AllocatedStorage() terra.NumberValue {
-	return terra.ReferenceNumber(dcs.ref.Append("allocated_storage"))
+	return terra.ReferenceAsNumber(dcs.ref.Append("allocated_storage"))
 }
 
+// AvailabilityZones returns a reference to field availability_zones of aws_db_cluster_snapshot.
 func (dcs dbClusterSnapshotAttributes) AvailabilityZones() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dcs.ref.Append("availability_zones"))
+	return terra.ReferenceAsList[terra.StringValue](dcs.ref.Append("availability_zones"))
 }
 
+// DbClusterIdentifier returns a reference to field db_cluster_identifier of aws_db_cluster_snapshot.
 func (dcs dbClusterSnapshotAttributes) DbClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(dcs.ref.Append("db_cluster_identifier"))
+	return terra.ReferenceAsString(dcs.ref.Append("db_cluster_identifier"))
 }
 
+// DbClusterSnapshotArn returns a reference to field db_cluster_snapshot_arn of aws_db_cluster_snapshot.
 func (dcs dbClusterSnapshotAttributes) DbClusterSnapshotArn() terra.StringValue {
-	return terra.ReferenceString(dcs.ref.Append("db_cluster_snapshot_arn"))
+	return terra.ReferenceAsString(dcs.ref.Append("db_cluster_snapshot_arn"))
 }
 
+// DbClusterSnapshotIdentifier returns a reference to field db_cluster_snapshot_identifier of aws_db_cluster_snapshot.
 func (dcs dbClusterSnapshotAttributes) DbClusterSnapshotIdentifier() terra.StringValue {
-	return terra.ReferenceString(dcs.ref.Append("db_cluster_snapshot_identifier"))
+	return terra.ReferenceAsString(dcs.ref.Append("db_cluster_snapshot_identifier"))
 }
 
+// Engine returns a reference to field engine of aws_db_cluster_snapshot.
 func (dcs dbClusterSnapshotAttributes) Engine() terra.StringValue {
-	return terra.ReferenceString(dcs.ref.Append("engine"))
+	return terra.ReferenceAsString(dcs.ref.Append("engine"))
 }
 
+// EngineVersion returns a reference to field engine_version of aws_db_cluster_snapshot.
 func (dcs dbClusterSnapshotAttributes) EngineVersion() terra.StringValue {
-	return terra.ReferenceString(dcs.ref.Append("engine_version"))
+	return terra.ReferenceAsString(dcs.ref.Append("engine_version"))
 }
 
+// Id returns a reference to field id of aws_db_cluster_snapshot.
 func (dcs dbClusterSnapshotAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dcs.ref.Append("id"))
+	return terra.ReferenceAsString(dcs.ref.Append("id"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_db_cluster_snapshot.
 func (dcs dbClusterSnapshotAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(dcs.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(dcs.ref.Append("kms_key_id"))
 }
 
+// LicenseModel returns a reference to field license_model of aws_db_cluster_snapshot.
 func (dcs dbClusterSnapshotAttributes) LicenseModel() terra.StringValue {
-	return terra.ReferenceString(dcs.ref.Append("license_model"))
+	return terra.ReferenceAsString(dcs.ref.Append("license_model"))
 }
 
+// Port returns a reference to field port of aws_db_cluster_snapshot.
 func (dcs dbClusterSnapshotAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(dcs.ref.Append("port"))
+	return terra.ReferenceAsNumber(dcs.ref.Append("port"))
 }
 
+// SnapshotType returns a reference to field snapshot_type of aws_db_cluster_snapshot.
 func (dcs dbClusterSnapshotAttributes) SnapshotType() terra.StringValue {
-	return terra.ReferenceString(dcs.ref.Append("snapshot_type"))
+	return terra.ReferenceAsString(dcs.ref.Append("snapshot_type"))
 }
 
+// SourceDbClusterSnapshotArn returns a reference to field source_db_cluster_snapshot_arn of aws_db_cluster_snapshot.
 func (dcs dbClusterSnapshotAttributes) SourceDbClusterSnapshotArn() terra.StringValue {
-	return terra.ReferenceString(dcs.ref.Append("source_db_cluster_snapshot_arn"))
+	return terra.ReferenceAsString(dcs.ref.Append("source_db_cluster_snapshot_arn"))
 }
 
+// Status returns a reference to field status of aws_db_cluster_snapshot.
 func (dcs dbClusterSnapshotAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(dcs.ref.Append("status"))
+	return terra.ReferenceAsString(dcs.ref.Append("status"))
 }
 
+// StorageEncrypted returns a reference to field storage_encrypted of aws_db_cluster_snapshot.
 func (dcs dbClusterSnapshotAttributes) StorageEncrypted() terra.BoolValue {
-	return terra.ReferenceBool(dcs.ref.Append("storage_encrypted"))
+	return terra.ReferenceAsBool(dcs.ref.Append("storage_encrypted"))
 }
 
+// Tags returns a reference to field tags of aws_db_cluster_snapshot.
 func (dcs dbClusterSnapshotAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dcs.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dcs.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_db_cluster_snapshot.
 func (dcs dbClusterSnapshotAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dcs.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dcs.ref.Append("tags_all"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_db_cluster_snapshot.
 func (dcs dbClusterSnapshotAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(dcs.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(dcs.ref.Append("vpc_id"))
 }
 
 func (dcs dbClusterSnapshotAttributes) Timeouts() dbclustersnapshot.TimeoutsAttributes {
-	return terra.ReferenceSingle[dbclustersnapshot.TimeoutsAttributes](dcs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dbclustersnapshot.TimeoutsAttributes](dcs.ref.Append("timeouts"))
 }
 
 type dbClusterSnapshotState struct {

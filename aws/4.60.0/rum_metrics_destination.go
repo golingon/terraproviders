@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRumMetricsDestination creates a new instance of [RumMetricsDestination].
 func NewRumMetricsDestination(name string, args RumMetricsDestinationArgs) *RumMetricsDestination {
 	return &RumMetricsDestination{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRumMetricsDestination(name string, args RumMetricsDestinationArgs) *RumM
 
 var _ terra.Resource = (*RumMetricsDestination)(nil)
 
+// RumMetricsDestination represents the Terraform resource aws_rum_metrics_destination.
 type RumMetricsDestination struct {
-	Name  string
-	Args  RumMetricsDestinationArgs
-	state *rumMetricsDestinationState
+	Name      string
+	Args      RumMetricsDestinationArgs
+	state     *rumMetricsDestinationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RumMetricsDestination].
 func (rmd *RumMetricsDestination) Type() string {
 	return "aws_rum_metrics_destination"
 }
 
+// LocalName returns the local name for [RumMetricsDestination].
 func (rmd *RumMetricsDestination) LocalName() string {
 	return rmd.Name
 }
 
+// Configuration returns the configuration (args) for [RumMetricsDestination].
 func (rmd *RumMetricsDestination) Configuration() interface{} {
 	return rmd.Args
 }
 
+// DependOn is used for other resources to depend on [RumMetricsDestination].
+func (rmd *RumMetricsDestination) DependOn() terra.Reference {
+	return terra.ReferenceResource(rmd)
+}
+
+// Dependencies returns the list of resources [RumMetricsDestination] depends_on.
+func (rmd *RumMetricsDestination) Dependencies() terra.Dependencies {
+	return rmd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RumMetricsDestination].
+func (rmd *RumMetricsDestination) LifecycleManagement() *terra.Lifecycle {
+	return rmd.Lifecycle
+}
+
+// Attributes returns the attributes for [RumMetricsDestination].
 func (rmd *RumMetricsDestination) Attributes() rumMetricsDestinationAttributes {
 	return rumMetricsDestinationAttributes{ref: terra.ReferenceResource(rmd)}
 }
 
+// ImportState imports the given attribute values into [RumMetricsDestination]'s state.
 func (rmd *RumMetricsDestination) ImportState(av io.Reader) error {
 	rmd.state = &rumMetricsDestinationState{}
 	if err := json.NewDecoder(av).Decode(rmd.state); err != nil {
@@ -48,10 +72,12 @@ func (rmd *RumMetricsDestination) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RumMetricsDestination] has state.
 func (rmd *RumMetricsDestination) State() (*rumMetricsDestinationState, bool) {
 	return rmd.state, rmd.state != nil
 }
 
+// StateMust returns the state for [RumMetricsDestination]. Panics if the state is nil.
 func (rmd *RumMetricsDestination) StateMust() *rumMetricsDestinationState {
 	if rmd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rmd.Type(), rmd.LocalName()))
@@ -59,10 +85,7 @@ func (rmd *RumMetricsDestination) StateMust() *rumMetricsDestinationState {
 	return rmd.state
 }
 
-func (rmd *RumMetricsDestination) DependOn() terra.Reference {
-	return terra.ReferenceResource(rmd)
-}
-
+// RumMetricsDestinationArgs contains the configurations for aws_rum_metrics_destination.
 type RumMetricsDestinationArgs struct {
 	// AppMonitorName: string, required
 	AppMonitorName terra.StringValue `hcl:"app_monitor_name,attr" validate:"required"`
@@ -74,31 +97,34 @@ type RumMetricsDestinationArgs struct {
 	IamRoleArn terra.StringValue `hcl:"iam_role_arn,attr"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that RumMetricsDestination depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type rumMetricsDestinationAttributes struct {
 	ref terra.Reference
 }
 
+// AppMonitorName returns a reference to field app_monitor_name of aws_rum_metrics_destination.
 func (rmd rumMetricsDestinationAttributes) AppMonitorName() terra.StringValue {
-	return terra.ReferenceString(rmd.ref.Append("app_monitor_name"))
+	return terra.ReferenceAsString(rmd.ref.Append("app_monitor_name"))
 }
 
+// Destination returns a reference to field destination of aws_rum_metrics_destination.
 func (rmd rumMetricsDestinationAttributes) Destination() terra.StringValue {
-	return terra.ReferenceString(rmd.ref.Append("destination"))
+	return terra.ReferenceAsString(rmd.ref.Append("destination"))
 }
 
+// DestinationArn returns a reference to field destination_arn of aws_rum_metrics_destination.
 func (rmd rumMetricsDestinationAttributes) DestinationArn() terra.StringValue {
-	return terra.ReferenceString(rmd.ref.Append("destination_arn"))
+	return terra.ReferenceAsString(rmd.ref.Append("destination_arn"))
 }
 
+// IamRoleArn returns a reference to field iam_role_arn of aws_rum_metrics_destination.
 func (rmd rumMetricsDestinationAttributes) IamRoleArn() terra.StringValue {
-	return terra.ReferenceString(rmd.ref.Append("iam_role_arn"))
+	return terra.ReferenceAsString(rmd.ref.Append("iam_role_arn"))
 }
 
+// Id returns a reference to field id of aws_rum_metrics_destination.
 func (rmd rumMetricsDestinationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rmd.ref.Append("id"))
+	return terra.ReferenceAsString(rmd.ref.Append("id"))
 }
 
 type rumMetricsDestinationState struct {

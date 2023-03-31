@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDynamodbTag creates a new instance of [DynamodbTag].
 func NewDynamodbTag(name string, args DynamodbTagArgs) *DynamodbTag {
 	return &DynamodbTag{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDynamodbTag(name string, args DynamodbTagArgs) *DynamodbTag {
 
 var _ terra.Resource = (*DynamodbTag)(nil)
 
+// DynamodbTag represents the Terraform resource aws_dynamodb_tag.
 type DynamodbTag struct {
-	Name  string
-	Args  DynamodbTagArgs
-	state *dynamodbTagState
+	Name      string
+	Args      DynamodbTagArgs
+	state     *dynamodbTagState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DynamodbTag].
 func (dt *DynamodbTag) Type() string {
 	return "aws_dynamodb_tag"
 }
 
+// LocalName returns the local name for [DynamodbTag].
 func (dt *DynamodbTag) LocalName() string {
 	return dt.Name
 }
 
+// Configuration returns the configuration (args) for [DynamodbTag].
 func (dt *DynamodbTag) Configuration() interface{} {
 	return dt.Args
 }
 
+// DependOn is used for other resources to depend on [DynamodbTag].
+func (dt *DynamodbTag) DependOn() terra.Reference {
+	return terra.ReferenceResource(dt)
+}
+
+// Dependencies returns the list of resources [DynamodbTag] depends_on.
+func (dt *DynamodbTag) Dependencies() terra.Dependencies {
+	return dt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DynamodbTag].
+func (dt *DynamodbTag) LifecycleManagement() *terra.Lifecycle {
+	return dt.Lifecycle
+}
+
+// Attributes returns the attributes for [DynamodbTag].
 func (dt *DynamodbTag) Attributes() dynamodbTagAttributes {
 	return dynamodbTagAttributes{ref: terra.ReferenceResource(dt)}
 }
 
+// ImportState imports the given attribute values into [DynamodbTag]'s state.
 func (dt *DynamodbTag) ImportState(av io.Reader) error {
 	dt.state = &dynamodbTagState{}
 	if err := json.NewDecoder(av).Decode(dt.state); err != nil {
@@ -48,10 +72,12 @@ func (dt *DynamodbTag) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DynamodbTag] has state.
 func (dt *DynamodbTag) State() (*dynamodbTagState, bool) {
 	return dt.state, dt.state != nil
 }
 
+// StateMust returns the state for [DynamodbTag]. Panics if the state is nil.
 func (dt *DynamodbTag) StateMust() *dynamodbTagState {
 	if dt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dt.Type(), dt.LocalName()))
@@ -59,10 +85,7 @@ func (dt *DynamodbTag) StateMust() *dynamodbTagState {
 	return dt.state
 }
 
-func (dt *DynamodbTag) DependOn() terra.Reference {
-	return terra.ReferenceResource(dt)
-}
-
+// DynamodbTagArgs contains the configurations for aws_dynamodb_tag.
 type DynamodbTagArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -72,27 +95,29 @@ type DynamodbTagArgs struct {
 	ResourceArn terra.StringValue `hcl:"resource_arn,attr" validate:"required"`
 	// Value: string, required
 	Value terra.StringValue `hcl:"value,attr" validate:"required"`
-	// DependsOn contains resources that DynamodbTag depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dynamodbTagAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_dynamodb_tag.
 func (dt dynamodbTagAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("id"))
+	return terra.ReferenceAsString(dt.ref.Append("id"))
 }
 
+// Key returns a reference to field key of aws_dynamodb_tag.
 func (dt dynamodbTagAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("key"))
+	return terra.ReferenceAsString(dt.ref.Append("key"))
 }
 
+// ResourceArn returns a reference to field resource_arn of aws_dynamodb_tag.
 func (dt dynamodbTagAttributes) ResourceArn() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("resource_arn"))
+	return terra.ReferenceAsString(dt.ref.Append("resource_arn"))
 }
 
+// Value returns a reference to field value of aws_dynamodb_tag.
 func (dt dynamodbTagAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("value"))
+	return terra.ReferenceAsString(dt.ref.Append("value"))
 }
 
 type dynamodbTagState struct {

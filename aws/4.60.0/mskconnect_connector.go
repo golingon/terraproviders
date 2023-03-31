@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMskconnectConnector creates a new instance of [MskconnectConnector].
 func NewMskconnectConnector(name string, args MskconnectConnectorArgs) *MskconnectConnector {
 	return &MskconnectConnector{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMskconnectConnector(name string, args MskconnectConnectorArgs) *Mskconne
 
 var _ terra.Resource = (*MskconnectConnector)(nil)
 
+// MskconnectConnector represents the Terraform resource aws_mskconnect_connector.
 type MskconnectConnector struct {
-	Name  string
-	Args  MskconnectConnectorArgs
-	state *mskconnectConnectorState
+	Name      string
+	Args      MskconnectConnectorArgs
+	state     *mskconnectConnectorState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MskconnectConnector].
 func (mc *MskconnectConnector) Type() string {
 	return "aws_mskconnect_connector"
 }
 
+// LocalName returns the local name for [MskconnectConnector].
 func (mc *MskconnectConnector) LocalName() string {
 	return mc.Name
 }
 
+// Configuration returns the configuration (args) for [MskconnectConnector].
 func (mc *MskconnectConnector) Configuration() interface{} {
 	return mc.Args
 }
 
+// DependOn is used for other resources to depend on [MskconnectConnector].
+func (mc *MskconnectConnector) DependOn() terra.Reference {
+	return terra.ReferenceResource(mc)
+}
+
+// Dependencies returns the list of resources [MskconnectConnector] depends_on.
+func (mc *MskconnectConnector) Dependencies() terra.Dependencies {
+	return mc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MskconnectConnector].
+func (mc *MskconnectConnector) LifecycleManagement() *terra.Lifecycle {
+	return mc.Lifecycle
+}
+
+// Attributes returns the attributes for [MskconnectConnector].
 func (mc *MskconnectConnector) Attributes() mskconnectConnectorAttributes {
 	return mskconnectConnectorAttributes{ref: terra.ReferenceResource(mc)}
 }
 
+// ImportState imports the given attribute values into [MskconnectConnector]'s state.
 func (mc *MskconnectConnector) ImportState(av io.Reader) error {
 	mc.state = &mskconnectConnectorState{}
 	if err := json.NewDecoder(av).Decode(mc.state); err != nil {
@@ -49,10 +73,12 @@ func (mc *MskconnectConnector) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MskconnectConnector] has state.
 func (mc *MskconnectConnector) State() (*mskconnectConnectorState, bool) {
 	return mc.state, mc.state != nil
 }
 
+// StateMust returns the state for [MskconnectConnector]. Panics if the state is nil.
 func (mc *MskconnectConnector) StateMust() *mskconnectConnectorState {
 	if mc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mc.Type(), mc.LocalName()))
@@ -60,10 +86,7 @@ func (mc *MskconnectConnector) StateMust() *mskconnectConnectorState {
 	return mc.state
 }
 
-func (mc *MskconnectConnector) DependOn() terra.Reference {
-	return terra.ReferenceResource(mc)
-}
-
+// MskconnectConnectorArgs contains the configurations for aws_mskconnect_connector.
 type MskconnectConnectorArgs struct {
 	// ConnectorConfiguration: map of string, required
 	ConnectorConfiguration terra.MapValue[terra.StringValue] `hcl:"connector_configuration,attr" validate:"required"`
@@ -93,75 +116,81 @@ type MskconnectConnectorArgs struct {
 	Timeouts *mskconnectconnector.Timeouts `hcl:"timeouts,block"`
 	// WorkerConfiguration: optional
 	WorkerConfiguration *mskconnectconnector.WorkerConfiguration `hcl:"worker_configuration,block"`
-	// DependsOn contains resources that MskconnectConnector depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mskconnectConnectorAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_mskconnect_connector.
 func (mc mskconnectConnectorAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("arn"))
+	return terra.ReferenceAsString(mc.ref.Append("arn"))
 }
 
+// ConnectorConfiguration returns a reference to field connector_configuration of aws_mskconnect_connector.
 func (mc mskconnectConnectorAttributes) ConnectorConfiguration() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mc.ref.Append("connector_configuration"))
+	return terra.ReferenceAsMap[terra.StringValue](mc.ref.Append("connector_configuration"))
 }
 
+// Description returns a reference to field description of aws_mskconnect_connector.
 func (mc mskconnectConnectorAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("description"))
+	return terra.ReferenceAsString(mc.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_mskconnect_connector.
 func (mc mskconnectConnectorAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("id"))
+	return terra.ReferenceAsString(mc.ref.Append("id"))
 }
 
+// KafkaconnectVersion returns a reference to field kafkaconnect_version of aws_mskconnect_connector.
 func (mc mskconnectConnectorAttributes) KafkaconnectVersion() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("kafkaconnect_version"))
+	return terra.ReferenceAsString(mc.ref.Append("kafkaconnect_version"))
 }
 
+// Name returns a reference to field name of aws_mskconnect_connector.
 func (mc mskconnectConnectorAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("name"))
+	return terra.ReferenceAsString(mc.ref.Append("name"))
 }
 
+// ServiceExecutionRoleArn returns a reference to field service_execution_role_arn of aws_mskconnect_connector.
 func (mc mskconnectConnectorAttributes) ServiceExecutionRoleArn() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("service_execution_role_arn"))
+	return terra.ReferenceAsString(mc.ref.Append("service_execution_role_arn"))
 }
 
+// Version returns a reference to field version of aws_mskconnect_connector.
 func (mc mskconnectConnectorAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("version"))
+	return terra.ReferenceAsString(mc.ref.Append("version"))
 }
 
 func (mc mskconnectConnectorAttributes) Capacity() terra.ListValue[mskconnectconnector.CapacityAttributes] {
-	return terra.ReferenceList[mskconnectconnector.CapacityAttributes](mc.ref.Append("capacity"))
+	return terra.ReferenceAsList[mskconnectconnector.CapacityAttributes](mc.ref.Append("capacity"))
 }
 
 func (mc mskconnectConnectorAttributes) KafkaCluster() terra.ListValue[mskconnectconnector.KafkaClusterAttributes] {
-	return terra.ReferenceList[mskconnectconnector.KafkaClusterAttributes](mc.ref.Append("kafka_cluster"))
+	return terra.ReferenceAsList[mskconnectconnector.KafkaClusterAttributes](mc.ref.Append("kafka_cluster"))
 }
 
 func (mc mskconnectConnectorAttributes) KafkaClusterClientAuthentication() terra.ListValue[mskconnectconnector.KafkaClusterClientAuthenticationAttributes] {
-	return terra.ReferenceList[mskconnectconnector.KafkaClusterClientAuthenticationAttributes](mc.ref.Append("kafka_cluster_client_authentication"))
+	return terra.ReferenceAsList[mskconnectconnector.KafkaClusterClientAuthenticationAttributes](mc.ref.Append("kafka_cluster_client_authentication"))
 }
 
 func (mc mskconnectConnectorAttributes) KafkaClusterEncryptionInTransit() terra.ListValue[mskconnectconnector.KafkaClusterEncryptionInTransitAttributes] {
-	return terra.ReferenceList[mskconnectconnector.KafkaClusterEncryptionInTransitAttributes](mc.ref.Append("kafka_cluster_encryption_in_transit"))
+	return terra.ReferenceAsList[mskconnectconnector.KafkaClusterEncryptionInTransitAttributes](mc.ref.Append("kafka_cluster_encryption_in_transit"))
 }
 
 func (mc mskconnectConnectorAttributes) LogDelivery() terra.ListValue[mskconnectconnector.LogDeliveryAttributes] {
-	return terra.ReferenceList[mskconnectconnector.LogDeliveryAttributes](mc.ref.Append("log_delivery"))
+	return terra.ReferenceAsList[mskconnectconnector.LogDeliveryAttributes](mc.ref.Append("log_delivery"))
 }
 
 func (mc mskconnectConnectorAttributes) Plugin() terra.SetValue[mskconnectconnector.PluginAttributes] {
-	return terra.ReferenceSet[mskconnectconnector.PluginAttributes](mc.ref.Append("plugin"))
+	return terra.ReferenceAsSet[mskconnectconnector.PluginAttributes](mc.ref.Append("plugin"))
 }
 
 func (mc mskconnectConnectorAttributes) Timeouts() mskconnectconnector.TimeoutsAttributes {
-	return terra.ReferenceSingle[mskconnectconnector.TimeoutsAttributes](mc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mskconnectconnector.TimeoutsAttributes](mc.ref.Append("timeouts"))
 }
 
 func (mc mskconnectConnectorAttributes) WorkerConfiguration() terra.ListValue[mskconnectconnector.WorkerConfigurationAttributes] {
-	return terra.ReferenceList[mskconnectconnector.WorkerConfigurationAttributes](mc.ref.Append("worker_configuration"))
+	return terra.ReferenceAsList[mskconnectconnector.WorkerConfigurationAttributes](mc.ref.Append("worker_configuration"))
 }
 
 type mskconnectConnectorState struct {

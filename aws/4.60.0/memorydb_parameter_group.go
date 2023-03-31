@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMemorydbParameterGroup creates a new instance of [MemorydbParameterGroup].
 func NewMemorydbParameterGroup(name string, args MemorydbParameterGroupArgs) *MemorydbParameterGroup {
 	return &MemorydbParameterGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMemorydbParameterGroup(name string, args MemorydbParameterGroupArgs) *Me
 
 var _ terra.Resource = (*MemorydbParameterGroup)(nil)
 
+// MemorydbParameterGroup represents the Terraform resource aws_memorydb_parameter_group.
 type MemorydbParameterGroup struct {
-	Name  string
-	Args  MemorydbParameterGroupArgs
-	state *memorydbParameterGroupState
+	Name      string
+	Args      MemorydbParameterGroupArgs
+	state     *memorydbParameterGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MemorydbParameterGroup].
 func (mpg *MemorydbParameterGroup) Type() string {
 	return "aws_memorydb_parameter_group"
 }
 
+// LocalName returns the local name for [MemorydbParameterGroup].
 func (mpg *MemorydbParameterGroup) LocalName() string {
 	return mpg.Name
 }
 
+// Configuration returns the configuration (args) for [MemorydbParameterGroup].
 func (mpg *MemorydbParameterGroup) Configuration() interface{} {
 	return mpg.Args
 }
 
+// DependOn is used for other resources to depend on [MemorydbParameterGroup].
+func (mpg *MemorydbParameterGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(mpg)
+}
+
+// Dependencies returns the list of resources [MemorydbParameterGroup] depends_on.
+func (mpg *MemorydbParameterGroup) Dependencies() terra.Dependencies {
+	return mpg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MemorydbParameterGroup].
+func (mpg *MemorydbParameterGroup) LifecycleManagement() *terra.Lifecycle {
+	return mpg.Lifecycle
+}
+
+// Attributes returns the attributes for [MemorydbParameterGroup].
 func (mpg *MemorydbParameterGroup) Attributes() memorydbParameterGroupAttributes {
 	return memorydbParameterGroupAttributes{ref: terra.ReferenceResource(mpg)}
 }
 
+// ImportState imports the given attribute values into [MemorydbParameterGroup]'s state.
 func (mpg *MemorydbParameterGroup) ImportState(av io.Reader) error {
 	mpg.state = &memorydbParameterGroupState{}
 	if err := json.NewDecoder(av).Decode(mpg.state); err != nil {
@@ -49,10 +73,12 @@ func (mpg *MemorydbParameterGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MemorydbParameterGroup] has state.
 func (mpg *MemorydbParameterGroup) State() (*memorydbParameterGroupState, bool) {
 	return mpg.state, mpg.state != nil
 }
 
+// StateMust returns the state for [MemorydbParameterGroup]. Panics if the state is nil.
 func (mpg *MemorydbParameterGroup) StateMust() *memorydbParameterGroupState {
 	if mpg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mpg.Type(), mpg.LocalName()))
@@ -60,10 +86,7 @@ func (mpg *MemorydbParameterGroup) StateMust() *memorydbParameterGroupState {
 	return mpg.state
 }
 
-func (mpg *MemorydbParameterGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(mpg)
-}
-
+// MemorydbParameterGroupArgs contains the configurations for aws_memorydb_parameter_group.
 type MemorydbParameterGroupArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -81,47 +104,53 @@ type MemorydbParameterGroupArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Parameter: min=0
 	Parameter []memorydbparametergroup.Parameter `hcl:"parameter,block" validate:"min=0"`
-	// DependsOn contains resources that MemorydbParameterGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type memorydbParameterGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_memorydb_parameter_group.
 func (mpg memorydbParameterGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(mpg.ref.Append("arn"))
+	return terra.ReferenceAsString(mpg.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_memorydb_parameter_group.
 func (mpg memorydbParameterGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mpg.ref.Append("description"))
+	return terra.ReferenceAsString(mpg.ref.Append("description"))
 }
 
+// Family returns a reference to field family of aws_memorydb_parameter_group.
 func (mpg memorydbParameterGroupAttributes) Family() terra.StringValue {
-	return terra.ReferenceString(mpg.ref.Append("family"))
+	return terra.ReferenceAsString(mpg.ref.Append("family"))
 }
 
+// Id returns a reference to field id of aws_memorydb_parameter_group.
 func (mpg memorydbParameterGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mpg.ref.Append("id"))
+	return terra.ReferenceAsString(mpg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_memorydb_parameter_group.
 func (mpg memorydbParameterGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mpg.ref.Append("name"))
+	return terra.ReferenceAsString(mpg.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_memorydb_parameter_group.
 func (mpg memorydbParameterGroupAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(mpg.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(mpg.ref.Append("name_prefix"))
 }
 
+// Tags returns a reference to field tags of aws_memorydb_parameter_group.
 func (mpg memorydbParameterGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mpg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mpg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_memorydb_parameter_group.
 func (mpg memorydbParameterGroupAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mpg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](mpg.ref.Append("tags_all"))
 }
 
 func (mpg memorydbParameterGroupAttributes) Parameter() terra.SetValue[memorydbparametergroup.ParameterAttributes] {
-	return terra.ReferenceSet[memorydbparametergroup.ParameterAttributes](mpg.ref.Append("parameter"))
+	return terra.ReferenceAsSet[memorydbparametergroup.ParameterAttributes](mpg.ref.Append("parameter"))
 }
 
 type memorydbParameterGroupState struct {

@@ -61,19 +61,19 @@ func (al AccessLogsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (al AccessLogsAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(al.ref.Append("bucket"))
+	return terra.ReferenceAsString(al.ref.Append("bucket"))
 }
 
 func (al AccessLogsAttributes) BucketPrefix() terra.StringValue {
-	return terra.ReferenceString(al.ref.Append("bucket_prefix"))
+	return terra.ReferenceAsString(al.ref.Append("bucket_prefix"))
 }
 
 func (al AccessLogsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(al.ref.Append("enabled"))
+	return terra.ReferenceAsBool(al.ref.Append("enabled"))
 }
 
 func (al AccessLogsAttributes) Interval() terra.NumberValue {
-	return terra.ReferenceNumber(al.ref.Append("interval"))
+	return terra.ReferenceAsNumber(al.ref.Append("interval"))
 }
 
 type HealthCheckAttributes struct {
@@ -93,23 +93,23 @@ func (hc HealthCheckAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hc HealthCheckAttributes) HealthyThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(hc.ref.Append("healthy_threshold"))
+	return terra.ReferenceAsNumber(hc.ref.Append("healthy_threshold"))
 }
 
 func (hc HealthCheckAttributes) Interval() terra.NumberValue {
-	return terra.ReferenceNumber(hc.ref.Append("interval"))
+	return terra.ReferenceAsNumber(hc.ref.Append("interval"))
 }
 
 func (hc HealthCheckAttributes) Target() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("target"))
+	return terra.ReferenceAsString(hc.ref.Append("target"))
 }
 
 func (hc HealthCheckAttributes) Timeout() terra.NumberValue {
-	return terra.ReferenceNumber(hc.ref.Append("timeout"))
+	return terra.ReferenceAsNumber(hc.ref.Append("timeout"))
 }
 
 func (hc HealthCheckAttributes) UnhealthyThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(hc.ref.Append("unhealthy_threshold"))
+	return terra.ReferenceAsNumber(hc.ref.Append("unhealthy_threshold"))
 }
 
 type ListenerAttributes struct {
@@ -129,23 +129,23 @@ func (l ListenerAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (l ListenerAttributes) InstancePort() terra.NumberValue {
-	return terra.ReferenceNumber(l.ref.Append("instance_port"))
+	return terra.ReferenceAsNumber(l.ref.Append("instance_port"))
 }
 
 func (l ListenerAttributes) InstanceProtocol() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("instance_protocol"))
+	return terra.ReferenceAsString(l.ref.Append("instance_protocol"))
 }
 
 func (l ListenerAttributes) LbPort() terra.NumberValue {
-	return terra.ReferenceNumber(l.ref.Append("lb_port"))
+	return terra.ReferenceAsNumber(l.ref.Append("lb_port"))
 }
 
 func (l ListenerAttributes) LbProtocol() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("lb_protocol"))
+	return terra.ReferenceAsString(l.ref.Append("lb_protocol"))
 }
 
 func (l ListenerAttributes) SslCertificateId() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("ssl_certificate_id"))
+	return terra.ReferenceAsString(l.ref.Append("ssl_certificate_id"))
 }
 
 type AccessLogsState struct {

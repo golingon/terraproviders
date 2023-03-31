@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataMskconnectConnector creates a new instance of [DataMskconnectConnector].
 func NewDataMskconnectConnector(name string, args DataMskconnectConnectorArgs) *DataMskconnectConnector {
 	return &DataMskconnectConnector{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataMskconnectConnector(name string, args DataMskconnectConnectorArgs) *
 
 var _ terra.DataResource = (*DataMskconnectConnector)(nil)
 
+// DataMskconnectConnector represents the Terraform data resource aws_mskconnect_connector.
 type DataMskconnectConnector struct {
 	Name string
 	Args DataMskconnectConnectorArgs
 }
 
+// DataSource returns the Terraform object type for [DataMskconnectConnector].
 func (mc *DataMskconnectConnector) DataSource() string {
 	return "aws_mskconnect_connector"
 }
 
+// LocalName returns the local name for [DataMskconnectConnector].
 func (mc *DataMskconnectConnector) LocalName() string {
 	return mc.Name
 }
 
+// Configuration returns the configuration (args) for [DataMskconnectConnector].
 func (mc *DataMskconnectConnector) Configuration() interface{} {
 	return mc.Args
 }
 
+// Attributes returns the attributes for [DataMskconnectConnector].
 func (mc *DataMskconnectConnector) Attributes() dataMskconnectConnectorAttributes {
 	return dataMskconnectConnectorAttributes{ref: terra.ReferenceDataResource(mc)}
 }
 
+// DataMskconnectConnectorArgs contains the configurations for aws_mskconnect_connector.
 type DataMskconnectConnectorArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,22 +51,27 @@ type dataMskconnectConnectorAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_mskconnect_connector.
 func (mc dataMskconnectConnectorAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("arn"))
+	return terra.ReferenceAsString(mc.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_mskconnect_connector.
 func (mc dataMskconnectConnectorAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("description"))
+	return terra.ReferenceAsString(mc.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_mskconnect_connector.
 func (mc dataMskconnectConnectorAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("id"))
+	return terra.ReferenceAsString(mc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_mskconnect_connector.
 func (mc dataMskconnectConnectorAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("name"))
+	return terra.ReferenceAsString(mc.ref.Append("name"))
 }
 
+// Version returns a reference to field version of aws_mskconnect_connector.
 func (mc dataMskconnectConnectorAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("version"))
+	return terra.ReferenceAsString(mc.ref.Append("version"))
 }

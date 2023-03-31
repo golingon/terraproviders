@@ -511,19 +511,19 @@ func (ca CloudwatchAlarmAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ca CloudwatchAlarmAttributes) AlarmName() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("alarm_name"))
+	return terra.ReferenceAsString(ca.ref.Append("alarm_name"))
 }
 
 func (ca CloudwatchAlarmAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("role_arn"))
+	return terra.ReferenceAsString(ca.ref.Append("role_arn"))
 }
 
 func (ca CloudwatchAlarmAttributes) StateReason() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("state_reason"))
+	return terra.ReferenceAsString(ca.ref.Append("state_reason"))
 }
 
 func (ca CloudwatchAlarmAttributes) StateValue() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("state_value"))
+	return terra.ReferenceAsString(ca.ref.Append("state_value"))
 }
 
 type CloudwatchLogsAttributes struct {
@@ -543,11 +543,11 @@ func (cl CloudwatchLogsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cl CloudwatchLogsAttributes) LogGroupName() terra.StringValue {
-	return terra.ReferenceString(cl.ref.Append("log_group_name"))
+	return terra.ReferenceAsString(cl.ref.Append("log_group_name"))
 }
 
 func (cl CloudwatchLogsAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(cl.ref.Append("role_arn"))
+	return terra.ReferenceAsString(cl.ref.Append("role_arn"))
 }
 
 type CloudwatchMetricAttributes struct {
@@ -567,27 +567,27 @@ func (cm CloudwatchMetricAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cm CloudwatchMetricAttributes) MetricName() terra.StringValue {
-	return terra.ReferenceString(cm.ref.Append("metric_name"))
+	return terra.ReferenceAsString(cm.ref.Append("metric_name"))
 }
 
 func (cm CloudwatchMetricAttributes) MetricNamespace() terra.StringValue {
-	return terra.ReferenceString(cm.ref.Append("metric_namespace"))
+	return terra.ReferenceAsString(cm.ref.Append("metric_namespace"))
 }
 
 func (cm CloudwatchMetricAttributes) MetricTimestamp() terra.StringValue {
-	return terra.ReferenceString(cm.ref.Append("metric_timestamp"))
+	return terra.ReferenceAsString(cm.ref.Append("metric_timestamp"))
 }
 
 func (cm CloudwatchMetricAttributes) MetricUnit() terra.StringValue {
-	return terra.ReferenceString(cm.ref.Append("metric_unit"))
+	return terra.ReferenceAsString(cm.ref.Append("metric_unit"))
 }
 
 func (cm CloudwatchMetricAttributes) MetricValue() terra.StringValue {
-	return terra.ReferenceString(cm.ref.Append("metric_value"))
+	return terra.ReferenceAsString(cm.ref.Append("metric_value"))
 }
 
 func (cm CloudwatchMetricAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(cm.ref.Append("role_arn"))
+	return terra.ReferenceAsString(cm.ref.Append("role_arn"))
 }
 
 type DynamodbAttributes struct {
@@ -607,43 +607,43 @@ func (d DynamodbAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DynamodbAttributes) HashKeyField() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("hash_key_field"))
+	return terra.ReferenceAsString(d.ref.Append("hash_key_field"))
 }
 
 func (d DynamodbAttributes) HashKeyType() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("hash_key_type"))
+	return terra.ReferenceAsString(d.ref.Append("hash_key_type"))
 }
 
 func (d DynamodbAttributes) HashKeyValue() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("hash_key_value"))
+	return terra.ReferenceAsString(d.ref.Append("hash_key_value"))
 }
 
 func (d DynamodbAttributes) Operation() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("operation"))
+	return terra.ReferenceAsString(d.ref.Append("operation"))
 }
 
 func (d DynamodbAttributes) PayloadField() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("payload_field"))
+	return terra.ReferenceAsString(d.ref.Append("payload_field"))
 }
 
 func (d DynamodbAttributes) RangeKeyField() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("range_key_field"))
+	return terra.ReferenceAsString(d.ref.Append("range_key_field"))
 }
 
 func (d DynamodbAttributes) RangeKeyType() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("range_key_type"))
+	return terra.ReferenceAsString(d.ref.Append("range_key_type"))
 }
 
 func (d DynamodbAttributes) RangeKeyValue() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("range_key_value"))
+	return terra.ReferenceAsString(d.ref.Append("range_key_value"))
 }
 
 func (d DynamodbAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("role_arn"))
+	return terra.ReferenceAsString(d.ref.Append("role_arn"))
 }
 
 func (d DynamodbAttributes) TableName() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("table_name"))
+	return terra.ReferenceAsString(d.ref.Append("table_name"))
 }
 
 type Dynamodbv2Attributes struct {
@@ -663,11 +663,11 @@ func (d Dynamodbv2Attributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d Dynamodbv2Attributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("role_arn"))
+	return terra.ReferenceAsString(d.ref.Append("role_arn"))
 }
 
 func (d Dynamodbv2Attributes) PutItem() terra.ListValue[Dynamodbv2PutItemAttributes] {
-	return terra.ReferenceList[Dynamodbv2PutItemAttributes](d.ref.Append("put_item"))
+	return terra.ReferenceAsList[Dynamodbv2PutItemAttributes](d.ref.Append("put_item"))
 }
 
 type Dynamodbv2PutItemAttributes struct {
@@ -687,7 +687,7 @@ func (pi Dynamodbv2PutItemAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pi Dynamodbv2PutItemAttributes) TableName() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("table_name"))
+	return terra.ReferenceAsString(pi.ref.Append("table_name"))
 }
 
 type ElasticsearchAttributes struct {
@@ -707,23 +707,23 @@ func (e ElasticsearchAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e ElasticsearchAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("endpoint"))
+	return terra.ReferenceAsString(e.ref.Append("endpoint"))
 }
 
 func (e ElasticsearchAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("id"))
+	return terra.ReferenceAsString(e.ref.Append("id"))
 }
 
 func (e ElasticsearchAttributes) Index() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("index"))
+	return terra.ReferenceAsString(e.ref.Append("index"))
 }
 
 func (e ElasticsearchAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("role_arn"))
+	return terra.ReferenceAsString(e.ref.Append("role_arn"))
 }
 
 func (e ElasticsearchAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("type"))
+	return terra.ReferenceAsString(e.ref.Append("type"))
 }
 
 type ErrorActionAttributes struct {
@@ -743,79 +743,79 @@ func (ea ErrorActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ea ErrorActionAttributes) CloudwatchAlarm() terra.ListValue[ErrorActionCloudwatchAlarmAttributes] {
-	return terra.ReferenceList[ErrorActionCloudwatchAlarmAttributes](ea.ref.Append("cloudwatch_alarm"))
+	return terra.ReferenceAsList[ErrorActionCloudwatchAlarmAttributes](ea.ref.Append("cloudwatch_alarm"))
 }
 
 func (ea ErrorActionAttributes) CloudwatchLogs() terra.ListValue[ErrorActionCloudwatchLogsAttributes] {
-	return terra.ReferenceList[ErrorActionCloudwatchLogsAttributes](ea.ref.Append("cloudwatch_logs"))
+	return terra.ReferenceAsList[ErrorActionCloudwatchLogsAttributes](ea.ref.Append("cloudwatch_logs"))
 }
 
 func (ea ErrorActionAttributes) CloudwatchMetric() terra.ListValue[ErrorActionCloudwatchMetricAttributes] {
-	return terra.ReferenceList[ErrorActionCloudwatchMetricAttributes](ea.ref.Append("cloudwatch_metric"))
+	return terra.ReferenceAsList[ErrorActionCloudwatchMetricAttributes](ea.ref.Append("cloudwatch_metric"))
 }
 
 func (ea ErrorActionAttributes) Dynamodb() terra.ListValue[ErrorActionDynamodbAttributes] {
-	return terra.ReferenceList[ErrorActionDynamodbAttributes](ea.ref.Append("dynamodb"))
+	return terra.ReferenceAsList[ErrorActionDynamodbAttributes](ea.ref.Append("dynamodb"))
 }
 
 func (ea ErrorActionAttributes) Dynamodbv2() terra.ListValue[ErrorActionDynamodbv2Attributes] {
-	return terra.ReferenceList[ErrorActionDynamodbv2Attributes](ea.ref.Append("dynamodbv2"))
+	return terra.ReferenceAsList[ErrorActionDynamodbv2Attributes](ea.ref.Append("dynamodbv2"))
 }
 
 func (ea ErrorActionAttributes) Elasticsearch() terra.ListValue[ErrorActionElasticsearchAttributes] {
-	return terra.ReferenceList[ErrorActionElasticsearchAttributes](ea.ref.Append("elasticsearch"))
+	return terra.ReferenceAsList[ErrorActionElasticsearchAttributes](ea.ref.Append("elasticsearch"))
 }
 
 func (ea ErrorActionAttributes) Firehose() terra.ListValue[ErrorActionFirehoseAttributes] {
-	return terra.ReferenceList[ErrorActionFirehoseAttributes](ea.ref.Append("firehose"))
+	return terra.ReferenceAsList[ErrorActionFirehoseAttributes](ea.ref.Append("firehose"))
 }
 
 func (ea ErrorActionAttributes) Http() terra.ListValue[ErrorActionHttpAttributes] {
-	return terra.ReferenceList[ErrorActionHttpAttributes](ea.ref.Append("http"))
+	return terra.ReferenceAsList[ErrorActionHttpAttributes](ea.ref.Append("http"))
 }
 
 func (ea ErrorActionAttributes) IotAnalytics() terra.ListValue[ErrorActionIotAnalyticsAttributes] {
-	return terra.ReferenceList[ErrorActionIotAnalyticsAttributes](ea.ref.Append("iot_analytics"))
+	return terra.ReferenceAsList[ErrorActionIotAnalyticsAttributes](ea.ref.Append("iot_analytics"))
 }
 
 func (ea ErrorActionAttributes) IotEvents() terra.ListValue[ErrorActionIotEventsAttributes] {
-	return terra.ReferenceList[ErrorActionIotEventsAttributes](ea.ref.Append("iot_events"))
+	return terra.ReferenceAsList[ErrorActionIotEventsAttributes](ea.ref.Append("iot_events"))
 }
 
 func (ea ErrorActionAttributes) Kafka() terra.ListValue[ErrorActionKafkaAttributes] {
-	return terra.ReferenceList[ErrorActionKafkaAttributes](ea.ref.Append("kafka"))
+	return terra.ReferenceAsList[ErrorActionKafkaAttributes](ea.ref.Append("kafka"))
 }
 
 func (ea ErrorActionAttributes) Kinesis() terra.ListValue[ErrorActionKinesisAttributes] {
-	return terra.ReferenceList[ErrorActionKinesisAttributes](ea.ref.Append("kinesis"))
+	return terra.ReferenceAsList[ErrorActionKinesisAttributes](ea.ref.Append("kinesis"))
 }
 
 func (ea ErrorActionAttributes) Lambda() terra.ListValue[ErrorActionLambdaAttributes] {
-	return terra.ReferenceList[ErrorActionLambdaAttributes](ea.ref.Append("lambda"))
+	return terra.ReferenceAsList[ErrorActionLambdaAttributes](ea.ref.Append("lambda"))
 }
 
 func (ea ErrorActionAttributes) Republish() terra.ListValue[ErrorActionRepublishAttributes] {
-	return terra.ReferenceList[ErrorActionRepublishAttributes](ea.ref.Append("republish"))
+	return terra.ReferenceAsList[ErrorActionRepublishAttributes](ea.ref.Append("republish"))
 }
 
 func (ea ErrorActionAttributes) S3() terra.ListValue[ErrorActionS3Attributes] {
-	return terra.ReferenceList[ErrorActionS3Attributes](ea.ref.Append("s3"))
+	return terra.ReferenceAsList[ErrorActionS3Attributes](ea.ref.Append("s3"))
 }
 
 func (ea ErrorActionAttributes) Sns() terra.ListValue[ErrorActionSnsAttributes] {
-	return terra.ReferenceList[ErrorActionSnsAttributes](ea.ref.Append("sns"))
+	return terra.ReferenceAsList[ErrorActionSnsAttributes](ea.ref.Append("sns"))
 }
 
 func (ea ErrorActionAttributes) Sqs() terra.ListValue[ErrorActionSqsAttributes] {
-	return terra.ReferenceList[ErrorActionSqsAttributes](ea.ref.Append("sqs"))
+	return terra.ReferenceAsList[ErrorActionSqsAttributes](ea.ref.Append("sqs"))
 }
 
 func (ea ErrorActionAttributes) StepFunctions() terra.ListValue[ErrorActionStepFunctionsAttributes] {
-	return terra.ReferenceList[ErrorActionStepFunctionsAttributes](ea.ref.Append("step_functions"))
+	return terra.ReferenceAsList[ErrorActionStepFunctionsAttributes](ea.ref.Append("step_functions"))
 }
 
 func (ea ErrorActionAttributes) Timestream() terra.ListValue[ErrorActionTimestreamAttributes] {
-	return terra.ReferenceList[ErrorActionTimestreamAttributes](ea.ref.Append("timestream"))
+	return terra.ReferenceAsList[ErrorActionTimestreamAttributes](ea.ref.Append("timestream"))
 }
 
 type ErrorActionCloudwatchAlarmAttributes struct {
@@ -835,19 +835,19 @@ func (ca ErrorActionCloudwatchAlarmAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (ca ErrorActionCloudwatchAlarmAttributes) AlarmName() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("alarm_name"))
+	return terra.ReferenceAsString(ca.ref.Append("alarm_name"))
 }
 
 func (ca ErrorActionCloudwatchAlarmAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("role_arn"))
+	return terra.ReferenceAsString(ca.ref.Append("role_arn"))
 }
 
 func (ca ErrorActionCloudwatchAlarmAttributes) StateReason() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("state_reason"))
+	return terra.ReferenceAsString(ca.ref.Append("state_reason"))
 }
 
 func (ca ErrorActionCloudwatchAlarmAttributes) StateValue() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("state_value"))
+	return terra.ReferenceAsString(ca.ref.Append("state_value"))
 }
 
 type ErrorActionCloudwatchLogsAttributes struct {
@@ -867,11 +867,11 @@ func (cl ErrorActionCloudwatchLogsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cl ErrorActionCloudwatchLogsAttributes) LogGroupName() terra.StringValue {
-	return terra.ReferenceString(cl.ref.Append("log_group_name"))
+	return terra.ReferenceAsString(cl.ref.Append("log_group_name"))
 }
 
 func (cl ErrorActionCloudwatchLogsAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(cl.ref.Append("role_arn"))
+	return terra.ReferenceAsString(cl.ref.Append("role_arn"))
 }
 
 type ErrorActionCloudwatchMetricAttributes struct {
@@ -891,27 +891,27 @@ func (cm ErrorActionCloudwatchMetricAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (cm ErrorActionCloudwatchMetricAttributes) MetricName() terra.StringValue {
-	return terra.ReferenceString(cm.ref.Append("metric_name"))
+	return terra.ReferenceAsString(cm.ref.Append("metric_name"))
 }
 
 func (cm ErrorActionCloudwatchMetricAttributes) MetricNamespace() terra.StringValue {
-	return terra.ReferenceString(cm.ref.Append("metric_namespace"))
+	return terra.ReferenceAsString(cm.ref.Append("metric_namespace"))
 }
 
 func (cm ErrorActionCloudwatchMetricAttributes) MetricTimestamp() terra.StringValue {
-	return terra.ReferenceString(cm.ref.Append("metric_timestamp"))
+	return terra.ReferenceAsString(cm.ref.Append("metric_timestamp"))
 }
 
 func (cm ErrorActionCloudwatchMetricAttributes) MetricUnit() terra.StringValue {
-	return terra.ReferenceString(cm.ref.Append("metric_unit"))
+	return terra.ReferenceAsString(cm.ref.Append("metric_unit"))
 }
 
 func (cm ErrorActionCloudwatchMetricAttributes) MetricValue() terra.StringValue {
-	return terra.ReferenceString(cm.ref.Append("metric_value"))
+	return terra.ReferenceAsString(cm.ref.Append("metric_value"))
 }
 
 func (cm ErrorActionCloudwatchMetricAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(cm.ref.Append("role_arn"))
+	return terra.ReferenceAsString(cm.ref.Append("role_arn"))
 }
 
 type ErrorActionDynamodbAttributes struct {
@@ -931,43 +931,43 @@ func (d ErrorActionDynamodbAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d ErrorActionDynamodbAttributes) HashKeyField() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("hash_key_field"))
+	return terra.ReferenceAsString(d.ref.Append("hash_key_field"))
 }
 
 func (d ErrorActionDynamodbAttributes) HashKeyType() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("hash_key_type"))
+	return terra.ReferenceAsString(d.ref.Append("hash_key_type"))
 }
 
 func (d ErrorActionDynamodbAttributes) HashKeyValue() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("hash_key_value"))
+	return terra.ReferenceAsString(d.ref.Append("hash_key_value"))
 }
 
 func (d ErrorActionDynamodbAttributes) Operation() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("operation"))
+	return terra.ReferenceAsString(d.ref.Append("operation"))
 }
 
 func (d ErrorActionDynamodbAttributes) PayloadField() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("payload_field"))
+	return terra.ReferenceAsString(d.ref.Append("payload_field"))
 }
 
 func (d ErrorActionDynamodbAttributes) RangeKeyField() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("range_key_field"))
+	return terra.ReferenceAsString(d.ref.Append("range_key_field"))
 }
 
 func (d ErrorActionDynamodbAttributes) RangeKeyType() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("range_key_type"))
+	return terra.ReferenceAsString(d.ref.Append("range_key_type"))
 }
 
 func (d ErrorActionDynamodbAttributes) RangeKeyValue() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("range_key_value"))
+	return terra.ReferenceAsString(d.ref.Append("range_key_value"))
 }
 
 func (d ErrorActionDynamodbAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("role_arn"))
+	return terra.ReferenceAsString(d.ref.Append("role_arn"))
 }
 
 func (d ErrorActionDynamodbAttributes) TableName() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("table_name"))
+	return terra.ReferenceAsString(d.ref.Append("table_name"))
 }
 
 type ErrorActionDynamodbv2Attributes struct {
@@ -987,11 +987,11 @@ func (d ErrorActionDynamodbv2Attributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d ErrorActionDynamodbv2Attributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("role_arn"))
+	return terra.ReferenceAsString(d.ref.Append("role_arn"))
 }
 
 func (d ErrorActionDynamodbv2Attributes) PutItem() terra.ListValue[ErrorActionDynamodbv2PutItemAttributes] {
-	return terra.ReferenceList[ErrorActionDynamodbv2PutItemAttributes](d.ref.Append("put_item"))
+	return terra.ReferenceAsList[ErrorActionDynamodbv2PutItemAttributes](d.ref.Append("put_item"))
 }
 
 type ErrorActionDynamodbv2PutItemAttributes struct {
@@ -1011,7 +1011,7 @@ func (pi ErrorActionDynamodbv2PutItemAttributes) InternalTokens() hclwrite.Token
 }
 
 func (pi ErrorActionDynamodbv2PutItemAttributes) TableName() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("table_name"))
+	return terra.ReferenceAsString(pi.ref.Append("table_name"))
 }
 
 type ErrorActionElasticsearchAttributes struct {
@@ -1031,23 +1031,23 @@ func (e ErrorActionElasticsearchAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e ErrorActionElasticsearchAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("endpoint"))
+	return terra.ReferenceAsString(e.ref.Append("endpoint"))
 }
 
 func (e ErrorActionElasticsearchAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("id"))
+	return terra.ReferenceAsString(e.ref.Append("id"))
 }
 
 func (e ErrorActionElasticsearchAttributes) Index() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("index"))
+	return terra.ReferenceAsString(e.ref.Append("index"))
 }
 
 func (e ErrorActionElasticsearchAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("role_arn"))
+	return terra.ReferenceAsString(e.ref.Append("role_arn"))
 }
 
 func (e ErrorActionElasticsearchAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("type"))
+	return terra.ReferenceAsString(e.ref.Append("type"))
 }
 
 type ErrorActionFirehoseAttributes struct {
@@ -1067,15 +1067,15 @@ func (f ErrorActionFirehoseAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f ErrorActionFirehoseAttributes) DeliveryStreamName() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("delivery_stream_name"))
+	return terra.ReferenceAsString(f.ref.Append("delivery_stream_name"))
 }
 
 func (f ErrorActionFirehoseAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("role_arn"))
+	return terra.ReferenceAsString(f.ref.Append("role_arn"))
 }
 
 func (f ErrorActionFirehoseAttributes) Separator() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("separator"))
+	return terra.ReferenceAsString(f.ref.Append("separator"))
 }
 
 type ErrorActionHttpAttributes struct {
@@ -1095,15 +1095,15 @@ func (h ErrorActionHttpAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (h ErrorActionHttpAttributes) ConfirmationUrl() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("confirmation_url"))
+	return terra.ReferenceAsString(h.ref.Append("confirmation_url"))
 }
 
 func (h ErrorActionHttpAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("url"))
+	return terra.ReferenceAsString(h.ref.Append("url"))
 }
 
 func (h ErrorActionHttpAttributes) HttpHeader() terra.ListValue[ErrorActionHttpHttpHeaderAttributes] {
-	return terra.ReferenceList[ErrorActionHttpHttpHeaderAttributes](h.ref.Append("http_header"))
+	return terra.ReferenceAsList[ErrorActionHttpHttpHeaderAttributes](h.ref.Append("http_header"))
 }
 
 type ErrorActionHttpHttpHeaderAttributes struct {
@@ -1123,11 +1123,11 @@ func (hh ErrorActionHttpHttpHeaderAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hh ErrorActionHttpHttpHeaderAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(hh.ref.Append("key"))
+	return terra.ReferenceAsString(hh.ref.Append("key"))
 }
 
 func (hh ErrorActionHttpHttpHeaderAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(hh.ref.Append("value"))
+	return terra.ReferenceAsString(hh.ref.Append("value"))
 }
 
 type ErrorActionIotAnalyticsAttributes struct {
@@ -1147,11 +1147,11 @@ func (ia ErrorActionIotAnalyticsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ia ErrorActionIotAnalyticsAttributes) ChannelName() terra.StringValue {
-	return terra.ReferenceString(ia.ref.Append("channel_name"))
+	return terra.ReferenceAsString(ia.ref.Append("channel_name"))
 }
 
 func (ia ErrorActionIotAnalyticsAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(ia.ref.Append("role_arn"))
+	return terra.ReferenceAsString(ia.ref.Append("role_arn"))
 }
 
 type ErrorActionIotEventsAttributes struct {
@@ -1171,15 +1171,15 @@ func (ie ErrorActionIotEventsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ie ErrorActionIotEventsAttributes) InputName() terra.StringValue {
-	return terra.ReferenceString(ie.ref.Append("input_name"))
+	return terra.ReferenceAsString(ie.ref.Append("input_name"))
 }
 
 func (ie ErrorActionIotEventsAttributes) MessageId() terra.StringValue {
-	return terra.ReferenceString(ie.ref.Append("message_id"))
+	return terra.ReferenceAsString(ie.ref.Append("message_id"))
 }
 
 func (ie ErrorActionIotEventsAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(ie.ref.Append("role_arn"))
+	return terra.ReferenceAsString(ie.ref.Append("role_arn"))
 }
 
 type ErrorActionKafkaAttributes struct {
@@ -1199,23 +1199,23 @@ func (k ErrorActionKafkaAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (k ErrorActionKafkaAttributes) ClientProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](k.ref.Append("client_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](k.ref.Append("client_properties"))
 }
 
 func (k ErrorActionKafkaAttributes) DestinationArn() terra.StringValue {
-	return terra.ReferenceString(k.ref.Append("destination_arn"))
+	return terra.ReferenceAsString(k.ref.Append("destination_arn"))
 }
 
 func (k ErrorActionKafkaAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(k.ref.Append("key"))
+	return terra.ReferenceAsString(k.ref.Append("key"))
 }
 
 func (k ErrorActionKafkaAttributes) Partition() terra.StringValue {
-	return terra.ReferenceString(k.ref.Append("partition"))
+	return terra.ReferenceAsString(k.ref.Append("partition"))
 }
 
 func (k ErrorActionKafkaAttributes) Topic() terra.StringValue {
-	return terra.ReferenceString(k.ref.Append("topic"))
+	return terra.ReferenceAsString(k.ref.Append("topic"))
 }
 
 type ErrorActionKinesisAttributes struct {
@@ -1235,15 +1235,15 @@ func (k ErrorActionKinesisAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (k ErrorActionKinesisAttributes) PartitionKey() terra.StringValue {
-	return terra.ReferenceString(k.ref.Append("partition_key"))
+	return terra.ReferenceAsString(k.ref.Append("partition_key"))
 }
 
 func (k ErrorActionKinesisAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(k.ref.Append("role_arn"))
+	return terra.ReferenceAsString(k.ref.Append("role_arn"))
 }
 
 func (k ErrorActionKinesisAttributes) StreamName() terra.StringValue {
-	return terra.ReferenceString(k.ref.Append("stream_name"))
+	return terra.ReferenceAsString(k.ref.Append("stream_name"))
 }
 
 type ErrorActionLambdaAttributes struct {
@@ -1263,7 +1263,7 @@ func (l ErrorActionLambdaAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (l ErrorActionLambdaAttributes) FunctionArn() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("function_arn"))
+	return terra.ReferenceAsString(l.ref.Append("function_arn"))
 }
 
 type ErrorActionRepublishAttributes struct {
@@ -1283,15 +1283,15 @@ func (r ErrorActionRepublishAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r ErrorActionRepublishAttributes) Qos() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("qos"))
+	return terra.ReferenceAsNumber(r.ref.Append("qos"))
 }
 
 func (r ErrorActionRepublishAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("role_arn"))
+	return terra.ReferenceAsString(r.ref.Append("role_arn"))
 }
 
 func (r ErrorActionRepublishAttributes) Topic() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("topic"))
+	return terra.ReferenceAsString(r.ref.Append("topic"))
 }
 
 type ErrorActionS3Attributes struct {
@@ -1311,19 +1311,19 @@ func (s ErrorActionS3Attributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s ErrorActionS3Attributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(s.ref.Append("bucket_name"))
 }
 
 func (s ErrorActionS3Attributes) CannedAcl() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("canned_acl"))
+	return terra.ReferenceAsString(s.ref.Append("canned_acl"))
 }
 
 func (s ErrorActionS3Attributes) Key() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("key"))
+	return terra.ReferenceAsString(s.ref.Append("key"))
 }
 
 func (s ErrorActionS3Attributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("role_arn"))
+	return terra.ReferenceAsString(s.ref.Append("role_arn"))
 }
 
 type ErrorActionSnsAttributes struct {
@@ -1343,15 +1343,15 @@ func (s ErrorActionSnsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s ErrorActionSnsAttributes) MessageFormat() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("message_format"))
+	return terra.ReferenceAsString(s.ref.Append("message_format"))
 }
 
 func (s ErrorActionSnsAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("role_arn"))
+	return terra.ReferenceAsString(s.ref.Append("role_arn"))
 }
 
 func (s ErrorActionSnsAttributes) TargetArn() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("target_arn"))
+	return terra.ReferenceAsString(s.ref.Append("target_arn"))
 }
 
 type ErrorActionSqsAttributes struct {
@@ -1371,15 +1371,15 @@ func (s ErrorActionSqsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s ErrorActionSqsAttributes) QueueUrl() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("queue_url"))
+	return terra.ReferenceAsString(s.ref.Append("queue_url"))
 }
 
 func (s ErrorActionSqsAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("role_arn"))
+	return terra.ReferenceAsString(s.ref.Append("role_arn"))
 }
 
 func (s ErrorActionSqsAttributes) UseBase64() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("use_base64"))
+	return terra.ReferenceAsBool(s.ref.Append("use_base64"))
 }
 
 type ErrorActionStepFunctionsAttributes struct {
@@ -1399,15 +1399,15 @@ func (sf ErrorActionStepFunctionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sf ErrorActionStepFunctionsAttributes) ExecutionNamePrefix() terra.StringValue {
-	return terra.ReferenceString(sf.ref.Append("execution_name_prefix"))
+	return terra.ReferenceAsString(sf.ref.Append("execution_name_prefix"))
 }
 
 func (sf ErrorActionStepFunctionsAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(sf.ref.Append("role_arn"))
+	return terra.ReferenceAsString(sf.ref.Append("role_arn"))
 }
 
 func (sf ErrorActionStepFunctionsAttributes) StateMachineName() terra.StringValue {
-	return terra.ReferenceString(sf.ref.Append("state_machine_name"))
+	return terra.ReferenceAsString(sf.ref.Append("state_machine_name"))
 }
 
 type ErrorActionTimestreamAttributes struct {
@@ -1427,23 +1427,23 @@ func (t ErrorActionTimestreamAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t ErrorActionTimestreamAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("database_name"))
+	return terra.ReferenceAsString(t.ref.Append("database_name"))
 }
 
 func (t ErrorActionTimestreamAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("role_arn"))
+	return terra.ReferenceAsString(t.ref.Append("role_arn"))
 }
 
 func (t ErrorActionTimestreamAttributes) TableName() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("table_name"))
+	return terra.ReferenceAsString(t.ref.Append("table_name"))
 }
 
 func (t ErrorActionTimestreamAttributes) Dimension() terra.SetValue[ErrorActionTimestreamDimensionAttributes] {
-	return terra.ReferenceSet[ErrorActionTimestreamDimensionAttributes](t.ref.Append("dimension"))
+	return terra.ReferenceAsSet[ErrorActionTimestreamDimensionAttributes](t.ref.Append("dimension"))
 }
 
 func (t ErrorActionTimestreamAttributes) Timestamp() terra.ListValue[ErrorActionTimestreamTimestampAttributes] {
-	return terra.ReferenceList[ErrorActionTimestreamTimestampAttributes](t.ref.Append("timestamp"))
+	return terra.ReferenceAsList[ErrorActionTimestreamTimestampAttributes](t.ref.Append("timestamp"))
 }
 
 type ErrorActionTimestreamDimensionAttributes struct {
@@ -1463,11 +1463,11 @@ func (d ErrorActionTimestreamDimensionAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (d ErrorActionTimestreamDimensionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("name"))
+	return terra.ReferenceAsString(d.ref.Append("name"))
 }
 
 func (d ErrorActionTimestreamDimensionAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("value"))
+	return terra.ReferenceAsString(d.ref.Append("value"))
 }
 
 type ErrorActionTimestreamTimestampAttributes struct {
@@ -1487,11 +1487,11 @@ func (t ErrorActionTimestreamTimestampAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (t ErrorActionTimestreamTimestampAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("unit"))
+	return terra.ReferenceAsString(t.ref.Append("unit"))
 }
 
 func (t ErrorActionTimestreamTimestampAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("value"))
+	return terra.ReferenceAsString(t.ref.Append("value"))
 }
 
 type FirehoseAttributes struct {
@@ -1511,15 +1511,15 @@ func (f FirehoseAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FirehoseAttributes) DeliveryStreamName() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("delivery_stream_name"))
+	return terra.ReferenceAsString(f.ref.Append("delivery_stream_name"))
 }
 
 func (f FirehoseAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("role_arn"))
+	return terra.ReferenceAsString(f.ref.Append("role_arn"))
 }
 
 func (f FirehoseAttributes) Separator() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("separator"))
+	return terra.ReferenceAsString(f.ref.Append("separator"))
 }
 
 type HttpAttributes struct {
@@ -1539,15 +1539,15 @@ func (h HttpAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (h HttpAttributes) ConfirmationUrl() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("confirmation_url"))
+	return terra.ReferenceAsString(h.ref.Append("confirmation_url"))
 }
 
 func (h HttpAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("url"))
+	return terra.ReferenceAsString(h.ref.Append("url"))
 }
 
 func (h HttpAttributes) HttpHeader() terra.ListValue[HttpHttpHeaderAttributes] {
-	return terra.ReferenceList[HttpHttpHeaderAttributes](h.ref.Append("http_header"))
+	return terra.ReferenceAsList[HttpHttpHeaderAttributes](h.ref.Append("http_header"))
 }
 
 type HttpHttpHeaderAttributes struct {
@@ -1567,11 +1567,11 @@ func (hh HttpHttpHeaderAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hh HttpHttpHeaderAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(hh.ref.Append("key"))
+	return terra.ReferenceAsString(hh.ref.Append("key"))
 }
 
 func (hh HttpHttpHeaderAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(hh.ref.Append("value"))
+	return terra.ReferenceAsString(hh.ref.Append("value"))
 }
 
 type IotAnalyticsAttributes struct {
@@ -1591,11 +1591,11 @@ func (ia IotAnalyticsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ia IotAnalyticsAttributes) ChannelName() terra.StringValue {
-	return terra.ReferenceString(ia.ref.Append("channel_name"))
+	return terra.ReferenceAsString(ia.ref.Append("channel_name"))
 }
 
 func (ia IotAnalyticsAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(ia.ref.Append("role_arn"))
+	return terra.ReferenceAsString(ia.ref.Append("role_arn"))
 }
 
 type IotEventsAttributes struct {
@@ -1615,15 +1615,15 @@ func (ie IotEventsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ie IotEventsAttributes) InputName() terra.StringValue {
-	return terra.ReferenceString(ie.ref.Append("input_name"))
+	return terra.ReferenceAsString(ie.ref.Append("input_name"))
 }
 
 func (ie IotEventsAttributes) MessageId() terra.StringValue {
-	return terra.ReferenceString(ie.ref.Append("message_id"))
+	return terra.ReferenceAsString(ie.ref.Append("message_id"))
 }
 
 func (ie IotEventsAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(ie.ref.Append("role_arn"))
+	return terra.ReferenceAsString(ie.ref.Append("role_arn"))
 }
 
 type KafkaAttributes struct {
@@ -1643,23 +1643,23 @@ func (k KafkaAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (k KafkaAttributes) ClientProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](k.ref.Append("client_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](k.ref.Append("client_properties"))
 }
 
 func (k KafkaAttributes) DestinationArn() terra.StringValue {
-	return terra.ReferenceString(k.ref.Append("destination_arn"))
+	return terra.ReferenceAsString(k.ref.Append("destination_arn"))
 }
 
 func (k KafkaAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(k.ref.Append("key"))
+	return terra.ReferenceAsString(k.ref.Append("key"))
 }
 
 func (k KafkaAttributes) Partition() terra.StringValue {
-	return terra.ReferenceString(k.ref.Append("partition"))
+	return terra.ReferenceAsString(k.ref.Append("partition"))
 }
 
 func (k KafkaAttributes) Topic() terra.StringValue {
-	return terra.ReferenceString(k.ref.Append("topic"))
+	return terra.ReferenceAsString(k.ref.Append("topic"))
 }
 
 type KinesisAttributes struct {
@@ -1679,15 +1679,15 @@ func (k KinesisAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (k KinesisAttributes) PartitionKey() terra.StringValue {
-	return terra.ReferenceString(k.ref.Append("partition_key"))
+	return terra.ReferenceAsString(k.ref.Append("partition_key"))
 }
 
 func (k KinesisAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(k.ref.Append("role_arn"))
+	return terra.ReferenceAsString(k.ref.Append("role_arn"))
 }
 
 func (k KinesisAttributes) StreamName() terra.StringValue {
-	return terra.ReferenceString(k.ref.Append("stream_name"))
+	return terra.ReferenceAsString(k.ref.Append("stream_name"))
 }
 
 type LambdaAttributes struct {
@@ -1707,7 +1707,7 @@ func (l LambdaAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (l LambdaAttributes) FunctionArn() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("function_arn"))
+	return terra.ReferenceAsString(l.ref.Append("function_arn"))
 }
 
 type RepublishAttributes struct {
@@ -1727,15 +1727,15 @@ func (r RepublishAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RepublishAttributes) Qos() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("qos"))
+	return terra.ReferenceAsNumber(r.ref.Append("qos"))
 }
 
 func (r RepublishAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("role_arn"))
+	return terra.ReferenceAsString(r.ref.Append("role_arn"))
 }
 
 func (r RepublishAttributes) Topic() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("topic"))
+	return terra.ReferenceAsString(r.ref.Append("topic"))
 }
 
 type S3Attributes struct {
@@ -1755,19 +1755,19 @@ func (s S3Attributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s S3Attributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(s.ref.Append("bucket_name"))
 }
 
 func (s S3Attributes) CannedAcl() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("canned_acl"))
+	return terra.ReferenceAsString(s.ref.Append("canned_acl"))
 }
 
 func (s S3Attributes) Key() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("key"))
+	return terra.ReferenceAsString(s.ref.Append("key"))
 }
 
 func (s S3Attributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("role_arn"))
+	return terra.ReferenceAsString(s.ref.Append("role_arn"))
 }
 
 type SnsAttributes struct {
@@ -1787,15 +1787,15 @@ func (s SnsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SnsAttributes) MessageFormat() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("message_format"))
+	return terra.ReferenceAsString(s.ref.Append("message_format"))
 }
 
 func (s SnsAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("role_arn"))
+	return terra.ReferenceAsString(s.ref.Append("role_arn"))
 }
 
 func (s SnsAttributes) TargetArn() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("target_arn"))
+	return terra.ReferenceAsString(s.ref.Append("target_arn"))
 }
 
 type SqsAttributes struct {
@@ -1815,15 +1815,15 @@ func (s SqsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SqsAttributes) QueueUrl() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("queue_url"))
+	return terra.ReferenceAsString(s.ref.Append("queue_url"))
 }
 
 func (s SqsAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("role_arn"))
+	return terra.ReferenceAsString(s.ref.Append("role_arn"))
 }
 
 func (s SqsAttributes) UseBase64() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("use_base64"))
+	return terra.ReferenceAsBool(s.ref.Append("use_base64"))
 }
 
 type StepFunctionsAttributes struct {
@@ -1843,15 +1843,15 @@ func (sf StepFunctionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sf StepFunctionsAttributes) ExecutionNamePrefix() terra.StringValue {
-	return terra.ReferenceString(sf.ref.Append("execution_name_prefix"))
+	return terra.ReferenceAsString(sf.ref.Append("execution_name_prefix"))
 }
 
 func (sf StepFunctionsAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(sf.ref.Append("role_arn"))
+	return terra.ReferenceAsString(sf.ref.Append("role_arn"))
 }
 
 func (sf StepFunctionsAttributes) StateMachineName() terra.StringValue {
-	return terra.ReferenceString(sf.ref.Append("state_machine_name"))
+	return terra.ReferenceAsString(sf.ref.Append("state_machine_name"))
 }
 
 type TimestreamAttributes struct {
@@ -1871,23 +1871,23 @@ func (t TimestreamAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimestreamAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("database_name"))
+	return terra.ReferenceAsString(t.ref.Append("database_name"))
 }
 
 func (t TimestreamAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("role_arn"))
+	return terra.ReferenceAsString(t.ref.Append("role_arn"))
 }
 
 func (t TimestreamAttributes) TableName() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("table_name"))
+	return terra.ReferenceAsString(t.ref.Append("table_name"))
 }
 
 func (t TimestreamAttributes) Dimension() terra.SetValue[TimestreamDimensionAttributes] {
-	return terra.ReferenceSet[TimestreamDimensionAttributes](t.ref.Append("dimension"))
+	return terra.ReferenceAsSet[TimestreamDimensionAttributes](t.ref.Append("dimension"))
 }
 
 func (t TimestreamAttributes) Timestamp() terra.ListValue[TimestreamTimestampAttributes] {
-	return terra.ReferenceList[TimestreamTimestampAttributes](t.ref.Append("timestamp"))
+	return terra.ReferenceAsList[TimestreamTimestampAttributes](t.ref.Append("timestamp"))
 }
 
 type TimestreamDimensionAttributes struct {
@@ -1907,11 +1907,11 @@ func (d TimestreamDimensionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d TimestreamDimensionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("name"))
+	return terra.ReferenceAsString(d.ref.Append("name"))
 }
 
 func (d TimestreamDimensionAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("value"))
+	return terra.ReferenceAsString(d.ref.Append("value"))
 }
 
 type TimestreamTimestampAttributes struct {
@@ -1931,11 +1931,11 @@ func (t TimestreamTimestampAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimestreamTimestampAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("unit"))
+	return terra.ReferenceAsString(t.ref.Append("unit"))
 }
 
 func (t TimestreamTimestampAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("value"))
+	return terra.ReferenceAsString(t.ref.Append("value"))
 }
 
 type CloudwatchAlarmState struct {

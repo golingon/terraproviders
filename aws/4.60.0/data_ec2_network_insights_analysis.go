@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataEc2NetworkInsightsAnalysis creates a new instance of [DataEc2NetworkInsightsAnalysis].
 func NewDataEc2NetworkInsightsAnalysis(name string, args DataEc2NetworkInsightsAnalysisArgs) *DataEc2NetworkInsightsAnalysis {
 	return &DataEc2NetworkInsightsAnalysis{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataEc2NetworkInsightsAnalysis(name string, args DataEc2NetworkInsightsA
 
 var _ terra.DataResource = (*DataEc2NetworkInsightsAnalysis)(nil)
 
+// DataEc2NetworkInsightsAnalysis represents the Terraform data resource aws_ec2_network_insights_analysis.
 type DataEc2NetworkInsightsAnalysis struct {
 	Name string
 	Args DataEc2NetworkInsightsAnalysisArgs
 }
 
+// DataSource returns the Terraform object type for [DataEc2NetworkInsightsAnalysis].
 func (enia *DataEc2NetworkInsightsAnalysis) DataSource() string {
 	return "aws_ec2_network_insights_analysis"
 }
 
+// LocalName returns the local name for [DataEc2NetworkInsightsAnalysis].
 func (enia *DataEc2NetworkInsightsAnalysis) LocalName() string {
 	return enia.Name
 }
 
+// Configuration returns the configuration (args) for [DataEc2NetworkInsightsAnalysis].
 func (enia *DataEc2NetworkInsightsAnalysis) Configuration() interface{} {
 	return enia.Args
 }
 
+// Attributes returns the attributes for [DataEc2NetworkInsightsAnalysis].
 func (enia *DataEc2NetworkInsightsAnalysis) Attributes() dataEc2NetworkInsightsAnalysisAttributes {
 	return dataEc2NetworkInsightsAnalysisAttributes{ref: terra.ReferenceDataResource(enia)}
 }
 
+// DataEc2NetworkInsightsAnalysisArgs contains the configurations for aws_ec2_network_insights_analysis.
 type DataEc2NetworkInsightsAnalysisArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -59,66 +66,77 @@ type dataEc2NetworkInsightsAnalysisAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ec2_network_insights_analysis.
 func (enia dataEc2NetworkInsightsAnalysisAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(enia.ref.Append("arn"))
+	return terra.ReferenceAsString(enia.ref.Append("arn"))
 }
 
+// FilterInArns returns a reference to field filter_in_arns of aws_ec2_network_insights_analysis.
 func (enia dataEc2NetworkInsightsAnalysisAttributes) FilterInArns() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](enia.ref.Append("filter_in_arns"))
+	return terra.ReferenceAsList[terra.StringValue](enia.ref.Append("filter_in_arns"))
 }
 
+// Id returns a reference to field id of aws_ec2_network_insights_analysis.
 func (enia dataEc2NetworkInsightsAnalysisAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(enia.ref.Append("id"))
+	return terra.ReferenceAsString(enia.ref.Append("id"))
 }
 
+// NetworkInsightsAnalysisId returns a reference to field network_insights_analysis_id of aws_ec2_network_insights_analysis.
 func (enia dataEc2NetworkInsightsAnalysisAttributes) NetworkInsightsAnalysisId() terra.StringValue {
-	return terra.ReferenceString(enia.ref.Append("network_insights_analysis_id"))
+	return terra.ReferenceAsString(enia.ref.Append("network_insights_analysis_id"))
 }
 
+// NetworkInsightsPathId returns a reference to field network_insights_path_id of aws_ec2_network_insights_analysis.
 func (enia dataEc2NetworkInsightsAnalysisAttributes) NetworkInsightsPathId() terra.StringValue {
-	return terra.ReferenceString(enia.ref.Append("network_insights_path_id"))
+	return terra.ReferenceAsString(enia.ref.Append("network_insights_path_id"))
 }
 
+// PathFound returns a reference to field path_found of aws_ec2_network_insights_analysis.
 func (enia dataEc2NetworkInsightsAnalysisAttributes) PathFound() terra.BoolValue {
-	return terra.ReferenceBool(enia.ref.Append("path_found"))
+	return terra.ReferenceAsBool(enia.ref.Append("path_found"))
 }
 
+// StartDate returns a reference to field start_date of aws_ec2_network_insights_analysis.
 func (enia dataEc2NetworkInsightsAnalysisAttributes) StartDate() terra.StringValue {
-	return terra.ReferenceString(enia.ref.Append("start_date"))
+	return terra.ReferenceAsString(enia.ref.Append("start_date"))
 }
 
+// Status returns a reference to field status of aws_ec2_network_insights_analysis.
 func (enia dataEc2NetworkInsightsAnalysisAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(enia.ref.Append("status"))
+	return terra.ReferenceAsString(enia.ref.Append("status"))
 }
 
+// StatusMessage returns a reference to field status_message of aws_ec2_network_insights_analysis.
 func (enia dataEc2NetworkInsightsAnalysisAttributes) StatusMessage() terra.StringValue {
-	return terra.ReferenceString(enia.ref.Append("status_message"))
+	return terra.ReferenceAsString(enia.ref.Append("status_message"))
 }
 
+// Tags returns a reference to field tags of aws_ec2_network_insights_analysis.
 func (enia dataEc2NetworkInsightsAnalysisAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](enia.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](enia.ref.Append("tags"))
 }
 
+// WarningMessage returns a reference to field warning_message of aws_ec2_network_insights_analysis.
 func (enia dataEc2NetworkInsightsAnalysisAttributes) WarningMessage() terra.StringValue {
-	return terra.ReferenceString(enia.ref.Append("warning_message"))
+	return terra.ReferenceAsString(enia.ref.Append("warning_message"))
 }
 
 func (enia dataEc2NetworkInsightsAnalysisAttributes) AlternatePathHints() terra.ListValue[dataec2networkinsightsanalysis.AlternatePathHintsAttributes] {
-	return terra.ReferenceList[dataec2networkinsightsanalysis.AlternatePathHintsAttributes](enia.ref.Append("alternate_path_hints"))
+	return terra.ReferenceAsList[dataec2networkinsightsanalysis.AlternatePathHintsAttributes](enia.ref.Append("alternate_path_hints"))
 }
 
 func (enia dataEc2NetworkInsightsAnalysisAttributes) Explanations() terra.ListValue[dataec2networkinsightsanalysis.ExplanationsAttributes] {
-	return terra.ReferenceList[dataec2networkinsightsanalysis.ExplanationsAttributes](enia.ref.Append("explanations"))
+	return terra.ReferenceAsList[dataec2networkinsightsanalysis.ExplanationsAttributes](enia.ref.Append("explanations"))
 }
 
 func (enia dataEc2NetworkInsightsAnalysisAttributes) ForwardPathComponents() terra.ListValue[dataec2networkinsightsanalysis.ForwardPathComponentsAttributes] {
-	return terra.ReferenceList[dataec2networkinsightsanalysis.ForwardPathComponentsAttributes](enia.ref.Append("forward_path_components"))
+	return terra.ReferenceAsList[dataec2networkinsightsanalysis.ForwardPathComponentsAttributes](enia.ref.Append("forward_path_components"))
 }
 
 func (enia dataEc2NetworkInsightsAnalysisAttributes) ReturnPathComponents() terra.ListValue[dataec2networkinsightsanalysis.ReturnPathComponentsAttributes] {
-	return terra.ReferenceList[dataec2networkinsightsanalysis.ReturnPathComponentsAttributes](enia.ref.Append("return_path_components"))
+	return terra.ReferenceAsList[dataec2networkinsightsanalysis.ReturnPathComponentsAttributes](enia.ref.Append("return_path_components"))
 }
 
 func (enia dataEc2NetworkInsightsAnalysisAttributes) Filter() terra.SetValue[dataec2networkinsightsanalysis.FilterAttributes] {
-	return terra.ReferenceSet[dataec2networkinsightsanalysis.FilterAttributes](enia.ref.Append("filter"))
+	return terra.ReferenceAsSet[dataec2networkinsightsanalysis.FilterAttributes](enia.ref.Append("filter"))
 }

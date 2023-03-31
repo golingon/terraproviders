@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSnapshotCreateVolumePermission creates a new instance of [SnapshotCreateVolumePermission].
 func NewSnapshotCreateVolumePermission(name string, args SnapshotCreateVolumePermissionArgs) *SnapshotCreateVolumePermission {
 	return &SnapshotCreateVolumePermission{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSnapshotCreateVolumePermission(name string, args SnapshotCreateVolumePer
 
 var _ terra.Resource = (*SnapshotCreateVolumePermission)(nil)
 
+// SnapshotCreateVolumePermission represents the Terraform resource aws_snapshot_create_volume_permission.
 type SnapshotCreateVolumePermission struct {
-	Name  string
-	Args  SnapshotCreateVolumePermissionArgs
-	state *snapshotCreateVolumePermissionState
+	Name      string
+	Args      SnapshotCreateVolumePermissionArgs
+	state     *snapshotCreateVolumePermissionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SnapshotCreateVolumePermission].
 func (scvp *SnapshotCreateVolumePermission) Type() string {
 	return "aws_snapshot_create_volume_permission"
 }
 
+// LocalName returns the local name for [SnapshotCreateVolumePermission].
 func (scvp *SnapshotCreateVolumePermission) LocalName() string {
 	return scvp.Name
 }
 
+// Configuration returns the configuration (args) for [SnapshotCreateVolumePermission].
 func (scvp *SnapshotCreateVolumePermission) Configuration() interface{} {
 	return scvp.Args
 }
 
+// DependOn is used for other resources to depend on [SnapshotCreateVolumePermission].
+func (scvp *SnapshotCreateVolumePermission) DependOn() terra.Reference {
+	return terra.ReferenceResource(scvp)
+}
+
+// Dependencies returns the list of resources [SnapshotCreateVolumePermission] depends_on.
+func (scvp *SnapshotCreateVolumePermission) Dependencies() terra.Dependencies {
+	return scvp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SnapshotCreateVolumePermission].
+func (scvp *SnapshotCreateVolumePermission) LifecycleManagement() *terra.Lifecycle {
+	return scvp.Lifecycle
+}
+
+// Attributes returns the attributes for [SnapshotCreateVolumePermission].
 func (scvp *SnapshotCreateVolumePermission) Attributes() snapshotCreateVolumePermissionAttributes {
 	return snapshotCreateVolumePermissionAttributes{ref: terra.ReferenceResource(scvp)}
 }
 
+// ImportState imports the given attribute values into [SnapshotCreateVolumePermission]'s state.
 func (scvp *SnapshotCreateVolumePermission) ImportState(av io.Reader) error {
 	scvp.state = &snapshotCreateVolumePermissionState{}
 	if err := json.NewDecoder(av).Decode(scvp.state); err != nil {
@@ -49,10 +73,12 @@ func (scvp *SnapshotCreateVolumePermission) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SnapshotCreateVolumePermission] has state.
 func (scvp *SnapshotCreateVolumePermission) State() (*snapshotCreateVolumePermissionState, bool) {
 	return scvp.state, scvp.state != nil
 }
 
+// StateMust returns the state for [SnapshotCreateVolumePermission]. Panics if the state is nil.
 func (scvp *SnapshotCreateVolumePermission) StateMust() *snapshotCreateVolumePermissionState {
 	if scvp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", scvp.Type(), scvp.LocalName()))
@@ -60,10 +86,7 @@ func (scvp *SnapshotCreateVolumePermission) StateMust() *snapshotCreateVolumePer
 	return scvp.state
 }
 
-func (scvp *SnapshotCreateVolumePermission) DependOn() terra.Reference {
-	return terra.ReferenceResource(scvp)
-}
-
+// SnapshotCreateVolumePermissionArgs contains the configurations for aws_snapshot_create_volume_permission.
 type SnapshotCreateVolumePermissionArgs struct {
 	// AccountId: string, required
 	AccountId terra.StringValue `hcl:"account_id,attr" validate:"required"`
@@ -73,27 +96,28 @@ type SnapshotCreateVolumePermissionArgs struct {
 	SnapshotId terra.StringValue `hcl:"snapshot_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *snapshotcreatevolumepermission.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SnapshotCreateVolumePermission depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type snapshotCreateVolumePermissionAttributes struct {
 	ref terra.Reference
 }
 
+// AccountId returns a reference to field account_id of aws_snapshot_create_volume_permission.
 func (scvp snapshotCreateVolumePermissionAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(scvp.ref.Append("account_id"))
+	return terra.ReferenceAsString(scvp.ref.Append("account_id"))
 }
 
+// Id returns a reference to field id of aws_snapshot_create_volume_permission.
 func (scvp snapshotCreateVolumePermissionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(scvp.ref.Append("id"))
+	return terra.ReferenceAsString(scvp.ref.Append("id"))
 }
 
+// SnapshotId returns a reference to field snapshot_id of aws_snapshot_create_volume_permission.
 func (scvp snapshotCreateVolumePermissionAttributes) SnapshotId() terra.StringValue {
-	return terra.ReferenceString(scvp.ref.Append("snapshot_id"))
+	return terra.ReferenceAsString(scvp.ref.Append("snapshot_id"))
 }
 
 func (scvp snapshotCreateVolumePermissionAttributes) Timeouts() snapshotcreatevolumepermission.TimeoutsAttributes {
-	return terra.ReferenceSingle[snapshotcreatevolumepermission.TimeoutsAttributes](scvp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[snapshotcreatevolumepermission.TimeoutsAttributes](scvp.ref.Append("timeouts"))
 }
 
 type snapshotCreateVolumePermissionState struct {

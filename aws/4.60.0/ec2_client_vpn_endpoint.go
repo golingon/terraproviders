@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEc2ClientVpnEndpoint creates a new instance of [Ec2ClientVpnEndpoint].
 func NewEc2ClientVpnEndpoint(name string, args Ec2ClientVpnEndpointArgs) *Ec2ClientVpnEndpoint {
 	return &Ec2ClientVpnEndpoint{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEc2ClientVpnEndpoint(name string, args Ec2ClientVpnEndpointArgs) *Ec2Cli
 
 var _ terra.Resource = (*Ec2ClientVpnEndpoint)(nil)
 
+// Ec2ClientVpnEndpoint represents the Terraform resource aws_ec2_client_vpn_endpoint.
 type Ec2ClientVpnEndpoint struct {
-	Name  string
-	Args  Ec2ClientVpnEndpointArgs
-	state *ec2ClientVpnEndpointState
+	Name      string
+	Args      Ec2ClientVpnEndpointArgs
+	state     *ec2ClientVpnEndpointState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Ec2ClientVpnEndpoint].
 func (ecve *Ec2ClientVpnEndpoint) Type() string {
 	return "aws_ec2_client_vpn_endpoint"
 }
 
+// LocalName returns the local name for [Ec2ClientVpnEndpoint].
 func (ecve *Ec2ClientVpnEndpoint) LocalName() string {
 	return ecve.Name
 }
 
+// Configuration returns the configuration (args) for [Ec2ClientVpnEndpoint].
 func (ecve *Ec2ClientVpnEndpoint) Configuration() interface{} {
 	return ecve.Args
 }
 
+// DependOn is used for other resources to depend on [Ec2ClientVpnEndpoint].
+func (ecve *Ec2ClientVpnEndpoint) DependOn() terra.Reference {
+	return terra.ReferenceResource(ecve)
+}
+
+// Dependencies returns the list of resources [Ec2ClientVpnEndpoint] depends_on.
+func (ecve *Ec2ClientVpnEndpoint) Dependencies() terra.Dependencies {
+	return ecve.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Ec2ClientVpnEndpoint].
+func (ecve *Ec2ClientVpnEndpoint) LifecycleManagement() *terra.Lifecycle {
+	return ecve.Lifecycle
+}
+
+// Attributes returns the attributes for [Ec2ClientVpnEndpoint].
 func (ecve *Ec2ClientVpnEndpoint) Attributes() ec2ClientVpnEndpointAttributes {
 	return ec2ClientVpnEndpointAttributes{ref: terra.ReferenceResource(ecve)}
 }
 
+// ImportState imports the given attribute values into [Ec2ClientVpnEndpoint]'s state.
 func (ecve *Ec2ClientVpnEndpoint) ImportState(av io.Reader) error {
 	ecve.state = &ec2ClientVpnEndpointState{}
 	if err := json.NewDecoder(av).Decode(ecve.state); err != nil {
@@ -49,10 +73,12 @@ func (ecve *Ec2ClientVpnEndpoint) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Ec2ClientVpnEndpoint] has state.
 func (ecve *Ec2ClientVpnEndpoint) State() (*ec2ClientVpnEndpointState, bool) {
 	return ecve.state, ecve.state != nil
 }
 
+// StateMust returns the state for [Ec2ClientVpnEndpoint]. Panics if the state is nil.
 func (ecve *Ec2ClientVpnEndpoint) StateMust() *ec2ClientVpnEndpointState {
 	if ecve.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ecve.Type(), ecve.LocalName()))
@@ -60,10 +86,7 @@ func (ecve *Ec2ClientVpnEndpoint) StateMust() *ec2ClientVpnEndpointState {
 	return ecve.state
 }
 
-func (ecve *Ec2ClientVpnEndpoint) DependOn() terra.Reference {
-	return terra.ReferenceResource(ecve)
-}
-
+// Ec2ClientVpnEndpointArgs contains the configurations for aws_ec2_client_vpn_endpoint.
 type Ec2ClientVpnEndpointArgs struct {
 	// ClientCidrBlock: string, required
 	ClientCidrBlock terra.StringValue `hcl:"client_cidr_block,attr" validate:"required"`
@@ -101,95 +124,110 @@ type Ec2ClientVpnEndpointArgs struct {
 	ClientLoginBannerOptions *ec2clientvpnendpoint.ClientLoginBannerOptions `hcl:"client_login_banner_options,block"`
 	// ConnectionLogOptions: required
 	ConnectionLogOptions *ec2clientvpnendpoint.ConnectionLogOptions `hcl:"connection_log_options,block" validate:"required"`
-	// DependsOn contains resources that Ec2ClientVpnEndpoint depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ec2ClientVpnEndpointAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ec2_client_vpn_endpoint.
 func (ecve ec2ClientVpnEndpointAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ecve.ref.Append("arn"))
+	return terra.ReferenceAsString(ecve.ref.Append("arn"))
 }
 
+// ClientCidrBlock returns a reference to field client_cidr_block of aws_ec2_client_vpn_endpoint.
 func (ecve ec2ClientVpnEndpointAttributes) ClientCidrBlock() terra.StringValue {
-	return terra.ReferenceString(ecve.ref.Append("client_cidr_block"))
+	return terra.ReferenceAsString(ecve.ref.Append("client_cidr_block"))
 }
 
+// Description returns a reference to field description of aws_ec2_client_vpn_endpoint.
 func (ecve ec2ClientVpnEndpointAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ecve.ref.Append("description"))
+	return terra.ReferenceAsString(ecve.ref.Append("description"))
 }
 
+// DnsName returns a reference to field dns_name of aws_ec2_client_vpn_endpoint.
 func (ecve ec2ClientVpnEndpointAttributes) DnsName() terra.StringValue {
-	return terra.ReferenceString(ecve.ref.Append("dns_name"))
+	return terra.ReferenceAsString(ecve.ref.Append("dns_name"))
 }
 
+// DnsServers returns a reference to field dns_servers of aws_ec2_client_vpn_endpoint.
 func (ecve ec2ClientVpnEndpointAttributes) DnsServers() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ecve.ref.Append("dns_servers"))
+	return terra.ReferenceAsList[terra.StringValue](ecve.ref.Append("dns_servers"))
 }
 
+// Id returns a reference to field id of aws_ec2_client_vpn_endpoint.
 func (ecve ec2ClientVpnEndpointAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ecve.ref.Append("id"))
+	return terra.ReferenceAsString(ecve.ref.Append("id"))
 }
 
+// SecurityGroupIds returns a reference to field security_group_ids of aws_ec2_client_vpn_endpoint.
 func (ecve ec2ClientVpnEndpointAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ecve.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](ecve.ref.Append("security_group_ids"))
 }
 
+// SelfServicePortal returns a reference to field self_service_portal of aws_ec2_client_vpn_endpoint.
 func (ecve ec2ClientVpnEndpointAttributes) SelfServicePortal() terra.StringValue {
-	return terra.ReferenceString(ecve.ref.Append("self_service_portal"))
+	return terra.ReferenceAsString(ecve.ref.Append("self_service_portal"))
 }
 
+// ServerCertificateArn returns a reference to field server_certificate_arn of aws_ec2_client_vpn_endpoint.
 func (ecve ec2ClientVpnEndpointAttributes) ServerCertificateArn() terra.StringValue {
-	return terra.ReferenceString(ecve.ref.Append("server_certificate_arn"))
+	return terra.ReferenceAsString(ecve.ref.Append("server_certificate_arn"))
 }
 
+// SessionTimeoutHours returns a reference to field session_timeout_hours of aws_ec2_client_vpn_endpoint.
 func (ecve ec2ClientVpnEndpointAttributes) SessionTimeoutHours() terra.NumberValue {
-	return terra.ReferenceNumber(ecve.ref.Append("session_timeout_hours"))
+	return terra.ReferenceAsNumber(ecve.ref.Append("session_timeout_hours"))
 }
 
+// SplitTunnel returns a reference to field split_tunnel of aws_ec2_client_vpn_endpoint.
 func (ecve ec2ClientVpnEndpointAttributes) SplitTunnel() terra.BoolValue {
-	return terra.ReferenceBool(ecve.ref.Append("split_tunnel"))
+	return terra.ReferenceAsBool(ecve.ref.Append("split_tunnel"))
 }
 
+// Status returns a reference to field status of aws_ec2_client_vpn_endpoint.
 func (ecve ec2ClientVpnEndpointAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ecve.ref.Append("status"))
+	return terra.ReferenceAsString(ecve.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of aws_ec2_client_vpn_endpoint.
 func (ecve ec2ClientVpnEndpointAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ecve.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ecve.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_ec2_client_vpn_endpoint.
 func (ecve ec2ClientVpnEndpointAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ecve.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ecve.ref.Append("tags_all"))
 }
 
+// TransportProtocol returns a reference to field transport_protocol of aws_ec2_client_vpn_endpoint.
 func (ecve ec2ClientVpnEndpointAttributes) TransportProtocol() terra.StringValue {
-	return terra.ReferenceString(ecve.ref.Append("transport_protocol"))
+	return terra.ReferenceAsString(ecve.ref.Append("transport_protocol"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_ec2_client_vpn_endpoint.
 func (ecve ec2ClientVpnEndpointAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(ecve.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(ecve.ref.Append("vpc_id"))
 }
 
+// VpnPort returns a reference to field vpn_port of aws_ec2_client_vpn_endpoint.
 func (ecve ec2ClientVpnEndpointAttributes) VpnPort() terra.NumberValue {
-	return terra.ReferenceNumber(ecve.ref.Append("vpn_port"))
+	return terra.ReferenceAsNumber(ecve.ref.Append("vpn_port"))
 }
 
 func (ecve ec2ClientVpnEndpointAttributes) AuthenticationOptions() terra.SetValue[ec2clientvpnendpoint.AuthenticationOptionsAttributes] {
-	return terra.ReferenceSet[ec2clientvpnendpoint.AuthenticationOptionsAttributes](ecve.ref.Append("authentication_options"))
+	return terra.ReferenceAsSet[ec2clientvpnendpoint.AuthenticationOptionsAttributes](ecve.ref.Append("authentication_options"))
 }
 
 func (ecve ec2ClientVpnEndpointAttributes) ClientConnectOptions() terra.ListValue[ec2clientvpnendpoint.ClientConnectOptionsAttributes] {
-	return terra.ReferenceList[ec2clientvpnendpoint.ClientConnectOptionsAttributes](ecve.ref.Append("client_connect_options"))
+	return terra.ReferenceAsList[ec2clientvpnendpoint.ClientConnectOptionsAttributes](ecve.ref.Append("client_connect_options"))
 }
 
 func (ecve ec2ClientVpnEndpointAttributes) ClientLoginBannerOptions() terra.ListValue[ec2clientvpnendpoint.ClientLoginBannerOptionsAttributes] {
-	return terra.ReferenceList[ec2clientvpnendpoint.ClientLoginBannerOptionsAttributes](ecve.ref.Append("client_login_banner_options"))
+	return terra.ReferenceAsList[ec2clientvpnendpoint.ClientLoginBannerOptionsAttributes](ecve.ref.Append("client_login_banner_options"))
 }
 
 func (ecve ec2ClientVpnEndpointAttributes) ConnectionLogOptions() terra.ListValue[ec2clientvpnendpoint.ConnectionLogOptionsAttributes] {
-	return terra.ReferenceList[ec2clientvpnendpoint.ConnectionLogOptionsAttributes](ecve.ref.Append("connection_log_options"))
+	return terra.ReferenceAsList[ec2clientvpnendpoint.ConnectionLogOptionsAttributes](ecve.ref.Append("connection_log_options"))
 }
 
 type ec2ClientVpnEndpointState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewEc2TransitGatewayPrefixListReference creates a new instance of [Ec2TransitGatewayPrefixListReference].
 func NewEc2TransitGatewayPrefixListReference(name string, args Ec2TransitGatewayPrefixListReferenceArgs) *Ec2TransitGatewayPrefixListReference {
 	return &Ec2TransitGatewayPrefixListReference{
 		Args: args,
@@ -18,28 +19,51 @@ func NewEc2TransitGatewayPrefixListReference(name string, args Ec2TransitGateway
 
 var _ terra.Resource = (*Ec2TransitGatewayPrefixListReference)(nil)
 
+// Ec2TransitGatewayPrefixListReference represents the Terraform resource aws_ec2_transit_gateway_prefix_list_reference.
 type Ec2TransitGatewayPrefixListReference struct {
-	Name  string
-	Args  Ec2TransitGatewayPrefixListReferenceArgs
-	state *ec2TransitGatewayPrefixListReferenceState
+	Name      string
+	Args      Ec2TransitGatewayPrefixListReferenceArgs
+	state     *ec2TransitGatewayPrefixListReferenceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Ec2TransitGatewayPrefixListReference].
 func (etgplr *Ec2TransitGatewayPrefixListReference) Type() string {
 	return "aws_ec2_transit_gateway_prefix_list_reference"
 }
 
+// LocalName returns the local name for [Ec2TransitGatewayPrefixListReference].
 func (etgplr *Ec2TransitGatewayPrefixListReference) LocalName() string {
 	return etgplr.Name
 }
 
+// Configuration returns the configuration (args) for [Ec2TransitGatewayPrefixListReference].
 func (etgplr *Ec2TransitGatewayPrefixListReference) Configuration() interface{} {
 	return etgplr.Args
 }
 
+// DependOn is used for other resources to depend on [Ec2TransitGatewayPrefixListReference].
+func (etgplr *Ec2TransitGatewayPrefixListReference) DependOn() terra.Reference {
+	return terra.ReferenceResource(etgplr)
+}
+
+// Dependencies returns the list of resources [Ec2TransitGatewayPrefixListReference] depends_on.
+func (etgplr *Ec2TransitGatewayPrefixListReference) Dependencies() terra.Dependencies {
+	return etgplr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Ec2TransitGatewayPrefixListReference].
+func (etgplr *Ec2TransitGatewayPrefixListReference) LifecycleManagement() *terra.Lifecycle {
+	return etgplr.Lifecycle
+}
+
+// Attributes returns the attributes for [Ec2TransitGatewayPrefixListReference].
 func (etgplr *Ec2TransitGatewayPrefixListReference) Attributes() ec2TransitGatewayPrefixListReferenceAttributes {
 	return ec2TransitGatewayPrefixListReferenceAttributes{ref: terra.ReferenceResource(etgplr)}
 }
 
+// ImportState imports the given attribute values into [Ec2TransitGatewayPrefixListReference]'s state.
 func (etgplr *Ec2TransitGatewayPrefixListReference) ImportState(av io.Reader) error {
 	etgplr.state = &ec2TransitGatewayPrefixListReferenceState{}
 	if err := json.NewDecoder(av).Decode(etgplr.state); err != nil {
@@ -48,10 +72,12 @@ func (etgplr *Ec2TransitGatewayPrefixListReference) ImportState(av io.Reader) er
 	return nil
 }
 
+// State returns the state and a bool indicating if [Ec2TransitGatewayPrefixListReference] has state.
 func (etgplr *Ec2TransitGatewayPrefixListReference) State() (*ec2TransitGatewayPrefixListReferenceState, bool) {
 	return etgplr.state, etgplr.state != nil
 }
 
+// StateMust returns the state for [Ec2TransitGatewayPrefixListReference]. Panics if the state is nil.
 func (etgplr *Ec2TransitGatewayPrefixListReference) StateMust() *ec2TransitGatewayPrefixListReferenceState {
 	if etgplr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", etgplr.Type(), etgplr.LocalName()))
@@ -59,10 +85,7 @@ func (etgplr *Ec2TransitGatewayPrefixListReference) StateMust() *ec2TransitGatew
 	return etgplr.state
 }
 
-func (etgplr *Ec2TransitGatewayPrefixListReference) DependOn() terra.Reference {
-	return terra.ReferenceResource(etgplr)
-}
-
+// Ec2TransitGatewayPrefixListReferenceArgs contains the configurations for aws_ec2_transit_gateway_prefix_list_reference.
 type Ec2TransitGatewayPrefixListReferenceArgs struct {
 	// Blackhole: bool, optional
 	Blackhole terra.BoolValue `hcl:"blackhole,attr"`
@@ -74,35 +97,39 @@ type Ec2TransitGatewayPrefixListReferenceArgs struct {
 	TransitGatewayAttachmentId terra.StringValue `hcl:"transit_gateway_attachment_id,attr"`
 	// TransitGatewayRouteTableId: string, required
 	TransitGatewayRouteTableId terra.StringValue `hcl:"transit_gateway_route_table_id,attr" validate:"required"`
-	// DependsOn contains resources that Ec2TransitGatewayPrefixListReference depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ec2TransitGatewayPrefixListReferenceAttributes struct {
 	ref terra.Reference
 }
 
+// Blackhole returns a reference to field blackhole of aws_ec2_transit_gateway_prefix_list_reference.
 func (etgplr ec2TransitGatewayPrefixListReferenceAttributes) Blackhole() terra.BoolValue {
-	return terra.ReferenceBool(etgplr.ref.Append("blackhole"))
+	return terra.ReferenceAsBool(etgplr.ref.Append("blackhole"))
 }
 
+// Id returns a reference to field id of aws_ec2_transit_gateway_prefix_list_reference.
 func (etgplr ec2TransitGatewayPrefixListReferenceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(etgplr.ref.Append("id"))
+	return terra.ReferenceAsString(etgplr.ref.Append("id"))
 }
 
+// PrefixListId returns a reference to field prefix_list_id of aws_ec2_transit_gateway_prefix_list_reference.
 func (etgplr ec2TransitGatewayPrefixListReferenceAttributes) PrefixListId() terra.StringValue {
-	return terra.ReferenceString(etgplr.ref.Append("prefix_list_id"))
+	return terra.ReferenceAsString(etgplr.ref.Append("prefix_list_id"))
 }
 
+// PrefixListOwnerId returns a reference to field prefix_list_owner_id of aws_ec2_transit_gateway_prefix_list_reference.
 func (etgplr ec2TransitGatewayPrefixListReferenceAttributes) PrefixListOwnerId() terra.StringValue {
-	return terra.ReferenceString(etgplr.ref.Append("prefix_list_owner_id"))
+	return terra.ReferenceAsString(etgplr.ref.Append("prefix_list_owner_id"))
 }
 
+// TransitGatewayAttachmentId returns a reference to field transit_gateway_attachment_id of aws_ec2_transit_gateway_prefix_list_reference.
 func (etgplr ec2TransitGatewayPrefixListReferenceAttributes) TransitGatewayAttachmentId() terra.StringValue {
-	return terra.ReferenceString(etgplr.ref.Append("transit_gateway_attachment_id"))
+	return terra.ReferenceAsString(etgplr.ref.Append("transit_gateway_attachment_id"))
 }
 
+// TransitGatewayRouteTableId returns a reference to field transit_gateway_route_table_id of aws_ec2_transit_gateway_prefix_list_reference.
 func (etgplr ec2TransitGatewayPrefixListReferenceAttributes) TransitGatewayRouteTableId() terra.StringValue {
-	return terra.ReferenceString(etgplr.ref.Append("transit_gateway_route_table_id"))
+	return terra.ReferenceAsString(etgplr.ref.Append("transit_gateway_route_table_id"))
 }
 
 type ec2TransitGatewayPrefixListReferenceState struct {

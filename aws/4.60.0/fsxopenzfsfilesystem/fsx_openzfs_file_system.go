@@ -76,11 +76,11 @@ func (dic DiskIopsConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dic DiskIopsConfigurationAttributes) Iops() terra.NumberValue {
-	return terra.ReferenceNumber(dic.ref.Append("iops"))
+	return terra.ReferenceAsNumber(dic.ref.Append("iops"))
 }
 
 func (dic DiskIopsConfigurationAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(dic.ref.Append("mode"))
+	return terra.ReferenceAsString(dic.ref.Append("mode"))
 }
 
 type RootVolumeConfigurationAttributes struct {
@@ -100,27 +100,27 @@ func (rvc RootVolumeConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rvc RootVolumeConfigurationAttributes) CopyTagsToSnapshots() terra.BoolValue {
-	return terra.ReferenceBool(rvc.ref.Append("copy_tags_to_snapshots"))
+	return terra.ReferenceAsBool(rvc.ref.Append("copy_tags_to_snapshots"))
 }
 
 func (rvc RootVolumeConfigurationAttributes) DataCompressionType() terra.StringValue {
-	return terra.ReferenceString(rvc.ref.Append("data_compression_type"))
+	return terra.ReferenceAsString(rvc.ref.Append("data_compression_type"))
 }
 
 func (rvc RootVolumeConfigurationAttributes) ReadOnly() terra.BoolValue {
-	return terra.ReferenceBool(rvc.ref.Append("read_only"))
+	return terra.ReferenceAsBool(rvc.ref.Append("read_only"))
 }
 
 func (rvc RootVolumeConfigurationAttributes) RecordSizeKib() terra.NumberValue {
-	return terra.ReferenceNumber(rvc.ref.Append("record_size_kib"))
+	return terra.ReferenceAsNumber(rvc.ref.Append("record_size_kib"))
 }
 
 func (rvc RootVolumeConfigurationAttributes) NfsExports() terra.ListValue[NfsExportsAttributes] {
-	return terra.ReferenceList[NfsExportsAttributes](rvc.ref.Append("nfs_exports"))
+	return terra.ReferenceAsList[NfsExportsAttributes](rvc.ref.Append("nfs_exports"))
 }
 
 func (rvc RootVolumeConfigurationAttributes) UserAndGroupQuotas() terra.SetValue[UserAndGroupQuotasAttributes] {
-	return terra.ReferenceSet[UserAndGroupQuotasAttributes](rvc.ref.Append("user_and_group_quotas"))
+	return terra.ReferenceAsSet[UserAndGroupQuotasAttributes](rvc.ref.Append("user_and_group_quotas"))
 }
 
 type NfsExportsAttributes struct {
@@ -140,7 +140,7 @@ func (ne NfsExportsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ne NfsExportsAttributes) ClientConfigurations() terra.SetValue[ClientConfigurationsAttributes] {
-	return terra.ReferenceSet[ClientConfigurationsAttributes](ne.ref.Append("client_configurations"))
+	return terra.ReferenceAsSet[ClientConfigurationsAttributes](ne.ref.Append("client_configurations"))
 }
 
 type ClientConfigurationsAttributes struct {
@@ -160,11 +160,11 @@ func (cc ClientConfigurationsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc ClientConfigurationsAttributes) Clients() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("clients"))
+	return terra.ReferenceAsString(cc.ref.Append("clients"))
 }
 
 func (cc ClientConfigurationsAttributes) Options() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cc.ref.Append("options"))
+	return terra.ReferenceAsList[terra.StringValue](cc.ref.Append("options"))
 }
 
 type UserAndGroupQuotasAttributes struct {
@@ -184,15 +184,15 @@ func (uagq UserAndGroupQuotasAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (uagq UserAndGroupQuotasAttributes) Id() terra.NumberValue {
-	return terra.ReferenceNumber(uagq.ref.Append("id"))
+	return terra.ReferenceAsNumber(uagq.ref.Append("id"))
 }
 
 func (uagq UserAndGroupQuotasAttributes) StorageCapacityQuotaGib() terra.NumberValue {
-	return terra.ReferenceNumber(uagq.ref.Append("storage_capacity_quota_gib"))
+	return terra.ReferenceAsNumber(uagq.ref.Append("storage_capacity_quota_gib"))
 }
 
 func (uagq UserAndGroupQuotasAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(uagq.ref.Append("type"))
+	return terra.ReferenceAsString(uagq.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
@@ -212,15 +212,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DiskIopsConfigurationState struct {

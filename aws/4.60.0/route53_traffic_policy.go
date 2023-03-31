@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRoute53TrafficPolicy creates a new instance of [Route53TrafficPolicy].
 func NewRoute53TrafficPolicy(name string, args Route53TrafficPolicyArgs) *Route53TrafficPolicy {
 	return &Route53TrafficPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRoute53TrafficPolicy(name string, args Route53TrafficPolicyArgs) *Route5
 
 var _ terra.Resource = (*Route53TrafficPolicy)(nil)
 
+// Route53TrafficPolicy represents the Terraform resource aws_route53_traffic_policy.
 type Route53TrafficPolicy struct {
-	Name  string
-	Args  Route53TrafficPolicyArgs
-	state *route53TrafficPolicyState
+	Name      string
+	Args      Route53TrafficPolicyArgs
+	state     *route53TrafficPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Route53TrafficPolicy].
 func (rtp *Route53TrafficPolicy) Type() string {
 	return "aws_route53_traffic_policy"
 }
 
+// LocalName returns the local name for [Route53TrafficPolicy].
 func (rtp *Route53TrafficPolicy) LocalName() string {
 	return rtp.Name
 }
 
+// Configuration returns the configuration (args) for [Route53TrafficPolicy].
 func (rtp *Route53TrafficPolicy) Configuration() interface{} {
 	return rtp.Args
 }
 
+// DependOn is used for other resources to depend on [Route53TrafficPolicy].
+func (rtp *Route53TrafficPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(rtp)
+}
+
+// Dependencies returns the list of resources [Route53TrafficPolicy] depends_on.
+func (rtp *Route53TrafficPolicy) Dependencies() terra.Dependencies {
+	return rtp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Route53TrafficPolicy].
+func (rtp *Route53TrafficPolicy) LifecycleManagement() *terra.Lifecycle {
+	return rtp.Lifecycle
+}
+
+// Attributes returns the attributes for [Route53TrafficPolicy].
 func (rtp *Route53TrafficPolicy) Attributes() route53TrafficPolicyAttributes {
 	return route53TrafficPolicyAttributes{ref: terra.ReferenceResource(rtp)}
 }
 
+// ImportState imports the given attribute values into [Route53TrafficPolicy]'s state.
 func (rtp *Route53TrafficPolicy) ImportState(av io.Reader) error {
 	rtp.state = &route53TrafficPolicyState{}
 	if err := json.NewDecoder(av).Decode(rtp.state); err != nil {
@@ -48,10 +72,12 @@ func (rtp *Route53TrafficPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Route53TrafficPolicy] has state.
 func (rtp *Route53TrafficPolicy) State() (*route53TrafficPolicyState, bool) {
 	return rtp.state, rtp.state != nil
 }
 
+// StateMust returns the state for [Route53TrafficPolicy]. Panics if the state is nil.
 func (rtp *Route53TrafficPolicy) StateMust() *route53TrafficPolicyState {
 	if rtp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rtp.Type(), rtp.LocalName()))
@@ -59,10 +85,7 @@ func (rtp *Route53TrafficPolicy) StateMust() *route53TrafficPolicyState {
 	return rtp.state
 }
 
-func (rtp *Route53TrafficPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(rtp)
-}
-
+// Route53TrafficPolicyArgs contains the configurations for aws_route53_traffic_policy.
 type Route53TrafficPolicyArgs struct {
 	// Comment: string, optional
 	Comment terra.StringValue `hcl:"comment,attr"`
@@ -72,35 +95,39 @@ type Route53TrafficPolicyArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// Name: string, required
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
-	// DependsOn contains resources that Route53TrafficPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type route53TrafficPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Comment returns a reference to field comment of aws_route53_traffic_policy.
 func (rtp route53TrafficPolicyAttributes) Comment() terra.StringValue {
-	return terra.ReferenceString(rtp.ref.Append("comment"))
+	return terra.ReferenceAsString(rtp.ref.Append("comment"))
 }
 
+// Document returns a reference to field document of aws_route53_traffic_policy.
 func (rtp route53TrafficPolicyAttributes) Document() terra.StringValue {
-	return terra.ReferenceString(rtp.ref.Append("document"))
+	return terra.ReferenceAsString(rtp.ref.Append("document"))
 }
 
+// Id returns a reference to field id of aws_route53_traffic_policy.
 func (rtp route53TrafficPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rtp.ref.Append("id"))
+	return terra.ReferenceAsString(rtp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_route53_traffic_policy.
 func (rtp route53TrafficPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rtp.ref.Append("name"))
+	return terra.ReferenceAsString(rtp.ref.Append("name"))
 }
 
+// Type returns a reference to field type of aws_route53_traffic_policy.
 func (rtp route53TrafficPolicyAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(rtp.ref.Append("type"))
+	return terra.ReferenceAsString(rtp.ref.Append("type"))
 }
 
+// Version returns a reference to field version of aws_route53_traffic_policy.
 func (rtp route53TrafficPolicyAttributes) Version() terra.NumberValue {
-	return terra.ReferenceNumber(rtp.ref.Append("version"))
+	return terra.ReferenceAsNumber(rtp.ref.Append("version"))
 }
 
 type route53TrafficPolicyState struct {

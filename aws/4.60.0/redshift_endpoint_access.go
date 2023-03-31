@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewRedshiftEndpointAccess creates a new instance of [RedshiftEndpointAccess].
 func NewRedshiftEndpointAccess(name string, args RedshiftEndpointAccessArgs) *RedshiftEndpointAccess {
 	return &RedshiftEndpointAccess{
 		Args: args,
@@ -19,28 +20,51 @@ func NewRedshiftEndpointAccess(name string, args RedshiftEndpointAccessArgs) *Re
 
 var _ terra.Resource = (*RedshiftEndpointAccess)(nil)
 
+// RedshiftEndpointAccess represents the Terraform resource aws_redshift_endpoint_access.
 type RedshiftEndpointAccess struct {
-	Name  string
-	Args  RedshiftEndpointAccessArgs
-	state *redshiftEndpointAccessState
+	Name      string
+	Args      RedshiftEndpointAccessArgs
+	state     *redshiftEndpointAccessState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RedshiftEndpointAccess].
 func (rea *RedshiftEndpointAccess) Type() string {
 	return "aws_redshift_endpoint_access"
 }
 
+// LocalName returns the local name for [RedshiftEndpointAccess].
 func (rea *RedshiftEndpointAccess) LocalName() string {
 	return rea.Name
 }
 
+// Configuration returns the configuration (args) for [RedshiftEndpointAccess].
 func (rea *RedshiftEndpointAccess) Configuration() interface{} {
 	return rea.Args
 }
 
+// DependOn is used for other resources to depend on [RedshiftEndpointAccess].
+func (rea *RedshiftEndpointAccess) DependOn() terra.Reference {
+	return terra.ReferenceResource(rea)
+}
+
+// Dependencies returns the list of resources [RedshiftEndpointAccess] depends_on.
+func (rea *RedshiftEndpointAccess) Dependencies() terra.Dependencies {
+	return rea.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RedshiftEndpointAccess].
+func (rea *RedshiftEndpointAccess) LifecycleManagement() *terra.Lifecycle {
+	return rea.Lifecycle
+}
+
+// Attributes returns the attributes for [RedshiftEndpointAccess].
 func (rea *RedshiftEndpointAccess) Attributes() redshiftEndpointAccessAttributes {
 	return redshiftEndpointAccessAttributes{ref: terra.ReferenceResource(rea)}
 }
 
+// ImportState imports the given attribute values into [RedshiftEndpointAccess]'s state.
 func (rea *RedshiftEndpointAccess) ImportState(av io.Reader) error {
 	rea.state = &redshiftEndpointAccessState{}
 	if err := json.NewDecoder(av).Decode(rea.state); err != nil {
@@ -49,10 +73,12 @@ func (rea *RedshiftEndpointAccess) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RedshiftEndpointAccess] has state.
 func (rea *RedshiftEndpointAccess) State() (*redshiftEndpointAccessState, bool) {
 	return rea.state, rea.state != nil
 }
 
+// StateMust returns the state for [RedshiftEndpointAccess]. Panics if the state is nil.
 func (rea *RedshiftEndpointAccess) StateMust() *redshiftEndpointAccessState {
 	if rea.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rea.Type(), rea.LocalName()))
@@ -60,10 +86,7 @@ func (rea *RedshiftEndpointAccess) StateMust() *redshiftEndpointAccessState {
 	return rea.state
 }
 
-func (rea *RedshiftEndpointAccess) DependOn() terra.Reference {
-	return terra.ReferenceResource(rea)
-}
-
+// RedshiftEndpointAccessArgs contains the configurations for aws_redshift_endpoint_access.
 type RedshiftEndpointAccessArgs struct {
 	// ClusterIdentifier: string, required
 	ClusterIdentifier terra.StringValue `hcl:"cluster_identifier,attr" validate:"required"`
@@ -79,47 +102,53 @@ type RedshiftEndpointAccessArgs struct {
 	VpcSecurityGroupIds terra.SetValue[terra.StringValue] `hcl:"vpc_security_group_ids,attr"`
 	// VpcEndpoint: min=0
 	VpcEndpoint []redshiftendpointaccess.VpcEndpoint `hcl:"vpc_endpoint,block" validate:"min=0"`
-	// DependsOn contains resources that RedshiftEndpointAccess depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type redshiftEndpointAccessAttributes struct {
 	ref terra.Reference
 }
 
+// Address returns a reference to field address of aws_redshift_endpoint_access.
 func (rea redshiftEndpointAccessAttributes) Address() terra.StringValue {
-	return terra.ReferenceString(rea.ref.Append("address"))
+	return terra.ReferenceAsString(rea.ref.Append("address"))
 }
 
+// ClusterIdentifier returns a reference to field cluster_identifier of aws_redshift_endpoint_access.
 func (rea redshiftEndpointAccessAttributes) ClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(rea.ref.Append("cluster_identifier"))
+	return terra.ReferenceAsString(rea.ref.Append("cluster_identifier"))
 }
 
+// EndpointName returns a reference to field endpoint_name of aws_redshift_endpoint_access.
 func (rea redshiftEndpointAccessAttributes) EndpointName() terra.StringValue {
-	return terra.ReferenceString(rea.ref.Append("endpoint_name"))
+	return terra.ReferenceAsString(rea.ref.Append("endpoint_name"))
 }
 
+// Id returns a reference to field id of aws_redshift_endpoint_access.
 func (rea redshiftEndpointAccessAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rea.ref.Append("id"))
+	return terra.ReferenceAsString(rea.ref.Append("id"))
 }
 
+// Port returns a reference to field port of aws_redshift_endpoint_access.
 func (rea redshiftEndpointAccessAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(rea.ref.Append("port"))
+	return terra.ReferenceAsNumber(rea.ref.Append("port"))
 }
 
+// ResourceOwner returns a reference to field resource_owner of aws_redshift_endpoint_access.
 func (rea redshiftEndpointAccessAttributes) ResourceOwner() terra.StringValue {
-	return terra.ReferenceString(rea.ref.Append("resource_owner"))
+	return terra.ReferenceAsString(rea.ref.Append("resource_owner"))
 }
 
+// SubnetGroupName returns a reference to field subnet_group_name of aws_redshift_endpoint_access.
 func (rea redshiftEndpointAccessAttributes) SubnetGroupName() terra.StringValue {
-	return terra.ReferenceString(rea.ref.Append("subnet_group_name"))
+	return terra.ReferenceAsString(rea.ref.Append("subnet_group_name"))
 }
 
+// VpcSecurityGroupIds returns a reference to field vpc_security_group_ids of aws_redshift_endpoint_access.
 func (rea redshiftEndpointAccessAttributes) VpcSecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rea.ref.Append("vpc_security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](rea.ref.Append("vpc_security_group_ids"))
 }
 
 func (rea redshiftEndpointAccessAttributes) VpcEndpoint() terra.ListValue[redshiftendpointaccess.VpcEndpointAttributes] {
-	return terra.ReferenceList[redshiftendpointaccess.VpcEndpointAttributes](rea.ref.Append("vpc_endpoint"))
+	return terra.ReferenceAsList[redshiftendpointaccess.VpcEndpointAttributes](rea.ref.Append("vpc_endpoint"))
 }
 
 type redshiftEndpointAccessState struct {

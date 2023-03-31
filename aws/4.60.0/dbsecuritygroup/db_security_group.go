@@ -35,19 +35,19 @@ func (i IngressAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i IngressAttributes) Cidr() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("cidr"))
+	return terra.ReferenceAsString(i.ref.Append("cidr"))
 }
 
 func (i IngressAttributes) SecurityGroupId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("security_group_id"))
+	return terra.ReferenceAsString(i.ref.Append("security_group_id"))
 }
 
 func (i IngressAttributes) SecurityGroupName() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("security_group_name"))
+	return terra.ReferenceAsString(i.ref.Append("security_group_name"))
 }
 
 func (i IngressAttributes) SecurityGroupOwnerId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("security_group_owner_id"))
+	return terra.ReferenceAsString(i.ref.Append("security_group_owner_id"))
 }
 
 type IngressState struct {

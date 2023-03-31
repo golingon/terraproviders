@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewInstance creates a new instance of [Instance].
 func NewInstance(name string, args InstanceArgs) *Instance {
 	return &Instance{
 		Args: args,
@@ -19,28 +20,51 @@ func NewInstance(name string, args InstanceArgs) *Instance {
 
 var _ terra.Resource = (*Instance)(nil)
 
+// Instance represents the Terraform resource aws_instance.
 type Instance struct {
-	Name  string
-	Args  InstanceArgs
-	state *instanceState
+	Name      string
+	Args      InstanceArgs
+	state     *instanceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Instance].
 func (i *Instance) Type() string {
 	return "aws_instance"
 }
 
+// LocalName returns the local name for [Instance].
 func (i *Instance) LocalName() string {
 	return i.Name
 }
 
+// Configuration returns the configuration (args) for [Instance].
 func (i *Instance) Configuration() interface{} {
 	return i.Args
 }
 
+// DependOn is used for other resources to depend on [Instance].
+func (i *Instance) DependOn() terra.Reference {
+	return terra.ReferenceResource(i)
+}
+
+// Dependencies returns the list of resources [Instance] depends_on.
+func (i *Instance) Dependencies() terra.Dependencies {
+	return i.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Instance].
+func (i *Instance) LifecycleManagement() *terra.Lifecycle {
+	return i.Lifecycle
+}
+
+// Attributes returns the attributes for [Instance].
 func (i *Instance) Attributes() instanceAttributes {
 	return instanceAttributes{ref: terra.ReferenceResource(i)}
 }
 
+// ImportState imports the given attribute values into [Instance]'s state.
 func (i *Instance) ImportState(av io.Reader) error {
 	i.state = &instanceState{}
 	if err := json.NewDecoder(av).Decode(i.state); err != nil {
@@ -49,10 +73,12 @@ func (i *Instance) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Instance] has state.
 func (i *Instance) State() (*instanceState, bool) {
 	return i.state, i.state != nil
 }
 
+// StateMust returns the state for [Instance]. Panics if the state is nil.
 func (i *Instance) StateMust() *instanceState {
 	if i.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", i.Type(), i.LocalName()))
@@ -60,10 +86,7 @@ func (i *Instance) StateMust() *instanceState {
 	return i.state
 }
 
-func (i *Instance) DependOn() terra.Reference {
-	return terra.ReferenceResource(i)
-}
-
+// InstanceArgs contains the configurations for aws_instance.
 type InstanceArgs struct {
 	// Ami: string, optional
 	Ami terra.StringValue `hcl:"ami,attr"`
@@ -159,231 +182,272 @@ type InstanceArgs struct {
 	RootBlockDevice *instance.RootBlockDevice `hcl:"root_block_device,block"`
 	// Timeouts: optional
 	Timeouts *instance.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Instance depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type instanceAttributes struct {
 	ref terra.Reference
 }
 
+// Ami returns a reference to field ami of aws_instance.
 func (i instanceAttributes) Ami() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("ami"))
+	return terra.ReferenceAsString(i.ref.Append("ami"))
 }
 
+// Arn returns a reference to field arn of aws_instance.
 func (i instanceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("arn"))
+	return terra.ReferenceAsString(i.ref.Append("arn"))
 }
 
+// AssociatePublicIpAddress returns a reference to field associate_public_ip_address of aws_instance.
 func (i instanceAttributes) AssociatePublicIpAddress() terra.BoolValue {
-	return terra.ReferenceBool(i.ref.Append("associate_public_ip_address"))
+	return terra.ReferenceAsBool(i.ref.Append("associate_public_ip_address"))
 }
 
+// AvailabilityZone returns a reference to field availability_zone of aws_instance.
 func (i instanceAttributes) AvailabilityZone() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("availability_zone"))
+	return terra.ReferenceAsString(i.ref.Append("availability_zone"))
 }
 
+// CpuCoreCount returns a reference to field cpu_core_count of aws_instance.
 func (i instanceAttributes) CpuCoreCount() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("cpu_core_count"))
+	return terra.ReferenceAsNumber(i.ref.Append("cpu_core_count"))
 }
 
+// CpuThreadsPerCore returns a reference to field cpu_threads_per_core of aws_instance.
 func (i instanceAttributes) CpuThreadsPerCore() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("cpu_threads_per_core"))
+	return terra.ReferenceAsNumber(i.ref.Append("cpu_threads_per_core"))
 }
 
+// DisableApiStop returns a reference to field disable_api_stop of aws_instance.
 func (i instanceAttributes) DisableApiStop() terra.BoolValue {
-	return terra.ReferenceBool(i.ref.Append("disable_api_stop"))
+	return terra.ReferenceAsBool(i.ref.Append("disable_api_stop"))
 }
 
+// DisableApiTermination returns a reference to field disable_api_termination of aws_instance.
 func (i instanceAttributes) DisableApiTermination() terra.BoolValue {
-	return terra.ReferenceBool(i.ref.Append("disable_api_termination"))
+	return terra.ReferenceAsBool(i.ref.Append("disable_api_termination"))
 }
 
+// EbsOptimized returns a reference to field ebs_optimized of aws_instance.
 func (i instanceAttributes) EbsOptimized() terra.BoolValue {
-	return terra.ReferenceBool(i.ref.Append("ebs_optimized"))
+	return terra.ReferenceAsBool(i.ref.Append("ebs_optimized"))
 }
 
+// GetPasswordData returns a reference to field get_password_data of aws_instance.
 func (i instanceAttributes) GetPasswordData() terra.BoolValue {
-	return terra.ReferenceBool(i.ref.Append("get_password_data"))
+	return terra.ReferenceAsBool(i.ref.Append("get_password_data"))
 }
 
+// Hibernation returns a reference to field hibernation of aws_instance.
 func (i instanceAttributes) Hibernation() terra.BoolValue {
-	return terra.ReferenceBool(i.ref.Append("hibernation"))
+	return terra.ReferenceAsBool(i.ref.Append("hibernation"))
 }
 
+// HostId returns a reference to field host_id of aws_instance.
 func (i instanceAttributes) HostId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("host_id"))
+	return terra.ReferenceAsString(i.ref.Append("host_id"))
 }
 
+// HostResourceGroupArn returns a reference to field host_resource_group_arn of aws_instance.
 func (i instanceAttributes) HostResourceGroupArn() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("host_resource_group_arn"))
+	return terra.ReferenceAsString(i.ref.Append("host_resource_group_arn"))
 }
 
+// IamInstanceProfile returns a reference to field iam_instance_profile of aws_instance.
 func (i instanceAttributes) IamInstanceProfile() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("iam_instance_profile"))
+	return terra.ReferenceAsString(i.ref.Append("iam_instance_profile"))
 }
 
+// Id returns a reference to field id of aws_instance.
 func (i instanceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("id"))
+	return terra.ReferenceAsString(i.ref.Append("id"))
 }
 
+// InstanceInitiatedShutdownBehavior returns a reference to field instance_initiated_shutdown_behavior of aws_instance.
 func (i instanceAttributes) InstanceInitiatedShutdownBehavior() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("instance_initiated_shutdown_behavior"))
+	return terra.ReferenceAsString(i.ref.Append("instance_initiated_shutdown_behavior"))
 }
 
+// InstanceState returns a reference to field instance_state of aws_instance.
 func (i instanceAttributes) InstanceState() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("instance_state"))
+	return terra.ReferenceAsString(i.ref.Append("instance_state"))
 }
 
+// InstanceType returns a reference to field instance_type of aws_instance.
 func (i instanceAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("instance_type"))
+	return terra.ReferenceAsString(i.ref.Append("instance_type"))
 }
 
+// Ipv6AddressCount returns a reference to field ipv6_address_count of aws_instance.
 func (i instanceAttributes) Ipv6AddressCount() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("ipv6_address_count"))
+	return terra.ReferenceAsNumber(i.ref.Append("ipv6_address_count"))
 }
 
+// Ipv6Addresses returns a reference to field ipv6_addresses of aws_instance.
 func (i instanceAttributes) Ipv6Addresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](i.ref.Append("ipv6_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](i.ref.Append("ipv6_addresses"))
 }
 
+// KeyName returns a reference to field key_name of aws_instance.
 func (i instanceAttributes) KeyName() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("key_name"))
+	return terra.ReferenceAsString(i.ref.Append("key_name"))
 }
 
+// Monitoring returns a reference to field monitoring of aws_instance.
 func (i instanceAttributes) Monitoring() terra.BoolValue {
-	return terra.ReferenceBool(i.ref.Append("monitoring"))
+	return terra.ReferenceAsBool(i.ref.Append("monitoring"))
 }
 
+// OutpostArn returns a reference to field outpost_arn of aws_instance.
 func (i instanceAttributes) OutpostArn() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("outpost_arn"))
+	return terra.ReferenceAsString(i.ref.Append("outpost_arn"))
 }
 
+// PasswordData returns a reference to field password_data of aws_instance.
 func (i instanceAttributes) PasswordData() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("password_data"))
+	return terra.ReferenceAsString(i.ref.Append("password_data"))
 }
 
+// PlacementGroup returns a reference to field placement_group of aws_instance.
 func (i instanceAttributes) PlacementGroup() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("placement_group"))
+	return terra.ReferenceAsString(i.ref.Append("placement_group"))
 }
 
+// PlacementPartitionNumber returns a reference to field placement_partition_number of aws_instance.
 func (i instanceAttributes) PlacementPartitionNumber() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("placement_partition_number"))
+	return terra.ReferenceAsNumber(i.ref.Append("placement_partition_number"))
 }
 
+// PrimaryNetworkInterfaceId returns a reference to field primary_network_interface_id of aws_instance.
 func (i instanceAttributes) PrimaryNetworkInterfaceId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("primary_network_interface_id"))
+	return terra.ReferenceAsString(i.ref.Append("primary_network_interface_id"))
 }
 
+// PrivateDns returns a reference to field private_dns of aws_instance.
 func (i instanceAttributes) PrivateDns() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("private_dns"))
+	return terra.ReferenceAsString(i.ref.Append("private_dns"))
 }
 
+// PrivateIp returns a reference to field private_ip of aws_instance.
 func (i instanceAttributes) PrivateIp() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("private_ip"))
+	return terra.ReferenceAsString(i.ref.Append("private_ip"))
 }
 
+// PublicDns returns a reference to field public_dns of aws_instance.
 func (i instanceAttributes) PublicDns() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("public_dns"))
+	return terra.ReferenceAsString(i.ref.Append("public_dns"))
 }
 
+// PublicIp returns a reference to field public_ip of aws_instance.
 func (i instanceAttributes) PublicIp() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("public_ip"))
+	return terra.ReferenceAsString(i.ref.Append("public_ip"))
 }
 
+// SecondaryPrivateIps returns a reference to field secondary_private_ips of aws_instance.
 func (i instanceAttributes) SecondaryPrivateIps() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("secondary_private_ips"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("secondary_private_ips"))
 }
 
+// SecurityGroups returns a reference to field security_groups of aws_instance.
 func (i instanceAttributes) SecurityGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("security_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("security_groups"))
 }
 
+// SourceDestCheck returns a reference to field source_dest_check of aws_instance.
 func (i instanceAttributes) SourceDestCheck() terra.BoolValue {
-	return terra.ReferenceBool(i.ref.Append("source_dest_check"))
+	return terra.ReferenceAsBool(i.ref.Append("source_dest_check"))
 }
 
+// SubnetId returns a reference to field subnet_id of aws_instance.
 func (i instanceAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(i.ref.Append("subnet_id"))
 }
 
+// Tags returns a reference to field tags of aws_instance.
 func (i instanceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](i.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](i.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_instance.
 func (i instanceAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](i.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](i.ref.Append("tags_all"))
 }
 
+// Tenancy returns a reference to field tenancy of aws_instance.
 func (i instanceAttributes) Tenancy() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("tenancy"))
+	return terra.ReferenceAsString(i.ref.Append("tenancy"))
 }
 
+// UserData returns a reference to field user_data of aws_instance.
 func (i instanceAttributes) UserData() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("user_data"))
+	return terra.ReferenceAsString(i.ref.Append("user_data"))
 }
 
+// UserDataBase64 returns a reference to field user_data_base64 of aws_instance.
 func (i instanceAttributes) UserDataBase64() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("user_data_base64"))
+	return terra.ReferenceAsString(i.ref.Append("user_data_base64"))
 }
 
+// UserDataReplaceOnChange returns a reference to field user_data_replace_on_change of aws_instance.
 func (i instanceAttributes) UserDataReplaceOnChange() terra.BoolValue {
-	return terra.ReferenceBool(i.ref.Append("user_data_replace_on_change"))
+	return terra.ReferenceAsBool(i.ref.Append("user_data_replace_on_change"))
 }
 
+// VolumeTags returns a reference to field volume_tags of aws_instance.
 func (i instanceAttributes) VolumeTags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](i.ref.Append("volume_tags"))
+	return terra.ReferenceAsMap[terra.StringValue](i.ref.Append("volume_tags"))
 }
 
+// VpcSecurityGroupIds returns a reference to field vpc_security_group_ids of aws_instance.
 func (i instanceAttributes) VpcSecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("vpc_security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("vpc_security_group_ids"))
 }
 
 func (i instanceAttributes) CapacityReservationSpecification() terra.ListValue[instance.CapacityReservationSpecificationAttributes] {
-	return terra.ReferenceList[instance.CapacityReservationSpecificationAttributes](i.ref.Append("capacity_reservation_specification"))
+	return terra.ReferenceAsList[instance.CapacityReservationSpecificationAttributes](i.ref.Append("capacity_reservation_specification"))
 }
 
 func (i instanceAttributes) CreditSpecification() terra.ListValue[instance.CreditSpecificationAttributes] {
-	return terra.ReferenceList[instance.CreditSpecificationAttributes](i.ref.Append("credit_specification"))
+	return terra.ReferenceAsList[instance.CreditSpecificationAttributes](i.ref.Append("credit_specification"))
 }
 
 func (i instanceAttributes) EbsBlockDevice() terra.SetValue[instance.EbsBlockDeviceAttributes] {
-	return terra.ReferenceSet[instance.EbsBlockDeviceAttributes](i.ref.Append("ebs_block_device"))
+	return terra.ReferenceAsSet[instance.EbsBlockDeviceAttributes](i.ref.Append("ebs_block_device"))
 }
 
 func (i instanceAttributes) EnclaveOptions() terra.ListValue[instance.EnclaveOptionsAttributes] {
-	return terra.ReferenceList[instance.EnclaveOptionsAttributes](i.ref.Append("enclave_options"))
+	return terra.ReferenceAsList[instance.EnclaveOptionsAttributes](i.ref.Append("enclave_options"))
 }
 
 func (i instanceAttributes) EphemeralBlockDevice() terra.SetValue[instance.EphemeralBlockDeviceAttributes] {
-	return terra.ReferenceSet[instance.EphemeralBlockDeviceAttributes](i.ref.Append("ephemeral_block_device"))
+	return terra.ReferenceAsSet[instance.EphemeralBlockDeviceAttributes](i.ref.Append("ephemeral_block_device"))
 }
 
 func (i instanceAttributes) LaunchTemplate() terra.ListValue[instance.LaunchTemplateAttributes] {
-	return terra.ReferenceList[instance.LaunchTemplateAttributes](i.ref.Append("launch_template"))
+	return terra.ReferenceAsList[instance.LaunchTemplateAttributes](i.ref.Append("launch_template"))
 }
 
 func (i instanceAttributes) MaintenanceOptions() terra.ListValue[instance.MaintenanceOptionsAttributes] {
-	return terra.ReferenceList[instance.MaintenanceOptionsAttributes](i.ref.Append("maintenance_options"))
+	return terra.ReferenceAsList[instance.MaintenanceOptionsAttributes](i.ref.Append("maintenance_options"))
 }
 
 func (i instanceAttributes) MetadataOptions() terra.ListValue[instance.MetadataOptionsAttributes] {
-	return terra.ReferenceList[instance.MetadataOptionsAttributes](i.ref.Append("metadata_options"))
+	return terra.ReferenceAsList[instance.MetadataOptionsAttributes](i.ref.Append("metadata_options"))
 }
 
 func (i instanceAttributes) NetworkInterface() terra.SetValue[instance.NetworkInterfaceAttributes] {
-	return terra.ReferenceSet[instance.NetworkInterfaceAttributes](i.ref.Append("network_interface"))
+	return terra.ReferenceAsSet[instance.NetworkInterfaceAttributes](i.ref.Append("network_interface"))
 }
 
 func (i instanceAttributes) PrivateDnsNameOptions() terra.ListValue[instance.PrivateDnsNameOptionsAttributes] {
-	return terra.ReferenceList[instance.PrivateDnsNameOptionsAttributes](i.ref.Append("private_dns_name_options"))
+	return terra.ReferenceAsList[instance.PrivateDnsNameOptionsAttributes](i.ref.Append("private_dns_name_options"))
 }
 
 func (i instanceAttributes) RootBlockDevice() terra.ListValue[instance.RootBlockDeviceAttributes] {
-	return terra.ReferenceList[instance.RootBlockDeviceAttributes](i.ref.Append("root_block_device"))
+	return terra.ReferenceAsList[instance.RootBlockDeviceAttributes](i.ref.Append("root_block_device"))
 }
 
 func (i instanceAttributes) Timeouts() instance.TimeoutsAttributes {
-	return terra.ReferenceSingle[instance.TimeoutsAttributes](i.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[instance.TimeoutsAttributes](i.ref.Append("timeouts"))
 }
 
 type instanceState struct {

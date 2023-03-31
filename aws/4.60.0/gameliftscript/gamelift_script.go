@@ -35,19 +35,19 @@ func (sl StorageLocationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sl StorageLocationAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("bucket"))
+	return terra.ReferenceAsString(sl.ref.Append("bucket"))
 }
 
 func (sl StorageLocationAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("key"))
+	return terra.ReferenceAsString(sl.ref.Append("key"))
 }
 
 func (sl StorageLocationAttributes) ObjectVersion() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("object_version"))
+	return terra.ReferenceAsString(sl.ref.Append("object_version"))
 }
 
 func (sl StorageLocationAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("role_arn"))
+	return terra.ReferenceAsString(sl.ref.Append("role_arn"))
 }
 
 type StorageLocationState struct {

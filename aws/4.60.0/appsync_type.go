@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAppsyncType creates a new instance of [AppsyncType].
 func NewAppsyncType(name string, args AppsyncTypeArgs) *AppsyncType {
 	return &AppsyncType{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAppsyncType(name string, args AppsyncTypeArgs) *AppsyncType {
 
 var _ terra.Resource = (*AppsyncType)(nil)
 
+// AppsyncType represents the Terraform resource aws_appsync_type.
 type AppsyncType struct {
-	Name  string
-	Args  AppsyncTypeArgs
-	state *appsyncTypeState
+	Name      string
+	Args      AppsyncTypeArgs
+	state     *appsyncTypeState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppsyncType].
 func (at *AppsyncType) Type() string {
 	return "aws_appsync_type"
 }
 
+// LocalName returns the local name for [AppsyncType].
 func (at *AppsyncType) LocalName() string {
 	return at.Name
 }
 
+// Configuration returns the configuration (args) for [AppsyncType].
 func (at *AppsyncType) Configuration() interface{} {
 	return at.Args
 }
 
+// DependOn is used for other resources to depend on [AppsyncType].
+func (at *AppsyncType) DependOn() terra.Reference {
+	return terra.ReferenceResource(at)
+}
+
+// Dependencies returns the list of resources [AppsyncType] depends_on.
+func (at *AppsyncType) Dependencies() terra.Dependencies {
+	return at.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppsyncType].
+func (at *AppsyncType) LifecycleManagement() *terra.Lifecycle {
+	return at.Lifecycle
+}
+
+// Attributes returns the attributes for [AppsyncType].
 func (at *AppsyncType) Attributes() appsyncTypeAttributes {
 	return appsyncTypeAttributes{ref: terra.ReferenceResource(at)}
 }
 
+// ImportState imports the given attribute values into [AppsyncType]'s state.
 func (at *AppsyncType) ImportState(av io.Reader) error {
 	at.state = &appsyncTypeState{}
 	if err := json.NewDecoder(av).Decode(at.state); err != nil {
@@ -48,10 +72,12 @@ func (at *AppsyncType) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppsyncType] has state.
 func (at *AppsyncType) State() (*appsyncTypeState, bool) {
 	return at.state, at.state != nil
 }
 
+// StateMust returns the state for [AppsyncType]. Panics if the state is nil.
 func (at *AppsyncType) StateMust() *appsyncTypeState {
 	if at.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", at.Type(), at.LocalName()))
@@ -59,10 +85,7 @@ func (at *AppsyncType) StateMust() *appsyncTypeState {
 	return at.state
 }
 
-func (at *AppsyncType) DependOn() terra.Reference {
-	return terra.ReferenceResource(at)
-}
-
+// AppsyncTypeArgs contains the configurations for aws_appsync_type.
 type AppsyncTypeArgs struct {
 	// ApiId: string, required
 	ApiId terra.StringValue `hcl:"api_id,attr" validate:"required"`
@@ -72,39 +95,44 @@ type AppsyncTypeArgs struct {
 	Format terra.StringValue `hcl:"format,attr" validate:"required"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that AppsyncType depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appsyncTypeAttributes struct {
 	ref terra.Reference
 }
 
+// ApiId returns a reference to field api_id of aws_appsync_type.
 func (at appsyncTypeAttributes) ApiId() terra.StringValue {
-	return terra.ReferenceString(at.ref.Append("api_id"))
+	return terra.ReferenceAsString(at.ref.Append("api_id"))
 }
 
+// Arn returns a reference to field arn of aws_appsync_type.
 func (at appsyncTypeAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(at.ref.Append("arn"))
+	return terra.ReferenceAsString(at.ref.Append("arn"))
 }
 
+// Definition returns a reference to field definition of aws_appsync_type.
 func (at appsyncTypeAttributes) Definition() terra.StringValue {
-	return terra.ReferenceString(at.ref.Append("definition"))
+	return terra.ReferenceAsString(at.ref.Append("definition"))
 }
 
+// Description returns a reference to field description of aws_appsync_type.
 func (at appsyncTypeAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(at.ref.Append("description"))
+	return terra.ReferenceAsString(at.ref.Append("description"))
 }
 
+// Format returns a reference to field format of aws_appsync_type.
 func (at appsyncTypeAttributes) Format() terra.StringValue {
-	return terra.ReferenceString(at.ref.Append("format"))
+	return terra.ReferenceAsString(at.ref.Append("format"))
 }
 
+// Id returns a reference to field id of aws_appsync_type.
 func (at appsyncTypeAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(at.ref.Append("id"))
+	return terra.ReferenceAsString(at.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_appsync_type.
 func (at appsyncTypeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(at.ref.Append("name"))
+	return terra.ReferenceAsString(at.ref.Append("name"))
 }
 
 type appsyncTypeState struct {

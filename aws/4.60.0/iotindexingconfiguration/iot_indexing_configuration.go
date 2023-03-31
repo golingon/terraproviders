@@ -76,15 +76,15 @@ func (tgic ThingGroupIndexingConfigurationAttributes) InternalTokens() hclwrite.
 }
 
 func (tgic ThingGroupIndexingConfigurationAttributes) ThingGroupIndexingMode() terra.StringValue {
-	return terra.ReferenceString(tgic.ref.Append("thing_group_indexing_mode"))
+	return terra.ReferenceAsString(tgic.ref.Append("thing_group_indexing_mode"))
 }
 
 func (tgic ThingGroupIndexingConfigurationAttributes) CustomField() terra.SetValue[ThingGroupIndexingConfigurationCustomFieldAttributes] {
-	return terra.ReferenceSet[ThingGroupIndexingConfigurationCustomFieldAttributes](tgic.ref.Append("custom_field"))
+	return terra.ReferenceAsSet[ThingGroupIndexingConfigurationCustomFieldAttributes](tgic.ref.Append("custom_field"))
 }
 
 func (tgic ThingGroupIndexingConfigurationAttributes) ManagedField() terra.SetValue[ThingGroupIndexingConfigurationManagedFieldAttributes] {
-	return terra.ReferenceSet[ThingGroupIndexingConfigurationManagedFieldAttributes](tgic.ref.Append("managed_field"))
+	return terra.ReferenceAsSet[ThingGroupIndexingConfigurationManagedFieldAttributes](tgic.ref.Append("managed_field"))
 }
 
 type ThingGroupIndexingConfigurationCustomFieldAttributes struct {
@@ -104,11 +104,11 @@ func (cf ThingGroupIndexingConfigurationCustomFieldAttributes) InternalTokens() 
 }
 
 func (cf ThingGroupIndexingConfigurationCustomFieldAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("name"))
+	return terra.ReferenceAsString(cf.ref.Append("name"))
 }
 
 func (cf ThingGroupIndexingConfigurationCustomFieldAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("type"))
+	return terra.ReferenceAsString(cf.ref.Append("type"))
 }
 
 type ThingGroupIndexingConfigurationManagedFieldAttributes struct {
@@ -128,11 +128,11 @@ func (mf ThingGroupIndexingConfigurationManagedFieldAttributes) InternalTokens()
 }
 
 func (mf ThingGroupIndexingConfigurationManagedFieldAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mf.ref.Append("name"))
+	return terra.ReferenceAsString(mf.ref.Append("name"))
 }
 
 func (mf ThingGroupIndexingConfigurationManagedFieldAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(mf.ref.Append("type"))
+	return terra.ReferenceAsString(mf.ref.Append("type"))
 }
 
 type ThingIndexingConfigurationAttributes struct {
@@ -152,27 +152,27 @@ func (tic ThingIndexingConfigurationAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (tic ThingIndexingConfigurationAttributes) DeviceDefenderIndexingMode() terra.StringValue {
-	return terra.ReferenceString(tic.ref.Append("device_defender_indexing_mode"))
+	return terra.ReferenceAsString(tic.ref.Append("device_defender_indexing_mode"))
 }
 
 func (tic ThingIndexingConfigurationAttributes) NamedShadowIndexingMode() terra.StringValue {
-	return terra.ReferenceString(tic.ref.Append("named_shadow_indexing_mode"))
+	return terra.ReferenceAsString(tic.ref.Append("named_shadow_indexing_mode"))
 }
 
 func (tic ThingIndexingConfigurationAttributes) ThingConnectivityIndexingMode() terra.StringValue {
-	return terra.ReferenceString(tic.ref.Append("thing_connectivity_indexing_mode"))
+	return terra.ReferenceAsString(tic.ref.Append("thing_connectivity_indexing_mode"))
 }
 
 func (tic ThingIndexingConfigurationAttributes) ThingIndexingMode() terra.StringValue {
-	return terra.ReferenceString(tic.ref.Append("thing_indexing_mode"))
+	return terra.ReferenceAsString(tic.ref.Append("thing_indexing_mode"))
 }
 
 func (tic ThingIndexingConfigurationAttributes) CustomField() terra.SetValue[ThingIndexingConfigurationCustomFieldAttributes] {
-	return terra.ReferenceSet[ThingIndexingConfigurationCustomFieldAttributes](tic.ref.Append("custom_field"))
+	return terra.ReferenceAsSet[ThingIndexingConfigurationCustomFieldAttributes](tic.ref.Append("custom_field"))
 }
 
 func (tic ThingIndexingConfigurationAttributes) ManagedField() terra.SetValue[ThingIndexingConfigurationManagedFieldAttributes] {
-	return terra.ReferenceSet[ThingIndexingConfigurationManagedFieldAttributes](tic.ref.Append("managed_field"))
+	return terra.ReferenceAsSet[ThingIndexingConfigurationManagedFieldAttributes](tic.ref.Append("managed_field"))
 }
 
 type ThingIndexingConfigurationCustomFieldAttributes struct {
@@ -192,11 +192,11 @@ func (cf ThingIndexingConfigurationCustomFieldAttributes) InternalTokens() hclwr
 }
 
 func (cf ThingIndexingConfigurationCustomFieldAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("name"))
+	return terra.ReferenceAsString(cf.ref.Append("name"))
 }
 
 func (cf ThingIndexingConfigurationCustomFieldAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("type"))
+	return terra.ReferenceAsString(cf.ref.Append("type"))
 }
 
 type ThingIndexingConfigurationManagedFieldAttributes struct {
@@ -216,11 +216,11 @@ func (mf ThingIndexingConfigurationManagedFieldAttributes) InternalTokens() hclw
 }
 
 func (mf ThingIndexingConfigurationManagedFieldAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mf.ref.Append("name"))
+	return terra.ReferenceAsString(mf.ref.Append("name"))
 }
 
 func (mf ThingIndexingConfigurationManagedFieldAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(mf.ref.Append("type"))
+	return terra.ReferenceAsString(mf.ref.Append("type"))
 }
 
 type ThingGroupIndexingConfigurationState struct {

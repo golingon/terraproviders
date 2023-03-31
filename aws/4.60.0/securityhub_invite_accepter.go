@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSecurityhubInviteAccepter creates a new instance of [SecurityhubInviteAccepter].
 func NewSecurityhubInviteAccepter(name string, args SecurityhubInviteAccepterArgs) *SecurityhubInviteAccepter {
 	return &SecurityhubInviteAccepter{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSecurityhubInviteAccepter(name string, args SecurityhubInviteAccepterArg
 
 var _ terra.Resource = (*SecurityhubInviteAccepter)(nil)
 
+// SecurityhubInviteAccepter represents the Terraform resource aws_securityhub_invite_accepter.
 type SecurityhubInviteAccepter struct {
-	Name  string
-	Args  SecurityhubInviteAccepterArgs
-	state *securityhubInviteAccepterState
+	Name      string
+	Args      SecurityhubInviteAccepterArgs
+	state     *securityhubInviteAccepterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SecurityhubInviteAccepter].
 func (sia *SecurityhubInviteAccepter) Type() string {
 	return "aws_securityhub_invite_accepter"
 }
 
+// LocalName returns the local name for [SecurityhubInviteAccepter].
 func (sia *SecurityhubInviteAccepter) LocalName() string {
 	return sia.Name
 }
 
+// Configuration returns the configuration (args) for [SecurityhubInviteAccepter].
 func (sia *SecurityhubInviteAccepter) Configuration() interface{} {
 	return sia.Args
 }
 
+// DependOn is used for other resources to depend on [SecurityhubInviteAccepter].
+func (sia *SecurityhubInviteAccepter) DependOn() terra.Reference {
+	return terra.ReferenceResource(sia)
+}
+
+// Dependencies returns the list of resources [SecurityhubInviteAccepter] depends_on.
+func (sia *SecurityhubInviteAccepter) Dependencies() terra.Dependencies {
+	return sia.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SecurityhubInviteAccepter].
+func (sia *SecurityhubInviteAccepter) LifecycleManagement() *terra.Lifecycle {
+	return sia.Lifecycle
+}
+
+// Attributes returns the attributes for [SecurityhubInviteAccepter].
 func (sia *SecurityhubInviteAccepter) Attributes() securityhubInviteAccepterAttributes {
 	return securityhubInviteAccepterAttributes{ref: terra.ReferenceResource(sia)}
 }
 
+// ImportState imports the given attribute values into [SecurityhubInviteAccepter]'s state.
 func (sia *SecurityhubInviteAccepter) ImportState(av io.Reader) error {
 	sia.state = &securityhubInviteAccepterState{}
 	if err := json.NewDecoder(av).Decode(sia.state); err != nil {
@@ -48,10 +72,12 @@ func (sia *SecurityhubInviteAccepter) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SecurityhubInviteAccepter] has state.
 func (sia *SecurityhubInviteAccepter) State() (*securityhubInviteAccepterState, bool) {
 	return sia.state, sia.state != nil
 }
 
+// StateMust returns the state for [SecurityhubInviteAccepter]. Panics if the state is nil.
 func (sia *SecurityhubInviteAccepter) StateMust() *securityhubInviteAccepterState {
 	if sia.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sia.Type(), sia.LocalName()))
@@ -59,32 +85,30 @@ func (sia *SecurityhubInviteAccepter) StateMust() *securityhubInviteAccepterStat
 	return sia.state
 }
 
-func (sia *SecurityhubInviteAccepter) DependOn() terra.Reference {
-	return terra.ReferenceResource(sia)
-}
-
+// SecurityhubInviteAccepterArgs contains the configurations for aws_securityhub_invite_accepter.
 type SecurityhubInviteAccepterArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
 	// MasterId: string, required
 	MasterId terra.StringValue `hcl:"master_id,attr" validate:"required"`
-	// DependsOn contains resources that SecurityhubInviteAccepter depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type securityhubInviteAccepterAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_securityhub_invite_accepter.
 func (sia securityhubInviteAccepterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sia.ref.Append("id"))
+	return terra.ReferenceAsString(sia.ref.Append("id"))
 }
 
+// InvitationId returns a reference to field invitation_id of aws_securityhub_invite_accepter.
 func (sia securityhubInviteAccepterAttributes) InvitationId() terra.StringValue {
-	return terra.ReferenceString(sia.ref.Append("invitation_id"))
+	return terra.ReferenceAsString(sia.ref.Append("invitation_id"))
 }
 
+// MasterId returns a reference to field master_id of aws_securityhub_invite_accepter.
 func (sia securityhubInviteAccepterAttributes) MasterId() terra.StringValue {
-	return terra.ReferenceString(sia.ref.Append("master_id"))
+	return terra.ReferenceAsString(sia.ref.Append("master_id"))
 }
 
 type securityhubInviteAccepterState struct {

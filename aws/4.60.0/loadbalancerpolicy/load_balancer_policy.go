@@ -31,11 +31,11 @@ func (pa PolicyAttributeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pa PolicyAttributeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("name"))
+	return terra.ReferenceAsString(pa.ref.Append("name"))
 }
 
 func (pa PolicyAttributeAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("value"))
+	return terra.ReferenceAsString(pa.ref.Append("value"))
 }
 
 type PolicyAttributeState struct {

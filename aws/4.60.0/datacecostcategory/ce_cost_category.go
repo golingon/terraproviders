@@ -106,19 +106,19 @@ func (r RuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RuleAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("type"))
+	return terra.ReferenceAsString(r.ref.Append("type"))
 }
 
 func (r RuleAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("value"))
+	return terra.ReferenceAsString(r.ref.Append("value"))
 }
 
 func (r RuleAttributes) InheritedValue() terra.ListValue[InheritedValueAttributes] {
-	return terra.ReferenceList[InheritedValueAttributes](r.ref.Append("inherited_value"))
+	return terra.ReferenceAsList[InheritedValueAttributes](r.ref.Append("inherited_value"))
 }
 
 func (r RuleAttributes) Rule() terra.ListValue[RuleRuleAttributes] {
-	return terra.ReferenceList[RuleRuleAttributes](r.ref.Append("rule"))
+	return terra.ReferenceAsList[RuleRuleAttributes](r.ref.Append("rule"))
 }
 
 type InheritedValueAttributes struct {
@@ -138,11 +138,11 @@ func (iv InheritedValueAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (iv InheritedValueAttributes) DimensionKey() terra.StringValue {
-	return terra.ReferenceString(iv.ref.Append("dimension_key"))
+	return terra.ReferenceAsString(iv.ref.Append("dimension_key"))
 }
 
 func (iv InheritedValueAttributes) DimensionName() terra.StringValue {
-	return terra.ReferenceString(iv.ref.Append("dimension_name"))
+	return terra.ReferenceAsString(iv.ref.Append("dimension_name"))
 }
 
 type RuleRuleAttributes struct {
@@ -162,27 +162,27 @@ func (r RuleRuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RuleRuleAttributes) And() terra.SetValue[AndAttributes] {
-	return terra.ReferenceSet[AndAttributes](r.ref.Append("and"))
+	return terra.ReferenceAsSet[AndAttributes](r.ref.Append("and"))
 }
 
 func (r RuleRuleAttributes) CostCategory() terra.ListValue[RuleCostCategoryAttributes] {
-	return terra.ReferenceList[RuleCostCategoryAttributes](r.ref.Append("cost_category"))
+	return terra.ReferenceAsList[RuleCostCategoryAttributes](r.ref.Append("cost_category"))
 }
 
 func (r RuleRuleAttributes) Dimension() terra.ListValue[RuleDimensionAttributes] {
-	return terra.ReferenceList[RuleDimensionAttributes](r.ref.Append("dimension"))
+	return terra.ReferenceAsList[RuleDimensionAttributes](r.ref.Append("dimension"))
 }
 
 func (r RuleRuleAttributes) Not() terra.ListValue[NotAttributes] {
-	return terra.ReferenceList[NotAttributes](r.ref.Append("not"))
+	return terra.ReferenceAsList[NotAttributes](r.ref.Append("not"))
 }
 
 func (r RuleRuleAttributes) Or() terra.SetValue[OrAttributes] {
-	return terra.ReferenceSet[OrAttributes](r.ref.Append("or"))
+	return terra.ReferenceAsSet[OrAttributes](r.ref.Append("or"))
 }
 
 func (r RuleRuleAttributes) Tags() terra.ListValue[RuleTagsAttributes] {
-	return terra.ReferenceList[RuleTagsAttributes](r.ref.Append("tags"))
+	return terra.ReferenceAsList[RuleTagsAttributes](r.ref.Append("tags"))
 }
 
 type AndAttributes struct {
@@ -202,15 +202,15 @@ func (a AndAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AndAttributes) CostCategory() terra.ListValue[AndCostCategoryAttributes] {
-	return terra.ReferenceList[AndCostCategoryAttributes](a.ref.Append("cost_category"))
+	return terra.ReferenceAsList[AndCostCategoryAttributes](a.ref.Append("cost_category"))
 }
 
 func (a AndAttributes) Dimension() terra.ListValue[AndDimensionAttributes] {
-	return terra.ReferenceList[AndDimensionAttributes](a.ref.Append("dimension"))
+	return terra.ReferenceAsList[AndDimensionAttributes](a.ref.Append("dimension"))
 }
 
 func (a AndAttributes) Tags() terra.ListValue[AndTagsAttributes] {
-	return terra.ReferenceList[AndTagsAttributes](a.ref.Append("tags"))
+	return terra.ReferenceAsList[AndTagsAttributes](a.ref.Append("tags"))
 }
 
 type AndCostCategoryAttributes struct {
@@ -230,15 +230,15 @@ func (cc AndCostCategoryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc AndCostCategoryAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("key"))
+	return terra.ReferenceAsString(cc.ref.Append("key"))
 }
 
 func (cc AndCostCategoryAttributes) MatchOptions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cc.ref.Append("match_options"))
+	return terra.ReferenceAsSet[terra.StringValue](cc.ref.Append("match_options"))
 }
 
 func (cc AndCostCategoryAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cc.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](cc.ref.Append("values"))
 }
 
 type AndDimensionAttributes struct {
@@ -258,15 +258,15 @@ func (d AndDimensionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d AndDimensionAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("key"))
+	return terra.ReferenceAsString(d.ref.Append("key"))
 }
 
 func (d AndDimensionAttributes) MatchOptions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](d.ref.Append("match_options"))
+	return terra.ReferenceAsSet[terra.StringValue](d.ref.Append("match_options"))
 }
 
 func (d AndDimensionAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](d.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](d.ref.Append("values"))
 }
 
 type AndTagsAttributes struct {
@@ -286,15 +286,15 @@ func (t AndTagsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t AndTagsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("key"))
+	return terra.ReferenceAsString(t.ref.Append("key"))
 }
 
 func (t AndTagsAttributes) MatchOptions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](t.ref.Append("match_options"))
+	return terra.ReferenceAsSet[terra.StringValue](t.ref.Append("match_options"))
 }
 
 func (t AndTagsAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](t.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](t.ref.Append("values"))
 }
 
 type RuleCostCategoryAttributes struct {
@@ -314,15 +314,15 @@ func (cc RuleCostCategoryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc RuleCostCategoryAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("key"))
+	return terra.ReferenceAsString(cc.ref.Append("key"))
 }
 
 func (cc RuleCostCategoryAttributes) MatchOptions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cc.ref.Append("match_options"))
+	return terra.ReferenceAsSet[terra.StringValue](cc.ref.Append("match_options"))
 }
 
 func (cc RuleCostCategoryAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cc.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](cc.ref.Append("values"))
 }
 
 type RuleDimensionAttributes struct {
@@ -342,15 +342,15 @@ func (d RuleDimensionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d RuleDimensionAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("key"))
+	return terra.ReferenceAsString(d.ref.Append("key"))
 }
 
 func (d RuleDimensionAttributes) MatchOptions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](d.ref.Append("match_options"))
+	return terra.ReferenceAsSet[terra.StringValue](d.ref.Append("match_options"))
 }
 
 func (d RuleDimensionAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](d.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](d.ref.Append("values"))
 }
 
 type NotAttributes struct {
@@ -370,15 +370,15 @@ func (n NotAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (n NotAttributes) CostCategory() terra.ListValue[NotCostCategoryAttributes] {
-	return terra.ReferenceList[NotCostCategoryAttributes](n.ref.Append("cost_category"))
+	return terra.ReferenceAsList[NotCostCategoryAttributes](n.ref.Append("cost_category"))
 }
 
 func (n NotAttributes) Dimension() terra.ListValue[NotDimensionAttributes] {
-	return terra.ReferenceList[NotDimensionAttributes](n.ref.Append("dimension"))
+	return terra.ReferenceAsList[NotDimensionAttributes](n.ref.Append("dimension"))
 }
 
 func (n NotAttributes) Tags() terra.ListValue[NotTagsAttributes] {
-	return terra.ReferenceList[NotTagsAttributes](n.ref.Append("tags"))
+	return terra.ReferenceAsList[NotTagsAttributes](n.ref.Append("tags"))
 }
 
 type NotCostCategoryAttributes struct {
@@ -398,15 +398,15 @@ func (cc NotCostCategoryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc NotCostCategoryAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("key"))
+	return terra.ReferenceAsString(cc.ref.Append("key"))
 }
 
 func (cc NotCostCategoryAttributes) MatchOptions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cc.ref.Append("match_options"))
+	return terra.ReferenceAsSet[terra.StringValue](cc.ref.Append("match_options"))
 }
 
 func (cc NotCostCategoryAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cc.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](cc.ref.Append("values"))
 }
 
 type NotDimensionAttributes struct {
@@ -426,15 +426,15 @@ func (d NotDimensionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d NotDimensionAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("key"))
+	return terra.ReferenceAsString(d.ref.Append("key"))
 }
 
 func (d NotDimensionAttributes) MatchOptions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](d.ref.Append("match_options"))
+	return terra.ReferenceAsSet[terra.StringValue](d.ref.Append("match_options"))
 }
 
 func (d NotDimensionAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](d.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](d.ref.Append("values"))
 }
 
 type NotTagsAttributes struct {
@@ -454,15 +454,15 @@ func (t NotTagsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t NotTagsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("key"))
+	return terra.ReferenceAsString(t.ref.Append("key"))
 }
 
 func (t NotTagsAttributes) MatchOptions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](t.ref.Append("match_options"))
+	return terra.ReferenceAsSet[terra.StringValue](t.ref.Append("match_options"))
 }
 
 func (t NotTagsAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](t.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](t.ref.Append("values"))
 }
 
 type OrAttributes struct {
@@ -482,15 +482,15 @@ func (o OrAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (o OrAttributes) CostCategory() terra.ListValue[OrCostCategoryAttributes] {
-	return terra.ReferenceList[OrCostCategoryAttributes](o.ref.Append("cost_category"))
+	return terra.ReferenceAsList[OrCostCategoryAttributes](o.ref.Append("cost_category"))
 }
 
 func (o OrAttributes) Dimension() terra.ListValue[OrDimensionAttributes] {
-	return terra.ReferenceList[OrDimensionAttributes](o.ref.Append("dimension"))
+	return terra.ReferenceAsList[OrDimensionAttributes](o.ref.Append("dimension"))
 }
 
 func (o OrAttributes) Tags() terra.ListValue[OrTagsAttributes] {
-	return terra.ReferenceList[OrTagsAttributes](o.ref.Append("tags"))
+	return terra.ReferenceAsList[OrTagsAttributes](o.ref.Append("tags"))
 }
 
 type OrCostCategoryAttributes struct {
@@ -510,15 +510,15 @@ func (cc OrCostCategoryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc OrCostCategoryAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("key"))
+	return terra.ReferenceAsString(cc.ref.Append("key"))
 }
 
 func (cc OrCostCategoryAttributes) MatchOptions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cc.ref.Append("match_options"))
+	return terra.ReferenceAsSet[terra.StringValue](cc.ref.Append("match_options"))
 }
 
 func (cc OrCostCategoryAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cc.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](cc.ref.Append("values"))
 }
 
 type OrDimensionAttributes struct {
@@ -538,15 +538,15 @@ func (d OrDimensionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d OrDimensionAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("key"))
+	return terra.ReferenceAsString(d.ref.Append("key"))
 }
 
 func (d OrDimensionAttributes) MatchOptions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](d.ref.Append("match_options"))
+	return terra.ReferenceAsSet[terra.StringValue](d.ref.Append("match_options"))
 }
 
 func (d OrDimensionAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](d.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](d.ref.Append("values"))
 }
 
 type OrTagsAttributes struct {
@@ -566,15 +566,15 @@ func (t OrTagsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t OrTagsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("key"))
+	return terra.ReferenceAsString(t.ref.Append("key"))
 }
 
 func (t OrTagsAttributes) MatchOptions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](t.ref.Append("match_options"))
+	return terra.ReferenceAsSet[terra.StringValue](t.ref.Append("match_options"))
 }
 
 func (t OrTagsAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](t.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](t.ref.Append("values"))
 }
 
 type RuleTagsAttributes struct {
@@ -594,15 +594,15 @@ func (t RuleTagsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t RuleTagsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("key"))
+	return terra.ReferenceAsString(t.ref.Append("key"))
 }
 
 func (t RuleTagsAttributes) MatchOptions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](t.ref.Append("match_options"))
+	return terra.ReferenceAsSet[terra.StringValue](t.ref.Append("match_options"))
 }
 
 func (t RuleTagsAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](t.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](t.ref.Append("values"))
 }
 
 type SplitChargeRuleAttributes struct {
@@ -622,19 +622,19 @@ func (scr SplitChargeRuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (scr SplitChargeRuleAttributes) Method() terra.StringValue {
-	return terra.ReferenceString(scr.ref.Append("method"))
+	return terra.ReferenceAsString(scr.ref.Append("method"))
 }
 
 func (scr SplitChargeRuleAttributes) Source() terra.StringValue {
-	return terra.ReferenceString(scr.ref.Append("source"))
+	return terra.ReferenceAsString(scr.ref.Append("source"))
 }
 
 func (scr SplitChargeRuleAttributes) Targets() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](scr.ref.Append("targets"))
+	return terra.ReferenceAsSet[terra.StringValue](scr.ref.Append("targets"))
 }
 
 func (scr SplitChargeRuleAttributes) Parameter() terra.SetValue[ParameterAttributes] {
-	return terra.ReferenceSet[ParameterAttributes](scr.ref.Append("parameter"))
+	return terra.ReferenceAsSet[ParameterAttributes](scr.ref.Append("parameter"))
 }
 
 type ParameterAttributes struct {
@@ -654,11 +654,11 @@ func (p ParameterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p ParameterAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("type"))
+	return terra.ReferenceAsString(p.ref.Append("type"))
 }
 
 func (p ParameterAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](p.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](p.ref.Append("values"))
 }
 
 type RuleState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDxConnection creates a new instance of [DxConnection].
 func NewDxConnection(name string, args DxConnectionArgs) *DxConnection {
 	return &DxConnection{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDxConnection(name string, args DxConnectionArgs) *DxConnection {
 
 var _ terra.Resource = (*DxConnection)(nil)
 
+// DxConnection represents the Terraform resource aws_dx_connection.
 type DxConnection struct {
-	Name  string
-	Args  DxConnectionArgs
-	state *dxConnectionState
+	Name      string
+	Args      DxConnectionArgs
+	state     *dxConnectionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DxConnection].
 func (dc *DxConnection) Type() string {
 	return "aws_dx_connection"
 }
 
+// LocalName returns the local name for [DxConnection].
 func (dc *DxConnection) LocalName() string {
 	return dc.Name
 }
 
+// Configuration returns the configuration (args) for [DxConnection].
 func (dc *DxConnection) Configuration() interface{} {
 	return dc.Args
 }
 
+// DependOn is used for other resources to depend on [DxConnection].
+func (dc *DxConnection) DependOn() terra.Reference {
+	return terra.ReferenceResource(dc)
+}
+
+// Dependencies returns the list of resources [DxConnection] depends_on.
+func (dc *DxConnection) Dependencies() terra.Dependencies {
+	return dc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DxConnection].
+func (dc *DxConnection) LifecycleManagement() *terra.Lifecycle {
+	return dc.Lifecycle
+}
+
+// Attributes returns the attributes for [DxConnection].
 func (dc *DxConnection) Attributes() dxConnectionAttributes {
 	return dxConnectionAttributes{ref: terra.ReferenceResource(dc)}
 }
 
+// ImportState imports the given attribute values into [DxConnection]'s state.
 func (dc *DxConnection) ImportState(av io.Reader) error {
 	dc.state = &dxConnectionState{}
 	if err := json.NewDecoder(av).Decode(dc.state); err != nil {
@@ -48,10 +72,12 @@ func (dc *DxConnection) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DxConnection] has state.
 func (dc *DxConnection) State() (*dxConnectionState, bool) {
 	return dc.state, dc.state != nil
 }
 
+// StateMust returns the state for [DxConnection]. Panics if the state is nil.
 func (dc *DxConnection) StateMust() *dxConnectionState {
 	if dc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dc.Type(), dc.LocalName()))
@@ -59,10 +85,7 @@ func (dc *DxConnection) StateMust() *dxConnectionState {
 	return dc.state
 }
 
-func (dc *DxConnection) DependOn() terra.Reference {
-	return terra.ReferenceResource(dc)
-}
-
+// DxConnectionArgs contains the configurations for aws_dx_connection.
 type DxConnectionArgs struct {
 	// Bandwidth: string, required
 	Bandwidth terra.StringValue `hcl:"bandwidth,attr" validate:"required"`
@@ -84,83 +107,99 @@ type DxConnectionArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that DxConnection depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dxConnectionAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_dx_connection.
 func (dc dxConnectionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("arn"))
+	return terra.ReferenceAsString(dc.ref.Append("arn"))
 }
 
+// AwsDevice returns a reference to field aws_device of aws_dx_connection.
 func (dc dxConnectionAttributes) AwsDevice() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("aws_device"))
+	return terra.ReferenceAsString(dc.ref.Append("aws_device"))
 }
 
+// Bandwidth returns a reference to field bandwidth of aws_dx_connection.
 func (dc dxConnectionAttributes) Bandwidth() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("bandwidth"))
+	return terra.ReferenceAsString(dc.ref.Append("bandwidth"))
 }
 
+// EncryptionMode returns a reference to field encryption_mode of aws_dx_connection.
 func (dc dxConnectionAttributes) EncryptionMode() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("encryption_mode"))
+	return terra.ReferenceAsString(dc.ref.Append("encryption_mode"))
 }
 
+// HasLogicalRedundancy returns a reference to field has_logical_redundancy of aws_dx_connection.
 func (dc dxConnectionAttributes) HasLogicalRedundancy() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("has_logical_redundancy"))
+	return terra.ReferenceAsString(dc.ref.Append("has_logical_redundancy"))
 }
 
+// Id returns a reference to field id of aws_dx_connection.
 func (dc dxConnectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("id"))
+	return terra.ReferenceAsString(dc.ref.Append("id"))
 }
 
+// JumboFrameCapable returns a reference to field jumbo_frame_capable of aws_dx_connection.
 func (dc dxConnectionAttributes) JumboFrameCapable() terra.BoolValue {
-	return terra.ReferenceBool(dc.ref.Append("jumbo_frame_capable"))
+	return terra.ReferenceAsBool(dc.ref.Append("jumbo_frame_capable"))
 }
 
+// Location returns a reference to field location of aws_dx_connection.
 func (dc dxConnectionAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("location"))
+	return terra.ReferenceAsString(dc.ref.Append("location"))
 }
 
+// MacsecCapable returns a reference to field macsec_capable of aws_dx_connection.
 func (dc dxConnectionAttributes) MacsecCapable() terra.BoolValue {
-	return terra.ReferenceBool(dc.ref.Append("macsec_capable"))
+	return terra.ReferenceAsBool(dc.ref.Append("macsec_capable"))
 }
 
+// Name returns a reference to field name of aws_dx_connection.
 func (dc dxConnectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("name"))
+	return terra.ReferenceAsString(dc.ref.Append("name"))
 }
 
+// OwnerAccountId returns a reference to field owner_account_id of aws_dx_connection.
 func (dc dxConnectionAttributes) OwnerAccountId() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("owner_account_id"))
+	return terra.ReferenceAsString(dc.ref.Append("owner_account_id"))
 }
 
+// PortEncryptionStatus returns a reference to field port_encryption_status of aws_dx_connection.
 func (dc dxConnectionAttributes) PortEncryptionStatus() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("port_encryption_status"))
+	return terra.ReferenceAsString(dc.ref.Append("port_encryption_status"))
 }
 
+// ProviderName returns a reference to field provider_name of aws_dx_connection.
 func (dc dxConnectionAttributes) ProviderName() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("provider_name"))
+	return terra.ReferenceAsString(dc.ref.Append("provider_name"))
 }
 
+// RequestMacsec returns a reference to field request_macsec of aws_dx_connection.
 func (dc dxConnectionAttributes) RequestMacsec() terra.BoolValue {
-	return terra.ReferenceBool(dc.ref.Append("request_macsec"))
+	return terra.ReferenceAsBool(dc.ref.Append("request_macsec"))
 }
 
+// SkipDestroy returns a reference to field skip_destroy of aws_dx_connection.
 func (dc dxConnectionAttributes) SkipDestroy() terra.BoolValue {
-	return terra.ReferenceBool(dc.ref.Append("skip_destroy"))
+	return terra.ReferenceAsBool(dc.ref.Append("skip_destroy"))
 }
 
+// Tags returns a reference to field tags of aws_dx_connection.
 func (dc dxConnectionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_dx_connection.
 func (dc dxConnectionAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dc.ref.Append("tags_all"))
 }
 
+// VlanId returns a reference to field vlan_id of aws_dx_connection.
 func (dc dxConnectionAttributes) VlanId() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("vlan_id"))
+	return terra.ReferenceAsString(dc.ref.Append("vlan_id"))
 }
 
 type dxConnectionState struct {

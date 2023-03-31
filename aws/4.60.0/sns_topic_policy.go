@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSnsTopicPolicy creates a new instance of [SnsTopicPolicy].
 func NewSnsTopicPolicy(name string, args SnsTopicPolicyArgs) *SnsTopicPolicy {
 	return &SnsTopicPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSnsTopicPolicy(name string, args SnsTopicPolicyArgs) *SnsTopicPolicy {
 
 var _ terra.Resource = (*SnsTopicPolicy)(nil)
 
+// SnsTopicPolicy represents the Terraform resource aws_sns_topic_policy.
 type SnsTopicPolicy struct {
-	Name  string
-	Args  SnsTopicPolicyArgs
-	state *snsTopicPolicyState
+	Name      string
+	Args      SnsTopicPolicyArgs
+	state     *snsTopicPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SnsTopicPolicy].
 func (stp *SnsTopicPolicy) Type() string {
 	return "aws_sns_topic_policy"
 }
 
+// LocalName returns the local name for [SnsTopicPolicy].
 func (stp *SnsTopicPolicy) LocalName() string {
 	return stp.Name
 }
 
+// Configuration returns the configuration (args) for [SnsTopicPolicy].
 func (stp *SnsTopicPolicy) Configuration() interface{} {
 	return stp.Args
 }
 
+// DependOn is used for other resources to depend on [SnsTopicPolicy].
+func (stp *SnsTopicPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(stp)
+}
+
+// Dependencies returns the list of resources [SnsTopicPolicy] depends_on.
+func (stp *SnsTopicPolicy) Dependencies() terra.Dependencies {
+	return stp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SnsTopicPolicy].
+func (stp *SnsTopicPolicy) LifecycleManagement() *terra.Lifecycle {
+	return stp.Lifecycle
+}
+
+// Attributes returns the attributes for [SnsTopicPolicy].
 func (stp *SnsTopicPolicy) Attributes() snsTopicPolicyAttributes {
 	return snsTopicPolicyAttributes{ref: terra.ReferenceResource(stp)}
 }
 
+// ImportState imports the given attribute values into [SnsTopicPolicy]'s state.
 func (stp *SnsTopicPolicy) ImportState(av io.Reader) error {
 	stp.state = &snsTopicPolicyState{}
 	if err := json.NewDecoder(av).Decode(stp.state); err != nil {
@@ -48,10 +72,12 @@ func (stp *SnsTopicPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SnsTopicPolicy] has state.
 func (stp *SnsTopicPolicy) State() (*snsTopicPolicyState, bool) {
 	return stp.state, stp.state != nil
 }
 
+// StateMust returns the state for [SnsTopicPolicy]. Panics if the state is nil.
 func (stp *SnsTopicPolicy) StateMust() *snsTopicPolicyState {
 	if stp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", stp.Type(), stp.LocalName()))
@@ -59,10 +85,7 @@ func (stp *SnsTopicPolicy) StateMust() *snsTopicPolicyState {
 	return stp.state
 }
 
-func (stp *SnsTopicPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(stp)
-}
-
+// SnsTopicPolicyArgs contains the configurations for aws_sns_topic_policy.
 type SnsTopicPolicyArgs struct {
 	// Arn: string, required
 	Arn terra.StringValue `hcl:"arn,attr" validate:"required"`
@@ -70,27 +93,29 @@ type SnsTopicPolicyArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// Policy: string, required
 	Policy terra.StringValue `hcl:"policy,attr" validate:"required"`
-	// DependsOn contains resources that SnsTopicPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type snsTopicPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_sns_topic_policy.
 func (stp snsTopicPolicyAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(stp.ref.Append("arn"))
+	return terra.ReferenceAsString(stp.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_sns_topic_policy.
 func (stp snsTopicPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(stp.ref.Append("id"))
+	return terra.ReferenceAsString(stp.ref.Append("id"))
 }
 
+// Owner returns a reference to field owner of aws_sns_topic_policy.
 func (stp snsTopicPolicyAttributes) Owner() terra.StringValue {
-	return terra.ReferenceString(stp.ref.Append("owner"))
+	return terra.ReferenceAsString(stp.ref.Append("owner"))
 }
 
+// Policy returns a reference to field policy of aws_sns_topic_policy.
 func (stp snsTopicPolicyAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(stp.ref.Append("policy"))
+	return terra.ReferenceAsString(stp.ref.Append("policy"))
 }
 
 type snsTopicPolicyState struct {

@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataConnectLambdaFunctionAssociation creates a new instance of [DataConnectLambdaFunctionAssociation].
 func NewDataConnectLambdaFunctionAssociation(name string, args DataConnectLambdaFunctionAssociationArgs) *DataConnectLambdaFunctionAssociation {
 	return &DataConnectLambdaFunctionAssociation{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataConnectLambdaFunctionAssociation(name string, args DataConnectLambda
 
 var _ terra.DataResource = (*DataConnectLambdaFunctionAssociation)(nil)
 
+// DataConnectLambdaFunctionAssociation represents the Terraform data resource aws_connect_lambda_function_association.
 type DataConnectLambdaFunctionAssociation struct {
 	Name string
 	Args DataConnectLambdaFunctionAssociationArgs
 }
 
+// DataSource returns the Terraform object type for [DataConnectLambdaFunctionAssociation].
 func (clfa *DataConnectLambdaFunctionAssociation) DataSource() string {
 	return "aws_connect_lambda_function_association"
 }
 
+// LocalName returns the local name for [DataConnectLambdaFunctionAssociation].
 func (clfa *DataConnectLambdaFunctionAssociation) LocalName() string {
 	return clfa.Name
 }
 
+// Configuration returns the configuration (args) for [DataConnectLambdaFunctionAssociation].
 func (clfa *DataConnectLambdaFunctionAssociation) Configuration() interface{} {
 	return clfa.Args
 }
 
+// Attributes returns the attributes for [DataConnectLambdaFunctionAssociation].
 func (clfa *DataConnectLambdaFunctionAssociation) Attributes() dataConnectLambdaFunctionAssociationAttributes {
 	return dataConnectLambdaFunctionAssociationAttributes{ref: terra.ReferenceDataResource(clfa)}
 }
 
+// DataConnectLambdaFunctionAssociationArgs contains the configurations for aws_connect_lambda_function_association.
 type DataConnectLambdaFunctionAssociationArgs struct {
 	// FunctionArn: string, required
 	FunctionArn terra.StringValue `hcl:"function_arn,attr" validate:"required"`
@@ -46,14 +53,17 @@ type dataConnectLambdaFunctionAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// FunctionArn returns a reference to field function_arn of aws_connect_lambda_function_association.
 func (clfa dataConnectLambdaFunctionAssociationAttributes) FunctionArn() terra.StringValue {
-	return terra.ReferenceString(clfa.ref.Append("function_arn"))
+	return terra.ReferenceAsString(clfa.ref.Append("function_arn"))
 }
 
+// Id returns a reference to field id of aws_connect_lambda_function_association.
 func (clfa dataConnectLambdaFunctionAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(clfa.ref.Append("id"))
+	return terra.ReferenceAsString(clfa.ref.Append("id"))
 }
 
+// InstanceId returns a reference to field instance_id of aws_connect_lambda_function_association.
 func (clfa dataConnectLambdaFunctionAssociationAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(clfa.ref.Append("instance_id"))
+	return terra.ReferenceAsString(clfa.ref.Append("instance_id"))
 }

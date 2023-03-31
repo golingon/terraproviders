@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDocdbCluster creates a new instance of [DocdbCluster].
 func NewDocdbCluster(name string, args DocdbClusterArgs) *DocdbCluster {
 	return &DocdbCluster{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDocdbCluster(name string, args DocdbClusterArgs) *DocdbCluster {
 
 var _ terra.Resource = (*DocdbCluster)(nil)
 
+// DocdbCluster represents the Terraform resource aws_docdb_cluster.
 type DocdbCluster struct {
-	Name  string
-	Args  DocdbClusterArgs
-	state *docdbClusterState
+	Name      string
+	Args      DocdbClusterArgs
+	state     *docdbClusterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DocdbCluster].
 func (dc *DocdbCluster) Type() string {
 	return "aws_docdb_cluster"
 }
 
+// LocalName returns the local name for [DocdbCluster].
 func (dc *DocdbCluster) LocalName() string {
 	return dc.Name
 }
 
+// Configuration returns the configuration (args) for [DocdbCluster].
 func (dc *DocdbCluster) Configuration() interface{} {
 	return dc.Args
 }
 
+// DependOn is used for other resources to depend on [DocdbCluster].
+func (dc *DocdbCluster) DependOn() terra.Reference {
+	return terra.ReferenceResource(dc)
+}
+
+// Dependencies returns the list of resources [DocdbCluster] depends_on.
+func (dc *DocdbCluster) Dependencies() terra.Dependencies {
+	return dc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DocdbCluster].
+func (dc *DocdbCluster) LifecycleManagement() *terra.Lifecycle {
+	return dc.Lifecycle
+}
+
+// Attributes returns the attributes for [DocdbCluster].
 func (dc *DocdbCluster) Attributes() docdbClusterAttributes {
 	return docdbClusterAttributes{ref: terra.ReferenceResource(dc)}
 }
 
+// ImportState imports the given attribute values into [DocdbCluster]'s state.
 func (dc *DocdbCluster) ImportState(av io.Reader) error {
 	dc.state = &docdbClusterState{}
 	if err := json.NewDecoder(av).Decode(dc.state); err != nil {
@@ -49,10 +73,12 @@ func (dc *DocdbCluster) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DocdbCluster] has state.
 func (dc *DocdbCluster) State() (*docdbClusterState, bool) {
 	return dc.state, dc.state != nil
 }
 
+// StateMust returns the state for [DocdbCluster]. Panics if the state is nil.
 func (dc *DocdbCluster) StateMust() *docdbClusterState {
 	if dc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dc.Type(), dc.LocalName()))
@@ -60,10 +86,7 @@ func (dc *DocdbCluster) StateMust() *docdbClusterState {
 	return dc.state
 }
 
-func (dc *DocdbCluster) DependOn() terra.Reference {
-	return terra.ReferenceResource(dc)
-}
-
+// DocdbClusterArgs contains the configurations for aws_docdb_cluster.
 type DocdbClusterArgs struct {
 	// ApplyImmediately: bool, optional
 	ApplyImmediately terra.BoolValue `hcl:"apply_immediately,attr"`
@@ -121,143 +144,173 @@ type DocdbClusterArgs struct {
 	VpcSecurityGroupIds terra.SetValue[terra.StringValue] `hcl:"vpc_security_group_ids,attr"`
 	// Timeouts: optional
 	Timeouts *docdbcluster.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DocdbCluster depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type docdbClusterAttributes struct {
 	ref terra.Reference
 }
 
+// ApplyImmediately returns a reference to field apply_immediately of aws_docdb_cluster.
 func (dc docdbClusterAttributes) ApplyImmediately() terra.BoolValue {
-	return terra.ReferenceBool(dc.ref.Append("apply_immediately"))
+	return terra.ReferenceAsBool(dc.ref.Append("apply_immediately"))
 }
 
+// Arn returns a reference to field arn of aws_docdb_cluster.
 func (dc docdbClusterAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("arn"))
+	return terra.ReferenceAsString(dc.ref.Append("arn"))
 }
 
+// AvailabilityZones returns a reference to field availability_zones of aws_docdb_cluster.
 func (dc docdbClusterAttributes) AvailabilityZones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dc.ref.Append("availability_zones"))
+	return terra.ReferenceAsSet[terra.StringValue](dc.ref.Append("availability_zones"))
 }
 
+// BackupRetentionPeriod returns a reference to field backup_retention_period of aws_docdb_cluster.
 func (dc docdbClusterAttributes) BackupRetentionPeriod() terra.NumberValue {
-	return terra.ReferenceNumber(dc.ref.Append("backup_retention_period"))
+	return terra.ReferenceAsNumber(dc.ref.Append("backup_retention_period"))
 }
 
+// ClusterIdentifier returns a reference to field cluster_identifier of aws_docdb_cluster.
 func (dc docdbClusterAttributes) ClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("cluster_identifier"))
+	return terra.ReferenceAsString(dc.ref.Append("cluster_identifier"))
 }
 
+// ClusterIdentifierPrefix returns a reference to field cluster_identifier_prefix of aws_docdb_cluster.
 func (dc docdbClusterAttributes) ClusterIdentifierPrefix() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("cluster_identifier_prefix"))
+	return terra.ReferenceAsString(dc.ref.Append("cluster_identifier_prefix"))
 }
 
+// ClusterMembers returns a reference to field cluster_members of aws_docdb_cluster.
 func (dc docdbClusterAttributes) ClusterMembers() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dc.ref.Append("cluster_members"))
+	return terra.ReferenceAsSet[terra.StringValue](dc.ref.Append("cluster_members"))
 }
 
+// ClusterResourceId returns a reference to field cluster_resource_id of aws_docdb_cluster.
 func (dc docdbClusterAttributes) ClusterResourceId() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("cluster_resource_id"))
+	return terra.ReferenceAsString(dc.ref.Append("cluster_resource_id"))
 }
 
+// DbClusterParameterGroupName returns a reference to field db_cluster_parameter_group_name of aws_docdb_cluster.
 func (dc docdbClusterAttributes) DbClusterParameterGroupName() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("db_cluster_parameter_group_name"))
+	return terra.ReferenceAsString(dc.ref.Append("db_cluster_parameter_group_name"))
 }
 
+// DbSubnetGroupName returns a reference to field db_subnet_group_name of aws_docdb_cluster.
 func (dc docdbClusterAttributes) DbSubnetGroupName() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("db_subnet_group_name"))
+	return terra.ReferenceAsString(dc.ref.Append("db_subnet_group_name"))
 }
 
+// DeletionProtection returns a reference to field deletion_protection of aws_docdb_cluster.
 func (dc docdbClusterAttributes) DeletionProtection() terra.BoolValue {
-	return terra.ReferenceBool(dc.ref.Append("deletion_protection"))
+	return terra.ReferenceAsBool(dc.ref.Append("deletion_protection"))
 }
 
+// EnabledCloudwatchLogsExports returns a reference to field enabled_cloudwatch_logs_exports of aws_docdb_cluster.
 func (dc docdbClusterAttributes) EnabledCloudwatchLogsExports() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dc.ref.Append("enabled_cloudwatch_logs_exports"))
+	return terra.ReferenceAsList[terra.StringValue](dc.ref.Append("enabled_cloudwatch_logs_exports"))
 }
 
+// Endpoint returns a reference to field endpoint of aws_docdb_cluster.
 func (dc docdbClusterAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("endpoint"))
+	return terra.ReferenceAsString(dc.ref.Append("endpoint"))
 }
 
+// Engine returns a reference to field engine of aws_docdb_cluster.
 func (dc docdbClusterAttributes) Engine() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("engine"))
+	return terra.ReferenceAsString(dc.ref.Append("engine"))
 }
 
+// EngineVersion returns a reference to field engine_version of aws_docdb_cluster.
 func (dc docdbClusterAttributes) EngineVersion() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("engine_version"))
+	return terra.ReferenceAsString(dc.ref.Append("engine_version"))
 }
 
+// FinalSnapshotIdentifier returns a reference to field final_snapshot_identifier of aws_docdb_cluster.
 func (dc docdbClusterAttributes) FinalSnapshotIdentifier() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("final_snapshot_identifier"))
+	return terra.ReferenceAsString(dc.ref.Append("final_snapshot_identifier"))
 }
 
+// GlobalClusterIdentifier returns a reference to field global_cluster_identifier of aws_docdb_cluster.
 func (dc docdbClusterAttributes) GlobalClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("global_cluster_identifier"))
+	return terra.ReferenceAsString(dc.ref.Append("global_cluster_identifier"))
 }
 
+// HostedZoneId returns a reference to field hosted_zone_id of aws_docdb_cluster.
 func (dc docdbClusterAttributes) HostedZoneId() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("hosted_zone_id"))
+	return terra.ReferenceAsString(dc.ref.Append("hosted_zone_id"))
 }
 
+// Id returns a reference to field id of aws_docdb_cluster.
 func (dc docdbClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("id"))
+	return terra.ReferenceAsString(dc.ref.Append("id"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_docdb_cluster.
 func (dc docdbClusterAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(dc.ref.Append("kms_key_id"))
 }
 
+// MasterPassword returns a reference to field master_password of aws_docdb_cluster.
 func (dc docdbClusterAttributes) MasterPassword() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("master_password"))
+	return terra.ReferenceAsString(dc.ref.Append("master_password"))
 }
 
+// MasterUsername returns a reference to field master_username of aws_docdb_cluster.
 func (dc docdbClusterAttributes) MasterUsername() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("master_username"))
+	return terra.ReferenceAsString(dc.ref.Append("master_username"))
 }
 
+// Port returns a reference to field port of aws_docdb_cluster.
 func (dc docdbClusterAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(dc.ref.Append("port"))
+	return terra.ReferenceAsNumber(dc.ref.Append("port"))
 }
 
+// PreferredBackupWindow returns a reference to field preferred_backup_window of aws_docdb_cluster.
 func (dc docdbClusterAttributes) PreferredBackupWindow() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("preferred_backup_window"))
+	return terra.ReferenceAsString(dc.ref.Append("preferred_backup_window"))
 }
 
+// PreferredMaintenanceWindow returns a reference to field preferred_maintenance_window of aws_docdb_cluster.
 func (dc docdbClusterAttributes) PreferredMaintenanceWindow() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("preferred_maintenance_window"))
+	return terra.ReferenceAsString(dc.ref.Append("preferred_maintenance_window"))
 }
 
+// ReaderEndpoint returns a reference to field reader_endpoint of aws_docdb_cluster.
 func (dc docdbClusterAttributes) ReaderEndpoint() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("reader_endpoint"))
+	return terra.ReferenceAsString(dc.ref.Append("reader_endpoint"))
 }
 
+// SkipFinalSnapshot returns a reference to field skip_final_snapshot of aws_docdb_cluster.
 func (dc docdbClusterAttributes) SkipFinalSnapshot() terra.BoolValue {
-	return terra.ReferenceBool(dc.ref.Append("skip_final_snapshot"))
+	return terra.ReferenceAsBool(dc.ref.Append("skip_final_snapshot"))
 }
 
+// SnapshotIdentifier returns a reference to field snapshot_identifier of aws_docdb_cluster.
 func (dc docdbClusterAttributes) SnapshotIdentifier() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("snapshot_identifier"))
+	return terra.ReferenceAsString(dc.ref.Append("snapshot_identifier"))
 }
 
+// StorageEncrypted returns a reference to field storage_encrypted of aws_docdb_cluster.
 func (dc docdbClusterAttributes) StorageEncrypted() terra.BoolValue {
-	return terra.ReferenceBool(dc.ref.Append("storage_encrypted"))
+	return terra.ReferenceAsBool(dc.ref.Append("storage_encrypted"))
 }
 
+// Tags returns a reference to field tags of aws_docdb_cluster.
 func (dc docdbClusterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_docdb_cluster.
 func (dc docdbClusterAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dc.ref.Append("tags_all"))
 }
 
+// VpcSecurityGroupIds returns a reference to field vpc_security_group_ids of aws_docdb_cluster.
 func (dc docdbClusterAttributes) VpcSecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dc.ref.Append("vpc_security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](dc.ref.Append("vpc_security_group_ids"))
 }
 
 func (dc docdbClusterAttributes) Timeouts() docdbcluster.TimeoutsAttributes {
-	return terra.ReferenceSingle[docdbcluster.TimeoutsAttributes](dc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[docdbcluster.TimeoutsAttributes](dc.ref.Append("timeouts"))
 }
 
 type docdbClusterState struct {

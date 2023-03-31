@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataWorkspacesWorkspace creates a new instance of [DataWorkspacesWorkspace].
 func NewDataWorkspacesWorkspace(name string, args DataWorkspacesWorkspaceArgs) *DataWorkspacesWorkspace {
 	return &DataWorkspacesWorkspace{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataWorkspacesWorkspace(name string, args DataWorkspacesWorkspaceArgs) *
 
 var _ terra.DataResource = (*DataWorkspacesWorkspace)(nil)
 
+// DataWorkspacesWorkspace represents the Terraform data resource aws_workspaces_workspace.
 type DataWorkspacesWorkspace struct {
 	Name string
 	Args DataWorkspacesWorkspaceArgs
 }
 
+// DataSource returns the Terraform object type for [DataWorkspacesWorkspace].
 func (ww *DataWorkspacesWorkspace) DataSource() string {
 	return "aws_workspaces_workspace"
 }
 
+// LocalName returns the local name for [DataWorkspacesWorkspace].
 func (ww *DataWorkspacesWorkspace) LocalName() string {
 	return ww.Name
 }
 
+// Configuration returns the configuration (args) for [DataWorkspacesWorkspace].
 func (ww *DataWorkspacesWorkspace) Configuration() interface{} {
 	return ww.Args
 }
 
+// Attributes returns the attributes for [DataWorkspacesWorkspace].
 func (ww *DataWorkspacesWorkspace) Attributes() dataWorkspacesWorkspaceAttributes {
 	return dataWorkspacesWorkspaceAttributes{ref: terra.ReferenceDataResource(ww)}
 }
 
+// DataWorkspacesWorkspaceArgs contains the configurations for aws_workspaces_workspace.
 type DataWorkspacesWorkspaceArgs struct {
 	// DirectoryId: string, optional
 	DirectoryId terra.StringValue `hcl:"directory_id,attr"`
@@ -55,54 +62,66 @@ type dataWorkspacesWorkspaceAttributes struct {
 	ref terra.Reference
 }
 
+// BundleId returns a reference to field bundle_id of aws_workspaces_workspace.
 func (ww dataWorkspacesWorkspaceAttributes) BundleId() terra.StringValue {
-	return terra.ReferenceString(ww.ref.Append("bundle_id"))
+	return terra.ReferenceAsString(ww.ref.Append("bundle_id"))
 }
 
+// ComputerName returns a reference to field computer_name of aws_workspaces_workspace.
 func (ww dataWorkspacesWorkspaceAttributes) ComputerName() terra.StringValue {
-	return terra.ReferenceString(ww.ref.Append("computer_name"))
+	return terra.ReferenceAsString(ww.ref.Append("computer_name"))
 }
 
+// DirectoryId returns a reference to field directory_id of aws_workspaces_workspace.
 func (ww dataWorkspacesWorkspaceAttributes) DirectoryId() terra.StringValue {
-	return terra.ReferenceString(ww.ref.Append("directory_id"))
+	return terra.ReferenceAsString(ww.ref.Append("directory_id"))
 }
 
+// Id returns a reference to field id of aws_workspaces_workspace.
 func (ww dataWorkspacesWorkspaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ww.ref.Append("id"))
+	return terra.ReferenceAsString(ww.ref.Append("id"))
 }
 
+// IpAddress returns a reference to field ip_address of aws_workspaces_workspace.
 func (ww dataWorkspacesWorkspaceAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(ww.ref.Append("ip_address"))
+	return terra.ReferenceAsString(ww.ref.Append("ip_address"))
 }
 
+// RootVolumeEncryptionEnabled returns a reference to field root_volume_encryption_enabled of aws_workspaces_workspace.
 func (ww dataWorkspacesWorkspaceAttributes) RootVolumeEncryptionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ww.ref.Append("root_volume_encryption_enabled"))
+	return terra.ReferenceAsBool(ww.ref.Append("root_volume_encryption_enabled"))
 }
 
+// State returns a reference to field state of aws_workspaces_workspace.
 func (ww dataWorkspacesWorkspaceAttributes) State() terra.StringValue {
-	return terra.ReferenceString(ww.ref.Append("state"))
+	return terra.ReferenceAsString(ww.ref.Append("state"))
 }
 
+// Tags returns a reference to field tags of aws_workspaces_workspace.
 func (ww dataWorkspacesWorkspaceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ww.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ww.ref.Append("tags"))
 }
 
+// UserName returns a reference to field user_name of aws_workspaces_workspace.
 func (ww dataWorkspacesWorkspaceAttributes) UserName() terra.StringValue {
-	return terra.ReferenceString(ww.ref.Append("user_name"))
+	return terra.ReferenceAsString(ww.ref.Append("user_name"))
 }
 
+// UserVolumeEncryptionEnabled returns a reference to field user_volume_encryption_enabled of aws_workspaces_workspace.
 func (ww dataWorkspacesWorkspaceAttributes) UserVolumeEncryptionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ww.ref.Append("user_volume_encryption_enabled"))
+	return terra.ReferenceAsBool(ww.ref.Append("user_volume_encryption_enabled"))
 }
 
+// VolumeEncryptionKey returns a reference to field volume_encryption_key of aws_workspaces_workspace.
 func (ww dataWorkspacesWorkspaceAttributes) VolumeEncryptionKey() terra.StringValue {
-	return terra.ReferenceString(ww.ref.Append("volume_encryption_key"))
+	return terra.ReferenceAsString(ww.ref.Append("volume_encryption_key"))
 }
 
+// WorkspaceId returns a reference to field workspace_id of aws_workspaces_workspace.
 func (ww dataWorkspacesWorkspaceAttributes) WorkspaceId() terra.StringValue {
-	return terra.ReferenceString(ww.ref.Append("workspace_id"))
+	return terra.ReferenceAsString(ww.ref.Append("workspace_id"))
 }
 
 func (ww dataWorkspacesWorkspaceAttributes) WorkspaceProperties() terra.ListValue[dataworkspacesworkspace.WorkspacePropertiesAttributes] {
-	return terra.ReferenceList[dataworkspacesworkspace.WorkspacePropertiesAttributes](ww.ref.Append("workspace_properties"))
+	return terra.ReferenceAsList[dataworkspacesworkspace.WorkspacePropertiesAttributes](ww.ref.Append("workspace_properties"))
 }

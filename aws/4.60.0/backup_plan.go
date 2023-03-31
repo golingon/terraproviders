@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBackupPlan creates a new instance of [BackupPlan].
 func NewBackupPlan(name string, args BackupPlanArgs) *BackupPlan {
 	return &BackupPlan{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBackupPlan(name string, args BackupPlanArgs) *BackupPlan {
 
 var _ terra.Resource = (*BackupPlan)(nil)
 
+// BackupPlan represents the Terraform resource aws_backup_plan.
 type BackupPlan struct {
-	Name  string
-	Args  BackupPlanArgs
-	state *backupPlanState
+	Name      string
+	Args      BackupPlanArgs
+	state     *backupPlanState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BackupPlan].
 func (bp *BackupPlan) Type() string {
 	return "aws_backup_plan"
 }
 
+// LocalName returns the local name for [BackupPlan].
 func (bp *BackupPlan) LocalName() string {
 	return bp.Name
 }
 
+// Configuration returns the configuration (args) for [BackupPlan].
 func (bp *BackupPlan) Configuration() interface{} {
 	return bp.Args
 }
 
+// DependOn is used for other resources to depend on [BackupPlan].
+func (bp *BackupPlan) DependOn() terra.Reference {
+	return terra.ReferenceResource(bp)
+}
+
+// Dependencies returns the list of resources [BackupPlan] depends_on.
+func (bp *BackupPlan) Dependencies() terra.Dependencies {
+	return bp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BackupPlan].
+func (bp *BackupPlan) LifecycleManagement() *terra.Lifecycle {
+	return bp.Lifecycle
+}
+
+// Attributes returns the attributes for [BackupPlan].
 func (bp *BackupPlan) Attributes() backupPlanAttributes {
 	return backupPlanAttributes{ref: terra.ReferenceResource(bp)}
 }
 
+// ImportState imports the given attribute values into [BackupPlan]'s state.
 func (bp *BackupPlan) ImportState(av io.Reader) error {
 	bp.state = &backupPlanState{}
 	if err := json.NewDecoder(av).Decode(bp.state); err != nil {
@@ -49,10 +73,12 @@ func (bp *BackupPlan) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BackupPlan] has state.
 func (bp *BackupPlan) State() (*backupPlanState, bool) {
 	return bp.state, bp.state != nil
 }
 
+// StateMust returns the state for [BackupPlan]. Panics if the state is nil.
 func (bp *BackupPlan) StateMust() *backupPlanState {
 	if bp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bp.Type(), bp.LocalName()))
@@ -60,10 +86,7 @@ func (bp *BackupPlan) StateMust() *backupPlanState {
 	return bp.state
 }
 
-func (bp *BackupPlan) DependOn() terra.Reference {
-	return terra.ReferenceResource(bp)
-}
-
+// BackupPlanArgs contains the configurations for aws_backup_plan.
 type BackupPlanArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,43 +100,47 @@ type BackupPlanArgs struct {
 	AdvancedBackupSetting []backupplan.AdvancedBackupSetting `hcl:"advanced_backup_setting,block" validate:"min=0"`
 	// Rule: min=1
 	Rule []backupplan.Rule `hcl:"rule,block" validate:"min=1"`
-	// DependsOn contains resources that BackupPlan depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type backupPlanAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_backup_plan.
 func (bp backupPlanAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(bp.ref.Append("arn"))
+	return terra.ReferenceAsString(bp.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_backup_plan.
 func (bp backupPlanAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bp.ref.Append("id"))
+	return terra.ReferenceAsString(bp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_backup_plan.
 func (bp backupPlanAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bp.ref.Append("name"))
+	return terra.ReferenceAsString(bp.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_backup_plan.
 func (bp backupPlanAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](bp.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_backup_plan.
 func (bp backupPlanAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bp.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](bp.ref.Append("tags_all"))
 }
 
+// Version returns a reference to field version of aws_backup_plan.
 func (bp backupPlanAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(bp.ref.Append("version"))
+	return terra.ReferenceAsString(bp.ref.Append("version"))
 }
 
 func (bp backupPlanAttributes) AdvancedBackupSetting() terra.SetValue[backupplan.AdvancedBackupSettingAttributes] {
-	return terra.ReferenceSet[backupplan.AdvancedBackupSettingAttributes](bp.ref.Append("advanced_backup_setting"))
+	return terra.ReferenceAsSet[backupplan.AdvancedBackupSettingAttributes](bp.ref.Append("advanced_backup_setting"))
 }
 
 func (bp backupPlanAttributes) Rule() terra.SetValue[backupplan.RuleAttributes] {
-	return terra.ReferenceSet[backupplan.RuleAttributes](bp.ref.Append("rule"))
+	return terra.ReferenceAsSet[backupplan.RuleAttributes](bp.ref.Append("rule"))
 }
 
 type backupPlanState struct {

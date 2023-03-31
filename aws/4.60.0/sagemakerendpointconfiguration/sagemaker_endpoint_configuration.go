@@ -157,11 +157,11 @@ func (aic AsyncInferenceConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (aic AsyncInferenceConfigAttributes) ClientConfig() terra.ListValue[ClientConfigAttributes] {
-	return terra.ReferenceList[ClientConfigAttributes](aic.ref.Append("client_config"))
+	return terra.ReferenceAsList[ClientConfigAttributes](aic.ref.Append("client_config"))
 }
 
 func (aic AsyncInferenceConfigAttributes) OutputConfig() terra.ListValue[OutputConfigAttributes] {
-	return terra.ReferenceList[OutputConfigAttributes](aic.ref.Append("output_config"))
+	return terra.ReferenceAsList[OutputConfigAttributes](aic.ref.Append("output_config"))
 }
 
 type ClientConfigAttributes struct {
@@ -181,7 +181,7 @@ func (cc ClientConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc ClientConfigAttributes) MaxConcurrentInvocationsPerInstance() terra.NumberValue {
-	return terra.ReferenceNumber(cc.ref.Append("max_concurrent_invocations_per_instance"))
+	return terra.ReferenceAsNumber(cc.ref.Append("max_concurrent_invocations_per_instance"))
 }
 
 type OutputConfigAttributes struct {
@@ -201,15 +201,15 @@ func (oc OutputConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (oc OutputConfigAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(oc.ref.Append("kms_key_id"))
 }
 
 func (oc OutputConfigAttributes) S3OutputPath() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("s3_output_path"))
+	return terra.ReferenceAsString(oc.ref.Append("s3_output_path"))
 }
 
 func (oc OutputConfigAttributes) NotificationConfig() terra.ListValue[NotificationConfigAttributes] {
-	return terra.ReferenceList[NotificationConfigAttributes](oc.ref.Append("notification_config"))
+	return terra.ReferenceAsList[NotificationConfigAttributes](oc.ref.Append("notification_config"))
 }
 
 type NotificationConfigAttributes struct {
@@ -229,11 +229,11 @@ func (nc NotificationConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nc NotificationConfigAttributes) ErrorTopic() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("error_topic"))
+	return terra.ReferenceAsString(nc.ref.Append("error_topic"))
 }
 
 func (nc NotificationConfigAttributes) SuccessTopic() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("success_topic"))
+	return terra.ReferenceAsString(nc.ref.Append("success_topic"))
 }
 
 type DataCaptureConfigAttributes struct {
@@ -253,27 +253,27 @@ func (dcc DataCaptureConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dcc DataCaptureConfigAttributes) DestinationS3Uri() terra.StringValue {
-	return terra.ReferenceString(dcc.ref.Append("destination_s3_uri"))
+	return terra.ReferenceAsString(dcc.ref.Append("destination_s3_uri"))
 }
 
 func (dcc DataCaptureConfigAttributes) EnableCapture() terra.BoolValue {
-	return terra.ReferenceBool(dcc.ref.Append("enable_capture"))
+	return terra.ReferenceAsBool(dcc.ref.Append("enable_capture"))
 }
 
 func (dcc DataCaptureConfigAttributes) InitialSamplingPercentage() terra.NumberValue {
-	return terra.ReferenceNumber(dcc.ref.Append("initial_sampling_percentage"))
+	return terra.ReferenceAsNumber(dcc.ref.Append("initial_sampling_percentage"))
 }
 
 func (dcc DataCaptureConfigAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(dcc.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(dcc.ref.Append("kms_key_id"))
 }
 
 func (dcc DataCaptureConfigAttributes) CaptureContentTypeHeader() terra.ListValue[CaptureContentTypeHeaderAttributes] {
-	return terra.ReferenceList[CaptureContentTypeHeaderAttributes](dcc.ref.Append("capture_content_type_header"))
+	return terra.ReferenceAsList[CaptureContentTypeHeaderAttributes](dcc.ref.Append("capture_content_type_header"))
 }
 
 func (dcc DataCaptureConfigAttributes) CaptureOptions() terra.ListValue[CaptureOptionsAttributes] {
-	return terra.ReferenceList[CaptureOptionsAttributes](dcc.ref.Append("capture_options"))
+	return terra.ReferenceAsList[CaptureOptionsAttributes](dcc.ref.Append("capture_options"))
 }
 
 type CaptureContentTypeHeaderAttributes struct {
@@ -293,11 +293,11 @@ func (ccth CaptureContentTypeHeaderAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (ccth CaptureContentTypeHeaderAttributes) CsvContentTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ccth.ref.Append("csv_content_types"))
+	return terra.ReferenceAsSet[terra.StringValue](ccth.ref.Append("csv_content_types"))
 }
 
 func (ccth CaptureContentTypeHeaderAttributes) JsonContentTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ccth.ref.Append("json_content_types"))
+	return terra.ReferenceAsSet[terra.StringValue](ccth.ref.Append("json_content_types"))
 }
 
 type CaptureOptionsAttributes struct {
@@ -317,7 +317,7 @@ func (co CaptureOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (co CaptureOptionsAttributes) CaptureMode() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("capture_mode"))
+	return terra.ReferenceAsString(co.ref.Append("capture_mode"))
 }
 
 type ProductionVariantsAttributes struct {
@@ -337,47 +337,47 @@ func (pv ProductionVariantsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pv ProductionVariantsAttributes) AcceleratorType() terra.StringValue {
-	return terra.ReferenceString(pv.ref.Append("accelerator_type"))
+	return terra.ReferenceAsString(pv.ref.Append("accelerator_type"))
 }
 
 func (pv ProductionVariantsAttributes) ContainerStartupHealthCheckTimeoutInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(pv.ref.Append("container_startup_health_check_timeout_in_seconds"))
+	return terra.ReferenceAsNumber(pv.ref.Append("container_startup_health_check_timeout_in_seconds"))
 }
 
 func (pv ProductionVariantsAttributes) InitialInstanceCount() terra.NumberValue {
-	return terra.ReferenceNumber(pv.ref.Append("initial_instance_count"))
+	return terra.ReferenceAsNumber(pv.ref.Append("initial_instance_count"))
 }
 
 func (pv ProductionVariantsAttributes) InitialVariantWeight() terra.NumberValue {
-	return terra.ReferenceNumber(pv.ref.Append("initial_variant_weight"))
+	return terra.ReferenceAsNumber(pv.ref.Append("initial_variant_weight"))
 }
 
 func (pv ProductionVariantsAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(pv.ref.Append("instance_type"))
+	return terra.ReferenceAsString(pv.ref.Append("instance_type"))
 }
 
 func (pv ProductionVariantsAttributes) ModelDataDownloadTimeoutInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(pv.ref.Append("model_data_download_timeout_in_seconds"))
+	return terra.ReferenceAsNumber(pv.ref.Append("model_data_download_timeout_in_seconds"))
 }
 
 func (pv ProductionVariantsAttributes) ModelName() terra.StringValue {
-	return terra.ReferenceString(pv.ref.Append("model_name"))
+	return terra.ReferenceAsString(pv.ref.Append("model_name"))
 }
 
 func (pv ProductionVariantsAttributes) VariantName() terra.StringValue {
-	return terra.ReferenceString(pv.ref.Append("variant_name"))
+	return terra.ReferenceAsString(pv.ref.Append("variant_name"))
 }
 
 func (pv ProductionVariantsAttributes) VolumeSizeInGb() terra.NumberValue {
-	return terra.ReferenceNumber(pv.ref.Append("volume_size_in_gb"))
+	return terra.ReferenceAsNumber(pv.ref.Append("volume_size_in_gb"))
 }
 
 func (pv ProductionVariantsAttributes) CoreDumpConfig() terra.ListValue[ProductionVariantsCoreDumpConfigAttributes] {
-	return terra.ReferenceList[ProductionVariantsCoreDumpConfigAttributes](pv.ref.Append("core_dump_config"))
+	return terra.ReferenceAsList[ProductionVariantsCoreDumpConfigAttributes](pv.ref.Append("core_dump_config"))
 }
 
 func (pv ProductionVariantsAttributes) ServerlessConfig() terra.ListValue[ProductionVariantsServerlessConfigAttributes] {
-	return terra.ReferenceList[ProductionVariantsServerlessConfigAttributes](pv.ref.Append("serverless_config"))
+	return terra.ReferenceAsList[ProductionVariantsServerlessConfigAttributes](pv.ref.Append("serverless_config"))
 }
 
 type ProductionVariantsCoreDumpConfigAttributes struct {
@@ -397,11 +397,11 @@ func (cdc ProductionVariantsCoreDumpConfigAttributes) InternalTokens() hclwrite.
 }
 
 func (cdc ProductionVariantsCoreDumpConfigAttributes) DestinationS3Uri() terra.StringValue {
-	return terra.ReferenceString(cdc.ref.Append("destination_s3_uri"))
+	return terra.ReferenceAsString(cdc.ref.Append("destination_s3_uri"))
 }
 
 func (cdc ProductionVariantsCoreDumpConfigAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(cdc.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(cdc.ref.Append("kms_key_id"))
 }
 
 type ProductionVariantsServerlessConfigAttributes struct {
@@ -421,11 +421,11 @@ func (sc ProductionVariantsServerlessConfigAttributes) InternalTokens() hclwrite
 }
 
 func (sc ProductionVariantsServerlessConfigAttributes) MaxConcurrency() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("max_concurrency"))
+	return terra.ReferenceAsNumber(sc.ref.Append("max_concurrency"))
 }
 
 func (sc ProductionVariantsServerlessConfigAttributes) MemorySizeInMb() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("memory_size_in_mb"))
+	return terra.ReferenceAsNumber(sc.ref.Append("memory_size_in_mb"))
 }
 
 type ShadowProductionVariantsAttributes struct {
@@ -445,47 +445,47 @@ func (spv ShadowProductionVariantsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (spv ShadowProductionVariantsAttributes) AcceleratorType() terra.StringValue {
-	return terra.ReferenceString(spv.ref.Append("accelerator_type"))
+	return terra.ReferenceAsString(spv.ref.Append("accelerator_type"))
 }
 
 func (spv ShadowProductionVariantsAttributes) ContainerStartupHealthCheckTimeoutInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(spv.ref.Append("container_startup_health_check_timeout_in_seconds"))
+	return terra.ReferenceAsNumber(spv.ref.Append("container_startup_health_check_timeout_in_seconds"))
 }
 
 func (spv ShadowProductionVariantsAttributes) InitialInstanceCount() terra.NumberValue {
-	return terra.ReferenceNumber(spv.ref.Append("initial_instance_count"))
+	return terra.ReferenceAsNumber(spv.ref.Append("initial_instance_count"))
 }
 
 func (spv ShadowProductionVariantsAttributes) InitialVariantWeight() terra.NumberValue {
-	return terra.ReferenceNumber(spv.ref.Append("initial_variant_weight"))
+	return terra.ReferenceAsNumber(spv.ref.Append("initial_variant_weight"))
 }
 
 func (spv ShadowProductionVariantsAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(spv.ref.Append("instance_type"))
+	return terra.ReferenceAsString(spv.ref.Append("instance_type"))
 }
 
 func (spv ShadowProductionVariantsAttributes) ModelDataDownloadTimeoutInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(spv.ref.Append("model_data_download_timeout_in_seconds"))
+	return terra.ReferenceAsNumber(spv.ref.Append("model_data_download_timeout_in_seconds"))
 }
 
 func (spv ShadowProductionVariantsAttributes) ModelName() terra.StringValue {
-	return terra.ReferenceString(spv.ref.Append("model_name"))
+	return terra.ReferenceAsString(spv.ref.Append("model_name"))
 }
 
 func (spv ShadowProductionVariantsAttributes) VariantName() terra.StringValue {
-	return terra.ReferenceString(spv.ref.Append("variant_name"))
+	return terra.ReferenceAsString(spv.ref.Append("variant_name"))
 }
 
 func (spv ShadowProductionVariantsAttributes) VolumeSizeInGb() terra.NumberValue {
-	return terra.ReferenceNumber(spv.ref.Append("volume_size_in_gb"))
+	return terra.ReferenceAsNumber(spv.ref.Append("volume_size_in_gb"))
 }
 
 func (spv ShadowProductionVariantsAttributes) CoreDumpConfig() terra.ListValue[ShadowProductionVariantsCoreDumpConfigAttributes] {
-	return terra.ReferenceList[ShadowProductionVariantsCoreDumpConfigAttributes](spv.ref.Append("core_dump_config"))
+	return terra.ReferenceAsList[ShadowProductionVariantsCoreDumpConfigAttributes](spv.ref.Append("core_dump_config"))
 }
 
 func (spv ShadowProductionVariantsAttributes) ServerlessConfig() terra.ListValue[ShadowProductionVariantsServerlessConfigAttributes] {
-	return terra.ReferenceList[ShadowProductionVariantsServerlessConfigAttributes](spv.ref.Append("serverless_config"))
+	return terra.ReferenceAsList[ShadowProductionVariantsServerlessConfigAttributes](spv.ref.Append("serverless_config"))
 }
 
 type ShadowProductionVariantsCoreDumpConfigAttributes struct {
@@ -505,11 +505,11 @@ func (cdc ShadowProductionVariantsCoreDumpConfigAttributes) InternalTokens() hcl
 }
 
 func (cdc ShadowProductionVariantsCoreDumpConfigAttributes) DestinationS3Uri() terra.StringValue {
-	return terra.ReferenceString(cdc.ref.Append("destination_s3_uri"))
+	return terra.ReferenceAsString(cdc.ref.Append("destination_s3_uri"))
 }
 
 func (cdc ShadowProductionVariantsCoreDumpConfigAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(cdc.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(cdc.ref.Append("kms_key_id"))
 }
 
 type ShadowProductionVariantsServerlessConfigAttributes struct {
@@ -529,11 +529,11 @@ func (sc ShadowProductionVariantsServerlessConfigAttributes) InternalTokens() hc
 }
 
 func (sc ShadowProductionVariantsServerlessConfigAttributes) MaxConcurrency() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("max_concurrency"))
+	return terra.ReferenceAsNumber(sc.ref.Append("max_concurrency"))
 }
 
 func (sc ShadowProductionVariantsServerlessConfigAttributes) MemorySizeInMb() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("memory_size_in_mb"))
+	return terra.ReferenceAsNumber(sc.ref.Append("memory_size_in_mb"))
 }
 
 type AsyncInferenceConfigState struct {

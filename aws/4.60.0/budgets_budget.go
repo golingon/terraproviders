@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBudgetsBudget creates a new instance of [BudgetsBudget].
 func NewBudgetsBudget(name string, args BudgetsBudgetArgs) *BudgetsBudget {
 	return &BudgetsBudget{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBudgetsBudget(name string, args BudgetsBudgetArgs) *BudgetsBudget {
 
 var _ terra.Resource = (*BudgetsBudget)(nil)
 
+// BudgetsBudget represents the Terraform resource aws_budgets_budget.
 type BudgetsBudget struct {
-	Name  string
-	Args  BudgetsBudgetArgs
-	state *budgetsBudgetState
+	Name      string
+	Args      BudgetsBudgetArgs
+	state     *budgetsBudgetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BudgetsBudget].
 func (bb *BudgetsBudget) Type() string {
 	return "aws_budgets_budget"
 }
 
+// LocalName returns the local name for [BudgetsBudget].
 func (bb *BudgetsBudget) LocalName() string {
 	return bb.Name
 }
 
+// Configuration returns the configuration (args) for [BudgetsBudget].
 func (bb *BudgetsBudget) Configuration() interface{} {
 	return bb.Args
 }
 
+// DependOn is used for other resources to depend on [BudgetsBudget].
+func (bb *BudgetsBudget) DependOn() terra.Reference {
+	return terra.ReferenceResource(bb)
+}
+
+// Dependencies returns the list of resources [BudgetsBudget] depends_on.
+func (bb *BudgetsBudget) Dependencies() terra.Dependencies {
+	return bb.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BudgetsBudget].
+func (bb *BudgetsBudget) LifecycleManagement() *terra.Lifecycle {
+	return bb.Lifecycle
+}
+
+// Attributes returns the attributes for [BudgetsBudget].
 func (bb *BudgetsBudget) Attributes() budgetsBudgetAttributes {
 	return budgetsBudgetAttributes{ref: terra.ReferenceResource(bb)}
 }
 
+// ImportState imports the given attribute values into [BudgetsBudget]'s state.
 func (bb *BudgetsBudget) ImportState(av io.Reader) error {
 	bb.state = &budgetsBudgetState{}
 	if err := json.NewDecoder(av).Decode(bb.state); err != nil {
@@ -49,10 +73,12 @@ func (bb *BudgetsBudget) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BudgetsBudget] has state.
 func (bb *BudgetsBudget) State() (*budgetsBudgetState, bool) {
 	return bb.state, bb.state != nil
 }
 
+// StateMust returns the state for [BudgetsBudget]. Panics if the state is nil.
 func (bb *BudgetsBudget) StateMust() *budgetsBudgetState {
 	if bb.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bb.Type(), bb.LocalName()))
@@ -60,10 +86,7 @@ func (bb *BudgetsBudget) StateMust() *budgetsBudgetState {
 	return bb.state
 }
 
-func (bb *BudgetsBudget) DependOn() terra.Reference {
-	return terra.ReferenceResource(bb)
-}
-
+// BudgetsBudgetArgs contains the configurations for aws_budgets_budget.
 type BudgetsBudgetArgs struct {
 	// AccountId: string, optional
 	AccountId terra.StringValue `hcl:"account_id,attr"`
@@ -97,79 +120,89 @@ type BudgetsBudgetArgs struct {
 	Notification []budgetsbudget.Notification `hcl:"notification,block" validate:"min=0"`
 	// PlannedLimit: min=0
 	PlannedLimit []budgetsbudget.PlannedLimit `hcl:"planned_limit,block" validate:"min=0"`
-	// DependsOn contains resources that BudgetsBudget depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type budgetsBudgetAttributes struct {
 	ref terra.Reference
 }
 
+// AccountId returns a reference to field account_id of aws_budgets_budget.
 func (bb budgetsBudgetAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(bb.ref.Append("account_id"))
+	return terra.ReferenceAsString(bb.ref.Append("account_id"))
 }
 
+// Arn returns a reference to field arn of aws_budgets_budget.
 func (bb budgetsBudgetAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(bb.ref.Append("arn"))
+	return terra.ReferenceAsString(bb.ref.Append("arn"))
 }
 
+// BudgetType returns a reference to field budget_type of aws_budgets_budget.
 func (bb budgetsBudgetAttributes) BudgetType() terra.StringValue {
-	return terra.ReferenceString(bb.ref.Append("budget_type"))
+	return terra.ReferenceAsString(bb.ref.Append("budget_type"))
 }
 
+// CostFilters returns a reference to field cost_filters of aws_budgets_budget.
 func (bb budgetsBudgetAttributes) CostFilters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bb.ref.Append("cost_filters"))
+	return terra.ReferenceAsMap[terra.StringValue](bb.ref.Append("cost_filters"))
 }
 
+// Id returns a reference to field id of aws_budgets_budget.
 func (bb budgetsBudgetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bb.ref.Append("id"))
+	return terra.ReferenceAsString(bb.ref.Append("id"))
 }
 
+// LimitAmount returns a reference to field limit_amount of aws_budgets_budget.
 func (bb budgetsBudgetAttributes) LimitAmount() terra.StringValue {
-	return terra.ReferenceString(bb.ref.Append("limit_amount"))
+	return terra.ReferenceAsString(bb.ref.Append("limit_amount"))
 }
 
+// LimitUnit returns a reference to field limit_unit of aws_budgets_budget.
 func (bb budgetsBudgetAttributes) LimitUnit() terra.StringValue {
-	return terra.ReferenceString(bb.ref.Append("limit_unit"))
+	return terra.ReferenceAsString(bb.ref.Append("limit_unit"))
 }
 
+// Name returns a reference to field name of aws_budgets_budget.
 func (bb budgetsBudgetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bb.ref.Append("name"))
+	return terra.ReferenceAsString(bb.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_budgets_budget.
 func (bb budgetsBudgetAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(bb.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(bb.ref.Append("name_prefix"))
 }
 
+// TimePeriodEnd returns a reference to field time_period_end of aws_budgets_budget.
 func (bb budgetsBudgetAttributes) TimePeriodEnd() terra.StringValue {
-	return terra.ReferenceString(bb.ref.Append("time_period_end"))
+	return terra.ReferenceAsString(bb.ref.Append("time_period_end"))
 }
 
+// TimePeriodStart returns a reference to field time_period_start of aws_budgets_budget.
 func (bb budgetsBudgetAttributes) TimePeriodStart() terra.StringValue {
-	return terra.ReferenceString(bb.ref.Append("time_period_start"))
+	return terra.ReferenceAsString(bb.ref.Append("time_period_start"))
 }
 
+// TimeUnit returns a reference to field time_unit of aws_budgets_budget.
 func (bb budgetsBudgetAttributes) TimeUnit() terra.StringValue {
-	return terra.ReferenceString(bb.ref.Append("time_unit"))
+	return terra.ReferenceAsString(bb.ref.Append("time_unit"))
 }
 
 func (bb budgetsBudgetAttributes) AutoAdjustData() terra.ListValue[budgetsbudget.AutoAdjustDataAttributes] {
-	return terra.ReferenceList[budgetsbudget.AutoAdjustDataAttributes](bb.ref.Append("auto_adjust_data"))
+	return terra.ReferenceAsList[budgetsbudget.AutoAdjustDataAttributes](bb.ref.Append("auto_adjust_data"))
 }
 
 func (bb budgetsBudgetAttributes) CostFilter() terra.SetValue[budgetsbudget.CostFilterAttributes] {
-	return terra.ReferenceSet[budgetsbudget.CostFilterAttributes](bb.ref.Append("cost_filter"))
+	return terra.ReferenceAsSet[budgetsbudget.CostFilterAttributes](bb.ref.Append("cost_filter"))
 }
 
 func (bb budgetsBudgetAttributes) CostTypes() terra.ListValue[budgetsbudget.CostTypesAttributes] {
-	return terra.ReferenceList[budgetsbudget.CostTypesAttributes](bb.ref.Append("cost_types"))
+	return terra.ReferenceAsList[budgetsbudget.CostTypesAttributes](bb.ref.Append("cost_types"))
 }
 
 func (bb budgetsBudgetAttributes) Notification() terra.SetValue[budgetsbudget.NotificationAttributes] {
-	return terra.ReferenceSet[budgetsbudget.NotificationAttributes](bb.ref.Append("notification"))
+	return terra.ReferenceAsSet[budgetsbudget.NotificationAttributes](bb.ref.Append("notification"))
 }
 
 func (bb budgetsBudgetAttributes) PlannedLimit() terra.SetValue[budgetsbudget.PlannedLimitAttributes] {
-	return terra.ReferenceSet[budgetsbudget.PlannedLimitAttributes](bb.ref.Append("planned_limit"))
+	return terra.ReferenceAsSet[budgetsbudget.PlannedLimitAttributes](bb.ref.Append("planned_limit"))
 }
 
 type budgetsBudgetState struct {

@@ -57,27 +57,27 @@ func (as AppSourceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (as AppSourceAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("password"))
+	return terra.ReferenceAsString(as.ref.Append("password"))
 }
 
 func (as AppSourceAttributes) Revision() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("revision"))
+	return terra.ReferenceAsString(as.ref.Append("revision"))
 }
 
 func (as AppSourceAttributes) SshKey() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("ssh_key"))
+	return terra.ReferenceAsString(as.ref.Append("ssh_key"))
 }
 
 func (as AppSourceAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("type"))
+	return terra.ReferenceAsString(as.ref.Append("type"))
 }
 
 func (as AppSourceAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("url"))
+	return terra.ReferenceAsString(as.ref.Append("url"))
 }
 
 func (as AppSourceAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("username"))
+	return terra.ReferenceAsString(as.ref.Append("username"))
 }
 
 type EnvironmentAttributes struct {
@@ -97,15 +97,15 @@ func (e EnvironmentAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e EnvironmentAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("key"))
+	return terra.ReferenceAsString(e.ref.Append("key"))
 }
 
 func (e EnvironmentAttributes) Secure() terra.BoolValue {
-	return terra.ReferenceBool(e.ref.Append("secure"))
+	return terra.ReferenceAsBool(e.ref.Append("secure"))
 }
 
 func (e EnvironmentAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("value"))
+	return terra.ReferenceAsString(e.ref.Append("value"))
 }
 
 type SslConfigurationAttributes struct {
@@ -125,15 +125,15 @@ func (sc SslConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc SslConfigurationAttributes) Certificate() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("certificate"))
+	return terra.ReferenceAsString(sc.ref.Append("certificate"))
 }
 
 func (sc SslConfigurationAttributes) Chain() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("chain"))
+	return terra.ReferenceAsString(sc.ref.Append("chain"))
 }
 
 func (sc SslConfigurationAttributes) PrivateKey() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("private_key"))
+	return terra.ReferenceAsString(sc.ref.Append("private_key"))
 }
 
 type AppSourceState struct {

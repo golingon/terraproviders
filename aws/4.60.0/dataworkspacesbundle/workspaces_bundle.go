@@ -30,7 +30,7 @@ func (ct ComputeTypeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ct ComputeTypeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("name"))
+	return terra.ReferenceAsString(ct.ref.Append("name"))
 }
 
 type RootStorageAttributes struct {
@@ -50,7 +50,7 @@ func (rs RootStorageAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rs RootStorageAttributes) Capacity() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("capacity"))
+	return terra.ReferenceAsString(rs.ref.Append("capacity"))
 }
 
 type UserStorageAttributes struct {
@@ -70,7 +70,7 @@ func (us UserStorageAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (us UserStorageAttributes) Capacity() terra.StringValue {
-	return terra.ReferenceString(us.ref.Append("capacity"))
+	return terra.ReferenceAsString(us.ref.Append("capacity"))
 }
 
 type ComputeTypeState struct {

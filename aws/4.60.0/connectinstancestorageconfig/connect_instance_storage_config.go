@@ -79,23 +79,23 @@ func (sc StorageConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc StorageConfigAttributes) StorageType() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("storage_type"))
+	return terra.ReferenceAsString(sc.ref.Append("storage_type"))
 }
 
 func (sc StorageConfigAttributes) KinesisFirehoseConfig() terra.ListValue[KinesisFirehoseConfigAttributes] {
-	return terra.ReferenceList[KinesisFirehoseConfigAttributes](sc.ref.Append("kinesis_firehose_config"))
+	return terra.ReferenceAsList[KinesisFirehoseConfigAttributes](sc.ref.Append("kinesis_firehose_config"))
 }
 
 func (sc StorageConfigAttributes) KinesisStreamConfig() terra.ListValue[KinesisStreamConfigAttributes] {
-	return terra.ReferenceList[KinesisStreamConfigAttributes](sc.ref.Append("kinesis_stream_config"))
+	return terra.ReferenceAsList[KinesisStreamConfigAttributes](sc.ref.Append("kinesis_stream_config"))
 }
 
 func (sc StorageConfigAttributes) KinesisVideoStreamConfig() terra.ListValue[KinesisVideoStreamConfigAttributes] {
-	return terra.ReferenceList[KinesisVideoStreamConfigAttributes](sc.ref.Append("kinesis_video_stream_config"))
+	return terra.ReferenceAsList[KinesisVideoStreamConfigAttributes](sc.ref.Append("kinesis_video_stream_config"))
 }
 
 func (sc StorageConfigAttributes) S3Config() terra.ListValue[S3ConfigAttributes] {
-	return terra.ReferenceList[S3ConfigAttributes](sc.ref.Append("s3_config"))
+	return terra.ReferenceAsList[S3ConfigAttributes](sc.ref.Append("s3_config"))
 }
 
 type KinesisFirehoseConfigAttributes struct {
@@ -115,7 +115,7 @@ func (kfc KinesisFirehoseConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (kfc KinesisFirehoseConfigAttributes) FirehoseArn() terra.StringValue {
-	return terra.ReferenceString(kfc.ref.Append("firehose_arn"))
+	return terra.ReferenceAsString(kfc.ref.Append("firehose_arn"))
 }
 
 type KinesisStreamConfigAttributes struct {
@@ -135,7 +135,7 @@ func (ksc KinesisStreamConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ksc KinesisStreamConfigAttributes) StreamArn() terra.StringValue {
-	return terra.ReferenceString(ksc.ref.Append("stream_arn"))
+	return terra.ReferenceAsString(ksc.ref.Append("stream_arn"))
 }
 
 type KinesisVideoStreamConfigAttributes struct {
@@ -155,15 +155,15 @@ func (kvsc KinesisVideoStreamConfigAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (kvsc KinesisVideoStreamConfigAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(kvsc.ref.Append("prefix"))
+	return terra.ReferenceAsString(kvsc.ref.Append("prefix"))
 }
 
 func (kvsc KinesisVideoStreamConfigAttributes) RetentionPeriodHours() terra.NumberValue {
-	return terra.ReferenceNumber(kvsc.ref.Append("retention_period_hours"))
+	return terra.ReferenceAsNumber(kvsc.ref.Append("retention_period_hours"))
 }
 
 func (kvsc KinesisVideoStreamConfigAttributes) EncryptionConfig() terra.ListValue[KinesisVideoStreamConfigEncryptionConfigAttributes] {
-	return terra.ReferenceList[KinesisVideoStreamConfigEncryptionConfigAttributes](kvsc.ref.Append("encryption_config"))
+	return terra.ReferenceAsList[KinesisVideoStreamConfigEncryptionConfigAttributes](kvsc.ref.Append("encryption_config"))
 }
 
 type KinesisVideoStreamConfigEncryptionConfigAttributes struct {
@@ -183,11 +183,11 @@ func (ec KinesisVideoStreamConfigEncryptionConfigAttributes) InternalTokens() hc
 }
 
 func (ec KinesisVideoStreamConfigEncryptionConfigAttributes) EncryptionType() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("encryption_type"))
+	return terra.ReferenceAsString(ec.ref.Append("encryption_type"))
 }
 
 func (ec KinesisVideoStreamConfigEncryptionConfigAttributes) KeyId() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("key_id"))
+	return terra.ReferenceAsString(ec.ref.Append("key_id"))
 }
 
 type S3ConfigAttributes struct {
@@ -207,15 +207,15 @@ func (sc S3ConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc S3ConfigAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(sc.ref.Append("bucket_name"))
 }
 
 func (sc S3ConfigAttributes) BucketPrefix() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("bucket_prefix"))
+	return terra.ReferenceAsString(sc.ref.Append("bucket_prefix"))
 }
 
 func (sc S3ConfigAttributes) EncryptionConfig() terra.ListValue[S3ConfigEncryptionConfigAttributes] {
-	return terra.ReferenceList[S3ConfigEncryptionConfigAttributes](sc.ref.Append("encryption_config"))
+	return terra.ReferenceAsList[S3ConfigEncryptionConfigAttributes](sc.ref.Append("encryption_config"))
 }
 
 type S3ConfigEncryptionConfigAttributes struct {
@@ -235,11 +235,11 @@ func (ec S3ConfigEncryptionConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec S3ConfigEncryptionConfigAttributes) EncryptionType() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("encryption_type"))
+	return terra.ReferenceAsString(ec.ref.Append("encryption_type"))
 }
 
 func (ec S3ConfigEncryptionConfigAttributes) KeyId() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("key_id"))
+	return terra.ReferenceAsString(ec.ref.Append("key_id"))
 }
 
 type StorageConfigState struct {

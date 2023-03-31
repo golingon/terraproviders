@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewIamGroupPolicy creates a new instance of [IamGroupPolicy].
 func NewIamGroupPolicy(name string, args IamGroupPolicyArgs) *IamGroupPolicy {
 	return &IamGroupPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewIamGroupPolicy(name string, args IamGroupPolicyArgs) *IamGroupPolicy {
 
 var _ terra.Resource = (*IamGroupPolicy)(nil)
 
+// IamGroupPolicy represents the Terraform resource aws_iam_group_policy.
 type IamGroupPolicy struct {
-	Name  string
-	Args  IamGroupPolicyArgs
-	state *iamGroupPolicyState
+	Name      string
+	Args      IamGroupPolicyArgs
+	state     *iamGroupPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IamGroupPolicy].
 func (igp *IamGroupPolicy) Type() string {
 	return "aws_iam_group_policy"
 }
 
+// LocalName returns the local name for [IamGroupPolicy].
 func (igp *IamGroupPolicy) LocalName() string {
 	return igp.Name
 }
 
+// Configuration returns the configuration (args) for [IamGroupPolicy].
 func (igp *IamGroupPolicy) Configuration() interface{} {
 	return igp.Args
 }
 
+// DependOn is used for other resources to depend on [IamGroupPolicy].
+func (igp *IamGroupPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(igp)
+}
+
+// Dependencies returns the list of resources [IamGroupPolicy] depends_on.
+func (igp *IamGroupPolicy) Dependencies() terra.Dependencies {
+	return igp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IamGroupPolicy].
+func (igp *IamGroupPolicy) LifecycleManagement() *terra.Lifecycle {
+	return igp.Lifecycle
+}
+
+// Attributes returns the attributes for [IamGroupPolicy].
 func (igp *IamGroupPolicy) Attributes() iamGroupPolicyAttributes {
 	return iamGroupPolicyAttributes{ref: terra.ReferenceResource(igp)}
 }
 
+// ImportState imports the given attribute values into [IamGroupPolicy]'s state.
 func (igp *IamGroupPolicy) ImportState(av io.Reader) error {
 	igp.state = &iamGroupPolicyState{}
 	if err := json.NewDecoder(av).Decode(igp.state); err != nil {
@@ -48,10 +72,12 @@ func (igp *IamGroupPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IamGroupPolicy] has state.
 func (igp *IamGroupPolicy) State() (*iamGroupPolicyState, bool) {
 	return igp.state, igp.state != nil
 }
 
+// StateMust returns the state for [IamGroupPolicy]. Panics if the state is nil.
 func (igp *IamGroupPolicy) StateMust() *iamGroupPolicyState {
 	if igp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", igp.Type(), igp.LocalName()))
@@ -59,10 +85,7 @@ func (igp *IamGroupPolicy) StateMust() *iamGroupPolicyState {
 	return igp.state
 }
 
-func (igp *IamGroupPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(igp)
-}
-
+// IamGroupPolicyArgs contains the configurations for aws_iam_group_policy.
 type IamGroupPolicyArgs struct {
 	// Group: string, required
 	Group terra.StringValue `hcl:"group,attr" validate:"required"`
@@ -74,31 +97,34 @@ type IamGroupPolicyArgs struct {
 	NamePrefix terra.StringValue `hcl:"name_prefix,attr"`
 	// Policy: string, required
 	Policy terra.StringValue `hcl:"policy,attr" validate:"required"`
-	// DependsOn contains resources that IamGroupPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iamGroupPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Group returns a reference to field group of aws_iam_group_policy.
 func (igp iamGroupPolicyAttributes) Group() terra.StringValue {
-	return terra.ReferenceString(igp.ref.Append("group"))
+	return terra.ReferenceAsString(igp.ref.Append("group"))
 }
 
+// Id returns a reference to field id of aws_iam_group_policy.
 func (igp iamGroupPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(igp.ref.Append("id"))
+	return terra.ReferenceAsString(igp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_iam_group_policy.
 func (igp iamGroupPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(igp.ref.Append("name"))
+	return terra.ReferenceAsString(igp.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_iam_group_policy.
 func (igp iamGroupPolicyAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(igp.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(igp.ref.Append("name_prefix"))
 }
 
+// Policy returns a reference to field policy of aws_iam_group_policy.
 func (igp iamGroupPolicyAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(igp.ref.Append("policy"))
+	return terra.ReferenceAsString(igp.ref.Append("policy"))
 }
 
 type iamGroupPolicyState struct {

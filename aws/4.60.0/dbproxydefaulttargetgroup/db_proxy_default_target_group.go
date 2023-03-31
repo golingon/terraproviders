@@ -44,23 +44,23 @@ func (cpc ConnectionPoolConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cpc ConnectionPoolConfigAttributes) ConnectionBorrowTimeout() terra.NumberValue {
-	return terra.ReferenceNumber(cpc.ref.Append("connection_borrow_timeout"))
+	return terra.ReferenceAsNumber(cpc.ref.Append("connection_borrow_timeout"))
 }
 
 func (cpc ConnectionPoolConfigAttributes) InitQuery() terra.StringValue {
-	return terra.ReferenceString(cpc.ref.Append("init_query"))
+	return terra.ReferenceAsString(cpc.ref.Append("init_query"))
 }
 
 func (cpc ConnectionPoolConfigAttributes) MaxConnectionsPercent() terra.NumberValue {
-	return terra.ReferenceNumber(cpc.ref.Append("max_connections_percent"))
+	return terra.ReferenceAsNumber(cpc.ref.Append("max_connections_percent"))
 }
 
 func (cpc ConnectionPoolConfigAttributes) MaxIdleConnectionsPercent() terra.NumberValue {
-	return terra.ReferenceNumber(cpc.ref.Append("max_idle_connections_percent"))
+	return terra.ReferenceAsNumber(cpc.ref.Append("max_idle_connections_percent"))
 }
 
 func (cpc ConnectionPoolConfigAttributes) SessionPinningFilters() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cpc.ref.Append("session_pinning_filters"))
+	return terra.ReferenceAsSet[terra.StringValue](cpc.ref.Append("session_pinning_filters"))
 }
 
 type TimeoutsAttributes struct {
@@ -80,11 +80,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ConnectionPoolConfigState struct {

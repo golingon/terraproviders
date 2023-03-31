@@ -75,23 +75,23 @@ func (idc InputDataConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (idc InputDataConfigAttributes) DataFormat() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("data_format"))
+	return terra.ReferenceAsString(idc.ref.Append("data_format"))
 }
 
 func (idc InputDataConfigAttributes) LabelDelimiter() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("label_delimiter"))
+	return terra.ReferenceAsString(idc.ref.Append("label_delimiter"))
 }
 
 func (idc InputDataConfigAttributes) S3Uri() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("s3_uri"))
+	return terra.ReferenceAsString(idc.ref.Append("s3_uri"))
 }
 
 func (idc InputDataConfigAttributes) TestS3Uri() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("test_s3_uri"))
+	return terra.ReferenceAsString(idc.ref.Append("test_s3_uri"))
 }
 
 func (idc InputDataConfigAttributes) AugmentedManifests() terra.SetValue[AugmentedManifestsAttributes] {
-	return terra.ReferenceSet[AugmentedManifestsAttributes](idc.ref.Append("augmented_manifests"))
+	return terra.ReferenceAsSet[AugmentedManifestsAttributes](idc.ref.Append("augmented_manifests"))
 }
 
 type AugmentedManifestsAttributes struct {
@@ -111,27 +111,27 @@ func (am AugmentedManifestsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (am AugmentedManifestsAttributes) AnnotationDataS3Uri() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("annotation_data_s3_uri"))
+	return terra.ReferenceAsString(am.ref.Append("annotation_data_s3_uri"))
 }
 
 func (am AugmentedManifestsAttributes) AttributeNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](am.ref.Append("attribute_names"))
+	return terra.ReferenceAsList[terra.StringValue](am.ref.Append("attribute_names"))
 }
 
 func (am AugmentedManifestsAttributes) DocumentType() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("document_type"))
+	return terra.ReferenceAsString(am.ref.Append("document_type"))
 }
 
 func (am AugmentedManifestsAttributes) S3Uri() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("s3_uri"))
+	return terra.ReferenceAsString(am.ref.Append("s3_uri"))
 }
 
 func (am AugmentedManifestsAttributes) SourceDocumentsS3Uri() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("source_documents_s3_uri"))
+	return terra.ReferenceAsString(am.ref.Append("source_documents_s3_uri"))
 }
 
 func (am AugmentedManifestsAttributes) Split() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("split"))
+	return terra.ReferenceAsString(am.ref.Append("split"))
 }
 
 type OutputDataConfigAttributes struct {
@@ -151,15 +151,15 @@ func (odc OutputDataConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (odc OutputDataConfigAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(odc.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(odc.ref.Append("kms_key_id"))
 }
 
 func (odc OutputDataConfigAttributes) OutputS3Uri() terra.StringValue {
-	return terra.ReferenceString(odc.ref.Append("output_s3_uri"))
+	return terra.ReferenceAsString(odc.ref.Append("output_s3_uri"))
 }
 
 func (odc OutputDataConfigAttributes) S3Uri() terra.StringValue {
-	return terra.ReferenceString(odc.ref.Append("s3_uri"))
+	return terra.ReferenceAsString(odc.ref.Append("s3_uri"))
 }
 
 type TimeoutsAttributes struct {
@@ -179,15 +179,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type VpcConfigAttributes struct {
@@ -207,11 +207,11 @@ func (vc VpcConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vc VpcConfigAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("security_group_ids"))
 }
 
 func (vc VpcConfigAttributes) Subnets() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("subnets"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("subnets"))
 }
 
 type InputDataConfigState struct {

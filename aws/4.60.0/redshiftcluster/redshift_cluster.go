@@ -57,15 +57,15 @@ func (cn ClusterNodesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cn ClusterNodesAttributes) NodeRole() terra.StringValue {
-	return terra.ReferenceString(cn.ref.Append("node_role"))
+	return terra.ReferenceAsString(cn.ref.Append("node_role"))
 }
 
 func (cn ClusterNodesAttributes) PrivateIpAddress() terra.StringValue {
-	return terra.ReferenceString(cn.ref.Append("private_ip_address"))
+	return terra.ReferenceAsString(cn.ref.Append("private_ip_address"))
 }
 
 func (cn ClusterNodesAttributes) PublicIpAddress() terra.StringValue {
-	return terra.ReferenceString(cn.ref.Append("public_ip_address"))
+	return terra.ReferenceAsString(cn.ref.Append("public_ip_address"))
 }
 
 type LoggingAttributes struct {
@@ -85,23 +85,23 @@ func (l LoggingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (l LoggingAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(l.ref.Append("bucket_name"))
 }
 
 func (l LoggingAttributes) Enable() terra.BoolValue {
-	return terra.ReferenceBool(l.ref.Append("enable"))
+	return terra.ReferenceAsBool(l.ref.Append("enable"))
 }
 
 func (l LoggingAttributes) LogDestinationType() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("log_destination_type"))
+	return terra.ReferenceAsString(l.ref.Append("log_destination_type"))
 }
 
 func (l LoggingAttributes) LogExports() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](l.ref.Append("log_exports"))
+	return terra.ReferenceAsSet[terra.StringValue](l.ref.Append("log_exports"))
 }
 
 func (l LoggingAttributes) S3KeyPrefix() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("s3_key_prefix"))
+	return terra.ReferenceAsString(l.ref.Append("s3_key_prefix"))
 }
 
 type SnapshotCopyAttributes struct {
@@ -121,15 +121,15 @@ func (sc SnapshotCopyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc SnapshotCopyAttributes) DestinationRegion() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("destination_region"))
+	return terra.ReferenceAsString(sc.ref.Append("destination_region"))
 }
 
 func (sc SnapshotCopyAttributes) GrantName() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("grant_name"))
+	return terra.ReferenceAsString(sc.ref.Append("grant_name"))
 }
 
 func (sc SnapshotCopyAttributes) RetentionPeriod() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("retention_period"))
+	return terra.ReferenceAsNumber(sc.ref.Append("retention_period"))
 }
 
 type TimeoutsAttributes struct {
@@ -149,15 +149,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ClusterNodesState struct {

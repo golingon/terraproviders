@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLightsailLbCertificate creates a new instance of [LightsailLbCertificate].
 func NewLightsailLbCertificate(name string, args LightsailLbCertificateArgs) *LightsailLbCertificate {
 	return &LightsailLbCertificate{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLightsailLbCertificate(name string, args LightsailLbCertificateArgs) *Li
 
 var _ terra.Resource = (*LightsailLbCertificate)(nil)
 
+// LightsailLbCertificate represents the Terraform resource aws_lightsail_lb_certificate.
 type LightsailLbCertificate struct {
-	Name  string
-	Args  LightsailLbCertificateArgs
-	state *lightsailLbCertificateState
+	Name      string
+	Args      LightsailLbCertificateArgs
+	state     *lightsailLbCertificateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LightsailLbCertificate].
 func (llc *LightsailLbCertificate) Type() string {
 	return "aws_lightsail_lb_certificate"
 }
 
+// LocalName returns the local name for [LightsailLbCertificate].
 func (llc *LightsailLbCertificate) LocalName() string {
 	return llc.Name
 }
 
+// Configuration returns the configuration (args) for [LightsailLbCertificate].
 func (llc *LightsailLbCertificate) Configuration() interface{} {
 	return llc.Args
 }
 
+// DependOn is used for other resources to depend on [LightsailLbCertificate].
+func (llc *LightsailLbCertificate) DependOn() terra.Reference {
+	return terra.ReferenceResource(llc)
+}
+
+// Dependencies returns the list of resources [LightsailLbCertificate] depends_on.
+func (llc *LightsailLbCertificate) Dependencies() terra.Dependencies {
+	return llc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LightsailLbCertificate].
+func (llc *LightsailLbCertificate) LifecycleManagement() *terra.Lifecycle {
+	return llc.Lifecycle
+}
+
+// Attributes returns the attributes for [LightsailLbCertificate].
 func (llc *LightsailLbCertificate) Attributes() lightsailLbCertificateAttributes {
 	return lightsailLbCertificateAttributes{ref: terra.ReferenceResource(llc)}
 }
 
+// ImportState imports the given attribute values into [LightsailLbCertificate]'s state.
 func (llc *LightsailLbCertificate) ImportState(av io.Reader) error {
 	llc.state = &lightsailLbCertificateState{}
 	if err := json.NewDecoder(av).Decode(llc.state); err != nil {
@@ -49,10 +73,12 @@ func (llc *LightsailLbCertificate) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LightsailLbCertificate] has state.
 func (llc *LightsailLbCertificate) State() (*lightsailLbCertificateState, bool) {
 	return llc.state, llc.state != nil
 }
 
+// StateMust returns the state for [LightsailLbCertificate]. Panics if the state is nil.
 func (llc *LightsailLbCertificate) StateMust() *lightsailLbCertificateState {
 	if llc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", llc.Type(), llc.LocalName()))
@@ -60,10 +86,7 @@ func (llc *LightsailLbCertificate) StateMust() *lightsailLbCertificateState {
 	return llc.state
 }
 
-func (llc *LightsailLbCertificate) DependOn() terra.Reference {
-	return terra.ReferenceResource(llc)
-}
-
+// LightsailLbCertificateArgs contains the configurations for aws_lightsail_lb_certificate.
 type LightsailLbCertificateArgs struct {
 	// DomainName: string, optional
 	DomainName terra.StringValue `hcl:"domain_name,attr"`
@@ -77,47 +100,53 @@ type LightsailLbCertificateArgs struct {
 	SubjectAlternativeNames terra.SetValue[terra.StringValue] `hcl:"subject_alternative_names,attr"`
 	// DomainValidationRecords: min=0
 	DomainValidationRecords []lightsaillbcertificate.DomainValidationRecords `hcl:"domain_validation_records,block" validate:"min=0"`
-	// DependsOn contains resources that LightsailLbCertificate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lightsailLbCertificateAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_lightsail_lb_certificate.
 func (llc lightsailLbCertificateAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(llc.ref.Append("arn"))
+	return terra.ReferenceAsString(llc.ref.Append("arn"))
 }
 
+// CreatedAt returns a reference to field created_at of aws_lightsail_lb_certificate.
 func (llc lightsailLbCertificateAttributes) CreatedAt() terra.StringValue {
-	return terra.ReferenceString(llc.ref.Append("created_at"))
+	return terra.ReferenceAsString(llc.ref.Append("created_at"))
 }
 
+// DomainName returns a reference to field domain_name of aws_lightsail_lb_certificate.
 func (llc lightsailLbCertificateAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(llc.ref.Append("domain_name"))
+	return terra.ReferenceAsString(llc.ref.Append("domain_name"))
 }
 
+// Id returns a reference to field id of aws_lightsail_lb_certificate.
 func (llc lightsailLbCertificateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(llc.ref.Append("id"))
+	return terra.ReferenceAsString(llc.ref.Append("id"))
 }
 
+// LbName returns a reference to field lb_name of aws_lightsail_lb_certificate.
 func (llc lightsailLbCertificateAttributes) LbName() terra.StringValue {
-	return terra.ReferenceString(llc.ref.Append("lb_name"))
+	return terra.ReferenceAsString(llc.ref.Append("lb_name"))
 }
 
+// Name returns a reference to field name of aws_lightsail_lb_certificate.
 func (llc lightsailLbCertificateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(llc.ref.Append("name"))
+	return terra.ReferenceAsString(llc.ref.Append("name"))
 }
 
+// SubjectAlternativeNames returns a reference to field subject_alternative_names of aws_lightsail_lb_certificate.
 func (llc lightsailLbCertificateAttributes) SubjectAlternativeNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](llc.ref.Append("subject_alternative_names"))
+	return terra.ReferenceAsSet[terra.StringValue](llc.ref.Append("subject_alternative_names"))
 }
 
+// SupportCode returns a reference to field support_code of aws_lightsail_lb_certificate.
 func (llc lightsailLbCertificateAttributes) SupportCode() terra.StringValue {
-	return terra.ReferenceString(llc.ref.Append("support_code"))
+	return terra.ReferenceAsString(llc.ref.Append("support_code"))
 }
 
 func (llc lightsailLbCertificateAttributes) DomainValidationRecords() terra.SetValue[lightsaillbcertificate.DomainValidationRecordsAttributes] {
-	return terra.ReferenceSet[lightsaillbcertificate.DomainValidationRecordsAttributes](llc.ref.Append("domain_validation_records"))
+	return terra.ReferenceAsSet[lightsaillbcertificate.DomainValidationRecordsAttributes](llc.ref.Append("domain_validation_records"))
 }
 
 type lightsailLbCertificateState struct {

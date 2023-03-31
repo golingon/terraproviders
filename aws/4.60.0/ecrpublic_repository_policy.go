@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewEcrpublicRepositoryPolicy creates a new instance of [EcrpublicRepositoryPolicy].
 func NewEcrpublicRepositoryPolicy(name string, args EcrpublicRepositoryPolicyArgs) *EcrpublicRepositoryPolicy {
 	return &EcrpublicRepositoryPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewEcrpublicRepositoryPolicy(name string, args EcrpublicRepositoryPolicyArg
 
 var _ terra.Resource = (*EcrpublicRepositoryPolicy)(nil)
 
+// EcrpublicRepositoryPolicy represents the Terraform resource aws_ecrpublic_repository_policy.
 type EcrpublicRepositoryPolicy struct {
-	Name  string
-	Args  EcrpublicRepositoryPolicyArgs
-	state *ecrpublicRepositoryPolicyState
+	Name      string
+	Args      EcrpublicRepositoryPolicyArgs
+	state     *ecrpublicRepositoryPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EcrpublicRepositoryPolicy].
 func (erp *EcrpublicRepositoryPolicy) Type() string {
 	return "aws_ecrpublic_repository_policy"
 }
 
+// LocalName returns the local name for [EcrpublicRepositoryPolicy].
 func (erp *EcrpublicRepositoryPolicy) LocalName() string {
 	return erp.Name
 }
 
+// Configuration returns the configuration (args) for [EcrpublicRepositoryPolicy].
 func (erp *EcrpublicRepositoryPolicy) Configuration() interface{} {
 	return erp.Args
 }
 
+// DependOn is used for other resources to depend on [EcrpublicRepositoryPolicy].
+func (erp *EcrpublicRepositoryPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(erp)
+}
+
+// Dependencies returns the list of resources [EcrpublicRepositoryPolicy] depends_on.
+func (erp *EcrpublicRepositoryPolicy) Dependencies() terra.Dependencies {
+	return erp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EcrpublicRepositoryPolicy].
+func (erp *EcrpublicRepositoryPolicy) LifecycleManagement() *terra.Lifecycle {
+	return erp.Lifecycle
+}
+
+// Attributes returns the attributes for [EcrpublicRepositoryPolicy].
 func (erp *EcrpublicRepositoryPolicy) Attributes() ecrpublicRepositoryPolicyAttributes {
 	return ecrpublicRepositoryPolicyAttributes{ref: terra.ReferenceResource(erp)}
 }
 
+// ImportState imports the given attribute values into [EcrpublicRepositoryPolicy]'s state.
 func (erp *EcrpublicRepositoryPolicy) ImportState(av io.Reader) error {
 	erp.state = &ecrpublicRepositoryPolicyState{}
 	if err := json.NewDecoder(av).Decode(erp.state); err != nil {
@@ -48,10 +72,12 @@ func (erp *EcrpublicRepositoryPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EcrpublicRepositoryPolicy] has state.
 func (erp *EcrpublicRepositoryPolicy) State() (*ecrpublicRepositoryPolicyState, bool) {
 	return erp.state, erp.state != nil
 }
 
+// StateMust returns the state for [EcrpublicRepositoryPolicy]. Panics if the state is nil.
 func (erp *EcrpublicRepositoryPolicy) StateMust() *ecrpublicRepositoryPolicyState {
 	if erp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", erp.Type(), erp.LocalName()))
@@ -59,10 +85,7 @@ func (erp *EcrpublicRepositoryPolicy) StateMust() *ecrpublicRepositoryPolicyStat
 	return erp.state
 }
 
-func (erp *EcrpublicRepositoryPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(erp)
-}
-
+// EcrpublicRepositoryPolicyArgs contains the configurations for aws_ecrpublic_repository_policy.
 type EcrpublicRepositoryPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,27 +93,29 @@ type EcrpublicRepositoryPolicyArgs struct {
 	Policy terra.StringValue `hcl:"policy,attr" validate:"required"`
 	// RepositoryName: string, required
 	RepositoryName terra.StringValue `hcl:"repository_name,attr" validate:"required"`
-	// DependsOn contains resources that EcrpublicRepositoryPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ecrpublicRepositoryPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_ecrpublic_repository_policy.
 func (erp ecrpublicRepositoryPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(erp.ref.Append("id"))
+	return terra.ReferenceAsString(erp.ref.Append("id"))
 }
 
+// Policy returns a reference to field policy of aws_ecrpublic_repository_policy.
 func (erp ecrpublicRepositoryPolicyAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(erp.ref.Append("policy"))
+	return terra.ReferenceAsString(erp.ref.Append("policy"))
 }
 
+// RegistryId returns a reference to field registry_id of aws_ecrpublic_repository_policy.
 func (erp ecrpublicRepositoryPolicyAttributes) RegistryId() terra.StringValue {
-	return terra.ReferenceString(erp.ref.Append("registry_id"))
+	return terra.ReferenceAsString(erp.ref.Append("registry_id"))
 }
 
+// RepositoryName returns a reference to field repository_name of aws_ecrpublic_repository_policy.
 func (erp ecrpublicRepositoryPolicyAttributes) RepositoryName() terra.StringValue {
-	return terra.ReferenceString(erp.ref.Append("repository_name"))
+	return terra.ReferenceAsString(erp.ref.Append("repository_name"))
 }
 
 type ecrpublicRepositoryPolicyState struct {

@@ -38,11 +38,11 @@ func (c ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("id"))
+	return terra.ReferenceAsString(c.ref.Append("id"))
 }
 
 func (c ConfigurationAttributes) Revision() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("revision"))
+	return terra.ReferenceAsNumber(c.ref.Append("revision"))
 }
 
 type EncryptionOptionsAttributes struct {
@@ -62,11 +62,11 @@ func (eo EncryptionOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (eo EncryptionOptionsAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(eo.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(eo.ref.Append("kms_key_id"))
 }
 
 func (eo EncryptionOptionsAttributes) UseAwsOwnedKey() terra.BoolValue {
-	return terra.ReferenceBool(eo.ref.Append("use_aws_owned_key"))
+	return terra.ReferenceAsBool(eo.ref.Append("use_aws_owned_key"))
 }
 
 type InstancesAttributes struct {
@@ -86,15 +86,15 @@ func (i InstancesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i InstancesAttributes) ConsoleUrl() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("console_url"))
+	return terra.ReferenceAsString(i.ref.Append("console_url"))
 }
 
 func (i InstancesAttributes) Endpoints() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](i.ref.Append("endpoints"))
+	return terra.ReferenceAsList[terra.StringValue](i.ref.Append("endpoints"))
 }
 
 func (i InstancesAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("ip_address"))
+	return terra.ReferenceAsString(i.ref.Append("ip_address"))
 }
 
 type LdapServerMetadataAttributes struct {
@@ -114,47 +114,47 @@ func (lsm LdapServerMetadataAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lsm LdapServerMetadataAttributes) Hosts() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lsm.ref.Append("hosts"))
+	return terra.ReferenceAsList[terra.StringValue](lsm.ref.Append("hosts"))
 }
 
 func (lsm LdapServerMetadataAttributes) RoleBase() terra.StringValue {
-	return terra.ReferenceString(lsm.ref.Append("role_base"))
+	return terra.ReferenceAsString(lsm.ref.Append("role_base"))
 }
 
 func (lsm LdapServerMetadataAttributes) RoleName() terra.StringValue {
-	return terra.ReferenceString(lsm.ref.Append("role_name"))
+	return terra.ReferenceAsString(lsm.ref.Append("role_name"))
 }
 
 func (lsm LdapServerMetadataAttributes) RoleSearchMatching() terra.StringValue {
-	return terra.ReferenceString(lsm.ref.Append("role_search_matching"))
+	return terra.ReferenceAsString(lsm.ref.Append("role_search_matching"))
 }
 
 func (lsm LdapServerMetadataAttributes) RoleSearchSubtree() terra.BoolValue {
-	return terra.ReferenceBool(lsm.ref.Append("role_search_subtree"))
+	return terra.ReferenceAsBool(lsm.ref.Append("role_search_subtree"))
 }
 
 func (lsm LdapServerMetadataAttributes) ServiceAccountPassword() terra.StringValue {
-	return terra.ReferenceString(lsm.ref.Append("service_account_password"))
+	return terra.ReferenceAsString(lsm.ref.Append("service_account_password"))
 }
 
 func (lsm LdapServerMetadataAttributes) ServiceAccountUsername() terra.StringValue {
-	return terra.ReferenceString(lsm.ref.Append("service_account_username"))
+	return terra.ReferenceAsString(lsm.ref.Append("service_account_username"))
 }
 
 func (lsm LdapServerMetadataAttributes) UserBase() terra.StringValue {
-	return terra.ReferenceString(lsm.ref.Append("user_base"))
+	return terra.ReferenceAsString(lsm.ref.Append("user_base"))
 }
 
 func (lsm LdapServerMetadataAttributes) UserRoleName() terra.StringValue {
-	return terra.ReferenceString(lsm.ref.Append("user_role_name"))
+	return terra.ReferenceAsString(lsm.ref.Append("user_role_name"))
 }
 
 func (lsm LdapServerMetadataAttributes) UserSearchMatching() terra.StringValue {
-	return terra.ReferenceString(lsm.ref.Append("user_search_matching"))
+	return terra.ReferenceAsString(lsm.ref.Append("user_search_matching"))
 }
 
 func (lsm LdapServerMetadataAttributes) UserSearchSubtree() terra.BoolValue {
-	return terra.ReferenceBool(lsm.ref.Append("user_search_subtree"))
+	return terra.ReferenceAsBool(lsm.ref.Append("user_search_subtree"))
 }
 
 type LogsAttributes struct {
@@ -174,11 +174,11 @@ func (l LogsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (l LogsAttributes) Audit() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("audit"))
+	return terra.ReferenceAsString(l.ref.Append("audit"))
 }
 
 func (l LogsAttributes) General() terra.BoolValue {
-	return terra.ReferenceBool(l.ref.Append("general"))
+	return terra.ReferenceAsBool(l.ref.Append("general"))
 }
 
 type MaintenanceWindowStartTimeAttributes struct {
@@ -198,15 +198,15 @@ func (mwst MaintenanceWindowStartTimeAttributes) InternalTokens() hclwrite.Token
 }
 
 func (mwst MaintenanceWindowStartTimeAttributes) DayOfWeek() terra.StringValue {
-	return terra.ReferenceString(mwst.ref.Append("day_of_week"))
+	return terra.ReferenceAsString(mwst.ref.Append("day_of_week"))
 }
 
 func (mwst MaintenanceWindowStartTimeAttributes) TimeOfDay() terra.StringValue {
-	return terra.ReferenceString(mwst.ref.Append("time_of_day"))
+	return terra.ReferenceAsString(mwst.ref.Append("time_of_day"))
 }
 
 func (mwst MaintenanceWindowStartTimeAttributes) TimeZone() terra.StringValue {
-	return terra.ReferenceString(mwst.ref.Append("time_zone"))
+	return terra.ReferenceAsString(mwst.ref.Append("time_zone"))
 }
 
 type UserAttributes struct {
@@ -226,15 +226,15 @@ func (u UserAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (u UserAttributes) ConsoleAccess() terra.BoolValue {
-	return terra.ReferenceBool(u.ref.Append("console_access"))
+	return terra.ReferenceAsBool(u.ref.Append("console_access"))
 }
 
 func (u UserAttributes) Groups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](u.ref.Append("groups"))
+	return terra.ReferenceAsSet[terra.StringValue](u.ref.Append("groups"))
 }
 
 func (u UserAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(u.ref.Append("username"))
+	return terra.ReferenceAsString(u.ref.Append("username"))
 }
 
 type ConfigurationState struct {

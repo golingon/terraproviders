@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDbInstance creates a new instance of [DbInstance].
 func NewDbInstance(name string, args DbInstanceArgs) *DbInstance {
 	return &DbInstance{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDbInstance(name string, args DbInstanceArgs) *DbInstance {
 
 var _ terra.Resource = (*DbInstance)(nil)
 
+// DbInstance represents the Terraform resource aws_db_instance.
 type DbInstance struct {
-	Name  string
-	Args  DbInstanceArgs
-	state *dbInstanceState
+	Name      string
+	Args      DbInstanceArgs
+	state     *dbInstanceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DbInstance].
 func (di *DbInstance) Type() string {
 	return "aws_db_instance"
 }
 
+// LocalName returns the local name for [DbInstance].
 func (di *DbInstance) LocalName() string {
 	return di.Name
 }
 
+// Configuration returns the configuration (args) for [DbInstance].
 func (di *DbInstance) Configuration() interface{} {
 	return di.Args
 }
 
+// DependOn is used for other resources to depend on [DbInstance].
+func (di *DbInstance) DependOn() terra.Reference {
+	return terra.ReferenceResource(di)
+}
+
+// Dependencies returns the list of resources [DbInstance] depends_on.
+func (di *DbInstance) Dependencies() terra.Dependencies {
+	return di.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DbInstance].
+func (di *DbInstance) LifecycleManagement() *terra.Lifecycle {
+	return di.Lifecycle
+}
+
+// Attributes returns the attributes for [DbInstance].
 func (di *DbInstance) Attributes() dbInstanceAttributes {
 	return dbInstanceAttributes{ref: terra.ReferenceResource(di)}
 }
 
+// ImportState imports the given attribute values into [DbInstance]'s state.
 func (di *DbInstance) ImportState(av io.Reader) error {
 	di.state = &dbInstanceState{}
 	if err := json.NewDecoder(av).Decode(di.state); err != nil {
@@ -49,10 +73,12 @@ func (di *DbInstance) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DbInstance] has state.
 func (di *DbInstance) State() (*dbInstanceState, bool) {
 	return di.state, di.state != nil
 }
 
+// StateMust returns the state for [DbInstance]. Panics if the state is nil.
 func (di *DbInstance) StateMust() *dbInstanceState {
 	if di.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", di.Type(), di.LocalName()))
@@ -60,10 +86,7 @@ func (di *DbInstance) StateMust() *dbInstanceState {
 	return di.state
 }
 
-func (di *DbInstance) DependOn() terra.Reference {
-	return terra.ReferenceResource(di)
-}
-
+// DbInstanceArgs contains the configurations for aws_db_instance.
 type DbInstanceArgs struct {
 	// AllocatedStorage: number, optional
 	AllocatedStorage terra.NumberValue `hcl:"allocated_storage,attr"`
@@ -193,303 +216,369 @@ type DbInstanceArgs struct {
 	S3Import *dbinstance.S3Import `hcl:"s3_import,block"`
 	// Timeouts: optional
 	Timeouts *dbinstance.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DbInstance depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dbInstanceAttributes struct {
 	ref terra.Reference
 }
 
+// Address returns a reference to field address of aws_db_instance.
 func (di dbInstanceAttributes) Address() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("address"))
+	return terra.ReferenceAsString(di.ref.Append("address"))
 }
 
+// AllocatedStorage returns a reference to field allocated_storage of aws_db_instance.
 func (di dbInstanceAttributes) AllocatedStorage() terra.NumberValue {
-	return terra.ReferenceNumber(di.ref.Append("allocated_storage"))
+	return terra.ReferenceAsNumber(di.ref.Append("allocated_storage"))
 }
 
+// AllowMajorVersionUpgrade returns a reference to field allow_major_version_upgrade of aws_db_instance.
 func (di dbInstanceAttributes) AllowMajorVersionUpgrade() terra.BoolValue {
-	return terra.ReferenceBool(di.ref.Append("allow_major_version_upgrade"))
+	return terra.ReferenceAsBool(di.ref.Append("allow_major_version_upgrade"))
 }
 
+// ApplyImmediately returns a reference to field apply_immediately of aws_db_instance.
 func (di dbInstanceAttributes) ApplyImmediately() terra.BoolValue {
-	return terra.ReferenceBool(di.ref.Append("apply_immediately"))
+	return terra.ReferenceAsBool(di.ref.Append("apply_immediately"))
 }
 
+// Arn returns a reference to field arn of aws_db_instance.
 func (di dbInstanceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("arn"))
+	return terra.ReferenceAsString(di.ref.Append("arn"))
 }
 
+// AutoMinorVersionUpgrade returns a reference to field auto_minor_version_upgrade of aws_db_instance.
 func (di dbInstanceAttributes) AutoMinorVersionUpgrade() terra.BoolValue {
-	return terra.ReferenceBool(di.ref.Append("auto_minor_version_upgrade"))
+	return terra.ReferenceAsBool(di.ref.Append("auto_minor_version_upgrade"))
 }
 
+// AvailabilityZone returns a reference to field availability_zone of aws_db_instance.
 func (di dbInstanceAttributes) AvailabilityZone() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("availability_zone"))
+	return terra.ReferenceAsString(di.ref.Append("availability_zone"))
 }
 
+// BackupRetentionPeriod returns a reference to field backup_retention_period of aws_db_instance.
 func (di dbInstanceAttributes) BackupRetentionPeriod() terra.NumberValue {
-	return terra.ReferenceNumber(di.ref.Append("backup_retention_period"))
+	return terra.ReferenceAsNumber(di.ref.Append("backup_retention_period"))
 }
 
+// BackupWindow returns a reference to field backup_window of aws_db_instance.
 func (di dbInstanceAttributes) BackupWindow() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("backup_window"))
+	return terra.ReferenceAsString(di.ref.Append("backup_window"))
 }
 
+// CaCertIdentifier returns a reference to field ca_cert_identifier of aws_db_instance.
 func (di dbInstanceAttributes) CaCertIdentifier() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("ca_cert_identifier"))
+	return terra.ReferenceAsString(di.ref.Append("ca_cert_identifier"))
 }
 
+// CharacterSetName returns a reference to field character_set_name of aws_db_instance.
 func (di dbInstanceAttributes) CharacterSetName() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("character_set_name"))
+	return terra.ReferenceAsString(di.ref.Append("character_set_name"))
 }
 
+// CopyTagsToSnapshot returns a reference to field copy_tags_to_snapshot of aws_db_instance.
 func (di dbInstanceAttributes) CopyTagsToSnapshot() terra.BoolValue {
-	return terra.ReferenceBool(di.ref.Append("copy_tags_to_snapshot"))
+	return terra.ReferenceAsBool(di.ref.Append("copy_tags_to_snapshot"))
 }
 
+// CustomIamInstanceProfile returns a reference to field custom_iam_instance_profile of aws_db_instance.
 func (di dbInstanceAttributes) CustomIamInstanceProfile() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("custom_iam_instance_profile"))
+	return terra.ReferenceAsString(di.ref.Append("custom_iam_instance_profile"))
 }
 
+// CustomerOwnedIpEnabled returns a reference to field customer_owned_ip_enabled of aws_db_instance.
 func (di dbInstanceAttributes) CustomerOwnedIpEnabled() terra.BoolValue {
-	return terra.ReferenceBool(di.ref.Append("customer_owned_ip_enabled"))
+	return terra.ReferenceAsBool(di.ref.Append("customer_owned_ip_enabled"))
 }
 
+// DbName returns a reference to field db_name of aws_db_instance.
 func (di dbInstanceAttributes) DbName() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("db_name"))
+	return terra.ReferenceAsString(di.ref.Append("db_name"))
 }
 
+// DbSubnetGroupName returns a reference to field db_subnet_group_name of aws_db_instance.
 func (di dbInstanceAttributes) DbSubnetGroupName() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("db_subnet_group_name"))
+	return terra.ReferenceAsString(di.ref.Append("db_subnet_group_name"))
 }
 
+// DeleteAutomatedBackups returns a reference to field delete_automated_backups of aws_db_instance.
 func (di dbInstanceAttributes) DeleteAutomatedBackups() terra.BoolValue {
-	return terra.ReferenceBool(di.ref.Append("delete_automated_backups"))
+	return terra.ReferenceAsBool(di.ref.Append("delete_automated_backups"))
 }
 
+// DeletionProtection returns a reference to field deletion_protection of aws_db_instance.
 func (di dbInstanceAttributes) DeletionProtection() terra.BoolValue {
-	return terra.ReferenceBool(di.ref.Append("deletion_protection"))
+	return terra.ReferenceAsBool(di.ref.Append("deletion_protection"))
 }
 
+// Domain returns a reference to field domain of aws_db_instance.
 func (di dbInstanceAttributes) Domain() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("domain"))
+	return terra.ReferenceAsString(di.ref.Append("domain"))
 }
 
+// DomainIamRoleName returns a reference to field domain_iam_role_name of aws_db_instance.
 func (di dbInstanceAttributes) DomainIamRoleName() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("domain_iam_role_name"))
+	return terra.ReferenceAsString(di.ref.Append("domain_iam_role_name"))
 }
 
+// EnabledCloudwatchLogsExports returns a reference to field enabled_cloudwatch_logs_exports of aws_db_instance.
 func (di dbInstanceAttributes) EnabledCloudwatchLogsExports() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](di.ref.Append("enabled_cloudwatch_logs_exports"))
+	return terra.ReferenceAsSet[terra.StringValue](di.ref.Append("enabled_cloudwatch_logs_exports"))
 }
 
+// Endpoint returns a reference to field endpoint of aws_db_instance.
 func (di dbInstanceAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("endpoint"))
+	return terra.ReferenceAsString(di.ref.Append("endpoint"))
 }
 
+// Engine returns a reference to field engine of aws_db_instance.
 func (di dbInstanceAttributes) Engine() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("engine"))
+	return terra.ReferenceAsString(di.ref.Append("engine"))
 }
 
+// EngineVersion returns a reference to field engine_version of aws_db_instance.
 func (di dbInstanceAttributes) EngineVersion() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("engine_version"))
+	return terra.ReferenceAsString(di.ref.Append("engine_version"))
 }
 
+// EngineVersionActual returns a reference to field engine_version_actual of aws_db_instance.
 func (di dbInstanceAttributes) EngineVersionActual() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("engine_version_actual"))
+	return terra.ReferenceAsString(di.ref.Append("engine_version_actual"))
 }
 
+// FinalSnapshotIdentifier returns a reference to field final_snapshot_identifier of aws_db_instance.
 func (di dbInstanceAttributes) FinalSnapshotIdentifier() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("final_snapshot_identifier"))
+	return terra.ReferenceAsString(di.ref.Append("final_snapshot_identifier"))
 }
 
+// HostedZoneId returns a reference to field hosted_zone_id of aws_db_instance.
 func (di dbInstanceAttributes) HostedZoneId() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("hosted_zone_id"))
+	return terra.ReferenceAsString(di.ref.Append("hosted_zone_id"))
 }
 
+// IamDatabaseAuthenticationEnabled returns a reference to field iam_database_authentication_enabled of aws_db_instance.
 func (di dbInstanceAttributes) IamDatabaseAuthenticationEnabled() terra.BoolValue {
-	return terra.ReferenceBool(di.ref.Append("iam_database_authentication_enabled"))
+	return terra.ReferenceAsBool(di.ref.Append("iam_database_authentication_enabled"))
 }
 
+// Id returns a reference to field id of aws_db_instance.
 func (di dbInstanceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("id"))
+	return terra.ReferenceAsString(di.ref.Append("id"))
 }
 
+// Identifier returns a reference to field identifier of aws_db_instance.
 func (di dbInstanceAttributes) Identifier() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("identifier"))
+	return terra.ReferenceAsString(di.ref.Append("identifier"))
 }
 
+// IdentifierPrefix returns a reference to field identifier_prefix of aws_db_instance.
 func (di dbInstanceAttributes) IdentifierPrefix() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("identifier_prefix"))
+	return terra.ReferenceAsString(di.ref.Append("identifier_prefix"))
 }
 
+// InstanceClass returns a reference to field instance_class of aws_db_instance.
 func (di dbInstanceAttributes) InstanceClass() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("instance_class"))
+	return terra.ReferenceAsString(di.ref.Append("instance_class"))
 }
 
+// Iops returns a reference to field iops of aws_db_instance.
 func (di dbInstanceAttributes) Iops() terra.NumberValue {
-	return terra.ReferenceNumber(di.ref.Append("iops"))
+	return terra.ReferenceAsNumber(di.ref.Append("iops"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_db_instance.
 func (di dbInstanceAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(di.ref.Append("kms_key_id"))
 }
 
+// LatestRestorableTime returns a reference to field latest_restorable_time of aws_db_instance.
 func (di dbInstanceAttributes) LatestRestorableTime() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("latest_restorable_time"))
+	return terra.ReferenceAsString(di.ref.Append("latest_restorable_time"))
 }
 
+// LicenseModel returns a reference to field license_model of aws_db_instance.
 func (di dbInstanceAttributes) LicenseModel() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("license_model"))
+	return terra.ReferenceAsString(di.ref.Append("license_model"))
 }
 
+// MaintenanceWindow returns a reference to field maintenance_window of aws_db_instance.
 func (di dbInstanceAttributes) MaintenanceWindow() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("maintenance_window"))
+	return terra.ReferenceAsString(di.ref.Append("maintenance_window"))
 }
 
+// MaxAllocatedStorage returns a reference to field max_allocated_storage of aws_db_instance.
 func (di dbInstanceAttributes) MaxAllocatedStorage() terra.NumberValue {
-	return terra.ReferenceNumber(di.ref.Append("max_allocated_storage"))
+	return terra.ReferenceAsNumber(di.ref.Append("max_allocated_storage"))
 }
 
+// MonitoringInterval returns a reference to field monitoring_interval of aws_db_instance.
 func (di dbInstanceAttributes) MonitoringInterval() terra.NumberValue {
-	return terra.ReferenceNumber(di.ref.Append("monitoring_interval"))
+	return terra.ReferenceAsNumber(di.ref.Append("monitoring_interval"))
 }
 
+// MonitoringRoleArn returns a reference to field monitoring_role_arn of aws_db_instance.
 func (di dbInstanceAttributes) MonitoringRoleArn() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("monitoring_role_arn"))
+	return terra.ReferenceAsString(di.ref.Append("monitoring_role_arn"))
 }
 
+// MultiAz returns a reference to field multi_az of aws_db_instance.
 func (di dbInstanceAttributes) MultiAz() terra.BoolValue {
-	return terra.ReferenceBool(di.ref.Append("multi_az"))
+	return terra.ReferenceAsBool(di.ref.Append("multi_az"))
 }
 
+// Name returns a reference to field name of aws_db_instance.
 func (di dbInstanceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("name"))
+	return terra.ReferenceAsString(di.ref.Append("name"))
 }
 
+// NcharCharacterSetName returns a reference to field nchar_character_set_name of aws_db_instance.
 func (di dbInstanceAttributes) NcharCharacterSetName() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("nchar_character_set_name"))
+	return terra.ReferenceAsString(di.ref.Append("nchar_character_set_name"))
 }
 
+// NetworkType returns a reference to field network_type of aws_db_instance.
 func (di dbInstanceAttributes) NetworkType() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("network_type"))
+	return terra.ReferenceAsString(di.ref.Append("network_type"))
 }
 
+// OptionGroupName returns a reference to field option_group_name of aws_db_instance.
 func (di dbInstanceAttributes) OptionGroupName() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("option_group_name"))
+	return terra.ReferenceAsString(di.ref.Append("option_group_name"))
 }
 
+// ParameterGroupName returns a reference to field parameter_group_name of aws_db_instance.
 func (di dbInstanceAttributes) ParameterGroupName() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("parameter_group_name"))
+	return terra.ReferenceAsString(di.ref.Append("parameter_group_name"))
 }
 
+// Password returns a reference to field password of aws_db_instance.
 func (di dbInstanceAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("password"))
+	return terra.ReferenceAsString(di.ref.Append("password"))
 }
 
+// PerformanceInsightsEnabled returns a reference to field performance_insights_enabled of aws_db_instance.
 func (di dbInstanceAttributes) PerformanceInsightsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(di.ref.Append("performance_insights_enabled"))
+	return terra.ReferenceAsBool(di.ref.Append("performance_insights_enabled"))
 }
 
+// PerformanceInsightsKmsKeyId returns a reference to field performance_insights_kms_key_id of aws_db_instance.
 func (di dbInstanceAttributes) PerformanceInsightsKmsKeyId() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("performance_insights_kms_key_id"))
+	return terra.ReferenceAsString(di.ref.Append("performance_insights_kms_key_id"))
 }
 
+// PerformanceInsightsRetentionPeriod returns a reference to field performance_insights_retention_period of aws_db_instance.
 func (di dbInstanceAttributes) PerformanceInsightsRetentionPeriod() terra.NumberValue {
-	return terra.ReferenceNumber(di.ref.Append("performance_insights_retention_period"))
+	return terra.ReferenceAsNumber(di.ref.Append("performance_insights_retention_period"))
 }
 
+// Port returns a reference to field port of aws_db_instance.
 func (di dbInstanceAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(di.ref.Append("port"))
+	return terra.ReferenceAsNumber(di.ref.Append("port"))
 }
 
+// PubliclyAccessible returns a reference to field publicly_accessible of aws_db_instance.
 func (di dbInstanceAttributes) PubliclyAccessible() terra.BoolValue {
-	return terra.ReferenceBool(di.ref.Append("publicly_accessible"))
+	return terra.ReferenceAsBool(di.ref.Append("publicly_accessible"))
 }
 
+// ReplicaMode returns a reference to field replica_mode of aws_db_instance.
 func (di dbInstanceAttributes) ReplicaMode() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("replica_mode"))
+	return terra.ReferenceAsString(di.ref.Append("replica_mode"))
 }
 
+// Replicas returns a reference to field replicas of aws_db_instance.
 func (di dbInstanceAttributes) Replicas() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](di.ref.Append("replicas"))
+	return terra.ReferenceAsList[terra.StringValue](di.ref.Append("replicas"))
 }
 
+// ReplicateSourceDb returns a reference to field replicate_source_db of aws_db_instance.
 func (di dbInstanceAttributes) ReplicateSourceDb() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("replicate_source_db"))
+	return terra.ReferenceAsString(di.ref.Append("replicate_source_db"))
 }
 
+// ResourceId returns a reference to field resource_id of aws_db_instance.
 func (di dbInstanceAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("resource_id"))
+	return terra.ReferenceAsString(di.ref.Append("resource_id"))
 }
 
+// SecurityGroupNames returns a reference to field security_group_names of aws_db_instance.
 func (di dbInstanceAttributes) SecurityGroupNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](di.ref.Append("security_group_names"))
+	return terra.ReferenceAsSet[terra.StringValue](di.ref.Append("security_group_names"))
 }
 
+// SkipFinalSnapshot returns a reference to field skip_final_snapshot of aws_db_instance.
 func (di dbInstanceAttributes) SkipFinalSnapshot() terra.BoolValue {
-	return terra.ReferenceBool(di.ref.Append("skip_final_snapshot"))
+	return terra.ReferenceAsBool(di.ref.Append("skip_final_snapshot"))
 }
 
+// SnapshotIdentifier returns a reference to field snapshot_identifier of aws_db_instance.
 func (di dbInstanceAttributes) SnapshotIdentifier() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("snapshot_identifier"))
+	return terra.ReferenceAsString(di.ref.Append("snapshot_identifier"))
 }
 
+// Status returns a reference to field status of aws_db_instance.
 func (di dbInstanceAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("status"))
+	return terra.ReferenceAsString(di.ref.Append("status"))
 }
 
+// StorageEncrypted returns a reference to field storage_encrypted of aws_db_instance.
 func (di dbInstanceAttributes) StorageEncrypted() terra.BoolValue {
-	return terra.ReferenceBool(di.ref.Append("storage_encrypted"))
+	return terra.ReferenceAsBool(di.ref.Append("storage_encrypted"))
 }
 
+// StorageThroughput returns a reference to field storage_throughput of aws_db_instance.
 func (di dbInstanceAttributes) StorageThroughput() terra.NumberValue {
-	return terra.ReferenceNumber(di.ref.Append("storage_throughput"))
+	return terra.ReferenceAsNumber(di.ref.Append("storage_throughput"))
 }
 
+// StorageType returns a reference to field storage_type of aws_db_instance.
 func (di dbInstanceAttributes) StorageType() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("storage_type"))
+	return terra.ReferenceAsString(di.ref.Append("storage_type"))
 }
 
+// Tags returns a reference to field tags of aws_db_instance.
 func (di dbInstanceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](di.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](di.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_db_instance.
 func (di dbInstanceAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](di.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](di.ref.Append("tags_all"))
 }
 
+// Timezone returns a reference to field timezone of aws_db_instance.
 func (di dbInstanceAttributes) Timezone() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("timezone"))
+	return terra.ReferenceAsString(di.ref.Append("timezone"))
 }
 
+// Username returns a reference to field username of aws_db_instance.
 func (di dbInstanceAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(di.ref.Append("username"))
+	return terra.ReferenceAsString(di.ref.Append("username"))
 }
 
+// VpcSecurityGroupIds returns a reference to field vpc_security_group_ids of aws_db_instance.
 func (di dbInstanceAttributes) VpcSecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](di.ref.Append("vpc_security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](di.ref.Append("vpc_security_group_ids"))
 }
 
 func (di dbInstanceAttributes) ListenerEndpoint() terra.ListValue[dbinstance.ListenerEndpointAttributes] {
-	return terra.ReferenceList[dbinstance.ListenerEndpointAttributes](di.ref.Append("listener_endpoint"))
+	return terra.ReferenceAsList[dbinstance.ListenerEndpointAttributes](di.ref.Append("listener_endpoint"))
 }
 
 func (di dbInstanceAttributes) BlueGreenUpdate() terra.ListValue[dbinstance.BlueGreenUpdateAttributes] {
-	return terra.ReferenceList[dbinstance.BlueGreenUpdateAttributes](di.ref.Append("blue_green_update"))
+	return terra.ReferenceAsList[dbinstance.BlueGreenUpdateAttributes](di.ref.Append("blue_green_update"))
 }
 
 func (di dbInstanceAttributes) RestoreToPointInTime() terra.ListValue[dbinstance.RestoreToPointInTimeAttributes] {
-	return terra.ReferenceList[dbinstance.RestoreToPointInTimeAttributes](di.ref.Append("restore_to_point_in_time"))
+	return terra.ReferenceAsList[dbinstance.RestoreToPointInTimeAttributes](di.ref.Append("restore_to_point_in_time"))
 }
 
 func (di dbInstanceAttributes) S3Import() terra.ListValue[dbinstance.S3ImportAttributes] {
-	return terra.ReferenceList[dbinstance.S3ImportAttributes](di.ref.Append("s3_import"))
+	return terra.ReferenceAsList[dbinstance.S3ImportAttributes](di.ref.Append("s3_import"))
 }
 
 func (di dbInstanceAttributes) Timeouts() dbinstance.TimeoutsAttributes {
-	return terra.ReferenceSingle[dbinstance.TimeoutsAttributes](di.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dbinstance.TimeoutsAttributes](di.ref.Append("timeouts"))
 }
 
 type dbInstanceState struct {

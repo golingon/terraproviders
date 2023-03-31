@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataApiGatewaySdk creates a new instance of [DataApiGatewaySdk].
 func NewDataApiGatewaySdk(name string, args DataApiGatewaySdkArgs) *DataApiGatewaySdk {
 	return &DataApiGatewaySdk{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataApiGatewaySdk(name string, args DataApiGatewaySdkArgs) *DataApiGatew
 
 var _ terra.DataResource = (*DataApiGatewaySdk)(nil)
 
+// DataApiGatewaySdk represents the Terraform data resource aws_api_gateway_sdk.
 type DataApiGatewaySdk struct {
 	Name string
 	Args DataApiGatewaySdkArgs
 }
 
+// DataSource returns the Terraform object type for [DataApiGatewaySdk].
 func (ags *DataApiGatewaySdk) DataSource() string {
 	return "aws_api_gateway_sdk"
 }
 
+// LocalName returns the local name for [DataApiGatewaySdk].
 func (ags *DataApiGatewaySdk) LocalName() string {
 	return ags.Name
 }
 
+// Configuration returns the configuration (args) for [DataApiGatewaySdk].
 func (ags *DataApiGatewaySdk) Configuration() interface{} {
 	return ags.Args
 }
 
+// Attributes returns the attributes for [DataApiGatewaySdk].
 func (ags *DataApiGatewaySdk) Attributes() dataApiGatewaySdkAttributes {
 	return dataApiGatewaySdkAttributes{ref: terra.ReferenceDataResource(ags)}
 }
 
+// DataApiGatewaySdkArgs contains the configurations for aws_api_gateway_sdk.
 type DataApiGatewaySdkArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -50,34 +57,42 @@ type dataApiGatewaySdkAttributes struct {
 	ref terra.Reference
 }
 
+// Body returns a reference to field body of aws_api_gateway_sdk.
 func (ags dataApiGatewaySdkAttributes) Body() terra.StringValue {
-	return terra.ReferenceString(ags.ref.Append("body"))
+	return terra.ReferenceAsString(ags.ref.Append("body"))
 }
 
+// ContentDisposition returns a reference to field content_disposition of aws_api_gateway_sdk.
 func (ags dataApiGatewaySdkAttributes) ContentDisposition() terra.StringValue {
-	return terra.ReferenceString(ags.ref.Append("content_disposition"))
+	return terra.ReferenceAsString(ags.ref.Append("content_disposition"))
 }
 
+// ContentType returns a reference to field content_type of aws_api_gateway_sdk.
 func (ags dataApiGatewaySdkAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(ags.ref.Append("content_type"))
+	return terra.ReferenceAsString(ags.ref.Append("content_type"))
 }
 
+// Id returns a reference to field id of aws_api_gateway_sdk.
 func (ags dataApiGatewaySdkAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ags.ref.Append("id"))
+	return terra.ReferenceAsString(ags.ref.Append("id"))
 }
 
+// Parameters returns a reference to field parameters of aws_api_gateway_sdk.
 func (ags dataApiGatewaySdkAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ags.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](ags.ref.Append("parameters"))
 }
 
+// RestApiId returns a reference to field rest_api_id of aws_api_gateway_sdk.
 func (ags dataApiGatewaySdkAttributes) RestApiId() terra.StringValue {
-	return terra.ReferenceString(ags.ref.Append("rest_api_id"))
+	return terra.ReferenceAsString(ags.ref.Append("rest_api_id"))
 }
 
+// SdkType returns a reference to field sdk_type of aws_api_gateway_sdk.
 func (ags dataApiGatewaySdkAttributes) SdkType() terra.StringValue {
-	return terra.ReferenceString(ags.ref.Append("sdk_type"))
+	return terra.ReferenceAsString(ags.ref.Append("sdk_type"))
 }
 
+// StageName returns a reference to field stage_name of aws_api_gateway_sdk.
 func (ags dataApiGatewaySdkAttributes) StageName() terra.StringValue {
-	return terra.ReferenceString(ags.ref.Append("stage_name"))
+	return terra.ReferenceAsString(ags.ref.Append("stage_name"))
 }

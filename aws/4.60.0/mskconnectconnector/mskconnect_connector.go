@@ -155,11 +155,11 @@ func (c CapacityAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c CapacityAttributes) Autoscaling() terra.ListValue[AutoscalingAttributes] {
-	return terra.ReferenceList[AutoscalingAttributes](c.ref.Append("autoscaling"))
+	return terra.ReferenceAsList[AutoscalingAttributes](c.ref.Append("autoscaling"))
 }
 
 func (c CapacityAttributes) ProvisionedCapacity() terra.ListValue[ProvisionedCapacityAttributes] {
-	return terra.ReferenceList[ProvisionedCapacityAttributes](c.ref.Append("provisioned_capacity"))
+	return terra.ReferenceAsList[ProvisionedCapacityAttributes](c.ref.Append("provisioned_capacity"))
 }
 
 type AutoscalingAttributes struct {
@@ -179,23 +179,23 @@ func (a AutoscalingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AutoscalingAttributes) MaxWorkerCount() terra.NumberValue {
-	return terra.ReferenceNumber(a.ref.Append("max_worker_count"))
+	return terra.ReferenceAsNumber(a.ref.Append("max_worker_count"))
 }
 
 func (a AutoscalingAttributes) McuCount() terra.NumberValue {
-	return terra.ReferenceNumber(a.ref.Append("mcu_count"))
+	return terra.ReferenceAsNumber(a.ref.Append("mcu_count"))
 }
 
 func (a AutoscalingAttributes) MinWorkerCount() terra.NumberValue {
-	return terra.ReferenceNumber(a.ref.Append("min_worker_count"))
+	return terra.ReferenceAsNumber(a.ref.Append("min_worker_count"))
 }
 
 func (a AutoscalingAttributes) ScaleInPolicy() terra.ListValue[ScaleInPolicyAttributes] {
-	return terra.ReferenceList[ScaleInPolicyAttributes](a.ref.Append("scale_in_policy"))
+	return terra.ReferenceAsList[ScaleInPolicyAttributes](a.ref.Append("scale_in_policy"))
 }
 
 func (a AutoscalingAttributes) ScaleOutPolicy() terra.ListValue[ScaleOutPolicyAttributes] {
-	return terra.ReferenceList[ScaleOutPolicyAttributes](a.ref.Append("scale_out_policy"))
+	return terra.ReferenceAsList[ScaleOutPolicyAttributes](a.ref.Append("scale_out_policy"))
 }
 
 type ScaleInPolicyAttributes struct {
@@ -215,7 +215,7 @@ func (sip ScaleInPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sip ScaleInPolicyAttributes) CpuUtilizationPercentage() terra.NumberValue {
-	return terra.ReferenceNumber(sip.ref.Append("cpu_utilization_percentage"))
+	return terra.ReferenceAsNumber(sip.ref.Append("cpu_utilization_percentage"))
 }
 
 type ScaleOutPolicyAttributes struct {
@@ -235,7 +235,7 @@ func (sop ScaleOutPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sop ScaleOutPolicyAttributes) CpuUtilizationPercentage() terra.NumberValue {
-	return terra.ReferenceNumber(sop.ref.Append("cpu_utilization_percentage"))
+	return terra.ReferenceAsNumber(sop.ref.Append("cpu_utilization_percentage"))
 }
 
 type ProvisionedCapacityAttributes struct {
@@ -255,11 +255,11 @@ func (pc ProvisionedCapacityAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pc ProvisionedCapacityAttributes) McuCount() terra.NumberValue {
-	return terra.ReferenceNumber(pc.ref.Append("mcu_count"))
+	return terra.ReferenceAsNumber(pc.ref.Append("mcu_count"))
 }
 
 func (pc ProvisionedCapacityAttributes) WorkerCount() terra.NumberValue {
-	return terra.ReferenceNumber(pc.ref.Append("worker_count"))
+	return terra.ReferenceAsNumber(pc.ref.Append("worker_count"))
 }
 
 type KafkaClusterAttributes struct {
@@ -279,7 +279,7 @@ func (kc KafkaClusterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (kc KafkaClusterAttributes) ApacheKafkaCluster() terra.ListValue[ApacheKafkaClusterAttributes] {
-	return terra.ReferenceList[ApacheKafkaClusterAttributes](kc.ref.Append("apache_kafka_cluster"))
+	return terra.ReferenceAsList[ApacheKafkaClusterAttributes](kc.ref.Append("apache_kafka_cluster"))
 }
 
 type ApacheKafkaClusterAttributes struct {
@@ -299,11 +299,11 @@ func (akc ApacheKafkaClusterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (akc ApacheKafkaClusterAttributes) BootstrapServers() terra.StringValue {
-	return terra.ReferenceString(akc.ref.Append("bootstrap_servers"))
+	return terra.ReferenceAsString(akc.ref.Append("bootstrap_servers"))
 }
 
 func (akc ApacheKafkaClusterAttributes) Vpc() terra.ListValue[VpcAttributes] {
-	return terra.ReferenceList[VpcAttributes](akc.ref.Append("vpc"))
+	return terra.ReferenceAsList[VpcAttributes](akc.ref.Append("vpc"))
 }
 
 type VpcAttributes struct {
@@ -323,11 +323,11 @@ func (v VpcAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (v VpcAttributes) SecurityGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](v.ref.Append("security_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](v.ref.Append("security_groups"))
 }
 
 func (v VpcAttributes) Subnets() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](v.ref.Append("subnets"))
+	return terra.ReferenceAsSet[terra.StringValue](v.ref.Append("subnets"))
 }
 
 type KafkaClusterClientAuthenticationAttributes struct {
@@ -347,7 +347,7 @@ func (kcca KafkaClusterClientAuthenticationAttributes) InternalTokens() hclwrite
 }
 
 func (kcca KafkaClusterClientAuthenticationAttributes) AuthenticationType() terra.StringValue {
-	return terra.ReferenceString(kcca.ref.Append("authentication_type"))
+	return terra.ReferenceAsString(kcca.ref.Append("authentication_type"))
 }
 
 type KafkaClusterEncryptionInTransitAttributes struct {
@@ -367,7 +367,7 @@ func (kceit KafkaClusterEncryptionInTransitAttributes) InternalTokens() hclwrite
 }
 
 func (kceit KafkaClusterEncryptionInTransitAttributes) EncryptionType() terra.StringValue {
-	return terra.ReferenceString(kceit.ref.Append("encryption_type"))
+	return terra.ReferenceAsString(kceit.ref.Append("encryption_type"))
 }
 
 type LogDeliveryAttributes struct {
@@ -387,7 +387,7 @@ func (ld LogDeliveryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ld LogDeliveryAttributes) WorkerLogDelivery() terra.ListValue[WorkerLogDeliveryAttributes] {
-	return terra.ReferenceList[WorkerLogDeliveryAttributes](ld.ref.Append("worker_log_delivery"))
+	return terra.ReferenceAsList[WorkerLogDeliveryAttributes](ld.ref.Append("worker_log_delivery"))
 }
 
 type WorkerLogDeliveryAttributes struct {
@@ -407,15 +407,15 @@ func (wld WorkerLogDeliveryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (wld WorkerLogDeliveryAttributes) CloudwatchLogs() terra.ListValue[CloudwatchLogsAttributes] {
-	return terra.ReferenceList[CloudwatchLogsAttributes](wld.ref.Append("cloudwatch_logs"))
+	return terra.ReferenceAsList[CloudwatchLogsAttributes](wld.ref.Append("cloudwatch_logs"))
 }
 
 func (wld WorkerLogDeliveryAttributes) Firehose() terra.ListValue[FirehoseAttributes] {
-	return terra.ReferenceList[FirehoseAttributes](wld.ref.Append("firehose"))
+	return terra.ReferenceAsList[FirehoseAttributes](wld.ref.Append("firehose"))
 }
 
 func (wld WorkerLogDeliveryAttributes) S3() terra.ListValue[S3Attributes] {
-	return terra.ReferenceList[S3Attributes](wld.ref.Append("s3"))
+	return terra.ReferenceAsList[S3Attributes](wld.ref.Append("s3"))
 }
 
 type CloudwatchLogsAttributes struct {
@@ -435,11 +435,11 @@ func (cl CloudwatchLogsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cl CloudwatchLogsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(cl.ref.Append("enabled"))
+	return terra.ReferenceAsBool(cl.ref.Append("enabled"))
 }
 
 func (cl CloudwatchLogsAttributes) LogGroup() terra.StringValue {
-	return terra.ReferenceString(cl.ref.Append("log_group"))
+	return terra.ReferenceAsString(cl.ref.Append("log_group"))
 }
 
 type FirehoseAttributes struct {
@@ -459,11 +459,11 @@ func (f FirehoseAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FirehoseAttributes) DeliveryStream() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("delivery_stream"))
+	return terra.ReferenceAsString(f.ref.Append("delivery_stream"))
 }
 
 func (f FirehoseAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(f.ref.Append("enabled"))
+	return terra.ReferenceAsBool(f.ref.Append("enabled"))
 }
 
 type S3Attributes struct {
@@ -483,15 +483,15 @@ func (s S3Attributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s S3Attributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("bucket"))
+	return terra.ReferenceAsString(s.ref.Append("bucket"))
 }
 
 func (s S3Attributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("enabled"))
+	return terra.ReferenceAsBool(s.ref.Append("enabled"))
 }
 
 func (s S3Attributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("prefix"))
+	return terra.ReferenceAsString(s.ref.Append("prefix"))
 }
 
 type PluginAttributes struct {
@@ -511,7 +511,7 @@ func (p PluginAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p PluginAttributes) CustomPlugin() terra.ListValue[CustomPluginAttributes] {
-	return terra.ReferenceList[CustomPluginAttributes](p.ref.Append("custom_plugin"))
+	return terra.ReferenceAsList[CustomPluginAttributes](p.ref.Append("custom_plugin"))
 }
 
 type CustomPluginAttributes struct {
@@ -531,11 +531,11 @@ func (cp CustomPluginAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cp CustomPluginAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("arn"))
+	return terra.ReferenceAsString(cp.ref.Append("arn"))
 }
 
 func (cp CustomPluginAttributes) Revision() terra.NumberValue {
-	return terra.ReferenceNumber(cp.ref.Append("revision"))
+	return terra.ReferenceAsNumber(cp.ref.Append("revision"))
 }
 
 type TimeoutsAttributes struct {
@@ -555,15 +555,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type WorkerConfigurationAttributes struct {
@@ -583,11 +583,11 @@ func (wc WorkerConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (wc WorkerConfigurationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(wc.ref.Append("arn"))
+	return terra.ReferenceAsString(wc.ref.Append("arn"))
 }
 
 func (wc WorkerConfigurationAttributes) Revision() terra.NumberValue {
-	return terra.ReferenceNumber(wc.ref.Append("revision"))
+	return terra.ReferenceAsNumber(wc.ref.Append("revision"))
 }
 
 type CapacityState struct {

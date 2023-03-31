@@ -29,7 +29,7 @@ func (lc LoggingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lc LoggingConfigurationAttributes) LogGroupArn() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("log_group_arn"))
+	return terra.ReferenceAsString(lc.ref.Append("log_group_arn"))
 }
 
 type LoggingConfigurationState struct {

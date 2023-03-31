@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEvidentlyProject creates a new instance of [EvidentlyProject].
 func NewEvidentlyProject(name string, args EvidentlyProjectArgs) *EvidentlyProject {
 	return &EvidentlyProject{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEvidentlyProject(name string, args EvidentlyProjectArgs) *EvidentlyProje
 
 var _ terra.Resource = (*EvidentlyProject)(nil)
 
+// EvidentlyProject represents the Terraform resource aws_evidently_project.
 type EvidentlyProject struct {
-	Name  string
-	Args  EvidentlyProjectArgs
-	state *evidentlyProjectState
+	Name      string
+	Args      EvidentlyProjectArgs
+	state     *evidentlyProjectState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EvidentlyProject].
 func (ep *EvidentlyProject) Type() string {
 	return "aws_evidently_project"
 }
 
+// LocalName returns the local name for [EvidentlyProject].
 func (ep *EvidentlyProject) LocalName() string {
 	return ep.Name
 }
 
+// Configuration returns the configuration (args) for [EvidentlyProject].
 func (ep *EvidentlyProject) Configuration() interface{} {
 	return ep.Args
 }
 
+// DependOn is used for other resources to depend on [EvidentlyProject].
+func (ep *EvidentlyProject) DependOn() terra.Reference {
+	return terra.ReferenceResource(ep)
+}
+
+// Dependencies returns the list of resources [EvidentlyProject] depends_on.
+func (ep *EvidentlyProject) Dependencies() terra.Dependencies {
+	return ep.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EvidentlyProject].
+func (ep *EvidentlyProject) LifecycleManagement() *terra.Lifecycle {
+	return ep.Lifecycle
+}
+
+// Attributes returns the attributes for [EvidentlyProject].
 func (ep *EvidentlyProject) Attributes() evidentlyProjectAttributes {
 	return evidentlyProjectAttributes{ref: terra.ReferenceResource(ep)}
 }
 
+// ImportState imports the given attribute values into [EvidentlyProject]'s state.
 func (ep *EvidentlyProject) ImportState(av io.Reader) error {
 	ep.state = &evidentlyProjectState{}
 	if err := json.NewDecoder(av).Decode(ep.state); err != nil {
@@ -49,10 +73,12 @@ func (ep *EvidentlyProject) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EvidentlyProject] has state.
 func (ep *EvidentlyProject) State() (*evidentlyProjectState, bool) {
 	return ep.state, ep.state != nil
 }
 
+// StateMust returns the state for [EvidentlyProject]. Panics if the state is nil.
 func (ep *EvidentlyProject) StateMust() *evidentlyProjectState {
 	if ep.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ep.Type(), ep.LocalName()))
@@ -60,10 +86,7 @@ func (ep *EvidentlyProject) StateMust() *evidentlyProjectState {
 	return ep.state
 }
 
-func (ep *EvidentlyProject) DependOn() terra.Reference {
-	return terra.ReferenceResource(ep)
-}
-
+// EvidentlyProjectArgs contains the configurations for aws_evidently_project.
 type EvidentlyProjectArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -79,75 +102,87 @@ type EvidentlyProjectArgs struct {
 	DataDelivery *evidentlyproject.DataDelivery `hcl:"data_delivery,block"`
 	// Timeouts: optional
 	Timeouts *evidentlyproject.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that EvidentlyProject depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type evidentlyProjectAttributes struct {
 	ref terra.Reference
 }
 
+// ActiveExperimentCount returns a reference to field active_experiment_count of aws_evidently_project.
 func (ep evidentlyProjectAttributes) ActiveExperimentCount() terra.NumberValue {
-	return terra.ReferenceNumber(ep.ref.Append("active_experiment_count"))
+	return terra.ReferenceAsNumber(ep.ref.Append("active_experiment_count"))
 }
 
+// ActiveLaunchCount returns a reference to field active_launch_count of aws_evidently_project.
 func (ep evidentlyProjectAttributes) ActiveLaunchCount() terra.NumberValue {
-	return terra.ReferenceNumber(ep.ref.Append("active_launch_count"))
+	return terra.ReferenceAsNumber(ep.ref.Append("active_launch_count"))
 }
 
+// Arn returns a reference to field arn of aws_evidently_project.
 func (ep evidentlyProjectAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("arn"))
+	return terra.ReferenceAsString(ep.ref.Append("arn"))
 }
 
+// CreatedTime returns a reference to field created_time of aws_evidently_project.
 func (ep evidentlyProjectAttributes) CreatedTime() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("created_time"))
+	return terra.ReferenceAsString(ep.ref.Append("created_time"))
 }
 
+// Description returns a reference to field description of aws_evidently_project.
 func (ep evidentlyProjectAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("description"))
+	return terra.ReferenceAsString(ep.ref.Append("description"))
 }
 
+// ExperimentCount returns a reference to field experiment_count of aws_evidently_project.
 func (ep evidentlyProjectAttributes) ExperimentCount() terra.NumberValue {
-	return terra.ReferenceNumber(ep.ref.Append("experiment_count"))
+	return terra.ReferenceAsNumber(ep.ref.Append("experiment_count"))
 }
 
+// FeatureCount returns a reference to field feature_count of aws_evidently_project.
 func (ep evidentlyProjectAttributes) FeatureCount() terra.NumberValue {
-	return terra.ReferenceNumber(ep.ref.Append("feature_count"))
+	return terra.ReferenceAsNumber(ep.ref.Append("feature_count"))
 }
 
+// Id returns a reference to field id of aws_evidently_project.
 func (ep evidentlyProjectAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("id"))
+	return terra.ReferenceAsString(ep.ref.Append("id"))
 }
 
+// LastUpdatedTime returns a reference to field last_updated_time of aws_evidently_project.
 func (ep evidentlyProjectAttributes) LastUpdatedTime() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("last_updated_time"))
+	return terra.ReferenceAsString(ep.ref.Append("last_updated_time"))
 }
 
+// LaunchCount returns a reference to field launch_count of aws_evidently_project.
 func (ep evidentlyProjectAttributes) LaunchCount() terra.NumberValue {
-	return terra.ReferenceNumber(ep.ref.Append("launch_count"))
+	return terra.ReferenceAsNumber(ep.ref.Append("launch_count"))
 }
 
+// Name returns a reference to field name of aws_evidently_project.
 func (ep evidentlyProjectAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("name"))
+	return terra.ReferenceAsString(ep.ref.Append("name"))
 }
 
+// Status returns a reference to field status of aws_evidently_project.
 func (ep evidentlyProjectAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("status"))
+	return terra.ReferenceAsString(ep.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of aws_evidently_project.
 func (ep evidentlyProjectAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ep.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ep.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_evidently_project.
 func (ep evidentlyProjectAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ep.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ep.ref.Append("tags_all"))
 }
 
 func (ep evidentlyProjectAttributes) DataDelivery() terra.ListValue[evidentlyproject.DataDeliveryAttributes] {
-	return terra.ReferenceList[evidentlyproject.DataDeliveryAttributes](ep.ref.Append("data_delivery"))
+	return terra.ReferenceAsList[evidentlyproject.DataDeliveryAttributes](ep.ref.Append("data_delivery"))
 }
 
 func (ep evidentlyProjectAttributes) Timeouts() evidentlyproject.TimeoutsAttributes {
-	return terra.ReferenceSingle[evidentlyproject.TimeoutsAttributes](ep.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[evidentlyproject.TimeoutsAttributes](ep.ref.Append("timeouts"))
 }
 
 type evidentlyProjectState struct {

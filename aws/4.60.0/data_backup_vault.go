@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataBackupVault creates a new instance of [DataBackupVault].
 func NewDataBackupVault(name string, args DataBackupVaultArgs) *DataBackupVault {
 	return &DataBackupVault{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataBackupVault(name string, args DataBackupVaultArgs) *DataBackupVault 
 
 var _ terra.DataResource = (*DataBackupVault)(nil)
 
+// DataBackupVault represents the Terraform data resource aws_backup_vault.
 type DataBackupVault struct {
 	Name string
 	Args DataBackupVaultArgs
 }
 
+// DataSource returns the Terraform object type for [DataBackupVault].
 func (bv *DataBackupVault) DataSource() string {
 	return "aws_backup_vault"
 }
 
+// LocalName returns the local name for [DataBackupVault].
 func (bv *DataBackupVault) LocalName() string {
 	return bv.Name
 }
 
+// Configuration returns the configuration (args) for [DataBackupVault].
 func (bv *DataBackupVault) Configuration() interface{} {
 	return bv.Args
 }
 
+// Attributes returns the attributes for [DataBackupVault].
 func (bv *DataBackupVault) Attributes() dataBackupVaultAttributes {
 	return dataBackupVaultAttributes{ref: terra.ReferenceDataResource(bv)}
 }
 
+// DataBackupVaultArgs contains the configurations for aws_backup_vault.
 type DataBackupVaultArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -46,26 +53,32 @@ type dataBackupVaultAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_backup_vault.
 func (bv dataBackupVaultAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(bv.ref.Append("arn"))
+	return terra.ReferenceAsString(bv.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_backup_vault.
 func (bv dataBackupVaultAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bv.ref.Append("id"))
+	return terra.ReferenceAsString(bv.ref.Append("id"))
 }
 
+// KmsKeyArn returns a reference to field kms_key_arn of aws_backup_vault.
 func (bv dataBackupVaultAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(bv.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(bv.ref.Append("kms_key_arn"))
 }
 
+// Name returns a reference to field name of aws_backup_vault.
 func (bv dataBackupVaultAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bv.ref.Append("name"))
+	return terra.ReferenceAsString(bv.ref.Append("name"))
 }
 
+// RecoveryPoints returns a reference to field recovery_points of aws_backup_vault.
 func (bv dataBackupVaultAttributes) RecoveryPoints() terra.NumberValue {
-	return terra.ReferenceNumber(bv.ref.Append("recovery_points"))
+	return terra.ReferenceAsNumber(bv.ref.Append("recovery_points"))
 }
 
+// Tags returns a reference to field tags of aws_backup_vault.
 func (bv dataBackupVaultAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bv.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](bv.ref.Append("tags"))
 }

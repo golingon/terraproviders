@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewEcrRegistryPolicy creates a new instance of [EcrRegistryPolicy].
 func NewEcrRegistryPolicy(name string, args EcrRegistryPolicyArgs) *EcrRegistryPolicy {
 	return &EcrRegistryPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewEcrRegistryPolicy(name string, args EcrRegistryPolicyArgs) *EcrRegistryP
 
 var _ terra.Resource = (*EcrRegistryPolicy)(nil)
 
+// EcrRegistryPolicy represents the Terraform resource aws_ecr_registry_policy.
 type EcrRegistryPolicy struct {
-	Name  string
-	Args  EcrRegistryPolicyArgs
-	state *ecrRegistryPolicyState
+	Name      string
+	Args      EcrRegistryPolicyArgs
+	state     *ecrRegistryPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EcrRegistryPolicy].
 func (erp *EcrRegistryPolicy) Type() string {
 	return "aws_ecr_registry_policy"
 }
 
+// LocalName returns the local name for [EcrRegistryPolicy].
 func (erp *EcrRegistryPolicy) LocalName() string {
 	return erp.Name
 }
 
+// Configuration returns the configuration (args) for [EcrRegistryPolicy].
 func (erp *EcrRegistryPolicy) Configuration() interface{} {
 	return erp.Args
 }
 
+// DependOn is used for other resources to depend on [EcrRegistryPolicy].
+func (erp *EcrRegistryPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(erp)
+}
+
+// Dependencies returns the list of resources [EcrRegistryPolicy] depends_on.
+func (erp *EcrRegistryPolicy) Dependencies() terra.Dependencies {
+	return erp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EcrRegistryPolicy].
+func (erp *EcrRegistryPolicy) LifecycleManagement() *terra.Lifecycle {
+	return erp.Lifecycle
+}
+
+// Attributes returns the attributes for [EcrRegistryPolicy].
 func (erp *EcrRegistryPolicy) Attributes() ecrRegistryPolicyAttributes {
 	return ecrRegistryPolicyAttributes{ref: terra.ReferenceResource(erp)}
 }
 
+// ImportState imports the given attribute values into [EcrRegistryPolicy]'s state.
 func (erp *EcrRegistryPolicy) ImportState(av io.Reader) error {
 	erp.state = &ecrRegistryPolicyState{}
 	if err := json.NewDecoder(av).Decode(erp.state); err != nil {
@@ -48,10 +72,12 @@ func (erp *EcrRegistryPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EcrRegistryPolicy] has state.
 func (erp *EcrRegistryPolicy) State() (*ecrRegistryPolicyState, bool) {
 	return erp.state, erp.state != nil
 }
 
+// StateMust returns the state for [EcrRegistryPolicy]. Panics if the state is nil.
 func (erp *EcrRegistryPolicy) StateMust() *ecrRegistryPolicyState {
 	if erp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", erp.Type(), erp.LocalName()))
@@ -59,32 +85,30 @@ func (erp *EcrRegistryPolicy) StateMust() *ecrRegistryPolicyState {
 	return erp.state
 }
 
-func (erp *EcrRegistryPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(erp)
-}
-
+// EcrRegistryPolicyArgs contains the configurations for aws_ecr_registry_policy.
 type EcrRegistryPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
 	// Policy: string, required
 	Policy terra.StringValue `hcl:"policy,attr" validate:"required"`
-	// DependsOn contains resources that EcrRegistryPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ecrRegistryPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_ecr_registry_policy.
 func (erp ecrRegistryPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(erp.ref.Append("id"))
+	return terra.ReferenceAsString(erp.ref.Append("id"))
 }
 
+// Policy returns a reference to field policy of aws_ecr_registry_policy.
 func (erp ecrRegistryPolicyAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(erp.ref.Append("policy"))
+	return terra.ReferenceAsString(erp.ref.Append("policy"))
 }
 
+// RegistryId returns a reference to field registry_id of aws_ecr_registry_policy.
 func (erp ecrRegistryPolicyAttributes) RegistryId() terra.StringValue {
-	return terra.ReferenceString(erp.ref.Append("registry_id"))
+	return terra.ReferenceAsString(erp.ref.Append("registry_id"))
 }
 
 type ecrRegistryPolicyState struct {

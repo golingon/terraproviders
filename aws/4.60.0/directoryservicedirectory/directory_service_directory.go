@@ -51,27 +51,27 @@ func (cs ConnectSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cs ConnectSettingsAttributes) AvailabilityZones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cs.ref.Append("availability_zones"))
+	return terra.ReferenceAsSet[terra.StringValue](cs.ref.Append("availability_zones"))
 }
 
 func (cs ConnectSettingsAttributes) ConnectIps() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cs.ref.Append("connect_ips"))
+	return terra.ReferenceAsSet[terra.StringValue](cs.ref.Append("connect_ips"))
 }
 
 func (cs ConnectSettingsAttributes) CustomerDnsIps() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cs.ref.Append("customer_dns_ips"))
+	return terra.ReferenceAsSet[terra.StringValue](cs.ref.Append("customer_dns_ips"))
 }
 
 func (cs ConnectSettingsAttributes) CustomerUsername() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("customer_username"))
+	return terra.ReferenceAsString(cs.ref.Append("customer_username"))
 }
 
 func (cs ConnectSettingsAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cs.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](cs.ref.Append("subnet_ids"))
 }
 
 func (cs ConnectSettingsAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(cs.ref.Append("vpc_id"))
 }
 
 type TimeoutsAttributes struct {
@@ -91,15 +91,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type VpcSettingsAttributes struct {
@@ -119,15 +119,15 @@ func (vs VpcSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vs VpcSettingsAttributes) AvailabilityZones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vs.ref.Append("availability_zones"))
+	return terra.ReferenceAsSet[terra.StringValue](vs.ref.Append("availability_zones"))
 }
 
 func (vs VpcSettingsAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vs.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vs.ref.Append("subnet_ids"))
 }
 
 func (vs VpcSettingsAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(vs.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(vs.ref.Append("vpc_id"))
 }
 
 type ConnectSettingsState struct {

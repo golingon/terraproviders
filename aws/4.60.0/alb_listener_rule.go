@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAlbListenerRule creates a new instance of [AlbListenerRule].
 func NewAlbListenerRule(name string, args AlbListenerRuleArgs) *AlbListenerRule {
 	return &AlbListenerRule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAlbListenerRule(name string, args AlbListenerRuleArgs) *AlbListenerRule 
 
 var _ terra.Resource = (*AlbListenerRule)(nil)
 
+// AlbListenerRule represents the Terraform resource aws_alb_listener_rule.
 type AlbListenerRule struct {
-	Name  string
-	Args  AlbListenerRuleArgs
-	state *albListenerRuleState
+	Name      string
+	Args      AlbListenerRuleArgs
+	state     *albListenerRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AlbListenerRule].
 func (alr *AlbListenerRule) Type() string {
 	return "aws_alb_listener_rule"
 }
 
+// LocalName returns the local name for [AlbListenerRule].
 func (alr *AlbListenerRule) LocalName() string {
 	return alr.Name
 }
 
+// Configuration returns the configuration (args) for [AlbListenerRule].
 func (alr *AlbListenerRule) Configuration() interface{} {
 	return alr.Args
 }
 
+// DependOn is used for other resources to depend on [AlbListenerRule].
+func (alr *AlbListenerRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(alr)
+}
+
+// Dependencies returns the list of resources [AlbListenerRule] depends_on.
+func (alr *AlbListenerRule) Dependencies() terra.Dependencies {
+	return alr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AlbListenerRule].
+func (alr *AlbListenerRule) LifecycleManagement() *terra.Lifecycle {
+	return alr.Lifecycle
+}
+
+// Attributes returns the attributes for [AlbListenerRule].
 func (alr *AlbListenerRule) Attributes() albListenerRuleAttributes {
 	return albListenerRuleAttributes{ref: terra.ReferenceResource(alr)}
 }
 
+// ImportState imports the given attribute values into [AlbListenerRule]'s state.
 func (alr *AlbListenerRule) ImportState(av io.Reader) error {
 	alr.state = &albListenerRuleState{}
 	if err := json.NewDecoder(av).Decode(alr.state); err != nil {
@@ -49,10 +73,12 @@ func (alr *AlbListenerRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AlbListenerRule] has state.
 func (alr *AlbListenerRule) State() (*albListenerRuleState, bool) {
 	return alr.state, alr.state != nil
 }
 
+// StateMust returns the state for [AlbListenerRule]. Panics if the state is nil.
 func (alr *AlbListenerRule) StateMust() *albListenerRuleState {
 	if alr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", alr.Type(), alr.LocalName()))
@@ -60,10 +86,7 @@ func (alr *AlbListenerRule) StateMust() *albListenerRuleState {
 	return alr.state
 }
 
-func (alr *AlbListenerRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(alr)
-}
-
+// AlbListenerRuleArgs contains the configurations for aws_alb_listener_rule.
 type AlbListenerRuleArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,47 @@ type AlbListenerRuleArgs struct {
 	Action []alblistenerrule.Action `hcl:"action,block" validate:"min=1"`
 	// Condition: min=1
 	Condition []alblistenerrule.Condition `hcl:"condition,block" validate:"min=1"`
-	// DependsOn contains resources that AlbListenerRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type albListenerRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_alb_listener_rule.
 func (alr albListenerRuleAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(alr.ref.Append("arn"))
+	return terra.ReferenceAsString(alr.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_alb_listener_rule.
 func (alr albListenerRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(alr.ref.Append("id"))
+	return terra.ReferenceAsString(alr.ref.Append("id"))
 }
 
+// ListenerArn returns a reference to field listener_arn of aws_alb_listener_rule.
 func (alr albListenerRuleAttributes) ListenerArn() terra.StringValue {
-	return terra.ReferenceString(alr.ref.Append("listener_arn"))
+	return terra.ReferenceAsString(alr.ref.Append("listener_arn"))
 }
 
+// Priority returns a reference to field priority of aws_alb_listener_rule.
 func (alr albListenerRuleAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(alr.ref.Append("priority"))
+	return terra.ReferenceAsNumber(alr.ref.Append("priority"))
 }
 
+// Tags returns a reference to field tags of aws_alb_listener_rule.
 func (alr albListenerRuleAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](alr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](alr.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_alb_listener_rule.
 func (alr albListenerRuleAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](alr.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](alr.ref.Append("tags_all"))
 }
 
 func (alr albListenerRuleAttributes) Action() terra.ListValue[alblistenerrule.ActionAttributes] {
-	return terra.ReferenceList[alblistenerrule.ActionAttributes](alr.ref.Append("action"))
+	return terra.ReferenceAsList[alblistenerrule.ActionAttributes](alr.ref.Append("action"))
 }
 
 func (alr albListenerRuleAttributes) Condition() terra.SetValue[alblistenerrule.ConditionAttributes] {
-	return terra.ReferenceSet[alblistenerrule.ConditionAttributes](alr.ref.Append("condition"))
+	return terra.ReferenceAsSet[alblistenerrule.ConditionAttributes](alr.ref.Append("condition"))
 }
 
 type albListenerRuleState struct {

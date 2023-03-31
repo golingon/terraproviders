@@ -56,11 +56,11 @@ func (acp AccessControlPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (acp AccessControlPolicyAttributes) Grant() terra.SetValue[GrantAttributes] {
-	return terra.ReferenceSet[GrantAttributes](acp.ref.Append("grant"))
+	return terra.ReferenceAsSet[GrantAttributes](acp.ref.Append("grant"))
 }
 
 func (acp AccessControlPolicyAttributes) Owner() terra.ListValue[OwnerAttributes] {
-	return terra.ReferenceList[OwnerAttributes](acp.ref.Append("owner"))
+	return terra.ReferenceAsList[OwnerAttributes](acp.ref.Append("owner"))
 }
 
 type GrantAttributes struct {
@@ -80,11 +80,11 @@ func (g GrantAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (g GrantAttributes) Permission() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("permission"))
+	return terra.ReferenceAsString(g.ref.Append("permission"))
 }
 
 func (g GrantAttributes) Grantee() terra.ListValue[GranteeAttributes] {
-	return terra.ReferenceList[GranteeAttributes](g.ref.Append("grantee"))
+	return terra.ReferenceAsList[GranteeAttributes](g.ref.Append("grantee"))
 }
 
 type GranteeAttributes struct {
@@ -104,23 +104,23 @@ func (g GranteeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (g GranteeAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("display_name"))
+	return terra.ReferenceAsString(g.ref.Append("display_name"))
 }
 
 func (g GranteeAttributes) EmailAddress() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("email_address"))
+	return terra.ReferenceAsString(g.ref.Append("email_address"))
 }
 
 func (g GranteeAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("id"))
+	return terra.ReferenceAsString(g.ref.Append("id"))
 }
 
 func (g GranteeAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("type"))
+	return terra.ReferenceAsString(g.ref.Append("type"))
 }
 
 func (g GranteeAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("uri"))
+	return terra.ReferenceAsString(g.ref.Append("uri"))
 }
 
 type OwnerAttributes struct {
@@ -140,11 +140,11 @@ func (o OwnerAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (o OwnerAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("display_name"))
+	return terra.ReferenceAsString(o.ref.Append("display_name"))
 }
 
 func (o OwnerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("id"))
+	return terra.ReferenceAsString(o.ref.Append("id"))
 }
 
 type AccessControlPolicyState struct {

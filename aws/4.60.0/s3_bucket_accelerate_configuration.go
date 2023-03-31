@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewS3BucketAccelerateConfiguration creates a new instance of [S3BucketAccelerateConfiguration].
 func NewS3BucketAccelerateConfiguration(name string, args S3BucketAccelerateConfigurationArgs) *S3BucketAccelerateConfiguration {
 	return &S3BucketAccelerateConfiguration{
 		Args: args,
@@ -18,28 +19,51 @@ func NewS3BucketAccelerateConfiguration(name string, args S3BucketAccelerateConf
 
 var _ terra.Resource = (*S3BucketAccelerateConfiguration)(nil)
 
+// S3BucketAccelerateConfiguration represents the Terraform resource aws_s3_bucket_accelerate_configuration.
 type S3BucketAccelerateConfiguration struct {
-	Name  string
-	Args  S3BucketAccelerateConfigurationArgs
-	state *s3BucketAccelerateConfigurationState
+	Name      string
+	Args      S3BucketAccelerateConfigurationArgs
+	state     *s3BucketAccelerateConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [S3BucketAccelerateConfiguration].
 func (sbac *S3BucketAccelerateConfiguration) Type() string {
 	return "aws_s3_bucket_accelerate_configuration"
 }
 
+// LocalName returns the local name for [S3BucketAccelerateConfiguration].
 func (sbac *S3BucketAccelerateConfiguration) LocalName() string {
 	return sbac.Name
 }
 
+// Configuration returns the configuration (args) for [S3BucketAccelerateConfiguration].
 func (sbac *S3BucketAccelerateConfiguration) Configuration() interface{} {
 	return sbac.Args
 }
 
+// DependOn is used for other resources to depend on [S3BucketAccelerateConfiguration].
+func (sbac *S3BucketAccelerateConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(sbac)
+}
+
+// Dependencies returns the list of resources [S3BucketAccelerateConfiguration] depends_on.
+func (sbac *S3BucketAccelerateConfiguration) Dependencies() terra.Dependencies {
+	return sbac.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [S3BucketAccelerateConfiguration].
+func (sbac *S3BucketAccelerateConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return sbac.Lifecycle
+}
+
+// Attributes returns the attributes for [S3BucketAccelerateConfiguration].
 func (sbac *S3BucketAccelerateConfiguration) Attributes() s3BucketAccelerateConfigurationAttributes {
 	return s3BucketAccelerateConfigurationAttributes{ref: terra.ReferenceResource(sbac)}
 }
 
+// ImportState imports the given attribute values into [S3BucketAccelerateConfiguration]'s state.
 func (sbac *S3BucketAccelerateConfiguration) ImportState(av io.Reader) error {
 	sbac.state = &s3BucketAccelerateConfigurationState{}
 	if err := json.NewDecoder(av).Decode(sbac.state); err != nil {
@@ -48,10 +72,12 @@ func (sbac *S3BucketAccelerateConfiguration) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [S3BucketAccelerateConfiguration] has state.
 func (sbac *S3BucketAccelerateConfiguration) State() (*s3BucketAccelerateConfigurationState, bool) {
 	return sbac.state, sbac.state != nil
 }
 
+// StateMust returns the state for [S3BucketAccelerateConfiguration]. Panics if the state is nil.
 func (sbac *S3BucketAccelerateConfiguration) StateMust() *s3BucketAccelerateConfigurationState {
 	if sbac.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sbac.Type(), sbac.LocalName()))
@@ -59,10 +85,7 @@ func (sbac *S3BucketAccelerateConfiguration) StateMust() *s3BucketAccelerateConf
 	return sbac.state
 }
 
-func (sbac *S3BucketAccelerateConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(sbac)
-}
-
+// S3BucketAccelerateConfigurationArgs contains the configurations for aws_s3_bucket_accelerate_configuration.
 type S3BucketAccelerateConfigurationArgs struct {
 	// Bucket: string, required
 	Bucket terra.StringValue `hcl:"bucket,attr" validate:"required"`
@@ -72,27 +95,29 @@ type S3BucketAccelerateConfigurationArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// Status: string, required
 	Status terra.StringValue `hcl:"status,attr" validate:"required"`
-	// DependsOn contains resources that S3BucketAccelerateConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type s3BucketAccelerateConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// Bucket returns a reference to field bucket of aws_s3_bucket_accelerate_configuration.
 func (sbac s3BucketAccelerateConfigurationAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(sbac.ref.Append("bucket"))
+	return terra.ReferenceAsString(sbac.ref.Append("bucket"))
 }
 
+// ExpectedBucketOwner returns a reference to field expected_bucket_owner of aws_s3_bucket_accelerate_configuration.
 func (sbac s3BucketAccelerateConfigurationAttributes) ExpectedBucketOwner() terra.StringValue {
-	return terra.ReferenceString(sbac.ref.Append("expected_bucket_owner"))
+	return terra.ReferenceAsString(sbac.ref.Append("expected_bucket_owner"))
 }
 
+// Id returns a reference to field id of aws_s3_bucket_accelerate_configuration.
 func (sbac s3BucketAccelerateConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sbac.ref.Append("id"))
+	return terra.ReferenceAsString(sbac.ref.Append("id"))
 }
 
+// Status returns a reference to field status of aws_s3_bucket_accelerate_configuration.
 func (sbac s3BucketAccelerateConfigurationAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(sbac.ref.Append("status"))
+	return terra.ReferenceAsString(sbac.ref.Append("status"))
 }
 
 type s3BucketAccelerateConfigurationState struct {

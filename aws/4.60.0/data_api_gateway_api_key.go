@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataApiGatewayApiKey creates a new instance of [DataApiGatewayApiKey].
 func NewDataApiGatewayApiKey(name string, args DataApiGatewayApiKeyArgs) *DataApiGatewayApiKey {
 	return &DataApiGatewayApiKey{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataApiGatewayApiKey(name string, args DataApiGatewayApiKeyArgs) *DataAp
 
 var _ terra.DataResource = (*DataApiGatewayApiKey)(nil)
 
+// DataApiGatewayApiKey represents the Terraform data resource aws_api_gateway_api_key.
 type DataApiGatewayApiKey struct {
 	Name string
 	Args DataApiGatewayApiKeyArgs
 }
 
+// DataSource returns the Terraform object type for [DataApiGatewayApiKey].
 func (agak *DataApiGatewayApiKey) DataSource() string {
 	return "aws_api_gateway_api_key"
 }
 
+// LocalName returns the local name for [DataApiGatewayApiKey].
 func (agak *DataApiGatewayApiKey) LocalName() string {
 	return agak.Name
 }
 
+// Configuration returns the configuration (args) for [DataApiGatewayApiKey].
 func (agak *DataApiGatewayApiKey) Configuration() interface{} {
 	return agak.Args
 }
 
+// Attributes returns the attributes for [DataApiGatewayApiKey].
 func (agak *DataApiGatewayApiKey) Attributes() dataApiGatewayApiKeyAttributes {
 	return dataApiGatewayApiKeyAttributes{ref: terra.ReferenceDataResource(agak)}
 }
 
+// DataApiGatewayApiKeyArgs contains the configurations for aws_api_gateway_api_key.
 type DataApiGatewayApiKeyArgs struct {
 	// Id: string, required
 	Id terra.StringValue `hcl:"id,attr" validate:"required"`
@@ -44,34 +51,42 @@ type dataApiGatewayApiKeyAttributes struct {
 	ref terra.Reference
 }
 
+// CreatedDate returns a reference to field created_date of aws_api_gateway_api_key.
 func (agak dataApiGatewayApiKeyAttributes) CreatedDate() terra.StringValue {
-	return terra.ReferenceString(agak.ref.Append("created_date"))
+	return terra.ReferenceAsString(agak.ref.Append("created_date"))
 }
 
+// Description returns a reference to field description of aws_api_gateway_api_key.
 func (agak dataApiGatewayApiKeyAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(agak.ref.Append("description"))
+	return terra.ReferenceAsString(agak.ref.Append("description"))
 }
 
+// Enabled returns a reference to field enabled of aws_api_gateway_api_key.
 func (agak dataApiGatewayApiKeyAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(agak.ref.Append("enabled"))
+	return terra.ReferenceAsBool(agak.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of aws_api_gateway_api_key.
 func (agak dataApiGatewayApiKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(agak.ref.Append("id"))
+	return terra.ReferenceAsString(agak.ref.Append("id"))
 }
 
+// LastUpdatedDate returns a reference to field last_updated_date of aws_api_gateway_api_key.
 func (agak dataApiGatewayApiKeyAttributes) LastUpdatedDate() terra.StringValue {
-	return terra.ReferenceString(agak.ref.Append("last_updated_date"))
+	return terra.ReferenceAsString(agak.ref.Append("last_updated_date"))
 }
 
+// Name returns a reference to field name of aws_api_gateway_api_key.
 func (agak dataApiGatewayApiKeyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(agak.ref.Append("name"))
+	return terra.ReferenceAsString(agak.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_api_gateway_api_key.
 func (agak dataApiGatewayApiKeyAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](agak.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](agak.ref.Append("tags"))
 }
 
+// Value returns a reference to field value of aws_api_gateway_api_key.
 func (agak dataApiGatewayApiKeyAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(agak.ref.Append("value"))
+	return terra.ReferenceAsString(agak.ref.Append("value"))
 }

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCognitoUserPool creates a new instance of [CognitoUserPool].
 func NewCognitoUserPool(name string, args CognitoUserPoolArgs) *CognitoUserPool {
 	return &CognitoUserPool{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCognitoUserPool(name string, args CognitoUserPoolArgs) *CognitoUserPool 
 
 var _ terra.Resource = (*CognitoUserPool)(nil)
 
+// CognitoUserPool represents the Terraform resource aws_cognito_user_pool.
 type CognitoUserPool struct {
-	Name  string
-	Args  CognitoUserPoolArgs
-	state *cognitoUserPoolState
+	Name      string
+	Args      CognitoUserPoolArgs
+	state     *cognitoUserPoolState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CognitoUserPool].
 func (cup *CognitoUserPool) Type() string {
 	return "aws_cognito_user_pool"
 }
 
+// LocalName returns the local name for [CognitoUserPool].
 func (cup *CognitoUserPool) LocalName() string {
 	return cup.Name
 }
 
+// Configuration returns the configuration (args) for [CognitoUserPool].
 func (cup *CognitoUserPool) Configuration() interface{} {
 	return cup.Args
 }
 
+// DependOn is used for other resources to depend on [CognitoUserPool].
+func (cup *CognitoUserPool) DependOn() terra.Reference {
+	return terra.ReferenceResource(cup)
+}
+
+// Dependencies returns the list of resources [CognitoUserPool] depends_on.
+func (cup *CognitoUserPool) Dependencies() terra.Dependencies {
+	return cup.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CognitoUserPool].
+func (cup *CognitoUserPool) LifecycleManagement() *terra.Lifecycle {
+	return cup.Lifecycle
+}
+
+// Attributes returns the attributes for [CognitoUserPool].
 func (cup *CognitoUserPool) Attributes() cognitoUserPoolAttributes {
 	return cognitoUserPoolAttributes{ref: terra.ReferenceResource(cup)}
 }
 
+// ImportState imports the given attribute values into [CognitoUserPool]'s state.
 func (cup *CognitoUserPool) ImportState(av io.Reader) error {
 	cup.state = &cognitoUserPoolState{}
 	if err := json.NewDecoder(av).Decode(cup.state); err != nil {
@@ -49,10 +73,12 @@ func (cup *CognitoUserPool) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CognitoUserPool] has state.
 func (cup *CognitoUserPool) State() (*cognitoUserPoolState, bool) {
 	return cup.state, cup.state != nil
 }
 
+// StateMust returns the state for [CognitoUserPool]. Panics if the state is nil.
 func (cup *CognitoUserPool) StateMust() *cognitoUserPoolState {
 	if cup.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cup.Type(), cup.LocalName()))
@@ -60,10 +86,7 @@ func (cup *CognitoUserPool) StateMust() *cognitoUserPoolState {
 	return cup.state
 }
 
-func (cup *CognitoUserPool) DependOn() terra.Reference {
-	return terra.ReferenceResource(cup)
-}
-
+// CognitoUserPoolArgs contains the configurations for aws_cognito_user_pool.
 type CognitoUserPoolArgs struct {
 	// AliasAttributes: set of string, optional
 	AliasAttributes terra.SetValue[terra.StringValue] `hcl:"alias_attributes,attr"`
@@ -117,143 +140,161 @@ type CognitoUserPoolArgs struct {
 	UsernameConfiguration *cognitouserpool.UsernameConfiguration `hcl:"username_configuration,block"`
 	// VerificationMessageTemplate: optional
 	VerificationMessageTemplate *cognitouserpool.VerificationMessageTemplate `hcl:"verification_message_template,block"`
-	// DependsOn contains resources that CognitoUserPool depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cognitoUserPoolAttributes struct {
 	ref terra.Reference
 }
 
+// AliasAttributes returns a reference to field alias_attributes of aws_cognito_user_pool.
 func (cup cognitoUserPoolAttributes) AliasAttributes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cup.ref.Append("alias_attributes"))
+	return terra.ReferenceAsSet[terra.StringValue](cup.ref.Append("alias_attributes"))
 }
 
+// Arn returns a reference to field arn of aws_cognito_user_pool.
 func (cup cognitoUserPoolAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(cup.ref.Append("arn"))
+	return terra.ReferenceAsString(cup.ref.Append("arn"))
 }
 
+// AutoVerifiedAttributes returns a reference to field auto_verified_attributes of aws_cognito_user_pool.
 func (cup cognitoUserPoolAttributes) AutoVerifiedAttributes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cup.ref.Append("auto_verified_attributes"))
+	return terra.ReferenceAsSet[terra.StringValue](cup.ref.Append("auto_verified_attributes"))
 }
 
+// CreationDate returns a reference to field creation_date of aws_cognito_user_pool.
 func (cup cognitoUserPoolAttributes) CreationDate() terra.StringValue {
-	return terra.ReferenceString(cup.ref.Append("creation_date"))
+	return terra.ReferenceAsString(cup.ref.Append("creation_date"))
 }
 
+// CustomDomain returns a reference to field custom_domain of aws_cognito_user_pool.
 func (cup cognitoUserPoolAttributes) CustomDomain() terra.StringValue {
-	return terra.ReferenceString(cup.ref.Append("custom_domain"))
+	return terra.ReferenceAsString(cup.ref.Append("custom_domain"))
 }
 
+// DeletionProtection returns a reference to field deletion_protection of aws_cognito_user_pool.
 func (cup cognitoUserPoolAttributes) DeletionProtection() terra.StringValue {
-	return terra.ReferenceString(cup.ref.Append("deletion_protection"))
+	return terra.ReferenceAsString(cup.ref.Append("deletion_protection"))
 }
 
+// Domain returns a reference to field domain of aws_cognito_user_pool.
 func (cup cognitoUserPoolAttributes) Domain() terra.StringValue {
-	return terra.ReferenceString(cup.ref.Append("domain"))
+	return terra.ReferenceAsString(cup.ref.Append("domain"))
 }
 
+// EmailVerificationMessage returns a reference to field email_verification_message of aws_cognito_user_pool.
 func (cup cognitoUserPoolAttributes) EmailVerificationMessage() terra.StringValue {
-	return terra.ReferenceString(cup.ref.Append("email_verification_message"))
+	return terra.ReferenceAsString(cup.ref.Append("email_verification_message"))
 }
 
+// EmailVerificationSubject returns a reference to field email_verification_subject of aws_cognito_user_pool.
 func (cup cognitoUserPoolAttributes) EmailVerificationSubject() terra.StringValue {
-	return terra.ReferenceString(cup.ref.Append("email_verification_subject"))
+	return terra.ReferenceAsString(cup.ref.Append("email_verification_subject"))
 }
 
+// Endpoint returns a reference to field endpoint of aws_cognito_user_pool.
 func (cup cognitoUserPoolAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(cup.ref.Append("endpoint"))
+	return terra.ReferenceAsString(cup.ref.Append("endpoint"))
 }
 
+// EstimatedNumberOfUsers returns a reference to field estimated_number_of_users of aws_cognito_user_pool.
 func (cup cognitoUserPoolAttributes) EstimatedNumberOfUsers() terra.NumberValue {
-	return terra.ReferenceNumber(cup.ref.Append("estimated_number_of_users"))
+	return terra.ReferenceAsNumber(cup.ref.Append("estimated_number_of_users"))
 }
 
+// Id returns a reference to field id of aws_cognito_user_pool.
 func (cup cognitoUserPoolAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cup.ref.Append("id"))
+	return terra.ReferenceAsString(cup.ref.Append("id"))
 }
 
+// LastModifiedDate returns a reference to field last_modified_date of aws_cognito_user_pool.
 func (cup cognitoUserPoolAttributes) LastModifiedDate() terra.StringValue {
-	return terra.ReferenceString(cup.ref.Append("last_modified_date"))
+	return terra.ReferenceAsString(cup.ref.Append("last_modified_date"))
 }
 
+// MfaConfiguration returns a reference to field mfa_configuration of aws_cognito_user_pool.
 func (cup cognitoUserPoolAttributes) MfaConfiguration() terra.StringValue {
-	return terra.ReferenceString(cup.ref.Append("mfa_configuration"))
+	return terra.ReferenceAsString(cup.ref.Append("mfa_configuration"))
 }
 
+// Name returns a reference to field name of aws_cognito_user_pool.
 func (cup cognitoUserPoolAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cup.ref.Append("name"))
+	return terra.ReferenceAsString(cup.ref.Append("name"))
 }
 
+// SmsAuthenticationMessage returns a reference to field sms_authentication_message of aws_cognito_user_pool.
 func (cup cognitoUserPoolAttributes) SmsAuthenticationMessage() terra.StringValue {
-	return terra.ReferenceString(cup.ref.Append("sms_authentication_message"))
+	return terra.ReferenceAsString(cup.ref.Append("sms_authentication_message"))
 }
 
+// SmsVerificationMessage returns a reference to field sms_verification_message of aws_cognito_user_pool.
 func (cup cognitoUserPoolAttributes) SmsVerificationMessage() terra.StringValue {
-	return terra.ReferenceString(cup.ref.Append("sms_verification_message"))
+	return terra.ReferenceAsString(cup.ref.Append("sms_verification_message"))
 }
 
+// Tags returns a reference to field tags of aws_cognito_user_pool.
 func (cup cognitoUserPoolAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cup.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cup.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_cognito_user_pool.
 func (cup cognitoUserPoolAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cup.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](cup.ref.Append("tags_all"))
 }
 
+// UsernameAttributes returns a reference to field username_attributes of aws_cognito_user_pool.
 func (cup cognitoUserPoolAttributes) UsernameAttributes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cup.ref.Append("username_attributes"))
+	return terra.ReferenceAsSet[terra.StringValue](cup.ref.Append("username_attributes"))
 }
 
 func (cup cognitoUserPoolAttributes) AccountRecoverySetting() terra.ListValue[cognitouserpool.AccountRecoverySettingAttributes] {
-	return terra.ReferenceList[cognitouserpool.AccountRecoverySettingAttributes](cup.ref.Append("account_recovery_setting"))
+	return terra.ReferenceAsList[cognitouserpool.AccountRecoverySettingAttributes](cup.ref.Append("account_recovery_setting"))
 }
 
 func (cup cognitoUserPoolAttributes) AdminCreateUserConfig() terra.ListValue[cognitouserpool.AdminCreateUserConfigAttributes] {
-	return terra.ReferenceList[cognitouserpool.AdminCreateUserConfigAttributes](cup.ref.Append("admin_create_user_config"))
+	return terra.ReferenceAsList[cognitouserpool.AdminCreateUserConfigAttributes](cup.ref.Append("admin_create_user_config"))
 }
 
 func (cup cognitoUserPoolAttributes) DeviceConfiguration() terra.ListValue[cognitouserpool.DeviceConfigurationAttributes] {
-	return terra.ReferenceList[cognitouserpool.DeviceConfigurationAttributes](cup.ref.Append("device_configuration"))
+	return terra.ReferenceAsList[cognitouserpool.DeviceConfigurationAttributes](cup.ref.Append("device_configuration"))
 }
 
 func (cup cognitoUserPoolAttributes) EmailConfiguration() terra.ListValue[cognitouserpool.EmailConfigurationAttributes] {
-	return terra.ReferenceList[cognitouserpool.EmailConfigurationAttributes](cup.ref.Append("email_configuration"))
+	return terra.ReferenceAsList[cognitouserpool.EmailConfigurationAttributes](cup.ref.Append("email_configuration"))
 }
 
 func (cup cognitoUserPoolAttributes) LambdaConfig() terra.ListValue[cognitouserpool.LambdaConfigAttributes] {
-	return terra.ReferenceList[cognitouserpool.LambdaConfigAttributes](cup.ref.Append("lambda_config"))
+	return terra.ReferenceAsList[cognitouserpool.LambdaConfigAttributes](cup.ref.Append("lambda_config"))
 }
 
 func (cup cognitoUserPoolAttributes) PasswordPolicy() terra.ListValue[cognitouserpool.PasswordPolicyAttributes] {
-	return terra.ReferenceList[cognitouserpool.PasswordPolicyAttributes](cup.ref.Append("password_policy"))
+	return terra.ReferenceAsList[cognitouserpool.PasswordPolicyAttributes](cup.ref.Append("password_policy"))
 }
 
 func (cup cognitoUserPoolAttributes) Schema() terra.SetValue[cognitouserpool.SchemaAttributes] {
-	return terra.ReferenceSet[cognitouserpool.SchemaAttributes](cup.ref.Append("schema"))
+	return terra.ReferenceAsSet[cognitouserpool.SchemaAttributes](cup.ref.Append("schema"))
 }
 
 func (cup cognitoUserPoolAttributes) SmsConfiguration() terra.ListValue[cognitouserpool.SmsConfigurationAttributes] {
-	return terra.ReferenceList[cognitouserpool.SmsConfigurationAttributes](cup.ref.Append("sms_configuration"))
+	return terra.ReferenceAsList[cognitouserpool.SmsConfigurationAttributes](cup.ref.Append("sms_configuration"))
 }
 
 func (cup cognitoUserPoolAttributes) SoftwareTokenMfaConfiguration() terra.ListValue[cognitouserpool.SoftwareTokenMfaConfigurationAttributes] {
-	return terra.ReferenceList[cognitouserpool.SoftwareTokenMfaConfigurationAttributes](cup.ref.Append("software_token_mfa_configuration"))
+	return terra.ReferenceAsList[cognitouserpool.SoftwareTokenMfaConfigurationAttributes](cup.ref.Append("software_token_mfa_configuration"))
 }
 
 func (cup cognitoUserPoolAttributes) UserAttributeUpdateSettings() terra.ListValue[cognitouserpool.UserAttributeUpdateSettingsAttributes] {
-	return terra.ReferenceList[cognitouserpool.UserAttributeUpdateSettingsAttributes](cup.ref.Append("user_attribute_update_settings"))
+	return terra.ReferenceAsList[cognitouserpool.UserAttributeUpdateSettingsAttributes](cup.ref.Append("user_attribute_update_settings"))
 }
 
 func (cup cognitoUserPoolAttributes) UserPoolAddOns() terra.ListValue[cognitouserpool.UserPoolAddOnsAttributes] {
-	return terra.ReferenceList[cognitouserpool.UserPoolAddOnsAttributes](cup.ref.Append("user_pool_add_ons"))
+	return terra.ReferenceAsList[cognitouserpool.UserPoolAddOnsAttributes](cup.ref.Append("user_pool_add_ons"))
 }
 
 func (cup cognitoUserPoolAttributes) UsernameConfiguration() terra.ListValue[cognitouserpool.UsernameConfigurationAttributes] {
-	return terra.ReferenceList[cognitouserpool.UsernameConfigurationAttributes](cup.ref.Append("username_configuration"))
+	return terra.ReferenceAsList[cognitouserpool.UsernameConfigurationAttributes](cup.ref.Append("username_configuration"))
 }
 
 func (cup cognitoUserPoolAttributes) VerificationMessageTemplate() terra.ListValue[cognitouserpool.VerificationMessageTemplateAttributes] {
-	return terra.ReferenceList[cognitouserpool.VerificationMessageTemplateAttributes](cup.ref.Append("verification_message_template"))
+	return terra.ReferenceAsList[cognitouserpool.VerificationMessageTemplateAttributes](cup.ref.Append("verification_message_template"))
 }
 
 type cognitoUserPoolState struct {

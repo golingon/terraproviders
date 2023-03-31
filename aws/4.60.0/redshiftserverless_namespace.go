@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRedshiftserverlessNamespace creates a new instance of [RedshiftserverlessNamespace].
 func NewRedshiftserverlessNamespace(name string, args RedshiftserverlessNamespaceArgs) *RedshiftserverlessNamespace {
 	return &RedshiftserverlessNamespace{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRedshiftserverlessNamespace(name string, args RedshiftserverlessNamespac
 
 var _ terra.Resource = (*RedshiftserverlessNamespace)(nil)
 
+// RedshiftserverlessNamespace represents the Terraform resource aws_redshiftserverless_namespace.
 type RedshiftserverlessNamespace struct {
-	Name  string
-	Args  RedshiftserverlessNamespaceArgs
-	state *redshiftserverlessNamespaceState
+	Name      string
+	Args      RedshiftserverlessNamespaceArgs
+	state     *redshiftserverlessNamespaceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RedshiftserverlessNamespace].
 func (rn *RedshiftserverlessNamespace) Type() string {
 	return "aws_redshiftserverless_namespace"
 }
 
+// LocalName returns the local name for [RedshiftserverlessNamespace].
 func (rn *RedshiftserverlessNamespace) LocalName() string {
 	return rn.Name
 }
 
+// Configuration returns the configuration (args) for [RedshiftserverlessNamespace].
 func (rn *RedshiftserverlessNamespace) Configuration() interface{} {
 	return rn.Args
 }
 
+// DependOn is used for other resources to depend on [RedshiftserverlessNamespace].
+func (rn *RedshiftserverlessNamespace) DependOn() terra.Reference {
+	return terra.ReferenceResource(rn)
+}
+
+// Dependencies returns the list of resources [RedshiftserverlessNamespace] depends_on.
+func (rn *RedshiftserverlessNamespace) Dependencies() terra.Dependencies {
+	return rn.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RedshiftserverlessNamespace].
+func (rn *RedshiftserverlessNamespace) LifecycleManagement() *terra.Lifecycle {
+	return rn.Lifecycle
+}
+
+// Attributes returns the attributes for [RedshiftserverlessNamespace].
 func (rn *RedshiftserverlessNamespace) Attributes() redshiftserverlessNamespaceAttributes {
 	return redshiftserverlessNamespaceAttributes{ref: terra.ReferenceResource(rn)}
 }
 
+// ImportState imports the given attribute values into [RedshiftserverlessNamespace]'s state.
 func (rn *RedshiftserverlessNamespace) ImportState(av io.Reader) error {
 	rn.state = &redshiftserverlessNamespaceState{}
 	if err := json.NewDecoder(av).Decode(rn.state); err != nil {
@@ -48,10 +72,12 @@ func (rn *RedshiftserverlessNamespace) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RedshiftserverlessNamespace] has state.
 func (rn *RedshiftserverlessNamespace) State() (*redshiftserverlessNamespaceState, bool) {
 	return rn.state, rn.state != nil
 }
 
+// StateMust returns the state for [RedshiftserverlessNamespace]. Panics if the state is nil.
 func (rn *RedshiftserverlessNamespace) StateMust() *redshiftserverlessNamespaceState {
 	if rn.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rn.Type(), rn.LocalName()))
@@ -59,10 +85,7 @@ func (rn *RedshiftserverlessNamespace) StateMust() *redshiftserverlessNamespaceS
 	return rn.state
 }
 
-func (rn *RedshiftserverlessNamespace) DependOn() terra.Reference {
-	return terra.ReferenceResource(rn)
-}
-
+// RedshiftserverlessNamespaceArgs contains the configurations for aws_redshiftserverless_namespace.
 type RedshiftserverlessNamespaceArgs struct {
 	// AdminUserPassword: string, optional
 	AdminUserPassword terra.StringValue `hcl:"admin_user_password,attr"`
@@ -86,63 +109,74 @@ type RedshiftserverlessNamespaceArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that RedshiftserverlessNamespace depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type redshiftserverlessNamespaceAttributes struct {
 	ref terra.Reference
 }
 
+// AdminUserPassword returns a reference to field admin_user_password of aws_redshiftserverless_namespace.
 func (rn redshiftserverlessNamespaceAttributes) AdminUserPassword() terra.StringValue {
-	return terra.ReferenceString(rn.ref.Append("admin_user_password"))
+	return terra.ReferenceAsString(rn.ref.Append("admin_user_password"))
 }
 
+// AdminUsername returns a reference to field admin_username of aws_redshiftserverless_namespace.
 func (rn redshiftserverlessNamespaceAttributes) AdminUsername() terra.StringValue {
-	return terra.ReferenceString(rn.ref.Append("admin_username"))
+	return terra.ReferenceAsString(rn.ref.Append("admin_username"))
 }
 
+// Arn returns a reference to field arn of aws_redshiftserverless_namespace.
 func (rn redshiftserverlessNamespaceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rn.ref.Append("arn"))
+	return terra.ReferenceAsString(rn.ref.Append("arn"))
 }
 
+// DbName returns a reference to field db_name of aws_redshiftserverless_namespace.
 func (rn redshiftserverlessNamespaceAttributes) DbName() terra.StringValue {
-	return terra.ReferenceString(rn.ref.Append("db_name"))
+	return terra.ReferenceAsString(rn.ref.Append("db_name"))
 }
 
+// DefaultIamRoleArn returns a reference to field default_iam_role_arn of aws_redshiftserverless_namespace.
 func (rn redshiftserverlessNamespaceAttributes) DefaultIamRoleArn() terra.StringValue {
-	return terra.ReferenceString(rn.ref.Append("default_iam_role_arn"))
+	return terra.ReferenceAsString(rn.ref.Append("default_iam_role_arn"))
 }
 
+// IamRoles returns a reference to field iam_roles of aws_redshiftserverless_namespace.
 func (rn redshiftserverlessNamespaceAttributes) IamRoles() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rn.ref.Append("iam_roles"))
+	return terra.ReferenceAsSet[terra.StringValue](rn.ref.Append("iam_roles"))
 }
 
+// Id returns a reference to field id of aws_redshiftserverless_namespace.
 func (rn redshiftserverlessNamespaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rn.ref.Append("id"))
+	return terra.ReferenceAsString(rn.ref.Append("id"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_redshiftserverless_namespace.
 func (rn redshiftserverlessNamespaceAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(rn.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(rn.ref.Append("kms_key_id"))
 }
 
+// LogExports returns a reference to field log_exports of aws_redshiftserverless_namespace.
 func (rn redshiftserverlessNamespaceAttributes) LogExports() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rn.ref.Append("log_exports"))
+	return terra.ReferenceAsSet[terra.StringValue](rn.ref.Append("log_exports"))
 }
 
+// NamespaceId returns a reference to field namespace_id of aws_redshiftserverless_namespace.
 func (rn redshiftserverlessNamespaceAttributes) NamespaceId() terra.StringValue {
-	return terra.ReferenceString(rn.ref.Append("namespace_id"))
+	return terra.ReferenceAsString(rn.ref.Append("namespace_id"))
 }
 
+// NamespaceName returns a reference to field namespace_name of aws_redshiftserverless_namespace.
 func (rn redshiftserverlessNamespaceAttributes) NamespaceName() terra.StringValue {
-	return terra.ReferenceString(rn.ref.Append("namespace_name"))
+	return terra.ReferenceAsString(rn.ref.Append("namespace_name"))
 }
 
+// Tags returns a reference to field tags of aws_redshiftserverless_namespace.
 func (rn redshiftserverlessNamespaceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rn.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rn.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_redshiftserverless_namespace.
 func (rn redshiftserverlessNamespaceAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rn.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](rn.ref.Append("tags_all"))
 }
 
 type redshiftserverlessNamespaceState struct {

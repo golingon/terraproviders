@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewVpnConnection creates a new instance of [VpnConnection].
 func NewVpnConnection(name string, args VpnConnectionArgs) *VpnConnection {
 	return &VpnConnection{
 		Args: args,
@@ -19,28 +20,51 @@ func NewVpnConnection(name string, args VpnConnectionArgs) *VpnConnection {
 
 var _ terra.Resource = (*VpnConnection)(nil)
 
+// VpnConnection represents the Terraform resource aws_vpn_connection.
 type VpnConnection struct {
-	Name  string
-	Args  VpnConnectionArgs
-	state *vpnConnectionState
+	Name      string
+	Args      VpnConnectionArgs
+	state     *vpnConnectionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VpnConnection].
 func (vc *VpnConnection) Type() string {
 	return "aws_vpn_connection"
 }
 
+// LocalName returns the local name for [VpnConnection].
 func (vc *VpnConnection) LocalName() string {
 	return vc.Name
 }
 
+// Configuration returns the configuration (args) for [VpnConnection].
 func (vc *VpnConnection) Configuration() interface{} {
 	return vc.Args
 }
 
+// DependOn is used for other resources to depend on [VpnConnection].
+func (vc *VpnConnection) DependOn() terra.Reference {
+	return terra.ReferenceResource(vc)
+}
+
+// Dependencies returns the list of resources [VpnConnection] depends_on.
+func (vc *VpnConnection) Dependencies() terra.Dependencies {
+	return vc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VpnConnection].
+func (vc *VpnConnection) LifecycleManagement() *terra.Lifecycle {
+	return vc.Lifecycle
+}
+
+// Attributes returns the attributes for [VpnConnection].
 func (vc *VpnConnection) Attributes() vpnConnectionAttributes {
 	return vpnConnectionAttributes{ref: terra.ReferenceResource(vc)}
 }
 
+// ImportState imports the given attribute values into [VpnConnection]'s state.
 func (vc *VpnConnection) ImportState(av io.Reader) error {
 	vc.state = &vpnConnectionState{}
 	if err := json.NewDecoder(av).Decode(vc.state); err != nil {
@@ -49,10 +73,12 @@ func (vc *VpnConnection) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VpnConnection] has state.
 func (vc *VpnConnection) State() (*vpnConnectionState, bool) {
 	return vc.state, vc.state != nil
 }
 
+// StateMust returns the state for [VpnConnection]. Panics if the state is nil.
 func (vc *VpnConnection) StateMust() *vpnConnectionState {
 	if vc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vc.Type(), vc.LocalName()))
@@ -60,10 +86,7 @@ func (vc *VpnConnection) StateMust() *vpnConnectionState {
 	return vc.state
 }
 
-func (vc *VpnConnection) DependOn() terra.Reference {
-	return terra.ReferenceResource(vc)
-}
-
+// VpnConnectionArgs contains the configurations for aws_vpn_connection.
 type VpnConnectionArgs struct {
 	// CustomerGatewayId: string, required
 	CustomerGatewayId terra.StringValue `hcl:"customer_gateway_id,attr" validate:"required"`
@@ -177,295 +200,360 @@ type VpnConnectionArgs struct {
 	Tunnel1LogOptions *vpnconnection.Tunnel1LogOptions `hcl:"tunnel1_log_options,block"`
 	// Tunnel2LogOptions: optional
 	Tunnel2LogOptions *vpnconnection.Tunnel2LogOptions `hcl:"tunnel2_log_options,block"`
-	// DependsOn contains resources that VpnConnection depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type vpnConnectionAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("arn"))
+	return terra.ReferenceAsString(vc.ref.Append("arn"))
 }
 
+// CoreNetworkArn returns a reference to field core_network_arn of aws_vpn_connection.
 func (vc vpnConnectionAttributes) CoreNetworkArn() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("core_network_arn"))
+	return terra.ReferenceAsString(vc.ref.Append("core_network_arn"))
 }
 
+// CoreNetworkAttachmentArn returns a reference to field core_network_attachment_arn of aws_vpn_connection.
 func (vc vpnConnectionAttributes) CoreNetworkAttachmentArn() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("core_network_attachment_arn"))
+	return terra.ReferenceAsString(vc.ref.Append("core_network_attachment_arn"))
 }
 
+// CustomerGatewayConfiguration returns a reference to field customer_gateway_configuration of aws_vpn_connection.
 func (vc vpnConnectionAttributes) CustomerGatewayConfiguration() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("customer_gateway_configuration"))
+	return terra.ReferenceAsString(vc.ref.Append("customer_gateway_configuration"))
 }
 
+// CustomerGatewayId returns a reference to field customer_gateway_id of aws_vpn_connection.
 func (vc vpnConnectionAttributes) CustomerGatewayId() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("customer_gateway_id"))
+	return terra.ReferenceAsString(vc.ref.Append("customer_gateway_id"))
 }
 
+// EnableAcceleration returns a reference to field enable_acceleration of aws_vpn_connection.
 func (vc vpnConnectionAttributes) EnableAcceleration() terra.BoolValue {
-	return terra.ReferenceBool(vc.ref.Append("enable_acceleration"))
+	return terra.ReferenceAsBool(vc.ref.Append("enable_acceleration"))
 }
 
+// Id returns a reference to field id of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("id"))
+	return terra.ReferenceAsString(vc.ref.Append("id"))
 }
 
+// LocalIpv4NetworkCidr returns a reference to field local_ipv4_network_cidr of aws_vpn_connection.
 func (vc vpnConnectionAttributes) LocalIpv4NetworkCidr() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("local_ipv4_network_cidr"))
+	return terra.ReferenceAsString(vc.ref.Append("local_ipv4_network_cidr"))
 }
 
+// LocalIpv6NetworkCidr returns a reference to field local_ipv6_network_cidr of aws_vpn_connection.
 func (vc vpnConnectionAttributes) LocalIpv6NetworkCidr() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("local_ipv6_network_cidr"))
+	return terra.ReferenceAsString(vc.ref.Append("local_ipv6_network_cidr"))
 }
 
+// OutsideIpAddressType returns a reference to field outside_ip_address_type of aws_vpn_connection.
 func (vc vpnConnectionAttributes) OutsideIpAddressType() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("outside_ip_address_type"))
+	return terra.ReferenceAsString(vc.ref.Append("outside_ip_address_type"))
 }
 
+// RemoteIpv4NetworkCidr returns a reference to field remote_ipv4_network_cidr of aws_vpn_connection.
 func (vc vpnConnectionAttributes) RemoteIpv4NetworkCidr() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("remote_ipv4_network_cidr"))
+	return terra.ReferenceAsString(vc.ref.Append("remote_ipv4_network_cidr"))
 }
 
+// RemoteIpv6NetworkCidr returns a reference to field remote_ipv6_network_cidr of aws_vpn_connection.
 func (vc vpnConnectionAttributes) RemoteIpv6NetworkCidr() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("remote_ipv6_network_cidr"))
+	return terra.ReferenceAsString(vc.ref.Append("remote_ipv6_network_cidr"))
 }
 
+// StaticRoutesOnly returns a reference to field static_routes_only of aws_vpn_connection.
 func (vc vpnConnectionAttributes) StaticRoutesOnly() terra.BoolValue {
-	return terra.ReferenceBool(vc.ref.Append("static_routes_only"))
+	return terra.ReferenceAsBool(vc.ref.Append("static_routes_only"))
 }
 
+// Tags returns a reference to field tags of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](vc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](vc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_vpn_connection.
 func (vc vpnConnectionAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](vc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](vc.ref.Append("tags_all"))
 }
 
+// TransitGatewayAttachmentId returns a reference to field transit_gateway_attachment_id of aws_vpn_connection.
 func (vc vpnConnectionAttributes) TransitGatewayAttachmentId() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("transit_gateway_attachment_id"))
+	return terra.ReferenceAsString(vc.ref.Append("transit_gateway_attachment_id"))
 }
 
+// TransitGatewayId returns a reference to field transit_gateway_id of aws_vpn_connection.
 func (vc vpnConnectionAttributes) TransitGatewayId() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("transit_gateway_id"))
+	return terra.ReferenceAsString(vc.ref.Append("transit_gateway_id"))
 }
 
+// TransportTransitGatewayAttachmentId returns a reference to field transport_transit_gateway_attachment_id of aws_vpn_connection.
 func (vc vpnConnectionAttributes) TransportTransitGatewayAttachmentId() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("transport_transit_gateway_attachment_id"))
+	return terra.ReferenceAsString(vc.ref.Append("transport_transit_gateway_attachment_id"))
 }
 
+// Tunnel1Address returns a reference to field tunnel1_address of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel1Address() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("tunnel1_address"))
+	return terra.ReferenceAsString(vc.ref.Append("tunnel1_address"))
 }
 
+// Tunnel1BgpAsn returns a reference to field tunnel1_bgp_asn of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel1BgpAsn() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("tunnel1_bgp_asn"))
+	return terra.ReferenceAsString(vc.ref.Append("tunnel1_bgp_asn"))
 }
 
+// Tunnel1BgpHoldtime returns a reference to field tunnel1_bgp_holdtime of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel1BgpHoldtime() terra.NumberValue {
-	return terra.ReferenceNumber(vc.ref.Append("tunnel1_bgp_holdtime"))
+	return terra.ReferenceAsNumber(vc.ref.Append("tunnel1_bgp_holdtime"))
 }
 
+// Tunnel1CgwInsideAddress returns a reference to field tunnel1_cgw_inside_address of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel1CgwInsideAddress() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("tunnel1_cgw_inside_address"))
+	return terra.ReferenceAsString(vc.ref.Append("tunnel1_cgw_inside_address"))
 }
 
+// Tunnel1DpdTimeoutAction returns a reference to field tunnel1_dpd_timeout_action of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel1DpdTimeoutAction() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("tunnel1_dpd_timeout_action"))
+	return terra.ReferenceAsString(vc.ref.Append("tunnel1_dpd_timeout_action"))
 }
 
+// Tunnel1DpdTimeoutSeconds returns a reference to field tunnel1_dpd_timeout_seconds of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel1DpdTimeoutSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(vc.ref.Append("tunnel1_dpd_timeout_seconds"))
+	return terra.ReferenceAsNumber(vc.ref.Append("tunnel1_dpd_timeout_seconds"))
 }
 
+// Tunnel1IkeVersions returns a reference to field tunnel1_ike_versions of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel1IkeVersions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("tunnel1_ike_versions"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("tunnel1_ike_versions"))
 }
 
+// Tunnel1InsideCidr returns a reference to field tunnel1_inside_cidr of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel1InsideCidr() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("tunnel1_inside_cidr"))
+	return terra.ReferenceAsString(vc.ref.Append("tunnel1_inside_cidr"))
 }
 
+// Tunnel1InsideIpv6Cidr returns a reference to field tunnel1_inside_ipv6_cidr of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel1InsideIpv6Cidr() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("tunnel1_inside_ipv6_cidr"))
+	return terra.ReferenceAsString(vc.ref.Append("tunnel1_inside_ipv6_cidr"))
 }
 
+// Tunnel1Phase1DhGroupNumbers returns a reference to field tunnel1_phase1_dh_group_numbers of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel1Phase1DhGroupNumbers() terra.SetValue[terra.NumberValue] {
-	return terra.ReferenceSet[terra.NumberValue](vc.ref.Append("tunnel1_phase1_dh_group_numbers"))
+	return terra.ReferenceAsSet[terra.NumberValue](vc.ref.Append("tunnel1_phase1_dh_group_numbers"))
 }
 
+// Tunnel1Phase1EncryptionAlgorithms returns a reference to field tunnel1_phase1_encryption_algorithms of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel1Phase1EncryptionAlgorithms() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("tunnel1_phase1_encryption_algorithms"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("tunnel1_phase1_encryption_algorithms"))
 }
 
+// Tunnel1Phase1IntegrityAlgorithms returns a reference to field tunnel1_phase1_integrity_algorithms of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel1Phase1IntegrityAlgorithms() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("tunnel1_phase1_integrity_algorithms"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("tunnel1_phase1_integrity_algorithms"))
 }
 
+// Tunnel1Phase1LifetimeSeconds returns a reference to field tunnel1_phase1_lifetime_seconds of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel1Phase1LifetimeSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(vc.ref.Append("tunnel1_phase1_lifetime_seconds"))
+	return terra.ReferenceAsNumber(vc.ref.Append("tunnel1_phase1_lifetime_seconds"))
 }
 
+// Tunnel1Phase2DhGroupNumbers returns a reference to field tunnel1_phase2_dh_group_numbers of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel1Phase2DhGroupNumbers() terra.SetValue[terra.NumberValue] {
-	return terra.ReferenceSet[terra.NumberValue](vc.ref.Append("tunnel1_phase2_dh_group_numbers"))
+	return terra.ReferenceAsSet[terra.NumberValue](vc.ref.Append("tunnel1_phase2_dh_group_numbers"))
 }
 
+// Tunnel1Phase2EncryptionAlgorithms returns a reference to field tunnel1_phase2_encryption_algorithms of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel1Phase2EncryptionAlgorithms() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("tunnel1_phase2_encryption_algorithms"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("tunnel1_phase2_encryption_algorithms"))
 }
 
+// Tunnel1Phase2IntegrityAlgorithms returns a reference to field tunnel1_phase2_integrity_algorithms of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel1Phase2IntegrityAlgorithms() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("tunnel1_phase2_integrity_algorithms"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("tunnel1_phase2_integrity_algorithms"))
 }
 
+// Tunnel1Phase2LifetimeSeconds returns a reference to field tunnel1_phase2_lifetime_seconds of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel1Phase2LifetimeSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(vc.ref.Append("tunnel1_phase2_lifetime_seconds"))
+	return terra.ReferenceAsNumber(vc.ref.Append("tunnel1_phase2_lifetime_seconds"))
 }
 
+// Tunnel1PresharedKey returns a reference to field tunnel1_preshared_key of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel1PresharedKey() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("tunnel1_preshared_key"))
+	return terra.ReferenceAsString(vc.ref.Append("tunnel1_preshared_key"))
 }
 
+// Tunnel1RekeyFuzzPercentage returns a reference to field tunnel1_rekey_fuzz_percentage of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel1RekeyFuzzPercentage() terra.NumberValue {
-	return terra.ReferenceNumber(vc.ref.Append("tunnel1_rekey_fuzz_percentage"))
+	return terra.ReferenceAsNumber(vc.ref.Append("tunnel1_rekey_fuzz_percentage"))
 }
 
+// Tunnel1RekeyMarginTimeSeconds returns a reference to field tunnel1_rekey_margin_time_seconds of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel1RekeyMarginTimeSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(vc.ref.Append("tunnel1_rekey_margin_time_seconds"))
+	return terra.ReferenceAsNumber(vc.ref.Append("tunnel1_rekey_margin_time_seconds"))
 }
 
+// Tunnel1ReplayWindowSize returns a reference to field tunnel1_replay_window_size of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel1ReplayWindowSize() terra.NumberValue {
-	return terra.ReferenceNumber(vc.ref.Append("tunnel1_replay_window_size"))
+	return terra.ReferenceAsNumber(vc.ref.Append("tunnel1_replay_window_size"))
 }
 
+// Tunnel1StartupAction returns a reference to field tunnel1_startup_action of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel1StartupAction() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("tunnel1_startup_action"))
+	return terra.ReferenceAsString(vc.ref.Append("tunnel1_startup_action"))
 }
 
+// Tunnel1VgwInsideAddress returns a reference to field tunnel1_vgw_inside_address of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel1VgwInsideAddress() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("tunnel1_vgw_inside_address"))
+	return terra.ReferenceAsString(vc.ref.Append("tunnel1_vgw_inside_address"))
 }
 
+// Tunnel2Address returns a reference to field tunnel2_address of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel2Address() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("tunnel2_address"))
+	return terra.ReferenceAsString(vc.ref.Append("tunnel2_address"))
 }
 
+// Tunnel2BgpAsn returns a reference to field tunnel2_bgp_asn of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel2BgpAsn() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("tunnel2_bgp_asn"))
+	return terra.ReferenceAsString(vc.ref.Append("tunnel2_bgp_asn"))
 }
 
+// Tunnel2BgpHoldtime returns a reference to field tunnel2_bgp_holdtime of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel2BgpHoldtime() terra.NumberValue {
-	return terra.ReferenceNumber(vc.ref.Append("tunnel2_bgp_holdtime"))
+	return terra.ReferenceAsNumber(vc.ref.Append("tunnel2_bgp_holdtime"))
 }
 
+// Tunnel2CgwInsideAddress returns a reference to field tunnel2_cgw_inside_address of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel2CgwInsideAddress() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("tunnel2_cgw_inside_address"))
+	return terra.ReferenceAsString(vc.ref.Append("tunnel2_cgw_inside_address"))
 }
 
+// Tunnel2DpdTimeoutAction returns a reference to field tunnel2_dpd_timeout_action of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel2DpdTimeoutAction() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("tunnel2_dpd_timeout_action"))
+	return terra.ReferenceAsString(vc.ref.Append("tunnel2_dpd_timeout_action"))
 }
 
+// Tunnel2DpdTimeoutSeconds returns a reference to field tunnel2_dpd_timeout_seconds of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel2DpdTimeoutSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(vc.ref.Append("tunnel2_dpd_timeout_seconds"))
+	return terra.ReferenceAsNumber(vc.ref.Append("tunnel2_dpd_timeout_seconds"))
 }
 
+// Tunnel2IkeVersions returns a reference to field tunnel2_ike_versions of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel2IkeVersions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("tunnel2_ike_versions"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("tunnel2_ike_versions"))
 }
 
+// Tunnel2InsideCidr returns a reference to field tunnel2_inside_cidr of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel2InsideCidr() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("tunnel2_inside_cidr"))
+	return terra.ReferenceAsString(vc.ref.Append("tunnel2_inside_cidr"))
 }
 
+// Tunnel2InsideIpv6Cidr returns a reference to field tunnel2_inside_ipv6_cidr of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel2InsideIpv6Cidr() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("tunnel2_inside_ipv6_cidr"))
+	return terra.ReferenceAsString(vc.ref.Append("tunnel2_inside_ipv6_cidr"))
 }
 
+// Tunnel2Phase1DhGroupNumbers returns a reference to field tunnel2_phase1_dh_group_numbers of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel2Phase1DhGroupNumbers() terra.SetValue[terra.NumberValue] {
-	return terra.ReferenceSet[terra.NumberValue](vc.ref.Append("tunnel2_phase1_dh_group_numbers"))
+	return terra.ReferenceAsSet[terra.NumberValue](vc.ref.Append("tunnel2_phase1_dh_group_numbers"))
 }
 
+// Tunnel2Phase1EncryptionAlgorithms returns a reference to field tunnel2_phase1_encryption_algorithms of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel2Phase1EncryptionAlgorithms() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("tunnel2_phase1_encryption_algorithms"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("tunnel2_phase1_encryption_algorithms"))
 }
 
+// Tunnel2Phase1IntegrityAlgorithms returns a reference to field tunnel2_phase1_integrity_algorithms of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel2Phase1IntegrityAlgorithms() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("tunnel2_phase1_integrity_algorithms"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("tunnel2_phase1_integrity_algorithms"))
 }
 
+// Tunnel2Phase1LifetimeSeconds returns a reference to field tunnel2_phase1_lifetime_seconds of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel2Phase1LifetimeSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(vc.ref.Append("tunnel2_phase1_lifetime_seconds"))
+	return terra.ReferenceAsNumber(vc.ref.Append("tunnel2_phase1_lifetime_seconds"))
 }
 
+// Tunnel2Phase2DhGroupNumbers returns a reference to field tunnel2_phase2_dh_group_numbers of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel2Phase2DhGroupNumbers() terra.SetValue[terra.NumberValue] {
-	return terra.ReferenceSet[terra.NumberValue](vc.ref.Append("tunnel2_phase2_dh_group_numbers"))
+	return terra.ReferenceAsSet[terra.NumberValue](vc.ref.Append("tunnel2_phase2_dh_group_numbers"))
 }
 
+// Tunnel2Phase2EncryptionAlgorithms returns a reference to field tunnel2_phase2_encryption_algorithms of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel2Phase2EncryptionAlgorithms() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("tunnel2_phase2_encryption_algorithms"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("tunnel2_phase2_encryption_algorithms"))
 }
 
+// Tunnel2Phase2IntegrityAlgorithms returns a reference to field tunnel2_phase2_integrity_algorithms of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel2Phase2IntegrityAlgorithms() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("tunnel2_phase2_integrity_algorithms"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("tunnel2_phase2_integrity_algorithms"))
 }
 
+// Tunnel2Phase2LifetimeSeconds returns a reference to field tunnel2_phase2_lifetime_seconds of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel2Phase2LifetimeSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(vc.ref.Append("tunnel2_phase2_lifetime_seconds"))
+	return terra.ReferenceAsNumber(vc.ref.Append("tunnel2_phase2_lifetime_seconds"))
 }
 
+// Tunnel2PresharedKey returns a reference to field tunnel2_preshared_key of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel2PresharedKey() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("tunnel2_preshared_key"))
+	return terra.ReferenceAsString(vc.ref.Append("tunnel2_preshared_key"))
 }
 
+// Tunnel2RekeyFuzzPercentage returns a reference to field tunnel2_rekey_fuzz_percentage of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel2RekeyFuzzPercentage() terra.NumberValue {
-	return terra.ReferenceNumber(vc.ref.Append("tunnel2_rekey_fuzz_percentage"))
+	return terra.ReferenceAsNumber(vc.ref.Append("tunnel2_rekey_fuzz_percentage"))
 }
 
+// Tunnel2RekeyMarginTimeSeconds returns a reference to field tunnel2_rekey_margin_time_seconds of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel2RekeyMarginTimeSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(vc.ref.Append("tunnel2_rekey_margin_time_seconds"))
+	return terra.ReferenceAsNumber(vc.ref.Append("tunnel2_rekey_margin_time_seconds"))
 }
 
+// Tunnel2ReplayWindowSize returns a reference to field tunnel2_replay_window_size of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel2ReplayWindowSize() terra.NumberValue {
-	return terra.ReferenceNumber(vc.ref.Append("tunnel2_replay_window_size"))
+	return terra.ReferenceAsNumber(vc.ref.Append("tunnel2_replay_window_size"))
 }
 
+// Tunnel2StartupAction returns a reference to field tunnel2_startup_action of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel2StartupAction() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("tunnel2_startup_action"))
+	return terra.ReferenceAsString(vc.ref.Append("tunnel2_startup_action"))
 }
 
+// Tunnel2VgwInsideAddress returns a reference to field tunnel2_vgw_inside_address of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Tunnel2VgwInsideAddress() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("tunnel2_vgw_inside_address"))
+	return terra.ReferenceAsString(vc.ref.Append("tunnel2_vgw_inside_address"))
 }
 
+// TunnelInsideIpVersion returns a reference to field tunnel_inside_ip_version of aws_vpn_connection.
 func (vc vpnConnectionAttributes) TunnelInsideIpVersion() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("tunnel_inside_ip_version"))
+	return terra.ReferenceAsString(vc.ref.Append("tunnel_inside_ip_version"))
 }
 
+// Type returns a reference to field type of aws_vpn_connection.
 func (vc vpnConnectionAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("type"))
+	return terra.ReferenceAsString(vc.ref.Append("type"))
 }
 
+// VpnGatewayId returns a reference to field vpn_gateway_id of aws_vpn_connection.
 func (vc vpnConnectionAttributes) VpnGatewayId() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("vpn_gateway_id"))
+	return terra.ReferenceAsString(vc.ref.Append("vpn_gateway_id"))
 }
 
 func (vc vpnConnectionAttributes) Routes() terra.SetValue[vpnconnection.RoutesAttributes] {
-	return terra.ReferenceSet[vpnconnection.RoutesAttributes](vc.ref.Append("routes"))
+	return terra.ReferenceAsSet[vpnconnection.RoutesAttributes](vc.ref.Append("routes"))
 }
 
 func (vc vpnConnectionAttributes) VgwTelemetry() terra.SetValue[vpnconnection.VgwTelemetryAttributes] {
-	return terra.ReferenceSet[vpnconnection.VgwTelemetryAttributes](vc.ref.Append("vgw_telemetry"))
+	return terra.ReferenceAsSet[vpnconnection.VgwTelemetryAttributes](vc.ref.Append("vgw_telemetry"))
 }
 
 func (vc vpnConnectionAttributes) Tunnel1LogOptions() terra.ListValue[vpnconnection.Tunnel1LogOptionsAttributes] {
-	return terra.ReferenceList[vpnconnection.Tunnel1LogOptionsAttributes](vc.ref.Append("tunnel1_log_options"))
+	return terra.ReferenceAsList[vpnconnection.Tunnel1LogOptionsAttributes](vc.ref.Append("tunnel1_log_options"))
 }
 
 func (vc vpnConnectionAttributes) Tunnel2LogOptions() terra.ListValue[vpnconnection.Tunnel2LogOptionsAttributes] {
-	return terra.ReferenceList[vpnconnection.Tunnel2LogOptionsAttributes](vc.ref.Append("tunnel2_log_options"))
+	return terra.ReferenceAsList[vpnconnection.Tunnel2LogOptionsAttributes](vc.ref.Append("tunnel2_log_options"))
 }
 
 type vpnConnectionState struct {

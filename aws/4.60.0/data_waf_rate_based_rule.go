@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataWafRateBasedRule creates a new instance of [DataWafRateBasedRule].
 func NewDataWafRateBasedRule(name string, args DataWafRateBasedRuleArgs) *DataWafRateBasedRule {
 	return &DataWafRateBasedRule{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataWafRateBasedRule(name string, args DataWafRateBasedRuleArgs) *DataWa
 
 var _ terra.DataResource = (*DataWafRateBasedRule)(nil)
 
+// DataWafRateBasedRule represents the Terraform data resource aws_waf_rate_based_rule.
 type DataWafRateBasedRule struct {
 	Name string
 	Args DataWafRateBasedRuleArgs
 }
 
+// DataSource returns the Terraform object type for [DataWafRateBasedRule].
 func (wrbr *DataWafRateBasedRule) DataSource() string {
 	return "aws_waf_rate_based_rule"
 }
 
+// LocalName returns the local name for [DataWafRateBasedRule].
 func (wrbr *DataWafRateBasedRule) LocalName() string {
 	return wrbr.Name
 }
 
+// Configuration returns the configuration (args) for [DataWafRateBasedRule].
 func (wrbr *DataWafRateBasedRule) Configuration() interface{} {
 	return wrbr.Args
 }
 
+// Attributes returns the attributes for [DataWafRateBasedRule].
 func (wrbr *DataWafRateBasedRule) Attributes() dataWafRateBasedRuleAttributes {
 	return dataWafRateBasedRuleAttributes{ref: terra.ReferenceDataResource(wrbr)}
 }
 
+// DataWafRateBasedRuleArgs contains the configurations for aws_waf_rate_based_rule.
 type DataWafRateBasedRuleArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,10 +51,12 @@ type dataWafRateBasedRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_waf_rate_based_rule.
 func (wrbr dataWafRateBasedRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(wrbr.ref.Append("id"))
+	return terra.ReferenceAsString(wrbr.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_waf_rate_based_rule.
 func (wrbr dataWafRateBasedRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(wrbr.ref.Append("name"))
+	return terra.ReferenceAsString(wrbr.ref.Append("name"))
 }

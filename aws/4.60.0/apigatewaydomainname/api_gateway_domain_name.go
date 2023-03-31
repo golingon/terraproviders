@@ -36,7 +36,7 @@ func (ec EndpointConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec EndpointConfigurationAttributes) Types() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ec.ref.Append("types"))
+	return terra.ReferenceAsList[terra.StringValue](ec.ref.Append("types"))
 }
 
 type MutualTlsAuthenticationAttributes struct {
@@ -56,11 +56,11 @@ func (mta MutualTlsAuthenticationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mta MutualTlsAuthenticationAttributes) TruststoreUri() terra.StringValue {
-	return terra.ReferenceString(mta.ref.Append("truststore_uri"))
+	return terra.ReferenceAsString(mta.ref.Append("truststore_uri"))
 }
 
 func (mta MutualTlsAuthenticationAttributes) TruststoreVersion() terra.StringValue {
-	return terra.ReferenceString(mta.ref.Append("truststore_version"))
+	return terra.ReferenceAsString(mta.ref.Append("truststore_version"))
 }
 
 type EndpointConfigurationState struct {

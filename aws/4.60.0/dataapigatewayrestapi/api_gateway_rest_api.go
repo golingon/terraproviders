@@ -26,11 +26,11 @@ func (ec EndpointConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec EndpointConfigurationAttributes) Types() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ec.ref.Append("types"))
+	return terra.ReferenceAsList[terra.StringValue](ec.ref.Append("types"))
 }
 
 func (ec EndpointConfigurationAttributes) VpcEndpointIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ec.ref.Append("vpc_endpoint_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](ec.ref.Append("vpc_endpoint_ids"))
 }
 
 type EndpointConfigurationState struct {

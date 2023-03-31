@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSagemakerNotebookInstance creates a new instance of [SagemakerNotebookInstance].
 func NewSagemakerNotebookInstance(name string, args SagemakerNotebookInstanceArgs) *SagemakerNotebookInstance {
 	return &SagemakerNotebookInstance{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSagemakerNotebookInstance(name string, args SagemakerNotebookInstanceArg
 
 var _ terra.Resource = (*SagemakerNotebookInstance)(nil)
 
+// SagemakerNotebookInstance represents the Terraform resource aws_sagemaker_notebook_instance.
 type SagemakerNotebookInstance struct {
-	Name  string
-	Args  SagemakerNotebookInstanceArgs
-	state *sagemakerNotebookInstanceState
+	Name      string
+	Args      SagemakerNotebookInstanceArgs
+	state     *sagemakerNotebookInstanceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SagemakerNotebookInstance].
 func (sni *SagemakerNotebookInstance) Type() string {
 	return "aws_sagemaker_notebook_instance"
 }
 
+// LocalName returns the local name for [SagemakerNotebookInstance].
 func (sni *SagemakerNotebookInstance) LocalName() string {
 	return sni.Name
 }
 
+// Configuration returns the configuration (args) for [SagemakerNotebookInstance].
 func (sni *SagemakerNotebookInstance) Configuration() interface{} {
 	return sni.Args
 }
 
+// DependOn is used for other resources to depend on [SagemakerNotebookInstance].
+func (sni *SagemakerNotebookInstance) DependOn() terra.Reference {
+	return terra.ReferenceResource(sni)
+}
+
+// Dependencies returns the list of resources [SagemakerNotebookInstance] depends_on.
+func (sni *SagemakerNotebookInstance) Dependencies() terra.Dependencies {
+	return sni.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SagemakerNotebookInstance].
+func (sni *SagemakerNotebookInstance) LifecycleManagement() *terra.Lifecycle {
+	return sni.Lifecycle
+}
+
+// Attributes returns the attributes for [SagemakerNotebookInstance].
 func (sni *SagemakerNotebookInstance) Attributes() sagemakerNotebookInstanceAttributes {
 	return sagemakerNotebookInstanceAttributes{ref: terra.ReferenceResource(sni)}
 }
 
+// ImportState imports the given attribute values into [SagemakerNotebookInstance]'s state.
 func (sni *SagemakerNotebookInstance) ImportState(av io.Reader) error {
 	sni.state = &sagemakerNotebookInstanceState{}
 	if err := json.NewDecoder(av).Decode(sni.state); err != nil {
@@ -49,10 +73,12 @@ func (sni *SagemakerNotebookInstance) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SagemakerNotebookInstance] has state.
 func (sni *SagemakerNotebookInstance) State() (*sagemakerNotebookInstanceState, bool) {
 	return sni.state, sni.state != nil
 }
 
+// StateMust returns the state for [SagemakerNotebookInstance]. Panics if the state is nil.
 func (sni *SagemakerNotebookInstance) StateMust() *sagemakerNotebookInstanceState {
 	if sni.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sni.Type(), sni.LocalName()))
@@ -60,10 +86,7 @@ func (sni *SagemakerNotebookInstance) StateMust() *sagemakerNotebookInstanceStat
 	return sni.state
 }
 
-func (sni *SagemakerNotebookInstance) DependOn() terra.Reference {
-	return terra.ReferenceResource(sni)
-}
-
+// SagemakerNotebookInstanceArgs contains the configurations for aws_sagemaker_notebook_instance.
 type SagemakerNotebookInstanceArgs struct {
 	// AcceleratorTypes: set of string, optional
 	AcceleratorTypes terra.SetValue[terra.StringValue] `hcl:"accelerator_types,attr"`
@@ -101,95 +124,113 @@ type SagemakerNotebookInstanceArgs struct {
 	VolumeSize terra.NumberValue `hcl:"volume_size,attr"`
 	// InstanceMetadataServiceConfiguration: optional
 	InstanceMetadataServiceConfiguration *sagemakernotebookinstance.InstanceMetadataServiceConfiguration `hcl:"instance_metadata_service_configuration,block"`
-	// DependsOn contains resources that SagemakerNotebookInstance depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sagemakerNotebookInstanceAttributes struct {
 	ref terra.Reference
 }
 
+// AcceleratorTypes returns a reference to field accelerator_types of aws_sagemaker_notebook_instance.
 func (sni sagemakerNotebookInstanceAttributes) AcceleratorTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sni.ref.Append("accelerator_types"))
+	return terra.ReferenceAsSet[terra.StringValue](sni.ref.Append("accelerator_types"))
 }
 
+// AdditionalCodeRepositories returns a reference to field additional_code_repositories of aws_sagemaker_notebook_instance.
 func (sni sagemakerNotebookInstanceAttributes) AdditionalCodeRepositories() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sni.ref.Append("additional_code_repositories"))
+	return terra.ReferenceAsSet[terra.StringValue](sni.ref.Append("additional_code_repositories"))
 }
 
+// Arn returns a reference to field arn of aws_sagemaker_notebook_instance.
 func (sni sagemakerNotebookInstanceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sni.ref.Append("arn"))
+	return terra.ReferenceAsString(sni.ref.Append("arn"))
 }
 
+// DefaultCodeRepository returns a reference to field default_code_repository of aws_sagemaker_notebook_instance.
 func (sni sagemakerNotebookInstanceAttributes) DefaultCodeRepository() terra.StringValue {
-	return terra.ReferenceString(sni.ref.Append("default_code_repository"))
+	return terra.ReferenceAsString(sni.ref.Append("default_code_repository"))
 }
 
+// DirectInternetAccess returns a reference to field direct_internet_access of aws_sagemaker_notebook_instance.
 func (sni sagemakerNotebookInstanceAttributes) DirectInternetAccess() terra.StringValue {
-	return terra.ReferenceString(sni.ref.Append("direct_internet_access"))
+	return terra.ReferenceAsString(sni.ref.Append("direct_internet_access"))
 }
 
+// Id returns a reference to field id of aws_sagemaker_notebook_instance.
 func (sni sagemakerNotebookInstanceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sni.ref.Append("id"))
+	return terra.ReferenceAsString(sni.ref.Append("id"))
 }
 
+// InstanceType returns a reference to field instance_type of aws_sagemaker_notebook_instance.
 func (sni sagemakerNotebookInstanceAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(sni.ref.Append("instance_type"))
+	return terra.ReferenceAsString(sni.ref.Append("instance_type"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_sagemaker_notebook_instance.
 func (sni sagemakerNotebookInstanceAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(sni.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(sni.ref.Append("kms_key_id"))
 }
 
+// LifecycleConfigName returns a reference to field lifecycle_config_name of aws_sagemaker_notebook_instance.
 func (sni sagemakerNotebookInstanceAttributes) LifecycleConfigName() terra.StringValue {
-	return terra.ReferenceString(sni.ref.Append("lifecycle_config_name"))
+	return terra.ReferenceAsString(sni.ref.Append("lifecycle_config_name"))
 }
 
+// Name returns a reference to field name of aws_sagemaker_notebook_instance.
 func (sni sagemakerNotebookInstanceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sni.ref.Append("name"))
+	return terra.ReferenceAsString(sni.ref.Append("name"))
 }
 
+// NetworkInterfaceId returns a reference to field network_interface_id of aws_sagemaker_notebook_instance.
 func (sni sagemakerNotebookInstanceAttributes) NetworkInterfaceId() terra.StringValue {
-	return terra.ReferenceString(sni.ref.Append("network_interface_id"))
+	return terra.ReferenceAsString(sni.ref.Append("network_interface_id"))
 }
 
+// PlatformIdentifier returns a reference to field platform_identifier of aws_sagemaker_notebook_instance.
 func (sni sagemakerNotebookInstanceAttributes) PlatformIdentifier() terra.StringValue {
-	return terra.ReferenceString(sni.ref.Append("platform_identifier"))
+	return terra.ReferenceAsString(sni.ref.Append("platform_identifier"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_sagemaker_notebook_instance.
 func (sni sagemakerNotebookInstanceAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(sni.ref.Append("role_arn"))
+	return terra.ReferenceAsString(sni.ref.Append("role_arn"))
 }
 
+// RootAccess returns a reference to field root_access of aws_sagemaker_notebook_instance.
 func (sni sagemakerNotebookInstanceAttributes) RootAccess() terra.StringValue {
-	return terra.ReferenceString(sni.ref.Append("root_access"))
+	return terra.ReferenceAsString(sni.ref.Append("root_access"))
 }
 
+// SecurityGroups returns a reference to field security_groups of aws_sagemaker_notebook_instance.
 func (sni sagemakerNotebookInstanceAttributes) SecurityGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sni.ref.Append("security_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](sni.ref.Append("security_groups"))
 }
 
+// SubnetId returns a reference to field subnet_id of aws_sagemaker_notebook_instance.
 func (sni sagemakerNotebookInstanceAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(sni.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(sni.ref.Append("subnet_id"))
 }
 
+// Tags returns a reference to field tags of aws_sagemaker_notebook_instance.
 func (sni sagemakerNotebookInstanceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sni.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sni.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_sagemaker_notebook_instance.
 func (sni sagemakerNotebookInstanceAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sni.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sni.ref.Append("tags_all"))
 }
 
+// Url returns a reference to field url of aws_sagemaker_notebook_instance.
 func (sni sagemakerNotebookInstanceAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(sni.ref.Append("url"))
+	return terra.ReferenceAsString(sni.ref.Append("url"))
 }
 
+// VolumeSize returns a reference to field volume_size of aws_sagemaker_notebook_instance.
 func (sni sagemakerNotebookInstanceAttributes) VolumeSize() terra.NumberValue {
-	return terra.ReferenceNumber(sni.ref.Append("volume_size"))
+	return terra.ReferenceAsNumber(sni.ref.Append("volume_size"))
 }
 
 func (sni sagemakerNotebookInstanceAttributes) InstanceMetadataServiceConfiguration() terra.ListValue[sagemakernotebookinstance.InstanceMetadataServiceConfigurationAttributes] {
-	return terra.ReferenceList[sagemakernotebookinstance.InstanceMetadataServiceConfigurationAttributes](sni.ref.Append("instance_metadata_service_configuration"))
+	return terra.ReferenceAsList[sagemakernotebookinstance.InstanceMetadataServiceConfigurationAttributes](sni.ref.Append("instance_metadata_service_configuration"))
 }
 
 type sagemakerNotebookInstanceState struct {

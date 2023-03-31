@@ -38,7 +38,7 @@ func (ca CacheAttributesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ca CacheAttributesAttributes) CacheStaleTimeoutInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(ca.ref.Append("cache_stale_timeout_in_seconds"))
+	return terra.ReferenceAsNumber(ca.ref.Append("cache_stale_timeout_in_seconds"))
 }
 
 type TimeoutsAttributes struct {
@@ -58,15 +58,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type CacheAttributesState struct {

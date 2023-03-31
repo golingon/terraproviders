@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCloudwatchQueryDefinition creates a new instance of [CloudwatchQueryDefinition].
 func NewCloudwatchQueryDefinition(name string, args CloudwatchQueryDefinitionArgs) *CloudwatchQueryDefinition {
 	return &CloudwatchQueryDefinition{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCloudwatchQueryDefinition(name string, args CloudwatchQueryDefinitionArg
 
 var _ terra.Resource = (*CloudwatchQueryDefinition)(nil)
 
+// CloudwatchQueryDefinition represents the Terraform resource aws_cloudwatch_query_definition.
 type CloudwatchQueryDefinition struct {
-	Name  string
-	Args  CloudwatchQueryDefinitionArgs
-	state *cloudwatchQueryDefinitionState
+	Name      string
+	Args      CloudwatchQueryDefinitionArgs
+	state     *cloudwatchQueryDefinitionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudwatchQueryDefinition].
 func (cqd *CloudwatchQueryDefinition) Type() string {
 	return "aws_cloudwatch_query_definition"
 }
 
+// LocalName returns the local name for [CloudwatchQueryDefinition].
 func (cqd *CloudwatchQueryDefinition) LocalName() string {
 	return cqd.Name
 }
 
+// Configuration returns the configuration (args) for [CloudwatchQueryDefinition].
 func (cqd *CloudwatchQueryDefinition) Configuration() interface{} {
 	return cqd.Args
 }
 
+// DependOn is used for other resources to depend on [CloudwatchQueryDefinition].
+func (cqd *CloudwatchQueryDefinition) DependOn() terra.Reference {
+	return terra.ReferenceResource(cqd)
+}
+
+// Dependencies returns the list of resources [CloudwatchQueryDefinition] depends_on.
+func (cqd *CloudwatchQueryDefinition) Dependencies() terra.Dependencies {
+	return cqd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudwatchQueryDefinition].
+func (cqd *CloudwatchQueryDefinition) LifecycleManagement() *terra.Lifecycle {
+	return cqd.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudwatchQueryDefinition].
 func (cqd *CloudwatchQueryDefinition) Attributes() cloudwatchQueryDefinitionAttributes {
 	return cloudwatchQueryDefinitionAttributes{ref: terra.ReferenceResource(cqd)}
 }
 
+// ImportState imports the given attribute values into [CloudwatchQueryDefinition]'s state.
 func (cqd *CloudwatchQueryDefinition) ImportState(av io.Reader) error {
 	cqd.state = &cloudwatchQueryDefinitionState{}
 	if err := json.NewDecoder(av).Decode(cqd.state); err != nil {
@@ -48,10 +72,12 @@ func (cqd *CloudwatchQueryDefinition) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudwatchQueryDefinition] has state.
 func (cqd *CloudwatchQueryDefinition) State() (*cloudwatchQueryDefinitionState, bool) {
 	return cqd.state, cqd.state != nil
 }
 
+// StateMust returns the state for [CloudwatchQueryDefinition]. Panics if the state is nil.
 func (cqd *CloudwatchQueryDefinition) StateMust() *cloudwatchQueryDefinitionState {
 	if cqd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cqd.Type(), cqd.LocalName()))
@@ -59,10 +85,7 @@ func (cqd *CloudwatchQueryDefinition) StateMust() *cloudwatchQueryDefinitionStat
 	return cqd.state
 }
 
-func (cqd *CloudwatchQueryDefinition) DependOn() terra.Reference {
-	return terra.ReferenceResource(cqd)
-}
-
+// CloudwatchQueryDefinitionArgs contains the configurations for aws_cloudwatch_query_definition.
 type CloudwatchQueryDefinitionArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -72,31 +95,34 @@ type CloudwatchQueryDefinitionArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// QueryString: string, required
 	QueryString terra.StringValue `hcl:"query_string,attr" validate:"required"`
-	// DependsOn contains resources that CloudwatchQueryDefinition depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudwatchQueryDefinitionAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_cloudwatch_query_definition.
 func (cqd cloudwatchQueryDefinitionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cqd.ref.Append("id"))
+	return terra.ReferenceAsString(cqd.ref.Append("id"))
 }
 
+// LogGroupNames returns a reference to field log_group_names of aws_cloudwatch_query_definition.
 func (cqd cloudwatchQueryDefinitionAttributes) LogGroupNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cqd.ref.Append("log_group_names"))
+	return terra.ReferenceAsList[terra.StringValue](cqd.ref.Append("log_group_names"))
 }
 
+// Name returns a reference to field name of aws_cloudwatch_query_definition.
 func (cqd cloudwatchQueryDefinitionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cqd.ref.Append("name"))
+	return terra.ReferenceAsString(cqd.ref.Append("name"))
 }
 
+// QueryDefinitionId returns a reference to field query_definition_id of aws_cloudwatch_query_definition.
 func (cqd cloudwatchQueryDefinitionAttributes) QueryDefinitionId() terra.StringValue {
-	return terra.ReferenceString(cqd.ref.Append("query_definition_id"))
+	return terra.ReferenceAsString(cqd.ref.Append("query_definition_id"))
 }
 
+// QueryString returns a reference to field query_string of aws_cloudwatch_query_definition.
 func (cqd cloudwatchQueryDefinitionAttributes) QueryString() terra.StringValue {
-	return terra.ReferenceString(cqd.ref.Append("query_string"))
+	return terra.ReferenceAsString(cqd.ref.Append("query_string"))
 }
 
 type cloudwatchQueryDefinitionState struct {

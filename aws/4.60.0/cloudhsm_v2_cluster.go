@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudhsmV2Cluster creates a new instance of [CloudhsmV2Cluster].
 func NewCloudhsmV2Cluster(name string, args CloudhsmV2ClusterArgs) *CloudhsmV2Cluster {
 	return &CloudhsmV2Cluster{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudhsmV2Cluster(name string, args CloudhsmV2ClusterArgs) *CloudhsmV2Cl
 
 var _ terra.Resource = (*CloudhsmV2Cluster)(nil)
 
+// CloudhsmV2Cluster represents the Terraform resource aws_cloudhsm_v2_cluster.
 type CloudhsmV2Cluster struct {
-	Name  string
-	Args  CloudhsmV2ClusterArgs
-	state *cloudhsmV2ClusterState
+	Name      string
+	Args      CloudhsmV2ClusterArgs
+	state     *cloudhsmV2ClusterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudhsmV2Cluster].
 func (cvc *CloudhsmV2Cluster) Type() string {
 	return "aws_cloudhsm_v2_cluster"
 }
 
+// LocalName returns the local name for [CloudhsmV2Cluster].
 func (cvc *CloudhsmV2Cluster) LocalName() string {
 	return cvc.Name
 }
 
+// Configuration returns the configuration (args) for [CloudhsmV2Cluster].
 func (cvc *CloudhsmV2Cluster) Configuration() interface{} {
 	return cvc.Args
 }
 
+// DependOn is used for other resources to depend on [CloudhsmV2Cluster].
+func (cvc *CloudhsmV2Cluster) DependOn() terra.Reference {
+	return terra.ReferenceResource(cvc)
+}
+
+// Dependencies returns the list of resources [CloudhsmV2Cluster] depends_on.
+func (cvc *CloudhsmV2Cluster) Dependencies() terra.Dependencies {
+	return cvc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudhsmV2Cluster].
+func (cvc *CloudhsmV2Cluster) LifecycleManagement() *terra.Lifecycle {
+	return cvc.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudhsmV2Cluster].
 func (cvc *CloudhsmV2Cluster) Attributes() cloudhsmV2ClusterAttributes {
 	return cloudhsmV2ClusterAttributes{ref: terra.ReferenceResource(cvc)}
 }
 
+// ImportState imports the given attribute values into [CloudhsmV2Cluster]'s state.
 func (cvc *CloudhsmV2Cluster) ImportState(av io.Reader) error {
 	cvc.state = &cloudhsmV2ClusterState{}
 	if err := json.NewDecoder(av).Decode(cvc.state); err != nil {
@@ -49,10 +73,12 @@ func (cvc *CloudhsmV2Cluster) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudhsmV2Cluster] has state.
 func (cvc *CloudhsmV2Cluster) State() (*cloudhsmV2ClusterState, bool) {
 	return cvc.state, cvc.state != nil
 }
 
+// StateMust returns the state for [CloudhsmV2Cluster]. Panics if the state is nil.
 func (cvc *CloudhsmV2Cluster) StateMust() *cloudhsmV2ClusterState {
 	if cvc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cvc.Type(), cvc.LocalName()))
@@ -60,10 +86,7 @@ func (cvc *CloudhsmV2Cluster) StateMust() *cloudhsmV2ClusterState {
 	return cvc.state
 }
 
-func (cvc *CloudhsmV2Cluster) DependOn() terra.Reference {
-	return terra.ReferenceResource(cvc)
-}
-
+// CloudhsmV2ClusterArgs contains the configurations for aws_cloudhsm_v2_cluster.
 type CloudhsmV2ClusterArgs struct {
 	// HsmType: string, required
 	HsmType terra.StringValue `hcl:"hsm_type,attr" validate:"required"`
@@ -81,59 +104,67 @@ type CloudhsmV2ClusterArgs struct {
 	ClusterCertificates []cloudhsmv2cluster.ClusterCertificates `hcl:"cluster_certificates,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *cloudhsmv2cluster.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CloudhsmV2Cluster depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudhsmV2ClusterAttributes struct {
 	ref terra.Reference
 }
 
+// ClusterId returns a reference to field cluster_id of aws_cloudhsm_v2_cluster.
 func (cvc cloudhsmV2ClusterAttributes) ClusterId() terra.StringValue {
-	return terra.ReferenceString(cvc.ref.Append("cluster_id"))
+	return terra.ReferenceAsString(cvc.ref.Append("cluster_id"))
 }
 
+// ClusterState returns a reference to field cluster_state of aws_cloudhsm_v2_cluster.
 func (cvc cloudhsmV2ClusterAttributes) ClusterState() terra.StringValue {
-	return terra.ReferenceString(cvc.ref.Append("cluster_state"))
+	return terra.ReferenceAsString(cvc.ref.Append("cluster_state"))
 }
 
+// HsmType returns a reference to field hsm_type of aws_cloudhsm_v2_cluster.
 func (cvc cloudhsmV2ClusterAttributes) HsmType() terra.StringValue {
-	return terra.ReferenceString(cvc.ref.Append("hsm_type"))
+	return terra.ReferenceAsString(cvc.ref.Append("hsm_type"))
 }
 
+// Id returns a reference to field id of aws_cloudhsm_v2_cluster.
 func (cvc cloudhsmV2ClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cvc.ref.Append("id"))
+	return terra.ReferenceAsString(cvc.ref.Append("id"))
 }
 
+// SecurityGroupId returns a reference to field security_group_id of aws_cloudhsm_v2_cluster.
 func (cvc cloudhsmV2ClusterAttributes) SecurityGroupId() terra.StringValue {
-	return terra.ReferenceString(cvc.ref.Append("security_group_id"))
+	return terra.ReferenceAsString(cvc.ref.Append("security_group_id"))
 }
 
+// SourceBackupIdentifier returns a reference to field source_backup_identifier of aws_cloudhsm_v2_cluster.
 func (cvc cloudhsmV2ClusterAttributes) SourceBackupIdentifier() terra.StringValue {
-	return terra.ReferenceString(cvc.ref.Append("source_backup_identifier"))
+	return terra.ReferenceAsString(cvc.ref.Append("source_backup_identifier"))
 }
 
+// SubnetIds returns a reference to field subnet_ids of aws_cloudhsm_v2_cluster.
 func (cvc cloudhsmV2ClusterAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cvc.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](cvc.ref.Append("subnet_ids"))
 }
 
+// Tags returns a reference to field tags of aws_cloudhsm_v2_cluster.
 func (cvc cloudhsmV2ClusterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cvc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cvc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_cloudhsm_v2_cluster.
 func (cvc cloudhsmV2ClusterAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cvc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](cvc.ref.Append("tags_all"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_cloudhsm_v2_cluster.
 func (cvc cloudhsmV2ClusterAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(cvc.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(cvc.ref.Append("vpc_id"))
 }
 
 func (cvc cloudhsmV2ClusterAttributes) ClusterCertificates() terra.ListValue[cloudhsmv2cluster.ClusterCertificatesAttributes] {
-	return terra.ReferenceList[cloudhsmv2cluster.ClusterCertificatesAttributes](cvc.ref.Append("cluster_certificates"))
+	return terra.ReferenceAsList[cloudhsmv2cluster.ClusterCertificatesAttributes](cvc.ref.Append("cluster_certificates"))
 }
 
 func (cvc cloudhsmV2ClusterAttributes) Timeouts() cloudhsmv2cluster.TimeoutsAttributes {
-	return terra.ReferenceSingle[cloudhsmv2cluster.TimeoutsAttributes](cvc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cloudhsmv2cluster.TimeoutsAttributes](cvc.ref.Append("timeouts"))
 }
 
 type cloudhsmV2ClusterState struct {

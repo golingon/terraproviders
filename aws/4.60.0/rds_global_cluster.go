@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewRdsGlobalCluster creates a new instance of [RdsGlobalCluster].
 func NewRdsGlobalCluster(name string, args RdsGlobalClusterArgs) *RdsGlobalCluster {
 	return &RdsGlobalCluster{
 		Args: args,
@@ -19,28 +20,51 @@ func NewRdsGlobalCluster(name string, args RdsGlobalClusterArgs) *RdsGlobalClust
 
 var _ terra.Resource = (*RdsGlobalCluster)(nil)
 
+// RdsGlobalCluster represents the Terraform resource aws_rds_global_cluster.
 type RdsGlobalCluster struct {
-	Name  string
-	Args  RdsGlobalClusterArgs
-	state *rdsGlobalClusterState
+	Name      string
+	Args      RdsGlobalClusterArgs
+	state     *rdsGlobalClusterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RdsGlobalCluster].
 func (rgc *RdsGlobalCluster) Type() string {
 	return "aws_rds_global_cluster"
 }
 
+// LocalName returns the local name for [RdsGlobalCluster].
 func (rgc *RdsGlobalCluster) LocalName() string {
 	return rgc.Name
 }
 
+// Configuration returns the configuration (args) for [RdsGlobalCluster].
 func (rgc *RdsGlobalCluster) Configuration() interface{} {
 	return rgc.Args
 }
 
+// DependOn is used for other resources to depend on [RdsGlobalCluster].
+func (rgc *RdsGlobalCluster) DependOn() terra.Reference {
+	return terra.ReferenceResource(rgc)
+}
+
+// Dependencies returns the list of resources [RdsGlobalCluster] depends_on.
+func (rgc *RdsGlobalCluster) Dependencies() terra.Dependencies {
+	return rgc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RdsGlobalCluster].
+func (rgc *RdsGlobalCluster) LifecycleManagement() *terra.Lifecycle {
+	return rgc.Lifecycle
+}
+
+// Attributes returns the attributes for [RdsGlobalCluster].
 func (rgc *RdsGlobalCluster) Attributes() rdsGlobalClusterAttributes {
 	return rdsGlobalClusterAttributes{ref: terra.ReferenceResource(rgc)}
 }
 
+// ImportState imports the given attribute values into [RdsGlobalCluster]'s state.
 func (rgc *RdsGlobalCluster) ImportState(av io.Reader) error {
 	rgc.state = &rdsGlobalClusterState{}
 	if err := json.NewDecoder(av).Decode(rgc.state); err != nil {
@@ -49,10 +73,12 @@ func (rgc *RdsGlobalCluster) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RdsGlobalCluster] has state.
 func (rgc *RdsGlobalCluster) State() (*rdsGlobalClusterState, bool) {
 	return rgc.state, rgc.state != nil
 }
 
+// StateMust returns the state for [RdsGlobalCluster]. Panics if the state is nil.
 func (rgc *RdsGlobalCluster) StateMust() *rdsGlobalClusterState {
 	if rgc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rgc.Type(), rgc.LocalName()))
@@ -60,10 +86,7 @@ func (rgc *RdsGlobalCluster) StateMust() *rdsGlobalClusterState {
 	return rgc.state
 }
 
-func (rgc *RdsGlobalCluster) DependOn() terra.Reference {
-	return terra.ReferenceResource(rgc)
-}
-
+// RdsGlobalClusterArgs contains the configurations for aws_rds_global_cluster.
 type RdsGlobalClusterArgs struct {
 	// DatabaseName: string, optional
 	DatabaseName terra.StringValue `hcl:"database_name,attr"`
@@ -87,67 +110,77 @@ type RdsGlobalClusterArgs struct {
 	GlobalClusterMembers []rdsglobalcluster.GlobalClusterMembers `hcl:"global_cluster_members,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *rdsglobalcluster.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that RdsGlobalCluster depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type rdsGlobalClusterAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_rds_global_cluster.
 func (rgc rdsGlobalClusterAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rgc.ref.Append("arn"))
+	return terra.ReferenceAsString(rgc.ref.Append("arn"))
 }
 
+// DatabaseName returns a reference to field database_name of aws_rds_global_cluster.
 func (rgc rdsGlobalClusterAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(rgc.ref.Append("database_name"))
+	return terra.ReferenceAsString(rgc.ref.Append("database_name"))
 }
 
+// DeletionProtection returns a reference to field deletion_protection of aws_rds_global_cluster.
 func (rgc rdsGlobalClusterAttributes) DeletionProtection() terra.BoolValue {
-	return terra.ReferenceBool(rgc.ref.Append("deletion_protection"))
+	return terra.ReferenceAsBool(rgc.ref.Append("deletion_protection"))
 }
 
+// Engine returns a reference to field engine of aws_rds_global_cluster.
 func (rgc rdsGlobalClusterAttributes) Engine() terra.StringValue {
-	return terra.ReferenceString(rgc.ref.Append("engine"))
+	return terra.ReferenceAsString(rgc.ref.Append("engine"))
 }
 
+// EngineVersion returns a reference to field engine_version of aws_rds_global_cluster.
 func (rgc rdsGlobalClusterAttributes) EngineVersion() terra.StringValue {
-	return terra.ReferenceString(rgc.ref.Append("engine_version"))
+	return terra.ReferenceAsString(rgc.ref.Append("engine_version"))
 }
 
+// EngineVersionActual returns a reference to field engine_version_actual of aws_rds_global_cluster.
 func (rgc rdsGlobalClusterAttributes) EngineVersionActual() terra.StringValue {
-	return terra.ReferenceString(rgc.ref.Append("engine_version_actual"))
+	return terra.ReferenceAsString(rgc.ref.Append("engine_version_actual"))
 }
 
+// ForceDestroy returns a reference to field force_destroy of aws_rds_global_cluster.
 func (rgc rdsGlobalClusterAttributes) ForceDestroy() terra.BoolValue {
-	return terra.ReferenceBool(rgc.ref.Append("force_destroy"))
+	return terra.ReferenceAsBool(rgc.ref.Append("force_destroy"))
 }
 
+// GlobalClusterIdentifier returns a reference to field global_cluster_identifier of aws_rds_global_cluster.
 func (rgc rdsGlobalClusterAttributes) GlobalClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(rgc.ref.Append("global_cluster_identifier"))
+	return terra.ReferenceAsString(rgc.ref.Append("global_cluster_identifier"))
 }
 
+// GlobalClusterResourceId returns a reference to field global_cluster_resource_id of aws_rds_global_cluster.
 func (rgc rdsGlobalClusterAttributes) GlobalClusterResourceId() terra.StringValue {
-	return terra.ReferenceString(rgc.ref.Append("global_cluster_resource_id"))
+	return terra.ReferenceAsString(rgc.ref.Append("global_cluster_resource_id"))
 }
 
+// Id returns a reference to field id of aws_rds_global_cluster.
 func (rgc rdsGlobalClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rgc.ref.Append("id"))
+	return terra.ReferenceAsString(rgc.ref.Append("id"))
 }
 
+// SourceDbClusterIdentifier returns a reference to field source_db_cluster_identifier of aws_rds_global_cluster.
 func (rgc rdsGlobalClusterAttributes) SourceDbClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(rgc.ref.Append("source_db_cluster_identifier"))
+	return terra.ReferenceAsString(rgc.ref.Append("source_db_cluster_identifier"))
 }
 
+// StorageEncrypted returns a reference to field storage_encrypted of aws_rds_global_cluster.
 func (rgc rdsGlobalClusterAttributes) StorageEncrypted() terra.BoolValue {
-	return terra.ReferenceBool(rgc.ref.Append("storage_encrypted"))
+	return terra.ReferenceAsBool(rgc.ref.Append("storage_encrypted"))
 }
 
 func (rgc rdsGlobalClusterAttributes) GlobalClusterMembers() terra.SetValue[rdsglobalcluster.GlobalClusterMembersAttributes] {
-	return terra.ReferenceSet[rdsglobalcluster.GlobalClusterMembersAttributes](rgc.ref.Append("global_cluster_members"))
+	return terra.ReferenceAsSet[rdsglobalcluster.GlobalClusterMembersAttributes](rgc.ref.Append("global_cluster_members"))
 }
 
 func (rgc rdsGlobalClusterAttributes) Timeouts() rdsglobalcluster.TimeoutsAttributes {
-	return terra.ReferenceSingle[rdsglobalcluster.TimeoutsAttributes](rgc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[rdsglobalcluster.TimeoutsAttributes](rgc.ref.Append("timeouts"))
 }
 
 type rdsGlobalClusterState struct {

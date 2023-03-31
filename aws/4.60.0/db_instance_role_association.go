@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDbInstanceRoleAssociation creates a new instance of [DbInstanceRoleAssociation].
 func NewDbInstanceRoleAssociation(name string, args DbInstanceRoleAssociationArgs) *DbInstanceRoleAssociation {
 	return &DbInstanceRoleAssociation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDbInstanceRoleAssociation(name string, args DbInstanceRoleAssociationArg
 
 var _ terra.Resource = (*DbInstanceRoleAssociation)(nil)
 
+// DbInstanceRoleAssociation represents the Terraform resource aws_db_instance_role_association.
 type DbInstanceRoleAssociation struct {
-	Name  string
-	Args  DbInstanceRoleAssociationArgs
-	state *dbInstanceRoleAssociationState
+	Name      string
+	Args      DbInstanceRoleAssociationArgs
+	state     *dbInstanceRoleAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DbInstanceRoleAssociation].
 func (dira *DbInstanceRoleAssociation) Type() string {
 	return "aws_db_instance_role_association"
 }
 
+// LocalName returns the local name for [DbInstanceRoleAssociation].
 func (dira *DbInstanceRoleAssociation) LocalName() string {
 	return dira.Name
 }
 
+// Configuration returns the configuration (args) for [DbInstanceRoleAssociation].
 func (dira *DbInstanceRoleAssociation) Configuration() interface{} {
 	return dira.Args
 }
 
+// DependOn is used for other resources to depend on [DbInstanceRoleAssociation].
+func (dira *DbInstanceRoleAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(dira)
+}
+
+// Dependencies returns the list of resources [DbInstanceRoleAssociation] depends_on.
+func (dira *DbInstanceRoleAssociation) Dependencies() terra.Dependencies {
+	return dira.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DbInstanceRoleAssociation].
+func (dira *DbInstanceRoleAssociation) LifecycleManagement() *terra.Lifecycle {
+	return dira.Lifecycle
+}
+
+// Attributes returns the attributes for [DbInstanceRoleAssociation].
 func (dira *DbInstanceRoleAssociation) Attributes() dbInstanceRoleAssociationAttributes {
 	return dbInstanceRoleAssociationAttributes{ref: terra.ReferenceResource(dira)}
 }
 
+// ImportState imports the given attribute values into [DbInstanceRoleAssociation]'s state.
 func (dira *DbInstanceRoleAssociation) ImportState(av io.Reader) error {
 	dira.state = &dbInstanceRoleAssociationState{}
 	if err := json.NewDecoder(av).Decode(dira.state); err != nil {
@@ -48,10 +72,12 @@ func (dira *DbInstanceRoleAssociation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DbInstanceRoleAssociation] has state.
 func (dira *DbInstanceRoleAssociation) State() (*dbInstanceRoleAssociationState, bool) {
 	return dira.state, dira.state != nil
 }
 
+// StateMust returns the state for [DbInstanceRoleAssociation]. Panics if the state is nil.
 func (dira *DbInstanceRoleAssociation) StateMust() *dbInstanceRoleAssociationState {
 	if dira.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dira.Type(), dira.LocalName()))
@@ -59,10 +85,7 @@ func (dira *DbInstanceRoleAssociation) StateMust() *dbInstanceRoleAssociationSta
 	return dira.state
 }
 
-func (dira *DbInstanceRoleAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(dira)
-}
-
+// DbInstanceRoleAssociationArgs contains the configurations for aws_db_instance_role_association.
 type DbInstanceRoleAssociationArgs struct {
 	// DbInstanceIdentifier: string, required
 	DbInstanceIdentifier terra.StringValue `hcl:"db_instance_identifier,attr" validate:"required"`
@@ -72,27 +95,29 @@ type DbInstanceRoleAssociationArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// RoleArn: string, required
 	RoleArn terra.StringValue `hcl:"role_arn,attr" validate:"required"`
-	// DependsOn contains resources that DbInstanceRoleAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dbInstanceRoleAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// DbInstanceIdentifier returns a reference to field db_instance_identifier of aws_db_instance_role_association.
 func (dira dbInstanceRoleAssociationAttributes) DbInstanceIdentifier() terra.StringValue {
-	return terra.ReferenceString(dira.ref.Append("db_instance_identifier"))
+	return terra.ReferenceAsString(dira.ref.Append("db_instance_identifier"))
 }
 
+// FeatureName returns a reference to field feature_name of aws_db_instance_role_association.
 func (dira dbInstanceRoleAssociationAttributes) FeatureName() terra.StringValue {
-	return terra.ReferenceString(dira.ref.Append("feature_name"))
+	return terra.ReferenceAsString(dira.ref.Append("feature_name"))
 }
 
+// Id returns a reference to field id of aws_db_instance_role_association.
 func (dira dbInstanceRoleAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dira.ref.Append("id"))
+	return terra.ReferenceAsString(dira.ref.Append("id"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_db_instance_role_association.
 func (dira dbInstanceRoleAssociationAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(dira.ref.Append("role_arn"))
+	return terra.ReferenceAsString(dira.ref.Append("role_arn"))
 }
 
 type dbInstanceRoleAssociationState struct {

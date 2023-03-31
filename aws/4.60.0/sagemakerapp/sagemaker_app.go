@@ -35,19 +35,19 @@ func (rs ResourceSpecAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rs ResourceSpecAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("instance_type"))
+	return terra.ReferenceAsString(rs.ref.Append("instance_type"))
 }
 
 func (rs ResourceSpecAttributes) LifecycleConfigArn() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("lifecycle_config_arn"))
+	return terra.ReferenceAsString(rs.ref.Append("lifecycle_config_arn"))
 }
 
 func (rs ResourceSpecAttributes) SagemakerImageArn() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("sagemaker_image_arn"))
+	return terra.ReferenceAsString(rs.ref.Append("sagemaker_image_arn"))
 }
 
 func (rs ResourceSpecAttributes) SagemakerImageVersionArn() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("sagemaker_image_version_arn"))
+	return terra.ReferenceAsString(rs.ref.Append("sagemaker_image_version_arn"))
 }
 
 type ResourceSpecState struct {

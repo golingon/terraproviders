@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBackupSelection creates a new instance of [BackupSelection].
 func NewBackupSelection(name string, args BackupSelectionArgs) *BackupSelection {
 	return &BackupSelection{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBackupSelection(name string, args BackupSelectionArgs) *BackupSelection 
 
 var _ terra.Resource = (*BackupSelection)(nil)
 
+// BackupSelection represents the Terraform resource aws_backup_selection.
 type BackupSelection struct {
-	Name  string
-	Args  BackupSelectionArgs
-	state *backupSelectionState
+	Name      string
+	Args      BackupSelectionArgs
+	state     *backupSelectionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BackupSelection].
 func (bs *BackupSelection) Type() string {
 	return "aws_backup_selection"
 }
 
+// LocalName returns the local name for [BackupSelection].
 func (bs *BackupSelection) LocalName() string {
 	return bs.Name
 }
 
+// Configuration returns the configuration (args) for [BackupSelection].
 func (bs *BackupSelection) Configuration() interface{} {
 	return bs.Args
 }
 
+// DependOn is used for other resources to depend on [BackupSelection].
+func (bs *BackupSelection) DependOn() terra.Reference {
+	return terra.ReferenceResource(bs)
+}
+
+// Dependencies returns the list of resources [BackupSelection] depends_on.
+func (bs *BackupSelection) Dependencies() terra.Dependencies {
+	return bs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BackupSelection].
+func (bs *BackupSelection) LifecycleManagement() *terra.Lifecycle {
+	return bs.Lifecycle
+}
+
+// Attributes returns the attributes for [BackupSelection].
 func (bs *BackupSelection) Attributes() backupSelectionAttributes {
 	return backupSelectionAttributes{ref: terra.ReferenceResource(bs)}
 }
 
+// ImportState imports the given attribute values into [BackupSelection]'s state.
 func (bs *BackupSelection) ImportState(av io.Reader) error {
 	bs.state = &backupSelectionState{}
 	if err := json.NewDecoder(av).Decode(bs.state); err != nil {
@@ -49,10 +73,12 @@ func (bs *BackupSelection) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BackupSelection] has state.
 func (bs *BackupSelection) State() (*backupSelectionState, bool) {
 	return bs.state, bs.state != nil
 }
 
+// StateMust returns the state for [BackupSelection]. Panics if the state is nil.
 func (bs *BackupSelection) StateMust() *backupSelectionState {
 	if bs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bs.Type(), bs.LocalName()))
@@ -60,10 +86,7 @@ func (bs *BackupSelection) StateMust() *backupSelectionState {
 	return bs.state
 }
 
-func (bs *BackupSelection) DependOn() terra.Reference {
-	return terra.ReferenceResource(bs)
-}
-
+// BackupSelectionArgs contains the configurations for aws_backup_selection.
 type BackupSelectionArgs struct {
 	// IamRoleArn: string, required
 	IamRoleArn terra.StringValue `hcl:"iam_role_arn,attr" validate:"required"`
@@ -81,43 +104,47 @@ type BackupSelectionArgs struct {
 	Condition []backupselection.Condition `hcl:"condition,block" validate:"min=0"`
 	// SelectionTag: min=0
 	SelectionTag []backupselection.SelectionTag `hcl:"selection_tag,block" validate:"min=0"`
-	// DependsOn contains resources that BackupSelection depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type backupSelectionAttributes struct {
 	ref terra.Reference
 }
 
+// IamRoleArn returns a reference to field iam_role_arn of aws_backup_selection.
 func (bs backupSelectionAttributes) IamRoleArn() terra.StringValue {
-	return terra.ReferenceString(bs.ref.Append("iam_role_arn"))
+	return terra.ReferenceAsString(bs.ref.Append("iam_role_arn"))
 }
 
+// Id returns a reference to field id of aws_backup_selection.
 func (bs backupSelectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bs.ref.Append("id"))
+	return terra.ReferenceAsString(bs.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_backup_selection.
 func (bs backupSelectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bs.ref.Append("name"))
+	return terra.ReferenceAsString(bs.ref.Append("name"))
 }
 
+// NotResources returns a reference to field not_resources of aws_backup_selection.
 func (bs backupSelectionAttributes) NotResources() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](bs.ref.Append("not_resources"))
+	return terra.ReferenceAsSet[terra.StringValue](bs.ref.Append("not_resources"))
 }
 
+// PlanId returns a reference to field plan_id of aws_backup_selection.
 func (bs backupSelectionAttributes) PlanId() terra.StringValue {
-	return terra.ReferenceString(bs.ref.Append("plan_id"))
+	return terra.ReferenceAsString(bs.ref.Append("plan_id"))
 }
 
+// Resources returns a reference to field resources of aws_backup_selection.
 func (bs backupSelectionAttributes) Resources() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](bs.ref.Append("resources"))
+	return terra.ReferenceAsSet[terra.StringValue](bs.ref.Append("resources"))
 }
 
 func (bs backupSelectionAttributes) Condition() terra.SetValue[backupselection.ConditionAttributes] {
-	return terra.ReferenceSet[backupselection.ConditionAttributes](bs.ref.Append("condition"))
+	return terra.ReferenceAsSet[backupselection.ConditionAttributes](bs.ref.Append("condition"))
 }
 
 func (bs backupSelectionAttributes) SelectionTag() terra.SetValue[backupselection.SelectionTagAttributes] {
-	return terra.ReferenceSet[backupselection.SelectionTagAttributes](bs.ref.Append("selection_tag"))
+	return terra.ReferenceAsSet[backupselection.SelectionTagAttributes](bs.ref.Append("selection_tag"))
 }
 
 type backupSelectionState struct {

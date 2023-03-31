@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataPrefixList creates a new instance of [DataPrefixList].
 func NewDataPrefixList(name string, args DataPrefixListArgs) *DataPrefixList {
 	return &DataPrefixList{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataPrefixList(name string, args DataPrefixListArgs) *DataPrefixList {
 
 var _ terra.DataResource = (*DataPrefixList)(nil)
 
+// DataPrefixList represents the Terraform data resource aws_prefix_list.
 type DataPrefixList struct {
 	Name string
 	Args DataPrefixListArgs
 }
 
+// DataSource returns the Terraform object type for [DataPrefixList].
 func (pl *DataPrefixList) DataSource() string {
 	return "aws_prefix_list"
 }
 
+// LocalName returns the local name for [DataPrefixList].
 func (pl *DataPrefixList) LocalName() string {
 	return pl.Name
 }
 
+// Configuration returns the configuration (args) for [DataPrefixList].
 func (pl *DataPrefixList) Configuration() interface{} {
 	return pl.Args
 }
 
+// Attributes returns the attributes for [DataPrefixList].
 func (pl *DataPrefixList) Attributes() dataPrefixListAttributes {
 	return dataPrefixListAttributes{ref: terra.ReferenceDataResource(pl)}
 }
 
+// DataPrefixListArgs contains the configurations for aws_prefix_list.
 type DataPrefixListArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,26 +60,30 @@ type dataPrefixListAttributes struct {
 	ref terra.Reference
 }
 
+// CidrBlocks returns a reference to field cidr_blocks of aws_prefix_list.
 func (pl dataPrefixListAttributes) CidrBlocks() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](pl.ref.Append("cidr_blocks"))
+	return terra.ReferenceAsList[terra.StringValue](pl.ref.Append("cidr_blocks"))
 }
 
+// Id returns a reference to field id of aws_prefix_list.
 func (pl dataPrefixListAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pl.ref.Append("id"))
+	return terra.ReferenceAsString(pl.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_prefix_list.
 func (pl dataPrefixListAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pl.ref.Append("name"))
+	return terra.ReferenceAsString(pl.ref.Append("name"))
 }
 
+// PrefixListId returns a reference to field prefix_list_id of aws_prefix_list.
 func (pl dataPrefixListAttributes) PrefixListId() terra.StringValue {
-	return terra.ReferenceString(pl.ref.Append("prefix_list_id"))
+	return terra.ReferenceAsString(pl.ref.Append("prefix_list_id"))
 }
 
 func (pl dataPrefixListAttributes) Filter() terra.SetValue[dataprefixlist.FilterAttributes] {
-	return terra.ReferenceSet[dataprefixlist.FilterAttributes](pl.ref.Append("filter"))
+	return terra.ReferenceAsSet[dataprefixlist.FilterAttributes](pl.ref.Append("filter"))
 }
 
 func (pl dataPrefixListAttributes) Timeouts() dataprefixlist.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataprefixlist.TimeoutsAttributes](pl.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataprefixlist.TimeoutsAttributes](pl.ref.Append("timeouts"))
 }

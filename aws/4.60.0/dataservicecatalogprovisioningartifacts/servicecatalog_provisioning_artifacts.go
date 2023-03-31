@@ -31,31 +31,31 @@ func (pad ProvisioningArtifactDetailsAttributes) InternalTokens() hclwrite.Token
 }
 
 func (pad ProvisioningArtifactDetailsAttributes) Active() terra.BoolValue {
-	return terra.ReferenceBool(pad.ref.Append("active"))
+	return terra.ReferenceAsBool(pad.ref.Append("active"))
 }
 
 func (pad ProvisioningArtifactDetailsAttributes) CreatedTime() terra.StringValue {
-	return terra.ReferenceString(pad.ref.Append("created_time"))
+	return terra.ReferenceAsString(pad.ref.Append("created_time"))
 }
 
 func (pad ProvisioningArtifactDetailsAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(pad.ref.Append("description"))
+	return terra.ReferenceAsString(pad.ref.Append("description"))
 }
 
 func (pad ProvisioningArtifactDetailsAttributes) Guidance() terra.StringValue {
-	return terra.ReferenceString(pad.ref.Append("guidance"))
+	return terra.ReferenceAsString(pad.ref.Append("guidance"))
 }
 
 func (pad ProvisioningArtifactDetailsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pad.ref.Append("id"))
+	return terra.ReferenceAsString(pad.ref.Append("id"))
 }
 
 func (pad ProvisioningArtifactDetailsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pad.ref.Append("name"))
+	return terra.ReferenceAsString(pad.ref.Append("name"))
 }
 
 func (pad ProvisioningArtifactDetailsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(pad.ref.Append("type"))
+	return terra.ReferenceAsString(pad.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
@@ -75,7 +75,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type ProvisioningArtifactDetailsState struct {

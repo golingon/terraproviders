@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataCloudfrontOriginRequestPolicy creates a new instance of [DataCloudfrontOriginRequestPolicy].
 func NewDataCloudfrontOriginRequestPolicy(name string, args DataCloudfrontOriginRequestPolicyArgs) *DataCloudfrontOriginRequestPolicy {
 	return &DataCloudfrontOriginRequestPolicy{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataCloudfrontOriginRequestPolicy(name string, args DataCloudfrontOrigin
 
 var _ terra.DataResource = (*DataCloudfrontOriginRequestPolicy)(nil)
 
+// DataCloudfrontOriginRequestPolicy represents the Terraform data resource aws_cloudfront_origin_request_policy.
 type DataCloudfrontOriginRequestPolicy struct {
 	Name string
 	Args DataCloudfrontOriginRequestPolicyArgs
 }
 
+// DataSource returns the Terraform object type for [DataCloudfrontOriginRequestPolicy].
 func (corp *DataCloudfrontOriginRequestPolicy) DataSource() string {
 	return "aws_cloudfront_origin_request_policy"
 }
 
+// LocalName returns the local name for [DataCloudfrontOriginRequestPolicy].
 func (corp *DataCloudfrontOriginRequestPolicy) LocalName() string {
 	return corp.Name
 }
 
+// Configuration returns the configuration (args) for [DataCloudfrontOriginRequestPolicy].
 func (corp *DataCloudfrontOriginRequestPolicy) Configuration() interface{} {
 	return corp.Args
 }
 
+// Attributes returns the attributes for [DataCloudfrontOriginRequestPolicy].
 func (corp *DataCloudfrontOriginRequestPolicy) Attributes() dataCloudfrontOriginRequestPolicyAttributes {
 	return dataCloudfrontOriginRequestPolicyAttributes{ref: terra.ReferenceDataResource(corp)}
 }
 
+// DataCloudfrontOriginRequestPolicyArgs contains the configurations for aws_cloudfront_origin_request_policy.
 type DataCloudfrontOriginRequestPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,30 +60,34 @@ type dataCloudfrontOriginRequestPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Comment returns a reference to field comment of aws_cloudfront_origin_request_policy.
 func (corp dataCloudfrontOriginRequestPolicyAttributes) Comment() terra.StringValue {
-	return terra.ReferenceString(corp.ref.Append("comment"))
+	return terra.ReferenceAsString(corp.ref.Append("comment"))
 }
 
+// Etag returns a reference to field etag of aws_cloudfront_origin_request_policy.
 func (corp dataCloudfrontOriginRequestPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(corp.ref.Append("etag"))
+	return terra.ReferenceAsString(corp.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of aws_cloudfront_origin_request_policy.
 func (corp dataCloudfrontOriginRequestPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(corp.ref.Append("id"))
+	return terra.ReferenceAsString(corp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_cloudfront_origin_request_policy.
 func (corp dataCloudfrontOriginRequestPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(corp.ref.Append("name"))
+	return terra.ReferenceAsString(corp.ref.Append("name"))
 }
 
 func (corp dataCloudfrontOriginRequestPolicyAttributes) CookiesConfig() terra.ListValue[datacloudfrontoriginrequestpolicy.CookiesConfigAttributes] {
-	return terra.ReferenceList[datacloudfrontoriginrequestpolicy.CookiesConfigAttributes](corp.ref.Append("cookies_config"))
+	return terra.ReferenceAsList[datacloudfrontoriginrequestpolicy.CookiesConfigAttributes](corp.ref.Append("cookies_config"))
 }
 
 func (corp dataCloudfrontOriginRequestPolicyAttributes) HeadersConfig() terra.ListValue[datacloudfrontoriginrequestpolicy.HeadersConfigAttributes] {
-	return terra.ReferenceList[datacloudfrontoriginrequestpolicy.HeadersConfigAttributes](corp.ref.Append("headers_config"))
+	return terra.ReferenceAsList[datacloudfrontoriginrequestpolicy.HeadersConfigAttributes](corp.ref.Append("headers_config"))
 }
 
 func (corp dataCloudfrontOriginRequestPolicyAttributes) QueryStringsConfig() terra.ListValue[datacloudfrontoriginrequestpolicy.QueryStringsConfigAttributes] {
-	return terra.ReferenceList[datacloudfrontoriginrequestpolicy.QueryStringsConfigAttributes](corp.ref.Append("query_strings_config"))
+	return terra.ReferenceAsList[datacloudfrontoriginrequestpolicy.QueryStringsConfigAttributes](corp.ref.Append("query_strings_config"))
 }

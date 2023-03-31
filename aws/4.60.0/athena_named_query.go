@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAthenaNamedQuery creates a new instance of [AthenaNamedQuery].
 func NewAthenaNamedQuery(name string, args AthenaNamedQueryArgs) *AthenaNamedQuery {
 	return &AthenaNamedQuery{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAthenaNamedQuery(name string, args AthenaNamedQueryArgs) *AthenaNamedQue
 
 var _ terra.Resource = (*AthenaNamedQuery)(nil)
 
+// AthenaNamedQuery represents the Terraform resource aws_athena_named_query.
 type AthenaNamedQuery struct {
-	Name  string
-	Args  AthenaNamedQueryArgs
-	state *athenaNamedQueryState
+	Name      string
+	Args      AthenaNamedQueryArgs
+	state     *athenaNamedQueryState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AthenaNamedQuery].
 func (anq *AthenaNamedQuery) Type() string {
 	return "aws_athena_named_query"
 }
 
+// LocalName returns the local name for [AthenaNamedQuery].
 func (anq *AthenaNamedQuery) LocalName() string {
 	return anq.Name
 }
 
+// Configuration returns the configuration (args) for [AthenaNamedQuery].
 func (anq *AthenaNamedQuery) Configuration() interface{} {
 	return anq.Args
 }
 
+// DependOn is used for other resources to depend on [AthenaNamedQuery].
+func (anq *AthenaNamedQuery) DependOn() terra.Reference {
+	return terra.ReferenceResource(anq)
+}
+
+// Dependencies returns the list of resources [AthenaNamedQuery] depends_on.
+func (anq *AthenaNamedQuery) Dependencies() terra.Dependencies {
+	return anq.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AthenaNamedQuery].
+func (anq *AthenaNamedQuery) LifecycleManagement() *terra.Lifecycle {
+	return anq.Lifecycle
+}
+
+// Attributes returns the attributes for [AthenaNamedQuery].
 func (anq *AthenaNamedQuery) Attributes() athenaNamedQueryAttributes {
 	return athenaNamedQueryAttributes{ref: terra.ReferenceResource(anq)}
 }
 
+// ImportState imports the given attribute values into [AthenaNamedQuery]'s state.
 func (anq *AthenaNamedQuery) ImportState(av io.Reader) error {
 	anq.state = &athenaNamedQueryState{}
 	if err := json.NewDecoder(av).Decode(anq.state); err != nil {
@@ -48,10 +72,12 @@ func (anq *AthenaNamedQuery) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AthenaNamedQuery] has state.
 func (anq *AthenaNamedQuery) State() (*athenaNamedQueryState, bool) {
 	return anq.state, anq.state != nil
 }
 
+// StateMust returns the state for [AthenaNamedQuery]. Panics if the state is nil.
 func (anq *AthenaNamedQuery) StateMust() *athenaNamedQueryState {
 	if anq.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", anq.Type(), anq.LocalName()))
@@ -59,10 +85,7 @@ func (anq *AthenaNamedQuery) StateMust() *athenaNamedQueryState {
 	return anq.state
 }
 
-func (anq *AthenaNamedQuery) DependOn() terra.Reference {
-	return terra.ReferenceResource(anq)
-}
-
+// AthenaNamedQueryArgs contains the configurations for aws_athena_named_query.
 type AthenaNamedQueryArgs struct {
 	// Database: string, required
 	Database terra.StringValue `hcl:"database,attr" validate:"required"`
@@ -76,35 +99,39 @@ type AthenaNamedQueryArgs struct {
 	Query terra.StringValue `hcl:"query,attr" validate:"required"`
 	// Workgroup: string, optional
 	Workgroup terra.StringValue `hcl:"workgroup,attr"`
-	// DependsOn contains resources that AthenaNamedQuery depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type athenaNamedQueryAttributes struct {
 	ref terra.Reference
 }
 
+// Database returns a reference to field database of aws_athena_named_query.
 func (anq athenaNamedQueryAttributes) Database() terra.StringValue {
-	return terra.ReferenceString(anq.ref.Append("database"))
+	return terra.ReferenceAsString(anq.ref.Append("database"))
 }
 
+// Description returns a reference to field description of aws_athena_named_query.
 func (anq athenaNamedQueryAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(anq.ref.Append("description"))
+	return terra.ReferenceAsString(anq.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_athena_named_query.
 func (anq athenaNamedQueryAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(anq.ref.Append("id"))
+	return terra.ReferenceAsString(anq.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_athena_named_query.
 func (anq athenaNamedQueryAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(anq.ref.Append("name"))
+	return terra.ReferenceAsString(anq.ref.Append("name"))
 }
 
+// Query returns a reference to field query of aws_athena_named_query.
 func (anq athenaNamedQueryAttributes) Query() terra.StringValue {
-	return terra.ReferenceString(anq.ref.Append("query"))
+	return terra.ReferenceAsString(anq.ref.Append("query"))
 }
 
+// Workgroup returns a reference to field workgroup of aws_athena_named_query.
 func (anq athenaNamedQueryAttributes) Workgroup() terra.StringValue {
-	return terra.ReferenceString(anq.ref.Append("workgroup"))
+	return terra.ReferenceAsString(anq.ref.Append("workgroup"))
 }
 
 type athenaNamedQueryState struct {

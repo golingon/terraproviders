@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMacie2Member creates a new instance of [Macie2Member].
 func NewMacie2Member(name string, args Macie2MemberArgs) *Macie2Member {
 	return &Macie2Member{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMacie2Member(name string, args Macie2MemberArgs) *Macie2Member {
 
 var _ terra.Resource = (*Macie2Member)(nil)
 
+// Macie2Member represents the Terraform resource aws_macie2_member.
 type Macie2Member struct {
-	Name  string
-	Args  Macie2MemberArgs
-	state *macie2MemberState
+	Name      string
+	Args      Macie2MemberArgs
+	state     *macie2MemberState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Macie2Member].
 func (mm *Macie2Member) Type() string {
 	return "aws_macie2_member"
 }
 
+// LocalName returns the local name for [Macie2Member].
 func (mm *Macie2Member) LocalName() string {
 	return mm.Name
 }
 
+// Configuration returns the configuration (args) for [Macie2Member].
 func (mm *Macie2Member) Configuration() interface{} {
 	return mm.Args
 }
 
+// DependOn is used for other resources to depend on [Macie2Member].
+func (mm *Macie2Member) DependOn() terra.Reference {
+	return terra.ReferenceResource(mm)
+}
+
+// Dependencies returns the list of resources [Macie2Member] depends_on.
+func (mm *Macie2Member) Dependencies() terra.Dependencies {
+	return mm.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Macie2Member].
+func (mm *Macie2Member) LifecycleManagement() *terra.Lifecycle {
+	return mm.Lifecycle
+}
+
+// Attributes returns the attributes for [Macie2Member].
 func (mm *Macie2Member) Attributes() macie2MemberAttributes {
 	return macie2MemberAttributes{ref: terra.ReferenceResource(mm)}
 }
 
+// ImportState imports the given attribute values into [Macie2Member]'s state.
 func (mm *Macie2Member) ImportState(av io.Reader) error {
 	mm.state = &macie2MemberState{}
 	if err := json.NewDecoder(av).Decode(mm.state); err != nil {
@@ -49,10 +73,12 @@ func (mm *Macie2Member) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Macie2Member] has state.
 func (mm *Macie2Member) State() (*macie2MemberState, bool) {
 	return mm.state, mm.state != nil
 }
 
+// StateMust returns the state for [Macie2Member]. Panics if the state is nil.
 func (mm *Macie2Member) StateMust() *macie2MemberState {
 	if mm.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mm.Type(), mm.LocalName()))
@@ -60,10 +86,7 @@ func (mm *Macie2Member) StateMust() *macie2MemberState {
 	return mm.state
 }
 
-func (mm *Macie2Member) DependOn() terra.Reference {
-	return terra.ReferenceResource(mm)
-}
-
+// Macie2MemberArgs contains the configurations for aws_macie2_member.
 type Macie2MemberArgs struct {
 	// AccountId: string, required
 	AccountId terra.StringValue `hcl:"account_id,attr" validate:"required"`
@@ -85,75 +108,88 @@ type Macie2MemberArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Timeouts: optional
 	Timeouts *macie2member.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Macie2Member depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type macie2MemberAttributes struct {
 	ref terra.Reference
 }
 
+// AccountId returns a reference to field account_id of aws_macie2_member.
 func (mm macie2MemberAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(mm.ref.Append("account_id"))
+	return terra.ReferenceAsString(mm.ref.Append("account_id"))
 }
 
+// AdministratorAccountId returns a reference to field administrator_account_id of aws_macie2_member.
 func (mm macie2MemberAttributes) AdministratorAccountId() terra.StringValue {
-	return terra.ReferenceString(mm.ref.Append("administrator_account_id"))
+	return terra.ReferenceAsString(mm.ref.Append("administrator_account_id"))
 }
 
+// Arn returns a reference to field arn of aws_macie2_member.
 func (mm macie2MemberAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(mm.ref.Append("arn"))
+	return terra.ReferenceAsString(mm.ref.Append("arn"))
 }
 
+// Email returns a reference to field email of aws_macie2_member.
 func (mm macie2MemberAttributes) Email() terra.StringValue {
-	return terra.ReferenceString(mm.ref.Append("email"))
+	return terra.ReferenceAsString(mm.ref.Append("email"))
 }
 
+// Id returns a reference to field id of aws_macie2_member.
 func (mm macie2MemberAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mm.ref.Append("id"))
+	return terra.ReferenceAsString(mm.ref.Append("id"))
 }
 
+// InvitationDisableEmailNotification returns a reference to field invitation_disable_email_notification of aws_macie2_member.
 func (mm macie2MemberAttributes) InvitationDisableEmailNotification() terra.BoolValue {
-	return terra.ReferenceBool(mm.ref.Append("invitation_disable_email_notification"))
+	return terra.ReferenceAsBool(mm.ref.Append("invitation_disable_email_notification"))
 }
 
+// InvitationMessage returns a reference to field invitation_message of aws_macie2_member.
 func (mm macie2MemberAttributes) InvitationMessage() terra.StringValue {
-	return terra.ReferenceString(mm.ref.Append("invitation_message"))
+	return terra.ReferenceAsString(mm.ref.Append("invitation_message"))
 }
 
+// Invite returns a reference to field invite of aws_macie2_member.
 func (mm macie2MemberAttributes) Invite() terra.BoolValue {
-	return terra.ReferenceBool(mm.ref.Append("invite"))
+	return terra.ReferenceAsBool(mm.ref.Append("invite"))
 }
 
+// InvitedAt returns a reference to field invited_at of aws_macie2_member.
 func (mm macie2MemberAttributes) InvitedAt() terra.StringValue {
-	return terra.ReferenceString(mm.ref.Append("invited_at"))
+	return terra.ReferenceAsString(mm.ref.Append("invited_at"))
 }
 
+// MasterAccountId returns a reference to field master_account_id of aws_macie2_member.
 func (mm macie2MemberAttributes) MasterAccountId() terra.StringValue {
-	return terra.ReferenceString(mm.ref.Append("master_account_id"))
+	return terra.ReferenceAsString(mm.ref.Append("master_account_id"))
 }
 
+// RelationshipStatus returns a reference to field relationship_status of aws_macie2_member.
 func (mm macie2MemberAttributes) RelationshipStatus() terra.StringValue {
-	return terra.ReferenceString(mm.ref.Append("relationship_status"))
+	return terra.ReferenceAsString(mm.ref.Append("relationship_status"))
 }
 
+// Status returns a reference to field status of aws_macie2_member.
 func (mm macie2MemberAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(mm.ref.Append("status"))
+	return terra.ReferenceAsString(mm.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of aws_macie2_member.
 func (mm macie2MemberAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mm.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mm.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_macie2_member.
 func (mm macie2MemberAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mm.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](mm.ref.Append("tags_all"))
 }
 
+// UpdatedAt returns a reference to field updated_at of aws_macie2_member.
 func (mm macie2MemberAttributes) UpdatedAt() terra.StringValue {
-	return terra.ReferenceString(mm.ref.Append("updated_at"))
+	return terra.ReferenceAsString(mm.ref.Append("updated_at"))
 }
 
 func (mm macie2MemberAttributes) Timeouts() macie2member.TimeoutsAttributes {
-	return terra.ReferenceSingle[macie2member.TimeoutsAttributes](mm.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[macie2member.TimeoutsAttributes](mm.ref.Append("timeouts"))
 }
 
 type macie2MemberState struct {

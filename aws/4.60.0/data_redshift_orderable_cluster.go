@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataRedshiftOrderableCluster creates a new instance of [DataRedshiftOrderableCluster].
 func NewDataRedshiftOrderableCluster(name string, args DataRedshiftOrderableClusterArgs) *DataRedshiftOrderableCluster {
 	return &DataRedshiftOrderableCluster{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataRedshiftOrderableCluster(name string, args DataRedshiftOrderableClus
 
 var _ terra.DataResource = (*DataRedshiftOrderableCluster)(nil)
 
+// DataRedshiftOrderableCluster represents the Terraform data resource aws_redshift_orderable_cluster.
 type DataRedshiftOrderableCluster struct {
 	Name string
 	Args DataRedshiftOrderableClusterArgs
 }
 
+// DataSource returns the Terraform object type for [DataRedshiftOrderableCluster].
 func (roc *DataRedshiftOrderableCluster) DataSource() string {
 	return "aws_redshift_orderable_cluster"
 }
 
+// LocalName returns the local name for [DataRedshiftOrderableCluster].
 func (roc *DataRedshiftOrderableCluster) LocalName() string {
 	return roc.Name
 }
 
+// Configuration returns the configuration (args) for [DataRedshiftOrderableCluster].
 func (roc *DataRedshiftOrderableCluster) Configuration() interface{} {
 	return roc.Args
 }
 
+// Attributes returns the attributes for [DataRedshiftOrderableCluster].
 func (roc *DataRedshiftOrderableCluster) Attributes() dataRedshiftOrderableClusterAttributes {
 	return dataRedshiftOrderableClusterAttributes{ref: terra.ReferenceDataResource(roc)}
 }
 
+// DataRedshiftOrderableClusterArgs contains the configurations for aws_redshift_orderable_cluster.
 type DataRedshiftOrderableClusterArgs struct {
 	// ClusterType: string, optional
 	ClusterType terra.StringValue `hcl:"cluster_type,attr"`
@@ -50,26 +57,32 @@ type dataRedshiftOrderableClusterAttributes struct {
 	ref terra.Reference
 }
 
+// AvailabilityZones returns a reference to field availability_zones of aws_redshift_orderable_cluster.
 func (roc dataRedshiftOrderableClusterAttributes) AvailabilityZones() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](roc.ref.Append("availability_zones"))
+	return terra.ReferenceAsList[terra.StringValue](roc.ref.Append("availability_zones"))
 }
 
+// ClusterType returns a reference to field cluster_type of aws_redshift_orderable_cluster.
 func (roc dataRedshiftOrderableClusterAttributes) ClusterType() terra.StringValue {
-	return terra.ReferenceString(roc.ref.Append("cluster_type"))
+	return terra.ReferenceAsString(roc.ref.Append("cluster_type"))
 }
 
+// ClusterVersion returns a reference to field cluster_version of aws_redshift_orderable_cluster.
 func (roc dataRedshiftOrderableClusterAttributes) ClusterVersion() terra.StringValue {
-	return terra.ReferenceString(roc.ref.Append("cluster_version"))
+	return terra.ReferenceAsString(roc.ref.Append("cluster_version"))
 }
 
+// Id returns a reference to field id of aws_redshift_orderable_cluster.
 func (roc dataRedshiftOrderableClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(roc.ref.Append("id"))
+	return terra.ReferenceAsString(roc.ref.Append("id"))
 }
 
+// NodeType returns a reference to field node_type of aws_redshift_orderable_cluster.
 func (roc dataRedshiftOrderableClusterAttributes) NodeType() terra.StringValue {
-	return terra.ReferenceString(roc.ref.Append("node_type"))
+	return terra.ReferenceAsString(roc.ref.Append("node_type"))
 }
 
+// PreferredNodeTypes returns a reference to field preferred_node_types of aws_redshift_orderable_cluster.
 func (roc dataRedshiftOrderableClusterAttributes) PreferredNodeTypes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](roc.ref.Append("preferred_node_types"))
+	return terra.ReferenceAsList[terra.StringValue](roc.ref.Append("preferred_node_types"))
 }

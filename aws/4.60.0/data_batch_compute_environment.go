@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataBatchComputeEnvironment creates a new instance of [DataBatchComputeEnvironment].
 func NewDataBatchComputeEnvironment(name string, args DataBatchComputeEnvironmentArgs) *DataBatchComputeEnvironment {
 	return &DataBatchComputeEnvironment{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataBatchComputeEnvironment(name string, args DataBatchComputeEnvironmen
 
 var _ terra.DataResource = (*DataBatchComputeEnvironment)(nil)
 
+// DataBatchComputeEnvironment represents the Terraform data resource aws_batch_compute_environment.
 type DataBatchComputeEnvironment struct {
 	Name string
 	Args DataBatchComputeEnvironmentArgs
 }
 
+// DataSource returns the Terraform object type for [DataBatchComputeEnvironment].
 func (bce *DataBatchComputeEnvironment) DataSource() string {
 	return "aws_batch_compute_environment"
 }
 
+// LocalName returns the local name for [DataBatchComputeEnvironment].
 func (bce *DataBatchComputeEnvironment) LocalName() string {
 	return bce.Name
 }
 
+// Configuration returns the configuration (args) for [DataBatchComputeEnvironment].
 func (bce *DataBatchComputeEnvironment) Configuration() interface{} {
 	return bce.Args
 }
 
+// Attributes returns the attributes for [DataBatchComputeEnvironment].
 func (bce *DataBatchComputeEnvironment) Attributes() dataBatchComputeEnvironmentAttributes {
 	return dataBatchComputeEnvironmentAttributes{ref: terra.ReferenceDataResource(bce)}
 }
 
+// DataBatchComputeEnvironmentArgs contains the configurations for aws_batch_compute_environment.
 type DataBatchComputeEnvironmentArgs struct {
 	// ComputeEnvironmentName: string, required
 	ComputeEnvironmentName terra.StringValue `hcl:"compute_environment_name,attr" validate:"required"`
@@ -46,42 +53,52 @@ type dataBatchComputeEnvironmentAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_batch_compute_environment.
 func (bce dataBatchComputeEnvironmentAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(bce.ref.Append("arn"))
+	return terra.ReferenceAsString(bce.ref.Append("arn"))
 }
 
+// ComputeEnvironmentName returns a reference to field compute_environment_name of aws_batch_compute_environment.
 func (bce dataBatchComputeEnvironmentAttributes) ComputeEnvironmentName() terra.StringValue {
-	return terra.ReferenceString(bce.ref.Append("compute_environment_name"))
+	return terra.ReferenceAsString(bce.ref.Append("compute_environment_name"))
 }
 
+// EcsClusterArn returns a reference to field ecs_cluster_arn of aws_batch_compute_environment.
 func (bce dataBatchComputeEnvironmentAttributes) EcsClusterArn() terra.StringValue {
-	return terra.ReferenceString(bce.ref.Append("ecs_cluster_arn"))
+	return terra.ReferenceAsString(bce.ref.Append("ecs_cluster_arn"))
 }
 
+// Id returns a reference to field id of aws_batch_compute_environment.
 func (bce dataBatchComputeEnvironmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bce.ref.Append("id"))
+	return terra.ReferenceAsString(bce.ref.Append("id"))
 }
 
+// ServiceRole returns a reference to field service_role of aws_batch_compute_environment.
 func (bce dataBatchComputeEnvironmentAttributes) ServiceRole() terra.StringValue {
-	return terra.ReferenceString(bce.ref.Append("service_role"))
+	return terra.ReferenceAsString(bce.ref.Append("service_role"))
 }
 
+// State returns a reference to field state of aws_batch_compute_environment.
 func (bce dataBatchComputeEnvironmentAttributes) State() terra.StringValue {
-	return terra.ReferenceString(bce.ref.Append("state"))
+	return terra.ReferenceAsString(bce.ref.Append("state"))
 }
 
+// Status returns a reference to field status of aws_batch_compute_environment.
 func (bce dataBatchComputeEnvironmentAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(bce.ref.Append("status"))
+	return terra.ReferenceAsString(bce.ref.Append("status"))
 }
 
+// StatusReason returns a reference to field status_reason of aws_batch_compute_environment.
 func (bce dataBatchComputeEnvironmentAttributes) StatusReason() terra.StringValue {
-	return terra.ReferenceString(bce.ref.Append("status_reason"))
+	return terra.ReferenceAsString(bce.ref.Append("status_reason"))
 }
 
+// Tags returns a reference to field tags of aws_batch_compute_environment.
 func (bce dataBatchComputeEnvironmentAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bce.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](bce.ref.Append("tags"))
 }
 
+// Type returns a reference to field type of aws_batch_compute_environment.
 func (bce dataBatchComputeEnvironmentAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(bce.ref.Append("type"))
+	return terra.ReferenceAsString(bce.ref.Append("type"))
 }

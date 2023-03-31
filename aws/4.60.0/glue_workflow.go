@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewGlueWorkflow creates a new instance of [GlueWorkflow].
 func NewGlueWorkflow(name string, args GlueWorkflowArgs) *GlueWorkflow {
 	return &GlueWorkflow{
 		Args: args,
@@ -18,28 +19,51 @@ func NewGlueWorkflow(name string, args GlueWorkflowArgs) *GlueWorkflow {
 
 var _ terra.Resource = (*GlueWorkflow)(nil)
 
+// GlueWorkflow represents the Terraform resource aws_glue_workflow.
 type GlueWorkflow struct {
-	Name  string
-	Args  GlueWorkflowArgs
-	state *glueWorkflowState
+	Name      string
+	Args      GlueWorkflowArgs
+	state     *glueWorkflowState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GlueWorkflow].
 func (gw *GlueWorkflow) Type() string {
 	return "aws_glue_workflow"
 }
 
+// LocalName returns the local name for [GlueWorkflow].
 func (gw *GlueWorkflow) LocalName() string {
 	return gw.Name
 }
 
+// Configuration returns the configuration (args) for [GlueWorkflow].
 func (gw *GlueWorkflow) Configuration() interface{} {
 	return gw.Args
 }
 
+// DependOn is used for other resources to depend on [GlueWorkflow].
+func (gw *GlueWorkflow) DependOn() terra.Reference {
+	return terra.ReferenceResource(gw)
+}
+
+// Dependencies returns the list of resources [GlueWorkflow] depends_on.
+func (gw *GlueWorkflow) Dependencies() terra.Dependencies {
+	return gw.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GlueWorkflow].
+func (gw *GlueWorkflow) LifecycleManagement() *terra.Lifecycle {
+	return gw.Lifecycle
+}
+
+// Attributes returns the attributes for [GlueWorkflow].
 func (gw *GlueWorkflow) Attributes() glueWorkflowAttributes {
 	return glueWorkflowAttributes{ref: terra.ReferenceResource(gw)}
 }
 
+// ImportState imports the given attribute values into [GlueWorkflow]'s state.
 func (gw *GlueWorkflow) ImportState(av io.Reader) error {
 	gw.state = &glueWorkflowState{}
 	if err := json.NewDecoder(av).Decode(gw.state); err != nil {
@@ -48,10 +72,12 @@ func (gw *GlueWorkflow) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GlueWorkflow] has state.
 func (gw *GlueWorkflow) State() (*glueWorkflowState, bool) {
 	return gw.state, gw.state != nil
 }
 
+// StateMust returns the state for [GlueWorkflow]. Panics if the state is nil.
 func (gw *GlueWorkflow) StateMust() *glueWorkflowState {
 	if gw.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", gw.Type(), gw.LocalName()))
@@ -59,10 +85,7 @@ func (gw *GlueWorkflow) StateMust() *glueWorkflowState {
 	return gw.state
 }
 
-func (gw *GlueWorkflow) DependOn() terra.Reference {
-	return terra.ReferenceResource(gw)
-}
-
+// GlueWorkflowArgs contains the configurations for aws_glue_workflow.
 type GlueWorkflowArgs struct {
 	// DefaultRunProperties: map of string, optional
 	DefaultRunProperties terra.MapValue[terra.StringValue] `hcl:"default_run_properties,attr"`
@@ -78,43 +101,49 @@ type GlueWorkflowArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that GlueWorkflow depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type glueWorkflowAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_glue_workflow.
 func (gw glueWorkflowAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(gw.ref.Append("arn"))
+	return terra.ReferenceAsString(gw.ref.Append("arn"))
 }
 
+// DefaultRunProperties returns a reference to field default_run_properties of aws_glue_workflow.
 func (gw glueWorkflowAttributes) DefaultRunProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gw.ref.Append("default_run_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](gw.ref.Append("default_run_properties"))
 }
 
+// Description returns a reference to field description of aws_glue_workflow.
 func (gw glueWorkflowAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(gw.ref.Append("description"))
+	return terra.ReferenceAsString(gw.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_glue_workflow.
 func (gw glueWorkflowAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gw.ref.Append("id"))
+	return terra.ReferenceAsString(gw.ref.Append("id"))
 }
 
+// MaxConcurrentRuns returns a reference to field max_concurrent_runs of aws_glue_workflow.
 func (gw glueWorkflowAttributes) MaxConcurrentRuns() terra.NumberValue {
-	return terra.ReferenceNumber(gw.ref.Append("max_concurrent_runs"))
+	return terra.ReferenceAsNumber(gw.ref.Append("max_concurrent_runs"))
 }
 
+// Name returns a reference to field name of aws_glue_workflow.
 func (gw glueWorkflowAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(gw.ref.Append("name"))
+	return terra.ReferenceAsString(gw.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_glue_workflow.
 func (gw glueWorkflowAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gw.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](gw.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_glue_workflow.
 func (gw glueWorkflowAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gw.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](gw.ref.Append("tags_all"))
 }
 
 type glueWorkflowState struct {

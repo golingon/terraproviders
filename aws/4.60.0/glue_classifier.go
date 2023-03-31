@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewGlueClassifier creates a new instance of [GlueClassifier].
 func NewGlueClassifier(name string, args GlueClassifierArgs) *GlueClassifier {
 	return &GlueClassifier{
 		Args: args,
@@ -19,28 +20,51 @@ func NewGlueClassifier(name string, args GlueClassifierArgs) *GlueClassifier {
 
 var _ terra.Resource = (*GlueClassifier)(nil)
 
+// GlueClassifier represents the Terraform resource aws_glue_classifier.
 type GlueClassifier struct {
-	Name  string
-	Args  GlueClassifierArgs
-	state *glueClassifierState
+	Name      string
+	Args      GlueClassifierArgs
+	state     *glueClassifierState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GlueClassifier].
 func (gc *GlueClassifier) Type() string {
 	return "aws_glue_classifier"
 }
 
+// LocalName returns the local name for [GlueClassifier].
 func (gc *GlueClassifier) LocalName() string {
 	return gc.Name
 }
 
+// Configuration returns the configuration (args) for [GlueClassifier].
 func (gc *GlueClassifier) Configuration() interface{} {
 	return gc.Args
 }
 
+// DependOn is used for other resources to depend on [GlueClassifier].
+func (gc *GlueClassifier) DependOn() terra.Reference {
+	return terra.ReferenceResource(gc)
+}
+
+// Dependencies returns the list of resources [GlueClassifier] depends_on.
+func (gc *GlueClassifier) Dependencies() terra.Dependencies {
+	return gc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GlueClassifier].
+func (gc *GlueClassifier) LifecycleManagement() *terra.Lifecycle {
+	return gc.Lifecycle
+}
+
+// Attributes returns the attributes for [GlueClassifier].
 func (gc *GlueClassifier) Attributes() glueClassifierAttributes {
 	return glueClassifierAttributes{ref: terra.ReferenceResource(gc)}
 }
 
+// ImportState imports the given attribute values into [GlueClassifier]'s state.
 func (gc *GlueClassifier) ImportState(av io.Reader) error {
 	gc.state = &glueClassifierState{}
 	if err := json.NewDecoder(av).Decode(gc.state); err != nil {
@@ -49,10 +73,12 @@ func (gc *GlueClassifier) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GlueClassifier] has state.
 func (gc *GlueClassifier) State() (*glueClassifierState, bool) {
 	return gc.state, gc.state != nil
 }
 
+// StateMust returns the state for [GlueClassifier]. Panics if the state is nil.
 func (gc *GlueClassifier) StateMust() *glueClassifierState {
 	if gc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", gc.Type(), gc.LocalName()))
@@ -60,10 +86,7 @@ func (gc *GlueClassifier) StateMust() *glueClassifierState {
 	return gc.state
 }
 
-func (gc *GlueClassifier) DependOn() terra.Reference {
-	return terra.ReferenceResource(gc)
-}
-
+// GlueClassifierArgs contains the configurations for aws_glue_classifier.
 type GlueClassifierArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,35 +100,35 @@ type GlueClassifierArgs struct {
 	JsonClassifier *glueclassifier.JsonClassifier `hcl:"json_classifier,block"`
 	// XmlClassifier: optional
 	XmlClassifier *glueclassifier.XmlClassifier `hcl:"xml_classifier,block"`
-	// DependsOn contains resources that GlueClassifier depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type glueClassifierAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_glue_classifier.
 func (gc glueClassifierAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("id"))
+	return terra.ReferenceAsString(gc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_glue_classifier.
 func (gc glueClassifierAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("name"))
+	return terra.ReferenceAsString(gc.ref.Append("name"))
 }
 
 func (gc glueClassifierAttributes) CsvClassifier() terra.ListValue[glueclassifier.CsvClassifierAttributes] {
-	return terra.ReferenceList[glueclassifier.CsvClassifierAttributes](gc.ref.Append("csv_classifier"))
+	return terra.ReferenceAsList[glueclassifier.CsvClassifierAttributes](gc.ref.Append("csv_classifier"))
 }
 
 func (gc glueClassifierAttributes) GrokClassifier() terra.ListValue[glueclassifier.GrokClassifierAttributes] {
-	return terra.ReferenceList[glueclassifier.GrokClassifierAttributes](gc.ref.Append("grok_classifier"))
+	return terra.ReferenceAsList[glueclassifier.GrokClassifierAttributes](gc.ref.Append("grok_classifier"))
 }
 
 func (gc glueClassifierAttributes) JsonClassifier() terra.ListValue[glueclassifier.JsonClassifierAttributes] {
-	return terra.ReferenceList[glueclassifier.JsonClassifierAttributes](gc.ref.Append("json_classifier"))
+	return terra.ReferenceAsList[glueclassifier.JsonClassifierAttributes](gc.ref.Append("json_classifier"))
 }
 
 func (gc glueClassifierAttributes) XmlClassifier() terra.ListValue[glueclassifier.XmlClassifierAttributes] {
-	return terra.ReferenceList[glueclassifier.XmlClassifierAttributes](gc.ref.Append("xml_classifier"))
+	return terra.ReferenceAsList[glueclassifier.XmlClassifierAttributes](gc.ref.Append("xml_classifier"))
 }
 
 type glueClassifierState struct {

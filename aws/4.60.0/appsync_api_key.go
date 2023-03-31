@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAppsyncApiKey creates a new instance of [AppsyncApiKey].
 func NewAppsyncApiKey(name string, args AppsyncApiKeyArgs) *AppsyncApiKey {
 	return &AppsyncApiKey{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAppsyncApiKey(name string, args AppsyncApiKeyArgs) *AppsyncApiKey {
 
 var _ terra.Resource = (*AppsyncApiKey)(nil)
 
+// AppsyncApiKey represents the Terraform resource aws_appsync_api_key.
 type AppsyncApiKey struct {
-	Name  string
-	Args  AppsyncApiKeyArgs
-	state *appsyncApiKeyState
+	Name      string
+	Args      AppsyncApiKeyArgs
+	state     *appsyncApiKeyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppsyncApiKey].
 func (aak *AppsyncApiKey) Type() string {
 	return "aws_appsync_api_key"
 }
 
+// LocalName returns the local name for [AppsyncApiKey].
 func (aak *AppsyncApiKey) LocalName() string {
 	return aak.Name
 }
 
+// Configuration returns the configuration (args) for [AppsyncApiKey].
 func (aak *AppsyncApiKey) Configuration() interface{} {
 	return aak.Args
 }
 
+// DependOn is used for other resources to depend on [AppsyncApiKey].
+func (aak *AppsyncApiKey) DependOn() terra.Reference {
+	return terra.ReferenceResource(aak)
+}
+
+// Dependencies returns the list of resources [AppsyncApiKey] depends_on.
+func (aak *AppsyncApiKey) Dependencies() terra.Dependencies {
+	return aak.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppsyncApiKey].
+func (aak *AppsyncApiKey) LifecycleManagement() *terra.Lifecycle {
+	return aak.Lifecycle
+}
+
+// Attributes returns the attributes for [AppsyncApiKey].
 func (aak *AppsyncApiKey) Attributes() appsyncApiKeyAttributes {
 	return appsyncApiKeyAttributes{ref: terra.ReferenceResource(aak)}
 }
 
+// ImportState imports the given attribute values into [AppsyncApiKey]'s state.
 func (aak *AppsyncApiKey) ImportState(av io.Reader) error {
 	aak.state = &appsyncApiKeyState{}
 	if err := json.NewDecoder(av).Decode(aak.state); err != nil {
@@ -48,10 +72,12 @@ func (aak *AppsyncApiKey) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppsyncApiKey] has state.
 func (aak *AppsyncApiKey) State() (*appsyncApiKeyState, bool) {
 	return aak.state, aak.state != nil
 }
 
+// StateMust returns the state for [AppsyncApiKey]. Panics if the state is nil.
 func (aak *AppsyncApiKey) StateMust() *appsyncApiKeyState {
 	if aak.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", aak.Type(), aak.LocalName()))
@@ -59,10 +85,7 @@ func (aak *AppsyncApiKey) StateMust() *appsyncApiKeyState {
 	return aak.state
 }
 
-func (aak *AppsyncApiKey) DependOn() terra.Reference {
-	return terra.ReferenceResource(aak)
-}
-
+// AppsyncApiKeyArgs contains the configurations for aws_appsync_api_key.
 type AppsyncApiKeyArgs struct {
 	// ApiId: string, required
 	ApiId terra.StringValue `hcl:"api_id,attr" validate:"required"`
@@ -72,31 +95,34 @@ type AppsyncApiKeyArgs struct {
 	Expires terra.StringValue `hcl:"expires,attr"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that AppsyncApiKey depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appsyncApiKeyAttributes struct {
 	ref terra.Reference
 }
 
+// ApiId returns a reference to field api_id of aws_appsync_api_key.
 func (aak appsyncApiKeyAttributes) ApiId() terra.StringValue {
-	return terra.ReferenceString(aak.ref.Append("api_id"))
+	return terra.ReferenceAsString(aak.ref.Append("api_id"))
 }
 
+// Description returns a reference to field description of aws_appsync_api_key.
 func (aak appsyncApiKeyAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(aak.ref.Append("description"))
+	return terra.ReferenceAsString(aak.ref.Append("description"))
 }
 
+// Expires returns a reference to field expires of aws_appsync_api_key.
 func (aak appsyncApiKeyAttributes) Expires() terra.StringValue {
-	return terra.ReferenceString(aak.ref.Append("expires"))
+	return terra.ReferenceAsString(aak.ref.Append("expires"))
 }
 
+// Id returns a reference to field id of aws_appsync_api_key.
 func (aak appsyncApiKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aak.ref.Append("id"))
+	return terra.ReferenceAsString(aak.ref.Append("id"))
 }
 
+// Key returns a reference to field key of aws_appsync_api_key.
 func (aak appsyncApiKeyAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(aak.ref.Append("key"))
+	return terra.ReferenceAsString(aak.ref.Append("key"))
 }
 
 type appsyncApiKeyState struct {

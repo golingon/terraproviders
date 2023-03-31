@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewEvidentlySegment creates a new instance of [EvidentlySegment].
 func NewEvidentlySegment(name string, args EvidentlySegmentArgs) *EvidentlySegment {
 	return &EvidentlySegment{
 		Args: args,
@@ -18,28 +19,51 @@ func NewEvidentlySegment(name string, args EvidentlySegmentArgs) *EvidentlySegme
 
 var _ terra.Resource = (*EvidentlySegment)(nil)
 
+// EvidentlySegment represents the Terraform resource aws_evidently_segment.
 type EvidentlySegment struct {
-	Name  string
-	Args  EvidentlySegmentArgs
-	state *evidentlySegmentState
+	Name      string
+	Args      EvidentlySegmentArgs
+	state     *evidentlySegmentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EvidentlySegment].
 func (es *EvidentlySegment) Type() string {
 	return "aws_evidently_segment"
 }
 
+// LocalName returns the local name for [EvidentlySegment].
 func (es *EvidentlySegment) LocalName() string {
 	return es.Name
 }
 
+// Configuration returns the configuration (args) for [EvidentlySegment].
 func (es *EvidentlySegment) Configuration() interface{} {
 	return es.Args
 }
 
+// DependOn is used for other resources to depend on [EvidentlySegment].
+func (es *EvidentlySegment) DependOn() terra.Reference {
+	return terra.ReferenceResource(es)
+}
+
+// Dependencies returns the list of resources [EvidentlySegment] depends_on.
+func (es *EvidentlySegment) Dependencies() terra.Dependencies {
+	return es.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EvidentlySegment].
+func (es *EvidentlySegment) LifecycleManagement() *terra.Lifecycle {
+	return es.Lifecycle
+}
+
+// Attributes returns the attributes for [EvidentlySegment].
 func (es *EvidentlySegment) Attributes() evidentlySegmentAttributes {
 	return evidentlySegmentAttributes{ref: terra.ReferenceResource(es)}
 }
 
+// ImportState imports the given attribute values into [EvidentlySegment]'s state.
 func (es *EvidentlySegment) ImportState(av io.Reader) error {
 	es.state = &evidentlySegmentState{}
 	if err := json.NewDecoder(av).Decode(es.state); err != nil {
@@ -48,10 +72,12 @@ func (es *EvidentlySegment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EvidentlySegment] has state.
 func (es *EvidentlySegment) State() (*evidentlySegmentState, bool) {
 	return es.state, es.state != nil
 }
 
+// StateMust returns the state for [EvidentlySegment]. Panics if the state is nil.
 func (es *EvidentlySegment) StateMust() *evidentlySegmentState {
 	if es.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", es.Type(), es.LocalName()))
@@ -59,10 +85,7 @@ func (es *EvidentlySegment) StateMust() *evidentlySegmentState {
 	return es.state
 }
 
-func (es *EvidentlySegment) DependOn() terra.Reference {
-	return terra.ReferenceResource(es)
-}
-
+// EvidentlySegmentArgs contains the configurations for aws_evidently_segment.
 type EvidentlySegmentArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -76,55 +99,64 @@ type EvidentlySegmentArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that EvidentlySegment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type evidentlySegmentAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_evidently_segment.
 func (es evidentlySegmentAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("arn"))
+	return terra.ReferenceAsString(es.ref.Append("arn"))
 }
 
+// CreatedTime returns a reference to field created_time of aws_evidently_segment.
 func (es evidentlySegmentAttributes) CreatedTime() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("created_time"))
+	return terra.ReferenceAsString(es.ref.Append("created_time"))
 }
 
+// Description returns a reference to field description of aws_evidently_segment.
 func (es evidentlySegmentAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("description"))
+	return terra.ReferenceAsString(es.ref.Append("description"))
 }
 
+// ExperimentCount returns a reference to field experiment_count of aws_evidently_segment.
 func (es evidentlySegmentAttributes) ExperimentCount() terra.NumberValue {
-	return terra.ReferenceNumber(es.ref.Append("experiment_count"))
+	return terra.ReferenceAsNumber(es.ref.Append("experiment_count"))
 }
 
+// Id returns a reference to field id of aws_evidently_segment.
 func (es evidentlySegmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("id"))
+	return terra.ReferenceAsString(es.ref.Append("id"))
 }
 
+// LastUpdatedTime returns a reference to field last_updated_time of aws_evidently_segment.
 func (es evidentlySegmentAttributes) LastUpdatedTime() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("last_updated_time"))
+	return terra.ReferenceAsString(es.ref.Append("last_updated_time"))
 }
 
+// LaunchCount returns a reference to field launch_count of aws_evidently_segment.
 func (es evidentlySegmentAttributes) LaunchCount() terra.NumberValue {
-	return terra.ReferenceNumber(es.ref.Append("launch_count"))
+	return terra.ReferenceAsNumber(es.ref.Append("launch_count"))
 }
 
+// Name returns a reference to field name of aws_evidently_segment.
 func (es evidentlySegmentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("name"))
+	return terra.ReferenceAsString(es.ref.Append("name"))
 }
 
+// Pattern returns a reference to field pattern of aws_evidently_segment.
 func (es evidentlySegmentAttributes) Pattern() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("pattern"))
+	return terra.ReferenceAsString(es.ref.Append("pattern"))
 }
 
+// Tags returns a reference to field tags of aws_evidently_segment.
 func (es evidentlySegmentAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](es.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](es.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_evidently_segment.
 func (es evidentlySegmentAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](es.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](es.ref.Append("tags_all"))
 }
 
 type evidentlySegmentState struct {

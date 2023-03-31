@@ -134,19 +134,19 @@ func (e EndpointAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e EndpointAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("id"))
+	return terra.ReferenceAsString(e.ref.Append("id"))
 }
 
 func (e EndpointAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("region"))
+	return terra.ReferenceAsString(e.ref.Append("region"))
 }
 
 func (e EndpointAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("type"))
+	return terra.ReferenceAsString(e.ref.Append("type"))
 }
 
 func (e EndpointAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("value"))
+	return terra.ReferenceAsString(e.ref.Append("value"))
 }
 
 type RuleAttributes struct {
@@ -166,35 +166,35 @@ func (r RuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("id"))
+	return terra.ReferenceAsString(r.ref.Append("id"))
 }
 
 func (r RuleAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("type"))
+	return terra.ReferenceAsString(r.ref.Append("type"))
 }
 
 func (r RuleAttributes) GeoProximityLocation() terra.SetValue[GeoProximityLocationAttributes] {
-	return terra.ReferenceSet[GeoProximityLocationAttributes](r.ref.Append("geo_proximity_location"))
+	return terra.ReferenceAsSet[GeoProximityLocationAttributes](r.ref.Append("geo_proximity_location"))
 }
 
 func (r RuleAttributes) Items() terra.SetValue[ItemsAttributes] {
-	return terra.ReferenceSet[ItemsAttributes](r.ref.Append("items"))
+	return terra.ReferenceAsSet[ItemsAttributes](r.ref.Append("items"))
 }
 
 func (r RuleAttributes) Location() terra.SetValue[LocationAttributes] {
-	return terra.ReferenceSet[LocationAttributes](r.ref.Append("location"))
+	return terra.ReferenceAsSet[LocationAttributes](r.ref.Append("location"))
 }
 
 func (r RuleAttributes) Primary() terra.ListValue[PrimaryAttributes] {
-	return terra.ReferenceList[PrimaryAttributes](r.ref.Append("primary"))
+	return terra.ReferenceAsList[PrimaryAttributes](r.ref.Append("primary"))
 }
 
 func (r RuleAttributes) Region() terra.SetValue[RegionAttributes] {
-	return terra.ReferenceSet[RegionAttributes](r.ref.Append("region"))
+	return terra.ReferenceAsSet[RegionAttributes](r.ref.Append("region"))
 }
 
 func (r RuleAttributes) Secondary() terra.ListValue[SecondaryAttributes] {
-	return terra.ReferenceList[SecondaryAttributes](r.ref.Append("secondary"))
+	return terra.ReferenceAsList[SecondaryAttributes](r.ref.Append("secondary"))
 }
 
 type GeoProximityLocationAttributes struct {
@@ -214,35 +214,35 @@ func (gpl GeoProximityLocationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (gpl GeoProximityLocationAttributes) Bias() terra.StringValue {
-	return terra.ReferenceString(gpl.ref.Append("bias"))
+	return terra.ReferenceAsString(gpl.ref.Append("bias"))
 }
 
 func (gpl GeoProximityLocationAttributes) EndpointReference() terra.StringValue {
-	return terra.ReferenceString(gpl.ref.Append("endpoint_reference"))
+	return terra.ReferenceAsString(gpl.ref.Append("endpoint_reference"))
 }
 
 func (gpl GeoProximityLocationAttributes) EvaluateTargetHealth() terra.BoolValue {
-	return terra.ReferenceBool(gpl.ref.Append("evaluate_target_health"))
+	return terra.ReferenceAsBool(gpl.ref.Append("evaluate_target_health"))
 }
 
 func (gpl GeoProximityLocationAttributes) HealthCheck() terra.StringValue {
-	return terra.ReferenceString(gpl.ref.Append("health_check"))
+	return terra.ReferenceAsString(gpl.ref.Append("health_check"))
 }
 
 func (gpl GeoProximityLocationAttributes) Latitude() terra.StringValue {
-	return terra.ReferenceString(gpl.ref.Append("latitude"))
+	return terra.ReferenceAsString(gpl.ref.Append("latitude"))
 }
 
 func (gpl GeoProximityLocationAttributes) Longitude() terra.StringValue {
-	return terra.ReferenceString(gpl.ref.Append("longitude"))
+	return terra.ReferenceAsString(gpl.ref.Append("longitude"))
 }
 
 func (gpl GeoProximityLocationAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(gpl.ref.Append("region"))
+	return terra.ReferenceAsString(gpl.ref.Append("region"))
 }
 
 func (gpl GeoProximityLocationAttributes) RuleReference() terra.StringValue {
-	return terra.ReferenceString(gpl.ref.Append("rule_reference"))
+	return terra.ReferenceAsString(gpl.ref.Append("rule_reference"))
 }
 
 type ItemsAttributes struct {
@@ -262,11 +262,11 @@ func (i ItemsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i ItemsAttributes) EndpointReference() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("endpoint_reference"))
+	return terra.ReferenceAsString(i.ref.Append("endpoint_reference"))
 }
 
 func (i ItemsAttributes) HealthCheck() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("health_check"))
+	return terra.ReferenceAsString(i.ref.Append("health_check"))
 }
 
 type LocationAttributes struct {
@@ -286,35 +286,35 @@ func (l LocationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (l LocationAttributes) Continent() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("continent"))
+	return terra.ReferenceAsString(l.ref.Append("continent"))
 }
 
 func (l LocationAttributes) Country() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("country"))
+	return terra.ReferenceAsString(l.ref.Append("country"))
 }
 
 func (l LocationAttributes) EndpointReference() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("endpoint_reference"))
+	return terra.ReferenceAsString(l.ref.Append("endpoint_reference"))
 }
 
 func (l LocationAttributes) EvaluateTargetHealth() terra.BoolValue {
-	return terra.ReferenceBool(l.ref.Append("evaluate_target_health"))
+	return terra.ReferenceAsBool(l.ref.Append("evaluate_target_health"))
 }
 
 func (l LocationAttributes) HealthCheck() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("health_check"))
+	return terra.ReferenceAsString(l.ref.Append("health_check"))
 }
 
 func (l LocationAttributes) IsDefault() terra.BoolValue {
-	return terra.ReferenceBool(l.ref.Append("is_default"))
+	return terra.ReferenceAsBool(l.ref.Append("is_default"))
 }
 
 func (l LocationAttributes) RuleReference() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("rule_reference"))
+	return terra.ReferenceAsString(l.ref.Append("rule_reference"))
 }
 
 func (l LocationAttributes) Subdivision() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("subdivision"))
+	return terra.ReferenceAsString(l.ref.Append("subdivision"))
 }
 
 type PrimaryAttributes struct {
@@ -334,19 +334,19 @@ func (p PrimaryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p PrimaryAttributes) EndpointReference() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("endpoint_reference"))
+	return terra.ReferenceAsString(p.ref.Append("endpoint_reference"))
 }
 
 func (p PrimaryAttributes) EvaluateTargetHealth() terra.BoolValue {
-	return terra.ReferenceBool(p.ref.Append("evaluate_target_health"))
+	return terra.ReferenceAsBool(p.ref.Append("evaluate_target_health"))
 }
 
 func (p PrimaryAttributes) HealthCheck() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("health_check"))
+	return terra.ReferenceAsString(p.ref.Append("health_check"))
 }
 
 func (p PrimaryAttributes) RuleReference() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("rule_reference"))
+	return terra.ReferenceAsString(p.ref.Append("rule_reference"))
 }
 
 type RegionAttributes struct {
@@ -366,23 +366,23 @@ func (r RegionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RegionAttributes) EndpointReference() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("endpoint_reference"))
+	return terra.ReferenceAsString(r.ref.Append("endpoint_reference"))
 }
 
 func (r RegionAttributes) EvaluateTargetHealth() terra.BoolValue {
-	return terra.ReferenceBool(r.ref.Append("evaluate_target_health"))
+	return terra.ReferenceAsBool(r.ref.Append("evaluate_target_health"))
 }
 
 func (r RegionAttributes) HealthCheck() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("health_check"))
+	return terra.ReferenceAsString(r.ref.Append("health_check"))
 }
 
 func (r RegionAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("region"))
+	return terra.ReferenceAsString(r.ref.Append("region"))
 }
 
 func (r RegionAttributes) RuleReference() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("rule_reference"))
+	return terra.ReferenceAsString(r.ref.Append("rule_reference"))
 }
 
 type SecondaryAttributes struct {
@@ -402,19 +402,19 @@ func (s SecondaryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SecondaryAttributes) EndpointReference() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("endpoint_reference"))
+	return terra.ReferenceAsString(s.ref.Append("endpoint_reference"))
 }
 
 func (s SecondaryAttributes) EvaluateTargetHealth() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("evaluate_target_health"))
+	return terra.ReferenceAsBool(s.ref.Append("evaluate_target_health"))
 }
 
 func (s SecondaryAttributes) HealthCheck() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("health_check"))
+	return terra.ReferenceAsString(s.ref.Append("health_check"))
 }
 
 func (s SecondaryAttributes) RuleReference() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("rule_reference"))
+	return terra.ReferenceAsString(s.ref.Append("rule_reference"))
 }
 
 type EndpointState struct {

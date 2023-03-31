@@ -60,19 +60,19 @@ func (pb ProductionBranchAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pb ProductionBranchAttributes) BranchName() terra.StringValue {
-	return terra.ReferenceString(pb.ref.Append("branch_name"))
+	return terra.ReferenceAsString(pb.ref.Append("branch_name"))
 }
 
 func (pb ProductionBranchAttributes) LastDeployTime() terra.StringValue {
-	return terra.ReferenceString(pb.ref.Append("last_deploy_time"))
+	return terra.ReferenceAsString(pb.ref.Append("last_deploy_time"))
 }
 
 func (pb ProductionBranchAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(pb.ref.Append("status"))
+	return terra.ReferenceAsString(pb.ref.Append("status"))
 }
 
 func (pb ProductionBranchAttributes) ThumbnailUrl() terra.StringValue {
-	return terra.ReferenceString(pb.ref.Append("thumbnail_url"))
+	return terra.ReferenceAsString(pb.ref.Append("thumbnail_url"))
 }
 
 type AutoBranchCreationConfigAttributes struct {
@@ -92,43 +92,43 @@ func (abcc AutoBranchCreationConfigAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (abcc AutoBranchCreationConfigAttributes) BasicAuthCredentials() terra.StringValue {
-	return terra.ReferenceString(abcc.ref.Append("basic_auth_credentials"))
+	return terra.ReferenceAsString(abcc.ref.Append("basic_auth_credentials"))
 }
 
 func (abcc AutoBranchCreationConfigAttributes) BuildSpec() terra.StringValue {
-	return terra.ReferenceString(abcc.ref.Append("build_spec"))
+	return terra.ReferenceAsString(abcc.ref.Append("build_spec"))
 }
 
 func (abcc AutoBranchCreationConfigAttributes) EnableAutoBuild() terra.BoolValue {
-	return terra.ReferenceBool(abcc.ref.Append("enable_auto_build"))
+	return terra.ReferenceAsBool(abcc.ref.Append("enable_auto_build"))
 }
 
 func (abcc AutoBranchCreationConfigAttributes) EnableBasicAuth() terra.BoolValue {
-	return terra.ReferenceBool(abcc.ref.Append("enable_basic_auth"))
+	return terra.ReferenceAsBool(abcc.ref.Append("enable_basic_auth"))
 }
 
 func (abcc AutoBranchCreationConfigAttributes) EnablePerformanceMode() terra.BoolValue {
-	return terra.ReferenceBool(abcc.ref.Append("enable_performance_mode"))
+	return terra.ReferenceAsBool(abcc.ref.Append("enable_performance_mode"))
 }
 
 func (abcc AutoBranchCreationConfigAttributes) EnablePullRequestPreview() terra.BoolValue {
-	return terra.ReferenceBool(abcc.ref.Append("enable_pull_request_preview"))
+	return terra.ReferenceAsBool(abcc.ref.Append("enable_pull_request_preview"))
 }
 
 func (abcc AutoBranchCreationConfigAttributes) EnvironmentVariables() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](abcc.ref.Append("environment_variables"))
+	return terra.ReferenceAsMap[terra.StringValue](abcc.ref.Append("environment_variables"))
 }
 
 func (abcc AutoBranchCreationConfigAttributes) Framework() terra.StringValue {
-	return terra.ReferenceString(abcc.ref.Append("framework"))
+	return terra.ReferenceAsString(abcc.ref.Append("framework"))
 }
 
 func (abcc AutoBranchCreationConfigAttributes) PullRequestEnvironmentName() terra.StringValue {
-	return terra.ReferenceString(abcc.ref.Append("pull_request_environment_name"))
+	return terra.ReferenceAsString(abcc.ref.Append("pull_request_environment_name"))
 }
 
 func (abcc AutoBranchCreationConfigAttributes) Stage() terra.StringValue {
-	return terra.ReferenceString(abcc.ref.Append("stage"))
+	return terra.ReferenceAsString(abcc.ref.Append("stage"))
 }
 
 type CustomRuleAttributes struct {
@@ -148,19 +148,19 @@ func (cr CustomRuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cr CustomRuleAttributes) Condition() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("condition"))
+	return terra.ReferenceAsString(cr.ref.Append("condition"))
 }
 
 func (cr CustomRuleAttributes) Source() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("source"))
+	return terra.ReferenceAsString(cr.ref.Append("source"))
 }
 
 func (cr CustomRuleAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("status"))
+	return terra.ReferenceAsString(cr.ref.Append("status"))
 }
 
 func (cr CustomRuleAttributes) Target() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("target"))
+	return terra.ReferenceAsString(cr.ref.Append("target"))
 }
 
 type ProductionBranchState struct {

@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataLexIntent creates a new instance of [DataLexIntent].
 func NewDataLexIntent(name string, args DataLexIntentArgs) *DataLexIntent {
 	return &DataLexIntent{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataLexIntent(name string, args DataLexIntentArgs) *DataLexIntent {
 
 var _ terra.DataResource = (*DataLexIntent)(nil)
 
+// DataLexIntent represents the Terraform data resource aws_lex_intent.
 type DataLexIntent struct {
 	Name string
 	Args DataLexIntentArgs
 }
 
+// DataSource returns the Terraform object type for [DataLexIntent].
 func (li *DataLexIntent) DataSource() string {
 	return "aws_lex_intent"
 }
 
+// LocalName returns the local name for [DataLexIntent].
 func (li *DataLexIntent) LocalName() string {
 	return li.Name
 }
 
+// Configuration returns the configuration (args) for [DataLexIntent].
 func (li *DataLexIntent) Configuration() interface{} {
 	return li.Args
 }
 
+// Attributes returns the attributes for [DataLexIntent].
 func (li *DataLexIntent) Attributes() dataLexIntentAttributes {
 	return dataLexIntentAttributes{ref: terra.ReferenceDataResource(li)}
 }
 
+// DataLexIntentArgs contains the configurations for aws_lex_intent.
 type DataLexIntentArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -46,38 +53,47 @@ type dataLexIntentAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_lex_intent.
 func (li dataLexIntentAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("arn"))
+	return terra.ReferenceAsString(li.ref.Append("arn"))
 }
 
+// Checksum returns a reference to field checksum of aws_lex_intent.
 func (li dataLexIntentAttributes) Checksum() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("checksum"))
+	return terra.ReferenceAsString(li.ref.Append("checksum"))
 }
 
+// CreatedDate returns a reference to field created_date of aws_lex_intent.
 func (li dataLexIntentAttributes) CreatedDate() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("created_date"))
+	return terra.ReferenceAsString(li.ref.Append("created_date"))
 }
 
+// Description returns a reference to field description of aws_lex_intent.
 func (li dataLexIntentAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("description"))
+	return terra.ReferenceAsString(li.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_lex_intent.
 func (li dataLexIntentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("id"))
+	return terra.ReferenceAsString(li.ref.Append("id"))
 }
 
+// LastUpdatedDate returns a reference to field last_updated_date of aws_lex_intent.
 func (li dataLexIntentAttributes) LastUpdatedDate() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("last_updated_date"))
+	return terra.ReferenceAsString(li.ref.Append("last_updated_date"))
 }
 
+// Name returns a reference to field name of aws_lex_intent.
 func (li dataLexIntentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("name"))
+	return terra.ReferenceAsString(li.ref.Append("name"))
 }
 
+// ParentIntentSignature returns a reference to field parent_intent_signature of aws_lex_intent.
 func (li dataLexIntentAttributes) ParentIntentSignature() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("parent_intent_signature"))
+	return terra.ReferenceAsString(li.ref.Append("parent_intent_signature"))
 }
 
+// Version returns a reference to field version of aws_lex_intent.
 func (li dataLexIntentAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("version"))
+	return terra.ReferenceAsString(li.ref.Append("version"))
 }

@@ -104,23 +104,23 @@ func (dc DynamodbConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dc DynamodbConfigAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("region"))
+	return terra.ReferenceAsString(dc.ref.Append("region"))
 }
 
 func (dc DynamodbConfigAttributes) TableName() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("table_name"))
+	return terra.ReferenceAsString(dc.ref.Append("table_name"))
 }
 
 func (dc DynamodbConfigAttributes) UseCallerCredentials() terra.BoolValue {
-	return terra.ReferenceBool(dc.ref.Append("use_caller_credentials"))
+	return terra.ReferenceAsBool(dc.ref.Append("use_caller_credentials"))
 }
 
 func (dc DynamodbConfigAttributes) Versioned() terra.BoolValue {
-	return terra.ReferenceBool(dc.ref.Append("versioned"))
+	return terra.ReferenceAsBool(dc.ref.Append("versioned"))
 }
 
 func (dc DynamodbConfigAttributes) DeltaSyncConfig() terra.ListValue[DeltaSyncConfigAttributes] {
-	return terra.ReferenceList[DeltaSyncConfigAttributes](dc.ref.Append("delta_sync_config"))
+	return terra.ReferenceAsList[DeltaSyncConfigAttributes](dc.ref.Append("delta_sync_config"))
 }
 
 type DeltaSyncConfigAttributes struct {
@@ -140,15 +140,15 @@ func (dsc DeltaSyncConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dsc DeltaSyncConfigAttributes) BaseTableTtl() terra.NumberValue {
-	return terra.ReferenceNumber(dsc.ref.Append("base_table_ttl"))
+	return terra.ReferenceAsNumber(dsc.ref.Append("base_table_ttl"))
 }
 
 func (dsc DeltaSyncConfigAttributes) DeltaSyncTableName() terra.StringValue {
-	return terra.ReferenceString(dsc.ref.Append("delta_sync_table_name"))
+	return terra.ReferenceAsString(dsc.ref.Append("delta_sync_table_name"))
 }
 
 func (dsc DeltaSyncConfigAttributes) DeltaSyncTableTtl() terra.NumberValue {
-	return terra.ReferenceNumber(dsc.ref.Append("delta_sync_table_ttl"))
+	return terra.ReferenceAsNumber(dsc.ref.Append("delta_sync_table_ttl"))
 }
 
 type ElasticsearchConfigAttributes struct {
@@ -168,11 +168,11 @@ func (ec ElasticsearchConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec ElasticsearchConfigAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("endpoint"))
+	return terra.ReferenceAsString(ec.ref.Append("endpoint"))
 }
 
 func (ec ElasticsearchConfigAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("region"))
+	return terra.ReferenceAsString(ec.ref.Append("region"))
 }
 
 type EventBridgeConfigAttributes struct {
@@ -192,7 +192,7 @@ func (ebc EventBridgeConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ebc EventBridgeConfigAttributes) EventBusArn() terra.StringValue {
-	return terra.ReferenceString(ebc.ref.Append("event_bus_arn"))
+	return terra.ReferenceAsString(ebc.ref.Append("event_bus_arn"))
 }
 
 type HttpConfigAttributes struct {
@@ -212,11 +212,11 @@ func (hc HttpConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hc HttpConfigAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("endpoint"))
+	return terra.ReferenceAsString(hc.ref.Append("endpoint"))
 }
 
 func (hc HttpConfigAttributes) AuthorizationConfig() terra.ListValue[AuthorizationConfigAttributes] {
-	return terra.ReferenceList[AuthorizationConfigAttributes](hc.ref.Append("authorization_config"))
+	return terra.ReferenceAsList[AuthorizationConfigAttributes](hc.ref.Append("authorization_config"))
 }
 
 type AuthorizationConfigAttributes struct {
@@ -236,11 +236,11 @@ func (ac AuthorizationConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ac AuthorizationConfigAttributes) AuthorizationType() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("authorization_type"))
+	return terra.ReferenceAsString(ac.ref.Append("authorization_type"))
 }
 
 func (ac AuthorizationConfigAttributes) AwsIamConfig() terra.ListValue[AwsIamConfigAttributes] {
-	return terra.ReferenceList[AwsIamConfigAttributes](ac.ref.Append("aws_iam_config"))
+	return terra.ReferenceAsList[AwsIamConfigAttributes](ac.ref.Append("aws_iam_config"))
 }
 
 type AwsIamConfigAttributes struct {
@@ -260,11 +260,11 @@ func (aic AwsIamConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (aic AwsIamConfigAttributes) SigningRegion() terra.StringValue {
-	return terra.ReferenceString(aic.ref.Append("signing_region"))
+	return terra.ReferenceAsString(aic.ref.Append("signing_region"))
 }
 
 func (aic AwsIamConfigAttributes) SigningServiceName() terra.StringValue {
-	return terra.ReferenceString(aic.ref.Append("signing_service_name"))
+	return terra.ReferenceAsString(aic.ref.Append("signing_service_name"))
 }
 
 type LambdaConfigAttributes struct {
@@ -284,7 +284,7 @@ func (lc LambdaConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lc LambdaConfigAttributes) FunctionArn() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("function_arn"))
+	return terra.ReferenceAsString(lc.ref.Append("function_arn"))
 }
 
 type RelationalDatabaseConfigAttributes struct {
@@ -304,11 +304,11 @@ func (rdc RelationalDatabaseConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rdc RelationalDatabaseConfigAttributes) SourceType() terra.StringValue {
-	return terra.ReferenceString(rdc.ref.Append("source_type"))
+	return terra.ReferenceAsString(rdc.ref.Append("source_type"))
 }
 
 func (rdc RelationalDatabaseConfigAttributes) HttpEndpointConfig() terra.ListValue[HttpEndpointConfigAttributes] {
-	return terra.ReferenceList[HttpEndpointConfigAttributes](rdc.ref.Append("http_endpoint_config"))
+	return terra.ReferenceAsList[HttpEndpointConfigAttributes](rdc.ref.Append("http_endpoint_config"))
 }
 
 type HttpEndpointConfigAttributes struct {
@@ -328,23 +328,23 @@ func (hec HttpEndpointConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hec HttpEndpointConfigAttributes) AwsSecretStoreArn() terra.StringValue {
-	return terra.ReferenceString(hec.ref.Append("aws_secret_store_arn"))
+	return terra.ReferenceAsString(hec.ref.Append("aws_secret_store_arn"))
 }
 
 func (hec HttpEndpointConfigAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(hec.ref.Append("database_name"))
+	return terra.ReferenceAsString(hec.ref.Append("database_name"))
 }
 
 func (hec HttpEndpointConfigAttributes) DbClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(hec.ref.Append("db_cluster_identifier"))
+	return terra.ReferenceAsString(hec.ref.Append("db_cluster_identifier"))
 }
 
 func (hec HttpEndpointConfigAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(hec.ref.Append("region"))
+	return terra.ReferenceAsString(hec.ref.Append("region"))
 }
 
 func (hec HttpEndpointConfigAttributes) Schema() terra.StringValue {
-	return terra.ReferenceString(hec.ref.Append("schema"))
+	return terra.ReferenceAsString(hec.ref.Append("schema"))
 }
 
 type DynamodbConfigState struct {

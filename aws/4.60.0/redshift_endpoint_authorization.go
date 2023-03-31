@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRedshiftEndpointAuthorization creates a new instance of [RedshiftEndpointAuthorization].
 func NewRedshiftEndpointAuthorization(name string, args RedshiftEndpointAuthorizationArgs) *RedshiftEndpointAuthorization {
 	return &RedshiftEndpointAuthorization{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRedshiftEndpointAuthorization(name string, args RedshiftEndpointAuthoriz
 
 var _ terra.Resource = (*RedshiftEndpointAuthorization)(nil)
 
+// RedshiftEndpointAuthorization represents the Terraform resource aws_redshift_endpoint_authorization.
 type RedshiftEndpointAuthorization struct {
-	Name  string
-	Args  RedshiftEndpointAuthorizationArgs
-	state *redshiftEndpointAuthorizationState
+	Name      string
+	Args      RedshiftEndpointAuthorizationArgs
+	state     *redshiftEndpointAuthorizationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RedshiftEndpointAuthorization].
 func (rea *RedshiftEndpointAuthorization) Type() string {
 	return "aws_redshift_endpoint_authorization"
 }
 
+// LocalName returns the local name for [RedshiftEndpointAuthorization].
 func (rea *RedshiftEndpointAuthorization) LocalName() string {
 	return rea.Name
 }
 
+// Configuration returns the configuration (args) for [RedshiftEndpointAuthorization].
 func (rea *RedshiftEndpointAuthorization) Configuration() interface{} {
 	return rea.Args
 }
 
+// DependOn is used for other resources to depend on [RedshiftEndpointAuthorization].
+func (rea *RedshiftEndpointAuthorization) DependOn() terra.Reference {
+	return terra.ReferenceResource(rea)
+}
+
+// Dependencies returns the list of resources [RedshiftEndpointAuthorization] depends_on.
+func (rea *RedshiftEndpointAuthorization) Dependencies() terra.Dependencies {
+	return rea.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RedshiftEndpointAuthorization].
+func (rea *RedshiftEndpointAuthorization) LifecycleManagement() *terra.Lifecycle {
+	return rea.Lifecycle
+}
+
+// Attributes returns the attributes for [RedshiftEndpointAuthorization].
 func (rea *RedshiftEndpointAuthorization) Attributes() redshiftEndpointAuthorizationAttributes {
 	return redshiftEndpointAuthorizationAttributes{ref: terra.ReferenceResource(rea)}
 }
 
+// ImportState imports the given attribute values into [RedshiftEndpointAuthorization]'s state.
 func (rea *RedshiftEndpointAuthorization) ImportState(av io.Reader) error {
 	rea.state = &redshiftEndpointAuthorizationState{}
 	if err := json.NewDecoder(av).Decode(rea.state); err != nil {
@@ -48,10 +72,12 @@ func (rea *RedshiftEndpointAuthorization) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RedshiftEndpointAuthorization] has state.
 func (rea *RedshiftEndpointAuthorization) State() (*redshiftEndpointAuthorizationState, bool) {
 	return rea.state, rea.state != nil
 }
 
+// StateMust returns the state for [RedshiftEndpointAuthorization]. Panics if the state is nil.
 func (rea *RedshiftEndpointAuthorization) StateMust() *redshiftEndpointAuthorizationState {
 	if rea.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rea.Type(), rea.LocalName()))
@@ -59,10 +85,7 @@ func (rea *RedshiftEndpointAuthorization) StateMust() *redshiftEndpointAuthoriza
 	return rea.state
 }
 
-func (rea *RedshiftEndpointAuthorization) DependOn() terra.Reference {
-	return terra.ReferenceResource(rea)
-}
-
+// RedshiftEndpointAuthorizationArgs contains the configurations for aws_redshift_endpoint_authorization.
 type RedshiftEndpointAuthorizationArgs struct {
 	// Account: string, required
 	Account terra.StringValue `hcl:"account,attr" validate:"required"`
@@ -74,47 +97,54 @@ type RedshiftEndpointAuthorizationArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// VpcIds: set of string, optional
 	VpcIds terra.SetValue[terra.StringValue] `hcl:"vpc_ids,attr"`
-	// DependsOn contains resources that RedshiftEndpointAuthorization depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type redshiftEndpointAuthorizationAttributes struct {
 	ref terra.Reference
 }
 
+// Account returns a reference to field account of aws_redshift_endpoint_authorization.
 func (rea redshiftEndpointAuthorizationAttributes) Account() terra.StringValue {
-	return terra.ReferenceString(rea.ref.Append("account"))
+	return terra.ReferenceAsString(rea.ref.Append("account"))
 }
 
+// AllowedAllVpcs returns a reference to field allowed_all_vpcs of aws_redshift_endpoint_authorization.
 func (rea redshiftEndpointAuthorizationAttributes) AllowedAllVpcs() terra.BoolValue {
-	return terra.ReferenceBool(rea.ref.Append("allowed_all_vpcs"))
+	return terra.ReferenceAsBool(rea.ref.Append("allowed_all_vpcs"))
 }
 
+// ClusterIdentifier returns a reference to field cluster_identifier of aws_redshift_endpoint_authorization.
 func (rea redshiftEndpointAuthorizationAttributes) ClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(rea.ref.Append("cluster_identifier"))
+	return terra.ReferenceAsString(rea.ref.Append("cluster_identifier"))
 }
 
+// EndpointCount returns a reference to field endpoint_count of aws_redshift_endpoint_authorization.
 func (rea redshiftEndpointAuthorizationAttributes) EndpointCount() terra.NumberValue {
-	return terra.ReferenceNumber(rea.ref.Append("endpoint_count"))
+	return terra.ReferenceAsNumber(rea.ref.Append("endpoint_count"))
 }
 
+// ForceDelete returns a reference to field force_delete of aws_redshift_endpoint_authorization.
 func (rea redshiftEndpointAuthorizationAttributes) ForceDelete() terra.BoolValue {
-	return terra.ReferenceBool(rea.ref.Append("force_delete"))
+	return terra.ReferenceAsBool(rea.ref.Append("force_delete"))
 }
 
+// Grantee returns a reference to field grantee of aws_redshift_endpoint_authorization.
 func (rea redshiftEndpointAuthorizationAttributes) Grantee() terra.StringValue {
-	return terra.ReferenceString(rea.ref.Append("grantee"))
+	return terra.ReferenceAsString(rea.ref.Append("grantee"))
 }
 
+// Grantor returns a reference to field grantor of aws_redshift_endpoint_authorization.
 func (rea redshiftEndpointAuthorizationAttributes) Grantor() terra.StringValue {
-	return terra.ReferenceString(rea.ref.Append("grantor"))
+	return terra.ReferenceAsString(rea.ref.Append("grantor"))
 }
 
+// Id returns a reference to field id of aws_redshift_endpoint_authorization.
 func (rea redshiftEndpointAuthorizationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rea.ref.Append("id"))
+	return terra.ReferenceAsString(rea.ref.Append("id"))
 }
 
+// VpcIds returns a reference to field vpc_ids of aws_redshift_endpoint_authorization.
 func (rea redshiftEndpointAuthorizationAttributes) VpcIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rea.ref.Append("vpc_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](rea.ref.Append("vpc_ids"))
 }
 
 type redshiftEndpointAuthorizationState struct {

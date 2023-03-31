@@ -92,15 +92,15 @@ func (aad AutoAdjustDataAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (aad AutoAdjustDataAttributes) AutoAdjustType() terra.StringValue {
-	return terra.ReferenceString(aad.ref.Append("auto_adjust_type"))
+	return terra.ReferenceAsString(aad.ref.Append("auto_adjust_type"))
 }
 
 func (aad AutoAdjustDataAttributes) LastAutoAdjustTime() terra.StringValue {
-	return terra.ReferenceString(aad.ref.Append("last_auto_adjust_time"))
+	return terra.ReferenceAsString(aad.ref.Append("last_auto_adjust_time"))
 }
 
 func (aad AutoAdjustDataAttributes) HistoricalOptions() terra.ListValue[HistoricalOptionsAttributes] {
-	return terra.ReferenceList[HistoricalOptionsAttributes](aad.ref.Append("historical_options"))
+	return terra.ReferenceAsList[HistoricalOptionsAttributes](aad.ref.Append("historical_options"))
 }
 
 type HistoricalOptionsAttributes struct {
@@ -120,11 +120,11 @@ func (ho HistoricalOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ho HistoricalOptionsAttributes) BudgetAdjustmentPeriod() terra.NumberValue {
-	return terra.ReferenceNumber(ho.ref.Append("budget_adjustment_period"))
+	return terra.ReferenceAsNumber(ho.ref.Append("budget_adjustment_period"))
 }
 
 func (ho HistoricalOptionsAttributes) LookbackAvailablePeriods() terra.NumberValue {
-	return terra.ReferenceNumber(ho.ref.Append("lookback_available_periods"))
+	return terra.ReferenceAsNumber(ho.ref.Append("lookback_available_periods"))
 }
 
 type CostFilterAttributes struct {
@@ -144,11 +144,11 @@ func (cf CostFilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cf CostFilterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("name"))
+	return terra.ReferenceAsString(cf.ref.Append("name"))
 }
 
 func (cf CostFilterAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cf.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](cf.ref.Append("values"))
 }
 
 type CostTypesAttributes struct {
@@ -168,47 +168,47 @@ func (ct CostTypesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ct CostTypesAttributes) IncludeCredit() terra.BoolValue {
-	return terra.ReferenceBool(ct.ref.Append("include_credit"))
+	return terra.ReferenceAsBool(ct.ref.Append("include_credit"))
 }
 
 func (ct CostTypesAttributes) IncludeDiscount() terra.BoolValue {
-	return terra.ReferenceBool(ct.ref.Append("include_discount"))
+	return terra.ReferenceAsBool(ct.ref.Append("include_discount"))
 }
 
 func (ct CostTypesAttributes) IncludeOtherSubscription() terra.BoolValue {
-	return terra.ReferenceBool(ct.ref.Append("include_other_subscription"))
+	return terra.ReferenceAsBool(ct.ref.Append("include_other_subscription"))
 }
 
 func (ct CostTypesAttributes) IncludeRecurring() terra.BoolValue {
-	return terra.ReferenceBool(ct.ref.Append("include_recurring"))
+	return terra.ReferenceAsBool(ct.ref.Append("include_recurring"))
 }
 
 func (ct CostTypesAttributes) IncludeRefund() terra.BoolValue {
-	return terra.ReferenceBool(ct.ref.Append("include_refund"))
+	return terra.ReferenceAsBool(ct.ref.Append("include_refund"))
 }
 
 func (ct CostTypesAttributes) IncludeSubscription() terra.BoolValue {
-	return terra.ReferenceBool(ct.ref.Append("include_subscription"))
+	return terra.ReferenceAsBool(ct.ref.Append("include_subscription"))
 }
 
 func (ct CostTypesAttributes) IncludeSupport() terra.BoolValue {
-	return terra.ReferenceBool(ct.ref.Append("include_support"))
+	return terra.ReferenceAsBool(ct.ref.Append("include_support"))
 }
 
 func (ct CostTypesAttributes) IncludeTax() terra.BoolValue {
-	return terra.ReferenceBool(ct.ref.Append("include_tax"))
+	return terra.ReferenceAsBool(ct.ref.Append("include_tax"))
 }
 
 func (ct CostTypesAttributes) IncludeUpfront() terra.BoolValue {
-	return terra.ReferenceBool(ct.ref.Append("include_upfront"))
+	return terra.ReferenceAsBool(ct.ref.Append("include_upfront"))
 }
 
 func (ct CostTypesAttributes) UseAmortized() terra.BoolValue {
-	return terra.ReferenceBool(ct.ref.Append("use_amortized"))
+	return terra.ReferenceAsBool(ct.ref.Append("use_amortized"))
 }
 
 func (ct CostTypesAttributes) UseBlended() terra.BoolValue {
-	return terra.ReferenceBool(ct.ref.Append("use_blended"))
+	return terra.ReferenceAsBool(ct.ref.Append("use_blended"))
 }
 
 type NotificationAttributes struct {
@@ -228,27 +228,27 @@ func (n NotificationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (n NotificationAttributes) ComparisonOperator() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("comparison_operator"))
+	return terra.ReferenceAsString(n.ref.Append("comparison_operator"))
 }
 
 func (n NotificationAttributes) NotificationType() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("notification_type"))
+	return terra.ReferenceAsString(n.ref.Append("notification_type"))
 }
 
 func (n NotificationAttributes) SubscriberEmailAddresses() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](n.ref.Append("subscriber_email_addresses"))
+	return terra.ReferenceAsSet[terra.StringValue](n.ref.Append("subscriber_email_addresses"))
 }
 
 func (n NotificationAttributes) SubscriberSnsTopicArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](n.ref.Append("subscriber_sns_topic_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](n.ref.Append("subscriber_sns_topic_arns"))
 }
 
 func (n NotificationAttributes) Threshold() terra.NumberValue {
-	return terra.ReferenceNumber(n.ref.Append("threshold"))
+	return terra.ReferenceAsNumber(n.ref.Append("threshold"))
 }
 
 func (n NotificationAttributes) ThresholdType() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("threshold_type"))
+	return terra.ReferenceAsString(n.ref.Append("threshold_type"))
 }
 
 type PlannedLimitAttributes struct {
@@ -268,15 +268,15 @@ func (pl PlannedLimitAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pl PlannedLimitAttributes) Amount() terra.StringValue {
-	return terra.ReferenceString(pl.ref.Append("amount"))
+	return terra.ReferenceAsString(pl.ref.Append("amount"))
 }
 
 func (pl PlannedLimitAttributes) StartTime() terra.StringValue {
-	return terra.ReferenceString(pl.ref.Append("start_time"))
+	return terra.ReferenceAsString(pl.ref.Append("start_time"))
 }
 
 func (pl PlannedLimitAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(pl.ref.Append("unit"))
+	return terra.ReferenceAsString(pl.ref.Append("unit"))
 }
 
 type AutoAdjustDataState struct {

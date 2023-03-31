@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewElasticacheUserGroup creates a new instance of [ElasticacheUserGroup].
 func NewElasticacheUserGroup(name string, args ElasticacheUserGroupArgs) *ElasticacheUserGroup {
 	return &ElasticacheUserGroup{
 		Args: args,
@@ -18,28 +19,51 @@ func NewElasticacheUserGroup(name string, args ElasticacheUserGroupArgs) *Elasti
 
 var _ terra.Resource = (*ElasticacheUserGroup)(nil)
 
+// ElasticacheUserGroup represents the Terraform resource aws_elasticache_user_group.
 type ElasticacheUserGroup struct {
-	Name  string
-	Args  ElasticacheUserGroupArgs
-	state *elasticacheUserGroupState
+	Name      string
+	Args      ElasticacheUserGroupArgs
+	state     *elasticacheUserGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ElasticacheUserGroup].
 func (eug *ElasticacheUserGroup) Type() string {
 	return "aws_elasticache_user_group"
 }
 
+// LocalName returns the local name for [ElasticacheUserGroup].
 func (eug *ElasticacheUserGroup) LocalName() string {
 	return eug.Name
 }
 
+// Configuration returns the configuration (args) for [ElasticacheUserGroup].
 func (eug *ElasticacheUserGroup) Configuration() interface{} {
 	return eug.Args
 }
 
+// DependOn is used for other resources to depend on [ElasticacheUserGroup].
+func (eug *ElasticacheUserGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(eug)
+}
+
+// Dependencies returns the list of resources [ElasticacheUserGroup] depends_on.
+func (eug *ElasticacheUserGroup) Dependencies() terra.Dependencies {
+	return eug.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ElasticacheUserGroup].
+func (eug *ElasticacheUserGroup) LifecycleManagement() *terra.Lifecycle {
+	return eug.Lifecycle
+}
+
+// Attributes returns the attributes for [ElasticacheUserGroup].
 func (eug *ElasticacheUserGroup) Attributes() elasticacheUserGroupAttributes {
 	return elasticacheUserGroupAttributes{ref: terra.ReferenceResource(eug)}
 }
 
+// ImportState imports the given attribute values into [ElasticacheUserGroup]'s state.
 func (eug *ElasticacheUserGroup) ImportState(av io.Reader) error {
 	eug.state = &elasticacheUserGroupState{}
 	if err := json.NewDecoder(av).Decode(eug.state); err != nil {
@@ -48,10 +72,12 @@ func (eug *ElasticacheUserGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ElasticacheUserGroup] has state.
 func (eug *ElasticacheUserGroup) State() (*elasticacheUserGroupState, bool) {
 	return eug.state, eug.state != nil
 }
 
+// StateMust returns the state for [ElasticacheUserGroup]. Panics if the state is nil.
 func (eug *ElasticacheUserGroup) StateMust() *elasticacheUserGroupState {
 	if eug.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", eug.Type(), eug.LocalName()))
@@ -59,10 +85,7 @@ func (eug *ElasticacheUserGroup) StateMust() *elasticacheUserGroupState {
 	return eug.state
 }
 
-func (eug *ElasticacheUserGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(eug)
-}
-
+// ElasticacheUserGroupArgs contains the configurations for aws_elasticache_user_group.
 type ElasticacheUserGroupArgs struct {
 	// Arn: string, optional
 	Arn terra.StringValue `hcl:"arn,attr"`
@@ -78,39 +101,44 @@ type ElasticacheUserGroupArgs struct {
 	UserGroupId terra.StringValue `hcl:"user_group_id,attr" validate:"required"`
 	// UserIds: set of string, optional
 	UserIds terra.SetValue[terra.StringValue] `hcl:"user_ids,attr"`
-	// DependsOn contains resources that ElasticacheUserGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type elasticacheUserGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_elasticache_user_group.
 func (eug elasticacheUserGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(eug.ref.Append("arn"))
+	return terra.ReferenceAsString(eug.ref.Append("arn"))
 }
 
+// Engine returns a reference to field engine of aws_elasticache_user_group.
 func (eug elasticacheUserGroupAttributes) Engine() terra.StringValue {
-	return terra.ReferenceString(eug.ref.Append("engine"))
+	return terra.ReferenceAsString(eug.ref.Append("engine"))
 }
 
+// Id returns a reference to field id of aws_elasticache_user_group.
 func (eug elasticacheUserGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(eug.ref.Append("id"))
+	return terra.ReferenceAsString(eug.ref.Append("id"))
 }
 
+// Tags returns a reference to field tags of aws_elasticache_user_group.
 func (eug elasticacheUserGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](eug.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](eug.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_elasticache_user_group.
 func (eug elasticacheUserGroupAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](eug.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](eug.ref.Append("tags_all"))
 }
 
+// UserGroupId returns a reference to field user_group_id of aws_elasticache_user_group.
 func (eug elasticacheUserGroupAttributes) UserGroupId() terra.StringValue {
-	return terra.ReferenceString(eug.ref.Append("user_group_id"))
+	return terra.ReferenceAsString(eug.ref.Append("user_group_id"))
 }
 
+// UserIds returns a reference to field user_ids of aws_elasticache_user_group.
 func (eug elasticacheUserGroupAttributes) UserIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](eug.ref.Append("user_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](eug.ref.Append("user_ids"))
 }
 
 type elasticacheUserGroupState struct {

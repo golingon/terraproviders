@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDxPublicVirtualInterface creates a new instance of [DxPublicVirtualInterface].
 func NewDxPublicVirtualInterface(name string, args DxPublicVirtualInterfaceArgs) *DxPublicVirtualInterface {
 	return &DxPublicVirtualInterface{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDxPublicVirtualInterface(name string, args DxPublicVirtualInterfaceArgs)
 
 var _ terra.Resource = (*DxPublicVirtualInterface)(nil)
 
+// DxPublicVirtualInterface represents the Terraform resource aws_dx_public_virtual_interface.
 type DxPublicVirtualInterface struct {
-	Name  string
-	Args  DxPublicVirtualInterfaceArgs
-	state *dxPublicVirtualInterfaceState
+	Name      string
+	Args      DxPublicVirtualInterfaceArgs
+	state     *dxPublicVirtualInterfaceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DxPublicVirtualInterface].
 func (dpvi *DxPublicVirtualInterface) Type() string {
 	return "aws_dx_public_virtual_interface"
 }
 
+// LocalName returns the local name for [DxPublicVirtualInterface].
 func (dpvi *DxPublicVirtualInterface) LocalName() string {
 	return dpvi.Name
 }
 
+// Configuration returns the configuration (args) for [DxPublicVirtualInterface].
 func (dpvi *DxPublicVirtualInterface) Configuration() interface{} {
 	return dpvi.Args
 }
 
+// DependOn is used for other resources to depend on [DxPublicVirtualInterface].
+func (dpvi *DxPublicVirtualInterface) DependOn() terra.Reference {
+	return terra.ReferenceResource(dpvi)
+}
+
+// Dependencies returns the list of resources [DxPublicVirtualInterface] depends_on.
+func (dpvi *DxPublicVirtualInterface) Dependencies() terra.Dependencies {
+	return dpvi.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DxPublicVirtualInterface].
+func (dpvi *DxPublicVirtualInterface) LifecycleManagement() *terra.Lifecycle {
+	return dpvi.Lifecycle
+}
+
+// Attributes returns the attributes for [DxPublicVirtualInterface].
 func (dpvi *DxPublicVirtualInterface) Attributes() dxPublicVirtualInterfaceAttributes {
 	return dxPublicVirtualInterfaceAttributes{ref: terra.ReferenceResource(dpvi)}
 }
 
+// ImportState imports the given attribute values into [DxPublicVirtualInterface]'s state.
 func (dpvi *DxPublicVirtualInterface) ImportState(av io.Reader) error {
 	dpvi.state = &dxPublicVirtualInterfaceState{}
 	if err := json.NewDecoder(av).Decode(dpvi.state); err != nil {
@@ -49,10 +73,12 @@ func (dpvi *DxPublicVirtualInterface) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DxPublicVirtualInterface] has state.
 func (dpvi *DxPublicVirtualInterface) State() (*dxPublicVirtualInterfaceState, bool) {
 	return dpvi.state, dpvi.state != nil
 }
 
+// StateMust returns the state for [DxPublicVirtualInterface]. Panics if the state is nil.
 func (dpvi *DxPublicVirtualInterface) StateMust() *dxPublicVirtualInterfaceState {
 	if dpvi.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dpvi.Type(), dpvi.LocalName()))
@@ -60,10 +86,7 @@ func (dpvi *DxPublicVirtualInterface) StateMust() *dxPublicVirtualInterfaceState
 	return dpvi.state
 }
 
-func (dpvi *DxPublicVirtualInterface) DependOn() terra.Reference {
-	return terra.ReferenceResource(dpvi)
-}
-
+// DxPublicVirtualInterfaceArgs contains the configurations for aws_dx_public_virtual_interface.
 type DxPublicVirtualInterfaceArgs struct {
 	// AddressFamily: string, required
 	AddressFamily terra.StringValue `hcl:"address_family,attr" validate:"required"`
@@ -91,75 +114,88 @@ type DxPublicVirtualInterfaceArgs struct {
 	Vlan terra.NumberValue `hcl:"vlan,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *dxpublicvirtualinterface.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DxPublicVirtualInterface depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dxPublicVirtualInterfaceAttributes struct {
 	ref terra.Reference
 }
 
+// AddressFamily returns a reference to field address_family of aws_dx_public_virtual_interface.
 func (dpvi dxPublicVirtualInterfaceAttributes) AddressFamily() terra.StringValue {
-	return terra.ReferenceString(dpvi.ref.Append("address_family"))
+	return terra.ReferenceAsString(dpvi.ref.Append("address_family"))
 }
 
+// AmazonAddress returns a reference to field amazon_address of aws_dx_public_virtual_interface.
 func (dpvi dxPublicVirtualInterfaceAttributes) AmazonAddress() terra.StringValue {
-	return terra.ReferenceString(dpvi.ref.Append("amazon_address"))
+	return terra.ReferenceAsString(dpvi.ref.Append("amazon_address"))
 }
 
+// AmazonSideAsn returns a reference to field amazon_side_asn of aws_dx_public_virtual_interface.
 func (dpvi dxPublicVirtualInterfaceAttributes) AmazonSideAsn() terra.StringValue {
-	return terra.ReferenceString(dpvi.ref.Append("amazon_side_asn"))
+	return terra.ReferenceAsString(dpvi.ref.Append("amazon_side_asn"))
 }
 
+// Arn returns a reference to field arn of aws_dx_public_virtual_interface.
 func (dpvi dxPublicVirtualInterfaceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dpvi.ref.Append("arn"))
+	return terra.ReferenceAsString(dpvi.ref.Append("arn"))
 }
 
+// AwsDevice returns a reference to field aws_device of aws_dx_public_virtual_interface.
 func (dpvi dxPublicVirtualInterfaceAttributes) AwsDevice() terra.StringValue {
-	return terra.ReferenceString(dpvi.ref.Append("aws_device"))
+	return terra.ReferenceAsString(dpvi.ref.Append("aws_device"))
 }
 
+// BgpAsn returns a reference to field bgp_asn of aws_dx_public_virtual_interface.
 func (dpvi dxPublicVirtualInterfaceAttributes) BgpAsn() terra.NumberValue {
-	return terra.ReferenceNumber(dpvi.ref.Append("bgp_asn"))
+	return terra.ReferenceAsNumber(dpvi.ref.Append("bgp_asn"))
 }
 
+// BgpAuthKey returns a reference to field bgp_auth_key of aws_dx_public_virtual_interface.
 func (dpvi dxPublicVirtualInterfaceAttributes) BgpAuthKey() terra.StringValue {
-	return terra.ReferenceString(dpvi.ref.Append("bgp_auth_key"))
+	return terra.ReferenceAsString(dpvi.ref.Append("bgp_auth_key"))
 }
 
+// ConnectionId returns a reference to field connection_id of aws_dx_public_virtual_interface.
 func (dpvi dxPublicVirtualInterfaceAttributes) ConnectionId() terra.StringValue {
-	return terra.ReferenceString(dpvi.ref.Append("connection_id"))
+	return terra.ReferenceAsString(dpvi.ref.Append("connection_id"))
 }
 
+// CustomerAddress returns a reference to field customer_address of aws_dx_public_virtual_interface.
 func (dpvi dxPublicVirtualInterfaceAttributes) CustomerAddress() terra.StringValue {
-	return terra.ReferenceString(dpvi.ref.Append("customer_address"))
+	return terra.ReferenceAsString(dpvi.ref.Append("customer_address"))
 }
 
+// Id returns a reference to field id of aws_dx_public_virtual_interface.
 func (dpvi dxPublicVirtualInterfaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dpvi.ref.Append("id"))
+	return terra.ReferenceAsString(dpvi.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_dx_public_virtual_interface.
 func (dpvi dxPublicVirtualInterfaceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dpvi.ref.Append("name"))
+	return terra.ReferenceAsString(dpvi.ref.Append("name"))
 }
 
+// RouteFilterPrefixes returns a reference to field route_filter_prefixes of aws_dx_public_virtual_interface.
 func (dpvi dxPublicVirtualInterfaceAttributes) RouteFilterPrefixes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dpvi.ref.Append("route_filter_prefixes"))
+	return terra.ReferenceAsSet[terra.StringValue](dpvi.ref.Append("route_filter_prefixes"))
 }
 
+// Tags returns a reference to field tags of aws_dx_public_virtual_interface.
 func (dpvi dxPublicVirtualInterfaceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dpvi.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dpvi.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_dx_public_virtual_interface.
 func (dpvi dxPublicVirtualInterfaceAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dpvi.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dpvi.ref.Append("tags_all"))
 }
 
+// Vlan returns a reference to field vlan of aws_dx_public_virtual_interface.
 func (dpvi dxPublicVirtualInterfaceAttributes) Vlan() terra.NumberValue {
-	return terra.ReferenceNumber(dpvi.ref.Append("vlan"))
+	return terra.ReferenceAsNumber(dpvi.ref.Append("vlan"))
 }
 
 func (dpvi dxPublicVirtualInterfaceAttributes) Timeouts() dxpublicvirtualinterface.TimeoutsAttributes {
-	return terra.ReferenceSingle[dxpublicvirtualinterface.TimeoutsAttributes](dpvi.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dxpublicvirtualinterface.TimeoutsAttributes](dpvi.ref.Append("timeouts"))
 }
 
 type dxPublicVirtualInterfaceState struct {

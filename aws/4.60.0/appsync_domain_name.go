@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAppsyncDomainName creates a new instance of [AppsyncDomainName].
 func NewAppsyncDomainName(name string, args AppsyncDomainNameArgs) *AppsyncDomainName {
 	return &AppsyncDomainName{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAppsyncDomainName(name string, args AppsyncDomainNameArgs) *AppsyncDomai
 
 var _ terra.Resource = (*AppsyncDomainName)(nil)
 
+// AppsyncDomainName represents the Terraform resource aws_appsync_domain_name.
 type AppsyncDomainName struct {
-	Name  string
-	Args  AppsyncDomainNameArgs
-	state *appsyncDomainNameState
+	Name      string
+	Args      AppsyncDomainNameArgs
+	state     *appsyncDomainNameState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppsyncDomainName].
 func (adn *AppsyncDomainName) Type() string {
 	return "aws_appsync_domain_name"
 }
 
+// LocalName returns the local name for [AppsyncDomainName].
 func (adn *AppsyncDomainName) LocalName() string {
 	return adn.Name
 }
 
+// Configuration returns the configuration (args) for [AppsyncDomainName].
 func (adn *AppsyncDomainName) Configuration() interface{} {
 	return adn.Args
 }
 
+// DependOn is used for other resources to depend on [AppsyncDomainName].
+func (adn *AppsyncDomainName) DependOn() terra.Reference {
+	return terra.ReferenceResource(adn)
+}
+
+// Dependencies returns the list of resources [AppsyncDomainName] depends_on.
+func (adn *AppsyncDomainName) Dependencies() terra.Dependencies {
+	return adn.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppsyncDomainName].
+func (adn *AppsyncDomainName) LifecycleManagement() *terra.Lifecycle {
+	return adn.Lifecycle
+}
+
+// Attributes returns the attributes for [AppsyncDomainName].
 func (adn *AppsyncDomainName) Attributes() appsyncDomainNameAttributes {
 	return appsyncDomainNameAttributes{ref: terra.ReferenceResource(adn)}
 }
 
+// ImportState imports the given attribute values into [AppsyncDomainName]'s state.
 func (adn *AppsyncDomainName) ImportState(av io.Reader) error {
 	adn.state = &appsyncDomainNameState{}
 	if err := json.NewDecoder(av).Decode(adn.state); err != nil {
@@ -48,10 +72,12 @@ func (adn *AppsyncDomainName) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppsyncDomainName] has state.
 func (adn *AppsyncDomainName) State() (*appsyncDomainNameState, bool) {
 	return adn.state, adn.state != nil
 }
 
+// StateMust returns the state for [AppsyncDomainName]. Panics if the state is nil.
 func (adn *AppsyncDomainName) StateMust() *appsyncDomainNameState {
 	if adn.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", adn.Type(), adn.LocalName()))
@@ -59,10 +85,7 @@ func (adn *AppsyncDomainName) StateMust() *appsyncDomainNameState {
 	return adn.state
 }
 
-func (adn *AppsyncDomainName) DependOn() terra.Reference {
-	return terra.ReferenceResource(adn)
-}
-
+// AppsyncDomainNameArgs contains the configurations for aws_appsync_domain_name.
 type AppsyncDomainNameArgs struct {
 	// CertificateArn: string, required
 	CertificateArn terra.StringValue `hcl:"certificate_arn,attr" validate:"required"`
@@ -72,35 +95,39 @@ type AppsyncDomainNameArgs struct {
 	DomainName terra.StringValue `hcl:"domain_name,attr" validate:"required"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that AppsyncDomainName depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appsyncDomainNameAttributes struct {
 	ref terra.Reference
 }
 
+// AppsyncDomainName returns a reference to field appsync_domain_name of aws_appsync_domain_name.
 func (adn appsyncDomainNameAttributes) AppsyncDomainName() terra.StringValue {
-	return terra.ReferenceString(adn.ref.Append("appsync_domain_name"))
+	return terra.ReferenceAsString(adn.ref.Append("appsync_domain_name"))
 }
 
+// CertificateArn returns a reference to field certificate_arn of aws_appsync_domain_name.
 func (adn appsyncDomainNameAttributes) CertificateArn() terra.StringValue {
-	return terra.ReferenceString(adn.ref.Append("certificate_arn"))
+	return terra.ReferenceAsString(adn.ref.Append("certificate_arn"))
 }
 
+// Description returns a reference to field description of aws_appsync_domain_name.
 func (adn appsyncDomainNameAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(adn.ref.Append("description"))
+	return terra.ReferenceAsString(adn.ref.Append("description"))
 }
 
+// DomainName returns a reference to field domain_name of aws_appsync_domain_name.
 func (adn appsyncDomainNameAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(adn.ref.Append("domain_name"))
+	return terra.ReferenceAsString(adn.ref.Append("domain_name"))
 }
 
+// HostedZoneId returns a reference to field hosted_zone_id of aws_appsync_domain_name.
 func (adn appsyncDomainNameAttributes) HostedZoneId() terra.StringValue {
-	return terra.ReferenceString(adn.ref.Append("hosted_zone_id"))
+	return terra.ReferenceAsString(adn.ref.Append("hosted_zone_id"))
 }
 
+// Id returns a reference to field id of aws_appsync_domain_name.
 func (adn appsyncDomainNameAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(adn.ref.Append("id"))
+	return terra.ReferenceAsString(adn.ref.Append("id"))
 }
 
 type appsyncDomainNameState struct {

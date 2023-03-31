@@ -928,355 +928,355 @@ func (f FiltersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FiltersAttributes) AwsAccountId() terra.SetValue[AwsAccountIdAttributes] {
-	return terra.ReferenceSet[AwsAccountIdAttributes](f.ref.Append("aws_account_id"))
+	return terra.ReferenceAsSet[AwsAccountIdAttributes](f.ref.Append("aws_account_id"))
 }
 
 func (f FiltersAttributes) CompanyName() terra.SetValue[CompanyNameAttributes] {
-	return terra.ReferenceSet[CompanyNameAttributes](f.ref.Append("company_name"))
+	return terra.ReferenceAsSet[CompanyNameAttributes](f.ref.Append("company_name"))
 }
 
 func (f FiltersAttributes) ComplianceStatus() terra.SetValue[ComplianceStatusAttributes] {
-	return terra.ReferenceSet[ComplianceStatusAttributes](f.ref.Append("compliance_status"))
+	return terra.ReferenceAsSet[ComplianceStatusAttributes](f.ref.Append("compliance_status"))
 }
 
 func (f FiltersAttributes) Confidence() terra.SetValue[ConfidenceAttributes] {
-	return terra.ReferenceSet[ConfidenceAttributes](f.ref.Append("confidence"))
+	return terra.ReferenceAsSet[ConfidenceAttributes](f.ref.Append("confidence"))
 }
 
 func (f FiltersAttributes) CreatedAt() terra.SetValue[CreatedAtAttributes] {
-	return terra.ReferenceSet[CreatedAtAttributes](f.ref.Append("created_at"))
+	return terra.ReferenceAsSet[CreatedAtAttributes](f.ref.Append("created_at"))
 }
 
 func (f FiltersAttributes) Criticality() terra.SetValue[CriticalityAttributes] {
-	return terra.ReferenceSet[CriticalityAttributes](f.ref.Append("criticality"))
+	return terra.ReferenceAsSet[CriticalityAttributes](f.ref.Append("criticality"))
 }
 
 func (f FiltersAttributes) Description() terra.SetValue[DescriptionAttributes] {
-	return terra.ReferenceSet[DescriptionAttributes](f.ref.Append("description"))
+	return terra.ReferenceAsSet[DescriptionAttributes](f.ref.Append("description"))
 }
 
 func (f FiltersAttributes) FindingProviderFieldsConfidence() terra.SetValue[FindingProviderFieldsConfidenceAttributes] {
-	return terra.ReferenceSet[FindingProviderFieldsConfidenceAttributes](f.ref.Append("finding_provider_fields_confidence"))
+	return terra.ReferenceAsSet[FindingProviderFieldsConfidenceAttributes](f.ref.Append("finding_provider_fields_confidence"))
 }
 
 func (f FiltersAttributes) FindingProviderFieldsCriticality() terra.SetValue[FindingProviderFieldsCriticalityAttributes] {
-	return terra.ReferenceSet[FindingProviderFieldsCriticalityAttributes](f.ref.Append("finding_provider_fields_criticality"))
+	return terra.ReferenceAsSet[FindingProviderFieldsCriticalityAttributes](f.ref.Append("finding_provider_fields_criticality"))
 }
 
 func (f FiltersAttributes) FindingProviderFieldsRelatedFindingsId() terra.SetValue[FindingProviderFieldsRelatedFindingsIdAttributes] {
-	return terra.ReferenceSet[FindingProviderFieldsRelatedFindingsIdAttributes](f.ref.Append("finding_provider_fields_related_findings_id"))
+	return terra.ReferenceAsSet[FindingProviderFieldsRelatedFindingsIdAttributes](f.ref.Append("finding_provider_fields_related_findings_id"))
 }
 
 func (f FiltersAttributes) FindingProviderFieldsRelatedFindingsProductArn() terra.SetValue[FindingProviderFieldsRelatedFindingsProductArnAttributes] {
-	return terra.ReferenceSet[FindingProviderFieldsRelatedFindingsProductArnAttributes](f.ref.Append("finding_provider_fields_related_findings_product_arn"))
+	return terra.ReferenceAsSet[FindingProviderFieldsRelatedFindingsProductArnAttributes](f.ref.Append("finding_provider_fields_related_findings_product_arn"))
 }
 
 func (f FiltersAttributes) FindingProviderFieldsSeverityLabel() terra.SetValue[FindingProviderFieldsSeverityLabelAttributes] {
-	return terra.ReferenceSet[FindingProviderFieldsSeverityLabelAttributes](f.ref.Append("finding_provider_fields_severity_label"))
+	return terra.ReferenceAsSet[FindingProviderFieldsSeverityLabelAttributes](f.ref.Append("finding_provider_fields_severity_label"))
 }
 
 func (f FiltersAttributes) FindingProviderFieldsSeverityOriginal() terra.SetValue[FindingProviderFieldsSeverityOriginalAttributes] {
-	return terra.ReferenceSet[FindingProviderFieldsSeverityOriginalAttributes](f.ref.Append("finding_provider_fields_severity_original"))
+	return terra.ReferenceAsSet[FindingProviderFieldsSeverityOriginalAttributes](f.ref.Append("finding_provider_fields_severity_original"))
 }
 
 func (f FiltersAttributes) FindingProviderFieldsTypes() terra.SetValue[FindingProviderFieldsTypesAttributes] {
-	return terra.ReferenceSet[FindingProviderFieldsTypesAttributes](f.ref.Append("finding_provider_fields_types"))
+	return terra.ReferenceAsSet[FindingProviderFieldsTypesAttributes](f.ref.Append("finding_provider_fields_types"))
 }
 
 func (f FiltersAttributes) FirstObservedAt() terra.SetValue[FirstObservedAtAttributes] {
-	return terra.ReferenceSet[FirstObservedAtAttributes](f.ref.Append("first_observed_at"))
+	return terra.ReferenceAsSet[FirstObservedAtAttributes](f.ref.Append("first_observed_at"))
 }
 
 func (f FiltersAttributes) GeneratorId() terra.SetValue[GeneratorIdAttributes] {
-	return terra.ReferenceSet[GeneratorIdAttributes](f.ref.Append("generator_id"))
+	return terra.ReferenceAsSet[GeneratorIdAttributes](f.ref.Append("generator_id"))
 }
 
 func (f FiltersAttributes) Id() terra.SetValue[IdAttributes] {
-	return terra.ReferenceSet[IdAttributes](f.ref.Append("id"))
+	return terra.ReferenceAsSet[IdAttributes](f.ref.Append("id"))
 }
 
 func (f FiltersAttributes) Keyword() terra.SetValue[KeywordAttributes] {
-	return terra.ReferenceSet[KeywordAttributes](f.ref.Append("keyword"))
+	return terra.ReferenceAsSet[KeywordAttributes](f.ref.Append("keyword"))
 }
 
 func (f FiltersAttributes) LastObservedAt() terra.SetValue[LastObservedAtAttributes] {
-	return terra.ReferenceSet[LastObservedAtAttributes](f.ref.Append("last_observed_at"))
+	return terra.ReferenceAsSet[LastObservedAtAttributes](f.ref.Append("last_observed_at"))
 }
 
 func (f FiltersAttributes) MalwareName() terra.SetValue[MalwareNameAttributes] {
-	return terra.ReferenceSet[MalwareNameAttributes](f.ref.Append("malware_name"))
+	return terra.ReferenceAsSet[MalwareNameAttributes](f.ref.Append("malware_name"))
 }
 
 func (f FiltersAttributes) MalwarePath() terra.SetValue[MalwarePathAttributes] {
-	return terra.ReferenceSet[MalwarePathAttributes](f.ref.Append("malware_path"))
+	return terra.ReferenceAsSet[MalwarePathAttributes](f.ref.Append("malware_path"))
 }
 
 func (f FiltersAttributes) MalwareState() terra.SetValue[MalwareStateAttributes] {
-	return terra.ReferenceSet[MalwareStateAttributes](f.ref.Append("malware_state"))
+	return terra.ReferenceAsSet[MalwareStateAttributes](f.ref.Append("malware_state"))
 }
 
 func (f FiltersAttributes) MalwareType() terra.SetValue[MalwareTypeAttributes] {
-	return terra.ReferenceSet[MalwareTypeAttributes](f.ref.Append("malware_type"))
+	return terra.ReferenceAsSet[MalwareTypeAttributes](f.ref.Append("malware_type"))
 }
 
 func (f FiltersAttributes) NetworkDestinationDomain() terra.SetValue[NetworkDestinationDomainAttributes] {
-	return terra.ReferenceSet[NetworkDestinationDomainAttributes](f.ref.Append("network_destination_domain"))
+	return terra.ReferenceAsSet[NetworkDestinationDomainAttributes](f.ref.Append("network_destination_domain"))
 }
 
 func (f FiltersAttributes) NetworkDestinationIpv4() terra.SetValue[NetworkDestinationIpv4Attributes] {
-	return terra.ReferenceSet[NetworkDestinationIpv4Attributes](f.ref.Append("network_destination_ipv4"))
+	return terra.ReferenceAsSet[NetworkDestinationIpv4Attributes](f.ref.Append("network_destination_ipv4"))
 }
 
 func (f FiltersAttributes) NetworkDestinationIpv6() terra.SetValue[NetworkDestinationIpv6Attributes] {
-	return terra.ReferenceSet[NetworkDestinationIpv6Attributes](f.ref.Append("network_destination_ipv6"))
+	return terra.ReferenceAsSet[NetworkDestinationIpv6Attributes](f.ref.Append("network_destination_ipv6"))
 }
 
 func (f FiltersAttributes) NetworkDestinationPort() terra.SetValue[NetworkDestinationPortAttributes] {
-	return terra.ReferenceSet[NetworkDestinationPortAttributes](f.ref.Append("network_destination_port"))
+	return terra.ReferenceAsSet[NetworkDestinationPortAttributes](f.ref.Append("network_destination_port"))
 }
 
 func (f FiltersAttributes) NetworkDirection() terra.SetValue[NetworkDirectionAttributes] {
-	return terra.ReferenceSet[NetworkDirectionAttributes](f.ref.Append("network_direction"))
+	return terra.ReferenceAsSet[NetworkDirectionAttributes](f.ref.Append("network_direction"))
 }
 
 func (f FiltersAttributes) NetworkProtocol() terra.SetValue[NetworkProtocolAttributes] {
-	return terra.ReferenceSet[NetworkProtocolAttributes](f.ref.Append("network_protocol"))
+	return terra.ReferenceAsSet[NetworkProtocolAttributes](f.ref.Append("network_protocol"))
 }
 
 func (f FiltersAttributes) NetworkSourceDomain() terra.SetValue[NetworkSourceDomainAttributes] {
-	return terra.ReferenceSet[NetworkSourceDomainAttributes](f.ref.Append("network_source_domain"))
+	return terra.ReferenceAsSet[NetworkSourceDomainAttributes](f.ref.Append("network_source_domain"))
 }
 
 func (f FiltersAttributes) NetworkSourceIpv4() terra.SetValue[NetworkSourceIpv4Attributes] {
-	return terra.ReferenceSet[NetworkSourceIpv4Attributes](f.ref.Append("network_source_ipv4"))
+	return terra.ReferenceAsSet[NetworkSourceIpv4Attributes](f.ref.Append("network_source_ipv4"))
 }
 
 func (f FiltersAttributes) NetworkSourceIpv6() terra.SetValue[NetworkSourceIpv6Attributes] {
-	return terra.ReferenceSet[NetworkSourceIpv6Attributes](f.ref.Append("network_source_ipv6"))
+	return terra.ReferenceAsSet[NetworkSourceIpv6Attributes](f.ref.Append("network_source_ipv6"))
 }
 
 func (f FiltersAttributes) NetworkSourceMac() terra.SetValue[NetworkSourceMacAttributes] {
-	return terra.ReferenceSet[NetworkSourceMacAttributes](f.ref.Append("network_source_mac"))
+	return terra.ReferenceAsSet[NetworkSourceMacAttributes](f.ref.Append("network_source_mac"))
 }
 
 func (f FiltersAttributes) NetworkSourcePort() terra.SetValue[NetworkSourcePortAttributes] {
-	return terra.ReferenceSet[NetworkSourcePortAttributes](f.ref.Append("network_source_port"))
+	return terra.ReferenceAsSet[NetworkSourcePortAttributes](f.ref.Append("network_source_port"))
 }
 
 func (f FiltersAttributes) NoteText() terra.SetValue[NoteTextAttributes] {
-	return terra.ReferenceSet[NoteTextAttributes](f.ref.Append("note_text"))
+	return terra.ReferenceAsSet[NoteTextAttributes](f.ref.Append("note_text"))
 }
 
 func (f FiltersAttributes) NoteUpdatedAt() terra.SetValue[NoteUpdatedAtAttributes] {
-	return terra.ReferenceSet[NoteUpdatedAtAttributes](f.ref.Append("note_updated_at"))
+	return terra.ReferenceAsSet[NoteUpdatedAtAttributes](f.ref.Append("note_updated_at"))
 }
 
 func (f FiltersAttributes) NoteUpdatedBy() terra.SetValue[NoteUpdatedByAttributes] {
-	return terra.ReferenceSet[NoteUpdatedByAttributes](f.ref.Append("note_updated_by"))
+	return terra.ReferenceAsSet[NoteUpdatedByAttributes](f.ref.Append("note_updated_by"))
 }
 
 func (f FiltersAttributes) ProcessLaunchedAt() terra.SetValue[ProcessLaunchedAtAttributes] {
-	return terra.ReferenceSet[ProcessLaunchedAtAttributes](f.ref.Append("process_launched_at"))
+	return terra.ReferenceAsSet[ProcessLaunchedAtAttributes](f.ref.Append("process_launched_at"))
 }
 
 func (f FiltersAttributes) ProcessName() terra.SetValue[ProcessNameAttributes] {
-	return terra.ReferenceSet[ProcessNameAttributes](f.ref.Append("process_name"))
+	return terra.ReferenceAsSet[ProcessNameAttributes](f.ref.Append("process_name"))
 }
 
 func (f FiltersAttributes) ProcessParentPid() terra.SetValue[ProcessParentPidAttributes] {
-	return terra.ReferenceSet[ProcessParentPidAttributes](f.ref.Append("process_parent_pid"))
+	return terra.ReferenceAsSet[ProcessParentPidAttributes](f.ref.Append("process_parent_pid"))
 }
 
 func (f FiltersAttributes) ProcessPath() terra.SetValue[ProcessPathAttributes] {
-	return terra.ReferenceSet[ProcessPathAttributes](f.ref.Append("process_path"))
+	return terra.ReferenceAsSet[ProcessPathAttributes](f.ref.Append("process_path"))
 }
 
 func (f FiltersAttributes) ProcessPid() terra.SetValue[ProcessPidAttributes] {
-	return terra.ReferenceSet[ProcessPidAttributes](f.ref.Append("process_pid"))
+	return terra.ReferenceAsSet[ProcessPidAttributes](f.ref.Append("process_pid"))
 }
 
 func (f FiltersAttributes) ProcessTerminatedAt() terra.SetValue[ProcessTerminatedAtAttributes] {
-	return terra.ReferenceSet[ProcessTerminatedAtAttributes](f.ref.Append("process_terminated_at"))
+	return terra.ReferenceAsSet[ProcessTerminatedAtAttributes](f.ref.Append("process_terminated_at"))
 }
 
 func (f FiltersAttributes) ProductArn() terra.SetValue[ProductArnAttributes] {
-	return terra.ReferenceSet[ProductArnAttributes](f.ref.Append("product_arn"))
+	return terra.ReferenceAsSet[ProductArnAttributes](f.ref.Append("product_arn"))
 }
 
 func (f FiltersAttributes) ProductFields() terra.SetValue[ProductFieldsAttributes] {
-	return terra.ReferenceSet[ProductFieldsAttributes](f.ref.Append("product_fields"))
+	return terra.ReferenceAsSet[ProductFieldsAttributes](f.ref.Append("product_fields"))
 }
 
 func (f FiltersAttributes) ProductName() terra.SetValue[ProductNameAttributes] {
-	return terra.ReferenceSet[ProductNameAttributes](f.ref.Append("product_name"))
+	return terra.ReferenceAsSet[ProductNameAttributes](f.ref.Append("product_name"))
 }
 
 func (f FiltersAttributes) RecommendationText() terra.SetValue[RecommendationTextAttributes] {
-	return terra.ReferenceSet[RecommendationTextAttributes](f.ref.Append("recommendation_text"))
+	return terra.ReferenceAsSet[RecommendationTextAttributes](f.ref.Append("recommendation_text"))
 }
 
 func (f FiltersAttributes) RecordState() terra.SetValue[RecordStateAttributes] {
-	return terra.ReferenceSet[RecordStateAttributes](f.ref.Append("record_state"))
+	return terra.ReferenceAsSet[RecordStateAttributes](f.ref.Append("record_state"))
 }
 
 func (f FiltersAttributes) RelatedFindingsId() terra.SetValue[RelatedFindingsIdAttributes] {
-	return terra.ReferenceSet[RelatedFindingsIdAttributes](f.ref.Append("related_findings_id"))
+	return terra.ReferenceAsSet[RelatedFindingsIdAttributes](f.ref.Append("related_findings_id"))
 }
 
 func (f FiltersAttributes) RelatedFindingsProductArn() terra.SetValue[RelatedFindingsProductArnAttributes] {
-	return terra.ReferenceSet[RelatedFindingsProductArnAttributes](f.ref.Append("related_findings_product_arn"))
+	return terra.ReferenceAsSet[RelatedFindingsProductArnAttributes](f.ref.Append("related_findings_product_arn"))
 }
 
 func (f FiltersAttributes) ResourceAwsEc2InstanceIamInstanceProfileArn() terra.SetValue[ResourceAwsEc2InstanceIamInstanceProfileArnAttributes] {
-	return terra.ReferenceSet[ResourceAwsEc2InstanceIamInstanceProfileArnAttributes](f.ref.Append("resource_aws_ec2_instance_iam_instance_profile_arn"))
+	return terra.ReferenceAsSet[ResourceAwsEc2InstanceIamInstanceProfileArnAttributes](f.ref.Append("resource_aws_ec2_instance_iam_instance_profile_arn"))
 }
 
 func (f FiltersAttributes) ResourceAwsEc2InstanceImageId() terra.SetValue[ResourceAwsEc2InstanceImageIdAttributes] {
-	return terra.ReferenceSet[ResourceAwsEc2InstanceImageIdAttributes](f.ref.Append("resource_aws_ec2_instance_image_id"))
+	return terra.ReferenceAsSet[ResourceAwsEc2InstanceImageIdAttributes](f.ref.Append("resource_aws_ec2_instance_image_id"))
 }
 
 func (f FiltersAttributes) ResourceAwsEc2InstanceIpv4Addresses() terra.SetValue[ResourceAwsEc2InstanceIpv4AddressesAttributes] {
-	return terra.ReferenceSet[ResourceAwsEc2InstanceIpv4AddressesAttributes](f.ref.Append("resource_aws_ec2_instance_ipv4_addresses"))
+	return terra.ReferenceAsSet[ResourceAwsEc2InstanceIpv4AddressesAttributes](f.ref.Append("resource_aws_ec2_instance_ipv4_addresses"))
 }
 
 func (f FiltersAttributes) ResourceAwsEc2InstanceIpv6Addresses() terra.SetValue[ResourceAwsEc2InstanceIpv6AddressesAttributes] {
-	return terra.ReferenceSet[ResourceAwsEc2InstanceIpv6AddressesAttributes](f.ref.Append("resource_aws_ec2_instance_ipv6_addresses"))
+	return terra.ReferenceAsSet[ResourceAwsEc2InstanceIpv6AddressesAttributes](f.ref.Append("resource_aws_ec2_instance_ipv6_addresses"))
 }
 
 func (f FiltersAttributes) ResourceAwsEc2InstanceKeyName() terra.SetValue[ResourceAwsEc2InstanceKeyNameAttributes] {
-	return terra.ReferenceSet[ResourceAwsEc2InstanceKeyNameAttributes](f.ref.Append("resource_aws_ec2_instance_key_name"))
+	return terra.ReferenceAsSet[ResourceAwsEc2InstanceKeyNameAttributes](f.ref.Append("resource_aws_ec2_instance_key_name"))
 }
 
 func (f FiltersAttributes) ResourceAwsEc2InstanceLaunchedAt() terra.SetValue[ResourceAwsEc2InstanceLaunchedAtAttributes] {
-	return terra.ReferenceSet[ResourceAwsEc2InstanceLaunchedAtAttributes](f.ref.Append("resource_aws_ec2_instance_launched_at"))
+	return terra.ReferenceAsSet[ResourceAwsEc2InstanceLaunchedAtAttributes](f.ref.Append("resource_aws_ec2_instance_launched_at"))
 }
 
 func (f FiltersAttributes) ResourceAwsEc2InstanceSubnetId() terra.SetValue[ResourceAwsEc2InstanceSubnetIdAttributes] {
-	return terra.ReferenceSet[ResourceAwsEc2InstanceSubnetIdAttributes](f.ref.Append("resource_aws_ec2_instance_subnet_id"))
+	return terra.ReferenceAsSet[ResourceAwsEc2InstanceSubnetIdAttributes](f.ref.Append("resource_aws_ec2_instance_subnet_id"))
 }
 
 func (f FiltersAttributes) ResourceAwsEc2InstanceType() terra.SetValue[ResourceAwsEc2InstanceTypeAttributes] {
-	return terra.ReferenceSet[ResourceAwsEc2InstanceTypeAttributes](f.ref.Append("resource_aws_ec2_instance_type"))
+	return terra.ReferenceAsSet[ResourceAwsEc2InstanceTypeAttributes](f.ref.Append("resource_aws_ec2_instance_type"))
 }
 
 func (f FiltersAttributes) ResourceAwsEc2InstanceVpcId() terra.SetValue[ResourceAwsEc2InstanceVpcIdAttributes] {
-	return terra.ReferenceSet[ResourceAwsEc2InstanceVpcIdAttributes](f.ref.Append("resource_aws_ec2_instance_vpc_id"))
+	return terra.ReferenceAsSet[ResourceAwsEc2InstanceVpcIdAttributes](f.ref.Append("resource_aws_ec2_instance_vpc_id"))
 }
 
 func (f FiltersAttributes) ResourceAwsIamAccessKeyCreatedAt() terra.SetValue[ResourceAwsIamAccessKeyCreatedAtAttributes] {
-	return terra.ReferenceSet[ResourceAwsIamAccessKeyCreatedAtAttributes](f.ref.Append("resource_aws_iam_access_key_created_at"))
+	return terra.ReferenceAsSet[ResourceAwsIamAccessKeyCreatedAtAttributes](f.ref.Append("resource_aws_iam_access_key_created_at"))
 }
 
 func (f FiltersAttributes) ResourceAwsIamAccessKeyStatus() terra.SetValue[ResourceAwsIamAccessKeyStatusAttributes] {
-	return terra.ReferenceSet[ResourceAwsIamAccessKeyStatusAttributes](f.ref.Append("resource_aws_iam_access_key_status"))
+	return terra.ReferenceAsSet[ResourceAwsIamAccessKeyStatusAttributes](f.ref.Append("resource_aws_iam_access_key_status"))
 }
 
 func (f FiltersAttributes) ResourceAwsIamAccessKeyUserName() terra.SetValue[ResourceAwsIamAccessKeyUserNameAttributes] {
-	return terra.ReferenceSet[ResourceAwsIamAccessKeyUserNameAttributes](f.ref.Append("resource_aws_iam_access_key_user_name"))
+	return terra.ReferenceAsSet[ResourceAwsIamAccessKeyUserNameAttributes](f.ref.Append("resource_aws_iam_access_key_user_name"))
 }
 
 func (f FiltersAttributes) ResourceAwsS3BucketOwnerId() terra.SetValue[ResourceAwsS3BucketOwnerIdAttributes] {
-	return terra.ReferenceSet[ResourceAwsS3BucketOwnerIdAttributes](f.ref.Append("resource_aws_s3_bucket_owner_id"))
+	return terra.ReferenceAsSet[ResourceAwsS3BucketOwnerIdAttributes](f.ref.Append("resource_aws_s3_bucket_owner_id"))
 }
 
 func (f FiltersAttributes) ResourceAwsS3BucketOwnerName() terra.SetValue[ResourceAwsS3BucketOwnerNameAttributes] {
-	return terra.ReferenceSet[ResourceAwsS3BucketOwnerNameAttributes](f.ref.Append("resource_aws_s3_bucket_owner_name"))
+	return terra.ReferenceAsSet[ResourceAwsS3BucketOwnerNameAttributes](f.ref.Append("resource_aws_s3_bucket_owner_name"))
 }
 
 func (f FiltersAttributes) ResourceContainerImageId() terra.SetValue[ResourceContainerImageIdAttributes] {
-	return terra.ReferenceSet[ResourceContainerImageIdAttributes](f.ref.Append("resource_container_image_id"))
+	return terra.ReferenceAsSet[ResourceContainerImageIdAttributes](f.ref.Append("resource_container_image_id"))
 }
 
 func (f FiltersAttributes) ResourceContainerImageName() terra.SetValue[ResourceContainerImageNameAttributes] {
-	return terra.ReferenceSet[ResourceContainerImageNameAttributes](f.ref.Append("resource_container_image_name"))
+	return terra.ReferenceAsSet[ResourceContainerImageNameAttributes](f.ref.Append("resource_container_image_name"))
 }
 
 func (f FiltersAttributes) ResourceContainerLaunchedAt() terra.SetValue[ResourceContainerLaunchedAtAttributes] {
-	return terra.ReferenceSet[ResourceContainerLaunchedAtAttributes](f.ref.Append("resource_container_launched_at"))
+	return terra.ReferenceAsSet[ResourceContainerLaunchedAtAttributes](f.ref.Append("resource_container_launched_at"))
 }
 
 func (f FiltersAttributes) ResourceContainerName() terra.SetValue[ResourceContainerNameAttributes] {
-	return terra.ReferenceSet[ResourceContainerNameAttributes](f.ref.Append("resource_container_name"))
+	return terra.ReferenceAsSet[ResourceContainerNameAttributes](f.ref.Append("resource_container_name"))
 }
 
 func (f FiltersAttributes) ResourceDetailsOther() terra.SetValue[ResourceDetailsOtherAttributes] {
-	return terra.ReferenceSet[ResourceDetailsOtherAttributes](f.ref.Append("resource_details_other"))
+	return terra.ReferenceAsSet[ResourceDetailsOtherAttributes](f.ref.Append("resource_details_other"))
 }
 
 func (f FiltersAttributes) ResourceId() terra.SetValue[ResourceIdAttributes] {
-	return terra.ReferenceSet[ResourceIdAttributes](f.ref.Append("resource_id"))
+	return terra.ReferenceAsSet[ResourceIdAttributes](f.ref.Append("resource_id"))
 }
 
 func (f FiltersAttributes) ResourcePartition() terra.SetValue[ResourcePartitionAttributes] {
-	return terra.ReferenceSet[ResourcePartitionAttributes](f.ref.Append("resource_partition"))
+	return terra.ReferenceAsSet[ResourcePartitionAttributes](f.ref.Append("resource_partition"))
 }
 
 func (f FiltersAttributes) ResourceRegion() terra.SetValue[ResourceRegionAttributes] {
-	return terra.ReferenceSet[ResourceRegionAttributes](f.ref.Append("resource_region"))
+	return terra.ReferenceAsSet[ResourceRegionAttributes](f.ref.Append("resource_region"))
 }
 
 func (f FiltersAttributes) ResourceTags() terra.SetValue[ResourceTagsAttributes] {
-	return terra.ReferenceSet[ResourceTagsAttributes](f.ref.Append("resource_tags"))
+	return terra.ReferenceAsSet[ResourceTagsAttributes](f.ref.Append("resource_tags"))
 }
 
 func (f FiltersAttributes) ResourceType() terra.SetValue[ResourceTypeAttributes] {
-	return terra.ReferenceSet[ResourceTypeAttributes](f.ref.Append("resource_type"))
+	return terra.ReferenceAsSet[ResourceTypeAttributes](f.ref.Append("resource_type"))
 }
 
 func (f FiltersAttributes) SeverityLabel() terra.SetValue[SeverityLabelAttributes] {
-	return terra.ReferenceSet[SeverityLabelAttributes](f.ref.Append("severity_label"))
+	return terra.ReferenceAsSet[SeverityLabelAttributes](f.ref.Append("severity_label"))
 }
 
 func (f FiltersAttributes) SourceUrl() terra.SetValue[SourceUrlAttributes] {
-	return terra.ReferenceSet[SourceUrlAttributes](f.ref.Append("source_url"))
+	return terra.ReferenceAsSet[SourceUrlAttributes](f.ref.Append("source_url"))
 }
 
 func (f FiltersAttributes) ThreatIntelIndicatorCategory() terra.SetValue[ThreatIntelIndicatorCategoryAttributes] {
-	return terra.ReferenceSet[ThreatIntelIndicatorCategoryAttributes](f.ref.Append("threat_intel_indicator_category"))
+	return terra.ReferenceAsSet[ThreatIntelIndicatorCategoryAttributes](f.ref.Append("threat_intel_indicator_category"))
 }
 
 func (f FiltersAttributes) ThreatIntelIndicatorLastObservedAt() terra.SetValue[ThreatIntelIndicatorLastObservedAtAttributes] {
-	return terra.ReferenceSet[ThreatIntelIndicatorLastObservedAtAttributes](f.ref.Append("threat_intel_indicator_last_observed_at"))
+	return terra.ReferenceAsSet[ThreatIntelIndicatorLastObservedAtAttributes](f.ref.Append("threat_intel_indicator_last_observed_at"))
 }
 
 func (f FiltersAttributes) ThreatIntelIndicatorSource() terra.SetValue[ThreatIntelIndicatorSourceAttributes] {
-	return terra.ReferenceSet[ThreatIntelIndicatorSourceAttributes](f.ref.Append("threat_intel_indicator_source"))
+	return terra.ReferenceAsSet[ThreatIntelIndicatorSourceAttributes](f.ref.Append("threat_intel_indicator_source"))
 }
 
 func (f FiltersAttributes) ThreatIntelIndicatorSourceUrl() terra.SetValue[ThreatIntelIndicatorSourceUrlAttributes] {
-	return terra.ReferenceSet[ThreatIntelIndicatorSourceUrlAttributes](f.ref.Append("threat_intel_indicator_source_url"))
+	return terra.ReferenceAsSet[ThreatIntelIndicatorSourceUrlAttributes](f.ref.Append("threat_intel_indicator_source_url"))
 }
 
 func (f FiltersAttributes) ThreatIntelIndicatorType() terra.SetValue[ThreatIntelIndicatorTypeAttributes] {
-	return terra.ReferenceSet[ThreatIntelIndicatorTypeAttributes](f.ref.Append("threat_intel_indicator_type"))
+	return terra.ReferenceAsSet[ThreatIntelIndicatorTypeAttributes](f.ref.Append("threat_intel_indicator_type"))
 }
 
 func (f FiltersAttributes) ThreatIntelIndicatorValue() terra.SetValue[ThreatIntelIndicatorValueAttributes] {
-	return terra.ReferenceSet[ThreatIntelIndicatorValueAttributes](f.ref.Append("threat_intel_indicator_value"))
+	return terra.ReferenceAsSet[ThreatIntelIndicatorValueAttributes](f.ref.Append("threat_intel_indicator_value"))
 }
 
 func (f FiltersAttributes) Title() terra.SetValue[TitleAttributes] {
-	return terra.ReferenceSet[TitleAttributes](f.ref.Append("title"))
+	return terra.ReferenceAsSet[TitleAttributes](f.ref.Append("title"))
 }
 
 func (f FiltersAttributes) Type() terra.SetValue[TypeAttributes] {
-	return terra.ReferenceSet[TypeAttributes](f.ref.Append("type"))
+	return terra.ReferenceAsSet[TypeAttributes](f.ref.Append("type"))
 }
 
 func (f FiltersAttributes) UpdatedAt() terra.SetValue[UpdatedAtAttributes] {
-	return terra.ReferenceSet[UpdatedAtAttributes](f.ref.Append("updated_at"))
+	return terra.ReferenceAsSet[UpdatedAtAttributes](f.ref.Append("updated_at"))
 }
 
 func (f FiltersAttributes) UserDefinedValues() terra.SetValue[UserDefinedValuesAttributes] {
-	return terra.ReferenceSet[UserDefinedValuesAttributes](f.ref.Append("user_defined_values"))
+	return terra.ReferenceAsSet[UserDefinedValuesAttributes](f.ref.Append("user_defined_values"))
 }
 
 func (f FiltersAttributes) VerificationState() terra.SetValue[VerificationStateAttributes] {
-	return terra.ReferenceSet[VerificationStateAttributes](f.ref.Append("verification_state"))
+	return terra.ReferenceAsSet[VerificationStateAttributes](f.ref.Append("verification_state"))
 }
 
 func (f FiltersAttributes) WorkflowStatus() terra.SetValue[WorkflowStatusAttributes] {
-	return terra.ReferenceSet[WorkflowStatusAttributes](f.ref.Append("workflow_status"))
+	return terra.ReferenceAsSet[WorkflowStatusAttributes](f.ref.Append("workflow_status"))
 }
 
 type AwsAccountIdAttributes struct {
@@ -1296,11 +1296,11 @@ func (aai AwsAccountIdAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (aai AwsAccountIdAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(aai.ref.Append("comparison"))
+	return terra.ReferenceAsString(aai.ref.Append("comparison"))
 }
 
 func (aai AwsAccountIdAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(aai.ref.Append("value"))
+	return terra.ReferenceAsString(aai.ref.Append("value"))
 }
 
 type CompanyNameAttributes struct {
@@ -1320,11 +1320,11 @@ func (cn CompanyNameAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cn CompanyNameAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(cn.ref.Append("comparison"))
+	return terra.ReferenceAsString(cn.ref.Append("comparison"))
 }
 
 func (cn CompanyNameAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(cn.ref.Append("value"))
+	return terra.ReferenceAsString(cn.ref.Append("value"))
 }
 
 type ComplianceStatusAttributes struct {
@@ -1344,11 +1344,11 @@ func (cs ComplianceStatusAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cs ComplianceStatusAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("comparison"))
+	return terra.ReferenceAsString(cs.ref.Append("comparison"))
 }
 
 func (cs ComplianceStatusAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("value"))
+	return terra.ReferenceAsString(cs.ref.Append("value"))
 }
 
 type ConfidenceAttributes struct {
@@ -1368,15 +1368,15 @@ func (c ConfidenceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ConfidenceAttributes) Eq() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("eq"))
+	return terra.ReferenceAsString(c.ref.Append("eq"))
 }
 
 func (c ConfidenceAttributes) Gte() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("gte"))
+	return terra.ReferenceAsString(c.ref.Append("gte"))
 }
 
 func (c ConfidenceAttributes) Lte() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("lte"))
+	return terra.ReferenceAsString(c.ref.Append("lte"))
 }
 
 type CreatedAtAttributes struct {
@@ -1396,15 +1396,15 @@ func (ca CreatedAtAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ca CreatedAtAttributes) End() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("end"))
+	return terra.ReferenceAsString(ca.ref.Append("end"))
 }
 
 func (ca CreatedAtAttributes) Start() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("start"))
+	return terra.ReferenceAsString(ca.ref.Append("start"))
 }
 
 func (ca CreatedAtAttributes) DateRange() terra.ListValue[CreatedAtDateRangeAttributes] {
-	return terra.ReferenceList[CreatedAtDateRangeAttributes](ca.ref.Append("date_range"))
+	return terra.ReferenceAsList[CreatedAtDateRangeAttributes](ca.ref.Append("date_range"))
 }
 
 type CreatedAtDateRangeAttributes struct {
@@ -1424,11 +1424,11 @@ func (dr CreatedAtDateRangeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dr CreatedAtDateRangeAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("unit"))
+	return terra.ReferenceAsString(dr.ref.Append("unit"))
 }
 
 func (dr CreatedAtDateRangeAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(dr.ref.Append("value"))
+	return terra.ReferenceAsNumber(dr.ref.Append("value"))
 }
 
 type CriticalityAttributes struct {
@@ -1448,15 +1448,15 @@ func (c CriticalityAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c CriticalityAttributes) Eq() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("eq"))
+	return terra.ReferenceAsString(c.ref.Append("eq"))
 }
 
 func (c CriticalityAttributes) Gte() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("gte"))
+	return terra.ReferenceAsString(c.ref.Append("gte"))
 }
 
 func (c CriticalityAttributes) Lte() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("lte"))
+	return terra.ReferenceAsString(c.ref.Append("lte"))
 }
 
 type DescriptionAttributes struct {
@@ -1476,11 +1476,11 @@ func (d DescriptionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DescriptionAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("comparison"))
+	return terra.ReferenceAsString(d.ref.Append("comparison"))
 }
 
 func (d DescriptionAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("value"))
+	return terra.ReferenceAsString(d.ref.Append("value"))
 }
 
 type FindingProviderFieldsConfidenceAttributes struct {
@@ -1500,15 +1500,15 @@ func (fpfc FindingProviderFieldsConfidenceAttributes) InternalTokens() hclwrite.
 }
 
 func (fpfc FindingProviderFieldsConfidenceAttributes) Eq() terra.StringValue {
-	return terra.ReferenceString(fpfc.ref.Append("eq"))
+	return terra.ReferenceAsString(fpfc.ref.Append("eq"))
 }
 
 func (fpfc FindingProviderFieldsConfidenceAttributes) Gte() terra.StringValue {
-	return terra.ReferenceString(fpfc.ref.Append("gte"))
+	return terra.ReferenceAsString(fpfc.ref.Append("gte"))
 }
 
 func (fpfc FindingProviderFieldsConfidenceAttributes) Lte() terra.StringValue {
-	return terra.ReferenceString(fpfc.ref.Append("lte"))
+	return terra.ReferenceAsString(fpfc.ref.Append("lte"))
 }
 
 type FindingProviderFieldsCriticalityAttributes struct {
@@ -1528,15 +1528,15 @@ func (fpfc FindingProviderFieldsCriticalityAttributes) InternalTokens() hclwrite
 }
 
 func (fpfc FindingProviderFieldsCriticalityAttributes) Eq() terra.StringValue {
-	return terra.ReferenceString(fpfc.ref.Append("eq"))
+	return terra.ReferenceAsString(fpfc.ref.Append("eq"))
 }
 
 func (fpfc FindingProviderFieldsCriticalityAttributes) Gte() terra.StringValue {
-	return terra.ReferenceString(fpfc.ref.Append("gte"))
+	return terra.ReferenceAsString(fpfc.ref.Append("gte"))
 }
 
 func (fpfc FindingProviderFieldsCriticalityAttributes) Lte() terra.StringValue {
-	return terra.ReferenceString(fpfc.ref.Append("lte"))
+	return terra.ReferenceAsString(fpfc.ref.Append("lte"))
 }
 
 type FindingProviderFieldsRelatedFindingsIdAttributes struct {
@@ -1556,11 +1556,11 @@ func (fpfrfi FindingProviderFieldsRelatedFindingsIdAttributes) InternalTokens() 
 }
 
 func (fpfrfi FindingProviderFieldsRelatedFindingsIdAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(fpfrfi.ref.Append("comparison"))
+	return terra.ReferenceAsString(fpfrfi.ref.Append("comparison"))
 }
 
 func (fpfrfi FindingProviderFieldsRelatedFindingsIdAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(fpfrfi.ref.Append("value"))
+	return terra.ReferenceAsString(fpfrfi.ref.Append("value"))
 }
 
 type FindingProviderFieldsRelatedFindingsProductArnAttributes struct {
@@ -1580,11 +1580,11 @@ func (fpfrfpa FindingProviderFieldsRelatedFindingsProductArnAttributes) Internal
 }
 
 func (fpfrfpa FindingProviderFieldsRelatedFindingsProductArnAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(fpfrfpa.ref.Append("comparison"))
+	return terra.ReferenceAsString(fpfrfpa.ref.Append("comparison"))
 }
 
 func (fpfrfpa FindingProviderFieldsRelatedFindingsProductArnAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(fpfrfpa.ref.Append("value"))
+	return terra.ReferenceAsString(fpfrfpa.ref.Append("value"))
 }
 
 type FindingProviderFieldsSeverityLabelAttributes struct {
@@ -1604,11 +1604,11 @@ func (fpfsl FindingProviderFieldsSeverityLabelAttributes) InternalTokens() hclwr
 }
 
 func (fpfsl FindingProviderFieldsSeverityLabelAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(fpfsl.ref.Append("comparison"))
+	return terra.ReferenceAsString(fpfsl.ref.Append("comparison"))
 }
 
 func (fpfsl FindingProviderFieldsSeverityLabelAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(fpfsl.ref.Append("value"))
+	return terra.ReferenceAsString(fpfsl.ref.Append("value"))
 }
 
 type FindingProviderFieldsSeverityOriginalAttributes struct {
@@ -1628,11 +1628,11 @@ func (fpfso FindingProviderFieldsSeverityOriginalAttributes) InternalTokens() hc
 }
 
 func (fpfso FindingProviderFieldsSeverityOriginalAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(fpfso.ref.Append("comparison"))
+	return terra.ReferenceAsString(fpfso.ref.Append("comparison"))
 }
 
 func (fpfso FindingProviderFieldsSeverityOriginalAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(fpfso.ref.Append("value"))
+	return terra.ReferenceAsString(fpfso.ref.Append("value"))
 }
 
 type FindingProviderFieldsTypesAttributes struct {
@@ -1652,11 +1652,11 @@ func (fpft FindingProviderFieldsTypesAttributes) InternalTokens() hclwrite.Token
 }
 
 func (fpft FindingProviderFieldsTypesAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(fpft.ref.Append("comparison"))
+	return terra.ReferenceAsString(fpft.ref.Append("comparison"))
 }
 
 func (fpft FindingProviderFieldsTypesAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(fpft.ref.Append("value"))
+	return terra.ReferenceAsString(fpft.ref.Append("value"))
 }
 
 type FirstObservedAtAttributes struct {
@@ -1676,15 +1676,15 @@ func (foa FirstObservedAtAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (foa FirstObservedAtAttributes) End() terra.StringValue {
-	return terra.ReferenceString(foa.ref.Append("end"))
+	return terra.ReferenceAsString(foa.ref.Append("end"))
 }
 
 func (foa FirstObservedAtAttributes) Start() terra.StringValue {
-	return terra.ReferenceString(foa.ref.Append("start"))
+	return terra.ReferenceAsString(foa.ref.Append("start"))
 }
 
 func (foa FirstObservedAtAttributes) DateRange() terra.ListValue[FirstObservedAtDateRangeAttributes] {
-	return terra.ReferenceList[FirstObservedAtDateRangeAttributes](foa.ref.Append("date_range"))
+	return terra.ReferenceAsList[FirstObservedAtDateRangeAttributes](foa.ref.Append("date_range"))
 }
 
 type FirstObservedAtDateRangeAttributes struct {
@@ -1704,11 +1704,11 @@ func (dr FirstObservedAtDateRangeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dr FirstObservedAtDateRangeAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("unit"))
+	return terra.ReferenceAsString(dr.ref.Append("unit"))
 }
 
 func (dr FirstObservedAtDateRangeAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(dr.ref.Append("value"))
+	return terra.ReferenceAsNumber(dr.ref.Append("value"))
 }
 
 type GeneratorIdAttributes struct {
@@ -1728,11 +1728,11 @@ func (gi GeneratorIdAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (gi GeneratorIdAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(gi.ref.Append("comparison"))
+	return terra.ReferenceAsString(gi.ref.Append("comparison"))
 }
 
 func (gi GeneratorIdAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(gi.ref.Append("value"))
+	return terra.ReferenceAsString(gi.ref.Append("value"))
 }
 
 type IdAttributes struct {
@@ -1752,11 +1752,11 @@ func (i IdAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i IdAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("comparison"))
+	return terra.ReferenceAsString(i.ref.Append("comparison"))
 }
 
 func (i IdAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("value"))
+	return terra.ReferenceAsString(i.ref.Append("value"))
 }
 
 type KeywordAttributes struct {
@@ -1776,7 +1776,7 @@ func (k KeywordAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (k KeywordAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(k.ref.Append("value"))
+	return terra.ReferenceAsString(k.ref.Append("value"))
 }
 
 type LastObservedAtAttributes struct {
@@ -1796,15 +1796,15 @@ func (loa LastObservedAtAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (loa LastObservedAtAttributes) End() terra.StringValue {
-	return terra.ReferenceString(loa.ref.Append("end"))
+	return terra.ReferenceAsString(loa.ref.Append("end"))
 }
 
 func (loa LastObservedAtAttributes) Start() terra.StringValue {
-	return terra.ReferenceString(loa.ref.Append("start"))
+	return terra.ReferenceAsString(loa.ref.Append("start"))
 }
 
 func (loa LastObservedAtAttributes) DateRange() terra.ListValue[LastObservedAtDateRangeAttributes] {
-	return terra.ReferenceList[LastObservedAtDateRangeAttributes](loa.ref.Append("date_range"))
+	return terra.ReferenceAsList[LastObservedAtDateRangeAttributes](loa.ref.Append("date_range"))
 }
 
 type LastObservedAtDateRangeAttributes struct {
@@ -1824,11 +1824,11 @@ func (dr LastObservedAtDateRangeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dr LastObservedAtDateRangeAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("unit"))
+	return terra.ReferenceAsString(dr.ref.Append("unit"))
 }
 
 func (dr LastObservedAtDateRangeAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(dr.ref.Append("value"))
+	return terra.ReferenceAsNumber(dr.ref.Append("value"))
 }
 
 type MalwareNameAttributes struct {
@@ -1848,11 +1848,11 @@ func (mn MalwareNameAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mn MalwareNameAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(mn.ref.Append("comparison"))
+	return terra.ReferenceAsString(mn.ref.Append("comparison"))
 }
 
 func (mn MalwareNameAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(mn.ref.Append("value"))
+	return terra.ReferenceAsString(mn.ref.Append("value"))
 }
 
 type MalwarePathAttributes struct {
@@ -1872,11 +1872,11 @@ func (mp MalwarePathAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mp MalwarePathAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(mp.ref.Append("comparison"))
+	return terra.ReferenceAsString(mp.ref.Append("comparison"))
 }
 
 func (mp MalwarePathAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(mp.ref.Append("value"))
+	return terra.ReferenceAsString(mp.ref.Append("value"))
 }
 
 type MalwareStateAttributes struct {
@@ -1896,11 +1896,11 @@ func (ms MalwareStateAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ms MalwareStateAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("comparison"))
+	return terra.ReferenceAsString(ms.ref.Append("comparison"))
 }
 
 func (ms MalwareStateAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("value"))
+	return terra.ReferenceAsString(ms.ref.Append("value"))
 }
 
 type MalwareTypeAttributes struct {
@@ -1920,11 +1920,11 @@ func (mt MalwareTypeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mt MalwareTypeAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(mt.ref.Append("comparison"))
+	return terra.ReferenceAsString(mt.ref.Append("comparison"))
 }
 
 func (mt MalwareTypeAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(mt.ref.Append("value"))
+	return terra.ReferenceAsString(mt.ref.Append("value"))
 }
 
 type NetworkDestinationDomainAttributes struct {
@@ -1944,11 +1944,11 @@ func (ndd NetworkDestinationDomainAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ndd NetworkDestinationDomainAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(ndd.ref.Append("comparison"))
+	return terra.ReferenceAsString(ndd.ref.Append("comparison"))
 }
 
 func (ndd NetworkDestinationDomainAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(ndd.ref.Append("value"))
+	return terra.ReferenceAsString(ndd.ref.Append("value"))
 }
 
 type NetworkDestinationIpv4Attributes struct {
@@ -1968,7 +1968,7 @@ func (ndi NetworkDestinationIpv4Attributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ndi NetworkDestinationIpv4Attributes) Cidr() terra.StringValue {
-	return terra.ReferenceString(ndi.ref.Append("cidr"))
+	return terra.ReferenceAsString(ndi.ref.Append("cidr"))
 }
 
 type NetworkDestinationIpv6Attributes struct {
@@ -1988,7 +1988,7 @@ func (ndi NetworkDestinationIpv6Attributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ndi NetworkDestinationIpv6Attributes) Cidr() terra.StringValue {
-	return terra.ReferenceString(ndi.ref.Append("cidr"))
+	return terra.ReferenceAsString(ndi.ref.Append("cidr"))
 }
 
 type NetworkDestinationPortAttributes struct {
@@ -2008,15 +2008,15 @@ func (ndp NetworkDestinationPortAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ndp NetworkDestinationPortAttributes) Eq() terra.StringValue {
-	return terra.ReferenceString(ndp.ref.Append("eq"))
+	return terra.ReferenceAsString(ndp.ref.Append("eq"))
 }
 
 func (ndp NetworkDestinationPortAttributes) Gte() terra.StringValue {
-	return terra.ReferenceString(ndp.ref.Append("gte"))
+	return terra.ReferenceAsString(ndp.ref.Append("gte"))
 }
 
 func (ndp NetworkDestinationPortAttributes) Lte() terra.StringValue {
-	return terra.ReferenceString(ndp.ref.Append("lte"))
+	return terra.ReferenceAsString(ndp.ref.Append("lte"))
 }
 
 type NetworkDirectionAttributes struct {
@@ -2036,11 +2036,11 @@ func (nd NetworkDirectionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nd NetworkDirectionAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(nd.ref.Append("comparison"))
+	return terra.ReferenceAsString(nd.ref.Append("comparison"))
 }
 
 func (nd NetworkDirectionAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(nd.ref.Append("value"))
+	return terra.ReferenceAsString(nd.ref.Append("value"))
 }
 
 type NetworkProtocolAttributes struct {
@@ -2060,11 +2060,11 @@ func (np NetworkProtocolAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (np NetworkProtocolAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("comparison"))
+	return terra.ReferenceAsString(np.ref.Append("comparison"))
 }
 
 func (np NetworkProtocolAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("value"))
+	return terra.ReferenceAsString(np.ref.Append("value"))
 }
 
 type NetworkSourceDomainAttributes struct {
@@ -2084,11 +2084,11 @@ func (nsd NetworkSourceDomainAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nsd NetworkSourceDomainAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(nsd.ref.Append("comparison"))
+	return terra.ReferenceAsString(nsd.ref.Append("comparison"))
 }
 
 func (nsd NetworkSourceDomainAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(nsd.ref.Append("value"))
+	return terra.ReferenceAsString(nsd.ref.Append("value"))
 }
 
 type NetworkSourceIpv4Attributes struct {
@@ -2108,7 +2108,7 @@ func (nsi NetworkSourceIpv4Attributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nsi NetworkSourceIpv4Attributes) Cidr() terra.StringValue {
-	return terra.ReferenceString(nsi.ref.Append("cidr"))
+	return terra.ReferenceAsString(nsi.ref.Append("cidr"))
 }
 
 type NetworkSourceIpv6Attributes struct {
@@ -2128,7 +2128,7 @@ func (nsi NetworkSourceIpv6Attributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nsi NetworkSourceIpv6Attributes) Cidr() terra.StringValue {
-	return terra.ReferenceString(nsi.ref.Append("cidr"))
+	return terra.ReferenceAsString(nsi.ref.Append("cidr"))
 }
 
 type NetworkSourceMacAttributes struct {
@@ -2148,11 +2148,11 @@ func (nsm NetworkSourceMacAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nsm NetworkSourceMacAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(nsm.ref.Append("comparison"))
+	return terra.ReferenceAsString(nsm.ref.Append("comparison"))
 }
 
 func (nsm NetworkSourceMacAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(nsm.ref.Append("value"))
+	return terra.ReferenceAsString(nsm.ref.Append("value"))
 }
 
 type NetworkSourcePortAttributes struct {
@@ -2172,15 +2172,15 @@ func (nsp NetworkSourcePortAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nsp NetworkSourcePortAttributes) Eq() terra.StringValue {
-	return terra.ReferenceString(nsp.ref.Append("eq"))
+	return terra.ReferenceAsString(nsp.ref.Append("eq"))
 }
 
 func (nsp NetworkSourcePortAttributes) Gte() terra.StringValue {
-	return terra.ReferenceString(nsp.ref.Append("gte"))
+	return terra.ReferenceAsString(nsp.ref.Append("gte"))
 }
 
 func (nsp NetworkSourcePortAttributes) Lte() terra.StringValue {
-	return terra.ReferenceString(nsp.ref.Append("lte"))
+	return terra.ReferenceAsString(nsp.ref.Append("lte"))
 }
 
 type NoteTextAttributes struct {
@@ -2200,11 +2200,11 @@ func (nt NoteTextAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nt NoteTextAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(nt.ref.Append("comparison"))
+	return terra.ReferenceAsString(nt.ref.Append("comparison"))
 }
 
 func (nt NoteTextAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(nt.ref.Append("value"))
+	return terra.ReferenceAsString(nt.ref.Append("value"))
 }
 
 type NoteUpdatedAtAttributes struct {
@@ -2224,15 +2224,15 @@ func (nua NoteUpdatedAtAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nua NoteUpdatedAtAttributes) End() terra.StringValue {
-	return terra.ReferenceString(nua.ref.Append("end"))
+	return terra.ReferenceAsString(nua.ref.Append("end"))
 }
 
 func (nua NoteUpdatedAtAttributes) Start() terra.StringValue {
-	return terra.ReferenceString(nua.ref.Append("start"))
+	return terra.ReferenceAsString(nua.ref.Append("start"))
 }
 
 func (nua NoteUpdatedAtAttributes) DateRange() terra.ListValue[NoteUpdatedAtDateRangeAttributes] {
-	return terra.ReferenceList[NoteUpdatedAtDateRangeAttributes](nua.ref.Append("date_range"))
+	return terra.ReferenceAsList[NoteUpdatedAtDateRangeAttributes](nua.ref.Append("date_range"))
 }
 
 type NoteUpdatedAtDateRangeAttributes struct {
@@ -2252,11 +2252,11 @@ func (dr NoteUpdatedAtDateRangeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dr NoteUpdatedAtDateRangeAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("unit"))
+	return terra.ReferenceAsString(dr.ref.Append("unit"))
 }
 
 func (dr NoteUpdatedAtDateRangeAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(dr.ref.Append("value"))
+	return terra.ReferenceAsNumber(dr.ref.Append("value"))
 }
 
 type NoteUpdatedByAttributes struct {
@@ -2276,11 +2276,11 @@ func (nub NoteUpdatedByAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nub NoteUpdatedByAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(nub.ref.Append("comparison"))
+	return terra.ReferenceAsString(nub.ref.Append("comparison"))
 }
 
 func (nub NoteUpdatedByAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(nub.ref.Append("value"))
+	return terra.ReferenceAsString(nub.ref.Append("value"))
 }
 
 type ProcessLaunchedAtAttributes struct {
@@ -2300,15 +2300,15 @@ func (pla ProcessLaunchedAtAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pla ProcessLaunchedAtAttributes) End() terra.StringValue {
-	return terra.ReferenceString(pla.ref.Append("end"))
+	return terra.ReferenceAsString(pla.ref.Append("end"))
 }
 
 func (pla ProcessLaunchedAtAttributes) Start() terra.StringValue {
-	return terra.ReferenceString(pla.ref.Append("start"))
+	return terra.ReferenceAsString(pla.ref.Append("start"))
 }
 
 func (pla ProcessLaunchedAtAttributes) DateRange() terra.ListValue[ProcessLaunchedAtDateRangeAttributes] {
-	return terra.ReferenceList[ProcessLaunchedAtDateRangeAttributes](pla.ref.Append("date_range"))
+	return terra.ReferenceAsList[ProcessLaunchedAtDateRangeAttributes](pla.ref.Append("date_range"))
 }
 
 type ProcessLaunchedAtDateRangeAttributes struct {
@@ -2328,11 +2328,11 @@ func (dr ProcessLaunchedAtDateRangeAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (dr ProcessLaunchedAtDateRangeAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("unit"))
+	return terra.ReferenceAsString(dr.ref.Append("unit"))
 }
 
 func (dr ProcessLaunchedAtDateRangeAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(dr.ref.Append("value"))
+	return terra.ReferenceAsNumber(dr.ref.Append("value"))
 }
 
 type ProcessNameAttributes struct {
@@ -2352,11 +2352,11 @@ func (pn ProcessNameAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pn ProcessNameAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(pn.ref.Append("comparison"))
+	return terra.ReferenceAsString(pn.ref.Append("comparison"))
 }
 
 func (pn ProcessNameAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(pn.ref.Append("value"))
+	return terra.ReferenceAsString(pn.ref.Append("value"))
 }
 
 type ProcessParentPidAttributes struct {
@@ -2376,15 +2376,15 @@ func (ppp ProcessParentPidAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ppp ProcessParentPidAttributes) Eq() terra.StringValue {
-	return terra.ReferenceString(ppp.ref.Append("eq"))
+	return terra.ReferenceAsString(ppp.ref.Append("eq"))
 }
 
 func (ppp ProcessParentPidAttributes) Gte() terra.StringValue {
-	return terra.ReferenceString(ppp.ref.Append("gte"))
+	return terra.ReferenceAsString(ppp.ref.Append("gte"))
 }
 
 func (ppp ProcessParentPidAttributes) Lte() terra.StringValue {
-	return terra.ReferenceString(ppp.ref.Append("lte"))
+	return terra.ReferenceAsString(ppp.ref.Append("lte"))
 }
 
 type ProcessPathAttributes struct {
@@ -2404,11 +2404,11 @@ func (pp ProcessPathAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pp ProcessPathAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(pp.ref.Append("comparison"))
+	return terra.ReferenceAsString(pp.ref.Append("comparison"))
 }
 
 func (pp ProcessPathAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(pp.ref.Append("value"))
+	return terra.ReferenceAsString(pp.ref.Append("value"))
 }
 
 type ProcessPidAttributes struct {
@@ -2428,15 +2428,15 @@ func (pp ProcessPidAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pp ProcessPidAttributes) Eq() terra.StringValue {
-	return terra.ReferenceString(pp.ref.Append("eq"))
+	return terra.ReferenceAsString(pp.ref.Append("eq"))
 }
 
 func (pp ProcessPidAttributes) Gte() terra.StringValue {
-	return terra.ReferenceString(pp.ref.Append("gte"))
+	return terra.ReferenceAsString(pp.ref.Append("gte"))
 }
 
 func (pp ProcessPidAttributes) Lte() terra.StringValue {
-	return terra.ReferenceString(pp.ref.Append("lte"))
+	return terra.ReferenceAsString(pp.ref.Append("lte"))
 }
 
 type ProcessTerminatedAtAttributes struct {
@@ -2456,15 +2456,15 @@ func (pta ProcessTerminatedAtAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pta ProcessTerminatedAtAttributes) End() terra.StringValue {
-	return terra.ReferenceString(pta.ref.Append("end"))
+	return terra.ReferenceAsString(pta.ref.Append("end"))
 }
 
 func (pta ProcessTerminatedAtAttributes) Start() terra.StringValue {
-	return terra.ReferenceString(pta.ref.Append("start"))
+	return terra.ReferenceAsString(pta.ref.Append("start"))
 }
 
 func (pta ProcessTerminatedAtAttributes) DateRange() terra.ListValue[ProcessTerminatedAtDateRangeAttributes] {
-	return terra.ReferenceList[ProcessTerminatedAtDateRangeAttributes](pta.ref.Append("date_range"))
+	return terra.ReferenceAsList[ProcessTerminatedAtDateRangeAttributes](pta.ref.Append("date_range"))
 }
 
 type ProcessTerminatedAtDateRangeAttributes struct {
@@ -2484,11 +2484,11 @@ func (dr ProcessTerminatedAtDateRangeAttributes) InternalTokens() hclwrite.Token
 }
 
 func (dr ProcessTerminatedAtDateRangeAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("unit"))
+	return terra.ReferenceAsString(dr.ref.Append("unit"))
 }
 
 func (dr ProcessTerminatedAtDateRangeAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(dr.ref.Append("value"))
+	return terra.ReferenceAsNumber(dr.ref.Append("value"))
 }
 
 type ProductArnAttributes struct {
@@ -2508,11 +2508,11 @@ func (pa ProductArnAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pa ProductArnAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("comparison"))
+	return terra.ReferenceAsString(pa.ref.Append("comparison"))
 }
 
 func (pa ProductArnAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("value"))
+	return terra.ReferenceAsString(pa.ref.Append("value"))
 }
 
 type ProductFieldsAttributes struct {
@@ -2532,15 +2532,15 @@ func (pf ProductFieldsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pf ProductFieldsAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(pf.ref.Append("comparison"))
+	return terra.ReferenceAsString(pf.ref.Append("comparison"))
 }
 
 func (pf ProductFieldsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(pf.ref.Append("key"))
+	return terra.ReferenceAsString(pf.ref.Append("key"))
 }
 
 func (pf ProductFieldsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(pf.ref.Append("value"))
+	return terra.ReferenceAsString(pf.ref.Append("value"))
 }
 
 type ProductNameAttributes struct {
@@ -2560,11 +2560,11 @@ func (pn ProductNameAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pn ProductNameAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(pn.ref.Append("comparison"))
+	return terra.ReferenceAsString(pn.ref.Append("comparison"))
 }
 
 func (pn ProductNameAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(pn.ref.Append("value"))
+	return terra.ReferenceAsString(pn.ref.Append("value"))
 }
 
 type RecommendationTextAttributes struct {
@@ -2584,11 +2584,11 @@ func (rt RecommendationTextAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rt RecommendationTextAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("comparison"))
+	return terra.ReferenceAsString(rt.ref.Append("comparison"))
 }
 
 func (rt RecommendationTextAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("value"))
+	return terra.ReferenceAsString(rt.ref.Append("value"))
 }
 
 type RecordStateAttributes struct {
@@ -2608,11 +2608,11 @@ func (rs RecordStateAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rs RecordStateAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("comparison"))
+	return terra.ReferenceAsString(rs.ref.Append("comparison"))
 }
 
 func (rs RecordStateAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("value"))
+	return terra.ReferenceAsString(rs.ref.Append("value"))
 }
 
 type RelatedFindingsIdAttributes struct {
@@ -2632,11 +2632,11 @@ func (rfi RelatedFindingsIdAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rfi RelatedFindingsIdAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(rfi.ref.Append("comparison"))
+	return terra.ReferenceAsString(rfi.ref.Append("comparison"))
 }
 
 func (rfi RelatedFindingsIdAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(rfi.ref.Append("value"))
+	return terra.ReferenceAsString(rfi.ref.Append("value"))
 }
 
 type RelatedFindingsProductArnAttributes struct {
@@ -2656,11 +2656,11 @@ func (rfpa RelatedFindingsProductArnAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (rfpa RelatedFindingsProductArnAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(rfpa.ref.Append("comparison"))
+	return terra.ReferenceAsString(rfpa.ref.Append("comparison"))
 }
 
 func (rfpa RelatedFindingsProductArnAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(rfpa.ref.Append("value"))
+	return terra.ReferenceAsString(rfpa.ref.Append("value"))
 }
 
 type ResourceAwsEc2InstanceIamInstanceProfileArnAttributes struct {
@@ -2680,11 +2680,11 @@ func (raeiiipa ResourceAwsEc2InstanceIamInstanceProfileArnAttributes) InternalTo
 }
 
 func (raeiiipa ResourceAwsEc2InstanceIamInstanceProfileArnAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(raeiiipa.ref.Append("comparison"))
+	return terra.ReferenceAsString(raeiiipa.ref.Append("comparison"))
 }
 
 func (raeiiipa ResourceAwsEc2InstanceIamInstanceProfileArnAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(raeiiipa.ref.Append("value"))
+	return terra.ReferenceAsString(raeiiipa.ref.Append("value"))
 }
 
 type ResourceAwsEc2InstanceImageIdAttributes struct {
@@ -2704,11 +2704,11 @@ func (raeiii ResourceAwsEc2InstanceImageIdAttributes) InternalTokens() hclwrite.
 }
 
 func (raeiii ResourceAwsEc2InstanceImageIdAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(raeiii.ref.Append("comparison"))
+	return terra.ReferenceAsString(raeiii.ref.Append("comparison"))
 }
 
 func (raeiii ResourceAwsEc2InstanceImageIdAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(raeiii.ref.Append("value"))
+	return terra.ReferenceAsString(raeiii.ref.Append("value"))
 }
 
 type ResourceAwsEc2InstanceIpv4AddressesAttributes struct {
@@ -2728,7 +2728,7 @@ func (raeiia ResourceAwsEc2InstanceIpv4AddressesAttributes) InternalTokens() hcl
 }
 
 func (raeiia ResourceAwsEc2InstanceIpv4AddressesAttributes) Cidr() terra.StringValue {
-	return terra.ReferenceString(raeiia.ref.Append("cidr"))
+	return terra.ReferenceAsString(raeiia.ref.Append("cidr"))
 }
 
 type ResourceAwsEc2InstanceIpv6AddressesAttributes struct {
@@ -2748,7 +2748,7 @@ func (raeiia ResourceAwsEc2InstanceIpv6AddressesAttributes) InternalTokens() hcl
 }
 
 func (raeiia ResourceAwsEc2InstanceIpv6AddressesAttributes) Cidr() terra.StringValue {
-	return terra.ReferenceString(raeiia.ref.Append("cidr"))
+	return terra.ReferenceAsString(raeiia.ref.Append("cidr"))
 }
 
 type ResourceAwsEc2InstanceKeyNameAttributes struct {
@@ -2768,11 +2768,11 @@ func (raeikn ResourceAwsEc2InstanceKeyNameAttributes) InternalTokens() hclwrite.
 }
 
 func (raeikn ResourceAwsEc2InstanceKeyNameAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(raeikn.ref.Append("comparison"))
+	return terra.ReferenceAsString(raeikn.ref.Append("comparison"))
 }
 
 func (raeikn ResourceAwsEc2InstanceKeyNameAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(raeikn.ref.Append("value"))
+	return terra.ReferenceAsString(raeikn.ref.Append("value"))
 }
 
 type ResourceAwsEc2InstanceLaunchedAtAttributes struct {
@@ -2792,15 +2792,15 @@ func (raeila ResourceAwsEc2InstanceLaunchedAtAttributes) InternalTokens() hclwri
 }
 
 func (raeila ResourceAwsEc2InstanceLaunchedAtAttributes) End() terra.StringValue {
-	return terra.ReferenceString(raeila.ref.Append("end"))
+	return terra.ReferenceAsString(raeila.ref.Append("end"))
 }
 
 func (raeila ResourceAwsEc2InstanceLaunchedAtAttributes) Start() terra.StringValue {
-	return terra.ReferenceString(raeila.ref.Append("start"))
+	return terra.ReferenceAsString(raeila.ref.Append("start"))
 }
 
 func (raeila ResourceAwsEc2InstanceLaunchedAtAttributes) DateRange() terra.ListValue[ResourceAwsEc2InstanceLaunchedAtDateRangeAttributes] {
-	return terra.ReferenceList[ResourceAwsEc2InstanceLaunchedAtDateRangeAttributes](raeila.ref.Append("date_range"))
+	return terra.ReferenceAsList[ResourceAwsEc2InstanceLaunchedAtDateRangeAttributes](raeila.ref.Append("date_range"))
 }
 
 type ResourceAwsEc2InstanceLaunchedAtDateRangeAttributes struct {
@@ -2820,11 +2820,11 @@ func (dr ResourceAwsEc2InstanceLaunchedAtDateRangeAttributes) InternalTokens() h
 }
 
 func (dr ResourceAwsEc2InstanceLaunchedAtDateRangeAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("unit"))
+	return terra.ReferenceAsString(dr.ref.Append("unit"))
 }
 
 func (dr ResourceAwsEc2InstanceLaunchedAtDateRangeAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(dr.ref.Append("value"))
+	return terra.ReferenceAsNumber(dr.ref.Append("value"))
 }
 
 type ResourceAwsEc2InstanceSubnetIdAttributes struct {
@@ -2844,11 +2844,11 @@ func (raeisi ResourceAwsEc2InstanceSubnetIdAttributes) InternalTokens() hclwrite
 }
 
 func (raeisi ResourceAwsEc2InstanceSubnetIdAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(raeisi.ref.Append("comparison"))
+	return terra.ReferenceAsString(raeisi.ref.Append("comparison"))
 }
 
 func (raeisi ResourceAwsEc2InstanceSubnetIdAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(raeisi.ref.Append("value"))
+	return terra.ReferenceAsString(raeisi.ref.Append("value"))
 }
 
 type ResourceAwsEc2InstanceTypeAttributes struct {
@@ -2868,11 +2868,11 @@ func (raeit ResourceAwsEc2InstanceTypeAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (raeit ResourceAwsEc2InstanceTypeAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(raeit.ref.Append("comparison"))
+	return terra.ReferenceAsString(raeit.ref.Append("comparison"))
 }
 
 func (raeit ResourceAwsEc2InstanceTypeAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(raeit.ref.Append("value"))
+	return terra.ReferenceAsString(raeit.ref.Append("value"))
 }
 
 type ResourceAwsEc2InstanceVpcIdAttributes struct {
@@ -2892,11 +2892,11 @@ func (raeivi ResourceAwsEc2InstanceVpcIdAttributes) InternalTokens() hclwrite.To
 }
 
 func (raeivi ResourceAwsEc2InstanceVpcIdAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(raeivi.ref.Append("comparison"))
+	return terra.ReferenceAsString(raeivi.ref.Append("comparison"))
 }
 
 func (raeivi ResourceAwsEc2InstanceVpcIdAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(raeivi.ref.Append("value"))
+	return terra.ReferenceAsString(raeivi.ref.Append("value"))
 }
 
 type ResourceAwsIamAccessKeyCreatedAtAttributes struct {
@@ -2916,15 +2916,15 @@ func (raiakca ResourceAwsIamAccessKeyCreatedAtAttributes) InternalTokens() hclwr
 }
 
 func (raiakca ResourceAwsIamAccessKeyCreatedAtAttributes) End() terra.StringValue {
-	return terra.ReferenceString(raiakca.ref.Append("end"))
+	return terra.ReferenceAsString(raiakca.ref.Append("end"))
 }
 
 func (raiakca ResourceAwsIamAccessKeyCreatedAtAttributes) Start() terra.StringValue {
-	return terra.ReferenceString(raiakca.ref.Append("start"))
+	return terra.ReferenceAsString(raiakca.ref.Append("start"))
 }
 
 func (raiakca ResourceAwsIamAccessKeyCreatedAtAttributes) DateRange() terra.ListValue[ResourceAwsIamAccessKeyCreatedAtDateRangeAttributes] {
-	return terra.ReferenceList[ResourceAwsIamAccessKeyCreatedAtDateRangeAttributes](raiakca.ref.Append("date_range"))
+	return terra.ReferenceAsList[ResourceAwsIamAccessKeyCreatedAtDateRangeAttributes](raiakca.ref.Append("date_range"))
 }
 
 type ResourceAwsIamAccessKeyCreatedAtDateRangeAttributes struct {
@@ -2944,11 +2944,11 @@ func (dr ResourceAwsIamAccessKeyCreatedAtDateRangeAttributes) InternalTokens() h
 }
 
 func (dr ResourceAwsIamAccessKeyCreatedAtDateRangeAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("unit"))
+	return terra.ReferenceAsString(dr.ref.Append("unit"))
 }
 
 func (dr ResourceAwsIamAccessKeyCreatedAtDateRangeAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(dr.ref.Append("value"))
+	return terra.ReferenceAsNumber(dr.ref.Append("value"))
 }
 
 type ResourceAwsIamAccessKeyStatusAttributes struct {
@@ -2968,11 +2968,11 @@ func (raiaks ResourceAwsIamAccessKeyStatusAttributes) InternalTokens() hclwrite.
 }
 
 func (raiaks ResourceAwsIamAccessKeyStatusAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(raiaks.ref.Append("comparison"))
+	return terra.ReferenceAsString(raiaks.ref.Append("comparison"))
 }
 
 func (raiaks ResourceAwsIamAccessKeyStatusAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(raiaks.ref.Append("value"))
+	return terra.ReferenceAsString(raiaks.ref.Append("value"))
 }
 
 type ResourceAwsIamAccessKeyUserNameAttributes struct {
@@ -2992,11 +2992,11 @@ func (raiakun ResourceAwsIamAccessKeyUserNameAttributes) InternalTokens() hclwri
 }
 
 func (raiakun ResourceAwsIamAccessKeyUserNameAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(raiakun.ref.Append("comparison"))
+	return terra.ReferenceAsString(raiakun.ref.Append("comparison"))
 }
 
 func (raiakun ResourceAwsIamAccessKeyUserNameAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(raiakun.ref.Append("value"))
+	return terra.ReferenceAsString(raiakun.ref.Append("value"))
 }
 
 type ResourceAwsS3BucketOwnerIdAttributes struct {
@@ -3016,11 +3016,11 @@ func (rasboi ResourceAwsS3BucketOwnerIdAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (rasboi ResourceAwsS3BucketOwnerIdAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(rasboi.ref.Append("comparison"))
+	return terra.ReferenceAsString(rasboi.ref.Append("comparison"))
 }
 
 func (rasboi ResourceAwsS3BucketOwnerIdAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(rasboi.ref.Append("value"))
+	return terra.ReferenceAsString(rasboi.ref.Append("value"))
 }
 
 type ResourceAwsS3BucketOwnerNameAttributes struct {
@@ -3040,11 +3040,11 @@ func (rasbon ResourceAwsS3BucketOwnerNameAttributes) InternalTokens() hclwrite.T
 }
 
 func (rasbon ResourceAwsS3BucketOwnerNameAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(rasbon.ref.Append("comparison"))
+	return terra.ReferenceAsString(rasbon.ref.Append("comparison"))
 }
 
 func (rasbon ResourceAwsS3BucketOwnerNameAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(rasbon.ref.Append("value"))
+	return terra.ReferenceAsString(rasbon.ref.Append("value"))
 }
 
 type ResourceContainerImageIdAttributes struct {
@@ -3064,11 +3064,11 @@ func (rcii ResourceContainerImageIdAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (rcii ResourceContainerImageIdAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(rcii.ref.Append("comparison"))
+	return terra.ReferenceAsString(rcii.ref.Append("comparison"))
 }
 
 func (rcii ResourceContainerImageIdAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(rcii.ref.Append("value"))
+	return terra.ReferenceAsString(rcii.ref.Append("value"))
 }
 
 type ResourceContainerImageNameAttributes struct {
@@ -3088,11 +3088,11 @@ func (rcin ResourceContainerImageNameAttributes) InternalTokens() hclwrite.Token
 }
 
 func (rcin ResourceContainerImageNameAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(rcin.ref.Append("comparison"))
+	return terra.ReferenceAsString(rcin.ref.Append("comparison"))
 }
 
 func (rcin ResourceContainerImageNameAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(rcin.ref.Append("value"))
+	return terra.ReferenceAsString(rcin.ref.Append("value"))
 }
 
 type ResourceContainerLaunchedAtAttributes struct {
@@ -3112,15 +3112,15 @@ func (rcla ResourceContainerLaunchedAtAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (rcla ResourceContainerLaunchedAtAttributes) End() terra.StringValue {
-	return terra.ReferenceString(rcla.ref.Append("end"))
+	return terra.ReferenceAsString(rcla.ref.Append("end"))
 }
 
 func (rcla ResourceContainerLaunchedAtAttributes) Start() terra.StringValue {
-	return terra.ReferenceString(rcla.ref.Append("start"))
+	return terra.ReferenceAsString(rcla.ref.Append("start"))
 }
 
 func (rcla ResourceContainerLaunchedAtAttributes) DateRange() terra.ListValue[ResourceContainerLaunchedAtDateRangeAttributes] {
-	return terra.ReferenceList[ResourceContainerLaunchedAtDateRangeAttributes](rcla.ref.Append("date_range"))
+	return terra.ReferenceAsList[ResourceContainerLaunchedAtDateRangeAttributes](rcla.ref.Append("date_range"))
 }
 
 type ResourceContainerLaunchedAtDateRangeAttributes struct {
@@ -3140,11 +3140,11 @@ func (dr ResourceContainerLaunchedAtDateRangeAttributes) InternalTokens() hclwri
 }
 
 func (dr ResourceContainerLaunchedAtDateRangeAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("unit"))
+	return terra.ReferenceAsString(dr.ref.Append("unit"))
 }
 
 func (dr ResourceContainerLaunchedAtDateRangeAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(dr.ref.Append("value"))
+	return terra.ReferenceAsNumber(dr.ref.Append("value"))
 }
 
 type ResourceContainerNameAttributes struct {
@@ -3164,11 +3164,11 @@ func (rcn ResourceContainerNameAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rcn ResourceContainerNameAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(rcn.ref.Append("comparison"))
+	return terra.ReferenceAsString(rcn.ref.Append("comparison"))
 }
 
 func (rcn ResourceContainerNameAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(rcn.ref.Append("value"))
+	return terra.ReferenceAsString(rcn.ref.Append("value"))
 }
 
 type ResourceDetailsOtherAttributes struct {
@@ -3188,15 +3188,15 @@ func (rdo ResourceDetailsOtherAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rdo ResourceDetailsOtherAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(rdo.ref.Append("comparison"))
+	return terra.ReferenceAsString(rdo.ref.Append("comparison"))
 }
 
 func (rdo ResourceDetailsOtherAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(rdo.ref.Append("key"))
+	return terra.ReferenceAsString(rdo.ref.Append("key"))
 }
 
 func (rdo ResourceDetailsOtherAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(rdo.ref.Append("value"))
+	return terra.ReferenceAsString(rdo.ref.Append("value"))
 }
 
 type ResourceIdAttributes struct {
@@ -3216,11 +3216,11 @@ func (ri ResourceIdAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ri ResourceIdAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(ri.ref.Append("comparison"))
+	return terra.ReferenceAsString(ri.ref.Append("comparison"))
 }
 
 func (ri ResourceIdAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(ri.ref.Append("value"))
+	return terra.ReferenceAsString(ri.ref.Append("value"))
 }
 
 type ResourcePartitionAttributes struct {
@@ -3240,11 +3240,11 @@ func (rp ResourcePartitionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rp ResourcePartitionAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(rp.ref.Append("comparison"))
+	return terra.ReferenceAsString(rp.ref.Append("comparison"))
 }
 
 func (rp ResourcePartitionAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(rp.ref.Append("value"))
+	return terra.ReferenceAsString(rp.ref.Append("value"))
 }
 
 type ResourceRegionAttributes struct {
@@ -3264,11 +3264,11 @@ func (rr ResourceRegionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rr ResourceRegionAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("comparison"))
+	return terra.ReferenceAsString(rr.ref.Append("comparison"))
 }
 
 func (rr ResourceRegionAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("value"))
+	return terra.ReferenceAsString(rr.ref.Append("value"))
 }
 
 type ResourceTagsAttributes struct {
@@ -3288,15 +3288,15 @@ func (rt ResourceTagsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rt ResourceTagsAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("comparison"))
+	return terra.ReferenceAsString(rt.ref.Append("comparison"))
 }
 
 func (rt ResourceTagsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("key"))
+	return terra.ReferenceAsString(rt.ref.Append("key"))
 }
 
 func (rt ResourceTagsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("value"))
+	return terra.ReferenceAsString(rt.ref.Append("value"))
 }
 
 type ResourceTypeAttributes struct {
@@ -3316,11 +3316,11 @@ func (rt ResourceTypeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rt ResourceTypeAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("comparison"))
+	return terra.ReferenceAsString(rt.ref.Append("comparison"))
 }
 
 func (rt ResourceTypeAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("value"))
+	return terra.ReferenceAsString(rt.ref.Append("value"))
 }
 
 type SeverityLabelAttributes struct {
@@ -3340,11 +3340,11 @@ func (sl SeverityLabelAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sl SeverityLabelAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("comparison"))
+	return terra.ReferenceAsString(sl.ref.Append("comparison"))
 }
 
 func (sl SeverityLabelAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("value"))
+	return terra.ReferenceAsString(sl.ref.Append("value"))
 }
 
 type SourceUrlAttributes struct {
@@ -3364,11 +3364,11 @@ func (su SourceUrlAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (su SourceUrlAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(su.ref.Append("comparison"))
+	return terra.ReferenceAsString(su.ref.Append("comparison"))
 }
 
 func (su SourceUrlAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(su.ref.Append("value"))
+	return terra.ReferenceAsString(su.ref.Append("value"))
 }
 
 type ThreatIntelIndicatorCategoryAttributes struct {
@@ -3388,11 +3388,11 @@ func (tiic ThreatIntelIndicatorCategoryAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (tiic ThreatIntelIndicatorCategoryAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(tiic.ref.Append("comparison"))
+	return terra.ReferenceAsString(tiic.ref.Append("comparison"))
 }
 
 func (tiic ThreatIntelIndicatorCategoryAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(tiic.ref.Append("value"))
+	return terra.ReferenceAsString(tiic.ref.Append("value"))
 }
 
 type ThreatIntelIndicatorLastObservedAtAttributes struct {
@@ -3412,15 +3412,15 @@ func (tiiloa ThreatIntelIndicatorLastObservedAtAttributes) InternalTokens() hclw
 }
 
 func (tiiloa ThreatIntelIndicatorLastObservedAtAttributes) End() terra.StringValue {
-	return terra.ReferenceString(tiiloa.ref.Append("end"))
+	return terra.ReferenceAsString(tiiloa.ref.Append("end"))
 }
 
 func (tiiloa ThreatIntelIndicatorLastObservedAtAttributes) Start() terra.StringValue {
-	return terra.ReferenceString(tiiloa.ref.Append("start"))
+	return terra.ReferenceAsString(tiiloa.ref.Append("start"))
 }
 
 func (tiiloa ThreatIntelIndicatorLastObservedAtAttributes) DateRange() terra.ListValue[ThreatIntelIndicatorLastObservedAtDateRangeAttributes] {
-	return terra.ReferenceList[ThreatIntelIndicatorLastObservedAtDateRangeAttributes](tiiloa.ref.Append("date_range"))
+	return terra.ReferenceAsList[ThreatIntelIndicatorLastObservedAtDateRangeAttributes](tiiloa.ref.Append("date_range"))
 }
 
 type ThreatIntelIndicatorLastObservedAtDateRangeAttributes struct {
@@ -3440,11 +3440,11 @@ func (dr ThreatIntelIndicatorLastObservedAtDateRangeAttributes) InternalTokens()
 }
 
 func (dr ThreatIntelIndicatorLastObservedAtDateRangeAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("unit"))
+	return terra.ReferenceAsString(dr.ref.Append("unit"))
 }
 
 func (dr ThreatIntelIndicatorLastObservedAtDateRangeAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(dr.ref.Append("value"))
+	return terra.ReferenceAsNumber(dr.ref.Append("value"))
 }
 
 type ThreatIntelIndicatorSourceAttributes struct {
@@ -3464,11 +3464,11 @@ func (tiis ThreatIntelIndicatorSourceAttributes) InternalTokens() hclwrite.Token
 }
 
 func (tiis ThreatIntelIndicatorSourceAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(tiis.ref.Append("comparison"))
+	return terra.ReferenceAsString(tiis.ref.Append("comparison"))
 }
 
 func (tiis ThreatIntelIndicatorSourceAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(tiis.ref.Append("value"))
+	return terra.ReferenceAsString(tiis.ref.Append("value"))
 }
 
 type ThreatIntelIndicatorSourceUrlAttributes struct {
@@ -3488,11 +3488,11 @@ func (tiisu ThreatIntelIndicatorSourceUrlAttributes) InternalTokens() hclwrite.T
 }
 
 func (tiisu ThreatIntelIndicatorSourceUrlAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(tiisu.ref.Append("comparison"))
+	return terra.ReferenceAsString(tiisu.ref.Append("comparison"))
 }
 
 func (tiisu ThreatIntelIndicatorSourceUrlAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(tiisu.ref.Append("value"))
+	return terra.ReferenceAsString(tiisu.ref.Append("value"))
 }
 
 type ThreatIntelIndicatorTypeAttributes struct {
@@ -3512,11 +3512,11 @@ func (tiit ThreatIntelIndicatorTypeAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (tiit ThreatIntelIndicatorTypeAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(tiit.ref.Append("comparison"))
+	return terra.ReferenceAsString(tiit.ref.Append("comparison"))
 }
 
 func (tiit ThreatIntelIndicatorTypeAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(tiit.ref.Append("value"))
+	return terra.ReferenceAsString(tiit.ref.Append("value"))
 }
 
 type ThreatIntelIndicatorValueAttributes struct {
@@ -3536,11 +3536,11 @@ func (tiiv ThreatIntelIndicatorValueAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (tiiv ThreatIntelIndicatorValueAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(tiiv.ref.Append("comparison"))
+	return terra.ReferenceAsString(tiiv.ref.Append("comparison"))
 }
 
 func (tiiv ThreatIntelIndicatorValueAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(tiiv.ref.Append("value"))
+	return terra.ReferenceAsString(tiiv.ref.Append("value"))
 }
 
 type TitleAttributes struct {
@@ -3560,11 +3560,11 @@ func (t TitleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TitleAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("comparison"))
+	return terra.ReferenceAsString(t.ref.Append("comparison"))
 }
 
 func (t TitleAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("value"))
+	return terra.ReferenceAsString(t.ref.Append("value"))
 }
 
 type TypeAttributes struct {
@@ -3584,11 +3584,11 @@ func (t TypeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TypeAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("comparison"))
+	return terra.ReferenceAsString(t.ref.Append("comparison"))
 }
 
 func (t TypeAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("value"))
+	return terra.ReferenceAsString(t.ref.Append("value"))
 }
 
 type UpdatedAtAttributes struct {
@@ -3608,15 +3608,15 @@ func (ua UpdatedAtAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ua UpdatedAtAttributes) End() terra.StringValue {
-	return terra.ReferenceString(ua.ref.Append("end"))
+	return terra.ReferenceAsString(ua.ref.Append("end"))
 }
 
 func (ua UpdatedAtAttributes) Start() terra.StringValue {
-	return terra.ReferenceString(ua.ref.Append("start"))
+	return terra.ReferenceAsString(ua.ref.Append("start"))
 }
 
 func (ua UpdatedAtAttributes) DateRange() terra.ListValue[UpdatedAtDateRangeAttributes] {
-	return terra.ReferenceList[UpdatedAtDateRangeAttributes](ua.ref.Append("date_range"))
+	return terra.ReferenceAsList[UpdatedAtDateRangeAttributes](ua.ref.Append("date_range"))
 }
 
 type UpdatedAtDateRangeAttributes struct {
@@ -3636,11 +3636,11 @@ func (dr UpdatedAtDateRangeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dr UpdatedAtDateRangeAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("unit"))
+	return terra.ReferenceAsString(dr.ref.Append("unit"))
 }
 
 func (dr UpdatedAtDateRangeAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(dr.ref.Append("value"))
+	return terra.ReferenceAsNumber(dr.ref.Append("value"))
 }
 
 type UserDefinedValuesAttributes struct {
@@ -3660,15 +3660,15 @@ func (udv UserDefinedValuesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (udv UserDefinedValuesAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(udv.ref.Append("comparison"))
+	return terra.ReferenceAsString(udv.ref.Append("comparison"))
 }
 
 func (udv UserDefinedValuesAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(udv.ref.Append("key"))
+	return terra.ReferenceAsString(udv.ref.Append("key"))
 }
 
 func (udv UserDefinedValuesAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(udv.ref.Append("value"))
+	return terra.ReferenceAsString(udv.ref.Append("value"))
 }
 
 type VerificationStateAttributes struct {
@@ -3688,11 +3688,11 @@ func (vs VerificationStateAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vs VerificationStateAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(vs.ref.Append("comparison"))
+	return terra.ReferenceAsString(vs.ref.Append("comparison"))
 }
 
 func (vs VerificationStateAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(vs.ref.Append("value"))
+	return terra.ReferenceAsString(vs.ref.Append("value"))
 }
 
 type WorkflowStatusAttributes struct {
@@ -3712,11 +3712,11 @@ func (ws WorkflowStatusAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ws WorkflowStatusAttributes) Comparison() terra.StringValue {
-	return terra.ReferenceString(ws.ref.Append("comparison"))
+	return terra.ReferenceAsString(ws.ref.Append("comparison"))
 }
 
 func (ws WorkflowStatusAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(ws.ref.Append("value"))
+	return terra.ReferenceAsString(ws.ref.Append("value"))
 }
 
 type FiltersState struct {

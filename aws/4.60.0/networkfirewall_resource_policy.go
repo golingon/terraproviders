@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewNetworkfirewallResourcePolicy creates a new instance of [NetworkfirewallResourcePolicy].
 func NewNetworkfirewallResourcePolicy(name string, args NetworkfirewallResourcePolicyArgs) *NetworkfirewallResourcePolicy {
 	return &NetworkfirewallResourcePolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewNetworkfirewallResourcePolicy(name string, args NetworkfirewallResourceP
 
 var _ terra.Resource = (*NetworkfirewallResourcePolicy)(nil)
 
+// NetworkfirewallResourcePolicy represents the Terraform resource aws_networkfirewall_resource_policy.
 type NetworkfirewallResourcePolicy struct {
-	Name  string
-	Args  NetworkfirewallResourcePolicyArgs
-	state *networkfirewallResourcePolicyState
+	Name      string
+	Args      NetworkfirewallResourcePolicyArgs
+	state     *networkfirewallResourcePolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NetworkfirewallResourcePolicy].
 func (nrp *NetworkfirewallResourcePolicy) Type() string {
 	return "aws_networkfirewall_resource_policy"
 }
 
+// LocalName returns the local name for [NetworkfirewallResourcePolicy].
 func (nrp *NetworkfirewallResourcePolicy) LocalName() string {
 	return nrp.Name
 }
 
+// Configuration returns the configuration (args) for [NetworkfirewallResourcePolicy].
 func (nrp *NetworkfirewallResourcePolicy) Configuration() interface{} {
 	return nrp.Args
 }
 
+// DependOn is used for other resources to depend on [NetworkfirewallResourcePolicy].
+func (nrp *NetworkfirewallResourcePolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(nrp)
+}
+
+// Dependencies returns the list of resources [NetworkfirewallResourcePolicy] depends_on.
+func (nrp *NetworkfirewallResourcePolicy) Dependencies() terra.Dependencies {
+	return nrp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NetworkfirewallResourcePolicy].
+func (nrp *NetworkfirewallResourcePolicy) LifecycleManagement() *terra.Lifecycle {
+	return nrp.Lifecycle
+}
+
+// Attributes returns the attributes for [NetworkfirewallResourcePolicy].
 func (nrp *NetworkfirewallResourcePolicy) Attributes() networkfirewallResourcePolicyAttributes {
 	return networkfirewallResourcePolicyAttributes{ref: terra.ReferenceResource(nrp)}
 }
 
+// ImportState imports the given attribute values into [NetworkfirewallResourcePolicy]'s state.
 func (nrp *NetworkfirewallResourcePolicy) ImportState(av io.Reader) error {
 	nrp.state = &networkfirewallResourcePolicyState{}
 	if err := json.NewDecoder(av).Decode(nrp.state); err != nil {
@@ -48,10 +72,12 @@ func (nrp *NetworkfirewallResourcePolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NetworkfirewallResourcePolicy] has state.
 func (nrp *NetworkfirewallResourcePolicy) State() (*networkfirewallResourcePolicyState, bool) {
 	return nrp.state, nrp.state != nil
 }
 
+// StateMust returns the state for [NetworkfirewallResourcePolicy]. Panics if the state is nil.
 func (nrp *NetworkfirewallResourcePolicy) StateMust() *networkfirewallResourcePolicyState {
 	if nrp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", nrp.Type(), nrp.LocalName()))
@@ -59,10 +85,7 @@ func (nrp *NetworkfirewallResourcePolicy) StateMust() *networkfirewallResourcePo
 	return nrp.state
 }
 
-func (nrp *NetworkfirewallResourcePolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(nrp)
-}
-
+// NetworkfirewallResourcePolicyArgs contains the configurations for aws_networkfirewall_resource_policy.
 type NetworkfirewallResourcePolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,23 +93,24 @@ type NetworkfirewallResourcePolicyArgs struct {
 	Policy terra.StringValue `hcl:"policy,attr" validate:"required"`
 	// ResourceArn: string, required
 	ResourceArn terra.StringValue `hcl:"resource_arn,attr" validate:"required"`
-	// DependsOn contains resources that NetworkfirewallResourcePolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type networkfirewallResourcePolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_networkfirewall_resource_policy.
 func (nrp networkfirewallResourcePolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nrp.ref.Append("id"))
+	return terra.ReferenceAsString(nrp.ref.Append("id"))
 }
 
+// Policy returns a reference to field policy of aws_networkfirewall_resource_policy.
 func (nrp networkfirewallResourcePolicyAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(nrp.ref.Append("policy"))
+	return terra.ReferenceAsString(nrp.ref.Append("policy"))
 }
 
+// ResourceArn returns a reference to field resource_arn of aws_networkfirewall_resource_policy.
 func (nrp networkfirewallResourcePolicyAttributes) ResourceArn() terra.StringValue {
-	return terra.ReferenceString(nrp.ref.Append("resource_arn"))
+	return terra.ReferenceAsString(nrp.ref.Append("resource_arn"))
 }
 
 type networkfirewallResourcePolicyState struct {

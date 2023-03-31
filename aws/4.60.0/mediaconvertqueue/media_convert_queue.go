@@ -33,15 +33,15 @@ func (rps ReservationPlanSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rps ReservationPlanSettingsAttributes) Commitment() terra.StringValue {
-	return terra.ReferenceString(rps.ref.Append("commitment"))
+	return terra.ReferenceAsString(rps.ref.Append("commitment"))
 }
 
 func (rps ReservationPlanSettingsAttributes) RenewalType() terra.StringValue {
-	return terra.ReferenceString(rps.ref.Append("renewal_type"))
+	return terra.ReferenceAsString(rps.ref.Append("renewal_type"))
 }
 
 func (rps ReservationPlanSettingsAttributes) ReservedSlots() terra.NumberValue {
-	return terra.ReferenceNumber(rps.ref.Append("reserved_slots"))
+	return terra.ReferenceAsNumber(rps.ref.Append("reserved_slots"))
 }
 
 type ReservationPlanSettingsState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewOpsworksStaticWebLayer creates a new instance of [OpsworksStaticWebLayer].
 func NewOpsworksStaticWebLayer(name string, args OpsworksStaticWebLayerArgs) *OpsworksStaticWebLayer {
 	return &OpsworksStaticWebLayer{
 		Args: args,
@@ -19,28 +20,51 @@ func NewOpsworksStaticWebLayer(name string, args OpsworksStaticWebLayerArgs) *Op
 
 var _ terra.Resource = (*OpsworksStaticWebLayer)(nil)
 
+// OpsworksStaticWebLayer represents the Terraform resource aws_opsworks_static_web_layer.
 type OpsworksStaticWebLayer struct {
-	Name  string
-	Args  OpsworksStaticWebLayerArgs
-	state *opsworksStaticWebLayerState
+	Name      string
+	Args      OpsworksStaticWebLayerArgs
+	state     *opsworksStaticWebLayerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [OpsworksStaticWebLayer].
 func (oswl *OpsworksStaticWebLayer) Type() string {
 	return "aws_opsworks_static_web_layer"
 }
 
+// LocalName returns the local name for [OpsworksStaticWebLayer].
 func (oswl *OpsworksStaticWebLayer) LocalName() string {
 	return oswl.Name
 }
 
+// Configuration returns the configuration (args) for [OpsworksStaticWebLayer].
 func (oswl *OpsworksStaticWebLayer) Configuration() interface{} {
 	return oswl.Args
 }
 
+// DependOn is used for other resources to depend on [OpsworksStaticWebLayer].
+func (oswl *OpsworksStaticWebLayer) DependOn() terra.Reference {
+	return terra.ReferenceResource(oswl)
+}
+
+// Dependencies returns the list of resources [OpsworksStaticWebLayer] depends_on.
+func (oswl *OpsworksStaticWebLayer) Dependencies() terra.Dependencies {
+	return oswl.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [OpsworksStaticWebLayer].
+func (oswl *OpsworksStaticWebLayer) LifecycleManagement() *terra.Lifecycle {
+	return oswl.Lifecycle
+}
+
+// Attributes returns the attributes for [OpsworksStaticWebLayer].
 func (oswl *OpsworksStaticWebLayer) Attributes() opsworksStaticWebLayerAttributes {
 	return opsworksStaticWebLayerAttributes{ref: terra.ReferenceResource(oswl)}
 }
 
+// ImportState imports the given attribute values into [OpsworksStaticWebLayer]'s state.
 func (oswl *OpsworksStaticWebLayer) ImportState(av io.Reader) error {
 	oswl.state = &opsworksStaticWebLayerState{}
 	if err := json.NewDecoder(av).Decode(oswl.state); err != nil {
@@ -49,10 +73,12 @@ func (oswl *OpsworksStaticWebLayer) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [OpsworksStaticWebLayer] has state.
 func (oswl *OpsworksStaticWebLayer) State() (*opsworksStaticWebLayerState, bool) {
 	return oswl.state, oswl.state != nil
 }
 
+// StateMust returns the state for [OpsworksStaticWebLayer]. Panics if the state is nil.
 func (oswl *OpsworksStaticWebLayer) StateMust() *opsworksStaticWebLayerState {
 	if oswl.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", oswl.Type(), oswl.LocalName()))
@@ -60,10 +86,7 @@ func (oswl *OpsworksStaticWebLayer) StateMust() *opsworksStaticWebLayerState {
 	return oswl.state
 }
 
-func (oswl *OpsworksStaticWebLayer) DependOn() terra.Reference {
-	return terra.ReferenceResource(oswl)
-}
-
+// OpsworksStaticWebLayerArgs contains the configurations for aws_opsworks_static_web_layer.
 type OpsworksStaticWebLayerArgs struct {
 	// AutoAssignElasticIps: bool, optional
 	AutoAssignElasticIps terra.BoolValue `hcl:"auto_assign_elastic_ips,attr"`
@@ -115,115 +138,136 @@ type OpsworksStaticWebLayerArgs struct {
 	EbsVolume []opsworksstaticweblayer.EbsVolume `hcl:"ebs_volume,block" validate:"min=0"`
 	// LoadBasedAutoScaling: optional
 	LoadBasedAutoScaling *opsworksstaticweblayer.LoadBasedAutoScaling `hcl:"load_based_auto_scaling,block"`
-	// DependsOn contains resources that OpsworksStaticWebLayer depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type opsworksStaticWebLayerAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_opsworks_static_web_layer.
 func (oswl opsworksStaticWebLayerAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(oswl.ref.Append("arn"))
+	return terra.ReferenceAsString(oswl.ref.Append("arn"))
 }
 
+// AutoAssignElasticIps returns a reference to field auto_assign_elastic_ips of aws_opsworks_static_web_layer.
 func (oswl opsworksStaticWebLayerAttributes) AutoAssignElasticIps() terra.BoolValue {
-	return terra.ReferenceBool(oswl.ref.Append("auto_assign_elastic_ips"))
+	return terra.ReferenceAsBool(oswl.ref.Append("auto_assign_elastic_ips"))
 }
 
+// AutoAssignPublicIps returns a reference to field auto_assign_public_ips of aws_opsworks_static_web_layer.
 func (oswl opsworksStaticWebLayerAttributes) AutoAssignPublicIps() terra.BoolValue {
-	return terra.ReferenceBool(oswl.ref.Append("auto_assign_public_ips"))
+	return terra.ReferenceAsBool(oswl.ref.Append("auto_assign_public_ips"))
 }
 
+// AutoHealing returns a reference to field auto_healing of aws_opsworks_static_web_layer.
 func (oswl opsworksStaticWebLayerAttributes) AutoHealing() terra.BoolValue {
-	return terra.ReferenceBool(oswl.ref.Append("auto_healing"))
+	return terra.ReferenceAsBool(oswl.ref.Append("auto_healing"))
 }
 
+// CustomConfigureRecipes returns a reference to field custom_configure_recipes of aws_opsworks_static_web_layer.
 func (oswl opsworksStaticWebLayerAttributes) CustomConfigureRecipes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](oswl.ref.Append("custom_configure_recipes"))
+	return terra.ReferenceAsList[terra.StringValue](oswl.ref.Append("custom_configure_recipes"))
 }
 
+// CustomDeployRecipes returns a reference to field custom_deploy_recipes of aws_opsworks_static_web_layer.
 func (oswl opsworksStaticWebLayerAttributes) CustomDeployRecipes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](oswl.ref.Append("custom_deploy_recipes"))
+	return terra.ReferenceAsList[terra.StringValue](oswl.ref.Append("custom_deploy_recipes"))
 }
 
+// CustomInstanceProfileArn returns a reference to field custom_instance_profile_arn of aws_opsworks_static_web_layer.
 func (oswl opsworksStaticWebLayerAttributes) CustomInstanceProfileArn() terra.StringValue {
-	return terra.ReferenceString(oswl.ref.Append("custom_instance_profile_arn"))
+	return terra.ReferenceAsString(oswl.ref.Append("custom_instance_profile_arn"))
 }
 
+// CustomJson returns a reference to field custom_json of aws_opsworks_static_web_layer.
 func (oswl opsworksStaticWebLayerAttributes) CustomJson() terra.StringValue {
-	return terra.ReferenceString(oswl.ref.Append("custom_json"))
+	return terra.ReferenceAsString(oswl.ref.Append("custom_json"))
 }
 
+// CustomSecurityGroupIds returns a reference to field custom_security_group_ids of aws_opsworks_static_web_layer.
 func (oswl opsworksStaticWebLayerAttributes) CustomSecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](oswl.ref.Append("custom_security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](oswl.ref.Append("custom_security_group_ids"))
 }
 
+// CustomSetupRecipes returns a reference to field custom_setup_recipes of aws_opsworks_static_web_layer.
 func (oswl opsworksStaticWebLayerAttributes) CustomSetupRecipes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](oswl.ref.Append("custom_setup_recipes"))
+	return terra.ReferenceAsList[terra.StringValue](oswl.ref.Append("custom_setup_recipes"))
 }
 
+// CustomShutdownRecipes returns a reference to field custom_shutdown_recipes of aws_opsworks_static_web_layer.
 func (oswl opsworksStaticWebLayerAttributes) CustomShutdownRecipes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](oswl.ref.Append("custom_shutdown_recipes"))
+	return terra.ReferenceAsList[terra.StringValue](oswl.ref.Append("custom_shutdown_recipes"))
 }
 
+// CustomUndeployRecipes returns a reference to field custom_undeploy_recipes of aws_opsworks_static_web_layer.
 func (oswl opsworksStaticWebLayerAttributes) CustomUndeployRecipes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](oswl.ref.Append("custom_undeploy_recipes"))
+	return terra.ReferenceAsList[terra.StringValue](oswl.ref.Append("custom_undeploy_recipes"))
 }
 
+// DrainElbOnShutdown returns a reference to field drain_elb_on_shutdown of aws_opsworks_static_web_layer.
 func (oswl opsworksStaticWebLayerAttributes) DrainElbOnShutdown() terra.BoolValue {
-	return terra.ReferenceBool(oswl.ref.Append("drain_elb_on_shutdown"))
+	return terra.ReferenceAsBool(oswl.ref.Append("drain_elb_on_shutdown"))
 }
 
+// ElasticLoadBalancer returns a reference to field elastic_load_balancer of aws_opsworks_static_web_layer.
 func (oswl opsworksStaticWebLayerAttributes) ElasticLoadBalancer() terra.StringValue {
-	return terra.ReferenceString(oswl.ref.Append("elastic_load_balancer"))
+	return terra.ReferenceAsString(oswl.ref.Append("elastic_load_balancer"))
 }
 
+// Id returns a reference to field id of aws_opsworks_static_web_layer.
 func (oswl opsworksStaticWebLayerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(oswl.ref.Append("id"))
+	return terra.ReferenceAsString(oswl.ref.Append("id"))
 }
 
+// InstallUpdatesOnBoot returns a reference to field install_updates_on_boot of aws_opsworks_static_web_layer.
 func (oswl opsworksStaticWebLayerAttributes) InstallUpdatesOnBoot() terra.BoolValue {
-	return terra.ReferenceBool(oswl.ref.Append("install_updates_on_boot"))
+	return terra.ReferenceAsBool(oswl.ref.Append("install_updates_on_boot"))
 }
 
+// InstanceShutdownTimeout returns a reference to field instance_shutdown_timeout of aws_opsworks_static_web_layer.
 func (oswl opsworksStaticWebLayerAttributes) InstanceShutdownTimeout() terra.NumberValue {
-	return terra.ReferenceNumber(oswl.ref.Append("instance_shutdown_timeout"))
+	return terra.ReferenceAsNumber(oswl.ref.Append("instance_shutdown_timeout"))
 }
 
+// Name returns a reference to field name of aws_opsworks_static_web_layer.
 func (oswl opsworksStaticWebLayerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(oswl.ref.Append("name"))
+	return terra.ReferenceAsString(oswl.ref.Append("name"))
 }
 
+// StackId returns a reference to field stack_id of aws_opsworks_static_web_layer.
 func (oswl opsworksStaticWebLayerAttributes) StackId() terra.StringValue {
-	return terra.ReferenceString(oswl.ref.Append("stack_id"))
+	return terra.ReferenceAsString(oswl.ref.Append("stack_id"))
 }
 
+// SystemPackages returns a reference to field system_packages of aws_opsworks_static_web_layer.
 func (oswl opsworksStaticWebLayerAttributes) SystemPackages() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](oswl.ref.Append("system_packages"))
+	return terra.ReferenceAsSet[terra.StringValue](oswl.ref.Append("system_packages"))
 }
 
+// Tags returns a reference to field tags of aws_opsworks_static_web_layer.
 func (oswl opsworksStaticWebLayerAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](oswl.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](oswl.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_opsworks_static_web_layer.
 func (oswl opsworksStaticWebLayerAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](oswl.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](oswl.ref.Append("tags_all"))
 }
 
+// UseEbsOptimizedInstances returns a reference to field use_ebs_optimized_instances of aws_opsworks_static_web_layer.
 func (oswl opsworksStaticWebLayerAttributes) UseEbsOptimizedInstances() terra.BoolValue {
-	return terra.ReferenceBool(oswl.ref.Append("use_ebs_optimized_instances"))
+	return terra.ReferenceAsBool(oswl.ref.Append("use_ebs_optimized_instances"))
 }
 
 func (oswl opsworksStaticWebLayerAttributes) CloudwatchConfiguration() terra.ListValue[opsworksstaticweblayer.CloudwatchConfigurationAttributes] {
-	return terra.ReferenceList[opsworksstaticweblayer.CloudwatchConfigurationAttributes](oswl.ref.Append("cloudwatch_configuration"))
+	return terra.ReferenceAsList[opsworksstaticweblayer.CloudwatchConfigurationAttributes](oswl.ref.Append("cloudwatch_configuration"))
 }
 
 func (oswl opsworksStaticWebLayerAttributes) EbsVolume() terra.SetValue[opsworksstaticweblayer.EbsVolumeAttributes] {
-	return terra.ReferenceSet[opsworksstaticweblayer.EbsVolumeAttributes](oswl.ref.Append("ebs_volume"))
+	return terra.ReferenceAsSet[opsworksstaticweblayer.EbsVolumeAttributes](oswl.ref.Append("ebs_volume"))
 }
 
 func (oswl opsworksStaticWebLayerAttributes) LoadBasedAutoScaling() terra.ListValue[opsworksstaticweblayer.LoadBasedAutoScalingAttributes] {
-	return terra.ReferenceList[opsworksstaticweblayer.LoadBasedAutoScalingAttributes](oswl.ref.Append("load_based_auto_scaling"))
+	return terra.ReferenceAsList[opsworksstaticweblayer.LoadBasedAutoScalingAttributes](oswl.ref.Append("load_based_auto_scaling"))
 }
 
 type opsworksStaticWebLayerState struct {

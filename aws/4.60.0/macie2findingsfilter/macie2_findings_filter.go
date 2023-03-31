@@ -48,7 +48,7 @@ func (fc FindingCriteriaAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fc FindingCriteriaAttributes) Criterion() terra.SetValue[CriterionAttributes] {
-	return terra.ReferenceSet[CriterionAttributes](fc.ref.Append("criterion"))
+	return terra.ReferenceAsSet[CriterionAttributes](fc.ref.Append("criterion"))
 }
 
 type CriterionAttributes struct {
@@ -68,35 +68,35 @@ func (c CriterionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c CriterionAttributes) Eq() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](c.ref.Append("eq"))
+	return terra.ReferenceAsSet[terra.StringValue](c.ref.Append("eq"))
 }
 
 func (c CriterionAttributes) EqExactMatch() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](c.ref.Append("eq_exact_match"))
+	return terra.ReferenceAsSet[terra.StringValue](c.ref.Append("eq_exact_match"))
 }
 
 func (c CriterionAttributes) Field() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("field"))
+	return terra.ReferenceAsString(c.ref.Append("field"))
 }
 
 func (c CriterionAttributes) Gt() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("gt"))
+	return terra.ReferenceAsString(c.ref.Append("gt"))
 }
 
 func (c CriterionAttributes) Gte() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("gte"))
+	return terra.ReferenceAsString(c.ref.Append("gte"))
 }
 
 func (c CriterionAttributes) Lt() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("lt"))
+	return terra.ReferenceAsString(c.ref.Append("lt"))
 }
 
 func (c CriterionAttributes) Lte() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("lte"))
+	return terra.ReferenceAsString(c.ref.Append("lte"))
 }
 
 func (c CriterionAttributes) Neq() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](c.ref.Append("neq"))
+	return terra.ReferenceAsSet[terra.StringValue](c.ref.Append("neq"))
 }
 
 type FindingCriteriaState struct {

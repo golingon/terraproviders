@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataConnectContactFlow creates a new instance of [DataConnectContactFlow].
 func NewDataConnectContactFlow(name string, args DataConnectContactFlowArgs) *DataConnectContactFlow {
 	return &DataConnectContactFlow{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataConnectContactFlow(name string, args DataConnectContactFlowArgs) *Da
 
 var _ terra.DataResource = (*DataConnectContactFlow)(nil)
 
+// DataConnectContactFlow represents the Terraform data resource aws_connect_contact_flow.
 type DataConnectContactFlow struct {
 	Name string
 	Args DataConnectContactFlowArgs
 }
 
+// DataSource returns the Terraform object type for [DataConnectContactFlow].
 func (ccf *DataConnectContactFlow) DataSource() string {
 	return "aws_connect_contact_flow"
 }
 
+// LocalName returns the local name for [DataConnectContactFlow].
 func (ccf *DataConnectContactFlow) LocalName() string {
 	return ccf.Name
 }
 
+// Configuration returns the configuration (args) for [DataConnectContactFlow].
 func (ccf *DataConnectContactFlow) Configuration() interface{} {
 	return ccf.Args
 }
 
+// Attributes returns the attributes for [DataConnectContactFlow].
 func (ccf *DataConnectContactFlow) Attributes() dataConnectContactFlowAttributes {
 	return dataConnectContactFlowAttributes{ref: terra.ReferenceDataResource(ccf)}
 }
 
+// DataConnectContactFlowArgs contains the configurations for aws_connect_contact_flow.
 type DataConnectContactFlowArgs struct {
 	// ContactFlowId: string, optional
 	ContactFlowId terra.StringValue `hcl:"contact_flow_id,attr"`
@@ -52,38 +59,47 @@ type dataConnectContactFlowAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_connect_contact_flow.
 func (ccf dataConnectContactFlowAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ccf.ref.Append("arn"))
+	return terra.ReferenceAsString(ccf.ref.Append("arn"))
 }
 
+// ContactFlowId returns a reference to field contact_flow_id of aws_connect_contact_flow.
 func (ccf dataConnectContactFlowAttributes) ContactFlowId() terra.StringValue {
-	return terra.ReferenceString(ccf.ref.Append("contact_flow_id"))
+	return terra.ReferenceAsString(ccf.ref.Append("contact_flow_id"))
 }
 
+// Content returns a reference to field content of aws_connect_contact_flow.
 func (ccf dataConnectContactFlowAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(ccf.ref.Append("content"))
+	return terra.ReferenceAsString(ccf.ref.Append("content"))
 }
 
+// Description returns a reference to field description of aws_connect_contact_flow.
 func (ccf dataConnectContactFlowAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ccf.ref.Append("description"))
+	return terra.ReferenceAsString(ccf.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_connect_contact_flow.
 func (ccf dataConnectContactFlowAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ccf.ref.Append("id"))
+	return terra.ReferenceAsString(ccf.ref.Append("id"))
 }
 
+// InstanceId returns a reference to field instance_id of aws_connect_contact_flow.
 func (ccf dataConnectContactFlowAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(ccf.ref.Append("instance_id"))
+	return terra.ReferenceAsString(ccf.ref.Append("instance_id"))
 }
 
+// Name returns a reference to field name of aws_connect_contact_flow.
 func (ccf dataConnectContactFlowAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ccf.ref.Append("name"))
+	return terra.ReferenceAsString(ccf.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_connect_contact_flow.
 func (ccf dataConnectContactFlowAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ccf.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ccf.ref.Append("tags"))
 }
 
+// Type returns a reference to field type of aws_connect_contact_flow.
 func (ccf dataConnectContactFlowAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ccf.ref.Append("type"))
+	return terra.ReferenceAsString(ccf.ref.Append("type"))
 }

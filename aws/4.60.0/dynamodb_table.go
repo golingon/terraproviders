@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDynamodbTable creates a new instance of [DynamodbTable].
 func NewDynamodbTable(name string, args DynamodbTableArgs) *DynamodbTable {
 	return &DynamodbTable{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDynamodbTable(name string, args DynamodbTableArgs) *DynamodbTable {
 
 var _ terra.Resource = (*DynamodbTable)(nil)
 
+// DynamodbTable represents the Terraform resource aws_dynamodb_table.
 type DynamodbTable struct {
-	Name  string
-	Args  DynamodbTableArgs
-	state *dynamodbTableState
+	Name      string
+	Args      DynamodbTableArgs
+	state     *dynamodbTableState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DynamodbTable].
 func (dt *DynamodbTable) Type() string {
 	return "aws_dynamodb_table"
 }
 
+// LocalName returns the local name for [DynamodbTable].
 func (dt *DynamodbTable) LocalName() string {
 	return dt.Name
 }
 
+// Configuration returns the configuration (args) for [DynamodbTable].
 func (dt *DynamodbTable) Configuration() interface{} {
 	return dt.Args
 }
 
+// DependOn is used for other resources to depend on [DynamodbTable].
+func (dt *DynamodbTable) DependOn() terra.Reference {
+	return terra.ReferenceResource(dt)
+}
+
+// Dependencies returns the list of resources [DynamodbTable] depends_on.
+func (dt *DynamodbTable) Dependencies() terra.Dependencies {
+	return dt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DynamodbTable].
+func (dt *DynamodbTable) LifecycleManagement() *terra.Lifecycle {
+	return dt.Lifecycle
+}
+
+// Attributes returns the attributes for [DynamodbTable].
 func (dt *DynamodbTable) Attributes() dynamodbTableAttributes {
 	return dynamodbTableAttributes{ref: terra.ReferenceResource(dt)}
 }
 
+// ImportState imports the given attribute values into [DynamodbTable]'s state.
 func (dt *DynamodbTable) ImportState(av io.Reader) error {
 	dt.state = &dynamodbTableState{}
 	if err := json.NewDecoder(av).Decode(dt.state); err != nil {
@@ -49,10 +73,12 @@ func (dt *DynamodbTable) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DynamodbTable] has state.
 func (dt *DynamodbTable) State() (*dynamodbTableState, bool) {
 	return dt.state, dt.state != nil
 }
 
+// StateMust returns the state for [DynamodbTable]. Panics if the state is nil.
 func (dt *DynamodbTable) StateMust() *dynamodbTableState {
 	if dt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dt.Type(), dt.LocalName()))
@@ -60,10 +86,7 @@ func (dt *DynamodbTable) StateMust() *dynamodbTableState {
 	return dt.state
 }
 
-func (dt *DynamodbTable) DependOn() terra.Reference {
-	return terra.ReferenceResource(dt)
-}
-
+// DynamodbTableArgs contains the configurations for aws_dynamodb_table.
 type DynamodbTableArgs struct {
 	// BillingMode: string, optional
 	BillingMode terra.StringValue `hcl:"billing_mode,attr"`
@@ -113,119 +136,136 @@ type DynamodbTableArgs struct {
 	Timeouts *dynamodbtable.Timeouts `hcl:"timeouts,block"`
 	// Ttl: optional
 	Ttl *dynamodbtable.Ttl `hcl:"ttl,block"`
-	// DependsOn contains resources that DynamodbTable depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dynamodbTableAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_dynamodb_table.
 func (dt dynamodbTableAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("arn"))
+	return terra.ReferenceAsString(dt.ref.Append("arn"))
 }
 
+// BillingMode returns a reference to field billing_mode of aws_dynamodb_table.
 func (dt dynamodbTableAttributes) BillingMode() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("billing_mode"))
+	return terra.ReferenceAsString(dt.ref.Append("billing_mode"))
 }
 
+// DeletionProtectionEnabled returns a reference to field deletion_protection_enabled of aws_dynamodb_table.
 func (dt dynamodbTableAttributes) DeletionProtectionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(dt.ref.Append("deletion_protection_enabled"))
+	return terra.ReferenceAsBool(dt.ref.Append("deletion_protection_enabled"))
 }
 
+// HashKey returns a reference to field hash_key of aws_dynamodb_table.
 func (dt dynamodbTableAttributes) HashKey() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("hash_key"))
+	return terra.ReferenceAsString(dt.ref.Append("hash_key"))
 }
 
+// Id returns a reference to field id of aws_dynamodb_table.
 func (dt dynamodbTableAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("id"))
+	return terra.ReferenceAsString(dt.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_dynamodb_table.
 func (dt dynamodbTableAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("name"))
+	return terra.ReferenceAsString(dt.ref.Append("name"))
 }
 
+// RangeKey returns a reference to field range_key of aws_dynamodb_table.
 func (dt dynamodbTableAttributes) RangeKey() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("range_key"))
+	return terra.ReferenceAsString(dt.ref.Append("range_key"))
 }
 
+// ReadCapacity returns a reference to field read_capacity of aws_dynamodb_table.
 func (dt dynamodbTableAttributes) ReadCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(dt.ref.Append("read_capacity"))
+	return terra.ReferenceAsNumber(dt.ref.Append("read_capacity"))
 }
 
+// RestoreDateTime returns a reference to field restore_date_time of aws_dynamodb_table.
 func (dt dynamodbTableAttributes) RestoreDateTime() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("restore_date_time"))
+	return terra.ReferenceAsString(dt.ref.Append("restore_date_time"))
 }
 
+// RestoreSourceName returns a reference to field restore_source_name of aws_dynamodb_table.
 func (dt dynamodbTableAttributes) RestoreSourceName() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("restore_source_name"))
+	return terra.ReferenceAsString(dt.ref.Append("restore_source_name"))
 }
 
+// RestoreToLatestTime returns a reference to field restore_to_latest_time of aws_dynamodb_table.
 func (dt dynamodbTableAttributes) RestoreToLatestTime() terra.BoolValue {
-	return terra.ReferenceBool(dt.ref.Append("restore_to_latest_time"))
+	return terra.ReferenceAsBool(dt.ref.Append("restore_to_latest_time"))
 }
 
+// StreamArn returns a reference to field stream_arn of aws_dynamodb_table.
 func (dt dynamodbTableAttributes) StreamArn() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("stream_arn"))
+	return terra.ReferenceAsString(dt.ref.Append("stream_arn"))
 }
 
+// StreamEnabled returns a reference to field stream_enabled of aws_dynamodb_table.
 func (dt dynamodbTableAttributes) StreamEnabled() terra.BoolValue {
-	return terra.ReferenceBool(dt.ref.Append("stream_enabled"))
+	return terra.ReferenceAsBool(dt.ref.Append("stream_enabled"))
 }
 
+// StreamLabel returns a reference to field stream_label of aws_dynamodb_table.
 func (dt dynamodbTableAttributes) StreamLabel() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("stream_label"))
+	return terra.ReferenceAsString(dt.ref.Append("stream_label"))
 }
 
+// StreamViewType returns a reference to field stream_view_type of aws_dynamodb_table.
 func (dt dynamodbTableAttributes) StreamViewType() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("stream_view_type"))
+	return terra.ReferenceAsString(dt.ref.Append("stream_view_type"))
 }
 
+// TableClass returns a reference to field table_class of aws_dynamodb_table.
 func (dt dynamodbTableAttributes) TableClass() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("table_class"))
+	return terra.ReferenceAsString(dt.ref.Append("table_class"))
 }
 
+// Tags returns a reference to field tags of aws_dynamodb_table.
 func (dt dynamodbTableAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dt.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dt.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_dynamodb_table.
 func (dt dynamodbTableAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dt.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dt.ref.Append("tags_all"))
 }
 
+// WriteCapacity returns a reference to field write_capacity of aws_dynamodb_table.
 func (dt dynamodbTableAttributes) WriteCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(dt.ref.Append("write_capacity"))
+	return terra.ReferenceAsNumber(dt.ref.Append("write_capacity"))
 }
 
 func (dt dynamodbTableAttributes) Attribute() terra.SetValue[dynamodbtable.AttributeAttributes] {
-	return terra.ReferenceSet[dynamodbtable.AttributeAttributes](dt.ref.Append("attribute"))
+	return terra.ReferenceAsSet[dynamodbtable.AttributeAttributes](dt.ref.Append("attribute"))
 }
 
 func (dt dynamodbTableAttributes) GlobalSecondaryIndex() terra.SetValue[dynamodbtable.GlobalSecondaryIndexAttributes] {
-	return terra.ReferenceSet[dynamodbtable.GlobalSecondaryIndexAttributes](dt.ref.Append("global_secondary_index"))
+	return terra.ReferenceAsSet[dynamodbtable.GlobalSecondaryIndexAttributes](dt.ref.Append("global_secondary_index"))
 }
 
 func (dt dynamodbTableAttributes) LocalSecondaryIndex() terra.SetValue[dynamodbtable.LocalSecondaryIndexAttributes] {
-	return terra.ReferenceSet[dynamodbtable.LocalSecondaryIndexAttributes](dt.ref.Append("local_secondary_index"))
+	return terra.ReferenceAsSet[dynamodbtable.LocalSecondaryIndexAttributes](dt.ref.Append("local_secondary_index"))
 }
 
 func (dt dynamodbTableAttributes) PointInTimeRecovery() terra.ListValue[dynamodbtable.PointInTimeRecoveryAttributes] {
-	return terra.ReferenceList[dynamodbtable.PointInTimeRecoveryAttributes](dt.ref.Append("point_in_time_recovery"))
+	return terra.ReferenceAsList[dynamodbtable.PointInTimeRecoveryAttributes](dt.ref.Append("point_in_time_recovery"))
 }
 
 func (dt dynamodbTableAttributes) Replica() terra.SetValue[dynamodbtable.ReplicaAttributes] {
-	return terra.ReferenceSet[dynamodbtable.ReplicaAttributes](dt.ref.Append("replica"))
+	return terra.ReferenceAsSet[dynamodbtable.ReplicaAttributes](dt.ref.Append("replica"))
 }
 
 func (dt dynamodbTableAttributes) ServerSideEncryption() terra.ListValue[dynamodbtable.ServerSideEncryptionAttributes] {
-	return terra.ReferenceList[dynamodbtable.ServerSideEncryptionAttributes](dt.ref.Append("server_side_encryption"))
+	return terra.ReferenceAsList[dynamodbtable.ServerSideEncryptionAttributes](dt.ref.Append("server_side_encryption"))
 }
 
 func (dt dynamodbTableAttributes) Timeouts() dynamodbtable.TimeoutsAttributes {
-	return terra.ReferenceSingle[dynamodbtable.TimeoutsAttributes](dt.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dynamodbtable.TimeoutsAttributes](dt.ref.Append("timeouts"))
 }
 
 func (dt dynamodbTableAttributes) Ttl() terra.ListValue[dynamodbtable.TtlAttributes] {
-	return terra.ReferenceList[dynamodbtable.TtlAttributes](dt.ref.Append("ttl"))
+	return terra.ReferenceAsList[dynamodbtable.TtlAttributes](dt.ref.Append("ttl"))
 }
 
 type dynamodbTableState struct {

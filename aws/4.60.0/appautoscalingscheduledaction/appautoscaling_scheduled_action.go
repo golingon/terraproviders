@@ -31,11 +31,11 @@ func (sta ScalableTargetActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sta ScalableTargetActionAttributes) MaxCapacity() terra.StringValue {
-	return terra.ReferenceString(sta.ref.Append("max_capacity"))
+	return terra.ReferenceAsString(sta.ref.Append("max_capacity"))
 }
 
 func (sta ScalableTargetActionAttributes) MinCapacity() terra.StringValue {
-	return terra.ReferenceString(sta.ref.Append("min_capacity"))
+	return terra.ReferenceAsString(sta.ref.Append("min_capacity"))
 }
 
 type ScalableTargetActionState struct {

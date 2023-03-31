@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataAppconfigEnvironments creates a new instance of [DataAppconfigEnvironments].
 func NewDataAppconfigEnvironments(name string, args DataAppconfigEnvironmentsArgs) *DataAppconfigEnvironments {
 	return &DataAppconfigEnvironments{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataAppconfigEnvironments(name string, args DataAppconfigEnvironmentsArg
 
 var _ terra.DataResource = (*DataAppconfigEnvironments)(nil)
 
+// DataAppconfigEnvironments represents the Terraform data resource aws_appconfig_environments.
 type DataAppconfigEnvironments struct {
 	Name string
 	Args DataAppconfigEnvironmentsArgs
 }
 
+// DataSource returns the Terraform object type for [DataAppconfigEnvironments].
 func (ae *DataAppconfigEnvironments) DataSource() string {
 	return "aws_appconfig_environments"
 }
 
+// LocalName returns the local name for [DataAppconfigEnvironments].
 func (ae *DataAppconfigEnvironments) LocalName() string {
 	return ae.Name
 }
 
+// Configuration returns the configuration (args) for [DataAppconfigEnvironments].
 func (ae *DataAppconfigEnvironments) Configuration() interface{} {
 	return ae.Args
 }
 
+// Attributes returns the attributes for [DataAppconfigEnvironments].
 func (ae *DataAppconfigEnvironments) Attributes() dataAppconfigEnvironmentsAttributes {
 	return dataAppconfigEnvironmentsAttributes{ref: terra.ReferenceDataResource(ae)}
 }
 
+// DataAppconfigEnvironmentsArgs contains the configurations for aws_appconfig_environments.
 type DataAppconfigEnvironmentsArgs struct {
 	// ApplicationId: string, required
 	ApplicationId terra.StringValue `hcl:"application_id,attr" validate:"required"`
@@ -44,14 +51,17 @@ type dataAppconfigEnvironmentsAttributes struct {
 	ref terra.Reference
 }
 
+// ApplicationId returns a reference to field application_id of aws_appconfig_environments.
 func (ae dataAppconfigEnvironmentsAttributes) ApplicationId() terra.StringValue {
-	return terra.ReferenceString(ae.ref.Append("application_id"))
+	return terra.ReferenceAsString(ae.ref.Append("application_id"))
 }
 
+// EnvironmentIds returns a reference to field environment_ids of aws_appconfig_environments.
 func (ae dataAppconfigEnvironmentsAttributes) EnvironmentIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ae.ref.Append("environment_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](ae.ref.Append("environment_ids"))
 }
 
+// Id returns a reference to field id of aws_appconfig_environments.
 func (ae dataAppconfigEnvironmentsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ae.ref.Append("id"))
+	return terra.ReferenceAsString(ae.ref.Append("id"))
 }

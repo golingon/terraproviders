@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataS3BucketPolicy creates a new instance of [DataS3BucketPolicy].
 func NewDataS3BucketPolicy(name string, args DataS3BucketPolicyArgs) *DataS3BucketPolicy {
 	return &DataS3BucketPolicy{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataS3BucketPolicy(name string, args DataS3BucketPolicyArgs) *DataS3Buck
 
 var _ terra.DataResource = (*DataS3BucketPolicy)(nil)
 
+// DataS3BucketPolicy represents the Terraform data resource aws_s3_bucket_policy.
 type DataS3BucketPolicy struct {
 	Name string
 	Args DataS3BucketPolicyArgs
 }
 
+// DataSource returns the Terraform object type for [DataS3BucketPolicy].
 func (sbp *DataS3BucketPolicy) DataSource() string {
 	return "aws_s3_bucket_policy"
 }
 
+// LocalName returns the local name for [DataS3BucketPolicy].
 func (sbp *DataS3BucketPolicy) LocalName() string {
 	return sbp.Name
 }
 
+// Configuration returns the configuration (args) for [DataS3BucketPolicy].
 func (sbp *DataS3BucketPolicy) Configuration() interface{} {
 	return sbp.Args
 }
 
+// Attributes returns the attributes for [DataS3BucketPolicy].
 func (sbp *DataS3BucketPolicy) Attributes() dataS3BucketPolicyAttributes {
 	return dataS3BucketPolicyAttributes{ref: terra.ReferenceDataResource(sbp)}
 }
 
+// DataS3BucketPolicyArgs contains the configurations for aws_s3_bucket_policy.
 type DataS3BucketPolicyArgs struct {
 	// Bucket: string, required
 	Bucket terra.StringValue `hcl:"bucket,attr" validate:"required"`
@@ -44,14 +51,17 @@ type dataS3BucketPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Bucket returns a reference to field bucket of aws_s3_bucket_policy.
 func (sbp dataS3BucketPolicyAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(sbp.ref.Append("bucket"))
+	return terra.ReferenceAsString(sbp.ref.Append("bucket"))
 }
 
+// Id returns a reference to field id of aws_s3_bucket_policy.
 func (sbp dataS3BucketPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sbp.ref.Append("id"))
+	return terra.ReferenceAsString(sbp.ref.Append("id"))
 }
 
+// Policy returns a reference to field policy of aws_s3_bucket_policy.
 func (sbp dataS3BucketPolicyAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(sbp.ref.Append("policy"))
+	return terra.ReferenceAsString(sbp.ref.Append("policy"))
 }

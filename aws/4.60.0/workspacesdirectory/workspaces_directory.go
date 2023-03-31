@@ -69,23 +69,23 @@ func (ssp SelfServicePermissionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ssp SelfServicePermissionsAttributes) ChangeComputeType() terra.BoolValue {
-	return terra.ReferenceBool(ssp.ref.Append("change_compute_type"))
+	return terra.ReferenceAsBool(ssp.ref.Append("change_compute_type"))
 }
 
 func (ssp SelfServicePermissionsAttributes) IncreaseVolumeSize() terra.BoolValue {
-	return terra.ReferenceBool(ssp.ref.Append("increase_volume_size"))
+	return terra.ReferenceAsBool(ssp.ref.Append("increase_volume_size"))
 }
 
 func (ssp SelfServicePermissionsAttributes) RebuildWorkspace() terra.BoolValue {
-	return terra.ReferenceBool(ssp.ref.Append("rebuild_workspace"))
+	return terra.ReferenceAsBool(ssp.ref.Append("rebuild_workspace"))
 }
 
 func (ssp SelfServicePermissionsAttributes) RestartWorkspace() terra.BoolValue {
-	return terra.ReferenceBool(ssp.ref.Append("restart_workspace"))
+	return terra.ReferenceAsBool(ssp.ref.Append("restart_workspace"))
 }
 
 func (ssp SelfServicePermissionsAttributes) SwitchRunningMode() terra.BoolValue {
-	return terra.ReferenceBool(ssp.ref.Append("switch_running_mode"))
+	return terra.ReferenceAsBool(ssp.ref.Append("switch_running_mode"))
 }
 
 type WorkspaceAccessPropertiesAttributes struct {
@@ -105,35 +105,35 @@ func (wap WorkspaceAccessPropertiesAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (wap WorkspaceAccessPropertiesAttributes) DeviceTypeAndroid() terra.StringValue {
-	return terra.ReferenceString(wap.ref.Append("device_type_android"))
+	return terra.ReferenceAsString(wap.ref.Append("device_type_android"))
 }
 
 func (wap WorkspaceAccessPropertiesAttributes) DeviceTypeChromeos() terra.StringValue {
-	return terra.ReferenceString(wap.ref.Append("device_type_chromeos"))
+	return terra.ReferenceAsString(wap.ref.Append("device_type_chromeos"))
 }
 
 func (wap WorkspaceAccessPropertiesAttributes) DeviceTypeIos() terra.StringValue {
-	return terra.ReferenceString(wap.ref.Append("device_type_ios"))
+	return terra.ReferenceAsString(wap.ref.Append("device_type_ios"))
 }
 
 func (wap WorkspaceAccessPropertiesAttributes) DeviceTypeLinux() terra.StringValue {
-	return terra.ReferenceString(wap.ref.Append("device_type_linux"))
+	return terra.ReferenceAsString(wap.ref.Append("device_type_linux"))
 }
 
 func (wap WorkspaceAccessPropertiesAttributes) DeviceTypeOsx() terra.StringValue {
-	return terra.ReferenceString(wap.ref.Append("device_type_osx"))
+	return terra.ReferenceAsString(wap.ref.Append("device_type_osx"))
 }
 
 func (wap WorkspaceAccessPropertiesAttributes) DeviceTypeWeb() terra.StringValue {
-	return terra.ReferenceString(wap.ref.Append("device_type_web"))
+	return terra.ReferenceAsString(wap.ref.Append("device_type_web"))
 }
 
 func (wap WorkspaceAccessPropertiesAttributes) DeviceTypeWindows() terra.StringValue {
-	return terra.ReferenceString(wap.ref.Append("device_type_windows"))
+	return terra.ReferenceAsString(wap.ref.Append("device_type_windows"))
 }
 
 func (wap WorkspaceAccessPropertiesAttributes) DeviceTypeZeroclient() terra.StringValue {
-	return terra.ReferenceString(wap.ref.Append("device_type_zeroclient"))
+	return terra.ReferenceAsString(wap.ref.Append("device_type_zeroclient"))
 }
 
 type WorkspaceCreationPropertiesAttributes struct {
@@ -153,23 +153,23 @@ func (wcp WorkspaceCreationPropertiesAttributes) InternalTokens() hclwrite.Token
 }
 
 func (wcp WorkspaceCreationPropertiesAttributes) CustomSecurityGroupId() terra.StringValue {
-	return terra.ReferenceString(wcp.ref.Append("custom_security_group_id"))
+	return terra.ReferenceAsString(wcp.ref.Append("custom_security_group_id"))
 }
 
 func (wcp WorkspaceCreationPropertiesAttributes) DefaultOu() terra.StringValue {
-	return terra.ReferenceString(wcp.ref.Append("default_ou"))
+	return terra.ReferenceAsString(wcp.ref.Append("default_ou"))
 }
 
 func (wcp WorkspaceCreationPropertiesAttributes) EnableInternetAccess() terra.BoolValue {
-	return terra.ReferenceBool(wcp.ref.Append("enable_internet_access"))
+	return terra.ReferenceAsBool(wcp.ref.Append("enable_internet_access"))
 }
 
 func (wcp WorkspaceCreationPropertiesAttributes) EnableMaintenanceMode() terra.BoolValue {
-	return terra.ReferenceBool(wcp.ref.Append("enable_maintenance_mode"))
+	return terra.ReferenceAsBool(wcp.ref.Append("enable_maintenance_mode"))
 }
 
 func (wcp WorkspaceCreationPropertiesAttributes) UserEnabledAsLocalAdministrator() terra.BoolValue {
-	return terra.ReferenceBool(wcp.ref.Append("user_enabled_as_local_administrator"))
+	return terra.ReferenceAsBool(wcp.ref.Append("user_enabled_as_local_administrator"))
 }
 
 type SelfServicePermissionsState struct {

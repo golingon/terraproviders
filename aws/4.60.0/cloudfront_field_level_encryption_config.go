@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudfrontFieldLevelEncryptionConfig creates a new instance of [CloudfrontFieldLevelEncryptionConfig].
 func NewCloudfrontFieldLevelEncryptionConfig(name string, args CloudfrontFieldLevelEncryptionConfigArgs) *CloudfrontFieldLevelEncryptionConfig {
 	return &CloudfrontFieldLevelEncryptionConfig{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudfrontFieldLevelEncryptionConfig(name string, args CloudfrontFieldLe
 
 var _ terra.Resource = (*CloudfrontFieldLevelEncryptionConfig)(nil)
 
+// CloudfrontFieldLevelEncryptionConfig represents the Terraform resource aws_cloudfront_field_level_encryption_config.
 type CloudfrontFieldLevelEncryptionConfig struct {
-	Name  string
-	Args  CloudfrontFieldLevelEncryptionConfigArgs
-	state *cloudfrontFieldLevelEncryptionConfigState
+	Name      string
+	Args      CloudfrontFieldLevelEncryptionConfigArgs
+	state     *cloudfrontFieldLevelEncryptionConfigState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudfrontFieldLevelEncryptionConfig].
 func (cflec *CloudfrontFieldLevelEncryptionConfig) Type() string {
 	return "aws_cloudfront_field_level_encryption_config"
 }
 
+// LocalName returns the local name for [CloudfrontFieldLevelEncryptionConfig].
 func (cflec *CloudfrontFieldLevelEncryptionConfig) LocalName() string {
 	return cflec.Name
 }
 
+// Configuration returns the configuration (args) for [CloudfrontFieldLevelEncryptionConfig].
 func (cflec *CloudfrontFieldLevelEncryptionConfig) Configuration() interface{} {
 	return cflec.Args
 }
 
+// DependOn is used for other resources to depend on [CloudfrontFieldLevelEncryptionConfig].
+func (cflec *CloudfrontFieldLevelEncryptionConfig) DependOn() terra.Reference {
+	return terra.ReferenceResource(cflec)
+}
+
+// Dependencies returns the list of resources [CloudfrontFieldLevelEncryptionConfig] depends_on.
+func (cflec *CloudfrontFieldLevelEncryptionConfig) Dependencies() terra.Dependencies {
+	return cflec.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudfrontFieldLevelEncryptionConfig].
+func (cflec *CloudfrontFieldLevelEncryptionConfig) LifecycleManagement() *terra.Lifecycle {
+	return cflec.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudfrontFieldLevelEncryptionConfig].
 func (cflec *CloudfrontFieldLevelEncryptionConfig) Attributes() cloudfrontFieldLevelEncryptionConfigAttributes {
 	return cloudfrontFieldLevelEncryptionConfigAttributes{ref: terra.ReferenceResource(cflec)}
 }
 
+// ImportState imports the given attribute values into [CloudfrontFieldLevelEncryptionConfig]'s state.
 func (cflec *CloudfrontFieldLevelEncryptionConfig) ImportState(av io.Reader) error {
 	cflec.state = &cloudfrontFieldLevelEncryptionConfigState{}
 	if err := json.NewDecoder(av).Decode(cflec.state); err != nil {
@@ -49,10 +73,12 @@ func (cflec *CloudfrontFieldLevelEncryptionConfig) ImportState(av io.Reader) err
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudfrontFieldLevelEncryptionConfig] has state.
 func (cflec *CloudfrontFieldLevelEncryptionConfig) State() (*cloudfrontFieldLevelEncryptionConfigState, bool) {
 	return cflec.state, cflec.state != nil
 }
 
+// StateMust returns the state for [CloudfrontFieldLevelEncryptionConfig]. Panics if the state is nil.
 func (cflec *CloudfrontFieldLevelEncryptionConfig) StateMust() *cloudfrontFieldLevelEncryptionConfigState {
 	if cflec.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cflec.Type(), cflec.LocalName()))
@@ -60,10 +86,7 @@ func (cflec *CloudfrontFieldLevelEncryptionConfig) StateMust() *cloudfrontFieldL
 	return cflec.state
 }
 
-func (cflec *CloudfrontFieldLevelEncryptionConfig) DependOn() terra.Reference {
-	return terra.ReferenceResource(cflec)
-}
-
+// CloudfrontFieldLevelEncryptionConfigArgs contains the configurations for aws_cloudfront_field_level_encryption_config.
 type CloudfrontFieldLevelEncryptionConfigArgs struct {
 	// Comment: string, optional
 	Comment terra.StringValue `hcl:"comment,attr"`
@@ -73,35 +96,37 @@ type CloudfrontFieldLevelEncryptionConfigArgs struct {
 	ContentTypeProfileConfig *cloudfrontfieldlevelencryptionconfig.ContentTypeProfileConfig `hcl:"content_type_profile_config,block" validate:"required"`
 	// QueryArgProfileConfig: required
 	QueryArgProfileConfig *cloudfrontfieldlevelencryptionconfig.QueryArgProfileConfig `hcl:"query_arg_profile_config,block" validate:"required"`
-	// DependsOn contains resources that CloudfrontFieldLevelEncryptionConfig depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudfrontFieldLevelEncryptionConfigAttributes struct {
 	ref terra.Reference
 }
 
+// CallerReference returns a reference to field caller_reference of aws_cloudfront_field_level_encryption_config.
 func (cflec cloudfrontFieldLevelEncryptionConfigAttributes) CallerReference() terra.StringValue {
-	return terra.ReferenceString(cflec.ref.Append("caller_reference"))
+	return terra.ReferenceAsString(cflec.ref.Append("caller_reference"))
 }
 
+// Comment returns a reference to field comment of aws_cloudfront_field_level_encryption_config.
 func (cflec cloudfrontFieldLevelEncryptionConfigAttributes) Comment() terra.StringValue {
-	return terra.ReferenceString(cflec.ref.Append("comment"))
+	return terra.ReferenceAsString(cflec.ref.Append("comment"))
 }
 
+// Etag returns a reference to field etag of aws_cloudfront_field_level_encryption_config.
 func (cflec cloudfrontFieldLevelEncryptionConfigAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(cflec.ref.Append("etag"))
+	return terra.ReferenceAsString(cflec.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of aws_cloudfront_field_level_encryption_config.
 func (cflec cloudfrontFieldLevelEncryptionConfigAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cflec.ref.Append("id"))
+	return terra.ReferenceAsString(cflec.ref.Append("id"))
 }
 
 func (cflec cloudfrontFieldLevelEncryptionConfigAttributes) ContentTypeProfileConfig() terra.ListValue[cloudfrontfieldlevelencryptionconfig.ContentTypeProfileConfigAttributes] {
-	return terra.ReferenceList[cloudfrontfieldlevelencryptionconfig.ContentTypeProfileConfigAttributes](cflec.ref.Append("content_type_profile_config"))
+	return terra.ReferenceAsList[cloudfrontfieldlevelencryptionconfig.ContentTypeProfileConfigAttributes](cflec.ref.Append("content_type_profile_config"))
 }
 
 func (cflec cloudfrontFieldLevelEncryptionConfigAttributes) QueryArgProfileConfig() terra.ListValue[cloudfrontfieldlevelencryptionconfig.QueryArgProfileConfigAttributes] {
-	return terra.ReferenceList[cloudfrontfieldlevelencryptionconfig.QueryArgProfileConfigAttributes](cflec.ref.Append("query_arg_profile_config"))
+	return terra.ReferenceAsList[cloudfrontfieldlevelencryptionconfig.QueryArgProfileConfigAttributes](cflec.ref.Append("query_arg_profile_config"))
 }
 
 type cloudfrontFieldLevelEncryptionConfigState struct {

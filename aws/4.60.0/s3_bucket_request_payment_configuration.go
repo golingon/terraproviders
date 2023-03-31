@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewS3BucketRequestPaymentConfiguration creates a new instance of [S3BucketRequestPaymentConfiguration].
 func NewS3BucketRequestPaymentConfiguration(name string, args S3BucketRequestPaymentConfigurationArgs) *S3BucketRequestPaymentConfiguration {
 	return &S3BucketRequestPaymentConfiguration{
 		Args: args,
@@ -18,28 +19,51 @@ func NewS3BucketRequestPaymentConfiguration(name string, args S3BucketRequestPay
 
 var _ terra.Resource = (*S3BucketRequestPaymentConfiguration)(nil)
 
+// S3BucketRequestPaymentConfiguration represents the Terraform resource aws_s3_bucket_request_payment_configuration.
 type S3BucketRequestPaymentConfiguration struct {
-	Name  string
-	Args  S3BucketRequestPaymentConfigurationArgs
-	state *s3BucketRequestPaymentConfigurationState
+	Name      string
+	Args      S3BucketRequestPaymentConfigurationArgs
+	state     *s3BucketRequestPaymentConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [S3BucketRequestPaymentConfiguration].
 func (sbrpc *S3BucketRequestPaymentConfiguration) Type() string {
 	return "aws_s3_bucket_request_payment_configuration"
 }
 
+// LocalName returns the local name for [S3BucketRequestPaymentConfiguration].
 func (sbrpc *S3BucketRequestPaymentConfiguration) LocalName() string {
 	return sbrpc.Name
 }
 
+// Configuration returns the configuration (args) for [S3BucketRequestPaymentConfiguration].
 func (sbrpc *S3BucketRequestPaymentConfiguration) Configuration() interface{} {
 	return sbrpc.Args
 }
 
+// DependOn is used for other resources to depend on [S3BucketRequestPaymentConfiguration].
+func (sbrpc *S3BucketRequestPaymentConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(sbrpc)
+}
+
+// Dependencies returns the list of resources [S3BucketRequestPaymentConfiguration] depends_on.
+func (sbrpc *S3BucketRequestPaymentConfiguration) Dependencies() terra.Dependencies {
+	return sbrpc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [S3BucketRequestPaymentConfiguration].
+func (sbrpc *S3BucketRequestPaymentConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return sbrpc.Lifecycle
+}
+
+// Attributes returns the attributes for [S3BucketRequestPaymentConfiguration].
 func (sbrpc *S3BucketRequestPaymentConfiguration) Attributes() s3BucketRequestPaymentConfigurationAttributes {
 	return s3BucketRequestPaymentConfigurationAttributes{ref: terra.ReferenceResource(sbrpc)}
 }
 
+// ImportState imports the given attribute values into [S3BucketRequestPaymentConfiguration]'s state.
 func (sbrpc *S3BucketRequestPaymentConfiguration) ImportState(av io.Reader) error {
 	sbrpc.state = &s3BucketRequestPaymentConfigurationState{}
 	if err := json.NewDecoder(av).Decode(sbrpc.state); err != nil {
@@ -48,10 +72,12 @@ func (sbrpc *S3BucketRequestPaymentConfiguration) ImportState(av io.Reader) erro
 	return nil
 }
 
+// State returns the state and a bool indicating if [S3BucketRequestPaymentConfiguration] has state.
 func (sbrpc *S3BucketRequestPaymentConfiguration) State() (*s3BucketRequestPaymentConfigurationState, bool) {
 	return sbrpc.state, sbrpc.state != nil
 }
 
+// StateMust returns the state for [S3BucketRequestPaymentConfiguration]. Panics if the state is nil.
 func (sbrpc *S3BucketRequestPaymentConfiguration) StateMust() *s3BucketRequestPaymentConfigurationState {
 	if sbrpc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sbrpc.Type(), sbrpc.LocalName()))
@@ -59,10 +85,7 @@ func (sbrpc *S3BucketRequestPaymentConfiguration) StateMust() *s3BucketRequestPa
 	return sbrpc.state
 }
 
-func (sbrpc *S3BucketRequestPaymentConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(sbrpc)
-}
-
+// S3BucketRequestPaymentConfigurationArgs contains the configurations for aws_s3_bucket_request_payment_configuration.
 type S3BucketRequestPaymentConfigurationArgs struct {
 	// Bucket: string, required
 	Bucket terra.StringValue `hcl:"bucket,attr" validate:"required"`
@@ -72,27 +95,29 @@ type S3BucketRequestPaymentConfigurationArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// Payer: string, required
 	Payer terra.StringValue `hcl:"payer,attr" validate:"required"`
-	// DependsOn contains resources that S3BucketRequestPaymentConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type s3BucketRequestPaymentConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// Bucket returns a reference to field bucket of aws_s3_bucket_request_payment_configuration.
 func (sbrpc s3BucketRequestPaymentConfigurationAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(sbrpc.ref.Append("bucket"))
+	return terra.ReferenceAsString(sbrpc.ref.Append("bucket"))
 }
 
+// ExpectedBucketOwner returns a reference to field expected_bucket_owner of aws_s3_bucket_request_payment_configuration.
 func (sbrpc s3BucketRequestPaymentConfigurationAttributes) ExpectedBucketOwner() terra.StringValue {
-	return terra.ReferenceString(sbrpc.ref.Append("expected_bucket_owner"))
+	return terra.ReferenceAsString(sbrpc.ref.Append("expected_bucket_owner"))
 }
 
+// Id returns a reference to field id of aws_s3_bucket_request_payment_configuration.
 func (sbrpc s3BucketRequestPaymentConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sbrpc.ref.Append("id"))
+	return terra.ReferenceAsString(sbrpc.ref.Append("id"))
 }
 
+// Payer returns a reference to field payer of aws_s3_bucket_request_payment_configuration.
 func (sbrpc s3BucketRequestPaymentConfigurationAttributes) Payer() terra.StringValue {
-	return terra.ReferenceString(sbrpc.ref.Append("payer"))
+	return terra.ReferenceAsString(sbrpc.ref.Append("payer"))
 }
 
 type s3BucketRequestPaymentConfigurationState struct {

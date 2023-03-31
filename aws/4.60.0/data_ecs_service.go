@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataEcsService creates a new instance of [DataEcsService].
 func NewDataEcsService(name string, args DataEcsServiceArgs) *DataEcsService {
 	return &DataEcsService{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataEcsService(name string, args DataEcsServiceArgs) *DataEcsService {
 
 var _ terra.DataResource = (*DataEcsService)(nil)
 
+// DataEcsService represents the Terraform data resource aws_ecs_service.
 type DataEcsService struct {
 	Name string
 	Args DataEcsServiceArgs
 }
 
+// DataSource returns the Terraform object type for [DataEcsService].
 func (es *DataEcsService) DataSource() string {
 	return "aws_ecs_service"
 }
 
+// LocalName returns the local name for [DataEcsService].
 func (es *DataEcsService) LocalName() string {
 	return es.Name
 }
 
+// Configuration returns the configuration (args) for [DataEcsService].
 func (es *DataEcsService) Configuration() interface{} {
 	return es.Args
 }
 
+// Attributes returns the attributes for [DataEcsService].
 func (es *DataEcsService) Attributes() dataEcsServiceAttributes {
 	return dataEcsServiceAttributes{ref: terra.ReferenceDataResource(es)}
 }
 
+// DataEcsServiceArgs contains the configurations for aws_ecs_service.
 type DataEcsServiceArgs struct {
 	// ClusterArn: string, required
 	ClusterArn terra.StringValue `hcl:"cluster_arn,attr" validate:"required"`
@@ -48,38 +55,47 @@ type dataEcsServiceAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ecs_service.
 func (es dataEcsServiceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("arn"))
+	return terra.ReferenceAsString(es.ref.Append("arn"))
 }
 
+// ClusterArn returns a reference to field cluster_arn of aws_ecs_service.
 func (es dataEcsServiceAttributes) ClusterArn() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("cluster_arn"))
+	return terra.ReferenceAsString(es.ref.Append("cluster_arn"))
 }
 
+// DesiredCount returns a reference to field desired_count of aws_ecs_service.
 func (es dataEcsServiceAttributes) DesiredCount() terra.NumberValue {
-	return terra.ReferenceNumber(es.ref.Append("desired_count"))
+	return terra.ReferenceAsNumber(es.ref.Append("desired_count"))
 }
 
+// Id returns a reference to field id of aws_ecs_service.
 func (es dataEcsServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("id"))
+	return terra.ReferenceAsString(es.ref.Append("id"))
 }
 
+// LaunchType returns a reference to field launch_type of aws_ecs_service.
 func (es dataEcsServiceAttributes) LaunchType() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("launch_type"))
+	return terra.ReferenceAsString(es.ref.Append("launch_type"))
 }
 
+// SchedulingStrategy returns a reference to field scheduling_strategy of aws_ecs_service.
 func (es dataEcsServiceAttributes) SchedulingStrategy() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("scheduling_strategy"))
+	return terra.ReferenceAsString(es.ref.Append("scheduling_strategy"))
 }
 
+// ServiceName returns a reference to field service_name of aws_ecs_service.
 func (es dataEcsServiceAttributes) ServiceName() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("service_name"))
+	return terra.ReferenceAsString(es.ref.Append("service_name"))
 }
 
+// Tags returns a reference to field tags of aws_ecs_service.
 func (es dataEcsServiceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](es.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](es.ref.Append("tags"))
 }
 
+// TaskDefinition returns a reference to field task_definition of aws_ecs_service.
 func (es dataEcsServiceAttributes) TaskDefinition() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("task_definition"))
+	return terra.ReferenceAsString(es.ref.Append("task_definition"))
 }

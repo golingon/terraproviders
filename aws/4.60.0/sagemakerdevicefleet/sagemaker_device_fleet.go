@@ -31,11 +31,11 @@ func (oc OutputConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (oc OutputConfigAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(oc.ref.Append("kms_key_id"))
 }
 
 func (oc OutputConfigAttributes) S3OutputLocation() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("s3_output_location"))
+	return terra.ReferenceAsString(oc.ref.Append("s3_output_location"))
 }
 
 type OutputConfigState struct {

@@ -31,11 +31,11 @@ func (plp PlayerLatencyPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (plp PlayerLatencyPolicyAttributes) MaximumIndividualPlayerLatencyMilliseconds() terra.NumberValue {
-	return terra.ReferenceNumber(plp.ref.Append("maximum_individual_player_latency_milliseconds"))
+	return terra.ReferenceAsNumber(plp.ref.Append("maximum_individual_player_latency_milliseconds"))
 }
 
 func (plp PlayerLatencyPolicyAttributes) PolicyDurationSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(plp.ref.Append("policy_duration_seconds"))
+	return terra.ReferenceAsNumber(plp.ref.Append("policy_duration_seconds"))
 }
 
 type PlayerLatencyPolicyState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewIamAccessKey creates a new instance of [IamAccessKey].
 func NewIamAccessKey(name string, args IamAccessKeyArgs) *IamAccessKey {
 	return &IamAccessKey{
 		Args: args,
@@ -18,28 +19,51 @@ func NewIamAccessKey(name string, args IamAccessKeyArgs) *IamAccessKey {
 
 var _ terra.Resource = (*IamAccessKey)(nil)
 
+// IamAccessKey represents the Terraform resource aws_iam_access_key.
 type IamAccessKey struct {
-	Name  string
-	Args  IamAccessKeyArgs
-	state *iamAccessKeyState
+	Name      string
+	Args      IamAccessKeyArgs
+	state     *iamAccessKeyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IamAccessKey].
 func (iak *IamAccessKey) Type() string {
 	return "aws_iam_access_key"
 }
 
+// LocalName returns the local name for [IamAccessKey].
 func (iak *IamAccessKey) LocalName() string {
 	return iak.Name
 }
 
+// Configuration returns the configuration (args) for [IamAccessKey].
 func (iak *IamAccessKey) Configuration() interface{} {
 	return iak.Args
 }
 
+// DependOn is used for other resources to depend on [IamAccessKey].
+func (iak *IamAccessKey) DependOn() terra.Reference {
+	return terra.ReferenceResource(iak)
+}
+
+// Dependencies returns the list of resources [IamAccessKey] depends_on.
+func (iak *IamAccessKey) Dependencies() terra.Dependencies {
+	return iak.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IamAccessKey].
+func (iak *IamAccessKey) LifecycleManagement() *terra.Lifecycle {
+	return iak.Lifecycle
+}
+
+// Attributes returns the attributes for [IamAccessKey].
 func (iak *IamAccessKey) Attributes() iamAccessKeyAttributes {
 	return iamAccessKeyAttributes{ref: terra.ReferenceResource(iak)}
 }
 
+// ImportState imports the given attribute values into [IamAccessKey]'s state.
 func (iak *IamAccessKey) ImportState(av io.Reader) error {
 	iak.state = &iamAccessKeyState{}
 	if err := json.NewDecoder(av).Decode(iak.state); err != nil {
@@ -48,10 +72,12 @@ func (iak *IamAccessKey) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IamAccessKey] has state.
 func (iak *IamAccessKey) State() (*iamAccessKeyState, bool) {
 	return iak.state, iak.state != nil
 }
 
+// StateMust returns the state for [IamAccessKey]. Panics if the state is nil.
 func (iak *IamAccessKey) StateMust() *iamAccessKeyState {
 	if iak.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", iak.Type(), iak.LocalName()))
@@ -59,10 +85,7 @@ func (iak *IamAccessKey) StateMust() *iamAccessKeyState {
 	return iak.state
 }
 
-func (iak *IamAccessKey) DependOn() terra.Reference {
-	return terra.ReferenceResource(iak)
-}
-
+// IamAccessKeyArgs contains the configurations for aws_iam_access_key.
 type IamAccessKeyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -72,51 +95,59 @@ type IamAccessKeyArgs struct {
 	Status terra.StringValue `hcl:"status,attr"`
 	// User: string, required
 	User terra.StringValue `hcl:"user,attr" validate:"required"`
-	// DependsOn contains resources that IamAccessKey depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iamAccessKeyAttributes struct {
 	ref terra.Reference
 }
 
+// CreateDate returns a reference to field create_date of aws_iam_access_key.
 func (iak iamAccessKeyAttributes) CreateDate() terra.StringValue {
-	return terra.ReferenceString(iak.ref.Append("create_date"))
+	return terra.ReferenceAsString(iak.ref.Append("create_date"))
 }
 
+// EncryptedSecret returns a reference to field encrypted_secret of aws_iam_access_key.
 func (iak iamAccessKeyAttributes) EncryptedSecret() terra.StringValue {
-	return terra.ReferenceString(iak.ref.Append("encrypted_secret"))
+	return terra.ReferenceAsString(iak.ref.Append("encrypted_secret"))
 }
 
+// EncryptedSesSmtpPasswordV4 returns a reference to field encrypted_ses_smtp_password_v4 of aws_iam_access_key.
 func (iak iamAccessKeyAttributes) EncryptedSesSmtpPasswordV4() terra.StringValue {
-	return terra.ReferenceString(iak.ref.Append("encrypted_ses_smtp_password_v4"))
+	return terra.ReferenceAsString(iak.ref.Append("encrypted_ses_smtp_password_v4"))
 }
 
+// Id returns a reference to field id of aws_iam_access_key.
 func (iak iamAccessKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(iak.ref.Append("id"))
+	return terra.ReferenceAsString(iak.ref.Append("id"))
 }
 
+// KeyFingerprint returns a reference to field key_fingerprint of aws_iam_access_key.
 func (iak iamAccessKeyAttributes) KeyFingerprint() terra.StringValue {
-	return terra.ReferenceString(iak.ref.Append("key_fingerprint"))
+	return terra.ReferenceAsString(iak.ref.Append("key_fingerprint"))
 }
 
+// PgpKey returns a reference to field pgp_key of aws_iam_access_key.
 func (iak iamAccessKeyAttributes) PgpKey() terra.StringValue {
-	return terra.ReferenceString(iak.ref.Append("pgp_key"))
+	return terra.ReferenceAsString(iak.ref.Append("pgp_key"))
 }
 
+// Secret returns a reference to field secret of aws_iam_access_key.
 func (iak iamAccessKeyAttributes) Secret() terra.StringValue {
-	return terra.ReferenceString(iak.ref.Append("secret"))
+	return terra.ReferenceAsString(iak.ref.Append("secret"))
 }
 
+// SesSmtpPasswordV4 returns a reference to field ses_smtp_password_v4 of aws_iam_access_key.
 func (iak iamAccessKeyAttributes) SesSmtpPasswordV4() terra.StringValue {
-	return terra.ReferenceString(iak.ref.Append("ses_smtp_password_v4"))
+	return terra.ReferenceAsString(iak.ref.Append("ses_smtp_password_v4"))
 }
 
+// Status returns a reference to field status of aws_iam_access_key.
 func (iak iamAccessKeyAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(iak.ref.Append("status"))
+	return terra.ReferenceAsString(iak.ref.Append("status"))
 }
 
+// User returns a reference to field user of aws_iam_access_key.
 func (iak iamAccessKeyAttributes) User() terra.StringValue {
-	return terra.ReferenceString(iak.ref.Append("user"))
+	return terra.ReferenceAsString(iak.ref.Append("user"))
 }
 
 type iamAccessKeyState struct {

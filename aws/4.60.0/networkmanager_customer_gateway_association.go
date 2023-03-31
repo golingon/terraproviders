@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNetworkmanagerCustomerGatewayAssociation creates a new instance of [NetworkmanagerCustomerGatewayAssociation].
 func NewNetworkmanagerCustomerGatewayAssociation(name string, args NetworkmanagerCustomerGatewayAssociationArgs) *NetworkmanagerCustomerGatewayAssociation {
 	return &NetworkmanagerCustomerGatewayAssociation{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNetworkmanagerCustomerGatewayAssociation(name string, args Networkmanage
 
 var _ terra.Resource = (*NetworkmanagerCustomerGatewayAssociation)(nil)
 
+// NetworkmanagerCustomerGatewayAssociation represents the Terraform resource aws_networkmanager_customer_gateway_association.
 type NetworkmanagerCustomerGatewayAssociation struct {
-	Name  string
-	Args  NetworkmanagerCustomerGatewayAssociationArgs
-	state *networkmanagerCustomerGatewayAssociationState
+	Name      string
+	Args      NetworkmanagerCustomerGatewayAssociationArgs
+	state     *networkmanagerCustomerGatewayAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NetworkmanagerCustomerGatewayAssociation].
 func (ncga *NetworkmanagerCustomerGatewayAssociation) Type() string {
 	return "aws_networkmanager_customer_gateway_association"
 }
 
+// LocalName returns the local name for [NetworkmanagerCustomerGatewayAssociation].
 func (ncga *NetworkmanagerCustomerGatewayAssociation) LocalName() string {
 	return ncga.Name
 }
 
+// Configuration returns the configuration (args) for [NetworkmanagerCustomerGatewayAssociation].
 func (ncga *NetworkmanagerCustomerGatewayAssociation) Configuration() interface{} {
 	return ncga.Args
 }
 
+// DependOn is used for other resources to depend on [NetworkmanagerCustomerGatewayAssociation].
+func (ncga *NetworkmanagerCustomerGatewayAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(ncga)
+}
+
+// Dependencies returns the list of resources [NetworkmanagerCustomerGatewayAssociation] depends_on.
+func (ncga *NetworkmanagerCustomerGatewayAssociation) Dependencies() terra.Dependencies {
+	return ncga.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NetworkmanagerCustomerGatewayAssociation].
+func (ncga *NetworkmanagerCustomerGatewayAssociation) LifecycleManagement() *terra.Lifecycle {
+	return ncga.Lifecycle
+}
+
+// Attributes returns the attributes for [NetworkmanagerCustomerGatewayAssociation].
 func (ncga *NetworkmanagerCustomerGatewayAssociation) Attributes() networkmanagerCustomerGatewayAssociationAttributes {
 	return networkmanagerCustomerGatewayAssociationAttributes{ref: terra.ReferenceResource(ncga)}
 }
 
+// ImportState imports the given attribute values into [NetworkmanagerCustomerGatewayAssociation]'s state.
 func (ncga *NetworkmanagerCustomerGatewayAssociation) ImportState(av io.Reader) error {
 	ncga.state = &networkmanagerCustomerGatewayAssociationState{}
 	if err := json.NewDecoder(av).Decode(ncga.state); err != nil {
@@ -49,10 +73,12 @@ func (ncga *NetworkmanagerCustomerGatewayAssociation) ImportState(av io.Reader) 
 	return nil
 }
 
+// State returns the state and a bool indicating if [NetworkmanagerCustomerGatewayAssociation] has state.
 func (ncga *NetworkmanagerCustomerGatewayAssociation) State() (*networkmanagerCustomerGatewayAssociationState, bool) {
 	return ncga.state, ncga.state != nil
 }
 
+// StateMust returns the state for [NetworkmanagerCustomerGatewayAssociation]. Panics if the state is nil.
 func (ncga *NetworkmanagerCustomerGatewayAssociation) StateMust() *networkmanagerCustomerGatewayAssociationState {
 	if ncga.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ncga.Type(), ncga.LocalName()))
@@ -60,10 +86,7 @@ func (ncga *NetworkmanagerCustomerGatewayAssociation) StateMust() *networkmanage
 	return ncga.state
 }
 
-func (ncga *NetworkmanagerCustomerGatewayAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(ncga)
-}
-
+// NetworkmanagerCustomerGatewayAssociationArgs contains the configurations for aws_networkmanager_customer_gateway_association.
 type NetworkmanagerCustomerGatewayAssociationArgs struct {
 	// CustomerGatewayArn: string, required
 	CustomerGatewayArn terra.StringValue `hcl:"customer_gateway_arn,attr" validate:"required"`
@@ -77,35 +100,38 @@ type NetworkmanagerCustomerGatewayAssociationArgs struct {
 	LinkId terra.StringValue `hcl:"link_id,attr"`
 	// Timeouts: optional
 	Timeouts *networkmanagercustomergatewayassociation.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that NetworkmanagerCustomerGatewayAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type networkmanagerCustomerGatewayAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// CustomerGatewayArn returns a reference to field customer_gateway_arn of aws_networkmanager_customer_gateway_association.
 func (ncga networkmanagerCustomerGatewayAssociationAttributes) CustomerGatewayArn() terra.StringValue {
-	return terra.ReferenceString(ncga.ref.Append("customer_gateway_arn"))
+	return terra.ReferenceAsString(ncga.ref.Append("customer_gateway_arn"))
 }
 
+// DeviceId returns a reference to field device_id of aws_networkmanager_customer_gateway_association.
 func (ncga networkmanagerCustomerGatewayAssociationAttributes) DeviceId() terra.StringValue {
-	return terra.ReferenceString(ncga.ref.Append("device_id"))
+	return terra.ReferenceAsString(ncga.ref.Append("device_id"))
 }
 
+// GlobalNetworkId returns a reference to field global_network_id of aws_networkmanager_customer_gateway_association.
 func (ncga networkmanagerCustomerGatewayAssociationAttributes) GlobalNetworkId() terra.StringValue {
-	return terra.ReferenceString(ncga.ref.Append("global_network_id"))
+	return terra.ReferenceAsString(ncga.ref.Append("global_network_id"))
 }
 
+// Id returns a reference to field id of aws_networkmanager_customer_gateway_association.
 func (ncga networkmanagerCustomerGatewayAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ncga.ref.Append("id"))
+	return terra.ReferenceAsString(ncga.ref.Append("id"))
 }
 
+// LinkId returns a reference to field link_id of aws_networkmanager_customer_gateway_association.
 func (ncga networkmanagerCustomerGatewayAssociationAttributes) LinkId() terra.StringValue {
-	return terra.ReferenceString(ncga.ref.Append("link_id"))
+	return terra.ReferenceAsString(ncga.ref.Append("link_id"))
 }
 
 func (ncga networkmanagerCustomerGatewayAssociationAttributes) Timeouts() networkmanagercustomergatewayassociation.TimeoutsAttributes {
-	return terra.ReferenceSingle[networkmanagercustomergatewayassociation.TimeoutsAttributes](ncga.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[networkmanagercustomergatewayassociation.TimeoutsAttributes](ncga.ref.Append("timeouts"))
 }
 
 type networkmanagerCustomerGatewayAssociationState struct {

@@ -54,19 +54,19 @@ func (c ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ConfigurationAttributes) AllowedFeatures() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](c.ref.Append("allowed_features"))
+	return terra.ReferenceAsSet[terra.StringValue](c.ref.Append("allowed_features"))
 }
 
 func (c ConfigurationAttributes) CloudWatchMetricsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(c.ref.Append("cloud_watch_metrics_enabled"))
+	return terra.ReferenceAsBool(c.ref.Append("cloud_watch_metrics_enabled"))
 }
 
 func (c ConfigurationAttributes) SupportingAccessPoint() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("supporting_access_point"))
+	return terra.ReferenceAsString(c.ref.Append("supporting_access_point"))
 }
 
 func (c ConfigurationAttributes) TransformationConfiguration() terra.SetValue[TransformationConfigurationAttributes] {
-	return terra.ReferenceSet[TransformationConfigurationAttributes](c.ref.Append("transformation_configuration"))
+	return terra.ReferenceAsSet[TransformationConfigurationAttributes](c.ref.Append("transformation_configuration"))
 }
 
 type TransformationConfigurationAttributes struct {
@@ -86,11 +86,11 @@ func (tc TransformationConfigurationAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (tc TransformationConfigurationAttributes) Actions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](tc.ref.Append("actions"))
+	return terra.ReferenceAsSet[terra.StringValue](tc.ref.Append("actions"))
 }
 
 func (tc TransformationConfigurationAttributes) ContentTransformation() terra.ListValue[ContentTransformationAttributes] {
-	return terra.ReferenceList[ContentTransformationAttributes](tc.ref.Append("content_transformation"))
+	return terra.ReferenceAsList[ContentTransformationAttributes](tc.ref.Append("content_transformation"))
 }
 
 type ContentTransformationAttributes struct {
@@ -110,7 +110,7 @@ func (ct ContentTransformationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ct ContentTransformationAttributes) AwsLambda() terra.ListValue[AwsLambdaAttributes] {
-	return terra.ReferenceList[AwsLambdaAttributes](ct.ref.Append("aws_lambda"))
+	return terra.ReferenceAsList[AwsLambdaAttributes](ct.ref.Append("aws_lambda"))
 }
 
 type AwsLambdaAttributes struct {
@@ -130,11 +130,11 @@ func (al AwsLambdaAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (al AwsLambdaAttributes) FunctionArn() terra.StringValue {
-	return terra.ReferenceString(al.ref.Append("function_arn"))
+	return terra.ReferenceAsString(al.ref.Append("function_arn"))
 }
 
 func (al AwsLambdaAttributes) FunctionPayload() terra.StringValue {
-	return terra.ReferenceString(al.ref.Append("function_payload"))
+	return terra.ReferenceAsString(al.ref.Append("function_payload"))
 }
 
 type ConfigurationState struct {

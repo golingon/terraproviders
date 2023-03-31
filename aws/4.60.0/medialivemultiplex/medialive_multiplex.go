@@ -44,19 +44,19 @@ func (ms MultiplexSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ms MultiplexSettingsAttributes) MaximumVideoBufferDelayMilliseconds() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("maximum_video_buffer_delay_milliseconds"))
+	return terra.ReferenceAsNumber(ms.ref.Append("maximum_video_buffer_delay_milliseconds"))
 }
 
 func (ms MultiplexSettingsAttributes) TransportStreamBitrate() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("transport_stream_bitrate"))
+	return terra.ReferenceAsNumber(ms.ref.Append("transport_stream_bitrate"))
 }
 
 func (ms MultiplexSettingsAttributes) TransportStreamId() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("transport_stream_id"))
+	return terra.ReferenceAsNumber(ms.ref.Append("transport_stream_id"))
 }
 
 func (ms MultiplexSettingsAttributes) TransportStreamReservedBitrate() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("transport_stream_reserved_bitrate"))
+	return terra.ReferenceAsNumber(ms.ref.Append("transport_stream_reserved_bitrate"))
 }
 
 type TimeoutsAttributes struct {
@@ -76,15 +76,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type MultiplexSettingsState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewLakeformationResource creates a new instance of [LakeformationResource].
 func NewLakeformationResource(name string, args LakeformationResourceArgs) *LakeformationResource {
 	return &LakeformationResource{
 		Args: args,
@@ -18,28 +19,51 @@ func NewLakeformationResource(name string, args LakeformationResourceArgs) *Lake
 
 var _ terra.Resource = (*LakeformationResource)(nil)
 
+// LakeformationResource represents the Terraform resource aws_lakeformation_resource.
 type LakeformationResource struct {
-	Name  string
-	Args  LakeformationResourceArgs
-	state *lakeformationResourceState
+	Name      string
+	Args      LakeformationResourceArgs
+	state     *lakeformationResourceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LakeformationResource].
 func (lr *LakeformationResource) Type() string {
 	return "aws_lakeformation_resource"
 }
 
+// LocalName returns the local name for [LakeformationResource].
 func (lr *LakeformationResource) LocalName() string {
 	return lr.Name
 }
 
+// Configuration returns the configuration (args) for [LakeformationResource].
 func (lr *LakeformationResource) Configuration() interface{} {
 	return lr.Args
 }
 
+// DependOn is used for other resources to depend on [LakeformationResource].
+func (lr *LakeformationResource) DependOn() terra.Reference {
+	return terra.ReferenceResource(lr)
+}
+
+// Dependencies returns the list of resources [LakeformationResource] depends_on.
+func (lr *LakeformationResource) Dependencies() terra.Dependencies {
+	return lr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LakeformationResource].
+func (lr *LakeformationResource) LifecycleManagement() *terra.Lifecycle {
+	return lr.Lifecycle
+}
+
+// Attributes returns the attributes for [LakeformationResource].
 func (lr *LakeformationResource) Attributes() lakeformationResourceAttributes {
 	return lakeformationResourceAttributes{ref: terra.ReferenceResource(lr)}
 }
 
+// ImportState imports the given attribute values into [LakeformationResource]'s state.
 func (lr *LakeformationResource) ImportState(av io.Reader) error {
 	lr.state = &lakeformationResourceState{}
 	if err := json.NewDecoder(av).Decode(lr.state); err != nil {
@@ -48,10 +72,12 @@ func (lr *LakeformationResource) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LakeformationResource] has state.
 func (lr *LakeformationResource) State() (*lakeformationResourceState, bool) {
 	return lr.state, lr.state != nil
 }
 
+// StateMust returns the state for [LakeformationResource]. Panics if the state is nil.
 func (lr *LakeformationResource) StateMust() *lakeformationResourceState {
 	if lr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lr.Type(), lr.LocalName()))
@@ -59,10 +85,7 @@ func (lr *LakeformationResource) StateMust() *lakeformationResourceState {
 	return lr.state
 }
 
-func (lr *LakeformationResource) DependOn() terra.Reference {
-	return terra.ReferenceResource(lr)
-}
-
+// LakeformationResourceArgs contains the configurations for aws_lakeformation_resource.
 type LakeformationResourceArgs struct {
 	// Arn: string, required
 	Arn terra.StringValue `hcl:"arn,attr" validate:"required"`
@@ -70,27 +93,29 @@ type LakeformationResourceArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// RoleArn: string, optional
 	RoleArn terra.StringValue `hcl:"role_arn,attr"`
-	// DependsOn contains resources that LakeformationResource depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lakeformationResourceAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_lakeformation_resource.
 func (lr lakeformationResourceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(lr.ref.Append("arn"))
+	return terra.ReferenceAsString(lr.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_lakeformation_resource.
 func (lr lakeformationResourceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lr.ref.Append("id"))
+	return terra.ReferenceAsString(lr.ref.Append("id"))
 }
 
+// LastModified returns a reference to field last_modified of aws_lakeformation_resource.
 func (lr lakeformationResourceAttributes) LastModified() terra.StringValue {
-	return terra.ReferenceString(lr.ref.Append("last_modified"))
+	return terra.ReferenceAsString(lr.ref.Append("last_modified"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_lakeformation_resource.
 func (lr lakeformationResourceAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(lr.ref.Append("role_arn"))
+	return terra.ReferenceAsString(lr.ref.Append("role_arn"))
 }
 
 type lakeformationResourceState struct {

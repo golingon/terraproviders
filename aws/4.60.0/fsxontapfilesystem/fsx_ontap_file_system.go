@@ -51,11 +51,11 @@ func (e EndpointsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e EndpointsAttributes) Intercluster() terra.ListValue[InterclusterAttributes] {
-	return terra.ReferenceList[InterclusterAttributes](e.ref.Append("intercluster"))
+	return terra.ReferenceAsList[InterclusterAttributes](e.ref.Append("intercluster"))
 }
 
 func (e EndpointsAttributes) Management() terra.ListValue[ManagementAttributes] {
-	return terra.ReferenceList[ManagementAttributes](e.ref.Append("management"))
+	return terra.ReferenceAsList[ManagementAttributes](e.ref.Append("management"))
 }
 
 type InterclusterAttributes struct {
@@ -75,11 +75,11 @@ func (i InterclusterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i InterclusterAttributes) DnsName() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("dns_name"))
+	return terra.ReferenceAsString(i.ref.Append("dns_name"))
 }
 
 func (i InterclusterAttributes) IpAddresses() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("ip_addresses"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("ip_addresses"))
 }
 
 type ManagementAttributes struct {
@@ -99,11 +99,11 @@ func (m ManagementAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m ManagementAttributes) DnsName() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("dns_name"))
+	return terra.ReferenceAsString(m.ref.Append("dns_name"))
 }
 
 func (m ManagementAttributes) IpAddresses() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](m.ref.Append("ip_addresses"))
+	return terra.ReferenceAsSet[terra.StringValue](m.ref.Append("ip_addresses"))
 }
 
 type DiskIopsConfigurationAttributes struct {
@@ -123,11 +123,11 @@ func (dic DiskIopsConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dic DiskIopsConfigurationAttributes) Iops() terra.NumberValue {
-	return terra.ReferenceNumber(dic.ref.Append("iops"))
+	return terra.ReferenceAsNumber(dic.ref.Append("iops"))
 }
 
 func (dic DiskIopsConfigurationAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(dic.ref.Append("mode"))
+	return terra.ReferenceAsString(dic.ref.Append("mode"))
 }
 
 type TimeoutsAttributes struct {
@@ -147,15 +147,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type EndpointsState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewGuarddutyOrganizationAdminAccount creates a new instance of [GuarddutyOrganizationAdminAccount].
 func NewGuarddutyOrganizationAdminAccount(name string, args GuarddutyOrganizationAdminAccountArgs) *GuarddutyOrganizationAdminAccount {
 	return &GuarddutyOrganizationAdminAccount{
 		Args: args,
@@ -18,28 +19,51 @@ func NewGuarddutyOrganizationAdminAccount(name string, args GuarddutyOrganizatio
 
 var _ terra.Resource = (*GuarddutyOrganizationAdminAccount)(nil)
 
+// GuarddutyOrganizationAdminAccount represents the Terraform resource aws_guardduty_organization_admin_account.
 type GuarddutyOrganizationAdminAccount struct {
-	Name  string
-	Args  GuarddutyOrganizationAdminAccountArgs
-	state *guarddutyOrganizationAdminAccountState
+	Name      string
+	Args      GuarddutyOrganizationAdminAccountArgs
+	state     *guarddutyOrganizationAdminAccountState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GuarddutyOrganizationAdminAccount].
 func (goaa *GuarddutyOrganizationAdminAccount) Type() string {
 	return "aws_guardduty_organization_admin_account"
 }
 
+// LocalName returns the local name for [GuarddutyOrganizationAdminAccount].
 func (goaa *GuarddutyOrganizationAdminAccount) LocalName() string {
 	return goaa.Name
 }
 
+// Configuration returns the configuration (args) for [GuarddutyOrganizationAdminAccount].
 func (goaa *GuarddutyOrganizationAdminAccount) Configuration() interface{} {
 	return goaa.Args
 }
 
+// DependOn is used for other resources to depend on [GuarddutyOrganizationAdminAccount].
+func (goaa *GuarddutyOrganizationAdminAccount) DependOn() terra.Reference {
+	return terra.ReferenceResource(goaa)
+}
+
+// Dependencies returns the list of resources [GuarddutyOrganizationAdminAccount] depends_on.
+func (goaa *GuarddutyOrganizationAdminAccount) Dependencies() terra.Dependencies {
+	return goaa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GuarddutyOrganizationAdminAccount].
+func (goaa *GuarddutyOrganizationAdminAccount) LifecycleManagement() *terra.Lifecycle {
+	return goaa.Lifecycle
+}
+
+// Attributes returns the attributes for [GuarddutyOrganizationAdminAccount].
 func (goaa *GuarddutyOrganizationAdminAccount) Attributes() guarddutyOrganizationAdminAccountAttributes {
 	return guarddutyOrganizationAdminAccountAttributes{ref: terra.ReferenceResource(goaa)}
 }
 
+// ImportState imports the given attribute values into [GuarddutyOrganizationAdminAccount]'s state.
 func (goaa *GuarddutyOrganizationAdminAccount) ImportState(av io.Reader) error {
 	goaa.state = &guarddutyOrganizationAdminAccountState{}
 	if err := json.NewDecoder(av).Decode(goaa.state); err != nil {
@@ -48,10 +72,12 @@ func (goaa *GuarddutyOrganizationAdminAccount) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GuarddutyOrganizationAdminAccount] has state.
 func (goaa *GuarddutyOrganizationAdminAccount) State() (*guarddutyOrganizationAdminAccountState, bool) {
 	return goaa.state, goaa.state != nil
 }
 
+// StateMust returns the state for [GuarddutyOrganizationAdminAccount]. Panics if the state is nil.
 func (goaa *GuarddutyOrganizationAdminAccount) StateMust() *guarddutyOrganizationAdminAccountState {
 	if goaa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", goaa.Type(), goaa.LocalName()))
@@ -59,28 +85,25 @@ func (goaa *GuarddutyOrganizationAdminAccount) StateMust() *guarddutyOrganizatio
 	return goaa.state
 }
 
-func (goaa *GuarddutyOrganizationAdminAccount) DependOn() terra.Reference {
-	return terra.ReferenceResource(goaa)
-}
-
+// GuarddutyOrganizationAdminAccountArgs contains the configurations for aws_guardduty_organization_admin_account.
 type GuarddutyOrganizationAdminAccountArgs struct {
 	// AdminAccountId: string, required
 	AdminAccountId terra.StringValue `hcl:"admin_account_id,attr" validate:"required"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that GuarddutyOrganizationAdminAccount depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type guarddutyOrganizationAdminAccountAttributes struct {
 	ref terra.Reference
 }
 
+// AdminAccountId returns a reference to field admin_account_id of aws_guardduty_organization_admin_account.
 func (goaa guarddutyOrganizationAdminAccountAttributes) AdminAccountId() terra.StringValue {
-	return terra.ReferenceString(goaa.ref.Append("admin_account_id"))
+	return terra.ReferenceAsString(goaa.ref.Append("admin_account_id"))
 }
 
+// Id returns a reference to field id of aws_guardduty_organization_admin_account.
 func (goaa guarddutyOrganizationAdminAccountAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(goaa.ref.Append("id"))
+	return terra.ReferenceAsString(goaa.ref.Append("id"))
 }
 
 type guarddutyOrganizationAdminAccountState struct {

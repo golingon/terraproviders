@@ -29,7 +29,7 @@ func (r RuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RuleAttributes) ObjectOwnership() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("object_ownership"))
+	return terra.ReferenceAsString(r.ref.Append("object_ownership"))
 }
 
 type RuleState struct {

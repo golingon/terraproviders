@@ -40,11 +40,11 @@ func (lc LogConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lc LogConfigurationAttributes) Destination() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("destination"))
+	return terra.ReferenceAsString(lc.ref.Append("destination"))
 }
 
 func (lc LogConfigurationAttributes) Level() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("level"))
+	return terra.ReferenceAsString(lc.ref.Append("level"))
 }
 
 type TimeoutsAttributes struct {
@@ -64,15 +64,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type LogConfigurationState struct {

@@ -547,19 +547,19 @@ func (dfc DestinationFlowConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dfc DestinationFlowConfigAttributes) ApiVersion() terra.StringValue {
-	return terra.ReferenceString(dfc.ref.Append("api_version"))
+	return terra.ReferenceAsString(dfc.ref.Append("api_version"))
 }
 
 func (dfc DestinationFlowConfigAttributes) ConnectorProfileName() terra.StringValue {
-	return terra.ReferenceString(dfc.ref.Append("connector_profile_name"))
+	return terra.ReferenceAsString(dfc.ref.Append("connector_profile_name"))
 }
 
 func (dfc DestinationFlowConfigAttributes) ConnectorType() terra.StringValue {
-	return terra.ReferenceString(dfc.ref.Append("connector_type"))
+	return terra.ReferenceAsString(dfc.ref.Append("connector_type"))
 }
 
 func (dfc DestinationFlowConfigAttributes) DestinationConnectorProperties() terra.ListValue[DestinationConnectorPropertiesAttributes] {
-	return terra.ReferenceList[DestinationConnectorPropertiesAttributes](dfc.ref.Append("destination_connector_properties"))
+	return terra.ReferenceAsList[DestinationConnectorPropertiesAttributes](dfc.ref.Append("destination_connector_properties"))
 }
 
 type DestinationConnectorPropertiesAttributes struct {
@@ -579,55 +579,55 @@ func (dcp DestinationConnectorPropertiesAttributes) InternalTokens() hclwrite.To
 }
 
 func (dcp DestinationConnectorPropertiesAttributes) CustomConnector() terra.ListValue[DestinationConnectorPropertiesCustomConnectorAttributes] {
-	return terra.ReferenceList[DestinationConnectorPropertiesCustomConnectorAttributes](dcp.ref.Append("custom_connector"))
+	return terra.ReferenceAsList[DestinationConnectorPropertiesCustomConnectorAttributes](dcp.ref.Append("custom_connector"))
 }
 
 func (dcp DestinationConnectorPropertiesAttributes) CustomerProfiles() terra.ListValue[CustomerProfilesAttributes] {
-	return terra.ReferenceList[CustomerProfilesAttributes](dcp.ref.Append("customer_profiles"))
+	return terra.ReferenceAsList[CustomerProfilesAttributes](dcp.ref.Append("customer_profiles"))
 }
 
 func (dcp DestinationConnectorPropertiesAttributes) EventBridge() terra.ListValue[EventBridgeAttributes] {
-	return terra.ReferenceList[EventBridgeAttributes](dcp.ref.Append("event_bridge"))
+	return terra.ReferenceAsList[EventBridgeAttributes](dcp.ref.Append("event_bridge"))
 }
 
 func (dcp DestinationConnectorPropertiesAttributes) Honeycode() terra.ListValue[HoneycodeAttributes] {
-	return terra.ReferenceList[HoneycodeAttributes](dcp.ref.Append("honeycode"))
+	return terra.ReferenceAsList[HoneycodeAttributes](dcp.ref.Append("honeycode"))
 }
 
 func (dcp DestinationConnectorPropertiesAttributes) LookoutMetrics() terra.ListValue[LookoutMetricsAttributes] {
-	return terra.ReferenceList[LookoutMetricsAttributes](dcp.ref.Append("lookout_metrics"))
+	return terra.ReferenceAsList[LookoutMetricsAttributes](dcp.ref.Append("lookout_metrics"))
 }
 
 func (dcp DestinationConnectorPropertiesAttributes) Marketo() terra.ListValue[DestinationConnectorPropertiesMarketoAttributes] {
-	return terra.ReferenceList[DestinationConnectorPropertiesMarketoAttributes](dcp.ref.Append("marketo"))
+	return terra.ReferenceAsList[DestinationConnectorPropertiesMarketoAttributes](dcp.ref.Append("marketo"))
 }
 
 func (dcp DestinationConnectorPropertiesAttributes) Redshift() terra.ListValue[RedshiftAttributes] {
-	return terra.ReferenceList[RedshiftAttributes](dcp.ref.Append("redshift"))
+	return terra.ReferenceAsList[RedshiftAttributes](dcp.ref.Append("redshift"))
 }
 
 func (dcp DestinationConnectorPropertiesAttributes) S3() terra.ListValue[DestinationConnectorPropertiesS3Attributes] {
-	return terra.ReferenceList[DestinationConnectorPropertiesS3Attributes](dcp.ref.Append("s3"))
+	return terra.ReferenceAsList[DestinationConnectorPropertiesS3Attributes](dcp.ref.Append("s3"))
 }
 
 func (dcp DestinationConnectorPropertiesAttributes) Salesforce() terra.ListValue[DestinationConnectorPropertiesSalesforceAttributes] {
-	return terra.ReferenceList[DestinationConnectorPropertiesSalesforceAttributes](dcp.ref.Append("salesforce"))
+	return terra.ReferenceAsList[DestinationConnectorPropertiesSalesforceAttributes](dcp.ref.Append("salesforce"))
 }
 
 func (dcp DestinationConnectorPropertiesAttributes) SapoData() terra.ListValue[DestinationConnectorPropertiesSapoDataAttributes] {
-	return terra.ReferenceList[DestinationConnectorPropertiesSapoDataAttributes](dcp.ref.Append("sapo_data"))
+	return terra.ReferenceAsList[DestinationConnectorPropertiesSapoDataAttributes](dcp.ref.Append("sapo_data"))
 }
 
 func (dcp DestinationConnectorPropertiesAttributes) Snowflake() terra.ListValue[SnowflakeAttributes] {
-	return terra.ReferenceList[SnowflakeAttributes](dcp.ref.Append("snowflake"))
+	return terra.ReferenceAsList[SnowflakeAttributes](dcp.ref.Append("snowflake"))
 }
 
 func (dcp DestinationConnectorPropertiesAttributes) Upsolver() terra.ListValue[UpsolverAttributes] {
-	return terra.ReferenceList[UpsolverAttributes](dcp.ref.Append("upsolver"))
+	return terra.ReferenceAsList[UpsolverAttributes](dcp.ref.Append("upsolver"))
 }
 
 func (dcp DestinationConnectorPropertiesAttributes) Zendesk() terra.ListValue[DestinationConnectorPropertiesZendeskAttributes] {
-	return terra.ReferenceList[DestinationConnectorPropertiesZendeskAttributes](dcp.ref.Append("zendesk"))
+	return terra.ReferenceAsList[DestinationConnectorPropertiesZendeskAttributes](dcp.ref.Append("zendesk"))
 }
 
 type DestinationConnectorPropertiesCustomConnectorAttributes struct {
@@ -647,23 +647,23 @@ func (cc DestinationConnectorPropertiesCustomConnectorAttributes) InternalTokens
 }
 
 func (cc DestinationConnectorPropertiesCustomConnectorAttributes) CustomProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cc.ref.Append("custom_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](cc.ref.Append("custom_properties"))
 }
 
 func (cc DestinationConnectorPropertiesCustomConnectorAttributes) EntityName() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("entity_name"))
+	return terra.ReferenceAsString(cc.ref.Append("entity_name"))
 }
 
 func (cc DestinationConnectorPropertiesCustomConnectorAttributes) IdFieldNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cc.ref.Append("id_field_names"))
+	return terra.ReferenceAsList[terra.StringValue](cc.ref.Append("id_field_names"))
 }
 
 func (cc DestinationConnectorPropertiesCustomConnectorAttributes) WriteOperationType() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("write_operation_type"))
+	return terra.ReferenceAsString(cc.ref.Append("write_operation_type"))
 }
 
 func (cc DestinationConnectorPropertiesCustomConnectorAttributes) ErrorHandlingConfig() terra.ListValue[CustomConnectorErrorHandlingConfigAttributes] {
-	return terra.ReferenceList[CustomConnectorErrorHandlingConfigAttributes](cc.ref.Append("error_handling_config"))
+	return terra.ReferenceAsList[CustomConnectorErrorHandlingConfigAttributes](cc.ref.Append("error_handling_config"))
 }
 
 type CustomConnectorErrorHandlingConfigAttributes struct {
@@ -683,15 +683,15 @@ func (ehc CustomConnectorErrorHandlingConfigAttributes) InternalTokens() hclwrit
 }
 
 func (ehc CustomConnectorErrorHandlingConfigAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(ehc.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(ehc.ref.Append("bucket_name"))
 }
 
 func (ehc CustomConnectorErrorHandlingConfigAttributes) BucketPrefix() terra.StringValue {
-	return terra.ReferenceString(ehc.ref.Append("bucket_prefix"))
+	return terra.ReferenceAsString(ehc.ref.Append("bucket_prefix"))
 }
 
 func (ehc CustomConnectorErrorHandlingConfigAttributes) FailOnFirstDestinationError() terra.BoolValue {
-	return terra.ReferenceBool(ehc.ref.Append("fail_on_first_destination_error"))
+	return terra.ReferenceAsBool(ehc.ref.Append("fail_on_first_destination_error"))
 }
 
 type CustomerProfilesAttributes struct {
@@ -711,11 +711,11 @@ func (cp CustomerProfilesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cp CustomerProfilesAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("domain_name"))
+	return terra.ReferenceAsString(cp.ref.Append("domain_name"))
 }
 
 func (cp CustomerProfilesAttributes) ObjectTypeName() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("object_type_name"))
+	return terra.ReferenceAsString(cp.ref.Append("object_type_name"))
 }
 
 type EventBridgeAttributes struct {
@@ -735,11 +735,11 @@ func (eb EventBridgeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (eb EventBridgeAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(eb.ref.Append("object"))
+	return terra.ReferenceAsString(eb.ref.Append("object"))
 }
 
 func (eb EventBridgeAttributes) ErrorHandlingConfig() terra.ListValue[EventBridgeErrorHandlingConfigAttributes] {
-	return terra.ReferenceList[EventBridgeErrorHandlingConfigAttributes](eb.ref.Append("error_handling_config"))
+	return terra.ReferenceAsList[EventBridgeErrorHandlingConfigAttributes](eb.ref.Append("error_handling_config"))
 }
 
 type EventBridgeErrorHandlingConfigAttributes struct {
@@ -759,15 +759,15 @@ func (ehc EventBridgeErrorHandlingConfigAttributes) InternalTokens() hclwrite.To
 }
 
 func (ehc EventBridgeErrorHandlingConfigAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(ehc.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(ehc.ref.Append("bucket_name"))
 }
 
 func (ehc EventBridgeErrorHandlingConfigAttributes) BucketPrefix() terra.StringValue {
-	return terra.ReferenceString(ehc.ref.Append("bucket_prefix"))
+	return terra.ReferenceAsString(ehc.ref.Append("bucket_prefix"))
 }
 
 func (ehc EventBridgeErrorHandlingConfigAttributes) FailOnFirstDestinationError() terra.BoolValue {
-	return terra.ReferenceBool(ehc.ref.Append("fail_on_first_destination_error"))
+	return terra.ReferenceAsBool(ehc.ref.Append("fail_on_first_destination_error"))
 }
 
 type HoneycodeAttributes struct {
@@ -787,11 +787,11 @@ func (h HoneycodeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (h HoneycodeAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("object"))
+	return terra.ReferenceAsString(h.ref.Append("object"))
 }
 
 func (h HoneycodeAttributes) ErrorHandlingConfig() terra.ListValue[HoneycodeErrorHandlingConfigAttributes] {
-	return terra.ReferenceList[HoneycodeErrorHandlingConfigAttributes](h.ref.Append("error_handling_config"))
+	return terra.ReferenceAsList[HoneycodeErrorHandlingConfigAttributes](h.ref.Append("error_handling_config"))
 }
 
 type HoneycodeErrorHandlingConfigAttributes struct {
@@ -811,15 +811,15 @@ func (ehc HoneycodeErrorHandlingConfigAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (ehc HoneycodeErrorHandlingConfigAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(ehc.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(ehc.ref.Append("bucket_name"))
 }
 
 func (ehc HoneycodeErrorHandlingConfigAttributes) BucketPrefix() terra.StringValue {
-	return terra.ReferenceString(ehc.ref.Append("bucket_prefix"))
+	return terra.ReferenceAsString(ehc.ref.Append("bucket_prefix"))
 }
 
 func (ehc HoneycodeErrorHandlingConfigAttributes) FailOnFirstDestinationError() terra.BoolValue {
-	return terra.ReferenceBool(ehc.ref.Append("fail_on_first_destination_error"))
+	return terra.ReferenceAsBool(ehc.ref.Append("fail_on_first_destination_error"))
 }
 
 type LookoutMetricsAttributes struct {
@@ -855,11 +855,11 @@ func (m DestinationConnectorPropertiesMarketoAttributes) InternalTokens() hclwri
 }
 
 func (m DestinationConnectorPropertiesMarketoAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("object"))
+	return terra.ReferenceAsString(m.ref.Append("object"))
 }
 
 func (m DestinationConnectorPropertiesMarketoAttributes) ErrorHandlingConfig() terra.ListValue[MarketoErrorHandlingConfigAttributes] {
-	return terra.ReferenceList[MarketoErrorHandlingConfigAttributes](m.ref.Append("error_handling_config"))
+	return terra.ReferenceAsList[MarketoErrorHandlingConfigAttributes](m.ref.Append("error_handling_config"))
 }
 
 type MarketoErrorHandlingConfigAttributes struct {
@@ -879,15 +879,15 @@ func (ehc MarketoErrorHandlingConfigAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (ehc MarketoErrorHandlingConfigAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(ehc.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(ehc.ref.Append("bucket_name"))
 }
 
 func (ehc MarketoErrorHandlingConfigAttributes) BucketPrefix() terra.StringValue {
-	return terra.ReferenceString(ehc.ref.Append("bucket_prefix"))
+	return terra.ReferenceAsString(ehc.ref.Append("bucket_prefix"))
 }
 
 func (ehc MarketoErrorHandlingConfigAttributes) FailOnFirstDestinationError() terra.BoolValue {
-	return terra.ReferenceBool(ehc.ref.Append("fail_on_first_destination_error"))
+	return terra.ReferenceAsBool(ehc.ref.Append("fail_on_first_destination_error"))
 }
 
 type RedshiftAttributes struct {
@@ -907,19 +907,19 @@ func (r RedshiftAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RedshiftAttributes) BucketPrefix() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("bucket_prefix"))
+	return terra.ReferenceAsString(r.ref.Append("bucket_prefix"))
 }
 
 func (r RedshiftAttributes) IntermediateBucketName() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("intermediate_bucket_name"))
+	return terra.ReferenceAsString(r.ref.Append("intermediate_bucket_name"))
 }
 
 func (r RedshiftAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("object"))
+	return terra.ReferenceAsString(r.ref.Append("object"))
 }
 
 func (r RedshiftAttributes) ErrorHandlingConfig() terra.ListValue[RedshiftErrorHandlingConfigAttributes] {
-	return terra.ReferenceList[RedshiftErrorHandlingConfigAttributes](r.ref.Append("error_handling_config"))
+	return terra.ReferenceAsList[RedshiftErrorHandlingConfigAttributes](r.ref.Append("error_handling_config"))
 }
 
 type RedshiftErrorHandlingConfigAttributes struct {
@@ -939,15 +939,15 @@ func (ehc RedshiftErrorHandlingConfigAttributes) InternalTokens() hclwrite.Token
 }
 
 func (ehc RedshiftErrorHandlingConfigAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(ehc.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(ehc.ref.Append("bucket_name"))
 }
 
 func (ehc RedshiftErrorHandlingConfigAttributes) BucketPrefix() terra.StringValue {
-	return terra.ReferenceString(ehc.ref.Append("bucket_prefix"))
+	return terra.ReferenceAsString(ehc.ref.Append("bucket_prefix"))
 }
 
 func (ehc RedshiftErrorHandlingConfigAttributes) FailOnFirstDestinationError() terra.BoolValue {
-	return terra.ReferenceBool(ehc.ref.Append("fail_on_first_destination_error"))
+	return terra.ReferenceAsBool(ehc.ref.Append("fail_on_first_destination_error"))
 }
 
 type DestinationConnectorPropertiesS3Attributes struct {
@@ -967,15 +967,15 @@ func (s DestinationConnectorPropertiesS3Attributes) InternalTokens() hclwrite.To
 }
 
 func (s DestinationConnectorPropertiesS3Attributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(s.ref.Append("bucket_name"))
 }
 
 func (s DestinationConnectorPropertiesS3Attributes) BucketPrefix() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("bucket_prefix"))
+	return terra.ReferenceAsString(s.ref.Append("bucket_prefix"))
 }
 
 func (s DestinationConnectorPropertiesS3Attributes) S3OutputFormatConfig() terra.ListValue[S3S3OutputFormatConfigAttributes] {
-	return terra.ReferenceList[S3S3OutputFormatConfigAttributes](s.ref.Append("s3_output_format_config"))
+	return terra.ReferenceAsList[S3S3OutputFormatConfigAttributes](s.ref.Append("s3_output_format_config"))
 }
 
 type S3S3OutputFormatConfigAttributes struct {
@@ -995,19 +995,19 @@ func (sofc S3S3OutputFormatConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sofc S3S3OutputFormatConfigAttributes) FileType() terra.StringValue {
-	return terra.ReferenceString(sofc.ref.Append("file_type"))
+	return terra.ReferenceAsString(sofc.ref.Append("file_type"))
 }
 
 func (sofc S3S3OutputFormatConfigAttributes) PreserveSourceDataTyping() terra.BoolValue {
-	return terra.ReferenceBool(sofc.ref.Append("preserve_source_data_typing"))
+	return terra.ReferenceAsBool(sofc.ref.Append("preserve_source_data_typing"))
 }
 
 func (sofc S3S3OutputFormatConfigAttributes) AggregationConfig() terra.ListValue[S3S3OutputFormatConfigAggregationConfigAttributes] {
-	return terra.ReferenceList[S3S3OutputFormatConfigAggregationConfigAttributes](sofc.ref.Append("aggregation_config"))
+	return terra.ReferenceAsList[S3S3OutputFormatConfigAggregationConfigAttributes](sofc.ref.Append("aggregation_config"))
 }
 
 func (sofc S3S3OutputFormatConfigAttributes) PrefixConfig() terra.ListValue[S3S3OutputFormatConfigPrefixConfigAttributes] {
-	return terra.ReferenceList[S3S3OutputFormatConfigPrefixConfigAttributes](sofc.ref.Append("prefix_config"))
+	return terra.ReferenceAsList[S3S3OutputFormatConfigPrefixConfigAttributes](sofc.ref.Append("prefix_config"))
 }
 
 type S3S3OutputFormatConfigAggregationConfigAttributes struct {
@@ -1027,7 +1027,7 @@ func (ac S3S3OutputFormatConfigAggregationConfigAttributes) InternalTokens() hcl
 }
 
 func (ac S3S3OutputFormatConfigAggregationConfigAttributes) AggregationType() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("aggregation_type"))
+	return terra.ReferenceAsString(ac.ref.Append("aggregation_type"))
 }
 
 type S3S3OutputFormatConfigPrefixConfigAttributes struct {
@@ -1047,11 +1047,11 @@ func (pc S3S3OutputFormatConfigPrefixConfigAttributes) InternalTokens() hclwrite
 }
 
 func (pc S3S3OutputFormatConfigPrefixConfigAttributes) PrefixFormat() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("prefix_format"))
+	return terra.ReferenceAsString(pc.ref.Append("prefix_format"))
 }
 
 func (pc S3S3OutputFormatConfigPrefixConfigAttributes) PrefixType() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("prefix_type"))
+	return terra.ReferenceAsString(pc.ref.Append("prefix_type"))
 }
 
 type DestinationConnectorPropertiesSalesforceAttributes struct {
@@ -1071,19 +1071,19 @@ func (s DestinationConnectorPropertiesSalesforceAttributes) InternalTokens() hcl
 }
 
 func (s DestinationConnectorPropertiesSalesforceAttributes) IdFieldNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("id_field_names"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("id_field_names"))
 }
 
 func (s DestinationConnectorPropertiesSalesforceAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("object"))
+	return terra.ReferenceAsString(s.ref.Append("object"))
 }
 
 func (s DestinationConnectorPropertiesSalesforceAttributes) WriteOperationType() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("write_operation_type"))
+	return terra.ReferenceAsString(s.ref.Append("write_operation_type"))
 }
 
 func (s DestinationConnectorPropertiesSalesforceAttributes) ErrorHandlingConfig() terra.ListValue[SalesforceErrorHandlingConfigAttributes] {
-	return terra.ReferenceList[SalesforceErrorHandlingConfigAttributes](s.ref.Append("error_handling_config"))
+	return terra.ReferenceAsList[SalesforceErrorHandlingConfigAttributes](s.ref.Append("error_handling_config"))
 }
 
 type SalesforceErrorHandlingConfigAttributes struct {
@@ -1103,15 +1103,15 @@ func (ehc SalesforceErrorHandlingConfigAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (ehc SalesforceErrorHandlingConfigAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(ehc.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(ehc.ref.Append("bucket_name"))
 }
 
 func (ehc SalesforceErrorHandlingConfigAttributes) BucketPrefix() terra.StringValue {
-	return terra.ReferenceString(ehc.ref.Append("bucket_prefix"))
+	return terra.ReferenceAsString(ehc.ref.Append("bucket_prefix"))
 }
 
 func (ehc SalesforceErrorHandlingConfigAttributes) FailOnFirstDestinationError() terra.BoolValue {
-	return terra.ReferenceBool(ehc.ref.Append("fail_on_first_destination_error"))
+	return terra.ReferenceAsBool(ehc.ref.Append("fail_on_first_destination_error"))
 }
 
 type DestinationConnectorPropertiesSapoDataAttributes struct {
@@ -1131,23 +1131,23 @@ func (sd DestinationConnectorPropertiesSapoDataAttributes) InternalTokens() hclw
 }
 
 func (sd DestinationConnectorPropertiesSapoDataAttributes) IdFieldNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sd.ref.Append("id_field_names"))
+	return terra.ReferenceAsList[terra.StringValue](sd.ref.Append("id_field_names"))
 }
 
 func (sd DestinationConnectorPropertiesSapoDataAttributes) ObjectPath() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("object_path"))
+	return terra.ReferenceAsString(sd.ref.Append("object_path"))
 }
 
 func (sd DestinationConnectorPropertiesSapoDataAttributes) WriteOperationType() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("write_operation_type"))
+	return terra.ReferenceAsString(sd.ref.Append("write_operation_type"))
 }
 
 func (sd DestinationConnectorPropertiesSapoDataAttributes) ErrorHandlingConfig() terra.ListValue[SapoDataErrorHandlingConfigAttributes] {
-	return terra.ReferenceList[SapoDataErrorHandlingConfigAttributes](sd.ref.Append("error_handling_config"))
+	return terra.ReferenceAsList[SapoDataErrorHandlingConfigAttributes](sd.ref.Append("error_handling_config"))
 }
 
 func (sd DestinationConnectorPropertiesSapoDataAttributes) SuccessResponseHandlingConfig() terra.ListValue[SuccessResponseHandlingConfigAttributes] {
-	return terra.ReferenceList[SuccessResponseHandlingConfigAttributes](sd.ref.Append("success_response_handling_config"))
+	return terra.ReferenceAsList[SuccessResponseHandlingConfigAttributes](sd.ref.Append("success_response_handling_config"))
 }
 
 type SapoDataErrorHandlingConfigAttributes struct {
@@ -1167,15 +1167,15 @@ func (ehc SapoDataErrorHandlingConfigAttributes) InternalTokens() hclwrite.Token
 }
 
 func (ehc SapoDataErrorHandlingConfigAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(ehc.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(ehc.ref.Append("bucket_name"))
 }
 
 func (ehc SapoDataErrorHandlingConfigAttributes) BucketPrefix() terra.StringValue {
-	return terra.ReferenceString(ehc.ref.Append("bucket_prefix"))
+	return terra.ReferenceAsString(ehc.ref.Append("bucket_prefix"))
 }
 
 func (ehc SapoDataErrorHandlingConfigAttributes) FailOnFirstDestinationError() terra.BoolValue {
-	return terra.ReferenceBool(ehc.ref.Append("fail_on_first_destination_error"))
+	return terra.ReferenceAsBool(ehc.ref.Append("fail_on_first_destination_error"))
 }
 
 type SuccessResponseHandlingConfigAttributes struct {
@@ -1195,11 +1195,11 @@ func (srhc SuccessResponseHandlingConfigAttributes) InternalTokens() hclwrite.To
 }
 
 func (srhc SuccessResponseHandlingConfigAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(srhc.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(srhc.ref.Append("bucket_name"))
 }
 
 func (srhc SuccessResponseHandlingConfigAttributes) BucketPrefix() terra.StringValue {
-	return terra.ReferenceString(srhc.ref.Append("bucket_prefix"))
+	return terra.ReferenceAsString(srhc.ref.Append("bucket_prefix"))
 }
 
 type SnowflakeAttributes struct {
@@ -1219,19 +1219,19 @@ func (s SnowflakeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SnowflakeAttributes) BucketPrefix() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("bucket_prefix"))
+	return terra.ReferenceAsString(s.ref.Append("bucket_prefix"))
 }
 
 func (s SnowflakeAttributes) IntermediateBucketName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("intermediate_bucket_name"))
+	return terra.ReferenceAsString(s.ref.Append("intermediate_bucket_name"))
 }
 
 func (s SnowflakeAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("object"))
+	return terra.ReferenceAsString(s.ref.Append("object"))
 }
 
 func (s SnowflakeAttributes) ErrorHandlingConfig() terra.ListValue[SnowflakeErrorHandlingConfigAttributes] {
-	return terra.ReferenceList[SnowflakeErrorHandlingConfigAttributes](s.ref.Append("error_handling_config"))
+	return terra.ReferenceAsList[SnowflakeErrorHandlingConfigAttributes](s.ref.Append("error_handling_config"))
 }
 
 type SnowflakeErrorHandlingConfigAttributes struct {
@@ -1251,15 +1251,15 @@ func (ehc SnowflakeErrorHandlingConfigAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (ehc SnowflakeErrorHandlingConfigAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(ehc.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(ehc.ref.Append("bucket_name"))
 }
 
 func (ehc SnowflakeErrorHandlingConfigAttributes) BucketPrefix() terra.StringValue {
-	return terra.ReferenceString(ehc.ref.Append("bucket_prefix"))
+	return terra.ReferenceAsString(ehc.ref.Append("bucket_prefix"))
 }
 
 func (ehc SnowflakeErrorHandlingConfigAttributes) FailOnFirstDestinationError() terra.BoolValue {
-	return terra.ReferenceBool(ehc.ref.Append("fail_on_first_destination_error"))
+	return terra.ReferenceAsBool(ehc.ref.Append("fail_on_first_destination_error"))
 }
 
 type UpsolverAttributes struct {
@@ -1279,15 +1279,15 @@ func (u UpsolverAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (u UpsolverAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(u.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(u.ref.Append("bucket_name"))
 }
 
 func (u UpsolverAttributes) BucketPrefix() terra.StringValue {
-	return terra.ReferenceString(u.ref.Append("bucket_prefix"))
+	return terra.ReferenceAsString(u.ref.Append("bucket_prefix"))
 }
 
 func (u UpsolverAttributes) S3OutputFormatConfig() terra.ListValue[UpsolverS3OutputFormatConfigAttributes] {
-	return terra.ReferenceList[UpsolverS3OutputFormatConfigAttributes](u.ref.Append("s3_output_format_config"))
+	return terra.ReferenceAsList[UpsolverS3OutputFormatConfigAttributes](u.ref.Append("s3_output_format_config"))
 }
 
 type UpsolverS3OutputFormatConfigAttributes struct {
@@ -1307,15 +1307,15 @@ func (sofc UpsolverS3OutputFormatConfigAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (sofc UpsolverS3OutputFormatConfigAttributes) FileType() terra.StringValue {
-	return terra.ReferenceString(sofc.ref.Append("file_type"))
+	return terra.ReferenceAsString(sofc.ref.Append("file_type"))
 }
 
 func (sofc UpsolverS3OutputFormatConfigAttributes) AggregationConfig() terra.ListValue[UpsolverS3OutputFormatConfigAggregationConfigAttributes] {
-	return terra.ReferenceList[UpsolverS3OutputFormatConfigAggregationConfigAttributes](sofc.ref.Append("aggregation_config"))
+	return terra.ReferenceAsList[UpsolverS3OutputFormatConfigAggregationConfigAttributes](sofc.ref.Append("aggregation_config"))
 }
 
 func (sofc UpsolverS3OutputFormatConfigAttributes) PrefixConfig() terra.ListValue[UpsolverS3OutputFormatConfigPrefixConfigAttributes] {
-	return terra.ReferenceList[UpsolverS3OutputFormatConfigPrefixConfigAttributes](sofc.ref.Append("prefix_config"))
+	return terra.ReferenceAsList[UpsolverS3OutputFormatConfigPrefixConfigAttributes](sofc.ref.Append("prefix_config"))
 }
 
 type UpsolverS3OutputFormatConfigAggregationConfigAttributes struct {
@@ -1335,7 +1335,7 @@ func (ac UpsolverS3OutputFormatConfigAggregationConfigAttributes) InternalTokens
 }
 
 func (ac UpsolverS3OutputFormatConfigAggregationConfigAttributes) AggregationType() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("aggregation_type"))
+	return terra.ReferenceAsString(ac.ref.Append("aggregation_type"))
 }
 
 type UpsolverS3OutputFormatConfigPrefixConfigAttributes struct {
@@ -1355,11 +1355,11 @@ func (pc UpsolverS3OutputFormatConfigPrefixConfigAttributes) InternalTokens() hc
 }
 
 func (pc UpsolverS3OutputFormatConfigPrefixConfigAttributes) PrefixFormat() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("prefix_format"))
+	return terra.ReferenceAsString(pc.ref.Append("prefix_format"))
 }
 
 func (pc UpsolverS3OutputFormatConfigPrefixConfigAttributes) PrefixType() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("prefix_type"))
+	return terra.ReferenceAsString(pc.ref.Append("prefix_type"))
 }
 
 type DestinationConnectorPropertiesZendeskAttributes struct {
@@ -1379,19 +1379,19 @@ func (z DestinationConnectorPropertiesZendeskAttributes) InternalTokens() hclwri
 }
 
 func (z DestinationConnectorPropertiesZendeskAttributes) IdFieldNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](z.ref.Append("id_field_names"))
+	return terra.ReferenceAsList[terra.StringValue](z.ref.Append("id_field_names"))
 }
 
 func (z DestinationConnectorPropertiesZendeskAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(z.ref.Append("object"))
+	return terra.ReferenceAsString(z.ref.Append("object"))
 }
 
 func (z DestinationConnectorPropertiesZendeskAttributes) WriteOperationType() terra.StringValue {
-	return terra.ReferenceString(z.ref.Append("write_operation_type"))
+	return terra.ReferenceAsString(z.ref.Append("write_operation_type"))
 }
 
 func (z DestinationConnectorPropertiesZendeskAttributes) ErrorHandlingConfig() terra.ListValue[ZendeskErrorHandlingConfigAttributes] {
-	return terra.ReferenceList[ZendeskErrorHandlingConfigAttributes](z.ref.Append("error_handling_config"))
+	return terra.ReferenceAsList[ZendeskErrorHandlingConfigAttributes](z.ref.Append("error_handling_config"))
 }
 
 type ZendeskErrorHandlingConfigAttributes struct {
@@ -1411,15 +1411,15 @@ func (ehc ZendeskErrorHandlingConfigAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (ehc ZendeskErrorHandlingConfigAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(ehc.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(ehc.ref.Append("bucket_name"))
 }
 
 func (ehc ZendeskErrorHandlingConfigAttributes) BucketPrefix() terra.StringValue {
-	return terra.ReferenceString(ehc.ref.Append("bucket_prefix"))
+	return terra.ReferenceAsString(ehc.ref.Append("bucket_prefix"))
 }
 
 func (ehc ZendeskErrorHandlingConfigAttributes) FailOnFirstDestinationError() terra.BoolValue {
-	return terra.ReferenceBool(ehc.ref.Append("fail_on_first_destination_error"))
+	return terra.ReferenceAsBool(ehc.ref.Append("fail_on_first_destination_error"))
 }
 
 type SourceFlowConfigAttributes struct {
@@ -1439,23 +1439,23 @@ func (sfc SourceFlowConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sfc SourceFlowConfigAttributes) ApiVersion() terra.StringValue {
-	return terra.ReferenceString(sfc.ref.Append("api_version"))
+	return terra.ReferenceAsString(sfc.ref.Append("api_version"))
 }
 
 func (sfc SourceFlowConfigAttributes) ConnectorProfileName() terra.StringValue {
-	return terra.ReferenceString(sfc.ref.Append("connector_profile_name"))
+	return terra.ReferenceAsString(sfc.ref.Append("connector_profile_name"))
 }
 
 func (sfc SourceFlowConfigAttributes) ConnectorType() terra.StringValue {
-	return terra.ReferenceString(sfc.ref.Append("connector_type"))
+	return terra.ReferenceAsString(sfc.ref.Append("connector_type"))
 }
 
 func (sfc SourceFlowConfigAttributes) IncrementalPullConfig() terra.ListValue[IncrementalPullConfigAttributes] {
-	return terra.ReferenceList[IncrementalPullConfigAttributes](sfc.ref.Append("incremental_pull_config"))
+	return terra.ReferenceAsList[IncrementalPullConfigAttributes](sfc.ref.Append("incremental_pull_config"))
 }
 
 func (sfc SourceFlowConfigAttributes) SourceConnectorProperties() terra.ListValue[SourceConnectorPropertiesAttributes] {
-	return terra.ReferenceList[SourceConnectorPropertiesAttributes](sfc.ref.Append("source_connector_properties"))
+	return terra.ReferenceAsList[SourceConnectorPropertiesAttributes](sfc.ref.Append("source_connector_properties"))
 }
 
 type IncrementalPullConfigAttributes struct {
@@ -1475,7 +1475,7 @@ func (ipc IncrementalPullConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ipc IncrementalPullConfigAttributes) DatetimeTypeFieldName() terra.StringValue {
-	return terra.ReferenceString(ipc.ref.Append("datetime_type_field_name"))
+	return terra.ReferenceAsString(ipc.ref.Append("datetime_type_field_name"))
 }
 
 type SourceConnectorPropertiesAttributes struct {
@@ -1495,67 +1495,67 @@ func (scp SourceConnectorPropertiesAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (scp SourceConnectorPropertiesAttributes) Amplitude() terra.ListValue[AmplitudeAttributes] {
-	return terra.ReferenceList[AmplitudeAttributes](scp.ref.Append("amplitude"))
+	return terra.ReferenceAsList[AmplitudeAttributes](scp.ref.Append("amplitude"))
 }
 
 func (scp SourceConnectorPropertiesAttributes) CustomConnector() terra.ListValue[SourceConnectorPropertiesCustomConnectorAttributes] {
-	return terra.ReferenceList[SourceConnectorPropertiesCustomConnectorAttributes](scp.ref.Append("custom_connector"))
+	return terra.ReferenceAsList[SourceConnectorPropertiesCustomConnectorAttributes](scp.ref.Append("custom_connector"))
 }
 
 func (scp SourceConnectorPropertiesAttributes) Datadog() terra.ListValue[DatadogAttributes] {
-	return terra.ReferenceList[DatadogAttributes](scp.ref.Append("datadog"))
+	return terra.ReferenceAsList[DatadogAttributes](scp.ref.Append("datadog"))
 }
 
 func (scp SourceConnectorPropertiesAttributes) Dynatrace() terra.ListValue[DynatraceAttributes] {
-	return terra.ReferenceList[DynatraceAttributes](scp.ref.Append("dynatrace"))
+	return terra.ReferenceAsList[DynatraceAttributes](scp.ref.Append("dynatrace"))
 }
 
 func (scp SourceConnectorPropertiesAttributes) GoogleAnalytics() terra.ListValue[GoogleAnalyticsAttributes] {
-	return terra.ReferenceList[GoogleAnalyticsAttributes](scp.ref.Append("google_analytics"))
+	return terra.ReferenceAsList[GoogleAnalyticsAttributes](scp.ref.Append("google_analytics"))
 }
 
 func (scp SourceConnectorPropertiesAttributes) InforNexus() terra.ListValue[InforNexusAttributes] {
-	return terra.ReferenceList[InforNexusAttributes](scp.ref.Append("infor_nexus"))
+	return terra.ReferenceAsList[InforNexusAttributes](scp.ref.Append("infor_nexus"))
 }
 
 func (scp SourceConnectorPropertiesAttributes) Marketo() terra.ListValue[SourceConnectorPropertiesMarketoAttributes] {
-	return terra.ReferenceList[SourceConnectorPropertiesMarketoAttributes](scp.ref.Append("marketo"))
+	return terra.ReferenceAsList[SourceConnectorPropertiesMarketoAttributes](scp.ref.Append("marketo"))
 }
 
 func (scp SourceConnectorPropertiesAttributes) S3() terra.ListValue[SourceConnectorPropertiesS3Attributes] {
-	return terra.ReferenceList[SourceConnectorPropertiesS3Attributes](scp.ref.Append("s3"))
+	return terra.ReferenceAsList[SourceConnectorPropertiesS3Attributes](scp.ref.Append("s3"))
 }
 
 func (scp SourceConnectorPropertiesAttributes) Salesforce() terra.ListValue[SourceConnectorPropertiesSalesforceAttributes] {
-	return terra.ReferenceList[SourceConnectorPropertiesSalesforceAttributes](scp.ref.Append("salesforce"))
+	return terra.ReferenceAsList[SourceConnectorPropertiesSalesforceAttributes](scp.ref.Append("salesforce"))
 }
 
 func (scp SourceConnectorPropertiesAttributes) SapoData() terra.ListValue[SourceConnectorPropertiesSapoDataAttributes] {
-	return terra.ReferenceList[SourceConnectorPropertiesSapoDataAttributes](scp.ref.Append("sapo_data"))
+	return terra.ReferenceAsList[SourceConnectorPropertiesSapoDataAttributes](scp.ref.Append("sapo_data"))
 }
 
 func (scp SourceConnectorPropertiesAttributes) ServiceNow() terra.ListValue[ServiceNowAttributes] {
-	return terra.ReferenceList[ServiceNowAttributes](scp.ref.Append("service_now"))
+	return terra.ReferenceAsList[ServiceNowAttributes](scp.ref.Append("service_now"))
 }
 
 func (scp SourceConnectorPropertiesAttributes) Singular() terra.ListValue[SingularAttributes] {
-	return terra.ReferenceList[SingularAttributes](scp.ref.Append("singular"))
+	return terra.ReferenceAsList[SingularAttributes](scp.ref.Append("singular"))
 }
 
 func (scp SourceConnectorPropertiesAttributes) Slack() terra.ListValue[SlackAttributes] {
-	return terra.ReferenceList[SlackAttributes](scp.ref.Append("slack"))
+	return terra.ReferenceAsList[SlackAttributes](scp.ref.Append("slack"))
 }
 
 func (scp SourceConnectorPropertiesAttributes) Trendmicro() terra.ListValue[TrendmicroAttributes] {
-	return terra.ReferenceList[TrendmicroAttributes](scp.ref.Append("trendmicro"))
+	return terra.ReferenceAsList[TrendmicroAttributes](scp.ref.Append("trendmicro"))
 }
 
 func (scp SourceConnectorPropertiesAttributes) Veeva() terra.ListValue[VeevaAttributes] {
-	return terra.ReferenceList[VeevaAttributes](scp.ref.Append("veeva"))
+	return terra.ReferenceAsList[VeevaAttributes](scp.ref.Append("veeva"))
 }
 
 func (scp SourceConnectorPropertiesAttributes) Zendesk() terra.ListValue[SourceConnectorPropertiesZendeskAttributes] {
-	return terra.ReferenceList[SourceConnectorPropertiesZendeskAttributes](scp.ref.Append("zendesk"))
+	return terra.ReferenceAsList[SourceConnectorPropertiesZendeskAttributes](scp.ref.Append("zendesk"))
 }
 
 type AmplitudeAttributes struct {
@@ -1575,7 +1575,7 @@ func (a AmplitudeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AmplitudeAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("object"))
+	return terra.ReferenceAsString(a.ref.Append("object"))
 }
 
 type SourceConnectorPropertiesCustomConnectorAttributes struct {
@@ -1595,11 +1595,11 @@ func (cc SourceConnectorPropertiesCustomConnectorAttributes) InternalTokens() hc
 }
 
 func (cc SourceConnectorPropertiesCustomConnectorAttributes) CustomProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cc.ref.Append("custom_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](cc.ref.Append("custom_properties"))
 }
 
 func (cc SourceConnectorPropertiesCustomConnectorAttributes) EntityName() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("entity_name"))
+	return terra.ReferenceAsString(cc.ref.Append("entity_name"))
 }
 
 type DatadogAttributes struct {
@@ -1619,7 +1619,7 @@ func (d DatadogAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DatadogAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("object"))
+	return terra.ReferenceAsString(d.ref.Append("object"))
 }
 
 type DynatraceAttributes struct {
@@ -1639,7 +1639,7 @@ func (d DynatraceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DynatraceAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("object"))
+	return terra.ReferenceAsString(d.ref.Append("object"))
 }
 
 type GoogleAnalyticsAttributes struct {
@@ -1659,7 +1659,7 @@ func (ga GoogleAnalyticsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ga GoogleAnalyticsAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(ga.ref.Append("object"))
+	return terra.ReferenceAsString(ga.ref.Append("object"))
 }
 
 type InforNexusAttributes struct {
@@ -1679,7 +1679,7 @@ func (in InforNexusAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (in InforNexusAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(in.ref.Append("object"))
+	return terra.ReferenceAsString(in.ref.Append("object"))
 }
 
 type SourceConnectorPropertiesMarketoAttributes struct {
@@ -1699,7 +1699,7 @@ func (m SourceConnectorPropertiesMarketoAttributes) InternalTokens() hclwrite.To
 }
 
 func (m SourceConnectorPropertiesMarketoAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("object"))
+	return terra.ReferenceAsString(m.ref.Append("object"))
 }
 
 type SourceConnectorPropertiesS3Attributes struct {
@@ -1719,15 +1719,15 @@ func (s SourceConnectorPropertiesS3Attributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (s SourceConnectorPropertiesS3Attributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(s.ref.Append("bucket_name"))
 }
 
 func (s SourceConnectorPropertiesS3Attributes) BucketPrefix() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("bucket_prefix"))
+	return terra.ReferenceAsString(s.ref.Append("bucket_prefix"))
 }
 
 func (s SourceConnectorPropertiesS3Attributes) S3InputFormatConfig() terra.ListValue[S3InputFormatConfigAttributes] {
-	return terra.ReferenceList[S3InputFormatConfigAttributes](s.ref.Append("s3_input_format_config"))
+	return terra.ReferenceAsList[S3InputFormatConfigAttributes](s.ref.Append("s3_input_format_config"))
 }
 
 type S3InputFormatConfigAttributes struct {
@@ -1747,7 +1747,7 @@ func (sifc S3InputFormatConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sifc S3InputFormatConfigAttributes) S3InputFileType() terra.StringValue {
-	return terra.ReferenceString(sifc.ref.Append("s3_input_file_type"))
+	return terra.ReferenceAsString(sifc.ref.Append("s3_input_file_type"))
 }
 
 type SourceConnectorPropertiesSalesforceAttributes struct {
@@ -1767,15 +1767,15 @@ func (s SourceConnectorPropertiesSalesforceAttributes) InternalTokens() hclwrite
 }
 
 func (s SourceConnectorPropertiesSalesforceAttributes) EnableDynamicFieldUpdate() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("enable_dynamic_field_update"))
+	return terra.ReferenceAsBool(s.ref.Append("enable_dynamic_field_update"))
 }
 
 func (s SourceConnectorPropertiesSalesforceAttributes) IncludeDeletedRecords() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("include_deleted_records"))
+	return terra.ReferenceAsBool(s.ref.Append("include_deleted_records"))
 }
 
 func (s SourceConnectorPropertiesSalesforceAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("object"))
+	return terra.ReferenceAsString(s.ref.Append("object"))
 }
 
 type SourceConnectorPropertiesSapoDataAttributes struct {
@@ -1795,7 +1795,7 @@ func (sd SourceConnectorPropertiesSapoDataAttributes) InternalTokens() hclwrite.
 }
 
 func (sd SourceConnectorPropertiesSapoDataAttributes) ObjectPath() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("object_path"))
+	return terra.ReferenceAsString(sd.ref.Append("object_path"))
 }
 
 type ServiceNowAttributes struct {
@@ -1815,7 +1815,7 @@ func (sn ServiceNowAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sn ServiceNowAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(sn.ref.Append("object"))
+	return terra.ReferenceAsString(sn.ref.Append("object"))
 }
 
 type SingularAttributes struct {
@@ -1835,7 +1835,7 @@ func (s SingularAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SingularAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("object"))
+	return terra.ReferenceAsString(s.ref.Append("object"))
 }
 
 type SlackAttributes struct {
@@ -1855,7 +1855,7 @@ func (s SlackAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SlackAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("object"))
+	return terra.ReferenceAsString(s.ref.Append("object"))
 }
 
 type TrendmicroAttributes struct {
@@ -1875,7 +1875,7 @@ func (t TrendmicroAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TrendmicroAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("object"))
+	return terra.ReferenceAsString(t.ref.Append("object"))
 }
 
 type VeevaAttributes struct {
@@ -1895,23 +1895,23 @@ func (v VeevaAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (v VeevaAttributes) DocumentType() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("document_type"))
+	return terra.ReferenceAsString(v.ref.Append("document_type"))
 }
 
 func (v VeevaAttributes) IncludeAllVersions() terra.BoolValue {
-	return terra.ReferenceBool(v.ref.Append("include_all_versions"))
+	return terra.ReferenceAsBool(v.ref.Append("include_all_versions"))
 }
 
 func (v VeevaAttributes) IncludeRenditions() terra.BoolValue {
-	return terra.ReferenceBool(v.ref.Append("include_renditions"))
+	return terra.ReferenceAsBool(v.ref.Append("include_renditions"))
 }
 
 func (v VeevaAttributes) IncludeSourceFiles() terra.BoolValue {
-	return terra.ReferenceBool(v.ref.Append("include_source_files"))
+	return terra.ReferenceAsBool(v.ref.Append("include_source_files"))
 }
 
 func (v VeevaAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("object"))
+	return terra.ReferenceAsString(v.ref.Append("object"))
 }
 
 type SourceConnectorPropertiesZendeskAttributes struct {
@@ -1931,7 +1931,7 @@ func (z SourceConnectorPropertiesZendeskAttributes) InternalTokens() hclwrite.To
 }
 
 func (z SourceConnectorPropertiesZendeskAttributes) Object() terra.StringValue {
-	return terra.ReferenceString(z.ref.Append("object"))
+	return terra.ReferenceAsString(z.ref.Append("object"))
 }
 
 type TaskAttributes struct {
@@ -1951,23 +1951,23 @@ func (t TaskAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TaskAttributes) DestinationField() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("destination_field"))
+	return terra.ReferenceAsString(t.ref.Append("destination_field"))
 }
 
 func (t TaskAttributes) SourceFields() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](t.ref.Append("source_fields"))
+	return terra.ReferenceAsList[terra.StringValue](t.ref.Append("source_fields"))
 }
 
 func (t TaskAttributes) TaskProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](t.ref.Append("task_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](t.ref.Append("task_properties"))
 }
 
 func (t TaskAttributes) TaskType() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("task_type"))
+	return terra.ReferenceAsString(t.ref.Append("task_type"))
 }
 
 func (t TaskAttributes) ConnectorOperator() terra.ListValue[ConnectorOperatorAttributes] {
-	return terra.ReferenceList[ConnectorOperatorAttributes](t.ref.Append("connector_operator"))
+	return terra.ReferenceAsList[ConnectorOperatorAttributes](t.ref.Append("connector_operator"))
 }
 
 type ConnectorOperatorAttributes struct {
@@ -1987,67 +1987,67 @@ func (co ConnectorOperatorAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (co ConnectorOperatorAttributes) Amplitude() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("amplitude"))
+	return terra.ReferenceAsString(co.ref.Append("amplitude"))
 }
 
 func (co ConnectorOperatorAttributes) CustomConnector() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("custom_connector"))
+	return terra.ReferenceAsString(co.ref.Append("custom_connector"))
 }
 
 func (co ConnectorOperatorAttributes) Datadog() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("datadog"))
+	return terra.ReferenceAsString(co.ref.Append("datadog"))
 }
 
 func (co ConnectorOperatorAttributes) Dynatrace() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("dynatrace"))
+	return terra.ReferenceAsString(co.ref.Append("dynatrace"))
 }
 
 func (co ConnectorOperatorAttributes) GoogleAnalytics() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("google_analytics"))
+	return terra.ReferenceAsString(co.ref.Append("google_analytics"))
 }
 
 func (co ConnectorOperatorAttributes) InforNexus() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("infor_nexus"))
+	return terra.ReferenceAsString(co.ref.Append("infor_nexus"))
 }
 
 func (co ConnectorOperatorAttributes) Marketo() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("marketo"))
+	return terra.ReferenceAsString(co.ref.Append("marketo"))
 }
 
 func (co ConnectorOperatorAttributes) S3() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("s3"))
+	return terra.ReferenceAsString(co.ref.Append("s3"))
 }
 
 func (co ConnectorOperatorAttributes) Salesforce() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("salesforce"))
+	return terra.ReferenceAsString(co.ref.Append("salesforce"))
 }
 
 func (co ConnectorOperatorAttributes) SapoData() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("sapo_data"))
+	return terra.ReferenceAsString(co.ref.Append("sapo_data"))
 }
 
 func (co ConnectorOperatorAttributes) ServiceNow() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("service_now"))
+	return terra.ReferenceAsString(co.ref.Append("service_now"))
 }
 
 func (co ConnectorOperatorAttributes) Singular() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("singular"))
+	return terra.ReferenceAsString(co.ref.Append("singular"))
 }
 
 func (co ConnectorOperatorAttributes) Slack() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("slack"))
+	return terra.ReferenceAsString(co.ref.Append("slack"))
 }
 
 func (co ConnectorOperatorAttributes) Trendmicro() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("trendmicro"))
+	return terra.ReferenceAsString(co.ref.Append("trendmicro"))
 }
 
 func (co ConnectorOperatorAttributes) Veeva() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("veeva"))
+	return terra.ReferenceAsString(co.ref.Append("veeva"))
 }
 
 func (co ConnectorOperatorAttributes) Zendesk() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("zendesk"))
+	return terra.ReferenceAsString(co.ref.Append("zendesk"))
 }
 
 type TriggerConfigAttributes struct {
@@ -2067,11 +2067,11 @@ func (tc TriggerConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tc TriggerConfigAttributes) TriggerType() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("trigger_type"))
+	return terra.ReferenceAsString(tc.ref.Append("trigger_type"))
 }
 
 func (tc TriggerConfigAttributes) TriggerProperties() terra.ListValue[TriggerPropertiesAttributes] {
-	return terra.ReferenceList[TriggerPropertiesAttributes](tc.ref.Append("trigger_properties"))
+	return terra.ReferenceAsList[TriggerPropertiesAttributes](tc.ref.Append("trigger_properties"))
 }
 
 type TriggerPropertiesAttributes struct {
@@ -2091,7 +2091,7 @@ func (tp TriggerPropertiesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tp TriggerPropertiesAttributes) Scheduled() terra.ListValue[ScheduledAttributes] {
-	return terra.ReferenceList[ScheduledAttributes](tp.ref.Append("scheduled"))
+	return terra.ReferenceAsList[ScheduledAttributes](tp.ref.Append("scheduled"))
 }
 
 type ScheduledAttributes struct {
@@ -2111,31 +2111,31 @@ func (s ScheduledAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s ScheduledAttributes) DataPullMode() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("data_pull_mode"))
+	return terra.ReferenceAsString(s.ref.Append("data_pull_mode"))
 }
 
 func (s ScheduledAttributes) FirstExecutionFrom() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("first_execution_from"))
+	return terra.ReferenceAsString(s.ref.Append("first_execution_from"))
 }
 
 func (s ScheduledAttributes) ScheduleEndTime() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("schedule_end_time"))
+	return terra.ReferenceAsString(s.ref.Append("schedule_end_time"))
 }
 
 func (s ScheduledAttributes) ScheduleExpression() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("schedule_expression"))
+	return terra.ReferenceAsString(s.ref.Append("schedule_expression"))
 }
 
 func (s ScheduledAttributes) ScheduleOffset() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("schedule_offset"))
+	return terra.ReferenceAsNumber(s.ref.Append("schedule_offset"))
 }
 
 func (s ScheduledAttributes) ScheduleStartTime() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("schedule_start_time"))
+	return terra.ReferenceAsString(s.ref.Append("schedule_start_time"))
 }
 
 func (s ScheduledAttributes) Timezone() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("timezone"))
+	return terra.ReferenceAsString(s.ref.Append("timezone"))
 }
 
 type DestinationFlowConfigState struct {

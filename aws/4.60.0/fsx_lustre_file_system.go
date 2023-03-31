@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewFsxLustreFileSystem creates a new instance of [FsxLustreFileSystem].
 func NewFsxLustreFileSystem(name string, args FsxLustreFileSystemArgs) *FsxLustreFileSystem {
 	return &FsxLustreFileSystem{
 		Args: args,
@@ -19,28 +20,51 @@ func NewFsxLustreFileSystem(name string, args FsxLustreFileSystemArgs) *FsxLustr
 
 var _ terra.Resource = (*FsxLustreFileSystem)(nil)
 
+// FsxLustreFileSystem represents the Terraform resource aws_fsx_lustre_file_system.
 type FsxLustreFileSystem struct {
-	Name  string
-	Args  FsxLustreFileSystemArgs
-	state *fsxLustreFileSystemState
+	Name      string
+	Args      FsxLustreFileSystemArgs
+	state     *fsxLustreFileSystemState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [FsxLustreFileSystem].
 func (flfs *FsxLustreFileSystem) Type() string {
 	return "aws_fsx_lustre_file_system"
 }
 
+// LocalName returns the local name for [FsxLustreFileSystem].
 func (flfs *FsxLustreFileSystem) LocalName() string {
 	return flfs.Name
 }
 
+// Configuration returns the configuration (args) for [FsxLustreFileSystem].
 func (flfs *FsxLustreFileSystem) Configuration() interface{} {
 	return flfs.Args
 }
 
+// DependOn is used for other resources to depend on [FsxLustreFileSystem].
+func (flfs *FsxLustreFileSystem) DependOn() terra.Reference {
+	return terra.ReferenceResource(flfs)
+}
+
+// Dependencies returns the list of resources [FsxLustreFileSystem] depends_on.
+func (flfs *FsxLustreFileSystem) Dependencies() terra.Dependencies {
+	return flfs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [FsxLustreFileSystem].
+func (flfs *FsxLustreFileSystem) LifecycleManagement() *terra.Lifecycle {
+	return flfs.Lifecycle
+}
+
+// Attributes returns the attributes for [FsxLustreFileSystem].
 func (flfs *FsxLustreFileSystem) Attributes() fsxLustreFileSystemAttributes {
 	return fsxLustreFileSystemAttributes{ref: terra.ReferenceResource(flfs)}
 }
 
+// ImportState imports the given attribute values into [FsxLustreFileSystem]'s state.
 func (flfs *FsxLustreFileSystem) ImportState(av io.Reader) error {
 	flfs.state = &fsxLustreFileSystemState{}
 	if err := json.NewDecoder(av).Decode(flfs.state); err != nil {
@@ -49,10 +73,12 @@ func (flfs *FsxLustreFileSystem) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [FsxLustreFileSystem] has state.
 func (flfs *FsxLustreFileSystem) State() (*fsxLustreFileSystemState, bool) {
 	return flfs.state, flfs.state != nil
 }
 
+// StateMust returns the state for [FsxLustreFileSystem]. Panics if the state is nil.
 func (flfs *FsxLustreFileSystem) StateMust() *fsxLustreFileSystemState {
 	if flfs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", flfs.Type(), flfs.LocalName()))
@@ -60,10 +86,7 @@ func (flfs *FsxLustreFileSystem) StateMust() *fsxLustreFileSystemState {
 	return flfs.state
 }
 
-func (flfs *FsxLustreFileSystem) DependOn() terra.Reference {
-	return terra.ReferenceResource(flfs)
-}
-
+// FsxLustreFileSystemArgs contains the configurations for aws_fsx_lustre_file_system.
 type FsxLustreFileSystemArgs struct {
 	// AutoImportPolicy: string, optional
 	AutoImportPolicy terra.StringValue `hcl:"auto_import_policy,attr"`
@@ -113,131 +136,157 @@ type FsxLustreFileSystemArgs struct {
 	LogConfiguration *fsxlustrefilesystem.LogConfiguration `hcl:"log_configuration,block"`
 	// Timeouts: optional
 	Timeouts *fsxlustrefilesystem.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that FsxLustreFileSystem depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type fsxLustreFileSystemAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(flfs.ref.Append("arn"))
+	return terra.ReferenceAsString(flfs.ref.Append("arn"))
 }
 
+// AutoImportPolicy returns a reference to field auto_import_policy of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) AutoImportPolicy() terra.StringValue {
-	return terra.ReferenceString(flfs.ref.Append("auto_import_policy"))
+	return terra.ReferenceAsString(flfs.ref.Append("auto_import_policy"))
 }
 
+// AutomaticBackupRetentionDays returns a reference to field automatic_backup_retention_days of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) AutomaticBackupRetentionDays() terra.NumberValue {
-	return terra.ReferenceNumber(flfs.ref.Append("automatic_backup_retention_days"))
+	return terra.ReferenceAsNumber(flfs.ref.Append("automatic_backup_retention_days"))
 }
 
+// BackupId returns a reference to field backup_id of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) BackupId() terra.StringValue {
-	return terra.ReferenceString(flfs.ref.Append("backup_id"))
+	return terra.ReferenceAsString(flfs.ref.Append("backup_id"))
 }
 
+// CopyTagsToBackups returns a reference to field copy_tags_to_backups of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) CopyTagsToBackups() terra.BoolValue {
-	return terra.ReferenceBool(flfs.ref.Append("copy_tags_to_backups"))
+	return terra.ReferenceAsBool(flfs.ref.Append("copy_tags_to_backups"))
 }
 
+// DailyAutomaticBackupStartTime returns a reference to field daily_automatic_backup_start_time of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) DailyAutomaticBackupStartTime() terra.StringValue {
-	return terra.ReferenceString(flfs.ref.Append("daily_automatic_backup_start_time"))
+	return terra.ReferenceAsString(flfs.ref.Append("daily_automatic_backup_start_time"))
 }
 
+// DataCompressionType returns a reference to field data_compression_type of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) DataCompressionType() terra.StringValue {
-	return terra.ReferenceString(flfs.ref.Append("data_compression_type"))
+	return terra.ReferenceAsString(flfs.ref.Append("data_compression_type"))
 }
 
+// DeploymentType returns a reference to field deployment_type of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) DeploymentType() terra.StringValue {
-	return terra.ReferenceString(flfs.ref.Append("deployment_type"))
+	return terra.ReferenceAsString(flfs.ref.Append("deployment_type"))
 }
 
+// DnsName returns a reference to field dns_name of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) DnsName() terra.StringValue {
-	return terra.ReferenceString(flfs.ref.Append("dns_name"))
+	return terra.ReferenceAsString(flfs.ref.Append("dns_name"))
 }
 
+// DriveCacheType returns a reference to field drive_cache_type of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) DriveCacheType() terra.StringValue {
-	return terra.ReferenceString(flfs.ref.Append("drive_cache_type"))
+	return terra.ReferenceAsString(flfs.ref.Append("drive_cache_type"))
 }
 
+// ExportPath returns a reference to field export_path of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) ExportPath() terra.StringValue {
-	return terra.ReferenceString(flfs.ref.Append("export_path"))
+	return terra.ReferenceAsString(flfs.ref.Append("export_path"))
 }
 
+// FileSystemTypeVersion returns a reference to field file_system_type_version of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) FileSystemTypeVersion() terra.StringValue {
-	return terra.ReferenceString(flfs.ref.Append("file_system_type_version"))
+	return terra.ReferenceAsString(flfs.ref.Append("file_system_type_version"))
 }
 
+// Id returns a reference to field id of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(flfs.ref.Append("id"))
+	return terra.ReferenceAsString(flfs.ref.Append("id"))
 }
 
+// ImportPath returns a reference to field import_path of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) ImportPath() terra.StringValue {
-	return terra.ReferenceString(flfs.ref.Append("import_path"))
+	return terra.ReferenceAsString(flfs.ref.Append("import_path"))
 }
 
+// ImportedFileChunkSize returns a reference to field imported_file_chunk_size of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) ImportedFileChunkSize() terra.NumberValue {
-	return terra.ReferenceNumber(flfs.ref.Append("imported_file_chunk_size"))
+	return terra.ReferenceAsNumber(flfs.ref.Append("imported_file_chunk_size"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(flfs.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(flfs.ref.Append("kms_key_id"))
 }
 
+// MountName returns a reference to field mount_name of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) MountName() terra.StringValue {
-	return terra.ReferenceString(flfs.ref.Append("mount_name"))
+	return terra.ReferenceAsString(flfs.ref.Append("mount_name"))
 }
 
+// NetworkInterfaceIds returns a reference to field network_interface_ids of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) NetworkInterfaceIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](flfs.ref.Append("network_interface_ids"))
+	return terra.ReferenceAsList[terra.StringValue](flfs.ref.Append("network_interface_ids"))
 }
 
+// OwnerId returns a reference to field owner_id of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(flfs.ref.Append("owner_id"))
+	return terra.ReferenceAsString(flfs.ref.Append("owner_id"))
 }
 
+// PerUnitStorageThroughput returns a reference to field per_unit_storage_throughput of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) PerUnitStorageThroughput() terra.NumberValue {
-	return terra.ReferenceNumber(flfs.ref.Append("per_unit_storage_throughput"))
+	return terra.ReferenceAsNumber(flfs.ref.Append("per_unit_storage_throughput"))
 }
 
+// SecurityGroupIds returns a reference to field security_group_ids of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](flfs.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](flfs.ref.Append("security_group_ids"))
 }
 
+// StorageCapacity returns a reference to field storage_capacity of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) StorageCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(flfs.ref.Append("storage_capacity"))
+	return terra.ReferenceAsNumber(flfs.ref.Append("storage_capacity"))
 }
 
+// StorageType returns a reference to field storage_type of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) StorageType() terra.StringValue {
-	return terra.ReferenceString(flfs.ref.Append("storage_type"))
+	return terra.ReferenceAsString(flfs.ref.Append("storage_type"))
 }
 
+// SubnetIds returns a reference to field subnet_ids of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) SubnetIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](flfs.ref.Append("subnet_ids"))
+	return terra.ReferenceAsList[terra.StringValue](flfs.ref.Append("subnet_ids"))
 }
 
+// Tags returns a reference to field tags of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](flfs.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](flfs.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](flfs.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](flfs.ref.Append("tags_all"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(flfs.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(flfs.ref.Append("vpc_id"))
 }
 
+// WeeklyMaintenanceStartTime returns a reference to field weekly_maintenance_start_time of aws_fsx_lustre_file_system.
 func (flfs fsxLustreFileSystemAttributes) WeeklyMaintenanceStartTime() terra.StringValue {
-	return terra.ReferenceString(flfs.ref.Append("weekly_maintenance_start_time"))
+	return terra.ReferenceAsString(flfs.ref.Append("weekly_maintenance_start_time"))
 }
 
 func (flfs fsxLustreFileSystemAttributes) LogConfiguration() terra.ListValue[fsxlustrefilesystem.LogConfigurationAttributes] {
-	return terra.ReferenceList[fsxlustrefilesystem.LogConfigurationAttributes](flfs.ref.Append("log_configuration"))
+	return terra.ReferenceAsList[fsxlustrefilesystem.LogConfigurationAttributes](flfs.ref.Append("log_configuration"))
 }
 
 func (flfs fsxLustreFileSystemAttributes) Timeouts() fsxlustrefilesystem.TimeoutsAttributes {
-	return terra.ReferenceSingle[fsxlustrefilesystem.TimeoutsAttributes](flfs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[fsxlustrefilesystem.TimeoutsAttributes](flfs.ref.Append("timeouts"))
 }
 
 type fsxLustreFileSystemState struct {

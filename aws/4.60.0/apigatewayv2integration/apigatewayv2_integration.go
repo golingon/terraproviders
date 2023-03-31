@@ -36,11 +36,11 @@ func (rp ResponseParametersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rp ResponseParametersAttributes) Mappings() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rp.ref.Append("mappings"))
+	return terra.ReferenceAsMap[terra.StringValue](rp.ref.Append("mappings"))
 }
 
 func (rp ResponseParametersAttributes) StatusCode() terra.StringValue {
-	return terra.ReferenceString(rp.ref.Append("status_code"))
+	return terra.ReferenceAsString(rp.ref.Append("status_code"))
 }
 
 type TlsConfigAttributes struct {
@@ -60,7 +60,7 @@ func (tc TlsConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tc TlsConfigAttributes) ServerNameToVerify() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("server_name_to_verify"))
+	return terra.ReferenceAsString(tc.ref.Append("server_name_to_verify"))
 }
 
 type ResponseParametersState struct {

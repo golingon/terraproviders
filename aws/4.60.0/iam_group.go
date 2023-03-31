@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewIamGroup creates a new instance of [IamGroup].
 func NewIamGroup(name string, args IamGroupArgs) *IamGroup {
 	return &IamGroup{
 		Args: args,
@@ -18,28 +19,51 @@ func NewIamGroup(name string, args IamGroupArgs) *IamGroup {
 
 var _ terra.Resource = (*IamGroup)(nil)
 
+// IamGroup represents the Terraform resource aws_iam_group.
 type IamGroup struct {
-	Name  string
-	Args  IamGroupArgs
-	state *iamGroupState
+	Name      string
+	Args      IamGroupArgs
+	state     *iamGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IamGroup].
 func (ig *IamGroup) Type() string {
 	return "aws_iam_group"
 }
 
+// LocalName returns the local name for [IamGroup].
 func (ig *IamGroup) LocalName() string {
 	return ig.Name
 }
 
+// Configuration returns the configuration (args) for [IamGroup].
 func (ig *IamGroup) Configuration() interface{} {
 	return ig.Args
 }
 
+// DependOn is used for other resources to depend on [IamGroup].
+func (ig *IamGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(ig)
+}
+
+// Dependencies returns the list of resources [IamGroup] depends_on.
+func (ig *IamGroup) Dependencies() terra.Dependencies {
+	return ig.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IamGroup].
+func (ig *IamGroup) LifecycleManagement() *terra.Lifecycle {
+	return ig.Lifecycle
+}
+
+// Attributes returns the attributes for [IamGroup].
 func (ig *IamGroup) Attributes() iamGroupAttributes {
 	return iamGroupAttributes{ref: terra.ReferenceResource(ig)}
 }
 
+// ImportState imports the given attribute values into [IamGroup]'s state.
 func (ig *IamGroup) ImportState(av io.Reader) error {
 	ig.state = &iamGroupState{}
 	if err := json.NewDecoder(av).Decode(ig.state); err != nil {
@@ -48,10 +72,12 @@ func (ig *IamGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IamGroup] has state.
 func (ig *IamGroup) State() (*iamGroupState, bool) {
 	return ig.state, ig.state != nil
 }
 
+// StateMust returns the state for [IamGroup]. Panics if the state is nil.
 func (ig *IamGroup) StateMust() *iamGroupState {
 	if ig.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ig.Type(), ig.LocalName()))
@@ -59,10 +85,7 @@ func (ig *IamGroup) StateMust() *iamGroupState {
 	return ig.state
 }
 
-func (ig *IamGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(ig)
-}
-
+// IamGroupArgs contains the configurations for aws_iam_group.
 type IamGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,31 +93,34 @@ type IamGroupArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// Path: string, optional
 	Path terra.StringValue `hcl:"path,attr"`
-	// DependsOn contains resources that IamGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iamGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_iam_group.
 func (ig iamGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ig.ref.Append("arn"))
+	return terra.ReferenceAsString(ig.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_iam_group.
 func (ig iamGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ig.ref.Append("id"))
+	return terra.ReferenceAsString(ig.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_iam_group.
 func (ig iamGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ig.ref.Append("name"))
+	return terra.ReferenceAsString(ig.ref.Append("name"))
 }
 
+// Path returns a reference to field path of aws_iam_group.
 func (ig iamGroupAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(ig.ref.Append("path"))
+	return terra.ReferenceAsString(ig.ref.Append("path"))
 }
 
+// UniqueId returns a reference to field unique_id of aws_iam_group.
 func (ig iamGroupAttributes) UniqueId() terra.StringValue {
-	return terra.ReferenceString(ig.ref.Append("unique_id"))
+	return terra.ReferenceAsString(ig.ref.Append("unique_id"))
 }
 
 type iamGroupState struct {

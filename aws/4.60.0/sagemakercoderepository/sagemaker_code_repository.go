@@ -33,15 +33,15 @@ func (gc GitConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (gc GitConfigAttributes) Branch() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("branch"))
+	return terra.ReferenceAsString(gc.ref.Append("branch"))
 }
 
 func (gc GitConfigAttributes) RepositoryUrl() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("repository_url"))
+	return terra.ReferenceAsString(gc.ref.Append("repository_url"))
 }
 
 func (gc GitConfigAttributes) SecretArn() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("secret_arn"))
+	return terra.ReferenceAsString(gc.ref.Append("secret_arn"))
 }
 
 type GitConfigState struct {

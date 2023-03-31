@@ -62,35 +62,35 @@ func (a AddressesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AddressesAttributes) Country() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("country"))
+	return terra.ReferenceAsString(a.ref.Append("country"))
 }
 
 func (a AddressesAttributes) Formatted() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("formatted"))
+	return terra.ReferenceAsString(a.ref.Append("formatted"))
 }
 
 func (a AddressesAttributes) Locality() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("locality"))
+	return terra.ReferenceAsString(a.ref.Append("locality"))
 }
 
 func (a AddressesAttributes) PostalCode() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("postal_code"))
+	return terra.ReferenceAsString(a.ref.Append("postal_code"))
 }
 
 func (a AddressesAttributes) Primary() terra.BoolValue {
-	return terra.ReferenceBool(a.ref.Append("primary"))
+	return terra.ReferenceAsBool(a.ref.Append("primary"))
 }
 
 func (a AddressesAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("region"))
+	return terra.ReferenceAsString(a.ref.Append("region"))
 }
 
 func (a AddressesAttributes) StreetAddress() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("street_address"))
+	return terra.ReferenceAsString(a.ref.Append("street_address"))
 }
 
 func (a AddressesAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("type"))
+	return terra.ReferenceAsString(a.ref.Append("type"))
 }
 
 type EmailsAttributes struct {
@@ -110,15 +110,15 @@ func (e EmailsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e EmailsAttributes) Primary() terra.BoolValue {
-	return terra.ReferenceBool(e.ref.Append("primary"))
+	return terra.ReferenceAsBool(e.ref.Append("primary"))
 }
 
 func (e EmailsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("type"))
+	return terra.ReferenceAsString(e.ref.Append("type"))
 }
 
 func (e EmailsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("value"))
+	return terra.ReferenceAsString(e.ref.Append("value"))
 }
 
 type ExternalIdsAttributes struct {
@@ -138,11 +138,11 @@ func (ei ExternalIdsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ei ExternalIdsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ei.ref.Append("id"))
+	return terra.ReferenceAsString(ei.ref.Append("id"))
 }
 
 func (ei ExternalIdsAttributes) Issuer() terra.StringValue {
-	return terra.ReferenceString(ei.ref.Append("issuer"))
+	return terra.ReferenceAsString(ei.ref.Append("issuer"))
 }
 
 type NameAttributes struct {
@@ -162,27 +162,27 @@ func (n NameAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (n NameAttributes) FamilyName() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("family_name"))
+	return terra.ReferenceAsString(n.ref.Append("family_name"))
 }
 
 func (n NameAttributes) Formatted() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("formatted"))
+	return terra.ReferenceAsString(n.ref.Append("formatted"))
 }
 
 func (n NameAttributes) GivenName() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("given_name"))
+	return terra.ReferenceAsString(n.ref.Append("given_name"))
 }
 
 func (n NameAttributes) HonorificPrefix() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("honorific_prefix"))
+	return terra.ReferenceAsString(n.ref.Append("honorific_prefix"))
 }
 
 func (n NameAttributes) HonorificSuffix() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("honorific_suffix"))
+	return terra.ReferenceAsString(n.ref.Append("honorific_suffix"))
 }
 
 func (n NameAttributes) MiddleName() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("middle_name"))
+	return terra.ReferenceAsString(n.ref.Append("middle_name"))
 }
 
 type PhoneNumbersAttributes struct {
@@ -202,15 +202,15 @@ func (pn PhoneNumbersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pn PhoneNumbersAttributes) Primary() terra.BoolValue {
-	return terra.ReferenceBool(pn.ref.Append("primary"))
+	return terra.ReferenceAsBool(pn.ref.Append("primary"))
 }
 
 func (pn PhoneNumbersAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(pn.ref.Append("type"))
+	return terra.ReferenceAsString(pn.ref.Append("type"))
 }
 
 func (pn PhoneNumbersAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(pn.ref.Append("value"))
+	return terra.ReferenceAsString(pn.ref.Append("value"))
 }
 
 type AlternateIdentifierAttributes struct {
@@ -230,11 +230,11 @@ func (ai AlternateIdentifierAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ai AlternateIdentifierAttributes) ExternalId() terra.ListValue[ExternalIdAttributes] {
-	return terra.ReferenceList[ExternalIdAttributes](ai.ref.Append("external_id"))
+	return terra.ReferenceAsList[ExternalIdAttributes](ai.ref.Append("external_id"))
 }
 
 func (ai AlternateIdentifierAttributes) UniqueAttribute() terra.ListValue[UniqueAttributeAttributes] {
-	return terra.ReferenceList[UniqueAttributeAttributes](ai.ref.Append("unique_attribute"))
+	return terra.ReferenceAsList[UniqueAttributeAttributes](ai.ref.Append("unique_attribute"))
 }
 
 type ExternalIdAttributes struct {
@@ -254,11 +254,11 @@ func (ei ExternalIdAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ei ExternalIdAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ei.ref.Append("id"))
+	return terra.ReferenceAsString(ei.ref.Append("id"))
 }
 
 func (ei ExternalIdAttributes) Issuer() terra.StringValue {
-	return terra.ReferenceString(ei.ref.Append("issuer"))
+	return terra.ReferenceAsString(ei.ref.Append("issuer"))
 }
 
 type UniqueAttributeAttributes struct {
@@ -278,11 +278,11 @@ func (ua UniqueAttributeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ua UniqueAttributeAttributes) AttributePath() terra.StringValue {
-	return terra.ReferenceString(ua.ref.Append("attribute_path"))
+	return terra.ReferenceAsString(ua.ref.Append("attribute_path"))
 }
 
 func (ua UniqueAttributeAttributes) AttributeValue() terra.StringValue {
-	return terra.ReferenceString(ua.ref.Append("attribute_value"))
+	return terra.ReferenceAsString(ua.ref.Append("attribute_value"))
 }
 
 type FilterAttributes struct {
@@ -302,11 +302,11 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) AttributePath() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("attribute_path"))
+	return terra.ReferenceAsString(f.ref.Append("attribute_path"))
 }
 
 func (f FilterAttributes) AttributeValue() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("attribute_value"))
+	return terra.ReferenceAsString(f.ref.Append("attribute_value"))
 }
 
 type AddressesState struct {

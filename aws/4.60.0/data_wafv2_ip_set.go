@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataWafv2IpSet creates a new instance of [DataWafv2IpSet].
 func NewDataWafv2IpSet(name string, args DataWafv2IpSetArgs) *DataWafv2IpSet {
 	return &DataWafv2IpSet{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataWafv2IpSet(name string, args DataWafv2IpSetArgs) *DataWafv2IpSet {
 
 var _ terra.DataResource = (*DataWafv2IpSet)(nil)
 
+// DataWafv2IpSet represents the Terraform data resource aws_wafv2_ip_set.
 type DataWafv2IpSet struct {
 	Name string
 	Args DataWafv2IpSetArgs
 }
 
+// DataSource returns the Terraform object type for [DataWafv2IpSet].
 func (wis *DataWafv2IpSet) DataSource() string {
 	return "aws_wafv2_ip_set"
 }
 
+// LocalName returns the local name for [DataWafv2IpSet].
 func (wis *DataWafv2IpSet) LocalName() string {
 	return wis.Name
 }
 
+// Configuration returns the configuration (args) for [DataWafv2IpSet].
 func (wis *DataWafv2IpSet) Configuration() interface{} {
 	return wis.Args
 }
 
+// Attributes returns the attributes for [DataWafv2IpSet].
 func (wis *DataWafv2IpSet) Attributes() dataWafv2IpSetAttributes {
 	return dataWafv2IpSetAttributes{ref: terra.ReferenceDataResource(wis)}
 }
 
+// DataWafv2IpSetArgs contains the configurations for aws_wafv2_ip_set.
 type DataWafv2IpSetArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -46,30 +53,37 @@ type dataWafv2IpSetAttributes struct {
 	ref terra.Reference
 }
 
+// Addresses returns a reference to field addresses of aws_wafv2_ip_set.
 func (wis dataWafv2IpSetAttributes) Addresses() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](wis.ref.Append("addresses"))
+	return terra.ReferenceAsSet[terra.StringValue](wis.ref.Append("addresses"))
 }
 
+// Arn returns a reference to field arn of aws_wafv2_ip_set.
 func (wis dataWafv2IpSetAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(wis.ref.Append("arn"))
+	return terra.ReferenceAsString(wis.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_wafv2_ip_set.
 func (wis dataWafv2IpSetAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(wis.ref.Append("description"))
+	return terra.ReferenceAsString(wis.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_wafv2_ip_set.
 func (wis dataWafv2IpSetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(wis.ref.Append("id"))
+	return terra.ReferenceAsString(wis.ref.Append("id"))
 }
 
+// IpAddressVersion returns a reference to field ip_address_version of aws_wafv2_ip_set.
 func (wis dataWafv2IpSetAttributes) IpAddressVersion() terra.StringValue {
-	return terra.ReferenceString(wis.ref.Append("ip_address_version"))
+	return terra.ReferenceAsString(wis.ref.Append("ip_address_version"))
 }
 
+// Name returns a reference to field name of aws_wafv2_ip_set.
 func (wis dataWafv2IpSetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(wis.ref.Append("name"))
+	return terra.ReferenceAsString(wis.ref.Append("name"))
 }
 
+// Scope returns a reference to field scope of aws_wafv2_ip_set.
 func (wis dataWafv2IpSetAttributes) Scope() terra.StringValue {
-	return terra.ReferenceString(wis.ref.Append("scope"))
+	return terra.ReferenceAsString(wis.ref.Append("scope"))
 }

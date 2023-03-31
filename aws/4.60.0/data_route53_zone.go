@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataRoute53Zone creates a new instance of [DataRoute53Zone].
 func NewDataRoute53Zone(name string, args DataRoute53ZoneArgs) *DataRoute53Zone {
 	return &DataRoute53Zone{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataRoute53Zone(name string, args DataRoute53ZoneArgs) *DataRoute53Zone 
 
 var _ terra.DataResource = (*DataRoute53Zone)(nil)
 
+// DataRoute53Zone represents the Terraform data resource aws_route53_zone.
 type DataRoute53Zone struct {
 	Name string
 	Args DataRoute53ZoneArgs
 }
 
+// DataSource returns the Terraform object type for [DataRoute53Zone].
 func (rz *DataRoute53Zone) DataSource() string {
 	return "aws_route53_zone"
 }
 
+// LocalName returns the local name for [DataRoute53Zone].
 func (rz *DataRoute53Zone) LocalName() string {
 	return rz.Name
 }
 
+// Configuration returns the configuration (args) for [DataRoute53Zone].
 func (rz *DataRoute53Zone) Configuration() interface{} {
 	return rz.Args
 }
 
+// Attributes returns the attributes for [DataRoute53Zone].
 func (rz *DataRoute53Zone) Attributes() dataRoute53ZoneAttributes {
 	return dataRoute53ZoneAttributes{ref: terra.ReferenceDataResource(rz)}
 }
 
+// DataRoute53ZoneArgs contains the configurations for aws_route53_zone.
 type DataRoute53ZoneArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -54,58 +61,72 @@ type dataRoute53ZoneAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_route53_zone.
 func (rz dataRoute53ZoneAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rz.ref.Append("arn"))
+	return terra.ReferenceAsString(rz.ref.Append("arn"))
 }
 
+// CallerReference returns a reference to field caller_reference of aws_route53_zone.
 func (rz dataRoute53ZoneAttributes) CallerReference() terra.StringValue {
-	return terra.ReferenceString(rz.ref.Append("caller_reference"))
+	return terra.ReferenceAsString(rz.ref.Append("caller_reference"))
 }
 
+// Comment returns a reference to field comment of aws_route53_zone.
 func (rz dataRoute53ZoneAttributes) Comment() terra.StringValue {
-	return terra.ReferenceString(rz.ref.Append("comment"))
+	return terra.ReferenceAsString(rz.ref.Append("comment"))
 }
 
+// Id returns a reference to field id of aws_route53_zone.
 func (rz dataRoute53ZoneAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rz.ref.Append("id"))
+	return terra.ReferenceAsString(rz.ref.Append("id"))
 }
 
+// LinkedServiceDescription returns a reference to field linked_service_description of aws_route53_zone.
 func (rz dataRoute53ZoneAttributes) LinkedServiceDescription() terra.StringValue {
-	return terra.ReferenceString(rz.ref.Append("linked_service_description"))
+	return terra.ReferenceAsString(rz.ref.Append("linked_service_description"))
 }
 
+// LinkedServicePrincipal returns a reference to field linked_service_principal of aws_route53_zone.
 func (rz dataRoute53ZoneAttributes) LinkedServicePrincipal() terra.StringValue {
-	return terra.ReferenceString(rz.ref.Append("linked_service_principal"))
+	return terra.ReferenceAsString(rz.ref.Append("linked_service_principal"))
 }
 
+// Name returns a reference to field name of aws_route53_zone.
 func (rz dataRoute53ZoneAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rz.ref.Append("name"))
+	return terra.ReferenceAsString(rz.ref.Append("name"))
 }
 
+// NameServers returns a reference to field name_servers of aws_route53_zone.
 func (rz dataRoute53ZoneAttributes) NameServers() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rz.ref.Append("name_servers"))
+	return terra.ReferenceAsList[terra.StringValue](rz.ref.Append("name_servers"))
 }
 
+// PrimaryNameServer returns a reference to field primary_name_server of aws_route53_zone.
 func (rz dataRoute53ZoneAttributes) PrimaryNameServer() terra.StringValue {
-	return terra.ReferenceString(rz.ref.Append("primary_name_server"))
+	return terra.ReferenceAsString(rz.ref.Append("primary_name_server"))
 }
 
+// PrivateZone returns a reference to field private_zone of aws_route53_zone.
 func (rz dataRoute53ZoneAttributes) PrivateZone() terra.BoolValue {
-	return terra.ReferenceBool(rz.ref.Append("private_zone"))
+	return terra.ReferenceAsBool(rz.ref.Append("private_zone"))
 }
 
+// ResourceRecordSetCount returns a reference to field resource_record_set_count of aws_route53_zone.
 func (rz dataRoute53ZoneAttributes) ResourceRecordSetCount() terra.NumberValue {
-	return terra.ReferenceNumber(rz.ref.Append("resource_record_set_count"))
+	return terra.ReferenceAsNumber(rz.ref.Append("resource_record_set_count"))
 }
 
+// Tags returns a reference to field tags of aws_route53_zone.
 func (rz dataRoute53ZoneAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rz.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rz.ref.Append("tags"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_route53_zone.
 func (rz dataRoute53ZoneAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(rz.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(rz.ref.Append("vpc_id"))
 }
 
+// ZoneId returns a reference to field zone_id of aws_route53_zone.
 func (rz dataRoute53ZoneAttributes) ZoneId() terra.StringValue {
-	return terra.ReferenceString(rz.ref.Append("zone_id"))
+	return terra.ReferenceAsString(rz.ref.Append("zone_id"))
 }

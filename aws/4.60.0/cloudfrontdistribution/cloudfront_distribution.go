@@ -311,11 +311,11 @@ func (tkg TrustedKeyGroupsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tkg TrustedKeyGroupsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(tkg.ref.Append("enabled"))
+	return terra.ReferenceAsBool(tkg.ref.Append("enabled"))
 }
 
 func (tkg TrustedKeyGroupsAttributes) Items() terra.ListValue[TrustedKeyGroupsItemsAttributes] {
-	return terra.ReferenceList[TrustedKeyGroupsItemsAttributes](tkg.ref.Append("items"))
+	return terra.ReferenceAsList[TrustedKeyGroupsItemsAttributes](tkg.ref.Append("items"))
 }
 
 type TrustedKeyGroupsItemsAttributes struct {
@@ -335,11 +335,11 @@ func (i TrustedKeyGroupsItemsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i TrustedKeyGroupsItemsAttributes) KeyGroupId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("key_group_id"))
+	return terra.ReferenceAsString(i.ref.Append("key_group_id"))
 }
 
 func (i TrustedKeyGroupsItemsAttributes) KeyPairIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("key_pair_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("key_pair_ids"))
 }
 
 type TrustedSignersAttributes struct {
@@ -359,11 +359,11 @@ func (ts TrustedSignersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ts TrustedSignersAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(ts.ref.Append("enabled"))
+	return terra.ReferenceAsBool(ts.ref.Append("enabled"))
 }
 
 func (ts TrustedSignersAttributes) Items() terra.ListValue[TrustedSignersItemsAttributes] {
-	return terra.ReferenceList[TrustedSignersItemsAttributes](ts.ref.Append("items"))
+	return terra.ReferenceAsList[TrustedSignersItemsAttributes](ts.ref.Append("items"))
 }
 
 type TrustedSignersItemsAttributes struct {
@@ -383,11 +383,11 @@ func (i TrustedSignersItemsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i TrustedSignersItemsAttributes) AwsAccountNumber() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("aws_account_number"))
+	return terra.ReferenceAsString(i.ref.Append("aws_account_number"))
 }
 
 func (i TrustedSignersItemsAttributes) KeyPairIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("key_pair_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("key_pair_ids"))
 }
 
 type CustomErrorResponseAttributes struct {
@@ -407,19 +407,19 @@ func (cer CustomErrorResponseAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cer CustomErrorResponseAttributes) ErrorCachingMinTtl() terra.NumberValue {
-	return terra.ReferenceNumber(cer.ref.Append("error_caching_min_ttl"))
+	return terra.ReferenceAsNumber(cer.ref.Append("error_caching_min_ttl"))
 }
 
 func (cer CustomErrorResponseAttributes) ErrorCode() terra.NumberValue {
-	return terra.ReferenceNumber(cer.ref.Append("error_code"))
+	return terra.ReferenceAsNumber(cer.ref.Append("error_code"))
 }
 
 func (cer CustomErrorResponseAttributes) ResponseCode() terra.NumberValue {
-	return terra.ReferenceNumber(cer.ref.Append("response_code"))
+	return terra.ReferenceAsNumber(cer.ref.Append("response_code"))
 }
 
 func (cer CustomErrorResponseAttributes) ResponsePagePath() terra.StringValue {
-	return terra.ReferenceString(cer.ref.Append("response_page_path"))
+	return terra.ReferenceAsString(cer.ref.Append("response_page_path"))
 }
 
 type DefaultCacheBehaviorAttributes struct {
@@ -439,79 +439,79 @@ func (dcb DefaultCacheBehaviorAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dcb DefaultCacheBehaviorAttributes) AllowedMethods() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dcb.ref.Append("allowed_methods"))
+	return terra.ReferenceAsSet[terra.StringValue](dcb.ref.Append("allowed_methods"))
 }
 
 func (dcb DefaultCacheBehaviorAttributes) CachePolicyId() terra.StringValue {
-	return terra.ReferenceString(dcb.ref.Append("cache_policy_id"))
+	return terra.ReferenceAsString(dcb.ref.Append("cache_policy_id"))
 }
 
 func (dcb DefaultCacheBehaviorAttributes) CachedMethods() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dcb.ref.Append("cached_methods"))
+	return terra.ReferenceAsSet[terra.StringValue](dcb.ref.Append("cached_methods"))
 }
 
 func (dcb DefaultCacheBehaviorAttributes) Compress() terra.BoolValue {
-	return terra.ReferenceBool(dcb.ref.Append("compress"))
+	return terra.ReferenceAsBool(dcb.ref.Append("compress"))
 }
 
 func (dcb DefaultCacheBehaviorAttributes) DefaultTtl() terra.NumberValue {
-	return terra.ReferenceNumber(dcb.ref.Append("default_ttl"))
+	return terra.ReferenceAsNumber(dcb.ref.Append("default_ttl"))
 }
 
 func (dcb DefaultCacheBehaviorAttributes) FieldLevelEncryptionId() terra.StringValue {
-	return terra.ReferenceString(dcb.ref.Append("field_level_encryption_id"))
+	return terra.ReferenceAsString(dcb.ref.Append("field_level_encryption_id"))
 }
 
 func (dcb DefaultCacheBehaviorAttributes) MaxTtl() terra.NumberValue {
-	return terra.ReferenceNumber(dcb.ref.Append("max_ttl"))
+	return terra.ReferenceAsNumber(dcb.ref.Append("max_ttl"))
 }
 
 func (dcb DefaultCacheBehaviorAttributes) MinTtl() terra.NumberValue {
-	return terra.ReferenceNumber(dcb.ref.Append("min_ttl"))
+	return terra.ReferenceAsNumber(dcb.ref.Append("min_ttl"))
 }
 
 func (dcb DefaultCacheBehaviorAttributes) OriginRequestPolicyId() terra.StringValue {
-	return terra.ReferenceString(dcb.ref.Append("origin_request_policy_id"))
+	return terra.ReferenceAsString(dcb.ref.Append("origin_request_policy_id"))
 }
 
 func (dcb DefaultCacheBehaviorAttributes) RealtimeLogConfigArn() terra.StringValue {
-	return terra.ReferenceString(dcb.ref.Append("realtime_log_config_arn"))
+	return terra.ReferenceAsString(dcb.ref.Append("realtime_log_config_arn"))
 }
 
 func (dcb DefaultCacheBehaviorAttributes) ResponseHeadersPolicyId() terra.StringValue {
-	return terra.ReferenceString(dcb.ref.Append("response_headers_policy_id"))
+	return terra.ReferenceAsString(dcb.ref.Append("response_headers_policy_id"))
 }
 
 func (dcb DefaultCacheBehaviorAttributes) SmoothStreaming() terra.BoolValue {
-	return terra.ReferenceBool(dcb.ref.Append("smooth_streaming"))
+	return terra.ReferenceAsBool(dcb.ref.Append("smooth_streaming"))
 }
 
 func (dcb DefaultCacheBehaviorAttributes) TargetOriginId() terra.StringValue {
-	return terra.ReferenceString(dcb.ref.Append("target_origin_id"))
+	return terra.ReferenceAsString(dcb.ref.Append("target_origin_id"))
 }
 
 func (dcb DefaultCacheBehaviorAttributes) TrustedKeyGroups() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dcb.ref.Append("trusted_key_groups"))
+	return terra.ReferenceAsList[terra.StringValue](dcb.ref.Append("trusted_key_groups"))
 }
 
 func (dcb DefaultCacheBehaviorAttributes) TrustedSigners() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dcb.ref.Append("trusted_signers"))
+	return terra.ReferenceAsList[terra.StringValue](dcb.ref.Append("trusted_signers"))
 }
 
 func (dcb DefaultCacheBehaviorAttributes) ViewerProtocolPolicy() terra.StringValue {
-	return terra.ReferenceString(dcb.ref.Append("viewer_protocol_policy"))
+	return terra.ReferenceAsString(dcb.ref.Append("viewer_protocol_policy"))
 }
 
 func (dcb DefaultCacheBehaviorAttributes) ForwardedValues() terra.ListValue[DefaultCacheBehaviorForwardedValuesAttributes] {
-	return terra.ReferenceList[DefaultCacheBehaviorForwardedValuesAttributes](dcb.ref.Append("forwarded_values"))
+	return terra.ReferenceAsList[DefaultCacheBehaviorForwardedValuesAttributes](dcb.ref.Append("forwarded_values"))
 }
 
 func (dcb DefaultCacheBehaviorAttributes) FunctionAssociation() terra.SetValue[DefaultCacheBehaviorFunctionAssociationAttributes] {
-	return terra.ReferenceSet[DefaultCacheBehaviorFunctionAssociationAttributes](dcb.ref.Append("function_association"))
+	return terra.ReferenceAsSet[DefaultCacheBehaviorFunctionAssociationAttributes](dcb.ref.Append("function_association"))
 }
 
 func (dcb DefaultCacheBehaviorAttributes) LambdaFunctionAssociation() terra.SetValue[DefaultCacheBehaviorLambdaFunctionAssociationAttributes] {
-	return terra.ReferenceSet[DefaultCacheBehaviorLambdaFunctionAssociationAttributes](dcb.ref.Append("lambda_function_association"))
+	return terra.ReferenceAsSet[DefaultCacheBehaviorLambdaFunctionAssociationAttributes](dcb.ref.Append("lambda_function_association"))
 }
 
 type DefaultCacheBehaviorForwardedValuesAttributes struct {
@@ -531,19 +531,19 @@ func (fv DefaultCacheBehaviorForwardedValuesAttributes) InternalTokens() hclwrit
 }
 
 func (fv DefaultCacheBehaviorForwardedValuesAttributes) Headers() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](fv.ref.Append("headers"))
+	return terra.ReferenceAsSet[terra.StringValue](fv.ref.Append("headers"))
 }
 
 func (fv DefaultCacheBehaviorForwardedValuesAttributes) QueryString() terra.BoolValue {
-	return terra.ReferenceBool(fv.ref.Append("query_string"))
+	return terra.ReferenceAsBool(fv.ref.Append("query_string"))
 }
 
 func (fv DefaultCacheBehaviorForwardedValuesAttributes) QueryStringCacheKeys() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](fv.ref.Append("query_string_cache_keys"))
+	return terra.ReferenceAsList[terra.StringValue](fv.ref.Append("query_string_cache_keys"))
 }
 
 func (fv DefaultCacheBehaviorForwardedValuesAttributes) Cookies() terra.ListValue[DefaultCacheBehaviorForwardedValuesCookiesAttributes] {
-	return terra.ReferenceList[DefaultCacheBehaviorForwardedValuesCookiesAttributes](fv.ref.Append("cookies"))
+	return terra.ReferenceAsList[DefaultCacheBehaviorForwardedValuesCookiesAttributes](fv.ref.Append("cookies"))
 }
 
 type DefaultCacheBehaviorForwardedValuesCookiesAttributes struct {
@@ -563,11 +563,11 @@ func (c DefaultCacheBehaviorForwardedValuesCookiesAttributes) InternalTokens() h
 }
 
 func (c DefaultCacheBehaviorForwardedValuesCookiesAttributes) Forward() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("forward"))
+	return terra.ReferenceAsString(c.ref.Append("forward"))
 }
 
 func (c DefaultCacheBehaviorForwardedValuesCookiesAttributes) WhitelistedNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](c.ref.Append("whitelisted_names"))
+	return terra.ReferenceAsSet[terra.StringValue](c.ref.Append("whitelisted_names"))
 }
 
 type DefaultCacheBehaviorFunctionAssociationAttributes struct {
@@ -587,11 +587,11 @@ func (fa DefaultCacheBehaviorFunctionAssociationAttributes) InternalTokens() hcl
 }
 
 func (fa DefaultCacheBehaviorFunctionAssociationAttributes) EventType() terra.StringValue {
-	return terra.ReferenceString(fa.ref.Append("event_type"))
+	return terra.ReferenceAsString(fa.ref.Append("event_type"))
 }
 
 func (fa DefaultCacheBehaviorFunctionAssociationAttributes) FunctionArn() terra.StringValue {
-	return terra.ReferenceString(fa.ref.Append("function_arn"))
+	return terra.ReferenceAsString(fa.ref.Append("function_arn"))
 }
 
 type DefaultCacheBehaviorLambdaFunctionAssociationAttributes struct {
@@ -611,15 +611,15 @@ func (lfa DefaultCacheBehaviorLambdaFunctionAssociationAttributes) InternalToken
 }
 
 func (lfa DefaultCacheBehaviorLambdaFunctionAssociationAttributes) EventType() terra.StringValue {
-	return terra.ReferenceString(lfa.ref.Append("event_type"))
+	return terra.ReferenceAsString(lfa.ref.Append("event_type"))
 }
 
 func (lfa DefaultCacheBehaviorLambdaFunctionAssociationAttributes) IncludeBody() terra.BoolValue {
-	return terra.ReferenceBool(lfa.ref.Append("include_body"))
+	return terra.ReferenceAsBool(lfa.ref.Append("include_body"))
 }
 
 func (lfa DefaultCacheBehaviorLambdaFunctionAssociationAttributes) LambdaArn() terra.StringValue {
-	return terra.ReferenceString(lfa.ref.Append("lambda_arn"))
+	return terra.ReferenceAsString(lfa.ref.Append("lambda_arn"))
 }
 
 type LoggingConfigAttributes struct {
@@ -639,15 +639,15 @@ func (lc LoggingConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lc LoggingConfigAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("bucket"))
+	return terra.ReferenceAsString(lc.ref.Append("bucket"))
 }
 
 func (lc LoggingConfigAttributes) IncludeCookies() terra.BoolValue {
-	return terra.ReferenceBool(lc.ref.Append("include_cookies"))
+	return terra.ReferenceAsBool(lc.ref.Append("include_cookies"))
 }
 
 func (lc LoggingConfigAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("prefix"))
+	return terra.ReferenceAsString(lc.ref.Append("prefix"))
 }
 
 type OrderedCacheBehaviorAttributes struct {
@@ -667,83 +667,83 @@ func (ocb OrderedCacheBehaviorAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ocb OrderedCacheBehaviorAttributes) AllowedMethods() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ocb.ref.Append("allowed_methods"))
+	return terra.ReferenceAsSet[terra.StringValue](ocb.ref.Append("allowed_methods"))
 }
 
 func (ocb OrderedCacheBehaviorAttributes) CachePolicyId() terra.StringValue {
-	return terra.ReferenceString(ocb.ref.Append("cache_policy_id"))
+	return terra.ReferenceAsString(ocb.ref.Append("cache_policy_id"))
 }
 
 func (ocb OrderedCacheBehaviorAttributes) CachedMethods() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ocb.ref.Append("cached_methods"))
+	return terra.ReferenceAsSet[terra.StringValue](ocb.ref.Append("cached_methods"))
 }
 
 func (ocb OrderedCacheBehaviorAttributes) Compress() terra.BoolValue {
-	return terra.ReferenceBool(ocb.ref.Append("compress"))
+	return terra.ReferenceAsBool(ocb.ref.Append("compress"))
 }
 
 func (ocb OrderedCacheBehaviorAttributes) DefaultTtl() terra.NumberValue {
-	return terra.ReferenceNumber(ocb.ref.Append("default_ttl"))
+	return terra.ReferenceAsNumber(ocb.ref.Append("default_ttl"))
 }
 
 func (ocb OrderedCacheBehaviorAttributes) FieldLevelEncryptionId() terra.StringValue {
-	return terra.ReferenceString(ocb.ref.Append("field_level_encryption_id"))
+	return terra.ReferenceAsString(ocb.ref.Append("field_level_encryption_id"))
 }
 
 func (ocb OrderedCacheBehaviorAttributes) MaxTtl() terra.NumberValue {
-	return terra.ReferenceNumber(ocb.ref.Append("max_ttl"))
+	return terra.ReferenceAsNumber(ocb.ref.Append("max_ttl"))
 }
 
 func (ocb OrderedCacheBehaviorAttributes) MinTtl() terra.NumberValue {
-	return terra.ReferenceNumber(ocb.ref.Append("min_ttl"))
+	return terra.ReferenceAsNumber(ocb.ref.Append("min_ttl"))
 }
 
 func (ocb OrderedCacheBehaviorAttributes) OriginRequestPolicyId() terra.StringValue {
-	return terra.ReferenceString(ocb.ref.Append("origin_request_policy_id"))
+	return terra.ReferenceAsString(ocb.ref.Append("origin_request_policy_id"))
 }
 
 func (ocb OrderedCacheBehaviorAttributes) PathPattern() terra.StringValue {
-	return terra.ReferenceString(ocb.ref.Append("path_pattern"))
+	return terra.ReferenceAsString(ocb.ref.Append("path_pattern"))
 }
 
 func (ocb OrderedCacheBehaviorAttributes) RealtimeLogConfigArn() terra.StringValue {
-	return terra.ReferenceString(ocb.ref.Append("realtime_log_config_arn"))
+	return terra.ReferenceAsString(ocb.ref.Append("realtime_log_config_arn"))
 }
 
 func (ocb OrderedCacheBehaviorAttributes) ResponseHeadersPolicyId() terra.StringValue {
-	return terra.ReferenceString(ocb.ref.Append("response_headers_policy_id"))
+	return terra.ReferenceAsString(ocb.ref.Append("response_headers_policy_id"))
 }
 
 func (ocb OrderedCacheBehaviorAttributes) SmoothStreaming() terra.BoolValue {
-	return terra.ReferenceBool(ocb.ref.Append("smooth_streaming"))
+	return terra.ReferenceAsBool(ocb.ref.Append("smooth_streaming"))
 }
 
 func (ocb OrderedCacheBehaviorAttributes) TargetOriginId() terra.StringValue {
-	return terra.ReferenceString(ocb.ref.Append("target_origin_id"))
+	return terra.ReferenceAsString(ocb.ref.Append("target_origin_id"))
 }
 
 func (ocb OrderedCacheBehaviorAttributes) TrustedKeyGroups() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ocb.ref.Append("trusted_key_groups"))
+	return terra.ReferenceAsList[terra.StringValue](ocb.ref.Append("trusted_key_groups"))
 }
 
 func (ocb OrderedCacheBehaviorAttributes) TrustedSigners() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ocb.ref.Append("trusted_signers"))
+	return terra.ReferenceAsList[terra.StringValue](ocb.ref.Append("trusted_signers"))
 }
 
 func (ocb OrderedCacheBehaviorAttributes) ViewerProtocolPolicy() terra.StringValue {
-	return terra.ReferenceString(ocb.ref.Append("viewer_protocol_policy"))
+	return terra.ReferenceAsString(ocb.ref.Append("viewer_protocol_policy"))
 }
 
 func (ocb OrderedCacheBehaviorAttributes) ForwardedValues() terra.ListValue[OrderedCacheBehaviorForwardedValuesAttributes] {
-	return terra.ReferenceList[OrderedCacheBehaviorForwardedValuesAttributes](ocb.ref.Append("forwarded_values"))
+	return terra.ReferenceAsList[OrderedCacheBehaviorForwardedValuesAttributes](ocb.ref.Append("forwarded_values"))
 }
 
 func (ocb OrderedCacheBehaviorAttributes) FunctionAssociation() terra.SetValue[OrderedCacheBehaviorFunctionAssociationAttributes] {
-	return terra.ReferenceSet[OrderedCacheBehaviorFunctionAssociationAttributes](ocb.ref.Append("function_association"))
+	return terra.ReferenceAsSet[OrderedCacheBehaviorFunctionAssociationAttributes](ocb.ref.Append("function_association"))
 }
 
 func (ocb OrderedCacheBehaviorAttributes) LambdaFunctionAssociation() terra.SetValue[OrderedCacheBehaviorLambdaFunctionAssociationAttributes] {
-	return terra.ReferenceSet[OrderedCacheBehaviorLambdaFunctionAssociationAttributes](ocb.ref.Append("lambda_function_association"))
+	return terra.ReferenceAsSet[OrderedCacheBehaviorLambdaFunctionAssociationAttributes](ocb.ref.Append("lambda_function_association"))
 }
 
 type OrderedCacheBehaviorForwardedValuesAttributes struct {
@@ -763,19 +763,19 @@ func (fv OrderedCacheBehaviorForwardedValuesAttributes) InternalTokens() hclwrit
 }
 
 func (fv OrderedCacheBehaviorForwardedValuesAttributes) Headers() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](fv.ref.Append("headers"))
+	return terra.ReferenceAsSet[terra.StringValue](fv.ref.Append("headers"))
 }
 
 func (fv OrderedCacheBehaviorForwardedValuesAttributes) QueryString() terra.BoolValue {
-	return terra.ReferenceBool(fv.ref.Append("query_string"))
+	return terra.ReferenceAsBool(fv.ref.Append("query_string"))
 }
 
 func (fv OrderedCacheBehaviorForwardedValuesAttributes) QueryStringCacheKeys() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](fv.ref.Append("query_string_cache_keys"))
+	return terra.ReferenceAsList[terra.StringValue](fv.ref.Append("query_string_cache_keys"))
 }
 
 func (fv OrderedCacheBehaviorForwardedValuesAttributes) Cookies() terra.ListValue[OrderedCacheBehaviorForwardedValuesCookiesAttributes] {
-	return terra.ReferenceList[OrderedCacheBehaviorForwardedValuesCookiesAttributes](fv.ref.Append("cookies"))
+	return terra.ReferenceAsList[OrderedCacheBehaviorForwardedValuesCookiesAttributes](fv.ref.Append("cookies"))
 }
 
 type OrderedCacheBehaviorForwardedValuesCookiesAttributes struct {
@@ -795,11 +795,11 @@ func (c OrderedCacheBehaviorForwardedValuesCookiesAttributes) InternalTokens() h
 }
 
 func (c OrderedCacheBehaviorForwardedValuesCookiesAttributes) Forward() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("forward"))
+	return terra.ReferenceAsString(c.ref.Append("forward"))
 }
 
 func (c OrderedCacheBehaviorForwardedValuesCookiesAttributes) WhitelistedNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](c.ref.Append("whitelisted_names"))
+	return terra.ReferenceAsSet[terra.StringValue](c.ref.Append("whitelisted_names"))
 }
 
 type OrderedCacheBehaviorFunctionAssociationAttributes struct {
@@ -819,11 +819,11 @@ func (fa OrderedCacheBehaviorFunctionAssociationAttributes) InternalTokens() hcl
 }
 
 func (fa OrderedCacheBehaviorFunctionAssociationAttributes) EventType() terra.StringValue {
-	return terra.ReferenceString(fa.ref.Append("event_type"))
+	return terra.ReferenceAsString(fa.ref.Append("event_type"))
 }
 
 func (fa OrderedCacheBehaviorFunctionAssociationAttributes) FunctionArn() terra.StringValue {
-	return terra.ReferenceString(fa.ref.Append("function_arn"))
+	return terra.ReferenceAsString(fa.ref.Append("function_arn"))
 }
 
 type OrderedCacheBehaviorLambdaFunctionAssociationAttributes struct {
@@ -843,15 +843,15 @@ func (lfa OrderedCacheBehaviorLambdaFunctionAssociationAttributes) InternalToken
 }
 
 func (lfa OrderedCacheBehaviorLambdaFunctionAssociationAttributes) EventType() terra.StringValue {
-	return terra.ReferenceString(lfa.ref.Append("event_type"))
+	return terra.ReferenceAsString(lfa.ref.Append("event_type"))
 }
 
 func (lfa OrderedCacheBehaviorLambdaFunctionAssociationAttributes) IncludeBody() terra.BoolValue {
-	return terra.ReferenceBool(lfa.ref.Append("include_body"))
+	return terra.ReferenceAsBool(lfa.ref.Append("include_body"))
 }
 
 func (lfa OrderedCacheBehaviorLambdaFunctionAssociationAttributes) LambdaArn() terra.StringValue {
-	return terra.ReferenceString(lfa.ref.Append("lambda_arn"))
+	return terra.ReferenceAsString(lfa.ref.Append("lambda_arn"))
 }
 
 type OriginAttributes struct {
@@ -871,43 +871,43 @@ func (o OriginAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (o OriginAttributes) ConnectionAttempts() terra.NumberValue {
-	return terra.ReferenceNumber(o.ref.Append("connection_attempts"))
+	return terra.ReferenceAsNumber(o.ref.Append("connection_attempts"))
 }
 
 func (o OriginAttributes) ConnectionTimeout() terra.NumberValue {
-	return terra.ReferenceNumber(o.ref.Append("connection_timeout"))
+	return terra.ReferenceAsNumber(o.ref.Append("connection_timeout"))
 }
 
 func (o OriginAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("domain_name"))
+	return terra.ReferenceAsString(o.ref.Append("domain_name"))
 }
 
 func (o OriginAttributes) OriginAccessControlId() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("origin_access_control_id"))
+	return terra.ReferenceAsString(o.ref.Append("origin_access_control_id"))
 }
 
 func (o OriginAttributes) OriginId() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("origin_id"))
+	return terra.ReferenceAsString(o.ref.Append("origin_id"))
 }
 
 func (o OriginAttributes) OriginPath() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("origin_path"))
+	return terra.ReferenceAsString(o.ref.Append("origin_path"))
 }
 
 func (o OriginAttributes) CustomHeader() terra.SetValue[CustomHeaderAttributes] {
-	return terra.ReferenceSet[CustomHeaderAttributes](o.ref.Append("custom_header"))
+	return terra.ReferenceAsSet[CustomHeaderAttributes](o.ref.Append("custom_header"))
 }
 
 func (o OriginAttributes) CustomOriginConfig() terra.ListValue[CustomOriginConfigAttributes] {
-	return terra.ReferenceList[CustomOriginConfigAttributes](o.ref.Append("custom_origin_config"))
+	return terra.ReferenceAsList[CustomOriginConfigAttributes](o.ref.Append("custom_origin_config"))
 }
 
 func (o OriginAttributes) OriginShield() terra.ListValue[OriginShieldAttributes] {
-	return terra.ReferenceList[OriginShieldAttributes](o.ref.Append("origin_shield"))
+	return terra.ReferenceAsList[OriginShieldAttributes](o.ref.Append("origin_shield"))
 }
 
 func (o OriginAttributes) S3OriginConfig() terra.ListValue[S3OriginConfigAttributes] {
-	return terra.ReferenceList[S3OriginConfigAttributes](o.ref.Append("s3_origin_config"))
+	return terra.ReferenceAsList[S3OriginConfigAttributes](o.ref.Append("s3_origin_config"))
 }
 
 type CustomHeaderAttributes struct {
@@ -927,11 +927,11 @@ func (ch CustomHeaderAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ch CustomHeaderAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ch.ref.Append("name"))
+	return terra.ReferenceAsString(ch.ref.Append("name"))
 }
 
 func (ch CustomHeaderAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(ch.ref.Append("value"))
+	return terra.ReferenceAsString(ch.ref.Append("value"))
 }
 
 type CustomOriginConfigAttributes struct {
@@ -951,27 +951,27 @@ func (coc CustomOriginConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (coc CustomOriginConfigAttributes) HttpPort() terra.NumberValue {
-	return terra.ReferenceNumber(coc.ref.Append("http_port"))
+	return terra.ReferenceAsNumber(coc.ref.Append("http_port"))
 }
 
 func (coc CustomOriginConfigAttributes) HttpsPort() terra.NumberValue {
-	return terra.ReferenceNumber(coc.ref.Append("https_port"))
+	return terra.ReferenceAsNumber(coc.ref.Append("https_port"))
 }
 
 func (coc CustomOriginConfigAttributes) OriginKeepaliveTimeout() terra.NumberValue {
-	return terra.ReferenceNumber(coc.ref.Append("origin_keepalive_timeout"))
+	return terra.ReferenceAsNumber(coc.ref.Append("origin_keepalive_timeout"))
 }
 
 func (coc CustomOriginConfigAttributes) OriginProtocolPolicy() terra.StringValue {
-	return terra.ReferenceString(coc.ref.Append("origin_protocol_policy"))
+	return terra.ReferenceAsString(coc.ref.Append("origin_protocol_policy"))
 }
 
 func (coc CustomOriginConfigAttributes) OriginReadTimeout() terra.NumberValue {
-	return terra.ReferenceNumber(coc.ref.Append("origin_read_timeout"))
+	return terra.ReferenceAsNumber(coc.ref.Append("origin_read_timeout"))
 }
 
 func (coc CustomOriginConfigAttributes) OriginSslProtocols() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](coc.ref.Append("origin_ssl_protocols"))
+	return terra.ReferenceAsSet[terra.StringValue](coc.ref.Append("origin_ssl_protocols"))
 }
 
 type OriginShieldAttributes struct {
@@ -991,11 +991,11 @@ func (os OriginShieldAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (os OriginShieldAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(os.ref.Append("enabled"))
+	return terra.ReferenceAsBool(os.ref.Append("enabled"))
 }
 
 func (os OriginShieldAttributes) OriginShieldRegion() terra.StringValue {
-	return terra.ReferenceString(os.ref.Append("origin_shield_region"))
+	return terra.ReferenceAsString(os.ref.Append("origin_shield_region"))
 }
 
 type S3OriginConfigAttributes struct {
@@ -1015,7 +1015,7 @@ func (soc S3OriginConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (soc S3OriginConfigAttributes) OriginAccessIdentity() terra.StringValue {
-	return terra.ReferenceString(soc.ref.Append("origin_access_identity"))
+	return terra.ReferenceAsString(soc.ref.Append("origin_access_identity"))
 }
 
 type OriginGroupAttributes struct {
@@ -1035,15 +1035,15 @@ func (og OriginGroupAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (og OriginGroupAttributes) OriginId() terra.StringValue {
-	return terra.ReferenceString(og.ref.Append("origin_id"))
+	return terra.ReferenceAsString(og.ref.Append("origin_id"))
 }
 
 func (og OriginGroupAttributes) FailoverCriteria() terra.ListValue[FailoverCriteriaAttributes] {
-	return terra.ReferenceList[FailoverCriteriaAttributes](og.ref.Append("failover_criteria"))
+	return terra.ReferenceAsList[FailoverCriteriaAttributes](og.ref.Append("failover_criteria"))
 }
 
 func (og OriginGroupAttributes) Member() terra.ListValue[MemberAttributes] {
-	return terra.ReferenceList[MemberAttributes](og.ref.Append("member"))
+	return terra.ReferenceAsList[MemberAttributes](og.ref.Append("member"))
 }
 
 type FailoverCriteriaAttributes struct {
@@ -1063,7 +1063,7 @@ func (fc FailoverCriteriaAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fc FailoverCriteriaAttributes) StatusCodes() terra.SetValue[terra.NumberValue] {
-	return terra.ReferenceSet[terra.NumberValue](fc.ref.Append("status_codes"))
+	return terra.ReferenceAsSet[terra.NumberValue](fc.ref.Append("status_codes"))
 }
 
 type MemberAttributes struct {
@@ -1083,7 +1083,7 @@ func (m MemberAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m MemberAttributes) OriginId() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("origin_id"))
+	return terra.ReferenceAsString(m.ref.Append("origin_id"))
 }
 
 type RestrictionsAttributes struct {
@@ -1103,7 +1103,7 @@ func (r RestrictionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RestrictionsAttributes) GeoRestriction() terra.ListValue[GeoRestrictionAttributes] {
-	return terra.ReferenceList[GeoRestrictionAttributes](r.ref.Append("geo_restriction"))
+	return terra.ReferenceAsList[GeoRestrictionAttributes](r.ref.Append("geo_restriction"))
 }
 
 type GeoRestrictionAttributes struct {
@@ -1123,11 +1123,11 @@ func (gr GeoRestrictionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (gr GeoRestrictionAttributes) Locations() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](gr.ref.Append("locations"))
+	return terra.ReferenceAsSet[terra.StringValue](gr.ref.Append("locations"))
 }
 
 func (gr GeoRestrictionAttributes) RestrictionType() terra.StringValue {
-	return terra.ReferenceString(gr.ref.Append("restriction_type"))
+	return terra.ReferenceAsString(gr.ref.Append("restriction_type"))
 }
 
 type ViewerCertificateAttributes struct {
@@ -1147,23 +1147,23 @@ func (vc ViewerCertificateAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vc ViewerCertificateAttributes) AcmCertificateArn() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("acm_certificate_arn"))
+	return terra.ReferenceAsString(vc.ref.Append("acm_certificate_arn"))
 }
 
 func (vc ViewerCertificateAttributes) CloudfrontDefaultCertificate() terra.BoolValue {
-	return terra.ReferenceBool(vc.ref.Append("cloudfront_default_certificate"))
+	return terra.ReferenceAsBool(vc.ref.Append("cloudfront_default_certificate"))
 }
 
 func (vc ViewerCertificateAttributes) IamCertificateId() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("iam_certificate_id"))
+	return terra.ReferenceAsString(vc.ref.Append("iam_certificate_id"))
 }
 
 func (vc ViewerCertificateAttributes) MinimumProtocolVersion() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("minimum_protocol_version"))
+	return terra.ReferenceAsString(vc.ref.Append("minimum_protocol_version"))
 }
 
 func (vc ViewerCertificateAttributes) SslSupportMethod() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("ssl_support_method"))
+	return terra.ReferenceAsString(vc.ref.Append("ssl_support_method"))
 }
 
 type TrustedKeyGroupsState struct {

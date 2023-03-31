@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataAvailabilityZones creates a new instance of [DataAvailabilityZones].
 func NewDataAvailabilityZones(name string, args DataAvailabilityZonesArgs) *DataAvailabilityZones {
 	return &DataAvailabilityZones{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataAvailabilityZones(name string, args DataAvailabilityZonesArgs) *Data
 
 var _ terra.DataResource = (*DataAvailabilityZones)(nil)
 
+// DataAvailabilityZones represents the Terraform data resource aws_availability_zones.
 type DataAvailabilityZones struct {
 	Name string
 	Args DataAvailabilityZonesArgs
 }
 
+// DataSource returns the Terraform object type for [DataAvailabilityZones].
 func (az *DataAvailabilityZones) DataSource() string {
 	return "aws_availability_zones"
 }
 
+// LocalName returns the local name for [DataAvailabilityZones].
 func (az *DataAvailabilityZones) LocalName() string {
 	return az.Name
 }
 
+// Configuration returns the configuration (args) for [DataAvailabilityZones].
 func (az *DataAvailabilityZones) Configuration() interface{} {
 	return az.Args
 }
 
+// Attributes returns the attributes for [DataAvailabilityZones].
 func (az *DataAvailabilityZones) Attributes() dataAvailabilityZonesAttributes {
 	return dataAvailabilityZonesAttributes{ref: terra.ReferenceDataResource(az)}
 }
 
+// DataAvailabilityZonesArgs contains the configurations for aws_availability_zones.
 type DataAvailabilityZonesArgs struct {
 	// AllAvailabilityZones: bool, optional
 	AllAvailabilityZones terra.BoolValue `hcl:"all_availability_zones,attr"`
@@ -57,42 +64,50 @@ type dataAvailabilityZonesAttributes struct {
 	ref terra.Reference
 }
 
+// AllAvailabilityZones returns a reference to field all_availability_zones of aws_availability_zones.
 func (az dataAvailabilityZonesAttributes) AllAvailabilityZones() terra.BoolValue {
-	return terra.ReferenceBool(az.ref.Append("all_availability_zones"))
+	return terra.ReferenceAsBool(az.ref.Append("all_availability_zones"))
 }
 
+// ExcludeNames returns a reference to field exclude_names of aws_availability_zones.
 func (az dataAvailabilityZonesAttributes) ExcludeNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](az.ref.Append("exclude_names"))
+	return terra.ReferenceAsSet[terra.StringValue](az.ref.Append("exclude_names"))
 }
 
+// ExcludeZoneIds returns a reference to field exclude_zone_ids of aws_availability_zones.
 func (az dataAvailabilityZonesAttributes) ExcludeZoneIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](az.ref.Append("exclude_zone_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](az.ref.Append("exclude_zone_ids"))
 }
 
+// GroupNames returns a reference to field group_names of aws_availability_zones.
 func (az dataAvailabilityZonesAttributes) GroupNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](az.ref.Append("group_names"))
+	return terra.ReferenceAsSet[terra.StringValue](az.ref.Append("group_names"))
 }
 
+// Id returns a reference to field id of aws_availability_zones.
 func (az dataAvailabilityZonesAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(az.ref.Append("id"))
+	return terra.ReferenceAsString(az.ref.Append("id"))
 }
 
+// Names returns a reference to field names of aws_availability_zones.
 func (az dataAvailabilityZonesAttributes) Names() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](az.ref.Append("names"))
+	return terra.ReferenceAsList[terra.StringValue](az.ref.Append("names"))
 }
 
+// State returns a reference to field state of aws_availability_zones.
 func (az dataAvailabilityZonesAttributes) State() terra.StringValue {
-	return terra.ReferenceString(az.ref.Append("state"))
+	return terra.ReferenceAsString(az.ref.Append("state"))
 }
 
+// ZoneIds returns a reference to field zone_ids of aws_availability_zones.
 func (az dataAvailabilityZonesAttributes) ZoneIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](az.ref.Append("zone_ids"))
+	return terra.ReferenceAsList[terra.StringValue](az.ref.Append("zone_ids"))
 }
 
 func (az dataAvailabilityZonesAttributes) Filter() terra.SetValue[dataavailabilityzones.FilterAttributes] {
-	return terra.ReferenceSet[dataavailabilityzones.FilterAttributes](az.ref.Append("filter"))
+	return terra.ReferenceAsSet[dataavailabilityzones.FilterAttributes](az.ref.Append("filter"))
 }
 
 func (az dataAvailabilityZonesAttributes) Timeouts() dataavailabilityzones.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataavailabilityzones.TimeoutsAttributes](az.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataavailabilityzones.TimeoutsAttributes](az.ref.Append("timeouts"))
 }

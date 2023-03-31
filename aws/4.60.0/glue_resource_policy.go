@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewGlueResourcePolicy creates a new instance of [GlueResourcePolicy].
 func NewGlueResourcePolicy(name string, args GlueResourcePolicyArgs) *GlueResourcePolicy {
 	return &GlueResourcePolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewGlueResourcePolicy(name string, args GlueResourcePolicyArgs) *GlueResour
 
 var _ terra.Resource = (*GlueResourcePolicy)(nil)
 
+// GlueResourcePolicy represents the Terraform resource aws_glue_resource_policy.
 type GlueResourcePolicy struct {
-	Name  string
-	Args  GlueResourcePolicyArgs
-	state *glueResourcePolicyState
+	Name      string
+	Args      GlueResourcePolicyArgs
+	state     *glueResourcePolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GlueResourcePolicy].
 func (grp *GlueResourcePolicy) Type() string {
 	return "aws_glue_resource_policy"
 }
 
+// LocalName returns the local name for [GlueResourcePolicy].
 func (grp *GlueResourcePolicy) LocalName() string {
 	return grp.Name
 }
 
+// Configuration returns the configuration (args) for [GlueResourcePolicy].
 func (grp *GlueResourcePolicy) Configuration() interface{} {
 	return grp.Args
 }
 
+// DependOn is used for other resources to depend on [GlueResourcePolicy].
+func (grp *GlueResourcePolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(grp)
+}
+
+// Dependencies returns the list of resources [GlueResourcePolicy] depends_on.
+func (grp *GlueResourcePolicy) Dependencies() terra.Dependencies {
+	return grp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GlueResourcePolicy].
+func (grp *GlueResourcePolicy) LifecycleManagement() *terra.Lifecycle {
+	return grp.Lifecycle
+}
+
+// Attributes returns the attributes for [GlueResourcePolicy].
 func (grp *GlueResourcePolicy) Attributes() glueResourcePolicyAttributes {
 	return glueResourcePolicyAttributes{ref: terra.ReferenceResource(grp)}
 }
 
+// ImportState imports the given attribute values into [GlueResourcePolicy]'s state.
 func (grp *GlueResourcePolicy) ImportState(av io.Reader) error {
 	grp.state = &glueResourcePolicyState{}
 	if err := json.NewDecoder(av).Decode(grp.state); err != nil {
@@ -48,10 +72,12 @@ func (grp *GlueResourcePolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GlueResourcePolicy] has state.
 func (grp *GlueResourcePolicy) State() (*glueResourcePolicyState, bool) {
 	return grp.state, grp.state != nil
 }
 
+// StateMust returns the state for [GlueResourcePolicy]. Panics if the state is nil.
 func (grp *GlueResourcePolicy) StateMust() *glueResourcePolicyState {
 	if grp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", grp.Type(), grp.LocalName()))
@@ -59,10 +85,7 @@ func (grp *GlueResourcePolicy) StateMust() *glueResourcePolicyState {
 	return grp.state
 }
 
-func (grp *GlueResourcePolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(grp)
-}
-
+// GlueResourcePolicyArgs contains the configurations for aws_glue_resource_policy.
 type GlueResourcePolicyArgs struct {
 	// EnableHybrid: string, optional
 	EnableHybrid terra.StringValue `hcl:"enable_hybrid,attr"`
@@ -70,23 +93,24 @@ type GlueResourcePolicyArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// Policy: string, required
 	Policy terra.StringValue `hcl:"policy,attr" validate:"required"`
-	// DependsOn contains resources that GlueResourcePolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type glueResourcePolicyAttributes struct {
 	ref terra.Reference
 }
 
+// EnableHybrid returns a reference to field enable_hybrid of aws_glue_resource_policy.
 func (grp glueResourcePolicyAttributes) EnableHybrid() terra.StringValue {
-	return terra.ReferenceString(grp.ref.Append("enable_hybrid"))
+	return terra.ReferenceAsString(grp.ref.Append("enable_hybrid"))
 }
 
+// Id returns a reference to field id of aws_glue_resource_policy.
 func (grp glueResourcePolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(grp.ref.Append("id"))
+	return terra.ReferenceAsString(grp.ref.Append("id"))
 }
 
+// Policy returns a reference to field policy of aws_glue_resource_policy.
 func (grp glueResourcePolicyAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(grp.ref.Append("policy"))
+	return terra.ReferenceAsString(grp.ref.Append("policy"))
 }
 
 type glueResourcePolicyState struct {

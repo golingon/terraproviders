@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewLambdaPermission creates a new instance of [LambdaPermission].
 func NewLambdaPermission(name string, args LambdaPermissionArgs) *LambdaPermission {
 	return &LambdaPermission{
 		Args: args,
@@ -18,28 +19,51 @@ func NewLambdaPermission(name string, args LambdaPermissionArgs) *LambdaPermissi
 
 var _ terra.Resource = (*LambdaPermission)(nil)
 
+// LambdaPermission represents the Terraform resource aws_lambda_permission.
 type LambdaPermission struct {
-	Name  string
-	Args  LambdaPermissionArgs
-	state *lambdaPermissionState
+	Name      string
+	Args      LambdaPermissionArgs
+	state     *lambdaPermissionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LambdaPermission].
 func (lp *LambdaPermission) Type() string {
 	return "aws_lambda_permission"
 }
 
+// LocalName returns the local name for [LambdaPermission].
 func (lp *LambdaPermission) LocalName() string {
 	return lp.Name
 }
 
+// Configuration returns the configuration (args) for [LambdaPermission].
 func (lp *LambdaPermission) Configuration() interface{} {
 	return lp.Args
 }
 
+// DependOn is used for other resources to depend on [LambdaPermission].
+func (lp *LambdaPermission) DependOn() terra.Reference {
+	return terra.ReferenceResource(lp)
+}
+
+// Dependencies returns the list of resources [LambdaPermission] depends_on.
+func (lp *LambdaPermission) Dependencies() terra.Dependencies {
+	return lp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LambdaPermission].
+func (lp *LambdaPermission) LifecycleManagement() *terra.Lifecycle {
+	return lp.Lifecycle
+}
+
+// Attributes returns the attributes for [LambdaPermission].
 func (lp *LambdaPermission) Attributes() lambdaPermissionAttributes {
 	return lambdaPermissionAttributes{ref: terra.ReferenceResource(lp)}
 }
 
+// ImportState imports the given attribute values into [LambdaPermission]'s state.
 func (lp *LambdaPermission) ImportState(av io.Reader) error {
 	lp.state = &lambdaPermissionState{}
 	if err := json.NewDecoder(av).Decode(lp.state); err != nil {
@@ -48,10 +72,12 @@ func (lp *LambdaPermission) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LambdaPermission] has state.
 func (lp *LambdaPermission) State() (*lambdaPermissionState, bool) {
 	return lp.state, lp.state != nil
 }
 
+// StateMust returns the state for [LambdaPermission]. Panics if the state is nil.
 func (lp *LambdaPermission) StateMust() *lambdaPermissionState {
 	if lp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lp.Type(), lp.LocalName()))
@@ -59,10 +85,7 @@ func (lp *LambdaPermission) StateMust() *lambdaPermissionState {
 	return lp.state
 }
 
-func (lp *LambdaPermission) DependOn() terra.Reference {
-	return terra.ReferenceResource(lp)
-}
-
+// LambdaPermissionArgs contains the configurations for aws_lambda_permission.
 type LambdaPermissionArgs struct {
 	// Action: string, required
 	Action terra.StringValue `hcl:"action,attr" validate:"required"`
@@ -88,59 +111,69 @@ type LambdaPermissionArgs struct {
 	StatementId terra.StringValue `hcl:"statement_id,attr"`
 	// StatementIdPrefix: string, optional
 	StatementIdPrefix terra.StringValue `hcl:"statement_id_prefix,attr"`
-	// DependsOn contains resources that LambdaPermission depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lambdaPermissionAttributes struct {
 	ref terra.Reference
 }
 
+// Action returns a reference to field action of aws_lambda_permission.
 func (lp lambdaPermissionAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("action"))
+	return terra.ReferenceAsString(lp.ref.Append("action"))
 }
 
+// EventSourceToken returns a reference to field event_source_token of aws_lambda_permission.
 func (lp lambdaPermissionAttributes) EventSourceToken() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("event_source_token"))
+	return terra.ReferenceAsString(lp.ref.Append("event_source_token"))
 }
 
+// FunctionName returns a reference to field function_name of aws_lambda_permission.
 func (lp lambdaPermissionAttributes) FunctionName() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("function_name"))
+	return terra.ReferenceAsString(lp.ref.Append("function_name"))
 }
 
+// FunctionUrlAuthType returns a reference to field function_url_auth_type of aws_lambda_permission.
 func (lp lambdaPermissionAttributes) FunctionUrlAuthType() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("function_url_auth_type"))
+	return terra.ReferenceAsString(lp.ref.Append("function_url_auth_type"))
 }
 
+// Id returns a reference to field id of aws_lambda_permission.
 func (lp lambdaPermissionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("id"))
+	return terra.ReferenceAsString(lp.ref.Append("id"))
 }
 
+// Principal returns a reference to field principal of aws_lambda_permission.
 func (lp lambdaPermissionAttributes) Principal() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("principal"))
+	return terra.ReferenceAsString(lp.ref.Append("principal"))
 }
 
+// PrincipalOrgId returns a reference to field principal_org_id of aws_lambda_permission.
 func (lp lambdaPermissionAttributes) PrincipalOrgId() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("principal_org_id"))
+	return terra.ReferenceAsString(lp.ref.Append("principal_org_id"))
 }
 
+// Qualifier returns a reference to field qualifier of aws_lambda_permission.
 func (lp lambdaPermissionAttributes) Qualifier() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("qualifier"))
+	return terra.ReferenceAsString(lp.ref.Append("qualifier"))
 }
 
+// SourceAccount returns a reference to field source_account of aws_lambda_permission.
 func (lp lambdaPermissionAttributes) SourceAccount() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("source_account"))
+	return terra.ReferenceAsString(lp.ref.Append("source_account"))
 }
 
+// SourceArn returns a reference to field source_arn of aws_lambda_permission.
 func (lp lambdaPermissionAttributes) SourceArn() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("source_arn"))
+	return terra.ReferenceAsString(lp.ref.Append("source_arn"))
 }
 
+// StatementId returns a reference to field statement_id of aws_lambda_permission.
 func (lp lambdaPermissionAttributes) StatementId() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("statement_id"))
+	return terra.ReferenceAsString(lp.ref.Append("statement_id"))
 }
 
+// StatementIdPrefix returns a reference to field statement_id_prefix of aws_lambda_permission.
 func (lp lambdaPermissionAttributes) StatementIdPrefix() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("statement_id_prefix"))
+	return terra.ReferenceAsString(lp.ref.Append("statement_id_prefix"))
 }
 
 type lambdaPermissionState struct {

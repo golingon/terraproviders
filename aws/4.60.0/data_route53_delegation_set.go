@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataRoute53DelegationSet creates a new instance of [DataRoute53DelegationSet].
 func NewDataRoute53DelegationSet(name string, args DataRoute53DelegationSetArgs) *DataRoute53DelegationSet {
 	return &DataRoute53DelegationSet{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataRoute53DelegationSet(name string, args DataRoute53DelegationSetArgs)
 
 var _ terra.DataResource = (*DataRoute53DelegationSet)(nil)
 
+// DataRoute53DelegationSet represents the Terraform data resource aws_route53_delegation_set.
 type DataRoute53DelegationSet struct {
 	Name string
 	Args DataRoute53DelegationSetArgs
 }
 
+// DataSource returns the Terraform object type for [DataRoute53DelegationSet].
 func (rds *DataRoute53DelegationSet) DataSource() string {
 	return "aws_route53_delegation_set"
 }
 
+// LocalName returns the local name for [DataRoute53DelegationSet].
 func (rds *DataRoute53DelegationSet) LocalName() string {
 	return rds.Name
 }
 
+// Configuration returns the configuration (args) for [DataRoute53DelegationSet].
 func (rds *DataRoute53DelegationSet) Configuration() interface{} {
 	return rds.Args
 }
 
+// Attributes returns the attributes for [DataRoute53DelegationSet].
 func (rds *DataRoute53DelegationSet) Attributes() dataRoute53DelegationSetAttributes {
 	return dataRoute53DelegationSetAttributes{ref: terra.ReferenceDataResource(rds)}
 }
 
+// DataRoute53DelegationSetArgs contains the configurations for aws_route53_delegation_set.
 type DataRoute53DelegationSetArgs struct {
 	// Id: string, required
 	Id terra.StringValue `hcl:"id,attr" validate:"required"`
@@ -42,18 +49,22 @@ type dataRoute53DelegationSetAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_route53_delegation_set.
 func (rds dataRoute53DelegationSetAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rds.ref.Append("arn"))
+	return terra.ReferenceAsString(rds.ref.Append("arn"))
 }
 
+// CallerReference returns a reference to field caller_reference of aws_route53_delegation_set.
 func (rds dataRoute53DelegationSetAttributes) CallerReference() terra.StringValue {
-	return terra.ReferenceString(rds.ref.Append("caller_reference"))
+	return terra.ReferenceAsString(rds.ref.Append("caller_reference"))
 }
 
+// Id returns a reference to field id of aws_route53_delegation_set.
 func (rds dataRoute53DelegationSetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rds.ref.Append("id"))
+	return terra.ReferenceAsString(rds.ref.Append("id"))
 }
 
+// NameServers returns a reference to field name_servers of aws_route53_delegation_set.
 func (rds dataRoute53DelegationSetAttributes) NameServers() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rds.ref.Append("name_servers"))
+	return terra.ReferenceAsList[terra.StringValue](rds.ref.Append("name_servers"))
 }

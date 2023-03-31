@@ -37,23 +37,23 @@ func (l LocationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (l LocationAttributes) Method() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("method"))
+	return terra.ReferenceAsString(l.ref.Append("method"))
 }
 
 func (l LocationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("name"))
+	return terra.ReferenceAsString(l.ref.Append("name"))
 }
 
 func (l LocationAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("path"))
+	return terra.ReferenceAsString(l.ref.Append("path"))
 }
 
 func (l LocationAttributes) StatusCode() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("status_code"))
+	return terra.ReferenceAsString(l.ref.Append("status_code"))
 }
 
 func (l LocationAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("type"))
+	return terra.ReferenceAsString(l.ref.Append("type"))
 }
 
 type LocationState struct {

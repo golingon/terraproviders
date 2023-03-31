@@ -33,35 +33,35 @@ func (dsa DkimSigningAttributesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dsa DkimSigningAttributesAttributes) CurrentSigningKeyLength() terra.StringValue {
-	return terra.ReferenceString(dsa.ref.Append("current_signing_key_length"))
+	return terra.ReferenceAsString(dsa.ref.Append("current_signing_key_length"))
 }
 
 func (dsa DkimSigningAttributesAttributes) DomainSigningPrivateKey() terra.StringValue {
-	return terra.ReferenceString(dsa.ref.Append("domain_signing_private_key"))
+	return terra.ReferenceAsString(dsa.ref.Append("domain_signing_private_key"))
 }
 
 func (dsa DkimSigningAttributesAttributes) DomainSigningSelector() terra.StringValue {
-	return terra.ReferenceString(dsa.ref.Append("domain_signing_selector"))
+	return terra.ReferenceAsString(dsa.ref.Append("domain_signing_selector"))
 }
 
 func (dsa DkimSigningAttributesAttributes) LastKeyGenerationTimestamp() terra.StringValue {
-	return terra.ReferenceString(dsa.ref.Append("last_key_generation_timestamp"))
+	return terra.ReferenceAsString(dsa.ref.Append("last_key_generation_timestamp"))
 }
 
 func (dsa DkimSigningAttributesAttributes) NextSigningKeyLength() terra.StringValue {
-	return terra.ReferenceString(dsa.ref.Append("next_signing_key_length"))
+	return terra.ReferenceAsString(dsa.ref.Append("next_signing_key_length"))
 }
 
 func (dsa DkimSigningAttributesAttributes) SigningAttributesOrigin() terra.StringValue {
-	return terra.ReferenceString(dsa.ref.Append("signing_attributes_origin"))
+	return terra.ReferenceAsString(dsa.ref.Append("signing_attributes_origin"))
 }
 
 func (dsa DkimSigningAttributesAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(dsa.ref.Append("status"))
+	return terra.ReferenceAsString(dsa.ref.Append("status"))
 }
 
 func (dsa DkimSigningAttributesAttributes) Tokens() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dsa.ref.Append("tokens"))
+	return terra.ReferenceAsList[terra.StringValue](dsa.ref.Append("tokens"))
 }
 
 type DkimSigningAttributesState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewGlueCrawler creates a new instance of [GlueCrawler].
 func NewGlueCrawler(name string, args GlueCrawlerArgs) *GlueCrawler {
 	return &GlueCrawler{
 		Args: args,
@@ -19,28 +20,51 @@ func NewGlueCrawler(name string, args GlueCrawlerArgs) *GlueCrawler {
 
 var _ terra.Resource = (*GlueCrawler)(nil)
 
+// GlueCrawler represents the Terraform resource aws_glue_crawler.
 type GlueCrawler struct {
-	Name  string
-	Args  GlueCrawlerArgs
-	state *glueCrawlerState
+	Name      string
+	Args      GlueCrawlerArgs
+	state     *glueCrawlerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GlueCrawler].
 func (gc *GlueCrawler) Type() string {
 	return "aws_glue_crawler"
 }
 
+// LocalName returns the local name for [GlueCrawler].
 func (gc *GlueCrawler) LocalName() string {
 	return gc.Name
 }
 
+// Configuration returns the configuration (args) for [GlueCrawler].
 func (gc *GlueCrawler) Configuration() interface{} {
 	return gc.Args
 }
 
+// DependOn is used for other resources to depend on [GlueCrawler].
+func (gc *GlueCrawler) DependOn() terra.Reference {
+	return terra.ReferenceResource(gc)
+}
+
+// Dependencies returns the list of resources [GlueCrawler] depends_on.
+func (gc *GlueCrawler) Dependencies() terra.Dependencies {
+	return gc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GlueCrawler].
+func (gc *GlueCrawler) LifecycleManagement() *terra.Lifecycle {
+	return gc.Lifecycle
+}
+
+// Attributes returns the attributes for [GlueCrawler].
 func (gc *GlueCrawler) Attributes() glueCrawlerAttributes {
 	return glueCrawlerAttributes{ref: terra.ReferenceResource(gc)}
 }
 
+// ImportState imports the given attribute values into [GlueCrawler]'s state.
 func (gc *GlueCrawler) ImportState(av io.Reader) error {
 	gc.state = &glueCrawlerState{}
 	if err := json.NewDecoder(av).Decode(gc.state); err != nil {
@@ -49,10 +73,12 @@ func (gc *GlueCrawler) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GlueCrawler] has state.
 func (gc *GlueCrawler) State() (*glueCrawlerState, bool) {
 	return gc.state, gc.state != nil
 }
 
+// StateMust returns the state for [GlueCrawler]. Panics if the state is nil.
 func (gc *GlueCrawler) StateMust() *glueCrawlerState {
 	if gc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", gc.Type(), gc.LocalName()))
@@ -60,10 +86,7 @@ func (gc *GlueCrawler) StateMust() *glueCrawlerState {
 	return gc.state
 }
 
-func (gc *GlueCrawler) DependOn() terra.Reference {
-	return terra.ReferenceResource(gc)
-}
-
+// GlueCrawlerArgs contains the configurations for aws_glue_crawler.
 type GlueCrawlerArgs struct {
 	// Classifiers: list of string, optional
 	Classifiers terra.ListValue[terra.StringValue] `hcl:"classifiers,attr"`
@@ -109,103 +132,114 @@ type GlueCrawlerArgs struct {
 	S3Target []gluecrawler.S3Target `hcl:"s3_target,block" validate:"min=0"`
 	// SchemaChangePolicy: optional
 	SchemaChangePolicy *gluecrawler.SchemaChangePolicy `hcl:"schema_change_policy,block"`
-	// DependsOn contains resources that GlueCrawler depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type glueCrawlerAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_glue_crawler.
 func (gc glueCrawlerAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("arn"))
+	return terra.ReferenceAsString(gc.ref.Append("arn"))
 }
 
+// Classifiers returns a reference to field classifiers of aws_glue_crawler.
 func (gc glueCrawlerAttributes) Classifiers() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](gc.ref.Append("classifiers"))
+	return terra.ReferenceAsList[terra.StringValue](gc.ref.Append("classifiers"))
 }
 
+// Configuration returns a reference to field configuration of aws_glue_crawler.
 func (gc glueCrawlerAttributes) Configuration() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("configuration"))
+	return terra.ReferenceAsString(gc.ref.Append("configuration"))
 }
 
+// DatabaseName returns a reference to field database_name of aws_glue_crawler.
 func (gc glueCrawlerAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("database_name"))
+	return terra.ReferenceAsString(gc.ref.Append("database_name"))
 }
 
+// Description returns a reference to field description of aws_glue_crawler.
 func (gc glueCrawlerAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("description"))
+	return terra.ReferenceAsString(gc.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_glue_crawler.
 func (gc glueCrawlerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("id"))
+	return terra.ReferenceAsString(gc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_glue_crawler.
 func (gc glueCrawlerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("name"))
+	return terra.ReferenceAsString(gc.ref.Append("name"))
 }
 
+// Role returns a reference to field role of aws_glue_crawler.
 func (gc glueCrawlerAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("role"))
+	return terra.ReferenceAsString(gc.ref.Append("role"))
 }
 
+// Schedule returns a reference to field schedule of aws_glue_crawler.
 func (gc glueCrawlerAttributes) Schedule() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("schedule"))
+	return terra.ReferenceAsString(gc.ref.Append("schedule"))
 }
 
+// SecurityConfiguration returns a reference to field security_configuration of aws_glue_crawler.
 func (gc glueCrawlerAttributes) SecurityConfiguration() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("security_configuration"))
+	return terra.ReferenceAsString(gc.ref.Append("security_configuration"))
 }
 
+// TablePrefix returns a reference to field table_prefix of aws_glue_crawler.
 func (gc glueCrawlerAttributes) TablePrefix() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("table_prefix"))
+	return terra.ReferenceAsString(gc.ref.Append("table_prefix"))
 }
 
+// Tags returns a reference to field tags of aws_glue_crawler.
 func (gc glueCrawlerAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](gc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_glue_crawler.
 func (gc glueCrawlerAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](gc.ref.Append("tags_all"))
 }
 
 func (gc glueCrawlerAttributes) CatalogTarget() terra.ListValue[gluecrawler.CatalogTargetAttributes] {
-	return terra.ReferenceList[gluecrawler.CatalogTargetAttributes](gc.ref.Append("catalog_target"))
+	return terra.ReferenceAsList[gluecrawler.CatalogTargetAttributes](gc.ref.Append("catalog_target"))
 }
 
 func (gc glueCrawlerAttributes) DeltaTarget() terra.ListValue[gluecrawler.DeltaTargetAttributes] {
-	return terra.ReferenceList[gluecrawler.DeltaTargetAttributes](gc.ref.Append("delta_target"))
+	return terra.ReferenceAsList[gluecrawler.DeltaTargetAttributes](gc.ref.Append("delta_target"))
 }
 
 func (gc glueCrawlerAttributes) DynamodbTarget() terra.ListValue[gluecrawler.DynamodbTargetAttributes] {
-	return terra.ReferenceList[gluecrawler.DynamodbTargetAttributes](gc.ref.Append("dynamodb_target"))
+	return terra.ReferenceAsList[gluecrawler.DynamodbTargetAttributes](gc.ref.Append("dynamodb_target"))
 }
 
 func (gc glueCrawlerAttributes) JdbcTarget() terra.ListValue[gluecrawler.JdbcTargetAttributes] {
-	return terra.ReferenceList[gluecrawler.JdbcTargetAttributes](gc.ref.Append("jdbc_target"))
+	return terra.ReferenceAsList[gluecrawler.JdbcTargetAttributes](gc.ref.Append("jdbc_target"))
 }
 
 func (gc glueCrawlerAttributes) LakeFormationConfiguration() terra.ListValue[gluecrawler.LakeFormationConfigurationAttributes] {
-	return terra.ReferenceList[gluecrawler.LakeFormationConfigurationAttributes](gc.ref.Append("lake_formation_configuration"))
+	return terra.ReferenceAsList[gluecrawler.LakeFormationConfigurationAttributes](gc.ref.Append("lake_formation_configuration"))
 }
 
 func (gc glueCrawlerAttributes) LineageConfiguration() terra.ListValue[gluecrawler.LineageConfigurationAttributes] {
-	return terra.ReferenceList[gluecrawler.LineageConfigurationAttributes](gc.ref.Append("lineage_configuration"))
+	return terra.ReferenceAsList[gluecrawler.LineageConfigurationAttributes](gc.ref.Append("lineage_configuration"))
 }
 
 func (gc glueCrawlerAttributes) MongodbTarget() terra.ListValue[gluecrawler.MongodbTargetAttributes] {
-	return terra.ReferenceList[gluecrawler.MongodbTargetAttributes](gc.ref.Append("mongodb_target"))
+	return terra.ReferenceAsList[gluecrawler.MongodbTargetAttributes](gc.ref.Append("mongodb_target"))
 }
 
 func (gc glueCrawlerAttributes) RecrawlPolicy() terra.ListValue[gluecrawler.RecrawlPolicyAttributes] {
-	return terra.ReferenceList[gluecrawler.RecrawlPolicyAttributes](gc.ref.Append("recrawl_policy"))
+	return terra.ReferenceAsList[gluecrawler.RecrawlPolicyAttributes](gc.ref.Append("recrawl_policy"))
 }
 
 func (gc glueCrawlerAttributes) S3Target() terra.ListValue[gluecrawler.S3TargetAttributes] {
-	return terra.ReferenceList[gluecrawler.S3TargetAttributes](gc.ref.Append("s3_target"))
+	return terra.ReferenceAsList[gluecrawler.S3TargetAttributes](gc.ref.Append("s3_target"))
 }
 
 func (gc glueCrawlerAttributes) SchemaChangePolicy() terra.ListValue[gluecrawler.SchemaChangePolicyAttributes] {
-	return terra.ReferenceList[gluecrawler.SchemaChangePolicyAttributes](gc.ref.Append("schema_change_policy"))
+	return terra.ReferenceAsList[gluecrawler.SchemaChangePolicyAttributes](gc.ref.Append("schema_change_policy"))
 }
 
 type glueCrawlerState struct {

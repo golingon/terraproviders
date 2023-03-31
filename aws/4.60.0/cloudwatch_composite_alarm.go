@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCloudwatchCompositeAlarm creates a new instance of [CloudwatchCompositeAlarm].
 func NewCloudwatchCompositeAlarm(name string, args CloudwatchCompositeAlarmArgs) *CloudwatchCompositeAlarm {
 	return &CloudwatchCompositeAlarm{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCloudwatchCompositeAlarm(name string, args CloudwatchCompositeAlarmArgs)
 
 var _ terra.Resource = (*CloudwatchCompositeAlarm)(nil)
 
+// CloudwatchCompositeAlarm represents the Terraform resource aws_cloudwatch_composite_alarm.
 type CloudwatchCompositeAlarm struct {
-	Name  string
-	Args  CloudwatchCompositeAlarmArgs
-	state *cloudwatchCompositeAlarmState
+	Name      string
+	Args      CloudwatchCompositeAlarmArgs
+	state     *cloudwatchCompositeAlarmState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudwatchCompositeAlarm].
 func (cca *CloudwatchCompositeAlarm) Type() string {
 	return "aws_cloudwatch_composite_alarm"
 }
 
+// LocalName returns the local name for [CloudwatchCompositeAlarm].
 func (cca *CloudwatchCompositeAlarm) LocalName() string {
 	return cca.Name
 }
 
+// Configuration returns the configuration (args) for [CloudwatchCompositeAlarm].
 func (cca *CloudwatchCompositeAlarm) Configuration() interface{} {
 	return cca.Args
 }
 
+// DependOn is used for other resources to depend on [CloudwatchCompositeAlarm].
+func (cca *CloudwatchCompositeAlarm) DependOn() terra.Reference {
+	return terra.ReferenceResource(cca)
+}
+
+// Dependencies returns the list of resources [CloudwatchCompositeAlarm] depends_on.
+func (cca *CloudwatchCompositeAlarm) Dependencies() terra.Dependencies {
+	return cca.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudwatchCompositeAlarm].
+func (cca *CloudwatchCompositeAlarm) LifecycleManagement() *terra.Lifecycle {
+	return cca.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudwatchCompositeAlarm].
 func (cca *CloudwatchCompositeAlarm) Attributes() cloudwatchCompositeAlarmAttributes {
 	return cloudwatchCompositeAlarmAttributes{ref: terra.ReferenceResource(cca)}
 }
 
+// ImportState imports the given attribute values into [CloudwatchCompositeAlarm]'s state.
 func (cca *CloudwatchCompositeAlarm) ImportState(av io.Reader) error {
 	cca.state = &cloudwatchCompositeAlarmState{}
 	if err := json.NewDecoder(av).Decode(cca.state); err != nil {
@@ -48,10 +72,12 @@ func (cca *CloudwatchCompositeAlarm) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudwatchCompositeAlarm] has state.
 func (cca *CloudwatchCompositeAlarm) State() (*cloudwatchCompositeAlarmState, bool) {
 	return cca.state, cca.state != nil
 }
 
+// StateMust returns the state for [CloudwatchCompositeAlarm]. Panics if the state is nil.
 func (cca *CloudwatchCompositeAlarm) StateMust() *cloudwatchCompositeAlarmState {
 	if cca.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cca.Type(), cca.LocalName()))
@@ -59,10 +85,7 @@ func (cca *CloudwatchCompositeAlarm) StateMust() *cloudwatchCompositeAlarmState 
 	return cca.state
 }
 
-func (cca *CloudwatchCompositeAlarm) DependOn() terra.Reference {
-	return terra.ReferenceResource(cca)
-}
-
+// CloudwatchCompositeAlarmArgs contains the configurations for aws_cloudwatch_composite_alarm.
 type CloudwatchCompositeAlarmArgs struct {
 	// ActionsEnabled: bool, optional
 	ActionsEnabled terra.BoolValue `hcl:"actions_enabled,attr"`
@@ -84,55 +107,64 @@ type CloudwatchCompositeAlarmArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that CloudwatchCompositeAlarm depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudwatchCompositeAlarmAttributes struct {
 	ref terra.Reference
 }
 
+// ActionsEnabled returns a reference to field actions_enabled of aws_cloudwatch_composite_alarm.
 func (cca cloudwatchCompositeAlarmAttributes) ActionsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cca.ref.Append("actions_enabled"))
+	return terra.ReferenceAsBool(cca.ref.Append("actions_enabled"))
 }
 
+// AlarmActions returns a reference to field alarm_actions of aws_cloudwatch_composite_alarm.
 func (cca cloudwatchCompositeAlarmAttributes) AlarmActions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cca.ref.Append("alarm_actions"))
+	return terra.ReferenceAsSet[terra.StringValue](cca.ref.Append("alarm_actions"))
 }
 
+// AlarmDescription returns a reference to field alarm_description of aws_cloudwatch_composite_alarm.
 func (cca cloudwatchCompositeAlarmAttributes) AlarmDescription() terra.StringValue {
-	return terra.ReferenceString(cca.ref.Append("alarm_description"))
+	return terra.ReferenceAsString(cca.ref.Append("alarm_description"))
 }
 
+// AlarmName returns a reference to field alarm_name of aws_cloudwatch_composite_alarm.
 func (cca cloudwatchCompositeAlarmAttributes) AlarmName() terra.StringValue {
-	return terra.ReferenceString(cca.ref.Append("alarm_name"))
+	return terra.ReferenceAsString(cca.ref.Append("alarm_name"))
 }
 
+// AlarmRule returns a reference to field alarm_rule of aws_cloudwatch_composite_alarm.
 func (cca cloudwatchCompositeAlarmAttributes) AlarmRule() terra.StringValue {
-	return terra.ReferenceString(cca.ref.Append("alarm_rule"))
+	return terra.ReferenceAsString(cca.ref.Append("alarm_rule"))
 }
 
+// Arn returns a reference to field arn of aws_cloudwatch_composite_alarm.
 func (cca cloudwatchCompositeAlarmAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(cca.ref.Append("arn"))
+	return terra.ReferenceAsString(cca.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_cloudwatch_composite_alarm.
 func (cca cloudwatchCompositeAlarmAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cca.ref.Append("id"))
+	return terra.ReferenceAsString(cca.ref.Append("id"))
 }
 
+// InsufficientDataActions returns a reference to field insufficient_data_actions of aws_cloudwatch_composite_alarm.
 func (cca cloudwatchCompositeAlarmAttributes) InsufficientDataActions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cca.ref.Append("insufficient_data_actions"))
+	return terra.ReferenceAsSet[terra.StringValue](cca.ref.Append("insufficient_data_actions"))
 }
 
+// OkActions returns a reference to field ok_actions of aws_cloudwatch_composite_alarm.
 func (cca cloudwatchCompositeAlarmAttributes) OkActions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cca.ref.Append("ok_actions"))
+	return terra.ReferenceAsSet[terra.StringValue](cca.ref.Append("ok_actions"))
 }
 
+// Tags returns a reference to field tags of aws_cloudwatch_composite_alarm.
 func (cca cloudwatchCompositeAlarmAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cca.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cca.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_cloudwatch_composite_alarm.
 func (cca cloudwatchCompositeAlarmAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cca.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](cca.ref.Append("tags_all"))
 }
 
 type cloudwatchCompositeAlarmState struct {

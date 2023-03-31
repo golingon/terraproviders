@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewNetworkAclAssociation creates a new instance of [NetworkAclAssociation].
 func NewNetworkAclAssociation(name string, args NetworkAclAssociationArgs) *NetworkAclAssociation {
 	return &NetworkAclAssociation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewNetworkAclAssociation(name string, args NetworkAclAssociationArgs) *Netw
 
 var _ terra.Resource = (*NetworkAclAssociation)(nil)
 
+// NetworkAclAssociation represents the Terraform resource aws_network_acl_association.
 type NetworkAclAssociation struct {
-	Name  string
-	Args  NetworkAclAssociationArgs
-	state *networkAclAssociationState
+	Name      string
+	Args      NetworkAclAssociationArgs
+	state     *networkAclAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NetworkAclAssociation].
 func (naa *NetworkAclAssociation) Type() string {
 	return "aws_network_acl_association"
 }
 
+// LocalName returns the local name for [NetworkAclAssociation].
 func (naa *NetworkAclAssociation) LocalName() string {
 	return naa.Name
 }
 
+// Configuration returns the configuration (args) for [NetworkAclAssociation].
 func (naa *NetworkAclAssociation) Configuration() interface{} {
 	return naa.Args
 }
 
+// DependOn is used for other resources to depend on [NetworkAclAssociation].
+func (naa *NetworkAclAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(naa)
+}
+
+// Dependencies returns the list of resources [NetworkAclAssociation] depends_on.
+func (naa *NetworkAclAssociation) Dependencies() terra.Dependencies {
+	return naa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NetworkAclAssociation].
+func (naa *NetworkAclAssociation) LifecycleManagement() *terra.Lifecycle {
+	return naa.Lifecycle
+}
+
+// Attributes returns the attributes for [NetworkAclAssociation].
 func (naa *NetworkAclAssociation) Attributes() networkAclAssociationAttributes {
 	return networkAclAssociationAttributes{ref: terra.ReferenceResource(naa)}
 }
 
+// ImportState imports the given attribute values into [NetworkAclAssociation]'s state.
 func (naa *NetworkAclAssociation) ImportState(av io.Reader) error {
 	naa.state = &networkAclAssociationState{}
 	if err := json.NewDecoder(av).Decode(naa.state); err != nil {
@@ -48,10 +72,12 @@ func (naa *NetworkAclAssociation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NetworkAclAssociation] has state.
 func (naa *NetworkAclAssociation) State() (*networkAclAssociationState, bool) {
 	return naa.state, naa.state != nil
 }
 
+// StateMust returns the state for [NetworkAclAssociation]. Panics if the state is nil.
 func (naa *NetworkAclAssociation) StateMust() *networkAclAssociationState {
 	if naa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", naa.Type(), naa.LocalName()))
@@ -59,10 +85,7 @@ func (naa *NetworkAclAssociation) StateMust() *networkAclAssociationState {
 	return naa.state
 }
 
-func (naa *NetworkAclAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(naa)
-}
-
+// NetworkAclAssociationArgs contains the configurations for aws_network_acl_association.
 type NetworkAclAssociationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,23 +93,24 @@ type NetworkAclAssociationArgs struct {
 	NetworkAclId terra.StringValue `hcl:"network_acl_id,attr" validate:"required"`
 	// SubnetId: string, required
 	SubnetId terra.StringValue `hcl:"subnet_id,attr" validate:"required"`
-	// DependsOn contains resources that NetworkAclAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type networkAclAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_network_acl_association.
 func (naa networkAclAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(naa.ref.Append("id"))
+	return terra.ReferenceAsString(naa.ref.Append("id"))
 }
 
+// NetworkAclId returns a reference to field network_acl_id of aws_network_acl_association.
 func (naa networkAclAssociationAttributes) NetworkAclId() terra.StringValue {
-	return terra.ReferenceString(naa.ref.Append("network_acl_id"))
+	return terra.ReferenceAsString(naa.ref.Append("network_acl_id"))
 }
 
+// SubnetId returns a reference to field subnet_id of aws_network_acl_association.
 func (naa networkAclAssociationAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(naa.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(naa.ref.Append("subnet_id"))
 }
 
 type networkAclAssociationState struct {

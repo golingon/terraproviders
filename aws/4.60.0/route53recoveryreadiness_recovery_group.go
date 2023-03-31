@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewRoute53RecoveryreadinessRecoveryGroup creates a new instance of [Route53RecoveryreadinessRecoveryGroup].
 func NewRoute53RecoveryreadinessRecoveryGroup(name string, args Route53RecoveryreadinessRecoveryGroupArgs) *Route53RecoveryreadinessRecoveryGroup {
 	return &Route53RecoveryreadinessRecoveryGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewRoute53RecoveryreadinessRecoveryGroup(name string, args Route53Recoveryr
 
 var _ terra.Resource = (*Route53RecoveryreadinessRecoveryGroup)(nil)
 
+// Route53RecoveryreadinessRecoveryGroup represents the Terraform resource aws_route53recoveryreadiness_recovery_group.
 type Route53RecoveryreadinessRecoveryGroup struct {
-	Name  string
-	Args  Route53RecoveryreadinessRecoveryGroupArgs
-	state *route53RecoveryreadinessRecoveryGroupState
+	Name      string
+	Args      Route53RecoveryreadinessRecoveryGroupArgs
+	state     *route53RecoveryreadinessRecoveryGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Route53RecoveryreadinessRecoveryGroup].
 func (rrg *Route53RecoveryreadinessRecoveryGroup) Type() string {
 	return "aws_route53recoveryreadiness_recovery_group"
 }
 
+// LocalName returns the local name for [Route53RecoveryreadinessRecoveryGroup].
 func (rrg *Route53RecoveryreadinessRecoveryGroup) LocalName() string {
 	return rrg.Name
 }
 
+// Configuration returns the configuration (args) for [Route53RecoveryreadinessRecoveryGroup].
 func (rrg *Route53RecoveryreadinessRecoveryGroup) Configuration() interface{} {
 	return rrg.Args
 }
 
+// DependOn is used for other resources to depend on [Route53RecoveryreadinessRecoveryGroup].
+func (rrg *Route53RecoveryreadinessRecoveryGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(rrg)
+}
+
+// Dependencies returns the list of resources [Route53RecoveryreadinessRecoveryGroup] depends_on.
+func (rrg *Route53RecoveryreadinessRecoveryGroup) Dependencies() terra.Dependencies {
+	return rrg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Route53RecoveryreadinessRecoveryGroup].
+func (rrg *Route53RecoveryreadinessRecoveryGroup) LifecycleManagement() *terra.Lifecycle {
+	return rrg.Lifecycle
+}
+
+// Attributes returns the attributes for [Route53RecoveryreadinessRecoveryGroup].
 func (rrg *Route53RecoveryreadinessRecoveryGroup) Attributes() route53RecoveryreadinessRecoveryGroupAttributes {
 	return route53RecoveryreadinessRecoveryGroupAttributes{ref: terra.ReferenceResource(rrg)}
 }
 
+// ImportState imports the given attribute values into [Route53RecoveryreadinessRecoveryGroup]'s state.
 func (rrg *Route53RecoveryreadinessRecoveryGroup) ImportState(av io.Reader) error {
 	rrg.state = &route53RecoveryreadinessRecoveryGroupState{}
 	if err := json.NewDecoder(av).Decode(rrg.state); err != nil {
@@ -49,10 +73,12 @@ func (rrg *Route53RecoveryreadinessRecoveryGroup) ImportState(av io.Reader) erro
 	return nil
 }
 
+// State returns the state and a bool indicating if [Route53RecoveryreadinessRecoveryGroup] has state.
 func (rrg *Route53RecoveryreadinessRecoveryGroup) State() (*route53RecoveryreadinessRecoveryGroupState, bool) {
 	return rrg.state, rrg.state != nil
 }
 
+// StateMust returns the state for [Route53RecoveryreadinessRecoveryGroup]. Panics if the state is nil.
 func (rrg *Route53RecoveryreadinessRecoveryGroup) StateMust() *route53RecoveryreadinessRecoveryGroupState {
 	if rrg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rrg.Type(), rrg.LocalName()))
@@ -60,10 +86,7 @@ func (rrg *Route53RecoveryreadinessRecoveryGroup) StateMust() *route53Recoveryre
 	return rrg.state
 }
 
-func (rrg *Route53RecoveryreadinessRecoveryGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(rrg)
-}
-
+// Route53RecoveryreadinessRecoveryGroupArgs contains the configurations for aws_route53recoveryreadiness_recovery_group.
 type Route53RecoveryreadinessRecoveryGroupArgs struct {
 	// Cells: list of string, optional
 	Cells terra.ListValue[terra.StringValue] `hcl:"cells,attr"`
@@ -77,39 +100,43 @@ type Route53RecoveryreadinessRecoveryGroupArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Timeouts: optional
 	Timeouts *route53recoveryreadinessrecoverygroup.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Route53RecoveryreadinessRecoveryGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type route53RecoveryreadinessRecoveryGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_route53recoveryreadiness_recovery_group.
 func (rrg route53RecoveryreadinessRecoveryGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rrg.ref.Append("arn"))
+	return terra.ReferenceAsString(rrg.ref.Append("arn"))
 }
 
+// Cells returns a reference to field cells of aws_route53recoveryreadiness_recovery_group.
 func (rrg route53RecoveryreadinessRecoveryGroupAttributes) Cells() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rrg.ref.Append("cells"))
+	return terra.ReferenceAsList[terra.StringValue](rrg.ref.Append("cells"))
 }
 
+// Id returns a reference to field id of aws_route53recoveryreadiness_recovery_group.
 func (rrg route53RecoveryreadinessRecoveryGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rrg.ref.Append("id"))
+	return terra.ReferenceAsString(rrg.ref.Append("id"))
 }
 
+// RecoveryGroupName returns a reference to field recovery_group_name of aws_route53recoveryreadiness_recovery_group.
 func (rrg route53RecoveryreadinessRecoveryGroupAttributes) RecoveryGroupName() terra.StringValue {
-	return terra.ReferenceString(rrg.ref.Append("recovery_group_name"))
+	return terra.ReferenceAsString(rrg.ref.Append("recovery_group_name"))
 }
 
+// Tags returns a reference to field tags of aws_route53recoveryreadiness_recovery_group.
 func (rrg route53RecoveryreadinessRecoveryGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rrg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rrg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_route53recoveryreadiness_recovery_group.
 func (rrg route53RecoveryreadinessRecoveryGroupAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rrg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](rrg.ref.Append("tags_all"))
 }
 
 func (rrg route53RecoveryreadinessRecoveryGroupAttributes) Timeouts() route53recoveryreadinessrecoverygroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[route53recoveryreadinessrecoverygroup.TimeoutsAttributes](rrg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[route53recoveryreadinessrecoverygroup.TimeoutsAttributes](rrg.ref.Append("timeouts"))
 }
 
 type route53RecoveryreadinessRecoveryGroupState struct {

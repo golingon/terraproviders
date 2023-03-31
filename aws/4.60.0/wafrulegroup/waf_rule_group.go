@@ -40,19 +40,19 @@ func (ar ActivatedRuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ar ActivatedRuleAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(ar.ref.Append("priority"))
+	return terra.ReferenceAsNumber(ar.ref.Append("priority"))
 }
 
 func (ar ActivatedRuleAttributes) RuleId() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("rule_id"))
+	return terra.ReferenceAsString(ar.ref.Append("rule_id"))
 }
 
 func (ar ActivatedRuleAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("type"))
+	return terra.ReferenceAsString(ar.ref.Append("type"))
 }
 
 func (ar ActivatedRuleAttributes) Action() terra.ListValue[ActionAttributes] {
-	return terra.ReferenceList[ActionAttributes](ar.ref.Append("action"))
+	return terra.ReferenceAsList[ActionAttributes](ar.ref.Append("action"))
 }
 
 type ActionAttributes struct {
@@ -72,7 +72,7 @@ func (a ActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a ActionAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("type"))
+	return terra.ReferenceAsString(a.ref.Append("type"))
 }
 
 type ActivatedRuleState struct {

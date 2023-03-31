@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewMemorydbSubnetGroup creates a new instance of [MemorydbSubnetGroup].
 func NewMemorydbSubnetGroup(name string, args MemorydbSubnetGroupArgs) *MemorydbSubnetGroup {
 	return &MemorydbSubnetGroup{
 		Args: args,
@@ -18,28 +19,51 @@ func NewMemorydbSubnetGroup(name string, args MemorydbSubnetGroupArgs) *Memorydb
 
 var _ terra.Resource = (*MemorydbSubnetGroup)(nil)
 
+// MemorydbSubnetGroup represents the Terraform resource aws_memorydb_subnet_group.
 type MemorydbSubnetGroup struct {
-	Name  string
-	Args  MemorydbSubnetGroupArgs
-	state *memorydbSubnetGroupState
+	Name      string
+	Args      MemorydbSubnetGroupArgs
+	state     *memorydbSubnetGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MemorydbSubnetGroup].
 func (msg *MemorydbSubnetGroup) Type() string {
 	return "aws_memorydb_subnet_group"
 }
 
+// LocalName returns the local name for [MemorydbSubnetGroup].
 func (msg *MemorydbSubnetGroup) LocalName() string {
 	return msg.Name
 }
 
+// Configuration returns the configuration (args) for [MemorydbSubnetGroup].
 func (msg *MemorydbSubnetGroup) Configuration() interface{} {
 	return msg.Args
 }
 
+// DependOn is used for other resources to depend on [MemorydbSubnetGroup].
+func (msg *MemorydbSubnetGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(msg)
+}
+
+// Dependencies returns the list of resources [MemorydbSubnetGroup] depends_on.
+func (msg *MemorydbSubnetGroup) Dependencies() terra.Dependencies {
+	return msg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MemorydbSubnetGroup].
+func (msg *MemorydbSubnetGroup) LifecycleManagement() *terra.Lifecycle {
+	return msg.Lifecycle
+}
+
+// Attributes returns the attributes for [MemorydbSubnetGroup].
 func (msg *MemorydbSubnetGroup) Attributes() memorydbSubnetGroupAttributes {
 	return memorydbSubnetGroupAttributes{ref: terra.ReferenceResource(msg)}
 }
 
+// ImportState imports the given attribute values into [MemorydbSubnetGroup]'s state.
 func (msg *MemorydbSubnetGroup) ImportState(av io.Reader) error {
 	msg.state = &memorydbSubnetGroupState{}
 	if err := json.NewDecoder(av).Decode(msg.state); err != nil {
@@ -48,10 +72,12 @@ func (msg *MemorydbSubnetGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MemorydbSubnetGroup] has state.
 func (msg *MemorydbSubnetGroup) State() (*memorydbSubnetGroupState, bool) {
 	return msg.state, msg.state != nil
 }
 
+// StateMust returns the state for [MemorydbSubnetGroup]. Panics if the state is nil.
 func (msg *MemorydbSubnetGroup) StateMust() *memorydbSubnetGroupState {
 	if msg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", msg.Type(), msg.LocalName()))
@@ -59,10 +85,7 @@ func (msg *MemorydbSubnetGroup) StateMust() *memorydbSubnetGroupState {
 	return msg.state
 }
 
-func (msg *MemorydbSubnetGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(msg)
-}
-
+// MemorydbSubnetGroupArgs contains the configurations for aws_memorydb_subnet_group.
 type MemorydbSubnetGroupArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -78,47 +101,54 @@ type MemorydbSubnetGroupArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that MemorydbSubnetGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type memorydbSubnetGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_memorydb_subnet_group.
 func (msg memorydbSubnetGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(msg.ref.Append("arn"))
+	return terra.ReferenceAsString(msg.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_memorydb_subnet_group.
 func (msg memorydbSubnetGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(msg.ref.Append("description"))
+	return terra.ReferenceAsString(msg.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_memorydb_subnet_group.
 func (msg memorydbSubnetGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(msg.ref.Append("id"))
+	return terra.ReferenceAsString(msg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_memorydb_subnet_group.
 func (msg memorydbSubnetGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(msg.ref.Append("name"))
+	return terra.ReferenceAsString(msg.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_memorydb_subnet_group.
 func (msg memorydbSubnetGroupAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(msg.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(msg.ref.Append("name_prefix"))
 }
 
+// SubnetIds returns a reference to field subnet_ids of aws_memorydb_subnet_group.
 func (msg memorydbSubnetGroupAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](msg.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](msg.ref.Append("subnet_ids"))
 }
 
+// Tags returns a reference to field tags of aws_memorydb_subnet_group.
 func (msg memorydbSubnetGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](msg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](msg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_memorydb_subnet_group.
 func (msg memorydbSubnetGroupAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](msg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](msg.ref.Append("tags_all"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_memorydb_subnet_group.
 func (msg memorydbSubnetGroupAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(msg.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(msg.ref.Append("vpc_id"))
 }
 
 type memorydbSubnetGroupState struct {

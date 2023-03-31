@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataWafWebAcl creates a new instance of [DataWafWebAcl].
 func NewDataWafWebAcl(name string, args DataWafWebAclArgs) *DataWafWebAcl {
 	return &DataWafWebAcl{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataWafWebAcl(name string, args DataWafWebAclArgs) *DataWafWebAcl {
 
 var _ terra.DataResource = (*DataWafWebAcl)(nil)
 
+// DataWafWebAcl represents the Terraform data resource aws_waf_web_acl.
 type DataWafWebAcl struct {
 	Name string
 	Args DataWafWebAclArgs
 }
 
+// DataSource returns the Terraform object type for [DataWafWebAcl].
 func (wwa *DataWafWebAcl) DataSource() string {
 	return "aws_waf_web_acl"
 }
 
+// LocalName returns the local name for [DataWafWebAcl].
 func (wwa *DataWafWebAcl) LocalName() string {
 	return wwa.Name
 }
 
+// Configuration returns the configuration (args) for [DataWafWebAcl].
 func (wwa *DataWafWebAcl) Configuration() interface{} {
 	return wwa.Args
 }
 
+// Attributes returns the attributes for [DataWafWebAcl].
 func (wwa *DataWafWebAcl) Attributes() dataWafWebAclAttributes {
 	return dataWafWebAclAttributes{ref: terra.ReferenceDataResource(wwa)}
 }
 
+// DataWafWebAclArgs contains the configurations for aws_waf_web_acl.
 type DataWafWebAclArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,10 +51,12 @@ type dataWafWebAclAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_waf_web_acl.
 func (wwa dataWafWebAclAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("id"))
+	return terra.ReferenceAsString(wwa.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_waf_web_acl.
 func (wwa dataWafWebAclAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("name"))
+	return terra.ReferenceAsString(wwa.ref.Append("name"))
 }

@@ -29,7 +29,7 @@ func (re RegularExpressionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (re RegularExpressionAttributes) RegexString() terra.StringValue {
-	return terra.ReferenceString(re.ref.Append("regex_string"))
+	return terra.ReferenceAsString(re.ref.Append("regex_string"))
 }
 
 type RegularExpressionState struct {

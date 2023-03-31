@@ -29,7 +29,7 @@ func (c ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ConfigurationAttributes) Style() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("style"))
+	return terra.ReferenceAsString(c.ref.Append("style"))
 }
 
 type ConfigurationState struct {

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataIamPolicyDocument creates a new instance of [DataIamPolicyDocument].
 func NewDataIamPolicyDocument(name string, args DataIamPolicyDocumentArgs) *DataIamPolicyDocument {
 	return &DataIamPolicyDocument{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataIamPolicyDocument(name string, args DataIamPolicyDocumentArgs) *Data
 
 var _ terra.DataResource = (*DataIamPolicyDocument)(nil)
 
+// DataIamPolicyDocument represents the Terraform data resource aws_iam_policy_document.
 type DataIamPolicyDocument struct {
 	Name string
 	Args DataIamPolicyDocumentArgs
 }
 
+// DataSource returns the Terraform object type for [DataIamPolicyDocument].
 func (ipd *DataIamPolicyDocument) DataSource() string {
 	return "aws_iam_policy_document"
 }
 
+// LocalName returns the local name for [DataIamPolicyDocument].
 func (ipd *DataIamPolicyDocument) LocalName() string {
 	return ipd.Name
 }
 
+// Configuration returns the configuration (args) for [DataIamPolicyDocument].
 func (ipd *DataIamPolicyDocument) Configuration() interface{} {
 	return ipd.Args
 }
 
+// Attributes returns the attributes for [DataIamPolicyDocument].
 func (ipd *DataIamPolicyDocument) Attributes() dataIamPolicyDocumentAttributes {
 	return dataIamPolicyDocumentAttributes{ref: terra.ReferenceDataResource(ipd)}
 }
 
+// DataIamPolicyDocumentArgs contains the configurations for aws_iam_policy_document.
 type DataIamPolicyDocumentArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -59,38 +66,46 @@ type dataIamPolicyDocumentAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_iam_policy_document.
 func (ipd dataIamPolicyDocumentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ipd.ref.Append("id"))
+	return terra.ReferenceAsString(ipd.ref.Append("id"))
 }
 
+// Json returns a reference to field json of aws_iam_policy_document.
 func (ipd dataIamPolicyDocumentAttributes) Json() terra.StringValue {
-	return terra.ReferenceString(ipd.ref.Append("json"))
+	return terra.ReferenceAsString(ipd.ref.Append("json"))
 }
 
+// OverrideJson returns a reference to field override_json of aws_iam_policy_document.
 func (ipd dataIamPolicyDocumentAttributes) OverrideJson() terra.StringValue {
-	return terra.ReferenceString(ipd.ref.Append("override_json"))
+	return terra.ReferenceAsString(ipd.ref.Append("override_json"))
 }
 
+// OverridePolicyDocuments returns a reference to field override_policy_documents of aws_iam_policy_document.
 func (ipd dataIamPolicyDocumentAttributes) OverridePolicyDocuments() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ipd.ref.Append("override_policy_documents"))
+	return terra.ReferenceAsList[terra.StringValue](ipd.ref.Append("override_policy_documents"))
 }
 
+// PolicyId returns a reference to field policy_id of aws_iam_policy_document.
 func (ipd dataIamPolicyDocumentAttributes) PolicyId() terra.StringValue {
-	return terra.ReferenceString(ipd.ref.Append("policy_id"))
+	return terra.ReferenceAsString(ipd.ref.Append("policy_id"))
 }
 
+// SourceJson returns a reference to field source_json of aws_iam_policy_document.
 func (ipd dataIamPolicyDocumentAttributes) SourceJson() terra.StringValue {
-	return terra.ReferenceString(ipd.ref.Append("source_json"))
+	return terra.ReferenceAsString(ipd.ref.Append("source_json"))
 }
 
+// SourcePolicyDocuments returns a reference to field source_policy_documents of aws_iam_policy_document.
 func (ipd dataIamPolicyDocumentAttributes) SourcePolicyDocuments() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ipd.ref.Append("source_policy_documents"))
+	return terra.ReferenceAsList[terra.StringValue](ipd.ref.Append("source_policy_documents"))
 }
 
+// Version returns a reference to field version of aws_iam_policy_document.
 func (ipd dataIamPolicyDocumentAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(ipd.ref.Append("version"))
+	return terra.ReferenceAsString(ipd.ref.Append("version"))
 }
 
 func (ipd dataIamPolicyDocumentAttributes) Statement() terra.ListValue[dataiampolicydocument.StatementAttributes] {
-	return terra.ReferenceList[dataiampolicydocument.StatementAttributes](ipd.ref.Append("statement"))
+	return terra.ReferenceAsList[dataiampolicydocument.StatementAttributes](ipd.ref.Append("statement"))
 }

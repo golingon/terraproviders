@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewRedshiftScheduledAction creates a new instance of [RedshiftScheduledAction].
 func NewRedshiftScheduledAction(name string, args RedshiftScheduledActionArgs) *RedshiftScheduledAction {
 	return &RedshiftScheduledAction{
 		Args: args,
@@ -19,28 +20,51 @@ func NewRedshiftScheduledAction(name string, args RedshiftScheduledActionArgs) *
 
 var _ terra.Resource = (*RedshiftScheduledAction)(nil)
 
+// RedshiftScheduledAction represents the Terraform resource aws_redshift_scheduled_action.
 type RedshiftScheduledAction struct {
-	Name  string
-	Args  RedshiftScheduledActionArgs
-	state *redshiftScheduledActionState
+	Name      string
+	Args      RedshiftScheduledActionArgs
+	state     *redshiftScheduledActionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RedshiftScheduledAction].
 func (rsa *RedshiftScheduledAction) Type() string {
 	return "aws_redshift_scheduled_action"
 }
 
+// LocalName returns the local name for [RedshiftScheduledAction].
 func (rsa *RedshiftScheduledAction) LocalName() string {
 	return rsa.Name
 }
 
+// Configuration returns the configuration (args) for [RedshiftScheduledAction].
 func (rsa *RedshiftScheduledAction) Configuration() interface{} {
 	return rsa.Args
 }
 
+// DependOn is used for other resources to depend on [RedshiftScheduledAction].
+func (rsa *RedshiftScheduledAction) DependOn() terra.Reference {
+	return terra.ReferenceResource(rsa)
+}
+
+// Dependencies returns the list of resources [RedshiftScheduledAction] depends_on.
+func (rsa *RedshiftScheduledAction) Dependencies() terra.Dependencies {
+	return rsa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RedshiftScheduledAction].
+func (rsa *RedshiftScheduledAction) LifecycleManagement() *terra.Lifecycle {
+	return rsa.Lifecycle
+}
+
+// Attributes returns the attributes for [RedshiftScheduledAction].
 func (rsa *RedshiftScheduledAction) Attributes() redshiftScheduledActionAttributes {
 	return redshiftScheduledActionAttributes{ref: terra.ReferenceResource(rsa)}
 }
 
+// ImportState imports the given attribute values into [RedshiftScheduledAction]'s state.
 func (rsa *RedshiftScheduledAction) ImportState(av io.Reader) error {
 	rsa.state = &redshiftScheduledActionState{}
 	if err := json.NewDecoder(av).Decode(rsa.state); err != nil {
@@ -49,10 +73,12 @@ func (rsa *RedshiftScheduledAction) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RedshiftScheduledAction] has state.
 func (rsa *RedshiftScheduledAction) State() (*redshiftScheduledActionState, bool) {
 	return rsa.state, rsa.state != nil
 }
 
+// StateMust returns the state for [RedshiftScheduledAction]. Panics if the state is nil.
 func (rsa *RedshiftScheduledAction) StateMust() *redshiftScheduledActionState {
 	if rsa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rsa.Type(), rsa.LocalName()))
@@ -60,10 +86,7 @@ func (rsa *RedshiftScheduledAction) StateMust() *redshiftScheduledActionState {
 	return rsa.state
 }
 
-func (rsa *RedshiftScheduledAction) DependOn() terra.Reference {
-	return terra.ReferenceResource(rsa)
-}
-
+// RedshiftScheduledActionArgs contains the configurations for aws_redshift_scheduled_action.
 type RedshiftScheduledActionArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -83,47 +106,53 @@ type RedshiftScheduledActionArgs struct {
 	StartTime terra.StringValue `hcl:"start_time,attr"`
 	// TargetAction: required
 	TargetAction *redshiftscheduledaction.TargetAction `hcl:"target_action,block" validate:"required"`
-	// DependsOn contains resources that RedshiftScheduledAction depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type redshiftScheduledActionAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of aws_redshift_scheduled_action.
 func (rsa redshiftScheduledActionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(rsa.ref.Append("description"))
+	return terra.ReferenceAsString(rsa.ref.Append("description"))
 }
 
+// Enable returns a reference to field enable of aws_redshift_scheduled_action.
 func (rsa redshiftScheduledActionAttributes) Enable() terra.BoolValue {
-	return terra.ReferenceBool(rsa.ref.Append("enable"))
+	return terra.ReferenceAsBool(rsa.ref.Append("enable"))
 }
 
+// EndTime returns a reference to field end_time of aws_redshift_scheduled_action.
 func (rsa redshiftScheduledActionAttributes) EndTime() terra.StringValue {
-	return terra.ReferenceString(rsa.ref.Append("end_time"))
+	return terra.ReferenceAsString(rsa.ref.Append("end_time"))
 }
 
+// IamRole returns a reference to field iam_role of aws_redshift_scheduled_action.
 func (rsa redshiftScheduledActionAttributes) IamRole() terra.StringValue {
-	return terra.ReferenceString(rsa.ref.Append("iam_role"))
+	return terra.ReferenceAsString(rsa.ref.Append("iam_role"))
 }
 
+// Id returns a reference to field id of aws_redshift_scheduled_action.
 func (rsa redshiftScheduledActionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rsa.ref.Append("id"))
+	return terra.ReferenceAsString(rsa.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_redshift_scheduled_action.
 func (rsa redshiftScheduledActionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rsa.ref.Append("name"))
+	return terra.ReferenceAsString(rsa.ref.Append("name"))
 }
 
+// Schedule returns a reference to field schedule of aws_redshift_scheduled_action.
 func (rsa redshiftScheduledActionAttributes) Schedule() terra.StringValue {
-	return terra.ReferenceString(rsa.ref.Append("schedule"))
+	return terra.ReferenceAsString(rsa.ref.Append("schedule"))
 }
 
+// StartTime returns a reference to field start_time of aws_redshift_scheduled_action.
 func (rsa redshiftScheduledActionAttributes) StartTime() terra.StringValue {
-	return terra.ReferenceString(rsa.ref.Append("start_time"))
+	return terra.ReferenceAsString(rsa.ref.Append("start_time"))
 }
 
 func (rsa redshiftScheduledActionAttributes) TargetAction() terra.ListValue[redshiftscheduledaction.TargetActionAttributes] {
-	return terra.ReferenceList[redshiftscheduledaction.TargetActionAttributes](rsa.ref.Append("target_action"))
+	return terra.ReferenceAsList[redshiftscheduledaction.TargetActionAttributes](rsa.ref.Append("target_action"))
 }
 
 type redshiftScheduledActionState struct {

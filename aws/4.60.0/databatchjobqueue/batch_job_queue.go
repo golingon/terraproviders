@@ -26,11 +26,11 @@ func (ceo ComputeEnvironmentOrderAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ceo ComputeEnvironmentOrderAttributes) ComputeEnvironment() terra.StringValue {
-	return terra.ReferenceString(ceo.ref.Append("compute_environment"))
+	return terra.ReferenceAsString(ceo.ref.Append("compute_environment"))
 }
 
 func (ceo ComputeEnvironmentOrderAttributes) Order() terra.NumberValue {
-	return terra.ReferenceNumber(ceo.ref.Append("order"))
+	return terra.ReferenceAsNumber(ceo.ref.Append("order"))
 }
 
 type ComputeEnvironmentOrderState struct {

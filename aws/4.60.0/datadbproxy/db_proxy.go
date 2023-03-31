@@ -26,23 +26,23 @@ func (a AuthAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AuthAttributes) AuthScheme() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("auth_scheme"))
+	return terra.ReferenceAsString(a.ref.Append("auth_scheme"))
 }
 
 func (a AuthAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("description"))
+	return terra.ReferenceAsString(a.ref.Append("description"))
 }
 
 func (a AuthAttributes) IamAuth() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("iam_auth"))
+	return terra.ReferenceAsString(a.ref.Append("iam_auth"))
 }
 
 func (a AuthAttributes) SecretArn() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("secret_arn"))
+	return terra.ReferenceAsString(a.ref.Append("secret_arn"))
 }
 
 func (a AuthAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("username"))
+	return terra.ReferenceAsString(a.ref.Append("username"))
 }
 
 type AuthState struct {

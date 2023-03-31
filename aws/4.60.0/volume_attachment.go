@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewVolumeAttachment creates a new instance of [VolumeAttachment].
 func NewVolumeAttachment(name string, args VolumeAttachmentArgs) *VolumeAttachment {
 	return &VolumeAttachment{
 		Args: args,
@@ -19,28 +20,51 @@ func NewVolumeAttachment(name string, args VolumeAttachmentArgs) *VolumeAttachme
 
 var _ terra.Resource = (*VolumeAttachment)(nil)
 
+// VolumeAttachment represents the Terraform resource aws_volume_attachment.
 type VolumeAttachment struct {
-	Name  string
-	Args  VolumeAttachmentArgs
-	state *volumeAttachmentState
+	Name      string
+	Args      VolumeAttachmentArgs
+	state     *volumeAttachmentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VolumeAttachment].
 func (va *VolumeAttachment) Type() string {
 	return "aws_volume_attachment"
 }
 
+// LocalName returns the local name for [VolumeAttachment].
 func (va *VolumeAttachment) LocalName() string {
 	return va.Name
 }
 
+// Configuration returns the configuration (args) for [VolumeAttachment].
 func (va *VolumeAttachment) Configuration() interface{} {
 	return va.Args
 }
 
+// DependOn is used for other resources to depend on [VolumeAttachment].
+func (va *VolumeAttachment) DependOn() terra.Reference {
+	return terra.ReferenceResource(va)
+}
+
+// Dependencies returns the list of resources [VolumeAttachment] depends_on.
+func (va *VolumeAttachment) Dependencies() terra.Dependencies {
+	return va.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VolumeAttachment].
+func (va *VolumeAttachment) LifecycleManagement() *terra.Lifecycle {
+	return va.Lifecycle
+}
+
+// Attributes returns the attributes for [VolumeAttachment].
 func (va *VolumeAttachment) Attributes() volumeAttachmentAttributes {
 	return volumeAttachmentAttributes{ref: terra.ReferenceResource(va)}
 }
 
+// ImportState imports the given attribute values into [VolumeAttachment]'s state.
 func (va *VolumeAttachment) ImportState(av io.Reader) error {
 	va.state = &volumeAttachmentState{}
 	if err := json.NewDecoder(av).Decode(va.state); err != nil {
@@ -49,10 +73,12 @@ func (va *VolumeAttachment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VolumeAttachment] has state.
 func (va *VolumeAttachment) State() (*volumeAttachmentState, bool) {
 	return va.state, va.state != nil
 }
 
+// StateMust returns the state for [VolumeAttachment]. Panics if the state is nil.
 func (va *VolumeAttachment) StateMust() *volumeAttachmentState {
 	if va.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", va.Type(), va.LocalName()))
@@ -60,10 +86,7 @@ func (va *VolumeAttachment) StateMust() *volumeAttachmentState {
 	return va.state
 }
 
-func (va *VolumeAttachment) DependOn() terra.Reference {
-	return terra.ReferenceResource(va)
-}
-
+// VolumeAttachmentArgs contains the configurations for aws_volume_attachment.
 type VolumeAttachmentArgs struct {
 	// DeviceName: string, required
 	DeviceName terra.StringValue `hcl:"device_name,attr" validate:"required"`
@@ -81,43 +104,48 @@ type VolumeAttachmentArgs struct {
 	VolumeId terra.StringValue `hcl:"volume_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *volumeattachment.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that VolumeAttachment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type volumeAttachmentAttributes struct {
 	ref terra.Reference
 }
 
+// DeviceName returns a reference to field device_name of aws_volume_attachment.
 func (va volumeAttachmentAttributes) DeviceName() terra.StringValue {
-	return terra.ReferenceString(va.ref.Append("device_name"))
+	return terra.ReferenceAsString(va.ref.Append("device_name"))
 }
 
+// ForceDetach returns a reference to field force_detach of aws_volume_attachment.
 func (va volumeAttachmentAttributes) ForceDetach() terra.BoolValue {
-	return terra.ReferenceBool(va.ref.Append("force_detach"))
+	return terra.ReferenceAsBool(va.ref.Append("force_detach"))
 }
 
+// Id returns a reference to field id of aws_volume_attachment.
 func (va volumeAttachmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(va.ref.Append("id"))
+	return terra.ReferenceAsString(va.ref.Append("id"))
 }
 
+// InstanceId returns a reference to field instance_id of aws_volume_attachment.
 func (va volumeAttachmentAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(va.ref.Append("instance_id"))
+	return terra.ReferenceAsString(va.ref.Append("instance_id"))
 }
 
+// SkipDestroy returns a reference to field skip_destroy of aws_volume_attachment.
 func (va volumeAttachmentAttributes) SkipDestroy() terra.BoolValue {
-	return terra.ReferenceBool(va.ref.Append("skip_destroy"))
+	return terra.ReferenceAsBool(va.ref.Append("skip_destroy"))
 }
 
+// StopInstanceBeforeDetaching returns a reference to field stop_instance_before_detaching of aws_volume_attachment.
 func (va volumeAttachmentAttributes) StopInstanceBeforeDetaching() terra.BoolValue {
-	return terra.ReferenceBool(va.ref.Append("stop_instance_before_detaching"))
+	return terra.ReferenceAsBool(va.ref.Append("stop_instance_before_detaching"))
 }
 
+// VolumeId returns a reference to field volume_id of aws_volume_attachment.
 func (va volumeAttachmentAttributes) VolumeId() terra.StringValue {
-	return terra.ReferenceString(va.ref.Append("volume_id"))
+	return terra.ReferenceAsString(va.ref.Append("volume_id"))
 }
 
 func (va volumeAttachmentAttributes) Timeouts() volumeattachment.TimeoutsAttributes {
-	return terra.ReferenceSingle[volumeattachment.TimeoutsAttributes](va.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[volumeattachment.TimeoutsAttributes](va.ref.Append("timeouts"))
 }
 
 type volumeAttachmentState struct {

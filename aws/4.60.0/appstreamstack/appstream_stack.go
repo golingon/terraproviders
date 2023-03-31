@@ -54,11 +54,11 @@ func (ae AccessEndpointsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ae AccessEndpointsAttributes) EndpointType() terra.StringValue {
-	return terra.ReferenceString(ae.ref.Append("endpoint_type"))
+	return terra.ReferenceAsString(ae.ref.Append("endpoint_type"))
 }
 
 func (ae AccessEndpointsAttributes) VpceId() terra.StringValue {
-	return terra.ReferenceString(ae.ref.Append("vpce_id"))
+	return terra.ReferenceAsString(ae.ref.Append("vpce_id"))
 }
 
 type ApplicationSettingsAttributes struct {
@@ -78,11 +78,11 @@ func (as ApplicationSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (as ApplicationSettingsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(as.ref.Append("enabled"))
+	return terra.ReferenceAsBool(as.ref.Append("enabled"))
 }
 
 func (as ApplicationSettingsAttributes) SettingsGroup() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("settings_group"))
+	return terra.ReferenceAsString(as.ref.Append("settings_group"))
 }
 
 type StorageConnectorsAttributes struct {
@@ -102,15 +102,15 @@ func (sc StorageConnectorsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc StorageConnectorsAttributes) ConnectorType() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("connector_type"))
+	return terra.ReferenceAsString(sc.ref.Append("connector_type"))
 }
 
 func (sc StorageConnectorsAttributes) Domains() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sc.ref.Append("domains"))
+	return terra.ReferenceAsList[terra.StringValue](sc.ref.Append("domains"))
 }
 
 func (sc StorageConnectorsAttributes) ResourceIdentifier() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("resource_identifier"))
+	return terra.ReferenceAsString(sc.ref.Append("resource_identifier"))
 }
 
 type UserSettingsAttributes struct {
@@ -130,11 +130,11 @@ func (us UserSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (us UserSettingsAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(us.ref.Append("action"))
+	return terra.ReferenceAsString(us.ref.Append("action"))
 }
 
 func (us UserSettingsAttributes) Permission() terra.StringValue {
-	return terra.ReferenceString(us.ref.Append("permission"))
+	return terra.ReferenceAsString(us.ref.Append("permission"))
 }
 
 type AccessEndpointsState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewWafregionalWebAclAssociation creates a new instance of [WafregionalWebAclAssociation].
 func NewWafregionalWebAclAssociation(name string, args WafregionalWebAclAssociationArgs) *WafregionalWebAclAssociation {
 	return &WafregionalWebAclAssociation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewWafregionalWebAclAssociation(name string, args WafregionalWebAclAssociat
 
 var _ terra.Resource = (*WafregionalWebAclAssociation)(nil)
 
+// WafregionalWebAclAssociation represents the Terraform resource aws_wafregional_web_acl_association.
 type WafregionalWebAclAssociation struct {
-	Name  string
-	Args  WafregionalWebAclAssociationArgs
-	state *wafregionalWebAclAssociationState
+	Name      string
+	Args      WafregionalWebAclAssociationArgs
+	state     *wafregionalWebAclAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [WafregionalWebAclAssociation].
 func (wwaa *WafregionalWebAclAssociation) Type() string {
 	return "aws_wafregional_web_acl_association"
 }
 
+// LocalName returns the local name for [WafregionalWebAclAssociation].
 func (wwaa *WafregionalWebAclAssociation) LocalName() string {
 	return wwaa.Name
 }
 
+// Configuration returns the configuration (args) for [WafregionalWebAclAssociation].
 func (wwaa *WafregionalWebAclAssociation) Configuration() interface{} {
 	return wwaa.Args
 }
 
+// DependOn is used for other resources to depend on [WafregionalWebAclAssociation].
+func (wwaa *WafregionalWebAclAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(wwaa)
+}
+
+// Dependencies returns the list of resources [WafregionalWebAclAssociation] depends_on.
+func (wwaa *WafregionalWebAclAssociation) Dependencies() terra.Dependencies {
+	return wwaa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [WafregionalWebAclAssociation].
+func (wwaa *WafregionalWebAclAssociation) LifecycleManagement() *terra.Lifecycle {
+	return wwaa.Lifecycle
+}
+
+// Attributes returns the attributes for [WafregionalWebAclAssociation].
 func (wwaa *WafregionalWebAclAssociation) Attributes() wafregionalWebAclAssociationAttributes {
 	return wafregionalWebAclAssociationAttributes{ref: terra.ReferenceResource(wwaa)}
 }
 
+// ImportState imports the given attribute values into [WafregionalWebAclAssociation]'s state.
 func (wwaa *WafregionalWebAclAssociation) ImportState(av io.Reader) error {
 	wwaa.state = &wafregionalWebAclAssociationState{}
 	if err := json.NewDecoder(av).Decode(wwaa.state); err != nil {
@@ -48,10 +72,12 @@ func (wwaa *WafregionalWebAclAssociation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [WafregionalWebAclAssociation] has state.
 func (wwaa *WafregionalWebAclAssociation) State() (*wafregionalWebAclAssociationState, bool) {
 	return wwaa.state, wwaa.state != nil
 }
 
+// StateMust returns the state for [WafregionalWebAclAssociation]. Panics if the state is nil.
 func (wwaa *WafregionalWebAclAssociation) StateMust() *wafregionalWebAclAssociationState {
 	if wwaa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", wwaa.Type(), wwaa.LocalName()))
@@ -59,10 +85,7 @@ func (wwaa *WafregionalWebAclAssociation) StateMust() *wafregionalWebAclAssociat
 	return wwaa.state
 }
 
-func (wwaa *WafregionalWebAclAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(wwaa)
-}
-
+// WafregionalWebAclAssociationArgs contains the configurations for aws_wafregional_web_acl_association.
 type WafregionalWebAclAssociationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,23 +93,24 @@ type WafregionalWebAclAssociationArgs struct {
 	ResourceArn terra.StringValue `hcl:"resource_arn,attr" validate:"required"`
 	// WebAclId: string, required
 	WebAclId terra.StringValue `hcl:"web_acl_id,attr" validate:"required"`
-	// DependsOn contains resources that WafregionalWebAclAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type wafregionalWebAclAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_wafregional_web_acl_association.
 func (wwaa wafregionalWebAclAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(wwaa.ref.Append("id"))
+	return terra.ReferenceAsString(wwaa.ref.Append("id"))
 }
 
+// ResourceArn returns a reference to field resource_arn of aws_wafregional_web_acl_association.
 func (wwaa wafregionalWebAclAssociationAttributes) ResourceArn() terra.StringValue {
-	return terra.ReferenceString(wwaa.ref.Append("resource_arn"))
+	return terra.ReferenceAsString(wwaa.ref.Append("resource_arn"))
 }
 
+// WebAclId returns a reference to field web_acl_id of aws_wafregional_web_acl_association.
 func (wwaa wafregionalWebAclAssociationAttributes) WebAclId() terra.StringValue {
-	return terra.ReferenceString(wwaa.ref.Append("web_acl_id"))
+	return terra.ReferenceAsString(wwaa.ref.Append("web_acl_id"))
 }
 
 type wafregionalWebAclAssociationState struct {

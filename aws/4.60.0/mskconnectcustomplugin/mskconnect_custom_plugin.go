@@ -45,7 +45,7 @@ func (l LocationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (l LocationAttributes) S3() terra.ListValue[S3Attributes] {
-	return terra.ReferenceList[S3Attributes](l.ref.Append("s3"))
+	return terra.ReferenceAsList[S3Attributes](l.ref.Append("s3"))
 }
 
 type S3Attributes struct {
@@ -65,15 +65,15 @@ func (s S3Attributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s S3Attributes) BucketArn() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("bucket_arn"))
+	return terra.ReferenceAsString(s.ref.Append("bucket_arn"))
 }
 
 func (s S3Attributes) FileKey() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("file_key"))
+	return terra.ReferenceAsString(s.ref.Append("file_key"))
 }
 
 func (s S3Attributes) ObjectVersion() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("object_version"))
+	return terra.ReferenceAsString(s.ref.Append("object_version"))
 }
 
 type TimeoutsAttributes struct {
@@ -93,11 +93,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type LocationState struct {

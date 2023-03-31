@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNeptuneEventSubscription creates a new instance of [NeptuneEventSubscription].
 func NewNeptuneEventSubscription(name string, args NeptuneEventSubscriptionArgs) *NeptuneEventSubscription {
 	return &NeptuneEventSubscription{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNeptuneEventSubscription(name string, args NeptuneEventSubscriptionArgs)
 
 var _ terra.Resource = (*NeptuneEventSubscription)(nil)
 
+// NeptuneEventSubscription represents the Terraform resource aws_neptune_event_subscription.
 type NeptuneEventSubscription struct {
-	Name  string
-	Args  NeptuneEventSubscriptionArgs
-	state *neptuneEventSubscriptionState
+	Name      string
+	Args      NeptuneEventSubscriptionArgs
+	state     *neptuneEventSubscriptionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NeptuneEventSubscription].
 func (nes *NeptuneEventSubscription) Type() string {
 	return "aws_neptune_event_subscription"
 }
 
+// LocalName returns the local name for [NeptuneEventSubscription].
 func (nes *NeptuneEventSubscription) LocalName() string {
 	return nes.Name
 }
 
+// Configuration returns the configuration (args) for [NeptuneEventSubscription].
 func (nes *NeptuneEventSubscription) Configuration() interface{} {
 	return nes.Args
 }
 
+// DependOn is used for other resources to depend on [NeptuneEventSubscription].
+func (nes *NeptuneEventSubscription) DependOn() terra.Reference {
+	return terra.ReferenceResource(nes)
+}
+
+// Dependencies returns the list of resources [NeptuneEventSubscription] depends_on.
+func (nes *NeptuneEventSubscription) Dependencies() terra.Dependencies {
+	return nes.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NeptuneEventSubscription].
+func (nes *NeptuneEventSubscription) LifecycleManagement() *terra.Lifecycle {
+	return nes.Lifecycle
+}
+
+// Attributes returns the attributes for [NeptuneEventSubscription].
 func (nes *NeptuneEventSubscription) Attributes() neptuneEventSubscriptionAttributes {
 	return neptuneEventSubscriptionAttributes{ref: terra.ReferenceResource(nes)}
 }
 
+// ImportState imports the given attribute values into [NeptuneEventSubscription]'s state.
 func (nes *NeptuneEventSubscription) ImportState(av io.Reader) error {
 	nes.state = &neptuneEventSubscriptionState{}
 	if err := json.NewDecoder(av).Decode(nes.state); err != nil {
@@ -49,10 +73,12 @@ func (nes *NeptuneEventSubscription) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NeptuneEventSubscription] has state.
 func (nes *NeptuneEventSubscription) State() (*neptuneEventSubscriptionState, bool) {
 	return nes.state, nes.state != nil
 }
 
+// StateMust returns the state for [NeptuneEventSubscription]. Panics if the state is nil.
 func (nes *NeptuneEventSubscription) StateMust() *neptuneEventSubscriptionState {
 	if nes.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", nes.Type(), nes.LocalName()))
@@ -60,10 +86,7 @@ func (nes *NeptuneEventSubscription) StateMust() *neptuneEventSubscriptionState 
 	return nes.state
 }
 
-func (nes *NeptuneEventSubscription) DependOn() terra.Reference {
-	return terra.ReferenceResource(nes)
-}
-
+// NeptuneEventSubscriptionArgs contains the configurations for aws_neptune_event_subscription.
 type NeptuneEventSubscriptionArgs struct {
 	// Enabled: bool, optional
 	Enabled terra.BoolValue `hcl:"enabled,attr"`
@@ -87,63 +110,73 @@ type NeptuneEventSubscriptionArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Timeouts: optional
 	Timeouts *neptuneeventsubscription.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that NeptuneEventSubscription depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type neptuneEventSubscriptionAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_neptune_event_subscription.
 func (nes neptuneEventSubscriptionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(nes.ref.Append("arn"))
+	return terra.ReferenceAsString(nes.ref.Append("arn"))
 }
 
+// CustomerAwsId returns a reference to field customer_aws_id of aws_neptune_event_subscription.
 func (nes neptuneEventSubscriptionAttributes) CustomerAwsId() terra.StringValue {
-	return terra.ReferenceString(nes.ref.Append("customer_aws_id"))
+	return terra.ReferenceAsString(nes.ref.Append("customer_aws_id"))
 }
 
+// Enabled returns a reference to field enabled of aws_neptune_event_subscription.
 func (nes neptuneEventSubscriptionAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(nes.ref.Append("enabled"))
+	return terra.ReferenceAsBool(nes.ref.Append("enabled"))
 }
 
+// EventCategories returns a reference to field event_categories of aws_neptune_event_subscription.
 func (nes neptuneEventSubscriptionAttributes) EventCategories() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](nes.ref.Append("event_categories"))
+	return terra.ReferenceAsSet[terra.StringValue](nes.ref.Append("event_categories"))
 }
 
+// Id returns a reference to field id of aws_neptune_event_subscription.
 func (nes neptuneEventSubscriptionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nes.ref.Append("id"))
+	return terra.ReferenceAsString(nes.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_neptune_event_subscription.
 func (nes neptuneEventSubscriptionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(nes.ref.Append("name"))
+	return terra.ReferenceAsString(nes.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_neptune_event_subscription.
 func (nes neptuneEventSubscriptionAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(nes.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(nes.ref.Append("name_prefix"))
 }
 
+// SnsTopicArn returns a reference to field sns_topic_arn of aws_neptune_event_subscription.
 func (nes neptuneEventSubscriptionAttributes) SnsTopicArn() terra.StringValue {
-	return terra.ReferenceString(nes.ref.Append("sns_topic_arn"))
+	return terra.ReferenceAsString(nes.ref.Append("sns_topic_arn"))
 }
 
+// SourceIds returns a reference to field source_ids of aws_neptune_event_subscription.
 func (nes neptuneEventSubscriptionAttributes) SourceIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](nes.ref.Append("source_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](nes.ref.Append("source_ids"))
 }
 
+// SourceType returns a reference to field source_type of aws_neptune_event_subscription.
 func (nes neptuneEventSubscriptionAttributes) SourceType() terra.StringValue {
-	return terra.ReferenceString(nes.ref.Append("source_type"))
+	return terra.ReferenceAsString(nes.ref.Append("source_type"))
 }
 
+// Tags returns a reference to field tags of aws_neptune_event_subscription.
 func (nes neptuneEventSubscriptionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](nes.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](nes.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_neptune_event_subscription.
 func (nes neptuneEventSubscriptionAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](nes.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](nes.ref.Append("tags_all"))
 }
 
 func (nes neptuneEventSubscriptionAttributes) Timeouts() neptuneeventsubscription.TimeoutsAttributes {
-	return terra.ReferenceSingle[neptuneeventsubscription.TimeoutsAttributes](nes.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[neptuneeventsubscription.TimeoutsAttributes](nes.ref.Append("timeouts"))
 }
 
 type neptuneEventSubscriptionState struct {

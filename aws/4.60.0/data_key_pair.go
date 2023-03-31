@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataKeyPair creates a new instance of [DataKeyPair].
 func NewDataKeyPair(name string, args DataKeyPairArgs) *DataKeyPair {
 	return &DataKeyPair{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataKeyPair(name string, args DataKeyPairArgs) *DataKeyPair {
 
 var _ terra.DataResource = (*DataKeyPair)(nil)
 
+// DataKeyPair represents the Terraform data resource aws_key_pair.
 type DataKeyPair struct {
 	Name string
 	Args DataKeyPairArgs
 }
 
+// DataSource returns the Terraform object type for [DataKeyPair].
 func (kp *DataKeyPair) DataSource() string {
 	return "aws_key_pair"
 }
 
+// LocalName returns the local name for [DataKeyPair].
 func (kp *DataKeyPair) LocalName() string {
 	return kp.Name
 }
 
+// Configuration returns the configuration (args) for [DataKeyPair].
 func (kp *DataKeyPair) Configuration() interface{} {
 	return kp.Args
 }
 
+// Attributes returns the attributes for [DataKeyPair].
 func (kp *DataKeyPair) Attributes() dataKeyPairAttributes {
 	return dataKeyPairAttributes{ref: terra.ReferenceDataResource(kp)}
 }
 
+// DataKeyPairArgs contains the configurations for aws_key_pair.
 type DataKeyPairArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -57,50 +64,60 @@ type dataKeyPairAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_key_pair.
 func (kp dataKeyPairAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(kp.ref.Append("arn"))
+	return terra.ReferenceAsString(kp.ref.Append("arn"))
 }
 
+// CreateTime returns a reference to field create_time of aws_key_pair.
 func (kp dataKeyPairAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(kp.ref.Append("create_time"))
+	return terra.ReferenceAsString(kp.ref.Append("create_time"))
 }
 
+// Fingerprint returns a reference to field fingerprint of aws_key_pair.
 func (kp dataKeyPairAttributes) Fingerprint() terra.StringValue {
-	return terra.ReferenceString(kp.ref.Append("fingerprint"))
+	return terra.ReferenceAsString(kp.ref.Append("fingerprint"))
 }
 
+// Id returns a reference to field id of aws_key_pair.
 func (kp dataKeyPairAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kp.ref.Append("id"))
+	return terra.ReferenceAsString(kp.ref.Append("id"))
 }
 
+// IncludePublicKey returns a reference to field include_public_key of aws_key_pair.
 func (kp dataKeyPairAttributes) IncludePublicKey() terra.BoolValue {
-	return terra.ReferenceBool(kp.ref.Append("include_public_key"))
+	return terra.ReferenceAsBool(kp.ref.Append("include_public_key"))
 }
 
+// KeyName returns a reference to field key_name of aws_key_pair.
 func (kp dataKeyPairAttributes) KeyName() terra.StringValue {
-	return terra.ReferenceString(kp.ref.Append("key_name"))
+	return terra.ReferenceAsString(kp.ref.Append("key_name"))
 }
 
+// KeyPairId returns a reference to field key_pair_id of aws_key_pair.
 func (kp dataKeyPairAttributes) KeyPairId() terra.StringValue {
-	return terra.ReferenceString(kp.ref.Append("key_pair_id"))
+	return terra.ReferenceAsString(kp.ref.Append("key_pair_id"))
 }
 
+// KeyType returns a reference to field key_type of aws_key_pair.
 func (kp dataKeyPairAttributes) KeyType() terra.StringValue {
-	return terra.ReferenceString(kp.ref.Append("key_type"))
+	return terra.ReferenceAsString(kp.ref.Append("key_type"))
 }
 
+// PublicKey returns a reference to field public_key of aws_key_pair.
 func (kp dataKeyPairAttributes) PublicKey() terra.StringValue {
-	return terra.ReferenceString(kp.ref.Append("public_key"))
+	return terra.ReferenceAsString(kp.ref.Append("public_key"))
 }
 
+// Tags returns a reference to field tags of aws_key_pair.
 func (kp dataKeyPairAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](kp.ref.Append("tags"))
 }
 
 func (kp dataKeyPairAttributes) Filter() terra.SetValue[datakeypair.FilterAttributes] {
-	return terra.ReferenceSet[datakeypair.FilterAttributes](kp.ref.Append("filter"))
+	return terra.ReferenceAsSet[datakeypair.FilterAttributes](kp.ref.Append("filter"))
 }
 
 func (kp dataKeyPairAttributes) Timeouts() datakeypair.TimeoutsAttributes {
-	return terra.ReferenceSingle[datakeypair.TimeoutsAttributes](kp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datakeypair.TimeoutsAttributes](kp.ref.Append("timeouts"))
 }

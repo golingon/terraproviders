@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewGuarddutyPublishingDestination creates a new instance of [GuarddutyPublishingDestination].
 func NewGuarddutyPublishingDestination(name string, args GuarddutyPublishingDestinationArgs) *GuarddutyPublishingDestination {
 	return &GuarddutyPublishingDestination{
 		Args: args,
@@ -18,28 +19,51 @@ func NewGuarddutyPublishingDestination(name string, args GuarddutyPublishingDest
 
 var _ terra.Resource = (*GuarddutyPublishingDestination)(nil)
 
+// GuarddutyPublishingDestination represents the Terraform resource aws_guardduty_publishing_destination.
 type GuarddutyPublishingDestination struct {
-	Name  string
-	Args  GuarddutyPublishingDestinationArgs
-	state *guarddutyPublishingDestinationState
+	Name      string
+	Args      GuarddutyPublishingDestinationArgs
+	state     *guarddutyPublishingDestinationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GuarddutyPublishingDestination].
 func (gpd *GuarddutyPublishingDestination) Type() string {
 	return "aws_guardduty_publishing_destination"
 }
 
+// LocalName returns the local name for [GuarddutyPublishingDestination].
 func (gpd *GuarddutyPublishingDestination) LocalName() string {
 	return gpd.Name
 }
 
+// Configuration returns the configuration (args) for [GuarddutyPublishingDestination].
 func (gpd *GuarddutyPublishingDestination) Configuration() interface{} {
 	return gpd.Args
 }
 
+// DependOn is used for other resources to depend on [GuarddutyPublishingDestination].
+func (gpd *GuarddutyPublishingDestination) DependOn() terra.Reference {
+	return terra.ReferenceResource(gpd)
+}
+
+// Dependencies returns the list of resources [GuarddutyPublishingDestination] depends_on.
+func (gpd *GuarddutyPublishingDestination) Dependencies() terra.Dependencies {
+	return gpd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GuarddutyPublishingDestination].
+func (gpd *GuarddutyPublishingDestination) LifecycleManagement() *terra.Lifecycle {
+	return gpd.Lifecycle
+}
+
+// Attributes returns the attributes for [GuarddutyPublishingDestination].
 func (gpd *GuarddutyPublishingDestination) Attributes() guarddutyPublishingDestinationAttributes {
 	return guarddutyPublishingDestinationAttributes{ref: terra.ReferenceResource(gpd)}
 }
 
+// ImportState imports the given attribute values into [GuarddutyPublishingDestination]'s state.
 func (gpd *GuarddutyPublishingDestination) ImportState(av io.Reader) error {
 	gpd.state = &guarddutyPublishingDestinationState{}
 	if err := json.NewDecoder(av).Decode(gpd.state); err != nil {
@@ -48,10 +72,12 @@ func (gpd *GuarddutyPublishingDestination) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GuarddutyPublishingDestination] has state.
 func (gpd *GuarddutyPublishingDestination) State() (*guarddutyPublishingDestinationState, bool) {
 	return gpd.state, gpd.state != nil
 }
 
+// StateMust returns the state for [GuarddutyPublishingDestination]. Panics if the state is nil.
 func (gpd *GuarddutyPublishingDestination) StateMust() *guarddutyPublishingDestinationState {
 	if gpd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", gpd.Type(), gpd.LocalName()))
@@ -59,10 +85,7 @@ func (gpd *GuarddutyPublishingDestination) StateMust() *guarddutyPublishingDesti
 	return gpd.state
 }
 
-func (gpd *GuarddutyPublishingDestination) DependOn() terra.Reference {
-	return terra.ReferenceResource(gpd)
-}
-
+// GuarddutyPublishingDestinationArgs contains the configurations for aws_guardduty_publishing_destination.
 type GuarddutyPublishingDestinationArgs struct {
 	// DestinationArn: string, required
 	DestinationArn terra.StringValue `hcl:"destination_arn,attr" validate:"required"`
@@ -74,31 +97,34 @@ type GuarddutyPublishingDestinationArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// KmsKeyArn: string, required
 	KmsKeyArn terra.StringValue `hcl:"kms_key_arn,attr" validate:"required"`
-	// DependsOn contains resources that GuarddutyPublishingDestination depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type guarddutyPublishingDestinationAttributes struct {
 	ref terra.Reference
 }
 
+// DestinationArn returns a reference to field destination_arn of aws_guardduty_publishing_destination.
 func (gpd guarddutyPublishingDestinationAttributes) DestinationArn() terra.StringValue {
-	return terra.ReferenceString(gpd.ref.Append("destination_arn"))
+	return terra.ReferenceAsString(gpd.ref.Append("destination_arn"))
 }
 
+// DestinationType returns a reference to field destination_type of aws_guardduty_publishing_destination.
 func (gpd guarddutyPublishingDestinationAttributes) DestinationType() terra.StringValue {
-	return terra.ReferenceString(gpd.ref.Append("destination_type"))
+	return terra.ReferenceAsString(gpd.ref.Append("destination_type"))
 }
 
+// DetectorId returns a reference to field detector_id of aws_guardduty_publishing_destination.
 func (gpd guarddutyPublishingDestinationAttributes) DetectorId() terra.StringValue {
-	return terra.ReferenceString(gpd.ref.Append("detector_id"))
+	return terra.ReferenceAsString(gpd.ref.Append("detector_id"))
 }
 
+// Id returns a reference to field id of aws_guardduty_publishing_destination.
 func (gpd guarddutyPublishingDestinationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gpd.ref.Append("id"))
+	return terra.ReferenceAsString(gpd.ref.Append("id"))
 }
 
+// KmsKeyArn returns a reference to field kms_key_arn of aws_guardduty_publishing_destination.
 func (gpd guarddutyPublishingDestinationAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(gpd.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(gpd.ref.Append("kms_key_arn"))
 }
 
 type guarddutyPublishingDestinationState struct {

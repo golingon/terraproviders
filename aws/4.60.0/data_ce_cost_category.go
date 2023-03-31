@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataCeCostCategory creates a new instance of [DataCeCostCategory].
 func NewDataCeCostCategory(name string, args DataCeCostCategoryArgs) *DataCeCostCategory {
 	return &DataCeCostCategory{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataCeCostCategory(name string, args DataCeCostCategoryArgs) *DataCeCost
 
 var _ terra.DataResource = (*DataCeCostCategory)(nil)
 
+// DataCeCostCategory represents the Terraform data resource aws_ce_cost_category.
 type DataCeCostCategory struct {
 	Name string
 	Args DataCeCostCategoryArgs
 }
 
+// DataSource returns the Terraform object type for [DataCeCostCategory].
 func (ccc *DataCeCostCategory) DataSource() string {
 	return "aws_ce_cost_category"
 }
 
+// LocalName returns the local name for [DataCeCostCategory].
 func (ccc *DataCeCostCategory) LocalName() string {
 	return ccc.Name
 }
 
+// Configuration returns the configuration (args) for [DataCeCostCategory].
 func (ccc *DataCeCostCategory) Configuration() interface{} {
 	return ccc.Args
 }
 
+// Attributes returns the attributes for [DataCeCostCategory].
 func (ccc *DataCeCostCategory) Attributes() dataCeCostCategoryAttributes {
 	return dataCeCostCategoryAttributes{ref: terra.ReferenceDataResource(ccc)}
 }
 
+// DataCeCostCategoryArgs contains the configurations for aws_ce_cost_category.
 type DataCeCostCategoryArgs struct {
 	// CostCategoryArn: string, required
 	CostCategoryArn terra.StringValue `hcl:"cost_category_arn,attr" validate:"required"`
@@ -53,42 +60,50 @@ type dataCeCostCategoryAttributes struct {
 	ref terra.Reference
 }
 
+// CostCategoryArn returns a reference to field cost_category_arn of aws_ce_cost_category.
 func (ccc dataCeCostCategoryAttributes) CostCategoryArn() terra.StringValue {
-	return terra.ReferenceString(ccc.ref.Append("cost_category_arn"))
+	return terra.ReferenceAsString(ccc.ref.Append("cost_category_arn"))
 }
 
+// DefaultValue returns a reference to field default_value of aws_ce_cost_category.
 func (ccc dataCeCostCategoryAttributes) DefaultValue() terra.StringValue {
-	return terra.ReferenceString(ccc.ref.Append("default_value"))
+	return terra.ReferenceAsString(ccc.ref.Append("default_value"))
 }
 
+// EffectiveEnd returns a reference to field effective_end of aws_ce_cost_category.
 func (ccc dataCeCostCategoryAttributes) EffectiveEnd() terra.StringValue {
-	return terra.ReferenceString(ccc.ref.Append("effective_end"))
+	return terra.ReferenceAsString(ccc.ref.Append("effective_end"))
 }
 
+// EffectiveStart returns a reference to field effective_start of aws_ce_cost_category.
 func (ccc dataCeCostCategoryAttributes) EffectiveStart() terra.StringValue {
-	return terra.ReferenceString(ccc.ref.Append("effective_start"))
+	return terra.ReferenceAsString(ccc.ref.Append("effective_start"))
 }
 
+// Id returns a reference to field id of aws_ce_cost_category.
 func (ccc dataCeCostCategoryAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ccc.ref.Append("id"))
+	return terra.ReferenceAsString(ccc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_ce_cost_category.
 func (ccc dataCeCostCategoryAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ccc.ref.Append("name"))
+	return terra.ReferenceAsString(ccc.ref.Append("name"))
 }
 
+// RuleVersion returns a reference to field rule_version of aws_ce_cost_category.
 func (ccc dataCeCostCategoryAttributes) RuleVersion() terra.StringValue {
-	return terra.ReferenceString(ccc.ref.Append("rule_version"))
+	return terra.ReferenceAsString(ccc.ref.Append("rule_version"))
 }
 
+// Tags returns a reference to field tags of aws_ce_cost_category.
 func (ccc dataCeCostCategoryAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ccc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ccc.ref.Append("tags"))
 }
 
 func (ccc dataCeCostCategoryAttributes) Rule() terra.SetValue[datacecostcategory.RuleAttributes] {
-	return terra.ReferenceSet[datacecostcategory.RuleAttributes](ccc.ref.Append("rule"))
+	return terra.ReferenceAsSet[datacecostcategory.RuleAttributes](ccc.ref.Append("rule"))
 }
 
 func (ccc dataCeCostCategoryAttributes) SplitChargeRule() terra.SetValue[datacecostcategory.SplitChargeRuleAttributes] {
-	return terra.ReferenceSet[datacecostcategory.SplitChargeRuleAttributes](ccc.ref.Append("split_charge_rule"))
+	return terra.ReferenceAsSet[datacecostcategory.SplitChargeRuleAttributes](ccc.ref.Append("split_charge_rule"))
 }

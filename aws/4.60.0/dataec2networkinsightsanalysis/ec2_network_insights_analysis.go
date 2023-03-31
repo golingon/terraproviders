@@ -366,11 +366,11 @@ func (aph AlternatePathHintsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (aph AlternatePathHintsAttributes) ComponentArn() terra.StringValue {
-	return terra.ReferenceString(aph.ref.Append("component_arn"))
+	return terra.ReferenceAsString(aph.ref.Append("component_arn"))
 }
 
 func (aph AlternatePathHintsAttributes) ComponentId() terra.StringValue {
-	return terra.ReferenceString(aph.ref.Append("component_id"))
+	return terra.ReferenceAsString(aph.ref.Append("component_id"))
 }
 
 type ExplanationsAttributes struct {
@@ -390,195 +390,195 @@ func (e ExplanationsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e ExplanationsAttributes) Address() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("address"))
+	return terra.ReferenceAsString(e.ref.Append("address"))
 }
 
 func (e ExplanationsAttributes) Addresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](e.ref.Append("addresses"))
+	return terra.ReferenceAsList[terra.StringValue](e.ref.Append("addresses"))
 }
 
 func (e ExplanationsAttributes) AvailabilityZones() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](e.ref.Append("availability_zones"))
+	return terra.ReferenceAsList[terra.StringValue](e.ref.Append("availability_zones"))
 }
 
 func (e ExplanationsAttributes) Cidrs() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](e.ref.Append("cidrs"))
+	return terra.ReferenceAsList[terra.StringValue](e.ref.Append("cidrs"))
 }
 
 func (e ExplanationsAttributes) Direction() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("direction"))
+	return terra.ReferenceAsString(e.ref.Append("direction"))
 }
 
 func (e ExplanationsAttributes) ExplanationCode() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("explanation_code"))
+	return terra.ReferenceAsString(e.ref.Append("explanation_code"))
 }
 
 func (e ExplanationsAttributes) LoadBalancerArn() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("load_balancer_arn"))
+	return terra.ReferenceAsString(e.ref.Append("load_balancer_arn"))
 }
 
 func (e ExplanationsAttributes) LoadBalancerListenerPort() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("load_balancer_listener_port"))
+	return terra.ReferenceAsNumber(e.ref.Append("load_balancer_listener_port"))
 }
 
 func (e ExplanationsAttributes) LoadBalancerTargetPort() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("load_balancer_target_port"))
+	return terra.ReferenceAsNumber(e.ref.Append("load_balancer_target_port"))
 }
 
 func (e ExplanationsAttributes) MissingComponent() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("missing_component"))
+	return terra.ReferenceAsString(e.ref.Append("missing_component"))
 }
 
 func (e ExplanationsAttributes) PacketField() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("packet_field"))
+	return terra.ReferenceAsString(e.ref.Append("packet_field"))
 }
 
 func (e ExplanationsAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("port"))
+	return terra.ReferenceAsNumber(e.ref.Append("port"))
 }
 
 func (e ExplanationsAttributes) Protocols() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](e.ref.Append("protocols"))
+	return terra.ReferenceAsList[terra.StringValue](e.ref.Append("protocols"))
 }
 
 func (e ExplanationsAttributes) State() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("state"))
+	return terra.ReferenceAsString(e.ref.Append("state"))
 }
 
 func (e ExplanationsAttributes) Acl() terra.ListValue[AclAttributes] {
-	return terra.ReferenceList[AclAttributes](e.ref.Append("acl"))
+	return terra.ReferenceAsList[AclAttributes](e.ref.Append("acl"))
 }
 
 func (e ExplanationsAttributes) AclRule() terra.ListValue[ExplanationsAclRuleAttributes] {
-	return terra.ReferenceList[ExplanationsAclRuleAttributes](e.ref.Append("acl_rule"))
+	return terra.ReferenceAsList[ExplanationsAclRuleAttributes](e.ref.Append("acl_rule"))
 }
 
 func (e ExplanationsAttributes) AttachedTo() terra.ListValue[ExplanationsAttachedToAttributes] {
-	return terra.ReferenceList[ExplanationsAttachedToAttributes](e.ref.Append("attached_to"))
+	return terra.ReferenceAsList[ExplanationsAttachedToAttributes](e.ref.Append("attached_to"))
 }
 
 func (e ExplanationsAttributes) ClassicLoadBalancerListener() terra.ListValue[ClassicLoadBalancerListenerAttributes] {
-	return terra.ReferenceList[ClassicLoadBalancerListenerAttributes](e.ref.Append("classic_load_balancer_listener"))
+	return terra.ReferenceAsList[ClassicLoadBalancerListenerAttributes](e.ref.Append("classic_load_balancer_listener"))
 }
 
 func (e ExplanationsAttributes) Component() terra.ListValue[ExplanationsComponentAttributes] {
-	return terra.ReferenceList[ExplanationsComponentAttributes](e.ref.Append("component"))
+	return terra.ReferenceAsList[ExplanationsComponentAttributes](e.ref.Append("component"))
 }
 
 func (e ExplanationsAttributes) CustomerGateway() terra.ListValue[CustomerGatewayAttributes] {
-	return terra.ReferenceList[CustomerGatewayAttributes](e.ref.Append("customer_gateway"))
+	return terra.ReferenceAsList[CustomerGatewayAttributes](e.ref.Append("customer_gateway"))
 }
 
 func (e ExplanationsAttributes) Destination() terra.ListValue[DestinationAttributes] {
-	return terra.ReferenceList[DestinationAttributes](e.ref.Append("destination"))
+	return terra.ReferenceAsList[DestinationAttributes](e.ref.Append("destination"))
 }
 
 func (e ExplanationsAttributes) DestinationVpc() terra.ListValue[ExplanationsDestinationVpcAttributes] {
-	return terra.ReferenceList[ExplanationsDestinationVpcAttributes](e.ref.Append("destination_vpc"))
+	return terra.ReferenceAsList[ExplanationsDestinationVpcAttributes](e.ref.Append("destination_vpc"))
 }
 
 func (e ExplanationsAttributes) ElasticLoadBalancerListener() terra.ListValue[ElasticLoadBalancerListenerAttributes] {
-	return terra.ReferenceList[ElasticLoadBalancerListenerAttributes](e.ref.Append("elastic_load_balancer_listener"))
+	return terra.ReferenceAsList[ElasticLoadBalancerListenerAttributes](e.ref.Append("elastic_load_balancer_listener"))
 }
 
 func (e ExplanationsAttributes) IngressRouteTable() terra.ListValue[IngressRouteTableAttributes] {
-	return terra.ReferenceList[IngressRouteTableAttributes](e.ref.Append("ingress_route_table"))
+	return terra.ReferenceAsList[IngressRouteTableAttributes](e.ref.Append("ingress_route_table"))
 }
 
 func (e ExplanationsAttributes) InternetGateway() terra.ListValue[InternetGatewayAttributes] {
-	return terra.ReferenceList[InternetGatewayAttributes](e.ref.Append("internet_gateway"))
+	return terra.ReferenceAsList[InternetGatewayAttributes](e.ref.Append("internet_gateway"))
 }
 
 func (e ExplanationsAttributes) LoadBalancerTargetGroup() terra.ListValue[LoadBalancerTargetGroupAttributes] {
-	return terra.ReferenceList[LoadBalancerTargetGroupAttributes](e.ref.Append("load_balancer_target_group"))
+	return terra.ReferenceAsList[LoadBalancerTargetGroupAttributes](e.ref.Append("load_balancer_target_group"))
 }
 
 func (e ExplanationsAttributes) LoadBalancerTargetGroups() terra.ListValue[LoadBalancerTargetGroupsAttributes] {
-	return terra.ReferenceList[LoadBalancerTargetGroupsAttributes](e.ref.Append("load_balancer_target_groups"))
+	return terra.ReferenceAsList[LoadBalancerTargetGroupsAttributes](e.ref.Append("load_balancer_target_groups"))
 }
 
 func (e ExplanationsAttributes) NatGateway() terra.ListValue[NatGatewayAttributes] {
-	return terra.ReferenceList[NatGatewayAttributes](e.ref.Append("nat_gateway"))
+	return terra.ReferenceAsList[NatGatewayAttributes](e.ref.Append("nat_gateway"))
 }
 
 func (e ExplanationsAttributes) NetworkInterface() terra.ListValue[NetworkInterfaceAttributes] {
-	return terra.ReferenceList[NetworkInterfaceAttributes](e.ref.Append("network_interface"))
+	return terra.ReferenceAsList[NetworkInterfaceAttributes](e.ref.Append("network_interface"))
 }
 
 func (e ExplanationsAttributes) PortRanges() terra.ListValue[PortRangesAttributes] {
-	return terra.ReferenceList[PortRangesAttributes](e.ref.Append("port_ranges"))
+	return terra.ReferenceAsList[PortRangesAttributes](e.ref.Append("port_ranges"))
 }
 
 func (e ExplanationsAttributes) PrefixList() terra.ListValue[PrefixListAttributes] {
-	return terra.ReferenceList[PrefixListAttributes](e.ref.Append("prefix_list"))
+	return terra.ReferenceAsList[PrefixListAttributes](e.ref.Append("prefix_list"))
 }
 
 func (e ExplanationsAttributes) RouteTable() terra.ListValue[RouteTableAttributes] {
-	return terra.ReferenceList[RouteTableAttributes](e.ref.Append("route_table"))
+	return terra.ReferenceAsList[RouteTableAttributes](e.ref.Append("route_table"))
 }
 
 func (e ExplanationsAttributes) RouteTableRoute() terra.ListValue[ExplanationsRouteTableRouteAttributes] {
-	return terra.ReferenceList[ExplanationsRouteTableRouteAttributes](e.ref.Append("route_table_route"))
+	return terra.ReferenceAsList[ExplanationsRouteTableRouteAttributes](e.ref.Append("route_table_route"))
 }
 
 func (e ExplanationsAttributes) SecurityGroup() terra.ListValue[SecurityGroupAttributes] {
-	return terra.ReferenceList[SecurityGroupAttributes](e.ref.Append("security_group"))
+	return terra.ReferenceAsList[SecurityGroupAttributes](e.ref.Append("security_group"))
 }
 
 func (e ExplanationsAttributes) SecurityGroupRule() terra.ListValue[ExplanationsSecurityGroupRuleAttributes] {
-	return terra.ReferenceList[ExplanationsSecurityGroupRuleAttributes](e.ref.Append("security_group_rule"))
+	return terra.ReferenceAsList[ExplanationsSecurityGroupRuleAttributes](e.ref.Append("security_group_rule"))
 }
 
 func (e ExplanationsAttributes) SecurityGroups() terra.ListValue[SecurityGroupsAttributes] {
-	return terra.ReferenceList[SecurityGroupsAttributes](e.ref.Append("security_groups"))
+	return terra.ReferenceAsList[SecurityGroupsAttributes](e.ref.Append("security_groups"))
 }
 
 func (e ExplanationsAttributes) SourceVpc() terra.ListValue[ExplanationsSourceVpcAttributes] {
-	return terra.ReferenceList[ExplanationsSourceVpcAttributes](e.ref.Append("source_vpc"))
+	return terra.ReferenceAsList[ExplanationsSourceVpcAttributes](e.ref.Append("source_vpc"))
 }
 
 func (e ExplanationsAttributes) Subnet() terra.ListValue[ExplanationsSubnetAttributes] {
-	return terra.ReferenceList[ExplanationsSubnetAttributes](e.ref.Append("subnet"))
+	return terra.ReferenceAsList[ExplanationsSubnetAttributes](e.ref.Append("subnet"))
 }
 
 func (e ExplanationsAttributes) SubnetRouteTable() terra.ListValue[SubnetRouteTableAttributes] {
-	return terra.ReferenceList[SubnetRouteTableAttributes](e.ref.Append("subnet_route_table"))
+	return terra.ReferenceAsList[SubnetRouteTableAttributes](e.ref.Append("subnet_route_table"))
 }
 
 func (e ExplanationsAttributes) TransitGateway() terra.ListValue[ExplanationsTransitGatewayAttributes] {
-	return terra.ReferenceList[ExplanationsTransitGatewayAttributes](e.ref.Append("transit_gateway"))
+	return terra.ReferenceAsList[ExplanationsTransitGatewayAttributes](e.ref.Append("transit_gateway"))
 }
 
 func (e ExplanationsAttributes) TransitGatewayAttachment() terra.ListValue[TransitGatewayAttachmentAttributes] {
-	return terra.ReferenceList[TransitGatewayAttachmentAttributes](e.ref.Append("transit_gateway_attachment"))
+	return terra.ReferenceAsList[TransitGatewayAttachmentAttributes](e.ref.Append("transit_gateway_attachment"))
 }
 
 func (e ExplanationsAttributes) TransitGatewayRouteTable() terra.ListValue[TransitGatewayRouteTableAttributes] {
-	return terra.ReferenceList[TransitGatewayRouteTableAttributes](e.ref.Append("transit_gateway_route_table"))
+	return terra.ReferenceAsList[TransitGatewayRouteTableAttributes](e.ref.Append("transit_gateway_route_table"))
 }
 
 func (e ExplanationsAttributes) TransitGatewayRouteTableRoute() terra.ListValue[ExplanationsTransitGatewayRouteTableRouteAttributes] {
-	return terra.ReferenceList[ExplanationsTransitGatewayRouteTableRouteAttributes](e.ref.Append("transit_gateway_route_table_route"))
+	return terra.ReferenceAsList[ExplanationsTransitGatewayRouteTableRouteAttributes](e.ref.Append("transit_gateway_route_table_route"))
 }
 
 func (e ExplanationsAttributes) Vpc() terra.ListValue[ExplanationsVpcAttributes] {
-	return terra.ReferenceList[ExplanationsVpcAttributes](e.ref.Append("vpc"))
+	return terra.ReferenceAsList[ExplanationsVpcAttributes](e.ref.Append("vpc"))
 }
 
 func (e ExplanationsAttributes) VpcEndpoint() terra.ListValue[VpcEndpointAttributes] {
-	return terra.ReferenceList[VpcEndpointAttributes](e.ref.Append("vpc_endpoint"))
+	return terra.ReferenceAsList[VpcEndpointAttributes](e.ref.Append("vpc_endpoint"))
 }
 
 func (e ExplanationsAttributes) VpcPeeringConnection() terra.ListValue[VpcPeeringConnectionAttributes] {
-	return terra.ReferenceList[VpcPeeringConnectionAttributes](e.ref.Append("vpc_peering_connection"))
+	return terra.ReferenceAsList[VpcPeeringConnectionAttributes](e.ref.Append("vpc_peering_connection"))
 }
 
 func (e ExplanationsAttributes) VpnConnection() terra.ListValue[VpnConnectionAttributes] {
-	return terra.ReferenceList[VpnConnectionAttributes](e.ref.Append("vpn_connection"))
+	return terra.ReferenceAsList[VpnConnectionAttributes](e.ref.Append("vpn_connection"))
 }
 
 func (e ExplanationsAttributes) VpnGateway() terra.ListValue[VpnGatewayAttributes] {
-	return terra.ReferenceList[VpnGatewayAttributes](e.ref.Append("vpn_gateway"))
+	return terra.ReferenceAsList[VpnGatewayAttributes](e.ref.Append("vpn_gateway"))
 }
 
 type AclAttributes struct {
@@ -598,15 +598,15 @@ func (a AclAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AclAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("arn"))
+	return terra.ReferenceAsString(a.ref.Append("arn"))
 }
 
 func (a AclAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("id"))
+	return terra.ReferenceAsString(a.ref.Append("id"))
 }
 
 func (a AclAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("name"))
+	return terra.ReferenceAsString(a.ref.Append("name"))
 }
 
 type ExplanationsAclRuleAttributes struct {
@@ -626,27 +626,27 @@ func (ar ExplanationsAclRuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ar ExplanationsAclRuleAttributes) Cidr() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("cidr"))
+	return terra.ReferenceAsString(ar.ref.Append("cidr"))
 }
 
 func (ar ExplanationsAclRuleAttributes) Egress() terra.BoolValue {
-	return terra.ReferenceBool(ar.ref.Append("egress"))
+	return terra.ReferenceAsBool(ar.ref.Append("egress"))
 }
 
 func (ar ExplanationsAclRuleAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("protocol"))
+	return terra.ReferenceAsString(ar.ref.Append("protocol"))
 }
 
 func (ar ExplanationsAclRuleAttributes) RuleAction() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("rule_action"))
+	return terra.ReferenceAsString(ar.ref.Append("rule_action"))
 }
 
 func (ar ExplanationsAclRuleAttributes) RuleNumber() terra.NumberValue {
-	return terra.ReferenceNumber(ar.ref.Append("rule_number"))
+	return terra.ReferenceAsNumber(ar.ref.Append("rule_number"))
 }
 
 func (ar ExplanationsAclRuleAttributes) PortRange() terra.ListValue[ExplanationsAclRulePortRangeAttributes] {
-	return terra.ReferenceList[ExplanationsAclRulePortRangeAttributes](ar.ref.Append("port_range"))
+	return terra.ReferenceAsList[ExplanationsAclRulePortRangeAttributes](ar.ref.Append("port_range"))
 }
 
 type ExplanationsAclRulePortRangeAttributes struct {
@@ -666,11 +666,11 @@ func (pr ExplanationsAclRulePortRangeAttributes) InternalTokens() hclwrite.Token
 }
 
 func (pr ExplanationsAclRulePortRangeAttributes) From() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("from"))
+	return terra.ReferenceAsNumber(pr.ref.Append("from"))
 }
 
 func (pr ExplanationsAclRulePortRangeAttributes) To() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("to"))
+	return terra.ReferenceAsNumber(pr.ref.Append("to"))
 }
 
 type ExplanationsAttachedToAttributes struct {
@@ -690,15 +690,15 @@ func (at ExplanationsAttachedToAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (at ExplanationsAttachedToAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(at.ref.Append("arn"))
+	return terra.ReferenceAsString(at.ref.Append("arn"))
 }
 
 func (at ExplanationsAttachedToAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(at.ref.Append("id"))
+	return terra.ReferenceAsString(at.ref.Append("id"))
 }
 
 func (at ExplanationsAttachedToAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(at.ref.Append("name"))
+	return terra.ReferenceAsString(at.ref.Append("name"))
 }
 
 type ClassicLoadBalancerListenerAttributes struct {
@@ -718,11 +718,11 @@ func (clbl ClassicLoadBalancerListenerAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (clbl ClassicLoadBalancerListenerAttributes) InstancePort() terra.NumberValue {
-	return terra.ReferenceNumber(clbl.ref.Append("instance_port"))
+	return terra.ReferenceAsNumber(clbl.ref.Append("instance_port"))
 }
 
 func (clbl ClassicLoadBalancerListenerAttributes) LoadBalancerPort() terra.NumberValue {
-	return terra.ReferenceNumber(clbl.ref.Append("load_balancer_port"))
+	return terra.ReferenceAsNumber(clbl.ref.Append("load_balancer_port"))
 }
 
 type ExplanationsComponentAttributes struct {
@@ -742,15 +742,15 @@ func (c ExplanationsComponentAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ExplanationsComponentAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("arn"))
+	return terra.ReferenceAsString(c.ref.Append("arn"))
 }
 
 func (c ExplanationsComponentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("id"))
+	return terra.ReferenceAsString(c.ref.Append("id"))
 }
 
 func (c ExplanationsComponentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 type CustomerGatewayAttributes struct {
@@ -770,15 +770,15 @@ func (cg CustomerGatewayAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cg CustomerGatewayAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(cg.ref.Append("arn"))
+	return terra.ReferenceAsString(cg.ref.Append("arn"))
 }
 
 func (cg CustomerGatewayAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cg.ref.Append("id"))
+	return terra.ReferenceAsString(cg.ref.Append("id"))
 }
 
 func (cg CustomerGatewayAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cg.ref.Append("name"))
+	return terra.ReferenceAsString(cg.ref.Append("name"))
 }
 
 type DestinationAttributes struct {
@@ -798,15 +798,15 @@ func (d DestinationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DestinationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("arn"))
+	return terra.ReferenceAsString(d.ref.Append("arn"))
 }
 
 func (d DestinationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("id"))
+	return terra.ReferenceAsString(d.ref.Append("id"))
 }
 
 func (d DestinationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("name"))
+	return terra.ReferenceAsString(d.ref.Append("name"))
 }
 
 type ExplanationsDestinationVpcAttributes struct {
@@ -826,15 +826,15 @@ func (dv ExplanationsDestinationVpcAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (dv ExplanationsDestinationVpcAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dv.ref.Append("arn"))
+	return terra.ReferenceAsString(dv.ref.Append("arn"))
 }
 
 func (dv ExplanationsDestinationVpcAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dv.ref.Append("id"))
+	return terra.ReferenceAsString(dv.ref.Append("id"))
 }
 
 func (dv ExplanationsDestinationVpcAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dv.ref.Append("name"))
+	return terra.ReferenceAsString(dv.ref.Append("name"))
 }
 
 type ElasticLoadBalancerListenerAttributes struct {
@@ -854,15 +854,15 @@ func (elbl ElasticLoadBalancerListenerAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (elbl ElasticLoadBalancerListenerAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(elbl.ref.Append("arn"))
+	return terra.ReferenceAsString(elbl.ref.Append("arn"))
 }
 
 func (elbl ElasticLoadBalancerListenerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(elbl.ref.Append("id"))
+	return terra.ReferenceAsString(elbl.ref.Append("id"))
 }
 
 func (elbl ElasticLoadBalancerListenerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(elbl.ref.Append("name"))
+	return terra.ReferenceAsString(elbl.ref.Append("name"))
 }
 
 type IngressRouteTableAttributes struct {
@@ -882,15 +882,15 @@ func (irt IngressRouteTableAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (irt IngressRouteTableAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(irt.ref.Append("arn"))
+	return terra.ReferenceAsString(irt.ref.Append("arn"))
 }
 
 func (irt IngressRouteTableAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(irt.ref.Append("id"))
+	return terra.ReferenceAsString(irt.ref.Append("id"))
 }
 
 func (irt IngressRouteTableAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(irt.ref.Append("name"))
+	return terra.ReferenceAsString(irt.ref.Append("name"))
 }
 
 type InternetGatewayAttributes struct {
@@ -910,15 +910,15 @@ func (ig InternetGatewayAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ig InternetGatewayAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ig.ref.Append("arn"))
+	return terra.ReferenceAsString(ig.ref.Append("arn"))
 }
 
 func (ig InternetGatewayAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ig.ref.Append("id"))
+	return terra.ReferenceAsString(ig.ref.Append("id"))
 }
 
 func (ig InternetGatewayAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ig.ref.Append("name"))
+	return terra.ReferenceAsString(ig.ref.Append("name"))
 }
 
 type LoadBalancerTargetGroupAttributes struct {
@@ -938,15 +938,15 @@ func (lbtg LoadBalancerTargetGroupAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lbtg LoadBalancerTargetGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(lbtg.ref.Append("arn"))
+	return terra.ReferenceAsString(lbtg.ref.Append("arn"))
 }
 
 func (lbtg LoadBalancerTargetGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lbtg.ref.Append("id"))
+	return terra.ReferenceAsString(lbtg.ref.Append("id"))
 }
 
 func (lbtg LoadBalancerTargetGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lbtg.ref.Append("name"))
+	return terra.ReferenceAsString(lbtg.ref.Append("name"))
 }
 
 type LoadBalancerTargetGroupsAttributes struct {
@@ -966,15 +966,15 @@ func (lbtg LoadBalancerTargetGroupsAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (lbtg LoadBalancerTargetGroupsAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(lbtg.ref.Append("arn"))
+	return terra.ReferenceAsString(lbtg.ref.Append("arn"))
 }
 
 func (lbtg LoadBalancerTargetGroupsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lbtg.ref.Append("id"))
+	return terra.ReferenceAsString(lbtg.ref.Append("id"))
 }
 
 func (lbtg LoadBalancerTargetGroupsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lbtg.ref.Append("name"))
+	return terra.ReferenceAsString(lbtg.ref.Append("name"))
 }
 
 type NatGatewayAttributes struct {
@@ -994,15 +994,15 @@ func (ng NatGatewayAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ng NatGatewayAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ng.ref.Append("arn"))
+	return terra.ReferenceAsString(ng.ref.Append("arn"))
 }
 
 func (ng NatGatewayAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ng.ref.Append("id"))
+	return terra.ReferenceAsString(ng.ref.Append("id"))
 }
 
 func (ng NatGatewayAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ng.ref.Append("name"))
+	return terra.ReferenceAsString(ng.ref.Append("name"))
 }
 
 type NetworkInterfaceAttributes struct {
@@ -1022,15 +1022,15 @@ func (ni NetworkInterfaceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ni NetworkInterfaceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("arn"))
+	return terra.ReferenceAsString(ni.ref.Append("arn"))
 }
 
 func (ni NetworkInterfaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("id"))
+	return terra.ReferenceAsString(ni.ref.Append("id"))
 }
 
 func (ni NetworkInterfaceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("name"))
+	return terra.ReferenceAsString(ni.ref.Append("name"))
 }
 
 type PortRangesAttributes struct {
@@ -1050,11 +1050,11 @@ func (pr PortRangesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pr PortRangesAttributes) From() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("from"))
+	return terra.ReferenceAsNumber(pr.ref.Append("from"))
 }
 
 func (pr PortRangesAttributes) To() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("to"))
+	return terra.ReferenceAsNumber(pr.ref.Append("to"))
 }
 
 type PrefixListAttributes struct {
@@ -1074,15 +1074,15 @@ func (pl PrefixListAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pl PrefixListAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(pl.ref.Append("arn"))
+	return terra.ReferenceAsString(pl.ref.Append("arn"))
 }
 
 func (pl PrefixListAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pl.ref.Append("id"))
+	return terra.ReferenceAsString(pl.ref.Append("id"))
 }
 
 func (pl PrefixListAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pl.ref.Append("name"))
+	return terra.ReferenceAsString(pl.ref.Append("name"))
 }
 
 type RouteTableAttributes struct {
@@ -1102,15 +1102,15 @@ func (rt RouteTableAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rt RouteTableAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("arn"))
+	return terra.ReferenceAsString(rt.ref.Append("arn"))
 }
 
 func (rt RouteTableAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("id"))
+	return terra.ReferenceAsString(rt.ref.Append("id"))
 }
 
 func (rt RouteTableAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("name"))
+	return terra.ReferenceAsString(rt.ref.Append("name"))
 }
 
 type ExplanationsRouteTableRouteAttributes struct {
@@ -1130,43 +1130,43 @@ func (rtr ExplanationsRouteTableRouteAttributes) InternalTokens() hclwrite.Token
 }
 
 func (rtr ExplanationsRouteTableRouteAttributes) DestinationCidr() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("destination_cidr"))
+	return terra.ReferenceAsString(rtr.ref.Append("destination_cidr"))
 }
 
 func (rtr ExplanationsRouteTableRouteAttributes) DestinationPrefixListId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("destination_prefix_list_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("destination_prefix_list_id"))
 }
 
 func (rtr ExplanationsRouteTableRouteAttributes) EgressOnlyInternetGatewayId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("egress_only_internet_gateway_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("egress_only_internet_gateway_id"))
 }
 
 func (rtr ExplanationsRouteTableRouteAttributes) GatewayId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("gateway_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("gateway_id"))
 }
 
 func (rtr ExplanationsRouteTableRouteAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("instance_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("instance_id"))
 }
 
 func (rtr ExplanationsRouteTableRouteAttributes) NatGatewayId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("nat_gateway_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("nat_gateway_id"))
 }
 
 func (rtr ExplanationsRouteTableRouteAttributes) NetworkInterfaceId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("network_interface_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("network_interface_id"))
 }
 
 func (rtr ExplanationsRouteTableRouteAttributes) Origin() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("origin"))
+	return terra.ReferenceAsString(rtr.ref.Append("origin"))
 }
 
 func (rtr ExplanationsRouteTableRouteAttributes) TransitGatewayId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("transit_gateway_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("transit_gateway_id"))
 }
 
 func (rtr ExplanationsRouteTableRouteAttributes) VpcPeeringConnectionId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("vpc_peering_connection_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("vpc_peering_connection_id"))
 }
 
 type SecurityGroupAttributes struct {
@@ -1186,15 +1186,15 @@ func (sg SecurityGroupAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sg SecurityGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sg.ref.Append("arn"))
+	return terra.ReferenceAsString(sg.ref.Append("arn"))
 }
 
 func (sg SecurityGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sg.ref.Append("id"))
+	return terra.ReferenceAsString(sg.ref.Append("id"))
 }
 
 func (sg SecurityGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sg.ref.Append("name"))
+	return terra.ReferenceAsString(sg.ref.Append("name"))
 }
 
 type ExplanationsSecurityGroupRuleAttributes struct {
@@ -1214,27 +1214,27 @@ func (sgr ExplanationsSecurityGroupRuleAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (sgr ExplanationsSecurityGroupRuleAttributes) Cidr() terra.StringValue {
-	return terra.ReferenceString(sgr.ref.Append("cidr"))
+	return terra.ReferenceAsString(sgr.ref.Append("cidr"))
 }
 
 func (sgr ExplanationsSecurityGroupRuleAttributes) Direction() terra.StringValue {
-	return terra.ReferenceString(sgr.ref.Append("direction"))
+	return terra.ReferenceAsString(sgr.ref.Append("direction"))
 }
 
 func (sgr ExplanationsSecurityGroupRuleAttributes) PrefixListId() terra.StringValue {
-	return terra.ReferenceString(sgr.ref.Append("prefix_list_id"))
+	return terra.ReferenceAsString(sgr.ref.Append("prefix_list_id"))
 }
 
 func (sgr ExplanationsSecurityGroupRuleAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(sgr.ref.Append("protocol"))
+	return terra.ReferenceAsString(sgr.ref.Append("protocol"))
 }
 
 func (sgr ExplanationsSecurityGroupRuleAttributes) SecurityGroupId() terra.StringValue {
-	return terra.ReferenceString(sgr.ref.Append("security_group_id"))
+	return terra.ReferenceAsString(sgr.ref.Append("security_group_id"))
 }
 
 func (sgr ExplanationsSecurityGroupRuleAttributes) PortRange() terra.ListValue[ExplanationsSecurityGroupRulePortRangeAttributes] {
-	return terra.ReferenceList[ExplanationsSecurityGroupRulePortRangeAttributes](sgr.ref.Append("port_range"))
+	return terra.ReferenceAsList[ExplanationsSecurityGroupRulePortRangeAttributes](sgr.ref.Append("port_range"))
 }
 
 type ExplanationsSecurityGroupRulePortRangeAttributes struct {
@@ -1254,11 +1254,11 @@ func (pr ExplanationsSecurityGroupRulePortRangeAttributes) InternalTokens() hclw
 }
 
 func (pr ExplanationsSecurityGroupRulePortRangeAttributes) From() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("from"))
+	return terra.ReferenceAsNumber(pr.ref.Append("from"))
 }
 
 func (pr ExplanationsSecurityGroupRulePortRangeAttributes) To() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("to"))
+	return terra.ReferenceAsNumber(pr.ref.Append("to"))
 }
 
 type SecurityGroupsAttributes struct {
@@ -1278,15 +1278,15 @@ func (sg SecurityGroupsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sg SecurityGroupsAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sg.ref.Append("arn"))
+	return terra.ReferenceAsString(sg.ref.Append("arn"))
 }
 
 func (sg SecurityGroupsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sg.ref.Append("id"))
+	return terra.ReferenceAsString(sg.ref.Append("id"))
 }
 
 func (sg SecurityGroupsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sg.ref.Append("name"))
+	return terra.ReferenceAsString(sg.ref.Append("name"))
 }
 
 type ExplanationsSourceVpcAttributes struct {
@@ -1306,15 +1306,15 @@ func (sv ExplanationsSourceVpcAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sv ExplanationsSourceVpcAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sv.ref.Append("arn"))
+	return terra.ReferenceAsString(sv.ref.Append("arn"))
 }
 
 func (sv ExplanationsSourceVpcAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sv.ref.Append("id"))
+	return terra.ReferenceAsString(sv.ref.Append("id"))
 }
 
 func (sv ExplanationsSourceVpcAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sv.ref.Append("name"))
+	return terra.ReferenceAsString(sv.ref.Append("name"))
 }
 
 type ExplanationsSubnetAttributes struct {
@@ -1334,15 +1334,15 @@ func (s ExplanationsSubnetAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s ExplanationsSubnetAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("arn"))
+	return terra.ReferenceAsString(s.ref.Append("arn"))
 }
 
 func (s ExplanationsSubnetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("id"))
+	return terra.ReferenceAsString(s.ref.Append("id"))
 }
 
 func (s ExplanationsSubnetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 type SubnetRouteTableAttributes struct {
@@ -1362,15 +1362,15 @@ func (srt SubnetRouteTableAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (srt SubnetRouteTableAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(srt.ref.Append("arn"))
+	return terra.ReferenceAsString(srt.ref.Append("arn"))
 }
 
 func (srt SubnetRouteTableAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(srt.ref.Append("id"))
+	return terra.ReferenceAsString(srt.ref.Append("id"))
 }
 
 func (srt SubnetRouteTableAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(srt.ref.Append("name"))
+	return terra.ReferenceAsString(srt.ref.Append("name"))
 }
 
 type ExplanationsTransitGatewayAttributes struct {
@@ -1390,15 +1390,15 @@ func (tg ExplanationsTransitGatewayAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (tg ExplanationsTransitGatewayAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(tg.ref.Append("arn"))
+	return terra.ReferenceAsString(tg.ref.Append("arn"))
 }
 
 func (tg ExplanationsTransitGatewayAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(tg.ref.Append("id"))
+	return terra.ReferenceAsString(tg.ref.Append("id"))
 }
 
 func (tg ExplanationsTransitGatewayAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(tg.ref.Append("name"))
+	return terra.ReferenceAsString(tg.ref.Append("name"))
 }
 
 type TransitGatewayAttachmentAttributes struct {
@@ -1418,15 +1418,15 @@ func (tga TransitGatewayAttachmentAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tga TransitGatewayAttachmentAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(tga.ref.Append("arn"))
+	return terra.ReferenceAsString(tga.ref.Append("arn"))
 }
 
 func (tga TransitGatewayAttachmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(tga.ref.Append("id"))
+	return terra.ReferenceAsString(tga.ref.Append("id"))
 }
 
 func (tga TransitGatewayAttachmentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(tga.ref.Append("name"))
+	return terra.ReferenceAsString(tga.ref.Append("name"))
 }
 
 type TransitGatewayRouteTableAttributes struct {
@@ -1446,15 +1446,15 @@ func (tgrt TransitGatewayRouteTableAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (tgrt TransitGatewayRouteTableAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(tgrt.ref.Append("arn"))
+	return terra.ReferenceAsString(tgrt.ref.Append("arn"))
 }
 
 func (tgrt TransitGatewayRouteTableAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(tgrt.ref.Append("id"))
+	return terra.ReferenceAsString(tgrt.ref.Append("id"))
 }
 
 func (tgrt TransitGatewayRouteTableAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(tgrt.ref.Append("name"))
+	return terra.ReferenceAsString(tgrt.ref.Append("name"))
 }
 
 type ExplanationsTransitGatewayRouteTableRouteAttributes struct {
@@ -1474,31 +1474,31 @@ func (tgrtr ExplanationsTransitGatewayRouteTableRouteAttributes) InternalTokens(
 }
 
 func (tgrtr ExplanationsTransitGatewayRouteTableRouteAttributes) AttachmentId() terra.StringValue {
-	return terra.ReferenceString(tgrtr.ref.Append("attachment_id"))
+	return terra.ReferenceAsString(tgrtr.ref.Append("attachment_id"))
 }
 
 func (tgrtr ExplanationsTransitGatewayRouteTableRouteAttributes) DestinationCidr() terra.StringValue {
-	return terra.ReferenceString(tgrtr.ref.Append("destination_cidr"))
+	return terra.ReferenceAsString(tgrtr.ref.Append("destination_cidr"))
 }
 
 func (tgrtr ExplanationsTransitGatewayRouteTableRouteAttributes) PrefixListId() terra.StringValue {
-	return terra.ReferenceString(tgrtr.ref.Append("prefix_list_id"))
+	return terra.ReferenceAsString(tgrtr.ref.Append("prefix_list_id"))
 }
 
 func (tgrtr ExplanationsTransitGatewayRouteTableRouteAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(tgrtr.ref.Append("resource_id"))
+	return terra.ReferenceAsString(tgrtr.ref.Append("resource_id"))
 }
 
 func (tgrtr ExplanationsTransitGatewayRouteTableRouteAttributes) ResourceType() terra.StringValue {
-	return terra.ReferenceString(tgrtr.ref.Append("resource_type"))
+	return terra.ReferenceAsString(tgrtr.ref.Append("resource_type"))
 }
 
 func (tgrtr ExplanationsTransitGatewayRouteTableRouteAttributes) RouteOrigin() terra.StringValue {
-	return terra.ReferenceString(tgrtr.ref.Append("route_origin"))
+	return terra.ReferenceAsString(tgrtr.ref.Append("route_origin"))
 }
 
 func (tgrtr ExplanationsTransitGatewayRouteTableRouteAttributes) State() terra.StringValue {
-	return terra.ReferenceString(tgrtr.ref.Append("state"))
+	return terra.ReferenceAsString(tgrtr.ref.Append("state"))
 }
 
 type ExplanationsVpcAttributes struct {
@@ -1518,15 +1518,15 @@ func (v ExplanationsVpcAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (v ExplanationsVpcAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("arn"))
+	return terra.ReferenceAsString(v.ref.Append("arn"))
 }
 
 func (v ExplanationsVpcAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("id"))
+	return terra.ReferenceAsString(v.ref.Append("id"))
 }
 
 func (v ExplanationsVpcAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("name"))
+	return terra.ReferenceAsString(v.ref.Append("name"))
 }
 
 type VpcEndpointAttributes struct {
@@ -1546,15 +1546,15 @@ func (ve VpcEndpointAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ve VpcEndpointAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ve.ref.Append("arn"))
+	return terra.ReferenceAsString(ve.ref.Append("arn"))
 }
 
 func (ve VpcEndpointAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ve.ref.Append("id"))
+	return terra.ReferenceAsString(ve.ref.Append("id"))
 }
 
 func (ve VpcEndpointAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ve.ref.Append("name"))
+	return terra.ReferenceAsString(ve.ref.Append("name"))
 }
 
 type VpcPeeringConnectionAttributes struct {
@@ -1574,15 +1574,15 @@ func (vpc VpcPeeringConnectionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vpc VpcPeeringConnectionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(vpc.ref.Append("arn"))
+	return terra.ReferenceAsString(vpc.ref.Append("arn"))
 }
 
 func (vpc VpcPeeringConnectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vpc.ref.Append("id"))
+	return terra.ReferenceAsString(vpc.ref.Append("id"))
 }
 
 func (vpc VpcPeeringConnectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vpc.ref.Append("name"))
+	return terra.ReferenceAsString(vpc.ref.Append("name"))
 }
 
 type VpnConnectionAttributes struct {
@@ -1602,15 +1602,15 @@ func (vc VpnConnectionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vc VpnConnectionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("arn"))
+	return terra.ReferenceAsString(vc.ref.Append("arn"))
 }
 
 func (vc VpnConnectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("id"))
+	return terra.ReferenceAsString(vc.ref.Append("id"))
 }
 
 func (vc VpnConnectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("name"))
+	return terra.ReferenceAsString(vc.ref.Append("name"))
 }
 
 type VpnGatewayAttributes struct {
@@ -1630,15 +1630,15 @@ func (vg VpnGatewayAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vg VpnGatewayAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(vg.ref.Append("arn"))
+	return terra.ReferenceAsString(vg.ref.Append("arn"))
 }
 
 func (vg VpnGatewayAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vg.ref.Append("id"))
+	return terra.ReferenceAsString(vg.ref.Append("id"))
 }
 
 func (vg VpnGatewayAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vg.ref.Append("name"))
+	return terra.ReferenceAsString(vg.ref.Append("name"))
 }
 
 type ForwardPathComponentsAttributes struct {
@@ -1658,63 +1658,63 @@ func (fpc ForwardPathComponentsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fpc ForwardPathComponentsAttributes) SequenceNumber() terra.NumberValue {
-	return terra.ReferenceNumber(fpc.ref.Append("sequence_number"))
+	return terra.ReferenceAsNumber(fpc.ref.Append("sequence_number"))
 }
 
 func (fpc ForwardPathComponentsAttributes) AclRule() terra.ListValue[ForwardPathComponentsAclRuleAttributes] {
-	return terra.ReferenceList[ForwardPathComponentsAclRuleAttributes](fpc.ref.Append("acl_rule"))
+	return terra.ReferenceAsList[ForwardPathComponentsAclRuleAttributes](fpc.ref.Append("acl_rule"))
 }
 
 func (fpc ForwardPathComponentsAttributes) AdditionalDetails() terra.ListValue[ForwardPathComponentsAdditionalDetailsAttributes] {
-	return terra.ReferenceList[ForwardPathComponentsAdditionalDetailsAttributes](fpc.ref.Append("additional_details"))
+	return terra.ReferenceAsList[ForwardPathComponentsAdditionalDetailsAttributes](fpc.ref.Append("additional_details"))
 }
 
 func (fpc ForwardPathComponentsAttributes) AttachedTo() terra.ListValue[ForwardPathComponentsAttachedToAttributes] {
-	return terra.ReferenceList[ForwardPathComponentsAttachedToAttributes](fpc.ref.Append("attached_to"))
+	return terra.ReferenceAsList[ForwardPathComponentsAttachedToAttributes](fpc.ref.Append("attached_to"))
 }
 
 func (fpc ForwardPathComponentsAttributes) Component() terra.ListValue[ForwardPathComponentsComponentAttributes] {
-	return terra.ReferenceList[ForwardPathComponentsComponentAttributes](fpc.ref.Append("component"))
+	return terra.ReferenceAsList[ForwardPathComponentsComponentAttributes](fpc.ref.Append("component"))
 }
 
 func (fpc ForwardPathComponentsAttributes) DestinationVpc() terra.ListValue[ForwardPathComponentsDestinationVpcAttributes] {
-	return terra.ReferenceList[ForwardPathComponentsDestinationVpcAttributes](fpc.ref.Append("destination_vpc"))
+	return terra.ReferenceAsList[ForwardPathComponentsDestinationVpcAttributes](fpc.ref.Append("destination_vpc"))
 }
 
 func (fpc ForwardPathComponentsAttributes) InboundHeader() terra.ListValue[ForwardPathComponentsInboundHeaderAttributes] {
-	return terra.ReferenceList[ForwardPathComponentsInboundHeaderAttributes](fpc.ref.Append("inbound_header"))
+	return terra.ReferenceAsList[ForwardPathComponentsInboundHeaderAttributes](fpc.ref.Append("inbound_header"))
 }
 
 func (fpc ForwardPathComponentsAttributes) OutboundHeader() terra.ListValue[ForwardPathComponentsOutboundHeaderAttributes] {
-	return terra.ReferenceList[ForwardPathComponentsOutboundHeaderAttributes](fpc.ref.Append("outbound_header"))
+	return terra.ReferenceAsList[ForwardPathComponentsOutboundHeaderAttributes](fpc.ref.Append("outbound_header"))
 }
 
 func (fpc ForwardPathComponentsAttributes) RouteTableRoute() terra.ListValue[ForwardPathComponentsRouteTableRouteAttributes] {
-	return terra.ReferenceList[ForwardPathComponentsRouteTableRouteAttributes](fpc.ref.Append("route_table_route"))
+	return terra.ReferenceAsList[ForwardPathComponentsRouteTableRouteAttributes](fpc.ref.Append("route_table_route"))
 }
 
 func (fpc ForwardPathComponentsAttributes) SecurityGroupRule() terra.ListValue[ForwardPathComponentsSecurityGroupRuleAttributes] {
-	return terra.ReferenceList[ForwardPathComponentsSecurityGroupRuleAttributes](fpc.ref.Append("security_group_rule"))
+	return terra.ReferenceAsList[ForwardPathComponentsSecurityGroupRuleAttributes](fpc.ref.Append("security_group_rule"))
 }
 
 func (fpc ForwardPathComponentsAttributes) SourceVpc() terra.ListValue[ForwardPathComponentsSourceVpcAttributes] {
-	return terra.ReferenceList[ForwardPathComponentsSourceVpcAttributes](fpc.ref.Append("source_vpc"))
+	return terra.ReferenceAsList[ForwardPathComponentsSourceVpcAttributes](fpc.ref.Append("source_vpc"))
 }
 
 func (fpc ForwardPathComponentsAttributes) Subnet() terra.ListValue[ForwardPathComponentsSubnetAttributes] {
-	return terra.ReferenceList[ForwardPathComponentsSubnetAttributes](fpc.ref.Append("subnet"))
+	return terra.ReferenceAsList[ForwardPathComponentsSubnetAttributes](fpc.ref.Append("subnet"))
 }
 
 func (fpc ForwardPathComponentsAttributes) TransitGateway() terra.ListValue[ForwardPathComponentsTransitGatewayAttributes] {
-	return terra.ReferenceList[ForwardPathComponentsTransitGatewayAttributes](fpc.ref.Append("transit_gateway"))
+	return terra.ReferenceAsList[ForwardPathComponentsTransitGatewayAttributes](fpc.ref.Append("transit_gateway"))
 }
 
 func (fpc ForwardPathComponentsAttributes) TransitGatewayRouteTableRoute() terra.ListValue[ForwardPathComponentsTransitGatewayRouteTableRouteAttributes] {
-	return terra.ReferenceList[ForwardPathComponentsTransitGatewayRouteTableRouteAttributes](fpc.ref.Append("transit_gateway_route_table_route"))
+	return terra.ReferenceAsList[ForwardPathComponentsTransitGatewayRouteTableRouteAttributes](fpc.ref.Append("transit_gateway_route_table_route"))
 }
 
 func (fpc ForwardPathComponentsAttributes) Vpc() terra.ListValue[ForwardPathComponentsVpcAttributes] {
-	return terra.ReferenceList[ForwardPathComponentsVpcAttributes](fpc.ref.Append("vpc"))
+	return terra.ReferenceAsList[ForwardPathComponentsVpcAttributes](fpc.ref.Append("vpc"))
 }
 
 type ForwardPathComponentsAclRuleAttributes struct {
@@ -1734,27 +1734,27 @@ func (ar ForwardPathComponentsAclRuleAttributes) InternalTokens() hclwrite.Token
 }
 
 func (ar ForwardPathComponentsAclRuleAttributes) Cidr() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("cidr"))
+	return terra.ReferenceAsString(ar.ref.Append("cidr"))
 }
 
 func (ar ForwardPathComponentsAclRuleAttributes) Egress() terra.BoolValue {
-	return terra.ReferenceBool(ar.ref.Append("egress"))
+	return terra.ReferenceAsBool(ar.ref.Append("egress"))
 }
 
 func (ar ForwardPathComponentsAclRuleAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("protocol"))
+	return terra.ReferenceAsString(ar.ref.Append("protocol"))
 }
 
 func (ar ForwardPathComponentsAclRuleAttributes) RuleAction() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("rule_action"))
+	return terra.ReferenceAsString(ar.ref.Append("rule_action"))
 }
 
 func (ar ForwardPathComponentsAclRuleAttributes) RuleNumber() terra.NumberValue {
-	return terra.ReferenceNumber(ar.ref.Append("rule_number"))
+	return terra.ReferenceAsNumber(ar.ref.Append("rule_number"))
 }
 
 func (ar ForwardPathComponentsAclRuleAttributes) PortRange() terra.ListValue[ForwardPathComponentsAclRulePortRangeAttributes] {
-	return terra.ReferenceList[ForwardPathComponentsAclRulePortRangeAttributes](ar.ref.Append("port_range"))
+	return terra.ReferenceAsList[ForwardPathComponentsAclRulePortRangeAttributes](ar.ref.Append("port_range"))
 }
 
 type ForwardPathComponentsAclRulePortRangeAttributes struct {
@@ -1774,11 +1774,11 @@ func (pr ForwardPathComponentsAclRulePortRangeAttributes) InternalTokens() hclwr
 }
 
 func (pr ForwardPathComponentsAclRulePortRangeAttributes) From() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("from"))
+	return terra.ReferenceAsNumber(pr.ref.Append("from"))
 }
 
 func (pr ForwardPathComponentsAclRulePortRangeAttributes) To() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("to"))
+	return terra.ReferenceAsNumber(pr.ref.Append("to"))
 }
 
 type ForwardPathComponentsAdditionalDetailsAttributes struct {
@@ -1798,11 +1798,11 @@ func (ad ForwardPathComponentsAdditionalDetailsAttributes) InternalTokens() hclw
 }
 
 func (ad ForwardPathComponentsAdditionalDetailsAttributes) AdditionalDetailType() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("additional_detail_type"))
+	return terra.ReferenceAsString(ad.ref.Append("additional_detail_type"))
 }
 
 func (ad ForwardPathComponentsAdditionalDetailsAttributes) Component() terra.ListValue[ForwardPathComponentsAdditionalDetailsComponentAttributes] {
-	return terra.ReferenceList[ForwardPathComponentsAdditionalDetailsComponentAttributes](ad.ref.Append("component"))
+	return terra.ReferenceAsList[ForwardPathComponentsAdditionalDetailsComponentAttributes](ad.ref.Append("component"))
 }
 
 type ForwardPathComponentsAdditionalDetailsComponentAttributes struct {
@@ -1822,15 +1822,15 @@ func (c ForwardPathComponentsAdditionalDetailsComponentAttributes) InternalToken
 }
 
 func (c ForwardPathComponentsAdditionalDetailsComponentAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("arn"))
+	return terra.ReferenceAsString(c.ref.Append("arn"))
 }
 
 func (c ForwardPathComponentsAdditionalDetailsComponentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("id"))
+	return terra.ReferenceAsString(c.ref.Append("id"))
 }
 
 func (c ForwardPathComponentsAdditionalDetailsComponentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 type ForwardPathComponentsAttachedToAttributes struct {
@@ -1850,15 +1850,15 @@ func (at ForwardPathComponentsAttachedToAttributes) InternalTokens() hclwrite.To
 }
 
 func (at ForwardPathComponentsAttachedToAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(at.ref.Append("arn"))
+	return terra.ReferenceAsString(at.ref.Append("arn"))
 }
 
 func (at ForwardPathComponentsAttachedToAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(at.ref.Append("id"))
+	return terra.ReferenceAsString(at.ref.Append("id"))
 }
 
 func (at ForwardPathComponentsAttachedToAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(at.ref.Append("name"))
+	return terra.ReferenceAsString(at.ref.Append("name"))
 }
 
 type ForwardPathComponentsComponentAttributes struct {
@@ -1878,15 +1878,15 @@ func (c ForwardPathComponentsComponentAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (c ForwardPathComponentsComponentAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("arn"))
+	return terra.ReferenceAsString(c.ref.Append("arn"))
 }
 
 func (c ForwardPathComponentsComponentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("id"))
+	return terra.ReferenceAsString(c.ref.Append("id"))
 }
 
 func (c ForwardPathComponentsComponentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 type ForwardPathComponentsDestinationVpcAttributes struct {
@@ -1906,15 +1906,15 @@ func (dv ForwardPathComponentsDestinationVpcAttributes) InternalTokens() hclwrit
 }
 
 func (dv ForwardPathComponentsDestinationVpcAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dv.ref.Append("arn"))
+	return terra.ReferenceAsString(dv.ref.Append("arn"))
 }
 
 func (dv ForwardPathComponentsDestinationVpcAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dv.ref.Append("id"))
+	return terra.ReferenceAsString(dv.ref.Append("id"))
 }
 
 func (dv ForwardPathComponentsDestinationVpcAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dv.ref.Append("name"))
+	return terra.ReferenceAsString(dv.ref.Append("name"))
 }
 
 type ForwardPathComponentsInboundHeaderAttributes struct {
@@ -1934,23 +1934,23 @@ func (ih ForwardPathComponentsInboundHeaderAttributes) InternalTokens() hclwrite
 }
 
 func (ih ForwardPathComponentsInboundHeaderAttributes) DestinationAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ih.ref.Append("destination_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](ih.ref.Append("destination_addresses"))
 }
 
 func (ih ForwardPathComponentsInboundHeaderAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(ih.ref.Append("protocol"))
+	return terra.ReferenceAsString(ih.ref.Append("protocol"))
 }
 
 func (ih ForwardPathComponentsInboundHeaderAttributes) SourceAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ih.ref.Append("source_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](ih.ref.Append("source_addresses"))
 }
 
 func (ih ForwardPathComponentsInboundHeaderAttributes) DestinationPortRanges() terra.ListValue[ForwardPathComponentsInboundHeaderDestinationPortRangesAttributes] {
-	return terra.ReferenceList[ForwardPathComponentsInboundHeaderDestinationPortRangesAttributes](ih.ref.Append("destination_port_ranges"))
+	return terra.ReferenceAsList[ForwardPathComponentsInboundHeaderDestinationPortRangesAttributes](ih.ref.Append("destination_port_ranges"))
 }
 
 func (ih ForwardPathComponentsInboundHeaderAttributes) SourcePortRanges() terra.ListValue[ForwardPathComponentsInboundHeaderSourcePortRangesAttributes] {
-	return terra.ReferenceList[ForwardPathComponentsInboundHeaderSourcePortRangesAttributes](ih.ref.Append("source_port_ranges"))
+	return terra.ReferenceAsList[ForwardPathComponentsInboundHeaderSourcePortRangesAttributes](ih.ref.Append("source_port_ranges"))
 }
 
 type ForwardPathComponentsInboundHeaderDestinationPortRangesAttributes struct {
@@ -1970,11 +1970,11 @@ func (dpr ForwardPathComponentsInboundHeaderDestinationPortRangesAttributes) Int
 }
 
 func (dpr ForwardPathComponentsInboundHeaderDestinationPortRangesAttributes) From() terra.NumberValue {
-	return terra.ReferenceNumber(dpr.ref.Append("from"))
+	return terra.ReferenceAsNumber(dpr.ref.Append("from"))
 }
 
 func (dpr ForwardPathComponentsInboundHeaderDestinationPortRangesAttributes) To() terra.NumberValue {
-	return terra.ReferenceNumber(dpr.ref.Append("to"))
+	return terra.ReferenceAsNumber(dpr.ref.Append("to"))
 }
 
 type ForwardPathComponentsInboundHeaderSourcePortRangesAttributes struct {
@@ -1994,11 +1994,11 @@ func (spr ForwardPathComponentsInboundHeaderSourcePortRangesAttributes) Internal
 }
 
 func (spr ForwardPathComponentsInboundHeaderSourcePortRangesAttributes) From() terra.NumberValue {
-	return terra.ReferenceNumber(spr.ref.Append("from"))
+	return terra.ReferenceAsNumber(spr.ref.Append("from"))
 }
 
 func (spr ForwardPathComponentsInboundHeaderSourcePortRangesAttributes) To() terra.NumberValue {
-	return terra.ReferenceNumber(spr.ref.Append("to"))
+	return terra.ReferenceAsNumber(spr.ref.Append("to"))
 }
 
 type ForwardPathComponentsOutboundHeaderAttributes struct {
@@ -2018,23 +2018,23 @@ func (oh ForwardPathComponentsOutboundHeaderAttributes) InternalTokens() hclwrit
 }
 
 func (oh ForwardPathComponentsOutboundHeaderAttributes) DestinationAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](oh.ref.Append("destination_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](oh.ref.Append("destination_addresses"))
 }
 
 func (oh ForwardPathComponentsOutboundHeaderAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(oh.ref.Append("protocol"))
+	return terra.ReferenceAsString(oh.ref.Append("protocol"))
 }
 
 func (oh ForwardPathComponentsOutboundHeaderAttributes) SourceAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](oh.ref.Append("source_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](oh.ref.Append("source_addresses"))
 }
 
 func (oh ForwardPathComponentsOutboundHeaderAttributes) DestinationPortRanges() terra.ListValue[ForwardPathComponentsOutboundHeaderDestinationPortRangesAttributes] {
-	return terra.ReferenceList[ForwardPathComponentsOutboundHeaderDestinationPortRangesAttributes](oh.ref.Append("destination_port_ranges"))
+	return terra.ReferenceAsList[ForwardPathComponentsOutboundHeaderDestinationPortRangesAttributes](oh.ref.Append("destination_port_ranges"))
 }
 
 func (oh ForwardPathComponentsOutboundHeaderAttributes) SourcePortRanges() terra.ListValue[ForwardPathComponentsOutboundHeaderSourcePortRangesAttributes] {
-	return terra.ReferenceList[ForwardPathComponentsOutboundHeaderSourcePortRangesAttributes](oh.ref.Append("source_port_ranges"))
+	return terra.ReferenceAsList[ForwardPathComponentsOutboundHeaderSourcePortRangesAttributes](oh.ref.Append("source_port_ranges"))
 }
 
 type ForwardPathComponentsOutboundHeaderDestinationPortRangesAttributes struct {
@@ -2054,11 +2054,11 @@ func (dpr ForwardPathComponentsOutboundHeaderDestinationPortRangesAttributes) In
 }
 
 func (dpr ForwardPathComponentsOutboundHeaderDestinationPortRangesAttributes) From() terra.NumberValue {
-	return terra.ReferenceNumber(dpr.ref.Append("from"))
+	return terra.ReferenceAsNumber(dpr.ref.Append("from"))
 }
 
 func (dpr ForwardPathComponentsOutboundHeaderDestinationPortRangesAttributes) To() terra.NumberValue {
-	return terra.ReferenceNumber(dpr.ref.Append("to"))
+	return terra.ReferenceAsNumber(dpr.ref.Append("to"))
 }
 
 type ForwardPathComponentsOutboundHeaderSourcePortRangesAttributes struct {
@@ -2078,11 +2078,11 @@ func (spr ForwardPathComponentsOutboundHeaderSourcePortRangesAttributes) Interna
 }
 
 func (spr ForwardPathComponentsOutboundHeaderSourcePortRangesAttributes) From() terra.NumberValue {
-	return terra.ReferenceNumber(spr.ref.Append("from"))
+	return terra.ReferenceAsNumber(spr.ref.Append("from"))
 }
 
 func (spr ForwardPathComponentsOutboundHeaderSourcePortRangesAttributes) To() terra.NumberValue {
-	return terra.ReferenceNumber(spr.ref.Append("to"))
+	return terra.ReferenceAsNumber(spr.ref.Append("to"))
 }
 
 type ForwardPathComponentsRouteTableRouteAttributes struct {
@@ -2102,43 +2102,43 @@ func (rtr ForwardPathComponentsRouteTableRouteAttributes) InternalTokens() hclwr
 }
 
 func (rtr ForwardPathComponentsRouteTableRouteAttributes) DestinationCidr() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("destination_cidr"))
+	return terra.ReferenceAsString(rtr.ref.Append("destination_cidr"))
 }
 
 func (rtr ForwardPathComponentsRouteTableRouteAttributes) DestinationPrefixListId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("destination_prefix_list_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("destination_prefix_list_id"))
 }
 
 func (rtr ForwardPathComponentsRouteTableRouteAttributes) EgressOnlyInternetGatewayId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("egress_only_internet_gateway_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("egress_only_internet_gateway_id"))
 }
 
 func (rtr ForwardPathComponentsRouteTableRouteAttributes) GatewayId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("gateway_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("gateway_id"))
 }
 
 func (rtr ForwardPathComponentsRouteTableRouteAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("instance_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("instance_id"))
 }
 
 func (rtr ForwardPathComponentsRouteTableRouteAttributes) NatGatewayId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("nat_gateway_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("nat_gateway_id"))
 }
 
 func (rtr ForwardPathComponentsRouteTableRouteAttributes) NetworkInterfaceId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("network_interface_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("network_interface_id"))
 }
 
 func (rtr ForwardPathComponentsRouteTableRouteAttributes) Origin() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("origin"))
+	return terra.ReferenceAsString(rtr.ref.Append("origin"))
 }
 
 func (rtr ForwardPathComponentsRouteTableRouteAttributes) TransitGatewayId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("transit_gateway_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("transit_gateway_id"))
 }
 
 func (rtr ForwardPathComponentsRouteTableRouteAttributes) VpcPeeringConnectionId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("vpc_peering_connection_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("vpc_peering_connection_id"))
 }
 
 type ForwardPathComponentsSecurityGroupRuleAttributes struct {
@@ -2158,27 +2158,27 @@ func (sgr ForwardPathComponentsSecurityGroupRuleAttributes) InternalTokens() hcl
 }
 
 func (sgr ForwardPathComponentsSecurityGroupRuleAttributes) Cidr() terra.StringValue {
-	return terra.ReferenceString(sgr.ref.Append("cidr"))
+	return terra.ReferenceAsString(sgr.ref.Append("cidr"))
 }
 
 func (sgr ForwardPathComponentsSecurityGroupRuleAttributes) Direction() terra.StringValue {
-	return terra.ReferenceString(sgr.ref.Append("direction"))
+	return terra.ReferenceAsString(sgr.ref.Append("direction"))
 }
 
 func (sgr ForwardPathComponentsSecurityGroupRuleAttributes) PrefixListId() terra.StringValue {
-	return terra.ReferenceString(sgr.ref.Append("prefix_list_id"))
+	return terra.ReferenceAsString(sgr.ref.Append("prefix_list_id"))
 }
 
 func (sgr ForwardPathComponentsSecurityGroupRuleAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(sgr.ref.Append("protocol"))
+	return terra.ReferenceAsString(sgr.ref.Append("protocol"))
 }
 
 func (sgr ForwardPathComponentsSecurityGroupRuleAttributes) SecurityGroupId() terra.StringValue {
-	return terra.ReferenceString(sgr.ref.Append("security_group_id"))
+	return terra.ReferenceAsString(sgr.ref.Append("security_group_id"))
 }
 
 func (sgr ForwardPathComponentsSecurityGroupRuleAttributes) PortRange() terra.ListValue[ForwardPathComponentsSecurityGroupRulePortRangeAttributes] {
-	return terra.ReferenceList[ForwardPathComponentsSecurityGroupRulePortRangeAttributes](sgr.ref.Append("port_range"))
+	return terra.ReferenceAsList[ForwardPathComponentsSecurityGroupRulePortRangeAttributes](sgr.ref.Append("port_range"))
 }
 
 type ForwardPathComponentsSecurityGroupRulePortRangeAttributes struct {
@@ -2198,11 +2198,11 @@ func (pr ForwardPathComponentsSecurityGroupRulePortRangeAttributes) InternalToke
 }
 
 func (pr ForwardPathComponentsSecurityGroupRulePortRangeAttributes) From() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("from"))
+	return terra.ReferenceAsNumber(pr.ref.Append("from"))
 }
 
 func (pr ForwardPathComponentsSecurityGroupRulePortRangeAttributes) To() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("to"))
+	return terra.ReferenceAsNumber(pr.ref.Append("to"))
 }
 
 type ForwardPathComponentsSourceVpcAttributes struct {
@@ -2222,15 +2222,15 @@ func (sv ForwardPathComponentsSourceVpcAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (sv ForwardPathComponentsSourceVpcAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sv.ref.Append("arn"))
+	return terra.ReferenceAsString(sv.ref.Append("arn"))
 }
 
 func (sv ForwardPathComponentsSourceVpcAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sv.ref.Append("id"))
+	return terra.ReferenceAsString(sv.ref.Append("id"))
 }
 
 func (sv ForwardPathComponentsSourceVpcAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sv.ref.Append("name"))
+	return terra.ReferenceAsString(sv.ref.Append("name"))
 }
 
 type ForwardPathComponentsSubnetAttributes struct {
@@ -2250,15 +2250,15 @@ func (s ForwardPathComponentsSubnetAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (s ForwardPathComponentsSubnetAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("arn"))
+	return terra.ReferenceAsString(s.ref.Append("arn"))
 }
 
 func (s ForwardPathComponentsSubnetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("id"))
+	return terra.ReferenceAsString(s.ref.Append("id"))
 }
 
 func (s ForwardPathComponentsSubnetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 type ForwardPathComponentsTransitGatewayAttributes struct {
@@ -2278,15 +2278,15 @@ func (tg ForwardPathComponentsTransitGatewayAttributes) InternalTokens() hclwrit
 }
 
 func (tg ForwardPathComponentsTransitGatewayAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(tg.ref.Append("arn"))
+	return terra.ReferenceAsString(tg.ref.Append("arn"))
 }
 
 func (tg ForwardPathComponentsTransitGatewayAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(tg.ref.Append("id"))
+	return terra.ReferenceAsString(tg.ref.Append("id"))
 }
 
 func (tg ForwardPathComponentsTransitGatewayAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(tg.ref.Append("name"))
+	return terra.ReferenceAsString(tg.ref.Append("name"))
 }
 
 type ForwardPathComponentsTransitGatewayRouteTableRouteAttributes struct {
@@ -2306,31 +2306,31 @@ func (tgrtr ForwardPathComponentsTransitGatewayRouteTableRouteAttributes) Intern
 }
 
 func (tgrtr ForwardPathComponentsTransitGatewayRouteTableRouteAttributes) AttachmentId() terra.StringValue {
-	return terra.ReferenceString(tgrtr.ref.Append("attachment_id"))
+	return terra.ReferenceAsString(tgrtr.ref.Append("attachment_id"))
 }
 
 func (tgrtr ForwardPathComponentsTransitGatewayRouteTableRouteAttributes) DestinationCidr() terra.StringValue {
-	return terra.ReferenceString(tgrtr.ref.Append("destination_cidr"))
+	return terra.ReferenceAsString(tgrtr.ref.Append("destination_cidr"))
 }
 
 func (tgrtr ForwardPathComponentsTransitGatewayRouteTableRouteAttributes) PrefixListId() terra.StringValue {
-	return terra.ReferenceString(tgrtr.ref.Append("prefix_list_id"))
+	return terra.ReferenceAsString(tgrtr.ref.Append("prefix_list_id"))
 }
 
 func (tgrtr ForwardPathComponentsTransitGatewayRouteTableRouteAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(tgrtr.ref.Append("resource_id"))
+	return terra.ReferenceAsString(tgrtr.ref.Append("resource_id"))
 }
 
 func (tgrtr ForwardPathComponentsTransitGatewayRouteTableRouteAttributes) ResourceType() terra.StringValue {
-	return terra.ReferenceString(tgrtr.ref.Append("resource_type"))
+	return terra.ReferenceAsString(tgrtr.ref.Append("resource_type"))
 }
 
 func (tgrtr ForwardPathComponentsTransitGatewayRouteTableRouteAttributes) RouteOrigin() terra.StringValue {
-	return terra.ReferenceString(tgrtr.ref.Append("route_origin"))
+	return terra.ReferenceAsString(tgrtr.ref.Append("route_origin"))
 }
 
 func (tgrtr ForwardPathComponentsTransitGatewayRouteTableRouteAttributes) State() terra.StringValue {
-	return terra.ReferenceString(tgrtr.ref.Append("state"))
+	return terra.ReferenceAsString(tgrtr.ref.Append("state"))
 }
 
 type ForwardPathComponentsVpcAttributes struct {
@@ -2350,15 +2350,15 @@ func (v ForwardPathComponentsVpcAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (v ForwardPathComponentsVpcAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("arn"))
+	return terra.ReferenceAsString(v.ref.Append("arn"))
 }
 
 func (v ForwardPathComponentsVpcAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("id"))
+	return terra.ReferenceAsString(v.ref.Append("id"))
 }
 
 func (v ForwardPathComponentsVpcAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("name"))
+	return terra.ReferenceAsString(v.ref.Append("name"))
 }
 
 type ReturnPathComponentsAttributes struct {
@@ -2378,63 +2378,63 @@ func (rpc ReturnPathComponentsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rpc ReturnPathComponentsAttributes) SequenceNumber() terra.NumberValue {
-	return terra.ReferenceNumber(rpc.ref.Append("sequence_number"))
+	return terra.ReferenceAsNumber(rpc.ref.Append("sequence_number"))
 }
 
 func (rpc ReturnPathComponentsAttributes) AclRule() terra.ListValue[ReturnPathComponentsAclRuleAttributes] {
-	return terra.ReferenceList[ReturnPathComponentsAclRuleAttributes](rpc.ref.Append("acl_rule"))
+	return terra.ReferenceAsList[ReturnPathComponentsAclRuleAttributes](rpc.ref.Append("acl_rule"))
 }
 
 func (rpc ReturnPathComponentsAttributes) AdditionalDetails() terra.ListValue[ReturnPathComponentsAdditionalDetailsAttributes] {
-	return terra.ReferenceList[ReturnPathComponentsAdditionalDetailsAttributes](rpc.ref.Append("additional_details"))
+	return terra.ReferenceAsList[ReturnPathComponentsAdditionalDetailsAttributes](rpc.ref.Append("additional_details"))
 }
 
 func (rpc ReturnPathComponentsAttributes) AttachedTo() terra.ListValue[ReturnPathComponentsAttachedToAttributes] {
-	return terra.ReferenceList[ReturnPathComponentsAttachedToAttributes](rpc.ref.Append("attached_to"))
+	return terra.ReferenceAsList[ReturnPathComponentsAttachedToAttributes](rpc.ref.Append("attached_to"))
 }
 
 func (rpc ReturnPathComponentsAttributes) Component() terra.ListValue[ReturnPathComponentsComponentAttributes] {
-	return terra.ReferenceList[ReturnPathComponentsComponentAttributes](rpc.ref.Append("component"))
+	return terra.ReferenceAsList[ReturnPathComponentsComponentAttributes](rpc.ref.Append("component"))
 }
 
 func (rpc ReturnPathComponentsAttributes) DestinationVpc() terra.ListValue[ReturnPathComponentsDestinationVpcAttributes] {
-	return terra.ReferenceList[ReturnPathComponentsDestinationVpcAttributes](rpc.ref.Append("destination_vpc"))
+	return terra.ReferenceAsList[ReturnPathComponentsDestinationVpcAttributes](rpc.ref.Append("destination_vpc"))
 }
 
 func (rpc ReturnPathComponentsAttributes) InboundHeader() terra.ListValue[ReturnPathComponentsInboundHeaderAttributes] {
-	return terra.ReferenceList[ReturnPathComponentsInboundHeaderAttributes](rpc.ref.Append("inbound_header"))
+	return terra.ReferenceAsList[ReturnPathComponentsInboundHeaderAttributes](rpc.ref.Append("inbound_header"))
 }
 
 func (rpc ReturnPathComponentsAttributes) OutboundHeader() terra.ListValue[ReturnPathComponentsOutboundHeaderAttributes] {
-	return terra.ReferenceList[ReturnPathComponentsOutboundHeaderAttributes](rpc.ref.Append("outbound_header"))
+	return terra.ReferenceAsList[ReturnPathComponentsOutboundHeaderAttributes](rpc.ref.Append("outbound_header"))
 }
 
 func (rpc ReturnPathComponentsAttributes) RouteTableRoute() terra.ListValue[ReturnPathComponentsRouteTableRouteAttributes] {
-	return terra.ReferenceList[ReturnPathComponentsRouteTableRouteAttributes](rpc.ref.Append("route_table_route"))
+	return terra.ReferenceAsList[ReturnPathComponentsRouteTableRouteAttributes](rpc.ref.Append("route_table_route"))
 }
 
 func (rpc ReturnPathComponentsAttributes) SecurityGroupRule() terra.ListValue[ReturnPathComponentsSecurityGroupRuleAttributes] {
-	return terra.ReferenceList[ReturnPathComponentsSecurityGroupRuleAttributes](rpc.ref.Append("security_group_rule"))
+	return terra.ReferenceAsList[ReturnPathComponentsSecurityGroupRuleAttributes](rpc.ref.Append("security_group_rule"))
 }
 
 func (rpc ReturnPathComponentsAttributes) SourceVpc() terra.ListValue[ReturnPathComponentsSourceVpcAttributes] {
-	return terra.ReferenceList[ReturnPathComponentsSourceVpcAttributes](rpc.ref.Append("source_vpc"))
+	return terra.ReferenceAsList[ReturnPathComponentsSourceVpcAttributes](rpc.ref.Append("source_vpc"))
 }
 
 func (rpc ReturnPathComponentsAttributes) Subnet() terra.ListValue[ReturnPathComponentsSubnetAttributes] {
-	return terra.ReferenceList[ReturnPathComponentsSubnetAttributes](rpc.ref.Append("subnet"))
+	return terra.ReferenceAsList[ReturnPathComponentsSubnetAttributes](rpc.ref.Append("subnet"))
 }
 
 func (rpc ReturnPathComponentsAttributes) TransitGateway() terra.ListValue[ReturnPathComponentsTransitGatewayAttributes] {
-	return terra.ReferenceList[ReturnPathComponentsTransitGatewayAttributes](rpc.ref.Append("transit_gateway"))
+	return terra.ReferenceAsList[ReturnPathComponentsTransitGatewayAttributes](rpc.ref.Append("transit_gateway"))
 }
 
 func (rpc ReturnPathComponentsAttributes) TransitGatewayRouteTableRoute() terra.ListValue[ReturnPathComponentsTransitGatewayRouteTableRouteAttributes] {
-	return terra.ReferenceList[ReturnPathComponentsTransitGatewayRouteTableRouteAttributes](rpc.ref.Append("transit_gateway_route_table_route"))
+	return terra.ReferenceAsList[ReturnPathComponentsTransitGatewayRouteTableRouteAttributes](rpc.ref.Append("transit_gateway_route_table_route"))
 }
 
 func (rpc ReturnPathComponentsAttributes) Vpc() terra.ListValue[ReturnPathComponentsVpcAttributes] {
-	return terra.ReferenceList[ReturnPathComponentsVpcAttributes](rpc.ref.Append("vpc"))
+	return terra.ReferenceAsList[ReturnPathComponentsVpcAttributes](rpc.ref.Append("vpc"))
 }
 
 type ReturnPathComponentsAclRuleAttributes struct {
@@ -2454,27 +2454,27 @@ func (ar ReturnPathComponentsAclRuleAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (ar ReturnPathComponentsAclRuleAttributes) Cidr() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("cidr"))
+	return terra.ReferenceAsString(ar.ref.Append("cidr"))
 }
 
 func (ar ReturnPathComponentsAclRuleAttributes) Egress() terra.BoolValue {
-	return terra.ReferenceBool(ar.ref.Append("egress"))
+	return terra.ReferenceAsBool(ar.ref.Append("egress"))
 }
 
 func (ar ReturnPathComponentsAclRuleAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("protocol"))
+	return terra.ReferenceAsString(ar.ref.Append("protocol"))
 }
 
 func (ar ReturnPathComponentsAclRuleAttributes) RuleAction() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("rule_action"))
+	return terra.ReferenceAsString(ar.ref.Append("rule_action"))
 }
 
 func (ar ReturnPathComponentsAclRuleAttributes) RuleNumber() terra.NumberValue {
-	return terra.ReferenceNumber(ar.ref.Append("rule_number"))
+	return terra.ReferenceAsNumber(ar.ref.Append("rule_number"))
 }
 
 func (ar ReturnPathComponentsAclRuleAttributes) PortRange() terra.ListValue[ReturnPathComponentsAclRulePortRangeAttributes] {
-	return terra.ReferenceList[ReturnPathComponentsAclRulePortRangeAttributes](ar.ref.Append("port_range"))
+	return terra.ReferenceAsList[ReturnPathComponentsAclRulePortRangeAttributes](ar.ref.Append("port_range"))
 }
 
 type ReturnPathComponentsAclRulePortRangeAttributes struct {
@@ -2494,11 +2494,11 @@ func (pr ReturnPathComponentsAclRulePortRangeAttributes) InternalTokens() hclwri
 }
 
 func (pr ReturnPathComponentsAclRulePortRangeAttributes) From() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("from"))
+	return terra.ReferenceAsNumber(pr.ref.Append("from"))
 }
 
 func (pr ReturnPathComponentsAclRulePortRangeAttributes) To() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("to"))
+	return terra.ReferenceAsNumber(pr.ref.Append("to"))
 }
 
 type ReturnPathComponentsAdditionalDetailsAttributes struct {
@@ -2518,11 +2518,11 @@ func (ad ReturnPathComponentsAdditionalDetailsAttributes) InternalTokens() hclwr
 }
 
 func (ad ReturnPathComponentsAdditionalDetailsAttributes) AdditionalDetailType() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("additional_detail_type"))
+	return terra.ReferenceAsString(ad.ref.Append("additional_detail_type"))
 }
 
 func (ad ReturnPathComponentsAdditionalDetailsAttributes) Component() terra.ListValue[ReturnPathComponentsAdditionalDetailsComponentAttributes] {
-	return terra.ReferenceList[ReturnPathComponentsAdditionalDetailsComponentAttributes](ad.ref.Append("component"))
+	return terra.ReferenceAsList[ReturnPathComponentsAdditionalDetailsComponentAttributes](ad.ref.Append("component"))
 }
 
 type ReturnPathComponentsAdditionalDetailsComponentAttributes struct {
@@ -2542,15 +2542,15 @@ func (c ReturnPathComponentsAdditionalDetailsComponentAttributes) InternalTokens
 }
 
 func (c ReturnPathComponentsAdditionalDetailsComponentAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("arn"))
+	return terra.ReferenceAsString(c.ref.Append("arn"))
 }
 
 func (c ReturnPathComponentsAdditionalDetailsComponentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("id"))
+	return terra.ReferenceAsString(c.ref.Append("id"))
 }
 
 func (c ReturnPathComponentsAdditionalDetailsComponentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 type ReturnPathComponentsAttachedToAttributes struct {
@@ -2570,15 +2570,15 @@ func (at ReturnPathComponentsAttachedToAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (at ReturnPathComponentsAttachedToAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(at.ref.Append("arn"))
+	return terra.ReferenceAsString(at.ref.Append("arn"))
 }
 
 func (at ReturnPathComponentsAttachedToAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(at.ref.Append("id"))
+	return terra.ReferenceAsString(at.ref.Append("id"))
 }
 
 func (at ReturnPathComponentsAttachedToAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(at.ref.Append("name"))
+	return terra.ReferenceAsString(at.ref.Append("name"))
 }
 
 type ReturnPathComponentsComponentAttributes struct {
@@ -2598,15 +2598,15 @@ func (c ReturnPathComponentsComponentAttributes) InternalTokens() hclwrite.Token
 }
 
 func (c ReturnPathComponentsComponentAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("arn"))
+	return terra.ReferenceAsString(c.ref.Append("arn"))
 }
 
 func (c ReturnPathComponentsComponentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("id"))
+	return terra.ReferenceAsString(c.ref.Append("id"))
 }
 
 func (c ReturnPathComponentsComponentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 type ReturnPathComponentsDestinationVpcAttributes struct {
@@ -2626,15 +2626,15 @@ func (dv ReturnPathComponentsDestinationVpcAttributes) InternalTokens() hclwrite
 }
 
 func (dv ReturnPathComponentsDestinationVpcAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dv.ref.Append("arn"))
+	return terra.ReferenceAsString(dv.ref.Append("arn"))
 }
 
 func (dv ReturnPathComponentsDestinationVpcAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dv.ref.Append("id"))
+	return terra.ReferenceAsString(dv.ref.Append("id"))
 }
 
 func (dv ReturnPathComponentsDestinationVpcAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dv.ref.Append("name"))
+	return terra.ReferenceAsString(dv.ref.Append("name"))
 }
 
 type ReturnPathComponentsInboundHeaderAttributes struct {
@@ -2654,23 +2654,23 @@ func (ih ReturnPathComponentsInboundHeaderAttributes) InternalTokens() hclwrite.
 }
 
 func (ih ReturnPathComponentsInboundHeaderAttributes) DestinationAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ih.ref.Append("destination_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](ih.ref.Append("destination_addresses"))
 }
 
 func (ih ReturnPathComponentsInboundHeaderAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(ih.ref.Append("protocol"))
+	return terra.ReferenceAsString(ih.ref.Append("protocol"))
 }
 
 func (ih ReturnPathComponentsInboundHeaderAttributes) SourceAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ih.ref.Append("source_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](ih.ref.Append("source_addresses"))
 }
 
 func (ih ReturnPathComponentsInboundHeaderAttributes) DestinationPortRanges() terra.ListValue[ReturnPathComponentsInboundHeaderDestinationPortRangesAttributes] {
-	return terra.ReferenceList[ReturnPathComponentsInboundHeaderDestinationPortRangesAttributes](ih.ref.Append("destination_port_ranges"))
+	return terra.ReferenceAsList[ReturnPathComponentsInboundHeaderDestinationPortRangesAttributes](ih.ref.Append("destination_port_ranges"))
 }
 
 func (ih ReturnPathComponentsInboundHeaderAttributes) SourcePortRanges() terra.ListValue[ReturnPathComponentsInboundHeaderSourcePortRangesAttributes] {
-	return terra.ReferenceList[ReturnPathComponentsInboundHeaderSourcePortRangesAttributes](ih.ref.Append("source_port_ranges"))
+	return terra.ReferenceAsList[ReturnPathComponentsInboundHeaderSourcePortRangesAttributes](ih.ref.Append("source_port_ranges"))
 }
 
 type ReturnPathComponentsInboundHeaderDestinationPortRangesAttributes struct {
@@ -2690,11 +2690,11 @@ func (dpr ReturnPathComponentsInboundHeaderDestinationPortRangesAttributes) Inte
 }
 
 func (dpr ReturnPathComponentsInboundHeaderDestinationPortRangesAttributes) From() terra.NumberValue {
-	return terra.ReferenceNumber(dpr.ref.Append("from"))
+	return terra.ReferenceAsNumber(dpr.ref.Append("from"))
 }
 
 func (dpr ReturnPathComponentsInboundHeaderDestinationPortRangesAttributes) To() terra.NumberValue {
-	return terra.ReferenceNumber(dpr.ref.Append("to"))
+	return terra.ReferenceAsNumber(dpr.ref.Append("to"))
 }
 
 type ReturnPathComponentsInboundHeaderSourcePortRangesAttributes struct {
@@ -2714,11 +2714,11 @@ func (spr ReturnPathComponentsInboundHeaderSourcePortRangesAttributes) InternalT
 }
 
 func (spr ReturnPathComponentsInboundHeaderSourcePortRangesAttributes) From() terra.NumberValue {
-	return terra.ReferenceNumber(spr.ref.Append("from"))
+	return terra.ReferenceAsNumber(spr.ref.Append("from"))
 }
 
 func (spr ReturnPathComponentsInboundHeaderSourcePortRangesAttributes) To() terra.NumberValue {
-	return terra.ReferenceNumber(spr.ref.Append("to"))
+	return terra.ReferenceAsNumber(spr.ref.Append("to"))
 }
 
 type ReturnPathComponentsOutboundHeaderAttributes struct {
@@ -2738,23 +2738,23 @@ func (oh ReturnPathComponentsOutboundHeaderAttributes) InternalTokens() hclwrite
 }
 
 func (oh ReturnPathComponentsOutboundHeaderAttributes) DestinationAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](oh.ref.Append("destination_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](oh.ref.Append("destination_addresses"))
 }
 
 func (oh ReturnPathComponentsOutboundHeaderAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(oh.ref.Append("protocol"))
+	return terra.ReferenceAsString(oh.ref.Append("protocol"))
 }
 
 func (oh ReturnPathComponentsOutboundHeaderAttributes) SourceAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](oh.ref.Append("source_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](oh.ref.Append("source_addresses"))
 }
 
 func (oh ReturnPathComponentsOutboundHeaderAttributes) DestinationPortRanges() terra.ListValue[ReturnPathComponentsOutboundHeaderDestinationPortRangesAttributes] {
-	return terra.ReferenceList[ReturnPathComponentsOutboundHeaderDestinationPortRangesAttributes](oh.ref.Append("destination_port_ranges"))
+	return terra.ReferenceAsList[ReturnPathComponentsOutboundHeaderDestinationPortRangesAttributes](oh.ref.Append("destination_port_ranges"))
 }
 
 func (oh ReturnPathComponentsOutboundHeaderAttributes) SourcePortRanges() terra.ListValue[ReturnPathComponentsOutboundHeaderSourcePortRangesAttributes] {
-	return terra.ReferenceList[ReturnPathComponentsOutboundHeaderSourcePortRangesAttributes](oh.ref.Append("source_port_ranges"))
+	return terra.ReferenceAsList[ReturnPathComponentsOutboundHeaderSourcePortRangesAttributes](oh.ref.Append("source_port_ranges"))
 }
 
 type ReturnPathComponentsOutboundHeaderDestinationPortRangesAttributes struct {
@@ -2774,11 +2774,11 @@ func (dpr ReturnPathComponentsOutboundHeaderDestinationPortRangesAttributes) Int
 }
 
 func (dpr ReturnPathComponentsOutboundHeaderDestinationPortRangesAttributes) From() terra.NumberValue {
-	return terra.ReferenceNumber(dpr.ref.Append("from"))
+	return terra.ReferenceAsNumber(dpr.ref.Append("from"))
 }
 
 func (dpr ReturnPathComponentsOutboundHeaderDestinationPortRangesAttributes) To() terra.NumberValue {
-	return terra.ReferenceNumber(dpr.ref.Append("to"))
+	return terra.ReferenceAsNumber(dpr.ref.Append("to"))
 }
 
 type ReturnPathComponentsOutboundHeaderSourcePortRangesAttributes struct {
@@ -2798,11 +2798,11 @@ func (spr ReturnPathComponentsOutboundHeaderSourcePortRangesAttributes) Internal
 }
 
 func (spr ReturnPathComponentsOutboundHeaderSourcePortRangesAttributes) From() terra.NumberValue {
-	return terra.ReferenceNumber(spr.ref.Append("from"))
+	return terra.ReferenceAsNumber(spr.ref.Append("from"))
 }
 
 func (spr ReturnPathComponentsOutboundHeaderSourcePortRangesAttributes) To() terra.NumberValue {
-	return terra.ReferenceNumber(spr.ref.Append("to"))
+	return terra.ReferenceAsNumber(spr.ref.Append("to"))
 }
 
 type ReturnPathComponentsRouteTableRouteAttributes struct {
@@ -2822,43 +2822,43 @@ func (rtr ReturnPathComponentsRouteTableRouteAttributes) InternalTokens() hclwri
 }
 
 func (rtr ReturnPathComponentsRouteTableRouteAttributes) DestinationCidr() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("destination_cidr"))
+	return terra.ReferenceAsString(rtr.ref.Append("destination_cidr"))
 }
 
 func (rtr ReturnPathComponentsRouteTableRouteAttributes) DestinationPrefixListId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("destination_prefix_list_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("destination_prefix_list_id"))
 }
 
 func (rtr ReturnPathComponentsRouteTableRouteAttributes) EgressOnlyInternetGatewayId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("egress_only_internet_gateway_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("egress_only_internet_gateway_id"))
 }
 
 func (rtr ReturnPathComponentsRouteTableRouteAttributes) GatewayId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("gateway_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("gateway_id"))
 }
 
 func (rtr ReturnPathComponentsRouteTableRouteAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("instance_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("instance_id"))
 }
 
 func (rtr ReturnPathComponentsRouteTableRouteAttributes) NatGatewayId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("nat_gateway_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("nat_gateway_id"))
 }
 
 func (rtr ReturnPathComponentsRouteTableRouteAttributes) NetworkInterfaceId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("network_interface_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("network_interface_id"))
 }
 
 func (rtr ReturnPathComponentsRouteTableRouteAttributes) Origin() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("origin"))
+	return terra.ReferenceAsString(rtr.ref.Append("origin"))
 }
 
 func (rtr ReturnPathComponentsRouteTableRouteAttributes) TransitGatewayId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("transit_gateway_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("transit_gateway_id"))
 }
 
 func (rtr ReturnPathComponentsRouteTableRouteAttributes) VpcPeeringConnectionId() terra.StringValue {
-	return terra.ReferenceString(rtr.ref.Append("vpc_peering_connection_id"))
+	return terra.ReferenceAsString(rtr.ref.Append("vpc_peering_connection_id"))
 }
 
 type ReturnPathComponentsSecurityGroupRuleAttributes struct {
@@ -2878,27 +2878,27 @@ func (sgr ReturnPathComponentsSecurityGroupRuleAttributes) InternalTokens() hclw
 }
 
 func (sgr ReturnPathComponentsSecurityGroupRuleAttributes) Cidr() terra.StringValue {
-	return terra.ReferenceString(sgr.ref.Append("cidr"))
+	return terra.ReferenceAsString(sgr.ref.Append("cidr"))
 }
 
 func (sgr ReturnPathComponentsSecurityGroupRuleAttributes) Direction() terra.StringValue {
-	return terra.ReferenceString(sgr.ref.Append("direction"))
+	return terra.ReferenceAsString(sgr.ref.Append("direction"))
 }
 
 func (sgr ReturnPathComponentsSecurityGroupRuleAttributes) PrefixListId() terra.StringValue {
-	return terra.ReferenceString(sgr.ref.Append("prefix_list_id"))
+	return terra.ReferenceAsString(sgr.ref.Append("prefix_list_id"))
 }
 
 func (sgr ReturnPathComponentsSecurityGroupRuleAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(sgr.ref.Append("protocol"))
+	return terra.ReferenceAsString(sgr.ref.Append("protocol"))
 }
 
 func (sgr ReturnPathComponentsSecurityGroupRuleAttributes) SecurityGroupId() terra.StringValue {
-	return terra.ReferenceString(sgr.ref.Append("security_group_id"))
+	return terra.ReferenceAsString(sgr.ref.Append("security_group_id"))
 }
 
 func (sgr ReturnPathComponentsSecurityGroupRuleAttributes) PortRange() terra.ListValue[ReturnPathComponentsSecurityGroupRulePortRangeAttributes] {
-	return terra.ReferenceList[ReturnPathComponentsSecurityGroupRulePortRangeAttributes](sgr.ref.Append("port_range"))
+	return terra.ReferenceAsList[ReturnPathComponentsSecurityGroupRulePortRangeAttributes](sgr.ref.Append("port_range"))
 }
 
 type ReturnPathComponentsSecurityGroupRulePortRangeAttributes struct {
@@ -2918,11 +2918,11 @@ func (pr ReturnPathComponentsSecurityGroupRulePortRangeAttributes) InternalToken
 }
 
 func (pr ReturnPathComponentsSecurityGroupRulePortRangeAttributes) From() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("from"))
+	return terra.ReferenceAsNumber(pr.ref.Append("from"))
 }
 
 func (pr ReturnPathComponentsSecurityGroupRulePortRangeAttributes) To() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("to"))
+	return terra.ReferenceAsNumber(pr.ref.Append("to"))
 }
 
 type ReturnPathComponentsSourceVpcAttributes struct {
@@ -2942,15 +2942,15 @@ func (sv ReturnPathComponentsSourceVpcAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (sv ReturnPathComponentsSourceVpcAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sv.ref.Append("arn"))
+	return terra.ReferenceAsString(sv.ref.Append("arn"))
 }
 
 func (sv ReturnPathComponentsSourceVpcAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sv.ref.Append("id"))
+	return terra.ReferenceAsString(sv.ref.Append("id"))
 }
 
 func (sv ReturnPathComponentsSourceVpcAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sv.ref.Append("name"))
+	return terra.ReferenceAsString(sv.ref.Append("name"))
 }
 
 type ReturnPathComponentsSubnetAttributes struct {
@@ -2970,15 +2970,15 @@ func (s ReturnPathComponentsSubnetAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s ReturnPathComponentsSubnetAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("arn"))
+	return terra.ReferenceAsString(s.ref.Append("arn"))
 }
 
 func (s ReturnPathComponentsSubnetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("id"))
+	return terra.ReferenceAsString(s.ref.Append("id"))
 }
 
 func (s ReturnPathComponentsSubnetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 type ReturnPathComponentsTransitGatewayAttributes struct {
@@ -2998,15 +2998,15 @@ func (tg ReturnPathComponentsTransitGatewayAttributes) InternalTokens() hclwrite
 }
 
 func (tg ReturnPathComponentsTransitGatewayAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(tg.ref.Append("arn"))
+	return terra.ReferenceAsString(tg.ref.Append("arn"))
 }
 
 func (tg ReturnPathComponentsTransitGatewayAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(tg.ref.Append("id"))
+	return terra.ReferenceAsString(tg.ref.Append("id"))
 }
 
 func (tg ReturnPathComponentsTransitGatewayAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(tg.ref.Append("name"))
+	return terra.ReferenceAsString(tg.ref.Append("name"))
 }
 
 type ReturnPathComponentsTransitGatewayRouteTableRouteAttributes struct {
@@ -3026,31 +3026,31 @@ func (tgrtr ReturnPathComponentsTransitGatewayRouteTableRouteAttributes) Interna
 }
 
 func (tgrtr ReturnPathComponentsTransitGatewayRouteTableRouteAttributes) AttachmentId() terra.StringValue {
-	return terra.ReferenceString(tgrtr.ref.Append("attachment_id"))
+	return terra.ReferenceAsString(tgrtr.ref.Append("attachment_id"))
 }
 
 func (tgrtr ReturnPathComponentsTransitGatewayRouteTableRouteAttributes) DestinationCidr() terra.StringValue {
-	return terra.ReferenceString(tgrtr.ref.Append("destination_cidr"))
+	return terra.ReferenceAsString(tgrtr.ref.Append("destination_cidr"))
 }
 
 func (tgrtr ReturnPathComponentsTransitGatewayRouteTableRouteAttributes) PrefixListId() terra.StringValue {
-	return terra.ReferenceString(tgrtr.ref.Append("prefix_list_id"))
+	return terra.ReferenceAsString(tgrtr.ref.Append("prefix_list_id"))
 }
 
 func (tgrtr ReturnPathComponentsTransitGatewayRouteTableRouteAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(tgrtr.ref.Append("resource_id"))
+	return terra.ReferenceAsString(tgrtr.ref.Append("resource_id"))
 }
 
 func (tgrtr ReturnPathComponentsTransitGatewayRouteTableRouteAttributes) ResourceType() terra.StringValue {
-	return terra.ReferenceString(tgrtr.ref.Append("resource_type"))
+	return terra.ReferenceAsString(tgrtr.ref.Append("resource_type"))
 }
 
 func (tgrtr ReturnPathComponentsTransitGatewayRouteTableRouteAttributes) RouteOrigin() terra.StringValue {
-	return terra.ReferenceString(tgrtr.ref.Append("route_origin"))
+	return terra.ReferenceAsString(tgrtr.ref.Append("route_origin"))
 }
 
 func (tgrtr ReturnPathComponentsTransitGatewayRouteTableRouteAttributes) State() terra.StringValue {
-	return terra.ReferenceString(tgrtr.ref.Append("state"))
+	return terra.ReferenceAsString(tgrtr.ref.Append("state"))
 }
 
 type ReturnPathComponentsVpcAttributes struct {
@@ -3070,15 +3070,15 @@ func (v ReturnPathComponentsVpcAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (v ReturnPathComponentsVpcAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("arn"))
+	return terra.ReferenceAsString(v.ref.Append("arn"))
 }
 
 func (v ReturnPathComponentsVpcAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("id"))
+	return terra.ReferenceAsString(v.ref.Append("id"))
 }
 
 func (v ReturnPathComponentsVpcAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("name"))
+	return terra.ReferenceAsString(v.ref.Append("name"))
 }
 
 type FilterAttributes struct {
@@ -3098,11 +3098,11 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
 func (f FilterAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](f.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](f.ref.Append("values"))
 }
 
 type AlternatePathHintsState struct {

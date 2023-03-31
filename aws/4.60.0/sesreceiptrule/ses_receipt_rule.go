@@ -99,15 +99,15 @@ func (aha AddHeaderActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (aha AddHeaderActionAttributes) HeaderName() terra.StringValue {
-	return terra.ReferenceString(aha.ref.Append("header_name"))
+	return terra.ReferenceAsString(aha.ref.Append("header_name"))
 }
 
 func (aha AddHeaderActionAttributes) HeaderValue() terra.StringValue {
-	return terra.ReferenceString(aha.ref.Append("header_value"))
+	return terra.ReferenceAsString(aha.ref.Append("header_value"))
 }
 
 func (aha AddHeaderActionAttributes) Position() terra.NumberValue {
-	return terra.ReferenceNumber(aha.ref.Append("position"))
+	return terra.ReferenceAsNumber(aha.ref.Append("position"))
 }
 
 type BounceActionAttributes struct {
@@ -127,27 +127,27 @@ func (ba BounceActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ba BounceActionAttributes) Message() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("message"))
+	return terra.ReferenceAsString(ba.ref.Append("message"))
 }
 
 func (ba BounceActionAttributes) Position() terra.NumberValue {
-	return terra.ReferenceNumber(ba.ref.Append("position"))
+	return terra.ReferenceAsNumber(ba.ref.Append("position"))
 }
 
 func (ba BounceActionAttributes) Sender() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("sender"))
+	return terra.ReferenceAsString(ba.ref.Append("sender"))
 }
 
 func (ba BounceActionAttributes) SmtpReplyCode() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("smtp_reply_code"))
+	return terra.ReferenceAsString(ba.ref.Append("smtp_reply_code"))
 }
 
 func (ba BounceActionAttributes) StatusCode() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("status_code"))
+	return terra.ReferenceAsString(ba.ref.Append("status_code"))
 }
 
 func (ba BounceActionAttributes) TopicArn() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("topic_arn"))
+	return terra.ReferenceAsString(ba.ref.Append("topic_arn"))
 }
 
 type LambdaActionAttributes struct {
@@ -167,19 +167,19 @@ func (la LambdaActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (la LambdaActionAttributes) FunctionArn() terra.StringValue {
-	return terra.ReferenceString(la.ref.Append("function_arn"))
+	return terra.ReferenceAsString(la.ref.Append("function_arn"))
 }
 
 func (la LambdaActionAttributes) InvocationType() terra.StringValue {
-	return terra.ReferenceString(la.ref.Append("invocation_type"))
+	return terra.ReferenceAsString(la.ref.Append("invocation_type"))
 }
 
 func (la LambdaActionAttributes) Position() terra.NumberValue {
-	return terra.ReferenceNumber(la.ref.Append("position"))
+	return terra.ReferenceAsNumber(la.ref.Append("position"))
 }
 
 func (la LambdaActionAttributes) TopicArn() terra.StringValue {
-	return terra.ReferenceString(la.ref.Append("topic_arn"))
+	return terra.ReferenceAsString(la.ref.Append("topic_arn"))
 }
 
 type S3ActionAttributes struct {
@@ -199,23 +199,23 @@ func (sa S3ActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sa S3ActionAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(sa.ref.Append("bucket_name"))
 }
 
 func (sa S3ActionAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(sa.ref.Append("kms_key_arn"))
 }
 
 func (sa S3ActionAttributes) ObjectKeyPrefix() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("object_key_prefix"))
+	return terra.ReferenceAsString(sa.ref.Append("object_key_prefix"))
 }
 
 func (sa S3ActionAttributes) Position() terra.NumberValue {
-	return terra.ReferenceNumber(sa.ref.Append("position"))
+	return terra.ReferenceAsNumber(sa.ref.Append("position"))
 }
 
 func (sa S3ActionAttributes) TopicArn() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("topic_arn"))
+	return terra.ReferenceAsString(sa.ref.Append("topic_arn"))
 }
 
 type SnsActionAttributes struct {
@@ -235,15 +235,15 @@ func (sa SnsActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sa SnsActionAttributes) Encoding() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("encoding"))
+	return terra.ReferenceAsString(sa.ref.Append("encoding"))
 }
 
 func (sa SnsActionAttributes) Position() terra.NumberValue {
-	return terra.ReferenceNumber(sa.ref.Append("position"))
+	return terra.ReferenceAsNumber(sa.ref.Append("position"))
 }
 
 func (sa SnsActionAttributes) TopicArn() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("topic_arn"))
+	return terra.ReferenceAsString(sa.ref.Append("topic_arn"))
 }
 
 type StopActionAttributes struct {
@@ -263,15 +263,15 @@ func (sa StopActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sa StopActionAttributes) Position() terra.NumberValue {
-	return terra.ReferenceNumber(sa.ref.Append("position"))
+	return terra.ReferenceAsNumber(sa.ref.Append("position"))
 }
 
 func (sa StopActionAttributes) Scope() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("scope"))
+	return terra.ReferenceAsString(sa.ref.Append("scope"))
 }
 
 func (sa StopActionAttributes) TopicArn() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("topic_arn"))
+	return terra.ReferenceAsString(sa.ref.Append("topic_arn"))
 }
 
 type WorkmailActionAttributes struct {
@@ -291,15 +291,15 @@ func (wa WorkmailActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (wa WorkmailActionAttributes) OrganizationArn() terra.StringValue {
-	return terra.ReferenceString(wa.ref.Append("organization_arn"))
+	return terra.ReferenceAsString(wa.ref.Append("organization_arn"))
 }
 
 func (wa WorkmailActionAttributes) Position() terra.NumberValue {
-	return terra.ReferenceNumber(wa.ref.Append("position"))
+	return terra.ReferenceAsNumber(wa.ref.Append("position"))
 }
 
 func (wa WorkmailActionAttributes) TopicArn() terra.StringValue {
-	return terra.ReferenceString(wa.ref.Append("topic_arn"))
+	return terra.ReferenceAsString(wa.ref.Append("topic_arn"))
 }
 
 type AddHeaderActionState struct {

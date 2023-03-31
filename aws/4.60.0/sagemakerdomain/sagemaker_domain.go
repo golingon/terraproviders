@@ -238,19 +238,19 @@ func (dss DefaultSpaceSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dss DefaultSpaceSettingsAttributes) ExecutionRole() terra.StringValue {
-	return terra.ReferenceString(dss.ref.Append("execution_role"))
+	return terra.ReferenceAsString(dss.ref.Append("execution_role"))
 }
 
 func (dss DefaultSpaceSettingsAttributes) SecurityGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dss.ref.Append("security_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](dss.ref.Append("security_groups"))
 }
 
 func (dss DefaultSpaceSettingsAttributes) JupyterServerAppSettings() terra.ListValue[DefaultSpaceSettingsJupyterServerAppSettingsAttributes] {
-	return terra.ReferenceList[DefaultSpaceSettingsJupyterServerAppSettingsAttributes](dss.ref.Append("jupyter_server_app_settings"))
+	return terra.ReferenceAsList[DefaultSpaceSettingsJupyterServerAppSettingsAttributes](dss.ref.Append("jupyter_server_app_settings"))
 }
 
 func (dss DefaultSpaceSettingsAttributes) KernelGatewayAppSettings() terra.ListValue[DefaultSpaceSettingsKernelGatewayAppSettingsAttributes] {
-	return terra.ReferenceList[DefaultSpaceSettingsKernelGatewayAppSettingsAttributes](dss.ref.Append("kernel_gateway_app_settings"))
+	return terra.ReferenceAsList[DefaultSpaceSettingsKernelGatewayAppSettingsAttributes](dss.ref.Append("kernel_gateway_app_settings"))
 }
 
 type DefaultSpaceSettingsJupyterServerAppSettingsAttributes struct {
@@ -270,15 +270,15 @@ func (jsas DefaultSpaceSettingsJupyterServerAppSettingsAttributes) InternalToken
 }
 
 func (jsas DefaultSpaceSettingsJupyterServerAppSettingsAttributes) LifecycleConfigArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](jsas.ref.Append("lifecycle_config_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](jsas.ref.Append("lifecycle_config_arns"))
 }
 
 func (jsas DefaultSpaceSettingsJupyterServerAppSettingsAttributes) CodeRepository() terra.SetValue[DefaultSpaceSettingsJupyterServerAppSettingsCodeRepositoryAttributes] {
-	return terra.ReferenceSet[DefaultSpaceSettingsJupyterServerAppSettingsCodeRepositoryAttributes](jsas.ref.Append("code_repository"))
+	return terra.ReferenceAsSet[DefaultSpaceSettingsJupyterServerAppSettingsCodeRepositoryAttributes](jsas.ref.Append("code_repository"))
 }
 
 func (jsas DefaultSpaceSettingsJupyterServerAppSettingsAttributes) DefaultResourceSpec() terra.ListValue[DefaultSpaceSettingsJupyterServerAppSettingsDefaultResourceSpecAttributes] {
-	return terra.ReferenceList[DefaultSpaceSettingsJupyterServerAppSettingsDefaultResourceSpecAttributes](jsas.ref.Append("default_resource_spec"))
+	return terra.ReferenceAsList[DefaultSpaceSettingsJupyterServerAppSettingsDefaultResourceSpecAttributes](jsas.ref.Append("default_resource_spec"))
 }
 
 type DefaultSpaceSettingsJupyterServerAppSettingsCodeRepositoryAttributes struct {
@@ -298,7 +298,7 @@ func (cr DefaultSpaceSettingsJupyterServerAppSettingsCodeRepositoryAttributes) I
 }
 
 func (cr DefaultSpaceSettingsJupyterServerAppSettingsCodeRepositoryAttributes) RepositoryUrl() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("repository_url"))
+	return terra.ReferenceAsString(cr.ref.Append("repository_url"))
 }
 
 type DefaultSpaceSettingsJupyterServerAppSettingsDefaultResourceSpecAttributes struct {
@@ -318,19 +318,19 @@ func (drs DefaultSpaceSettingsJupyterServerAppSettingsDefaultResourceSpecAttribu
 }
 
 func (drs DefaultSpaceSettingsJupyterServerAppSettingsDefaultResourceSpecAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("instance_type"))
+	return terra.ReferenceAsString(drs.ref.Append("instance_type"))
 }
 
 func (drs DefaultSpaceSettingsJupyterServerAppSettingsDefaultResourceSpecAttributes) LifecycleConfigArn() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("lifecycle_config_arn"))
+	return terra.ReferenceAsString(drs.ref.Append("lifecycle_config_arn"))
 }
 
 func (drs DefaultSpaceSettingsJupyterServerAppSettingsDefaultResourceSpecAttributes) SagemakerImageArn() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("sagemaker_image_arn"))
+	return terra.ReferenceAsString(drs.ref.Append("sagemaker_image_arn"))
 }
 
 func (drs DefaultSpaceSettingsJupyterServerAppSettingsDefaultResourceSpecAttributes) SagemakerImageVersionArn() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("sagemaker_image_version_arn"))
+	return terra.ReferenceAsString(drs.ref.Append("sagemaker_image_version_arn"))
 }
 
 type DefaultSpaceSettingsKernelGatewayAppSettingsAttributes struct {
@@ -350,15 +350,15 @@ func (kgas DefaultSpaceSettingsKernelGatewayAppSettingsAttributes) InternalToken
 }
 
 func (kgas DefaultSpaceSettingsKernelGatewayAppSettingsAttributes) LifecycleConfigArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](kgas.ref.Append("lifecycle_config_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](kgas.ref.Append("lifecycle_config_arns"))
 }
 
 func (kgas DefaultSpaceSettingsKernelGatewayAppSettingsAttributes) CustomImage() terra.ListValue[DefaultSpaceSettingsKernelGatewayAppSettingsCustomImageAttributes] {
-	return terra.ReferenceList[DefaultSpaceSettingsKernelGatewayAppSettingsCustomImageAttributes](kgas.ref.Append("custom_image"))
+	return terra.ReferenceAsList[DefaultSpaceSettingsKernelGatewayAppSettingsCustomImageAttributes](kgas.ref.Append("custom_image"))
 }
 
 func (kgas DefaultSpaceSettingsKernelGatewayAppSettingsAttributes) DefaultResourceSpec() terra.ListValue[DefaultSpaceSettingsKernelGatewayAppSettingsDefaultResourceSpecAttributes] {
-	return terra.ReferenceList[DefaultSpaceSettingsKernelGatewayAppSettingsDefaultResourceSpecAttributes](kgas.ref.Append("default_resource_spec"))
+	return terra.ReferenceAsList[DefaultSpaceSettingsKernelGatewayAppSettingsDefaultResourceSpecAttributes](kgas.ref.Append("default_resource_spec"))
 }
 
 type DefaultSpaceSettingsKernelGatewayAppSettingsCustomImageAttributes struct {
@@ -378,15 +378,15 @@ func (ci DefaultSpaceSettingsKernelGatewayAppSettingsCustomImageAttributes) Inte
 }
 
 func (ci DefaultSpaceSettingsKernelGatewayAppSettingsCustomImageAttributes) AppImageConfigName() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("app_image_config_name"))
+	return terra.ReferenceAsString(ci.ref.Append("app_image_config_name"))
 }
 
 func (ci DefaultSpaceSettingsKernelGatewayAppSettingsCustomImageAttributes) ImageName() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("image_name"))
+	return terra.ReferenceAsString(ci.ref.Append("image_name"))
 }
 
 func (ci DefaultSpaceSettingsKernelGatewayAppSettingsCustomImageAttributes) ImageVersionNumber() terra.NumberValue {
-	return terra.ReferenceNumber(ci.ref.Append("image_version_number"))
+	return terra.ReferenceAsNumber(ci.ref.Append("image_version_number"))
 }
 
 type DefaultSpaceSettingsKernelGatewayAppSettingsDefaultResourceSpecAttributes struct {
@@ -406,19 +406,19 @@ func (drs DefaultSpaceSettingsKernelGatewayAppSettingsDefaultResourceSpecAttribu
 }
 
 func (drs DefaultSpaceSettingsKernelGatewayAppSettingsDefaultResourceSpecAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("instance_type"))
+	return terra.ReferenceAsString(drs.ref.Append("instance_type"))
 }
 
 func (drs DefaultSpaceSettingsKernelGatewayAppSettingsDefaultResourceSpecAttributes) LifecycleConfigArn() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("lifecycle_config_arn"))
+	return terra.ReferenceAsString(drs.ref.Append("lifecycle_config_arn"))
 }
 
 func (drs DefaultSpaceSettingsKernelGatewayAppSettingsDefaultResourceSpecAttributes) SagemakerImageArn() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("sagemaker_image_arn"))
+	return terra.ReferenceAsString(drs.ref.Append("sagemaker_image_arn"))
 }
 
 func (drs DefaultSpaceSettingsKernelGatewayAppSettingsDefaultResourceSpecAttributes) SagemakerImageVersionArn() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("sagemaker_image_version_arn"))
+	return terra.ReferenceAsString(drs.ref.Append("sagemaker_image_version_arn"))
 }
 
 type DefaultUserSettingsAttributes struct {
@@ -438,35 +438,35 @@ func (dus DefaultUserSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dus DefaultUserSettingsAttributes) ExecutionRole() terra.StringValue {
-	return terra.ReferenceString(dus.ref.Append("execution_role"))
+	return terra.ReferenceAsString(dus.ref.Append("execution_role"))
 }
 
 func (dus DefaultUserSettingsAttributes) SecurityGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dus.ref.Append("security_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](dus.ref.Append("security_groups"))
 }
 
 func (dus DefaultUserSettingsAttributes) CanvasAppSettings() terra.ListValue[CanvasAppSettingsAttributes] {
-	return terra.ReferenceList[CanvasAppSettingsAttributes](dus.ref.Append("canvas_app_settings"))
+	return terra.ReferenceAsList[CanvasAppSettingsAttributes](dus.ref.Append("canvas_app_settings"))
 }
 
 func (dus DefaultUserSettingsAttributes) JupyterServerAppSettings() terra.ListValue[DefaultUserSettingsJupyterServerAppSettingsAttributes] {
-	return terra.ReferenceList[DefaultUserSettingsJupyterServerAppSettingsAttributes](dus.ref.Append("jupyter_server_app_settings"))
+	return terra.ReferenceAsList[DefaultUserSettingsJupyterServerAppSettingsAttributes](dus.ref.Append("jupyter_server_app_settings"))
 }
 
 func (dus DefaultUserSettingsAttributes) KernelGatewayAppSettings() terra.ListValue[DefaultUserSettingsKernelGatewayAppSettingsAttributes] {
-	return terra.ReferenceList[DefaultUserSettingsKernelGatewayAppSettingsAttributes](dus.ref.Append("kernel_gateway_app_settings"))
+	return terra.ReferenceAsList[DefaultUserSettingsKernelGatewayAppSettingsAttributes](dus.ref.Append("kernel_gateway_app_settings"))
 }
 
 func (dus DefaultUserSettingsAttributes) RSessionAppSettings() terra.ListValue[RSessionAppSettingsAttributes] {
-	return terra.ReferenceList[RSessionAppSettingsAttributes](dus.ref.Append("r_session_app_settings"))
+	return terra.ReferenceAsList[RSessionAppSettingsAttributes](dus.ref.Append("r_session_app_settings"))
 }
 
 func (dus DefaultUserSettingsAttributes) SharingSettings() terra.ListValue[SharingSettingsAttributes] {
-	return terra.ReferenceList[SharingSettingsAttributes](dus.ref.Append("sharing_settings"))
+	return terra.ReferenceAsList[SharingSettingsAttributes](dus.ref.Append("sharing_settings"))
 }
 
 func (dus DefaultUserSettingsAttributes) TensorBoardAppSettings() terra.ListValue[TensorBoardAppSettingsAttributes] {
-	return terra.ReferenceList[TensorBoardAppSettingsAttributes](dus.ref.Append("tensor_board_app_settings"))
+	return terra.ReferenceAsList[TensorBoardAppSettingsAttributes](dus.ref.Append("tensor_board_app_settings"))
 }
 
 type CanvasAppSettingsAttributes struct {
@@ -486,7 +486,7 @@ func (cas CanvasAppSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cas CanvasAppSettingsAttributes) TimeSeriesForecastingSettings() terra.ListValue[TimeSeriesForecastingSettingsAttributes] {
-	return terra.ReferenceList[TimeSeriesForecastingSettingsAttributes](cas.ref.Append("time_series_forecasting_settings"))
+	return terra.ReferenceAsList[TimeSeriesForecastingSettingsAttributes](cas.ref.Append("time_series_forecasting_settings"))
 }
 
 type TimeSeriesForecastingSettingsAttributes struct {
@@ -506,11 +506,11 @@ func (tsfs TimeSeriesForecastingSettingsAttributes) InternalTokens() hclwrite.To
 }
 
 func (tsfs TimeSeriesForecastingSettingsAttributes) AmazonForecastRoleArn() terra.StringValue {
-	return terra.ReferenceString(tsfs.ref.Append("amazon_forecast_role_arn"))
+	return terra.ReferenceAsString(tsfs.ref.Append("amazon_forecast_role_arn"))
 }
 
 func (tsfs TimeSeriesForecastingSettingsAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(tsfs.ref.Append("status"))
+	return terra.ReferenceAsString(tsfs.ref.Append("status"))
 }
 
 type DefaultUserSettingsJupyterServerAppSettingsAttributes struct {
@@ -530,15 +530,15 @@ func (jsas DefaultUserSettingsJupyterServerAppSettingsAttributes) InternalTokens
 }
 
 func (jsas DefaultUserSettingsJupyterServerAppSettingsAttributes) LifecycleConfigArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](jsas.ref.Append("lifecycle_config_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](jsas.ref.Append("lifecycle_config_arns"))
 }
 
 func (jsas DefaultUserSettingsJupyterServerAppSettingsAttributes) CodeRepository() terra.SetValue[DefaultUserSettingsJupyterServerAppSettingsCodeRepositoryAttributes] {
-	return terra.ReferenceSet[DefaultUserSettingsJupyterServerAppSettingsCodeRepositoryAttributes](jsas.ref.Append("code_repository"))
+	return terra.ReferenceAsSet[DefaultUserSettingsJupyterServerAppSettingsCodeRepositoryAttributes](jsas.ref.Append("code_repository"))
 }
 
 func (jsas DefaultUserSettingsJupyterServerAppSettingsAttributes) DefaultResourceSpec() terra.ListValue[DefaultUserSettingsJupyterServerAppSettingsDefaultResourceSpecAttributes] {
-	return terra.ReferenceList[DefaultUserSettingsJupyterServerAppSettingsDefaultResourceSpecAttributes](jsas.ref.Append("default_resource_spec"))
+	return terra.ReferenceAsList[DefaultUserSettingsJupyterServerAppSettingsDefaultResourceSpecAttributes](jsas.ref.Append("default_resource_spec"))
 }
 
 type DefaultUserSettingsJupyterServerAppSettingsCodeRepositoryAttributes struct {
@@ -558,7 +558,7 @@ func (cr DefaultUserSettingsJupyterServerAppSettingsCodeRepositoryAttributes) In
 }
 
 func (cr DefaultUserSettingsJupyterServerAppSettingsCodeRepositoryAttributes) RepositoryUrl() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("repository_url"))
+	return terra.ReferenceAsString(cr.ref.Append("repository_url"))
 }
 
 type DefaultUserSettingsJupyterServerAppSettingsDefaultResourceSpecAttributes struct {
@@ -578,19 +578,19 @@ func (drs DefaultUserSettingsJupyterServerAppSettingsDefaultResourceSpecAttribut
 }
 
 func (drs DefaultUserSettingsJupyterServerAppSettingsDefaultResourceSpecAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("instance_type"))
+	return terra.ReferenceAsString(drs.ref.Append("instance_type"))
 }
 
 func (drs DefaultUserSettingsJupyterServerAppSettingsDefaultResourceSpecAttributes) LifecycleConfigArn() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("lifecycle_config_arn"))
+	return terra.ReferenceAsString(drs.ref.Append("lifecycle_config_arn"))
 }
 
 func (drs DefaultUserSettingsJupyterServerAppSettingsDefaultResourceSpecAttributes) SagemakerImageArn() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("sagemaker_image_arn"))
+	return terra.ReferenceAsString(drs.ref.Append("sagemaker_image_arn"))
 }
 
 func (drs DefaultUserSettingsJupyterServerAppSettingsDefaultResourceSpecAttributes) SagemakerImageVersionArn() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("sagemaker_image_version_arn"))
+	return terra.ReferenceAsString(drs.ref.Append("sagemaker_image_version_arn"))
 }
 
 type DefaultUserSettingsKernelGatewayAppSettingsAttributes struct {
@@ -610,15 +610,15 @@ func (kgas DefaultUserSettingsKernelGatewayAppSettingsAttributes) InternalTokens
 }
 
 func (kgas DefaultUserSettingsKernelGatewayAppSettingsAttributes) LifecycleConfigArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](kgas.ref.Append("lifecycle_config_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](kgas.ref.Append("lifecycle_config_arns"))
 }
 
 func (kgas DefaultUserSettingsKernelGatewayAppSettingsAttributes) CustomImage() terra.ListValue[DefaultUserSettingsKernelGatewayAppSettingsCustomImageAttributes] {
-	return terra.ReferenceList[DefaultUserSettingsKernelGatewayAppSettingsCustomImageAttributes](kgas.ref.Append("custom_image"))
+	return terra.ReferenceAsList[DefaultUserSettingsKernelGatewayAppSettingsCustomImageAttributes](kgas.ref.Append("custom_image"))
 }
 
 func (kgas DefaultUserSettingsKernelGatewayAppSettingsAttributes) DefaultResourceSpec() terra.ListValue[DefaultUserSettingsKernelGatewayAppSettingsDefaultResourceSpecAttributes] {
-	return terra.ReferenceList[DefaultUserSettingsKernelGatewayAppSettingsDefaultResourceSpecAttributes](kgas.ref.Append("default_resource_spec"))
+	return terra.ReferenceAsList[DefaultUserSettingsKernelGatewayAppSettingsDefaultResourceSpecAttributes](kgas.ref.Append("default_resource_spec"))
 }
 
 type DefaultUserSettingsKernelGatewayAppSettingsCustomImageAttributes struct {
@@ -638,15 +638,15 @@ func (ci DefaultUserSettingsKernelGatewayAppSettingsCustomImageAttributes) Inter
 }
 
 func (ci DefaultUserSettingsKernelGatewayAppSettingsCustomImageAttributes) AppImageConfigName() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("app_image_config_name"))
+	return terra.ReferenceAsString(ci.ref.Append("app_image_config_name"))
 }
 
 func (ci DefaultUserSettingsKernelGatewayAppSettingsCustomImageAttributes) ImageName() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("image_name"))
+	return terra.ReferenceAsString(ci.ref.Append("image_name"))
 }
 
 func (ci DefaultUserSettingsKernelGatewayAppSettingsCustomImageAttributes) ImageVersionNumber() terra.NumberValue {
-	return terra.ReferenceNumber(ci.ref.Append("image_version_number"))
+	return terra.ReferenceAsNumber(ci.ref.Append("image_version_number"))
 }
 
 type DefaultUserSettingsKernelGatewayAppSettingsDefaultResourceSpecAttributes struct {
@@ -666,19 +666,19 @@ func (drs DefaultUserSettingsKernelGatewayAppSettingsDefaultResourceSpecAttribut
 }
 
 func (drs DefaultUserSettingsKernelGatewayAppSettingsDefaultResourceSpecAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("instance_type"))
+	return terra.ReferenceAsString(drs.ref.Append("instance_type"))
 }
 
 func (drs DefaultUserSettingsKernelGatewayAppSettingsDefaultResourceSpecAttributes) LifecycleConfigArn() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("lifecycle_config_arn"))
+	return terra.ReferenceAsString(drs.ref.Append("lifecycle_config_arn"))
 }
 
 func (drs DefaultUserSettingsKernelGatewayAppSettingsDefaultResourceSpecAttributes) SagemakerImageArn() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("sagemaker_image_arn"))
+	return terra.ReferenceAsString(drs.ref.Append("sagemaker_image_arn"))
 }
 
 func (drs DefaultUserSettingsKernelGatewayAppSettingsDefaultResourceSpecAttributes) SagemakerImageVersionArn() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("sagemaker_image_version_arn"))
+	return terra.ReferenceAsString(drs.ref.Append("sagemaker_image_version_arn"))
 }
 
 type RSessionAppSettingsAttributes struct {
@@ -698,11 +698,11 @@ func (rsas RSessionAppSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rsas RSessionAppSettingsAttributes) CustomImage() terra.ListValue[RSessionAppSettingsCustomImageAttributes] {
-	return terra.ReferenceList[RSessionAppSettingsCustomImageAttributes](rsas.ref.Append("custom_image"))
+	return terra.ReferenceAsList[RSessionAppSettingsCustomImageAttributes](rsas.ref.Append("custom_image"))
 }
 
 func (rsas RSessionAppSettingsAttributes) DefaultResourceSpec() terra.ListValue[RSessionAppSettingsDefaultResourceSpecAttributes] {
-	return terra.ReferenceList[RSessionAppSettingsDefaultResourceSpecAttributes](rsas.ref.Append("default_resource_spec"))
+	return terra.ReferenceAsList[RSessionAppSettingsDefaultResourceSpecAttributes](rsas.ref.Append("default_resource_spec"))
 }
 
 type RSessionAppSettingsCustomImageAttributes struct {
@@ -722,15 +722,15 @@ func (ci RSessionAppSettingsCustomImageAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (ci RSessionAppSettingsCustomImageAttributes) AppImageConfigName() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("app_image_config_name"))
+	return terra.ReferenceAsString(ci.ref.Append("app_image_config_name"))
 }
 
 func (ci RSessionAppSettingsCustomImageAttributes) ImageName() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("image_name"))
+	return terra.ReferenceAsString(ci.ref.Append("image_name"))
 }
 
 func (ci RSessionAppSettingsCustomImageAttributes) ImageVersionNumber() terra.NumberValue {
-	return terra.ReferenceNumber(ci.ref.Append("image_version_number"))
+	return terra.ReferenceAsNumber(ci.ref.Append("image_version_number"))
 }
 
 type RSessionAppSettingsDefaultResourceSpecAttributes struct {
@@ -750,19 +750,19 @@ func (drs RSessionAppSettingsDefaultResourceSpecAttributes) InternalTokens() hcl
 }
 
 func (drs RSessionAppSettingsDefaultResourceSpecAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("instance_type"))
+	return terra.ReferenceAsString(drs.ref.Append("instance_type"))
 }
 
 func (drs RSessionAppSettingsDefaultResourceSpecAttributes) LifecycleConfigArn() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("lifecycle_config_arn"))
+	return terra.ReferenceAsString(drs.ref.Append("lifecycle_config_arn"))
 }
 
 func (drs RSessionAppSettingsDefaultResourceSpecAttributes) SagemakerImageArn() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("sagemaker_image_arn"))
+	return terra.ReferenceAsString(drs.ref.Append("sagemaker_image_arn"))
 }
 
 func (drs RSessionAppSettingsDefaultResourceSpecAttributes) SagemakerImageVersionArn() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("sagemaker_image_version_arn"))
+	return terra.ReferenceAsString(drs.ref.Append("sagemaker_image_version_arn"))
 }
 
 type SharingSettingsAttributes struct {
@@ -782,15 +782,15 @@ func (ss SharingSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ss SharingSettingsAttributes) NotebookOutputOption() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("notebook_output_option"))
+	return terra.ReferenceAsString(ss.ref.Append("notebook_output_option"))
 }
 
 func (ss SharingSettingsAttributes) S3KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("s3_kms_key_id"))
+	return terra.ReferenceAsString(ss.ref.Append("s3_kms_key_id"))
 }
 
 func (ss SharingSettingsAttributes) S3OutputPath() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("s3_output_path"))
+	return terra.ReferenceAsString(ss.ref.Append("s3_output_path"))
 }
 
 type TensorBoardAppSettingsAttributes struct {
@@ -810,7 +810,7 @@ func (tbas TensorBoardAppSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tbas TensorBoardAppSettingsAttributes) DefaultResourceSpec() terra.ListValue[TensorBoardAppSettingsDefaultResourceSpecAttributes] {
-	return terra.ReferenceList[TensorBoardAppSettingsDefaultResourceSpecAttributes](tbas.ref.Append("default_resource_spec"))
+	return terra.ReferenceAsList[TensorBoardAppSettingsDefaultResourceSpecAttributes](tbas.ref.Append("default_resource_spec"))
 }
 
 type TensorBoardAppSettingsDefaultResourceSpecAttributes struct {
@@ -830,19 +830,19 @@ func (drs TensorBoardAppSettingsDefaultResourceSpecAttributes) InternalTokens() 
 }
 
 func (drs TensorBoardAppSettingsDefaultResourceSpecAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("instance_type"))
+	return terra.ReferenceAsString(drs.ref.Append("instance_type"))
 }
 
 func (drs TensorBoardAppSettingsDefaultResourceSpecAttributes) LifecycleConfigArn() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("lifecycle_config_arn"))
+	return terra.ReferenceAsString(drs.ref.Append("lifecycle_config_arn"))
 }
 
 func (drs TensorBoardAppSettingsDefaultResourceSpecAttributes) SagemakerImageArn() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("sagemaker_image_arn"))
+	return terra.ReferenceAsString(drs.ref.Append("sagemaker_image_arn"))
 }
 
 func (drs TensorBoardAppSettingsDefaultResourceSpecAttributes) SagemakerImageVersionArn() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("sagemaker_image_version_arn"))
+	return terra.ReferenceAsString(drs.ref.Append("sagemaker_image_version_arn"))
 }
 
 type DomainSettingsAttributes struct {
@@ -862,11 +862,11 @@ func (ds DomainSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ds DomainSettingsAttributes) ExecutionRoleIdentityConfig() terra.StringValue {
-	return terra.ReferenceString(ds.ref.Append("execution_role_identity_config"))
+	return terra.ReferenceAsString(ds.ref.Append("execution_role_identity_config"))
 }
 
 func (ds DomainSettingsAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ds.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](ds.ref.Append("security_group_ids"))
 }
 
 type RetentionPolicyAttributes struct {
@@ -886,7 +886,7 @@ func (rp RetentionPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rp RetentionPolicyAttributes) HomeEfsFileSystem() terra.StringValue {
-	return terra.ReferenceString(rp.ref.Append("home_efs_file_system"))
+	return terra.ReferenceAsString(rp.ref.Append("home_efs_file_system"))
 }
 
 type DefaultSpaceSettingsState struct {

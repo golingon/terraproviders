@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDocdbGlobalCluster creates a new instance of [DocdbGlobalCluster].
 func NewDocdbGlobalCluster(name string, args DocdbGlobalClusterArgs) *DocdbGlobalCluster {
 	return &DocdbGlobalCluster{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDocdbGlobalCluster(name string, args DocdbGlobalClusterArgs) *DocdbGloba
 
 var _ terra.Resource = (*DocdbGlobalCluster)(nil)
 
+// DocdbGlobalCluster represents the Terraform resource aws_docdb_global_cluster.
 type DocdbGlobalCluster struct {
-	Name  string
-	Args  DocdbGlobalClusterArgs
-	state *docdbGlobalClusterState
+	Name      string
+	Args      DocdbGlobalClusterArgs
+	state     *docdbGlobalClusterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DocdbGlobalCluster].
 func (dgc *DocdbGlobalCluster) Type() string {
 	return "aws_docdb_global_cluster"
 }
 
+// LocalName returns the local name for [DocdbGlobalCluster].
 func (dgc *DocdbGlobalCluster) LocalName() string {
 	return dgc.Name
 }
 
+// Configuration returns the configuration (args) for [DocdbGlobalCluster].
 func (dgc *DocdbGlobalCluster) Configuration() interface{} {
 	return dgc.Args
 }
 
+// DependOn is used for other resources to depend on [DocdbGlobalCluster].
+func (dgc *DocdbGlobalCluster) DependOn() terra.Reference {
+	return terra.ReferenceResource(dgc)
+}
+
+// Dependencies returns the list of resources [DocdbGlobalCluster] depends_on.
+func (dgc *DocdbGlobalCluster) Dependencies() terra.Dependencies {
+	return dgc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DocdbGlobalCluster].
+func (dgc *DocdbGlobalCluster) LifecycleManagement() *terra.Lifecycle {
+	return dgc.Lifecycle
+}
+
+// Attributes returns the attributes for [DocdbGlobalCluster].
 func (dgc *DocdbGlobalCluster) Attributes() docdbGlobalClusterAttributes {
 	return docdbGlobalClusterAttributes{ref: terra.ReferenceResource(dgc)}
 }
 
+// ImportState imports the given attribute values into [DocdbGlobalCluster]'s state.
 func (dgc *DocdbGlobalCluster) ImportState(av io.Reader) error {
 	dgc.state = &docdbGlobalClusterState{}
 	if err := json.NewDecoder(av).Decode(dgc.state); err != nil {
@@ -49,10 +73,12 @@ func (dgc *DocdbGlobalCluster) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DocdbGlobalCluster] has state.
 func (dgc *DocdbGlobalCluster) State() (*docdbGlobalClusterState, bool) {
 	return dgc.state, dgc.state != nil
 }
 
+// StateMust returns the state for [DocdbGlobalCluster]. Panics if the state is nil.
 func (dgc *DocdbGlobalCluster) StateMust() *docdbGlobalClusterState {
 	if dgc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dgc.Type(), dgc.LocalName()))
@@ -60,10 +86,7 @@ func (dgc *DocdbGlobalCluster) StateMust() *docdbGlobalClusterState {
 	return dgc.state
 }
 
-func (dgc *DocdbGlobalCluster) DependOn() terra.Reference {
-	return terra.ReferenceResource(dgc)
-}
-
+// DocdbGlobalClusterArgs contains the configurations for aws_docdb_global_cluster.
 type DocdbGlobalClusterArgs struct {
 	// DatabaseName: string, optional
 	DatabaseName terra.StringValue `hcl:"database_name,attr"`
@@ -85,63 +108,72 @@ type DocdbGlobalClusterArgs struct {
 	GlobalClusterMembers []docdbglobalcluster.GlobalClusterMembers `hcl:"global_cluster_members,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *docdbglobalcluster.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DocdbGlobalCluster depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type docdbGlobalClusterAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_docdb_global_cluster.
 func (dgc docdbGlobalClusterAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dgc.ref.Append("arn"))
+	return terra.ReferenceAsString(dgc.ref.Append("arn"))
 }
 
+// DatabaseName returns a reference to field database_name of aws_docdb_global_cluster.
 func (dgc docdbGlobalClusterAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(dgc.ref.Append("database_name"))
+	return terra.ReferenceAsString(dgc.ref.Append("database_name"))
 }
 
+// DeletionProtection returns a reference to field deletion_protection of aws_docdb_global_cluster.
 func (dgc docdbGlobalClusterAttributes) DeletionProtection() terra.BoolValue {
-	return terra.ReferenceBool(dgc.ref.Append("deletion_protection"))
+	return terra.ReferenceAsBool(dgc.ref.Append("deletion_protection"))
 }
 
+// Engine returns a reference to field engine of aws_docdb_global_cluster.
 func (dgc docdbGlobalClusterAttributes) Engine() terra.StringValue {
-	return terra.ReferenceString(dgc.ref.Append("engine"))
+	return terra.ReferenceAsString(dgc.ref.Append("engine"))
 }
 
+// EngineVersion returns a reference to field engine_version of aws_docdb_global_cluster.
 func (dgc docdbGlobalClusterAttributes) EngineVersion() terra.StringValue {
-	return terra.ReferenceString(dgc.ref.Append("engine_version"))
+	return terra.ReferenceAsString(dgc.ref.Append("engine_version"))
 }
 
+// GlobalClusterIdentifier returns a reference to field global_cluster_identifier of aws_docdb_global_cluster.
 func (dgc docdbGlobalClusterAttributes) GlobalClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(dgc.ref.Append("global_cluster_identifier"))
+	return terra.ReferenceAsString(dgc.ref.Append("global_cluster_identifier"))
 }
 
+// GlobalClusterResourceId returns a reference to field global_cluster_resource_id of aws_docdb_global_cluster.
 func (dgc docdbGlobalClusterAttributes) GlobalClusterResourceId() terra.StringValue {
-	return terra.ReferenceString(dgc.ref.Append("global_cluster_resource_id"))
+	return terra.ReferenceAsString(dgc.ref.Append("global_cluster_resource_id"))
 }
 
+// Id returns a reference to field id of aws_docdb_global_cluster.
 func (dgc docdbGlobalClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dgc.ref.Append("id"))
+	return terra.ReferenceAsString(dgc.ref.Append("id"))
 }
 
+// SourceDbClusterIdentifier returns a reference to field source_db_cluster_identifier of aws_docdb_global_cluster.
 func (dgc docdbGlobalClusterAttributes) SourceDbClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(dgc.ref.Append("source_db_cluster_identifier"))
+	return terra.ReferenceAsString(dgc.ref.Append("source_db_cluster_identifier"))
 }
 
+// Status returns a reference to field status of aws_docdb_global_cluster.
 func (dgc docdbGlobalClusterAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(dgc.ref.Append("status"))
+	return terra.ReferenceAsString(dgc.ref.Append("status"))
 }
 
+// StorageEncrypted returns a reference to field storage_encrypted of aws_docdb_global_cluster.
 func (dgc docdbGlobalClusterAttributes) StorageEncrypted() terra.BoolValue {
-	return terra.ReferenceBool(dgc.ref.Append("storage_encrypted"))
+	return terra.ReferenceAsBool(dgc.ref.Append("storage_encrypted"))
 }
 
 func (dgc docdbGlobalClusterAttributes) GlobalClusterMembers() terra.SetValue[docdbglobalcluster.GlobalClusterMembersAttributes] {
-	return terra.ReferenceSet[docdbglobalcluster.GlobalClusterMembersAttributes](dgc.ref.Append("global_cluster_members"))
+	return terra.ReferenceAsSet[docdbglobalcluster.GlobalClusterMembersAttributes](dgc.ref.Append("global_cluster_members"))
 }
 
 func (dgc docdbGlobalClusterAttributes) Timeouts() docdbglobalcluster.TimeoutsAttributes {
-	return terra.ReferenceSingle[docdbglobalcluster.TimeoutsAttributes](dgc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[docdbglobalcluster.TimeoutsAttributes](dgc.ref.Append("timeouts"))
 }
 
 type docdbGlobalClusterState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewElasticacheParameterGroup creates a new instance of [ElasticacheParameterGroup].
 func NewElasticacheParameterGroup(name string, args ElasticacheParameterGroupArgs) *ElasticacheParameterGroup {
 	return &ElasticacheParameterGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewElasticacheParameterGroup(name string, args ElasticacheParameterGroupArg
 
 var _ terra.Resource = (*ElasticacheParameterGroup)(nil)
 
+// ElasticacheParameterGroup represents the Terraform resource aws_elasticache_parameter_group.
 type ElasticacheParameterGroup struct {
-	Name  string
-	Args  ElasticacheParameterGroupArgs
-	state *elasticacheParameterGroupState
+	Name      string
+	Args      ElasticacheParameterGroupArgs
+	state     *elasticacheParameterGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ElasticacheParameterGroup].
 func (epg *ElasticacheParameterGroup) Type() string {
 	return "aws_elasticache_parameter_group"
 }
 
+// LocalName returns the local name for [ElasticacheParameterGroup].
 func (epg *ElasticacheParameterGroup) LocalName() string {
 	return epg.Name
 }
 
+// Configuration returns the configuration (args) for [ElasticacheParameterGroup].
 func (epg *ElasticacheParameterGroup) Configuration() interface{} {
 	return epg.Args
 }
 
+// DependOn is used for other resources to depend on [ElasticacheParameterGroup].
+func (epg *ElasticacheParameterGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(epg)
+}
+
+// Dependencies returns the list of resources [ElasticacheParameterGroup] depends_on.
+func (epg *ElasticacheParameterGroup) Dependencies() terra.Dependencies {
+	return epg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ElasticacheParameterGroup].
+func (epg *ElasticacheParameterGroup) LifecycleManagement() *terra.Lifecycle {
+	return epg.Lifecycle
+}
+
+// Attributes returns the attributes for [ElasticacheParameterGroup].
 func (epg *ElasticacheParameterGroup) Attributes() elasticacheParameterGroupAttributes {
 	return elasticacheParameterGroupAttributes{ref: terra.ReferenceResource(epg)}
 }
 
+// ImportState imports the given attribute values into [ElasticacheParameterGroup]'s state.
 func (epg *ElasticacheParameterGroup) ImportState(av io.Reader) error {
 	epg.state = &elasticacheParameterGroupState{}
 	if err := json.NewDecoder(av).Decode(epg.state); err != nil {
@@ -49,10 +73,12 @@ func (epg *ElasticacheParameterGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ElasticacheParameterGroup] has state.
 func (epg *ElasticacheParameterGroup) State() (*elasticacheParameterGroupState, bool) {
 	return epg.state, epg.state != nil
 }
 
+// StateMust returns the state for [ElasticacheParameterGroup]. Panics if the state is nil.
 func (epg *ElasticacheParameterGroup) StateMust() *elasticacheParameterGroupState {
 	if epg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", epg.Type(), epg.LocalName()))
@@ -60,10 +86,7 @@ func (epg *ElasticacheParameterGroup) StateMust() *elasticacheParameterGroupStat
 	return epg.state
 }
 
-func (epg *ElasticacheParameterGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(epg)
-}
-
+// ElasticacheParameterGroupArgs contains the configurations for aws_elasticache_parameter_group.
 type ElasticacheParameterGroupArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -79,43 +102,48 @@ type ElasticacheParameterGroupArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Parameter: min=0
 	Parameter []elasticacheparametergroup.Parameter `hcl:"parameter,block" validate:"min=0"`
-	// DependsOn contains resources that ElasticacheParameterGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type elasticacheParameterGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_elasticache_parameter_group.
 func (epg elasticacheParameterGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(epg.ref.Append("arn"))
+	return terra.ReferenceAsString(epg.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_elasticache_parameter_group.
 func (epg elasticacheParameterGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(epg.ref.Append("description"))
+	return terra.ReferenceAsString(epg.ref.Append("description"))
 }
 
+// Family returns a reference to field family of aws_elasticache_parameter_group.
 func (epg elasticacheParameterGroupAttributes) Family() terra.StringValue {
-	return terra.ReferenceString(epg.ref.Append("family"))
+	return terra.ReferenceAsString(epg.ref.Append("family"))
 }
 
+// Id returns a reference to field id of aws_elasticache_parameter_group.
 func (epg elasticacheParameterGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(epg.ref.Append("id"))
+	return terra.ReferenceAsString(epg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_elasticache_parameter_group.
 func (epg elasticacheParameterGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(epg.ref.Append("name"))
+	return terra.ReferenceAsString(epg.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_elasticache_parameter_group.
 func (epg elasticacheParameterGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](epg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](epg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_elasticache_parameter_group.
 func (epg elasticacheParameterGroupAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](epg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](epg.ref.Append("tags_all"))
 }
 
 func (epg elasticacheParameterGroupAttributes) Parameter() terra.SetValue[elasticacheparametergroup.ParameterAttributes] {
-	return terra.ReferenceSet[elasticacheparametergroup.ParameterAttributes](epg.ref.Append("parameter"))
+	return terra.ReferenceAsSet[elasticacheparametergroup.ParameterAttributes](epg.ref.Append("parameter"))
 }
 
 type elasticacheParameterGroupState struct {

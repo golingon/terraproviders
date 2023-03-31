@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataLakeformationResource creates a new instance of [DataLakeformationResource].
 func NewDataLakeformationResource(name string, args DataLakeformationResourceArgs) *DataLakeformationResource {
 	return &DataLakeformationResource{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataLakeformationResource(name string, args DataLakeformationResourceArg
 
 var _ terra.DataResource = (*DataLakeformationResource)(nil)
 
+// DataLakeformationResource represents the Terraform data resource aws_lakeformation_resource.
 type DataLakeformationResource struct {
 	Name string
 	Args DataLakeformationResourceArgs
 }
 
+// DataSource returns the Terraform object type for [DataLakeformationResource].
 func (lr *DataLakeformationResource) DataSource() string {
 	return "aws_lakeformation_resource"
 }
 
+// LocalName returns the local name for [DataLakeformationResource].
 func (lr *DataLakeformationResource) LocalName() string {
 	return lr.Name
 }
 
+// Configuration returns the configuration (args) for [DataLakeformationResource].
 func (lr *DataLakeformationResource) Configuration() interface{} {
 	return lr.Args
 }
 
+// Attributes returns the attributes for [DataLakeformationResource].
 func (lr *DataLakeformationResource) Attributes() dataLakeformationResourceAttributes {
 	return dataLakeformationResourceAttributes{ref: terra.ReferenceDataResource(lr)}
 }
 
+// DataLakeformationResourceArgs contains the configurations for aws_lakeformation_resource.
 type DataLakeformationResourceArgs struct {
 	// Arn: string, required
 	Arn terra.StringValue `hcl:"arn,attr" validate:"required"`
@@ -44,18 +51,22 @@ type dataLakeformationResourceAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_lakeformation_resource.
 func (lr dataLakeformationResourceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(lr.ref.Append("arn"))
+	return terra.ReferenceAsString(lr.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_lakeformation_resource.
 func (lr dataLakeformationResourceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lr.ref.Append("id"))
+	return terra.ReferenceAsString(lr.ref.Append("id"))
 }
 
+// LastModified returns a reference to field last_modified of aws_lakeformation_resource.
 func (lr dataLakeformationResourceAttributes) LastModified() terra.StringValue {
-	return terra.ReferenceString(lr.ref.Append("last_modified"))
+	return terra.ReferenceAsString(lr.ref.Append("last_modified"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_lakeformation_resource.
 func (lr dataLakeformationResourceAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(lr.ref.Append("role_arn"))
+	return terra.ReferenceAsString(lr.ref.Append("role_arn"))
 }

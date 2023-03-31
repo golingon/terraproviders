@@ -50,11 +50,11 @@ func (md MemberDefinitionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (md MemberDefinitionAttributes) CognitoMemberDefinition() terra.ListValue[CognitoMemberDefinitionAttributes] {
-	return terra.ReferenceList[CognitoMemberDefinitionAttributes](md.ref.Append("cognito_member_definition"))
+	return terra.ReferenceAsList[CognitoMemberDefinitionAttributes](md.ref.Append("cognito_member_definition"))
 }
 
 func (md MemberDefinitionAttributes) OidcMemberDefinition() terra.ListValue[OidcMemberDefinitionAttributes] {
-	return terra.ReferenceList[OidcMemberDefinitionAttributes](md.ref.Append("oidc_member_definition"))
+	return terra.ReferenceAsList[OidcMemberDefinitionAttributes](md.ref.Append("oidc_member_definition"))
 }
 
 type CognitoMemberDefinitionAttributes struct {
@@ -74,15 +74,15 @@ func (cmd CognitoMemberDefinitionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cmd CognitoMemberDefinitionAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(cmd.ref.Append("client_id"))
+	return terra.ReferenceAsString(cmd.ref.Append("client_id"))
 }
 
 func (cmd CognitoMemberDefinitionAttributes) UserGroup() terra.StringValue {
-	return terra.ReferenceString(cmd.ref.Append("user_group"))
+	return terra.ReferenceAsString(cmd.ref.Append("user_group"))
 }
 
 func (cmd CognitoMemberDefinitionAttributes) UserPool() terra.StringValue {
-	return terra.ReferenceString(cmd.ref.Append("user_pool"))
+	return terra.ReferenceAsString(cmd.ref.Append("user_pool"))
 }
 
 type OidcMemberDefinitionAttributes struct {
@@ -102,7 +102,7 @@ func (omd OidcMemberDefinitionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (omd OidcMemberDefinitionAttributes) Groups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](omd.ref.Append("groups"))
+	return terra.ReferenceAsSet[terra.StringValue](omd.ref.Append("groups"))
 }
 
 type NotificationConfigurationAttributes struct {
@@ -122,7 +122,7 @@ func (nc NotificationConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nc NotificationConfigurationAttributes) NotificationTopicArn() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("notification_topic_arn"))
+	return terra.ReferenceAsString(nc.ref.Append("notification_topic_arn"))
 }
 
 type MemberDefinitionState struct {

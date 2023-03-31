@@ -73,11 +73,11 @@ func (abs AdvancedBackupSettingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (abs AdvancedBackupSettingAttributes) BackupOptions() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](abs.ref.Append("backup_options"))
+	return terra.ReferenceAsMap[terra.StringValue](abs.ref.Append("backup_options"))
 }
 
 func (abs AdvancedBackupSettingAttributes) ResourceType() terra.StringValue {
-	return terra.ReferenceString(abs.ref.Append("resource_type"))
+	return terra.ReferenceAsString(abs.ref.Append("resource_type"))
 }
 
 type RuleAttributes struct {
@@ -97,39 +97,39 @@ func (r RuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RuleAttributes) CompletionWindow() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("completion_window"))
+	return terra.ReferenceAsNumber(r.ref.Append("completion_window"))
 }
 
 func (r RuleAttributes) EnableContinuousBackup() terra.BoolValue {
-	return terra.ReferenceBool(r.ref.Append("enable_continuous_backup"))
+	return terra.ReferenceAsBool(r.ref.Append("enable_continuous_backup"))
 }
 
 func (r RuleAttributes) RecoveryPointTags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](r.ref.Append("recovery_point_tags"))
+	return terra.ReferenceAsMap[terra.StringValue](r.ref.Append("recovery_point_tags"))
 }
 
 func (r RuleAttributes) RuleName() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("rule_name"))
+	return terra.ReferenceAsString(r.ref.Append("rule_name"))
 }
 
 func (r RuleAttributes) Schedule() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("schedule"))
+	return terra.ReferenceAsString(r.ref.Append("schedule"))
 }
 
 func (r RuleAttributes) StartWindow() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("start_window"))
+	return terra.ReferenceAsNumber(r.ref.Append("start_window"))
 }
 
 func (r RuleAttributes) TargetVaultName() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("target_vault_name"))
+	return terra.ReferenceAsString(r.ref.Append("target_vault_name"))
 }
 
 func (r RuleAttributes) CopyAction() terra.SetValue[CopyActionAttributes] {
-	return terra.ReferenceSet[CopyActionAttributes](r.ref.Append("copy_action"))
+	return terra.ReferenceAsSet[CopyActionAttributes](r.ref.Append("copy_action"))
 }
 
 func (r RuleAttributes) Lifecycle() terra.ListValue[RuleLifecycleAttributes] {
-	return terra.ReferenceList[RuleLifecycleAttributes](r.ref.Append("lifecycle"))
+	return terra.ReferenceAsList[RuleLifecycleAttributes](r.ref.Append("lifecycle"))
 }
 
 type CopyActionAttributes struct {
@@ -149,11 +149,11 @@ func (ca CopyActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ca CopyActionAttributes) DestinationVaultArn() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("destination_vault_arn"))
+	return terra.ReferenceAsString(ca.ref.Append("destination_vault_arn"))
 }
 
 func (ca CopyActionAttributes) Lifecycle() terra.ListValue[CopyActionLifecycleAttributes] {
-	return terra.ReferenceList[CopyActionLifecycleAttributes](ca.ref.Append("lifecycle"))
+	return terra.ReferenceAsList[CopyActionLifecycleAttributes](ca.ref.Append("lifecycle"))
 }
 
 type CopyActionLifecycleAttributes struct {
@@ -173,11 +173,11 @@ func (l CopyActionLifecycleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (l CopyActionLifecycleAttributes) ColdStorageAfter() terra.NumberValue {
-	return terra.ReferenceNumber(l.ref.Append("cold_storage_after"))
+	return terra.ReferenceAsNumber(l.ref.Append("cold_storage_after"))
 }
 
 func (l CopyActionLifecycleAttributes) DeleteAfter() terra.NumberValue {
-	return terra.ReferenceNumber(l.ref.Append("delete_after"))
+	return terra.ReferenceAsNumber(l.ref.Append("delete_after"))
 }
 
 type RuleLifecycleAttributes struct {
@@ -197,11 +197,11 @@ func (l RuleLifecycleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (l RuleLifecycleAttributes) ColdStorageAfter() terra.NumberValue {
-	return terra.ReferenceNumber(l.ref.Append("cold_storage_after"))
+	return terra.ReferenceAsNumber(l.ref.Append("cold_storage_after"))
 }
 
 func (l RuleLifecycleAttributes) DeleteAfter() terra.NumberValue {
-	return terra.ReferenceNumber(l.ref.Append("delete_after"))
+	return terra.ReferenceAsNumber(l.ref.Append("delete_after"))
 }
 
 type AdvancedBackupSettingState struct {

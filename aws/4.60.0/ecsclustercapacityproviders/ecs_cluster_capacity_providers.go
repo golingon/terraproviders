@@ -33,15 +33,15 @@ func (dcps DefaultCapacityProviderStrategyAttributes) InternalTokens() hclwrite.
 }
 
 func (dcps DefaultCapacityProviderStrategyAttributes) Base() terra.NumberValue {
-	return terra.ReferenceNumber(dcps.ref.Append("base"))
+	return terra.ReferenceAsNumber(dcps.ref.Append("base"))
 }
 
 func (dcps DefaultCapacityProviderStrategyAttributes) CapacityProvider() terra.StringValue {
-	return terra.ReferenceString(dcps.ref.Append("capacity_provider"))
+	return terra.ReferenceAsString(dcps.ref.Append("capacity_provider"))
 }
 
 func (dcps DefaultCapacityProviderStrategyAttributes) Weight() terra.NumberValue {
-	return terra.ReferenceNumber(dcps.ref.Append("weight"))
+	return terra.ReferenceAsNumber(dcps.ref.Append("weight"))
 }
 
 type DefaultCapacityProviderStrategyState struct {

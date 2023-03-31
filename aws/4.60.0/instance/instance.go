@@ -153,11 +153,11 @@ func (crs CapacityReservationSpecificationAttributes) InternalTokens() hclwrite.
 }
 
 func (crs CapacityReservationSpecificationAttributes) CapacityReservationPreference() terra.StringValue {
-	return terra.ReferenceString(crs.ref.Append("capacity_reservation_preference"))
+	return terra.ReferenceAsString(crs.ref.Append("capacity_reservation_preference"))
 }
 
 func (crs CapacityReservationSpecificationAttributes) CapacityReservationTarget() terra.ListValue[CapacityReservationTargetAttributes] {
-	return terra.ReferenceList[CapacityReservationTargetAttributes](crs.ref.Append("capacity_reservation_target"))
+	return terra.ReferenceAsList[CapacityReservationTargetAttributes](crs.ref.Append("capacity_reservation_target"))
 }
 
 type CapacityReservationTargetAttributes struct {
@@ -177,11 +177,11 @@ func (crt CapacityReservationTargetAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (crt CapacityReservationTargetAttributes) CapacityReservationId() terra.StringValue {
-	return terra.ReferenceString(crt.ref.Append("capacity_reservation_id"))
+	return terra.ReferenceAsString(crt.ref.Append("capacity_reservation_id"))
 }
 
 func (crt CapacityReservationTargetAttributes) CapacityReservationResourceGroupArn() terra.StringValue {
-	return terra.ReferenceString(crt.ref.Append("capacity_reservation_resource_group_arn"))
+	return terra.ReferenceAsString(crt.ref.Append("capacity_reservation_resource_group_arn"))
 }
 
 type CreditSpecificationAttributes struct {
@@ -201,7 +201,7 @@ func (cs CreditSpecificationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cs CreditSpecificationAttributes) CpuCredits() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("cpu_credits"))
+	return terra.ReferenceAsString(cs.ref.Append("cpu_credits"))
 }
 
 type EbsBlockDeviceAttributes struct {
@@ -221,47 +221,47 @@ func (ebd EbsBlockDeviceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ebd EbsBlockDeviceAttributes) DeleteOnTermination() terra.BoolValue {
-	return terra.ReferenceBool(ebd.ref.Append("delete_on_termination"))
+	return terra.ReferenceAsBool(ebd.ref.Append("delete_on_termination"))
 }
 
 func (ebd EbsBlockDeviceAttributes) DeviceName() terra.StringValue {
-	return terra.ReferenceString(ebd.ref.Append("device_name"))
+	return terra.ReferenceAsString(ebd.ref.Append("device_name"))
 }
 
 func (ebd EbsBlockDeviceAttributes) Encrypted() terra.BoolValue {
-	return terra.ReferenceBool(ebd.ref.Append("encrypted"))
+	return terra.ReferenceAsBool(ebd.ref.Append("encrypted"))
 }
 
 func (ebd EbsBlockDeviceAttributes) Iops() terra.NumberValue {
-	return terra.ReferenceNumber(ebd.ref.Append("iops"))
+	return terra.ReferenceAsNumber(ebd.ref.Append("iops"))
 }
 
 func (ebd EbsBlockDeviceAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(ebd.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(ebd.ref.Append("kms_key_id"))
 }
 
 func (ebd EbsBlockDeviceAttributes) SnapshotId() terra.StringValue {
-	return terra.ReferenceString(ebd.ref.Append("snapshot_id"))
+	return terra.ReferenceAsString(ebd.ref.Append("snapshot_id"))
 }
 
 func (ebd EbsBlockDeviceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ebd.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ebd.ref.Append("tags"))
 }
 
 func (ebd EbsBlockDeviceAttributes) Throughput() terra.NumberValue {
-	return terra.ReferenceNumber(ebd.ref.Append("throughput"))
+	return terra.ReferenceAsNumber(ebd.ref.Append("throughput"))
 }
 
 func (ebd EbsBlockDeviceAttributes) VolumeId() terra.StringValue {
-	return terra.ReferenceString(ebd.ref.Append("volume_id"))
+	return terra.ReferenceAsString(ebd.ref.Append("volume_id"))
 }
 
 func (ebd EbsBlockDeviceAttributes) VolumeSize() terra.NumberValue {
-	return terra.ReferenceNumber(ebd.ref.Append("volume_size"))
+	return terra.ReferenceAsNumber(ebd.ref.Append("volume_size"))
 }
 
 func (ebd EbsBlockDeviceAttributes) VolumeType() terra.StringValue {
-	return terra.ReferenceString(ebd.ref.Append("volume_type"))
+	return terra.ReferenceAsString(ebd.ref.Append("volume_type"))
 }
 
 type EnclaveOptionsAttributes struct {
@@ -281,7 +281,7 @@ func (eo EnclaveOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (eo EnclaveOptionsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(eo.ref.Append("enabled"))
+	return terra.ReferenceAsBool(eo.ref.Append("enabled"))
 }
 
 type EphemeralBlockDeviceAttributes struct {
@@ -301,15 +301,15 @@ func (ebd EphemeralBlockDeviceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ebd EphemeralBlockDeviceAttributes) DeviceName() terra.StringValue {
-	return terra.ReferenceString(ebd.ref.Append("device_name"))
+	return terra.ReferenceAsString(ebd.ref.Append("device_name"))
 }
 
 func (ebd EphemeralBlockDeviceAttributes) NoDevice() terra.BoolValue {
-	return terra.ReferenceBool(ebd.ref.Append("no_device"))
+	return terra.ReferenceAsBool(ebd.ref.Append("no_device"))
 }
 
 func (ebd EphemeralBlockDeviceAttributes) VirtualName() terra.StringValue {
-	return terra.ReferenceString(ebd.ref.Append("virtual_name"))
+	return terra.ReferenceAsString(ebd.ref.Append("virtual_name"))
 }
 
 type LaunchTemplateAttributes struct {
@@ -329,15 +329,15 @@ func (lt LaunchTemplateAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lt LaunchTemplateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("id"))
+	return terra.ReferenceAsString(lt.ref.Append("id"))
 }
 
 func (lt LaunchTemplateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("name"))
+	return terra.ReferenceAsString(lt.ref.Append("name"))
 }
 
 func (lt LaunchTemplateAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("version"))
+	return terra.ReferenceAsString(lt.ref.Append("version"))
 }
 
 type MaintenanceOptionsAttributes struct {
@@ -357,7 +357,7 @@ func (mo MaintenanceOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mo MaintenanceOptionsAttributes) AutoRecovery() terra.StringValue {
-	return terra.ReferenceString(mo.ref.Append("auto_recovery"))
+	return terra.ReferenceAsString(mo.ref.Append("auto_recovery"))
 }
 
 type MetadataOptionsAttributes struct {
@@ -377,19 +377,19 @@ func (mo MetadataOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mo MetadataOptionsAttributes) HttpEndpoint() terra.StringValue {
-	return terra.ReferenceString(mo.ref.Append("http_endpoint"))
+	return terra.ReferenceAsString(mo.ref.Append("http_endpoint"))
 }
 
 func (mo MetadataOptionsAttributes) HttpPutResponseHopLimit() terra.NumberValue {
-	return terra.ReferenceNumber(mo.ref.Append("http_put_response_hop_limit"))
+	return terra.ReferenceAsNumber(mo.ref.Append("http_put_response_hop_limit"))
 }
 
 func (mo MetadataOptionsAttributes) HttpTokens() terra.StringValue {
-	return terra.ReferenceString(mo.ref.Append("http_tokens"))
+	return terra.ReferenceAsString(mo.ref.Append("http_tokens"))
 }
 
 func (mo MetadataOptionsAttributes) InstanceMetadataTags() terra.StringValue {
-	return terra.ReferenceString(mo.ref.Append("instance_metadata_tags"))
+	return terra.ReferenceAsString(mo.ref.Append("instance_metadata_tags"))
 }
 
 type NetworkInterfaceAttributes struct {
@@ -409,19 +409,19 @@ func (ni NetworkInterfaceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ni NetworkInterfaceAttributes) DeleteOnTermination() terra.BoolValue {
-	return terra.ReferenceBool(ni.ref.Append("delete_on_termination"))
+	return terra.ReferenceAsBool(ni.ref.Append("delete_on_termination"))
 }
 
 func (ni NetworkInterfaceAttributes) DeviceIndex() terra.NumberValue {
-	return terra.ReferenceNumber(ni.ref.Append("device_index"))
+	return terra.ReferenceAsNumber(ni.ref.Append("device_index"))
 }
 
 func (ni NetworkInterfaceAttributes) NetworkCardIndex() terra.NumberValue {
-	return terra.ReferenceNumber(ni.ref.Append("network_card_index"))
+	return terra.ReferenceAsNumber(ni.ref.Append("network_card_index"))
 }
 
 func (ni NetworkInterfaceAttributes) NetworkInterfaceId() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("network_interface_id"))
+	return terra.ReferenceAsString(ni.ref.Append("network_interface_id"))
 }
 
 type PrivateDnsNameOptionsAttributes struct {
@@ -441,15 +441,15 @@ func (pdno PrivateDnsNameOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pdno PrivateDnsNameOptionsAttributes) EnableResourceNameDnsARecord() terra.BoolValue {
-	return terra.ReferenceBool(pdno.ref.Append("enable_resource_name_dns_a_record"))
+	return terra.ReferenceAsBool(pdno.ref.Append("enable_resource_name_dns_a_record"))
 }
 
 func (pdno PrivateDnsNameOptionsAttributes) EnableResourceNameDnsAaaaRecord() terra.BoolValue {
-	return terra.ReferenceBool(pdno.ref.Append("enable_resource_name_dns_aaaa_record"))
+	return terra.ReferenceAsBool(pdno.ref.Append("enable_resource_name_dns_aaaa_record"))
 }
 
 func (pdno PrivateDnsNameOptionsAttributes) HostnameType() terra.StringValue {
-	return terra.ReferenceString(pdno.ref.Append("hostname_type"))
+	return terra.ReferenceAsString(pdno.ref.Append("hostname_type"))
 }
 
 type RootBlockDeviceAttributes struct {
@@ -469,43 +469,43 @@ func (rbd RootBlockDeviceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rbd RootBlockDeviceAttributes) DeleteOnTermination() terra.BoolValue {
-	return terra.ReferenceBool(rbd.ref.Append("delete_on_termination"))
+	return terra.ReferenceAsBool(rbd.ref.Append("delete_on_termination"))
 }
 
 func (rbd RootBlockDeviceAttributes) DeviceName() terra.StringValue {
-	return terra.ReferenceString(rbd.ref.Append("device_name"))
+	return terra.ReferenceAsString(rbd.ref.Append("device_name"))
 }
 
 func (rbd RootBlockDeviceAttributes) Encrypted() terra.BoolValue {
-	return terra.ReferenceBool(rbd.ref.Append("encrypted"))
+	return terra.ReferenceAsBool(rbd.ref.Append("encrypted"))
 }
 
 func (rbd RootBlockDeviceAttributes) Iops() terra.NumberValue {
-	return terra.ReferenceNumber(rbd.ref.Append("iops"))
+	return terra.ReferenceAsNumber(rbd.ref.Append("iops"))
 }
 
 func (rbd RootBlockDeviceAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(rbd.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(rbd.ref.Append("kms_key_id"))
 }
 
 func (rbd RootBlockDeviceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rbd.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rbd.ref.Append("tags"))
 }
 
 func (rbd RootBlockDeviceAttributes) Throughput() terra.NumberValue {
-	return terra.ReferenceNumber(rbd.ref.Append("throughput"))
+	return terra.ReferenceAsNumber(rbd.ref.Append("throughput"))
 }
 
 func (rbd RootBlockDeviceAttributes) VolumeId() terra.StringValue {
-	return terra.ReferenceString(rbd.ref.Append("volume_id"))
+	return terra.ReferenceAsString(rbd.ref.Append("volume_id"))
 }
 
 func (rbd RootBlockDeviceAttributes) VolumeSize() terra.NumberValue {
-	return terra.ReferenceNumber(rbd.ref.Append("volume_size"))
+	return terra.ReferenceAsNumber(rbd.ref.Append("volume_size"))
 }
 
 func (rbd RootBlockDeviceAttributes) VolumeType() terra.StringValue {
-	return terra.ReferenceString(rbd.ref.Append("volume_type"))
+	return terra.ReferenceAsString(rbd.ref.Append("volume_type"))
 }
 
 type TimeoutsAttributes struct {
@@ -525,15 +525,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type CapacityReservationSpecificationState struct {

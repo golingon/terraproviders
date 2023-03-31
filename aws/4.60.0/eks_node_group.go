@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEksNodeGroup creates a new instance of [EksNodeGroup].
 func NewEksNodeGroup(name string, args EksNodeGroupArgs) *EksNodeGroup {
 	return &EksNodeGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEksNodeGroup(name string, args EksNodeGroupArgs) *EksNodeGroup {
 
 var _ terra.Resource = (*EksNodeGroup)(nil)
 
+// EksNodeGroup represents the Terraform resource aws_eks_node_group.
 type EksNodeGroup struct {
-	Name  string
-	Args  EksNodeGroupArgs
-	state *eksNodeGroupState
+	Name      string
+	Args      EksNodeGroupArgs
+	state     *eksNodeGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EksNodeGroup].
 func (eng *EksNodeGroup) Type() string {
 	return "aws_eks_node_group"
 }
 
+// LocalName returns the local name for [EksNodeGroup].
 func (eng *EksNodeGroup) LocalName() string {
 	return eng.Name
 }
 
+// Configuration returns the configuration (args) for [EksNodeGroup].
 func (eng *EksNodeGroup) Configuration() interface{} {
 	return eng.Args
 }
 
+// DependOn is used for other resources to depend on [EksNodeGroup].
+func (eng *EksNodeGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(eng)
+}
+
+// Dependencies returns the list of resources [EksNodeGroup] depends_on.
+func (eng *EksNodeGroup) Dependencies() terra.Dependencies {
+	return eng.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EksNodeGroup].
+func (eng *EksNodeGroup) LifecycleManagement() *terra.Lifecycle {
+	return eng.Lifecycle
+}
+
+// Attributes returns the attributes for [EksNodeGroup].
 func (eng *EksNodeGroup) Attributes() eksNodeGroupAttributes {
 	return eksNodeGroupAttributes{ref: terra.ReferenceResource(eng)}
 }
 
+// ImportState imports the given attribute values into [EksNodeGroup]'s state.
 func (eng *EksNodeGroup) ImportState(av io.Reader) error {
 	eng.state = &eksNodeGroupState{}
 	if err := json.NewDecoder(av).Decode(eng.state); err != nil {
@@ -49,10 +73,12 @@ func (eng *EksNodeGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EksNodeGroup] has state.
 func (eng *EksNodeGroup) State() (*eksNodeGroupState, bool) {
 	return eng.state, eng.state != nil
 }
 
+// StateMust returns the state for [EksNodeGroup]. Panics if the state is nil.
 func (eng *EksNodeGroup) StateMust() *eksNodeGroupState {
 	if eng.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", eng.Type(), eng.LocalName()))
@@ -60,10 +86,7 @@ func (eng *EksNodeGroup) StateMust() *eksNodeGroupState {
 	return eng.state
 }
 
-func (eng *EksNodeGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(eng)
-}
-
+// EksNodeGroupArgs contains the configurations for aws_eks_node_group.
 type EksNodeGroupArgs struct {
 	// AmiType: string, optional
 	AmiType terra.StringValue `hcl:"ami_type,attr"`
@@ -111,111 +134,127 @@ type EksNodeGroupArgs struct {
 	Timeouts *eksnodegroup.Timeouts `hcl:"timeouts,block"`
 	// UpdateConfig: optional
 	UpdateConfig *eksnodegroup.UpdateConfig `hcl:"update_config,block"`
-	// DependsOn contains resources that EksNodeGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type eksNodeGroupAttributes struct {
 	ref terra.Reference
 }
 
+// AmiType returns a reference to field ami_type of aws_eks_node_group.
 func (eng eksNodeGroupAttributes) AmiType() terra.StringValue {
-	return terra.ReferenceString(eng.ref.Append("ami_type"))
+	return terra.ReferenceAsString(eng.ref.Append("ami_type"))
 }
 
+// Arn returns a reference to field arn of aws_eks_node_group.
 func (eng eksNodeGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(eng.ref.Append("arn"))
+	return terra.ReferenceAsString(eng.ref.Append("arn"))
 }
 
+// CapacityType returns a reference to field capacity_type of aws_eks_node_group.
 func (eng eksNodeGroupAttributes) CapacityType() terra.StringValue {
-	return terra.ReferenceString(eng.ref.Append("capacity_type"))
+	return terra.ReferenceAsString(eng.ref.Append("capacity_type"))
 }
 
+// ClusterName returns a reference to field cluster_name of aws_eks_node_group.
 func (eng eksNodeGroupAttributes) ClusterName() terra.StringValue {
-	return terra.ReferenceString(eng.ref.Append("cluster_name"))
+	return terra.ReferenceAsString(eng.ref.Append("cluster_name"))
 }
 
+// DiskSize returns a reference to field disk_size of aws_eks_node_group.
 func (eng eksNodeGroupAttributes) DiskSize() terra.NumberValue {
-	return terra.ReferenceNumber(eng.ref.Append("disk_size"))
+	return terra.ReferenceAsNumber(eng.ref.Append("disk_size"))
 }
 
+// ForceUpdateVersion returns a reference to field force_update_version of aws_eks_node_group.
 func (eng eksNodeGroupAttributes) ForceUpdateVersion() terra.BoolValue {
-	return terra.ReferenceBool(eng.ref.Append("force_update_version"))
+	return terra.ReferenceAsBool(eng.ref.Append("force_update_version"))
 }
 
+// Id returns a reference to field id of aws_eks_node_group.
 func (eng eksNodeGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(eng.ref.Append("id"))
+	return terra.ReferenceAsString(eng.ref.Append("id"))
 }
 
+// InstanceTypes returns a reference to field instance_types of aws_eks_node_group.
 func (eng eksNodeGroupAttributes) InstanceTypes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](eng.ref.Append("instance_types"))
+	return terra.ReferenceAsList[terra.StringValue](eng.ref.Append("instance_types"))
 }
 
+// Labels returns a reference to field labels of aws_eks_node_group.
 func (eng eksNodeGroupAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](eng.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](eng.ref.Append("labels"))
 }
 
+// NodeGroupName returns a reference to field node_group_name of aws_eks_node_group.
 func (eng eksNodeGroupAttributes) NodeGroupName() terra.StringValue {
-	return terra.ReferenceString(eng.ref.Append("node_group_name"))
+	return terra.ReferenceAsString(eng.ref.Append("node_group_name"))
 }
 
+// NodeGroupNamePrefix returns a reference to field node_group_name_prefix of aws_eks_node_group.
 func (eng eksNodeGroupAttributes) NodeGroupNamePrefix() terra.StringValue {
-	return terra.ReferenceString(eng.ref.Append("node_group_name_prefix"))
+	return terra.ReferenceAsString(eng.ref.Append("node_group_name_prefix"))
 }
 
+// NodeRoleArn returns a reference to field node_role_arn of aws_eks_node_group.
 func (eng eksNodeGroupAttributes) NodeRoleArn() terra.StringValue {
-	return terra.ReferenceString(eng.ref.Append("node_role_arn"))
+	return terra.ReferenceAsString(eng.ref.Append("node_role_arn"))
 }
 
+// ReleaseVersion returns a reference to field release_version of aws_eks_node_group.
 func (eng eksNodeGroupAttributes) ReleaseVersion() terra.StringValue {
-	return terra.ReferenceString(eng.ref.Append("release_version"))
+	return terra.ReferenceAsString(eng.ref.Append("release_version"))
 }
 
+// Status returns a reference to field status of aws_eks_node_group.
 func (eng eksNodeGroupAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(eng.ref.Append("status"))
+	return terra.ReferenceAsString(eng.ref.Append("status"))
 }
 
+// SubnetIds returns a reference to field subnet_ids of aws_eks_node_group.
 func (eng eksNodeGroupAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](eng.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](eng.ref.Append("subnet_ids"))
 }
 
+// Tags returns a reference to field tags of aws_eks_node_group.
 func (eng eksNodeGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](eng.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](eng.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_eks_node_group.
 func (eng eksNodeGroupAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](eng.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](eng.ref.Append("tags_all"))
 }
 
+// Version returns a reference to field version of aws_eks_node_group.
 func (eng eksNodeGroupAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(eng.ref.Append("version"))
+	return terra.ReferenceAsString(eng.ref.Append("version"))
 }
 
 func (eng eksNodeGroupAttributes) Resources() terra.ListValue[eksnodegroup.ResourcesAttributes] {
-	return terra.ReferenceList[eksnodegroup.ResourcesAttributes](eng.ref.Append("resources"))
+	return terra.ReferenceAsList[eksnodegroup.ResourcesAttributes](eng.ref.Append("resources"))
 }
 
 func (eng eksNodeGroupAttributes) LaunchTemplate() terra.ListValue[eksnodegroup.LaunchTemplateAttributes] {
-	return terra.ReferenceList[eksnodegroup.LaunchTemplateAttributes](eng.ref.Append("launch_template"))
+	return terra.ReferenceAsList[eksnodegroup.LaunchTemplateAttributes](eng.ref.Append("launch_template"))
 }
 
 func (eng eksNodeGroupAttributes) RemoteAccess() terra.ListValue[eksnodegroup.RemoteAccessAttributes] {
-	return terra.ReferenceList[eksnodegroup.RemoteAccessAttributes](eng.ref.Append("remote_access"))
+	return terra.ReferenceAsList[eksnodegroup.RemoteAccessAttributes](eng.ref.Append("remote_access"))
 }
 
 func (eng eksNodeGroupAttributes) ScalingConfig() terra.ListValue[eksnodegroup.ScalingConfigAttributes] {
-	return terra.ReferenceList[eksnodegroup.ScalingConfigAttributes](eng.ref.Append("scaling_config"))
+	return terra.ReferenceAsList[eksnodegroup.ScalingConfigAttributes](eng.ref.Append("scaling_config"))
 }
 
 func (eng eksNodeGroupAttributes) Taint() terra.SetValue[eksnodegroup.TaintAttributes] {
-	return terra.ReferenceSet[eksnodegroup.TaintAttributes](eng.ref.Append("taint"))
+	return terra.ReferenceAsSet[eksnodegroup.TaintAttributes](eng.ref.Append("taint"))
 }
 
 func (eng eksNodeGroupAttributes) Timeouts() eksnodegroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[eksnodegroup.TimeoutsAttributes](eng.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[eksnodegroup.TimeoutsAttributes](eng.ref.Append("timeouts"))
 }
 
 func (eng eksNodeGroupAttributes) UpdateConfig() terra.ListValue[eksnodegroup.UpdateConfigAttributes] {
-	return terra.ReferenceList[eksnodegroup.UpdateConfigAttributes](eng.ref.Append("update_config"))
+	return terra.ReferenceAsList[eksnodegroup.UpdateConfigAttributes](eng.ref.Append("update_config"))
 }
 
 type eksNodeGroupState struct {

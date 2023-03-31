@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSchemasSchema creates a new instance of [SchemasSchema].
 func NewSchemasSchema(name string, args SchemasSchemaArgs) *SchemasSchema {
 	return &SchemasSchema{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSchemasSchema(name string, args SchemasSchemaArgs) *SchemasSchema {
 
 var _ terra.Resource = (*SchemasSchema)(nil)
 
+// SchemasSchema represents the Terraform resource aws_schemas_schema.
 type SchemasSchema struct {
-	Name  string
-	Args  SchemasSchemaArgs
-	state *schemasSchemaState
+	Name      string
+	Args      SchemasSchemaArgs
+	state     *schemasSchemaState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SchemasSchema].
 func (ss *SchemasSchema) Type() string {
 	return "aws_schemas_schema"
 }
 
+// LocalName returns the local name for [SchemasSchema].
 func (ss *SchemasSchema) LocalName() string {
 	return ss.Name
 }
 
+// Configuration returns the configuration (args) for [SchemasSchema].
 func (ss *SchemasSchema) Configuration() interface{} {
 	return ss.Args
 }
 
+// DependOn is used for other resources to depend on [SchemasSchema].
+func (ss *SchemasSchema) DependOn() terra.Reference {
+	return terra.ReferenceResource(ss)
+}
+
+// Dependencies returns the list of resources [SchemasSchema] depends_on.
+func (ss *SchemasSchema) Dependencies() terra.Dependencies {
+	return ss.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SchemasSchema].
+func (ss *SchemasSchema) LifecycleManagement() *terra.Lifecycle {
+	return ss.Lifecycle
+}
+
+// Attributes returns the attributes for [SchemasSchema].
 func (ss *SchemasSchema) Attributes() schemasSchemaAttributes {
 	return schemasSchemaAttributes{ref: terra.ReferenceResource(ss)}
 }
 
+// ImportState imports the given attribute values into [SchemasSchema]'s state.
 func (ss *SchemasSchema) ImportState(av io.Reader) error {
 	ss.state = &schemasSchemaState{}
 	if err := json.NewDecoder(av).Decode(ss.state); err != nil {
@@ -48,10 +72,12 @@ func (ss *SchemasSchema) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SchemasSchema] has state.
 func (ss *SchemasSchema) State() (*schemasSchemaState, bool) {
 	return ss.state, ss.state != nil
 }
 
+// StateMust returns the state for [SchemasSchema]. Panics if the state is nil.
 func (ss *SchemasSchema) StateMust() *schemasSchemaState {
 	if ss.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ss.Type(), ss.LocalName()))
@@ -59,10 +85,7 @@ func (ss *SchemasSchema) StateMust() *schemasSchemaState {
 	return ss.state
 }
 
-func (ss *SchemasSchema) DependOn() terra.Reference {
-	return terra.ReferenceResource(ss)
-}
-
+// SchemasSchemaArgs contains the configurations for aws_schemas_schema.
 type SchemasSchemaArgs struct {
 	// Content: string, required
 	Content terra.StringValue `hcl:"content,attr" validate:"required"`
@@ -80,59 +103,69 @@ type SchemasSchemaArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Type: string, required
 	Type terra.StringValue `hcl:"type,attr" validate:"required"`
-	// DependsOn contains resources that SchemasSchema depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type schemasSchemaAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_schemas_schema.
 func (ss schemasSchemaAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("arn"))
+	return terra.ReferenceAsString(ss.ref.Append("arn"))
 }
 
+// Content returns a reference to field content of aws_schemas_schema.
 func (ss schemasSchemaAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("content"))
+	return terra.ReferenceAsString(ss.ref.Append("content"))
 }
 
+// Description returns a reference to field description of aws_schemas_schema.
 func (ss schemasSchemaAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("description"))
+	return terra.ReferenceAsString(ss.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_schemas_schema.
 func (ss schemasSchemaAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("id"))
+	return terra.ReferenceAsString(ss.ref.Append("id"))
 }
 
+// LastModified returns a reference to field last_modified of aws_schemas_schema.
 func (ss schemasSchemaAttributes) LastModified() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("last_modified"))
+	return terra.ReferenceAsString(ss.ref.Append("last_modified"))
 }
 
+// Name returns a reference to field name of aws_schemas_schema.
 func (ss schemasSchemaAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("name"))
+	return terra.ReferenceAsString(ss.ref.Append("name"))
 }
 
+// RegistryName returns a reference to field registry_name of aws_schemas_schema.
 func (ss schemasSchemaAttributes) RegistryName() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("registry_name"))
+	return terra.ReferenceAsString(ss.ref.Append("registry_name"))
 }
 
+// Tags returns a reference to field tags of aws_schemas_schema.
 func (ss schemasSchemaAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ss.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ss.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_schemas_schema.
 func (ss schemasSchemaAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ss.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ss.ref.Append("tags_all"))
 }
 
+// Type returns a reference to field type of aws_schemas_schema.
 func (ss schemasSchemaAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("type"))
+	return terra.ReferenceAsString(ss.ref.Append("type"))
 }
 
+// Version returns a reference to field version of aws_schemas_schema.
 func (ss schemasSchemaAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("version"))
+	return terra.ReferenceAsString(ss.ref.Append("version"))
 }
 
+// VersionCreatedDate returns a reference to field version_created_date of aws_schemas_schema.
 func (ss schemasSchemaAttributes) VersionCreatedDate() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("version_created_date"))
+	return terra.ReferenceAsString(ss.ref.Append("version_created_date"))
 }
 
 type schemasSchemaState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSfnActivity creates a new instance of [SfnActivity].
 func NewSfnActivity(name string, args SfnActivityArgs) *SfnActivity {
 	return &SfnActivity{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSfnActivity(name string, args SfnActivityArgs) *SfnActivity {
 
 var _ terra.Resource = (*SfnActivity)(nil)
 
+// SfnActivity represents the Terraform resource aws_sfn_activity.
 type SfnActivity struct {
-	Name  string
-	Args  SfnActivityArgs
-	state *sfnActivityState
+	Name      string
+	Args      SfnActivityArgs
+	state     *sfnActivityState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SfnActivity].
 func (sa *SfnActivity) Type() string {
 	return "aws_sfn_activity"
 }
 
+// LocalName returns the local name for [SfnActivity].
 func (sa *SfnActivity) LocalName() string {
 	return sa.Name
 }
 
+// Configuration returns the configuration (args) for [SfnActivity].
 func (sa *SfnActivity) Configuration() interface{} {
 	return sa.Args
 }
 
+// DependOn is used for other resources to depend on [SfnActivity].
+func (sa *SfnActivity) DependOn() terra.Reference {
+	return terra.ReferenceResource(sa)
+}
+
+// Dependencies returns the list of resources [SfnActivity] depends_on.
+func (sa *SfnActivity) Dependencies() terra.Dependencies {
+	return sa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SfnActivity].
+func (sa *SfnActivity) LifecycleManagement() *terra.Lifecycle {
+	return sa.Lifecycle
+}
+
+// Attributes returns the attributes for [SfnActivity].
 func (sa *SfnActivity) Attributes() sfnActivityAttributes {
 	return sfnActivityAttributes{ref: terra.ReferenceResource(sa)}
 }
 
+// ImportState imports the given attribute values into [SfnActivity]'s state.
 func (sa *SfnActivity) ImportState(av io.Reader) error {
 	sa.state = &sfnActivityState{}
 	if err := json.NewDecoder(av).Decode(sa.state); err != nil {
@@ -48,10 +72,12 @@ func (sa *SfnActivity) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SfnActivity] has state.
 func (sa *SfnActivity) State() (*sfnActivityState, bool) {
 	return sa.state, sa.state != nil
 }
 
+// StateMust returns the state for [SfnActivity]. Panics if the state is nil.
 func (sa *SfnActivity) StateMust() *sfnActivityState {
 	if sa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sa.Type(), sa.LocalName()))
@@ -59,10 +85,7 @@ func (sa *SfnActivity) StateMust() *sfnActivityState {
 	return sa.state
 }
 
-func (sa *SfnActivity) DependOn() terra.Reference {
-	return terra.ReferenceResource(sa)
-}
-
+// SfnActivityArgs contains the configurations for aws_sfn_activity.
 type SfnActivityArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -72,31 +95,34 @@ type SfnActivityArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that SfnActivity depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sfnActivityAttributes struct {
 	ref terra.Reference
 }
 
+// CreationDate returns a reference to field creation_date of aws_sfn_activity.
 func (sa sfnActivityAttributes) CreationDate() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("creation_date"))
+	return terra.ReferenceAsString(sa.ref.Append("creation_date"))
 }
 
+// Id returns a reference to field id of aws_sfn_activity.
 func (sa sfnActivityAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("id"))
+	return terra.ReferenceAsString(sa.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_sfn_activity.
 func (sa sfnActivityAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("name"))
+	return terra.ReferenceAsString(sa.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_sfn_activity.
 func (sa sfnActivityAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sa.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sa.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_sfn_activity.
 func (sa sfnActivityAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sa.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sa.ref.Append("tags_all"))
 }
 
 type sfnActivityState struct {

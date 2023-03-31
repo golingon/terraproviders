@@ -81,11 +81,11 @@ func (at ActionThresholdAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (at ActionThresholdAttributes) ActionThresholdType() terra.StringValue {
-	return terra.ReferenceString(at.ref.Append("action_threshold_type"))
+	return terra.ReferenceAsString(at.ref.Append("action_threshold_type"))
 }
 
 func (at ActionThresholdAttributes) ActionThresholdValue() terra.NumberValue {
-	return terra.ReferenceNumber(at.ref.Append("action_threshold_value"))
+	return terra.ReferenceAsNumber(at.ref.Append("action_threshold_value"))
 }
 
 type DefinitionAttributes struct {
@@ -105,15 +105,15 @@ func (d DefinitionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DefinitionAttributes) IamActionDefinition() terra.ListValue[IamActionDefinitionAttributes] {
-	return terra.ReferenceList[IamActionDefinitionAttributes](d.ref.Append("iam_action_definition"))
+	return terra.ReferenceAsList[IamActionDefinitionAttributes](d.ref.Append("iam_action_definition"))
 }
 
 func (d DefinitionAttributes) ScpActionDefinition() terra.ListValue[ScpActionDefinitionAttributes] {
-	return terra.ReferenceList[ScpActionDefinitionAttributes](d.ref.Append("scp_action_definition"))
+	return terra.ReferenceAsList[ScpActionDefinitionAttributes](d.ref.Append("scp_action_definition"))
 }
 
 func (d DefinitionAttributes) SsmActionDefinition() terra.ListValue[SsmActionDefinitionAttributes] {
-	return terra.ReferenceList[SsmActionDefinitionAttributes](d.ref.Append("ssm_action_definition"))
+	return terra.ReferenceAsList[SsmActionDefinitionAttributes](d.ref.Append("ssm_action_definition"))
 }
 
 type IamActionDefinitionAttributes struct {
@@ -133,19 +133,19 @@ func (iad IamActionDefinitionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (iad IamActionDefinitionAttributes) Groups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](iad.ref.Append("groups"))
+	return terra.ReferenceAsSet[terra.StringValue](iad.ref.Append("groups"))
 }
 
 func (iad IamActionDefinitionAttributes) PolicyArn() terra.StringValue {
-	return terra.ReferenceString(iad.ref.Append("policy_arn"))
+	return terra.ReferenceAsString(iad.ref.Append("policy_arn"))
 }
 
 func (iad IamActionDefinitionAttributes) Roles() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](iad.ref.Append("roles"))
+	return terra.ReferenceAsSet[terra.StringValue](iad.ref.Append("roles"))
 }
 
 func (iad IamActionDefinitionAttributes) Users() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](iad.ref.Append("users"))
+	return terra.ReferenceAsSet[terra.StringValue](iad.ref.Append("users"))
 }
 
 type ScpActionDefinitionAttributes struct {
@@ -165,11 +165,11 @@ func (sad ScpActionDefinitionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sad ScpActionDefinitionAttributes) PolicyId() terra.StringValue {
-	return terra.ReferenceString(sad.ref.Append("policy_id"))
+	return terra.ReferenceAsString(sad.ref.Append("policy_id"))
 }
 
 func (sad ScpActionDefinitionAttributes) TargetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sad.ref.Append("target_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](sad.ref.Append("target_ids"))
 }
 
 type SsmActionDefinitionAttributes struct {
@@ -189,15 +189,15 @@ func (sad SsmActionDefinitionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sad SsmActionDefinitionAttributes) ActionSubType() terra.StringValue {
-	return terra.ReferenceString(sad.ref.Append("action_sub_type"))
+	return terra.ReferenceAsString(sad.ref.Append("action_sub_type"))
 }
 
 func (sad SsmActionDefinitionAttributes) InstanceIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sad.ref.Append("instance_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](sad.ref.Append("instance_ids"))
 }
 
 func (sad SsmActionDefinitionAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(sad.ref.Append("region"))
+	return terra.ReferenceAsString(sad.ref.Append("region"))
 }
 
 type SubscriberAttributes struct {
@@ -217,11 +217,11 @@ func (s SubscriberAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SubscriberAttributes) Address() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("address"))
+	return terra.ReferenceAsString(s.ref.Append("address"))
 }
 
 func (s SubscriberAttributes) SubscriptionType() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("subscription_type"))
+	return terra.ReferenceAsString(s.ref.Append("subscription_type"))
 }
 
 type TimeoutsAttributes struct {
@@ -241,11 +241,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ActionThresholdState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSagemakerHumanTaskUi creates a new instance of [SagemakerHumanTaskUi].
 func NewSagemakerHumanTaskUi(name string, args SagemakerHumanTaskUiArgs) *SagemakerHumanTaskUi {
 	return &SagemakerHumanTaskUi{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSagemakerHumanTaskUi(name string, args SagemakerHumanTaskUiArgs) *Sagema
 
 var _ terra.Resource = (*SagemakerHumanTaskUi)(nil)
 
+// SagemakerHumanTaskUi represents the Terraform resource aws_sagemaker_human_task_ui.
 type SagemakerHumanTaskUi struct {
-	Name  string
-	Args  SagemakerHumanTaskUiArgs
-	state *sagemakerHumanTaskUiState
+	Name      string
+	Args      SagemakerHumanTaskUiArgs
+	state     *sagemakerHumanTaskUiState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SagemakerHumanTaskUi].
 func (shtu *SagemakerHumanTaskUi) Type() string {
 	return "aws_sagemaker_human_task_ui"
 }
 
+// LocalName returns the local name for [SagemakerHumanTaskUi].
 func (shtu *SagemakerHumanTaskUi) LocalName() string {
 	return shtu.Name
 }
 
+// Configuration returns the configuration (args) for [SagemakerHumanTaskUi].
 func (shtu *SagemakerHumanTaskUi) Configuration() interface{} {
 	return shtu.Args
 }
 
+// DependOn is used for other resources to depend on [SagemakerHumanTaskUi].
+func (shtu *SagemakerHumanTaskUi) DependOn() terra.Reference {
+	return terra.ReferenceResource(shtu)
+}
+
+// Dependencies returns the list of resources [SagemakerHumanTaskUi] depends_on.
+func (shtu *SagemakerHumanTaskUi) Dependencies() terra.Dependencies {
+	return shtu.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SagemakerHumanTaskUi].
+func (shtu *SagemakerHumanTaskUi) LifecycleManagement() *terra.Lifecycle {
+	return shtu.Lifecycle
+}
+
+// Attributes returns the attributes for [SagemakerHumanTaskUi].
 func (shtu *SagemakerHumanTaskUi) Attributes() sagemakerHumanTaskUiAttributes {
 	return sagemakerHumanTaskUiAttributes{ref: terra.ReferenceResource(shtu)}
 }
 
+// ImportState imports the given attribute values into [SagemakerHumanTaskUi]'s state.
 func (shtu *SagemakerHumanTaskUi) ImportState(av io.Reader) error {
 	shtu.state = &sagemakerHumanTaskUiState{}
 	if err := json.NewDecoder(av).Decode(shtu.state); err != nil {
@@ -49,10 +73,12 @@ func (shtu *SagemakerHumanTaskUi) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SagemakerHumanTaskUi] has state.
 func (shtu *SagemakerHumanTaskUi) State() (*sagemakerHumanTaskUiState, bool) {
 	return shtu.state, shtu.state != nil
 }
 
+// StateMust returns the state for [SagemakerHumanTaskUi]. Panics if the state is nil.
 func (shtu *SagemakerHumanTaskUi) StateMust() *sagemakerHumanTaskUiState {
 	if shtu.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", shtu.Type(), shtu.LocalName()))
@@ -60,10 +86,7 @@ func (shtu *SagemakerHumanTaskUi) StateMust() *sagemakerHumanTaskUiState {
 	return shtu.state
 }
 
-func (shtu *SagemakerHumanTaskUi) DependOn() terra.Reference {
-	return terra.ReferenceResource(shtu)
-}
-
+// SagemakerHumanTaskUiArgs contains the configurations for aws_sagemaker_human_task_ui.
 type SagemakerHumanTaskUiArgs struct {
 	// HumanTaskUiName: string, required
 	HumanTaskUiName terra.StringValue `hcl:"human_task_ui_name,attr" validate:"required"`
@@ -75,35 +98,38 @@ type SagemakerHumanTaskUiArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// UiTemplate: required
 	UiTemplate *sagemakerhumantaskui.UiTemplate `hcl:"ui_template,block" validate:"required"`
-	// DependsOn contains resources that SagemakerHumanTaskUi depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sagemakerHumanTaskUiAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_sagemaker_human_task_ui.
 func (shtu sagemakerHumanTaskUiAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(shtu.ref.Append("arn"))
+	return terra.ReferenceAsString(shtu.ref.Append("arn"))
 }
 
+// HumanTaskUiName returns a reference to field human_task_ui_name of aws_sagemaker_human_task_ui.
 func (shtu sagemakerHumanTaskUiAttributes) HumanTaskUiName() terra.StringValue {
-	return terra.ReferenceString(shtu.ref.Append("human_task_ui_name"))
+	return terra.ReferenceAsString(shtu.ref.Append("human_task_ui_name"))
 }
 
+// Id returns a reference to field id of aws_sagemaker_human_task_ui.
 func (shtu sagemakerHumanTaskUiAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(shtu.ref.Append("id"))
+	return terra.ReferenceAsString(shtu.ref.Append("id"))
 }
 
+// Tags returns a reference to field tags of aws_sagemaker_human_task_ui.
 func (shtu sagemakerHumanTaskUiAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](shtu.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](shtu.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_sagemaker_human_task_ui.
 func (shtu sagemakerHumanTaskUiAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](shtu.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](shtu.ref.Append("tags_all"))
 }
 
 func (shtu sagemakerHumanTaskUiAttributes) UiTemplate() terra.ListValue[sagemakerhumantaskui.UiTemplateAttributes] {
-	return terra.ReferenceList[sagemakerhumantaskui.UiTemplateAttributes](shtu.ref.Append("ui_template"))
+	return terra.ReferenceAsList[sagemakerhumantaskui.UiTemplateAttributes](shtu.ref.Append("ui_template"))
 }
 
 type sagemakerHumanTaskUiState struct {

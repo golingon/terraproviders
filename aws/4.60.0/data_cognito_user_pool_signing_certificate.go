@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataCognitoUserPoolSigningCertificate creates a new instance of [DataCognitoUserPoolSigningCertificate].
 func NewDataCognitoUserPoolSigningCertificate(name string, args DataCognitoUserPoolSigningCertificateArgs) *DataCognitoUserPoolSigningCertificate {
 	return &DataCognitoUserPoolSigningCertificate{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataCognitoUserPoolSigningCertificate(name string, args DataCognitoUserP
 
 var _ terra.DataResource = (*DataCognitoUserPoolSigningCertificate)(nil)
 
+// DataCognitoUserPoolSigningCertificate represents the Terraform data resource aws_cognito_user_pool_signing_certificate.
 type DataCognitoUserPoolSigningCertificate struct {
 	Name string
 	Args DataCognitoUserPoolSigningCertificateArgs
 }
 
+// DataSource returns the Terraform object type for [DataCognitoUserPoolSigningCertificate].
 func (cupsc *DataCognitoUserPoolSigningCertificate) DataSource() string {
 	return "aws_cognito_user_pool_signing_certificate"
 }
 
+// LocalName returns the local name for [DataCognitoUserPoolSigningCertificate].
 func (cupsc *DataCognitoUserPoolSigningCertificate) LocalName() string {
 	return cupsc.Name
 }
 
+// Configuration returns the configuration (args) for [DataCognitoUserPoolSigningCertificate].
 func (cupsc *DataCognitoUserPoolSigningCertificate) Configuration() interface{} {
 	return cupsc.Args
 }
 
+// Attributes returns the attributes for [DataCognitoUserPoolSigningCertificate].
 func (cupsc *DataCognitoUserPoolSigningCertificate) Attributes() dataCognitoUserPoolSigningCertificateAttributes {
 	return dataCognitoUserPoolSigningCertificateAttributes{ref: terra.ReferenceDataResource(cupsc)}
 }
 
+// DataCognitoUserPoolSigningCertificateArgs contains the configurations for aws_cognito_user_pool_signing_certificate.
 type DataCognitoUserPoolSigningCertificateArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,14 +51,17 @@ type dataCognitoUserPoolSigningCertificateAttributes struct {
 	ref terra.Reference
 }
 
+// Certificate returns a reference to field certificate of aws_cognito_user_pool_signing_certificate.
 func (cupsc dataCognitoUserPoolSigningCertificateAttributes) Certificate() terra.StringValue {
-	return terra.ReferenceString(cupsc.ref.Append("certificate"))
+	return terra.ReferenceAsString(cupsc.ref.Append("certificate"))
 }
 
+// Id returns a reference to field id of aws_cognito_user_pool_signing_certificate.
 func (cupsc dataCognitoUserPoolSigningCertificateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cupsc.ref.Append("id"))
+	return terra.ReferenceAsString(cupsc.ref.Append("id"))
 }
 
+// UserPoolId returns a reference to field user_pool_id of aws_cognito_user_pool_signing_certificate.
 func (cupsc dataCognitoUserPoolSigningCertificateAttributes) UserPoolId() terra.StringValue {
-	return terra.ReferenceString(cupsc.ref.Append("user_pool_id"))
+	return terra.ReferenceAsString(cupsc.ref.Append("user_pool_id"))
 }

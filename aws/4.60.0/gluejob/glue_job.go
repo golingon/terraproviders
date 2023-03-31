@@ -43,15 +43,15 @@ func (c CommandAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c CommandAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 func (c CommandAttributes) PythonVersion() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("python_version"))
+	return terra.ReferenceAsString(c.ref.Append("python_version"))
 }
 
 func (c CommandAttributes) ScriptLocation() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("script_location"))
+	return terra.ReferenceAsString(c.ref.Append("script_location"))
 }
 
 type ExecutionPropertyAttributes struct {
@@ -71,7 +71,7 @@ func (ep ExecutionPropertyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ep ExecutionPropertyAttributes) MaxConcurrentRuns() terra.NumberValue {
-	return terra.ReferenceNumber(ep.ref.Append("max_concurrent_runs"))
+	return terra.ReferenceAsNumber(ep.ref.Append("max_concurrent_runs"))
 }
 
 type NotificationPropertyAttributes struct {
@@ -91,7 +91,7 @@ func (np NotificationPropertyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (np NotificationPropertyAttributes) NotifyDelayAfter() terra.NumberValue {
-	return terra.ReferenceNumber(np.ref.Append("notify_delay_after"))
+	return terra.ReferenceAsNumber(np.ref.Append("notify_delay_after"))
 }
 
 type CommandState struct {

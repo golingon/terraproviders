@@ -104,19 +104,19 @@ func (aap AdditionalAuthenticationProviderAttributes) InternalTokens() hclwrite.
 }
 
 func (aap AdditionalAuthenticationProviderAttributes) AuthenticationType() terra.StringValue {
-	return terra.ReferenceString(aap.ref.Append("authentication_type"))
+	return terra.ReferenceAsString(aap.ref.Append("authentication_type"))
 }
 
 func (aap AdditionalAuthenticationProviderAttributes) LambdaAuthorizerConfig() terra.ListValue[AdditionalAuthenticationProviderLambdaAuthorizerConfigAttributes] {
-	return terra.ReferenceList[AdditionalAuthenticationProviderLambdaAuthorizerConfigAttributes](aap.ref.Append("lambda_authorizer_config"))
+	return terra.ReferenceAsList[AdditionalAuthenticationProviderLambdaAuthorizerConfigAttributes](aap.ref.Append("lambda_authorizer_config"))
 }
 
 func (aap AdditionalAuthenticationProviderAttributes) OpenidConnectConfig() terra.ListValue[AdditionalAuthenticationProviderOpenidConnectConfigAttributes] {
-	return terra.ReferenceList[AdditionalAuthenticationProviderOpenidConnectConfigAttributes](aap.ref.Append("openid_connect_config"))
+	return terra.ReferenceAsList[AdditionalAuthenticationProviderOpenidConnectConfigAttributes](aap.ref.Append("openid_connect_config"))
 }
 
 func (aap AdditionalAuthenticationProviderAttributes) UserPoolConfig() terra.ListValue[AdditionalAuthenticationProviderUserPoolConfigAttributes] {
-	return terra.ReferenceList[AdditionalAuthenticationProviderUserPoolConfigAttributes](aap.ref.Append("user_pool_config"))
+	return terra.ReferenceAsList[AdditionalAuthenticationProviderUserPoolConfigAttributes](aap.ref.Append("user_pool_config"))
 }
 
 type AdditionalAuthenticationProviderLambdaAuthorizerConfigAttributes struct {
@@ -136,15 +136,15 @@ func (lac AdditionalAuthenticationProviderLambdaAuthorizerConfigAttributes) Inte
 }
 
 func (lac AdditionalAuthenticationProviderLambdaAuthorizerConfigAttributes) AuthorizerResultTtlInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(lac.ref.Append("authorizer_result_ttl_in_seconds"))
+	return terra.ReferenceAsNumber(lac.ref.Append("authorizer_result_ttl_in_seconds"))
 }
 
 func (lac AdditionalAuthenticationProviderLambdaAuthorizerConfigAttributes) AuthorizerUri() terra.StringValue {
-	return terra.ReferenceString(lac.ref.Append("authorizer_uri"))
+	return terra.ReferenceAsString(lac.ref.Append("authorizer_uri"))
 }
 
 func (lac AdditionalAuthenticationProviderLambdaAuthorizerConfigAttributes) IdentityValidationExpression() terra.StringValue {
-	return terra.ReferenceString(lac.ref.Append("identity_validation_expression"))
+	return terra.ReferenceAsString(lac.ref.Append("identity_validation_expression"))
 }
 
 type AdditionalAuthenticationProviderOpenidConnectConfigAttributes struct {
@@ -164,19 +164,19 @@ func (occ AdditionalAuthenticationProviderOpenidConnectConfigAttributes) Interna
 }
 
 func (occ AdditionalAuthenticationProviderOpenidConnectConfigAttributes) AuthTtl() terra.NumberValue {
-	return terra.ReferenceNumber(occ.ref.Append("auth_ttl"))
+	return terra.ReferenceAsNumber(occ.ref.Append("auth_ttl"))
 }
 
 func (occ AdditionalAuthenticationProviderOpenidConnectConfigAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(occ.ref.Append("client_id"))
+	return terra.ReferenceAsString(occ.ref.Append("client_id"))
 }
 
 func (occ AdditionalAuthenticationProviderOpenidConnectConfigAttributes) IatTtl() terra.NumberValue {
-	return terra.ReferenceNumber(occ.ref.Append("iat_ttl"))
+	return terra.ReferenceAsNumber(occ.ref.Append("iat_ttl"))
 }
 
 func (occ AdditionalAuthenticationProviderOpenidConnectConfigAttributes) Issuer() terra.StringValue {
-	return terra.ReferenceString(occ.ref.Append("issuer"))
+	return terra.ReferenceAsString(occ.ref.Append("issuer"))
 }
 
 type AdditionalAuthenticationProviderUserPoolConfigAttributes struct {
@@ -196,15 +196,15 @@ func (upc AdditionalAuthenticationProviderUserPoolConfigAttributes) InternalToke
 }
 
 func (upc AdditionalAuthenticationProviderUserPoolConfigAttributes) AppIdClientRegex() terra.StringValue {
-	return terra.ReferenceString(upc.ref.Append("app_id_client_regex"))
+	return terra.ReferenceAsString(upc.ref.Append("app_id_client_regex"))
 }
 
 func (upc AdditionalAuthenticationProviderUserPoolConfigAttributes) AwsRegion() terra.StringValue {
-	return terra.ReferenceString(upc.ref.Append("aws_region"))
+	return terra.ReferenceAsString(upc.ref.Append("aws_region"))
 }
 
 func (upc AdditionalAuthenticationProviderUserPoolConfigAttributes) UserPoolId() terra.StringValue {
-	return terra.ReferenceString(upc.ref.Append("user_pool_id"))
+	return terra.ReferenceAsString(upc.ref.Append("user_pool_id"))
 }
 
 type LambdaAuthorizerConfigAttributes struct {
@@ -224,15 +224,15 @@ func (lac LambdaAuthorizerConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lac LambdaAuthorizerConfigAttributes) AuthorizerResultTtlInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(lac.ref.Append("authorizer_result_ttl_in_seconds"))
+	return terra.ReferenceAsNumber(lac.ref.Append("authorizer_result_ttl_in_seconds"))
 }
 
 func (lac LambdaAuthorizerConfigAttributes) AuthorizerUri() terra.StringValue {
-	return terra.ReferenceString(lac.ref.Append("authorizer_uri"))
+	return terra.ReferenceAsString(lac.ref.Append("authorizer_uri"))
 }
 
 func (lac LambdaAuthorizerConfigAttributes) IdentityValidationExpression() terra.StringValue {
-	return terra.ReferenceString(lac.ref.Append("identity_validation_expression"))
+	return terra.ReferenceAsString(lac.ref.Append("identity_validation_expression"))
 }
 
 type LogConfigAttributes struct {
@@ -252,15 +252,15 @@ func (lc LogConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lc LogConfigAttributes) CloudwatchLogsRoleArn() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("cloudwatch_logs_role_arn"))
+	return terra.ReferenceAsString(lc.ref.Append("cloudwatch_logs_role_arn"))
 }
 
 func (lc LogConfigAttributes) ExcludeVerboseContent() terra.BoolValue {
-	return terra.ReferenceBool(lc.ref.Append("exclude_verbose_content"))
+	return terra.ReferenceAsBool(lc.ref.Append("exclude_verbose_content"))
 }
 
 func (lc LogConfigAttributes) FieldLogLevel() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("field_log_level"))
+	return terra.ReferenceAsString(lc.ref.Append("field_log_level"))
 }
 
 type OpenidConnectConfigAttributes struct {
@@ -280,19 +280,19 @@ func (occ OpenidConnectConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (occ OpenidConnectConfigAttributes) AuthTtl() terra.NumberValue {
-	return terra.ReferenceNumber(occ.ref.Append("auth_ttl"))
+	return terra.ReferenceAsNumber(occ.ref.Append("auth_ttl"))
 }
 
 func (occ OpenidConnectConfigAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(occ.ref.Append("client_id"))
+	return terra.ReferenceAsString(occ.ref.Append("client_id"))
 }
 
 func (occ OpenidConnectConfigAttributes) IatTtl() terra.NumberValue {
-	return terra.ReferenceNumber(occ.ref.Append("iat_ttl"))
+	return terra.ReferenceAsNumber(occ.ref.Append("iat_ttl"))
 }
 
 func (occ OpenidConnectConfigAttributes) Issuer() terra.StringValue {
-	return terra.ReferenceString(occ.ref.Append("issuer"))
+	return terra.ReferenceAsString(occ.ref.Append("issuer"))
 }
 
 type UserPoolConfigAttributes struct {
@@ -312,19 +312,19 @@ func (upc UserPoolConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (upc UserPoolConfigAttributes) AppIdClientRegex() terra.StringValue {
-	return terra.ReferenceString(upc.ref.Append("app_id_client_regex"))
+	return terra.ReferenceAsString(upc.ref.Append("app_id_client_regex"))
 }
 
 func (upc UserPoolConfigAttributes) AwsRegion() terra.StringValue {
-	return terra.ReferenceString(upc.ref.Append("aws_region"))
+	return terra.ReferenceAsString(upc.ref.Append("aws_region"))
 }
 
 func (upc UserPoolConfigAttributes) DefaultAction() terra.StringValue {
-	return terra.ReferenceString(upc.ref.Append("default_action"))
+	return terra.ReferenceAsString(upc.ref.Append("default_action"))
 }
 
 func (upc UserPoolConfigAttributes) UserPoolId() terra.StringValue {
-	return terra.ReferenceString(upc.ref.Append("user_pool_id"))
+	return terra.ReferenceAsString(upc.ref.Append("user_pool_id"))
 }
 
 type AdditionalAuthenticationProviderState struct {

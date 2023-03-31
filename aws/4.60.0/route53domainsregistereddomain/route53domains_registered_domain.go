@@ -131,59 +131,59 @@ func (ac AdminContactAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ac AdminContactAttributes) AddressLine1() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("address_line_1"))
+	return terra.ReferenceAsString(ac.ref.Append("address_line_1"))
 }
 
 func (ac AdminContactAttributes) AddressLine2() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("address_line_2"))
+	return terra.ReferenceAsString(ac.ref.Append("address_line_2"))
 }
 
 func (ac AdminContactAttributes) City() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("city"))
+	return terra.ReferenceAsString(ac.ref.Append("city"))
 }
 
 func (ac AdminContactAttributes) ContactType() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("contact_type"))
+	return terra.ReferenceAsString(ac.ref.Append("contact_type"))
 }
 
 func (ac AdminContactAttributes) CountryCode() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("country_code"))
+	return terra.ReferenceAsString(ac.ref.Append("country_code"))
 }
 
 func (ac AdminContactAttributes) Email() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("email"))
+	return terra.ReferenceAsString(ac.ref.Append("email"))
 }
 
 func (ac AdminContactAttributes) ExtraParams() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ac.ref.Append("extra_params"))
+	return terra.ReferenceAsMap[terra.StringValue](ac.ref.Append("extra_params"))
 }
 
 func (ac AdminContactAttributes) Fax() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("fax"))
+	return terra.ReferenceAsString(ac.ref.Append("fax"))
 }
 
 func (ac AdminContactAttributes) FirstName() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("first_name"))
+	return terra.ReferenceAsString(ac.ref.Append("first_name"))
 }
 
 func (ac AdminContactAttributes) LastName() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("last_name"))
+	return terra.ReferenceAsString(ac.ref.Append("last_name"))
 }
 
 func (ac AdminContactAttributes) OrganizationName() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("organization_name"))
+	return terra.ReferenceAsString(ac.ref.Append("organization_name"))
 }
 
 func (ac AdminContactAttributes) PhoneNumber() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("phone_number"))
+	return terra.ReferenceAsString(ac.ref.Append("phone_number"))
 }
 
 func (ac AdminContactAttributes) State() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("state"))
+	return terra.ReferenceAsString(ac.ref.Append("state"))
 }
 
 func (ac AdminContactAttributes) ZipCode() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("zip_code"))
+	return terra.ReferenceAsString(ac.ref.Append("zip_code"))
 }
 
 type NameServerAttributes struct {
@@ -203,11 +203,11 @@ func (ns NameServerAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ns NameServerAttributes) GlueIps() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ns.ref.Append("glue_ips"))
+	return terra.ReferenceAsSet[terra.StringValue](ns.ref.Append("glue_ips"))
 }
 
 func (ns NameServerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ns.ref.Append("name"))
+	return terra.ReferenceAsString(ns.ref.Append("name"))
 }
 
 type RegistrantContactAttributes struct {
@@ -227,59 +227,59 @@ func (rc RegistrantContactAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rc RegistrantContactAttributes) AddressLine1() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("address_line_1"))
+	return terra.ReferenceAsString(rc.ref.Append("address_line_1"))
 }
 
 func (rc RegistrantContactAttributes) AddressLine2() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("address_line_2"))
+	return terra.ReferenceAsString(rc.ref.Append("address_line_2"))
 }
 
 func (rc RegistrantContactAttributes) City() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("city"))
+	return terra.ReferenceAsString(rc.ref.Append("city"))
 }
 
 func (rc RegistrantContactAttributes) ContactType() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("contact_type"))
+	return terra.ReferenceAsString(rc.ref.Append("contact_type"))
 }
 
 func (rc RegistrantContactAttributes) CountryCode() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("country_code"))
+	return terra.ReferenceAsString(rc.ref.Append("country_code"))
 }
 
 func (rc RegistrantContactAttributes) Email() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("email"))
+	return terra.ReferenceAsString(rc.ref.Append("email"))
 }
 
 func (rc RegistrantContactAttributes) ExtraParams() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rc.ref.Append("extra_params"))
+	return terra.ReferenceAsMap[terra.StringValue](rc.ref.Append("extra_params"))
 }
 
 func (rc RegistrantContactAttributes) Fax() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("fax"))
+	return terra.ReferenceAsString(rc.ref.Append("fax"))
 }
 
 func (rc RegistrantContactAttributes) FirstName() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("first_name"))
+	return terra.ReferenceAsString(rc.ref.Append("first_name"))
 }
 
 func (rc RegistrantContactAttributes) LastName() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("last_name"))
+	return terra.ReferenceAsString(rc.ref.Append("last_name"))
 }
 
 func (rc RegistrantContactAttributes) OrganizationName() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("organization_name"))
+	return terra.ReferenceAsString(rc.ref.Append("organization_name"))
 }
 
 func (rc RegistrantContactAttributes) PhoneNumber() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("phone_number"))
+	return terra.ReferenceAsString(rc.ref.Append("phone_number"))
 }
 
 func (rc RegistrantContactAttributes) State() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("state"))
+	return terra.ReferenceAsString(rc.ref.Append("state"))
 }
 
 func (rc RegistrantContactAttributes) ZipCode() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("zip_code"))
+	return terra.ReferenceAsString(rc.ref.Append("zip_code"))
 }
 
 type TechContactAttributes struct {
@@ -299,59 +299,59 @@ func (tc TechContactAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tc TechContactAttributes) AddressLine1() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("address_line_1"))
+	return terra.ReferenceAsString(tc.ref.Append("address_line_1"))
 }
 
 func (tc TechContactAttributes) AddressLine2() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("address_line_2"))
+	return terra.ReferenceAsString(tc.ref.Append("address_line_2"))
 }
 
 func (tc TechContactAttributes) City() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("city"))
+	return terra.ReferenceAsString(tc.ref.Append("city"))
 }
 
 func (tc TechContactAttributes) ContactType() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("contact_type"))
+	return terra.ReferenceAsString(tc.ref.Append("contact_type"))
 }
 
 func (tc TechContactAttributes) CountryCode() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("country_code"))
+	return terra.ReferenceAsString(tc.ref.Append("country_code"))
 }
 
 func (tc TechContactAttributes) Email() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("email"))
+	return terra.ReferenceAsString(tc.ref.Append("email"))
 }
 
 func (tc TechContactAttributes) ExtraParams() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](tc.ref.Append("extra_params"))
+	return terra.ReferenceAsMap[terra.StringValue](tc.ref.Append("extra_params"))
 }
 
 func (tc TechContactAttributes) Fax() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("fax"))
+	return terra.ReferenceAsString(tc.ref.Append("fax"))
 }
 
 func (tc TechContactAttributes) FirstName() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("first_name"))
+	return terra.ReferenceAsString(tc.ref.Append("first_name"))
 }
 
 func (tc TechContactAttributes) LastName() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("last_name"))
+	return terra.ReferenceAsString(tc.ref.Append("last_name"))
 }
 
 func (tc TechContactAttributes) OrganizationName() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("organization_name"))
+	return terra.ReferenceAsString(tc.ref.Append("organization_name"))
 }
 
 func (tc TechContactAttributes) PhoneNumber() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("phone_number"))
+	return terra.ReferenceAsString(tc.ref.Append("phone_number"))
 }
 
 func (tc TechContactAttributes) State() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("state"))
+	return terra.ReferenceAsString(tc.ref.Append("state"))
 }
 
 func (tc TechContactAttributes) ZipCode() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("zip_code"))
+	return terra.ReferenceAsString(tc.ref.Append("zip_code"))
 }
 
 type TimeoutsAttributes struct {
@@ -371,11 +371,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AdminContactState struct {

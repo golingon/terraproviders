@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSsoadminPermissionSetInlinePolicy creates a new instance of [SsoadminPermissionSetInlinePolicy].
 func NewSsoadminPermissionSetInlinePolicy(name string, args SsoadminPermissionSetInlinePolicyArgs) *SsoadminPermissionSetInlinePolicy {
 	return &SsoadminPermissionSetInlinePolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSsoadminPermissionSetInlinePolicy(name string, args SsoadminPermissionSe
 
 var _ terra.Resource = (*SsoadminPermissionSetInlinePolicy)(nil)
 
+// SsoadminPermissionSetInlinePolicy represents the Terraform resource aws_ssoadmin_permission_set_inline_policy.
 type SsoadminPermissionSetInlinePolicy struct {
-	Name  string
-	Args  SsoadminPermissionSetInlinePolicyArgs
-	state *ssoadminPermissionSetInlinePolicyState
+	Name      string
+	Args      SsoadminPermissionSetInlinePolicyArgs
+	state     *ssoadminPermissionSetInlinePolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SsoadminPermissionSetInlinePolicy].
 func (spsip *SsoadminPermissionSetInlinePolicy) Type() string {
 	return "aws_ssoadmin_permission_set_inline_policy"
 }
 
+// LocalName returns the local name for [SsoadminPermissionSetInlinePolicy].
 func (spsip *SsoadminPermissionSetInlinePolicy) LocalName() string {
 	return spsip.Name
 }
 
+// Configuration returns the configuration (args) for [SsoadminPermissionSetInlinePolicy].
 func (spsip *SsoadminPermissionSetInlinePolicy) Configuration() interface{} {
 	return spsip.Args
 }
 
+// DependOn is used for other resources to depend on [SsoadminPermissionSetInlinePolicy].
+func (spsip *SsoadminPermissionSetInlinePolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(spsip)
+}
+
+// Dependencies returns the list of resources [SsoadminPermissionSetInlinePolicy] depends_on.
+func (spsip *SsoadminPermissionSetInlinePolicy) Dependencies() terra.Dependencies {
+	return spsip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SsoadminPermissionSetInlinePolicy].
+func (spsip *SsoadminPermissionSetInlinePolicy) LifecycleManagement() *terra.Lifecycle {
+	return spsip.Lifecycle
+}
+
+// Attributes returns the attributes for [SsoadminPermissionSetInlinePolicy].
 func (spsip *SsoadminPermissionSetInlinePolicy) Attributes() ssoadminPermissionSetInlinePolicyAttributes {
 	return ssoadminPermissionSetInlinePolicyAttributes{ref: terra.ReferenceResource(spsip)}
 }
 
+// ImportState imports the given attribute values into [SsoadminPermissionSetInlinePolicy]'s state.
 func (spsip *SsoadminPermissionSetInlinePolicy) ImportState(av io.Reader) error {
 	spsip.state = &ssoadminPermissionSetInlinePolicyState{}
 	if err := json.NewDecoder(av).Decode(spsip.state); err != nil {
@@ -48,10 +72,12 @@ func (spsip *SsoadminPermissionSetInlinePolicy) ImportState(av io.Reader) error 
 	return nil
 }
 
+// State returns the state and a bool indicating if [SsoadminPermissionSetInlinePolicy] has state.
 func (spsip *SsoadminPermissionSetInlinePolicy) State() (*ssoadminPermissionSetInlinePolicyState, bool) {
 	return spsip.state, spsip.state != nil
 }
 
+// StateMust returns the state for [SsoadminPermissionSetInlinePolicy]. Panics if the state is nil.
 func (spsip *SsoadminPermissionSetInlinePolicy) StateMust() *ssoadminPermissionSetInlinePolicyState {
 	if spsip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", spsip.Type(), spsip.LocalName()))
@@ -59,10 +85,7 @@ func (spsip *SsoadminPermissionSetInlinePolicy) StateMust() *ssoadminPermissionS
 	return spsip.state
 }
 
-func (spsip *SsoadminPermissionSetInlinePolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(spsip)
-}
-
+// SsoadminPermissionSetInlinePolicyArgs contains the configurations for aws_ssoadmin_permission_set_inline_policy.
 type SsoadminPermissionSetInlinePolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -72,27 +95,29 @@ type SsoadminPermissionSetInlinePolicyArgs struct {
 	InstanceArn terra.StringValue `hcl:"instance_arn,attr" validate:"required"`
 	// PermissionSetArn: string, required
 	PermissionSetArn terra.StringValue `hcl:"permission_set_arn,attr" validate:"required"`
-	// DependsOn contains resources that SsoadminPermissionSetInlinePolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ssoadminPermissionSetInlinePolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_ssoadmin_permission_set_inline_policy.
 func (spsip ssoadminPermissionSetInlinePolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(spsip.ref.Append("id"))
+	return terra.ReferenceAsString(spsip.ref.Append("id"))
 }
 
+// InlinePolicy returns a reference to field inline_policy of aws_ssoadmin_permission_set_inline_policy.
 func (spsip ssoadminPermissionSetInlinePolicyAttributes) InlinePolicy() terra.StringValue {
-	return terra.ReferenceString(spsip.ref.Append("inline_policy"))
+	return terra.ReferenceAsString(spsip.ref.Append("inline_policy"))
 }
 
+// InstanceArn returns a reference to field instance_arn of aws_ssoadmin_permission_set_inline_policy.
 func (spsip ssoadminPermissionSetInlinePolicyAttributes) InstanceArn() terra.StringValue {
-	return terra.ReferenceString(spsip.ref.Append("instance_arn"))
+	return terra.ReferenceAsString(spsip.ref.Append("instance_arn"))
 }
 
+// PermissionSetArn returns a reference to field permission_set_arn of aws_ssoadmin_permission_set_inline_policy.
 func (spsip ssoadminPermissionSetInlinePolicyAttributes) PermissionSetArn() terra.StringValue {
-	return terra.ReferenceString(spsip.ref.Append("permission_set_arn"))
+	return terra.ReferenceAsString(spsip.ref.Append("permission_set_arn"))
 }
 
 type ssoadminPermissionSetInlinePolicyState struct {

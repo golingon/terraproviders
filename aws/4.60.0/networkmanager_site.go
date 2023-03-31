@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNetworkmanagerSite creates a new instance of [NetworkmanagerSite].
 func NewNetworkmanagerSite(name string, args NetworkmanagerSiteArgs) *NetworkmanagerSite {
 	return &NetworkmanagerSite{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNetworkmanagerSite(name string, args NetworkmanagerSiteArgs) *Networkman
 
 var _ terra.Resource = (*NetworkmanagerSite)(nil)
 
+// NetworkmanagerSite represents the Terraform resource aws_networkmanager_site.
 type NetworkmanagerSite struct {
-	Name  string
-	Args  NetworkmanagerSiteArgs
-	state *networkmanagerSiteState
+	Name      string
+	Args      NetworkmanagerSiteArgs
+	state     *networkmanagerSiteState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NetworkmanagerSite].
 func (ns *NetworkmanagerSite) Type() string {
 	return "aws_networkmanager_site"
 }
 
+// LocalName returns the local name for [NetworkmanagerSite].
 func (ns *NetworkmanagerSite) LocalName() string {
 	return ns.Name
 }
 
+// Configuration returns the configuration (args) for [NetworkmanagerSite].
 func (ns *NetworkmanagerSite) Configuration() interface{} {
 	return ns.Args
 }
 
+// DependOn is used for other resources to depend on [NetworkmanagerSite].
+func (ns *NetworkmanagerSite) DependOn() terra.Reference {
+	return terra.ReferenceResource(ns)
+}
+
+// Dependencies returns the list of resources [NetworkmanagerSite] depends_on.
+func (ns *NetworkmanagerSite) Dependencies() terra.Dependencies {
+	return ns.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NetworkmanagerSite].
+func (ns *NetworkmanagerSite) LifecycleManagement() *terra.Lifecycle {
+	return ns.Lifecycle
+}
+
+// Attributes returns the attributes for [NetworkmanagerSite].
 func (ns *NetworkmanagerSite) Attributes() networkmanagerSiteAttributes {
 	return networkmanagerSiteAttributes{ref: terra.ReferenceResource(ns)}
 }
 
+// ImportState imports the given attribute values into [NetworkmanagerSite]'s state.
 func (ns *NetworkmanagerSite) ImportState(av io.Reader) error {
 	ns.state = &networkmanagerSiteState{}
 	if err := json.NewDecoder(av).Decode(ns.state); err != nil {
@@ -49,10 +73,12 @@ func (ns *NetworkmanagerSite) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NetworkmanagerSite] has state.
 func (ns *NetworkmanagerSite) State() (*networkmanagerSiteState, bool) {
 	return ns.state, ns.state != nil
 }
 
+// StateMust returns the state for [NetworkmanagerSite]. Panics if the state is nil.
 func (ns *NetworkmanagerSite) StateMust() *networkmanagerSiteState {
 	if ns.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ns.Type(), ns.LocalName()))
@@ -60,10 +86,7 @@ func (ns *NetworkmanagerSite) StateMust() *networkmanagerSiteState {
 	return ns.state
 }
 
-func (ns *NetworkmanagerSite) DependOn() terra.Reference {
-	return terra.ReferenceResource(ns)
-}
-
+// NetworkmanagerSiteArgs contains the configurations for aws_networkmanager_site.
 type NetworkmanagerSiteArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -79,43 +102,47 @@ type NetworkmanagerSiteArgs struct {
 	Location *networkmanagersite.Location `hcl:"location,block"`
 	// Timeouts: optional
 	Timeouts *networkmanagersite.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that NetworkmanagerSite depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type networkmanagerSiteAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_networkmanager_site.
 func (ns networkmanagerSiteAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ns.ref.Append("arn"))
+	return terra.ReferenceAsString(ns.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_networkmanager_site.
 func (ns networkmanagerSiteAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ns.ref.Append("description"))
+	return terra.ReferenceAsString(ns.ref.Append("description"))
 }
 
+// GlobalNetworkId returns a reference to field global_network_id of aws_networkmanager_site.
 func (ns networkmanagerSiteAttributes) GlobalNetworkId() terra.StringValue {
-	return terra.ReferenceString(ns.ref.Append("global_network_id"))
+	return terra.ReferenceAsString(ns.ref.Append("global_network_id"))
 }
 
+// Id returns a reference to field id of aws_networkmanager_site.
 func (ns networkmanagerSiteAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ns.ref.Append("id"))
+	return terra.ReferenceAsString(ns.ref.Append("id"))
 }
 
+// Tags returns a reference to field tags of aws_networkmanager_site.
 func (ns networkmanagerSiteAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ns.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ns.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_networkmanager_site.
 func (ns networkmanagerSiteAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ns.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ns.ref.Append("tags_all"))
 }
 
 func (ns networkmanagerSiteAttributes) Location() terra.ListValue[networkmanagersite.LocationAttributes] {
-	return terra.ReferenceList[networkmanagersite.LocationAttributes](ns.ref.Append("location"))
+	return terra.ReferenceAsList[networkmanagersite.LocationAttributes](ns.ref.Append("location"))
 }
 
 func (ns networkmanagerSiteAttributes) Timeouts() networkmanagersite.TimeoutsAttributes {
-	return terra.ReferenceSingle[networkmanagersite.TimeoutsAttributes](ns.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[networkmanagersite.TimeoutsAttributes](ns.ref.Append("timeouts"))
 }
 
 type networkmanagerSiteState struct {

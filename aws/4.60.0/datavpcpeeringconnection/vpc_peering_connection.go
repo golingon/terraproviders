@@ -40,7 +40,7 @@ func (cbs CidrBlockSetAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cbs CidrBlockSetAttributes) CidrBlock() terra.StringValue {
-	return terra.ReferenceString(cbs.ref.Append("cidr_block"))
+	return terra.ReferenceAsString(cbs.ref.Append("cidr_block"))
 }
 
 type PeerCidrBlockSetAttributes struct {
@@ -60,7 +60,7 @@ func (pcbs PeerCidrBlockSetAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pcbs PeerCidrBlockSetAttributes) CidrBlock() terra.StringValue {
-	return terra.ReferenceString(pcbs.ref.Append("cidr_block"))
+	return terra.ReferenceAsString(pcbs.ref.Append("cidr_block"))
 }
 
 type FilterAttributes struct {
@@ -80,11 +80,11 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
 func (f FilterAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](f.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](f.ref.Append("values"))
 }
 
 type TimeoutsAttributes struct {
@@ -104,7 +104,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type CidrBlockSetState struct {

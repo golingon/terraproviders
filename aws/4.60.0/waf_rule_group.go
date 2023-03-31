@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewWafRuleGroup creates a new instance of [WafRuleGroup].
 func NewWafRuleGroup(name string, args WafRuleGroupArgs) *WafRuleGroup {
 	return &WafRuleGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewWafRuleGroup(name string, args WafRuleGroupArgs) *WafRuleGroup {
 
 var _ terra.Resource = (*WafRuleGroup)(nil)
 
+// WafRuleGroup represents the Terraform resource aws_waf_rule_group.
 type WafRuleGroup struct {
-	Name  string
-	Args  WafRuleGroupArgs
-	state *wafRuleGroupState
+	Name      string
+	Args      WafRuleGroupArgs
+	state     *wafRuleGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [WafRuleGroup].
 func (wrg *WafRuleGroup) Type() string {
 	return "aws_waf_rule_group"
 }
 
+// LocalName returns the local name for [WafRuleGroup].
 func (wrg *WafRuleGroup) LocalName() string {
 	return wrg.Name
 }
 
+// Configuration returns the configuration (args) for [WafRuleGroup].
 func (wrg *WafRuleGroup) Configuration() interface{} {
 	return wrg.Args
 }
 
+// DependOn is used for other resources to depend on [WafRuleGroup].
+func (wrg *WafRuleGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(wrg)
+}
+
+// Dependencies returns the list of resources [WafRuleGroup] depends_on.
+func (wrg *WafRuleGroup) Dependencies() terra.Dependencies {
+	return wrg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [WafRuleGroup].
+func (wrg *WafRuleGroup) LifecycleManagement() *terra.Lifecycle {
+	return wrg.Lifecycle
+}
+
+// Attributes returns the attributes for [WafRuleGroup].
 func (wrg *WafRuleGroup) Attributes() wafRuleGroupAttributes {
 	return wafRuleGroupAttributes{ref: terra.ReferenceResource(wrg)}
 }
 
+// ImportState imports the given attribute values into [WafRuleGroup]'s state.
 func (wrg *WafRuleGroup) ImportState(av io.Reader) error {
 	wrg.state = &wafRuleGroupState{}
 	if err := json.NewDecoder(av).Decode(wrg.state); err != nil {
@@ -49,10 +73,12 @@ func (wrg *WafRuleGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [WafRuleGroup] has state.
 func (wrg *WafRuleGroup) State() (*wafRuleGroupState, bool) {
 	return wrg.state, wrg.state != nil
 }
 
+// StateMust returns the state for [WafRuleGroup]. Panics if the state is nil.
 func (wrg *WafRuleGroup) StateMust() *wafRuleGroupState {
 	if wrg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", wrg.Type(), wrg.LocalName()))
@@ -60,10 +86,7 @@ func (wrg *WafRuleGroup) StateMust() *wafRuleGroupState {
 	return wrg.state
 }
 
-func (wrg *WafRuleGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(wrg)
-}
-
+// WafRuleGroupArgs contains the configurations for aws_waf_rule_group.
 type WafRuleGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,39 +100,43 @@ type WafRuleGroupArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// ActivatedRule: min=0
 	ActivatedRule []wafrulegroup.ActivatedRule `hcl:"activated_rule,block" validate:"min=0"`
-	// DependsOn contains resources that WafRuleGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type wafRuleGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_waf_rule_group.
 func (wrg wafRuleGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(wrg.ref.Append("arn"))
+	return terra.ReferenceAsString(wrg.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_waf_rule_group.
 func (wrg wafRuleGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(wrg.ref.Append("id"))
+	return terra.ReferenceAsString(wrg.ref.Append("id"))
 }
 
+// MetricName returns a reference to field metric_name of aws_waf_rule_group.
 func (wrg wafRuleGroupAttributes) MetricName() terra.StringValue {
-	return terra.ReferenceString(wrg.ref.Append("metric_name"))
+	return terra.ReferenceAsString(wrg.ref.Append("metric_name"))
 }
 
+// Name returns a reference to field name of aws_waf_rule_group.
 func (wrg wafRuleGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(wrg.ref.Append("name"))
+	return terra.ReferenceAsString(wrg.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_waf_rule_group.
 func (wrg wafRuleGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](wrg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](wrg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_waf_rule_group.
 func (wrg wafRuleGroupAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](wrg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](wrg.ref.Append("tags_all"))
 }
 
 func (wrg wafRuleGroupAttributes) ActivatedRule() terra.SetValue[wafrulegroup.ActivatedRuleAttributes] {
-	return terra.ReferenceSet[wafrulegroup.ActivatedRuleAttributes](wrg.ref.Append("activated_rule"))
+	return terra.ReferenceAsSet[wafrulegroup.ActivatedRuleAttributes](wrg.ref.Append("activated_rule"))
 }
 
 type wafRuleGroupState struct {

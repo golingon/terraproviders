@@ -87,11 +87,11 @@ func (e ExecutionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e ExecutionAttributes) EndedTime() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("ended_time"))
+	return terra.ReferenceAsString(e.ref.Append("ended_time"))
 }
 
 func (e ExecutionAttributes) StartedTime() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("started_time"))
+	return terra.ReferenceAsString(e.ref.Append("started_time"))
 }
 
 type GroupsAttributes struct {
@@ -111,19 +111,19 @@ func (g GroupsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (g GroupsAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("description"))
+	return terra.ReferenceAsString(g.ref.Append("description"))
 }
 
 func (g GroupsAttributes) Feature() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("feature"))
+	return terra.ReferenceAsString(g.ref.Append("feature"))
 }
 
 func (g GroupsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("name"))
+	return terra.ReferenceAsString(g.ref.Append("name"))
 }
 
 func (g GroupsAttributes) Variation() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("variation"))
+	return terra.ReferenceAsString(g.ref.Append("variation"))
 }
 
 type MetricMonitorsAttributes struct {
@@ -143,7 +143,7 @@ func (mm MetricMonitorsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mm MetricMonitorsAttributes) MetricDefinition() terra.ListValue[MetricDefinitionAttributes] {
-	return terra.ReferenceList[MetricDefinitionAttributes](mm.ref.Append("metric_definition"))
+	return terra.ReferenceAsList[MetricDefinitionAttributes](mm.ref.Append("metric_definition"))
 }
 
 type MetricDefinitionAttributes struct {
@@ -163,23 +163,23 @@ func (md MetricDefinitionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (md MetricDefinitionAttributes) EntityIdKey() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("entity_id_key"))
+	return terra.ReferenceAsString(md.ref.Append("entity_id_key"))
 }
 
 func (md MetricDefinitionAttributes) EventPattern() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("event_pattern"))
+	return terra.ReferenceAsString(md.ref.Append("event_pattern"))
 }
 
 func (md MetricDefinitionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("name"))
+	return terra.ReferenceAsString(md.ref.Append("name"))
 }
 
 func (md MetricDefinitionAttributes) UnitLabel() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("unit_label"))
+	return terra.ReferenceAsString(md.ref.Append("unit_label"))
 }
 
 func (md MetricDefinitionAttributes) ValueKey() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("value_key"))
+	return terra.ReferenceAsString(md.ref.Append("value_key"))
 }
 
 type ScheduledSplitsConfigAttributes struct {
@@ -199,7 +199,7 @@ func (ssc ScheduledSplitsConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ssc ScheduledSplitsConfigAttributes) Steps() terra.ListValue[StepsAttributes] {
-	return terra.ReferenceList[StepsAttributes](ssc.ref.Append("steps"))
+	return terra.ReferenceAsList[StepsAttributes](ssc.ref.Append("steps"))
 }
 
 type StepsAttributes struct {
@@ -219,15 +219,15 @@ func (s StepsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s StepsAttributes) GroupWeights() terra.MapValue[terra.NumberValue] {
-	return terra.ReferenceMap[terra.NumberValue](s.ref.Append("group_weights"))
+	return terra.ReferenceAsMap[terra.NumberValue](s.ref.Append("group_weights"))
 }
 
 func (s StepsAttributes) StartTime() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("start_time"))
+	return terra.ReferenceAsString(s.ref.Append("start_time"))
 }
 
 func (s StepsAttributes) SegmentOverrides() terra.ListValue[SegmentOverridesAttributes] {
-	return terra.ReferenceList[SegmentOverridesAttributes](s.ref.Append("segment_overrides"))
+	return terra.ReferenceAsList[SegmentOverridesAttributes](s.ref.Append("segment_overrides"))
 }
 
 type SegmentOverridesAttributes struct {
@@ -247,15 +247,15 @@ func (so SegmentOverridesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (so SegmentOverridesAttributes) EvaluationOrder() terra.NumberValue {
-	return terra.ReferenceNumber(so.ref.Append("evaluation_order"))
+	return terra.ReferenceAsNumber(so.ref.Append("evaluation_order"))
 }
 
 func (so SegmentOverridesAttributes) Segment() terra.StringValue {
-	return terra.ReferenceString(so.ref.Append("segment"))
+	return terra.ReferenceAsString(so.ref.Append("segment"))
 }
 
 func (so SegmentOverridesAttributes) Weights() terra.MapValue[terra.NumberValue] {
-	return terra.ReferenceMap[terra.NumberValue](so.ref.Append("weights"))
+	return terra.ReferenceAsMap[terra.NumberValue](so.ref.Append("weights"))
 }
 
 type TimeoutsAttributes struct {
@@ -275,15 +275,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ExecutionState struct {

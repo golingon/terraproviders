@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewConnectContactFlowModule creates a new instance of [ConnectContactFlowModule].
 func NewConnectContactFlowModule(name string, args ConnectContactFlowModuleArgs) *ConnectContactFlowModule {
 	return &ConnectContactFlowModule{
 		Args: args,
@@ -18,28 +19,51 @@ func NewConnectContactFlowModule(name string, args ConnectContactFlowModuleArgs)
 
 var _ terra.Resource = (*ConnectContactFlowModule)(nil)
 
+// ConnectContactFlowModule represents the Terraform resource aws_connect_contact_flow_module.
 type ConnectContactFlowModule struct {
-	Name  string
-	Args  ConnectContactFlowModuleArgs
-	state *connectContactFlowModuleState
+	Name      string
+	Args      ConnectContactFlowModuleArgs
+	state     *connectContactFlowModuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ConnectContactFlowModule].
 func (ccfm *ConnectContactFlowModule) Type() string {
 	return "aws_connect_contact_flow_module"
 }
 
+// LocalName returns the local name for [ConnectContactFlowModule].
 func (ccfm *ConnectContactFlowModule) LocalName() string {
 	return ccfm.Name
 }
 
+// Configuration returns the configuration (args) for [ConnectContactFlowModule].
 func (ccfm *ConnectContactFlowModule) Configuration() interface{} {
 	return ccfm.Args
 }
 
+// DependOn is used for other resources to depend on [ConnectContactFlowModule].
+func (ccfm *ConnectContactFlowModule) DependOn() terra.Reference {
+	return terra.ReferenceResource(ccfm)
+}
+
+// Dependencies returns the list of resources [ConnectContactFlowModule] depends_on.
+func (ccfm *ConnectContactFlowModule) Dependencies() terra.Dependencies {
+	return ccfm.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ConnectContactFlowModule].
+func (ccfm *ConnectContactFlowModule) LifecycleManagement() *terra.Lifecycle {
+	return ccfm.Lifecycle
+}
+
+// Attributes returns the attributes for [ConnectContactFlowModule].
 func (ccfm *ConnectContactFlowModule) Attributes() connectContactFlowModuleAttributes {
 	return connectContactFlowModuleAttributes{ref: terra.ReferenceResource(ccfm)}
 }
 
+// ImportState imports the given attribute values into [ConnectContactFlowModule]'s state.
 func (ccfm *ConnectContactFlowModule) ImportState(av io.Reader) error {
 	ccfm.state = &connectContactFlowModuleState{}
 	if err := json.NewDecoder(av).Decode(ccfm.state); err != nil {
@@ -48,10 +72,12 @@ func (ccfm *ConnectContactFlowModule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ConnectContactFlowModule] has state.
 func (ccfm *ConnectContactFlowModule) State() (*connectContactFlowModuleState, bool) {
 	return ccfm.state, ccfm.state != nil
 }
 
+// StateMust returns the state for [ConnectContactFlowModule]. Panics if the state is nil.
 func (ccfm *ConnectContactFlowModule) StateMust() *connectContactFlowModuleState {
 	if ccfm.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ccfm.Type(), ccfm.LocalName()))
@@ -59,10 +85,7 @@ func (ccfm *ConnectContactFlowModule) StateMust() *connectContactFlowModuleState
 	return ccfm.state
 }
 
-func (ccfm *ConnectContactFlowModule) DependOn() terra.Reference {
-	return terra.ReferenceResource(ccfm)
-}
-
+// ConnectContactFlowModuleArgs contains the configurations for aws_connect_contact_flow_module.
 type ConnectContactFlowModuleArgs struct {
 	// Content: string, optional
 	Content terra.StringValue `hcl:"content,attr"`
@@ -82,55 +105,64 @@ type ConnectContactFlowModuleArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that ConnectContactFlowModule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type connectContactFlowModuleAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_connect_contact_flow_module.
 func (ccfm connectContactFlowModuleAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ccfm.ref.Append("arn"))
+	return terra.ReferenceAsString(ccfm.ref.Append("arn"))
 }
 
+// ContactFlowModuleId returns a reference to field contact_flow_module_id of aws_connect_contact_flow_module.
 func (ccfm connectContactFlowModuleAttributes) ContactFlowModuleId() terra.StringValue {
-	return terra.ReferenceString(ccfm.ref.Append("contact_flow_module_id"))
+	return terra.ReferenceAsString(ccfm.ref.Append("contact_flow_module_id"))
 }
 
+// Content returns a reference to field content of aws_connect_contact_flow_module.
 func (ccfm connectContactFlowModuleAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(ccfm.ref.Append("content"))
+	return terra.ReferenceAsString(ccfm.ref.Append("content"))
 }
 
+// ContentHash returns a reference to field content_hash of aws_connect_contact_flow_module.
 func (ccfm connectContactFlowModuleAttributes) ContentHash() terra.StringValue {
-	return terra.ReferenceString(ccfm.ref.Append("content_hash"))
+	return terra.ReferenceAsString(ccfm.ref.Append("content_hash"))
 }
 
+// Description returns a reference to field description of aws_connect_contact_flow_module.
 func (ccfm connectContactFlowModuleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ccfm.ref.Append("description"))
+	return terra.ReferenceAsString(ccfm.ref.Append("description"))
 }
 
+// Filename returns a reference to field filename of aws_connect_contact_flow_module.
 func (ccfm connectContactFlowModuleAttributes) Filename() terra.StringValue {
-	return terra.ReferenceString(ccfm.ref.Append("filename"))
+	return terra.ReferenceAsString(ccfm.ref.Append("filename"))
 }
 
+// Id returns a reference to field id of aws_connect_contact_flow_module.
 func (ccfm connectContactFlowModuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ccfm.ref.Append("id"))
+	return terra.ReferenceAsString(ccfm.ref.Append("id"))
 }
 
+// InstanceId returns a reference to field instance_id of aws_connect_contact_flow_module.
 func (ccfm connectContactFlowModuleAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(ccfm.ref.Append("instance_id"))
+	return terra.ReferenceAsString(ccfm.ref.Append("instance_id"))
 }
 
+// Name returns a reference to field name of aws_connect_contact_flow_module.
 func (ccfm connectContactFlowModuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ccfm.ref.Append("name"))
+	return terra.ReferenceAsString(ccfm.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_connect_contact_flow_module.
 func (ccfm connectContactFlowModuleAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ccfm.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ccfm.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_connect_contact_flow_module.
 func (ccfm connectContactFlowModuleAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ccfm.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ccfm.ref.Append("tags_all"))
 }
 
 type connectContactFlowModuleState struct {

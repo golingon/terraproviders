@@ -38,11 +38,11 @@ func (xmt XssMatchTuplesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (xmt XssMatchTuplesAttributes) TextTransformation() terra.StringValue {
-	return terra.ReferenceString(xmt.ref.Append("text_transformation"))
+	return terra.ReferenceAsString(xmt.ref.Append("text_transformation"))
 }
 
 func (xmt XssMatchTuplesAttributes) FieldToMatch() terra.ListValue[FieldToMatchAttributes] {
-	return terra.ReferenceList[FieldToMatchAttributes](xmt.ref.Append("field_to_match"))
+	return terra.ReferenceAsList[FieldToMatchAttributes](xmt.ref.Append("field_to_match"))
 }
 
 type FieldToMatchAttributes struct {
@@ -62,11 +62,11 @@ func (ftm FieldToMatchAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ftm FieldToMatchAttributes) Data() terra.StringValue {
-	return terra.ReferenceString(ftm.ref.Append("data"))
+	return terra.ReferenceAsString(ftm.ref.Append("data"))
 }
 
 func (ftm FieldToMatchAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ftm.ref.Append("type"))
+	return terra.ReferenceAsString(ftm.ref.Append("type"))
 }
 
 type XssMatchTuplesState struct {

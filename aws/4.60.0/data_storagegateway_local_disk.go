@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataStoragegatewayLocalDisk creates a new instance of [DataStoragegatewayLocalDisk].
 func NewDataStoragegatewayLocalDisk(name string, args DataStoragegatewayLocalDiskArgs) *DataStoragegatewayLocalDisk {
 	return &DataStoragegatewayLocalDisk{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataStoragegatewayLocalDisk(name string, args DataStoragegatewayLocalDis
 
 var _ terra.DataResource = (*DataStoragegatewayLocalDisk)(nil)
 
+// DataStoragegatewayLocalDisk represents the Terraform data resource aws_storagegateway_local_disk.
 type DataStoragegatewayLocalDisk struct {
 	Name string
 	Args DataStoragegatewayLocalDiskArgs
 }
 
+// DataSource returns the Terraform object type for [DataStoragegatewayLocalDisk].
 func (sld *DataStoragegatewayLocalDisk) DataSource() string {
 	return "aws_storagegateway_local_disk"
 }
 
+// LocalName returns the local name for [DataStoragegatewayLocalDisk].
 func (sld *DataStoragegatewayLocalDisk) LocalName() string {
 	return sld.Name
 }
 
+// Configuration returns the configuration (args) for [DataStoragegatewayLocalDisk].
 func (sld *DataStoragegatewayLocalDisk) Configuration() interface{} {
 	return sld.Args
 }
 
+// Attributes returns the attributes for [DataStoragegatewayLocalDisk].
 func (sld *DataStoragegatewayLocalDisk) Attributes() dataStoragegatewayLocalDiskAttributes {
 	return dataStoragegatewayLocalDiskAttributes{ref: terra.ReferenceDataResource(sld)}
 }
 
+// DataStoragegatewayLocalDiskArgs contains the configurations for aws_storagegateway_local_disk.
 type DataStoragegatewayLocalDiskArgs struct {
 	// DiskNode: string, optional
 	DiskNode terra.StringValue `hcl:"disk_node,attr"`
@@ -48,22 +55,27 @@ type dataStoragegatewayLocalDiskAttributes struct {
 	ref terra.Reference
 }
 
+// DiskId returns a reference to field disk_id of aws_storagegateway_local_disk.
 func (sld dataStoragegatewayLocalDiskAttributes) DiskId() terra.StringValue {
-	return terra.ReferenceString(sld.ref.Append("disk_id"))
+	return terra.ReferenceAsString(sld.ref.Append("disk_id"))
 }
 
+// DiskNode returns a reference to field disk_node of aws_storagegateway_local_disk.
 func (sld dataStoragegatewayLocalDiskAttributes) DiskNode() terra.StringValue {
-	return terra.ReferenceString(sld.ref.Append("disk_node"))
+	return terra.ReferenceAsString(sld.ref.Append("disk_node"))
 }
 
+// DiskPath returns a reference to field disk_path of aws_storagegateway_local_disk.
 func (sld dataStoragegatewayLocalDiskAttributes) DiskPath() terra.StringValue {
-	return terra.ReferenceString(sld.ref.Append("disk_path"))
+	return terra.ReferenceAsString(sld.ref.Append("disk_path"))
 }
 
+// GatewayArn returns a reference to field gateway_arn of aws_storagegateway_local_disk.
 func (sld dataStoragegatewayLocalDiskAttributes) GatewayArn() terra.StringValue {
-	return terra.ReferenceString(sld.ref.Append("gateway_arn"))
+	return terra.ReferenceAsString(sld.ref.Append("gateway_arn"))
 }
 
+// Id returns a reference to field id of aws_storagegateway_local_disk.
 func (sld dataStoragegatewayLocalDiskAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sld.ref.Append("id"))
+	return terra.ReferenceAsString(sld.ref.Append("id"))
 }

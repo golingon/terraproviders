@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewOrganizationsPolicy creates a new instance of [OrganizationsPolicy].
 func NewOrganizationsPolicy(name string, args OrganizationsPolicyArgs) *OrganizationsPolicy {
 	return &OrganizationsPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewOrganizationsPolicy(name string, args OrganizationsPolicyArgs) *Organiza
 
 var _ terra.Resource = (*OrganizationsPolicy)(nil)
 
+// OrganizationsPolicy represents the Terraform resource aws_organizations_policy.
 type OrganizationsPolicy struct {
-	Name  string
-	Args  OrganizationsPolicyArgs
-	state *organizationsPolicyState
+	Name      string
+	Args      OrganizationsPolicyArgs
+	state     *organizationsPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [OrganizationsPolicy].
 func (op *OrganizationsPolicy) Type() string {
 	return "aws_organizations_policy"
 }
 
+// LocalName returns the local name for [OrganizationsPolicy].
 func (op *OrganizationsPolicy) LocalName() string {
 	return op.Name
 }
 
+// Configuration returns the configuration (args) for [OrganizationsPolicy].
 func (op *OrganizationsPolicy) Configuration() interface{} {
 	return op.Args
 }
 
+// DependOn is used for other resources to depend on [OrganizationsPolicy].
+func (op *OrganizationsPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(op)
+}
+
+// Dependencies returns the list of resources [OrganizationsPolicy] depends_on.
+func (op *OrganizationsPolicy) Dependencies() terra.Dependencies {
+	return op.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [OrganizationsPolicy].
+func (op *OrganizationsPolicy) LifecycleManagement() *terra.Lifecycle {
+	return op.Lifecycle
+}
+
+// Attributes returns the attributes for [OrganizationsPolicy].
 func (op *OrganizationsPolicy) Attributes() organizationsPolicyAttributes {
 	return organizationsPolicyAttributes{ref: terra.ReferenceResource(op)}
 }
 
+// ImportState imports the given attribute values into [OrganizationsPolicy]'s state.
 func (op *OrganizationsPolicy) ImportState(av io.Reader) error {
 	op.state = &organizationsPolicyState{}
 	if err := json.NewDecoder(av).Decode(op.state); err != nil {
@@ -48,10 +72,12 @@ func (op *OrganizationsPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [OrganizationsPolicy] has state.
 func (op *OrganizationsPolicy) State() (*organizationsPolicyState, bool) {
 	return op.state, op.state != nil
 }
 
+// StateMust returns the state for [OrganizationsPolicy]. Panics if the state is nil.
 func (op *OrganizationsPolicy) StateMust() *organizationsPolicyState {
 	if op.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", op.Type(), op.LocalName()))
@@ -59,10 +85,7 @@ func (op *OrganizationsPolicy) StateMust() *organizationsPolicyState {
 	return op.state
 }
 
-func (op *OrganizationsPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(op)
-}
-
+// OrganizationsPolicyArgs contains the configurations for aws_organizations_policy.
 type OrganizationsPolicyArgs struct {
 	// Content: string, required
 	Content terra.StringValue `hcl:"content,attr" validate:"required"`
@@ -80,47 +103,54 @@ type OrganizationsPolicyArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Type: string, optional
 	Type terra.StringValue `hcl:"type,attr"`
-	// DependsOn contains resources that OrganizationsPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type organizationsPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_organizations_policy.
 func (op organizationsPolicyAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(op.ref.Append("arn"))
+	return terra.ReferenceAsString(op.ref.Append("arn"))
 }
 
+// Content returns a reference to field content of aws_organizations_policy.
 func (op organizationsPolicyAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(op.ref.Append("content"))
+	return terra.ReferenceAsString(op.ref.Append("content"))
 }
 
+// Description returns a reference to field description of aws_organizations_policy.
 func (op organizationsPolicyAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(op.ref.Append("description"))
+	return terra.ReferenceAsString(op.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_organizations_policy.
 func (op organizationsPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(op.ref.Append("id"))
+	return terra.ReferenceAsString(op.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_organizations_policy.
 func (op organizationsPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(op.ref.Append("name"))
+	return terra.ReferenceAsString(op.ref.Append("name"))
 }
 
+// SkipDestroy returns a reference to field skip_destroy of aws_organizations_policy.
 func (op organizationsPolicyAttributes) SkipDestroy() terra.BoolValue {
-	return terra.ReferenceBool(op.ref.Append("skip_destroy"))
+	return terra.ReferenceAsBool(op.ref.Append("skip_destroy"))
 }
 
+// Tags returns a reference to field tags of aws_organizations_policy.
 func (op organizationsPolicyAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](op.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](op.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_organizations_policy.
 func (op organizationsPolicyAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](op.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](op.ref.Append("tags_all"))
 }
 
+// Type returns a reference to field type of aws_organizations_policy.
 func (op organizationsPolicyAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(op.ref.Append("type"))
+	return terra.ReferenceAsString(op.ref.Append("type"))
 }
 
 type organizationsPolicyState struct {

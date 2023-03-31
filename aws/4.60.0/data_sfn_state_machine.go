@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataSfnStateMachine creates a new instance of [DataSfnStateMachine].
 func NewDataSfnStateMachine(name string, args DataSfnStateMachineArgs) *DataSfnStateMachine {
 	return &DataSfnStateMachine{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataSfnStateMachine(name string, args DataSfnStateMachineArgs) *DataSfnS
 
 var _ terra.DataResource = (*DataSfnStateMachine)(nil)
 
+// DataSfnStateMachine represents the Terraform data resource aws_sfn_state_machine.
 type DataSfnStateMachine struct {
 	Name string
 	Args DataSfnStateMachineArgs
 }
 
+// DataSource returns the Terraform object type for [DataSfnStateMachine].
 func (ssm *DataSfnStateMachine) DataSource() string {
 	return "aws_sfn_state_machine"
 }
 
+// LocalName returns the local name for [DataSfnStateMachine].
 func (ssm *DataSfnStateMachine) LocalName() string {
 	return ssm.Name
 }
 
+// Configuration returns the configuration (args) for [DataSfnStateMachine].
 func (ssm *DataSfnStateMachine) Configuration() interface{} {
 	return ssm.Args
 }
 
+// Attributes returns the attributes for [DataSfnStateMachine].
 func (ssm *DataSfnStateMachine) Attributes() dataSfnStateMachineAttributes {
 	return dataSfnStateMachineAttributes{ref: terra.ReferenceDataResource(ssm)}
 }
 
+// DataSfnStateMachineArgs contains the configurations for aws_sfn_state_machine.
 type DataSfnStateMachineArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,30 +51,37 @@ type dataSfnStateMachineAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_sfn_state_machine.
 func (ssm dataSfnStateMachineAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ssm.ref.Append("arn"))
+	return terra.ReferenceAsString(ssm.ref.Append("arn"))
 }
 
+// CreationDate returns a reference to field creation_date of aws_sfn_state_machine.
 func (ssm dataSfnStateMachineAttributes) CreationDate() terra.StringValue {
-	return terra.ReferenceString(ssm.ref.Append("creation_date"))
+	return terra.ReferenceAsString(ssm.ref.Append("creation_date"))
 }
 
+// Definition returns a reference to field definition of aws_sfn_state_machine.
 func (ssm dataSfnStateMachineAttributes) Definition() terra.StringValue {
-	return terra.ReferenceString(ssm.ref.Append("definition"))
+	return terra.ReferenceAsString(ssm.ref.Append("definition"))
 }
 
+// Id returns a reference to field id of aws_sfn_state_machine.
 func (ssm dataSfnStateMachineAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ssm.ref.Append("id"))
+	return terra.ReferenceAsString(ssm.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_sfn_state_machine.
 func (ssm dataSfnStateMachineAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ssm.ref.Append("name"))
+	return terra.ReferenceAsString(ssm.ref.Append("name"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_sfn_state_machine.
 func (ssm dataSfnStateMachineAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(ssm.ref.Append("role_arn"))
+	return terra.ReferenceAsString(ssm.ref.Append("role_arn"))
 }
 
+// Status returns a reference to field status of aws_sfn_state_machine.
 func (ssm dataSfnStateMachineAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ssm.ref.Append("status"))
+	return terra.ReferenceAsString(ssm.ref.Append("status"))
 }

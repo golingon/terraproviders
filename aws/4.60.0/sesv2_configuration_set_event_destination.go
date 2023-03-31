@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSesv2ConfigurationSetEventDestination creates a new instance of [Sesv2ConfigurationSetEventDestination].
 func NewSesv2ConfigurationSetEventDestination(name string, args Sesv2ConfigurationSetEventDestinationArgs) *Sesv2ConfigurationSetEventDestination {
 	return &Sesv2ConfigurationSetEventDestination{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSesv2ConfigurationSetEventDestination(name string, args Sesv2Configurati
 
 var _ terra.Resource = (*Sesv2ConfigurationSetEventDestination)(nil)
 
+// Sesv2ConfigurationSetEventDestination represents the Terraform resource aws_sesv2_configuration_set_event_destination.
 type Sesv2ConfigurationSetEventDestination struct {
-	Name  string
-	Args  Sesv2ConfigurationSetEventDestinationArgs
-	state *sesv2ConfigurationSetEventDestinationState
+	Name      string
+	Args      Sesv2ConfigurationSetEventDestinationArgs
+	state     *sesv2ConfigurationSetEventDestinationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Sesv2ConfigurationSetEventDestination].
 func (scsed *Sesv2ConfigurationSetEventDestination) Type() string {
 	return "aws_sesv2_configuration_set_event_destination"
 }
 
+// LocalName returns the local name for [Sesv2ConfigurationSetEventDestination].
 func (scsed *Sesv2ConfigurationSetEventDestination) LocalName() string {
 	return scsed.Name
 }
 
+// Configuration returns the configuration (args) for [Sesv2ConfigurationSetEventDestination].
 func (scsed *Sesv2ConfigurationSetEventDestination) Configuration() interface{} {
 	return scsed.Args
 }
 
+// DependOn is used for other resources to depend on [Sesv2ConfigurationSetEventDestination].
+func (scsed *Sesv2ConfigurationSetEventDestination) DependOn() terra.Reference {
+	return terra.ReferenceResource(scsed)
+}
+
+// Dependencies returns the list of resources [Sesv2ConfigurationSetEventDestination] depends_on.
+func (scsed *Sesv2ConfigurationSetEventDestination) Dependencies() terra.Dependencies {
+	return scsed.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Sesv2ConfigurationSetEventDestination].
+func (scsed *Sesv2ConfigurationSetEventDestination) LifecycleManagement() *terra.Lifecycle {
+	return scsed.Lifecycle
+}
+
+// Attributes returns the attributes for [Sesv2ConfigurationSetEventDestination].
 func (scsed *Sesv2ConfigurationSetEventDestination) Attributes() sesv2ConfigurationSetEventDestinationAttributes {
 	return sesv2ConfigurationSetEventDestinationAttributes{ref: terra.ReferenceResource(scsed)}
 }
 
+// ImportState imports the given attribute values into [Sesv2ConfigurationSetEventDestination]'s state.
 func (scsed *Sesv2ConfigurationSetEventDestination) ImportState(av io.Reader) error {
 	scsed.state = &sesv2ConfigurationSetEventDestinationState{}
 	if err := json.NewDecoder(av).Decode(scsed.state); err != nil {
@@ -49,10 +73,12 @@ func (scsed *Sesv2ConfigurationSetEventDestination) ImportState(av io.Reader) er
 	return nil
 }
 
+// State returns the state and a bool indicating if [Sesv2ConfigurationSetEventDestination] has state.
 func (scsed *Sesv2ConfigurationSetEventDestination) State() (*sesv2ConfigurationSetEventDestinationState, bool) {
 	return scsed.state, scsed.state != nil
 }
 
+// StateMust returns the state for [Sesv2ConfigurationSetEventDestination]. Panics if the state is nil.
 func (scsed *Sesv2ConfigurationSetEventDestination) StateMust() *sesv2ConfigurationSetEventDestinationState {
 	if scsed.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", scsed.Type(), scsed.LocalName()))
@@ -60,10 +86,7 @@ func (scsed *Sesv2ConfigurationSetEventDestination) StateMust() *sesv2Configurat
 	return scsed.state
 }
 
-func (scsed *Sesv2ConfigurationSetEventDestination) DependOn() terra.Reference {
-	return terra.ReferenceResource(scsed)
-}
-
+// Sesv2ConfigurationSetEventDestinationArgs contains the configurations for aws_sesv2_configuration_set_event_destination.
 type Sesv2ConfigurationSetEventDestinationArgs struct {
 	// ConfigurationSetName: string, required
 	ConfigurationSetName terra.StringValue `hcl:"configuration_set_name,attr" validate:"required"`
@@ -73,27 +96,28 @@ type Sesv2ConfigurationSetEventDestinationArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// EventDestination: required
 	EventDestination *sesv2configurationseteventdestination.EventDestination `hcl:"event_destination,block" validate:"required"`
-	// DependsOn contains resources that Sesv2ConfigurationSetEventDestination depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sesv2ConfigurationSetEventDestinationAttributes struct {
 	ref terra.Reference
 }
 
+// ConfigurationSetName returns a reference to field configuration_set_name of aws_sesv2_configuration_set_event_destination.
 func (scsed sesv2ConfigurationSetEventDestinationAttributes) ConfigurationSetName() terra.StringValue {
-	return terra.ReferenceString(scsed.ref.Append("configuration_set_name"))
+	return terra.ReferenceAsString(scsed.ref.Append("configuration_set_name"))
 }
 
+// EventDestinationName returns a reference to field event_destination_name of aws_sesv2_configuration_set_event_destination.
 func (scsed sesv2ConfigurationSetEventDestinationAttributes) EventDestinationName() terra.StringValue {
-	return terra.ReferenceString(scsed.ref.Append("event_destination_name"))
+	return terra.ReferenceAsString(scsed.ref.Append("event_destination_name"))
 }
 
+// Id returns a reference to field id of aws_sesv2_configuration_set_event_destination.
 func (scsed sesv2ConfigurationSetEventDestinationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(scsed.ref.Append("id"))
+	return terra.ReferenceAsString(scsed.ref.Append("id"))
 }
 
 func (scsed sesv2ConfigurationSetEventDestinationAttributes) EventDestination() terra.ListValue[sesv2configurationseteventdestination.EventDestinationAttributes] {
-	return terra.ReferenceList[sesv2configurationseteventdestination.EventDestinationAttributes](scsed.ref.Append("event_destination"))
+	return terra.ReferenceAsList[sesv2configurationseteventdestination.EventDestinationAttributes](scsed.ref.Append("event_destination"))
 }
 
 type sesv2ConfigurationSetEventDestinationState struct {

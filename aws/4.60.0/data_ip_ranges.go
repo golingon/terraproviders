@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataIpRanges creates a new instance of [DataIpRanges].
 func NewDataIpRanges(name string, args DataIpRangesArgs) *DataIpRanges {
 	return &DataIpRanges{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataIpRanges(name string, args DataIpRangesArgs) *DataIpRanges {
 
 var _ terra.DataResource = (*DataIpRanges)(nil)
 
+// DataIpRanges represents the Terraform data resource aws_ip_ranges.
 type DataIpRanges struct {
 	Name string
 	Args DataIpRangesArgs
 }
 
+// DataSource returns the Terraform object type for [DataIpRanges].
 func (ir *DataIpRanges) DataSource() string {
 	return "aws_ip_ranges"
 }
 
+// LocalName returns the local name for [DataIpRanges].
 func (ir *DataIpRanges) LocalName() string {
 	return ir.Name
 }
 
+// Configuration returns the configuration (args) for [DataIpRanges].
 func (ir *DataIpRanges) Configuration() interface{} {
 	return ir.Args
 }
 
+// Attributes returns the attributes for [DataIpRanges].
 func (ir *DataIpRanges) Attributes() dataIpRangesAttributes {
 	return dataIpRangesAttributes{ref: terra.ReferenceDataResource(ir)}
 }
 
+// DataIpRangesArgs contains the configurations for aws_ip_ranges.
 type DataIpRangesArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -48,34 +55,42 @@ type dataIpRangesAttributes struct {
 	ref terra.Reference
 }
 
+// CidrBlocks returns a reference to field cidr_blocks of aws_ip_ranges.
 func (ir dataIpRangesAttributes) CidrBlocks() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ir.ref.Append("cidr_blocks"))
+	return terra.ReferenceAsList[terra.StringValue](ir.ref.Append("cidr_blocks"))
 }
 
+// CreateDate returns a reference to field create_date of aws_ip_ranges.
 func (ir dataIpRangesAttributes) CreateDate() terra.StringValue {
-	return terra.ReferenceString(ir.ref.Append("create_date"))
+	return terra.ReferenceAsString(ir.ref.Append("create_date"))
 }
 
+// Id returns a reference to field id of aws_ip_ranges.
 func (ir dataIpRangesAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ir.ref.Append("id"))
+	return terra.ReferenceAsString(ir.ref.Append("id"))
 }
 
+// Ipv6CidrBlocks returns a reference to field ipv6_cidr_blocks of aws_ip_ranges.
 func (ir dataIpRangesAttributes) Ipv6CidrBlocks() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ir.ref.Append("ipv6_cidr_blocks"))
+	return terra.ReferenceAsList[terra.StringValue](ir.ref.Append("ipv6_cidr_blocks"))
 }
 
+// Regions returns a reference to field regions of aws_ip_ranges.
 func (ir dataIpRangesAttributes) Regions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ir.ref.Append("regions"))
+	return terra.ReferenceAsSet[terra.StringValue](ir.ref.Append("regions"))
 }
 
+// Services returns a reference to field services of aws_ip_ranges.
 func (ir dataIpRangesAttributes) Services() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ir.ref.Append("services"))
+	return terra.ReferenceAsSet[terra.StringValue](ir.ref.Append("services"))
 }
 
+// SyncToken returns a reference to field sync_token of aws_ip_ranges.
 func (ir dataIpRangesAttributes) SyncToken() terra.NumberValue {
-	return terra.ReferenceNumber(ir.ref.Append("sync_token"))
+	return terra.ReferenceAsNumber(ir.ref.Append("sync_token"))
 }
 
+// Url returns a reference to field url of aws_ip_ranges.
 func (ir dataIpRangesAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(ir.ref.Append("url"))
+	return terra.ReferenceAsString(ir.ref.Append("url"))
 }

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewS3BucketMetric creates a new instance of [S3BucketMetric].
 func NewS3BucketMetric(name string, args S3BucketMetricArgs) *S3BucketMetric {
 	return &S3BucketMetric{
 		Args: args,
@@ -19,28 +20,51 @@ func NewS3BucketMetric(name string, args S3BucketMetricArgs) *S3BucketMetric {
 
 var _ terra.Resource = (*S3BucketMetric)(nil)
 
+// S3BucketMetric represents the Terraform resource aws_s3_bucket_metric.
 type S3BucketMetric struct {
-	Name  string
-	Args  S3BucketMetricArgs
-	state *s3BucketMetricState
+	Name      string
+	Args      S3BucketMetricArgs
+	state     *s3BucketMetricState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [S3BucketMetric].
 func (sbm *S3BucketMetric) Type() string {
 	return "aws_s3_bucket_metric"
 }
 
+// LocalName returns the local name for [S3BucketMetric].
 func (sbm *S3BucketMetric) LocalName() string {
 	return sbm.Name
 }
 
+// Configuration returns the configuration (args) for [S3BucketMetric].
 func (sbm *S3BucketMetric) Configuration() interface{} {
 	return sbm.Args
 }
 
+// DependOn is used for other resources to depend on [S3BucketMetric].
+func (sbm *S3BucketMetric) DependOn() terra.Reference {
+	return terra.ReferenceResource(sbm)
+}
+
+// Dependencies returns the list of resources [S3BucketMetric] depends_on.
+func (sbm *S3BucketMetric) Dependencies() terra.Dependencies {
+	return sbm.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [S3BucketMetric].
+func (sbm *S3BucketMetric) LifecycleManagement() *terra.Lifecycle {
+	return sbm.Lifecycle
+}
+
+// Attributes returns the attributes for [S3BucketMetric].
 func (sbm *S3BucketMetric) Attributes() s3BucketMetricAttributes {
 	return s3BucketMetricAttributes{ref: terra.ReferenceResource(sbm)}
 }
 
+// ImportState imports the given attribute values into [S3BucketMetric]'s state.
 func (sbm *S3BucketMetric) ImportState(av io.Reader) error {
 	sbm.state = &s3BucketMetricState{}
 	if err := json.NewDecoder(av).Decode(sbm.state); err != nil {
@@ -49,10 +73,12 @@ func (sbm *S3BucketMetric) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [S3BucketMetric] has state.
 func (sbm *S3BucketMetric) State() (*s3BucketMetricState, bool) {
 	return sbm.state, sbm.state != nil
 }
 
+// StateMust returns the state for [S3BucketMetric]. Panics if the state is nil.
 func (sbm *S3BucketMetric) StateMust() *s3BucketMetricState {
 	if sbm.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sbm.Type(), sbm.LocalName()))
@@ -60,10 +86,7 @@ func (sbm *S3BucketMetric) StateMust() *s3BucketMetricState {
 	return sbm.state
 }
 
-func (sbm *S3BucketMetric) DependOn() terra.Reference {
-	return terra.ReferenceResource(sbm)
-}
-
+// S3BucketMetricArgs contains the configurations for aws_s3_bucket_metric.
 type S3BucketMetricArgs struct {
 	// Bucket: string, required
 	Bucket terra.StringValue `hcl:"bucket,attr" validate:"required"`
@@ -73,27 +96,28 @@ type S3BucketMetricArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// Filter: optional
 	Filter *s3bucketmetric.Filter `hcl:"filter,block"`
-	// DependsOn contains resources that S3BucketMetric depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type s3BucketMetricAttributes struct {
 	ref terra.Reference
 }
 
+// Bucket returns a reference to field bucket of aws_s3_bucket_metric.
 func (sbm s3BucketMetricAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(sbm.ref.Append("bucket"))
+	return terra.ReferenceAsString(sbm.ref.Append("bucket"))
 }
 
+// Id returns a reference to field id of aws_s3_bucket_metric.
 func (sbm s3BucketMetricAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sbm.ref.Append("id"))
+	return terra.ReferenceAsString(sbm.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_s3_bucket_metric.
 func (sbm s3BucketMetricAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sbm.ref.Append("name"))
+	return terra.ReferenceAsString(sbm.ref.Append("name"))
 }
 
 func (sbm s3BucketMetricAttributes) Filter() terra.ListValue[s3bucketmetric.FilterAttributes] {
-	return terra.ReferenceList[s3bucketmetric.FilterAttributes](sbm.ref.Append("filter"))
+	return terra.ReferenceAsList[s3bucketmetric.FilterAttributes](sbm.ref.Append("filter"))
 }
 
 type s3BucketMetricState struct {

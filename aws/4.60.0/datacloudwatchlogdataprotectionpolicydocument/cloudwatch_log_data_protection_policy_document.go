@@ -76,15 +76,15 @@ func (s StatementAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s StatementAttributes) DataIdentifiers() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("data_identifiers"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("data_identifiers"))
 }
 
 func (s StatementAttributes) Sid() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("sid"))
+	return terra.ReferenceAsString(s.ref.Append("sid"))
 }
 
 func (s StatementAttributes) Operation() terra.ListValue[OperationAttributes] {
-	return terra.ReferenceList[OperationAttributes](s.ref.Append("operation"))
+	return terra.ReferenceAsList[OperationAttributes](s.ref.Append("operation"))
 }
 
 type OperationAttributes struct {
@@ -104,11 +104,11 @@ func (o OperationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (o OperationAttributes) Audit() terra.ListValue[AuditAttributes] {
-	return terra.ReferenceList[AuditAttributes](o.ref.Append("audit"))
+	return terra.ReferenceAsList[AuditAttributes](o.ref.Append("audit"))
 }
 
 func (o OperationAttributes) Deidentify() terra.ListValue[DeidentifyAttributes] {
-	return terra.ReferenceList[DeidentifyAttributes](o.ref.Append("deidentify"))
+	return terra.ReferenceAsList[DeidentifyAttributes](o.ref.Append("deidentify"))
 }
 
 type AuditAttributes struct {
@@ -128,7 +128,7 @@ func (a AuditAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AuditAttributes) FindingsDestination() terra.ListValue[FindingsDestinationAttributes] {
-	return terra.ReferenceList[FindingsDestinationAttributes](a.ref.Append("findings_destination"))
+	return terra.ReferenceAsList[FindingsDestinationAttributes](a.ref.Append("findings_destination"))
 }
 
 type FindingsDestinationAttributes struct {
@@ -148,15 +148,15 @@ func (fd FindingsDestinationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fd FindingsDestinationAttributes) CloudwatchLogs() terra.ListValue[CloudwatchLogsAttributes] {
-	return terra.ReferenceList[CloudwatchLogsAttributes](fd.ref.Append("cloudwatch_logs"))
+	return terra.ReferenceAsList[CloudwatchLogsAttributes](fd.ref.Append("cloudwatch_logs"))
 }
 
 func (fd FindingsDestinationAttributes) Firehose() terra.ListValue[FirehoseAttributes] {
-	return terra.ReferenceList[FirehoseAttributes](fd.ref.Append("firehose"))
+	return terra.ReferenceAsList[FirehoseAttributes](fd.ref.Append("firehose"))
 }
 
 func (fd FindingsDestinationAttributes) S3() terra.ListValue[S3Attributes] {
-	return terra.ReferenceList[S3Attributes](fd.ref.Append("s3"))
+	return terra.ReferenceAsList[S3Attributes](fd.ref.Append("s3"))
 }
 
 type CloudwatchLogsAttributes struct {
@@ -176,7 +176,7 @@ func (cl CloudwatchLogsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cl CloudwatchLogsAttributes) LogGroup() terra.StringValue {
-	return terra.ReferenceString(cl.ref.Append("log_group"))
+	return terra.ReferenceAsString(cl.ref.Append("log_group"))
 }
 
 type FirehoseAttributes struct {
@@ -196,7 +196,7 @@ func (f FirehoseAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FirehoseAttributes) DeliveryStream() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("delivery_stream"))
+	return terra.ReferenceAsString(f.ref.Append("delivery_stream"))
 }
 
 type S3Attributes struct {
@@ -216,7 +216,7 @@ func (s S3Attributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s S3Attributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("bucket"))
+	return terra.ReferenceAsString(s.ref.Append("bucket"))
 }
 
 type DeidentifyAttributes struct {
@@ -236,7 +236,7 @@ func (d DeidentifyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DeidentifyAttributes) MaskConfig() terra.ListValue[MaskConfigAttributes] {
-	return terra.ReferenceList[MaskConfigAttributes](d.ref.Append("mask_config"))
+	return terra.ReferenceAsList[MaskConfigAttributes](d.ref.Append("mask_config"))
 }
 
 type MaskConfigAttributes struct {

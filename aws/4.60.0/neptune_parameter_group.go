@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNeptuneParameterGroup creates a new instance of [NeptuneParameterGroup].
 func NewNeptuneParameterGroup(name string, args NeptuneParameterGroupArgs) *NeptuneParameterGroup {
 	return &NeptuneParameterGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNeptuneParameterGroup(name string, args NeptuneParameterGroupArgs) *Nept
 
 var _ terra.Resource = (*NeptuneParameterGroup)(nil)
 
+// NeptuneParameterGroup represents the Terraform resource aws_neptune_parameter_group.
 type NeptuneParameterGroup struct {
-	Name  string
-	Args  NeptuneParameterGroupArgs
-	state *neptuneParameterGroupState
+	Name      string
+	Args      NeptuneParameterGroupArgs
+	state     *neptuneParameterGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NeptuneParameterGroup].
 func (npg *NeptuneParameterGroup) Type() string {
 	return "aws_neptune_parameter_group"
 }
 
+// LocalName returns the local name for [NeptuneParameterGroup].
 func (npg *NeptuneParameterGroup) LocalName() string {
 	return npg.Name
 }
 
+// Configuration returns the configuration (args) for [NeptuneParameterGroup].
 func (npg *NeptuneParameterGroup) Configuration() interface{} {
 	return npg.Args
 }
 
+// DependOn is used for other resources to depend on [NeptuneParameterGroup].
+func (npg *NeptuneParameterGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(npg)
+}
+
+// Dependencies returns the list of resources [NeptuneParameterGroup] depends_on.
+func (npg *NeptuneParameterGroup) Dependencies() terra.Dependencies {
+	return npg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NeptuneParameterGroup].
+func (npg *NeptuneParameterGroup) LifecycleManagement() *terra.Lifecycle {
+	return npg.Lifecycle
+}
+
+// Attributes returns the attributes for [NeptuneParameterGroup].
 func (npg *NeptuneParameterGroup) Attributes() neptuneParameterGroupAttributes {
 	return neptuneParameterGroupAttributes{ref: terra.ReferenceResource(npg)}
 }
 
+// ImportState imports the given attribute values into [NeptuneParameterGroup]'s state.
 func (npg *NeptuneParameterGroup) ImportState(av io.Reader) error {
 	npg.state = &neptuneParameterGroupState{}
 	if err := json.NewDecoder(av).Decode(npg.state); err != nil {
@@ -49,10 +73,12 @@ func (npg *NeptuneParameterGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NeptuneParameterGroup] has state.
 func (npg *NeptuneParameterGroup) State() (*neptuneParameterGroupState, bool) {
 	return npg.state, npg.state != nil
 }
 
+// StateMust returns the state for [NeptuneParameterGroup]. Panics if the state is nil.
 func (npg *NeptuneParameterGroup) StateMust() *neptuneParameterGroupState {
 	if npg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", npg.Type(), npg.LocalName()))
@@ -60,10 +86,7 @@ func (npg *NeptuneParameterGroup) StateMust() *neptuneParameterGroupState {
 	return npg.state
 }
 
-func (npg *NeptuneParameterGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(npg)
-}
-
+// NeptuneParameterGroupArgs contains the configurations for aws_neptune_parameter_group.
 type NeptuneParameterGroupArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -79,43 +102,48 @@ type NeptuneParameterGroupArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Parameter: min=0
 	Parameter []neptuneparametergroup.Parameter `hcl:"parameter,block" validate:"min=0"`
-	// DependsOn contains resources that NeptuneParameterGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type neptuneParameterGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_neptune_parameter_group.
 func (npg neptuneParameterGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(npg.ref.Append("arn"))
+	return terra.ReferenceAsString(npg.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_neptune_parameter_group.
 func (npg neptuneParameterGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(npg.ref.Append("description"))
+	return terra.ReferenceAsString(npg.ref.Append("description"))
 }
 
+// Family returns a reference to field family of aws_neptune_parameter_group.
 func (npg neptuneParameterGroupAttributes) Family() terra.StringValue {
-	return terra.ReferenceString(npg.ref.Append("family"))
+	return terra.ReferenceAsString(npg.ref.Append("family"))
 }
 
+// Id returns a reference to field id of aws_neptune_parameter_group.
 func (npg neptuneParameterGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(npg.ref.Append("id"))
+	return terra.ReferenceAsString(npg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_neptune_parameter_group.
 func (npg neptuneParameterGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(npg.ref.Append("name"))
+	return terra.ReferenceAsString(npg.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_neptune_parameter_group.
 func (npg neptuneParameterGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](npg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](npg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_neptune_parameter_group.
 func (npg neptuneParameterGroupAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](npg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](npg.ref.Append("tags_all"))
 }
 
 func (npg neptuneParameterGroupAttributes) Parameter() terra.SetValue[neptuneparametergroup.ParameterAttributes] {
-	return terra.ReferenceSet[neptuneparametergroup.ParameterAttributes](npg.ref.Append("parameter"))
+	return terra.ReferenceAsSet[neptuneparametergroup.ParameterAttributes](npg.ref.Append("parameter"))
 }
 
 type neptuneParameterGroupState struct {

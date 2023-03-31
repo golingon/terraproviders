@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewVpcSecurityGroupEgressRule creates a new instance of [VpcSecurityGroupEgressRule].
 func NewVpcSecurityGroupEgressRule(name string, args VpcSecurityGroupEgressRuleArgs) *VpcSecurityGroupEgressRule {
 	return &VpcSecurityGroupEgressRule{
 		Args: args,
@@ -18,28 +19,51 @@ func NewVpcSecurityGroupEgressRule(name string, args VpcSecurityGroupEgressRuleA
 
 var _ terra.Resource = (*VpcSecurityGroupEgressRule)(nil)
 
+// VpcSecurityGroupEgressRule represents the Terraform resource aws_vpc_security_group_egress_rule.
 type VpcSecurityGroupEgressRule struct {
-	Name  string
-	Args  VpcSecurityGroupEgressRuleArgs
-	state *vpcSecurityGroupEgressRuleState
+	Name      string
+	Args      VpcSecurityGroupEgressRuleArgs
+	state     *vpcSecurityGroupEgressRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VpcSecurityGroupEgressRule].
 func (vsger *VpcSecurityGroupEgressRule) Type() string {
 	return "aws_vpc_security_group_egress_rule"
 }
 
+// LocalName returns the local name for [VpcSecurityGroupEgressRule].
 func (vsger *VpcSecurityGroupEgressRule) LocalName() string {
 	return vsger.Name
 }
 
+// Configuration returns the configuration (args) for [VpcSecurityGroupEgressRule].
 func (vsger *VpcSecurityGroupEgressRule) Configuration() interface{} {
 	return vsger.Args
 }
 
+// DependOn is used for other resources to depend on [VpcSecurityGroupEgressRule].
+func (vsger *VpcSecurityGroupEgressRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(vsger)
+}
+
+// Dependencies returns the list of resources [VpcSecurityGroupEgressRule] depends_on.
+func (vsger *VpcSecurityGroupEgressRule) Dependencies() terra.Dependencies {
+	return vsger.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VpcSecurityGroupEgressRule].
+func (vsger *VpcSecurityGroupEgressRule) LifecycleManagement() *terra.Lifecycle {
+	return vsger.Lifecycle
+}
+
+// Attributes returns the attributes for [VpcSecurityGroupEgressRule].
 func (vsger *VpcSecurityGroupEgressRule) Attributes() vpcSecurityGroupEgressRuleAttributes {
 	return vpcSecurityGroupEgressRuleAttributes{ref: terra.ReferenceResource(vsger)}
 }
 
+// ImportState imports the given attribute values into [VpcSecurityGroupEgressRule]'s state.
 func (vsger *VpcSecurityGroupEgressRule) ImportState(av io.Reader) error {
 	vsger.state = &vpcSecurityGroupEgressRuleState{}
 	if err := json.NewDecoder(av).Decode(vsger.state); err != nil {
@@ -48,10 +72,12 @@ func (vsger *VpcSecurityGroupEgressRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VpcSecurityGroupEgressRule] has state.
 func (vsger *VpcSecurityGroupEgressRule) State() (*vpcSecurityGroupEgressRuleState, bool) {
 	return vsger.state, vsger.state != nil
 }
 
+// StateMust returns the state for [VpcSecurityGroupEgressRule]. Panics if the state is nil.
 func (vsger *VpcSecurityGroupEgressRule) StateMust() *vpcSecurityGroupEgressRuleState {
 	if vsger.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vsger.Type(), vsger.LocalName()))
@@ -59,10 +85,7 @@ func (vsger *VpcSecurityGroupEgressRule) StateMust() *vpcSecurityGroupEgressRule
 	return vsger.state
 }
 
-func (vsger *VpcSecurityGroupEgressRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(vsger)
-}
-
+// VpcSecurityGroupEgressRuleArgs contains the configurations for aws_vpc_security_group_egress_rule.
 type VpcSecurityGroupEgressRuleArgs struct {
 	// CidrIpv4: string, optional
 	CidrIpv4 terra.StringValue `hcl:"cidr_ipv4,attr"`
@@ -84,67 +107,79 @@ type VpcSecurityGroupEgressRuleArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// ToPort: number, optional
 	ToPort terra.NumberValue `hcl:"to_port,attr"`
-	// DependsOn contains resources that VpcSecurityGroupEgressRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type vpcSecurityGroupEgressRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_vpc_security_group_egress_rule.
 func (vsger vpcSecurityGroupEgressRuleAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(vsger.ref.Append("arn"))
+	return terra.ReferenceAsString(vsger.ref.Append("arn"))
 }
 
+// CidrIpv4 returns a reference to field cidr_ipv4 of aws_vpc_security_group_egress_rule.
 func (vsger vpcSecurityGroupEgressRuleAttributes) CidrIpv4() terra.StringValue {
-	return terra.ReferenceString(vsger.ref.Append("cidr_ipv4"))
+	return terra.ReferenceAsString(vsger.ref.Append("cidr_ipv4"))
 }
 
+// CidrIpv6 returns a reference to field cidr_ipv6 of aws_vpc_security_group_egress_rule.
 func (vsger vpcSecurityGroupEgressRuleAttributes) CidrIpv6() terra.StringValue {
-	return terra.ReferenceString(vsger.ref.Append("cidr_ipv6"))
+	return terra.ReferenceAsString(vsger.ref.Append("cidr_ipv6"))
 }
 
+// Description returns a reference to field description of aws_vpc_security_group_egress_rule.
 func (vsger vpcSecurityGroupEgressRuleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(vsger.ref.Append("description"))
+	return terra.ReferenceAsString(vsger.ref.Append("description"))
 }
 
+// FromPort returns a reference to field from_port of aws_vpc_security_group_egress_rule.
 func (vsger vpcSecurityGroupEgressRuleAttributes) FromPort() terra.NumberValue {
-	return terra.ReferenceNumber(vsger.ref.Append("from_port"))
+	return terra.ReferenceAsNumber(vsger.ref.Append("from_port"))
 }
 
+// Id returns a reference to field id of aws_vpc_security_group_egress_rule.
 func (vsger vpcSecurityGroupEgressRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vsger.ref.Append("id"))
+	return terra.ReferenceAsString(vsger.ref.Append("id"))
 }
 
+// IpProtocol returns a reference to field ip_protocol of aws_vpc_security_group_egress_rule.
 func (vsger vpcSecurityGroupEgressRuleAttributes) IpProtocol() terra.StringValue {
-	return terra.ReferenceString(vsger.ref.Append("ip_protocol"))
+	return terra.ReferenceAsString(vsger.ref.Append("ip_protocol"))
 }
 
+// PrefixListId returns a reference to field prefix_list_id of aws_vpc_security_group_egress_rule.
 func (vsger vpcSecurityGroupEgressRuleAttributes) PrefixListId() terra.StringValue {
-	return terra.ReferenceString(vsger.ref.Append("prefix_list_id"))
+	return terra.ReferenceAsString(vsger.ref.Append("prefix_list_id"))
 }
 
+// ReferencedSecurityGroupId returns a reference to field referenced_security_group_id of aws_vpc_security_group_egress_rule.
 func (vsger vpcSecurityGroupEgressRuleAttributes) ReferencedSecurityGroupId() terra.StringValue {
-	return terra.ReferenceString(vsger.ref.Append("referenced_security_group_id"))
+	return terra.ReferenceAsString(vsger.ref.Append("referenced_security_group_id"))
 }
 
+// SecurityGroupId returns a reference to field security_group_id of aws_vpc_security_group_egress_rule.
 func (vsger vpcSecurityGroupEgressRuleAttributes) SecurityGroupId() terra.StringValue {
-	return terra.ReferenceString(vsger.ref.Append("security_group_id"))
+	return terra.ReferenceAsString(vsger.ref.Append("security_group_id"))
 }
 
+// SecurityGroupRuleId returns a reference to field security_group_rule_id of aws_vpc_security_group_egress_rule.
 func (vsger vpcSecurityGroupEgressRuleAttributes) SecurityGroupRuleId() terra.StringValue {
-	return terra.ReferenceString(vsger.ref.Append("security_group_rule_id"))
+	return terra.ReferenceAsString(vsger.ref.Append("security_group_rule_id"))
 }
 
+// Tags returns a reference to field tags of aws_vpc_security_group_egress_rule.
 func (vsger vpcSecurityGroupEgressRuleAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](vsger.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](vsger.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_vpc_security_group_egress_rule.
 func (vsger vpcSecurityGroupEgressRuleAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](vsger.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](vsger.ref.Append("tags_all"))
 }
 
+// ToPort returns a reference to field to_port of aws_vpc_security_group_egress_rule.
 func (vsger vpcSecurityGroupEgressRuleAttributes) ToPort() terra.NumberValue {
-	return terra.ReferenceNumber(vsger.ref.Append("to_port"))
+	return terra.ReferenceAsNumber(vsger.ref.Append("to_port"))
 }
 
 type vpcSecurityGroupEgressRuleState struct {

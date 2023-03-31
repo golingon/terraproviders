@@ -35,11 +35,11 @@ func (rc RevocationConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rc RevocationConfigurationAttributes) CrlConfiguration() terra.ListValue[CrlConfigurationAttributes] {
-	return terra.ReferenceList[CrlConfigurationAttributes](rc.ref.Append("crl_configuration"))
+	return terra.ReferenceAsList[CrlConfigurationAttributes](rc.ref.Append("crl_configuration"))
 }
 
 func (rc RevocationConfigurationAttributes) OcspConfiguration() terra.ListValue[OcspConfigurationAttributes] {
-	return terra.ReferenceList[OcspConfigurationAttributes](rc.ref.Append("ocsp_configuration"))
+	return terra.ReferenceAsList[OcspConfigurationAttributes](rc.ref.Append("ocsp_configuration"))
 }
 
 type CrlConfigurationAttributes struct {
@@ -59,23 +59,23 @@ func (cc CrlConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc CrlConfigurationAttributes) CustomCname() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("custom_cname"))
+	return terra.ReferenceAsString(cc.ref.Append("custom_cname"))
 }
 
 func (cc CrlConfigurationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(cc.ref.Append("enabled"))
 }
 
 func (cc CrlConfigurationAttributes) ExpirationInDays() terra.NumberValue {
-	return terra.ReferenceNumber(cc.ref.Append("expiration_in_days"))
+	return terra.ReferenceAsNumber(cc.ref.Append("expiration_in_days"))
 }
 
 func (cc CrlConfigurationAttributes) S3BucketName() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("s3_bucket_name"))
+	return terra.ReferenceAsString(cc.ref.Append("s3_bucket_name"))
 }
 
 func (cc CrlConfigurationAttributes) S3ObjectAcl() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("s3_object_acl"))
+	return terra.ReferenceAsString(cc.ref.Append("s3_object_acl"))
 }
 
 type OcspConfigurationAttributes struct {
@@ -95,11 +95,11 @@ func (oc OcspConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (oc OcspConfigurationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(oc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(oc.ref.Append("enabled"))
 }
 
 func (oc OcspConfigurationAttributes) OcspCustomCname() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("ocsp_custom_cname"))
+	return terra.ReferenceAsString(oc.ref.Append("ocsp_custom_cname"))
 }
 
 type RevocationConfigurationState struct {

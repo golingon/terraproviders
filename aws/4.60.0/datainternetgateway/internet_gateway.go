@@ -38,11 +38,11 @@ func (a AttachmentsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AttachmentsAttributes) State() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("state"))
+	return terra.ReferenceAsString(a.ref.Append("state"))
 }
 
 func (a AttachmentsAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(a.ref.Append("vpc_id"))
 }
 
 type FilterAttributes struct {
@@ -62,11 +62,11 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
 func (f FilterAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](f.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](f.ref.Append("values"))
 }
 
 type TimeoutsAttributes struct {
@@ -86,7 +86,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type AttachmentsState struct {

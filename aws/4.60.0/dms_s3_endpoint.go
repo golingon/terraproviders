@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDmsS3Endpoint creates a new instance of [DmsS3Endpoint].
 func NewDmsS3Endpoint(name string, args DmsS3EndpointArgs) *DmsS3Endpoint {
 	return &DmsS3Endpoint{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDmsS3Endpoint(name string, args DmsS3EndpointArgs) *DmsS3Endpoint {
 
 var _ terra.Resource = (*DmsS3Endpoint)(nil)
 
+// DmsS3Endpoint represents the Terraform resource aws_dms_s3_endpoint.
 type DmsS3Endpoint struct {
-	Name  string
-	Args  DmsS3EndpointArgs
-	state *dmsS3EndpointState
+	Name      string
+	Args      DmsS3EndpointArgs
+	state     *dmsS3EndpointState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DmsS3Endpoint].
 func (dse *DmsS3Endpoint) Type() string {
 	return "aws_dms_s3_endpoint"
 }
 
+// LocalName returns the local name for [DmsS3Endpoint].
 func (dse *DmsS3Endpoint) LocalName() string {
 	return dse.Name
 }
 
+// Configuration returns the configuration (args) for [DmsS3Endpoint].
 func (dse *DmsS3Endpoint) Configuration() interface{} {
 	return dse.Args
 }
 
+// DependOn is used for other resources to depend on [DmsS3Endpoint].
+func (dse *DmsS3Endpoint) DependOn() terra.Reference {
+	return terra.ReferenceResource(dse)
+}
+
+// Dependencies returns the list of resources [DmsS3Endpoint] depends_on.
+func (dse *DmsS3Endpoint) Dependencies() terra.Dependencies {
+	return dse.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DmsS3Endpoint].
+func (dse *DmsS3Endpoint) LifecycleManagement() *terra.Lifecycle {
+	return dse.Lifecycle
+}
+
+// Attributes returns the attributes for [DmsS3Endpoint].
 func (dse *DmsS3Endpoint) Attributes() dmsS3EndpointAttributes {
 	return dmsS3EndpointAttributes{ref: terra.ReferenceResource(dse)}
 }
 
+// ImportState imports the given attribute values into [DmsS3Endpoint]'s state.
 func (dse *DmsS3Endpoint) ImportState(av io.Reader) error {
 	dse.state = &dmsS3EndpointState{}
 	if err := json.NewDecoder(av).Decode(dse.state); err != nil {
@@ -49,10 +73,12 @@ func (dse *DmsS3Endpoint) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DmsS3Endpoint] has state.
 func (dse *DmsS3Endpoint) State() (*dmsS3EndpointState, bool) {
 	return dse.state, dse.state != nil
 }
 
+// StateMust returns the state for [DmsS3Endpoint]. Panics if the state is nil.
 func (dse *DmsS3Endpoint) StateMust() *dmsS3EndpointState {
 	if dse.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dse.Type(), dse.LocalName()))
@@ -60,10 +86,7 @@ func (dse *DmsS3Endpoint) StateMust() *dmsS3EndpointState {
 	return dse.state
 }
 
-func (dse *DmsS3Endpoint) DependOn() terra.Reference {
-	return terra.ReferenceResource(dse)
-}
-
+// DmsS3EndpointArgs contains the configurations for aws_dms_s3_endpoint.
 type DmsS3EndpointArgs struct {
 	// AddColumnName: bool, optional
 	AddColumnName terra.BoolValue `hcl:"add_column_name,attr"`
@@ -165,227 +188,278 @@ type DmsS3EndpointArgs struct {
 	UseTaskStartTimeForFullLoadTimestamp terra.BoolValue `hcl:"use_task_start_time_for_full_load_timestamp,attr"`
 	// Timeouts: optional
 	Timeouts *dmss3endpoint.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DmsS3Endpoint depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dmsS3EndpointAttributes struct {
 	ref terra.Reference
 }
 
+// AddColumnName returns a reference to field add_column_name of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) AddColumnName() terra.BoolValue {
-	return terra.ReferenceBool(dse.ref.Append("add_column_name"))
+	return terra.ReferenceAsBool(dse.ref.Append("add_column_name"))
 }
 
+// AddTrailingPaddingCharacter returns a reference to field add_trailing_padding_character of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) AddTrailingPaddingCharacter() terra.BoolValue {
-	return terra.ReferenceBool(dse.ref.Append("add_trailing_padding_character"))
+	return terra.ReferenceAsBool(dse.ref.Append("add_trailing_padding_character"))
 }
 
+// BucketFolder returns a reference to field bucket_folder of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) BucketFolder() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("bucket_folder"))
+	return terra.ReferenceAsString(dse.ref.Append("bucket_folder"))
 }
 
+// BucketName returns a reference to field bucket_name of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(dse.ref.Append("bucket_name"))
 }
 
+// CannedAclForObjects returns a reference to field canned_acl_for_objects of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) CannedAclForObjects() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("canned_acl_for_objects"))
+	return terra.ReferenceAsString(dse.ref.Append("canned_acl_for_objects"))
 }
 
+// CdcInsertsAndUpdates returns a reference to field cdc_inserts_and_updates of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) CdcInsertsAndUpdates() terra.BoolValue {
-	return terra.ReferenceBool(dse.ref.Append("cdc_inserts_and_updates"))
+	return terra.ReferenceAsBool(dse.ref.Append("cdc_inserts_and_updates"))
 }
 
+// CdcInsertsOnly returns a reference to field cdc_inserts_only of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) CdcInsertsOnly() terra.BoolValue {
-	return terra.ReferenceBool(dse.ref.Append("cdc_inserts_only"))
+	return terra.ReferenceAsBool(dse.ref.Append("cdc_inserts_only"))
 }
 
+// CdcMaxBatchInterval returns a reference to field cdc_max_batch_interval of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) CdcMaxBatchInterval() terra.NumberValue {
-	return terra.ReferenceNumber(dse.ref.Append("cdc_max_batch_interval"))
+	return terra.ReferenceAsNumber(dse.ref.Append("cdc_max_batch_interval"))
 }
 
+// CdcMinFileSize returns a reference to field cdc_min_file_size of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) CdcMinFileSize() terra.NumberValue {
-	return terra.ReferenceNumber(dse.ref.Append("cdc_min_file_size"))
+	return terra.ReferenceAsNumber(dse.ref.Append("cdc_min_file_size"))
 }
 
+// CdcPath returns a reference to field cdc_path of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) CdcPath() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("cdc_path"))
+	return terra.ReferenceAsString(dse.ref.Append("cdc_path"))
 }
 
+// CertificateArn returns a reference to field certificate_arn of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) CertificateArn() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("certificate_arn"))
+	return terra.ReferenceAsString(dse.ref.Append("certificate_arn"))
 }
 
+// CompressionType returns a reference to field compression_type of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) CompressionType() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("compression_type"))
+	return terra.ReferenceAsString(dse.ref.Append("compression_type"))
 }
 
+// CsvDelimiter returns a reference to field csv_delimiter of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) CsvDelimiter() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("csv_delimiter"))
+	return terra.ReferenceAsString(dse.ref.Append("csv_delimiter"))
 }
 
+// CsvNoSupValue returns a reference to field csv_no_sup_value of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) CsvNoSupValue() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("csv_no_sup_value"))
+	return terra.ReferenceAsString(dse.ref.Append("csv_no_sup_value"))
 }
 
+// CsvNullValue returns a reference to field csv_null_value of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) CsvNullValue() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("csv_null_value"))
+	return terra.ReferenceAsString(dse.ref.Append("csv_null_value"))
 }
 
+// CsvRowDelimiter returns a reference to field csv_row_delimiter of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) CsvRowDelimiter() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("csv_row_delimiter"))
+	return terra.ReferenceAsString(dse.ref.Append("csv_row_delimiter"))
 }
 
+// DataFormat returns a reference to field data_format of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) DataFormat() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("data_format"))
+	return terra.ReferenceAsString(dse.ref.Append("data_format"))
 }
 
+// DataPageSize returns a reference to field data_page_size of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) DataPageSize() terra.NumberValue {
-	return terra.ReferenceNumber(dse.ref.Append("data_page_size"))
+	return terra.ReferenceAsNumber(dse.ref.Append("data_page_size"))
 }
 
+// DatePartitionDelimiter returns a reference to field date_partition_delimiter of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) DatePartitionDelimiter() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("date_partition_delimiter"))
+	return terra.ReferenceAsString(dse.ref.Append("date_partition_delimiter"))
 }
 
+// DatePartitionEnabled returns a reference to field date_partition_enabled of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) DatePartitionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(dse.ref.Append("date_partition_enabled"))
+	return terra.ReferenceAsBool(dse.ref.Append("date_partition_enabled"))
 }
 
+// DatePartitionSequence returns a reference to field date_partition_sequence of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) DatePartitionSequence() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("date_partition_sequence"))
+	return terra.ReferenceAsString(dse.ref.Append("date_partition_sequence"))
 }
 
+// DatePartitionTimezone returns a reference to field date_partition_timezone of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) DatePartitionTimezone() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("date_partition_timezone"))
+	return terra.ReferenceAsString(dse.ref.Append("date_partition_timezone"))
 }
 
+// DetachTargetOnLobLookupFailureParquet returns a reference to field detach_target_on_lob_lookup_failure_parquet of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) DetachTargetOnLobLookupFailureParquet() terra.BoolValue {
-	return terra.ReferenceBool(dse.ref.Append("detach_target_on_lob_lookup_failure_parquet"))
+	return terra.ReferenceAsBool(dse.ref.Append("detach_target_on_lob_lookup_failure_parquet"))
 }
 
+// DictPageSizeLimit returns a reference to field dict_page_size_limit of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) DictPageSizeLimit() terra.NumberValue {
-	return terra.ReferenceNumber(dse.ref.Append("dict_page_size_limit"))
+	return terra.ReferenceAsNumber(dse.ref.Append("dict_page_size_limit"))
 }
 
+// EnableStatistics returns a reference to field enable_statistics of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) EnableStatistics() terra.BoolValue {
-	return terra.ReferenceBool(dse.ref.Append("enable_statistics"))
+	return terra.ReferenceAsBool(dse.ref.Append("enable_statistics"))
 }
 
+// EncodingType returns a reference to field encoding_type of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) EncodingType() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("encoding_type"))
+	return terra.ReferenceAsString(dse.ref.Append("encoding_type"))
 }
 
+// EncryptionMode returns a reference to field encryption_mode of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) EncryptionMode() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("encryption_mode"))
+	return terra.ReferenceAsString(dse.ref.Append("encryption_mode"))
 }
 
+// EndpointArn returns a reference to field endpoint_arn of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) EndpointArn() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("endpoint_arn"))
+	return terra.ReferenceAsString(dse.ref.Append("endpoint_arn"))
 }
 
+// EndpointId returns a reference to field endpoint_id of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) EndpointId() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("endpoint_id"))
+	return terra.ReferenceAsString(dse.ref.Append("endpoint_id"))
 }
 
+// EndpointType returns a reference to field endpoint_type of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) EndpointType() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("endpoint_type"))
+	return terra.ReferenceAsString(dse.ref.Append("endpoint_type"))
 }
 
+// EngineDisplayName returns a reference to field engine_display_name of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) EngineDisplayName() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("engine_display_name"))
+	return terra.ReferenceAsString(dse.ref.Append("engine_display_name"))
 }
 
+// ExpectedBucketOwner returns a reference to field expected_bucket_owner of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) ExpectedBucketOwner() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("expected_bucket_owner"))
+	return terra.ReferenceAsString(dse.ref.Append("expected_bucket_owner"))
 }
 
+// ExternalId returns a reference to field external_id of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) ExternalId() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("external_id"))
+	return terra.ReferenceAsString(dse.ref.Append("external_id"))
 }
 
+// ExternalTableDefinition returns a reference to field external_table_definition of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) ExternalTableDefinition() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("external_table_definition"))
+	return terra.ReferenceAsString(dse.ref.Append("external_table_definition"))
 }
 
+// Id returns a reference to field id of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("id"))
+	return terra.ReferenceAsString(dse.ref.Append("id"))
 }
 
+// IgnoreHeaderRows returns a reference to field ignore_header_rows of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) IgnoreHeaderRows() terra.NumberValue {
-	return terra.ReferenceNumber(dse.ref.Append("ignore_header_rows"))
+	return terra.ReferenceAsNumber(dse.ref.Append("ignore_header_rows"))
 }
 
+// IncludeOpForFullLoad returns a reference to field include_op_for_full_load of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) IncludeOpForFullLoad() terra.BoolValue {
-	return terra.ReferenceBool(dse.ref.Append("include_op_for_full_load"))
+	return terra.ReferenceAsBool(dse.ref.Append("include_op_for_full_load"))
 }
 
+// KmsKeyArn returns a reference to field kms_key_arn of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(dse.ref.Append("kms_key_arn"))
 }
 
+// MaxFileSize returns a reference to field max_file_size of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) MaxFileSize() terra.NumberValue {
-	return terra.ReferenceNumber(dse.ref.Append("max_file_size"))
+	return terra.ReferenceAsNumber(dse.ref.Append("max_file_size"))
 }
 
+// ParquetTimestampInMillisecond returns a reference to field parquet_timestamp_in_millisecond of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) ParquetTimestampInMillisecond() terra.BoolValue {
-	return terra.ReferenceBool(dse.ref.Append("parquet_timestamp_in_millisecond"))
+	return terra.ReferenceAsBool(dse.ref.Append("parquet_timestamp_in_millisecond"))
 }
 
+// ParquetVersion returns a reference to field parquet_version of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) ParquetVersion() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("parquet_version"))
+	return terra.ReferenceAsString(dse.ref.Append("parquet_version"))
 }
 
+// PreserveTransactions returns a reference to field preserve_transactions of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) PreserveTransactions() terra.BoolValue {
-	return terra.ReferenceBool(dse.ref.Append("preserve_transactions"))
+	return terra.ReferenceAsBool(dse.ref.Append("preserve_transactions"))
 }
 
+// Rfc4180 returns a reference to field rfc_4180 of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) Rfc4180() terra.BoolValue {
-	return terra.ReferenceBool(dse.ref.Append("rfc_4180"))
+	return terra.ReferenceAsBool(dse.ref.Append("rfc_4180"))
 }
 
+// RowGroupLength returns a reference to field row_group_length of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) RowGroupLength() terra.NumberValue {
-	return terra.ReferenceNumber(dse.ref.Append("row_group_length"))
+	return terra.ReferenceAsNumber(dse.ref.Append("row_group_length"))
 }
 
+// ServerSideEncryptionKmsKeyId returns a reference to field server_side_encryption_kms_key_id of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) ServerSideEncryptionKmsKeyId() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("server_side_encryption_kms_key_id"))
+	return terra.ReferenceAsString(dse.ref.Append("server_side_encryption_kms_key_id"))
 }
 
+// ServiceAccessRoleArn returns a reference to field service_access_role_arn of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) ServiceAccessRoleArn() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("service_access_role_arn"))
+	return terra.ReferenceAsString(dse.ref.Append("service_access_role_arn"))
 }
 
+// SslMode returns a reference to field ssl_mode of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) SslMode() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("ssl_mode"))
+	return terra.ReferenceAsString(dse.ref.Append("ssl_mode"))
 }
 
+// Status returns a reference to field status of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("status"))
+	return terra.ReferenceAsString(dse.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dse.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dse.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dse.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dse.ref.Append("tags_all"))
 }
 
+// TimestampColumnName returns a reference to field timestamp_column_name of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) TimestampColumnName() terra.StringValue {
-	return terra.ReferenceString(dse.ref.Append("timestamp_column_name"))
+	return terra.ReferenceAsString(dse.ref.Append("timestamp_column_name"))
 }
 
+// UseCsvNoSupValue returns a reference to field use_csv_no_sup_value of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) UseCsvNoSupValue() terra.BoolValue {
-	return terra.ReferenceBool(dse.ref.Append("use_csv_no_sup_value"))
+	return terra.ReferenceAsBool(dse.ref.Append("use_csv_no_sup_value"))
 }
 
+// UseTaskStartTimeForFullLoadTimestamp returns a reference to field use_task_start_time_for_full_load_timestamp of aws_dms_s3_endpoint.
 func (dse dmsS3EndpointAttributes) UseTaskStartTimeForFullLoadTimestamp() terra.BoolValue {
-	return terra.ReferenceBool(dse.ref.Append("use_task_start_time_for_full_load_timestamp"))
+	return terra.ReferenceAsBool(dse.ref.Append("use_task_start_time_for_full_load_timestamp"))
 }
 
 func (dse dmsS3EndpointAttributes) Timeouts() dmss3endpoint.TimeoutsAttributes {
-	return terra.ReferenceSingle[dmss3endpoint.TimeoutsAttributes](dse.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dmss3endpoint.TimeoutsAttributes](dse.ref.Append("timeouts"))
 }
 
 type dmsS3EndpointState struct {

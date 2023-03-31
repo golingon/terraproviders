@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAcmpcaPermission creates a new instance of [AcmpcaPermission].
 func NewAcmpcaPermission(name string, args AcmpcaPermissionArgs) *AcmpcaPermission {
 	return &AcmpcaPermission{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAcmpcaPermission(name string, args AcmpcaPermissionArgs) *AcmpcaPermissi
 
 var _ terra.Resource = (*AcmpcaPermission)(nil)
 
+// AcmpcaPermission represents the Terraform resource aws_acmpca_permission.
 type AcmpcaPermission struct {
-	Name  string
-	Args  AcmpcaPermissionArgs
-	state *acmpcaPermissionState
+	Name      string
+	Args      AcmpcaPermissionArgs
+	state     *acmpcaPermissionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AcmpcaPermission].
 func (ap *AcmpcaPermission) Type() string {
 	return "aws_acmpca_permission"
 }
 
+// LocalName returns the local name for [AcmpcaPermission].
 func (ap *AcmpcaPermission) LocalName() string {
 	return ap.Name
 }
 
+// Configuration returns the configuration (args) for [AcmpcaPermission].
 func (ap *AcmpcaPermission) Configuration() interface{} {
 	return ap.Args
 }
 
+// DependOn is used for other resources to depend on [AcmpcaPermission].
+func (ap *AcmpcaPermission) DependOn() terra.Reference {
+	return terra.ReferenceResource(ap)
+}
+
+// Dependencies returns the list of resources [AcmpcaPermission] depends_on.
+func (ap *AcmpcaPermission) Dependencies() terra.Dependencies {
+	return ap.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AcmpcaPermission].
+func (ap *AcmpcaPermission) LifecycleManagement() *terra.Lifecycle {
+	return ap.Lifecycle
+}
+
+// Attributes returns the attributes for [AcmpcaPermission].
 func (ap *AcmpcaPermission) Attributes() acmpcaPermissionAttributes {
 	return acmpcaPermissionAttributes{ref: terra.ReferenceResource(ap)}
 }
 
+// ImportState imports the given attribute values into [AcmpcaPermission]'s state.
 func (ap *AcmpcaPermission) ImportState(av io.Reader) error {
 	ap.state = &acmpcaPermissionState{}
 	if err := json.NewDecoder(av).Decode(ap.state); err != nil {
@@ -48,10 +72,12 @@ func (ap *AcmpcaPermission) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AcmpcaPermission] has state.
 func (ap *AcmpcaPermission) State() (*acmpcaPermissionState, bool) {
 	return ap.state, ap.state != nil
 }
 
+// StateMust returns the state for [AcmpcaPermission]. Panics if the state is nil.
 func (ap *AcmpcaPermission) StateMust() *acmpcaPermissionState {
 	if ap.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ap.Type(), ap.LocalName()))
@@ -59,10 +85,7 @@ func (ap *AcmpcaPermission) StateMust() *acmpcaPermissionState {
 	return ap.state
 }
 
-func (ap *AcmpcaPermission) DependOn() terra.Reference {
-	return terra.ReferenceResource(ap)
-}
-
+// AcmpcaPermissionArgs contains the configurations for aws_acmpca_permission.
 type AcmpcaPermissionArgs struct {
 	// Actions: set of string, required
 	Actions terra.SetValue[terra.StringValue] `hcl:"actions,attr" validate:"required"`
@@ -74,35 +97,39 @@ type AcmpcaPermissionArgs struct {
 	Principal terra.StringValue `hcl:"principal,attr" validate:"required"`
 	// SourceAccount: string, optional
 	SourceAccount terra.StringValue `hcl:"source_account,attr"`
-	// DependsOn contains resources that AcmpcaPermission depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type acmpcaPermissionAttributes struct {
 	ref terra.Reference
 }
 
+// Actions returns a reference to field actions of aws_acmpca_permission.
 func (ap acmpcaPermissionAttributes) Actions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ap.ref.Append("actions"))
+	return terra.ReferenceAsSet[terra.StringValue](ap.ref.Append("actions"))
 }
 
+// CertificateAuthorityArn returns a reference to field certificate_authority_arn of aws_acmpca_permission.
 func (ap acmpcaPermissionAttributes) CertificateAuthorityArn() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("certificate_authority_arn"))
+	return terra.ReferenceAsString(ap.ref.Append("certificate_authority_arn"))
 }
 
+// Id returns a reference to field id of aws_acmpca_permission.
 func (ap acmpcaPermissionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("id"))
+	return terra.ReferenceAsString(ap.ref.Append("id"))
 }
 
+// Policy returns a reference to field policy of aws_acmpca_permission.
 func (ap acmpcaPermissionAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("policy"))
+	return terra.ReferenceAsString(ap.ref.Append("policy"))
 }
 
+// Principal returns a reference to field principal of aws_acmpca_permission.
 func (ap acmpcaPermissionAttributes) Principal() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("principal"))
+	return terra.ReferenceAsString(ap.ref.Append("principal"))
 }
 
+// SourceAccount returns a reference to field source_account of aws_acmpca_permission.
 func (ap acmpcaPermissionAttributes) SourceAccount() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("source_account"))
+	return terra.ReferenceAsString(ap.ref.Append("source_account"))
 }
 
 type acmpcaPermissionState struct {

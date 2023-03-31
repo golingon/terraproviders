@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCodecommitApprovalRuleTemplate creates a new instance of [CodecommitApprovalRuleTemplate].
 func NewCodecommitApprovalRuleTemplate(name string, args CodecommitApprovalRuleTemplateArgs) *CodecommitApprovalRuleTemplate {
 	return &CodecommitApprovalRuleTemplate{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCodecommitApprovalRuleTemplate(name string, args CodecommitApprovalRuleT
 
 var _ terra.Resource = (*CodecommitApprovalRuleTemplate)(nil)
 
+// CodecommitApprovalRuleTemplate represents the Terraform resource aws_codecommit_approval_rule_template.
 type CodecommitApprovalRuleTemplate struct {
-	Name  string
-	Args  CodecommitApprovalRuleTemplateArgs
-	state *codecommitApprovalRuleTemplateState
+	Name      string
+	Args      CodecommitApprovalRuleTemplateArgs
+	state     *codecommitApprovalRuleTemplateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CodecommitApprovalRuleTemplate].
 func (cart *CodecommitApprovalRuleTemplate) Type() string {
 	return "aws_codecommit_approval_rule_template"
 }
 
+// LocalName returns the local name for [CodecommitApprovalRuleTemplate].
 func (cart *CodecommitApprovalRuleTemplate) LocalName() string {
 	return cart.Name
 }
 
+// Configuration returns the configuration (args) for [CodecommitApprovalRuleTemplate].
 func (cart *CodecommitApprovalRuleTemplate) Configuration() interface{} {
 	return cart.Args
 }
 
+// DependOn is used for other resources to depend on [CodecommitApprovalRuleTemplate].
+func (cart *CodecommitApprovalRuleTemplate) DependOn() terra.Reference {
+	return terra.ReferenceResource(cart)
+}
+
+// Dependencies returns the list of resources [CodecommitApprovalRuleTemplate] depends_on.
+func (cart *CodecommitApprovalRuleTemplate) Dependencies() terra.Dependencies {
+	return cart.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CodecommitApprovalRuleTemplate].
+func (cart *CodecommitApprovalRuleTemplate) LifecycleManagement() *terra.Lifecycle {
+	return cart.Lifecycle
+}
+
+// Attributes returns the attributes for [CodecommitApprovalRuleTemplate].
 func (cart *CodecommitApprovalRuleTemplate) Attributes() codecommitApprovalRuleTemplateAttributes {
 	return codecommitApprovalRuleTemplateAttributes{ref: terra.ReferenceResource(cart)}
 }
 
+// ImportState imports the given attribute values into [CodecommitApprovalRuleTemplate]'s state.
 func (cart *CodecommitApprovalRuleTemplate) ImportState(av io.Reader) error {
 	cart.state = &codecommitApprovalRuleTemplateState{}
 	if err := json.NewDecoder(av).Decode(cart.state); err != nil {
@@ -48,10 +72,12 @@ func (cart *CodecommitApprovalRuleTemplate) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CodecommitApprovalRuleTemplate] has state.
 func (cart *CodecommitApprovalRuleTemplate) State() (*codecommitApprovalRuleTemplateState, bool) {
 	return cart.state, cart.state != nil
 }
 
+// StateMust returns the state for [CodecommitApprovalRuleTemplate]. Panics if the state is nil.
 func (cart *CodecommitApprovalRuleTemplate) StateMust() *codecommitApprovalRuleTemplateState {
 	if cart.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cart.Type(), cart.LocalName()))
@@ -59,10 +85,7 @@ func (cart *CodecommitApprovalRuleTemplate) StateMust() *codecommitApprovalRuleT
 	return cart.state
 }
 
-func (cart *CodecommitApprovalRuleTemplate) DependOn() terra.Reference {
-	return terra.ReferenceResource(cart)
-}
-
+// CodecommitApprovalRuleTemplateArgs contains the configurations for aws_codecommit_approval_rule_template.
 type CodecommitApprovalRuleTemplateArgs struct {
 	// Content: string, required
 	Content terra.StringValue `hcl:"content,attr" validate:"required"`
@@ -72,47 +95,54 @@ type CodecommitApprovalRuleTemplateArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// Name: string, required
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
-	// DependsOn contains resources that CodecommitApprovalRuleTemplate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type codecommitApprovalRuleTemplateAttributes struct {
 	ref terra.Reference
 }
 
+// ApprovalRuleTemplateId returns a reference to field approval_rule_template_id of aws_codecommit_approval_rule_template.
 func (cart codecommitApprovalRuleTemplateAttributes) ApprovalRuleTemplateId() terra.StringValue {
-	return terra.ReferenceString(cart.ref.Append("approval_rule_template_id"))
+	return terra.ReferenceAsString(cart.ref.Append("approval_rule_template_id"))
 }
 
+// Content returns a reference to field content of aws_codecommit_approval_rule_template.
 func (cart codecommitApprovalRuleTemplateAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(cart.ref.Append("content"))
+	return terra.ReferenceAsString(cart.ref.Append("content"))
 }
 
+// CreationDate returns a reference to field creation_date of aws_codecommit_approval_rule_template.
 func (cart codecommitApprovalRuleTemplateAttributes) CreationDate() terra.StringValue {
-	return terra.ReferenceString(cart.ref.Append("creation_date"))
+	return terra.ReferenceAsString(cart.ref.Append("creation_date"))
 }
 
+// Description returns a reference to field description of aws_codecommit_approval_rule_template.
 func (cart codecommitApprovalRuleTemplateAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cart.ref.Append("description"))
+	return terra.ReferenceAsString(cart.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_codecommit_approval_rule_template.
 func (cart codecommitApprovalRuleTemplateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cart.ref.Append("id"))
+	return terra.ReferenceAsString(cart.ref.Append("id"))
 }
 
+// LastModifiedDate returns a reference to field last_modified_date of aws_codecommit_approval_rule_template.
 func (cart codecommitApprovalRuleTemplateAttributes) LastModifiedDate() terra.StringValue {
-	return terra.ReferenceString(cart.ref.Append("last_modified_date"))
+	return terra.ReferenceAsString(cart.ref.Append("last_modified_date"))
 }
 
+// LastModifiedUser returns a reference to field last_modified_user of aws_codecommit_approval_rule_template.
 func (cart codecommitApprovalRuleTemplateAttributes) LastModifiedUser() terra.StringValue {
-	return terra.ReferenceString(cart.ref.Append("last_modified_user"))
+	return terra.ReferenceAsString(cart.ref.Append("last_modified_user"))
 }
 
+// Name returns a reference to field name of aws_codecommit_approval_rule_template.
 func (cart codecommitApprovalRuleTemplateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cart.ref.Append("name"))
+	return terra.ReferenceAsString(cart.ref.Append("name"))
 }
 
+// RuleContentSha256 returns a reference to field rule_content_sha256 of aws_codecommit_approval_rule_template.
 func (cart codecommitApprovalRuleTemplateAttributes) RuleContentSha256() terra.StringValue {
-	return terra.ReferenceString(cart.ref.Append("rule_content_sha256"))
+	return terra.ReferenceAsString(cart.ref.Append("rule_content_sha256"))
 }
 
 type codecommitApprovalRuleTemplateState struct {

@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataRdsReservedInstanceOffering creates a new instance of [DataRdsReservedInstanceOffering].
 func NewDataRdsReservedInstanceOffering(name string, args DataRdsReservedInstanceOfferingArgs) *DataRdsReservedInstanceOffering {
 	return &DataRdsReservedInstanceOffering{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataRdsReservedInstanceOffering(name string, args DataRdsReservedInstanc
 
 var _ terra.DataResource = (*DataRdsReservedInstanceOffering)(nil)
 
+// DataRdsReservedInstanceOffering represents the Terraform data resource aws_rds_reserved_instance_offering.
 type DataRdsReservedInstanceOffering struct {
 	Name string
 	Args DataRdsReservedInstanceOfferingArgs
 }
 
+// DataSource returns the Terraform object type for [DataRdsReservedInstanceOffering].
 func (rrio *DataRdsReservedInstanceOffering) DataSource() string {
 	return "aws_rds_reserved_instance_offering"
 }
 
+// LocalName returns the local name for [DataRdsReservedInstanceOffering].
 func (rrio *DataRdsReservedInstanceOffering) LocalName() string {
 	return rrio.Name
 }
 
+// Configuration returns the configuration (args) for [DataRdsReservedInstanceOffering].
 func (rrio *DataRdsReservedInstanceOffering) Configuration() interface{} {
 	return rrio.Args
 }
 
+// Attributes returns the attributes for [DataRdsReservedInstanceOffering].
 func (rrio *DataRdsReservedInstanceOffering) Attributes() dataRdsReservedInstanceOfferingAttributes {
 	return dataRdsReservedInstanceOfferingAttributes{ref: terra.ReferenceDataResource(rrio)}
 }
 
+// DataRdsReservedInstanceOfferingArgs contains the configurations for aws_rds_reserved_instance_offering.
 type DataRdsReservedInstanceOfferingArgs struct {
 	// DbInstanceClass: string, required
 	DbInstanceClass terra.StringValue `hcl:"db_instance_class,attr" validate:"required"`
@@ -52,38 +59,47 @@ type dataRdsReservedInstanceOfferingAttributes struct {
 	ref terra.Reference
 }
 
+// CurrencyCode returns a reference to field currency_code of aws_rds_reserved_instance_offering.
 func (rrio dataRdsReservedInstanceOfferingAttributes) CurrencyCode() terra.StringValue {
-	return terra.ReferenceString(rrio.ref.Append("currency_code"))
+	return terra.ReferenceAsString(rrio.ref.Append("currency_code"))
 }
 
+// DbInstanceClass returns a reference to field db_instance_class of aws_rds_reserved_instance_offering.
 func (rrio dataRdsReservedInstanceOfferingAttributes) DbInstanceClass() terra.StringValue {
-	return terra.ReferenceString(rrio.ref.Append("db_instance_class"))
+	return terra.ReferenceAsString(rrio.ref.Append("db_instance_class"))
 }
 
+// Duration returns a reference to field duration of aws_rds_reserved_instance_offering.
 func (rrio dataRdsReservedInstanceOfferingAttributes) Duration() terra.NumberValue {
-	return terra.ReferenceNumber(rrio.ref.Append("duration"))
+	return terra.ReferenceAsNumber(rrio.ref.Append("duration"))
 }
 
+// FixedPrice returns a reference to field fixed_price of aws_rds_reserved_instance_offering.
 func (rrio dataRdsReservedInstanceOfferingAttributes) FixedPrice() terra.NumberValue {
-	return terra.ReferenceNumber(rrio.ref.Append("fixed_price"))
+	return terra.ReferenceAsNumber(rrio.ref.Append("fixed_price"))
 }
 
+// Id returns a reference to field id of aws_rds_reserved_instance_offering.
 func (rrio dataRdsReservedInstanceOfferingAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rrio.ref.Append("id"))
+	return terra.ReferenceAsString(rrio.ref.Append("id"))
 }
 
+// MultiAz returns a reference to field multi_az of aws_rds_reserved_instance_offering.
 func (rrio dataRdsReservedInstanceOfferingAttributes) MultiAz() terra.BoolValue {
-	return terra.ReferenceBool(rrio.ref.Append("multi_az"))
+	return terra.ReferenceAsBool(rrio.ref.Append("multi_az"))
 }
 
+// OfferingId returns a reference to field offering_id of aws_rds_reserved_instance_offering.
 func (rrio dataRdsReservedInstanceOfferingAttributes) OfferingId() terra.StringValue {
-	return terra.ReferenceString(rrio.ref.Append("offering_id"))
+	return terra.ReferenceAsString(rrio.ref.Append("offering_id"))
 }
 
+// OfferingType returns a reference to field offering_type of aws_rds_reserved_instance_offering.
 func (rrio dataRdsReservedInstanceOfferingAttributes) OfferingType() terra.StringValue {
-	return terra.ReferenceString(rrio.ref.Append("offering_type"))
+	return terra.ReferenceAsString(rrio.ref.Append("offering_type"))
 }
 
+// ProductDescription returns a reference to field product_description of aws_rds_reserved_instance_offering.
 func (rrio dataRdsReservedInstanceOfferingAttributes) ProductDescription() terra.StringValue {
-	return terra.ReferenceString(rrio.ref.Append("product_description"))
+	return terra.ReferenceAsString(rrio.ref.Append("product_description"))
 }

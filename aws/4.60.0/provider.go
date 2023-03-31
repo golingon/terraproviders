@@ -17,22 +17,27 @@ type Provider struct {
 	Args ProviderArgs
 }
 
+// LocalName returns the provider local name for [Provider].
 func (p *Provider) LocalName() string {
 	return "aws"
 }
 
+// Source returns the provider source for [Provider].
 func (p *Provider) Source() string {
 	return "hashicorp/aws"
 }
 
+// Version returns the provider version for [Provider].
 func (p *Provider) Version() string {
 	return "4.60.0"
 }
 
+// Configuration returns the configuration (args) for [Provider].
 func (p *Provider) Configuration() interface{} {
 	return p.Args
 }
 
+// ProviderArgs contains the configurations for provider.
 type ProviderArgs struct {
 	// AccessKey: string, optional
 	AccessKey terra.StringValue `hcl:"access_key,attr"`

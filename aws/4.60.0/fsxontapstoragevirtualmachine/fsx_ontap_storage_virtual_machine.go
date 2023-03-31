@@ -74,19 +74,19 @@ func (e EndpointsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e EndpointsAttributes) Iscsi() terra.ListValue[IscsiAttributes] {
-	return terra.ReferenceList[IscsiAttributes](e.ref.Append("iscsi"))
+	return terra.ReferenceAsList[IscsiAttributes](e.ref.Append("iscsi"))
 }
 
 func (e EndpointsAttributes) Management() terra.ListValue[ManagementAttributes] {
-	return terra.ReferenceList[ManagementAttributes](e.ref.Append("management"))
+	return terra.ReferenceAsList[ManagementAttributes](e.ref.Append("management"))
 }
 
 func (e EndpointsAttributes) Nfs() terra.ListValue[NfsAttributes] {
-	return terra.ReferenceList[NfsAttributes](e.ref.Append("nfs"))
+	return terra.ReferenceAsList[NfsAttributes](e.ref.Append("nfs"))
 }
 
 func (e EndpointsAttributes) Smb() terra.ListValue[SmbAttributes] {
-	return terra.ReferenceList[SmbAttributes](e.ref.Append("smb"))
+	return terra.ReferenceAsList[SmbAttributes](e.ref.Append("smb"))
 }
 
 type IscsiAttributes struct {
@@ -106,11 +106,11 @@ func (i IscsiAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i IscsiAttributes) DnsName() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("dns_name"))
+	return terra.ReferenceAsString(i.ref.Append("dns_name"))
 }
 
 func (i IscsiAttributes) IpAddresses() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("ip_addresses"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("ip_addresses"))
 }
 
 type ManagementAttributes struct {
@@ -130,11 +130,11 @@ func (m ManagementAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m ManagementAttributes) DnsName() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("dns_name"))
+	return terra.ReferenceAsString(m.ref.Append("dns_name"))
 }
 
 func (m ManagementAttributes) IpAddresses() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](m.ref.Append("ip_addresses"))
+	return terra.ReferenceAsSet[terra.StringValue](m.ref.Append("ip_addresses"))
 }
 
 type NfsAttributes struct {
@@ -154,11 +154,11 @@ func (n NfsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (n NfsAttributes) DnsName() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("dns_name"))
+	return terra.ReferenceAsString(n.ref.Append("dns_name"))
 }
 
 func (n NfsAttributes) IpAddresses() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](n.ref.Append("ip_addresses"))
+	return terra.ReferenceAsSet[terra.StringValue](n.ref.Append("ip_addresses"))
 }
 
 type SmbAttributes struct {
@@ -178,11 +178,11 @@ func (s SmbAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SmbAttributes) DnsName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("dns_name"))
+	return terra.ReferenceAsString(s.ref.Append("dns_name"))
 }
 
 func (s SmbAttributes) IpAddresses() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("ip_addresses"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("ip_addresses"))
 }
 
 type ActiveDirectoryConfigurationAttributes struct {
@@ -202,11 +202,11 @@ func (adc ActiveDirectoryConfigurationAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (adc ActiveDirectoryConfigurationAttributes) NetbiosName() terra.StringValue {
-	return terra.ReferenceString(adc.ref.Append("netbios_name"))
+	return terra.ReferenceAsString(adc.ref.Append("netbios_name"))
 }
 
 func (adc ActiveDirectoryConfigurationAttributes) SelfManagedActiveDirectoryConfiguration() terra.ListValue[SelfManagedActiveDirectoryConfigurationAttributes] {
-	return terra.ReferenceList[SelfManagedActiveDirectoryConfigurationAttributes](adc.ref.Append("self_managed_active_directory_configuration"))
+	return terra.ReferenceAsList[SelfManagedActiveDirectoryConfigurationAttributes](adc.ref.Append("self_managed_active_directory_configuration"))
 }
 
 type SelfManagedActiveDirectoryConfigurationAttributes struct {
@@ -226,27 +226,27 @@ func (smadc SelfManagedActiveDirectoryConfigurationAttributes) InternalTokens() 
 }
 
 func (smadc SelfManagedActiveDirectoryConfigurationAttributes) DnsIps() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](smadc.ref.Append("dns_ips"))
+	return terra.ReferenceAsSet[terra.StringValue](smadc.ref.Append("dns_ips"))
 }
 
 func (smadc SelfManagedActiveDirectoryConfigurationAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(smadc.ref.Append("domain_name"))
+	return terra.ReferenceAsString(smadc.ref.Append("domain_name"))
 }
 
 func (smadc SelfManagedActiveDirectoryConfigurationAttributes) FileSystemAdministratorsGroup() terra.StringValue {
-	return terra.ReferenceString(smadc.ref.Append("file_system_administrators_group"))
+	return terra.ReferenceAsString(smadc.ref.Append("file_system_administrators_group"))
 }
 
 func (smadc SelfManagedActiveDirectoryConfigurationAttributes) OrganizationalUnitDistinguishedName() terra.StringValue {
-	return terra.ReferenceString(smadc.ref.Append("organizational_unit_distinguished_name"))
+	return terra.ReferenceAsString(smadc.ref.Append("organizational_unit_distinguished_name"))
 }
 
 func (smadc SelfManagedActiveDirectoryConfigurationAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(smadc.ref.Append("password"))
+	return terra.ReferenceAsString(smadc.ref.Append("password"))
 }
 
 func (smadc SelfManagedActiveDirectoryConfigurationAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(smadc.ref.Append("username"))
+	return terra.ReferenceAsString(smadc.ref.Append("username"))
 }
 
 type TimeoutsAttributes struct {
@@ -266,15 +266,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type EndpointsState struct {

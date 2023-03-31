@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataCurReportDefinition creates a new instance of [DataCurReportDefinition].
 func NewDataCurReportDefinition(name string, args DataCurReportDefinitionArgs) *DataCurReportDefinition {
 	return &DataCurReportDefinition{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataCurReportDefinition(name string, args DataCurReportDefinitionArgs) *
 
 var _ terra.DataResource = (*DataCurReportDefinition)(nil)
 
+// DataCurReportDefinition represents the Terraform data resource aws_cur_report_definition.
 type DataCurReportDefinition struct {
 	Name string
 	Args DataCurReportDefinitionArgs
 }
 
+// DataSource returns the Terraform object type for [DataCurReportDefinition].
 func (crd *DataCurReportDefinition) DataSource() string {
 	return "aws_cur_report_definition"
 }
 
+// LocalName returns the local name for [DataCurReportDefinition].
 func (crd *DataCurReportDefinition) LocalName() string {
 	return crd.Name
 }
 
+// Configuration returns the configuration (args) for [DataCurReportDefinition].
 func (crd *DataCurReportDefinition) Configuration() interface{} {
 	return crd.Args
 }
 
+// Attributes returns the attributes for [DataCurReportDefinition].
 func (crd *DataCurReportDefinition) Attributes() dataCurReportDefinitionAttributes {
 	return dataCurReportDefinitionAttributes{ref: terra.ReferenceDataResource(crd)}
 }
 
+// DataCurReportDefinitionArgs contains the configurations for aws_cur_report_definition.
 type DataCurReportDefinitionArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,50 +51,62 @@ type dataCurReportDefinitionAttributes struct {
 	ref terra.Reference
 }
 
+// AdditionalArtifacts returns a reference to field additional_artifacts of aws_cur_report_definition.
 func (crd dataCurReportDefinitionAttributes) AdditionalArtifacts() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](crd.ref.Append("additional_artifacts"))
+	return terra.ReferenceAsSet[terra.StringValue](crd.ref.Append("additional_artifacts"))
 }
 
+// AdditionalSchemaElements returns a reference to field additional_schema_elements of aws_cur_report_definition.
 func (crd dataCurReportDefinitionAttributes) AdditionalSchemaElements() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](crd.ref.Append("additional_schema_elements"))
+	return terra.ReferenceAsSet[terra.StringValue](crd.ref.Append("additional_schema_elements"))
 }
 
+// Compression returns a reference to field compression of aws_cur_report_definition.
 func (crd dataCurReportDefinitionAttributes) Compression() terra.StringValue {
-	return terra.ReferenceString(crd.ref.Append("compression"))
+	return terra.ReferenceAsString(crd.ref.Append("compression"))
 }
 
+// Format returns a reference to field format of aws_cur_report_definition.
 func (crd dataCurReportDefinitionAttributes) Format() terra.StringValue {
-	return terra.ReferenceString(crd.ref.Append("format"))
+	return terra.ReferenceAsString(crd.ref.Append("format"))
 }
 
+// Id returns a reference to field id of aws_cur_report_definition.
 func (crd dataCurReportDefinitionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crd.ref.Append("id"))
+	return terra.ReferenceAsString(crd.ref.Append("id"))
 }
 
+// RefreshClosedReports returns a reference to field refresh_closed_reports of aws_cur_report_definition.
 func (crd dataCurReportDefinitionAttributes) RefreshClosedReports() terra.BoolValue {
-	return terra.ReferenceBool(crd.ref.Append("refresh_closed_reports"))
+	return terra.ReferenceAsBool(crd.ref.Append("refresh_closed_reports"))
 }
 
+// ReportName returns a reference to field report_name of aws_cur_report_definition.
 func (crd dataCurReportDefinitionAttributes) ReportName() terra.StringValue {
-	return terra.ReferenceString(crd.ref.Append("report_name"))
+	return terra.ReferenceAsString(crd.ref.Append("report_name"))
 }
 
+// ReportVersioning returns a reference to field report_versioning of aws_cur_report_definition.
 func (crd dataCurReportDefinitionAttributes) ReportVersioning() terra.StringValue {
-	return terra.ReferenceString(crd.ref.Append("report_versioning"))
+	return terra.ReferenceAsString(crd.ref.Append("report_versioning"))
 }
 
+// S3Bucket returns a reference to field s3_bucket of aws_cur_report_definition.
 func (crd dataCurReportDefinitionAttributes) S3Bucket() terra.StringValue {
-	return terra.ReferenceString(crd.ref.Append("s3_bucket"))
+	return terra.ReferenceAsString(crd.ref.Append("s3_bucket"))
 }
 
+// S3Prefix returns a reference to field s3_prefix of aws_cur_report_definition.
 func (crd dataCurReportDefinitionAttributes) S3Prefix() terra.StringValue {
-	return terra.ReferenceString(crd.ref.Append("s3_prefix"))
+	return terra.ReferenceAsString(crd.ref.Append("s3_prefix"))
 }
 
+// S3Region returns a reference to field s3_region of aws_cur_report_definition.
 func (crd dataCurReportDefinitionAttributes) S3Region() terra.StringValue {
-	return terra.ReferenceString(crd.ref.Append("s3_region"))
+	return terra.ReferenceAsString(crd.ref.Append("s3_region"))
 }
 
+// TimeUnit returns a reference to field time_unit of aws_cur_report_definition.
 func (crd dataCurReportDefinitionAttributes) TimeUnit() terra.StringValue {
-	return terra.ReferenceString(crd.ref.Append("time_unit"))
+	return terra.ReferenceAsString(crd.ref.Append("time_unit"))
 }

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewIamOpenidConnectProvider creates a new instance of [IamOpenidConnectProvider].
 func NewIamOpenidConnectProvider(name string, args IamOpenidConnectProviderArgs) *IamOpenidConnectProvider {
 	return &IamOpenidConnectProvider{
 		Args: args,
@@ -18,28 +19,51 @@ func NewIamOpenidConnectProvider(name string, args IamOpenidConnectProviderArgs)
 
 var _ terra.Resource = (*IamOpenidConnectProvider)(nil)
 
+// IamOpenidConnectProvider represents the Terraform resource aws_iam_openid_connect_provider.
 type IamOpenidConnectProvider struct {
-	Name  string
-	Args  IamOpenidConnectProviderArgs
-	state *iamOpenidConnectProviderState
+	Name      string
+	Args      IamOpenidConnectProviderArgs
+	state     *iamOpenidConnectProviderState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IamOpenidConnectProvider].
 func (iocp *IamOpenidConnectProvider) Type() string {
 	return "aws_iam_openid_connect_provider"
 }
 
+// LocalName returns the local name for [IamOpenidConnectProvider].
 func (iocp *IamOpenidConnectProvider) LocalName() string {
 	return iocp.Name
 }
 
+// Configuration returns the configuration (args) for [IamOpenidConnectProvider].
 func (iocp *IamOpenidConnectProvider) Configuration() interface{} {
 	return iocp.Args
 }
 
+// DependOn is used for other resources to depend on [IamOpenidConnectProvider].
+func (iocp *IamOpenidConnectProvider) DependOn() terra.Reference {
+	return terra.ReferenceResource(iocp)
+}
+
+// Dependencies returns the list of resources [IamOpenidConnectProvider] depends_on.
+func (iocp *IamOpenidConnectProvider) Dependencies() terra.Dependencies {
+	return iocp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IamOpenidConnectProvider].
+func (iocp *IamOpenidConnectProvider) LifecycleManagement() *terra.Lifecycle {
+	return iocp.Lifecycle
+}
+
+// Attributes returns the attributes for [IamOpenidConnectProvider].
 func (iocp *IamOpenidConnectProvider) Attributes() iamOpenidConnectProviderAttributes {
 	return iamOpenidConnectProviderAttributes{ref: terra.ReferenceResource(iocp)}
 }
 
+// ImportState imports the given attribute values into [IamOpenidConnectProvider]'s state.
 func (iocp *IamOpenidConnectProvider) ImportState(av io.Reader) error {
 	iocp.state = &iamOpenidConnectProviderState{}
 	if err := json.NewDecoder(av).Decode(iocp.state); err != nil {
@@ -48,10 +72,12 @@ func (iocp *IamOpenidConnectProvider) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IamOpenidConnectProvider] has state.
 func (iocp *IamOpenidConnectProvider) State() (*iamOpenidConnectProviderState, bool) {
 	return iocp.state, iocp.state != nil
 }
 
+// StateMust returns the state for [IamOpenidConnectProvider]. Panics if the state is nil.
 func (iocp *IamOpenidConnectProvider) StateMust() *iamOpenidConnectProviderState {
 	if iocp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", iocp.Type(), iocp.LocalName()))
@@ -59,10 +85,7 @@ func (iocp *IamOpenidConnectProvider) StateMust() *iamOpenidConnectProviderState
 	return iocp.state
 }
 
-func (iocp *IamOpenidConnectProvider) DependOn() terra.Reference {
-	return terra.ReferenceResource(iocp)
-}
-
+// IamOpenidConnectProviderArgs contains the configurations for aws_iam_openid_connect_provider.
 type IamOpenidConnectProviderArgs struct {
 	// ClientIdList: list of string, required
 	ClientIdList terra.ListValue[terra.StringValue] `hcl:"client_id_list,attr" validate:"required"`
@@ -76,39 +99,44 @@ type IamOpenidConnectProviderArgs struct {
 	ThumbprintList terra.ListValue[terra.StringValue] `hcl:"thumbprint_list,attr" validate:"required"`
 	// Url: string, required
 	Url terra.StringValue `hcl:"url,attr" validate:"required"`
-	// DependsOn contains resources that IamOpenidConnectProvider depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iamOpenidConnectProviderAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_iam_openid_connect_provider.
 func (iocp iamOpenidConnectProviderAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(iocp.ref.Append("arn"))
+	return terra.ReferenceAsString(iocp.ref.Append("arn"))
 }
 
+// ClientIdList returns a reference to field client_id_list of aws_iam_openid_connect_provider.
 func (iocp iamOpenidConnectProviderAttributes) ClientIdList() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](iocp.ref.Append("client_id_list"))
+	return terra.ReferenceAsList[terra.StringValue](iocp.ref.Append("client_id_list"))
 }
 
+// Id returns a reference to field id of aws_iam_openid_connect_provider.
 func (iocp iamOpenidConnectProviderAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(iocp.ref.Append("id"))
+	return terra.ReferenceAsString(iocp.ref.Append("id"))
 }
 
+// Tags returns a reference to field tags of aws_iam_openid_connect_provider.
 func (iocp iamOpenidConnectProviderAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](iocp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](iocp.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_iam_openid_connect_provider.
 func (iocp iamOpenidConnectProviderAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](iocp.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](iocp.ref.Append("tags_all"))
 }
 
+// ThumbprintList returns a reference to field thumbprint_list of aws_iam_openid_connect_provider.
 func (iocp iamOpenidConnectProviderAttributes) ThumbprintList() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](iocp.ref.Append("thumbprint_list"))
+	return terra.ReferenceAsList[terra.StringValue](iocp.ref.Append("thumbprint_list"))
 }
 
+// Url returns a reference to field url of aws_iam_openid_connect_provider.
 func (iocp iamOpenidConnectProviderAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(iocp.ref.Append("url"))
+	return terra.ReferenceAsString(iocp.ref.Append("url"))
 }
 
 type iamOpenidConnectProviderState struct {

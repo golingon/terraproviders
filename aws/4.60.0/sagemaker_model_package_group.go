@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSagemakerModelPackageGroup creates a new instance of [SagemakerModelPackageGroup].
 func NewSagemakerModelPackageGroup(name string, args SagemakerModelPackageGroupArgs) *SagemakerModelPackageGroup {
 	return &SagemakerModelPackageGroup{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSagemakerModelPackageGroup(name string, args SagemakerModelPackageGroupA
 
 var _ terra.Resource = (*SagemakerModelPackageGroup)(nil)
 
+// SagemakerModelPackageGroup represents the Terraform resource aws_sagemaker_model_package_group.
 type SagemakerModelPackageGroup struct {
-	Name  string
-	Args  SagemakerModelPackageGroupArgs
-	state *sagemakerModelPackageGroupState
+	Name      string
+	Args      SagemakerModelPackageGroupArgs
+	state     *sagemakerModelPackageGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SagemakerModelPackageGroup].
 func (smpg *SagemakerModelPackageGroup) Type() string {
 	return "aws_sagemaker_model_package_group"
 }
 
+// LocalName returns the local name for [SagemakerModelPackageGroup].
 func (smpg *SagemakerModelPackageGroup) LocalName() string {
 	return smpg.Name
 }
 
+// Configuration returns the configuration (args) for [SagemakerModelPackageGroup].
 func (smpg *SagemakerModelPackageGroup) Configuration() interface{} {
 	return smpg.Args
 }
 
+// DependOn is used for other resources to depend on [SagemakerModelPackageGroup].
+func (smpg *SagemakerModelPackageGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(smpg)
+}
+
+// Dependencies returns the list of resources [SagemakerModelPackageGroup] depends_on.
+func (smpg *SagemakerModelPackageGroup) Dependencies() terra.Dependencies {
+	return smpg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SagemakerModelPackageGroup].
+func (smpg *SagemakerModelPackageGroup) LifecycleManagement() *terra.Lifecycle {
+	return smpg.Lifecycle
+}
+
+// Attributes returns the attributes for [SagemakerModelPackageGroup].
 func (smpg *SagemakerModelPackageGroup) Attributes() sagemakerModelPackageGroupAttributes {
 	return sagemakerModelPackageGroupAttributes{ref: terra.ReferenceResource(smpg)}
 }
 
+// ImportState imports the given attribute values into [SagemakerModelPackageGroup]'s state.
 func (smpg *SagemakerModelPackageGroup) ImportState(av io.Reader) error {
 	smpg.state = &sagemakerModelPackageGroupState{}
 	if err := json.NewDecoder(av).Decode(smpg.state); err != nil {
@@ -48,10 +72,12 @@ func (smpg *SagemakerModelPackageGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SagemakerModelPackageGroup] has state.
 func (smpg *SagemakerModelPackageGroup) State() (*sagemakerModelPackageGroupState, bool) {
 	return smpg.state, smpg.state != nil
 }
 
+// StateMust returns the state for [SagemakerModelPackageGroup]. Panics if the state is nil.
 func (smpg *SagemakerModelPackageGroup) StateMust() *sagemakerModelPackageGroupState {
 	if smpg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", smpg.Type(), smpg.LocalName()))
@@ -59,10 +85,7 @@ func (smpg *SagemakerModelPackageGroup) StateMust() *sagemakerModelPackageGroupS
 	return smpg.state
 }
 
-func (smpg *SagemakerModelPackageGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(smpg)
-}
-
+// SagemakerModelPackageGroupArgs contains the configurations for aws_sagemaker_model_package_group.
 type SagemakerModelPackageGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -74,35 +97,39 @@ type SagemakerModelPackageGroupArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that SagemakerModelPackageGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sagemakerModelPackageGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_sagemaker_model_package_group.
 func (smpg sagemakerModelPackageGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(smpg.ref.Append("arn"))
+	return terra.ReferenceAsString(smpg.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_sagemaker_model_package_group.
 func (smpg sagemakerModelPackageGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(smpg.ref.Append("id"))
+	return terra.ReferenceAsString(smpg.ref.Append("id"))
 }
 
+// ModelPackageGroupDescription returns a reference to field model_package_group_description of aws_sagemaker_model_package_group.
 func (smpg sagemakerModelPackageGroupAttributes) ModelPackageGroupDescription() terra.StringValue {
-	return terra.ReferenceString(smpg.ref.Append("model_package_group_description"))
+	return terra.ReferenceAsString(smpg.ref.Append("model_package_group_description"))
 }
 
+// ModelPackageGroupName returns a reference to field model_package_group_name of aws_sagemaker_model_package_group.
 func (smpg sagemakerModelPackageGroupAttributes) ModelPackageGroupName() terra.StringValue {
-	return terra.ReferenceString(smpg.ref.Append("model_package_group_name"))
+	return terra.ReferenceAsString(smpg.ref.Append("model_package_group_name"))
 }
 
+// Tags returns a reference to field tags of aws_sagemaker_model_package_group.
 func (smpg sagemakerModelPackageGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](smpg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](smpg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_sagemaker_model_package_group.
 func (smpg sagemakerModelPackageGroupAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](smpg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](smpg.ref.Append("tags_all"))
 }
 
 type sagemakerModelPackageGroupState struct {

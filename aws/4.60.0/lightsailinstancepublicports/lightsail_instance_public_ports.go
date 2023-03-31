@@ -39,27 +39,27 @@ func (pi PortInfoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pi PortInfoAttributes) CidrListAliases() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](pi.ref.Append("cidr_list_aliases"))
+	return terra.ReferenceAsSet[terra.StringValue](pi.ref.Append("cidr_list_aliases"))
 }
 
 func (pi PortInfoAttributes) Cidrs() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](pi.ref.Append("cidrs"))
+	return terra.ReferenceAsSet[terra.StringValue](pi.ref.Append("cidrs"))
 }
 
 func (pi PortInfoAttributes) FromPort() terra.NumberValue {
-	return terra.ReferenceNumber(pi.ref.Append("from_port"))
+	return terra.ReferenceAsNumber(pi.ref.Append("from_port"))
 }
 
 func (pi PortInfoAttributes) Ipv6Cidrs() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](pi.ref.Append("ipv6_cidrs"))
+	return terra.ReferenceAsSet[terra.StringValue](pi.ref.Append("ipv6_cidrs"))
 }
 
 func (pi PortInfoAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(pi.ref.Append("protocol"))
+	return terra.ReferenceAsString(pi.ref.Append("protocol"))
 }
 
 func (pi PortInfoAttributes) ToPort() terra.NumberValue {
-	return terra.ReferenceNumber(pi.ref.Append("to_port"))
+	return terra.ReferenceAsNumber(pi.ref.Append("to_port"))
 }
 
 type PortInfoState struct {

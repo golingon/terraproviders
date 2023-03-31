@@ -33,15 +33,15 @@ func (al AccessLogsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (al AccessLogsAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(al.ref.Append("bucket"))
+	return terra.ReferenceAsString(al.ref.Append("bucket"))
 }
 
 func (al AccessLogsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(al.ref.Append("enabled"))
+	return terra.ReferenceAsBool(al.ref.Append("enabled"))
 }
 
 func (al AccessLogsAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(al.ref.Append("prefix"))
+	return terra.ReferenceAsString(al.ref.Append("prefix"))
 }
 
 type SubnetMappingAttributes struct {
@@ -61,23 +61,23 @@ func (sm SubnetMappingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sm SubnetMappingAttributes) AllocationId() terra.StringValue {
-	return terra.ReferenceString(sm.ref.Append("allocation_id"))
+	return terra.ReferenceAsString(sm.ref.Append("allocation_id"))
 }
 
 func (sm SubnetMappingAttributes) Ipv6Address() terra.StringValue {
-	return terra.ReferenceString(sm.ref.Append("ipv6_address"))
+	return terra.ReferenceAsString(sm.ref.Append("ipv6_address"))
 }
 
 func (sm SubnetMappingAttributes) OutpostId() terra.StringValue {
-	return terra.ReferenceString(sm.ref.Append("outpost_id"))
+	return terra.ReferenceAsString(sm.ref.Append("outpost_id"))
 }
 
 func (sm SubnetMappingAttributes) PrivateIpv4Address() terra.StringValue {
-	return terra.ReferenceString(sm.ref.Append("private_ipv4_address"))
+	return terra.ReferenceAsString(sm.ref.Append("private_ipv4_address"))
 }
 
 func (sm SubnetMappingAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(sm.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(sm.ref.Append("subnet_id"))
 }
 
 type TimeoutsAttributes struct {
@@ -97,7 +97,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type AccessLogsState struct {

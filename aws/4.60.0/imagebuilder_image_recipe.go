@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewImagebuilderImageRecipe creates a new instance of [ImagebuilderImageRecipe].
 func NewImagebuilderImageRecipe(name string, args ImagebuilderImageRecipeArgs) *ImagebuilderImageRecipe {
 	return &ImagebuilderImageRecipe{
 		Args: args,
@@ -19,28 +20,51 @@ func NewImagebuilderImageRecipe(name string, args ImagebuilderImageRecipeArgs) *
 
 var _ terra.Resource = (*ImagebuilderImageRecipe)(nil)
 
+// ImagebuilderImageRecipe represents the Terraform resource aws_imagebuilder_image_recipe.
 type ImagebuilderImageRecipe struct {
-	Name  string
-	Args  ImagebuilderImageRecipeArgs
-	state *imagebuilderImageRecipeState
+	Name      string
+	Args      ImagebuilderImageRecipeArgs
+	state     *imagebuilderImageRecipeState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ImagebuilderImageRecipe].
 func (iir *ImagebuilderImageRecipe) Type() string {
 	return "aws_imagebuilder_image_recipe"
 }
 
+// LocalName returns the local name for [ImagebuilderImageRecipe].
 func (iir *ImagebuilderImageRecipe) LocalName() string {
 	return iir.Name
 }
 
+// Configuration returns the configuration (args) for [ImagebuilderImageRecipe].
 func (iir *ImagebuilderImageRecipe) Configuration() interface{} {
 	return iir.Args
 }
 
+// DependOn is used for other resources to depend on [ImagebuilderImageRecipe].
+func (iir *ImagebuilderImageRecipe) DependOn() terra.Reference {
+	return terra.ReferenceResource(iir)
+}
+
+// Dependencies returns the list of resources [ImagebuilderImageRecipe] depends_on.
+func (iir *ImagebuilderImageRecipe) Dependencies() terra.Dependencies {
+	return iir.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ImagebuilderImageRecipe].
+func (iir *ImagebuilderImageRecipe) LifecycleManagement() *terra.Lifecycle {
+	return iir.Lifecycle
+}
+
+// Attributes returns the attributes for [ImagebuilderImageRecipe].
 func (iir *ImagebuilderImageRecipe) Attributes() imagebuilderImageRecipeAttributes {
 	return imagebuilderImageRecipeAttributes{ref: terra.ReferenceResource(iir)}
 }
 
+// ImportState imports the given attribute values into [ImagebuilderImageRecipe]'s state.
 func (iir *ImagebuilderImageRecipe) ImportState(av io.Reader) error {
 	iir.state = &imagebuilderImageRecipeState{}
 	if err := json.NewDecoder(av).Decode(iir.state); err != nil {
@@ -49,10 +73,12 @@ func (iir *ImagebuilderImageRecipe) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ImagebuilderImageRecipe] has state.
 func (iir *ImagebuilderImageRecipe) State() (*imagebuilderImageRecipeState, bool) {
 	return iir.state, iir.state != nil
 }
 
+// StateMust returns the state for [ImagebuilderImageRecipe]. Panics if the state is nil.
 func (iir *ImagebuilderImageRecipe) StateMust() *imagebuilderImageRecipeState {
 	if iir.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", iir.Type(), iir.LocalName()))
@@ -60,10 +86,7 @@ func (iir *ImagebuilderImageRecipe) StateMust() *imagebuilderImageRecipeState {
 	return iir.state
 }
 
-func (iir *ImagebuilderImageRecipe) DependOn() terra.Reference {
-	return terra.ReferenceResource(iir)
-}
-
+// ImagebuilderImageRecipeArgs contains the configurations for aws_imagebuilder_image_recipe.
 type ImagebuilderImageRecipeArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -89,75 +112,86 @@ type ImagebuilderImageRecipeArgs struct {
 	Component []imagebuilderimagerecipe.Component `hcl:"component,block" validate:"min=1"`
 	// SystemsManagerAgent: optional
 	SystemsManagerAgent *imagebuilderimagerecipe.SystemsManagerAgent `hcl:"systems_manager_agent,block"`
-	// DependsOn contains resources that ImagebuilderImageRecipe depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type imagebuilderImageRecipeAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_imagebuilder_image_recipe.
 func (iir imagebuilderImageRecipeAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(iir.ref.Append("arn"))
+	return terra.ReferenceAsString(iir.ref.Append("arn"))
 }
 
+// DateCreated returns a reference to field date_created of aws_imagebuilder_image_recipe.
 func (iir imagebuilderImageRecipeAttributes) DateCreated() terra.StringValue {
-	return terra.ReferenceString(iir.ref.Append("date_created"))
+	return terra.ReferenceAsString(iir.ref.Append("date_created"))
 }
 
+// Description returns a reference to field description of aws_imagebuilder_image_recipe.
 func (iir imagebuilderImageRecipeAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(iir.ref.Append("description"))
+	return terra.ReferenceAsString(iir.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_imagebuilder_image_recipe.
 func (iir imagebuilderImageRecipeAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(iir.ref.Append("id"))
+	return terra.ReferenceAsString(iir.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_imagebuilder_image_recipe.
 func (iir imagebuilderImageRecipeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(iir.ref.Append("name"))
+	return terra.ReferenceAsString(iir.ref.Append("name"))
 }
 
+// Owner returns a reference to field owner of aws_imagebuilder_image_recipe.
 func (iir imagebuilderImageRecipeAttributes) Owner() terra.StringValue {
-	return terra.ReferenceString(iir.ref.Append("owner"))
+	return terra.ReferenceAsString(iir.ref.Append("owner"))
 }
 
+// ParentImage returns a reference to field parent_image of aws_imagebuilder_image_recipe.
 func (iir imagebuilderImageRecipeAttributes) ParentImage() terra.StringValue {
-	return terra.ReferenceString(iir.ref.Append("parent_image"))
+	return terra.ReferenceAsString(iir.ref.Append("parent_image"))
 }
 
+// Platform returns a reference to field platform of aws_imagebuilder_image_recipe.
 func (iir imagebuilderImageRecipeAttributes) Platform() terra.StringValue {
-	return terra.ReferenceString(iir.ref.Append("platform"))
+	return terra.ReferenceAsString(iir.ref.Append("platform"))
 }
 
+// Tags returns a reference to field tags of aws_imagebuilder_image_recipe.
 func (iir imagebuilderImageRecipeAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](iir.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](iir.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_imagebuilder_image_recipe.
 func (iir imagebuilderImageRecipeAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](iir.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](iir.ref.Append("tags_all"))
 }
 
+// UserDataBase64 returns a reference to field user_data_base64 of aws_imagebuilder_image_recipe.
 func (iir imagebuilderImageRecipeAttributes) UserDataBase64() terra.StringValue {
-	return terra.ReferenceString(iir.ref.Append("user_data_base64"))
+	return terra.ReferenceAsString(iir.ref.Append("user_data_base64"))
 }
 
+// Version returns a reference to field version of aws_imagebuilder_image_recipe.
 func (iir imagebuilderImageRecipeAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(iir.ref.Append("version"))
+	return terra.ReferenceAsString(iir.ref.Append("version"))
 }
 
+// WorkingDirectory returns a reference to field working_directory of aws_imagebuilder_image_recipe.
 func (iir imagebuilderImageRecipeAttributes) WorkingDirectory() terra.StringValue {
-	return terra.ReferenceString(iir.ref.Append("working_directory"))
+	return terra.ReferenceAsString(iir.ref.Append("working_directory"))
 }
 
 func (iir imagebuilderImageRecipeAttributes) BlockDeviceMapping() terra.SetValue[imagebuilderimagerecipe.BlockDeviceMappingAttributes] {
-	return terra.ReferenceSet[imagebuilderimagerecipe.BlockDeviceMappingAttributes](iir.ref.Append("block_device_mapping"))
+	return terra.ReferenceAsSet[imagebuilderimagerecipe.BlockDeviceMappingAttributes](iir.ref.Append("block_device_mapping"))
 }
 
 func (iir imagebuilderImageRecipeAttributes) Component() terra.ListValue[imagebuilderimagerecipe.ComponentAttributes] {
-	return terra.ReferenceList[imagebuilderimagerecipe.ComponentAttributes](iir.ref.Append("component"))
+	return terra.ReferenceAsList[imagebuilderimagerecipe.ComponentAttributes](iir.ref.Append("component"))
 }
 
 func (iir imagebuilderImageRecipeAttributes) SystemsManagerAgent() terra.ListValue[imagebuilderimagerecipe.SystemsManagerAgentAttributes] {
-	return terra.ReferenceList[imagebuilderimagerecipe.SystemsManagerAgentAttributes](iir.ref.Append("systems_manager_agent"))
+	return terra.ReferenceAsList[imagebuilderimagerecipe.SystemsManagerAgentAttributes](iir.ref.Append("systems_manager_agent"))
 }
 
 type imagebuilderImageRecipeState struct {

@@ -40,11 +40,11 @@ func (pr PortRangeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pr PortRangeAttributes) FromPort() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("from_port"))
+	return terra.ReferenceAsNumber(pr.ref.Append("from_port"))
 }
 
 func (pr PortRangeAttributes) ToPort() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("to_port"))
+	return terra.ReferenceAsNumber(pr.ref.Append("to_port"))
 }
 
 type TimeoutsAttributes struct {
@@ -64,15 +64,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type PortRangeState struct {

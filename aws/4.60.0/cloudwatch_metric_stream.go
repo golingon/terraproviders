@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudwatchMetricStream creates a new instance of [CloudwatchMetricStream].
 func NewCloudwatchMetricStream(name string, args CloudwatchMetricStreamArgs) *CloudwatchMetricStream {
 	return &CloudwatchMetricStream{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudwatchMetricStream(name string, args CloudwatchMetricStreamArgs) *Cl
 
 var _ terra.Resource = (*CloudwatchMetricStream)(nil)
 
+// CloudwatchMetricStream represents the Terraform resource aws_cloudwatch_metric_stream.
 type CloudwatchMetricStream struct {
-	Name  string
-	Args  CloudwatchMetricStreamArgs
-	state *cloudwatchMetricStreamState
+	Name      string
+	Args      CloudwatchMetricStreamArgs
+	state     *cloudwatchMetricStreamState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudwatchMetricStream].
 func (cms *CloudwatchMetricStream) Type() string {
 	return "aws_cloudwatch_metric_stream"
 }
 
+// LocalName returns the local name for [CloudwatchMetricStream].
 func (cms *CloudwatchMetricStream) LocalName() string {
 	return cms.Name
 }
 
+// Configuration returns the configuration (args) for [CloudwatchMetricStream].
 func (cms *CloudwatchMetricStream) Configuration() interface{} {
 	return cms.Args
 }
 
+// DependOn is used for other resources to depend on [CloudwatchMetricStream].
+func (cms *CloudwatchMetricStream) DependOn() terra.Reference {
+	return terra.ReferenceResource(cms)
+}
+
+// Dependencies returns the list of resources [CloudwatchMetricStream] depends_on.
+func (cms *CloudwatchMetricStream) Dependencies() terra.Dependencies {
+	return cms.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudwatchMetricStream].
+func (cms *CloudwatchMetricStream) LifecycleManagement() *terra.Lifecycle {
+	return cms.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudwatchMetricStream].
 func (cms *CloudwatchMetricStream) Attributes() cloudwatchMetricStreamAttributes {
 	return cloudwatchMetricStreamAttributes{ref: terra.ReferenceResource(cms)}
 }
 
+// ImportState imports the given attribute values into [CloudwatchMetricStream]'s state.
 func (cms *CloudwatchMetricStream) ImportState(av io.Reader) error {
 	cms.state = &cloudwatchMetricStreamState{}
 	if err := json.NewDecoder(av).Decode(cms.state); err != nil {
@@ -49,10 +73,12 @@ func (cms *CloudwatchMetricStream) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudwatchMetricStream] has state.
 func (cms *CloudwatchMetricStream) State() (*cloudwatchMetricStreamState, bool) {
 	return cms.state, cms.state != nil
 }
 
+// StateMust returns the state for [CloudwatchMetricStream]. Panics if the state is nil.
 func (cms *CloudwatchMetricStream) StateMust() *cloudwatchMetricStreamState {
 	if cms.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cms.Type(), cms.LocalName()))
@@ -60,10 +86,7 @@ func (cms *CloudwatchMetricStream) StateMust() *cloudwatchMetricStreamState {
 	return cms.state
 }
 
-func (cms *CloudwatchMetricStream) DependOn() terra.Reference {
-	return terra.ReferenceResource(cms)
-}
-
+// CloudwatchMetricStreamArgs contains the configurations for aws_cloudwatch_metric_stream.
 type CloudwatchMetricStreamArgs struct {
 	// FirehoseArn: string, required
 	FirehoseArn terra.StringValue `hcl:"firehose_arn,attr" validate:"required"`
@@ -89,75 +112,85 @@ type CloudwatchMetricStreamArgs struct {
 	StatisticsConfiguration []cloudwatchmetricstream.StatisticsConfiguration `hcl:"statistics_configuration,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *cloudwatchmetricstream.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CloudwatchMetricStream depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudwatchMetricStreamAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_cloudwatch_metric_stream.
 func (cms cloudwatchMetricStreamAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("arn"))
+	return terra.ReferenceAsString(cms.ref.Append("arn"))
 }
 
+// CreationDate returns a reference to field creation_date of aws_cloudwatch_metric_stream.
 func (cms cloudwatchMetricStreamAttributes) CreationDate() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("creation_date"))
+	return terra.ReferenceAsString(cms.ref.Append("creation_date"))
 }
 
+// FirehoseArn returns a reference to field firehose_arn of aws_cloudwatch_metric_stream.
 func (cms cloudwatchMetricStreamAttributes) FirehoseArn() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("firehose_arn"))
+	return terra.ReferenceAsString(cms.ref.Append("firehose_arn"))
 }
 
+// Id returns a reference to field id of aws_cloudwatch_metric_stream.
 func (cms cloudwatchMetricStreamAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("id"))
+	return terra.ReferenceAsString(cms.ref.Append("id"))
 }
 
+// LastUpdateDate returns a reference to field last_update_date of aws_cloudwatch_metric_stream.
 func (cms cloudwatchMetricStreamAttributes) LastUpdateDate() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("last_update_date"))
+	return terra.ReferenceAsString(cms.ref.Append("last_update_date"))
 }
 
+// Name returns a reference to field name of aws_cloudwatch_metric_stream.
 func (cms cloudwatchMetricStreamAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("name"))
+	return terra.ReferenceAsString(cms.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_cloudwatch_metric_stream.
 func (cms cloudwatchMetricStreamAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(cms.ref.Append("name_prefix"))
 }
 
+// OutputFormat returns a reference to field output_format of aws_cloudwatch_metric_stream.
 func (cms cloudwatchMetricStreamAttributes) OutputFormat() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("output_format"))
+	return terra.ReferenceAsString(cms.ref.Append("output_format"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_cloudwatch_metric_stream.
 func (cms cloudwatchMetricStreamAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("role_arn"))
+	return terra.ReferenceAsString(cms.ref.Append("role_arn"))
 }
 
+// State returns a reference to field state of aws_cloudwatch_metric_stream.
 func (cms cloudwatchMetricStreamAttributes) State() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("state"))
+	return terra.ReferenceAsString(cms.ref.Append("state"))
 }
 
+// Tags returns a reference to field tags of aws_cloudwatch_metric_stream.
 func (cms cloudwatchMetricStreamAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cms.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cms.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_cloudwatch_metric_stream.
 func (cms cloudwatchMetricStreamAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cms.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](cms.ref.Append("tags_all"))
 }
 
 func (cms cloudwatchMetricStreamAttributes) ExcludeFilter() terra.SetValue[cloudwatchmetricstream.ExcludeFilterAttributes] {
-	return terra.ReferenceSet[cloudwatchmetricstream.ExcludeFilterAttributes](cms.ref.Append("exclude_filter"))
+	return terra.ReferenceAsSet[cloudwatchmetricstream.ExcludeFilterAttributes](cms.ref.Append("exclude_filter"))
 }
 
 func (cms cloudwatchMetricStreamAttributes) IncludeFilter() terra.SetValue[cloudwatchmetricstream.IncludeFilterAttributes] {
-	return terra.ReferenceSet[cloudwatchmetricstream.IncludeFilterAttributes](cms.ref.Append("include_filter"))
+	return terra.ReferenceAsSet[cloudwatchmetricstream.IncludeFilterAttributes](cms.ref.Append("include_filter"))
 }
 
 func (cms cloudwatchMetricStreamAttributes) StatisticsConfiguration() terra.SetValue[cloudwatchmetricstream.StatisticsConfigurationAttributes] {
-	return terra.ReferenceSet[cloudwatchmetricstream.StatisticsConfigurationAttributes](cms.ref.Append("statistics_configuration"))
+	return terra.ReferenceAsSet[cloudwatchmetricstream.StatisticsConfigurationAttributes](cms.ref.Append("statistics_configuration"))
 }
 
 func (cms cloudwatchMetricStreamAttributes) Timeouts() cloudwatchmetricstream.TimeoutsAttributes {
-	return terra.ReferenceSingle[cloudwatchmetricstream.TimeoutsAttributes](cms.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cloudwatchmetricstream.TimeoutsAttributes](cms.ref.Append("timeouts"))
 }
 
 type cloudwatchMetricStreamState struct {

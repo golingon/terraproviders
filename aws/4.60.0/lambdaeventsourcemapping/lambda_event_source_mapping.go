@@ -71,7 +71,7 @@ func (amkesc AmazonManagedKafkaEventSourceConfigAttributes) InternalTokens() hcl
 }
 
 func (amkesc AmazonManagedKafkaEventSourceConfigAttributes) ConsumerGroupId() terra.StringValue {
-	return terra.ReferenceString(amkesc.ref.Append("consumer_group_id"))
+	return terra.ReferenceAsString(amkesc.ref.Append("consumer_group_id"))
 }
 
 type DestinationConfigAttributes struct {
@@ -91,7 +91,7 @@ func (dc DestinationConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dc DestinationConfigAttributes) OnFailure() terra.ListValue[OnFailureAttributes] {
-	return terra.ReferenceList[OnFailureAttributes](dc.ref.Append("on_failure"))
+	return terra.ReferenceAsList[OnFailureAttributes](dc.ref.Append("on_failure"))
 }
 
 type OnFailureAttributes struct {
@@ -111,7 +111,7 @@ func (of OnFailureAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (of OnFailureAttributes) DestinationArn() terra.StringValue {
-	return terra.ReferenceString(of.ref.Append("destination_arn"))
+	return terra.ReferenceAsString(of.ref.Append("destination_arn"))
 }
 
 type FilterCriteriaAttributes struct {
@@ -131,7 +131,7 @@ func (fc FilterCriteriaAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fc FilterCriteriaAttributes) Filter() terra.SetValue[FilterAttributes] {
-	return terra.ReferenceSet[FilterAttributes](fc.ref.Append("filter"))
+	return terra.ReferenceAsSet[FilterAttributes](fc.ref.Append("filter"))
 }
 
 type FilterAttributes struct {
@@ -151,7 +151,7 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) Pattern() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("pattern"))
+	return terra.ReferenceAsString(f.ref.Append("pattern"))
 }
 
 type ScalingConfigAttributes struct {
@@ -171,7 +171,7 @@ func (sc ScalingConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc ScalingConfigAttributes) MaximumConcurrency() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("maximum_concurrency"))
+	return terra.ReferenceAsNumber(sc.ref.Append("maximum_concurrency"))
 }
 
 type SelfManagedEventSourceAttributes struct {
@@ -191,7 +191,7 @@ func (smes SelfManagedEventSourceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (smes SelfManagedEventSourceAttributes) Endpoints() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](smes.ref.Append("endpoints"))
+	return terra.ReferenceAsMap[terra.StringValue](smes.ref.Append("endpoints"))
 }
 
 type SelfManagedKafkaEventSourceConfigAttributes struct {
@@ -211,7 +211,7 @@ func (smkesc SelfManagedKafkaEventSourceConfigAttributes) InternalTokens() hclwr
 }
 
 func (smkesc SelfManagedKafkaEventSourceConfigAttributes) ConsumerGroupId() terra.StringValue {
-	return terra.ReferenceString(smkesc.ref.Append("consumer_group_id"))
+	return terra.ReferenceAsString(smkesc.ref.Append("consumer_group_id"))
 }
 
 type SourceAccessConfigurationAttributes struct {
@@ -231,11 +231,11 @@ func (sac SourceAccessConfigurationAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (sac SourceAccessConfigurationAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(sac.ref.Append("type"))
+	return terra.ReferenceAsString(sac.ref.Append("type"))
 }
 
 func (sac SourceAccessConfigurationAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(sac.ref.Append("uri"))
+	return terra.ReferenceAsString(sac.ref.Append("uri"))
 }
 
 type AmazonManagedKafkaEventSourceConfigState struct {

@@ -42,19 +42,19 @@ func (scpd ServiceCatalogProvisioningDetailsAttributes) InternalTokens() hclwrit
 }
 
 func (scpd ServiceCatalogProvisioningDetailsAttributes) PathId() terra.StringValue {
-	return terra.ReferenceString(scpd.ref.Append("path_id"))
+	return terra.ReferenceAsString(scpd.ref.Append("path_id"))
 }
 
 func (scpd ServiceCatalogProvisioningDetailsAttributes) ProductId() terra.StringValue {
-	return terra.ReferenceString(scpd.ref.Append("product_id"))
+	return terra.ReferenceAsString(scpd.ref.Append("product_id"))
 }
 
 func (scpd ServiceCatalogProvisioningDetailsAttributes) ProvisioningArtifactId() terra.StringValue {
-	return terra.ReferenceString(scpd.ref.Append("provisioning_artifact_id"))
+	return terra.ReferenceAsString(scpd.ref.Append("provisioning_artifact_id"))
 }
 
 func (scpd ServiceCatalogProvisioningDetailsAttributes) ProvisioningParameter() terra.ListValue[ProvisioningParameterAttributes] {
-	return terra.ReferenceList[ProvisioningParameterAttributes](scpd.ref.Append("provisioning_parameter"))
+	return terra.ReferenceAsList[ProvisioningParameterAttributes](scpd.ref.Append("provisioning_parameter"))
 }
 
 type ProvisioningParameterAttributes struct {
@@ -74,11 +74,11 @@ func (pp ProvisioningParameterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pp ProvisioningParameterAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(pp.ref.Append("key"))
+	return terra.ReferenceAsString(pp.ref.Append("key"))
 }
 
 func (pp ProvisioningParameterAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(pp.ref.Append("value"))
+	return terra.ReferenceAsString(pp.ref.Append("value"))
 }
 
 type ServiceCatalogProvisioningDetailsState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewRoute53ResolverRule creates a new instance of [Route53ResolverRule].
 func NewRoute53ResolverRule(name string, args Route53ResolverRuleArgs) *Route53ResolverRule {
 	return &Route53ResolverRule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewRoute53ResolverRule(name string, args Route53ResolverRuleArgs) *Route53R
 
 var _ terra.Resource = (*Route53ResolverRule)(nil)
 
+// Route53ResolverRule represents the Terraform resource aws_route53_resolver_rule.
 type Route53ResolverRule struct {
-	Name  string
-	Args  Route53ResolverRuleArgs
-	state *route53ResolverRuleState
+	Name      string
+	Args      Route53ResolverRuleArgs
+	state     *route53ResolverRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Route53ResolverRule].
 func (rrr *Route53ResolverRule) Type() string {
 	return "aws_route53_resolver_rule"
 }
 
+// LocalName returns the local name for [Route53ResolverRule].
 func (rrr *Route53ResolverRule) LocalName() string {
 	return rrr.Name
 }
 
+// Configuration returns the configuration (args) for [Route53ResolverRule].
 func (rrr *Route53ResolverRule) Configuration() interface{} {
 	return rrr.Args
 }
 
+// DependOn is used for other resources to depend on [Route53ResolverRule].
+func (rrr *Route53ResolverRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(rrr)
+}
+
+// Dependencies returns the list of resources [Route53ResolverRule] depends_on.
+func (rrr *Route53ResolverRule) Dependencies() terra.Dependencies {
+	return rrr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Route53ResolverRule].
+func (rrr *Route53ResolverRule) LifecycleManagement() *terra.Lifecycle {
+	return rrr.Lifecycle
+}
+
+// Attributes returns the attributes for [Route53ResolverRule].
 func (rrr *Route53ResolverRule) Attributes() route53ResolverRuleAttributes {
 	return route53ResolverRuleAttributes{ref: terra.ReferenceResource(rrr)}
 }
 
+// ImportState imports the given attribute values into [Route53ResolverRule]'s state.
 func (rrr *Route53ResolverRule) ImportState(av io.Reader) error {
 	rrr.state = &route53ResolverRuleState{}
 	if err := json.NewDecoder(av).Decode(rrr.state); err != nil {
@@ -49,10 +73,12 @@ func (rrr *Route53ResolverRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Route53ResolverRule] has state.
 func (rrr *Route53ResolverRule) State() (*route53ResolverRuleState, bool) {
 	return rrr.state, rrr.state != nil
 }
 
+// StateMust returns the state for [Route53ResolverRule]. Panics if the state is nil.
 func (rrr *Route53ResolverRule) StateMust() *route53ResolverRuleState {
 	if rrr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rrr.Type(), rrr.LocalName()))
@@ -60,10 +86,7 @@ func (rrr *Route53ResolverRule) StateMust() *route53ResolverRuleState {
 	return rrr.state
 }
 
-func (rrr *Route53ResolverRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(rrr)
-}
-
+// Route53ResolverRuleArgs contains the configurations for aws_route53_resolver_rule.
 type Route53ResolverRuleArgs struct {
 	// DomainName: string, required
 	DomainName terra.StringValue `hcl:"domain_name,attr" validate:"required"`
@@ -83,59 +106,67 @@ type Route53ResolverRuleArgs struct {
 	TargetIp []route53resolverrule.TargetIp `hcl:"target_ip,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *route53resolverrule.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Route53ResolverRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type route53ResolverRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_route53_resolver_rule.
 func (rrr route53ResolverRuleAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rrr.ref.Append("arn"))
+	return terra.ReferenceAsString(rrr.ref.Append("arn"))
 }
 
+// DomainName returns a reference to field domain_name of aws_route53_resolver_rule.
 func (rrr route53ResolverRuleAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(rrr.ref.Append("domain_name"))
+	return terra.ReferenceAsString(rrr.ref.Append("domain_name"))
 }
 
+// Id returns a reference to field id of aws_route53_resolver_rule.
 func (rrr route53ResolverRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rrr.ref.Append("id"))
+	return terra.ReferenceAsString(rrr.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_route53_resolver_rule.
 func (rrr route53ResolverRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rrr.ref.Append("name"))
+	return terra.ReferenceAsString(rrr.ref.Append("name"))
 }
 
+// OwnerId returns a reference to field owner_id of aws_route53_resolver_rule.
 func (rrr route53ResolverRuleAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(rrr.ref.Append("owner_id"))
+	return terra.ReferenceAsString(rrr.ref.Append("owner_id"))
 }
 
+// ResolverEndpointId returns a reference to field resolver_endpoint_id of aws_route53_resolver_rule.
 func (rrr route53ResolverRuleAttributes) ResolverEndpointId() terra.StringValue {
-	return terra.ReferenceString(rrr.ref.Append("resolver_endpoint_id"))
+	return terra.ReferenceAsString(rrr.ref.Append("resolver_endpoint_id"))
 }
 
+// RuleType returns a reference to field rule_type of aws_route53_resolver_rule.
 func (rrr route53ResolverRuleAttributes) RuleType() terra.StringValue {
-	return terra.ReferenceString(rrr.ref.Append("rule_type"))
+	return terra.ReferenceAsString(rrr.ref.Append("rule_type"))
 }
 
+// ShareStatus returns a reference to field share_status of aws_route53_resolver_rule.
 func (rrr route53ResolverRuleAttributes) ShareStatus() terra.StringValue {
-	return terra.ReferenceString(rrr.ref.Append("share_status"))
+	return terra.ReferenceAsString(rrr.ref.Append("share_status"))
 }
 
+// Tags returns a reference to field tags of aws_route53_resolver_rule.
 func (rrr route53ResolverRuleAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rrr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rrr.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_route53_resolver_rule.
 func (rrr route53ResolverRuleAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rrr.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](rrr.ref.Append("tags_all"))
 }
 
 func (rrr route53ResolverRuleAttributes) TargetIp() terra.SetValue[route53resolverrule.TargetIpAttributes] {
-	return terra.ReferenceSet[route53resolverrule.TargetIpAttributes](rrr.ref.Append("target_ip"))
+	return terra.ReferenceAsSet[route53resolverrule.TargetIpAttributes](rrr.ref.Append("target_ip"))
 }
 
 func (rrr route53ResolverRuleAttributes) Timeouts() route53resolverrule.TimeoutsAttributes {
-	return terra.ReferenceSingle[route53resolverrule.TimeoutsAttributes](rrr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[route53resolverrule.TimeoutsAttributes](rrr.ref.Append("timeouts"))
 }
 
 type route53ResolverRuleState struct {

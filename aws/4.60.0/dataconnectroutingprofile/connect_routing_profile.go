@@ -28,11 +28,11 @@ func (mc MediaConcurrenciesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mc MediaConcurrenciesAttributes) Channel() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("channel"))
+	return terra.ReferenceAsString(mc.ref.Append("channel"))
 }
 
 func (mc MediaConcurrenciesAttributes) Concurrency() terra.NumberValue {
-	return terra.ReferenceNumber(mc.ref.Append("concurrency"))
+	return terra.ReferenceAsNumber(mc.ref.Append("concurrency"))
 }
 
 type QueueConfigsAttributes struct {
@@ -52,27 +52,27 @@ func (qc QueueConfigsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (qc QueueConfigsAttributes) Channel() terra.StringValue {
-	return terra.ReferenceString(qc.ref.Append("channel"))
+	return terra.ReferenceAsString(qc.ref.Append("channel"))
 }
 
 func (qc QueueConfigsAttributes) Delay() terra.NumberValue {
-	return terra.ReferenceNumber(qc.ref.Append("delay"))
+	return terra.ReferenceAsNumber(qc.ref.Append("delay"))
 }
 
 func (qc QueueConfigsAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(qc.ref.Append("priority"))
+	return terra.ReferenceAsNumber(qc.ref.Append("priority"))
 }
 
 func (qc QueueConfigsAttributes) QueueArn() terra.StringValue {
-	return terra.ReferenceString(qc.ref.Append("queue_arn"))
+	return terra.ReferenceAsString(qc.ref.Append("queue_arn"))
 }
 
 func (qc QueueConfigsAttributes) QueueId() terra.StringValue {
-	return terra.ReferenceString(qc.ref.Append("queue_id"))
+	return terra.ReferenceAsString(qc.ref.Append("queue_id"))
 }
 
 func (qc QueueConfigsAttributes) QueueName() terra.StringValue {
-	return terra.ReferenceString(qc.ref.Append("queue_name"))
+	return terra.ReferenceAsString(qc.ref.Append("queue_name"))
 }
 
 type MediaConcurrenciesState struct {

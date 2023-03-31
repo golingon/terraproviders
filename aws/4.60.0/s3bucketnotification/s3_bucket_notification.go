@@ -63,23 +63,23 @@ func (lf LambdaFunctionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lf LambdaFunctionAttributes) Events() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](lf.ref.Append("events"))
+	return terra.ReferenceAsSet[terra.StringValue](lf.ref.Append("events"))
 }
 
 func (lf LambdaFunctionAttributes) FilterPrefix() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("filter_prefix"))
+	return terra.ReferenceAsString(lf.ref.Append("filter_prefix"))
 }
 
 func (lf LambdaFunctionAttributes) FilterSuffix() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("filter_suffix"))
+	return terra.ReferenceAsString(lf.ref.Append("filter_suffix"))
 }
 
 func (lf LambdaFunctionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("id"))
+	return terra.ReferenceAsString(lf.ref.Append("id"))
 }
 
 func (lf LambdaFunctionAttributes) LambdaFunctionArn() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("lambda_function_arn"))
+	return terra.ReferenceAsString(lf.ref.Append("lambda_function_arn"))
 }
 
 type QueueAttributes struct {
@@ -99,23 +99,23 @@ func (q QueueAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (q QueueAttributes) Events() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](q.ref.Append("events"))
+	return terra.ReferenceAsSet[terra.StringValue](q.ref.Append("events"))
 }
 
 func (q QueueAttributes) FilterPrefix() terra.StringValue {
-	return terra.ReferenceString(q.ref.Append("filter_prefix"))
+	return terra.ReferenceAsString(q.ref.Append("filter_prefix"))
 }
 
 func (q QueueAttributes) FilterSuffix() terra.StringValue {
-	return terra.ReferenceString(q.ref.Append("filter_suffix"))
+	return terra.ReferenceAsString(q.ref.Append("filter_suffix"))
 }
 
 func (q QueueAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(q.ref.Append("id"))
+	return terra.ReferenceAsString(q.ref.Append("id"))
 }
 
 func (q QueueAttributes) QueueArn() terra.StringValue {
-	return terra.ReferenceString(q.ref.Append("queue_arn"))
+	return terra.ReferenceAsString(q.ref.Append("queue_arn"))
 }
 
 type TopicAttributes struct {
@@ -135,23 +135,23 @@ func (t TopicAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TopicAttributes) Events() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](t.ref.Append("events"))
+	return terra.ReferenceAsSet[terra.StringValue](t.ref.Append("events"))
 }
 
 func (t TopicAttributes) FilterPrefix() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("filter_prefix"))
+	return terra.ReferenceAsString(t.ref.Append("filter_prefix"))
 }
 
 func (t TopicAttributes) FilterSuffix() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("filter_suffix"))
+	return terra.ReferenceAsString(t.ref.Append("filter_suffix"))
 }
 
 func (t TopicAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("id"))
+	return terra.ReferenceAsString(t.ref.Append("id"))
 }
 
 func (t TopicAttributes) TopicArn() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("topic_arn"))
+	return terra.ReferenceAsString(t.ref.Append("topic_arn"))
 }
 
 type LambdaFunctionState struct {

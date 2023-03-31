@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewInspectorAssessmentTarget creates a new instance of [InspectorAssessmentTarget].
 func NewInspectorAssessmentTarget(name string, args InspectorAssessmentTargetArgs) *InspectorAssessmentTarget {
 	return &InspectorAssessmentTarget{
 		Args: args,
@@ -18,28 +19,51 @@ func NewInspectorAssessmentTarget(name string, args InspectorAssessmentTargetArg
 
 var _ terra.Resource = (*InspectorAssessmentTarget)(nil)
 
+// InspectorAssessmentTarget represents the Terraform resource aws_inspector_assessment_target.
 type InspectorAssessmentTarget struct {
-	Name  string
-	Args  InspectorAssessmentTargetArgs
-	state *inspectorAssessmentTargetState
+	Name      string
+	Args      InspectorAssessmentTargetArgs
+	state     *inspectorAssessmentTargetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [InspectorAssessmentTarget].
 func (iat *InspectorAssessmentTarget) Type() string {
 	return "aws_inspector_assessment_target"
 }
 
+// LocalName returns the local name for [InspectorAssessmentTarget].
 func (iat *InspectorAssessmentTarget) LocalName() string {
 	return iat.Name
 }
 
+// Configuration returns the configuration (args) for [InspectorAssessmentTarget].
 func (iat *InspectorAssessmentTarget) Configuration() interface{} {
 	return iat.Args
 }
 
+// DependOn is used for other resources to depend on [InspectorAssessmentTarget].
+func (iat *InspectorAssessmentTarget) DependOn() terra.Reference {
+	return terra.ReferenceResource(iat)
+}
+
+// Dependencies returns the list of resources [InspectorAssessmentTarget] depends_on.
+func (iat *InspectorAssessmentTarget) Dependencies() terra.Dependencies {
+	return iat.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [InspectorAssessmentTarget].
+func (iat *InspectorAssessmentTarget) LifecycleManagement() *terra.Lifecycle {
+	return iat.Lifecycle
+}
+
+// Attributes returns the attributes for [InspectorAssessmentTarget].
 func (iat *InspectorAssessmentTarget) Attributes() inspectorAssessmentTargetAttributes {
 	return inspectorAssessmentTargetAttributes{ref: terra.ReferenceResource(iat)}
 }
 
+// ImportState imports the given attribute values into [InspectorAssessmentTarget]'s state.
 func (iat *InspectorAssessmentTarget) ImportState(av io.Reader) error {
 	iat.state = &inspectorAssessmentTargetState{}
 	if err := json.NewDecoder(av).Decode(iat.state); err != nil {
@@ -48,10 +72,12 @@ func (iat *InspectorAssessmentTarget) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [InspectorAssessmentTarget] has state.
 func (iat *InspectorAssessmentTarget) State() (*inspectorAssessmentTargetState, bool) {
 	return iat.state, iat.state != nil
 }
 
+// StateMust returns the state for [InspectorAssessmentTarget]. Panics if the state is nil.
 func (iat *InspectorAssessmentTarget) StateMust() *inspectorAssessmentTargetState {
 	if iat.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", iat.Type(), iat.LocalName()))
@@ -59,10 +85,7 @@ func (iat *InspectorAssessmentTarget) StateMust() *inspectorAssessmentTargetStat
 	return iat.state
 }
 
-func (iat *InspectorAssessmentTarget) DependOn() terra.Reference {
-	return terra.ReferenceResource(iat)
-}
-
+// InspectorAssessmentTargetArgs contains the configurations for aws_inspector_assessment_target.
 type InspectorAssessmentTargetArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,27 +93,29 @@ type InspectorAssessmentTargetArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// ResourceGroupArn: string, optional
 	ResourceGroupArn terra.StringValue `hcl:"resource_group_arn,attr"`
-	// DependsOn contains resources that InspectorAssessmentTarget depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type inspectorAssessmentTargetAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_inspector_assessment_target.
 func (iat inspectorAssessmentTargetAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(iat.ref.Append("arn"))
+	return terra.ReferenceAsString(iat.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_inspector_assessment_target.
 func (iat inspectorAssessmentTargetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(iat.ref.Append("id"))
+	return terra.ReferenceAsString(iat.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_inspector_assessment_target.
 func (iat inspectorAssessmentTargetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(iat.ref.Append("name"))
+	return terra.ReferenceAsString(iat.ref.Append("name"))
 }
 
+// ResourceGroupArn returns a reference to field resource_group_arn of aws_inspector_assessment_target.
 func (iat inspectorAssessmentTargetAttributes) ResourceGroupArn() terra.StringValue {
-	return terra.ReferenceString(iat.ref.Append("resource_group_arn"))
+	return terra.ReferenceAsString(iat.ref.Append("resource_group_arn"))
 }
 
 type inspectorAssessmentTargetState struct {

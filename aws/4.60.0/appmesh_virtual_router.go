@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAppmeshVirtualRouter creates a new instance of [AppmeshVirtualRouter].
 func NewAppmeshVirtualRouter(name string, args AppmeshVirtualRouterArgs) *AppmeshVirtualRouter {
 	return &AppmeshVirtualRouter{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAppmeshVirtualRouter(name string, args AppmeshVirtualRouterArgs) *Appmes
 
 var _ terra.Resource = (*AppmeshVirtualRouter)(nil)
 
+// AppmeshVirtualRouter represents the Terraform resource aws_appmesh_virtual_router.
 type AppmeshVirtualRouter struct {
-	Name  string
-	Args  AppmeshVirtualRouterArgs
-	state *appmeshVirtualRouterState
+	Name      string
+	Args      AppmeshVirtualRouterArgs
+	state     *appmeshVirtualRouterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppmeshVirtualRouter].
 func (avr *AppmeshVirtualRouter) Type() string {
 	return "aws_appmesh_virtual_router"
 }
 
+// LocalName returns the local name for [AppmeshVirtualRouter].
 func (avr *AppmeshVirtualRouter) LocalName() string {
 	return avr.Name
 }
 
+// Configuration returns the configuration (args) for [AppmeshVirtualRouter].
 func (avr *AppmeshVirtualRouter) Configuration() interface{} {
 	return avr.Args
 }
 
+// DependOn is used for other resources to depend on [AppmeshVirtualRouter].
+func (avr *AppmeshVirtualRouter) DependOn() terra.Reference {
+	return terra.ReferenceResource(avr)
+}
+
+// Dependencies returns the list of resources [AppmeshVirtualRouter] depends_on.
+func (avr *AppmeshVirtualRouter) Dependencies() terra.Dependencies {
+	return avr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppmeshVirtualRouter].
+func (avr *AppmeshVirtualRouter) LifecycleManagement() *terra.Lifecycle {
+	return avr.Lifecycle
+}
+
+// Attributes returns the attributes for [AppmeshVirtualRouter].
 func (avr *AppmeshVirtualRouter) Attributes() appmeshVirtualRouterAttributes {
 	return appmeshVirtualRouterAttributes{ref: terra.ReferenceResource(avr)}
 }
 
+// ImportState imports the given attribute values into [AppmeshVirtualRouter]'s state.
 func (avr *AppmeshVirtualRouter) ImportState(av io.Reader) error {
 	avr.state = &appmeshVirtualRouterState{}
 	if err := json.NewDecoder(av).Decode(avr.state); err != nil {
@@ -49,10 +73,12 @@ func (avr *AppmeshVirtualRouter) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppmeshVirtualRouter] has state.
 func (avr *AppmeshVirtualRouter) State() (*appmeshVirtualRouterState, bool) {
 	return avr.state, avr.state != nil
 }
 
+// StateMust returns the state for [AppmeshVirtualRouter]. Panics if the state is nil.
 func (avr *AppmeshVirtualRouter) StateMust() *appmeshVirtualRouterState {
 	if avr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", avr.Type(), avr.LocalName()))
@@ -60,10 +86,7 @@ func (avr *AppmeshVirtualRouter) StateMust() *appmeshVirtualRouterState {
 	return avr.state
 }
 
-func (avr *AppmeshVirtualRouter) DependOn() terra.Reference {
-	return terra.ReferenceResource(avr)
-}
-
+// AppmeshVirtualRouterArgs contains the configurations for aws_appmesh_virtual_router.
 type AppmeshVirtualRouterArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,55 +102,63 @@ type AppmeshVirtualRouterArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Spec: required
 	Spec *appmeshvirtualrouter.Spec `hcl:"spec,block" validate:"required"`
-	// DependsOn contains resources that AppmeshVirtualRouter depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appmeshVirtualRouterAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_appmesh_virtual_router.
 func (avr appmeshVirtualRouterAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(avr.ref.Append("arn"))
+	return terra.ReferenceAsString(avr.ref.Append("arn"))
 }
 
+// CreatedDate returns a reference to field created_date of aws_appmesh_virtual_router.
 func (avr appmeshVirtualRouterAttributes) CreatedDate() terra.StringValue {
-	return terra.ReferenceString(avr.ref.Append("created_date"))
+	return terra.ReferenceAsString(avr.ref.Append("created_date"))
 }
 
+// Id returns a reference to field id of aws_appmesh_virtual_router.
 func (avr appmeshVirtualRouterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(avr.ref.Append("id"))
+	return terra.ReferenceAsString(avr.ref.Append("id"))
 }
 
+// LastUpdatedDate returns a reference to field last_updated_date of aws_appmesh_virtual_router.
 func (avr appmeshVirtualRouterAttributes) LastUpdatedDate() terra.StringValue {
-	return terra.ReferenceString(avr.ref.Append("last_updated_date"))
+	return terra.ReferenceAsString(avr.ref.Append("last_updated_date"))
 }
 
+// MeshName returns a reference to field mesh_name of aws_appmesh_virtual_router.
 func (avr appmeshVirtualRouterAttributes) MeshName() terra.StringValue {
-	return terra.ReferenceString(avr.ref.Append("mesh_name"))
+	return terra.ReferenceAsString(avr.ref.Append("mesh_name"))
 }
 
+// MeshOwner returns a reference to field mesh_owner of aws_appmesh_virtual_router.
 func (avr appmeshVirtualRouterAttributes) MeshOwner() terra.StringValue {
-	return terra.ReferenceString(avr.ref.Append("mesh_owner"))
+	return terra.ReferenceAsString(avr.ref.Append("mesh_owner"))
 }
 
+// Name returns a reference to field name of aws_appmesh_virtual_router.
 func (avr appmeshVirtualRouterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(avr.ref.Append("name"))
+	return terra.ReferenceAsString(avr.ref.Append("name"))
 }
 
+// ResourceOwner returns a reference to field resource_owner of aws_appmesh_virtual_router.
 func (avr appmeshVirtualRouterAttributes) ResourceOwner() terra.StringValue {
-	return terra.ReferenceString(avr.ref.Append("resource_owner"))
+	return terra.ReferenceAsString(avr.ref.Append("resource_owner"))
 }
 
+// Tags returns a reference to field tags of aws_appmesh_virtual_router.
 func (avr appmeshVirtualRouterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](avr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](avr.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_appmesh_virtual_router.
 func (avr appmeshVirtualRouterAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](avr.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](avr.ref.Append("tags_all"))
 }
 
 func (avr appmeshVirtualRouterAttributes) Spec() terra.ListValue[appmeshvirtualrouter.SpecAttributes] {
-	return terra.ReferenceList[appmeshvirtualrouter.SpecAttributes](avr.ref.Append("spec"))
+	return terra.ReferenceAsList[appmeshvirtualrouter.SpecAttributes](avr.ref.Append("spec"))
 }
 
 type appmeshVirtualRouterState struct {

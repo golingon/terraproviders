@@ -42,19 +42,19 @@ func (sc SizeConstraintsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc SizeConstraintsAttributes) ComparisonOperator() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("comparison_operator"))
+	return terra.ReferenceAsString(sc.ref.Append("comparison_operator"))
 }
 
 func (sc SizeConstraintsAttributes) Size() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("size"))
+	return terra.ReferenceAsNumber(sc.ref.Append("size"))
 }
 
 func (sc SizeConstraintsAttributes) TextTransformation() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("text_transformation"))
+	return terra.ReferenceAsString(sc.ref.Append("text_transformation"))
 }
 
 func (sc SizeConstraintsAttributes) FieldToMatch() terra.ListValue[FieldToMatchAttributes] {
-	return terra.ReferenceList[FieldToMatchAttributes](sc.ref.Append("field_to_match"))
+	return terra.ReferenceAsList[FieldToMatchAttributes](sc.ref.Append("field_to_match"))
 }
 
 type FieldToMatchAttributes struct {
@@ -74,11 +74,11 @@ func (ftm FieldToMatchAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ftm FieldToMatchAttributes) Data() terra.StringValue {
-	return terra.ReferenceString(ftm.ref.Append("data"))
+	return terra.ReferenceAsString(ftm.ref.Append("data"))
 }
 
 func (ftm FieldToMatchAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ftm.ref.Append("type"))
+	return terra.ReferenceAsString(ftm.ref.Append("type"))
 }
 
 type SizeConstraintsState struct {

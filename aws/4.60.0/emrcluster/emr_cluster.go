@@ -284,15 +284,15 @@ func (s StepAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s StepAttributes) ActionOnFailure() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("action_on_failure"))
+	return terra.ReferenceAsString(s.ref.Append("action_on_failure"))
 }
 
 func (s StepAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s StepAttributes) HadoopJarStep() terra.ListValue[HadoopJarStepAttributes] {
-	return terra.ReferenceList[HadoopJarStepAttributes](s.ref.Append("hadoop_jar_step"))
+	return terra.ReferenceAsList[HadoopJarStepAttributes](s.ref.Append("hadoop_jar_step"))
 }
 
 type HadoopJarStepAttributes struct {
@@ -312,19 +312,19 @@ func (hjs HadoopJarStepAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hjs HadoopJarStepAttributes) Args() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](hjs.ref.Append("args"))
+	return terra.ReferenceAsList[terra.StringValue](hjs.ref.Append("args"))
 }
 
 func (hjs HadoopJarStepAttributes) Jar() terra.StringValue {
-	return terra.ReferenceString(hjs.ref.Append("jar"))
+	return terra.ReferenceAsString(hjs.ref.Append("jar"))
 }
 
 func (hjs HadoopJarStepAttributes) MainClass() terra.StringValue {
-	return terra.ReferenceString(hjs.ref.Append("main_class"))
+	return terra.ReferenceAsString(hjs.ref.Append("main_class"))
 }
 
 func (hjs HadoopJarStepAttributes) Properties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](hjs.ref.Append("properties"))
+	return terra.ReferenceAsMap[terra.StringValue](hjs.ref.Append("properties"))
 }
 
 type AutoTerminationPolicyAttributes struct {
@@ -344,7 +344,7 @@ func (atp AutoTerminationPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (atp AutoTerminationPolicyAttributes) IdleTimeout() terra.NumberValue {
-	return terra.ReferenceNumber(atp.ref.Append("idle_timeout"))
+	return terra.ReferenceAsNumber(atp.ref.Append("idle_timeout"))
 }
 
 type BootstrapActionAttributes struct {
@@ -364,15 +364,15 @@ func (ba BootstrapActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ba BootstrapActionAttributes) Args() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ba.ref.Append("args"))
+	return terra.ReferenceAsList[terra.StringValue](ba.ref.Append("args"))
 }
 
 func (ba BootstrapActionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("name"))
+	return terra.ReferenceAsString(ba.ref.Append("name"))
 }
 
 func (ba BootstrapActionAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(ba.ref.Append("path"))
+	return terra.ReferenceAsString(ba.ref.Append("path"))
 }
 
 type CoreInstanceFleetAttributes struct {
@@ -392,35 +392,35 @@ func (cif CoreInstanceFleetAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cif CoreInstanceFleetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cif.ref.Append("id"))
+	return terra.ReferenceAsString(cif.ref.Append("id"))
 }
 
 func (cif CoreInstanceFleetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cif.ref.Append("name"))
+	return terra.ReferenceAsString(cif.ref.Append("name"))
 }
 
 func (cif CoreInstanceFleetAttributes) ProvisionedOnDemandCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(cif.ref.Append("provisioned_on_demand_capacity"))
+	return terra.ReferenceAsNumber(cif.ref.Append("provisioned_on_demand_capacity"))
 }
 
 func (cif CoreInstanceFleetAttributes) ProvisionedSpotCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(cif.ref.Append("provisioned_spot_capacity"))
+	return terra.ReferenceAsNumber(cif.ref.Append("provisioned_spot_capacity"))
 }
 
 func (cif CoreInstanceFleetAttributes) TargetOnDemandCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(cif.ref.Append("target_on_demand_capacity"))
+	return terra.ReferenceAsNumber(cif.ref.Append("target_on_demand_capacity"))
 }
 
 func (cif CoreInstanceFleetAttributes) TargetSpotCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(cif.ref.Append("target_spot_capacity"))
+	return terra.ReferenceAsNumber(cif.ref.Append("target_spot_capacity"))
 }
 
 func (cif CoreInstanceFleetAttributes) InstanceTypeConfigs() terra.SetValue[CoreInstanceFleetInstanceTypeConfigsAttributes] {
-	return terra.ReferenceSet[CoreInstanceFleetInstanceTypeConfigsAttributes](cif.ref.Append("instance_type_configs"))
+	return terra.ReferenceAsSet[CoreInstanceFleetInstanceTypeConfigsAttributes](cif.ref.Append("instance_type_configs"))
 }
 
 func (cif CoreInstanceFleetAttributes) LaunchSpecifications() terra.ListValue[CoreInstanceFleetLaunchSpecificationsAttributes] {
-	return terra.ReferenceList[CoreInstanceFleetLaunchSpecificationsAttributes](cif.ref.Append("launch_specifications"))
+	return terra.ReferenceAsList[CoreInstanceFleetLaunchSpecificationsAttributes](cif.ref.Append("launch_specifications"))
 }
 
 type CoreInstanceFleetInstanceTypeConfigsAttributes struct {
@@ -440,27 +440,27 @@ func (itc CoreInstanceFleetInstanceTypeConfigsAttributes) InternalTokens() hclwr
 }
 
 func (itc CoreInstanceFleetInstanceTypeConfigsAttributes) BidPrice() terra.StringValue {
-	return terra.ReferenceString(itc.ref.Append("bid_price"))
+	return terra.ReferenceAsString(itc.ref.Append("bid_price"))
 }
 
 func (itc CoreInstanceFleetInstanceTypeConfigsAttributes) BidPriceAsPercentageOfOnDemandPrice() terra.NumberValue {
-	return terra.ReferenceNumber(itc.ref.Append("bid_price_as_percentage_of_on_demand_price"))
+	return terra.ReferenceAsNumber(itc.ref.Append("bid_price_as_percentage_of_on_demand_price"))
 }
 
 func (itc CoreInstanceFleetInstanceTypeConfigsAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(itc.ref.Append("instance_type"))
+	return terra.ReferenceAsString(itc.ref.Append("instance_type"))
 }
 
 func (itc CoreInstanceFleetInstanceTypeConfigsAttributes) WeightedCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(itc.ref.Append("weighted_capacity"))
+	return terra.ReferenceAsNumber(itc.ref.Append("weighted_capacity"))
 }
 
 func (itc CoreInstanceFleetInstanceTypeConfigsAttributes) Configurations() terra.SetValue[CoreInstanceFleetInstanceTypeConfigsConfigurationsAttributes] {
-	return terra.ReferenceSet[CoreInstanceFleetInstanceTypeConfigsConfigurationsAttributes](itc.ref.Append("configurations"))
+	return terra.ReferenceAsSet[CoreInstanceFleetInstanceTypeConfigsConfigurationsAttributes](itc.ref.Append("configurations"))
 }
 
 func (itc CoreInstanceFleetInstanceTypeConfigsAttributes) EbsConfig() terra.SetValue[CoreInstanceFleetInstanceTypeConfigsEbsConfigAttributes] {
-	return terra.ReferenceSet[CoreInstanceFleetInstanceTypeConfigsEbsConfigAttributes](itc.ref.Append("ebs_config"))
+	return terra.ReferenceAsSet[CoreInstanceFleetInstanceTypeConfigsEbsConfigAttributes](itc.ref.Append("ebs_config"))
 }
 
 type CoreInstanceFleetInstanceTypeConfigsConfigurationsAttributes struct {
@@ -480,11 +480,11 @@ func (c CoreInstanceFleetInstanceTypeConfigsConfigurationsAttributes) InternalTo
 }
 
 func (c CoreInstanceFleetInstanceTypeConfigsConfigurationsAttributes) Classification() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("classification"))
+	return terra.ReferenceAsString(c.ref.Append("classification"))
 }
 
 func (c CoreInstanceFleetInstanceTypeConfigsConfigurationsAttributes) Properties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](c.ref.Append("properties"))
+	return terra.ReferenceAsMap[terra.StringValue](c.ref.Append("properties"))
 }
 
 type CoreInstanceFleetInstanceTypeConfigsEbsConfigAttributes struct {
@@ -504,19 +504,19 @@ func (ec CoreInstanceFleetInstanceTypeConfigsEbsConfigAttributes) InternalTokens
 }
 
 func (ec CoreInstanceFleetInstanceTypeConfigsEbsConfigAttributes) Iops() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("iops"))
+	return terra.ReferenceAsNumber(ec.ref.Append("iops"))
 }
 
 func (ec CoreInstanceFleetInstanceTypeConfigsEbsConfigAttributes) Size() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("size"))
+	return terra.ReferenceAsNumber(ec.ref.Append("size"))
 }
 
 func (ec CoreInstanceFleetInstanceTypeConfigsEbsConfigAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("type"))
+	return terra.ReferenceAsString(ec.ref.Append("type"))
 }
 
 func (ec CoreInstanceFleetInstanceTypeConfigsEbsConfigAttributes) VolumesPerInstance() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("volumes_per_instance"))
+	return terra.ReferenceAsNumber(ec.ref.Append("volumes_per_instance"))
 }
 
 type CoreInstanceFleetLaunchSpecificationsAttributes struct {
@@ -536,11 +536,11 @@ func (ls CoreInstanceFleetLaunchSpecificationsAttributes) InternalTokens() hclwr
 }
 
 func (ls CoreInstanceFleetLaunchSpecificationsAttributes) OnDemandSpecification() terra.ListValue[CoreInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes] {
-	return terra.ReferenceList[CoreInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes](ls.ref.Append("on_demand_specification"))
+	return terra.ReferenceAsList[CoreInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes](ls.ref.Append("on_demand_specification"))
 }
 
 func (ls CoreInstanceFleetLaunchSpecificationsAttributes) SpotSpecification() terra.ListValue[CoreInstanceFleetLaunchSpecificationsSpotSpecificationAttributes] {
-	return terra.ReferenceList[CoreInstanceFleetLaunchSpecificationsSpotSpecificationAttributes](ls.ref.Append("spot_specification"))
+	return terra.ReferenceAsList[CoreInstanceFleetLaunchSpecificationsSpotSpecificationAttributes](ls.ref.Append("spot_specification"))
 }
 
 type CoreInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes struct {
@@ -560,7 +560,7 @@ func (ods CoreInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes) 
 }
 
 func (ods CoreInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes) AllocationStrategy() terra.StringValue {
-	return terra.ReferenceString(ods.ref.Append("allocation_strategy"))
+	return terra.ReferenceAsString(ods.ref.Append("allocation_strategy"))
 }
 
 type CoreInstanceFleetLaunchSpecificationsSpotSpecificationAttributes struct {
@@ -580,19 +580,19 @@ func (ss CoreInstanceFleetLaunchSpecificationsSpotSpecificationAttributes) Inter
 }
 
 func (ss CoreInstanceFleetLaunchSpecificationsSpotSpecificationAttributes) AllocationStrategy() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("allocation_strategy"))
+	return terra.ReferenceAsString(ss.ref.Append("allocation_strategy"))
 }
 
 func (ss CoreInstanceFleetLaunchSpecificationsSpotSpecificationAttributes) BlockDurationMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("block_duration_minutes"))
+	return terra.ReferenceAsNumber(ss.ref.Append("block_duration_minutes"))
 }
 
 func (ss CoreInstanceFleetLaunchSpecificationsSpotSpecificationAttributes) TimeoutAction() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("timeout_action"))
+	return terra.ReferenceAsString(ss.ref.Append("timeout_action"))
 }
 
 func (ss CoreInstanceFleetLaunchSpecificationsSpotSpecificationAttributes) TimeoutDurationMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("timeout_duration_minutes"))
+	return terra.ReferenceAsNumber(ss.ref.Append("timeout_duration_minutes"))
 }
 
 type CoreInstanceGroupAttributes struct {
@@ -612,31 +612,31 @@ func (cig CoreInstanceGroupAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cig CoreInstanceGroupAttributes) AutoscalingPolicy() terra.StringValue {
-	return terra.ReferenceString(cig.ref.Append("autoscaling_policy"))
+	return terra.ReferenceAsString(cig.ref.Append("autoscaling_policy"))
 }
 
 func (cig CoreInstanceGroupAttributes) BidPrice() terra.StringValue {
-	return terra.ReferenceString(cig.ref.Append("bid_price"))
+	return terra.ReferenceAsString(cig.ref.Append("bid_price"))
 }
 
 func (cig CoreInstanceGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cig.ref.Append("id"))
+	return terra.ReferenceAsString(cig.ref.Append("id"))
 }
 
 func (cig CoreInstanceGroupAttributes) InstanceCount() terra.NumberValue {
-	return terra.ReferenceNumber(cig.ref.Append("instance_count"))
+	return terra.ReferenceAsNumber(cig.ref.Append("instance_count"))
 }
 
 func (cig CoreInstanceGroupAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(cig.ref.Append("instance_type"))
+	return terra.ReferenceAsString(cig.ref.Append("instance_type"))
 }
 
 func (cig CoreInstanceGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cig.ref.Append("name"))
+	return terra.ReferenceAsString(cig.ref.Append("name"))
 }
 
 func (cig CoreInstanceGroupAttributes) EbsConfig() terra.SetValue[CoreInstanceGroupEbsConfigAttributes] {
-	return terra.ReferenceSet[CoreInstanceGroupEbsConfigAttributes](cig.ref.Append("ebs_config"))
+	return terra.ReferenceAsSet[CoreInstanceGroupEbsConfigAttributes](cig.ref.Append("ebs_config"))
 }
 
 type CoreInstanceGroupEbsConfigAttributes struct {
@@ -656,23 +656,23 @@ func (ec CoreInstanceGroupEbsConfigAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (ec CoreInstanceGroupEbsConfigAttributes) Iops() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("iops"))
+	return terra.ReferenceAsNumber(ec.ref.Append("iops"))
 }
 
 func (ec CoreInstanceGroupEbsConfigAttributes) Size() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("size"))
+	return terra.ReferenceAsNumber(ec.ref.Append("size"))
 }
 
 func (ec CoreInstanceGroupEbsConfigAttributes) Throughput() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("throughput"))
+	return terra.ReferenceAsNumber(ec.ref.Append("throughput"))
 }
 
 func (ec CoreInstanceGroupEbsConfigAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("type"))
+	return terra.ReferenceAsString(ec.ref.Append("type"))
 }
 
 func (ec CoreInstanceGroupEbsConfigAttributes) VolumesPerInstance() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("volumes_per_instance"))
+	return terra.ReferenceAsNumber(ec.ref.Append("volumes_per_instance"))
 }
 
 type Ec2AttributesAttributes struct {
@@ -692,39 +692,39 @@ func (ea Ec2AttributesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ea Ec2AttributesAttributes) AdditionalMasterSecurityGroups() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("additional_master_security_groups"))
+	return terra.ReferenceAsString(ea.ref.Append("additional_master_security_groups"))
 }
 
 func (ea Ec2AttributesAttributes) AdditionalSlaveSecurityGroups() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("additional_slave_security_groups"))
+	return terra.ReferenceAsString(ea.ref.Append("additional_slave_security_groups"))
 }
 
 func (ea Ec2AttributesAttributes) EmrManagedMasterSecurityGroup() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("emr_managed_master_security_group"))
+	return terra.ReferenceAsString(ea.ref.Append("emr_managed_master_security_group"))
 }
 
 func (ea Ec2AttributesAttributes) EmrManagedSlaveSecurityGroup() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("emr_managed_slave_security_group"))
+	return terra.ReferenceAsString(ea.ref.Append("emr_managed_slave_security_group"))
 }
 
 func (ea Ec2AttributesAttributes) InstanceProfile() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("instance_profile"))
+	return terra.ReferenceAsString(ea.ref.Append("instance_profile"))
 }
 
 func (ea Ec2AttributesAttributes) KeyName() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("key_name"))
+	return terra.ReferenceAsString(ea.ref.Append("key_name"))
 }
 
 func (ea Ec2AttributesAttributes) ServiceAccessSecurityGroup() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("service_access_security_group"))
+	return terra.ReferenceAsString(ea.ref.Append("service_access_security_group"))
 }
 
 func (ea Ec2AttributesAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(ea.ref.Append("subnet_id"))
 }
 
 func (ea Ec2AttributesAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ea.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](ea.ref.Append("subnet_ids"))
 }
 
 type KerberosAttributesAttributes struct {
@@ -744,23 +744,23 @@ func (ka KerberosAttributesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ka KerberosAttributesAttributes) AdDomainJoinPassword() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("ad_domain_join_password"))
+	return terra.ReferenceAsString(ka.ref.Append("ad_domain_join_password"))
 }
 
 func (ka KerberosAttributesAttributes) AdDomainJoinUser() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("ad_domain_join_user"))
+	return terra.ReferenceAsString(ka.ref.Append("ad_domain_join_user"))
 }
 
 func (ka KerberosAttributesAttributes) CrossRealmTrustPrincipalPassword() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("cross_realm_trust_principal_password"))
+	return terra.ReferenceAsString(ka.ref.Append("cross_realm_trust_principal_password"))
 }
 
 func (ka KerberosAttributesAttributes) KdcAdminPassword() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("kdc_admin_password"))
+	return terra.ReferenceAsString(ka.ref.Append("kdc_admin_password"))
 }
 
 func (ka KerberosAttributesAttributes) Realm() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("realm"))
+	return terra.ReferenceAsString(ka.ref.Append("realm"))
 }
 
 type MasterInstanceFleetAttributes struct {
@@ -780,35 +780,35 @@ func (mif MasterInstanceFleetAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mif MasterInstanceFleetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mif.ref.Append("id"))
+	return terra.ReferenceAsString(mif.ref.Append("id"))
 }
 
 func (mif MasterInstanceFleetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mif.ref.Append("name"))
+	return terra.ReferenceAsString(mif.ref.Append("name"))
 }
 
 func (mif MasterInstanceFleetAttributes) ProvisionedOnDemandCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(mif.ref.Append("provisioned_on_demand_capacity"))
+	return terra.ReferenceAsNumber(mif.ref.Append("provisioned_on_demand_capacity"))
 }
 
 func (mif MasterInstanceFleetAttributes) ProvisionedSpotCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(mif.ref.Append("provisioned_spot_capacity"))
+	return terra.ReferenceAsNumber(mif.ref.Append("provisioned_spot_capacity"))
 }
 
 func (mif MasterInstanceFleetAttributes) TargetOnDemandCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(mif.ref.Append("target_on_demand_capacity"))
+	return terra.ReferenceAsNumber(mif.ref.Append("target_on_demand_capacity"))
 }
 
 func (mif MasterInstanceFleetAttributes) TargetSpotCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(mif.ref.Append("target_spot_capacity"))
+	return terra.ReferenceAsNumber(mif.ref.Append("target_spot_capacity"))
 }
 
 func (mif MasterInstanceFleetAttributes) InstanceTypeConfigs() terra.SetValue[MasterInstanceFleetInstanceTypeConfigsAttributes] {
-	return terra.ReferenceSet[MasterInstanceFleetInstanceTypeConfigsAttributes](mif.ref.Append("instance_type_configs"))
+	return terra.ReferenceAsSet[MasterInstanceFleetInstanceTypeConfigsAttributes](mif.ref.Append("instance_type_configs"))
 }
 
 func (mif MasterInstanceFleetAttributes) LaunchSpecifications() terra.ListValue[MasterInstanceFleetLaunchSpecificationsAttributes] {
-	return terra.ReferenceList[MasterInstanceFleetLaunchSpecificationsAttributes](mif.ref.Append("launch_specifications"))
+	return terra.ReferenceAsList[MasterInstanceFleetLaunchSpecificationsAttributes](mif.ref.Append("launch_specifications"))
 }
 
 type MasterInstanceFleetInstanceTypeConfigsAttributes struct {
@@ -828,27 +828,27 @@ func (itc MasterInstanceFleetInstanceTypeConfigsAttributes) InternalTokens() hcl
 }
 
 func (itc MasterInstanceFleetInstanceTypeConfigsAttributes) BidPrice() terra.StringValue {
-	return terra.ReferenceString(itc.ref.Append("bid_price"))
+	return terra.ReferenceAsString(itc.ref.Append("bid_price"))
 }
 
 func (itc MasterInstanceFleetInstanceTypeConfigsAttributes) BidPriceAsPercentageOfOnDemandPrice() terra.NumberValue {
-	return terra.ReferenceNumber(itc.ref.Append("bid_price_as_percentage_of_on_demand_price"))
+	return terra.ReferenceAsNumber(itc.ref.Append("bid_price_as_percentage_of_on_demand_price"))
 }
 
 func (itc MasterInstanceFleetInstanceTypeConfigsAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(itc.ref.Append("instance_type"))
+	return terra.ReferenceAsString(itc.ref.Append("instance_type"))
 }
 
 func (itc MasterInstanceFleetInstanceTypeConfigsAttributes) WeightedCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(itc.ref.Append("weighted_capacity"))
+	return terra.ReferenceAsNumber(itc.ref.Append("weighted_capacity"))
 }
 
 func (itc MasterInstanceFleetInstanceTypeConfigsAttributes) Configurations() terra.SetValue[MasterInstanceFleetInstanceTypeConfigsConfigurationsAttributes] {
-	return terra.ReferenceSet[MasterInstanceFleetInstanceTypeConfigsConfigurationsAttributes](itc.ref.Append("configurations"))
+	return terra.ReferenceAsSet[MasterInstanceFleetInstanceTypeConfigsConfigurationsAttributes](itc.ref.Append("configurations"))
 }
 
 func (itc MasterInstanceFleetInstanceTypeConfigsAttributes) EbsConfig() terra.SetValue[MasterInstanceFleetInstanceTypeConfigsEbsConfigAttributes] {
-	return terra.ReferenceSet[MasterInstanceFleetInstanceTypeConfigsEbsConfigAttributes](itc.ref.Append("ebs_config"))
+	return terra.ReferenceAsSet[MasterInstanceFleetInstanceTypeConfigsEbsConfigAttributes](itc.ref.Append("ebs_config"))
 }
 
 type MasterInstanceFleetInstanceTypeConfigsConfigurationsAttributes struct {
@@ -868,11 +868,11 @@ func (c MasterInstanceFleetInstanceTypeConfigsConfigurationsAttributes) Internal
 }
 
 func (c MasterInstanceFleetInstanceTypeConfigsConfigurationsAttributes) Classification() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("classification"))
+	return terra.ReferenceAsString(c.ref.Append("classification"))
 }
 
 func (c MasterInstanceFleetInstanceTypeConfigsConfigurationsAttributes) Properties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](c.ref.Append("properties"))
+	return terra.ReferenceAsMap[terra.StringValue](c.ref.Append("properties"))
 }
 
 type MasterInstanceFleetInstanceTypeConfigsEbsConfigAttributes struct {
@@ -892,19 +892,19 @@ func (ec MasterInstanceFleetInstanceTypeConfigsEbsConfigAttributes) InternalToke
 }
 
 func (ec MasterInstanceFleetInstanceTypeConfigsEbsConfigAttributes) Iops() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("iops"))
+	return terra.ReferenceAsNumber(ec.ref.Append("iops"))
 }
 
 func (ec MasterInstanceFleetInstanceTypeConfigsEbsConfigAttributes) Size() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("size"))
+	return terra.ReferenceAsNumber(ec.ref.Append("size"))
 }
 
 func (ec MasterInstanceFleetInstanceTypeConfigsEbsConfigAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("type"))
+	return terra.ReferenceAsString(ec.ref.Append("type"))
 }
 
 func (ec MasterInstanceFleetInstanceTypeConfigsEbsConfigAttributes) VolumesPerInstance() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("volumes_per_instance"))
+	return terra.ReferenceAsNumber(ec.ref.Append("volumes_per_instance"))
 }
 
 type MasterInstanceFleetLaunchSpecificationsAttributes struct {
@@ -924,11 +924,11 @@ func (ls MasterInstanceFleetLaunchSpecificationsAttributes) InternalTokens() hcl
 }
 
 func (ls MasterInstanceFleetLaunchSpecificationsAttributes) OnDemandSpecification() terra.ListValue[MasterInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes] {
-	return terra.ReferenceList[MasterInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes](ls.ref.Append("on_demand_specification"))
+	return terra.ReferenceAsList[MasterInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes](ls.ref.Append("on_demand_specification"))
 }
 
 func (ls MasterInstanceFleetLaunchSpecificationsAttributes) SpotSpecification() terra.ListValue[MasterInstanceFleetLaunchSpecificationsSpotSpecificationAttributes] {
-	return terra.ReferenceList[MasterInstanceFleetLaunchSpecificationsSpotSpecificationAttributes](ls.ref.Append("spot_specification"))
+	return terra.ReferenceAsList[MasterInstanceFleetLaunchSpecificationsSpotSpecificationAttributes](ls.ref.Append("spot_specification"))
 }
 
 type MasterInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes struct {
@@ -948,7 +948,7 @@ func (ods MasterInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes
 }
 
 func (ods MasterInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes) AllocationStrategy() terra.StringValue {
-	return terra.ReferenceString(ods.ref.Append("allocation_strategy"))
+	return terra.ReferenceAsString(ods.ref.Append("allocation_strategy"))
 }
 
 type MasterInstanceFleetLaunchSpecificationsSpotSpecificationAttributes struct {
@@ -968,19 +968,19 @@ func (ss MasterInstanceFleetLaunchSpecificationsSpotSpecificationAttributes) Int
 }
 
 func (ss MasterInstanceFleetLaunchSpecificationsSpotSpecificationAttributes) AllocationStrategy() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("allocation_strategy"))
+	return terra.ReferenceAsString(ss.ref.Append("allocation_strategy"))
 }
 
 func (ss MasterInstanceFleetLaunchSpecificationsSpotSpecificationAttributes) BlockDurationMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("block_duration_minutes"))
+	return terra.ReferenceAsNumber(ss.ref.Append("block_duration_minutes"))
 }
 
 func (ss MasterInstanceFleetLaunchSpecificationsSpotSpecificationAttributes) TimeoutAction() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("timeout_action"))
+	return terra.ReferenceAsString(ss.ref.Append("timeout_action"))
 }
 
 func (ss MasterInstanceFleetLaunchSpecificationsSpotSpecificationAttributes) TimeoutDurationMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("timeout_duration_minutes"))
+	return terra.ReferenceAsNumber(ss.ref.Append("timeout_duration_minutes"))
 }
 
 type MasterInstanceGroupAttributes struct {
@@ -1000,27 +1000,27 @@ func (mig MasterInstanceGroupAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mig MasterInstanceGroupAttributes) BidPrice() terra.StringValue {
-	return terra.ReferenceString(mig.ref.Append("bid_price"))
+	return terra.ReferenceAsString(mig.ref.Append("bid_price"))
 }
 
 func (mig MasterInstanceGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mig.ref.Append("id"))
+	return terra.ReferenceAsString(mig.ref.Append("id"))
 }
 
 func (mig MasterInstanceGroupAttributes) InstanceCount() terra.NumberValue {
-	return terra.ReferenceNumber(mig.ref.Append("instance_count"))
+	return terra.ReferenceAsNumber(mig.ref.Append("instance_count"))
 }
 
 func (mig MasterInstanceGroupAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(mig.ref.Append("instance_type"))
+	return terra.ReferenceAsString(mig.ref.Append("instance_type"))
 }
 
 func (mig MasterInstanceGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mig.ref.Append("name"))
+	return terra.ReferenceAsString(mig.ref.Append("name"))
 }
 
 func (mig MasterInstanceGroupAttributes) EbsConfig() terra.SetValue[MasterInstanceGroupEbsConfigAttributes] {
-	return terra.ReferenceSet[MasterInstanceGroupEbsConfigAttributes](mig.ref.Append("ebs_config"))
+	return terra.ReferenceAsSet[MasterInstanceGroupEbsConfigAttributes](mig.ref.Append("ebs_config"))
 }
 
 type MasterInstanceGroupEbsConfigAttributes struct {
@@ -1040,23 +1040,23 @@ func (ec MasterInstanceGroupEbsConfigAttributes) InternalTokens() hclwrite.Token
 }
 
 func (ec MasterInstanceGroupEbsConfigAttributes) Iops() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("iops"))
+	return terra.ReferenceAsNumber(ec.ref.Append("iops"))
 }
 
 func (ec MasterInstanceGroupEbsConfigAttributes) Size() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("size"))
+	return terra.ReferenceAsNumber(ec.ref.Append("size"))
 }
 
 func (ec MasterInstanceGroupEbsConfigAttributes) Throughput() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("throughput"))
+	return terra.ReferenceAsNumber(ec.ref.Append("throughput"))
 }
 
 func (ec MasterInstanceGroupEbsConfigAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("type"))
+	return terra.ReferenceAsString(ec.ref.Append("type"))
 }
 
 func (ec MasterInstanceGroupEbsConfigAttributes) VolumesPerInstance() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("volumes_per_instance"))
+	return terra.ReferenceAsNumber(ec.ref.Append("volumes_per_instance"))
 }
 
 type StepState struct {

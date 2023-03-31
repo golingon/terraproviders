@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataWafv2WebAcl creates a new instance of [DataWafv2WebAcl].
 func NewDataWafv2WebAcl(name string, args DataWafv2WebAclArgs) *DataWafv2WebAcl {
 	return &DataWafv2WebAcl{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataWafv2WebAcl(name string, args DataWafv2WebAclArgs) *DataWafv2WebAcl 
 
 var _ terra.DataResource = (*DataWafv2WebAcl)(nil)
 
+// DataWafv2WebAcl represents the Terraform data resource aws_wafv2_web_acl.
 type DataWafv2WebAcl struct {
 	Name string
 	Args DataWafv2WebAclArgs
 }
 
+// DataSource returns the Terraform object type for [DataWafv2WebAcl].
 func (wwa *DataWafv2WebAcl) DataSource() string {
 	return "aws_wafv2_web_acl"
 }
 
+// LocalName returns the local name for [DataWafv2WebAcl].
 func (wwa *DataWafv2WebAcl) LocalName() string {
 	return wwa.Name
 }
 
+// Configuration returns the configuration (args) for [DataWafv2WebAcl].
 func (wwa *DataWafv2WebAcl) Configuration() interface{} {
 	return wwa.Args
 }
 
+// Attributes returns the attributes for [DataWafv2WebAcl].
 func (wwa *DataWafv2WebAcl) Attributes() dataWafv2WebAclAttributes {
 	return dataWafv2WebAclAttributes{ref: terra.ReferenceDataResource(wwa)}
 }
 
+// DataWafv2WebAclArgs contains the configurations for aws_wafv2_web_acl.
 type DataWafv2WebAclArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -46,22 +53,27 @@ type dataWafv2WebAclAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_wafv2_web_acl.
 func (wwa dataWafv2WebAclAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("arn"))
+	return terra.ReferenceAsString(wwa.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_wafv2_web_acl.
 func (wwa dataWafv2WebAclAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("description"))
+	return terra.ReferenceAsString(wwa.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_wafv2_web_acl.
 func (wwa dataWafv2WebAclAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("id"))
+	return terra.ReferenceAsString(wwa.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_wafv2_web_acl.
 func (wwa dataWafv2WebAclAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("name"))
+	return terra.ReferenceAsString(wwa.ref.Append("name"))
 }
 
+// Scope returns a reference to field scope of aws_wafv2_web_acl.
 func (wwa dataWafv2WebAclAttributes) Scope() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("scope"))
+	return terra.ReferenceAsString(wwa.ref.Append("scope"))
 }

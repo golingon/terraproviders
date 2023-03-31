@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDxHostedPrivateVirtualInterfaceAccepter creates a new instance of [DxHostedPrivateVirtualInterfaceAccepter].
 func NewDxHostedPrivateVirtualInterfaceAccepter(name string, args DxHostedPrivateVirtualInterfaceAccepterArgs) *DxHostedPrivateVirtualInterfaceAccepter {
 	return &DxHostedPrivateVirtualInterfaceAccepter{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDxHostedPrivateVirtualInterfaceAccepter(name string, args DxHostedPrivat
 
 var _ terra.Resource = (*DxHostedPrivateVirtualInterfaceAccepter)(nil)
 
+// DxHostedPrivateVirtualInterfaceAccepter represents the Terraform resource aws_dx_hosted_private_virtual_interface_accepter.
 type DxHostedPrivateVirtualInterfaceAccepter struct {
-	Name  string
-	Args  DxHostedPrivateVirtualInterfaceAccepterArgs
-	state *dxHostedPrivateVirtualInterfaceAccepterState
+	Name      string
+	Args      DxHostedPrivateVirtualInterfaceAccepterArgs
+	state     *dxHostedPrivateVirtualInterfaceAccepterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DxHostedPrivateVirtualInterfaceAccepter].
 func (dhpvia *DxHostedPrivateVirtualInterfaceAccepter) Type() string {
 	return "aws_dx_hosted_private_virtual_interface_accepter"
 }
 
+// LocalName returns the local name for [DxHostedPrivateVirtualInterfaceAccepter].
 func (dhpvia *DxHostedPrivateVirtualInterfaceAccepter) LocalName() string {
 	return dhpvia.Name
 }
 
+// Configuration returns the configuration (args) for [DxHostedPrivateVirtualInterfaceAccepter].
 func (dhpvia *DxHostedPrivateVirtualInterfaceAccepter) Configuration() interface{} {
 	return dhpvia.Args
 }
 
+// DependOn is used for other resources to depend on [DxHostedPrivateVirtualInterfaceAccepter].
+func (dhpvia *DxHostedPrivateVirtualInterfaceAccepter) DependOn() terra.Reference {
+	return terra.ReferenceResource(dhpvia)
+}
+
+// Dependencies returns the list of resources [DxHostedPrivateVirtualInterfaceAccepter] depends_on.
+func (dhpvia *DxHostedPrivateVirtualInterfaceAccepter) Dependencies() terra.Dependencies {
+	return dhpvia.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DxHostedPrivateVirtualInterfaceAccepter].
+func (dhpvia *DxHostedPrivateVirtualInterfaceAccepter) LifecycleManagement() *terra.Lifecycle {
+	return dhpvia.Lifecycle
+}
+
+// Attributes returns the attributes for [DxHostedPrivateVirtualInterfaceAccepter].
 func (dhpvia *DxHostedPrivateVirtualInterfaceAccepter) Attributes() dxHostedPrivateVirtualInterfaceAccepterAttributes {
 	return dxHostedPrivateVirtualInterfaceAccepterAttributes{ref: terra.ReferenceResource(dhpvia)}
 }
 
+// ImportState imports the given attribute values into [DxHostedPrivateVirtualInterfaceAccepter]'s state.
 func (dhpvia *DxHostedPrivateVirtualInterfaceAccepter) ImportState(av io.Reader) error {
 	dhpvia.state = &dxHostedPrivateVirtualInterfaceAccepterState{}
 	if err := json.NewDecoder(av).Decode(dhpvia.state); err != nil {
@@ -49,10 +73,12 @@ func (dhpvia *DxHostedPrivateVirtualInterfaceAccepter) ImportState(av io.Reader)
 	return nil
 }
 
+// State returns the state and a bool indicating if [DxHostedPrivateVirtualInterfaceAccepter] has state.
 func (dhpvia *DxHostedPrivateVirtualInterfaceAccepter) State() (*dxHostedPrivateVirtualInterfaceAccepterState, bool) {
 	return dhpvia.state, dhpvia.state != nil
 }
 
+// StateMust returns the state for [DxHostedPrivateVirtualInterfaceAccepter]. Panics if the state is nil.
 func (dhpvia *DxHostedPrivateVirtualInterfaceAccepter) StateMust() *dxHostedPrivateVirtualInterfaceAccepterState {
 	if dhpvia.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dhpvia.Type(), dhpvia.LocalName()))
@@ -60,10 +86,7 @@ func (dhpvia *DxHostedPrivateVirtualInterfaceAccepter) StateMust() *dxHostedPriv
 	return dhpvia.state
 }
 
-func (dhpvia *DxHostedPrivateVirtualInterfaceAccepter) DependOn() terra.Reference {
-	return terra.ReferenceResource(dhpvia)
-}
-
+// DxHostedPrivateVirtualInterfaceAccepterArgs contains the configurations for aws_dx_hosted_private_virtual_interface_accepter.
 type DxHostedPrivateVirtualInterfaceAccepterArgs struct {
 	// DxGatewayId: string, optional
 	DxGatewayId terra.StringValue `hcl:"dx_gateway_id,attr"`
@@ -79,43 +102,48 @@ type DxHostedPrivateVirtualInterfaceAccepterArgs struct {
 	VpnGatewayId terra.StringValue `hcl:"vpn_gateway_id,attr"`
 	// Timeouts: optional
 	Timeouts *dxhostedprivatevirtualinterfaceaccepter.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DxHostedPrivateVirtualInterfaceAccepter depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dxHostedPrivateVirtualInterfaceAccepterAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_dx_hosted_private_virtual_interface_accepter.
 func (dhpvia dxHostedPrivateVirtualInterfaceAccepterAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dhpvia.ref.Append("arn"))
+	return terra.ReferenceAsString(dhpvia.ref.Append("arn"))
 }
 
+// DxGatewayId returns a reference to field dx_gateway_id of aws_dx_hosted_private_virtual_interface_accepter.
 func (dhpvia dxHostedPrivateVirtualInterfaceAccepterAttributes) DxGatewayId() terra.StringValue {
-	return terra.ReferenceString(dhpvia.ref.Append("dx_gateway_id"))
+	return terra.ReferenceAsString(dhpvia.ref.Append("dx_gateway_id"))
 }
 
+// Id returns a reference to field id of aws_dx_hosted_private_virtual_interface_accepter.
 func (dhpvia dxHostedPrivateVirtualInterfaceAccepterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dhpvia.ref.Append("id"))
+	return terra.ReferenceAsString(dhpvia.ref.Append("id"))
 }
 
+// Tags returns a reference to field tags of aws_dx_hosted_private_virtual_interface_accepter.
 func (dhpvia dxHostedPrivateVirtualInterfaceAccepterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dhpvia.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dhpvia.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_dx_hosted_private_virtual_interface_accepter.
 func (dhpvia dxHostedPrivateVirtualInterfaceAccepterAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dhpvia.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dhpvia.ref.Append("tags_all"))
 }
 
+// VirtualInterfaceId returns a reference to field virtual_interface_id of aws_dx_hosted_private_virtual_interface_accepter.
 func (dhpvia dxHostedPrivateVirtualInterfaceAccepterAttributes) VirtualInterfaceId() terra.StringValue {
-	return terra.ReferenceString(dhpvia.ref.Append("virtual_interface_id"))
+	return terra.ReferenceAsString(dhpvia.ref.Append("virtual_interface_id"))
 }
 
+// VpnGatewayId returns a reference to field vpn_gateway_id of aws_dx_hosted_private_virtual_interface_accepter.
 func (dhpvia dxHostedPrivateVirtualInterfaceAccepterAttributes) VpnGatewayId() terra.StringValue {
-	return terra.ReferenceString(dhpvia.ref.Append("vpn_gateway_id"))
+	return terra.ReferenceAsString(dhpvia.ref.Append("vpn_gateway_id"))
 }
 
 func (dhpvia dxHostedPrivateVirtualInterfaceAccepterAttributes) Timeouts() dxhostedprivatevirtualinterfaceaccepter.TimeoutsAttributes {
-	return terra.ReferenceSingle[dxhostedprivatevirtualinterfaceaccepter.TimeoutsAttributes](dhpvia.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dxhostedprivatevirtualinterfaceaccepter.TimeoutsAttributes](dhpvia.ref.Append("timeouts"))
 }
 
 type dxHostedPrivateVirtualInterfaceAccepterState struct {

@@ -226,19 +226,19 @@ func (es ElasticsearchSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (es ElasticsearchSettingsAttributes) EndpointUri() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("endpoint_uri"))
+	return terra.ReferenceAsString(es.ref.Append("endpoint_uri"))
 }
 
 func (es ElasticsearchSettingsAttributes) ErrorRetryDuration() terra.NumberValue {
-	return terra.ReferenceNumber(es.ref.Append("error_retry_duration"))
+	return terra.ReferenceAsNumber(es.ref.Append("error_retry_duration"))
 }
 
 func (es ElasticsearchSettingsAttributes) FullLoadErrorPercentage() terra.NumberValue {
-	return terra.ReferenceNumber(es.ref.Append("full_load_error_percentage"))
+	return terra.ReferenceAsNumber(es.ref.Append("full_load_error_percentage"))
 }
 
 func (es ElasticsearchSettingsAttributes) ServiceAccessRoleArn() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("service_access_role_arn"))
+	return terra.ReferenceAsString(es.ref.Append("service_access_role_arn"))
 }
 
 type KafkaSettingsAttributes struct {
@@ -258,75 +258,75 @@ func (ks KafkaSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ks KafkaSettingsAttributes) Broker() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("broker"))
+	return terra.ReferenceAsString(ks.ref.Append("broker"))
 }
 
 func (ks KafkaSettingsAttributes) IncludeControlDetails() terra.BoolValue {
-	return terra.ReferenceBool(ks.ref.Append("include_control_details"))
+	return terra.ReferenceAsBool(ks.ref.Append("include_control_details"))
 }
 
 func (ks KafkaSettingsAttributes) IncludeNullAndEmpty() terra.BoolValue {
-	return terra.ReferenceBool(ks.ref.Append("include_null_and_empty"))
+	return terra.ReferenceAsBool(ks.ref.Append("include_null_and_empty"))
 }
 
 func (ks KafkaSettingsAttributes) IncludePartitionValue() terra.BoolValue {
-	return terra.ReferenceBool(ks.ref.Append("include_partition_value"))
+	return terra.ReferenceAsBool(ks.ref.Append("include_partition_value"))
 }
 
 func (ks KafkaSettingsAttributes) IncludeTableAlterOperations() terra.BoolValue {
-	return terra.ReferenceBool(ks.ref.Append("include_table_alter_operations"))
+	return terra.ReferenceAsBool(ks.ref.Append("include_table_alter_operations"))
 }
 
 func (ks KafkaSettingsAttributes) IncludeTransactionDetails() terra.BoolValue {
-	return terra.ReferenceBool(ks.ref.Append("include_transaction_details"))
+	return terra.ReferenceAsBool(ks.ref.Append("include_transaction_details"))
 }
 
 func (ks KafkaSettingsAttributes) MessageFormat() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("message_format"))
+	return terra.ReferenceAsString(ks.ref.Append("message_format"))
 }
 
 func (ks KafkaSettingsAttributes) MessageMaxBytes() terra.NumberValue {
-	return terra.ReferenceNumber(ks.ref.Append("message_max_bytes"))
+	return terra.ReferenceAsNumber(ks.ref.Append("message_max_bytes"))
 }
 
 func (ks KafkaSettingsAttributes) NoHexPrefix() terra.BoolValue {
-	return terra.ReferenceBool(ks.ref.Append("no_hex_prefix"))
+	return terra.ReferenceAsBool(ks.ref.Append("no_hex_prefix"))
 }
 
 func (ks KafkaSettingsAttributes) PartitionIncludeSchemaTable() terra.BoolValue {
-	return terra.ReferenceBool(ks.ref.Append("partition_include_schema_table"))
+	return terra.ReferenceAsBool(ks.ref.Append("partition_include_schema_table"))
 }
 
 func (ks KafkaSettingsAttributes) SaslPassword() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("sasl_password"))
+	return terra.ReferenceAsString(ks.ref.Append("sasl_password"))
 }
 
 func (ks KafkaSettingsAttributes) SaslUsername() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("sasl_username"))
+	return terra.ReferenceAsString(ks.ref.Append("sasl_username"))
 }
 
 func (ks KafkaSettingsAttributes) SecurityProtocol() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("security_protocol"))
+	return terra.ReferenceAsString(ks.ref.Append("security_protocol"))
 }
 
 func (ks KafkaSettingsAttributes) SslCaCertificateArn() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("ssl_ca_certificate_arn"))
+	return terra.ReferenceAsString(ks.ref.Append("ssl_ca_certificate_arn"))
 }
 
 func (ks KafkaSettingsAttributes) SslClientCertificateArn() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("ssl_client_certificate_arn"))
+	return terra.ReferenceAsString(ks.ref.Append("ssl_client_certificate_arn"))
 }
 
 func (ks KafkaSettingsAttributes) SslClientKeyArn() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("ssl_client_key_arn"))
+	return terra.ReferenceAsString(ks.ref.Append("ssl_client_key_arn"))
 }
 
 func (ks KafkaSettingsAttributes) SslClientKeyPassword() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("ssl_client_key_password"))
+	return terra.ReferenceAsString(ks.ref.Append("ssl_client_key_password"))
 }
 
 func (ks KafkaSettingsAttributes) Topic() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("topic"))
+	return terra.ReferenceAsString(ks.ref.Append("topic"))
 }
 
 type KinesisSettingsAttributes struct {
@@ -346,39 +346,39 @@ func (ks KinesisSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ks KinesisSettingsAttributes) IncludeControlDetails() terra.BoolValue {
-	return terra.ReferenceBool(ks.ref.Append("include_control_details"))
+	return terra.ReferenceAsBool(ks.ref.Append("include_control_details"))
 }
 
 func (ks KinesisSettingsAttributes) IncludeNullAndEmpty() terra.BoolValue {
-	return terra.ReferenceBool(ks.ref.Append("include_null_and_empty"))
+	return terra.ReferenceAsBool(ks.ref.Append("include_null_and_empty"))
 }
 
 func (ks KinesisSettingsAttributes) IncludePartitionValue() terra.BoolValue {
-	return terra.ReferenceBool(ks.ref.Append("include_partition_value"))
+	return terra.ReferenceAsBool(ks.ref.Append("include_partition_value"))
 }
 
 func (ks KinesisSettingsAttributes) IncludeTableAlterOperations() terra.BoolValue {
-	return terra.ReferenceBool(ks.ref.Append("include_table_alter_operations"))
+	return terra.ReferenceAsBool(ks.ref.Append("include_table_alter_operations"))
 }
 
 func (ks KinesisSettingsAttributes) IncludeTransactionDetails() terra.BoolValue {
-	return terra.ReferenceBool(ks.ref.Append("include_transaction_details"))
+	return terra.ReferenceAsBool(ks.ref.Append("include_transaction_details"))
 }
 
 func (ks KinesisSettingsAttributes) MessageFormat() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("message_format"))
+	return terra.ReferenceAsString(ks.ref.Append("message_format"))
 }
 
 func (ks KinesisSettingsAttributes) PartitionIncludeSchemaTable() terra.BoolValue {
-	return terra.ReferenceBool(ks.ref.Append("partition_include_schema_table"))
+	return terra.ReferenceAsBool(ks.ref.Append("partition_include_schema_table"))
 }
 
 func (ks KinesisSettingsAttributes) ServiceAccessRoleArn() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("service_access_role_arn"))
+	return terra.ReferenceAsString(ks.ref.Append("service_access_role_arn"))
 }
 
 func (ks KinesisSettingsAttributes) StreamArn() terra.StringValue {
-	return terra.ReferenceString(ks.ref.Append("stream_arn"))
+	return terra.ReferenceAsString(ks.ref.Append("stream_arn"))
 }
 
 type MongodbSettingsAttributes struct {
@@ -398,27 +398,27 @@ func (ms MongodbSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ms MongodbSettingsAttributes) AuthMechanism() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("auth_mechanism"))
+	return terra.ReferenceAsString(ms.ref.Append("auth_mechanism"))
 }
 
 func (ms MongodbSettingsAttributes) AuthSource() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("auth_source"))
+	return terra.ReferenceAsString(ms.ref.Append("auth_source"))
 }
 
 func (ms MongodbSettingsAttributes) AuthType() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("auth_type"))
+	return terra.ReferenceAsString(ms.ref.Append("auth_type"))
 }
 
 func (ms MongodbSettingsAttributes) DocsToInvestigate() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("docs_to_investigate"))
+	return terra.ReferenceAsString(ms.ref.Append("docs_to_investigate"))
 }
 
 func (ms MongodbSettingsAttributes) ExtractDocId() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("extract_doc_id"))
+	return terra.ReferenceAsString(ms.ref.Append("extract_doc_id"))
 }
 
 func (ms MongodbSettingsAttributes) NestingLevel() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("nesting_level"))
+	return terra.ReferenceAsString(ms.ref.Append("nesting_level"))
 }
 
 type RedisSettingsAttributes struct {
@@ -438,31 +438,31 @@ func (rs RedisSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rs RedisSettingsAttributes) AuthPassword() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("auth_password"))
+	return terra.ReferenceAsString(rs.ref.Append("auth_password"))
 }
 
 func (rs RedisSettingsAttributes) AuthType() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("auth_type"))
+	return terra.ReferenceAsString(rs.ref.Append("auth_type"))
 }
 
 func (rs RedisSettingsAttributes) AuthUserName() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("auth_user_name"))
+	return terra.ReferenceAsString(rs.ref.Append("auth_user_name"))
 }
 
 func (rs RedisSettingsAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(rs.ref.Append("port"))
+	return terra.ReferenceAsNumber(rs.ref.Append("port"))
 }
 
 func (rs RedisSettingsAttributes) ServerName() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("server_name"))
+	return terra.ReferenceAsString(rs.ref.Append("server_name"))
 }
 
 func (rs RedisSettingsAttributes) SslCaCertificateArn() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("ssl_ca_certificate_arn"))
+	return terra.ReferenceAsString(rs.ref.Append("ssl_ca_certificate_arn"))
 }
 
 func (rs RedisSettingsAttributes) SslSecurityProtocol() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("ssl_security_protocol"))
+	return terra.ReferenceAsString(rs.ref.Append("ssl_security_protocol"))
 }
 
 type RedshiftSettingsAttributes struct {
@@ -482,23 +482,23 @@ func (rs RedshiftSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rs RedshiftSettingsAttributes) BucketFolder() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("bucket_folder"))
+	return terra.ReferenceAsString(rs.ref.Append("bucket_folder"))
 }
 
 func (rs RedshiftSettingsAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(rs.ref.Append("bucket_name"))
 }
 
 func (rs RedshiftSettingsAttributes) EncryptionMode() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("encryption_mode"))
+	return terra.ReferenceAsString(rs.ref.Append("encryption_mode"))
 }
 
 func (rs RedshiftSettingsAttributes) ServerSideEncryptionKmsKeyId() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("server_side_encryption_kms_key_id"))
+	return terra.ReferenceAsString(rs.ref.Append("server_side_encryption_kms_key_id"))
 }
 
 func (rs RedshiftSettingsAttributes) ServiceAccessRoleArn() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("service_access_role_arn"))
+	return terra.ReferenceAsString(rs.ref.Append("service_access_role_arn"))
 }
 
 type S3SettingsAttributes struct {
@@ -518,155 +518,155 @@ func (ss S3SettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ss S3SettingsAttributes) AddColumnName() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("add_column_name"))
+	return terra.ReferenceAsBool(ss.ref.Append("add_column_name"))
 }
 
 func (ss S3SettingsAttributes) BucketFolder() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("bucket_folder"))
+	return terra.ReferenceAsString(ss.ref.Append("bucket_folder"))
 }
 
 func (ss S3SettingsAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(ss.ref.Append("bucket_name"))
 }
 
 func (ss S3SettingsAttributes) CannedAclForObjects() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("canned_acl_for_objects"))
+	return terra.ReferenceAsString(ss.ref.Append("canned_acl_for_objects"))
 }
 
 func (ss S3SettingsAttributes) CdcInsertsAndUpdates() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("cdc_inserts_and_updates"))
+	return terra.ReferenceAsBool(ss.ref.Append("cdc_inserts_and_updates"))
 }
 
 func (ss S3SettingsAttributes) CdcInsertsOnly() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("cdc_inserts_only"))
+	return terra.ReferenceAsBool(ss.ref.Append("cdc_inserts_only"))
 }
 
 func (ss S3SettingsAttributes) CdcMaxBatchInterval() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("cdc_max_batch_interval"))
+	return terra.ReferenceAsNumber(ss.ref.Append("cdc_max_batch_interval"))
 }
 
 func (ss S3SettingsAttributes) CdcMinFileSize() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("cdc_min_file_size"))
+	return terra.ReferenceAsNumber(ss.ref.Append("cdc_min_file_size"))
 }
 
 func (ss S3SettingsAttributes) CdcPath() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("cdc_path"))
+	return terra.ReferenceAsString(ss.ref.Append("cdc_path"))
 }
 
 func (ss S3SettingsAttributes) CompressionType() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("compression_type"))
+	return terra.ReferenceAsString(ss.ref.Append("compression_type"))
 }
 
 func (ss S3SettingsAttributes) CsvDelimiter() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("csv_delimiter"))
+	return terra.ReferenceAsString(ss.ref.Append("csv_delimiter"))
 }
 
 func (ss S3SettingsAttributes) CsvNoSupValue() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("csv_no_sup_value"))
+	return terra.ReferenceAsString(ss.ref.Append("csv_no_sup_value"))
 }
 
 func (ss S3SettingsAttributes) CsvNullValue() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("csv_null_value"))
+	return terra.ReferenceAsString(ss.ref.Append("csv_null_value"))
 }
 
 func (ss S3SettingsAttributes) CsvRowDelimiter() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("csv_row_delimiter"))
+	return terra.ReferenceAsString(ss.ref.Append("csv_row_delimiter"))
 }
 
 func (ss S3SettingsAttributes) DataFormat() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("data_format"))
+	return terra.ReferenceAsString(ss.ref.Append("data_format"))
 }
 
 func (ss S3SettingsAttributes) DataPageSize() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("data_page_size"))
+	return terra.ReferenceAsNumber(ss.ref.Append("data_page_size"))
 }
 
 func (ss S3SettingsAttributes) DatePartitionDelimiter() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("date_partition_delimiter"))
+	return terra.ReferenceAsString(ss.ref.Append("date_partition_delimiter"))
 }
 
 func (ss S3SettingsAttributes) DatePartitionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("date_partition_enabled"))
+	return terra.ReferenceAsBool(ss.ref.Append("date_partition_enabled"))
 }
 
 func (ss S3SettingsAttributes) DatePartitionSequence() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("date_partition_sequence"))
+	return terra.ReferenceAsString(ss.ref.Append("date_partition_sequence"))
 }
 
 func (ss S3SettingsAttributes) DictPageSizeLimit() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("dict_page_size_limit"))
+	return terra.ReferenceAsNumber(ss.ref.Append("dict_page_size_limit"))
 }
 
 func (ss S3SettingsAttributes) EnableStatistics() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("enable_statistics"))
+	return terra.ReferenceAsBool(ss.ref.Append("enable_statistics"))
 }
 
 func (ss S3SettingsAttributes) EncodingType() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("encoding_type"))
+	return terra.ReferenceAsString(ss.ref.Append("encoding_type"))
 }
 
 func (ss S3SettingsAttributes) EncryptionMode() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("encryption_mode"))
+	return terra.ReferenceAsString(ss.ref.Append("encryption_mode"))
 }
 
 func (ss S3SettingsAttributes) ExternalTableDefinition() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("external_table_definition"))
+	return terra.ReferenceAsString(ss.ref.Append("external_table_definition"))
 }
 
 func (ss S3SettingsAttributes) IgnoreHeaderRows() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("ignore_header_rows"))
+	return terra.ReferenceAsNumber(ss.ref.Append("ignore_header_rows"))
 }
 
 func (ss S3SettingsAttributes) IgnoreHeadersRow() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("ignore_headers_row"))
+	return terra.ReferenceAsNumber(ss.ref.Append("ignore_headers_row"))
 }
 
 func (ss S3SettingsAttributes) IncludeOpForFullLoad() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("include_op_for_full_load"))
+	return terra.ReferenceAsBool(ss.ref.Append("include_op_for_full_load"))
 }
 
 func (ss S3SettingsAttributes) MaxFileSize() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("max_file_size"))
+	return terra.ReferenceAsNumber(ss.ref.Append("max_file_size"))
 }
 
 func (ss S3SettingsAttributes) ParquetTimestampInMillisecond() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("parquet_timestamp_in_millisecond"))
+	return terra.ReferenceAsBool(ss.ref.Append("parquet_timestamp_in_millisecond"))
 }
 
 func (ss S3SettingsAttributes) ParquetVersion() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("parquet_version"))
+	return terra.ReferenceAsString(ss.ref.Append("parquet_version"))
 }
 
 func (ss S3SettingsAttributes) PreserveTransactions() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("preserve_transactions"))
+	return terra.ReferenceAsBool(ss.ref.Append("preserve_transactions"))
 }
 
 func (ss S3SettingsAttributes) Rfc4180() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("rfc_4180"))
+	return terra.ReferenceAsBool(ss.ref.Append("rfc_4180"))
 }
 
 func (ss S3SettingsAttributes) RowGroupLength() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("row_group_length"))
+	return terra.ReferenceAsNumber(ss.ref.Append("row_group_length"))
 }
 
 func (ss S3SettingsAttributes) ServerSideEncryptionKmsKeyId() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("server_side_encryption_kms_key_id"))
+	return terra.ReferenceAsString(ss.ref.Append("server_side_encryption_kms_key_id"))
 }
 
 func (ss S3SettingsAttributes) ServiceAccessRoleArn() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("service_access_role_arn"))
+	return terra.ReferenceAsString(ss.ref.Append("service_access_role_arn"))
 }
 
 func (ss S3SettingsAttributes) TimestampColumnName() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("timestamp_column_name"))
+	return terra.ReferenceAsString(ss.ref.Append("timestamp_column_name"))
 }
 
 func (ss S3SettingsAttributes) UseCsvNoSupValue() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("use_csv_no_sup_value"))
+	return terra.ReferenceAsBool(ss.ref.Append("use_csv_no_sup_value"))
 }
 
 func (ss S3SettingsAttributes) UseTaskStartTimeForFullLoadTimestamp() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("use_task_start_time_for_full_load_timestamp"))
+	return terra.ReferenceAsBool(ss.ref.Append("use_task_start_time_for_full_load_timestamp"))
 }
 
 type TimeoutsAttributes struct {
@@ -686,11 +686,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type ElasticsearchSettingsState struct {

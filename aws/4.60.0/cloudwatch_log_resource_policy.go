@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCloudwatchLogResourcePolicy creates a new instance of [CloudwatchLogResourcePolicy].
 func NewCloudwatchLogResourcePolicy(name string, args CloudwatchLogResourcePolicyArgs) *CloudwatchLogResourcePolicy {
 	return &CloudwatchLogResourcePolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCloudwatchLogResourcePolicy(name string, args CloudwatchLogResourcePolic
 
 var _ terra.Resource = (*CloudwatchLogResourcePolicy)(nil)
 
+// CloudwatchLogResourcePolicy represents the Terraform resource aws_cloudwatch_log_resource_policy.
 type CloudwatchLogResourcePolicy struct {
-	Name  string
-	Args  CloudwatchLogResourcePolicyArgs
-	state *cloudwatchLogResourcePolicyState
+	Name      string
+	Args      CloudwatchLogResourcePolicyArgs
+	state     *cloudwatchLogResourcePolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudwatchLogResourcePolicy].
 func (clrp *CloudwatchLogResourcePolicy) Type() string {
 	return "aws_cloudwatch_log_resource_policy"
 }
 
+// LocalName returns the local name for [CloudwatchLogResourcePolicy].
 func (clrp *CloudwatchLogResourcePolicy) LocalName() string {
 	return clrp.Name
 }
 
+// Configuration returns the configuration (args) for [CloudwatchLogResourcePolicy].
 func (clrp *CloudwatchLogResourcePolicy) Configuration() interface{} {
 	return clrp.Args
 }
 
+// DependOn is used for other resources to depend on [CloudwatchLogResourcePolicy].
+func (clrp *CloudwatchLogResourcePolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(clrp)
+}
+
+// Dependencies returns the list of resources [CloudwatchLogResourcePolicy] depends_on.
+func (clrp *CloudwatchLogResourcePolicy) Dependencies() terra.Dependencies {
+	return clrp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudwatchLogResourcePolicy].
+func (clrp *CloudwatchLogResourcePolicy) LifecycleManagement() *terra.Lifecycle {
+	return clrp.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudwatchLogResourcePolicy].
 func (clrp *CloudwatchLogResourcePolicy) Attributes() cloudwatchLogResourcePolicyAttributes {
 	return cloudwatchLogResourcePolicyAttributes{ref: terra.ReferenceResource(clrp)}
 }
 
+// ImportState imports the given attribute values into [CloudwatchLogResourcePolicy]'s state.
 func (clrp *CloudwatchLogResourcePolicy) ImportState(av io.Reader) error {
 	clrp.state = &cloudwatchLogResourcePolicyState{}
 	if err := json.NewDecoder(av).Decode(clrp.state); err != nil {
@@ -48,10 +72,12 @@ func (clrp *CloudwatchLogResourcePolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudwatchLogResourcePolicy] has state.
 func (clrp *CloudwatchLogResourcePolicy) State() (*cloudwatchLogResourcePolicyState, bool) {
 	return clrp.state, clrp.state != nil
 }
 
+// StateMust returns the state for [CloudwatchLogResourcePolicy]. Panics if the state is nil.
 func (clrp *CloudwatchLogResourcePolicy) StateMust() *cloudwatchLogResourcePolicyState {
 	if clrp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", clrp.Type(), clrp.LocalName()))
@@ -59,10 +85,7 @@ func (clrp *CloudwatchLogResourcePolicy) StateMust() *cloudwatchLogResourcePolic
 	return clrp.state
 }
 
-func (clrp *CloudwatchLogResourcePolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(clrp)
-}
-
+// CloudwatchLogResourcePolicyArgs contains the configurations for aws_cloudwatch_log_resource_policy.
 type CloudwatchLogResourcePolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,23 +93,24 @@ type CloudwatchLogResourcePolicyArgs struct {
 	PolicyDocument terra.StringValue `hcl:"policy_document,attr" validate:"required"`
 	// PolicyName: string, required
 	PolicyName terra.StringValue `hcl:"policy_name,attr" validate:"required"`
-	// DependsOn contains resources that CloudwatchLogResourcePolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudwatchLogResourcePolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_cloudwatch_log_resource_policy.
 func (clrp cloudwatchLogResourcePolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(clrp.ref.Append("id"))
+	return terra.ReferenceAsString(clrp.ref.Append("id"))
 }
 
+// PolicyDocument returns a reference to field policy_document of aws_cloudwatch_log_resource_policy.
 func (clrp cloudwatchLogResourcePolicyAttributes) PolicyDocument() terra.StringValue {
-	return terra.ReferenceString(clrp.ref.Append("policy_document"))
+	return terra.ReferenceAsString(clrp.ref.Append("policy_document"))
 }
 
+// PolicyName returns a reference to field policy_name of aws_cloudwatch_log_resource_policy.
 func (clrp cloudwatchLogResourcePolicyAttributes) PolicyName() terra.StringValue {
-	return terra.ReferenceString(clrp.ref.Append("policy_name"))
+	return terra.ReferenceAsString(clrp.ref.Append("policy_name"))
 }
 
 type cloudwatchLogResourcePolicyState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewS3ControlBucketPolicy creates a new instance of [S3ControlBucketPolicy].
 func NewS3ControlBucketPolicy(name string, args S3ControlBucketPolicyArgs) *S3ControlBucketPolicy {
 	return &S3ControlBucketPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewS3ControlBucketPolicy(name string, args S3ControlBucketPolicyArgs) *S3Co
 
 var _ terra.Resource = (*S3ControlBucketPolicy)(nil)
 
+// S3ControlBucketPolicy represents the Terraform resource aws_s3control_bucket_policy.
 type S3ControlBucketPolicy struct {
-	Name  string
-	Args  S3ControlBucketPolicyArgs
-	state *s3ControlBucketPolicyState
+	Name      string
+	Args      S3ControlBucketPolicyArgs
+	state     *s3ControlBucketPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [S3ControlBucketPolicy].
 func (sbp *S3ControlBucketPolicy) Type() string {
 	return "aws_s3control_bucket_policy"
 }
 
+// LocalName returns the local name for [S3ControlBucketPolicy].
 func (sbp *S3ControlBucketPolicy) LocalName() string {
 	return sbp.Name
 }
 
+// Configuration returns the configuration (args) for [S3ControlBucketPolicy].
 func (sbp *S3ControlBucketPolicy) Configuration() interface{} {
 	return sbp.Args
 }
 
+// DependOn is used for other resources to depend on [S3ControlBucketPolicy].
+func (sbp *S3ControlBucketPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(sbp)
+}
+
+// Dependencies returns the list of resources [S3ControlBucketPolicy] depends_on.
+func (sbp *S3ControlBucketPolicy) Dependencies() terra.Dependencies {
+	return sbp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [S3ControlBucketPolicy].
+func (sbp *S3ControlBucketPolicy) LifecycleManagement() *terra.Lifecycle {
+	return sbp.Lifecycle
+}
+
+// Attributes returns the attributes for [S3ControlBucketPolicy].
 func (sbp *S3ControlBucketPolicy) Attributes() s3ControlBucketPolicyAttributes {
 	return s3ControlBucketPolicyAttributes{ref: terra.ReferenceResource(sbp)}
 }
 
+// ImportState imports the given attribute values into [S3ControlBucketPolicy]'s state.
 func (sbp *S3ControlBucketPolicy) ImportState(av io.Reader) error {
 	sbp.state = &s3ControlBucketPolicyState{}
 	if err := json.NewDecoder(av).Decode(sbp.state); err != nil {
@@ -48,10 +72,12 @@ func (sbp *S3ControlBucketPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [S3ControlBucketPolicy] has state.
 func (sbp *S3ControlBucketPolicy) State() (*s3ControlBucketPolicyState, bool) {
 	return sbp.state, sbp.state != nil
 }
 
+// StateMust returns the state for [S3ControlBucketPolicy]. Panics if the state is nil.
 func (sbp *S3ControlBucketPolicy) StateMust() *s3ControlBucketPolicyState {
 	if sbp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sbp.Type(), sbp.LocalName()))
@@ -59,10 +85,7 @@ func (sbp *S3ControlBucketPolicy) StateMust() *s3ControlBucketPolicyState {
 	return sbp.state
 }
 
-func (sbp *S3ControlBucketPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(sbp)
-}
-
+// S3ControlBucketPolicyArgs contains the configurations for aws_s3control_bucket_policy.
 type S3ControlBucketPolicyArgs struct {
 	// Bucket: string, required
 	Bucket terra.StringValue `hcl:"bucket,attr" validate:"required"`
@@ -70,23 +93,24 @@ type S3ControlBucketPolicyArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// Policy: string, required
 	Policy terra.StringValue `hcl:"policy,attr" validate:"required"`
-	// DependsOn contains resources that S3ControlBucketPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type s3ControlBucketPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Bucket returns a reference to field bucket of aws_s3control_bucket_policy.
 func (sbp s3ControlBucketPolicyAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(sbp.ref.Append("bucket"))
+	return terra.ReferenceAsString(sbp.ref.Append("bucket"))
 }
 
+// Id returns a reference to field id of aws_s3control_bucket_policy.
 func (sbp s3ControlBucketPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sbp.ref.Append("id"))
+	return terra.ReferenceAsString(sbp.ref.Append("id"))
 }
 
+// Policy returns a reference to field policy of aws_s3control_bucket_policy.
 func (sbp s3ControlBucketPolicyAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(sbp.ref.Append("policy"))
+	return terra.ReferenceAsString(sbp.ref.Append("policy"))
 }
 
 type s3ControlBucketPolicyState struct {

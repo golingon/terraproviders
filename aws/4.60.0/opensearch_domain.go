@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewOpensearchDomain creates a new instance of [OpensearchDomain].
 func NewOpensearchDomain(name string, args OpensearchDomainArgs) *OpensearchDomain {
 	return &OpensearchDomain{
 		Args: args,
@@ -19,28 +20,51 @@ func NewOpensearchDomain(name string, args OpensearchDomainArgs) *OpensearchDoma
 
 var _ terra.Resource = (*OpensearchDomain)(nil)
 
+// OpensearchDomain represents the Terraform resource aws_opensearch_domain.
 type OpensearchDomain struct {
-	Name  string
-	Args  OpensearchDomainArgs
-	state *opensearchDomainState
+	Name      string
+	Args      OpensearchDomainArgs
+	state     *opensearchDomainState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [OpensearchDomain].
 func (od *OpensearchDomain) Type() string {
 	return "aws_opensearch_domain"
 }
 
+// LocalName returns the local name for [OpensearchDomain].
 func (od *OpensearchDomain) LocalName() string {
 	return od.Name
 }
 
+// Configuration returns the configuration (args) for [OpensearchDomain].
 func (od *OpensearchDomain) Configuration() interface{} {
 	return od.Args
 }
 
+// DependOn is used for other resources to depend on [OpensearchDomain].
+func (od *OpensearchDomain) DependOn() terra.Reference {
+	return terra.ReferenceResource(od)
+}
+
+// Dependencies returns the list of resources [OpensearchDomain] depends_on.
+func (od *OpensearchDomain) Dependencies() terra.Dependencies {
+	return od.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [OpensearchDomain].
+func (od *OpensearchDomain) LifecycleManagement() *terra.Lifecycle {
+	return od.Lifecycle
+}
+
+// Attributes returns the attributes for [OpensearchDomain].
 func (od *OpensearchDomain) Attributes() opensearchDomainAttributes {
 	return opensearchDomainAttributes{ref: terra.ReferenceResource(od)}
 }
 
+// ImportState imports the given attribute values into [OpensearchDomain]'s state.
 func (od *OpensearchDomain) ImportState(av io.Reader) error {
 	od.state = &opensearchDomainState{}
 	if err := json.NewDecoder(av).Decode(od.state); err != nil {
@@ -49,10 +73,12 @@ func (od *OpensearchDomain) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [OpensearchDomain] has state.
 func (od *OpensearchDomain) State() (*opensearchDomainState, bool) {
 	return od.state, od.state != nil
 }
 
+// StateMust returns the state for [OpensearchDomain]. Panics if the state is nil.
 func (od *OpensearchDomain) StateMust() *opensearchDomainState {
 	if od.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", od.Type(), od.LocalName()))
@@ -60,10 +86,7 @@ func (od *OpensearchDomain) StateMust() *opensearchDomainState {
 	return od.state
 }
 
-func (od *OpensearchDomain) DependOn() terra.Reference {
-	return terra.ReferenceResource(od)
-}
-
+// OpensearchDomainArgs contains the configurations for aws_opensearch_domain.
 type OpensearchDomainArgs struct {
 	// AccessPolicies: string, optional
 	AccessPolicies terra.StringValue `hcl:"access_policies,attr"`
@@ -103,107 +126,117 @@ type OpensearchDomainArgs struct {
 	Timeouts *opensearchdomain.Timeouts `hcl:"timeouts,block"`
 	// VpcOptions: optional
 	VpcOptions *opensearchdomain.VpcOptions `hcl:"vpc_options,block"`
-	// DependsOn contains resources that OpensearchDomain depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type opensearchDomainAttributes struct {
 	ref terra.Reference
 }
 
+// AccessPolicies returns a reference to field access_policies of aws_opensearch_domain.
 func (od opensearchDomainAttributes) AccessPolicies() terra.StringValue {
-	return terra.ReferenceString(od.ref.Append("access_policies"))
+	return terra.ReferenceAsString(od.ref.Append("access_policies"))
 }
 
+// AdvancedOptions returns a reference to field advanced_options of aws_opensearch_domain.
 func (od opensearchDomainAttributes) AdvancedOptions() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](od.ref.Append("advanced_options"))
+	return terra.ReferenceAsMap[terra.StringValue](od.ref.Append("advanced_options"))
 }
 
+// Arn returns a reference to field arn of aws_opensearch_domain.
 func (od opensearchDomainAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(od.ref.Append("arn"))
+	return terra.ReferenceAsString(od.ref.Append("arn"))
 }
 
+// DashboardEndpoint returns a reference to field dashboard_endpoint of aws_opensearch_domain.
 func (od opensearchDomainAttributes) DashboardEndpoint() terra.StringValue {
-	return terra.ReferenceString(od.ref.Append("dashboard_endpoint"))
+	return terra.ReferenceAsString(od.ref.Append("dashboard_endpoint"))
 }
 
+// DomainId returns a reference to field domain_id of aws_opensearch_domain.
 func (od opensearchDomainAttributes) DomainId() terra.StringValue {
-	return terra.ReferenceString(od.ref.Append("domain_id"))
+	return terra.ReferenceAsString(od.ref.Append("domain_id"))
 }
 
+// DomainName returns a reference to field domain_name of aws_opensearch_domain.
 func (od opensearchDomainAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(od.ref.Append("domain_name"))
+	return terra.ReferenceAsString(od.ref.Append("domain_name"))
 }
 
+// Endpoint returns a reference to field endpoint of aws_opensearch_domain.
 func (od opensearchDomainAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(od.ref.Append("endpoint"))
+	return terra.ReferenceAsString(od.ref.Append("endpoint"))
 }
 
+// EngineVersion returns a reference to field engine_version of aws_opensearch_domain.
 func (od opensearchDomainAttributes) EngineVersion() terra.StringValue {
-	return terra.ReferenceString(od.ref.Append("engine_version"))
+	return terra.ReferenceAsString(od.ref.Append("engine_version"))
 }
 
+// Id returns a reference to field id of aws_opensearch_domain.
 func (od opensearchDomainAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(od.ref.Append("id"))
+	return terra.ReferenceAsString(od.ref.Append("id"))
 }
 
+// KibanaEndpoint returns a reference to field kibana_endpoint of aws_opensearch_domain.
 func (od opensearchDomainAttributes) KibanaEndpoint() terra.StringValue {
-	return terra.ReferenceString(od.ref.Append("kibana_endpoint"))
+	return terra.ReferenceAsString(od.ref.Append("kibana_endpoint"))
 }
 
+// Tags returns a reference to field tags of aws_opensearch_domain.
 func (od opensearchDomainAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](od.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](od.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_opensearch_domain.
 func (od opensearchDomainAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](od.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](od.ref.Append("tags_all"))
 }
 
 func (od opensearchDomainAttributes) AdvancedSecurityOptions() terra.ListValue[opensearchdomain.AdvancedSecurityOptionsAttributes] {
-	return terra.ReferenceList[opensearchdomain.AdvancedSecurityOptionsAttributes](od.ref.Append("advanced_security_options"))
+	return terra.ReferenceAsList[opensearchdomain.AdvancedSecurityOptionsAttributes](od.ref.Append("advanced_security_options"))
 }
 
 func (od opensearchDomainAttributes) AutoTuneOptions() terra.ListValue[opensearchdomain.AutoTuneOptionsAttributes] {
-	return terra.ReferenceList[opensearchdomain.AutoTuneOptionsAttributes](od.ref.Append("auto_tune_options"))
+	return terra.ReferenceAsList[opensearchdomain.AutoTuneOptionsAttributes](od.ref.Append("auto_tune_options"))
 }
 
 func (od opensearchDomainAttributes) ClusterConfig() terra.ListValue[opensearchdomain.ClusterConfigAttributes] {
-	return terra.ReferenceList[opensearchdomain.ClusterConfigAttributes](od.ref.Append("cluster_config"))
+	return terra.ReferenceAsList[opensearchdomain.ClusterConfigAttributes](od.ref.Append("cluster_config"))
 }
 
 func (od opensearchDomainAttributes) CognitoOptions() terra.ListValue[opensearchdomain.CognitoOptionsAttributes] {
-	return terra.ReferenceList[opensearchdomain.CognitoOptionsAttributes](od.ref.Append("cognito_options"))
+	return terra.ReferenceAsList[opensearchdomain.CognitoOptionsAttributes](od.ref.Append("cognito_options"))
 }
 
 func (od opensearchDomainAttributes) DomainEndpointOptions() terra.ListValue[opensearchdomain.DomainEndpointOptionsAttributes] {
-	return terra.ReferenceList[opensearchdomain.DomainEndpointOptionsAttributes](od.ref.Append("domain_endpoint_options"))
+	return terra.ReferenceAsList[opensearchdomain.DomainEndpointOptionsAttributes](od.ref.Append("domain_endpoint_options"))
 }
 
 func (od opensearchDomainAttributes) EbsOptions() terra.ListValue[opensearchdomain.EbsOptionsAttributes] {
-	return terra.ReferenceList[opensearchdomain.EbsOptionsAttributes](od.ref.Append("ebs_options"))
+	return terra.ReferenceAsList[opensearchdomain.EbsOptionsAttributes](od.ref.Append("ebs_options"))
 }
 
 func (od opensearchDomainAttributes) EncryptAtRest() terra.ListValue[opensearchdomain.EncryptAtRestAttributes] {
-	return terra.ReferenceList[opensearchdomain.EncryptAtRestAttributes](od.ref.Append("encrypt_at_rest"))
+	return terra.ReferenceAsList[opensearchdomain.EncryptAtRestAttributes](od.ref.Append("encrypt_at_rest"))
 }
 
 func (od opensearchDomainAttributes) LogPublishingOptions() terra.SetValue[opensearchdomain.LogPublishingOptionsAttributes] {
-	return terra.ReferenceSet[opensearchdomain.LogPublishingOptionsAttributes](od.ref.Append("log_publishing_options"))
+	return terra.ReferenceAsSet[opensearchdomain.LogPublishingOptionsAttributes](od.ref.Append("log_publishing_options"))
 }
 
 func (od opensearchDomainAttributes) NodeToNodeEncryption() terra.ListValue[opensearchdomain.NodeToNodeEncryptionAttributes] {
-	return terra.ReferenceList[opensearchdomain.NodeToNodeEncryptionAttributes](od.ref.Append("node_to_node_encryption"))
+	return terra.ReferenceAsList[opensearchdomain.NodeToNodeEncryptionAttributes](od.ref.Append("node_to_node_encryption"))
 }
 
 func (od opensearchDomainAttributes) SnapshotOptions() terra.ListValue[opensearchdomain.SnapshotOptionsAttributes] {
-	return terra.ReferenceList[opensearchdomain.SnapshotOptionsAttributes](od.ref.Append("snapshot_options"))
+	return terra.ReferenceAsList[opensearchdomain.SnapshotOptionsAttributes](od.ref.Append("snapshot_options"))
 }
 
 func (od opensearchDomainAttributes) Timeouts() opensearchdomain.TimeoutsAttributes {
-	return terra.ReferenceSingle[opensearchdomain.TimeoutsAttributes](od.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[opensearchdomain.TimeoutsAttributes](od.ref.Append("timeouts"))
 }
 
 func (od opensearchDomainAttributes) VpcOptions() terra.ListValue[opensearchdomain.VpcOptionsAttributes] {
-	return terra.ReferenceList[opensearchdomain.VpcOptionsAttributes](od.ref.Append("vpc_options"))
+	return terra.ReferenceAsList[opensearchdomain.VpcOptionsAttributes](od.ref.Append("vpc_options"))
 }
 
 type opensearchDomainState struct {

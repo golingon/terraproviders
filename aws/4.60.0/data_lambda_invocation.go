@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataLambdaInvocation creates a new instance of [DataLambdaInvocation].
 func NewDataLambdaInvocation(name string, args DataLambdaInvocationArgs) *DataLambdaInvocation {
 	return &DataLambdaInvocation{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataLambdaInvocation(name string, args DataLambdaInvocationArgs) *DataLa
 
 var _ terra.DataResource = (*DataLambdaInvocation)(nil)
 
+// DataLambdaInvocation represents the Terraform data resource aws_lambda_invocation.
 type DataLambdaInvocation struct {
 	Name string
 	Args DataLambdaInvocationArgs
 }
 
+// DataSource returns the Terraform object type for [DataLambdaInvocation].
 func (li *DataLambdaInvocation) DataSource() string {
 	return "aws_lambda_invocation"
 }
 
+// LocalName returns the local name for [DataLambdaInvocation].
 func (li *DataLambdaInvocation) LocalName() string {
 	return li.Name
 }
 
+// Configuration returns the configuration (args) for [DataLambdaInvocation].
 func (li *DataLambdaInvocation) Configuration() interface{} {
 	return li.Args
 }
 
+// Attributes returns the attributes for [DataLambdaInvocation].
 func (li *DataLambdaInvocation) Attributes() dataLambdaInvocationAttributes {
 	return dataLambdaInvocationAttributes{ref: terra.ReferenceDataResource(li)}
 }
 
+// DataLambdaInvocationArgs contains the configurations for aws_lambda_invocation.
 type DataLambdaInvocationArgs struct {
 	// FunctionName: string, required
 	FunctionName terra.StringValue `hcl:"function_name,attr" validate:"required"`
@@ -48,22 +55,27 @@ type dataLambdaInvocationAttributes struct {
 	ref terra.Reference
 }
 
+// FunctionName returns a reference to field function_name of aws_lambda_invocation.
 func (li dataLambdaInvocationAttributes) FunctionName() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("function_name"))
+	return terra.ReferenceAsString(li.ref.Append("function_name"))
 }
 
+// Id returns a reference to field id of aws_lambda_invocation.
 func (li dataLambdaInvocationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("id"))
+	return terra.ReferenceAsString(li.ref.Append("id"))
 }
 
+// Input returns a reference to field input of aws_lambda_invocation.
 func (li dataLambdaInvocationAttributes) Input() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("input"))
+	return terra.ReferenceAsString(li.ref.Append("input"))
 }
 
+// Qualifier returns a reference to field qualifier of aws_lambda_invocation.
 func (li dataLambdaInvocationAttributes) Qualifier() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("qualifier"))
+	return terra.ReferenceAsString(li.ref.Append("qualifier"))
 }
 
+// Result returns a reference to field result of aws_lambda_invocation.
 func (li dataLambdaInvocationAttributes) Result() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("result"))
+	return terra.ReferenceAsString(li.ref.Append("result"))
 }

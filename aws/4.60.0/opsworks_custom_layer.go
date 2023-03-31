@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewOpsworksCustomLayer creates a new instance of [OpsworksCustomLayer].
 func NewOpsworksCustomLayer(name string, args OpsworksCustomLayerArgs) *OpsworksCustomLayer {
 	return &OpsworksCustomLayer{
 		Args: args,
@@ -19,28 +20,51 @@ func NewOpsworksCustomLayer(name string, args OpsworksCustomLayerArgs) *Opsworks
 
 var _ terra.Resource = (*OpsworksCustomLayer)(nil)
 
+// OpsworksCustomLayer represents the Terraform resource aws_opsworks_custom_layer.
 type OpsworksCustomLayer struct {
-	Name  string
-	Args  OpsworksCustomLayerArgs
-	state *opsworksCustomLayerState
+	Name      string
+	Args      OpsworksCustomLayerArgs
+	state     *opsworksCustomLayerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [OpsworksCustomLayer].
 func (ocl *OpsworksCustomLayer) Type() string {
 	return "aws_opsworks_custom_layer"
 }
 
+// LocalName returns the local name for [OpsworksCustomLayer].
 func (ocl *OpsworksCustomLayer) LocalName() string {
 	return ocl.Name
 }
 
+// Configuration returns the configuration (args) for [OpsworksCustomLayer].
 func (ocl *OpsworksCustomLayer) Configuration() interface{} {
 	return ocl.Args
 }
 
+// DependOn is used for other resources to depend on [OpsworksCustomLayer].
+func (ocl *OpsworksCustomLayer) DependOn() terra.Reference {
+	return terra.ReferenceResource(ocl)
+}
+
+// Dependencies returns the list of resources [OpsworksCustomLayer] depends_on.
+func (ocl *OpsworksCustomLayer) Dependencies() terra.Dependencies {
+	return ocl.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [OpsworksCustomLayer].
+func (ocl *OpsworksCustomLayer) LifecycleManagement() *terra.Lifecycle {
+	return ocl.Lifecycle
+}
+
+// Attributes returns the attributes for [OpsworksCustomLayer].
 func (ocl *OpsworksCustomLayer) Attributes() opsworksCustomLayerAttributes {
 	return opsworksCustomLayerAttributes{ref: terra.ReferenceResource(ocl)}
 }
 
+// ImportState imports the given attribute values into [OpsworksCustomLayer]'s state.
 func (ocl *OpsworksCustomLayer) ImportState(av io.Reader) error {
 	ocl.state = &opsworksCustomLayerState{}
 	if err := json.NewDecoder(av).Decode(ocl.state); err != nil {
@@ -49,10 +73,12 @@ func (ocl *OpsworksCustomLayer) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [OpsworksCustomLayer] has state.
 func (ocl *OpsworksCustomLayer) State() (*opsworksCustomLayerState, bool) {
 	return ocl.state, ocl.state != nil
 }
 
+// StateMust returns the state for [OpsworksCustomLayer]. Panics if the state is nil.
 func (ocl *OpsworksCustomLayer) StateMust() *opsworksCustomLayerState {
 	if ocl.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ocl.Type(), ocl.LocalName()))
@@ -60,10 +86,7 @@ func (ocl *OpsworksCustomLayer) StateMust() *opsworksCustomLayerState {
 	return ocl.state
 }
 
-func (ocl *OpsworksCustomLayer) DependOn() terra.Reference {
-	return terra.ReferenceResource(ocl)
-}
-
+// OpsworksCustomLayerArgs contains the configurations for aws_opsworks_custom_layer.
 type OpsworksCustomLayerArgs struct {
 	// AutoAssignElasticIps: bool, optional
 	AutoAssignElasticIps terra.BoolValue `hcl:"auto_assign_elastic_ips,attr"`
@@ -117,119 +140,141 @@ type OpsworksCustomLayerArgs struct {
 	EbsVolume []opsworkscustomlayer.EbsVolume `hcl:"ebs_volume,block" validate:"min=0"`
 	// LoadBasedAutoScaling: optional
 	LoadBasedAutoScaling *opsworkscustomlayer.LoadBasedAutoScaling `hcl:"load_based_auto_scaling,block"`
-	// DependsOn contains resources that OpsworksCustomLayer depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type opsworksCustomLayerAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ocl.ref.Append("arn"))
+	return terra.ReferenceAsString(ocl.ref.Append("arn"))
 }
 
+// AutoAssignElasticIps returns a reference to field auto_assign_elastic_ips of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) AutoAssignElasticIps() terra.BoolValue {
-	return terra.ReferenceBool(ocl.ref.Append("auto_assign_elastic_ips"))
+	return terra.ReferenceAsBool(ocl.ref.Append("auto_assign_elastic_ips"))
 }
 
+// AutoAssignPublicIps returns a reference to field auto_assign_public_ips of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) AutoAssignPublicIps() terra.BoolValue {
-	return terra.ReferenceBool(ocl.ref.Append("auto_assign_public_ips"))
+	return terra.ReferenceAsBool(ocl.ref.Append("auto_assign_public_ips"))
 }
 
+// AutoHealing returns a reference to field auto_healing of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) AutoHealing() terra.BoolValue {
-	return terra.ReferenceBool(ocl.ref.Append("auto_healing"))
+	return terra.ReferenceAsBool(ocl.ref.Append("auto_healing"))
 }
 
+// CustomConfigureRecipes returns a reference to field custom_configure_recipes of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) CustomConfigureRecipes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ocl.ref.Append("custom_configure_recipes"))
+	return terra.ReferenceAsList[terra.StringValue](ocl.ref.Append("custom_configure_recipes"))
 }
 
+// CustomDeployRecipes returns a reference to field custom_deploy_recipes of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) CustomDeployRecipes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ocl.ref.Append("custom_deploy_recipes"))
+	return terra.ReferenceAsList[terra.StringValue](ocl.ref.Append("custom_deploy_recipes"))
 }
 
+// CustomInstanceProfileArn returns a reference to field custom_instance_profile_arn of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) CustomInstanceProfileArn() terra.StringValue {
-	return terra.ReferenceString(ocl.ref.Append("custom_instance_profile_arn"))
+	return terra.ReferenceAsString(ocl.ref.Append("custom_instance_profile_arn"))
 }
 
+// CustomJson returns a reference to field custom_json of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) CustomJson() terra.StringValue {
-	return terra.ReferenceString(ocl.ref.Append("custom_json"))
+	return terra.ReferenceAsString(ocl.ref.Append("custom_json"))
 }
 
+// CustomSecurityGroupIds returns a reference to field custom_security_group_ids of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) CustomSecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ocl.ref.Append("custom_security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](ocl.ref.Append("custom_security_group_ids"))
 }
 
+// CustomSetupRecipes returns a reference to field custom_setup_recipes of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) CustomSetupRecipes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ocl.ref.Append("custom_setup_recipes"))
+	return terra.ReferenceAsList[terra.StringValue](ocl.ref.Append("custom_setup_recipes"))
 }
 
+// CustomShutdownRecipes returns a reference to field custom_shutdown_recipes of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) CustomShutdownRecipes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ocl.ref.Append("custom_shutdown_recipes"))
+	return terra.ReferenceAsList[terra.StringValue](ocl.ref.Append("custom_shutdown_recipes"))
 }
 
+// CustomUndeployRecipes returns a reference to field custom_undeploy_recipes of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) CustomUndeployRecipes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ocl.ref.Append("custom_undeploy_recipes"))
+	return terra.ReferenceAsList[terra.StringValue](ocl.ref.Append("custom_undeploy_recipes"))
 }
 
+// DrainElbOnShutdown returns a reference to field drain_elb_on_shutdown of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) DrainElbOnShutdown() terra.BoolValue {
-	return terra.ReferenceBool(ocl.ref.Append("drain_elb_on_shutdown"))
+	return terra.ReferenceAsBool(ocl.ref.Append("drain_elb_on_shutdown"))
 }
 
+// ElasticLoadBalancer returns a reference to field elastic_load_balancer of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) ElasticLoadBalancer() terra.StringValue {
-	return terra.ReferenceString(ocl.ref.Append("elastic_load_balancer"))
+	return terra.ReferenceAsString(ocl.ref.Append("elastic_load_balancer"))
 }
 
+// Id returns a reference to field id of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ocl.ref.Append("id"))
+	return terra.ReferenceAsString(ocl.ref.Append("id"))
 }
 
+// InstallUpdatesOnBoot returns a reference to field install_updates_on_boot of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) InstallUpdatesOnBoot() terra.BoolValue {
-	return terra.ReferenceBool(ocl.ref.Append("install_updates_on_boot"))
+	return terra.ReferenceAsBool(ocl.ref.Append("install_updates_on_boot"))
 }
 
+// InstanceShutdownTimeout returns a reference to field instance_shutdown_timeout of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) InstanceShutdownTimeout() terra.NumberValue {
-	return terra.ReferenceNumber(ocl.ref.Append("instance_shutdown_timeout"))
+	return terra.ReferenceAsNumber(ocl.ref.Append("instance_shutdown_timeout"))
 }
 
+// Name returns a reference to field name of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ocl.ref.Append("name"))
+	return terra.ReferenceAsString(ocl.ref.Append("name"))
 }
 
+// ShortName returns a reference to field short_name of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) ShortName() terra.StringValue {
-	return terra.ReferenceString(ocl.ref.Append("short_name"))
+	return terra.ReferenceAsString(ocl.ref.Append("short_name"))
 }
 
+// StackId returns a reference to field stack_id of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) StackId() terra.StringValue {
-	return terra.ReferenceString(ocl.ref.Append("stack_id"))
+	return terra.ReferenceAsString(ocl.ref.Append("stack_id"))
 }
 
+// SystemPackages returns a reference to field system_packages of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) SystemPackages() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ocl.ref.Append("system_packages"))
+	return terra.ReferenceAsSet[terra.StringValue](ocl.ref.Append("system_packages"))
 }
 
+// Tags returns a reference to field tags of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ocl.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ocl.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ocl.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ocl.ref.Append("tags_all"))
 }
 
+// UseEbsOptimizedInstances returns a reference to field use_ebs_optimized_instances of aws_opsworks_custom_layer.
 func (ocl opsworksCustomLayerAttributes) UseEbsOptimizedInstances() terra.BoolValue {
-	return terra.ReferenceBool(ocl.ref.Append("use_ebs_optimized_instances"))
+	return terra.ReferenceAsBool(ocl.ref.Append("use_ebs_optimized_instances"))
 }
 
 func (ocl opsworksCustomLayerAttributes) CloudwatchConfiguration() terra.ListValue[opsworkscustomlayer.CloudwatchConfigurationAttributes] {
-	return terra.ReferenceList[opsworkscustomlayer.CloudwatchConfigurationAttributes](ocl.ref.Append("cloudwatch_configuration"))
+	return terra.ReferenceAsList[opsworkscustomlayer.CloudwatchConfigurationAttributes](ocl.ref.Append("cloudwatch_configuration"))
 }
 
 func (ocl opsworksCustomLayerAttributes) EbsVolume() terra.SetValue[opsworkscustomlayer.EbsVolumeAttributes] {
-	return terra.ReferenceSet[opsworkscustomlayer.EbsVolumeAttributes](ocl.ref.Append("ebs_volume"))
+	return terra.ReferenceAsSet[opsworkscustomlayer.EbsVolumeAttributes](ocl.ref.Append("ebs_volume"))
 }
 
 func (ocl opsworksCustomLayerAttributes) LoadBasedAutoScaling() terra.ListValue[opsworkscustomlayer.LoadBasedAutoScalingAttributes] {
-	return terra.ReferenceList[opsworkscustomlayer.LoadBasedAutoScalingAttributes](ocl.ref.Append("load_based_auto_scaling"))
+	return terra.ReferenceAsList[opsworkscustomlayer.LoadBasedAutoScalingAttributes](ocl.ref.Append("load_based_auto_scaling"))
 }
 
 type opsworksCustomLayerState struct {

@@ -31,11 +31,11 @@ func (v VpcAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (v VpcAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(v.ref.Append("vpc_id"))
 }
 
 func (v VpcAttributes) VpcRegion() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("vpc_region"))
+	return terra.ReferenceAsString(v.ref.Append("vpc_region"))
 }
 
 type VpcState struct {

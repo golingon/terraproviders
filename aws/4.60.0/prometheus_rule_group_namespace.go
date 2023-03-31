@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewPrometheusRuleGroupNamespace creates a new instance of [PrometheusRuleGroupNamespace].
 func NewPrometheusRuleGroupNamespace(name string, args PrometheusRuleGroupNamespaceArgs) *PrometheusRuleGroupNamespace {
 	return &PrometheusRuleGroupNamespace{
 		Args: args,
@@ -18,28 +19,51 @@ func NewPrometheusRuleGroupNamespace(name string, args PrometheusRuleGroupNamesp
 
 var _ terra.Resource = (*PrometheusRuleGroupNamespace)(nil)
 
+// PrometheusRuleGroupNamespace represents the Terraform resource aws_prometheus_rule_group_namespace.
 type PrometheusRuleGroupNamespace struct {
-	Name  string
-	Args  PrometheusRuleGroupNamespaceArgs
-	state *prometheusRuleGroupNamespaceState
+	Name      string
+	Args      PrometheusRuleGroupNamespaceArgs
+	state     *prometheusRuleGroupNamespaceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PrometheusRuleGroupNamespace].
 func (prgn *PrometheusRuleGroupNamespace) Type() string {
 	return "aws_prometheus_rule_group_namespace"
 }
 
+// LocalName returns the local name for [PrometheusRuleGroupNamespace].
 func (prgn *PrometheusRuleGroupNamespace) LocalName() string {
 	return prgn.Name
 }
 
+// Configuration returns the configuration (args) for [PrometheusRuleGroupNamespace].
 func (prgn *PrometheusRuleGroupNamespace) Configuration() interface{} {
 	return prgn.Args
 }
 
+// DependOn is used for other resources to depend on [PrometheusRuleGroupNamespace].
+func (prgn *PrometheusRuleGroupNamespace) DependOn() terra.Reference {
+	return terra.ReferenceResource(prgn)
+}
+
+// Dependencies returns the list of resources [PrometheusRuleGroupNamespace] depends_on.
+func (prgn *PrometheusRuleGroupNamespace) Dependencies() terra.Dependencies {
+	return prgn.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PrometheusRuleGroupNamespace].
+func (prgn *PrometheusRuleGroupNamespace) LifecycleManagement() *terra.Lifecycle {
+	return prgn.Lifecycle
+}
+
+// Attributes returns the attributes for [PrometheusRuleGroupNamespace].
 func (prgn *PrometheusRuleGroupNamespace) Attributes() prometheusRuleGroupNamespaceAttributes {
 	return prometheusRuleGroupNamespaceAttributes{ref: terra.ReferenceResource(prgn)}
 }
 
+// ImportState imports the given attribute values into [PrometheusRuleGroupNamespace]'s state.
 func (prgn *PrometheusRuleGroupNamespace) ImportState(av io.Reader) error {
 	prgn.state = &prometheusRuleGroupNamespaceState{}
 	if err := json.NewDecoder(av).Decode(prgn.state); err != nil {
@@ -48,10 +72,12 @@ func (prgn *PrometheusRuleGroupNamespace) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PrometheusRuleGroupNamespace] has state.
 func (prgn *PrometheusRuleGroupNamespace) State() (*prometheusRuleGroupNamespaceState, bool) {
 	return prgn.state, prgn.state != nil
 }
 
+// StateMust returns the state for [PrometheusRuleGroupNamespace]. Panics if the state is nil.
 func (prgn *PrometheusRuleGroupNamespace) StateMust() *prometheusRuleGroupNamespaceState {
 	if prgn.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", prgn.Type(), prgn.LocalName()))
@@ -59,10 +85,7 @@ func (prgn *PrometheusRuleGroupNamespace) StateMust() *prometheusRuleGroupNamesp
 	return prgn.state
 }
 
-func (prgn *PrometheusRuleGroupNamespace) DependOn() terra.Reference {
-	return terra.ReferenceResource(prgn)
-}
-
+// PrometheusRuleGroupNamespaceArgs contains the configurations for aws_prometheus_rule_group_namespace.
 type PrometheusRuleGroupNamespaceArgs struct {
 	// Data: string, required
 	Data terra.StringValue `hcl:"data,attr" validate:"required"`
@@ -72,27 +95,29 @@ type PrometheusRuleGroupNamespaceArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// WorkspaceId: string, required
 	WorkspaceId terra.StringValue `hcl:"workspace_id,attr" validate:"required"`
-	// DependsOn contains resources that PrometheusRuleGroupNamespace depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type prometheusRuleGroupNamespaceAttributes struct {
 	ref terra.Reference
 }
 
+// Data returns a reference to field data of aws_prometheus_rule_group_namespace.
 func (prgn prometheusRuleGroupNamespaceAttributes) Data() terra.StringValue {
-	return terra.ReferenceString(prgn.ref.Append("data"))
+	return terra.ReferenceAsString(prgn.ref.Append("data"))
 }
 
+// Id returns a reference to field id of aws_prometheus_rule_group_namespace.
 func (prgn prometheusRuleGroupNamespaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(prgn.ref.Append("id"))
+	return terra.ReferenceAsString(prgn.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_prometheus_rule_group_namespace.
 func (prgn prometheusRuleGroupNamespaceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(prgn.ref.Append("name"))
+	return terra.ReferenceAsString(prgn.ref.Append("name"))
 }
 
+// WorkspaceId returns a reference to field workspace_id of aws_prometheus_rule_group_namespace.
 func (prgn prometheusRuleGroupNamespaceAttributes) WorkspaceId() terra.StringValue {
-	return terra.ReferenceString(prgn.ref.Append("workspace_id"))
+	return terra.ReferenceAsString(prgn.ref.Append("workspace_id"))
 }
 
 type prometheusRuleGroupNamespaceState struct {

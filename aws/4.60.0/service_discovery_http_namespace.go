@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewServiceDiscoveryHttpNamespace creates a new instance of [ServiceDiscoveryHttpNamespace].
 func NewServiceDiscoveryHttpNamespace(name string, args ServiceDiscoveryHttpNamespaceArgs) *ServiceDiscoveryHttpNamespace {
 	return &ServiceDiscoveryHttpNamespace{
 		Args: args,
@@ -18,28 +19,51 @@ func NewServiceDiscoveryHttpNamespace(name string, args ServiceDiscoveryHttpName
 
 var _ terra.Resource = (*ServiceDiscoveryHttpNamespace)(nil)
 
+// ServiceDiscoveryHttpNamespace represents the Terraform resource aws_service_discovery_http_namespace.
 type ServiceDiscoveryHttpNamespace struct {
-	Name  string
-	Args  ServiceDiscoveryHttpNamespaceArgs
-	state *serviceDiscoveryHttpNamespaceState
+	Name      string
+	Args      ServiceDiscoveryHttpNamespaceArgs
+	state     *serviceDiscoveryHttpNamespaceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ServiceDiscoveryHttpNamespace].
 func (sdhn *ServiceDiscoveryHttpNamespace) Type() string {
 	return "aws_service_discovery_http_namespace"
 }
 
+// LocalName returns the local name for [ServiceDiscoveryHttpNamespace].
 func (sdhn *ServiceDiscoveryHttpNamespace) LocalName() string {
 	return sdhn.Name
 }
 
+// Configuration returns the configuration (args) for [ServiceDiscoveryHttpNamespace].
 func (sdhn *ServiceDiscoveryHttpNamespace) Configuration() interface{} {
 	return sdhn.Args
 }
 
+// DependOn is used for other resources to depend on [ServiceDiscoveryHttpNamespace].
+func (sdhn *ServiceDiscoveryHttpNamespace) DependOn() terra.Reference {
+	return terra.ReferenceResource(sdhn)
+}
+
+// Dependencies returns the list of resources [ServiceDiscoveryHttpNamespace] depends_on.
+func (sdhn *ServiceDiscoveryHttpNamespace) Dependencies() terra.Dependencies {
+	return sdhn.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ServiceDiscoveryHttpNamespace].
+func (sdhn *ServiceDiscoveryHttpNamespace) LifecycleManagement() *terra.Lifecycle {
+	return sdhn.Lifecycle
+}
+
+// Attributes returns the attributes for [ServiceDiscoveryHttpNamespace].
 func (sdhn *ServiceDiscoveryHttpNamespace) Attributes() serviceDiscoveryHttpNamespaceAttributes {
 	return serviceDiscoveryHttpNamespaceAttributes{ref: terra.ReferenceResource(sdhn)}
 }
 
+// ImportState imports the given attribute values into [ServiceDiscoveryHttpNamespace]'s state.
 func (sdhn *ServiceDiscoveryHttpNamespace) ImportState(av io.Reader) error {
 	sdhn.state = &serviceDiscoveryHttpNamespaceState{}
 	if err := json.NewDecoder(av).Decode(sdhn.state); err != nil {
@@ -48,10 +72,12 @@ func (sdhn *ServiceDiscoveryHttpNamespace) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ServiceDiscoveryHttpNamespace] has state.
 func (sdhn *ServiceDiscoveryHttpNamespace) State() (*serviceDiscoveryHttpNamespaceState, bool) {
 	return sdhn.state, sdhn.state != nil
 }
 
+// StateMust returns the state for [ServiceDiscoveryHttpNamespace]. Panics if the state is nil.
 func (sdhn *ServiceDiscoveryHttpNamespace) StateMust() *serviceDiscoveryHttpNamespaceState {
 	if sdhn.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sdhn.Type(), sdhn.LocalName()))
@@ -59,10 +85,7 @@ func (sdhn *ServiceDiscoveryHttpNamespace) StateMust() *serviceDiscoveryHttpName
 	return sdhn.state
 }
 
-func (sdhn *ServiceDiscoveryHttpNamespace) DependOn() terra.Reference {
-	return terra.ReferenceResource(sdhn)
-}
-
+// ServiceDiscoveryHttpNamespaceArgs contains the configurations for aws_service_discovery_http_namespace.
 type ServiceDiscoveryHttpNamespaceArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -74,39 +97,44 @@ type ServiceDiscoveryHttpNamespaceArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that ServiceDiscoveryHttpNamespace depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type serviceDiscoveryHttpNamespaceAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_service_discovery_http_namespace.
 func (sdhn serviceDiscoveryHttpNamespaceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sdhn.ref.Append("arn"))
+	return terra.ReferenceAsString(sdhn.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_service_discovery_http_namespace.
 func (sdhn serviceDiscoveryHttpNamespaceAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sdhn.ref.Append("description"))
+	return terra.ReferenceAsString(sdhn.ref.Append("description"))
 }
 
+// HttpName returns a reference to field http_name of aws_service_discovery_http_namespace.
 func (sdhn serviceDiscoveryHttpNamespaceAttributes) HttpName() terra.StringValue {
-	return terra.ReferenceString(sdhn.ref.Append("http_name"))
+	return terra.ReferenceAsString(sdhn.ref.Append("http_name"))
 }
 
+// Id returns a reference to field id of aws_service_discovery_http_namespace.
 func (sdhn serviceDiscoveryHttpNamespaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sdhn.ref.Append("id"))
+	return terra.ReferenceAsString(sdhn.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_service_discovery_http_namespace.
 func (sdhn serviceDiscoveryHttpNamespaceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sdhn.ref.Append("name"))
+	return terra.ReferenceAsString(sdhn.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_service_discovery_http_namespace.
 func (sdhn serviceDiscoveryHttpNamespaceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sdhn.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sdhn.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_service_discovery_http_namespace.
 func (sdhn serviceDiscoveryHttpNamespaceAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sdhn.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sdhn.ref.Append("tags_all"))
 }
 
 type serviceDiscoveryHttpNamespaceState struct {

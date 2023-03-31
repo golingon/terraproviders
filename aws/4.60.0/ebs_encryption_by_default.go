@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewEbsEncryptionByDefault creates a new instance of [EbsEncryptionByDefault].
 func NewEbsEncryptionByDefault(name string, args EbsEncryptionByDefaultArgs) *EbsEncryptionByDefault {
 	return &EbsEncryptionByDefault{
 		Args: args,
@@ -18,28 +19,51 @@ func NewEbsEncryptionByDefault(name string, args EbsEncryptionByDefaultArgs) *Eb
 
 var _ terra.Resource = (*EbsEncryptionByDefault)(nil)
 
+// EbsEncryptionByDefault represents the Terraform resource aws_ebs_encryption_by_default.
 type EbsEncryptionByDefault struct {
-	Name  string
-	Args  EbsEncryptionByDefaultArgs
-	state *ebsEncryptionByDefaultState
+	Name      string
+	Args      EbsEncryptionByDefaultArgs
+	state     *ebsEncryptionByDefaultState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EbsEncryptionByDefault].
 func (eebd *EbsEncryptionByDefault) Type() string {
 	return "aws_ebs_encryption_by_default"
 }
 
+// LocalName returns the local name for [EbsEncryptionByDefault].
 func (eebd *EbsEncryptionByDefault) LocalName() string {
 	return eebd.Name
 }
 
+// Configuration returns the configuration (args) for [EbsEncryptionByDefault].
 func (eebd *EbsEncryptionByDefault) Configuration() interface{} {
 	return eebd.Args
 }
 
+// DependOn is used for other resources to depend on [EbsEncryptionByDefault].
+func (eebd *EbsEncryptionByDefault) DependOn() terra.Reference {
+	return terra.ReferenceResource(eebd)
+}
+
+// Dependencies returns the list of resources [EbsEncryptionByDefault] depends_on.
+func (eebd *EbsEncryptionByDefault) Dependencies() terra.Dependencies {
+	return eebd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EbsEncryptionByDefault].
+func (eebd *EbsEncryptionByDefault) LifecycleManagement() *terra.Lifecycle {
+	return eebd.Lifecycle
+}
+
+// Attributes returns the attributes for [EbsEncryptionByDefault].
 func (eebd *EbsEncryptionByDefault) Attributes() ebsEncryptionByDefaultAttributes {
 	return ebsEncryptionByDefaultAttributes{ref: terra.ReferenceResource(eebd)}
 }
 
+// ImportState imports the given attribute values into [EbsEncryptionByDefault]'s state.
 func (eebd *EbsEncryptionByDefault) ImportState(av io.Reader) error {
 	eebd.state = &ebsEncryptionByDefaultState{}
 	if err := json.NewDecoder(av).Decode(eebd.state); err != nil {
@@ -48,10 +72,12 @@ func (eebd *EbsEncryptionByDefault) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EbsEncryptionByDefault] has state.
 func (eebd *EbsEncryptionByDefault) State() (*ebsEncryptionByDefaultState, bool) {
 	return eebd.state, eebd.state != nil
 }
 
+// StateMust returns the state for [EbsEncryptionByDefault]. Panics if the state is nil.
 func (eebd *EbsEncryptionByDefault) StateMust() *ebsEncryptionByDefaultState {
 	if eebd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", eebd.Type(), eebd.LocalName()))
@@ -59,28 +85,25 @@ func (eebd *EbsEncryptionByDefault) StateMust() *ebsEncryptionByDefaultState {
 	return eebd.state
 }
 
-func (eebd *EbsEncryptionByDefault) DependOn() terra.Reference {
-	return terra.ReferenceResource(eebd)
-}
-
+// EbsEncryptionByDefaultArgs contains the configurations for aws_ebs_encryption_by_default.
 type EbsEncryptionByDefaultArgs struct {
 	// Enabled: bool, optional
 	Enabled terra.BoolValue `hcl:"enabled,attr"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that EbsEncryptionByDefault depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ebsEncryptionByDefaultAttributes struct {
 	ref terra.Reference
 }
 
+// Enabled returns a reference to field enabled of aws_ebs_encryption_by_default.
 func (eebd ebsEncryptionByDefaultAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(eebd.ref.Append("enabled"))
+	return terra.ReferenceAsBool(eebd.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of aws_ebs_encryption_by_default.
 func (eebd ebsEncryptionByDefaultAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(eebd.ref.Append("id"))
+	return terra.ReferenceAsString(eebd.ref.Append("id"))
 }
 
 type ebsEncryptionByDefaultState struct {

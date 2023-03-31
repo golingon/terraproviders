@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMacie2ClassificationExportConfiguration creates a new instance of [Macie2ClassificationExportConfiguration].
 func NewMacie2ClassificationExportConfiguration(name string, args Macie2ClassificationExportConfigurationArgs) *Macie2ClassificationExportConfiguration {
 	return &Macie2ClassificationExportConfiguration{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMacie2ClassificationExportConfiguration(name string, args Macie2Classifi
 
 var _ terra.Resource = (*Macie2ClassificationExportConfiguration)(nil)
 
+// Macie2ClassificationExportConfiguration represents the Terraform resource aws_macie2_classification_export_configuration.
 type Macie2ClassificationExportConfiguration struct {
-	Name  string
-	Args  Macie2ClassificationExportConfigurationArgs
-	state *macie2ClassificationExportConfigurationState
+	Name      string
+	Args      Macie2ClassificationExportConfigurationArgs
+	state     *macie2ClassificationExportConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Macie2ClassificationExportConfiguration].
 func (mcec *Macie2ClassificationExportConfiguration) Type() string {
 	return "aws_macie2_classification_export_configuration"
 }
 
+// LocalName returns the local name for [Macie2ClassificationExportConfiguration].
 func (mcec *Macie2ClassificationExportConfiguration) LocalName() string {
 	return mcec.Name
 }
 
+// Configuration returns the configuration (args) for [Macie2ClassificationExportConfiguration].
 func (mcec *Macie2ClassificationExportConfiguration) Configuration() interface{} {
 	return mcec.Args
 }
 
+// DependOn is used for other resources to depend on [Macie2ClassificationExportConfiguration].
+func (mcec *Macie2ClassificationExportConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(mcec)
+}
+
+// Dependencies returns the list of resources [Macie2ClassificationExportConfiguration] depends_on.
+func (mcec *Macie2ClassificationExportConfiguration) Dependencies() terra.Dependencies {
+	return mcec.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Macie2ClassificationExportConfiguration].
+func (mcec *Macie2ClassificationExportConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return mcec.Lifecycle
+}
+
+// Attributes returns the attributes for [Macie2ClassificationExportConfiguration].
 func (mcec *Macie2ClassificationExportConfiguration) Attributes() macie2ClassificationExportConfigurationAttributes {
 	return macie2ClassificationExportConfigurationAttributes{ref: terra.ReferenceResource(mcec)}
 }
 
+// ImportState imports the given attribute values into [Macie2ClassificationExportConfiguration]'s state.
 func (mcec *Macie2ClassificationExportConfiguration) ImportState(av io.Reader) error {
 	mcec.state = &macie2ClassificationExportConfigurationState{}
 	if err := json.NewDecoder(av).Decode(mcec.state); err != nil {
@@ -49,10 +73,12 @@ func (mcec *Macie2ClassificationExportConfiguration) ImportState(av io.Reader) e
 	return nil
 }
 
+// State returns the state and a bool indicating if [Macie2ClassificationExportConfiguration] has state.
 func (mcec *Macie2ClassificationExportConfiguration) State() (*macie2ClassificationExportConfigurationState, bool) {
 	return mcec.state, mcec.state != nil
 }
 
+// StateMust returns the state for [Macie2ClassificationExportConfiguration]. Panics if the state is nil.
 func (mcec *Macie2ClassificationExportConfiguration) StateMust() *macie2ClassificationExportConfigurationState {
 	if mcec.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mcec.Type(), mcec.LocalName()))
@@ -60,28 +86,24 @@ func (mcec *Macie2ClassificationExportConfiguration) StateMust() *macie2Classifi
 	return mcec.state
 }
 
-func (mcec *Macie2ClassificationExportConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(mcec)
-}
-
+// Macie2ClassificationExportConfigurationArgs contains the configurations for aws_macie2_classification_export_configuration.
 type Macie2ClassificationExportConfigurationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
 	// S3Destination: optional
 	S3Destination *macie2classificationexportconfiguration.S3Destination `hcl:"s3_destination,block"`
-	// DependsOn contains resources that Macie2ClassificationExportConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type macie2ClassificationExportConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_macie2_classification_export_configuration.
 func (mcec macie2ClassificationExportConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mcec.ref.Append("id"))
+	return terra.ReferenceAsString(mcec.ref.Append("id"))
 }
 
 func (mcec macie2ClassificationExportConfigurationAttributes) S3Destination() terra.ListValue[macie2classificationexportconfiguration.S3DestinationAttributes] {
-	return terra.ReferenceList[macie2classificationexportconfiguration.S3DestinationAttributes](mcec.ref.Append("s3_destination"))
+	return terra.ReferenceAsList[macie2classificationexportconfiguration.S3DestinationAttributes](mcec.ref.Append("s3_destination"))
 }
 
 type macie2ClassificationExportConfigurationState struct {

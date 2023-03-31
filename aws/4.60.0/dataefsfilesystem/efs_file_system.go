@@ -26,11 +26,11 @@ func (lp LifecyclePolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lp LifecyclePolicyAttributes) TransitionToIa() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("transition_to_ia"))
+	return terra.ReferenceAsString(lp.ref.Append("transition_to_ia"))
 }
 
 func (lp LifecyclePolicyAttributes) TransitionToPrimaryStorageClass() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("transition_to_primary_storage_class"))
+	return terra.ReferenceAsString(lp.ref.Append("transition_to_primary_storage_class"))
 }
 
 type LifecyclePolicyState struct {

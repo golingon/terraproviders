@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataElasticacheSubnetGroup creates a new instance of [DataElasticacheSubnetGroup].
 func NewDataElasticacheSubnetGroup(name string, args DataElasticacheSubnetGroupArgs) *DataElasticacheSubnetGroup {
 	return &DataElasticacheSubnetGroup{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataElasticacheSubnetGroup(name string, args DataElasticacheSubnetGroupA
 
 var _ terra.DataResource = (*DataElasticacheSubnetGroup)(nil)
 
+// DataElasticacheSubnetGroup represents the Terraform data resource aws_elasticache_subnet_group.
 type DataElasticacheSubnetGroup struct {
 	Name string
 	Args DataElasticacheSubnetGroupArgs
 }
 
+// DataSource returns the Terraform object type for [DataElasticacheSubnetGroup].
 func (esg *DataElasticacheSubnetGroup) DataSource() string {
 	return "aws_elasticache_subnet_group"
 }
 
+// LocalName returns the local name for [DataElasticacheSubnetGroup].
 func (esg *DataElasticacheSubnetGroup) LocalName() string {
 	return esg.Name
 }
 
+// Configuration returns the configuration (args) for [DataElasticacheSubnetGroup].
 func (esg *DataElasticacheSubnetGroup) Configuration() interface{} {
 	return esg.Args
 }
 
+// Attributes returns the attributes for [DataElasticacheSubnetGroup].
 func (esg *DataElasticacheSubnetGroup) Attributes() dataElasticacheSubnetGroupAttributes {
 	return dataElasticacheSubnetGroupAttributes{ref: terra.ReferenceDataResource(esg)}
 }
 
+// DataElasticacheSubnetGroupArgs contains the configurations for aws_elasticache_subnet_group.
 type DataElasticacheSubnetGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -46,26 +53,32 @@ type dataElasticacheSubnetGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_elasticache_subnet_group.
 func (esg dataElasticacheSubnetGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(esg.ref.Append("arn"))
+	return terra.ReferenceAsString(esg.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_elasticache_subnet_group.
 func (esg dataElasticacheSubnetGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(esg.ref.Append("description"))
+	return terra.ReferenceAsString(esg.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_elasticache_subnet_group.
 func (esg dataElasticacheSubnetGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(esg.ref.Append("id"))
+	return terra.ReferenceAsString(esg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_elasticache_subnet_group.
 func (esg dataElasticacheSubnetGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(esg.ref.Append("name"))
+	return terra.ReferenceAsString(esg.ref.Append("name"))
 }
 
+// SubnetIds returns a reference to field subnet_ids of aws_elasticache_subnet_group.
 func (esg dataElasticacheSubnetGroupAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](esg.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](esg.ref.Append("subnet_ids"))
 }
 
+// Tags returns a reference to field tags of aws_elasticache_subnet_group.
 func (esg dataElasticacheSubnetGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](esg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](esg.ref.Append("tags"))
 }

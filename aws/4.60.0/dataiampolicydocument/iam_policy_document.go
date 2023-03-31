@@ -68,39 +68,39 @@ func (s StatementAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s StatementAttributes) Actions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("actions"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("actions"))
 }
 
 func (s StatementAttributes) Effect() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("effect"))
+	return terra.ReferenceAsString(s.ref.Append("effect"))
 }
 
 func (s StatementAttributes) NotActions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("not_actions"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("not_actions"))
 }
 
 func (s StatementAttributes) NotResources() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("not_resources"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("not_resources"))
 }
 
 func (s StatementAttributes) Resources() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("resources"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("resources"))
 }
 
 func (s StatementAttributes) Sid() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("sid"))
+	return terra.ReferenceAsString(s.ref.Append("sid"))
 }
 
 func (s StatementAttributes) Condition() terra.SetValue[ConditionAttributes] {
-	return terra.ReferenceSet[ConditionAttributes](s.ref.Append("condition"))
+	return terra.ReferenceAsSet[ConditionAttributes](s.ref.Append("condition"))
 }
 
 func (s StatementAttributes) NotPrincipals() terra.SetValue[NotPrincipalsAttributes] {
-	return terra.ReferenceSet[NotPrincipalsAttributes](s.ref.Append("not_principals"))
+	return terra.ReferenceAsSet[NotPrincipalsAttributes](s.ref.Append("not_principals"))
 }
 
 func (s StatementAttributes) Principals() terra.SetValue[PrincipalsAttributes] {
-	return terra.ReferenceSet[PrincipalsAttributes](s.ref.Append("principals"))
+	return terra.ReferenceAsSet[PrincipalsAttributes](s.ref.Append("principals"))
 }
 
 type ConditionAttributes struct {
@@ -120,15 +120,15 @@ func (c ConditionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ConditionAttributes) Test() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("test"))
+	return terra.ReferenceAsString(c.ref.Append("test"))
 }
 
 func (c ConditionAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](c.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](c.ref.Append("values"))
 }
 
 func (c ConditionAttributes) Variable() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("variable"))
+	return terra.ReferenceAsString(c.ref.Append("variable"))
 }
 
 type NotPrincipalsAttributes struct {
@@ -148,11 +148,11 @@ func (np NotPrincipalsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (np NotPrincipalsAttributes) Identifiers() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](np.ref.Append("identifiers"))
+	return terra.ReferenceAsSet[terra.StringValue](np.ref.Append("identifiers"))
 }
 
 func (np NotPrincipalsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(np.ref.Append("type"))
+	return terra.ReferenceAsString(np.ref.Append("type"))
 }
 
 type PrincipalsAttributes struct {
@@ -172,11 +172,11 @@ func (p PrincipalsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p PrincipalsAttributes) Identifiers() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](p.ref.Append("identifiers"))
+	return terra.ReferenceAsSet[terra.StringValue](p.ref.Append("identifiers"))
 }
 
 func (p PrincipalsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("type"))
+	return terra.ReferenceAsString(p.ref.Append("type"))
 }
 
 type StatementState struct {

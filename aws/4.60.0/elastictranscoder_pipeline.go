@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewElastictranscoderPipeline creates a new instance of [ElastictranscoderPipeline].
 func NewElastictranscoderPipeline(name string, args ElastictranscoderPipelineArgs) *ElastictranscoderPipeline {
 	return &ElastictranscoderPipeline{
 		Args: args,
@@ -19,28 +20,51 @@ func NewElastictranscoderPipeline(name string, args ElastictranscoderPipelineArg
 
 var _ terra.Resource = (*ElastictranscoderPipeline)(nil)
 
+// ElastictranscoderPipeline represents the Terraform resource aws_elastictranscoder_pipeline.
 type ElastictranscoderPipeline struct {
-	Name  string
-	Args  ElastictranscoderPipelineArgs
-	state *elastictranscoderPipelineState
+	Name      string
+	Args      ElastictranscoderPipelineArgs
+	state     *elastictranscoderPipelineState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ElastictranscoderPipeline].
 func (ep *ElastictranscoderPipeline) Type() string {
 	return "aws_elastictranscoder_pipeline"
 }
 
+// LocalName returns the local name for [ElastictranscoderPipeline].
 func (ep *ElastictranscoderPipeline) LocalName() string {
 	return ep.Name
 }
 
+// Configuration returns the configuration (args) for [ElastictranscoderPipeline].
 func (ep *ElastictranscoderPipeline) Configuration() interface{} {
 	return ep.Args
 }
 
+// DependOn is used for other resources to depend on [ElastictranscoderPipeline].
+func (ep *ElastictranscoderPipeline) DependOn() terra.Reference {
+	return terra.ReferenceResource(ep)
+}
+
+// Dependencies returns the list of resources [ElastictranscoderPipeline] depends_on.
+func (ep *ElastictranscoderPipeline) Dependencies() terra.Dependencies {
+	return ep.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ElastictranscoderPipeline].
+func (ep *ElastictranscoderPipeline) LifecycleManagement() *terra.Lifecycle {
+	return ep.Lifecycle
+}
+
+// Attributes returns the attributes for [ElastictranscoderPipeline].
 func (ep *ElastictranscoderPipeline) Attributes() elastictranscoderPipelineAttributes {
 	return elastictranscoderPipelineAttributes{ref: terra.ReferenceResource(ep)}
 }
 
+// ImportState imports the given attribute values into [ElastictranscoderPipeline]'s state.
 func (ep *ElastictranscoderPipeline) ImportState(av io.Reader) error {
 	ep.state = &elastictranscoderPipelineState{}
 	if err := json.NewDecoder(av).Decode(ep.state); err != nil {
@@ -49,10 +73,12 @@ func (ep *ElastictranscoderPipeline) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ElastictranscoderPipeline] has state.
 func (ep *ElastictranscoderPipeline) State() (*elastictranscoderPipelineState, bool) {
 	return ep.state, ep.state != nil
 }
 
+// StateMust returns the state for [ElastictranscoderPipeline]. Panics if the state is nil.
 func (ep *ElastictranscoderPipeline) StateMust() *elastictranscoderPipelineState {
 	if ep.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ep.Type(), ep.LocalName()))
@@ -60,10 +86,7 @@ func (ep *ElastictranscoderPipeline) StateMust() *elastictranscoderPipelineState
 	return ep.state
 }
 
-func (ep *ElastictranscoderPipeline) DependOn() terra.Reference {
-	return terra.ReferenceResource(ep)
-}
-
+// ElastictranscoderPipelineArgs contains the configurations for aws_elastictranscoder_pipeline.
 type ElastictranscoderPipelineArgs struct {
 	// AwsKmsKeyArn: string, optional
 	AwsKmsKeyArn terra.StringValue `hcl:"aws_kms_key_arn,attr"`
@@ -87,59 +110,64 @@ type ElastictranscoderPipelineArgs struct {
 	ThumbnailConfig *elastictranscoderpipeline.ThumbnailConfig `hcl:"thumbnail_config,block"`
 	// ThumbnailConfigPermissions: min=0
 	ThumbnailConfigPermissions []elastictranscoderpipeline.ThumbnailConfigPermissions `hcl:"thumbnail_config_permissions,block" validate:"min=0"`
-	// DependsOn contains resources that ElastictranscoderPipeline depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type elastictranscoderPipelineAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_elastictranscoder_pipeline.
 func (ep elastictranscoderPipelineAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("arn"))
+	return terra.ReferenceAsString(ep.ref.Append("arn"))
 }
 
+// AwsKmsKeyArn returns a reference to field aws_kms_key_arn of aws_elastictranscoder_pipeline.
 func (ep elastictranscoderPipelineAttributes) AwsKmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("aws_kms_key_arn"))
+	return terra.ReferenceAsString(ep.ref.Append("aws_kms_key_arn"))
 }
 
+// Id returns a reference to field id of aws_elastictranscoder_pipeline.
 func (ep elastictranscoderPipelineAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("id"))
+	return terra.ReferenceAsString(ep.ref.Append("id"))
 }
 
+// InputBucket returns a reference to field input_bucket of aws_elastictranscoder_pipeline.
 func (ep elastictranscoderPipelineAttributes) InputBucket() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("input_bucket"))
+	return terra.ReferenceAsString(ep.ref.Append("input_bucket"))
 }
 
+// Name returns a reference to field name of aws_elastictranscoder_pipeline.
 func (ep elastictranscoderPipelineAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("name"))
+	return terra.ReferenceAsString(ep.ref.Append("name"))
 }
 
+// OutputBucket returns a reference to field output_bucket of aws_elastictranscoder_pipeline.
 func (ep elastictranscoderPipelineAttributes) OutputBucket() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("output_bucket"))
+	return terra.ReferenceAsString(ep.ref.Append("output_bucket"))
 }
 
+// Role returns a reference to field role of aws_elastictranscoder_pipeline.
 func (ep elastictranscoderPipelineAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("role"))
+	return terra.ReferenceAsString(ep.ref.Append("role"))
 }
 
 func (ep elastictranscoderPipelineAttributes) ContentConfig() terra.ListValue[elastictranscoderpipeline.ContentConfigAttributes] {
-	return terra.ReferenceList[elastictranscoderpipeline.ContentConfigAttributes](ep.ref.Append("content_config"))
+	return terra.ReferenceAsList[elastictranscoderpipeline.ContentConfigAttributes](ep.ref.Append("content_config"))
 }
 
 func (ep elastictranscoderPipelineAttributes) ContentConfigPermissions() terra.SetValue[elastictranscoderpipeline.ContentConfigPermissionsAttributes] {
-	return terra.ReferenceSet[elastictranscoderpipeline.ContentConfigPermissionsAttributes](ep.ref.Append("content_config_permissions"))
+	return terra.ReferenceAsSet[elastictranscoderpipeline.ContentConfigPermissionsAttributes](ep.ref.Append("content_config_permissions"))
 }
 
 func (ep elastictranscoderPipelineAttributes) Notifications() terra.ListValue[elastictranscoderpipeline.NotificationsAttributes] {
-	return terra.ReferenceList[elastictranscoderpipeline.NotificationsAttributes](ep.ref.Append("notifications"))
+	return terra.ReferenceAsList[elastictranscoderpipeline.NotificationsAttributes](ep.ref.Append("notifications"))
 }
 
 func (ep elastictranscoderPipelineAttributes) ThumbnailConfig() terra.ListValue[elastictranscoderpipeline.ThumbnailConfigAttributes] {
-	return terra.ReferenceList[elastictranscoderpipeline.ThumbnailConfigAttributes](ep.ref.Append("thumbnail_config"))
+	return terra.ReferenceAsList[elastictranscoderpipeline.ThumbnailConfigAttributes](ep.ref.Append("thumbnail_config"))
 }
 
 func (ep elastictranscoderPipelineAttributes) ThumbnailConfigPermissions() terra.SetValue[elastictranscoderpipeline.ThumbnailConfigPermissionsAttributes] {
-	return terra.ReferenceSet[elastictranscoderpipeline.ThumbnailConfigPermissionsAttributes](ep.ref.Append("thumbnail_config_permissions"))
+	return terra.ReferenceAsSet[elastictranscoderpipeline.ThumbnailConfigPermissionsAttributes](ep.ref.Append("thumbnail_config_permissions"))
 }
 
 type elastictranscoderPipelineState struct {

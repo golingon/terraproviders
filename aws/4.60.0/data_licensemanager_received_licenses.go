@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataLicensemanagerReceivedLicenses creates a new instance of [DataLicensemanagerReceivedLicenses].
 func NewDataLicensemanagerReceivedLicenses(name string, args DataLicensemanagerReceivedLicensesArgs) *DataLicensemanagerReceivedLicenses {
 	return &DataLicensemanagerReceivedLicenses{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataLicensemanagerReceivedLicenses(name string, args DataLicensemanagerR
 
 var _ terra.DataResource = (*DataLicensemanagerReceivedLicenses)(nil)
 
+// DataLicensemanagerReceivedLicenses represents the Terraform data resource aws_licensemanager_received_licenses.
 type DataLicensemanagerReceivedLicenses struct {
 	Name string
 	Args DataLicensemanagerReceivedLicensesArgs
 }
 
+// DataSource returns the Terraform object type for [DataLicensemanagerReceivedLicenses].
 func (lrl *DataLicensemanagerReceivedLicenses) DataSource() string {
 	return "aws_licensemanager_received_licenses"
 }
 
+// LocalName returns the local name for [DataLicensemanagerReceivedLicenses].
 func (lrl *DataLicensemanagerReceivedLicenses) LocalName() string {
 	return lrl.Name
 }
 
+// Configuration returns the configuration (args) for [DataLicensemanagerReceivedLicenses].
 func (lrl *DataLicensemanagerReceivedLicenses) Configuration() interface{} {
 	return lrl.Args
 }
 
+// Attributes returns the attributes for [DataLicensemanagerReceivedLicenses].
 func (lrl *DataLicensemanagerReceivedLicenses) Attributes() dataLicensemanagerReceivedLicensesAttributes {
 	return dataLicensemanagerReceivedLicensesAttributes{ref: terra.ReferenceDataResource(lrl)}
 }
 
+// DataLicensemanagerReceivedLicensesArgs contains the configurations for aws_licensemanager_received_licenses.
 type DataLicensemanagerReceivedLicensesArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -47,14 +54,16 @@ type dataLicensemanagerReceivedLicensesAttributes struct {
 	ref terra.Reference
 }
 
+// Arns returns a reference to field arns of aws_licensemanager_received_licenses.
 func (lrl dataLicensemanagerReceivedLicensesAttributes) Arns() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lrl.ref.Append("arns"))
+	return terra.ReferenceAsList[terra.StringValue](lrl.ref.Append("arns"))
 }
 
+// Id returns a reference to field id of aws_licensemanager_received_licenses.
 func (lrl dataLicensemanagerReceivedLicensesAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lrl.ref.Append("id"))
+	return terra.ReferenceAsString(lrl.ref.Append("id"))
 }
 
 func (lrl dataLicensemanagerReceivedLicensesAttributes) Filter() terra.SetValue[datalicensemanagerreceivedlicenses.FilterAttributes] {
-	return terra.ReferenceSet[datalicensemanagerreceivedlicenses.FilterAttributes](lrl.ref.Append("filter"))
+	return terra.ReferenceAsSet[datalicensemanagerreceivedlicenses.FilterAttributes](lrl.ref.Append("filter"))
 }

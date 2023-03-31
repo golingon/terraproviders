@@ -45,15 +45,15 @@ func (cc ConsumptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc ConsumptionConfigurationAttributes) RenewType() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("renew_type"))
+	return terra.ReferenceAsString(cc.ref.Append("renew_type"))
 }
 
 func (cc ConsumptionConfigurationAttributes) BorrowConfiguration() terra.ListValue[BorrowConfigurationAttributes] {
-	return terra.ReferenceList[BorrowConfigurationAttributes](cc.ref.Append("borrow_configuration"))
+	return terra.ReferenceAsList[BorrowConfigurationAttributes](cc.ref.Append("borrow_configuration"))
 }
 
 func (cc ConsumptionConfigurationAttributes) ProvisionalConfiguration() terra.ListValue[ProvisionalConfigurationAttributes] {
-	return terra.ReferenceList[ProvisionalConfigurationAttributes](cc.ref.Append("provisional_configuration"))
+	return terra.ReferenceAsList[ProvisionalConfigurationAttributes](cc.ref.Append("provisional_configuration"))
 }
 
 type BorrowConfigurationAttributes struct {
@@ -73,11 +73,11 @@ func (bc BorrowConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (bc BorrowConfigurationAttributes) AllowEarlyCheckIn() terra.BoolValue {
-	return terra.ReferenceBool(bc.ref.Append("allow_early_check_in"))
+	return terra.ReferenceAsBool(bc.ref.Append("allow_early_check_in"))
 }
 
 func (bc BorrowConfigurationAttributes) MaxTimeToLiveInMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(bc.ref.Append("max_time_to_live_in_minutes"))
+	return terra.ReferenceAsNumber(bc.ref.Append("max_time_to_live_in_minutes"))
 }
 
 type ProvisionalConfigurationAttributes struct {
@@ -97,7 +97,7 @@ func (pc ProvisionalConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pc ProvisionalConfigurationAttributes) MaxTimeToLiveInMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(pc.ref.Append("max_time_to_live_in_minutes"))
+	return terra.ReferenceAsNumber(pc.ref.Append("max_time_to_live_in_minutes"))
 }
 
 type EntitlementsAttributes struct {
@@ -117,23 +117,23 @@ func (e EntitlementsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e EntitlementsAttributes) AllowCheckIn() terra.BoolValue {
-	return terra.ReferenceBool(e.ref.Append("allow_check_in"))
+	return terra.ReferenceAsBool(e.ref.Append("allow_check_in"))
 }
 
 func (e EntitlementsAttributes) MaxCount() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("max_count"))
+	return terra.ReferenceAsNumber(e.ref.Append("max_count"))
 }
 
 func (e EntitlementsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("name"))
+	return terra.ReferenceAsString(e.ref.Append("name"))
 }
 
 func (e EntitlementsAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("unit"))
+	return terra.ReferenceAsString(e.ref.Append("unit"))
 }
 
 func (e EntitlementsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("value"))
+	return terra.ReferenceAsString(e.ref.Append("value"))
 }
 
 type IssuerAttributes struct {
@@ -153,15 +153,15 @@ func (i IssuerAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i IssuerAttributes) KeyFingerprint() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("key_fingerprint"))
+	return terra.ReferenceAsString(i.ref.Append("key_fingerprint"))
 }
 
 func (i IssuerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("name"))
+	return terra.ReferenceAsString(i.ref.Append("name"))
 }
 
 func (i IssuerAttributes) SignKey() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("sign_key"))
+	return terra.ReferenceAsString(i.ref.Append("sign_key"))
 }
 
 type LicenseMetadataAttributes struct {
@@ -181,11 +181,11 @@ func (lm LicenseMetadataAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lm LicenseMetadataAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lm.ref.Append("name"))
+	return terra.ReferenceAsString(lm.ref.Append("name"))
 }
 
 func (lm LicenseMetadataAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(lm.ref.Append("value"))
+	return terra.ReferenceAsString(lm.ref.Append("value"))
 }
 
 type ReceivedMetadataAttributes struct {
@@ -205,15 +205,15 @@ func (rm ReceivedMetadataAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rm ReceivedMetadataAttributes) AllowedOperations() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rm.ref.Append("allowed_operations"))
+	return terra.ReferenceAsSet[terra.StringValue](rm.ref.Append("allowed_operations"))
 }
 
 func (rm ReceivedMetadataAttributes) ReceivedStatus() terra.StringValue {
-	return terra.ReferenceString(rm.ref.Append("received_status"))
+	return terra.ReferenceAsString(rm.ref.Append("received_status"))
 }
 
 func (rm ReceivedMetadataAttributes) ReceivedStatusReason() terra.StringValue {
-	return terra.ReferenceString(rm.ref.Append("received_status_reason"))
+	return terra.ReferenceAsString(rm.ref.Append("received_status_reason"))
 }
 
 type ValidityAttributes struct {
@@ -233,11 +233,11 @@ func (v ValidityAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (v ValidityAttributes) Begin() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("begin"))
+	return terra.ReferenceAsString(v.ref.Append("begin"))
 }
 
 func (v ValidityAttributes) End() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("end"))
+	return terra.ReferenceAsString(v.ref.Append("end"))
 }
 
 type ConsumptionConfigurationState struct {

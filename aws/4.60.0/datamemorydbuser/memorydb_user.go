@@ -26,11 +26,11 @@ func (am AuthenticationModeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (am AuthenticationModeAttributes) PasswordCount() terra.NumberValue {
-	return terra.ReferenceNumber(am.ref.Append("password_count"))
+	return terra.ReferenceAsNumber(am.ref.Append("password_count"))
 }
 
 func (am AuthenticationModeAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(am.ref.Append("type"))
+	return terra.ReferenceAsString(am.ref.Append("type"))
 }
 
 type AuthenticationModeState struct {

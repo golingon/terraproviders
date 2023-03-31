@@ -50,11 +50,11 @@ func (s S3Attributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s S3Attributes) AutoExportPolicy() terra.ListValue[AutoExportPolicyAttributes] {
-	return terra.ReferenceList[AutoExportPolicyAttributes](s.ref.Append("auto_export_policy"))
+	return terra.ReferenceAsList[AutoExportPolicyAttributes](s.ref.Append("auto_export_policy"))
 }
 
 func (s S3Attributes) AutoImportPolicy() terra.ListValue[AutoImportPolicyAttributes] {
-	return terra.ReferenceList[AutoImportPolicyAttributes](s.ref.Append("auto_import_policy"))
+	return terra.ReferenceAsList[AutoImportPolicyAttributes](s.ref.Append("auto_import_policy"))
 }
 
 type AutoExportPolicyAttributes struct {
@@ -74,7 +74,7 @@ func (aep AutoExportPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (aep AutoExportPolicyAttributes) Events() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](aep.ref.Append("events"))
+	return terra.ReferenceAsList[terra.StringValue](aep.ref.Append("events"))
 }
 
 type AutoImportPolicyAttributes struct {
@@ -94,7 +94,7 @@ func (aip AutoImportPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (aip AutoImportPolicyAttributes) Events() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](aip.ref.Append("events"))
+	return terra.ReferenceAsList[terra.StringValue](aip.ref.Append("events"))
 }
 
 type TimeoutsAttributes struct {
@@ -114,15 +114,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type S3State struct {

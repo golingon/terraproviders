@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataMskConfiguration creates a new instance of [DataMskConfiguration].
 func NewDataMskConfiguration(name string, args DataMskConfigurationArgs) *DataMskConfiguration {
 	return &DataMskConfiguration{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataMskConfiguration(name string, args DataMskConfigurationArgs) *DataMs
 
 var _ terra.DataResource = (*DataMskConfiguration)(nil)
 
+// DataMskConfiguration represents the Terraform data resource aws_msk_configuration.
 type DataMskConfiguration struct {
 	Name string
 	Args DataMskConfigurationArgs
 }
 
+// DataSource returns the Terraform object type for [DataMskConfiguration].
 func (mc *DataMskConfiguration) DataSource() string {
 	return "aws_msk_configuration"
 }
 
+// LocalName returns the local name for [DataMskConfiguration].
 func (mc *DataMskConfiguration) LocalName() string {
 	return mc.Name
 }
 
+// Configuration returns the configuration (args) for [DataMskConfiguration].
 func (mc *DataMskConfiguration) Configuration() interface{} {
 	return mc.Args
 }
 
+// Attributes returns the attributes for [DataMskConfiguration].
 func (mc *DataMskConfiguration) Attributes() dataMskConfigurationAttributes {
 	return dataMskConfigurationAttributes{ref: terra.ReferenceDataResource(mc)}
 }
 
+// DataMskConfigurationArgs contains the configurations for aws_msk_configuration.
 type DataMskConfigurationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,30 +51,37 @@ type dataMskConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_msk_configuration.
 func (mc dataMskConfigurationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("arn"))
+	return terra.ReferenceAsString(mc.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_msk_configuration.
 func (mc dataMskConfigurationAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("description"))
+	return terra.ReferenceAsString(mc.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_msk_configuration.
 func (mc dataMskConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("id"))
+	return terra.ReferenceAsString(mc.ref.Append("id"))
 }
 
+// KafkaVersions returns a reference to field kafka_versions of aws_msk_configuration.
 func (mc dataMskConfigurationAttributes) KafkaVersions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](mc.ref.Append("kafka_versions"))
+	return terra.ReferenceAsSet[terra.StringValue](mc.ref.Append("kafka_versions"))
 }
 
+// LatestRevision returns a reference to field latest_revision of aws_msk_configuration.
 func (mc dataMskConfigurationAttributes) LatestRevision() terra.NumberValue {
-	return terra.ReferenceNumber(mc.ref.Append("latest_revision"))
+	return terra.ReferenceAsNumber(mc.ref.Append("latest_revision"))
 }
 
+// Name returns a reference to field name of aws_msk_configuration.
 func (mc dataMskConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("name"))
+	return terra.ReferenceAsString(mc.ref.Append("name"))
 }
 
+// ServerProperties returns a reference to field server_properties of aws_msk_configuration.
 func (mc dataMskConfigurationAttributes) ServerProperties() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("server_properties"))
+	return terra.ReferenceAsString(mc.ref.Append("server_properties"))
 }

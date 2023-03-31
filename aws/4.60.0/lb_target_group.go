@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLbTargetGroup creates a new instance of [LbTargetGroup].
 func NewLbTargetGroup(name string, args LbTargetGroupArgs) *LbTargetGroup {
 	return &LbTargetGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLbTargetGroup(name string, args LbTargetGroupArgs) *LbTargetGroup {
 
 var _ terra.Resource = (*LbTargetGroup)(nil)
 
+// LbTargetGroup represents the Terraform resource aws_lb_target_group.
 type LbTargetGroup struct {
-	Name  string
-	Args  LbTargetGroupArgs
-	state *lbTargetGroupState
+	Name      string
+	Args      LbTargetGroupArgs
+	state     *lbTargetGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LbTargetGroup].
 func (ltg *LbTargetGroup) Type() string {
 	return "aws_lb_target_group"
 }
 
+// LocalName returns the local name for [LbTargetGroup].
 func (ltg *LbTargetGroup) LocalName() string {
 	return ltg.Name
 }
 
+// Configuration returns the configuration (args) for [LbTargetGroup].
 func (ltg *LbTargetGroup) Configuration() interface{} {
 	return ltg.Args
 }
 
+// DependOn is used for other resources to depend on [LbTargetGroup].
+func (ltg *LbTargetGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(ltg)
+}
+
+// Dependencies returns the list of resources [LbTargetGroup] depends_on.
+func (ltg *LbTargetGroup) Dependencies() terra.Dependencies {
+	return ltg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LbTargetGroup].
+func (ltg *LbTargetGroup) LifecycleManagement() *terra.Lifecycle {
+	return ltg.Lifecycle
+}
+
+// Attributes returns the attributes for [LbTargetGroup].
 func (ltg *LbTargetGroup) Attributes() lbTargetGroupAttributes {
 	return lbTargetGroupAttributes{ref: terra.ReferenceResource(ltg)}
 }
 
+// ImportState imports the given attribute values into [LbTargetGroup]'s state.
 func (ltg *LbTargetGroup) ImportState(av io.Reader) error {
 	ltg.state = &lbTargetGroupState{}
 	if err := json.NewDecoder(av).Decode(ltg.state); err != nil {
@@ -49,10 +73,12 @@ func (ltg *LbTargetGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LbTargetGroup] has state.
 func (ltg *LbTargetGroup) State() (*lbTargetGroupState, bool) {
 	return ltg.state, ltg.state != nil
 }
 
+// StateMust returns the state for [LbTargetGroup]. Panics if the state is nil.
 func (ltg *LbTargetGroup) StateMust() *lbTargetGroupState {
 	if ltg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ltg.Type(), ltg.LocalName()))
@@ -60,10 +86,7 @@ func (ltg *LbTargetGroup) StateMust() *lbTargetGroupState {
 	return ltg.state
 }
 
-func (ltg *LbTargetGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(ltg)
-}
-
+// LbTargetGroupArgs contains the configurations for aws_lb_target_group.
 type LbTargetGroupArgs struct {
 	// ConnectionTermination: bool, optional
 	ConnectionTermination terra.BoolValue `hcl:"connection_termination,attr"`
@@ -109,107 +132,126 @@ type LbTargetGroupArgs struct {
 	Stickiness *lbtargetgroup.Stickiness `hcl:"stickiness,block"`
 	// TargetFailover: min=0
 	TargetFailover []lbtargetgroup.TargetFailover `hcl:"target_failover,block" validate:"min=0"`
-	// DependsOn contains resources that LbTargetGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lbTargetGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_lb_target_group.
 func (ltg lbTargetGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ltg.ref.Append("arn"))
+	return terra.ReferenceAsString(ltg.ref.Append("arn"))
 }
 
+// ArnSuffix returns a reference to field arn_suffix of aws_lb_target_group.
 func (ltg lbTargetGroupAttributes) ArnSuffix() terra.StringValue {
-	return terra.ReferenceString(ltg.ref.Append("arn_suffix"))
+	return terra.ReferenceAsString(ltg.ref.Append("arn_suffix"))
 }
 
+// ConnectionTermination returns a reference to field connection_termination of aws_lb_target_group.
 func (ltg lbTargetGroupAttributes) ConnectionTermination() terra.BoolValue {
-	return terra.ReferenceBool(ltg.ref.Append("connection_termination"))
+	return terra.ReferenceAsBool(ltg.ref.Append("connection_termination"))
 }
 
+// DeregistrationDelay returns a reference to field deregistration_delay of aws_lb_target_group.
 func (ltg lbTargetGroupAttributes) DeregistrationDelay() terra.StringValue {
-	return terra.ReferenceString(ltg.ref.Append("deregistration_delay"))
+	return terra.ReferenceAsString(ltg.ref.Append("deregistration_delay"))
 }
 
+// Id returns a reference to field id of aws_lb_target_group.
 func (ltg lbTargetGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ltg.ref.Append("id"))
+	return terra.ReferenceAsString(ltg.ref.Append("id"))
 }
 
+// IpAddressType returns a reference to field ip_address_type of aws_lb_target_group.
 func (ltg lbTargetGroupAttributes) IpAddressType() terra.StringValue {
-	return terra.ReferenceString(ltg.ref.Append("ip_address_type"))
+	return terra.ReferenceAsString(ltg.ref.Append("ip_address_type"))
 }
 
+// LambdaMultiValueHeadersEnabled returns a reference to field lambda_multi_value_headers_enabled of aws_lb_target_group.
 func (ltg lbTargetGroupAttributes) LambdaMultiValueHeadersEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ltg.ref.Append("lambda_multi_value_headers_enabled"))
+	return terra.ReferenceAsBool(ltg.ref.Append("lambda_multi_value_headers_enabled"))
 }
 
+// LoadBalancingAlgorithmType returns a reference to field load_balancing_algorithm_type of aws_lb_target_group.
 func (ltg lbTargetGroupAttributes) LoadBalancingAlgorithmType() terra.StringValue {
-	return terra.ReferenceString(ltg.ref.Append("load_balancing_algorithm_type"))
+	return terra.ReferenceAsString(ltg.ref.Append("load_balancing_algorithm_type"))
 }
 
+// LoadBalancingCrossZoneEnabled returns a reference to field load_balancing_cross_zone_enabled of aws_lb_target_group.
 func (ltg lbTargetGroupAttributes) LoadBalancingCrossZoneEnabled() terra.StringValue {
-	return terra.ReferenceString(ltg.ref.Append("load_balancing_cross_zone_enabled"))
+	return terra.ReferenceAsString(ltg.ref.Append("load_balancing_cross_zone_enabled"))
 }
 
+// Name returns a reference to field name of aws_lb_target_group.
 func (ltg lbTargetGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ltg.ref.Append("name"))
+	return terra.ReferenceAsString(ltg.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_lb_target_group.
 func (ltg lbTargetGroupAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(ltg.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(ltg.ref.Append("name_prefix"))
 }
 
+// Port returns a reference to field port of aws_lb_target_group.
 func (ltg lbTargetGroupAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(ltg.ref.Append("port"))
+	return terra.ReferenceAsNumber(ltg.ref.Append("port"))
 }
 
+// PreserveClientIp returns a reference to field preserve_client_ip of aws_lb_target_group.
 func (ltg lbTargetGroupAttributes) PreserveClientIp() terra.StringValue {
-	return terra.ReferenceString(ltg.ref.Append("preserve_client_ip"))
+	return terra.ReferenceAsString(ltg.ref.Append("preserve_client_ip"))
 }
 
+// Protocol returns a reference to field protocol of aws_lb_target_group.
 func (ltg lbTargetGroupAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(ltg.ref.Append("protocol"))
+	return terra.ReferenceAsString(ltg.ref.Append("protocol"))
 }
 
+// ProtocolVersion returns a reference to field protocol_version of aws_lb_target_group.
 func (ltg lbTargetGroupAttributes) ProtocolVersion() terra.StringValue {
-	return terra.ReferenceString(ltg.ref.Append("protocol_version"))
+	return terra.ReferenceAsString(ltg.ref.Append("protocol_version"))
 }
 
+// ProxyProtocolV2 returns a reference to field proxy_protocol_v2 of aws_lb_target_group.
 func (ltg lbTargetGroupAttributes) ProxyProtocolV2() terra.BoolValue {
-	return terra.ReferenceBool(ltg.ref.Append("proxy_protocol_v2"))
+	return terra.ReferenceAsBool(ltg.ref.Append("proxy_protocol_v2"))
 }
 
+// SlowStart returns a reference to field slow_start of aws_lb_target_group.
 func (ltg lbTargetGroupAttributes) SlowStart() terra.NumberValue {
-	return terra.ReferenceNumber(ltg.ref.Append("slow_start"))
+	return terra.ReferenceAsNumber(ltg.ref.Append("slow_start"))
 }
 
+// Tags returns a reference to field tags of aws_lb_target_group.
 func (ltg lbTargetGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ltg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ltg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_lb_target_group.
 func (ltg lbTargetGroupAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ltg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ltg.ref.Append("tags_all"))
 }
 
+// TargetType returns a reference to field target_type of aws_lb_target_group.
 func (ltg lbTargetGroupAttributes) TargetType() terra.StringValue {
-	return terra.ReferenceString(ltg.ref.Append("target_type"))
+	return terra.ReferenceAsString(ltg.ref.Append("target_type"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_lb_target_group.
 func (ltg lbTargetGroupAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(ltg.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(ltg.ref.Append("vpc_id"))
 }
 
 func (ltg lbTargetGroupAttributes) HealthCheck() terra.ListValue[lbtargetgroup.HealthCheckAttributes] {
-	return terra.ReferenceList[lbtargetgroup.HealthCheckAttributes](ltg.ref.Append("health_check"))
+	return terra.ReferenceAsList[lbtargetgroup.HealthCheckAttributes](ltg.ref.Append("health_check"))
 }
 
 func (ltg lbTargetGroupAttributes) Stickiness() terra.ListValue[lbtargetgroup.StickinessAttributes] {
-	return terra.ReferenceList[lbtargetgroup.StickinessAttributes](ltg.ref.Append("stickiness"))
+	return terra.ReferenceAsList[lbtargetgroup.StickinessAttributes](ltg.ref.Append("stickiness"))
 }
 
 func (ltg lbTargetGroupAttributes) TargetFailover() terra.ListValue[lbtargetgroup.TargetFailoverAttributes] {
-	return terra.ReferenceList[lbtargetgroup.TargetFailoverAttributes](ltg.ref.Append("target_failover"))
+	return terra.ReferenceAsList[lbtargetgroup.TargetFailoverAttributes](ltg.ref.Append("target_failover"))
 }
 
 type lbTargetGroupState struct {

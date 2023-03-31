@@ -166,15 +166,15 @@ func (ac AlarmConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ac AlarmConfigurationAttributes) Alarms() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ac.ref.Append("alarms"))
+	return terra.ReferenceAsSet[terra.StringValue](ac.ref.Append("alarms"))
 }
 
 func (ac AlarmConfigurationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(ac.ref.Append("enabled"))
+	return terra.ReferenceAsBool(ac.ref.Append("enabled"))
 }
 
 func (ac AlarmConfigurationAttributes) IgnorePollAlarmFailure() terra.BoolValue {
-	return terra.ReferenceBool(ac.ref.Append("ignore_poll_alarm_failure"))
+	return terra.ReferenceAsBool(ac.ref.Append("ignore_poll_alarm_failure"))
 }
 
 type AutoRollbackConfigurationAttributes struct {
@@ -194,11 +194,11 @@ func (arc AutoRollbackConfigurationAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (arc AutoRollbackConfigurationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(arc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(arc.ref.Append("enabled"))
 }
 
 func (arc AutoRollbackConfigurationAttributes) Events() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](arc.ref.Append("events"))
+	return terra.ReferenceAsSet[terra.StringValue](arc.ref.Append("events"))
 }
 
 type BlueGreenDeploymentConfigAttributes struct {
@@ -218,15 +218,15 @@ func (bgdc BlueGreenDeploymentConfigAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (bgdc BlueGreenDeploymentConfigAttributes) DeploymentReadyOption() terra.ListValue[DeploymentReadyOptionAttributes] {
-	return terra.ReferenceList[DeploymentReadyOptionAttributes](bgdc.ref.Append("deployment_ready_option"))
+	return terra.ReferenceAsList[DeploymentReadyOptionAttributes](bgdc.ref.Append("deployment_ready_option"))
 }
 
 func (bgdc BlueGreenDeploymentConfigAttributes) GreenFleetProvisioningOption() terra.ListValue[GreenFleetProvisioningOptionAttributes] {
-	return terra.ReferenceList[GreenFleetProvisioningOptionAttributes](bgdc.ref.Append("green_fleet_provisioning_option"))
+	return terra.ReferenceAsList[GreenFleetProvisioningOptionAttributes](bgdc.ref.Append("green_fleet_provisioning_option"))
 }
 
 func (bgdc BlueGreenDeploymentConfigAttributes) TerminateBlueInstancesOnDeploymentSuccess() terra.ListValue[TerminateBlueInstancesOnDeploymentSuccessAttributes] {
-	return terra.ReferenceList[TerminateBlueInstancesOnDeploymentSuccessAttributes](bgdc.ref.Append("terminate_blue_instances_on_deployment_success"))
+	return terra.ReferenceAsList[TerminateBlueInstancesOnDeploymentSuccessAttributes](bgdc.ref.Append("terminate_blue_instances_on_deployment_success"))
 }
 
 type DeploymentReadyOptionAttributes struct {
@@ -246,11 +246,11 @@ func (dro DeploymentReadyOptionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dro DeploymentReadyOptionAttributes) ActionOnTimeout() terra.StringValue {
-	return terra.ReferenceString(dro.ref.Append("action_on_timeout"))
+	return terra.ReferenceAsString(dro.ref.Append("action_on_timeout"))
 }
 
 func (dro DeploymentReadyOptionAttributes) WaitTimeInMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(dro.ref.Append("wait_time_in_minutes"))
+	return terra.ReferenceAsNumber(dro.ref.Append("wait_time_in_minutes"))
 }
 
 type GreenFleetProvisioningOptionAttributes struct {
@@ -270,7 +270,7 @@ func (gfpo GreenFleetProvisioningOptionAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (gfpo GreenFleetProvisioningOptionAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(gfpo.ref.Append("action"))
+	return terra.ReferenceAsString(gfpo.ref.Append("action"))
 }
 
 type TerminateBlueInstancesOnDeploymentSuccessAttributes struct {
@@ -290,11 +290,11 @@ func (tbiods TerminateBlueInstancesOnDeploymentSuccessAttributes) InternalTokens
 }
 
 func (tbiods TerminateBlueInstancesOnDeploymentSuccessAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(tbiods.ref.Append("action"))
+	return terra.ReferenceAsString(tbiods.ref.Append("action"))
 }
 
 func (tbiods TerminateBlueInstancesOnDeploymentSuccessAttributes) TerminationWaitTimeInMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(tbiods.ref.Append("termination_wait_time_in_minutes"))
+	return terra.ReferenceAsNumber(tbiods.ref.Append("termination_wait_time_in_minutes"))
 }
 
 type DeploymentStyleAttributes struct {
@@ -314,11 +314,11 @@ func (ds DeploymentStyleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ds DeploymentStyleAttributes) DeploymentOption() terra.StringValue {
-	return terra.ReferenceString(ds.ref.Append("deployment_option"))
+	return terra.ReferenceAsString(ds.ref.Append("deployment_option"))
 }
 
 func (ds DeploymentStyleAttributes) DeploymentType() terra.StringValue {
-	return terra.ReferenceString(ds.ref.Append("deployment_type"))
+	return terra.ReferenceAsString(ds.ref.Append("deployment_type"))
 }
 
 type Ec2TagFilterAttributes struct {
@@ -338,15 +338,15 @@ func (etf Ec2TagFilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (etf Ec2TagFilterAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(etf.ref.Append("key"))
+	return terra.ReferenceAsString(etf.ref.Append("key"))
 }
 
 func (etf Ec2TagFilterAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(etf.ref.Append("type"))
+	return terra.ReferenceAsString(etf.ref.Append("type"))
 }
 
 func (etf Ec2TagFilterAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(etf.ref.Append("value"))
+	return terra.ReferenceAsString(etf.ref.Append("value"))
 }
 
 type Ec2TagSetAttributes struct {
@@ -366,7 +366,7 @@ func (ets Ec2TagSetAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ets Ec2TagSetAttributes) Ec2TagFilter() terra.SetValue[Ec2TagSetEc2TagFilterAttributes] {
-	return terra.ReferenceSet[Ec2TagSetEc2TagFilterAttributes](ets.ref.Append("ec2_tag_filter"))
+	return terra.ReferenceAsSet[Ec2TagSetEc2TagFilterAttributes](ets.ref.Append("ec2_tag_filter"))
 }
 
 type Ec2TagSetEc2TagFilterAttributes struct {
@@ -386,15 +386,15 @@ func (etf Ec2TagSetEc2TagFilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (etf Ec2TagSetEc2TagFilterAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(etf.ref.Append("key"))
+	return terra.ReferenceAsString(etf.ref.Append("key"))
 }
 
 func (etf Ec2TagSetEc2TagFilterAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(etf.ref.Append("type"))
+	return terra.ReferenceAsString(etf.ref.Append("type"))
 }
 
 func (etf Ec2TagSetEc2TagFilterAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(etf.ref.Append("value"))
+	return terra.ReferenceAsString(etf.ref.Append("value"))
 }
 
 type EcsServiceAttributes struct {
@@ -414,11 +414,11 @@ func (es EcsServiceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (es EcsServiceAttributes) ClusterName() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("cluster_name"))
+	return terra.ReferenceAsString(es.ref.Append("cluster_name"))
 }
 
 func (es EcsServiceAttributes) ServiceName() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("service_name"))
+	return terra.ReferenceAsString(es.ref.Append("service_name"))
 }
 
 type LoadBalancerInfoAttributes struct {
@@ -438,15 +438,15 @@ func (lbi LoadBalancerInfoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lbi LoadBalancerInfoAttributes) ElbInfo() terra.SetValue[ElbInfoAttributes] {
-	return terra.ReferenceSet[ElbInfoAttributes](lbi.ref.Append("elb_info"))
+	return terra.ReferenceAsSet[ElbInfoAttributes](lbi.ref.Append("elb_info"))
 }
 
 func (lbi LoadBalancerInfoAttributes) TargetGroupInfo() terra.SetValue[TargetGroupInfoAttributes] {
-	return terra.ReferenceSet[TargetGroupInfoAttributes](lbi.ref.Append("target_group_info"))
+	return terra.ReferenceAsSet[TargetGroupInfoAttributes](lbi.ref.Append("target_group_info"))
 }
 
 func (lbi LoadBalancerInfoAttributes) TargetGroupPairInfo() terra.ListValue[TargetGroupPairInfoAttributes] {
-	return terra.ReferenceList[TargetGroupPairInfoAttributes](lbi.ref.Append("target_group_pair_info"))
+	return terra.ReferenceAsList[TargetGroupPairInfoAttributes](lbi.ref.Append("target_group_pair_info"))
 }
 
 type ElbInfoAttributes struct {
@@ -466,7 +466,7 @@ func (ei ElbInfoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ei ElbInfoAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ei.ref.Append("name"))
+	return terra.ReferenceAsString(ei.ref.Append("name"))
 }
 
 type TargetGroupInfoAttributes struct {
@@ -486,7 +486,7 @@ func (tgi TargetGroupInfoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tgi TargetGroupInfoAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(tgi.ref.Append("name"))
+	return terra.ReferenceAsString(tgi.ref.Append("name"))
 }
 
 type TargetGroupPairInfoAttributes struct {
@@ -506,15 +506,15 @@ func (tgpi TargetGroupPairInfoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tgpi TargetGroupPairInfoAttributes) ProdTrafficRoute() terra.ListValue[ProdTrafficRouteAttributes] {
-	return terra.ReferenceList[ProdTrafficRouteAttributes](tgpi.ref.Append("prod_traffic_route"))
+	return terra.ReferenceAsList[ProdTrafficRouteAttributes](tgpi.ref.Append("prod_traffic_route"))
 }
 
 func (tgpi TargetGroupPairInfoAttributes) TargetGroup() terra.ListValue[TargetGroupAttributes] {
-	return terra.ReferenceList[TargetGroupAttributes](tgpi.ref.Append("target_group"))
+	return terra.ReferenceAsList[TargetGroupAttributes](tgpi.ref.Append("target_group"))
 }
 
 func (tgpi TargetGroupPairInfoAttributes) TestTrafficRoute() terra.ListValue[TestTrafficRouteAttributes] {
-	return terra.ReferenceList[TestTrafficRouteAttributes](tgpi.ref.Append("test_traffic_route"))
+	return terra.ReferenceAsList[TestTrafficRouteAttributes](tgpi.ref.Append("test_traffic_route"))
 }
 
 type ProdTrafficRouteAttributes struct {
@@ -534,7 +534,7 @@ func (ptr ProdTrafficRouteAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ptr ProdTrafficRouteAttributes) ListenerArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ptr.ref.Append("listener_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](ptr.ref.Append("listener_arns"))
 }
 
 type TargetGroupAttributes struct {
@@ -554,7 +554,7 @@ func (tg TargetGroupAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tg TargetGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(tg.ref.Append("name"))
+	return terra.ReferenceAsString(tg.ref.Append("name"))
 }
 
 type TestTrafficRouteAttributes struct {
@@ -574,7 +574,7 @@ func (ttr TestTrafficRouteAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ttr TestTrafficRouteAttributes) ListenerArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ttr.ref.Append("listener_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](ttr.ref.Append("listener_arns"))
 }
 
 type OnPremisesInstanceTagFilterAttributes struct {
@@ -594,15 +594,15 @@ func (opitf OnPremisesInstanceTagFilterAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (opitf OnPremisesInstanceTagFilterAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(opitf.ref.Append("key"))
+	return terra.ReferenceAsString(opitf.ref.Append("key"))
 }
 
 func (opitf OnPremisesInstanceTagFilterAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(opitf.ref.Append("type"))
+	return terra.ReferenceAsString(opitf.ref.Append("type"))
 }
 
 func (opitf OnPremisesInstanceTagFilterAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(opitf.ref.Append("value"))
+	return terra.ReferenceAsString(opitf.ref.Append("value"))
 }
 
 type TriggerConfigurationAttributes struct {
@@ -622,15 +622,15 @@ func (tc TriggerConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tc TriggerConfigurationAttributes) TriggerEvents() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](tc.ref.Append("trigger_events"))
+	return terra.ReferenceAsSet[terra.StringValue](tc.ref.Append("trigger_events"))
 }
 
 func (tc TriggerConfigurationAttributes) TriggerName() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("trigger_name"))
+	return terra.ReferenceAsString(tc.ref.Append("trigger_name"))
 }
 
 func (tc TriggerConfigurationAttributes) TriggerTargetArn() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("trigger_target_arn"))
+	return terra.ReferenceAsString(tc.ref.Append("trigger_target_arn"))
 }
 
 type AlarmConfigurationState struct {

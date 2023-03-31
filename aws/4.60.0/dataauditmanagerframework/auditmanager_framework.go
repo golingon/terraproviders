@@ -31,15 +31,15 @@ func (cs ControlSetsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cs ControlSetsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("id"))
+	return terra.ReferenceAsString(cs.ref.Append("id"))
 }
 
 func (cs ControlSetsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("name"))
+	return terra.ReferenceAsString(cs.ref.Append("name"))
 }
 
 func (cs ControlSetsAttributes) Controls() terra.SetValue[ControlsAttributes] {
-	return terra.ReferenceSet[ControlsAttributes](cs.ref.Append("controls"))
+	return terra.ReferenceAsSet[ControlsAttributes](cs.ref.Append("controls"))
 }
 
 type ControlsAttributes struct {
@@ -59,7 +59,7 @@ func (c ControlsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ControlsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("id"))
+	return terra.ReferenceAsString(c.ref.Append("id"))
 }
 
 type ControlSetsState struct {

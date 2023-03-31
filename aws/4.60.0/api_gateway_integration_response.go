@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewApiGatewayIntegrationResponse creates a new instance of [ApiGatewayIntegrationResponse].
 func NewApiGatewayIntegrationResponse(name string, args ApiGatewayIntegrationResponseArgs) *ApiGatewayIntegrationResponse {
 	return &ApiGatewayIntegrationResponse{
 		Args: args,
@@ -18,28 +19,51 @@ func NewApiGatewayIntegrationResponse(name string, args ApiGatewayIntegrationRes
 
 var _ terra.Resource = (*ApiGatewayIntegrationResponse)(nil)
 
+// ApiGatewayIntegrationResponse represents the Terraform resource aws_api_gateway_integration_response.
 type ApiGatewayIntegrationResponse struct {
-	Name  string
-	Args  ApiGatewayIntegrationResponseArgs
-	state *apiGatewayIntegrationResponseState
+	Name      string
+	Args      ApiGatewayIntegrationResponseArgs
+	state     *apiGatewayIntegrationResponseState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiGatewayIntegrationResponse].
 func (agir *ApiGatewayIntegrationResponse) Type() string {
 	return "aws_api_gateway_integration_response"
 }
 
+// LocalName returns the local name for [ApiGatewayIntegrationResponse].
 func (agir *ApiGatewayIntegrationResponse) LocalName() string {
 	return agir.Name
 }
 
+// Configuration returns the configuration (args) for [ApiGatewayIntegrationResponse].
 func (agir *ApiGatewayIntegrationResponse) Configuration() interface{} {
 	return agir.Args
 }
 
+// DependOn is used for other resources to depend on [ApiGatewayIntegrationResponse].
+func (agir *ApiGatewayIntegrationResponse) DependOn() terra.Reference {
+	return terra.ReferenceResource(agir)
+}
+
+// Dependencies returns the list of resources [ApiGatewayIntegrationResponse] depends_on.
+func (agir *ApiGatewayIntegrationResponse) Dependencies() terra.Dependencies {
+	return agir.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiGatewayIntegrationResponse].
+func (agir *ApiGatewayIntegrationResponse) LifecycleManagement() *terra.Lifecycle {
+	return agir.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiGatewayIntegrationResponse].
 func (agir *ApiGatewayIntegrationResponse) Attributes() apiGatewayIntegrationResponseAttributes {
 	return apiGatewayIntegrationResponseAttributes{ref: terra.ReferenceResource(agir)}
 }
 
+// ImportState imports the given attribute values into [ApiGatewayIntegrationResponse]'s state.
 func (agir *ApiGatewayIntegrationResponse) ImportState(av io.Reader) error {
 	agir.state = &apiGatewayIntegrationResponseState{}
 	if err := json.NewDecoder(av).Decode(agir.state); err != nil {
@@ -48,10 +72,12 @@ func (agir *ApiGatewayIntegrationResponse) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiGatewayIntegrationResponse] has state.
 func (agir *ApiGatewayIntegrationResponse) State() (*apiGatewayIntegrationResponseState, bool) {
 	return agir.state, agir.state != nil
 }
 
+// StateMust returns the state for [ApiGatewayIntegrationResponse]. Panics if the state is nil.
 func (agir *ApiGatewayIntegrationResponse) StateMust() *apiGatewayIntegrationResponseState {
 	if agir.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", agir.Type(), agir.LocalName()))
@@ -59,10 +85,7 @@ func (agir *ApiGatewayIntegrationResponse) StateMust() *apiGatewayIntegrationRes
 	return agir.state
 }
 
-func (agir *ApiGatewayIntegrationResponse) DependOn() terra.Reference {
-	return terra.ReferenceResource(agir)
-}
-
+// ApiGatewayIntegrationResponseArgs contains the configurations for aws_api_gateway_integration_response.
 type ApiGatewayIntegrationResponseArgs struct {
 	// ContentHandling: string, optional
 	ContentHandling terra.StringValue `hcl:"content_handling,attr"`
@@ -82,47 +105,54 @@ type ApiGatewayIntegrationResponseArgs struct {
 	SelectionPattern terra.StringValue `hcl:"selection_pattern,attr"`
 	// StatusCode: string, required
 	StatusCode terra.StringValue `hcl:"status_code,attr" validate:"required"`
-	// DependsOn contains resources that ApiGatewayIntegrationResponse depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiGatewayIntegrationResponseAttributes struct {
 	ref terra.Reference
 }
 
+// ContentHandling returns a reference to field content_handling of aws_api_gateway_integration_response.
 func (agir apiGatewayIntegrationResponseAttributes) ContentHandling() terra.StringValue {
-	return terra.ReferenceString(agir.ref.Append("content_handling"))
+	return terra.ReferenceAsString(agir.ref.Append("content_handling"))
 }
 
+// HttpMethod returns a reference to field http_method of aws_api_gateway_integration_response.
 func (agir apiGatewayIntegrationResponseAttributes) HttpMethod() terra.StringValue {
-	return terra.ReferenceString(agir.ref.Append("http_method"))
+	return terra.ReferenceAsString(agir.ref.Append("http_method"))
 }
 
+// Id returns a reference to field id of aws_api_gateway_integration_response.
 func (agir apiGatewayIntegrationResponseAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(agir.ref.Append("id"))
+	return terra.ReferenceAsString(agir.ref.Append("id"))
 }
 
+// ResourceId returns a reference to field resource_id of aws_api_gateway_integration_response.
 func (agir apiGatewayIntegrationResponseAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(agir.ref.Append("resource_id"))
+	return terra.ReferenceAsString(agir.ref.Append("resource_id"))
 }
 
+// ResponseParameters returns a reference to field response_parameters of aws_api_gateway_integration_response.
 func (agir apiGatewayIntegrationResponseAttributes) ResponseParameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](agir.ref.Append("response_parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](agir.ref.Append("response_parameters"))
 }
 
+// ResponseTemplates returns a reference to field response_templates of aws_api_gateway_integration_response.
 func (agir apiGatewayIntegrationResponseAttributes) ResponseTemplates() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](agir.ref.Append("response_templates"))
+	return terra.ReferenceAsMap[terra.StringValue](agir.ref.Append("response_templates"))
 }
 
+// RestApiId returns a reference to field rest_api_id of aws_api_gateway_integration_response.
 func (agir apiGatewayIntegrationResponseAttributes) RestApiId() terra.StringValue {
-	return terra.ReferenceString(agir.ref.Append("rest_api_id"))
+	return terra.ReferenceAsString(agir.ref.Append("rest_api_id"))
 }
 
+// SelectionPattern returns a reference to field selection_pattern of aws_api_gateway_integration_response.
 func (agir apiGatewayIntegrationResponseAttributes) SelectionPattern() terra.StringValue {
-	return terra.ReferenceString(agir.ref.Append("selection_pattern"))
+	return terra.ReferenceAsString(agir.ref.Append("selection_pattern"))
 }
 
+// StatusCode returns a reference to field status_code of aws_api_gateway_integration_response.
 func (agir apiGatewayIntegrationResponseAttributes) StatusCode() terra.StringValue {
-	return terra.ReferenceString(agir.ref.Append("status_code"))
+	return terra.ReferenceAsString(agir.ref.Append("status_code"))
 }
 
 type apiGatewayIntegrationResponseState struct {

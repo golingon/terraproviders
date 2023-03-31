@@ -40,11 +40,11 @@ func (po ParameterObjectAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (po ParameterObjectAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(po.ref.Append("id"))
+	return terra.ReferenceAsString(po.ref.Append("id"))
 }
 
 func (po ParameterObjectAttributes) Attribute() terra.SetValue[AttributeAttributes] {
-	return terra.ReferenceSet[AttributeAttributes](po.ref.Append("attribute"))
+	return terra.ReferenceAsSet[AttributeAttributes](po.ref.Append("attribute"))
 }
 
 type AttributeAttributes struct {
@@ -64,11 +64,11 @@ func (a AttributeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AttributeAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("key"))
+	return terra.ReferenceAsString(a.ref.Append("key"))
 }
 
 func (a AttributeAttributes) StringValue() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("string_value"))
+	return terra.ReferenceAsString(a.ref.Append("string_value"))
 }
 
 type PipelineObjectAttributes struct {
@@ -88,15 +88,15 @@ func (po PipelineObjectAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (po PipelineObjectAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(po.ref.Append("id"))
+	return terra.ReferenceAsString(po.ref.Append("id"))
 }
 
 func (po PipelineObjectAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(po.ref.Append("name"))
+	return terra.ReferenceAsString(po.ref.Append("name"))
 }
 
 func (po PipelineObjectAttributes) Field() terra.SetValue[FieldAttributes] {
-	return terra.ReferenceSet[FieldAttributes](po.ref.Append("field"))
+	return terra.ReferenceAsSet[FieldAttributes](po.ref.Append("field"))
 }
 
 type FieldAttributes struct {
@@ -116,15 +116,15 @@ func (f FieldAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FieldAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("key"))
+	return terra.ReferenceAsString(f.ref.Append("key"))
 }
 
 func (f FieldAttributes) RefValue() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("ref_value"))
+	return terra.ReferenceAsString(f.ref.Append("ref_value"))
 }
 
 func (f FieldAttributes) StringValue() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("string_value"))
+	return terra.ReferenceAsString(f.ref.Append("string_value"))
 }
 
 type ParameterValueAttributes struct {
@@ -144,11 +144,11 @@ func (pv ParameterValueAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pv ParameterValueAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pv.ref.Append("id"))
+	return terra.ReferenceAsString(pv.ref.Append("id"))
 }
 
 func (pv ParameterValueAttributes) StringValue() terra.StringValue {
-	return terra.ReferenceString(pv.ref.Append("string_value"))
+	return terra.ReferenceAsString(pv.ref.Append("string_value"))
 }
 
 type ParameterObjectState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDbProxyTarget creates a new instance of [DbProxyTarget].
 func NewDbProxyTarget(name string, args DbProxyTargetArgs) *DbProxyTarget {
 	return &DbProxyTarget{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDbProxyTarget(name string, args DbProxyTargetArgs) *DbProxyTarget {
 
 var _ terra.Resource = (*DbProxyTarget)(nil)
 
+// DbProxyTarget represents the Terraform resource aws_db_proxy_target.
 type DbProxyTarget struct {
-	Name  string
-	Args  DbProxyTargetArgs
-	state *dbProxyTargetState
+	Name      string
+	Args      DbProxyTargetArgs
+	state     *dbProxyTargetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DbProxyTarget].
 func (dpt *DbProxyTarget) Type() string {
 	return "aws_db_proxy_target"
 }
 
+// LocalName returns the local name for [DbProxyTarget].
 func (dpt *DbProxyTarget) LocalName() string {
 	return dpt.Name
 }
 
+// Configuration returns the configuration (args) for [DbProxyTarget].
 func (dpt *DbProxyTarget) Configuration() interface{} {
 	return dpt.Args
 }
 
+// DependOn is used for other resources to depend on [DbProxyTarget].
+func (dpt *DbProxyTarget) DependOn() terra.Reference {
+	return terra.ReferenceResource(dpt)
+}
+
+// Dependencies returns the list of resources [DbProxyTarget] depends_on.
+func (dpt *DbProxyTarget) Dependencies() terra.Dependencies {
+	return dpt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DbProxyTarget].
+func (dpt *DbProxyTarget) LifecycleManagement() *terra.Lifecycle {
+	return dpt.Lifecycle
+}
+
+// Attributes returns the attributes for [DbProxyTarget].
 func (dpt *DbProxyTarget) Attributes() dbProxyTargetAttributes {
 	return dbProxyTargetAttributes{ref: terra.ReferenceResource(dpt)}
 }
 
+// ImportState imports the given attribute values into [DbProxyTarget]'s state.
 func (dpt *DbProxyTarget) ImportState(av io.Reader) error {
 	dpt.state = &dbProxyTargetState{}
 	if err := json.NewDecoder(av).Decode(dpt.state); err != nil {
@@ -48,10 +72,12 @@ func (dpt *DbProxyTarget) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DbProxyTarget] has state.
 func (dpt *DbProxyTarget) State() (*dbProxyTargetState, bool) {
 	return dpt.state, dpt.state != nil
 }
 
+// StateMust returns the state for [DbProxyTarget]. Panics if the state is nil.
 func (dpt *DbProxyTarget) StateMust() *dbProxyTargetState {
 	if dpt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dpt.Type(), dpt.LocalName()))
@@ -59,10 +85,7 @@ func (dpt *DbProxyTarget) StateMust() *dbProxyTargetState {
 	return dpt.state
 }
 
-func (dpt *DbProxyTarget) DependOn() terra.Reference {
-	return terra.ReferenceResource(dpt)
-}
-
+// DbProxyTargetArgs contains the configurations for aws_db_proxy_target.
 type DbProxyTargetArgs struct {
 	// DbClusterIdentifier: string, optional
 	DbClusterIdentifier terra.StringValue `hcl:"db_cluster_identifier,attr"`
@@ -74,55 +97,64 @@ type DbProxyTargetArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// TargetGroupName: string, required
 	TargetGroupName terra.StringValue `hcl:"target_group_name,attr" validate:"required"`
-	// DependsOn contains resources that DbProxyTarget depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dbProxyTargetAttributes struct {
 	ref terra.Reference
 }
 
+// DbClusterIdentifier returns a reference to field db_cluster_identifier of aws_db_proxy_target.
 func (dpt dbProxyTargetAttributes) DbClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(dpt.ref.Append("db_cluster_identifier"))
+	return terra.ReferenceAsString(dpt.ref.Append("db_cluster_identifier"))
 }
 
+// DbInstanceIdentifier returns a reference to field db_instance_identifier of aws_db_proxy_target.
 func (dpt dbProxyTargetAttributes) DbInstanceIdentifier() terra.StringValue {
-	return terra.ReferenceString(dpt.ref.Append("db_instance_identifier"))
+	return terra.ReferenceAsString(dpt.ref.Append("db_instance_identifier"))
 }
 
+// DbProxyName returns a reference to field db_proxy_name of aws_db_proxy_target.
 func (dpt dbProxyTargetAttributes) DbProxyName() terra.StringValue {
-	return terra.ReferenceString(dpt.ref.Append("db_proxy_name"))
+	return terra.ReferenceAsString(dpt.ref.Append("db_proxy_name"))
 }
 
+// Endpoint returns a reference to field endpoint of aws_db_proxy_target.
 func (dpt dbProxyTargetAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(dpt.ref.Append("endpoint"))
+	return terra.ReferenceAsString(dpt.ref.Append("endpoint"))
 }
 
+// Id returns a reference to field id of aws_db_proxy_target.
 func (dpt dbProxyTargetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dpt.ref.Append("id"))
+	return terra.ReferenceAsString(dpt.ref.Append("id"))
 }
 
+// Port returns a reference to field port of aws_db_proxy_target.
 func (dpt dbProxyTargetAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(dpt.ref.Append("port"))
+	return terra.ReferenceAsNumber(dpt.ref.Append("port"))
 }
 
+// RdsResourceId returns a reference to field rds_resource_id of aws_db_proxy_target.
 func (dpt dbProxyTargetAttributes) RdsResourceId() terra.StringValue {
-	return terra.ReferenceString(dpt.ref.Append("rds_resource_id"))
+	return terra.ReferenceAsString(dpt.ref.Append("rds_resource_id"))
 }
 
+// TargetArn returns a reference to field target_arn of aws_db_proxy_target.
 func (dpt dbProxyTargetAttributes) TargetArn() terra.StringValue {
-	return terra.ReferenceString(dpt.ref.Append("target_arn"))
+	return terra.ReferenceAsString(dpt.ref.Append("target_arn"))
 }
 
+// TargetGroupName returns a reference to field target_group_name of aws_db_proxy_target.
 func (dpt dbProxyTargetAttributes) TargetGroupName() terra.StringValue {
-	return terra.ReferenceString(dpt.ref.Append("target_group_name"))
+	return terra.ReferenceAsString(dpt.ref.Append("target_group_name"))
 }
 
+// TrackedClusterId returns a reference to field tracked_cluster_id of aws_db_proxy_target.
 func (dpt dbProxyTargetAttributes) TrackedClusterId() terra.StringValue {
-	return terra.ReferenceString(dpt.ref.Append("tracked_cluster_id"))
+	return terra.ReferenceAsString(dpt.ref.Append("tracked_cluster_id"))
 }
 
+// Type returns a reference to field type of aws_db_proxy_target.
 func (dpt dbProxyTargetAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(dpt.ref.Append("type"))
+	return terra.ReferenceAsString(dpt.ref.Append("type"))
 }
 
 type dbProxyTargetState struct {

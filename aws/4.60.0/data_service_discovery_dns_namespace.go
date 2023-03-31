@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataServiceDiscoveryDnsNamespace creates a new instance of [DataServiceDiscoveryDnsNamespace].
 func NewDataServiceDiscoveryDnsNamespace(name string, args DataServiceDiscoveryDnsNamespaceArgs) *DataServiceDiscoveryDnsNamespace {
 	return &DataServiceDiscoveryDnsNamespace{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataServiceDiscoveryDnsNamespace(name string, args DataServiceDiscoveryD
 
 var _ terra.DataResource = (*DataServiceDiscoveryDnsNamespace)(nil)
 
+// DataServiceDiscoveryDnsNamespace represents the Terraform data resource aws_service_discovery_dns_namespace.
 type DataServiceDiscoveryDnsNamespace struct {
 	Name string
 	Args DataServiceDiscoveryDnsNamespaceArgs
 }
 
+// DataSource returns the Terraform object type for [DataServiceDiscoveryDnsNamespace].
 func (sddn *DataServiceDiscoveryDnsNamespace) DataSource() string {
 	return "aws_service_discovery_dns_namespace"
 }
 
+// LocalName returns the local name for [DataServiceDiscoveryDnsNamespace].
 func (sddn *DataServiceDiscoveryDnsNamespace) LocalName() string {
 	return sddn.Name
 }
 
+// Configuration returns the configuration (args) for [DataServiceDiscoveryDnsNamespace].
 func (sddn *DataServiceDiscoveryDnsNamespace) Configuration() interface{} {
 	return sddn.Args
 }
 
+// Attributes returns the attributes for [DataServiceDiscoveryDnsNamespace].
 func (sddn *DataServiceDiscoveryDnsNamespace) Attributes() dataServiceDiscoveryDnsNamespaceAttributes {
 	return dataServiceDiscoveryDnsNamespaceAttributes{ref: terra.ReferenceDataResource(sddn)}
 }
 
+// DataServiceDiscoveryDnsNamespaceArgs contains the configurations for aws_service_discovery_dns_namespace.
 type DataServiceDiscoveryDnsNamespaceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -48,30 +55,37 @@ type dataServiceDiscoveryDnsNamespaceAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_service_discovery_dns_namespace.
 func (sddn dataServiceDiscoveryDnsNamespaceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sddn.ref.Append("arn"))
+	return terra.ReferenceAsString(sddn.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_service_discovery_dns_namespace.
 func (sddn dataServiceDiscoveryDnsNamespaceAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sddn.ref.Append("description"))
+	return terra.ReferenceAsString(sddn.ref.Append("description"))
 }
 
+// HostedZone returns a reference to field hosted_zone of aws_service_discovery_dns_namespace.
 func (sddn dataServiceDiscoveryDnsNamespaceAttributes) HostedZone() terra.StringValue {
-	return terra.ReferenceString(sddn.ref.Append("hosted_zone"))
+	return terra.ReferenceAsString(sddn.ref.Append("hosted_zone"))
 }
 
+// Id returns a reference to field id of aws_service_discovery_dns_namespace.
 func (sddn dataServiceDiscoveryDnsNamespaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sddn.ref.Append("id"))
+	return terra.ReferenceAsString(sddn.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_service_discovery_dns_namespace.
 func (sddn dataServiceDiscoveryDnsNamespaceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sddn.ref.Append("name"))
+	return terra.ReferenceAsString(sddn.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_service_discovery_dns_namespace.
 func (sddn dataServiceDiscoveryDnsNamespaceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sddn.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sddn.ref.Append("tags"))
 }
 
+// Type returns a reference to field type of aws_service_discovery_dns_namespace.
 func (sddn dataServiceDiscoveryDnsNamespaceAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(sddn.ref.Append("type"))
+	return terra.ReferenceAsString(sddn.ref.Append("type"))
 }

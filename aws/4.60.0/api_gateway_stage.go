@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApiGatewayStage creates a new instance of [ApiGatewayStage].
 func NewApiGatewayStage(name string, args ApiGatewayStageArgs) *ApiGatewayStage {
 	return &ApiGatewayStage{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApiGatewayStage(name string, args ApiGatewayStageArgs) *ApiGatewayStage 
 
 var _ terra.Resource = (*ApiGatewayStage)(nil)
 
+// ApiGatewayStage represents the Terraform resource aws_api_gateway_stage.
 type ApiGatewayStage struct {
-	Name  string
-	Args  ApiGatewayStageArgs
-	state *apiGatewayStageState
+	Name      string
+	Args      ApiGatewayStageArgs
+	state     *apiGatewayStageState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiGatewayStage].
 func (ags *ApiGatewayStage) Type() string {
 	return "aws_api_gateway_stage"
 }
 
+// LocalName returns the local name for [ApiGatewayStage].
 func (ags *ApiGatewayStage) LocalName() string {
 	return ags.Name
 }
 
+// Configuration returns the configuration (args) for [ApiGatewayStage].
 func (ags *ApiGatewayStage) Configuration() interface{} {
 	return ags.Args
 }
 
+// DependOn is used for other resources to depend on [ApiGatewayStage].
+func (ags *ApiGatewayStage) DependOn() terra.Reference {
+	return terra.ReferenceResource(ags)
+}
+
+// Dependencies returns the list of resources [ApiGatewayStage] depends_on.
+func (ags *ApiGatewayStage) Dependencies() terra.Dependencies {
+	return ags.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiGatewayStage].
+func (ags *ApiGatewayStage) LifecycleManagement() *terra.Lifecycle {
+	return ags.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiGatewayStage].
 func (ags *ApiGatewayStage) Attributes() apiGatewayStageAttributes {
 	return apiGatewayStageAttributes{ref: terra.ReferenceResource(ags)}
 }
 
+// ImportState imports the given attribute values into [ApiGatewayStage]'s state.
 func (ags *ApiGatewayStage) ImportState(av io.Reader) error {
 	ags.state = &apiGatewayStageState{}
 	if err := json.NewDecoder(av).Decode(ags.state); err != nil {
@@ -49,10 +73,12 @@ func (ags *ApiGatewayStage) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiGatewayStage] has state.
 func (ags *ApiGatewayStage) State() (*apiGatewayStageState, bool) {
 	return ags.state, ags.state != nil
 }
 
+// StateMust returns the state for [ApiGatewayStage]. Panics if the state is nil.
 func (ags *ApiGatewayStage) StateMust() *apiGatewayStageState {
 	if ags.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ags.Type(), ags.LocalName()))
@@ -60,10 +86,7 @@ func (ags *ApiGatewayStage) StateMust() *apiGatewayStageState {
 	return ags.state
 }
 
-func (ags *ApiGatewayStage) DependOn() terra.Reference {
-	return terra.ReferenceResource(ags)
-}
-
+// ApiGatewayStageArgs contains the configurations for aws_api_gateway_stage.
 type ApiGatewayStageArgs struct {
 	// CacheClusterEnabled: bool, optional
 	CacheClusterEnabled terra.BoolValue `hcl:"cache_cluster_enabled,attr"`
@@ -95,87 +118,102 @@ type ApiGatewayStageArgs struct {
 	AccessLogSettings *apigatewaystage.AccessLogSettings `hcl:"access_log_settings,block"`
 	// CanarySettings: optional
 	CanarySettings *apigatewaystage.CanarySettings `hcl:"canary_settings,block"`
-	// DependsOn contains resources that ApiGatewayStage depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiGatewayStageAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_api_gateway_stage.
 func (ags apiGatewayStageAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ags.ref.Append("arn"))
+	return terra.ReferenceAsString(ags.ref.Append("arn"))
 }
 
+// CacheClusterEnabled returns a reference to field cache_cluster_enabled of aws_api_gateway_stage.
 func (ags apiGatewayStageAttributes) CacheClusterEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ags.ref.Append("cache_cluster_enabled"))
+	return terra.ReferenceAsBool(ags.ref.Append("cache_cluster_enabled"))
 }
 
+// CacheClusterSize returns a reference to field cache_cluster_size of aws_api_gateway_stage.
 func (ags apiGatewayStageAttributes) CacheClusterSize() terra.StringValue {
-	return terra.ReferenceString(ags.ref.Append("cache_cluster_size"))
+	return terra.ReferenceAsString(ags.ref.Append("cache_cluster_size"))
 }
 
+// ClientCertificateId returns a reference to field client_certificate_id of aws_api_gateway_stage.
 func (ags apiGatewayStageAttributes) ClientCertificateId() terra.StringValue {
-	return terra.ReferenceString(ags.ref.Append("client_certificate_id"))
+	return terra.ReferenceAsString(ags.ref.Append("client_certificate_id"))
 }
 
+// DeploymentId returns a reference to field deployment_id of aws_api_gateway_stage.
 func (ags apiGatewayStageAttributes) DeploymentId() terra.StringValue {
-	return terra.ReferenceString(ags.ref.Append("deployment_id"))
+	return terra.ReferenceAsString(ags.ref.Append("deployment_id"))
 }
 
+// Description returns a reference to field description of aws_api_gateway_stage.
 func (ags apiGatewayStageAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ags.ref.Append("description"))
+	return terra.ReferenceAsString(ags.ref.Append("description"))
 }
 
+// DocumentationVersion returns a reference to field documentation_version of aws_api_gateway_stage.
 func (ags apiGatewayStageAttributes) DocumentationVersion() terra.StringValue {
-	return terra.ReferenceString(ags.ref.Append("documentation_version"))
+	return terra.ReferenceAsString(ags.ref.Append("documentation_version"))
 }
 
+// ExecutionArn returns a reference to field execution_arn of aws_api_gateway_stage.
 func (ags apiGatewayStageAttributes) ExecutionArn() terra.StringValue {
-	return terra.ReferenceString(ags.ref.Append("execution_arn"))
+	return terra.ReferenceAsString(ags.ref.Append("execution_arn"))
 }
 
+// Id returns a reference to field id of aws_api_gateway_stage.
 func (ags apiGatewayStageAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ags.ref.Append("id"))
+	return terra.ReferenceAsString(ags.ref.Append("id"))
 }
 
+// InvokeUrl returns a reference to field invoke_url of aws_api_gateway_stage.
 func (ags apiGatewayStageAttributes) InvokeUrl() terra.StringValue {
-	return terra.ReferenceString(ags.ref.Append("invoke_url"))
+	return terra.ReferenceAsString(ags.ref.Append("invoke_url"))
 }
 
+// RestApiId returns a reference to field rest_api_id of aws_api_gateway_stage.
 func (ags apiGatewayStageAttributes) RestApiId() terra.StringValue {
-	return terra.ReferenceString(ags.ref.Append("rest_api_id"))
+	return terra.ReferenceAsString(ags.ref.Append("rest_api_id"))
 }
 
+// StageName returns a reference to field stage_name of aws_api_gateway_stage.
 func (ags apiGatewayStageAttributes) StageName() terra.StringValue {
-	return terra.ReferenceString(ags.ref.Append("stage_name"))
+	return terra.ReferenceAsString(ags.ref.Append("stage_name"))
 }
 
+// Tags returns a reference to field tags of aws_api_gateway_stage.
 func (ags apiGatewayStageAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ags.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ags.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_api_gateway_stage.
 func (ags apiGatewayStageAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ags.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ags.ref.Append("tags_all"))
 }
 
+// Variables returns a reference to field variables of aws_api_gateway_stage.
 func (ags apiGatewayStageAttributes) Variables() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ags.ref.Append("variables"))
+	return terra.ReferenceAsMap[terra.StringValue](ags.ref.Append("variables"))
 }
 
+// WebAclArn returns a reference to field web_acl_arn of aws_api_gateway_stage.
 func (ags apiGatewayStageAttributes) WebAclArn() terra.StringValue {
-	return terra.ReferenceString(ags.ref.Append("web_acl_arn"))
+	return terra.ReferenceAsString(ags.ref.Append("web_acl_arn"))
 }
 
+// XrayTracingEnabled returns a reference to field xray_tracing_enabled of aws_api_gateway_stage.
 func (ags apiGatewayStageAttributes) XrayTracingEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ags.ref.Append("xray_tracing_enabled"))
+	return terra.ReferenceAsBool(ags.ref.Append("xray_tracing_enabled"))
 }
 
 func (ags apiGatewayStageAttributes) AccessLogSettings() terra.ListValue[apigatewaystage.AccessLogSettingsAttributes] {
-	return terra.ReferenceList[apigatewaystage.AccessLogSettingsAttributes](ags.ref.Append("access_log_settings"))
+	return terra.ReferenceAsList[apigatewaystage.AccessLogSettingsAttributes](ags.ref.Append("access_log_settings"))
 }
 
 func (ags apiGatewayStageAttributes) CanarySettings() terra.ListValue[apigatewaystage.CanarySettingsAttributes] {
-	return terra.ReferenceList[apigatewaystage.CanarySettingsAttributes](ags.ref.Append("canary_settings"))
+	return terra.ReferenceAsList[apigatewaystage.CanarySettingsAttributes](ags.ref.Append("canary_settings"))
 }
 
 type apiGatewayStageState struct {

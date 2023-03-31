@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataEcsTaskDefinition creates a new instance of [DataEcsTaskDefinition].
 func NewDataEcsTaskDefinition(name string, args DataEcsTaskDefinitionArgs) *DataEcsTaskDefinition {
 	return &DataEcsTaskDefinition{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataEcsTaskDefinition(name string, args DataEcsTaskDefinitionArgs) *Data
 
 var _ terra.DataResource = (*DataEcsTaskDefinition)(nil)
 
+// DataEcsTaskDefinition represents the Terraform data resource aws_ecs_task_definition.
 type DataEcsTaskDefinition struct {
 	Name string
 	Args DataEcsTaskDefinitionArgs
 }
 
+// DataSource returns the Terraform object type for [DataEcsTaskDefinition].
 func (etd *DataEcsTaskDefinition) DataSource() string {
 	return "aws_ecs_task_definition"
 }
 
+// LocalName returns the local name for [DataEcsTaskDefinition].
 func (etd *DataEcsTaskDefinition) LocalName() string {
 	return etd.Name
 }
 
+// Configuration returns the configuration (args) for [DataEcsTaskDefinition].
 func (etd *DataEcsTaskDefinition) Configuration() interface{} {
 	return etd.Args
 }
 
+// Attributes returns the attributes for [DataEcsTaskDefinition].
 func (etd *DataEcsTaskDefinition) Attributes() dataEcsTaskDefinitionAttributes {
 	return dataEcsTaskDefinitionAttributes{ref: terra.ReferenceDataResource(etd)}
 }
 
+// DataEcsTaskDefinitionArgs contains the configurations for aws_ecs_task_definition.
 type DataEcsTaskDefinitionArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,38 +51,47 @@ type dataEcsTaskDefinitionAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ecs_task_definition.
 func (etd dataEcsTaskDefinitionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(etd.ref.Append("arn"))
+	return terra.ReferenceAsString(etd.ref.Append("arn"))
 }
 
+// ArnWithoutRevision returns a reference to field arn_without_revision of aws_ecs_task_definition.
 func (etd dataEcsTaskDefinitionAttributes) ArnWithoutRevision() terra.StringValue {
-	return terra.ReferenceString(etd.ref.Append("arn_without_revision"))
+	return terra.ReferenceAsString(etd.ref.Append("arn_without_revision"))
 }
 
+// Family returns a reference to field family of aws_ecs_task_definition.
 func (etd dataEcsTaskDefinitionAttributes) Family() terra.StringValue {
-	return terra.ReferenceString(etd.ref.Append("family"))
+	return terra.ReferenceAsString(etd.ref.Append("family"))
 }
 
+// Id returns a reference to field id of aws_ecs_task_definition.
 func (etd dataEcsTaskDefinitionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(etd.ref.Append("id"))
+	return terra.ReferenceAsString(etd.ref.Append("id"))
 }
 
+// NetworkMode returns a reference to field network_mode of aws_ecs_task_definition.
 func (etd dataEcsTaskDefinitionAttributes) NetworkMode() terra.StringValue {
-	return terra.ReferenceString(etd.ref.Append("network_mode"))
+	return terra.ReferenceAsString(etd.ref.Append("network_mode"))
 }
 
+// Revision returns a reference to field revision of aws_ecs_task_definition.
 func (etd dataEcsTaskDefinitionAttributes) Revision() terra.NumberValue {
-	return terra.ReferenceNumber(etd.ref.Append("revision"))
+	return terra.ReferenceAsNumber(etd.ref.Append("revision"))
 }
 
+// Status returns a reference to field status of aws_ecs_task_definition.
 func (etd dataEcsTaskDefinitionAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(etd.ref.Append("status"))
+	return terra.ReferenceAsString(etd.ref.Append("status"))
 }
 
+// TaskDefinition returns a reference to field task_definition of aws_ecs_task_definition.
 func (etd dataEcsTaskDefinitionAttributes) TaskDefinition() terra.StringValue {
-	return terra.ReferenceString(etd.ref.Append("task_definition"))
+	return terra.ReferenceAsString(etd.ref.Append("task_definition"))
 }
 
+// TaskRoleArn returns a reference to field task_role_arn of aws_ecs_task_definition.
 func (etd dataEcsTaskDefinitionAttributes) TaskRoleArn() terra.StringValue {
-	return terra.ReferenceString(etd.ref.Append("task_role_arn"))
+	return terra.ReferenceAsString(etd.ref.Append("task_role_arn"))
 }

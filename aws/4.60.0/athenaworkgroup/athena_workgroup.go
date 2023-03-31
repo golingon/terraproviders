@@ -69,31 +69,31 @@ func (c ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ConfigurationAttributes) BytesScannedCutoffPerQuery() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("bytes_scanned_cutoff_per_query"))
+	return terra.ReferenceAsNumber(c.ref.Append("bytes_scanned_cutoff_per_query"))
 }
 
 func (c ConfigurationAttributes) EnforceWorkgroupConfiguration() terra.BoolValue {
-	return terra.ReferenceBool(c.ref.Append("enforce_workgroup_configuration"))
+	return terra.ReferenceAsBool(c.ref.Append("enforce_workgroup_configuration"))
 }
 
 func (c ConfigurationAttributes) ExecutionRole() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("execution_role"))
+	return terra.ReferenceAsString(c.ref.Append("execution_role"))
 }
 
 func (c ConfigurationAttributes) PublishCloudwatchMetricsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(c.ref.Append("publish_cloudwatch_metrics_enabled"))
+	return terra.ReferenceAsBool(c.ref.Append("publish_cloudwatch_metrics_enabled"))
 }
 
 func (c ConfigurationAttributes) RequesterPaysEnabled() terra.BoolValue {
-	return terra.ReferenceBool(c.ref.Append("requester_pays_enabled"))
+	return terra.ReferenceAsBool(c.ref.Append("requester_pays_enabled"))
 }
 
 func (c ConfigurationAttributes) EngineVersion() terra.ListValue[EngineVersionAttributes] {
-	return terra.ReferenceList[EngineVersionAttributes](c.ref.Append("engine_version"))
+	return terra.ReferenceAsList[EngineVersionAttributes](c.ref.Append("engine_version"))
 }
 
 func (c ConfigurationAttributes) ResultConfiguration() terra.ListValue[ResultConfigurationAttributes] {
-	return terra.ReferenceList[ResultConfigurationAttributes](c.ref.Append("result_configuration"))
+	return terra.ReferenceAsList[ResultConfigurationAttributes](c.ref.Append("result_configuration"))
 }
 
 type EngineVersionAttributes struct {
@@ -113,11 +113,11 @@ func (ev EngineVersionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ev EngineVersionAttributes) EffectiveEngineVersion() terra.StringValue {
-	return terra.ReferenceString(ev.ref.Append("effective_engine_version"))
+	return terra.ReferenceAsString(ev.ref.Append("effective_engine_version"))
 }
 
 func (ev EngineVersionAttributes) SelectedEngineVersion() terra.StringValue {
-	return terra.ReferenceString(ev.ref.Append("selected_engine_version"))
+	return terra.ReferenceAsString(ev.ref.Append("selected_engine_version"))
 }
 
 type ResultConfigurationAttributes struct {
@@ -137,19 +137,19 @@ func (rc ResultConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rc ResultConfigurationAttributes) ExpectedBucketOwner() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("expected_bucket_owner"))
+	return terra.ReferenceAsString(rc.ref.Append("expected_bucket_owner"))
 }
 
 func (rc ResultConfigurationAttributes) OutputLocation() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("output_location"))
+	return terra.ReferenceAsString(rc.ref.Append("output_location"))
 }
 
 func (rc ResultConfigurationAttributes) AclConfiguration() terra.ListValue[AclConfigurationAttributes] {
-	return terra.ReferenceList[AclConfigurationAttributes](rc.ref.Append("acl_configuration"))
+	return terra.ReferenceAsList[AclConfigurationAttributes](rc.ref.Append("acl_configuration"))
 }
 
 func (rc ResultConfigurationAttributes) EncryptionConfiguration() terra.ListValue[EncryptionConfigurationAttributes] {
-	return terra.ReferenceList[EncryptionConfigurationAttributes](rc.ref.Append("encryption_configuration"))
+	return terra.ReferenceAsList[EncryptionConfigurationAttributes](rc.ref.Append("encryption_configuration"))
 }
 
 type AclConfigurationAttributes struct {
@@ -169,7 +169,7 @@ func (ac AclConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ac AclConfigurationAttributes) S3AclOption() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("s3_acl_option"))
+	return terra.ReferenceAsString(ac.ref.Append("s3_acl_option"))
 }
 
 type EncryptionConfigurationAttributes struct {
@@ -189,11 +189,11 @@ func (ec EncryptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec EncryptionConfigurationAttributes) EncryptionOption() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("encryption_option"))
+	return terra.ReferenceAsString(ec.ref.Append("encryption_option"))
 }
 
 func (ec EncryptionConfigurationAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(ec.ref.Append("kms_key_arn"))
 }
 
 type ConfigurationState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewGlueCatalogDatabase creates a new instance of [GlueCatalogDatabase].
 func NewGlueCatalogDatabase(name string, args GlueCatalogDatabaseArgs) *GlueCatalogDatabase {
 	return &GlueCatalogDatabase{
 		Args: args,
@@ -19,28 +20,51 @@ func NewGlueCatalogDatabase(name string, args GlueCatalogDatabaseArgs) *GlueCata
 
 var _ terra.Resource = (*GlueCatalogDatabase)(nil)
 
+// GlueCatalogDatabase represents the Terraform resource aws_glue_catalog_database.
 type GlueCatalogDatabase struct {
-	Name  string
-	Args  GlueCatalogDatabaseArgs
-	state *glueCatalogDatabaseState
+	Name      string
+	Args      GlueCatalogDatabaseArgs
+	state     *glueCatalogDatabaseState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GlueCatalogDatabase].
 func (gcd *GlueCatalogDatabase) Type() string {
 	return "aws_glue_catalog_database"
 }
 
+// LocalName returns the local name for [GlueCatalogDatabase].
 func (gcd *GlueCatalogDatabase) LocalName() string {
 	return gcd.Name
 }
 
+// Configuration returns the configuration (args) for [GlueCatalogDatabase].
 func (gcd *GlueCatalogDatabase) Configuration() interface{} {
 	return gcd.Args
 }
 
+// DependOn is used for other resources to depend on [GlueCatalogDatabase].
+func (gcd *GlueCatalogDatabase) DependOn() terra.Reference {
+	return terra.ReferenceResource(gcd)
+}
+
+// Dependencies returns the list of resources [GlueCatalogDatabase] depends_on.
+func (gcd *GlueCatalogDatabase) Dependencies() terra.Dependencies {
+	return gcd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GlueCatalogDatabase].
+func (gcd *GlueCatalogDatabase) LifecycleManagement() *terra.Lifecycle {
+	return gcd.Lifecycle
+}
+
+// Attributes returns the attributes for [GlueCatalogDatabase].
 func (gcd *GlueCatalogDatabase) Attributes() glueCatalogDatabaseAttributes {
 	return glueCatalogDatabaseAttributes{ref: terra.ReferenceResource(gcd)}
 }
 
+// ImportState imports the given attribute values into [GlueCatalogDatabase]'s state.
 func (gcd *GlueCatalogDatabase) ImportState(av io.Reader) error {
 	gcd.state = &glueCatalogDatabaseState{}
 	if err := json.NewDecoder(av).Decode(gcd.state); err != nil {
@@ -49,10 +73,12 @@ func (gcd *GlueCatalogDatabase) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GlueCatalogDatabase] has state.
 func (gcd *GlueCatalogDatabase) State() (*glueCatalogDatabaseState, bool) {
 	return gcd.state, gcd.state != nil
 }
 
+// StateMust returns the state for [GlueCatalogDatabase]. Panics if the state is nil.
 func (gcd *GlueCatalogDatabase) StateMust() *glueCatalogDatabaseState {
 	if gcd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", gcd.Type(), gcd.LocalName()))
@@ -60,10 +86,7 @@ func (gcd *GlueCatalogDatabase) StateMust() *glueCatalogDatabaseState {
 	return gcd.state
 }
 
-func (gcd *GlueCatalogDatabase) DependOn() terra.Reference {
-	return terra.ReferenceResource(gcd)
-}
-
+// GlueCatalogDatabaseArgs contains the configurations for aws_glue_catalog_database.
 type GlueCatalogDatabaseArgs struct {
 	// CatalogId: string, optional
 	CatalogId terra.StringValue `hcl:"catalog_id,attr"`
@@ -81,47 +104,52 @@ type GlueCatalogDatabaseArgs struct {
 	CreateTableDefaultPermission []gluecatalogdatabase.CreateTableDefaultPermission `hcl:"create_table_default_permission,block" validate:"min=0"`
 	// TargetDatabase: optional
 	TargetDatabase *gluecatalogdatabase.TargetDatabase `hcl:"target_database,block"`
-	// DependsOn contains resources that GlueCatalogDatabase depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type glueCatalogDatabaseAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_glue_catalog_database.
 func (gcd glueCatalogDatabaseAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(gcd.ref.Append("arn"))
+	return terra.ReferenceAsString(gcd.ref.Append("arn"))
 }
 
+// CatalogId returns a reference to field catalog_id of aws_glue_catalog_database.
 func (gcd glueCatalogDatabaseAttributes) CatalogId() terra.StringValue {
-	return terra.ReferenceString(gcd.ref.Append("catalog_id"))
+	return terra.ReferenceAsString(gcd.ref.Append("catalog_id"))
 }
 
+// Description returns a reference to field description of aws_glue_catalog_database.
 func (gcd glueCatalogDatabaseAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(gcd.ref.Append("description"))
+	return terra.ReferenceAsString(gcd.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_glue_catalog_database.
 func (gcd glueCatalogDatabaseAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gcd.ref.Append("id"))
+	return terra.ReferenceAsString(gcd.ref.Append("id"))
 }
 
+// LocationUri returns a reference to field location_uri of aws_glue_catalog_database.
 func (gcd glueCatalogDatabaseAttributes) LocationUri() terra.StringValue {
-	return terra.ReferenceString(gcd.ref.Append("location_uri"))
+	return terra.ReferenceAsString(gcd.ref.Append("location_uri"))
 }
 
+// Name returns a reference to field name of aws_glue_catalog_database.
 func (gcd glueCatalogDatabaseAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(gcd.ref.Append("name"))
+	return terra.ReferenceAsString(gcd.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of aws_glue_catalog_database.
 func (gcd glueCatalogDatabaseAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gcd.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](gcd.ref.Append("parameters"))
 }
 
 func (gcd glueCatalogDatabaseAttributes) CreateTableDefaultPermission() terra.ListValue[gluecatalogdatabase.CreateTableDefaultPermissionAttributes] {
-	return terra.ReferenceList[gluecatalogdatabase.CreateTableDefaultPermissionAttributes](gcd.ref.Append("create_table_default_permission"))
+	return terra.ReferenceAsList[gluecatalogdatabase.CreateTableDefaultPermissionAttributes](gcd.ref.Append("create_table_default_permission"))
 }
 
 func (gcd glueCatalogDatabaseAttributes) TargetDatabase() terra.ListValue[gluecatalogdatabase.TargetDatabaseAttributes] {
-	return terra.ReferenceList[gluecatalogdatabase.TargetDatabaseAttributes](gcd.ref.Append("target_database"))
+	return terra.ReferenceAsList[gluecatalogdatabase.TargetDatabaseAttributes](gcd.ref.Append("target_database"))
 }
 
 type glueCatalogDatabaseState struct {

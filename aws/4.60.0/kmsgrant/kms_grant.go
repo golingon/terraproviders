@@ -31,11 +31,11 @@ func (c ConstraintsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ConstraintsAttributes) EncryptionContextEquals() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](c.ref.Append("encryption_context_equals"))
+	return terra.ReferenceAsMap[terra.StringValue](c.ref.Append("encryption_context_equals"))
 }
 
 func (c ConstraintsAttributes) EncryptionContextSubset() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](c.ref.Append("encryption_context_subset"))
+	return terra.ReferenceAsMap[terra.StringValue](c.ref.Append("encryption_context_subset"))
 }
 
 type ConstraintsState struct {

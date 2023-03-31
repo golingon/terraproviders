@@ -235,11 +235,11 @@ func (ec EncryptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec EncryptionConfigurationAttributes) KeyId() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("key_id"))
+	return terra.ReferenceAsString(ec.ref.Append("key_id"))
 }
 
 func (ec EncryptionConfigurationAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("type"))
+	return terra.ReferenceAsString(ec.ref.Append("type"))
 }
 
 type RuleGroupAttributes struct {
@@ -259,19 +259,19 @@ func (rg RuleGroupAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rg RuleGroupAttributes) ReferenceSets() terra.ListValue[ReferenceSetsAttributes] {
-	return terra.ReferenceList[ReferenceSetsAttributes](rg.ref.Append("reference_sets"))
+	return terra.ReferenceAsList[ReferenceSetsAttributes](rg.ref.Append("reference_sets"))
 }
 
 func (rg RuleGroupAttributes) RuleVariables() terra.ListValue[RuleVariablesAttributes] {
-	return terra.ReferenceList[RuleVariablesAttributes](rg.ref.Append("rule_variables"))
+	return terra.ReferenceAsList[RuleVariablesAttributes](rg.ref.Append("rule_variables"))
 }
 
 func (rg RuleGroupAttributes) RulesSource() terra.ListValue[RulesSourceAttributes] {
-	return terra.ReferenceList[RulesSourceAttributes](rg.ref.Append("rules_source"))
+	return terra.ReferenceAsList[RulesSourceAttributes](rg.ref.Append("rules_source"))
 }
 
 func (rg RuleGroupAttributes) StatefulRuleOptions() terra.ListValue[StatefulRuleOptionsAttributes] {
-	return terra.ReferenceList[StatefulRuleOptionsAttributes](rg.ref.Append("stateful_rule_options"))
+	return terra.ReferenceAsList[StatefulRuleOptionsAttributes](rg.ref.Append("stateful_rule_options"))
 }
 
 type ReferenceSetsAttributes struct {
@@ -291,7 +291,7 @@ func (rs ReferenceSetsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rs ReferenceSetsAttributes) IpSetReferences() terra.SetValue[IpSetReferencesAttributes] {
-	return terra.ReferenceSet[IpSetReferencesAttributes](rs.ref.Append("ip_set_references"))
+	return terra.ReferenceAsSet[IpSetReferencesAttributes](rs.ref.Append("ip_set_references"))
 }
 
 type IpSetReferencesAttributes struct {
@@ -311,11 +311,11 @@ func (isr IpSetReferencesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (isr IpSetReferencesAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(isr.ref.Append("key"))
+	return terra.ReferenceAsString(isr.ref.Append("key"))
 }
 
 func (isr IpSetReferencesAttributes) IpSetReference() terra.ListValue[IpSetReferenceAttributes] {
-	return terra.ReferenceList[IpSetReferenceAttributes](isr.ref.Append("ip_set_reference"))
+	return terra.ReferenceAsList[IpSetReferenceAttributes](isr.ref.Append("ip_set_reference"))
 }
 
 type IpSetReferenceAttributes struct {
@@ -335,7 +335,7 @@ func (isr IpSetReferenceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (isr IpSetReferenceAttributes) ReferenceArn() terra.StringValue {
-	return terra.ReferenceString(isr.ref.Append("reference_arn"))
+	return terra.ReferenceAsString(isr.ref.Append("reference_arn"))
 }
 
 type RuleVariablesAttributes struct {
@@ -355,11 +355,11 @@ func (rv RuleVariablesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rv RuleVariablesAttributes) IpSets() terra.SetValue[IpSetsAttributes] {
-	return terra.ReferenceSet[IpSetsAttributes](rv.ref.Append("ip_sets"))
+	return terra.ReferenceAsSet[IpSetsAttributes](rv.ref.Append("ip_sets"))
 }
 
 func (rv RuleVariablesAttributes) PortSets() terra.SetValue[PortSetsAttributes] {
-	return terra.ReferenceSet[PortSetsAttributes](rv.ref.Append("port_sets"))
+	return terra.ReferenceAsSet[PortSetsAttributes](rv.ref.Append("port_sets"))
 }
 
 type IpSetsAttributes struct {
@@ -379,11 +379,11 @@ func (is IpSetsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (is IpSetsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(is.ref.Append("key"))
+	return terra.ReferenceAsString(is.ref.Append("key"))
 }
 
 func (is IpSetsAttributes) IpSet() terra.ListValue[IpSetAttributes] {
-	return terra.ReferenceList[IpSetAttributes](is.ref.Append("ip_set"))
+	return terra.ReferenceAsList[IpSetAttributes](is.ref.Append("ip_set"))
 }
 
 type IpSetAttributes struct {
@@ -403,7 +403,7 @@ func (is IpSetAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (is IpSetAttributes) Definition() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](is.ref.Append("definition"))
+	return terra.ReferenceAsSet[terra.StringValue](is.ref.Append("definition"))
 }
 
 type PortSetsAttributes struct {
@@ -423,11 +423,11 @@ func (ps PortSetsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ps PortSetsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("key"))
+	return terra.ReferenceAsString(ps.ref.Append("key"))
 }
 
 func (ps PortSetsAttributes) PortSet() terra.ListValue[PortSetAttributes] {
-	return terra.ReferenceList[PortSetAttributes](ps.ref.Append("port_set"))
+	return terra.ReferenceAsList[PortSetAttributes](ps.ref.Append("port_set"))
 }
 
 type PortSetAttributes struct {
@@ -447,7 +447,7 @@ func (ps PortSetAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ps PortSetAttributes) Definition() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ps.ref.Append("definition"))
+	return terra.ReferenceAsSet[terra.StringValue](ps.ref.Append("definition"))
 }
 
 type RulesSourceAttributes struct {
@@ -467,19 +467,19 @@ func (rs RulesSourceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rs RulesSourceAttributes) RulesString() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("rules_string"))
+	return terra.ReferenceAsString(rs.ref.Append("rules_string"))
 }
 
 func (rs RulesSourceAttributes) RulesSourceList() terra.ListValue[RulesSourceListAttributes] {
-	return terra.ReferenceList[RulesSourceListAttributes](rs.ref.Append("rules_source_list"))
+	return terra.ReferenceAsList[RulesSourceListAttributes](rs.ref.Append("rules_source_list"))
 }
 
 func (rs RulesSourceAttributes) StatefulRule() terra.ListValue[StatefulRuleAttributes] {
-	return terra.ReferenceList[StatefulRuleAttributes](rs.ref.Append("stateful_rule"))
+	return terra.ReferenceAsList[StatefulRuleAttributes](rs.ref.Append("stateful_rule"))
 }
 
 func (rs RulesSourceAttributes) StatelessRulesAndCustomActions() terra.ListValue[StatelessRulesAndCustomActionsAttributes] {
-	return terra.ReferenceList[StatelessRulesAndCustomActionsAttributes](rs.ref.Append("stateless_rules_and_custom_actions"))
+	return terra.ReferenceAsList[StatelessRulesAndCustomActionsAttributes](rs.ref.Append("stateless_rules_and_custom_actions"))
 }
 
 type RulesSourceListAttributes struct {
@@ -499,15 +499,15 @@ func (rsl RulesSourceListAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rsl RulesSourceListAttributes) GeneratedRulesType() terra.StringValue {
-	return terra.ReferenceString(rsl.ref.Append("generated_rules_type"))
+	return terra.ReferenceAsString(rsl.ref.Append("generated_rules_type"))
 }
 
 func (rsl RulesSourceListAttributes) TargetTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rsl.ref.Append("target_types"))
+	return terra.ReferenceAsSet[terra.StringValue](rsl.ref.Append("target_types"))
 }
 
 func (rsl RulesSourceListAttributes) Targets() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rsl.ref.Append("targets"))
+	return terra.ReferenceAsSet[terra.StringValue](rsl.ref.Append("targets"))
 }
 
 type StatefulRuleAttributes struct {
@@ -527,15 +527,15 @@ func (sr StatefulRuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sr StatefulRuleAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("action"))
+	return terra.ReferenceAsString(sr.ref.Append("action"))
 }
 
 func (sr StatefulRuleAttributes) Header() terra.ListValue[HeaderAttributes] {
-	return terra.ReferenceList[HeaderAttributes](sr.ref.Append("header"))
+	return terra.ReferenceAsList[HeaderAttributes](sr.ref.Append("header"))
 }
 
 func (sr StatefulRuleAttributes) RuleOption() terra.SetValue[RuleOptionAttributes] {
-	return terra.ReferenceSet[RuleOptionAttributes](sr.ref.Append("rule_option"))
+	return terra.ReferenceAsSet[RuleOptionAttributes](sr.ref.Append("rule_option"))
 }
 
 type HeaderAttributes struct {
@@ -555,27 +555,27 @@ func (h HeaderAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (h HeaderAttributes) Destination() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("destination"))
+	return terra.ReferenceAsString(h.ref.Append("destination"))
 }
 
 func (h HeaderAttributes) DestinationPort() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("destination_port"))
+	return terra.ReferenceAsString(h.ref.Append("destination_port"))
 }
 
 func (h HeaderAttributes) Direction() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("direction"))
+	return terra.ReferenceAsString(h.ref.Append("direction"))
 }
 
 func (h HeaderAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("protocol"))
+	return terra.ReferenceAsString(h.ref.Append("protocol"))
 }
 
 func (h HeaderAttributes) Source() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("source"))
+	return terra.ReferenceAsString(h.ref.Append("source"))
 }
 
 func (h HeaderAttributes) SourcePort() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("source_port"))
+	return terra.ReferenceAsString(h.ref.Append("source_port"))
 }
 
 type RuleOptionAttributes struct {
@@ -595,11 +595,11 @@ func (ro RuleOptionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ro RuleOptionAttributes) Keyword() terra.StringValue {
-	return terra.ReferenceString(ro.ref.Append("keyword"))
+	return terra.ReferenceAsString(ro.ref.Append("keyword"))
 }
 
 func (ro RuleOptionAttributes) Settings() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ro.ref.Append("settings"))
+	return terra.ReferenceAsSet[terra.StringValue](ro.ref.Append("settings"))
 }
 
 type StatelessRulesAndCustomActionsAttributes struct {
@@ -619,11 +619,11 @@ func (sraca StatelessRulesAndCustomActionsAttributes) InternalTokens() hclwrite.
 }
 
 func (sraca StatelessRulesAndCustomActionsAttributes) CustomAction() terra.SetValue[CustomActionAttributes] {
-	return terra.ReferenceSet[CustomActionAttributes](sraca.ref.Append("custom_action"))
+	return terra.ReferenceAsSet[CustomActionAttributes](sraca.ref.Append("custom_action"))
 }
 
 func (sraca StatelessRulesAndCustomActionsAttributes) StatelessRule() terra.SetValue[StatelessRuleAttributes] {
-	return terra.ReferenceSet[StatelessRuleAttributes](sraca.ref.Append("stateless_rule"))
+	return terra.ReferenceAsSet[StatelessRuleAttributes](sraca.ref.Append("stateless_rule"))
 }
 
 type CustomActionAttributes struct {
@@ -643,11 +643,11 @@ func (ca CustomActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ca CustomActionAttributes) ActionName() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("action_name"))
+	return terra.ReferenceAsString(ca.ref.Append("action_name"))
 }
 
 func (ca CustomActionAttributes) ActionDefinition() terra.ListValue[ActionDefinitionAttributes] {
-	return terra.ReferenceList[ActionDefinitionAttributes](ca.ref.Append("action_definition"))
+	return terra.ReferenceAsList[ActionDefinitionAttributes](ca.ref.Append("action_definition"))
 }
 
 type ActionDefinitionAttributes struct {
@@ -667,7 +667,7 @@ func (ad ActionDefinitionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ad ActionDefinitionAttributes) PublishMetricAction() terra.ListValue[PublishMetricActionAttributes] {
-	return terra.ReferenceList[PublishMetricActionAttributes](ad.ref.Append("publish_metric_action"))
+	return terra.ReferenceAsList[PublishMetricActionAttributes](ad.ref.Append("publish_metric_action"))
 }
 
 type PublishMetricActionAttributes struct {
@@ -687,7 +687,7 @@ func (pma PublishMetricActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pma PublishMetricActionAttributes) Dimension() terra.SetValue[DimensionAttributes] {
-	return terra.ReferenceSet[DimensionAttributes](pma.ref.Append("dimension"))
+	return terra.ReferenceAsSet[DimensionAttributes](pma.ref.Append("dimension"))
 }
 
 type DimensionAttributes struct {
@@ -707,7 +707,7 @@ func (d DimensionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DimensionAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("value"))
+	return terra.ReferenceAsString(d.ref.Append("value"))
 }
 
 type StatelessRuleAttributes struct {
@@ -727,11 +727,11 @@ func (sr StatelessRuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sr StatelessRuleAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(sr.ref.Append("priority"))
+	return terra.ReferenceAsNumber(sr.ref.Append("priority"))
 }
 
 func (sr StatelessRuleAttributes) RuleDefinition() terra.ListValue[RuleDefinitionAttributes] {
-	return terra.ReferenceList[RuleDefinitionAttributes](sr.ref.Append("rule_definition"))
+	return terra.ReferenceAsList[RuleDefinitionAttributes](sr.ref.Append("rule_definition"))
 }
 
 type RuleDefinitionAttributes struct {
@@ -751,11 +751,11 @@ func (rd RuleDefinitionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rd RuleDefinitionAttributes) Actions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rd.ref.Append("actions"))
+	return terra.ReferenceAsSet[terra.StringValue](rd.ref.Append("actions"))
 }
 
 func (rd RuleDefinitionAttributes) MatchAttributes() terra.ListValue[MatchAttributesAttributes] {
-	return terra.ReferenceList[MatchAttributesAttributes](rd.ref.Append("match_attributes"))
+	return terra.ReferenceAsList[MatchAttributesAttributes](rd.ref.Append("match_attributes"))
 }
 
 type MatchAttributesAttributes struct {
@@ -775,27 +775,27 @@ func (ma MatchAttributesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ma MatchAttributesAttributes) Protocols() terra.SetValue[terra.NumberValue] {
-	return terra.ReferenceSet[terra.NumberValue](ma.ref.Append("protocols"))
+	return terra.ReferenceAsSet[terra.NumberValue](ma.ref.Append("protocols"))
 }
 
 func (ma MatchAttributesAttributes) Destination() terra.SetValue[DestinationAttributes] {
-	return terra.ReferenceSet[DestinationAttributes](ma.ref.Append("destination"))
+	return terra.ReferenceAsSet[DestinationAttributes](ma.ref.Append("destination"))
 }
 
 func (ma MatchAttributesAttributes) DestinationPort() terra.SetValue[DestinationPortAttributes] {
-	return terra.ReferenceSet[DestinationPortAttributes](ma.ref.Append("destination_port"))
+	return terra.ReferenceAsSet[DestinationPortAttributes](ma.ref.Append("destination_port"))
 }
 
 func (ma MatchAttributesAttributes) Source() terra.SetValue[SourceAttributes] {
-	return terra.ReferenceSet[SourceAttributes](ma.ref.Append("source"))
+	return terra.ReferenceAsSet[SourceAttributes](ma.ref.Append("source"))
 }
 
 func (ma MatchAttributesAttributes) SourcePort() terra.SetValue[SourcePortAttributes] {
-	return terra.ReferenceSet[SourcePortAttributes](ma.ref.Append("source_port"))
+	return terra.ReferenceAsSet[SourcePortAttributes](ma.ref.Append("source_port"))
 }
 
 func (ma MatchAttributesAttributes) TcpFlag() terra.SetValue[TcpFlagAttributes] {
-	return terra.ReferenceSet[TcpFlagAttributes](ma.ref.Append("tcp_flag"))
+	return terra.ReferenceAsSet[TcpFlagAttributes](ma.ref.Append("tcp_flag"))
 }
 
 type DestinationAttributes struct {
@@ -815,7 +815,7 @@ func (d DestinationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DestinationAttributes) AddressDefinition() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("address_definition"))
+	return terra.ReferenceAsString(d.ref.Append("address_definition"))
 }
 
 type DestinationPortAttributes struct {
@@ -835,11 +835,11 @@ func (dp DestinationPortAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dp DestinationPortAttributes) FromPort() terra.NumberValue {
-	return terra.ReferenceNumber(dp.ref.Append("from_port"))
+	return terra.ReferenceAsNumber(dp.ref.Append("from_port"))
 }
 
 func (dp DestinationPortAttributes) ToPort() terra.NumberValue {
-	return terra.ReferenceNumber(dp.ref.Append("to_port"))
+	return terra.ReferenceAsNumber(dp.ref.Append("to_port"))
 }
 
 type SourceAttributes struct {
@@ -859,7 +859,7 @@ func (s SourceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SourceAttributes) AddressDefinition() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("address_definition"))
+	return terra.ReferenceAsString(s.ref.Append("address_definition"))
 }
 
 type SourcePortAttributes struct {
@@ -879,11 +879,11 @@ func (sp SourcePortAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sp SourcePortAttributes) FromPort() terra.NumberValue {
-	return terra.ReferenceNumber(sp.ref.Append("from_port"))
+	return terra.ReferenceAsNumber(sp.ref.Append("from_port"))
 }
 
 func (sp SourcePortAttributes) ToPort() terra.NumberValue {
-	return terra.ReferenceNumber(sp.ref.Append("to_port"))
+	return terra.ReferenceAsNumber(sp.ref.Append("to_port"))
 }
 
 type TcpFlagAttributes struct {
@@ -903,11 +903,11 @@ func (tf TcpFlagAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tf TcpFlagAttributes) Flags() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](tf.ref.Append("flags"))
+	return terra.ReferenceAsSet[terra.StringValue](tf.ref.Append("flags"))
 }
 
 func (tf TcpFlagAttributes) Masks() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](tf.ref.Append("masks"))
+	return terra.ReferenceAsSet[terra.StringValue](tf.ref.Append("masks"))
 }
 
 type StatefulRuleOptionsAttributes struct {
@@ -927,7 +927,7 @@ func (sro StatefulRuleOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sro StatefulRuleOptionsAttributes) RuleOrder() terra.StringValue {
-	return terra.ReferenceString(sro.ref.Append("rule_order"))
+	return terra.ReferenceAsString(sro.ref.Append("rule_order"))
 }
 
 type EncryptionConfigurationState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSsmMaintenanceWindow creates a new instance of [SsmMaintenanceWindow].
 func NewSsmMaintenanceWindow(name string, args SsmMaintenanceWindowArgs) *SsmMaintenanceWindow {
 	return &SsmMaintenanceWindow{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSsmMaintenanceWindow(name string, args SsmMaintenanceWindowArgs) *SsmMai
 
 var _ terra.Resource = (*SsmMaintenanceWindow)(nil)
 
+// SsmMaintenanceWindow represents the Terraform resource aws_ssm_maintenance_window.
 type SsmMaintenanceWindow struct {
-	Name  string
-	Args  SsmMaintenanceWindowArgs
-	state *ssmMaintenanceWindowState
+	Name      string
+	Args      SsmMaintenanceWindowArgs
+	state     *ssmMaintenanceWindowState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SsmMaintenanceWindow].
 func (smw *SsmMaintenanceWindow) Type() string {
 	return "aws_ssm_maintenance_window"
 }
 
+// LocalName returns the local name for [SsmMaintenanceWindow].
 func (smw *SsmMaintenanceWindow) LocalName() string {
 	return smw.Name
 }
 
+// Configuration returns the configuration (args) for [SsmMaintenanceWindow].
 func (smw *SsmMaintenanceWindow) Configuration() interface{} {
 	return smw.Args
 }
 
+// DependOn is used for other resources to depend on [SsmMaintenanceWindow].
+func (smw *SsmMaintenanceWindow) DependOn() terra.Reference {
+	return terra.ReferenceResource(smw)
+}
+
+// Dependencies returns the list of resources [SsmMaintenanceWindow] depends_on.
+func (smw *SsmMaintenanceWindow) Dependencies() terra.Dependencies {
+	return smw.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SsmMaintenanceWindow].
+func (smw *SsmMaintenanceWindow) LifecycleManagement() *terra.Lifecycle {
+	return smw.Lifecycle
+}
+
+// Attributes returns the attributes for [SsmMaintenanceWindow].
 func (smw *SsmMaintenanceWindow) Attributes() ssmMaintenanceWindowAttributes {
 	return ssmMaintenanceWindowAttributes{ref: terra.ReferenceResource(smw)}
 }
 
+// ImportState imports the given attribute values into [SsmMaintenanceWindow]'s state.
 func (smw *SsmMaintenanceWindow) ImportState(av io.Reader) error {
 	smw.state = &ssmMaintenanceWindowState{}
 	if err := json.NewDecoder(av).Decode(smw.state); err != nil {
@@ -48,10 +72,12 @@ func (smw *SsmMaintenanceWindow) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SsmMaintenanceWindow] has state.
 func (smw *SsmMaintenanceWindow) State() (*ssmMaintenanceWindowState, bool) {
 	return smw.state, smw.state != nil
 }
 
+// StateMust returns the state for [SsmMaintenanceWindow]. Panics if the state is nil.
 func (smw *SsmMaintenanceWindow) StateMust() *ssmMaintenanceWindowState {
 	if smw.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", smw.Type(), smw.LocalName()))
@@ -59,10 +85,7 @@ func (smw *SsmMaintenanceWindow) StateMust() *ssmMaintenanceWindowState {
 	return smw.state
 }
 
-func (smw *SsmMaintenanceWindow) DependOn() terra.Reference {
-	return terra.ReferenceResource(smw)
-}
-
+// SsmMaintenanceWindowArgs contains the configurations for aws_ssm_maintenance_window.
 type SsmMaintenanceWindowArgs struct {
 	// AllowUnassociatedTargets: bool, optional
 	AllowUnassociatedTargets terra.BoolValue `hcl:"allow_unassociated_targets,attr"`
@@ -92,67 +115,79 @@ type SsmMaintenanceWindowArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that SsmMaintenanceWindow depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ssmMaintenanceWindowAttributes struct {
 	ref terra.Reference
 }
 
+// AllowUnassociatedTargets returns a reference to field allow_unassociated_targets of aws_ssm_maintenance_window.
 func (smw ssmMaintenanceWindowAttributes) AllowUnassociatedTargets() terra.BoolValue {
-	return terra.ReferenceBool(smw.ref.Append("allow_unassociated_targets"))
+	return terra.ReferenceAsBool(smw.ref.Append("allow_unassociated_targets"))
 }
 
+// Cutoff returns a reference to field cutoff of aws_ssm_maintenance_window.
 func (smw ssmMaintenanceWindowAttributes) Cutoff() terra.NumberValue {
-	return terra.ReferenceNumber(smw.ref.Append("cutoff"))
+	return terra.ReferenceAsNumber(smw.ref.Append("cutoff"))
 }
 
+// Description returns a reference to field description of aws_ssm_maintenance_window.
 func (smw ssmMaintenanceWindowAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(smw.ref.Append("description"))
+	return terra.ReferenceAsString(smw.ref.Append("description"))
 }
 
+// Duration returns a reference to field duration of aws_ssm_maintenance_window.
 func (smw ssmMaintenanceWindowAttributes) Duration() terra.NumberValue {
-	return terra.ReferenceNumber(smw.ref.Append("duration"))
+	return terra.ReferenceAsNumber(smw.ref.Append("duration"))
 }
 
+// Enabled returns a reference to field enabled of aws_ssm_maintenance_window.
 func (smw ssmMaintenanceWindowAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(smw.ref.Append("enabled"))
+	return terra.ReferenceAsBool(smw.ref.Append("enabled"))
 }
 
+// EndDate returns a reference to field end_date of aws_ssm_maintenance_window.
 func (smw ssmMaintenanceWindowAttributes) EndDate() terra.StringValue {
-	return terra.ReferenceString(smw.ref.Append("end_date"))
+	return terra.ReferenceAsString(smw.ref.Append("end_date"))
 }
 
+// Id returns a reference to field id of aws_ssm_maintenance_window.
 func (smw ssmMaintenanceWindowAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(smw.ref.Append("id"))
+	return terra.ReferenceAsString(smw.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_ssm_maintenance_window.
 func (smw ssmMaintenanceWindowAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(smw.ref.Append("name"))
+	return terra.ReferenceAsString(smw.ref.Append("name"))
 }
 
+// Schedule returns a reference to field schedule of aws_ssm_maintenance_window.
 func (smw ssmMaintenanceWindowAttributes) Schedule() terra.StringValue {
-	return terra.ReferenceString(smw.ref.Append("schedule"))
+	return terra.ReferenceAsString(smw.ref.Append("schedule"))
 }
 
+// ScheduleOffset returns a reference to field schedule_offset of aws_ssm_maintenance_window.
 func (smw ssmMaintenanceWindowAttributes) ScheduleOffset() terra.NumberValue {
-	return terra.ReferenceNumber(smw.ref.Append("schedule_offset"))
+	return terra.ReferenceAsNumber(smw.ref.Append("schedule_offset"))
 }
 
+// ScheduleTimezone returns a reference to field schedule_timezone of aws_ssm_maintenance_window.
 func (smw ssmMaintenanceWindowAttributes) ScheduleTimezone() terra.StringValue {
-	return terra.ReferenceString(smw.ref.Append("schedule_timezone"))
+	return terra.ReferenceAsString(smw.ref.Append("schedule_timezone"))
 }
 
+// StartDate returns a reference to field start_date of aws_ssm_maintenance_window.
 func (smw ssmMaintenanceWindowAttributes) StartDate() terra.StringValue {
-	return terra.ReferenceString(smw.ref.Append("start_date"))
+	return terra.ReferenceAsString(smw.ref.Append("start_date"))
 }
 
+// Tags returns a reference to field tags of aws_ssm_maintenance_window.
 func (smw ssmMaintenanceWindowAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](smw.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](smw.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_ssm_maintenance_window.
 func (smw ssmMaintenanceWindowAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](smw.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](smw.ref.Append("tags_all"))
 }
 
 type ssmMaintenanceWindowState struct {

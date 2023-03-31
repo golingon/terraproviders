@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRoute53KeySigningKey creates a new instance of [Route53KeySigningKey].
 func NewRoute53KeySigningKey(name string, args Route53KeySigningKeyArgs) *Route53KeySigningKey {
 	return &Route53KeySigningKey{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRoute53KeySigningKey(name string, args Route53KeySigningKeyArgs) *Route5
 
 var _ terra.Resource = (*Route53KeySigningKey)(nil)
 
+// Route53KeySigningKey represents the Terraform resource aws_route53_key_signing_key.
 type Route53KeySigningKey struct {
-	Name  string
-	Args  Route53KeySigningKeyArgs
-	state *route53KeySigningKeyState
+	Name      string
+	Args      Route53KeySigningKeyArgs
+	state     *route53KeySigningKeyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Route53KeySigningKey].
 func (rksk *Route53KeySigningKey) Type() string {
 	return "aws_route53_key_signing_key"
 }
 
+// LocalName returns the local name for [Route53KeySigningKey].
 func (rksk *Route53KeySigningKey) LocalName() string {
 	return rksk.Name
 }
 
+// Configuration returns the configuration (args) for [Route53KeySigningKey].
 func (rksk *Route53KeySigningKey) Configuration() interface{} {
 	return rksk.Args
 }
 
+// DependOn is used for other resources to depend on [Route53KeySigningKey].
+func (rksk *Route53KeySigningKey) DependOn() terra.Reference {
+	return terra.ReferenceResource(rksk)
+}
+
+// Dependencies returns the list of resources [Route53KeySigningKey] depends_on.
+func (rksk *Route53KeySigningKey) Dependencies() terra.Dependencies {
+	return rksk.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Route53KeySigningKey].
+func (rksk *Route53KeySigningKey) LifecycleManagement() *terra.Lifecycle {
+	return rksk.Lifecycle
+}
+
+// Attributes returns the attributes for [Route53KeySigningKey].
 func (rksk *Route53KeySigningKey) Attributes() route53KeySigningKeyAttributes {
 	return route53KeySigningKeyAttributes{ref: terra.ReferenceResource(rksk)}
 }
 
+// ImportState imports the given attribute values into [Route53KeySigningKey]'s state.
 func (rksk *Route53KeySigningKey) ImportState(av io.Reader) error {
 	rksk.state = &route53KeySigningKeyState{}
 	if err := json.NewDecoder(av).Decode(rksk.state); err != nil {
@@ -48,10 +72,12 @@ func (rksk *Route53KeySigningKey) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Route53KeySigningKey] has state.
 func (rksk *Route53KeySigningKey) State() (*route53KeySigningKeyState, bool) {
 	return rksk.state, rksk.state != nil
 }
 
+// StateMust returns the state for [Route53KeySigningKey]. Panics if the state is nil.
 func (rksk *Route53KeySigningKey) StateMust() *route53KeySigningKeyState {
 	if rksk.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rksk.Type(), rksk.LocalName()))
@@ -59,10 +85,7 @@ func (rksk *Route53KeySigningKey) StateMust() *route53KeySigningKeyState {
 	return rksk.state
 }
 
-func (rksk *Route53KeySigningKey) DependOn() terra.Reference {
-	return terra.ReferenceResource(rksk)
-}
-
+// Route53KeySigningKeyArgs contains the configurations for aws_route53_key_signing_key.
 type Route53KeySigningKeyArgs struct {
 	// HostedZoneId: string, required
 	HostedZoneId terra.StringValue `hcl:"hosted_zone_id,attr" validate:"required"`
@@ -74,71 +97,84 @@ type Route53KeySigningKeyArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// Status: string, optional
 	Status terra.StringValue `hcl:"status,attr"`
-	// DependsOn contains resources that Route53KeySigningKey depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type route53KeySigningKeyAttributes struct {
 	ref terra.Reference
 }
 
+// DigestAlgorithmMnemonic returns a reference to field digest_algorithm_mnemonic of aws_route53_key_signing_key.
 func (rksk route53KeySigningKeyAttributes) DigestAlgorithmMnemonic() terra.StringValue {
-	return terra.ReferenceString(rksk.ref.Append("digest_algorithm_mnemonic"))
+	return terra.ReferenceAsString(rksk.ref.Append("digest_algorithm_mnemonic"))
 }
 
+// DigestAlgorithmType returns a reference to field digest_algorithm_type of aws_route53_key_signing_key.
 func (rksk route53KeySigningKeyAttributes) DigestAlgorithmType() terra.NumberValue {
-	return terra.ReferenceNumber(rksk.ref.Append("digest_algorithm_type"))
+	return terra.ReferenceAsNumber(rksk.ref.Append("digest_algorithm_type"))
 }
 
+// DigestValue returns a reference to field digest_value of aws_route53_key_signing_key.
 func (rksk route53KeySigningKeyAttributes) DigestValue() terra.StringValue {
-	return terra.ReferenceString(rksk.ref.Append("digest_value"))
+	return terra.ReferenceAsString(rksk.ref.Append("digest_value"))
 }
 
+// DnskeyRecord returns a reference to field dnskey_record of aws_route53_key_signing_key.
 func (rksk route53KeySigningKeyAttributes) DnskeyRecord() terra.StringValue {
-	return terra.ReferenceString(rksk.ref.Append("dnskey_record"))
+	return terra.ReferenceAsString(rksk.ref.Append("dnskey_record"))
 }
 
+// DsRecord returns a reference to field ds_record of aws_route53_key_signing_key.
 func (rksk route53KeySigningKeyAttributes) DsRecord() terra.StringValue {
-	return terra.ReferenceString(rksk.ref.Append("ds_record"))
+	return terra.ReferenceAsString(rksk.ref.Append("ds_record"))
 }
 
+// Flag returns a reference to field flag of aws_route53_key_signing_key.
 func (rksk route53KeySigningKeyAttributes) Flag() terra.NumberValue {
-	return terra.ReferenceNumber(rksk.ref.Append("flag"))
+	return terra.ReferenceAsNumber(rksk.ref.Append("flag"))
 }
 
+// HostedZoneId returns a reference to field hosted_zone_id of aws_route53_key_signing_key.
 func (rksk route53KeySigningKeyAttributes) HostedZoneId() terra.StringValue {
-	return terra.ReferenceString(rksk.ref.Append("hosted_zone_id"))
+	return terra.ReferenceAsString(rksk.ref.Append("hosted_zone_id"))
 }
 
+// Id returns a reference to field id of aws_route53_key_signing_key.
 func (rksk route53KeySigningKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rksk.ref.Append("id"))
+	return terra.ReferenceAsString(rksk.ref.Append("id"))
 }
 
+// KeyManagementServiceArn returns a reference to field key_management_service_arn of aws_route53_key_signing_key.
 func (rksk route53KeySigningKeyAttributes) KeyManagementServiceArn() terra.StringValue {
-	return terra.ReferenceString(rksk.ref.Append("key_management_service_arn"))
+	return terra.ReferenceAsString(rksk.ref.Append("key_management_service_arn"))
 }
 
+// KeyTag returns a reference to field key_tag of aws_route53_key_signing_key.
 func (rksk route53KeySigningKeyAttributes) KeyTag() terra.NumberValue {
-	return terra.ReferenceNumber(rksk.ref.Append("key_tag"))
+	return terra.ReferenceAsNumber(rksk.ref.Append("key_tag"))
 }
 
+// Name returns a reference to field name of aws_route53_key_signing_key.
 func (rksk route53KeySigningKeyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rksk.ref.Append("name"))
+	return terra.ReferenceAsString(rksk.ref.Append("name"))
 }
 
+// PublicKey returns a reference to field public_key of aws_route53_key_signing_key.
 func (rksk route53KeySigningKeyAttributes) PublicKey() terra.StringValue {
-	return terra.ReferenceString(rksk.ref.Append("public_key"))
+	return terra.ReferenceAsString(rksk.ref.Append("public_key"))
 }
 
+// SigningAlgorithmMnemonic returns a reference to field signing_algorithm_mnemonic of aws_route53_key_signing_key.
 func (rksk route53KeySigningKeyAttributes) SigningAlgorithmMnemonic() terra.StringValue {
-	return terra.ReferenceString(rksk.ref.Append("signing_algorithm_mnemonic"))
+	return terra.ReferenceAsString(rksk.ref.Append("signing_algorithm_mnemonic"))
 }
 
+// SigningAlgorithmType returns a reference to field signing_algorithm_type of aws_route53_key_signing_key.
 func (rksk route53KeySigningKeyAttributes) SigningAlgorithmType() terra.NumberValue {
-	return terra.ReferenceNumber(rksk.ref.Append("signing_algorithm_type"))
+	return terra.ReferenceAsNumber(rksk.ref.Append("signing_algorithm_type"))
 }
 
+// Status returns a reference to field status of aws_route53_key_signing_key.
 func (rksk route53KeySigningKeyAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(rksk.ref.Append("status"))
+	return terra.ReferenceAsString(rksk.ref.Append("status"))
 }
 
 type route53KeySigningKeyState struct {

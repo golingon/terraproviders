@@ -28,11 +28,11 @@ func (al AwsLocationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (al AwsLocationAttributes) SubnetArn() terra.StringValue {
-	return terra.ReferenceString(al.ref.Append("subnet_arn"))
+	return terra.ReferenceAsString(al.ref.Append("subnet_arn"))
 }
 
 func (al AwsLocationAttributes) Zone() terra.StringValue {
-	return terra.ReferenceString(al.ref.Append("zone"))
+	return terra.ReferenceAsString(al.ref.Append("zone"))
 }
 
 type LocationAttributes struct {
@@ -52,15 +52,15 @@ func (l LocationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (l LocationAttributes) Address() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("address"))
+	return terra.ReferenceAsString(l.ref.Append("address"))
 }
 
 func (l LocationAttributes) Latitude() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("latitude"))
+	return terra.ReferenceAsString(l.ref.Append("latitude"))
 }
 
 func (l LocationAttributes) Longitude() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("longitude"))
+	return terra.ReferenceAsString(l.ref.Append("longitude"))
 }
 
 type AwsLocationState struct {

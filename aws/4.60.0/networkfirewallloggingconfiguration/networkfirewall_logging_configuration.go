@@ -38,7 +38,7 @@ func (lc LoggingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lc LoggingConfigurationAttributes) LogDestinationConfig() terra.SetValue[LogDestinationConfigAttributes] {
-	return terra.ReferenceSet[LogDestinationConfigAttributes](lc.ref.Append("log_destination_config"))
+	return terra.ReferenceAsSet[LogDestinationConfigAttributes](lc.ref.Append("log_destination_config"))
 }
 
 type LogDestinationConfigAttributes struct {
@@ -58,15 +58,15 @@ func (ldc LogDestinationConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ldc LogDestinationConfigAttributes) LogDestination() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ldc.ref.Append("log_destination"))
+	return terra.ReferenceAsMap[terra.StringValue](ldc.ref.Append("log_destination"))
 }
 
 func (ldc LogDestinationConfigAttributes) LogDestinationType() terra.StringValue {
-	return terra.ReferenceString(ldc.ref.Append("log_destination_type"))
+	return terra.ReferenceAsString(ldc.ref.Append("log_destination_type"))
 }
 
 func (ldc LogDestinationConfigAttributes) LogType() terra.StringValue {
-	return terra.ReferenceString(ldc.ref.Append("log_type"))
+	return terra.ReferenceAsString(ldc.ref.Append("log_type"))
 }
 
 type LoggingConfigurationState struct {

@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataIamInstanceProfile creates a new instance of [DataIamInstanceProfile].
 func NewDataIamInstanceProfile(name string, args DataIamInstanceProfileArgs) *DataIamInstanceProfile {
 	return &DataIamInstanceProfile{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataIamInstanceProfile(name string, args DataIamInstanceProfileArgs) *Da
 
 var _ terra.DataResource = (*DataIamInstanceProfile)(nil)
 
+// DataIamInstanceProfile represents the Terraform data resource aws_iam_instance_profile.
 type DataIamInstanceProfile struct {
 	Name string
 	Args DataIamInstanceProfileArgs
 }
 
+// DataSource returns the Terraform object type for [DataIamInstanceProfile].
 func (iip *DataIamInstanceProfile) DataSource() string {
 	return "aws_iam_instance_profile"
 }
 
+// LocalName returns the local name for [DataIamInstanceProfile].
 func (iip *DataIamInstanceProfile) LocalName() string {
 	return iip.Name
 }
 
+// Configuration returns the configuration (args) for [DataIamInstanceProfile].
 func (iip *DataIamInstanceProfile) Configuration() interface{} {
 	return iip.Args
 }
 
+// Attributes returns the attributes for [DataIamInstanceProfile].
 func (iip *DataIamInstanceProfile) Attributes() dataIamInstanceProfileAttributes {
 	return dataIamInstanceProfileAttributes{ref: terra.ReferenceDataResource(iip)}
 }
 
+// DataIamInstanceProfileArgs contains the configurations for aws_iam_instance_profile.
 type DataIamInstanceProfileArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,34 +51,42 @@ type dataIamInstanceProfileAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_iam_instance_profile.
 func (iip dataIamInstanceProfileAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(iip.ref.Append("arn"))
+	return terra.ReferenceAsString(iip.ref.Append("arn"))
 }
 
+// CreateDate returns a reference to field create_date of aws_iam_instance_profile.
 func (iip dataIamInstanceProfileAttributes) CreateDate() terra.StringValue {
-	return terra.ReferenceString(iip.ref.Append("create_date"))
+	return terra.ReferenceAsString(iip.ref.Append("create_date"))
 }
 
+// Id returns a reference to field id of aws_iam_instance_profile.
 func (iip dataIamInstanceProfileAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(iip.ref.Append("id"))
+	return terra.ReferenceAsString(iip.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_iam_instance_profile.
 func (iip dataIamInstanceProfileAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(iip.ref.Append("name"))
+	return terra.ReferenceAsString(iip.ref.Append("name"))
 }
 
+// Path returns a reference to field path of aws_iam_instance_profile.
 func (iip dataIamInstanceProfileAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(iip.ref.Append("path"))
+	return terra.ReferenceAsString(iip.ref.Append("path"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_iam_instance_profile.
 func (iip dataIamInstanceProfileAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(iip.ref.Append("role_arn"))
+	return terra.ReferenceAsString(iip.ref.Append("role_arn"))
 }
 
+// RoleId returns a reference to field role_id of aws_iam_instance_profile.
 func (iip dataIamInstanceProfileAttributes) RoleId() terra.StringValue {
-	return terra.ReferenceString(iip.ref.Append("role_id"))
+	return terra.ReferenceAsString(iip.ref.Append("role_id"))
 }
 
+// RoleName returns a reference to field role_name of aws_iam_instance_profile.
 func (iip dataIamInstanceProfileAttributes) RoleName() terra.StringValue {
-	return terra.ReferenceString(iip.ref.Append("role_name"))
+	return terra.ReferenceAsString(iip.ref.Append("role_name"))
 }

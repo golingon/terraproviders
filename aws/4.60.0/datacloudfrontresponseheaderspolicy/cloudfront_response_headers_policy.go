@@ -79,31 +79,31 @@ func (cc CorsConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc CorsConfigAttributes) AccessControlAllowCredentials() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("access_control_allow_credentials"))
+	return terra.ReferenceAsBool(cc.ref.Append("access_control_allow_credentials"))
 }
 
 func (cc CorsConfigAttributes) AccessControlMaxAgeSec() terra.NumberValue {
-	return terra.ReferenceNumber(cc.ref.Append("access_control_max_age_sec"))
+	return terra.ReferenceAsNumber(cc.ref.Append("access_control_max_age_sec"))
 }
 
 func (cc CorsConfigAttributes) OriginOverride() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("origin_override"))
+	return terra.ReferenceAsBool(cc.ref.Append("origin_override"))
 }
 
 func (cc CorsConfigAttributes) AccessControlAllowHeaders() terra.ListValue[AccessControlAllowHeadersAttributes] {
-	return terra.ReferenceList[AccessControlAllowHeadersAttributes](cc.ref.Append("access_control_allow_headers"))
+	return terra.ReferenceAsList[AccessControlAllowHeadersAttributes](cc.ref.Append("access_control_allow_headers"))
 }
 
 func (cc CorsConfigAttributes) AccessControlAllowMethods() terra.ListValue[AccessControlAllowMethodsAttributes] {
-	return terra.ReferenceList[AccessControlAllowMethodsAttributes](cc.ref.Append("access_control_allow_methods"))
+	return terra.ReferenceAsList[AccessControlAllowMethodsAttributes](cc.ref.Append("access_control_allow_methods"))
 }
 
 func (cc CorsConfigAttributes) AccessControlAllowOrigins() terra.ListValue[AccessControlAllowOriginsAttributes] {
-	return terra.ReferenceList[AccessControlAllowOriginsAttributes](cc.ref.Append("access_control_allow_origins"))
+	return terra.ReferenceAsList[AccessControlAllowOriginsAttributes](cc.ref.Append("access_control_allow_origins"))
 }
 
 func (cc CorsConfigAttributes) AccessControlExposeHeaders() terra.ListValue[AccessControlExposeHeadersAttributes] {
-	return terra.ReferenceList[AccessControlExposeHeadersAttributes](cc.ref.Append("access_control_expose_headers"))
+	return terra.ReferenceAsList[AccessControlExposeHeadersAttributes](cc.ref.Append("access_control_expose_headers"))
 }
 
 type AccessControlAllowHeadersAttributes struct {
@@ -123,7 +123,7 @@ func (acah AccessControlAllowHeadersAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (acah AccessControlAllowHeadersAttributes) Items() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](acah.ref.Append("items"))
+	return terra.ReferenceAsSet[terra.StringValue](acah.ref.Append("items"))
 }
 
 type AccessControlAllowMethodsAttributes struct {
@@ -143,7 +143,7 @@ func (acam AccessControlAllowMethodsAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (acam AccessControlAllowMethodsAttributes) Items() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](acam.ref.Append("items"))
+	return terra.ReferenceAsSet[terra.StringValue](acam.ref.Append("items"))
 }
 
 type AccessControlAllowOriginsAttributes struct {
@@ -163,7 +163,7 @@ func (acao AccessControlAllowOriginsAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (acao AccessControlAllowOriginsAttributes) Items() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](acao.ref.Append("items"))
+	return terra.ReferenceAsSet[terra.StringValue](acao.ref.Append("items"))
 }
 
 type AccessControlExposeHeadersAttributes struct {
@@ -183,7 +183,7 @@ func (aceh AccessControlExposeHeadersAttributes) InternalTokens() hclwrite.Token
 }
 
 func (aceh AccessControlExposeHeadersAttributes) Items() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](aceh.ref.Append("items"))
+	return terra.ReferenceAsSet[terra.StringValue](aceh.ref.Append("items"))
 }
 
 type CustomHeadersConfigAttributes struct {
@@ -203,7 +203,7 @@ func (chc CustomHeadersConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (chc CustomHeadersConfigAttributes) Items() terra.SetValue[ItemsAttributes] {
-	return terra.ReferenceSet[ItemsAttributes](chc.ref.Append("items"))
+	return terra.ReferenceAsSet[ItemsAttributes](chc.ref.Append("items"))
 }
 
 type ItemsAttributes struct {
@@ -223,15 +223,15 @@ func (i ItemsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i ItemsAttributes) Header() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("header"))
+	return terra.ReferenceAsString(i.ref.Append("header"))
 }
 
 func (i ItemsAttributes) Override() terra.BoolValue {
-	return terra.ReferenceBool(i.ref.Append("override"))
+	return terra.ReferenceAsBool(i.ref.Append("override"))
 }
 
 func (i ItemsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("value"))
+	return terra.ReferenceAsString(i.ref.Append("value"))
 }
 
 type SecurityHeadersConfigAttributes struct {
@@ -251,27 +251,27 @@ func (shc SecurityHeadersConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (shc SecurityHeadersConfigAttributes) ContentSecurityPolicy() terra.ListValue[ContentSecurityPolicyAttributes] {
-	return terra.ReferenceList[ContentSecurityPolicyAttributes](shc.ref.Append("content_security_policy"))
+	return terra.ReferenceAsList[ContentSecurityPolicyAttributes](shc.ref.Append("content_security_policy"))
 }
 
 func (shc SecurityHeadersConfigAttributes) ContentTypeOptions() terra.ListValue[ContentTypeOptionsAttributes] {
-	return terra.ReferenceList[ContentTypeOptionsAttributes](shc.ref.Append("content_type_options"))
+	return terra.ReferenceAsList[ContentTypeOptionsAttributes](shc.ref.Append("content_type_options"))
 }
 
 func (shc SecurityHeadersConfigAttributes) FrameOptions() terra.ListValue[FrameOptionsAttributes] {
-	return terra.ReferenceList[FrameOptionsAttributes](shc.ref.Append("frame_options"))
+	return terra.ReferenceAsList[FrameOptionsAttributes](shc.ref.Append("frame_options"))
 }
 
 func (shc SecurityHeadersConfigAttributes) ReferrerPolicy() terra.ListValue[ReferrerPolicyAttributes] {
-	return terra.ReferenceList[ReferrerPolicyAttributes](shc.ref.Append("referrer_policy"))
+	return terra.ReferenceAsList[ReferrerPolicyAttributes](shc.ref.Append("referrer_policy"))
 }
 
 func (shc SecurityHeadersConfigAttributes) StrictTransportSecurity() terra.ListValue[StrictTransportSecurityAttributes] {
-	return terra.ReferenceList[StrictTransportSecurityAttributes](shc.ref.Append("strict_transport_security"))
+	return terra.ReferenceAsList[StrictTransportSecurityAttributes](shc.ref.Append("strict_transport_security"))
 }
 
 func (shc SecurityHeadersConfigAttributes) XssProtection() terra.ListValue[XssProtectionAttributes] {
-	return terra.ReferenceList[XssProtectionAttributes](shc.ref.Append("xss_protection"))
+	return terra.ReferenceAsList[XssProtectionAttributes](shc.ref.Append("xss_protection"))
 }
 
 type ContentSecurityPolicyAttributes struct {
@@ -291,11 +291,11 @@ func (csp ContentSecurityPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (csp ContentSecurityPolicyAttributes) ContentSecurityPolicy() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("content_security_policy"))
+	return terra.ReferenceAsString(csp.ref.Append("content_security_policy"))
 }
 
 func (csp ContentSecurityPolicyAttributes) Override() terra.BoolValue {
-	return terra.ReferenceBool(csp.ref.Append("override"))
+	return terra.ReferenceAsBool(csp.ref.Append("override"))
 }
 
 type ContentTypeOptionsAttributes struct {
@@ -315,7 +315,7 @@ func (cto ContentTypeOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cto ContentTypeOptionsAttributes) Override() terra.BoolValue {
-	return terra.ReferenceBool(cto.ref.Append("override"))
+	return terra.ReferenceAsBool(cto.ref.Append("override"))
 }
 
 type FrameOptionsAttributes struct {
@@ -335,11 +335,11 @@ func (fo FrameOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fo FrameOptionsAttributes) FrameOption() terra.StringValue {
-	return terra.ReferenceString(fo.ref.Append("frame_option"))
+	return terra.ReferenceAsString(fo.ref.Append("frame_option"))
 }
 
 func (fo FrameOptionsAttributes) Override() terra.BoolValue {
-	return terra.ReferenceBool(fo.ref.Append("override"))
+	return terra.ReferenceAsBool(fo.ref.Append("override"))
 }
 
 type ReferrerPolicyAttributes struct {
@@ -359,11 +359,11 @@ func (rp ReferrerPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rp ReferrerPolicyAttributes) Override() terra.BoolValue {
-	return terra.ReferenceBool(rp.ref.Append("override"))
+	return terra.ReferenceAsBool(rp.ref.Append("override"))
 }
 
 func (rp ReferrerPolicyAttributes) ReferrerPolicy() terra.StringValue {
-	return terra.ReferenceString(rp.ref.Append("referrer_policy"))
+	return terra.ReferenceAsString(rp.ref.Append("referrer_policy"))
 }
 
 type StrictTransportSecurityAttributes struct {
@@ -383,19 +383,19 @@ func (sts StrictTransportSecurityAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sts StrictTransportSecurityAttributes) AccessControlMaxAgeSec() terra.NumberValue {
-	return terra.ReferenceNumber(sts.ref.Append("access_control_max_age_sec"))
+	return terra.ReferenceAsNumber(sts.ref.Append("access_control_max_age_sec"))
 }
 
 func (sts StrictTransportSecurityAttributes) IncludeSubdomains() terra.BoolValue {
-	return terra.ReferenceBool(sts.ref.Append("include_subdomains"))
+	return terra.ReferenceAsBool(sts.ref.Append("include_subdomains"))
 }
 
 func (sts StrictTransportSecurityAttributes) Override() terra.BoolValue {
-	return terra.ReferenceBool(sts.ref.Append("override"))
+	return terra.ReferenceAsBool(sts.ref.Append("override"))
 }
 
 func (sts StrictTransportSecurityAttributes) Preload() terra.BoolValue {
-	return terra.ReferenceBool(sts.ref.Append("preload"))
+	return terra.ReferenceAsBool(sts.ref.Append("preload"))
 }
 
 type XssProtectionAttributes struct {
@@ -415,19 +415,19 @@ func (xp XssProtectionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (xp XssProtectionAttributes) ModeBlock() terra.BoolValue {
-	return terra.ReferenceBool(xp.ref.Append("mode_block"))
+	return terra.ReferenceAsBool(xp.ref.Append("mode_block"))
 }
 
 func (xp XssProtectionAttributes) Override() terra.BoolValue {
-	return terra.ReferenceBool(xp.ref.Append("override"))
+	return terra.ReferenceAsBool(xp.ref.Append("override"))
 }
 
 func (xp XssProtectionAttributes) Protection() terra.BoolValue {
-	return terra.ReferenceBool(xp.ref.Append("protection"))
+	return terra.ReferenceAsBool(xp.ref.Append("protection"))
 }
 
 func (xp XssProtectionAttributes) ReportUri() terra.StringValue {
-	return terra.ReferenceString(xp.ref.Append("report_uri"))
+	return terra.ReferenceAsString(xp.ref.Append("report_uri"))
 }
 
 type ServerTimingHeadersConfigAttributes struct {
@@ -447,11 +447,11 @@ func (sthc ServerTimingHeadersConfigAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (sthc ServerTimingHeadersConfigAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(sthc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(sthc.ref.Append("enabled"))
 }
 
 func (sthc ServerTimingHeadersConfigAttributes) SamplingRate() terra.NumberValue {
-	return terra.ReferenceNumber(sthc.ref.Append("sampling_rate"))
+	return terra.ReferenceAsNumber(sthc.ref.Append("sampling_rate"))
 }
 
 type CorsConfigState struct {

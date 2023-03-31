@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRedshiftAuthenticationProfile creates a new instance of [RedshiftAuthenticationProfile].
 func NewRedshiftAuthenticationProfile(name string, args RedshiftAuthenticationProfileArgs) *RedshiftAuthenticationProfile {
 	return &RedshiftAuthenticationProfile{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRedshiftAuthenticationProfile(name string, args RedshiftAuthenticationPr
 
 var _ terra.Resource = (*RedshiftAuthenticationProfile)(nil)
 
+// RedshiftAuthenticationProfile represents the Terraform resource aws_redshift_authentication_profile.
 type RedshiftAuthenticationProfile struct {
-	Name  string
-	Args  RedshiftAuthenticationProfileArgs
-	state *redshiftAuthenticationProfileState
+	Name      string
+	Args      RedshiftAuthenticationProfileArgs
+	state     *redshiftAuthenticationProfileState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RedshiftAuthenticationProfile].
 func (rap *RedshiftAuthenticationProfile) Type() string {
 	return "aws_redshift_authentication_profile"
 }
 
+// LocalName returns the local name for [RedshiftAuthenticationProfile].
 func (rap *RedshiftAuthenticationProfile) LocalName() string {
 	return rap.Name
 }
 
+// Configuration returns the configuration (args) for [RedshiftAuthenticationProfile].
 func (rap *RedshiftAuthenticationProfile) Configuration() interface{} {
 	return rap.Args
 }
 
+// DependOn is used for other resources to depend on [RedshiftAuthenticationProfile].
+func (rap *RedshiftAuthenticationProfile) DependOn() terra.Reference {
+	return terra.ReferenceResource(rap)
+}
+
+// Dependencies returns the list of resources [RedshiftAuthenticationProfile] depends_on.
+func (rap *RedshiftAuthenticationProfile) Dependencies() terra.Dependencies {
+	return rap.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RedshiftAuthenticationProfile].
+func (rap *RedshiftAuthenticationProfile) LifecycleManagement() *terra.Lifecycle {
+	return rap.Lifecycle
+}
+
+// Attributes returns the attributes for [RedshiftAuthenticationProfile].
 func (rap *RedshiftAuthenticationProfile) Attributes() redshiftAuthenticationProfileAttributes {
 	return redshiftAuthenticationProfileAttributes{ref: terra.ReferenceResource(rap)}
 }
 
+// ImportState imports the given attribute values into [RedshiftAuthenticationProfile]'s state.
 func (rap *RedshiftAuthenticationProfile) ImportState(av io.Reader) error {
 	rap.state = &redshiftAuthenticationProfileState{}
 	if err := json.NewDecoder(av).Decode(rap.state); err != nil {
@@ -48,10 +72,12 @@ func (rap *RedshiftAuthenticationProfile) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RedshiftAuthenticationProfile] has state.
 func (rap *RedshiftAuthenticationProfile) State() (*redshiftAuthenticationProfileState, bool) {
 	return rap.state, rap.state != nil
 }
 
+// StateMust returns the state for [RedshiftAuthenticationProfile]. Panics if the state is nil.
 func (rap *RedshiftAuthenticationProfile) StateMust() *redshiftAuthenticationProfileState {
 	if rap.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rap.Type(), rap.LocalName()))
@@ -59,10 +85,7 @@ func (rap *RedshiftAuthenticationProfile) StateMust() *redshiftAuthenticationPro
 	return rap.state
 }
 
-func (rap *RedshiftAuthenticationProfile) DependOn() terra.Reference {
-	return terra.ReferenceResource(rap)
-}
-
+// RedshiftAuthenticationProfileArgs contains the configurations for aws_redshift_authentication_profile.
 type RedshiftAuthenticationProfileArgs struct {
 	// AuthenticationProfileContent: string, required
 	AuthenticationProfileContent terra.StringValue `hcl:"authentication_profile_content,attr" validate:"required"`
@@ -70,23 +93,24 @@ type RedshiftAuthenticationProfileArgs struct {
 	AuthenticationProfileName terra.StringValue `hcl:"authentication_profile_name,attr" validate:"required"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that RedshiftAuthenticationProfile depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type redshiftAuthenticationProfileAttributes struct {
 	ref terra.Reference
 }
 
+// AuthenticationProfileContent returns a reference to field authentication_profile_content of aws_redshift_authentication_profile.
 func (rap redshiftAuthenticationProfileAttributes) AuthenticationProfileContent() terra.StringValue {
-	return terra.ReferenceString(rap.ref.Append("authentication_profile_content"))
+	return terra.ReferenceAsString(rap.ref.Append("authentication_profile_content"))
 }
 
+// AuthenticationProfileName returns a reference to field authentication_profile_name of aws_redshift_authentication_profile.
 func (rap redshiftAuthenticationProfileAttributes) AuthenticationProfileName() terra.StringValue {
-	return terra.ReferenceString(rap.ref.Append("authentication_profile_name"))
+	return terra.ReferenceAsString(rap.ref.Append("authentication_profile_name"))
 }
 
+// Id returns a reference to field id of aws_redshift_authentication_profile.
 func (rap redshiftAuthenticationProfileAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rap.ref.Append("id"))
+	return terra.ReferenceAsString(rap.ref.Append("id"))
 }
 
 type redshiftAuthenticationProfileState struct {

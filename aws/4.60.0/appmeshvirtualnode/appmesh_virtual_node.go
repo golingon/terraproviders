@@ -510,23 +510,23 @@ func (s SpecAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SpecAttributes) Backend() terra.SetValue[BackendAttributes] {
-	return terra.ReferenceSet[BackendAttributes](s.ref.Append("backend"))
+	return terra.ReferenceAsSet[BackendAttributes](s.ref.Append("backend"))
 }
 
 func (s SpecAttributes) BackendDefaults() terra.ListValue[BackendDefaultsAttributes] {
-	return terra.ReferenceList[BackendDefaultsAttributes](s.ref.Append("backend_defaults"))
+	return terra.ReferenceAsList[BackendDefaultsAttributes](s.ref.Append("backend_defaults"))
 }
 
 func (s SpecAttributes) Listener() terra.ListValue[ListenerAttributes] {
-	return terra.ReferenceList[ListenerAttributes](s.ref.Append("listener"))
+	return terra.ReferenceAsList[ListenerAttributes](s.ref.Append("listener"))
 }
 
 func (s SpecAttributes) Logging() terra.ListValue[LoggingAttributes] {
-	return terra.ReferenceList[LoggingAttributes](s.ref.Append("logging"))
+	return terra.ReferenceAsList[LoggingAttributes](s.ref.Append("logging"))
 }
 
 func (s SpecAttributes) ServiceDiscovery() terra.ListValue[ServiceDiscoveryAttributes] {
-	return terra.ReferenceList[ServiceDiscoveryAttributes](s.ref.Append("service_discovery"))
+	return terra.ReferenceAsList[ServiceDiscoveryAttributes](s.ref.Append("service_discovery"))
 }
 
 type BackendAttributes struct {
@@ -546,7 +546,7 @@ func (b BackendAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (b BackendAttributes) VirtualService() terra.ListValue[VirtualServiceAttributes] {
-	return terra.ReferenceList[VirtualServiceAttributes](b.ref.Append("virtual_service"))
+	return terra.ReferenceAsList[VirtualServiceAttributes](b.ref.Append("virtual_service"))
 }
 
 type VirtualServiceAttributes struct {
@@ -566,11 +566,11 @@ func (vs VirtualServiceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vs VirtualServiceAttributes) VirtualServiceName() terra.StringValue {
-	return terra.ReferenceString(vs.ref.Append("virtual_service_name"))
+	return terra.ReferenceAsString(vs.ref.Append("virtual_service_name"))
 }
 
 func (vs VirtualServiceAttributes) ClientPolicy() terra.ListValue[VirtualServiceClientPolicyAttributes] {
-	return terra.ReferenceList[VirtualServiceClientPolicyAttributes](vs.ref.Append("client_policy"))
+	return terra.ReferenceAsList[VirtualServiceClientPolicyAttributes](vs.ref.Append("client_policy"))
 }
 
 type VirtualServiceClientPolicyAttributes struct {
@@ -590,7 +590,7 @@ func (cp VirtualServiceClientPolicyAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (cp VirtualServiceClientPolicyAttributes) Tls() terra.ListValue[VirtualServiceClientPolicyTlsAttributes] {
-	return terra.ReferenceList[VirtualServiceClientPolicyTlsAttributes](cp.ref.Append("tls"))
+	return terra.ReferenceAsList[VirtualServiceClientPolicyTlsAttributes](cp.ref.Append("tls"))
 }
 
 type VirtualServiceClientPolicyTlsAttributes struct {
@@ -610,19 +610,19 @@ func (t VirtualServiceClientPolicyTlsAttributes) InternalTokens() hclwrite.Token
 }
 
 func (t VirtualServiceClientPolicyTlsAttributes) Enforce() terra.BoolValue {
-	return terra.ReferenceBool(t.ref.Append("enforce"))
+	return terra.ReferenceAsBool(t.ref.Append("enforce"))
 }
 
 func (t VirtualServiceClientPolicyTlsAttributes) Ports() terra.SetValue[terra.NumberValue] {
-	return terra.ReferenceSet[terra.NumberValue](t.ref.Append("ports"))
+	return terra.ReferenceAsSet[terra.NumberValue](t.ref.Append("ports"))
 }
 
 func (t VirtualServiceClientPolicyTlsAttributes) Certificate() terra.ListValue[VirtualServiceClientPolicyTlsCertificateAttributes] {
-	return terra.ReferenceList[VirtualServiceClientPolicyTlsCertificateAttributes](t.ref.Append("certificate"))
+	return terra.ReferenceAsList[VirtualServiceClientPolicyTlsCertificateAttributes](t.ref.Append("certificate"))
 }
 
 func (t VirtualServiceClientPolicyTlsAttributes) Validation() terra.ListValue[VirtualServiceClientPolicyTlsValidationAttributes] {
-	return terra.ReferenceList[VirtualServiceClientPolicyTlsValidationAttributes](t.ref.Append("validation"))
+	return terra.ReferenceAsList[VirtualServiceClientPolicyTlsValidationAttributes](t.ref.Append("validation"))
 }
 
 type VirtualServiceClientPolicyTlsCertificateAttributes struct {
@@ -642,11 +642,11 @@ func (c VirtualServiceClientPolicyTlsCertificateAttributes) InternalTokens() hcl
 }
 
 func (c VirtualServiceClientPolicyTlsCertificateAttributes) File() terra.ListValue[VirtualServiceClientPolicyTlsCertificateFileAttributes] {
-	return terra.ReferenceList[VirtualServiceClientPolicyTlsCertificateFileAttributes](c.ref.Append("file"))
+	return terra.ReferenceAsList[VirtualServiceClientPolicyTlsCertificateFileAttributes](c.ref.Append("file"))
 }
 
 func (c VirtualServiceClientPolicyTlsCertificateAttributes) Sds() terra.ListValue[VirtualServiceClientPolicyTlsCertificateSdsAttributes] {
-	return terra.ReferenceList[VirtualServiceClientPolicyTlsCertificateSdsAttributes](c.ref.Append("sds"))
+	return terra.ReferenceAsList[VirtualServiceClientPolicyTlsCertificateSdsAttributes](c.ref.Append("sds"))
 }
 
 type VirtualServiceClientPolicyTlsCertificateFileAttributes struct {
@@ -666,11 +666,11 @@ func (f VirtualServiceClientPolicyTlsCertificateFileAttributes) InternalTokens()
 }
 
 func (f VirtualServiceClientPolicyTlsCertificateFileAttributes) CertificateChain() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("certificate_chain"))
+	return terra.ReferenceAsString(f.ref.Append("certificate_chain"))
 }
 
 func (f VirtualServiceClientPolicyTlsCertificateFileAttributes) PrivateKey() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("private_key"))
+	return terra.ReferenceAsString(f.ref.Append("private_key"))
 }
 
 type VirtualServiceClientPolicyTlsCertificateSdsAttributes struct {
@@ -690,7 +690,7 @@ func (s VirtualServiceClientPolicyTlsCertificateSdsAttributes) InternalTokens() 
 }
 
 func (s VirtualServiceClientPolicyTlsCertificateSdsAttributes) SecretName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("secret_name"))
+	return terra.ReferenceAsString(s.ref.Append("secret_name"))
 }
 
 type VirtualServiceClientPolicyTlsValidationAttributes struct {
@@ -710,11 +710,11 @@ func (v VirtualServiceClientPolicyTlsValidationAttributes) InternalTokens() hclw
 }
 
 func (v VirtualServiceClientPolicyTlsValidationAttributes) SubjectAlternativeNames() terra.ListValue[VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesAttributes] {
-	return terra.ReferenceList[VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesAttributes](v.ref.Append("subject_alternative_names"))
+	return terra.ReferenceAsList[VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesAttributes](v.ref.Append("subject_alternative_names"))
 }
 
 func (v VirtualServiceClientPolicyTlsValidationAttributes) Trust() terra.ListValue[VirtualServiceClientPolicyTlsValidationTrustAttributes] {
-	return terra.ReferenceList[VirtualServiceClientPolicyTlsValidationTrustAttributes](v.ref.Append("trust"))
+	return terra.ReferenceAsList[VirtualServiceClientPolicyTlsValidationTrustAttributes](v.ref.Append("trust"))
 }
 
 type VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesAttributes struct {
@@ -734,7 +734,7 @@ func (san VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesAttribut
 }
 
 func (san VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesAttributes) Match() terra.ListValue[VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes] {
-	return terra.ReferenceList[VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes](san.ref.Append("match"))
+	return terra.ReferenceAsList[VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes](san.ref.Append("match"))
 }
 
 type VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes struct {
@@ -754,7 +754,7 @@ func (m VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesMatchAttri
 }
 
 func (m VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes) Exact() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](m.ref.Append("exact"))
+	return terra.ReferenceAsSet[terra.StringValue](m.ref.Append("exact"))
 }
 
 type VirtualServiceClientPolicyTlsValidationTrustAttributes struct {
@@ -774,15 +774,15 @@ func (t VirtualServiceClientPolicyTlsValidationTrustAttributes) InternalTokens()
 }
 
 func (t VirtualServiceClientPolicyTlsValidationTrustAttributes) Acm() terra.ListValue[VirtualServiceClientPolicyTlsValidationTrustAcmAttributes] {
-	return terra.ReferenceList[VirtualServiceClientPolicyTlsValidationTrustAcmAttributes](t.ref.Append("acm"))
+	return terra.ReferenceAsList[VirtualServiceClientPolicyTlsValidationTrustAcmAttributes](t.ref.Append("acm"))
 }
 
 func (t VirtualServiceClientPolicyTlsValidationTrustAttributes) File() terra.ListValue[VirtualServiceClientPolicyTlsValidationTrustFileAttributes] {
-	return terra.ReferenceList[VirtualServiceClientPolicyTlsValidationTrustFileAttributes](t.ref.Append("file"))
+	return terra.ReferenceAsList[VirtualServiceClientPolicyTlsValidationTrustFileAttributes](t.ref.Append("file"))
 }
 
 func (t VirtualServiceClientPolicyTlsValidationTrustAttributes) Sds() terra.ListValue[VirtualServiceClientPolicyTlsValidationTrustSdsAttributes] {
-	return terra.ReferenceList[VirtualServiceClientPolicyTlsValidationTrustSdsAttributes](t.ref.Append("sds"))
+	return terra.ReferenceAsList[VirtualServiceClientPolicyTlsValidationTrustSdsAttributes](t.ref.Append("sds"))
 }
 
 type VirtualServiceClientPolicyTlsValidationTrustAcmAttributes struct {
@@ -802,7 +802,7 @@ func (a VirtualServiceClientPolicyTlsValidationTrustAcmAttributes) InternalToken
 }
 
 func (a VirtualServiceClientPolicyTlsValidationTrustAcmAttributes) CertificateAuthorityArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](a.ref.Append("certificate_authority_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](a.ref.Append("certificate_authority_arns"))
 }
 
 type VirtualServiceClientPolicyTlsValidationTrustFileAttributes struct {
@@ -822,7 +822,7 @@ func (f VirtualServiceClientPolicyTlsValidationTrustFileAttributes) InternalToke
 }
 
 func (f VirtualServiceClientPolicyTlsValidationTrustFileAttributes) CertificateChain() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("certificate_chain"))
+	return terra.ReferenceAsString(f.ref.Append("certificate_chain"))
 }
 
 type VirtualServiceClientPolicyTlsValidationTrustSdsAttributes struct {
@@ -842,7 +842,7 @@ func (s VirtualServiceClientPolicyTlsValidationTrustSdsAttributes) InternalToken
 }
 
 func (s VirtualServiceClientPolicyTlsValidationTrustSdsAttributes) SecretName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("secret_name"))
+	return terra.ReferenceAsString(s.ref.Append("secret_name"))
 }
 
 type BackendDefaultsAttributes struct {
@@ -862,7 +862,7 @@ func (bd BackendDefaultsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (bd BackendDefaultsAttributes) ClientPolicy() terra.ListValue[BackendDefaultsClientPolicyAttributes] {
-	return terra.ReferenceList[BackendDefaultsClientPolicyAttributes](bd.ref.Append("client_policy"))
+	return terra.ReferenceAsList[BackendDefaultsClientPolicyAttributes](bd.ref.Append("client_policy"))
 }
 
 type BackendDefaultsClientPolicyAttributes struct {
@@ -882,7 +882,7 @@ func (cp BackendDefaultsClientPolicyAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (cp BackendDefaultsClientPolicyAttributes) Tls() terra.ListValue[BackendDefaultsClientPolicyTlsAttributes] {
-	return terra.ReferenceList[BackendDefaultsClientPolicyTlsAttributes](cp.ref.Append("tls"))
+	return terra.ReferenceAsList[BackendDefaultsClientPolicyTlsAttributes](cp.ref.Append("tls"))
 }
 
 type BackendDefaultsClientPolicyTlsAttributes struct {
@@ -902,19 +902,19 @@ func (t BackendDefaultsClientPolicyTlsAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (t BackendDefaultsClientPolicyTlsAttributes) Enforce() terra.BoolValue {
-	return terra.ReferenceBool(t.ref.Append("enforce"))
+	return terra.ReferenceAsBool(t.ref.Append("enforce"))
 }
 
 func (t BackendDefaultsClientPolicyTlsAttributes) Ports() terra.SetValue[terra.NumberValue] {
-	return terra.ReferenceSet[terra.NumberValue](t.ref.Append("ports"))
+	return terra.ReferenceAsSet[terra.NumberValue](t.ref.Append("ports"))
 }
 
 func (t BackendDefaultsClientPolicyTlsAttributes) Certificate() terra.ListValue[BackendDefaultsClientPolicyTlsCertificateAttributes] {
-	return terra.ReferenceList[BackendDefaultsClientPolicyTlsCertificateAttributes](t.ref.Append("certificate"))
+	return terra.ReferenceAsList[BackendDefaultsClientPolicyTlsCertificateAttributes](t.ref.Append("certificate"))
 }
 
 func (t BackendDefaultsClientPolicyTlsAttributes) Validation() terra.ListValue[BackendDefaultsClientPolicyTlsValidationAttributes] {
-	return terra.ReferenceList[BackendDefaultsClientPolicyTlsValidationAttributes](t.ref.Append("validation"))
+	return terra.ReferenceAsList[BackendDefaultsClientPolicyTlsValidationAttributes](t.ref.Append("validation"))
 }
 
 type BackendDefaultsClientPolicyTlsCertificateAttributes struct {
@@ -934,11 +934,11 @@ func (c BackendDefaultsClientPolicyTlsCertificateAttributes) InternalTokens() hc
 }
 
 func (c BackendDefaultsClientPolicyTlsCertificateAttributes) File() terra.ListValue[BackendDefaultsClientPolicyTlsCertificateFileAttributes] {
-	return terra.ReferenceList[BackendDefaultsClientPolicyTlsCertificateFileAttributes](c.ref.Append("file"))
+	return terra.ReferenceAsList[BackendDefaultsClientPolicyTlsCertificateFileAttributes](c.ref.Append("file"))
 }
 
 func (c BackendDefaultsClientPolicyTlsCertificateAttributes) Sds() terra.ListValue[BackendDefaultsClientPolicyTlsCertificateSdsAttributes] {
-	return terra.ReferenceList[BackendDefaultsClientPolicyTlsCertificateSdsAttributes](c.ref.Append("sds"))
+	return terra.ReferenceAsList[BackendDefaultsClientPolicyTlsCertificateSdsAttributes](c.ref.Append("sds"))
 }
 
 type BackendDefaultsClientPolicyTlsCertificateFileAttributes struct {
@@ -958,11 +958,11 @@ func (f BackendDefaultsClientPolicyTlsCertificateFileAttributes) InternalTokens(
 }
 
 func (f BackendDefaultsClientPolicyTlsCertificateFileAttributes) CertificateChain() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("certificate_chain"))
+	return terra.ReferenceAsString(f.ref.Append("certificate_chain"))
 }
 
 func (f BackendDefaultsClientPolicyTlsCertificateFileAttributes) PrivateKey() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("private_key"))
+	return terra.ReferenceAsString(f.ref.Append("private_key"))
 }
 
 type BackendDefaultsClientPolicyTlsCertificateSdsAttributes struct {
@@ -982,7 +982,7 @@ func (s BackendDefaultsClientPolicyTlsCertificateSdsAttributes) InternalTokens()
 }
 
 func (s BackendDefaultsClientPolicyTlsCertificateSdsAttributes) SecretName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("secret_name"))
+	return terra.ReferenceAsString(s.ref.Append("secret_name"))
 }
 
 type BackendDefaultsClientPolicyTlsValidationAttributes struct {
@@ -1002,11 +1002,11 @@ func (v BackendDefaultsClientPolicyTlsValidationAttributes) InternalTokens() hcl
 }
 
 func (v BackendDefaultsClientPolicyTlsValidationAttributes) SubjectAlternativeNames() terra.ListValue[BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesAttributes] {
-	return terra.ReferenceList[BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesAttributes](v.ref.Append("subject_alternative_names"))
+	return terra.ReferenceAsList[BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesAttributes](v.ref.Append("subject_alternative_names"))
 }
 
 func (v BackendDefaultsClientPolicyTlsValidationAttributes) Trust() terra.ListValue[BackendDefaultsClientPolicyTlsValidationTrustAttributes] {
-	return terra.ReferenceList[BackendDefaultsClientPolicyTlsValidationTrustAttributes](v.ref.Append("trust"))
+	return terra.ReferenceAsList[BackendDefaultsClientPolicyTlsValidationTrustAttributes](v.ref.Append("trust"))
 }
 
 type BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesAttributes struct {
@@ -1026,7 +1026,7 @@ func (san BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesAttribu
 }
 
 func (san BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesAttributes) Match() terra.ListValue[BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes] {
-	return terra.ReferenceList[BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes](san.ref.Append("match"))
+	return terra.ReferenceAsList[BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes](san.ref.Append("match"))
 }
 
 type BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes struct {
@@ -1046,7 +1046,7 @@ func (m BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesMatchAttr
 }
 
 func (m BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes) Exact() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](m.ref.Append("exact"))
+	return terra.ReferenceAsSet[terra.StringValue](m.ref.Append("exact"))
 }
 
 type BackendDefaultsClientPolicyTlsValidationTrustAttributes struct {
@@ -1066,15 +1066,15 @@ func (t BackendDefaultsClientPolicyTlsValidationTrustAttributes) InternalTokens(
 }
 
 func (t BackendDefaultsClientPolicyTlsValidationTrustAttributes) Acm() terra.ListValue[BackendDefaultsClientPolicyTlsValidationTrustAcmAttributes] {
-	return terra.ReferenceList[BackendDefaultsClientPolicyTlsValidationTrustAcmAttributes](t.ref.Append("acm"))
+	return terra.ReferenceAsList[BackendDefaultsClientPolicyTlsValidationTrustAcmAttributes](t.ref.Append("acm"))
 }
 
 func (t BackendDefaultsClientPolicyTlsValidationTrustAttributes) File() terra.ListValue[BackendDefaultsClientPolicyTlsValidationTrustFileAttributes] {
-	return terra.ReferenceList[BackendDefaultsClientPolicyTlsValidationTrustFileAttributes](t.ref.Append("file"))
+	return terra.ReferenceAsList[BackendDefaultsClientPolicyTlsValidationTrustFileAttributes](t.ref.Append("file"))
 }
 
 func (t BackendDefaultsClientPolicyTlsValidationTrustAttributes) Sds() terra.ListValue[BackendDefaultsClientPolicyTlsValidationTrustSdsAttributes] {
-	return terra.ReferenceList[BackendDefaultsClientPolicyTlsValidationTrustSdsAttributes](t.ref.Append("sds"))
+	return terra.ReferenceAsList[BackendDefaultsClientPolicyTlsValidationTrustSdsAttributes](t.ref.Append("sds"))
 }
 
 type BackendDefaultsClientPolicyTlsValidationTrustAcmAttributes struct {
@@ -1094,7 +1094,7 @@ func (a BackendDefaultsClientPolicyTlsValidationTrustAcmAttributes) InternalToke
 }
 
 func (a BackendDefaultsClientPolicyTlsValidationTrustAcmAttributes) CertificateAuthorityArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](a.ref.Append("certificate_authority_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](a.ref.Append("certificate_authority_arns"))
 }
 
 type BackendDefaultsClientPolicyTlsValidationTrustFileAttributes struct {
@@ -1114,7 +1114,7 @@ func (f BackendDefaultsClientPolicyTlsValidationTrustFileAttributes) InternalTok
 }
 
 func (f BackendDefaultsClientPolicyTlsValidationTrustFileAttributes) CertificateChain() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("certificate_chain"))
+	return terra.ReferenceAsString(f.ref.Append("certificate_chain"))
 }
 
 type BackendDefaultsClientPolicyTlsValidationTrustSdsAttributes struct {
@@ -1134,7 +1134,7 @@ func (s BackendDefaultsClientPolicyTlsValidationTrustSdsAttributes) InternalToke
 }
 
 func (s BackendDefaultsClientPolicyTlsValidationTrustSdsAttributes) SecretName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("secret_name"))
+	return terra.ReferenceAsString(s.ref.Append("secret_name"))
 }
 
 type ListenerAttributes struct {
@@ -1154,27 +1154,27 @@ func (l ListenerAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (l ListenerAttributes) ConnectionPool() terra.ListValue[ConnectionPoolAttributes] {
-	return terra.ReferenceList[ConnectionPoolAttributes](l.ref.Append("connection_pool"))
+	return terra.ReferenceAsList[ConnectionPoolAttributes](l.ref.Append("connection_pool"))
 }
 
 func (l ListenerAttributes) HealthCheck() terra.ListValue[HealthCheckAttributes] {
-	return terra.ReferenceList[HealthCheckAttributes](l.ref.Append("health_check"))
+	return terra.ReferenceAsList[HealthCheckAttributes](l.ref.Append("health_check"))
 }
 
 func (l ListenerAttributes) OutlierDetection() terra.ListValue[OutlierDetectionAttributes] {
-	return terra.ReferenceList[OutlierDetectionAttributes](l.ref.Append("outlier_detection"))
+	return terra.ReferenceAsList[OutlierDetectionAttributes](l.ref.Append("outlier_detection"))
 }
 
 func (l ListenerAttributes) PortMapping() terra.ListValue[PortMappingAttributes] {
-	return terra.ReferenceList[PortMappingAttributes](l.ref.Append("port_mapping"))
+	return terra.ReferenceAsList[PortMappingAttributes](l.ref.Append("port_mapping"))
 }
 
 func (l ListenerAttributes) Timeout() terra.ListValue[TimeoutAttributes] {
-	return terra.ReferenceList[TimeoutAttributes](l.ref.Append("timeout"))
+	return terra.ReferenceAsList[TimeoutAttributes](l.ref.Append("timeout"))
 }
 
 func (l ListenerAttributes) Tls() terra.ListValue[ListenerTlsAttributes] {
-	return terra.ReferenceList[ListenerTlsAttributes](l.ref.Append("tls"))
+	return terra.ReferenceAsList[ListenerTlsAttributes](l.ref.Append("tls"))
 }
 
 type ConnectionPoolAttributes struct {
@@ -1194,19 +1194,19 @@ func (cp ConnectionPoolAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cp ConnectionPoolAttributes) Grpc() terra.ListValue[ConnectionPoolGrpcAttributes] {
-	return terra.ReferenceList[ConnectionPoolGrpcAttributes](cp.ref.Append("grpc"))
+	return terra.ReferenceAsList[ConnectionPoolGrpcAttributes](cp.ref.Append("grpc"))
 }
 
 func (cp ConnectionPoolAttributes) Http() terra.ListValue[ConnectionPoolHttpAttributes] {
-	return terra.ReferenceList[ConnectionPoolHttpAttributes](cp.ref.Append("http"))
+	return terra.ReferenceAsList[ConnectionPoolHttpAttributes](cp.ref.Append("http"))
 }
 
 func (cp ConnectionPoolAttributes) Http2() terra.ListValue[ConnectionPoolHttp2Attributes] {
-	return terra.ReferenceList[ConnectionPoolHttp2Attributes](cp.ref.Append("http2"))
+	return terra.ReferenceAsList[ConnectionPoolHttp2Attributes](cp.ref.Append("http2"))
 }
 
 func (cp ConnectionPoolAttributes) Tcp() terra.ListValue[ConnectionPoolTcpAttributes] {
-	return terra.ReferenceList[ConnectionPoolTcpAttributes](cp.ref.Append("tcp"))
+	return terra.ReferenceAsList[ConnectionPoolTcpAttributes](cp.ref.Append("tcp"))
 }
 
 type ConnectionPoolGrpcAttributes struct {
@@ -1226,7 +1226,7 @@ func (g ConnectionPoolGrpcAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (g ConnectionPoolGrpcAttributes) MaxRequests() terra.NumberValue {
-	return terra.ReferenceNumber(g.ref.Append("max_requests"))
+	return terra.ReferenceAsNumber(g.ref.Append("max_requests"))
 }
 
 type ConnectionPoolHttpAttributes struct {
@@ -1246,11 +1246,11 @@ func (h ConnectionPoolHttpAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (h ConnectionPoolHttpAttributes) MaxConnections() terra.NumberValue {
-	return terra.ReferenceNumber(h.ref.Append("max_connections"))
+	return terra.ReferenceAsNumber(h.ref.Append("max_connections"))
 }
 
 func (h ConnectionPoolHttpAttributes) MaxPendingRequests() terra.NumberValue {
-	return terra.ReferenceNumber(h.ref.Append("max_pending_requests"))
+	return terra.ReferenceAsNumber(h.ref.Append("max_pending_requests"))
 }
 
 type ConnectionPoolHttp2Attributes struct {
@@ -1270,7 +1270,7 @@ func (h ConnectionPoolHttp2Attributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (h ConnectionPoolHttp2Attributes) MaxRequests() terra.NumberValue {
-	return terra.ReferenceNumber(h.ref.Append("max_requests"))
+	return terra.ReferenceAsNumber(h.ref.Append("max_requests"))
 }
 
 type ConnectionPoolTcpAttributes struct {
@@ -1290,7 +1290,7 @@ func (t ConnectionPoolTcpAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t ConnectionPoolTcpAttributes) MaxConnections() terra.NumberValue {
-	return terra.ReferenceNumber(t.ref.Append("max_connections"))
+	return terra.ReferenceAsNumber(t.ref.Append("max_connections"))
 }
 
 type HealthCheckAttributes struct {
@@ -1310,31 +1310,31 @@ func (hc HealthCheckAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hc HealthCheckAttributes) HealthyThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(hc.ref.Append("healthy_threshold"))
+	return terra.ReferenceAsNumber(hc.ref.Append("healthy_threshold"))
 }
 
 func (hc HealthCheckAttributes) IntervalMillis() terra.NumberValue {
-	return terra.ReferenceNumber(hc.ref.Append("interval_millis"))
+	return terra.ReferenceAsNumber(hc.ref.Append("interval_millis"))
 }
 
 func (hc HealthCheckAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("path"))
+	return terra.ReferenceAsString(hc.ref.Append("path"))
 }
 
 func (hc HealthCheckAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(hc.ref.Append("port"))
+	return terra.ReferenceAsNumber(hc.ref.Append("port"))
 }
 
 func (hc HealthCheckAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("protocol"))
+	return terra.ReferenceAsString(hc.ref.Append("protocol"))
 }
 
 func (hc HealthCheckAttributes) TimeoutMillis() terra.NumberValue {
-	return terra.ReferenceNumber(hc.ref.Append("timeout_millis"))
+	return terra.ReferenceAsNumber(hc.ref.Append("timeout_millis"))
 }
 
 func (hc HealthCheckAttributes) UnhealthyThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(hc.ref.Append("unhealthy_threshold"))
+	return terra.ReferenceAsNumber(hc.ref.Append("unhealthy_threshold"))
 }
 
 type OutlierDetectionAttributes struct {
@@ -1354,19 +1354,19 @@ func (od OutlierDetectionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (od OutlierDetectionAttributes) MaxEjectionPercent() terra.NumberValue {
-	return terra.ReferenceNumber(od.ref.Append("max_ejection_percent"))
+	return terra.ReferenceAsNumber(od.ref.Append("max_ejection_percent"))
 }
 
 func (od OutlierDetectionAttributes) MaxServerErrors() terra.NumberValue {
-	return terra.ReferenceNumber(od.ref.Append("max_server_errors"))
+	return terra.ReferenceAsNumber(od.ref.Append("max_server_errors"))
 }
 
 func (od OutlierDetectionAttributes) BaseEjectionDuration() terra.ListValue[BaseEjectionDurationAttributes] {
-	return terra.ReferenceList[BaseEjectionDurationAttributes](od.ref.Append("base_ejection_duration"))
+	return terra.ReferenceAsList[BaseEjectionDurationAttributes](od.ref.Append("base_ejection_duration"))
 }
 
 func (od OutlierDetectionAttributes) Interval() terra.ListValue[IntervalAttributes] {
-	return terra.ReferenceList[IntervalAttributes](od.ref.Append("interval"))
+	return terra.ReferenceAsList[IntervalAttributes](od.ref.Append("interval"))
 }
 
 type BaseEjectionDurationAttributes struct {
@@ -1386,11 +1386,11 @@ func (bed BaseEjectionDurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (bed BaseEjectionDurationAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(bed.ref.Append("unit"))
+	return terra.ReferenceAsString(bed.ref.Append("unit"))
 }
 
 func (bed BaseEjectionDurationAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(bed.ref.Append("value"))
+	return terra.ReferenceAsNumber(bed.ref.Append("value"))
 }
 
 type IntervalAttributes struct {
@@ -1410,11 +1410,11 @@ func (i IntervalAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i IntervalAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("unit"))
+	return terra.ReferenceAsString(i.ref.Append("unit"))
 }
 
 func (i IntervalAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("value"))
+	return terra.ReferenceAsNumber(i.ref.Append("value"))
 }
 
 type PortMappingAttributes struct {
@@ -1434,11 +1434,11 @@ func (pm PortMappingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pm PortMappingAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(pm.ref.Append("port"))
+	return terra.ReferenceAsNumber(pm.ref.Append("port"))
 }
 
 func (pm PortMappingAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(pm.ref.Append("protocol"))
+	return terra.ReferenceAsString(pm.ref.Append("protocol"))
 }
 
 type TimeoutAttributes struct {
@@ -1458,19 +1458,19 @@ func (t TimeoutAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutAttributes) Grpc() terra.ListValue[TimeoutGrpcAttributes] {
-	return terra.ReferenceList[TimeoutGrpcAttributes](t.ref.Append("grpc"))
+	return terra.ReferenceAsList[TimeoutGrpcAttributes](t.ref.Append("grpc"))
 }
 
 func (t TimeoutAttributes) Http() terra.ListValue[TimeoutHttpAttributes] {
-	return terra.ReferenceList[TimeoutHttpAttributes](t.ref.Append("http"))
+	return terra.ReferenceAsList[TimeoutHttpAttributes](t.ref.Append("http"))
 }
 
 func (t TimeoutAttributes) Http2() terra.ListValue[TimeoutHttp2Attributes] {
-	return terra.ReferenceList[TimeoutHttp2Attributes](t.ref.Append("http2"))
+	return terra.ReferenceAsList[TimeoutHttp2Attributes](t.ref.Append("http2"))
 }
 
 func (t TimeoutAttributes) Tcp() terra.ListValue[TimeoutTcpAttributes] {
-	return terra.ReferenceList[TimeoutTcpAttributes](t.ref.Append("tcp"))
+	return terra.ReferenceAsList[TimeoutTcpAttributes](t.ref.Append("tcp"))
 }
 
 type TimeoutGrpcAttributes struct {
@@ -1490,11 +1490,11 @@ func (g TimeoutGrpcAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (g TimeoutGrpcAttributes) Idle() terra.ListValue[GrpcIdleAttributes] {
-	return terra.ReferenceList[GrpcIdleAttributes](g.ref.Append("idle"))
+	return terra.ReferenceAsList[GrpcIdleAttributes](g.ref.Append("idle"))
 }
 
 func (g TimeoutGrpcAttributes) PerRequest() terra.ListValue[GrpcPerRequestAttributes] {
-	return terra.ReferenceList[GrpcPerRequestAttributes](g.ref.Append("per_request"))
+	return terra.ReferenceAsList[GrpcPerRequestAttributes](g.ref.Append("per_request"))
 }
 
 type GrpcIdleAttributes struct {
@@ -1514,11 +1514,11 @@ func (i GrpcIdleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i GrpcIdleAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("unit"))
+	return terra.ReferenceAsString(i.ref.Append("unit"))
 }
 
 func (i GrpcIdleAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("value"))
+	return terra.ReferenceAsNumber(i.ref.Append("value"))
 }
 
 type GrpcPerRequestAttributes struct {
@@ -1538,11 +1538,11 @@ func (pr GrpcPerRequestAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pr GrpcPerRequestAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(pr.ref.Append("unit"))
+	return terra.ReferenceAsString(pr.ref.Append("unit"))
 }
 
 func (pr GrpcPerRequestAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("value"))
+	return terra.ReferenceAsNumber(pr.ref.Append("value"))
 }
 
 type TimeoutHttpAttributes struct {
@@ -1562,11 +1562,11 @@ func (h TimeoutHttpAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (h TimeoutHttpAttributes) Idle() terra.ListValue[HttpIdleAttributes] {
-	return terra.ReferenceList[HttpIdleAttributes](h.ref.Append("idle"))
+	return terra.ReferenceAsList[HttpIdleAttributes](h.ref.Append("idle"))
 }
 
 func (h TimeoutHttpAttributes) PerRequest() terra.ListValue[HttpPerRequestAttributes] {
-	return terra.ReferenceList[HttpPerRequestAttributes](h.ref.Append("per_request"))
+	return terra.ReferenceAsList[HttpPerRequestAttributes](h.ref.Append("per_request"))
 }
 
 type HttpIdleAttributes struct {
@@ -1586,11 +1586,11 @@ func (i HttpIdleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i HttpIdleAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("unit"))
+	return terra.ReferenceAsString(i.ref.Append("unit"))
 }
 
 func (i HttpIdleAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("value"))
+	return terra.ReferenceAsNumber(i.ref.Append("value"))
 }
 
 type HttpPerRequestAttributes struct {
@@ -1610,11 +1610,11 @@ func (pr HttpPerRequestAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pr HttpPerRequestAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(pr.ref.Append("unit"))
+	return terra.ReferenceAsString(pr.ref.Append("unit"))
 }
 
 func (pr HttpPerRequestAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("value"))
+	return terra.ReferenceAsNumber(pr.ref.Append("value"))
 }
 
 type TimeoutHttp2Attributes struct {
@@ -1634,11 +1634,11 @@ func (h TimeoutHttp2Attributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (h TimeoutHttp2Attributes) Idle() terra.ListValue[Http2IdleAttributes] {
-	return terra.ReferenceList[Http2IdleAttributes](h.ref.Append("idle"))
+	return terra.ReferenceAsList[Http2IdleAttributes](h.ref.Append("idle"))
 }
 
 func (h TimeoutHttp2Attributes) PerRequest() terra.ListValue[Http2PerRequestAttributes] {
-	return terra.ReferenceList[Http2PerRequestAttributes](h.ref.Append("per_request"))
+	return terra.ReferenceAsList[Http2PerRequestAttributes](h.ref.Append("per_request"))
 }
 
 type Http2IdleAttributes struct {
@@ -1658,11 +1658,11 @@ func (i Http2IdleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i Http2IdleAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("unit"))
+	return terra.ReferenceAsString(i.ref.Append("unit"))
 }
 
 func (i Http2IdleAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("value"))
+	return terra.ReferenceAsNumber(i.ref.Append("value"))
 }
 
 type Http2PerRequestAttributes struct {
@@ -1682,11 +1682,11 @@ func (pr Http2PerRequestAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pr Http2PerRequestAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(pr.ref.Append("unit"))
+	return terra.ReferenceAsString(pr.ref.Append("unit"))
 }
 
 func (pr Http2PerRequestAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(pr.ref.Append("value"))
+	return terra.ReferenceAsNumber(pr.ref.Append("value"))
 }
 
 type TimeoutTcpAttributes struct {
@@ -1706,7 +1706,7 @@ func (t TimeoutTcpAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutTcpAttributes) Idle() terra.ListValue[TcpIdleAttributes] {
-	return terra.ReferenceList[TcpIdleAttributes](t.ref.Append("idle"))
+	return terra.ReferenceAsList[TcpIdleAttributes](t.ref.Append("idle"))
 }
 
 type TcpIdleAttributes struct {
@@ -1726,11 +1726,11 @@ func (i TcpIdleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i TcpIdleAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("unit"))
+	return terra.ReferenceAsString(i.ref.Append("unit"))
 }
 
 func (i TcpIdleAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("value"))
+	return terra.ReferenceAsNumber(i.ref.Append("value"))
 }
 
 type ListenerTlsAttributes struct {
@@ -1750,15 +1750,15 @@ func (t ListenerTlsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t ListenerTlsAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("mode"))
+	return terra.ReferenceAsString(t.ref.Append("mode"))
 }
 
 func (t ListenerTlsAttributes) Certificate() terra.ListValue[ListenerTlsCertificateAttributes] {
-	return terra.ReferenceList[ListenerTlsCertificateAttributes](t.ref.Append("certificate"))
+	return terra.ReferenceAsList[ListenerTlsCertificateAttributes](t.ref.Append("certificate"))
 }
 
 func (t ListenerTlsAttributes) Validation() terra.ListValue[ListenerTlsValidationAttributes] {
-	return terra.ReferenceList[ListenerTlsValidationAttributes](t.ref.Append("validation"))
+	return terra.ReferenceAsList[ListenerTlsValidationAttributes](t.ref.Append("validation"))
 }
 
 type ListenerTlsCertificateAttributes struct {
@@ -1778,15 +1778,15 @@ func (c ListenerTlsCertificateAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ListenerTlsCertificateAttributes) Acm() terra.ListValue[CertificateAcmAttributes] {
-	return terra.ReferenceList[CertificateAcmAttributes](c.ref.Append("acm"))
+	return terra.ReferenceAsList[CertificateAcmAttributes](c.ref.Append("acm"))
 }
 
 func (c ListenerTlsCertificateAttributes) File() terra.ListValue[ListenerTlsCertificateFileAttributes] {
-	return terra.ReferenceList[ListenerTlsCertificateFileAttributes](c.ref.Append("file"))
+	return terra.ReferenceAsList[ListenerTlsCertificateFileAttributes](c.ref.Append("file"))
 }
 
 func (c ListenerTlsCertificateAttributes) Sds() terra.ListValue[ListenerTlsCertificateSdsAttributes] {
-	return terra.ReferenceList[ListenerTlsCertificateSdsAttributes](c.ref.Append("sds"))
+	return terra.ReferenceAsList[ListenerTlsCertificateSdsAttributes](c.ref.Append("sds"))
 }
 
 type CertificateAcmAttributes struct {
@@ -1806,7 +1806,7 @@ func (a CertificateAcmAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a CertificateAcmAttributes) CertificateArn() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("certificate_arn"))
+	return terra.ReferenceAsString(a.ref.Append("certificate_arn"))
 }
 
 type ListenerTlsCertificateFileAttributes struct {
@@ -1826,11 +1826,11 @@ func (f ListenerTlsCertificateFileAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f ListenerTlsCertificateFileAttributes) CertificateChain() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("certificate_chain"))
+	return terra.ReferenceAsString(f.ref.Append("certificate_chain"))
 }
 
 func (f ListenerTlsCertificateFileAttributes) PrivateKey() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("private_key"))
+	return terra.ReferenceAsString(f.ref.Append("private_key"))
 }
 
 type ListenerTlsCertificateSdsAttributes struct {
@@ -1850,7 +1850,7 @@ func (s ListenerTlsCertificateSdsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s ListenerTlsCertificateSdsAttributes) SecretName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("secret_name"))
+	return terra.ReferenceAsString(s.ref.Append("secret_name"))
 }
 
 type ListenerTlsValidationAttributes struct {
@@ -1870,11 +1870,11 @@ func (v ListenerTlsValidationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (v ListenerTlsValidationAttributes) SubjectAlternativeNames() terra.ListValue[ListenerTlsValidationSubjectAlternativeNamesAttributes] {
-	return terra.ReferenceList[ListenerTlsValidationSubjectAlternativeNamesAttributes](v.ref.Append("subject_alternative_names"))
+	return terra.ReferenceAsList[ListenerTlsValidationSubjectAlternativeNamesAttributes](v.ref.Append("subject_alternative_names"))
 }
 
 func (v ListenerTlsValidationAttributes) Trust() terra.ListValue[ListenerTlsValidationTrustAttributes] {
-	return terra.ReferenceList[ListenerTlsValidationTrustAttributes](v.ref.Append("trust"))
+	return terra.ReferenceAsList[ListenerTlsValidationTrustAttributes](v.ref.Append("trust"))
 }
 
 type ListenerTlsValidationSubjectAlternativeNamesAttributes struct {
@@ -1894,7 +1894,7 @@ func (san ListenerTlsValidationSubjectAlternativeNamesAttributes) InternalTokens
 }
 
 func (san ListenerTlsValidationSubjectAlternativeNamesAttributes) Match() terra.ListValue[ListenerTlsValidationSubjectAlternativeNamesMatchAttributes] {
-	return terra.ReferenceList[ListenerTlsValidationSubjectAlternativeNamesMatchAttributes](san.ref.Append("match"))
+	return terra.ReferenceAsList[ListenerTlsValidationSubjectAlternativeNamesMatchAttributes](san.ref.Append("match"))
 }
 
 type ListenerTlsValidationSubjectAlternativeNamesMatchAttributes struct {
@@ -1914,7 +1914,7 @@ func (m ListenerTlsValidationSubjectAlternativeNamesMatchAttributes) InternalTok
 }
 
 func (m ListenerTlsValidationSubjectAlternativeNamesMatchAttributes) Exact() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](m.ref.Append("exact"))
+	return terra.ReferenceAsSet[terra.StringValue](m.ref.Append("exact"))
 }
 
 type ListenerTlsValidationTrustAttributes struct {
@@ -1934,11 +1934,11 @@ func (t ListenerTlsValidationTrustAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t ListenerTlsValidationTrustAttributes) File() terra.ListValue[ListenerTlsValidationTrustFileAttributes] {
-	return terra.ReferenceList[ListenerTlsValidationTrustFileAttributes](t.ref.Append("file"))
+	return terra.ReferenceAsList[ListenerTlsValidationTrustFileAttributes](t.ref.Append("file"))
 }
 
 func (t ListenerTlsValidationTrustAttributes) Sds() terra.ListValue[ListenerTlsValidationTrustSdsAttributes] {
-	return terra.ReferenceList[ListenerTlsValidationTrustSdsAttributes](t.ref.Append("sds"))
+	return terra.ReferenceAsList[ListenerTlsValidationTrustSdsAttributes](t.ref.Append("sds"))
 }
 
 type ListenerTlsValidationTrustFileAttributes struct {
@@ -1958,7 +1958,7 @@ func (f ListenerTlsValidationTrustFileAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (f ListenerTlsValidationTrustFileAttributes) CertificateChain() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("certificate_chain"))
+	return terra.ReferenceAsString(f.ref.Append("certificate_chain"))
 }
 
 type ListenerTlsValidationTrustSdsAttributes struct {
@@ -1978,7 +1978,7 @@ func (s ListenerTlsValidationTrustSdsAttributes) InternalTokens() hclwrite.Token
 }
 
 func (s ListenerTlsValidationTrustSdsAttributes) SecretName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("secret_name"))
+	return terra.ReferenceAsString(s.ref.Append("secret_name"))
 }
 
 type LoggingAttributes struct {
@@ -1998,7 +1998,7 @@ func (l LoggingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (l LoggingAttributes) AccessLog() terra.ListValue[AccessLogAttributes] {
-	return terra.ReferenceList[AccessLogAttributes](l.ref.Append("access_log"))
+	return terra.ReferenceAsList[AccessLogAttributes](l.ref.Append("access_log"))
 }
 
 type AccessLogAttributes struct {
@@ -2018,7 +2018,7 @@ func (al AccessLogAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (al AccessLogAttributes) File() terra.ListValue[AccessLogFileAttributes] {
-	return terra.ReferenceList[AccessLogFileAttributes](al.ref.Append("file"))
+	return terra.ReferenceAsList[AccessLogFileAttributes](al.ref.Append("file"))
 }
 
 type AccessLogFileAttributes struct {
@@ -2038,11 +2038,11 @@ func (f AccessLogFileAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f AccessLogFileAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("path"))
+	return terra.ReferenceAsString(f.ref.Append("path"))
 }
 
 func (f AccessLogFileAttributes) Format() terra.ListValue[FormatAttributes] {
-	return terra.ReferenceList[FormatAttributes](f.ref.Append("format"))
+	return terra.ReferenceAsList[FormatAttributes](f.ref.Append("format"))
 }
 
 type FormatAttributes struct {
@@ -2062,11 +2062,11 @@ func (f FormatAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FormatAttributes) Text() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("text"))
+	return terra.ReferenceAsString(f.ref.Append("text"))
 }
 
 func (f FormatAttributes) Json() terra.ListValue[JsonAttributes] {
-	return terra.ReferenceList[JsonAttributes](f.ref.Append("json"))
+	return terra.ReferenceAsList[JsonAttributes](f.ref.Append("json"))
 }
 
 type JsonAttributes struct {
@@ -2086,11 +2086,11 @@ func (j JsonAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (j JsonAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(j.ref.Append("key"))
+	return terra.ReferenceAsString(j.ref.Append("key"))
 }
 
 func (j JsonAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(j.ref.Append("value"))
+	return terra.ReferenceAsString(j.ref.Append("value"))
 }
 
 type ServiceDiscoveryAttributes struct {
@@ -2110,11 +2110,11 @@ func (sd ServiceDiscoveryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sd ServiceDiscoveryAttributes) AwsCloudMap() terra.ListValue[AwsCloudMapAttributes] {
-	return terra.ReferenceList[AwsCloudMapAttributes](sd.ref.Append("aws_cloud_map"))
+	return terra.ReferenceAsList[AwsCloudMapAttributes](sd.ref.Append("aws_cloud_map"))
 }
 
 func (sd ServiceDiscoveryAttributes) Dns() terra.ListValue[DnsAttributes] {
-	return terra.ReferenceList[DnsAttributes](sd.ref.Append("dns"))
+	return terra.ReferenceAsList[DnsAttributes](sd.ref.Append("dns"))
 }
 
 type AwsCloudMapAttributes struct {
@@ -2134,15 +2134,15 @@ func (acm AwsCloudMapAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (acm AwsCloudMapAttributes) Attributes() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](acm.ref.Append("attributes"))
+	return terra.ReferenceAsMap[terra.StringValue](acm.ref.Append("attributes"))
 }
 
 func (acm AwsCloudMapAttributes) NamespaceName() terra.StringValue {
-	return terra.ReferenceString(acm.ref.Append("namespace_name"))
+	return terra.ReferenceAsString(acm.ref.Append("namespace_name"))
 }
 
 func (acm AwsCloudMapAttributes) ServiceName() terra.StringValue {
-	return terra.ReferenceString(acm.ref.Append("service_name"))
+	return terra.ReferenceAsString(acm.ref.Append("service_name"))
 }
 
 type DnsAttributes struct {
@@ -2162,7 +2162,7 @@ func (d DnsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DnsAttributes) Hostname() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("hostname"))
+	return terra.ReferenceAsString(d.ref.Append("hostname"))
 }
 
 type SpecState struct {

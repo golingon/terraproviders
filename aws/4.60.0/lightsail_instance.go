@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLightsailInstance creates a new instance of [LightsailInstance].
 func NewLightsailInstance(name string, args LightsailInstanceArgs) *LightsailInstance {
 	return &LightsailInstance{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLightsailInstance(name string, args LightsailInstanceArgs) *LightsailIns
 
 var _ terra.Resource = (*LightsailInstance)(nil)
 
+// LightsailInstance represents the Terraform resource aws_lightsail_instance.
 type LightsailInstance struct {
-	Name  string
-	Args  LightsailInstanceArgs
-	state *lightsailInstanceState
+	Name      string
+	Args      LightsailInstanceArgs
+	state     *lightsailInstanceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LightsailInstance].
 func (li *LightsailInstance) Type() string {
 	return "aws_lightsail_instance"
 }
 
+// LocalName returns the local name for [LightsailInstance].
 func (li *LightsailInstance) LocalName() string {
 	return li.Name
 }
 
+// Configuration returns the configuration (args) for [LightsailInstance].
 func (li *LightsailInstance) Configuration() interface{} {
 	return li.Args
 }
 
+// DependOn is used for other resources to depend on [LightsailInstance].
+func (li *LightsailInstance) DependOn() terra.Reference {
+	return terra.ReferenceResource(li)
+}
+
+// Dependencies returns the list of resources [LightsailInstance] depends_on.
+func (li *LightsailInstance) Dependencies() terra.Dependencies {
+	return li.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LightsailInstance].
+func (li *LightsailInstance) LifecycleManagement() *terra.Lifecycle {
+	return li.Lifecycle
+}
+
+// Attributes returns the attributes for [LightsailInstance].
 func (li *LightsailInstance) Attributes() lightsailInstanceAttributes {
 	return lightsailInstanceAttributes{ref: terra.ReferenceResource(li)}
 }
 
+// ImportState imports the given attribute values into [LightsailInstance]'s state.
 func (li *LightsailInstance) ImportState(av io.Reader) error {
 	li.state = &lightsailInstanceState{}
 	if err := json.NewDecoder(av).Decode(li.state); err != nil {
@@ -49,10 +73,12 @@ func (li *LightsailInstance) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LightsailInstance] has state.
 func (li *LightsailInstance) State() (*lightsailInstanceState, bool) {
 	return li.state, li.state != nil
 }
 
+// StateMust returns the state for [LightsailInstance]. Panics if the state is nil.
 func (li *LightsailInstance) StateMust() *lightsailInstanceState {
 	if li.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", li.Type(), li.LocalName()))
@@ -60,10 +86,7 @@ func (li *LightsailInstance) StateMust() *lightsailInstanceState {
 	return li.state
 }
 
-func (li *LightsailInstance) DependOn() terra.Reference {
-	return terra.ReferenceResource(li)
-}
-
+// LightsailInstanceArgs contains the configurations for aws_lightsail_instance.
 type LightsailInstanceArgs struct {
 	// AvailabilityZone: string, required
 	AvailabilityZone terra.StringValue `hcl:"availability_zone,attr" validate:"required"`
@@ -87,95 +110,113 @@ type LightsailInstanceArgs struct {
 	UserData terra.StringValue `hcl:"user_data,attr"`
 	// AddOn: optional
 	AddOn *lightsailinstance.AddOn `hcl:"add_on,block"`
-	// DependsOn contains resources that LightsailInstance depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lightsailInstanceAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_lightsail_instance.
 func (li lightsailInstanceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("arn"))
+	return terra.ReferenceAsString(li.ref.Append("arn"))
 }
 
+// AvailabilityZone returns a reference to field availability_zone of aws_lightsail_instance.
 func (li lightsailInstanceAttributes) AvailabilityZone() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("availability_zone"))
+	return terra.ReferenceAsString(li.ref.Append("availability_zone"))
 }
 
+// BlueprintId returns a reference to field blueprint_id of aws_lightsail_instance.
 func (li lightsailInstanceAttributes) BlueprintId() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("blueprint_id"))
+	return terra.ReferenceAsString(li.ref.Append("blueprint_id"))
 }
 
+// BundleId returns a reference to field bundle_id of aws_lightsail_instance.
 func (li lightsailInstanceAttributes) BundleId() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("bundle_id"))
+	return terra.ReferenceAsString(li.ref.Append("bundle_id"))
 }
 
+// CpuCount returns a reference to field cpu_count of aws_lightsail_instance.
 func (li lightsailInstanceAttributes) CpuCount() terra.NumberValue {
-	return terra.ReferenceNumber(li.ref.Append("cpu_count"))
+	return terra.ReferenceAsNumber(li.ref.Append("cpu_count"))
 }
 
+// CreatedAt returns a reference to field created_at of aws_lightsail_instance.
 func (li lightsailInstanceAttributes) CreatedAt() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("created_at"))
+	return terra.ReferenceAsString(li.ref.Append("created_at"))
 }
 
+// Id returns a reference to field id of aws_lightsail_instance.
 func (li lightsailInstanceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("id"))
+	return terra.ReferenceAsString(li.ref.Append("id"))
 }
 
+// IpAddressType returns a reference to field ip_address_type of aws_lightsail_instance.
 func (li lightsailInstanceAttributes) IpAddressType() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("ip_address_type"))
+	return terra.ReferenceAsString(li.ref.Append("ip_address_type"))
 }
 
+// Ipv6Address returns a reference to field ipv6_address of aws_lightsail_instance.
 func (li lightsailInstanceAttributes) Ipv6Address() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("ipv6_address"))
+	return terra.ReferenceAsString(li.ref.Append("ipv6_address"))
 }
 
+// Ipv6Addresses returns a reference to field ipv6_addresses of aws_lightsail_instance.
 func (li lightsailInstanceAttributes) Ipv6Addresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](li.ref.Append("ipv6_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](li.ref.Append("ipv6_addresses"))
 }
 
+// IsStaticIp returns a reference to field is_static_ip of aws_lightsail_instance.
 func (li lightsailInstanceAttributes) IsStaticIp() terra.BoolValue {
-	return terra.ReferenceBool(li.ref.Append("is_static_ip"))
+	return terra.ReferenceAsBool(li.ref.Append("is_static_ip"))
 }
 
+// KeyPairName returns a reference to field key_pair_name of aws_lightsail_instance.
 func (li lightsailInstanceAttributes) KeyPairName() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("key_pair_name"))
+	return terra.ReferenceAsString(li.ref.Append("key_pair_name"))
 }
 
+// Name returns a reference to field name of aws_lightsail_instance.
 func (li lightsailInstanceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("name"))
+	return terra.ReferenceAsString(li.ref.Append("name"))
 }
 
+// PrivateIpAddress returns a reference to field private_ip_address of aws_lightsail_instance.
 func (li lightsailInstanceAttributes) PrivateIpAddress() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("private_ip_address"))
+	return terra.ReferenceAsString(li.ref.Append("private_ip_address"))
 }
 
+// PublicIpAddress returns a reference to field public_ip_address of aws_lightsail_instance.
 func (li lightsailInstanceAttributes) PublicIpAddress() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("public_ip_address"))
+	return terra.ReferenceAsString(li.ref.Append("public_ip_address"))
 }
 
+// RamSize returns a reference to field ram_size of aws_lightsail_instance.
 func (li lightsailInstanceAttributes) RamSize() terra.NumberValue {
-	return terra.ReferenceNumber(li.ref.Append("ram_size"))
+	return terra.ReferenceAsNumber(li.ref.Append("ram_size"))
 }
 
+// Tags returns a reference to field tags of aws_lightsail_instance.
 func (li lightsailInstanceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](li.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](li.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_lightsail_instance.
 func (li lightsailInstanceAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](li.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](li.ref.Append("tags_all"))
 }
 
+// UserData returns a reference to field user_data of aws_lightsail_instance.
 func (li lightsailInstanceAttributes) UserData() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("user_data"))
+	return terra.ReferenceAsString(li.ref.Append("user_data"))
 }
 
+// Username returns a reference to field username of aws_lightsail_instance.
 func (li lightsailInstanceAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(li.ref.Append("username"))
+	return terra.ReferenceAsString(li.ref.Append("username"))
 }
 
 func (li lightsailInstanceAttributes) AddOn() terra.ListValue[lightsailinstance.AddOnAttributes] {
-	return terra.ReferenceList[lightsailinstance.AddOnAttributes](li.ref.Append("add_on"))
+	return terra.ReferenceAsList[lightsailinstance.AddOnAttributes](li.ref.Append("add_on"))
 }
 
 type lightsailInstanceState struct {

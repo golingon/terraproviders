@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewTransferWorkflow creates a new instance of [TransferWorkflow].
 func NewTransferWorkflow(name string, args TransferWorkflowArgs) *TransferWorkflow {
 	return &TransferWorkflow{
 		Args: args,
@@ -19,28 +20,51 @@ func NewTransferWorkflow(name string, args TransferWorkflowArgs) *TransferWorkfl
 
 var _ terra.Resource = (*TransferWorkflow)(nil)
 
+// TransferWorkflow represents the Terraform resource aws_transfer_workflow.
 type TransferWorkflow struct {
-	Name  string
-	Args  TransferWorkflowArgs
-	state *transferWorkflowState
+	Name      string
+	Args      TransferWorkflowArgs
+	state     *transferWorkflowState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [TransferWorkflow].
 func (tw *TransferWorkflow) Type() string {
 	return "aws_transfer_workflow"
 }
 
+// LocalName returns the local name for [TransferWorkflow].
 func (tw *TransferWorkflow) LocalName() string {
 	return tw.Name
 }
 
+// Configuration returns the configuration (args) for [TransferWorkflow].
 func (tw *TransferWorkflow) Configuration() interface{} {
 	return tw.Args
 }
 
+// DependOn is used for other resources to depend on [TransferWorkflow].
+func (tw *TransferWorkflow) DependOn() terra.Reference {
+	return terra.ReferenceResource(tw)
+}
+
+// Dependencies returns the list of resources [TransferWorkflow] depends_on.
+func (tw *TransferWorkflow) Dependencies() terra.Dependencies {
+	return tw.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [TransferWorkflow].
+func (tw *TransferWorkflow) LifecycleManagement() *terra.Lifecycle {
+	return tw.Lifecycle
+}
+
+// Attributes returns the attributes for [TransferWorkflow].
 func (tw *TransferWorkflow) Attributes() transferWorkflowAttributes {
 	return transferWorkflowAttributes{ref: terra.ReferenceResource(tw)}
 }
 
+// ImportState imports the given attribute values into [TransferWorkflow]'s state.
 func (tw *TransferWorkflow) ImportState(av io.Reader) error {
 	tw.state = &transferWorkflowState{}
 	if err := json.NewDecoder(av).Decode(tw.state); err != nil {
@@ -49,10 +73,12 @@ func (tw *TransferWorkflow) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [TransferWorkflow] has state.
 func (tw *TransferWorkflow) State() (*transferWorkflowState, bool) {
 	return tw.state, tw.state != nil
 }
 
+// StateMust returns the state for [TransferWorkflow]. Panics if the state is nil.
 func (tw *TransferWorkflow) StateMust() *transferWorkflowState {
 	if tw.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", tw.Type(), tw.LocalName()))
@@ -60,10 +86,7 @@ func (tw *TransferWorkflow) StateMust() *transferWorkflowState {
 	return tw.state
 }
 
-func (tw *TransferWorkflow) DependOn() terra.Reference {
-	return terra.ReferenceResource(tw)
-}
-
+// TransferWorkflowArgs contains the configurations for aws_transfer_workflow.
 type TransferWorkflowArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -77,39 +100,42 @@ type TransferWorkflowArgs struct {
 	OnExceptionSteps []transferworkflow.OnExceptionSteps `hcl:"on_exception_steps,block" validate:"min=0,max=8"`
 	// Steps: min=1,max=8
 	Steps []transferworkflow.Steps `hcl:"steps,block" validate:"min=1,max=8"`
-	// DependsOn contains resources that TransferWorkflow depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type transferWorkflowAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_transfer_workflow.
 func (tw transferWorkflowAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(tw.ref.Append("arn"))
+	return terra.ReferenceAsString(tw.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_transfer_workflow.
 func (tw transferWorkflowAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(tw.ref.Append("description"))
+	return terra.ReferenceAsString(tw.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_transfer_workflow.
 func (tw transferWorkflowAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(tw.ref.Append("id"))
+	return terra.ReferenceAsString(tw.ref.Append("id"))
 }
 
+// Tags returns a reference to field tags of aws_transfer_workflow.
 func (tw transferWorkflowAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](tw.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](tw.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_transfer_workflow.
 func (tw transferWorkflowAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](tw.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](tw.ref.Append("tags_all"))
 }
 
 func (tw transferWorkflowAttributes) OnExceptionSteps() terra.ListValue[transferworkflow.OnExceptionStepsAttributes] {
-	return terra.ReferenceList[transferworkflow.OnExceptionStepsAttributes](tw.ref.Append("on_exception_steps"))
+	return terra.ReferenceAsList[transferworkflow.OnExceptionStepsAttributes](tw.ref.Append("on_exception_steps"))
 }
 
 func (tw transferWorkflowAttributes) Steps() terra.ListValue[transferworkflow.StepsAttributes] {
-	return terra.ReferenceList[transferworkflow.StepsAttributes](tw.ref.Append("steps"))
+	return terra.ReferenceAsList[transferworkflow.StepsAttributes](tw.ref.Append("steps"))
 }
 
 type transferWorkflowState struct {

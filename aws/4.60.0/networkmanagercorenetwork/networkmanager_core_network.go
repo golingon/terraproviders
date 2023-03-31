@@ -37,15 +37,15 @@ func (e EdgesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e EdgesAttributes) Asn() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("asn"))
+	return terra.ReferenceAsNumber(e.ref.Append("asn"))
 }
 
 func (e EdgesAttributes) EdgeLocation() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("edge_location"))
+	return terra.ReferenceAsString(e.ref.Append("edge_location"))
 }
 
 func (e EdgesAttributes) InsideCidrBlocks() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](e.ref.Append("inside_cidr_blocks"))
+	return terra.ReferenceAsList[terra.StringValue](e.ref.Append("inside_cidr_blocks"))
 }
 
 type SegmentsAttributes struct {
@@ -65,15 +65,15 @@ func (s SegmentsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SegmentsAttributes) EdgeLocations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("edge_locations"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("edge_locations"))
 }
 
 func (s SegmentsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s SegmentsAttributes) SharedSegments() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("shared_segments"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("shared_segments"))
 }
 
 type TimeoutsAttributes struct {
@@ -93,15 +93,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type EdgesState struct {

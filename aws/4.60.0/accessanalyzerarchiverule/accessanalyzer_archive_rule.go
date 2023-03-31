@@ -37,23 +37,23 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) Contains() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](f.ref.Append("contains"))
+	return terra.ReferenceAsList[terra.StringValue](f.ref.Append("contains"))
 }
 
 func (f FilterAttributes) Criteria() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("criteria"))
+	return terra.ReferenceAsString(f.ref.Append("criteria"))
 }
 
 func (f FilterAttributes) Eq() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](f.ref.Append("eq"))
+	return terra.ReferenceAsList[terra.StringValue](f.ref.Append("eq"))
 }
 
 func (f FilterAttributes) Exists() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("exists"))
+	return terra.ReferenceAsString(f.ref.Append("exists"))
 }
 
 func (f FilterAttributes) Neq() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](f.ref.Append("neq"))
+	return terra.ReferenceAsList[terra.StringValue](f.ref.Append("neq"))
 }
 
 type FilterState struct {

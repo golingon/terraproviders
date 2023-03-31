@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNetworkAcl creates a new instance of [NetworkAcl].
 func NewNetworkAcl(name string, args NetworkAclArgs) *NetworkAcl {
 	return &NetworkAcl{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNetworkAcl(name string, args NetworkAclArgs) *NetworkAcl {
 
 var _ terra.Resource = (*NetworkAcl)(nil)
 
+// NetworkAcl represents the Terraform resource aws_network_acl.
 type NetworkAcl struct {
-	Name  string
-	Args  NetworkAclArgs
-	state *networkAclState
+	Name      string
+	Args      NetworkAclArgs
+	state     *networkAclState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NetworkAcl].
 func (na *NetworkAcl) Type() string {
 	return "aws_network_acl"
 }
 
+// LocalName returns the local name for [NetworkAcl].
 func (na *NetworkAcl) LocalName() string {
 	return na.Name
 }
 
+// Configuration returns the configuration (args) for [NetworkAcl].
 func (na *NetworkAcl) Configuration() interface{} {
 	return na.Args
 }
 
+// DependOn is used for other resources to depend on [NetworkAcl].
+func (na *NetworkAcl) DependOn() terra.Reference {
+	return terra.ReferenceResource(na)
+}
+
+// Dependencies returns the list of resources [NetworkAcl] depends_on.
+func (na *NetworkAcl) Dependencies() terra.Dependencies {
+	return na.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NetworkAcl].
+func (na *NetworkAcl) LifecycleManagement() *terra.Lifecycle {
+	return na.Lifecycle
+}
+
+// Attributes returns the attributes for [NetworkAcl].
 func (na *NetworkAcl) Attributes() networkAclAttributes {
 	return networkAclAttributes{ref: terra.ReferenceResource(na)}
 }
 
+// ImportState imports the given attribute values into [NetworkAcl]'s state.
 func (na *NetworkAcl) ImportState(av io.Reader) error {
 	na.state = &networkAclState{}
 	if err := json.NewDecoder(av).Decode(na.state); err != nil {
@@ -49,10 +73,12 @@ func (na *NetworkAcl) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NetworkAcl] has state.
 func (na *NetworkAcl) State() (*networkAclState, bool) {
 	return na.state, na.state != nil
 }
 
+// StateMust returns the state for [NetworkAcl]. Panics if the state is nil.
 func (na *NetworkAcl) StateMust() *networkAclState {
 	if na.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", na.Type(), na.LocalName()))
@@ -60,10 +86,7 @@ func (na *NetworkAcl) StateMust() *networkAclState {
 	return na.state
 }
 
-func (na *NetworkAcl) DependOn() terra.Reference {
-	return terra.ReferenceResource(na)
-}
-
+// NetworkAclArgs contains the configurations for aws_network_acl.
 type NetworkAclArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,47 +102,52 @@ type NetworkAclArgs struct {
 	Egress []networkacl.Egress `hcl:"egress,block" validate:"min=0"`
 	// Ingress: min=0
 	Ingress []networkacl.Ingress `hcl:"ingress,block" validate:"min=0"`
-	// DependsOn contains resources that NetworkAcl depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type networkAclAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_network_acl.
 func (na networkAclAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(na.ref.Append("arn"))
+	return terra.ReferenceAsString(na.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_network_acl.
 func (na networkAclAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(na.ref.Append("id"))
+	return terra.ReferenceAsString(na.ref.Append("id"))
 }
 
+// OwnerId returns a reference to field owner_id of aws_network_acl.
 func (na networkAclAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(na.ref.Append("owner_id"))
+	return terra.ReferenceAsString(na.ref.Append("owner_id"))
 }
 
+// SubnetIds returns a reference to field subnet_ids of aws_network_acl.
 func (na networkAclAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](na.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](na.ref.Append("subnet_ids"))
 }
 
+// Tags returns a reference to field tags of aws_network_acl.
 func (na networkAclAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](na.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](na.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_network_acl.
 func (na networkAclAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](na.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](na.ref.Append("tags_all"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_network_acl.
 func (na networkAclAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(na.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(na.ref.Append("vpc_id"))
 }
 
 func (na networkAclAttributes) Egress() terra.SetValue[networkacl.EgressAttributes] {
-	return terra.ReferenceSet[networkacl.EgressAttributes](na.ref.Append("egress"))
+	return terra.ReferenceAsSet[networkacl.EgressAttributes](na.ref.Append("egress"))
 }
 
 func (na networkAclAttributes) Ingress() terra.SetValue[networkacl.IngressAttributes] {
-	return terra.ReferenceSet[networkacl.IngressAttributes](na.ref.Append("ingress"))
+	return terra.ReferenceAsSet[networkacl.IngressAttributes](na.ref.Append("ingress"))
 }
 
 type networkAclState struct {

@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataCodeartifactAuthorizationToken creates a new instance of [DataCodeartifactAuthorizationToken].
 func NewDataCodeartifactAuthorizationToken(name string, args DataCodeartifactAuthorizationTokenArgs) *DataCodeartifactAuthorizationToken {
 	return &DataCodeartifactAuthorizationToken{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataCodeartifactAuthorizationToken(name string, args DataCodeartifactAut
 
 var _ terra.DataResource = (*DataCodeartifactAuthorizationToken)(nil)
 
+// DataCodeartifactAuthorizationToken represents the Terraform data resource aws_codeartifact_authorization_token.
 type DataCodeartifactAuthorizationToken struct {
 	Name string
 	Args DataCodeartifactAuthorizationTokenArgs
 }
 
+// DataSource returns the Terraform object type for [DataCodeartifactAuthorizationToken].
 func (cat *DataCodeartifactAuthorizationToken) DataSource() string {
 	return "aws_codeartifact_authorization_token"
 }
 
+// LocalName returns the local name for [DataCodeartifactAuthorizationToken].
 func (cat *DataCodeartifactAuthorizationToken) LocalName() string {
 	return cat.Name
 }
 
+// Configuration returns the configuration (args) for [DataCodeartifactAuthorizationToken].
 func (cat *DataCodeartifactAuthorizationToken) Configuration() interface{} {
 	return cat.Args
 }
 
+// Attributes returns the attributes for [DataCodeartifactAuthorizationToken].
 func (cat *DataCodeartifactAuthorizationToken) Attributes() dataCodeartifactAuthorizationTokenAttributes {
 	return dataCodeartifactAuthorizationTokenAttributes{ref: terra.ReferenceDataResource(cat)}
 }
 
+// DataCodeartifactAuthorizationTokenArgs contains the configurations for aws_codeartifact_authorization_token.
 type DataCodeartifactAuthorizationTokenArgs struct {
 	// Domain: string, required
 	Domain terra.StringValue `hcl:"domain,attr" validate:"required"`
@@ -48,26 +55,32 @@ type dataCodeartifactAuthorizationTokenAttributes struct {
 	ref terra.Reference
 }
 
+// AuthorizationToken returns a reference to field authorization_token of aws_codeartifact_authorization_token.
 func (cat dataCodeartifactAuthorizationTokenAttributes) AuthorizationToken() terra.StringValue {
-	return terra.ReferenceString(cat.ref.Append("authorization_token"))
+	return terra.ReferenceAsString(cat.ref.Append("authorization_token"))
 }
 
+// Domain returns a reference to field domain of aws_codeartifact_authorization_token.
 func (cat dataCodeartifactAuthorizationTokenAttributes) Domain() terra.StringValue {
-	return terra.ReferenceString(cat.ref.Append("domain"))
+	return terra.ReferenceAsString(cat.ref.Append("domain"))
 }
 
+// DomainOwner returns a reference to field domain_owner of aws_codeartifact_authorization_token.
 func (cat dataCodeartifactAuthorizationTokenAttributes) DomainOwner() terra.StringValue {
-	return terra.ReferenceString(cat.ref.Append("domain_owner"))
+	return terra.ReferenceAsString(cat.ref.Append("domain_owner"))
 }
 
+// DurationSeconds returns a reference to field duration_seconds of aws_codeartifact_authorization_token.
 func (cat dataCodeartifactAuthorizationTokenAttributes) DurationSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(cat.ref.Append("duration_seconds"))
+	return terra.ReferenceAsNumber(cat.ref.Append("duration_seconds"))
 }
 
+// Expiration returns a reference to field expiration of aws_codeartifact_authorization_token.
 func (cat dataCodeartifactAuthorizationTokenAttributes) Expiration() terra.StringValue {
-	return terra.ReferenceString(cat.ref.Append("expiration"))
+	return terra.ReferenceAsString(cat.ref.Append("expiration"))
 }
 
+// Id returns a reference to field id of aws_codeartifact_authorization_token.
 func (cat dataCodeartifactAuthorizationTokenAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cat.ref.Append("id"))
+	return terra.ReferenceAsString(cat.ref.Append("id"))
 }

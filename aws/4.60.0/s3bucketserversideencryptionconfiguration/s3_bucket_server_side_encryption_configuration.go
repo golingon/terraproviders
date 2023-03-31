@@ -38,11 +38,11 @@ func (r RuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RuleAttributes) BucketKeyEnabled() terra.BoolValue {
-	return terra.ReferenceBool(r.ref.Append("bucket_key_enabled"))
+	return terra.ReferenceAsBool(r.ref.Append("bucket_key_enabled"))
 }
 
 func (r RuleAttributes) ApplyServerSideEncryptionByDefault() terra.ListValue[ApplyServerSideEncryptionByDefaultAttributes] {
-	return terra.ReferenceList[ApplyServerSideEncryptionByDefaultAttributes](r.ref.Append("apply_server_side_encryption_by_default"))
+	return terra.ReferenceAsList[ApplyServerSideEncryptionByDefaultAttributes](r.ref.Append("apply_server_side_encryption_by_default"))
 }
 
 type ApplyServerSideEncryptionByDefaultAttributes struct {
@@ -62,11 +62,11 @@ func (assebd ApplyServerSideEncryptionByDefaultAttributes) InternalTokens() hclw
 }
 
 func (assebd ApplyServerSideEncryptionByDefaultAttributes) KmsMasterKeyId() terra.StringValue {
-	return terra.ReferenceString(assebd.ref.Append("kms_master_key_id"))
+	return terra.ReferenceAsString(assebd.ref.Append("kms_master_key_id"))
 }
 
 func (assebd ApplyServerSideEncryptionByDefaultAttributes) SseAlgorithm() terra.StringValue {
-	return terra.ReferenceString(assebd.ref.Append("sse_algorithm"))
+	return terra.ReferenceAsString(assebd.ref.Append("sse_algorithm"))
 }
 
 type RuleState struct {

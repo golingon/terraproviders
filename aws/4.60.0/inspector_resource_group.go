@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewInspectorResourceGroup creates a new instance of [InspectorResourceGroup].
 func NewInspectorResourceGroup(name string, args InspectorResourceGroupArgs) *InspectorResourceGroup {
 	return &InspectorResourceGroup{
 		Args: args,
@@ -18,28 +19,51 @@ func NewInspectorResourceGroup(name string, args InspectorResourceGroupArgs) *In
 
 var _ terra.Resource = (*InspectorResourceGroup)(nil)
 
+// InspectorResourceGroup represents the Terraform resource aws_inspector_resource_group.
 type InspectorResourceGroup struct {
-	Name  string
-	Args  InspectorResourceGroupArgs
-	state *inspectorResourceGroupState
+	Name      string
+	Args      InspectorResourceGroupArgs
+	state     *inspectorResourceGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [InspectorResourceGroup].
 func (irg *InspectorResourceGroup) Type() string {
 	return "aws_inspector_resource_group"
 }
 
+// LocalName returns the local name for [InspectorResourceGroup].
 func (irg *InspectorResourceGroup) LocalName() string {
 	return irg.Name
 }
 
+// Configuration returns the configuration (args) for [InspectorResourceGroup].
 func (irg *InspectorResourceGroup) Configuration() interface{} {
 	return irg.Args
 }
 
+// DependOn is used for other resources to depend on [InspectorResourceGroup].
+func (irg *InspectorResourceGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(irg)
+}
+
+// Dependencies returns the list of resources [InspectorResourceGroup] depends_on.
+func (irg *InspectorResourceGroup) Dependencies() terra.Dependencies {
+	return irg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [InspectorResourceGroup].
+func (irg *InspectorResourceGroup) LifecycleManagement() *terra.Lifecycle {
+	return irg.Lifecycle
+}
+
+// Attributes returns the attributes for [InspectorResourceGroup].
 func (irg *InspectorResourceGroup) Attributes() inspectorResourceGroupAttributes {
 	return inspectorResourceGroupAttributes{ref: terra.ReferenceResource(irg)}
 }
 
+// ImportState imports the given attribute values into [InspectorResourceGroup]'s state.
 func (irg *InspectorResourceGroup) ImportState(av io.Reader) error {
 	irg.state = &inspectorResourceGroupState{}
 	if err := json.NewDecoder(av).Decode(irg.state); err != nil {
@@ -48,10 +72,12 @@ func (irg *InspectorResourceGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [InspectorResourceGroup] has state.
 func (irg *InspectorResourceGroup) State() (*inspectorResourceGroupState, bool) {
 	return irg.state, irg.state != nil
 }
 
+// StateMust returns the state for [InspectorResourceGroup]. Panics if the state is nil.
 func (irg *InspectorResourceGroup) StateMust() *inspectorResourceGroupState {
 	if irg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", irg.Type(), irg.LocalName()))
@@ -59,32 +85,30 @@ func (irg *InspectorResourceGroup) StateMust() *inspectorResourceGroupState {
 	return irg.state
 }
 
-func (irg *InspectorResourceGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(irg)
-}
-
+// InspectorResourceGroupArgs contains the configurations for aws_inspector_resource_group.
 type InspectorResourceGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
 	// Tags: map of string, required
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr" validate:"required"`
-	// DependsOn contains resources that InspectorResourceGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type inspectorResourceGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_inspector_resource_group.
 func (irg inspectorResourceGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(irg.ref.Append("arn"))
+	return terra.ReferenceAsString(irg.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_inspector_resource_group.
 func (irg inspectorResourceGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(irg.ref.Append("id"))
+	return terra.ReferenceAsString(irg.ref.Append("id"))
 }
 
+// Tags returns a reference to field tags of aws_inspector_resource_group.
 func (irg inspectorResourceGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](irg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](irg.ref.Append("tags"))
 }
 
 type inspectorResourceGroupState struct {

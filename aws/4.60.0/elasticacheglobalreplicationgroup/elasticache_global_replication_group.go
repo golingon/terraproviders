@@ -35,11 +35,11 @@ func (gng GlobalNodeGroupsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (gng GlobalNodeGroupsAttributes) GlobalNodeGroupId() terra.StringValue {
-	return terra.ReferenceString(gng.ref.Append("global_node_group_id"))
+	return terra.ReferenceAsString(gng.ref.Append("global_node_group_id"))
 }
 
 func (gng GlobalNodeGroupsAttributes) Slots() terra.StringValue {
-	return terra.ReferenceString(gng.ref.Append("slots"))
+	return terra.ReferenceAsString(gng.ref.Append("slots"))
 }
 
 type TimeoutsAttributes struct {
@@ -59,15 +59,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type GlobalNodeGroupsState struct {

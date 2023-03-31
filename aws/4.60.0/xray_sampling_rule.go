@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewXraySamplingRule creates a new instance of [XraySamplingRule].
 func NewXraySamplingRule(name string, args XraySamplingRuleArgs) *XraySamplingRule {
 	return &XraySamplingRule{
 		Args: args,
@@ -18,28 +19,51 @@ func NewXraySamplingRule(name string, args XraySamplingRuleArgs) *XraySamplingRu
 
 var _ terra.Resource = (*XraySamplingRule)(nil)
 
+// XraySamplingRule represents the Terraform resource aws_xray_sampling_rule.
 type XraySamplingRule struct {
-	Name  string
-	Args  XraySamplingRuleArgs
-	state *xraySamplingRuleState
+	Name      string
+	Args      XraySamplingRuleArgs
+	state     *xraySamplingRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [XraySamplingRule].
 func (xsr *XraySamplingRule) Type() string {
 	return "aws_xray_sampling_rule"
 }
 
+// LocalName returns the local name for [XraySamplingRule].
 func (xsr *XraySamplingRule) LocalName() string {
 	return xsr.Name
 }
 
+// Configuration returns the configuration (args) for [XraySamplingRule].
 func (xsr *XraySamplingRule) Configuration() interface{} {
 	return xsr.Args
 }
 
+// DependOn is used for other resources to depend on [XraySamplingRule].
+func (xsr *XraySamplingRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(xsr)
+}
+
+// Dependencies returns the list of resources [XraySamplingRule] depends_on.
+func (xsr *XraySamplingRule) Dependencies() terra.Dependencies {
+	return xsr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [XraySamplingRule].
+func (xsr *XraySamplingRule) LifecycleManagement() *terra.Lifecycle {
+	return xsr.Lifecycle
+}
+
+// Attributes returns the attributes for [XraySamplingRule].
 func (xsr *XraySamplingRule) Attributes() xraySamplingRuleAttributes {
 	return xraySamplingRuleAttributes{ref: terra.ReferenceResource(xsr)}
 }
 
+// ImportState imports the given attribute values into [XraySamplingRule]'s state.
 func (xsr *XraySamplingRule) ImportState(av io.Reader) error {
 	xsr.state = &xraySamplingRuleState{}
 	if err := json.NewDecoder(av).Decode(xsr.state); err != nil {
@@ -48,10 +72,12 @@ func (xsr *XraySamplingRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [XraySamplingRule] has state.
 func (xsr *XraySamplingRule) State() (*xraySamplingRuleState, bool) {
 	return xsr.state, xsr.state != nil
 }
 
+// StateMust returns the state for [XraySamplingRule]. Panics if the state is nil.
 func (xsr *XraySamplingRule) StateMust() *xraySamplingRuleState {
 	if xsr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", xsr.Type(), xsr.LocalName()))
@@ -59,10 +85,7 @@ func (xsr *XraySamplingRule) StateMust() *xraySamplingRuleState {
 	return xsr.state
 }
 
-func (xsr *XraySamplingRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(xsr)
-}
-
+// XraySamplingRuleArgs contains the configurations for aws_xray_sampling_rule.
 type XraySamplingRuleArgs struct {
 	// Attributes: map of string, optional
 	Attributes terra.MapValue[terra.StringValue] `hcl:"attributes,attr"`
@@ -94,75 +117,89 @@ type XraySamplingRuleArgs struct {
 	UrlPath terra.StringValue `hcl:"url_path,attr" validate:"required"`
 	// Version: number, required
 	Version terra.NumberValue `hcl:"version,attr" validate:"required"`
-	// DependsOn contains resources that XraySamplingRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type xraySamplingRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_xray_sampling_rule.
 func (xsr xraySamplingRuleAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(xsr.ref.Append("arn"))
+	return terra.ReferenceAsString(xsr.ref.Append("arn"))
 }
 
+// Attributes returns a reference to field attributes of aws_xray_sampling_rule.
 func (xsr xraySamplingRuleAttributes) Attributes() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](xsr.ref.Append("attributes"))
+	return terra.ReferenceAsMap[terra.StringValue](xsr.ref.Append("attributes"))
 }
 
+// FixedRate returns a reference to field fixed_rate of aws_xray_sampling_rule.
 func (xsr xraySamplingRuleAttributes) FixedRate() terra.NumberValue {
-	return terra.ReferenceNumber(xsr.ref.Append("fixed_rate"))
+	return terra.ReferenceAsNumber(xsr.ref.Append("fixed_rate"))
 }
 
+// Host returns a reference to field host of aws_xray_sampling_rule.
 func (xsr xraySamplingRuleAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(xsr.ref.Append("host"))
+	return terra.ReferenceAsString(xsr.ref.Append("host"))
 }
 
+// HttpMethod returns a reference to field http_method of aws_xray_sampling_rule.
 func (xsr xraySamplingRuleAttributes) HttpMethod() terra.StringValue {
-	return terra.ReferenceString(xsr.ref.Append("http_method"))
+	return terra.ReferenceAsString(xsr.ref.Append("http_method"))
 }
 
+// Id returns a reference to field id of aws_xray_sampling_rule.
 func (xsr xraySamplingRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(xsr.ref.Append("id"))
+	return terra.ReferenceAsString(xsr.ref.Append("id"))
 }
 
+// Priority returns a reference to field priority of aws_xray_sampling_rule.
 func (xsr xraySamplingRuleAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(xsr.ref.Append("priority"))
+	return terra.ReferenceAsNumber(xsr.ref.Append("priority"))
 }
 
+// ReservoirSize returns a reference to field reservoir_size of aws_xray_sampling_rule.
 func (xsr xraySamplingRuleAttributes) ReservoirSize() terra.NumberValue {
-	return terra.ReferenceNumber(xsr.ref.Append("reservoir_size"))
+	return terra.ReferenceAsNumber(xsr.ref.Append("reservoir_size"))
 }
 
+// ResourceArn returns a reference to field resource_arn of aws_xray_sampling_rule.
 func (xsr xraySamplingRuleAttributes) ResourceArn() terra.StringValue {
-	return terra.ReferenceString(xsr.ref.Append("resource_arn"))
+	return terra.ReferenceAsString(xsr.ref.Append("resource_arn"))
 }
 
+// RuleName returns a reference to field rule_name of aws_xray_sampling_rule.
 func (xsr xraySamplingRuleAttributes) RuleName() terra.StringValue {
-	return terra.ReferenceString(xsr.ref.Append("rule_name"))
+	return terra.ReferenceAsString(xsr.ref.Append("rule_name"))
 }
 
+// ServiceName returns a reference to field service_name of aws_xray_sampling_rule.
 func (xsr xraySamplingRuleAttributes) ServiceName() terra.StringValue {
-	return terra.ReferenceString(xsr.ref.Append("service_name"))
+	return terra.ReferenceAsString(xsr.ref.Append("service_name"))
 }
 
+// ServiceType returns a reference to field service_type of aws_xray_sampling_rule.
 func (xsr xraySamplingRuleAttributes) ServiceType() terra.StringValue {
-	return terra.ReferenceString(xsr.ref.Append("service_type"))
+	return terra.ReferenceAsString(xsr.ref.Append("service_type"))
 }
 
+// Tags returns a reference to field tags of aws_xray_sampling_rule.
 func (xsr xraySamplingRuleAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](xsr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](xsr.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_xray_sampling_rule.
 func (xsr xraySamplingRuleAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](xsr.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](xsr.ref.Append("tags_all"))
 }
 
+// UrlPath returns a reference to field url_path of aws_xray_sampling_rule.
 func (xsr xraySamplingRuleAttributes) UrlPath() terra.StringValue {
-	return terra.ReferenceString(xsr.ref.Append("url_path"))
+	return terra.ReferenceAsString(xsr.ref.Append("url_path"))
 }
 
+// Version returns a reference to field version of aws_xray_sampling_rule.
 func (xsr xraySamplingRuleAttributes) Version() terra.NumberValue {
-	return terra.ReferenceNumber(xsr.ref.Append("version"))
+	return terra.ReferenceAsNumber(xsr.ref.Append("version"))
 }
 
 type xraySamplingRuleState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSecretsmanagerSecretRotation creates a new instance of [SecretsmanagerSecretRotation].
 func NewSecretsmanagerSecretRotation(name string, args SecretsmanagerSecretRotationArgs) *SecretsmanagerSecretRotation {
 	return &SecretsmanagerSecretRotation{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSecretsmanagerSecretRotation(name string, args SecretsmanagerSecretRotat
 
 var _ terra.Resource = (*SecretsmanagerSecretRotation)(nil)
 
+// SecretsmanagerSecretRotation represents the Terraform resource aws_secretsmanager_secret_rotation.
 type SecretsmanagerSecretRotation struct {
-	Name  string
-	Args  SecretsmanagerSecretRotationArgs
-	state *secretsmanagerSecretRotationState
+	Name      string
+	Args      SecretsmanagerSecretRotationArgs
+	state     *secretsmanagerSecretRotationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SecretsmanagerSecretRotation].
 func (ssr *SecretsmanagerSecretRotation) Type() string {
 	return "aws_secretsmanager_secret_rotation"
 }
 
+// LocalName returns the local name for [SecretsmanagerSecretRotation].
 func (ssr *SecretsmanagerSecretRotation) LocalName() string {
 	return ssr.Name
 }
 
+// Configuration returns the configuration (args) for [SecretsmanagerSecretRotation].
 func (ssr *SecretsmanagerSecretRotation) Configuration() interface{} {
 	return ssr.Args
 }
 
+// DependOn is used for other resources to depend on [SecretsmanagerSecretRotation].
+func (ssr *SecretsmanagerSecretRotation) DependOn() terra.Reference {
+	return terra.ReferenceResource(ssr)
+}
+
+// Dependencies returns the list of resources [SecretsmanagerSecretRotation] depends_on.
+func (ssr *SecretsmanagerSecretRotation) Dependencies() terra.Dependencies {
+	return ssr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SecretsmanagerSecretRotation].
+func (ssr *SecretsmanagerSecretRotation) LifecycleManagement() *terra.Lifecycle {
+	return ssr.Lifecycle
+}
+
+// Attributes returns the attributes for [SecretsmanagerSecretRotation].
 func (ssr *SecretsmanagerSecretRotation) Attributes() secretsmanagerSecretRotationAttributes {
 	return secretsmanagerSecretRotationAttributes{ref: terra.ReferenceResource(ssr)}
 }
 
+// ImportState imports the given attribute values into [SecretsmanagerSecretRotation]'s state.
 func (ssr *SecretsmanagerSecretRotation) ImportState(av io.Reader) error {
 	ssr.state = &secretsmanagerSecretRotationState{}
 	if err := json.NewDecoder(av).Decode(ssr.state); err != nil {
@@ -49,10 +73,12 @@ func (ssr *SecretsmanagerSecretRotation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SecretsmanagerSecretRotation] has state.
 func (ssr *SecretsmanagerSecretRotation) State() (*secretsmanagerSecretRotationState, bool) {
 	return ssr.state, ssr.state != nil
 }
 
+// StateMust returns the state for [SecretsmanagerSecretRotation]. Panics if the state is nil.
 func (ssr *SecretsmanagerSecretRotation) StateMust() *secretsmanagerSecretRotationState {
 	if ssr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ssr.Type(), ssr.LocalName()))
@@ -60,10 +86,7 @@ func (ssr *SecretsmanagerSecretRotation) StateMust() *secretsmanagerSecretRotati
 	return ssr.state
 }
 
-func (ssr *SecretsmanagerSecretRotation) DependOn() terra.Reference {
-	return terra.ReferenceResource(ssr)
-}
-
+// SecretsmanagerSecretRotationArgs contains the configurations for aws_secretsmanager_secret_rotation.
 type SecretsmanagerSecretRotationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -73,31 +96,33 @@ type SecretsmanagerSecretRotationArgs struct {
 	SecretId terra.StringValue `hcl:"secret_id,attr" validate:"required"`
 	// RotationRules: required
 	RotationRules *secretsmanagersecretrotation.RotationRules `hcl:"rotation_rules,block" validate:"required"`
-	// DependsOn contains resources that SecretsmanagerSecretRotation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type secretsmanagerSecretRotationAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_secretsmanager_secret_rotation.
 func (ssr secretsmanagerSecretRotationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ssr.ref.Append("id"))
+	return terra.ReferenceAsString(ssr.ref.Append("id"))
 }
 
+// RotationEnabled returns a reference to field rotation_enabled of aws_secretsmanager_secret_rotation.
 func (ssr secretsmanagerSecretRotationAttributes) RotationEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ssr.ref.Append("rotation_enabled"))
+	return terra.ReferenceAsBool(ssr.ref.Append("rotation_enabled"))
 }
 
+// RotationLambdaArn returns a reference to field rotation_lambda_arn of aws_secretsmanager_secret_rotation.
 func (ssr secretsmanagerSecretRotationAttributes) RotationLambdaArn() terra.StringValue {
-	return terra.ReferenceString(ssr.ref.Append("rotation_lambda_arn"))
+	return terra.ReferenceAsString(ssr.ref.Append("rotation_lambda_arn"))
 }
 
+// SecretId returns a reference to field secret_id of aws_secretsmanager_secret_rotation.
 func (ssr secretsmanagerSecretRotationAttributes) SecretId() terra.StringValue {
-	return terra.ReferenceString(ssr.ref.Append("secret_id"))
+	return terra.ReferenceAsString(ssr.ref.Append("secret_id"))
 }
 
 func (ssr secretsmanagerSecretRotationAttributes) RotationRules() terra.ListValue[secretsmanagersecretrotation.RotationRulesAttributes] {
-	return terra.ReferenceList[secretsmanagersecretrotation.RotationRulesAttributes](ssr.ref.Append("rotation_rules"))
+	return terra.ReferenceAsList[secretsmanagersecretrotation.RotationRulesAttributes](ssr.ref.Append("rotation_rules"))
 }
 
 type secretsmanagerSecretRotationState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewServicecatalogConstraint creates a new instance of [ServicecatalogConstraint].
 func NewServicecatalogConstraint(name string, args ServicecatalogConstraintArgs) *ServicecatalogConstraint {
 	return &ServicecatalogConstraint{
 		Args: args,
@@ -19,28 +20,51 @@ func NewServicecatalogConstraint(name string, args ServicecatalogConstraintArgs)
 
 var _ terra.Resource = (*ServicecatalogConstraint)(nil)
 
+// ServicecatalogConstraint represents the Terraform resource aws_servicecatalog_constraint.
 type ServicecatalogConstraint struct {
-	Name  string
-	Args  ServicecatalogConstraintArgs
-	state *servicecatalogConstraintState
+	Name      string
+	Args      ServicecatalogConstraintArgs
+	state     *servicecatalogConstraintState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ServicecatalogConstraint].
 func (sc *ServicecatalogConstraint) Type() string {
 	return "aws_servicecatalog_constraint"
 }
 
+// LocalName returns the local name for [ServicecatalogConstraint].
 func (sc *ServicecatalogConstraint) LocalName() string {
 	return sc.Name
 }
 
+// Configuration returns the configuration (args) for [ServicecatalogConstraint].
 func (sc *ServicecatalogConstraint) Configuration() interface{} {
 	return sc.Args
 }
 
+// DependOn is used for other resources to depend on [ServicecatalogConstraint].
+func (sc *ServicecatalogConstraint) DependOn() terra.Reference {
+	return terra.ReferenceResource(sc)
+}
+
+// Dependencies returns the list of resources [ServicecatalogConstraint] depends_on.
+func (sc *ServicecatalogConstraint) Dependencies() terra.Dependencies {
+	return sc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ServicecatalogConstraint].
+func (sc *ServicecatalogConstraint) LifecycleManagement() *terra.Lifecycle {
+	return sc.Lifecycle
+}
+
+// Attributes returns the attributes for [ServicecatalogConstraint].
 func (sc *ServicecatalogConstraint) Attributes() servicecatalogConstraintAttributes {
 	return servicecatalogConstraintAttributes{ref: terra.ReferenceResource(sc)}
 }
 
+// ImportState imports the given attribute values into [ServicecatalogConstraint]'s state.
 func (sc *ServicecatalogConstraint) ImportState(av io.Reader) error {
 	sc.state = &servicecatalogConstraintState{}
 	if err := json.NewDecoder(av).Decode(sc.state); err != nil {
@@ -49,10 +73,12 @@ func (sc *ServicecatalogConstraint) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ServicecatalogConstraint] has state.
 func (sc *ServicecatalogConstraint) State() (*servicecatalogConstraintState, bool) {
 	return sc.state, sc.state != nil
 }
 
+// StateMust returns the state for [ServicecatalogConstraint]. Panics if the state is nil.
 func (sc *ServicecatalogConstraint) StateMust() *servicecatalogConstraintState {
 	if sc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sc.Type(), sc.LocalName()))
@@ -60,10 +86,7 @@ func (sc *ServicecatalogConstraint) StateMust() *servicecatalogConstraintState {
 	return sc.state
 }
 
-func (sc *ServicecatalogConstraint) DependOn() terra.Reference {
-	return terra.ReferenceResource(sc)
-}
-
+// ServicecatalogConstraintArgs contains the configurations for aws_servicecatalog_constraint.
 type ServicecatalogConstraintArgs struct {
 	// AcceptLanguage: string, optional
 	AcceptLanguage terra.StringValue `hcl:"accept_language,attr"`
@@ -81,51 +104,58 @@ type ServicecatalogConstraintArgs struct {
 	Type terra.StringValue `hcl:"type,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *servicecatalogconstraint.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ServicecatalogConstraint depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type servicecatalogConstraintAttributes struct {
 	ref terra.Reference
 }
 
+// AcceptLanguage returns a reference to field accept_language of aws_servicecatalog_constraint.
 func (sc servicecatalogConstraintAttributes) AcceptLanguage() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("accept_language"))
+	return terra.ReferenceAsString(sc.ref.Append("accept_language"))
 }
 
+// Description returns a reference to field description of aws_servicecatalog_constraint.
 func (sc servicecatalogConstraintAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("description"))
+	return terra.ReferenceAsString(sc.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_servicecatalog_constraint.
 func (sc servicecatalogConstraintAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("id"))
+	return terra.ReferenceAsString(sc.ref.Append("id"))
 }
 
+// Owner returns a reference to field owner of aws_servicecatalog_constraint.
 func (sc servicecatalogConstraintAttributes) Owner() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("owner"))
+	return terra.ReferenceAsString(sc.ref.Append("owner"))
 }
 
+// Parameters returns a reference to field parameters of aws_servicecatalog_constraint.
 func (sc servicecatalogConstraintAttributes) Parameters() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("parameters"))
+	return terra.ReferenceAsString(sc.ref.Append("parameters"))
 }
 
+// PortfolioId returns a reference to field portfolio_id of aws_servicecatalog_constraint.
 func (sc servicecatalogConstraintAttributes) PortfolioId() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("portfolio_id"))
+	return terra.ReferenceAsString(sc.ref.Append("portfolio_id"))
 }
 
+// ProductId returns a reference to field product_id of aws_servicecatalog_constraint.
 func (sc servicecatalogConstraintAttributes) ProductId() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("product_id"))
+	return terra.ReferenceAsString(sc.ref.Append("product_id"))
 }
 
+// Status returns a reference to field status of aws_servicecatalog_constraint.
 func (sc servicecatalogConstraintAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("status"))
+	return terra.ReferenceAsString(sc.ref.Append("status"))
 }
 
+// Type returns a reference to field type of aws_servicecatalog_constraint.
 func (sc servicecatalogConstraintAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("type"))
+	return terra.ReferenceAsString(sc.ref.Append("type"))
 }
 
 func (sc servicecatalogConstraintAttributes) Timeouts() servicecatalogconstraint.TimeoutsAttributes {
-	return terra.ReferenceSingle[servicecatalogconstraint.TimeoutsAttributes](sc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[servicecatalogconstraint.TimeoutsAttributes](sc.ref.Append("timeouts"))
 }
 
 type servicecatalogConstraintState struct {

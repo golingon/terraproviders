@@ -41,7 +41,7 @@ func (s SpecAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SpecAttributes) Listener() terra.ListValue[ListenerAttributes] {
-	return terra.ReferenceList[ListenerAttributes](s.ref.Append("listener"))
+	return terra.ReferenceAsList[ListenerAttributes](s.ref.Append("listener"))
 }
 
 type ListenerAttributes struct {
@@ -61,7 +61,7 @@ func (l ListenerAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (l ListenerAttributes) PortMapping() terra.ListValue[PortMappingAttributes] {
-	return terra.ReferenceList[PortMappingAttributes](l.ref.Append("port_mapping"))
+	return terra.ReferenceAsList[PortMappingAttributes](l.ref.Append("port_mapping"))
 }
 
 type PortMappingAttributes struct {
@@ -81,11 +81,11 @@ func (pm PortMappingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pm PortMappingAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(pm.ref.Append("port"))
+	return terra.ReferenceAsNumber(pm.ref.Append("port"))
 }
 
 func (pm PortMappingAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(pm.ref.Append("protocol"))
+	return terra.ReferenceAsString(pm.ref.Append("protocol"))
 }
 
 type SpecState struct {

@@ -40,31 +40,31 @@ func (a AssociationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AssociationAttributes) AllocationId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("allocation_id"))
+	return terra.ReferenceAsString(a.ref.Append("allocation_id"))
 }
 
 func (a AssociationAttributes) AssociationId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("association_id"))
+	return terra.ReferenceAsString(a.ref.Append("association_id"))
 }
 
 func (a AssociationAttributes) CarrierIp() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("carrier_ip"))
+	return terra.ReferenceAsString(a.ref.Append("carrier_ip"))
 }
 
 func (a AssociationAttributes) CustomerOwnedIp() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("customer_owned_ip"))
+	return terra.ReferenceAsString(a.ref.Append("customer_owned_ip"))
 }
 
 func (a AssociationAttributes) IpOwnerId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("ip_owner_id"))
+	return terra.ReferenceAsString(a.ref.Append("ip_owner_id"))
 }
 
 func (a AssociationAttributes) PublicDnsName() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("public_dns_name"))
+	return terra.ReferenceAsString(a.ref.Append("public_dns_name"))
 }
 
 func (a AssociationAttributes) PublicIp() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("public_ip"))
+	return terra.ReferenceAsString(a.ref.Append("public_ip"))
 }
 
 type AttachmentAttributes struct {
@@ -84,19 +84,19 @@ func (a AttachmentAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AttachmentAttributes) AttachmentId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("attachment_id"))
+	return terra.ReferenceAsString(a.ref.Append("attachment_id"))
 }
 
 func (a AttachmentAttributes) DeviceIndex() terra.NumberValue {
-	return terra.ReferenceNumber(a.ref.Append("device_index"))
+	return terra.ReferenceAsNumber(a.ref.Append("device_index"))
 }
 
 func (a AttachmentAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("instance_id"))
+	return terra.ReferenceAsString(a.ref.Append("instance_id"))
 }
 
 func (a AttachmentAttributes) InstanceOwnerId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("instance_owner_id"))
+	return terra.ReferenceAsString(a.ref.Append("instance_owner_id"))
 }
 
 type FilterAttributes struct {
@@ -116,11 +116,11 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
 func (f FilterAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](f.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](f.ref.Append("values"))
 }
 
 type TimeoutsAttributes struct {
@@ -140,7 +140,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type AssociationState struct {

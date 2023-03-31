@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewIotCertificate creates a new instance of [IotCertificate].
 func NewIotCertificate(name string, args IotCertificateArgs) *IotCertificate {
 	return &IotCertificate{
 		Args: args,
@@ -18,28 +19,51 @@ func NewIotCertificate(name string, args IotCertificateArgs) *IotCertificate {
 
 var _ terra.Resource = (*IotCertificate)(nil)
 
+// IotCertificate represents the Terraform resource aws_iot_certificate.
 type IotCertificate struct {
-	Name  string
-	Args  IotCertificateArgs
-	state *iotCertificateState
+	Name      string
+	Args      IotCertificateArgs
+	state     *iotCertificateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IotCertificate].
 func (ic *IotCertificate) Type() string {
 	return "aws_iot_certificate"
 }
 
+// LocalName returns the local name for [IotCertificate].
 func (ic *IotCertificate) LocalName() string {
 	return ic.Name
 }
 
+// Configuration returns the configuration (args) for [IotCertificate].
 func (ic *IotCertificate) Configuration() interface{} {
 	return ic.Args
 }
 
+// DependOn is used for other resources to depend on [IotCertificate].
+func (ic *IotCertificate) DependOn() terra.Reference {
+	return terra.ReferenceResource(ic)
+}
+
+// Dependencies returns the list of resources [IotCertificate] depends_on.
+func (ic *IotCertificate) Dependencies() terra.Dependencies {
+	return ic.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IotCertificate].
+func (ic *IotCertificate) LifecycleManagement() *terra.Lifecycle {
+	return ic.Lifecycle
+}
+
+// Attributes returns the attributes for [IotCertificate].
 func (ic *IotCertificate) Attributes() iotCertificateAttributes {
 	return iotCertificateAttributes{ref: terra.ReferenceResource(ic)}
 }
 
+// ImportState imports the given attribute values into [IotCertificate]'s state.
 func (ic *IotCertificate) ImportState(av io.Reader) error {
 	ic.state = &iotCertificateState{}
 	if err := json.NewDecoder(av).Decode(ic.state); err != nil {
@@ -48,10 +72,12 @@ func (ic *IotCertificate) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IotCertificate] has state.
 func (ic *IotCertificate) State() (*iotCertificateState, bool) {
 	return ic.state, ic.state != nil
 }
 
+// StateMust returns the state for [IotCertificate]. Panics if the state is nil.
 func (ic *IotCertificate) StateMust() *iotCertificateState {
 	if ic.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ic.Type(), ic.LocalName()))
@@ -59,10 +85,7 @@ func (ic *IotCertificate) StateMust() *iotCertificateState {
 	return ic.state
 }
 
-func (ic *IotCertificate) DependOn() terra.Reference {
-	return terra.ReferenceResource(ic)
-}
-
+// IotCertificateArgs contains the configurations for aws_iot_certificate.
 type IotCertificateArgs struct {
 	// Active: bool, required
 	Active terra.BoolValue `hcl:"active,attr" validate:"required"`
@@ -74,43 +97,49 @@ type IotCertificateArgs struct {
 	Csr terra.StringValue `hcl:"csr,attr"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that IotCertificate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iotCertificateAttributes struct {
 	ref terra.Reference
 }
 
+// Active returns a reference to field active of aws_iot_certificate.
 func (ic iotCertificateAttributes) Active() terra.BoolValue {
-	return terra.ReferenceBool(ic.ref.Append("active"))
+	return terra.ReferenceAsBool(ic.ref.Append("active"))
 }
 
+// Arn returns a reference to field arn of aws_iot_certificate.
 func (ic iotCertificateAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("arn"))
+	return terra.ReferenceAsString(ic.ref.Append("arn"))
 }
 
+// CaPem returns a reference to field ca_pem of aws_iot_certificate.
 func (ic iotCertificateAttributes) CaPem() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("ca_pem"))
+	return terra.ReferenceAsString(ic.ref.Append("ca_pem"))
 }
 
+// CertificatePem returns a reference to field certificate_pem of aws_iot_certificate.
 func (ic iotCertificateAttributes) CertificatePem() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("certificate_pem"))
+	return terra.ReferenceAsString(ic.ref.Append("certificate_pem"))
 }
 
+// Csr returns a reference to field csr of aws_iot_certificate.
 func (ic iotCertificateAttributes) Csr() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("csr"))
+	return terra.ReferenceAsString(ic.ref.Append("csr"))
 }
 
+// Id returns a reference to field id of aws_iot_certificate.
 func (ic iotCertificateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("id"))
+	return terra.ReferenceAsString(ic.ref.Append("id"))
 }
 
+// PrivateKey returns a reference to field private_key of aws_iot_certificate.
 func (ic iotCertificateAttributes) PrivateKey() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("private_key"))
+	return terra.ReferenceAsString(ic.ref.Append("private_key"))
 }
 
+// PublicKey returns a reference to field public_key of aws_iot_certificate.
 func (ic iotCertificateAttributes) PublicKey() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("public_key"))
+	return terra.ReferenceAsString(ic.ref.Append("public_key"))
 }
 
 type iotCertificateState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewResourceexplorer2View creates a new instance of [Resourceexplorer2View].
 func NewResourceexplorer2View(name string, args Resourceexplorer2ViewArgs) *Resourceexplorer2View {
 	return &Resourceexplorer2View{
 		Args: args,
@@ -19,28 +20,51 @@ func NewResourceexplorer2View(name string, args Resourceexplorer2ViewArgs) *Reso
 
 var _ terra.Resource = (*Resourceexplorer2View)(nil)
 
+// Resourceexplorer2View represents the Terraform resource aws_resourceexplorer2_view.
 type Resourceexplorer2View struct {
-	Name  string
-	Args  Resourceexplorer2ViewArgs
-	state *resourceexplorer2ViewState
+	Name      string
+	Args      Resourceexplorer2ViewArgs
+	state     *resourceexplorer2ViewState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Resourceexplorer2View].
 func (rv *Resourceexplorer2View) Type() string {
 	return "aws_resourceexplorer2_view"
 }
 
+// LocalName returns the local name for [Resourceexplorer2View].
 func (rv *Resourceexplorer2View) LocalName() string {
 	return rv.Name
 }
 
+// Configuration returns the configuration (args) for [Resourceexplorer2View].
 func (rv *Resourceexplorer2View) Configuration() interface{} {
 	return rv.Args
 }
 
+// DependOn is used for other resources to depend on [Resourceexplorer2View].
+func (rv *Resourceexplorer2View) DependOn() terra.Reference {
+	return terra.ReferenceResource(rv)
+}
+
+// Dependencies returns the list of resources [Resourceexplorer2View] depends_on.
+func (rv *Resourceexplorer2View) Dependencies() terra.Dependencies {
+	return rv.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Resourceexplorer2View].
+func (rv *Resourceexplorer2View) LifecycleManagement() *terra.Lifecycle {
+	return rv.Lifecycle
+}
+
+// Attributes returns the attributes for [Resourceexplorer2View].
 func (rv *Resourceexplorer2View) Attributes() resourceexplorer2ViewAttributes {
 	return resourceexplorer2ViewAttributes{ref: terra.ReferenceResource(rv)}
 }
 
+// ImportState imports the given attribute values into [Resourceexplorer2View]'s state.
 func (rv *Resourceexplorer2View) ImportState(av io.Reader) error {
 	rv.state = &resourceexplorer2ViewState{}
 	if err := json.NewDecoder(av).Decode(rv.state); err != nil {
@@ -49,10 +73,12 @@ func (rv *Resourceexplorer2View) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Resourceexplorer2View] has state.
 func (rv *Resourceexplorer2View) State() (*resourceexplorer2ViewState, bool) {
 	return rv.state, rv.state != nil
 }
 
+// StateMust returns the state for [Resourceexplorer2View]. Panics if the state is nil.
 func (rv *Resourceexplorer2View) StateMust() *resourceexplorer2ViewState {
 	if rv.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rv.Type(), rv.LocalName()))
@@ -60,10 +86,7 @@ func (rv *Resourceexplorer2View) StateMust() *resourceexplorer2ViewState {
 	return rv.state
 }
 
-func (rv *Resourceexplorer2View) DependOn() terra.Reference {
-	return terra.ReferenceResource(rv)
-}
-
+// Resourceexplorer2ViewArgs contains the configurations for aws_resourceexplorer2_view.
 type Resourceexplorer2ViewArgs struct {
 	// DefaultView: bool, optional
 	DefaultView terra.BoolValue `hcl:"default_view,attr"`
@@ -75,43 +98,47 @@ type Resourceexplorer2ViewArgs struct {
 	Filters []resourceexplorer2view.Filters `hcl:"filters,block" validate:"min=0"`
 	// IncludedProperty: min=0
 	IncludedProperty []resourceexplorer2view.IncludedProperty `hcl:"included_property,block" validate:"min=0"`
-	// DependsOn contains resources that Resourceexplorer2View depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type resourceexplorer2ViewAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_resourceexplorer2_view.
 func (rv resourceexplorer2ViewAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rv.ref.Append("arn"))
+	return terra.ReferenceAsString(rv.ref.Append("arn"))
 }
 
+// DefaultView returns a reference to field default_view of aws_resourceexplorer2_view.
 func (rv resourceexplorer2ViewAttributes) DefaultView() terra.BoolValue {
-	return terra.ReferenceBool(rv.ref.Append("default_view"))
+	return terra.ReferenceAsBool(rv.ref.Append("default_view"))
 }
 
+// Id returns a reference to field id of aws_resourceexplorer2_view.
 func (rv resourceexplorer2ViewAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rv.ref.Append("id"))
+	return terra.ReferenceAsString(rv.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_resourceexplorer2_view.
 func (rv resourceexplorer2ViewAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rv.ref.Append("name"))
+	return terra.ReferenceAsString(rv.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_resourceexplorer2_view.
 func (rv resourceexplorer2ViewAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rv.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rv.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_resourceexplorer2_view.
 func (rv resourceexplorer2ViewAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rv.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](rv.ref.Append("tags_all"))
 }
 
 func (rv resourceexplorer2ViewAttributes) Filters() terra.ListValue[resourceexplorer2view.FiltersAttributes] {
-	return terra.ReferenceList[resourceexplorer2view.FiltersAttributes](rv.ref.Append("filters"))
+	return terra.ReferenceAsList[resourceexplorer2view.FiltersAttributes](rv.ref.Append("filters"))
 }
 
 func (rv resourceexplorer2ViewAttributes) IncludedProperty() terra.ListValue[resourceexplorer2view.IncludedPropertyAttributes] {
-	return terra.ReferenceList[resourceexplorer2view.IncludedPropertyAttributes](rv.ref.Append("included_property"))
+	return terra.ReferenceAsList[resourceexplorer2view.IncludedPropertyAttributes](rv.ref.Append("included_property"))
 }
 
 type resourceexplorer2ViewState struct {

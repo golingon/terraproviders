@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSecurityhubOrganizationConfiguration creates a new instance of [SecurityhubOrganizationConfiguration].
 func NewSecurityhubOrganizationConfiguration(name string, args SecurityhubOrganizationConfigurationArgs) *SecurityhubOrganizationConfiguration {
 	return &SecurityhubOrganizationConfiguration{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSecurityhubOrganizationConfiguration(name string, args SecurityhubOrgani
 
 var _ terra.Resource = (*SecurityhubOrganizationConfiguration)(nil)
 
+// SecurityhubOrganizationConfiguration represents the Terraform resource aws_securityhub_organization_configuration.
 type SecurityhubOrganizationConfiguration struct {
-	Name  string
-	Args  SecurityhubOrganizationConfigurationArgs
-	state *securityhubOrganizationConfigurationState
+	Name      string
+	Args      SecurityhubOrganizationConfigurationArgs
+	state     *securityhubOrganizationConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SecurityhubOrganizationConfiguration].
 func (soc *SecurityhubOrganizationConfiguration) Type() string {
 	return "aws_securityhub_organization_configuration"
 }
 
+// LocalName returns the local name for [SecurityhubOrganizationConfiguration].
 func (soc *SecurityhubOrganizationConfiguration) LocalName() string {
 	return soc.Name
 }
 
+// Configuration returns the configuration (args) for [SecurityhubOrganizationConfiguration].
 func (soc *SecurityhubOrganizationConfiguration) Configuration() interface{} {
 	return soc.Args
 }
 
+// DependOn is used for other resources to depend on [SecurityhubOrganizationConfiguration].
+func (soc *SecurityhubOrganizationConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(soc)
+}
+
+// Dependencies returns the list of resources [SecurityhubOrganizationConfiguration] depends_on.
+func (soc *SecurityhubOrganizationConfiguration) Dependencies() terra.Dependencies {
+	return soc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SecurityhubOrganizationConfiguration].
+func (soc *SecurityhubOrganizationConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return soc.Lifecycle
+}
+
+// Attributes returns the attributes for [SecurityhubOrganizationConfiguration].
 func (soc *SecurityhubOrganizationConfiguration) Attributes() securityhubOrganizationConfigurationAttributes {
 	return securityhubOrganizationConfigurationAttributes{ref: terra.ReferenceResource(soc)}
 }
 
+// ImportState imports the given attribute values into [SecurityhubOrganizationConfiguration]'s state.
 func (soc *SecurityhubOrganizationConfiguration) ImportState(av io.Reader) error {
 	soc.state = &securityhubOrganizationConfigurationState{}
 	if err := json.NewDecoder(av).Decode(soc.state); err != nil {
@@ -48,10 +72,12 @@ func (soc *SecurityhubOrganizationConfiguration) ImportState(av io.Reader) error
 	return nil
 }
 
+// State returns the state and a bool indicating if [SecurityhubOrganizationConfiguration] has state.
 func (soc *SecurityhubOrganizationConfiguration) State() (*securityhubOrganizationConfigurationState, bool) {
 	return soc.state, soc.state != nil
 }
 
+// StateMust returns the state for [SecurityhubOrganizationConfiguration]. Panics if the state is nil.
 func (soc *SecurityhubOrganizationConfiguration) StateMust() *securityhubOrganizationConfigurationState {
 	if soc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", soc.Type(), soc.LocalName()))
@@ -59,10 +85,7 @@ func (soc *SecurityhubOrganizationConfiguration) StateMust() *securityhubOrganiz
 	return soc.state
 }
 
-func (soc *SecurityhubOrganizationConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(soc)
-}
-
+// SecurityhubOrganizationConfigurationArgs contains the configurations for aws_securityhub_organization_configuration.
 type SecurityhubOrganizationConfigurationArgs struct {
 	// AutoEnable: bool, required
 	AutoEnable terra.BoolValue `hcl:"auto_enable,attr" validate:"required"`
@@ -70,23 +93,24 @@ type SecurityhubOrganizationConfigurationArgs struct {
 	AutoEnableStandards terra.StringValue `hcl:"auto_enable_standards,attr"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that SecurityhubOrganizationConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type securityhubOrganizationConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// AutoEnable returns a reference to field auto_enable of aws_securityhub_organization_configuration.
 func (soc securityhubOrganizationConfigurationAttributes) AutoEnable() terra.BoolValue {
-	return terra.ReferenceBool(soc.ref.Append("auto_enable"))
+	return terra.ReferenceAsBool(soc.ref.Append("auto_enable"))
 }
 
+// AutoEnableStandards returns a reference to field auto_enable_standards of aws_securityhub_organization_configuration.
 func (soc securityhubOrganizationConfigurationAttributes) AutoEnableStandards() terra.StringValue {
-	return terra.ReferenceString(soc.ref.Append("auto_enable_standards"))
+	return terra.ReferenceAsString(soc.ref.Append("auto_enable_standards"))
 }
 
+// Id returns a reference to field id of aws_securityhub_organization_configuration.
 func (soc securityhubOrganizationConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(soc.ref.Append("id"))
+	return terra.ReferenceAsString(soc.ref.Append("id"))
 }
 
 type securityhubOrganizationConfigurationState struct {

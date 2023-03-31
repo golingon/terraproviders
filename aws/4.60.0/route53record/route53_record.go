@@ -64,15 +64,15 @@ func (a AliasAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AliasAttributes) EvaluateTargetHealth() terra.BoolValue {
-	return terra.ReferenceBool(a.ref.Append("evaluate_target_health"))
+	return terra.ReferenceAsBool(a.ref.Append("evaluate_target_health"))
 }
 
 func (a AliasAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("name"))
+	return terra.ReferenceAsString(a.ref.Append("name"))
 }
 
 func (a AliasAttributes) ZoneId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("zone_id"))
+	return terra.ReferenceAsString(a.ref.Append("zone_id"))
 }
 
 type CidrRoutingPolicyAttributes struct {
@@ -92,11 +92,11 @@ func (crp CidrRoutingPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (crp CidrRoutingPolicyAttributes) CollectionId() terra.StringValue {
-	return terra.ReferenceString(crp.ref.Append("collection_id"))
+	return terra.ReferenceAsString(crp.ref.Append("collection_id"))
 }
 
 func (crp CidrRoutingPolicyAttributes) LocationName() terra.StringValue {
-	return terra.ReferenceString(crp.ref.Append("location_name"))
+	return terra.ReferenceAsString(crp.ref.Append("location_name"))
 }
 
 type FailoverRoutingPolicyAttributes struct {
@@ -116,7 +116,7 @@ func (frp FailoverRoutingPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (frp FailoverRoutingPolicyAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(frp.ref.Append("type"))
+	return terra.ReferenceAsString(frp.ref.Append("type"))
 }
 
 type GeolocationRoutingPolicyAttributes struct {
@@ -136,15 +136,15 @@ func (grp GeolocationRoutingPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (grp GeolocationRoutingPolicyAttributes) Continent() terra.StringValue {
-	return terra.ReferenceString(grp.ref.Append("continent"))
+	return terra.ReferenceAsString(grp.ref.Append("continent"))
 }
 
 func (grp GeolocationRoutingPolicyAttributes) Country() terra.StringValue {
-	return terra.ReferenceString(grp.ref.Append("country"))
+	return terra.ReferenceAsString(grp.ref.Append("country"))
 }
 
 func (grp GeolocationRoutingPolicyAttributes) Subdivision() terra.StringValue {
-	return terra.ReferenceString(grp.ref.Append("subdivision"))
+	return terra.ReferenceAsString(grp.ref.Append("subdivision"))
 }
 
 type LatencyRoutingPolicyAttributes struct {
@@ -164,7 +164,7 @@ func (lrp LatencyRoutingPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lrp LatencyRoutingPolicyAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(lrp.ref.Append("region"))
+	return terra.ReferenceAsString(lrp.ref.Append("region"))
 }
 
 type WeightedRoutingPolicyAttributes struct {
@@ -184,7 +184,7 @@ func (wrp WeightedRoutingPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (wrp WeightedRoutingPolicyAttributes) Weight() terra.NumberValue {
-	return terra.ReferenceNumber(wrp.ref.Append("weight"))
+	return terra.ReferenceAsNumber(wrp.ref.Append("weight"))
 }
 
 type AliasState struct {

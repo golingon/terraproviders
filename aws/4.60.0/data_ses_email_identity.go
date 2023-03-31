@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataSesEmailIdentity creates a new instance of [DataSesEmailIdentity].
 func NewDataSesEmailIdentity(name string, args DataSesEmailIdentityArgs) *DataSesEmailIdentity {
 	return &DataSesEmailIdentity{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataSesEmailIdentity(name string, args DataSesEmailIdentityArgs) *DataSe
 
 var _ terra.DataResource = (*DataSesEmailIdentity)(nil)
 
+// DataSesEmailIdentity represents the Terraform data resource aws_ses_email_identity.
 type DataSesEmailIdentity struct {
 	Name string
 	Args DataSesEmailIdentityArgs
 }
 
+// DataSource returns the Terraform object type for [DataSesEmailIdentity].
 func (sei *DataSesEmailIdentity) DataSource() string {
 	return "aws_ses_email_identity"
 }
 
+// LocalName returns the local name for [DataSesEmailIdentity].
 func (sei *DataSesEmailIdentity) LocalName() string {
 	return sei.Name
 }
 
+// Configuration returns the configuration (args) for [DataSesEmailIdentity].
 func (sei *DataSesEmailIdentity) Configuration() interface{} {
 	return sei.Args
 }
 
+// Attributes returns the attributes for [DataSesEmailIdentity].
 func (sei *DataSesEmailIdentity) Attributes() dataSesEmailIdentityAttributes {
 	return dataSesEmailIdentityAttributes{ref: terra.ReferenceDataResource(sei)}
 }
 
+// DataSesEmailIdentityArgs contains the configurations for aws_ses_email_identity.
 type DataSesEmailIdentityArgs struct {
 	// Email: string, required
 	Email terra.StringValue `hcl:"email,attr" validate:"required"`
@@ -44,14 +51,17 @@ type dataSesEmailIdentityAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ses_email_identity.
 func (sei dataSesEmailIdentityAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sei.ref.Append("arn"))
+	return terra.ReferenceAsString(sei.ref.Append("arn"))
 }
 
+// Email returns a reference to field email of aws_ses_email_identity.
 func (sei dataSesEmailIdentityAttributes) Email() terra.StringValue {
-	return terra.ReferenceString(sei.ref.Append("email"))
+	return terra.ReferenceAsString(sei.ref.Append("email"))
 }
 
+// Id returns a reference to field id of aws_ses_email_identity.
 func (sei dataSesEmailIdentityAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sei.ref.Append("id"))
+	return terra.ReferenceAsString(sei.ref.Append("id"))
 }

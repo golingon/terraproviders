@@ -115,23 +115,23 @@ func (ap AttachmentPoliciesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ap AttachmentPoliciesAttributes) ConditionLogic() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("condition_logic"))
+	return terra.ReferenceAsString(ap.ref.Append("condition_logic"))
 }
 
 func (ap AttachmentPoliciesAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("description"))
+	return terra.ReferenceAsString(ap.ref.Append("description"))
 }
 
 func (ap AttachmentPoliciesAttributes) RuleNumber() terra.NumberValue {
-	return terra.ReferenceNumber(ap.ref.Append("rule_number"))
+	return terra.ReferenceAsNumber(ap.ref.Append("rule_number"))
 }
 
 func (ap AttachmentPoliciesAttributes) Action() terra.ListValue[ActionAttributes] {
-	return terra.ReferenceList[ActionAttributes](ap.ref.Append("action"))
+	return terra.ReferenceAsList[ActionAttributes](ap.ref.Append("action"))
 }
 
 func (ap AttachmentPoliciesAttributes) Conditions() terra.ListValue[ConditionsAttributes] {
-	return terra.ReferenceList[ConditionsAttributes](ap.ref.Append("conditions"))
+	return terra.ReferenceAsList[ConditionsAttributes](ap.ref.Append("conditions"))
 }
 
 type ActionAttributes struct {
@@ -151,19 +151,19 @@ func (a ActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a ActionAttributes) AssociationMethod() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("association_method"))
+	return terra.ReferenceAsString(a.ref.Append("association_method"))
 }
 
 func (a ActionAttributes) RequireAcceptance() terra.BoolValue {
-	return terra.ReferenceBool(a.ref.Append("require_acceptance"))
+	return terra.ReferenceAsBool(a.ref.Append("require_acceptance"))
 }
 
 func (a ActionAttributes) Segment() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("segment"))
+	return terra.ReferenceAsString(a.ref.Append("segment"))
 }
 
 func (a ActionAttributes) TagValueOfKey() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("tag_value_of_key"))
+	return terra.ReferenceAsString(a.ref.Append("tag_value_of_key"))
 }
 
 type ConditionsAttributes struct {
@@ -183,19 +183,19 @@ func (c ConditionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ConditionsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("key"))
+	return terra.ReferenceAsString(c.ref.Append("key"))
 }
 
 func (c ConditionsAttributes) Operator() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("operator"))
+	return terra.ReferenceAsString(c.ref.Append("operator"))
 }
 
 func (c ConditionsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("type"))
+	return terra.ReferenceAsString(c.ref.Append("type"))
 }
 
 func (c ConditionsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("value"))
+	return terra.ReferenceAsString(c.ref.Append("value"))
 }
 
 type CoreNetworkConfigurationAttributes struct {
@@ -215,19 +215,19 @@ func (cnc CoreNetworkConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cnc CoreNetworkConfigurationAttributes) AsnRanges() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cnc.ref.Append("asn_ranges"))
+	return terra.ReferenceAsSet[terra.StringValue](cnc.ref.Append("asn_ranges"))
 }
 
 func (cnc CoreNetworkConfigurationAttributes) InsideCidrBlocks() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cnc.ref.Append("inside_cidr_blocks"))
+	return terra.ReferenceAsSet[terra.StringValue](cnc.ref.Append("inside_cidr_blocks"))
 }
 
 func (cnc CoreNetworkConfigurationAttributes) VpnEcmpSupport() terra.BoolValue {
-	return terra.ReferenceBool(cnc.ref.Append("vpn_ecmp_support"))
+	return terra.ReferenceAsBool(cnc.ref.Append("vpn_ecmp_support"))
 }
 
 func (cnc CoreNetworkConfigurationAttributes) EdgeLocations() terra.ListValue[EdgeLocationsAttributes] {
-	return terra.ReferenceList[EdgeLocationsAttributes](cnc.ref.Append("edge_locations"))
+	return terra.ReferenceAsList[EdgeLocationsAttributes](cnc.ref.Append("edge_locations"))
 }
 
 type EdgeLocationsAttributes struct {
@@ -247,15 +247,15 @@ func (el EdgeLocationsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (el EdgeLocationsAttributes) Asn() terra.StringValue {
-	return terra.ReferenceString(el.ref.Append("asn"))
+	return terra.ReferenceAsString(el.ref.Append("asn"))
 }
 
 func (el EdgeLocationsAttributes) InsideCidrBlocks() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](el.ref.Append("inside_cidr_blocks"))
+	return terra.ReferenceAsList[terra.StringValue](el.ref.Append("inside_cidr_blocks"))
 }
 
 func (el EdgeLocationsAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(el.ref.Append("location"))
+	return terra.ReferenceAsString(el.ref.Append("location"))
 }
 
 type SegmentActionsAttributes struct {
@@ -275,35 +275,35 @@ func (sa SegmentActionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sa SegmentActionsAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("action"))
+	return terra.ReferenceAsString(sa.ref.Append("action"))
 }
 
 func (sa SegmentActionsAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("description"))
+	return terra.ReferenceAsString(sa.ref.Append("description"))
 }
 
 func (sa SegmentActionsAttributes) DestinationCidrBlocks() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sa.ref.Append("destination_cidr_blocks"))
+	return terra.ReferenceAsSet[terra.StringValue](sa.ref.Append("destination_cidr_blocks"))
 }
 
 func (sa SegmentActionsAttributes) Destinations() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sa.ref.Append("destinations"))
+	return terra.ReferenceAsSet[terra.StringValue](sa.ref.Append("destinations"))
 }
 
 func (sa SegmentActionsAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("mode"))
+	return terra.ReferenceAsString(sa.ref.Append("mode"))
 }
 
 func (sa SegmentActionsAttributes) Segment() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("segment"))
+	return terra.ReferenceAsString(sa.ref.Append("segment"))
 }
 
 func (sa SegmentActionsAttributes) ShareWith() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sa.ref.Append("share_with"))
+	return terra.ReferenceAsSet[terra.StringValue](sa.ref.Append("share_with"))
 }
 
 func (sa SegmentActionsAttributes) ShareWithExcept() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sa.ref.Append("share_with_except"))
+	return terra.ReferenceAsSet[terra.StringValue](sa.ref.Append("share_with_except"))
 }
 
 type SegmentsAttributes struct {
@@ -323,31 +323,31 @@ func (s SegmentsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SegmentsAttributes) AllowFilter() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("allow_filter"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("allow_filter"))
 }
 
 func (s SegmentsAttributes) DenyFilter() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("deny_filter"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("deny_filter"))
 }
 
 func (s SegmentsAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("description"))
+	return terra.ReferenceAsString(s.ref.Append("description"))
 }
 
 func (s SegmentsAttributes) EdgeLocations() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("edge_locations"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("edge_locations"))
 }
 
 func (s SegmentsAttributes) IsolateAttachments() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("isolate_attachments"))
+	return terra.ReferenceAsBool(s.ref.Append("isolate_attachments"))
 }
 
 func (s SegmentsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s SegmentsAttributes) RequireAttachmentAcceptance() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("require_attachment_acceptance"))
+	return terra.ReferenceAsBool(s.ref.Append("require_attachment_acceptance"))
 }
 
 type AttachmentPoliciesState struct {

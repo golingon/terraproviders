@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSesEmailIdentity creates a new instance of [SesEmailIdentity].
 func NewSesEmailIdentity(name string, args SesEmailIdentityArgs) *SesEmailIdentity {
 	return &SesEmailIdentity{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSesEmailIdentity(name string, args SesEmailIdentityArgs) *SesEmailIdenti
 
 var _ terra.Resource = (*SesEmailIdentity)(nil)
 
+// SesEmailIdentity represents the Terraform resource aws_ses_email_identity.
 type SesEmailIdentity struct {
-	Name  string
-	Args  SesEmailIdentityArgs
-	state *sesEmailIdentityState
+	Name      string
+	Args      SesEmailIdentityArgs
+	state     *sesEmailIdentityState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SesEmailIdentity].
 func (sei *SesEmailIdentity) Type() string {
 	return "aws_ses_email_identity"
 }
 
+// LocalName returns the local name for [SesEmailIdentity].
 func (sei *SesEmailIdentity) LocalName() string {
 	return sei.Name
 }
 
+// Configuration returns the configuration (args) for [SesEmailIdentity].
 func (sei *SesEmailIdentity) Configuration() interface{} {
 	return sei.Args
 }
 
+// DependOn is used for other resources to depend on [SesEmailIdentity].
+func (sei *SesEmailIdentity) DependOn() terra.Reference {
+	return terra.ReferenceResource(sei)
+}
+
+// Dependencies returns the list of resources [SesEmailIdentity] depends_on.
+func (sei *SesEmailIdentity) Dependencies() terra.Dependencies {
+	return sei.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SesEmailIdentity].
+func (sei *SesEmailIdentity) LifecycleManagement() *terra.Lifecycle {
+	return sei.Lifecycle
+}
+
+// Attributes returns the attributes for [SesEmailIdentity].
 func (sei *SesEmailIdentity) Attributes() sesEmailIdentityAttributes {
 	return sesEmailIdentityAttributes{ref: terra.ReferenceResource(sei)}
 }
 
+// ImportState imports the given attribute values into [SesEmailIdentity]'s state.
 func (sei *SesEmailIdentity) ImportState(av io.Reader) error {
 	sei.state = &sesEmailIdentityState{}
 	if err := json.NewDecoder(av).Decode(sei.state); err != nil {
@@ -48,10 +72,12 @@ func (sei *SesEmailIdentity) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SesEmailIdentity] has state.
 func (sei *SesEmailIdentity) State() (*sesEmailIdentityState, bool) {
 	return sei.state, sei.state != nil
 }
 
+// StateMust returns the state for [SesEmailIdentity]. Panics if the state is nil.
 func (sei *SesEmailIdentity) StateMust() *sesEmailIdentityState {
 	if sei.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sei.Type(), sei.LocalName()))
@@ -59,32 +85,30 @@ func (sei *SesEmailIdentity) StateMust() *sesEmailIdentityState {
 	return sei.state
 }
 
-func (sei *SesEmailIdentity) DependOn() terra.Reference {
-	return terra.ReferenceResource(sei)
-}
-
+// SesEmailIdentityArgs contains the configurations for aws_ses_email_identity.
 type SesEmailIdentityArgs struct {
 	// Email: string, required
 	Email terra.StringValue `hcl:"email,attr" validate:"required"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that SesEmailIdentity depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sesEmailIdentityAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ses_email_identity.
 func (sei sesEmailIdentityAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sei.ref.Append("arn"))
+	return terra.ReferenceAsString(sei.ref.Append("arn"))
 }
 
+// Email returns a reference to field email of aws_ses_email_identity.
 func (sei sesEmailIdentityAttributes) Email() terra.StringValue {
-	return terra.ReferenceString(sei.ref.Append("email"))
+	return terra.ReferenceAsString(sei.ref.Append("email"))
 }
 
+// Id returns a reference to field id of aws_ses_email_identity.
 func (sei sesEmailIdentityAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sei.ref.Append("id"))
+	return terra.ReferenceAsString(sei.ref.Append("id"))
 }
 
 type sesEmailIdentityState struct {

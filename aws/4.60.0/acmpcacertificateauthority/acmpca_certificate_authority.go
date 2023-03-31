@@ -94,15 +94,15 @@ func (cac CertificateAuthorityConfigurationAttributes) InternalTokens() hclwrite
 }
 
 func (cac CertificateAuthorityConfigurationAttributes) KeyAlgorithm() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("key_algorithm"))
+	return terra.ReferenceAsString(cac.ref.Append("key_algorithm"))
 }
 
 func (cac CertificateAuthorityConfigurationAttributes) SigningAlgorithm() terra.StringValue {
-	return terra.ReferenceString(cac.ref.Append("signing_algorithm"))
+	return terra.ReferenceAsString(cac.ref.Append("signing_algorithm"))
 }
 
 func (cac CertificateAuthorityConfigurationAttributes) Subject() terra.ListValue[SubjectAttributes] {
-	return terra.ReferenceList[SubjectAttributes](cac.ref.Append("subject"))
+	return terra.ReferenceAsList[SubjectAttributes](cac.ref.Append("subject"))
 }
 
 type SubjectAttributes struct {
@@ -122,55 +122,55 @@ func (s SubjectAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SubjectAttributes) CommonName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("common_name"))
+	return terra.ReferenceAsString(s.ref.Append("common_name"))
 }
 
 func (s SubjectAttributes) Country() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("country"))
+	return terra.ReferenceAsString(s.ref.Append("country"))
 }
 
 func (s SubjectAttributes) DistinguishedNameQualifier() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("distinguished_name_qualifier"))
+	return terra.ReferenceAsString(s.ref.Append("distinguished_name_qualifier"))
 }
 
 func (s SubjectAttributes) GenerationQualifier() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("generation_qualifier"))
+	return terra.ReferenceAsString(s.ref.Append("generation_qualifier"))
 }
 
 func (s SubjectAttributes) GivenName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("given_name"))
+	return terra.ReferenceAsString(s.ref.Append("given_name"))
 }
 
 func (s SubjectAttributes) Initials() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("initials"))
+	return terra.ReferenceAsString(s.ref.Append("initials"))
 }
 
 func (s SubjectAttributes) Locality() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("locality"))
+	return terra.ReferenceAsString(s.ref.Append("locality"))
 }
 
 func (s SubjectAttributes) Organization() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("organization"))
+	return terra.ReferenceAsString(s.ref.Append("organization"))
 }
 
 func (s SubjectAttributes) OrganizationalUnit() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("organizational_unit"))
+	return terra.ReferenceAsString(s.ref.Append("organizational_unit"))
 }
 
 func (s SubjectAttributes) Pseudonym() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("pseudonym"))
+	return terra.ReferenceAsString(s.ref.Append("pseudonym"))
 }
 
 func (s SubjectAttributes) State() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("state"))
+	return terra.ReferenceAsString(s.ref.Append("state"))
 }
 
 func (s SubjectAttributes) Surname() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("surname"))
+	return terra.ReferenceAsString(s.ref.Append("surname"))
 }
 
 func (s SubjectAttributes) Title() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("title"))
+	return terra.ReferenceAsString(s.ref.Append("title"))
 }
 
 type RevocationConfigurationAttributes struct {
@@ -190,11 +190,11 @@ func (rc RevocationConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rc RevocationConfigurationAttributes) CrlConfiguration() terra.ListValue[CrlConfigurationAttributes] {
-	return terra.ReferenceList[CrlConfigurationAttributes](rc.ref.Append("crl_configuration"))
+	return terra.ReferenceAsList[CrlConfigurationAttributes](rc.ref.Append("crl_configuration"))
 }
 
 func (rc RevocationConfigurationAttributes) OcspConfiguration() terra.ListValue[OcspConfigurationAttributes] {
-	return terra.ReferenceList[OcspConfigurationAttributes](rc.ref.Append("ocsp_configuration"))
+	return terra.ReferenceAsList[OcspConfigurationAttributes](rc.ref.Append("ocsp_configuration"))
 }
 
 type CrlConfigurationAttributes struct {
@@ -214,23 +214,23 @@ func (cc CrlConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc CrlConfigurationAttributes) CustomCname() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("custom_cname"))
+	return terra.ReferenceAsString(cc.ref.Append("custom_cname"))
 }
 
 func (cc CrlConfigurationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(cc.ref.Append("enabled"))
 }
 
 func (cc CrlConfigurationAttributes) ExpirationInDays() terra.NumberValue {
-	return terra.ReferenceNumber(cc.ref.Append("expiration_in_days"))
+	return terra.ReferenceAsNumber(cc.ref.Append("expiration_in_days"))
 }
 
 func (cc CrlConfigurationAttributes) S3BucketName() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("s3_bucket_name"))
+	return terra.ReferenceAsString(cc.ref.Append("s3_bucket_name"))
 }
 
 func (cc CrlConfigurationAttributes) S3ObjectAcl() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("s3_object_acl"))
+	return terra.ReferenceAsString(cc.ref.Append("s3_object_acl"))
 }
 
 type OcspConfigurationAttributes struct {
@@ -250,11 +250,11 @@ func (oc OcspConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (oc OcspConfigurationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(oc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(oc.ref.Append("enabled"))
 }
 
 func (oc OcspConfigurationAttributes) OcspCustomCname() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("ocsp_custom_cname"))
+	return terra.ReferenceAsString(oc.ref.Append("ocsp_custom_cname"))
 }
 
 type TimeoutsAttributes struct {
@@ -274,7 +274,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 type CertificateAuthorityConfigurationState struct {

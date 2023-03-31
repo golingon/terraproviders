@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewFsxFileCache creates a new instance of [FsxFileCache].
 func NewFsxFileCache(name string, args FsxFileCacheArgs) *FsxFileCache {
 	return &FsxFileCache{
 		Args: args,
@@ -19,28 +20,51 @@ func NewFsxFileCache(name string, args FsxFileCacheArgs) *FsxFileCache {
 
 var _ terra.Resource = (*FsxFileCache)(nil)
 
+// FsxFileCache represents the Terraform resource aws_fsx_file_cache.
 type FsxFileCache struct {
-	Name  string
-	Args  FsxFileCacheArgs
-	state *fsxFileCacheState
+	Name      string
+	Args      FsxFileCacheArgs
+	state     *fsxFileCacheState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [FsxFileCache].
 func (ffc *FsxFileCache) Type() string {
 	return "aws_fsx_file_cache"
 }
 
+// LocalName returns the local name for [FsxFileCache].
 func (ffc *FsxFileCache) LocalName() string {
 	return ffc.Name
 }
 
+// Configuration returns the configuration (args) for [FsxFileCache].
 func (ffc *FsxFileCache) Configuration() interface{} {
 	return ffc.Args
 }
 
+// DependOn is used for other resources to depend on [FsxFileCache].
+func (ffc *FsxFileCache) DependOn() terra.Reference {
+	return terra.ReferenceResource(ffc)
+}
+
+// Dependencies returns the list of resources [FsxFileCache] depends_on.
+func (ffc *FsxFileCache) Dependencies() terra.Dependencies {
+	return ffc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [FsxFileCache].
+func (ffc *FsxFileCache) LifecycleManagement() *terra.Lifecycle {
+	return ffc.Lifecycle
+}
+
+// Attributes returns the attributes for [FsxFileCache].
 func (ffc *FsxFileCache) Attributes() fsxFileCacheAttributes {
 	return fsxFileCacheAttributes{ref: terra.ReferenceResource(ffc)}
 }
 
+// ImportState imports the given attribute values into [FsxFileCache]'s state.
 func (ffc *FsxFileCache) ImportState(av io.Reader) error {
 	ffc.state = &fsxFileCacheState{}
 	if err := json.NewDecoder(av).Decode(ffc.state); err != nil {
@@ -49,10 +73,12 @@ func (ffc *FsxFileCache) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [FsxFileCache] has state.
 func (ffc *FsxFileCache) State() (*fsxFileCacheState, bool) {
 	return ffc.state, ffc.state != nil
 }
 
+// StateMust returns the state for [FsxFileCache]. Panics if the state is nil.
 func (ffc *FsxFileCache) StateMust() *fsxFileCacheState {
 	if ffc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ffc.Type(), ffc.LocalName()))
@@ -60,10 +86,7 @@ func (ffc *FsxFileCache) StateMust() *fsxFileCacheState {
 	return ffc.state
 }
 
-func (ffc *FsxFileCache) DependOn() terra.Reference {
-	return terra.ReferenceResource(ffc)
-}
-
+// FsxFileCacheArgs contains the configurations for aws_fsx_file_cache.
 type FsxFileCacheArgs struct {
 	// CopyTagsToDataRepositoryAssociations: bool, optional
 	CopyTagsToDataRepositoryAssociations terra.BoolValue `hcl:"copy_tags_to_data_repository_associations,attr"`
@@ -91,91 +114,106 @@ type FsxFileCacheArgs struct {
 	LustreConfiguration []fsxfilecache.LustreConfiguration `hcl:"lustre_configuration,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *fsxfilecache.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that FsxFileCache depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type fsxFileCacheAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_fsx_file_cache.
 func (ffc fsxFileCacheAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ffc.ref.Append("arn"))
+	return terra.ReferenceAsString(ffc.ref.Append("arn"))
 }
 
+// CopyTagsToDataRepositoryAssociations returns a reference to field copy_tags_to_data_repository_associations of aws_fsx_file_cache.
 func (ffc fsxFileCacheAttributes) CopyTagsToDataRepositoryAssociations() terra.BoolValue {
-	return terra.ReferenceBool(ffc.ref.Append("copy_tags_to_data_repository_associations"))
+	return terra.ReferenceAsBool(ffc.ref.Append("copy_tags_to_data_repository_associations"))
 }
 
+// DataRepositoryAssociationIds returns a reference to field data_repository_association_ids of aws_fsx_file_cache.
 func (ffc fsxFileCacheAttributes) DataRepositoryAssociationIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ffc.ref.Append("data_repository_association_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](ffc.ref.Append("data_repository_association_ids"))
 }
 
+// DnsName returns a reference to field dns_name of aws_fsx_file_cache.
 func (ffc fsxFileCacheAttributes) DnsName() terra.StringValue {
-	return terra.ReferenceString(ffc.ref.Append("dns_name"))
+	return terra.ReferenceAsString(ffc.ref.Append("dns_name"))
 }
 
+// FileCacheId returns a reference to field file_cache_id of aws_fsx_file_cache.
 func (ffc fsxFileCacheAttributes) FileCacheId() terra.StringValue {
-	return terra.ReferenceString(ffc.ref.Append("file_cache_id"))
+	return terra.ReferenceAsString(ffc.ref.Append("file_cache_id"))
 }
 
+// FileCacheType returns a reference to field file_cache_type of aws_fsx_file_cache.
 func (ffc fsxFileCacheAttributes) FileCacheType() terra.StringValue {
-	return terra.ReferenceString(ffc.ref.Append("file_cache_type"))
+	return terra.ReferenceAsString(ffc.ref.Append("file_cache_type"))
 }
 
+// FileCacheTypeVersion returns a reference to field file_cache_type_version of aws_fsx_file_cache.
 func (ffc fsxFileCacheAttributes) FileCacheTypeVersion() terra.StringValue {
-	return terra.ReferenceString(ffc.ref.Append("file_cache_type_version"))
+	return terra.ReferenceAsString(ffc.ref.Append("file_cache_type_version"))
 }
 
+// Id returns a reference to field id of aws_fsx_file_cache.
 func (ffc fsxFileCacheAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ffc.ref.Append("id"))
+	return terra.ReferenceAsString(ffc.ref.Append("id"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_fsx_file_cache.
 func (ffc fsxFileCacheAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(ffc.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(ffc.ref.Append("kms_key_id"))
 }
 
+// NetworkInterfaceIds returns a reference to field network_interface_ids of aws_fsx_file_cache.
 func (ffc fsxFileCacheAttributes) NetworkInterfaceIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ffc.ref.Append("network_interface_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](ffc.ref.Append("network_interface_ids"))
 }
 
+// OwnerId returns a reference to field owner_id of aws_fsx_file_cache.
 func (ffc fsxFileCacheAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(ffc.ref.Append("owner_id"))
+	return terra.ReferenceAsString(ffc.ref.Append("owner_id"))
 }
 
+// SecurityGroupIds returns a reference to field security_group_ids of aws_fsx_file_cache.
 func (ffc fsxFileCacheAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ffc.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](ffc.ref.Append("security_group_ids"))
 }
 
+// StorageCapacity returns a reference to field storage_capacity of aws_fsx_file_cache.
 func (ffc fsxFileCacheAttributes) StorageCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(ffc.ref.Append("storage_capacity"))
+	return terra.ReferenceAsNumber(ffc.ref.Append("storage_capacity"))
 }
 
+// SubnetIds returns a reference to field subnet_ids of aws_fsx_file_cache.
 func (ffc fsxFileCacheAttributes) SubnetIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ffc.ref.Append("subnet_ids"))
+	return terra.ReferenceAsList[terra.StringValue](ffc.ref.Append("subnet_ids"))
 }
 
+// Tags returns a reference to field tags of aws_fsx_file_cache.
 func (ffc fsxFileCacheAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ffc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ffc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_fsx_file_cache.
 func (ffc fsxFileCacheAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ffc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ffc.ref.Append("tags_all"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_fsx_file_cache.
 func (ffc fsxFileCacheAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(ffc.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(ffc.ref.Append("vpc_id"))
 }
 
 func (ffc fsxFileCacheAttributes) DataRepositoryAssociation() terra.SetValue[fsxfilecache.DataRepositoryAssociationAttributes] {
-	return terra.ReferenceSet[fsxfilecache.DataRepositoryAssociationAttributes](ffc.ref.Append("data_repository_association"))
+	return terra.ReferenceAsSet[fsxfilecache.DataRepositoryAssociationAttributes](ffc.ref.Append("data_repository_association"))
 }
 
 func (ffc fsxFileCacheAttributes) LustreConfiguration() terra.SetValue[fsxfilecache.LustreConfigurationAttributes] {
-	return terra.ReferenceSet[fsxfilecache.LustreConfigurationAttributes](ffc.ref.Append("lustre_configuration"))
+	return terra.ReferenceAsSet[fsxfilecache.LustreConfigurationAttributes](ffc.ref.Append("lustre_configuration"))
 }
 
 func (ffc fsxFileCacheAttributes) Timeouts() fsxfilecache.TimeoutsAttributes {
-	return terra.ReferenceSingle[fsxfilecache.TimeoutsAttributes](ffc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[fsxfilecache.TimeoutsAttributes](ffc.ref.Append("timeouts"))
 }
 
 type fsxFileCacheState struct {

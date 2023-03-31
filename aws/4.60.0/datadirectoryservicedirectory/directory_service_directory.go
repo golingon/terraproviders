@@ -30,27 +30,27 @@ func (cs ConnectSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cs ConnectSettingsAttributes) AvailabilityZones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cs.ref.Append("availability_zones"))
+	return terra.ReferenceAsSet[terra.StringValue](cs.ref.Append("availability_zones"))
 }
 
 func (cs ConnectSettingsAttributes) ConnectIps() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cs.ref.Append("connect_ips"))
+	return terra.ReferenceAsSet[terra.StringValue](cs.ref.Append("connect_ips"))
 }
 
 func (cs ConnectSettingsAttributes) CustomerDnsIps() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cs.ref.Append("customer_dns_ips"))
+	return terra.ReferenceAsSet[terra.StringValue](cs.ref.Append("customer_dns_ips"))
 }
 
 func (cs ConnectSettingsAttributes) CustomerUsername() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("customer_username"))
+	return terra.ReferenceAsString(cs.ref.Append("customer_username"))
 }
 
 func (cs ConnectSettingsAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cs.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](cs.ref.Append("subnet_ids"))
 }
 
 func (cs ConnectSettingsAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(cs.ref.Append("vpc_id"))
 }
 
 type RadiusSettingsAttributes struct {
@@ -70,31 +70,31 @@ func (rs RadiusSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rs RadiusSettingsAttributes) AuthenticationProtocol() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("authentication_protocol"))
+	return terra.ReferenceAsString(rs.ref.Append("authentication_protocol"))
 }
 
 func (rs RadiusSettingsAttributes) DisplayLabel() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("display_label"))
+	return terra.ReferenceAsString(rs.ref.Append("display_label"))
 }
 
 func (rs RadiusSettingsAttributes) RadiusPort() terra.NumberValue {
-	return terra.ReferenceNumber(rs.ref.Append("radius_port"))
+	return terra.ReferenceAsNumber(rs.ref.Append("radius_port"))
 }
 
 func (rs RadiusSettingsAttributes) RadiusRetries() terra.NumberValue {
-	return terra.ReferenceNumber(rs.ref.Append("radius_retries"))
+	return terra.ReferenceAsNumber(rs.ref.Append("radius_retries"))
 }
 
 func (rs RadiusSettingsAttributes) RadiusServers() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rs.ref.Append("radius_servers"))
+	return terra.ReferenceAsSet[terra.StringValue](rs.ref.Append("radius_servers"))
 }
 
 func (rs RadiusSettingsAttributes) RadiusTimeout() terra.NumberValue {
-	return terra.ReferenceNumber(rs.ref.Append("radius_timeout"))
+	return terra.ReferenceAsNumber(rs.ref.Append("radius_timeout"))
 }
 
 func (rs RadiusSettingsAttributes) UseSameUsername() terra.BoolValue {
-	return terra.ReferenceBool(rs.ref.Append("use_same_username"))
+	return terra.ReferenceAsBool(rs.ref.Append("use_same_username"))
 }
 
 type VpcSettingsAttributes struct {
@@ -114,15 +114,15 @@ func (vs VpcSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vs VpcSettingsAttributes) AvailabilityZones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vs.ref.Append("availability_zones"))
+	return terra.ReferenceAsSet[terra.StringValue](vs.ref.Append("availability_zones"))
 }
 
 func (vs VpcSettingsAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vs.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vs.ref.Append("subnet_ids"))
 }
 
 func (vs VpcSettingsAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(vs.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(vs.ref.Append("vpc_id"))
 }
 
 type ConnectSettingsState struct {

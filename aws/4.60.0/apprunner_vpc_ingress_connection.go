@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApprunnerVpcIngressConnection creates a new instance of [ApprunnerVpcIngressConnection].
 func NewApprunnerVpcIngressConnection(name string, args ApprunnerVpcIngressConnectionArgs) *ApprunnerVpcIngressConnection {
 	return &ApprunnerVpcIngressConnection{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApprunnerVpcIngressConnection(name string, args ApprunnerVpcIngressConne
 
 var _ terra.Resource = (*ApprunnerVpcIngressConnection)(nil)
 
+// ApprunnerVpcIngressConnection represents the Terraform resource aws_apprunner_vpc_ingress_connection.
 type ApprunnerVpcIngressConnection struct {
-	Name  string
-	Args  ApprunnerVpcIngressConnectionArgs
-	state *apprunnerVpcIngressConnectionState
+	Name      string
+	Args      ApprunnerVpcIngressConnectionArgs
+	state     *apprunnerVpcIngressConnectionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApprunnerVpcIngressConnection].
 func (avic *ApprunnerVpcIngressConnection) Type() string {
 	return "aws_apprunner_vpc_ingress_connection"
 }
 
+// LocalName returns the local name for [ApprunnerVpcIngressConnection].
 func (avic *ApprunnerVpcIngressConnection) LocalName() string {
 	return avic.Name
 }
 
+// Configuration returns the configuration (args) for [ApprunnerVpcIngressConnection].
 func (avic *ApprunnerVpcIngressConnection) Configuration() interface{} {
 	return avic.Args
 }
 
+// DependOn is used for other resources to depend on [ApprunnerVpcIngressConnection].
+func (avic *ApprunnerVpcIngressConnection) DependOn() terra.Reference {
+	return terra.ReferenceResource(avic)
+}
+
+// Dependencies returns the list of resources [ApprunnerVpcIngressConnection] depends_on.
+func (avic *ApprunnerVpcIngressConnection) Dependencies() terra.Dependencies {
+	return avic.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApprunnerVpcIngressConnection].
+func (avic *ApprunnerVpcIngressConnection) LifecycleManagement() *terra.Lifecycle {
+	return avic.Lifecycle
+}
+
+// Attributes returns the attributes for [ApprunnerVpcIngressConnection].
 func (avic *ApprunnerVpcIngressConnection) Attributes() apprunnerVpcIngressConnectionAttributes {
 	return apprunnerVpcIngressConnectionAttributes{ref: terra.ReferenceResource(avic)}
 }
 
+// ImportState imports the given attribute values into [ApprunnerVpcIngressConnection]'s state.
 func (avic *ApprunnerVpcIngressConnection) ImportState(av io.Reader) error {
 	avic.state = &apprunnerVpcIngressConnectionState{}
 	if err := json.NewDecoder(av).Decode(avic.state); err != nil {
@@ -49,10 +73,12 @@ func (avic *ApprunnerVpcIngressConnection) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApprunnerVpcIngressConnection] has state.
 func (avic *ApprunnerVpcIngressConnection) State() (*apprunnerVpcIngressConnectionState, bool) {
 	return avic.state, avic.state != nil
 }
 
+// StateMust returns the state for [ApprunnerVpcIngressConnection]. Panics if the state is nil.
 func (avic *ApprunnerVpcIngressConnection) StateMust() *apprunnerVpcIngressConnectionState {
 	if avic.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", avic.Type(), avic.LocalName()))
@@ -60,10 +86,7 @@ func (avic *ApprunnerVpcIngressConnection) StateMust() *apprunnerVpcIngressConne
 	return avic.state
 }
 
-func (avic *ApprunnerVpcIngressConnection) DependOn() terra.Reference {
-	return terra.ReferenceResource(avic)
-}
-
+// ApprunnerVpcIngressConnectionArgs contains the configurations for aws_apprunner_vpc_ingress_connection.
 type ApprunnerVpcIngressConnectionArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,47 +100,53 @@ type ApprunnerVpcIngressConnectionArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// IngressVpcConfiguration: required
 	IngressVpcConfiguration *apprunnervpcingressconnection.IngressVpcConfiguration `hcl:"ingress_vpc_configuration,block" validate:"required"`
-	// DependsOn contains resources that ApprunnerVpcIngressConnection depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apprunnerVpcIngressConnectionAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_apprunner_vpc_ingress_connection.
 func (avic apprunnerVpcIngressConnectionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(avic.ref.Append("arn"))
+	return terra.ReferenceAsString(avic.ref.Append("arn"))
 }
 
+// DomainName returns a reference to field domain_name of aws_apprunner_vpc_ingress_connection.
 func (avic apprunnerVpcIngressConnectionAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(avic.ref.Append("domain_name"))
+	return terra.ReferenceAsString(avic.ref.Append("domain_name"))
 }
 
+// Id returns a reference to field id of aws_apprunner_vpc_ingress_connection.
 func (avic apprunnerVpcIngressConnectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(avic.ref.Append("id"))
+	return terra.ReferenceAsString(avic.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_apprunner_vpc_ingress_connection.
 func (avic apprunnerVpcIngressConnectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(avic.ref.Append("name"))
+	return terra.ReferenceAsString(avic.ref.Append("name"))
 }
 
+// ServiceArn returns a reference to field service_arn of aws_apprunner_vpc_ingress_connection.
 func (avic apprunnerVpcIngressConnectionAttributes) ServiceArn() terra.StringValue {
-	return terra.ReferenceString(avic.ref.Append("service_arn"))
+	return terra.ReferenceAsString(avic.ref.Append("service_arn"))
 }
 
+// Status returns a reference to field status of aws_apprunner_vpc_ingress_connection.
 func (avic apprunnerVpcIngressConnectionAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(avic.ref.Append("status"))
+	return terra.ReferenceAsString(avic.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of aws_apprunner_vpc_ingress_connection.
 func (avic apprunnerVpcIngressConnectionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](avic.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](avic.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_apprunner_vpc_ingress_connection.
 func (avic apprunnerVpcIngressConnectionAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](avic.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](avic.ref.Append("tags_all"))
 }
 
 func (avic apprunnerVpcIngressConnectionAttributes) IngressVpcConfiguration() terra.ListValue[apprunnervpcingressconnection.IngressVpcConfigurationAttributes] {
-	return terra.ReferenceList[apprunnervpcingressconnection.IngressVpcConfigurationAttributes](avic.ref.Append("ingress_vpc_configuration"))
+	return terra.ReferenceAsList[apprunnervpcingressconnection.IngressVpcConfigurationAttributes](avic.ref.Append("ingress_vpc_configuration"))
 }
 
 type apprunnerVpcIngressConnectionState struct {

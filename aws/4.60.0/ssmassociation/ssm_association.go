@@ -40,15 +40,15 @@ func (ol OutputLocationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ol OutputLocationAttributes) S3BucketName() terra.StringValue {
-	return terra.ReferenceString(ol.ref.Append("s3_bucket_name"))
+	return terra.ReferenceAsString(ol.ref.Append("s3_bucket_name"))
 }
 
 func (ol OutputLocationAttributes) S3KeyPrefix() terra.StringValue {
-	return terra.ReferenceString(ol.ref.Append("s3_key_prefix"))
+	return terra.ReferenceAsString(ol.ref.Append("s3_key_prefix"))
 }
 
 func (ol OutputLocationAttributes) S3Region() terra.StringValue {
-	return terra.ReferenceString(ol.ref.Append("s3_region"))
+	return terra.ReferenceAsString(ol.ref.Append("s3_region"))
 }
 
 type TargetsAttributes struct {
@@ -68,11 +68,11 @@ func (t TargetsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TargetsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("key"))
+	return terra.ReferenceAsString(t.ref.Append("key"))
 }
 
 func (t TargetsAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](t.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](t.ref.Append("values"))
 }
 
 type OutputLocationState struct {

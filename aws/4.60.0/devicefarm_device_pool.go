@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDevicefarmDevicePool creates a new instance of [DevicefarmDevicePool].
 func NewDevicefarmDevicePool(name string, args DevicefarmDevicePoolArgs) *DevicefarmDevicePool {
 	return &DevicefarmDevicePool{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDevicefarmDevicePool(name string, args DevicefarmDevicePoolArgs) *Device
 
 var _ terra.Resource = (*DevicefarmDevicePool)(nil)
 
+// DevicefarmDevicePool represents the Terraform resource aws_devicefarm_device_pool.
 type DevicefarmDevicePool struct {
-	Name  string
-	Args  DevicefarmDevicePoolArgs
-	state *devicefarmDevicePoolState
+	Name      string
+	Args      DevicefarmDevicePoolArgs
+	state     *devicefarmDevicePoolState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DevicefarmDevicePool].
 func (ddp *DevicefarmDevicePool) Type() string {
 	return "aws_devicefarm_device_pool"
 }
 
+// LocalName returns the local name for [DevicefarmDevicePool].
 func (ddp *DevicefarmDevicePool) LocalName() string {
 	return ddp.Name
 }
 
+// Configuration returns the configuration (args) for [DevicefarmDevicePool].
 func (ddp *DevicefarmDevicePool) Configuration() interface{} {
 	return ddp.Args
 }
 
+// DependOn is used for other resources to depend on [DevicefarmDevicePool].
+func (ddp *DevicefarmDevicePool) DependOn() terra.Reference {
+	return terra.ReferenceResource(ddp)
+}
+
+// Dependencies returns the list of resources [DevicefarmDevicePool] depends_on.
+func (ddp *DevicefarmDevicePool) Dependencies() terra.Dependencies {
+	return ddp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DevicefarmDevicePool].
+func (ddp *DevicefarmDevicePool) LifecycleManagement() *terra.Lifecycle {
+	return ddp.Lifecycle
+}
+
+// Attributes returns the attributes for [DevicefarmDevicePool].
 func (ddp *DevicefarmDevicePool) Attributes() devicefarmDevicePoolAttributes {
 	return devicefarmDevicePoolAttributes{ref: terra.ReferenceResource(ddp)}
 }
 
+// ImportState imports the given attribute values into [DevicefarmDevicePool]'s state.
 func (ddp *DevicefarmDevicePool) ImportState(av io.Reader) error {
 	ddp.state = &devicefarmDevicePoolState{}
 	if err := json.NewDecoder(av).Decode(ddp.state); err != nil {
@@ -49,10 +73,12 @@ func (ddp *DevicefarmDevicePool) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DevicefarmDevicePool] has state.
 func (ddp *DevicefarmDevicePool) State() (*devicefarmDevicePoolState, bool) {
 	return ddp.state, ddp.state != nil
 }
 
+// StateMust returns the state for [DevicefarmDevicePool]. Panics if the state is nil.
 func (ddp *DevicefarmDevicePool) StateMust() *devicefarmDevicePoolState {
 	if ddp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ddp.Type(), ddp.LocalName()))
@@ -60,10 +86,7 @@ func (ddp *DevicefarmDevicePool) StateMust() *devicefarmDevicePoolState {
 	return ddp.state
 }
 
-func (ddp *DevicefarmDevicePool) DependOn() terra.Reference {
-	return terra.ReferenceResource(ddp)
-}
-
+// DevicefarmDevicePoolArgs contains the configurations for aws_devicefarm_device_pool.
 type DevicefarmDevicePoolArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -81,51 +104,58 @@ type DevicefarmDevicePoolArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Rule: min=1
 	Rule []devicefarmdevicepool.Rule `hcl:"rule,block" validate:"min=1"`
-	// DependsOn contains resources that DevicefarmDevicePool depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type devicefarmDevicePoolAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_devicefarm_device_pool.
 func (ddp devicefarmDevicePoolAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ddp.ref.Append("arn"))
+	return terra.ReferenceAsString(ddp.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_devicefarm_device_pool.
 func (ddp devicefarmDevicePoolAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ddp.ref.Append("description"))
+	return terra.ReferenceAsString(ddp.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_devicefarm_device_pool.
 func (ddp devicefarmDevicePoolAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ddp.ref.Append("id"))
+	return terra.ReferenceAsString(ddp.ref.Append("id"))
 }
 
+// MaxDevices returns a reference to field max_devices of aws_devicefarm_device_pool.
 func (ddp devicefarmDevicePoolAttributes) MaxDevices() terra.NumberValue {
-	return terra.ReferenceNumber(ddp.ref.Append("max_devices"))
+	return terra.ReferenceAsNumber(ddp.ref.Append("max_devices"))
 }
 
+// Name returns a reference to field name of aws_devicefarm_device_pool.
 func (ddp devicefarmDevicePoolAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ddp.ref.Append("name"))
+	return terra.ReferenceAsString(ddp.ref.Append("name"))
 }
 
+// ProjectArn returns a reference to field project_arn of aws_devicefarm_device_pool.
 func (ddp devicefarmDevicePoolAttributes) ProjectArn() terra.StringValue {
-	return terra.ReferenceString(ddp.ref.Append("project_arn"))
+	return terra.ReferenceAsString(ddp.ref.Append("project_arn"))
 }
 
+// Tags returns a reference to field tags of aws_devicefarm_device_pool.
 func (ddp devicefarmDevicePoolAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ddp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ddp.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_devicefarm_device_pool.
 func (ddp devicefarmDevicePoolAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ddp.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ddp.ref.Append("tags_all"))
 }
 
+// Type returns a reference to field type of aws_devicefarm_device_pool.
 func (ddp devicefarmDevicePoolAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ddp.ref.Append("type"))
+	return terra.ReferenceAsString(ddp.ref.Append("type"))
 }
 
 func (ddp devicefarmDevicePoolAttributes) Rule() terra.SetValue[devicefarmdevicepool.RuleAttributes] {
-	return terra.ReferenceSet[devicefarmdevicepool.RuleAttributes](ddp.ref.Append("rule"))
+	return terra.ReferenceAsSet[devicefarmdevicepool.RuleAttributes](ddp.ref.Append("rule"))
 }
 
 type devicefarmDevicePoolState struct {

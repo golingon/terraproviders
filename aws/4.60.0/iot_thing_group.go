@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIotThingGroup creates a new instance of [IotThingGroup].
 func NewIotThingGroup(name string, args IotThingGroupArgs) *IotThingGroup {
 	return &IotThingGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIotThingGroup(name string, args IotThingGroupArgs) *IotThingGroup {
 
 var _ terra.Resource = (*IotThingGroup)(nil)
 
+// IotThingGroup represents the Terraform resource aws_iot_thing_group.
 type IotThingGroup struct {
-	Name  string
-	Args  IotThingGroupArgs
-	state *iotThingGroupState
+	Name      string
+	Args      IotThingGroupArgs
+	state     *iotThingGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IotThingGroup].
 func (itg *IotThingGroup) Type() string {
 	return "aws_iot_thing_group"
 }
 
+// LocalName returns the local name for [IotThingGroup].
 func (itg *IotThingGroup) LocalName() string {
 	return itg.Name
 }
 
+// Configuration returns the configuration (args) for [IotThingGroup].
 func (itg *IotThingGroup) Configuration() interface{} {
 	return itg.Args
 }
 
+// DependOn is used for other resources to depend on [IotThingGroup].
+func (itg *IotThingGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(itg)
+}
+
+// Dependencies returns the list of resources [IotThingGroup] depends_on.
+func (itg *IotThingGroup) Dependencies() terra.Dependencies {
+	return itg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IotThingGroup].
+func (itg *IotThingGroup) LifecycleManagement() *terra.Lifecycle {
+	return itg.Lifecycle
+}
+
+// Attributes returns the attributes for [IotThingGroup].
 func (itg *IotThingGroup) Attributes() iotThingGroupAttributes {
 	return iotThingGroupAttributes{ref: terra.ReferenceResource(itg)}
 }
 
+// ImportState imports the given attribute values into [IotThingGroup]'s state.
 func (itg *IotThingGroup) ImportState(av io.Reader) error {
 	itg.state = &iotThingGroupState{}
 	if err := json.NewDecoder(av).Decode(itg.state); err != nil {
@@ -49,10 +73,12 @@ func (itg *IotThingGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IotThingGroup] has state.
 func (itg *IotThingGroup) State() (*iotThingGroupState, bool) {
 	return itg.state, itg.state != nil
 }
 
+// StateMust returns the state for [IotThingGroup]. Panics if the state is nil.
 func (itg *IotThingGroup) StateMust() *iotThingGroupState {
 	if itg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", itg.Type(), itg.LocalName()))
@@ -60,10 +86,7 @@ func (itg *IotThingGroup) StateMust() *iotThingGroupState {
 	return itg.state
 }
 
-func (itg *IotThingGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(itg)
-}
-
+// IotThingGroupArgs contains the configurations for aws_iot_thing_group.
 type IotThingGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,47 +102,52 @@ type IotThingGroupArgs struct {
 	Metadata []iotthinggroup.Metadata `hcl:"metadata,block" validate:"min=0"`
 	// Properties: optional
 	Properties *iotthinggroup.Properties `hcl:"properties,block"`
-	// DependsOn contains resources that IotThingGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iotThingGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_iot_thing_group.
 func (itg iotThingGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(itg.ref.Append("arn"))
+	return terra.ReferenceAsString(itg.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_iot_thing_group.
 func (itg iotThingGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(itg.ref.Append("id"))
+	return terra.ReferenceAsString(itg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_iot_thing_group.
 func (itg iotThingGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(itg.ref.Append("name"))
+	return terra.ReferenceAsString(itg.ref.Append("name"))
 }
 
+// ParentGroupName returns a reference to field parent_group_name of aws_iot_thing_group.
 func (itg iotThingGroupAttributes) ParentGroupName() terra.StringValue {
-	return terra.ReferenceString(itg.ref.Append("parent_group_name"))
+	return terra.ReferenceAsString(itg.ref.Append("parent_group_name"))
 }
 
+// Tags returns a reference to field tags of aws_iot_thing_group.
 func (itg iotThingGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](itg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](itg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_iot_thing_group.
 func (itg iotThingGroupAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](itg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](itg.ref.Append("tags_all"))
 }
 
+// Version returns a reference to field version of aws_iot_thing_group.
 func (itg iotThingGroupAttributes) Version() terra.NumberValue {
-	return terra.ReferenceNumber(itg.ref.Append("version"))
+	return terra.ReferenceAsNumber(itg.ref.Append("version"))
 }
 
 func (itg iotThingGroupAttributes) Metadata() terra.ListValue[iotthinggroup.MetadataAttributes] {
-	return terra.ReferenceList[iotthinggroup.MetadataAttributes](itg.ref.Append("metadata"))
+	return terra.ReferenceAsList[iotthinggroup.MetadataAttributes](itg.ref.Append("metadata"))
 }
 
 func (itg iotThingGroupAttributes) Properties() terra.ListValue[iotthinggroup.PropertiesAttributes] {
-	return terra.ReferenceList[iotthinggroup.PropertiesAttributes](itg.ref.Append("properties"))
+	return terra.ReferenceAsList[iotthinggroup.PropertiesAttributes](itg.ref.Append("properties"))
 }
 
 type iotThingGroupState struct {

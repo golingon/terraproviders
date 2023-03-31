@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDbProxy creates a new instance of [DbProxy].
 func NewDbProxy(name string, args DbProxyArgs) *DbProxy {
 	return &DbProxy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDbProxy(name string, args DbProxyArgs) *DbProxy {
 
 var _ terra.Resource = (*DbProxy)(nil)
 
+// DbProxy represents the Terraform resource aws_db_proxy.
 type DbProxy struct {
-	Name  string
-	Args  DbProxyArgs
-	state *dbProxyState
+	Name      string
+	Args      DbProxyArgs
+	state     *dbProxyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DbProxy].
 func (dp *DbProxy) Type() string {
 	return "aws_db_proxy"
 }
 
+// LocalName returns the local name for [DbProxy].
 func (dp *DbProxy) LocalName() string {
 	return dp.Name
 }
 
+// Configuration returns the configuration (args) for [DbProxy].
 func (dp *DbProxy) Configuration() interface{} {
 	return dp.Args
 }
 
+// DependOn is used for other resources to depend on [DbProxy].
+func (dp *DbProxy) DependOn() terra.Reference {
+	return terra.ReferenceResource(dp)
+}
+
+// Dependencies returns the list of resources [DbProxy] depends_on.
+func (dp *DbProxy) Dependencies() terra.Dependencies {
+	return dp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DbProxy].
+func (dp *DbProxy) LifecycleManagement() *terra.Lifecycle {
+	return dp.Lifecycle
+}
+
+// Attributes returns the attributes for [DbProxy].
 func (dp *DbProxy) Attributes() dbProxyAttributes {
 	return dbProxyAttributes{ref: terra.ReferenceResource(dp)}
 }
 
+// ImportState imports the given attribute values into [DbProxy]'s state.
 func (dp *DbProxy) ImportState(av io.Reader) error {
 	dp.state = &dbProxyState{}
 	if err := json.NewDecoder(av).Decode(dp.state); err != nil {
@@ -49,10 +73,12 @@ func (dp *DbProxy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DbProxy] has state.
 func (dp *DbProxy) State() (*dbProxyState, bool) {
 	return dp.state, dp.state != nil
 }
 
+// StateMust returns the state for [DbProxy]. Panics if the state is nil.
 func (dp *DbProxy) StateMust() *dbProxyState {
 	if dp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dp.Type(), dp.LocalName()))
@@ -60,10 +86,7 @@ func (dp *DbProxy) StateMust() *dbProxyState {
 	return dp.state
 }
 
-func (dp *DbProxy) DependOn() terra.Reference {
-	return terra.ReferenceResource(dp)
-}
-
+// DbProxyArgs contains the configurations for aws_db_proxy.
 type DbProxyArgs struct {
 	// DebugLogging: bool, optional
 	DebugLogging terra.BoolValue `hcl:"debug_logging,attr"`
@@ -91,71 +114,82 @@ type DbProxyArgs struct {
 	Auth []dbproxy.Auth `hcl:"auth,block" validate:"min=1"`
 	// Timeouts: optional
 	Timeouts *dbproxy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DbProxy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dbProxyAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_db_proxy.
 func (dp dbProxyAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("arn"))
+	return terra.ReferenceAsString(dp.ref.Append("arn"))
 }
 
+// DebugLogging returns a reference to field debug_logging of aws_db_proxy.
 func (dp dbProxyAttributes) DebugLogging() terra.BoolValue {
-	return terra.ReferenceBool(dp.ref.Append("debug_logging"))
+	return terra.ReferenceAsBool(dp.ref.Append("debug_logging"))
 }
 
+// Endpoint returns a reference to field endpoint of aws_db_proxy.
 func (dp dbProxyAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("endpoint"))
+	return terra.ReferenceAsString(dp.ref.Append("endpoint"))
 }
 
+// EngineFamily returns a reference to field engine_family of aws_db_proxy.
 func (dp dbProxyAttributes) EngineFamily() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("engine_family"))
+	return terra.ReferenceAsString(dp.ref.Append("engine_family"))
 }
 
+// Id returns a reference to field id of aws_db_proxy.
 func (dp dbProxyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("id"))
+	return terra.ReferenceAsString(dp.ref.Append("id"))
 }
 
+// IdleClientTimeout returns a reference to field idle_client_timeout of aws_db_proxy.
 func (dp dbProxyAttributes) IdleClientTimeout() terra.NumberValue {
-	return terra.ReferenceNumber(dp.ref.Append("idle_client_timeout"))
+	return terra.ReferenceAsNumber(dp.ref.Append("idle_client_timeout"))
 }
 
+// Name returns a reference to field name of aws_db_proxy.
 func (dp dbProxyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("name"))
+	return terra.ReferenceAsString(dp.ref.Append("name"))
 }
 
+// RequireTls returns a reference to field require_tls of aws_db_proxy.
 func (dp dbProxyAttributes) RequireTls() terra.BoolValue {
-	return terra.ReferenceBool(dp.ref.Append("require_tls"))
+	return terra.ReferenceAsBool(dp.ref.Append("require_tls"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_db_proxy.
 func (dp dbProxyAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(dp.ref.Append("role_arn"))
+	return terra.ReferenceAsString(dp.ref.Append("role_arn"))
 }
 
+// Tags returns a reference to field tags of aws_db_proxy.
 func (dp dbProxyAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dp.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_db_proxy.
 func (dp dbProxyAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dp.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dp.ref.Append("tags_all"))
 }
 
+// VpcSecurityGroupIds returns a reference to field vpc_security_group_ids of aws_db_proxy.
 func (dp dbProxyAttributes) VpcSecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dp.ref.Append("vpc_security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](dp.ref.Append("vpc_security_group_ids"))
 }
 
+// VpcSubnetIds returns a reference to field vpc_subnet_ids of aws_db_proxy.
 func (dp dbProxyAttributes) VpcSubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dp.ref.Append("vpc_subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](dp.ref.Append("vpc_subnet_ids"))
 }
 
 func (dp dbProxyAttributes) Auth() terra.ListValue[dbproxy.AuthAttributes] {
-	return terra.ReferenceList[dbproxy.AuthAttributes](dp.ref.Append("auth"))
+	return terra.ReferenceAsList[dbproxy.AuthAttributes](dp.ref.Append("auth"))
 }
 
 func (dp dbProxyAttributes) Timeouts() dbproxy.TimeoutsAttributes {
-	return terra.ReferenceSingle[dbproxy.TimeoutsAttributes](dp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dbproxy.TimeoutsAttributes](dp.ref.Append("timeouts"))
 }
 
 type dbProxyState struct {

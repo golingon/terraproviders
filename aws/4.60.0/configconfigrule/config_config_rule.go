@@ -64,19 +64,19 @@ func (s ScopeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s ScopeAttributes) ComplianceResourceId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("compliance_resource_id"))
+	return terra.ReferenceAsString(s.ref.Append("compliance_resource_id"))
 }
 
 func (s ScopeAttributes) ComplianceResourceTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("compliance_resource_types"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("compliance_resource_types"))
 }
 
 func (s ScopeAttributes) TagKey() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("tag_key"))
+	return terra.ReferenceAsString(s.ref.Append("tag_key"))
 }
 
 func (s ScopeAttributes) TagValue() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("tag_value"))
+	return terra.ReferenceAsString(s.ref.Append("tag_value"))
 }
 
 type SourceAttributes struct {
@@ -96,19 +96,19 @@ func (s SourceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SourceAttributes) Owner() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("owner"))
+	return terra.ReferenceAsString(s.ref.Append("owner"))
 }
 
 func (s SourceAttributes) SourceIdentifier() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("source_identifier"))
+	return terra.ReferenceAsString(s.ref.Append("source_identifier"))
 }
 
 func (s SourceAttributes) CustomPolicyDetails() terra.ListValue[CustomPolicyDetailsAttributes] {
-	return terra.ReferenceList[CustomPolicyDetailsAttributes](s.ref.Append("custom_policy_details"))
+	return terra.ReferenceAsList[CustomPolicyDetailsAttributes](s.ref.Append("custom_policy_details"))
 }
 
 func (s SourceAttributes) SourceDetail() terra.SetValue[SourceDetailAttributes] {
-	return terra.ReferenceSet[SourceDetailAttributes](s.ref.Append("source_detail"))
+	return terra.ReferenceAsSet[SourceDetailAttributes](s.ref.Append("source_detail"))
 }
 
 type CustomPolicyDetailsAttributes struct {
@@ -128,15 +128,15 @@ func (cpd CustomPolicyDetailsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cpd CustomPolicyDetailsAttributes) EnableDebugLogDelivery() terra.BoolValue {
-	return terra.ReferenceBool(cpd.ref.Append("enable_debug_log_delivery"))
+	return terra.ReferenceAsBool(cpd.ref.Append("enable_debug_log_delivery"))
 }
 
 func (cpd CustomPolicyDetailsAttributes) PolicyRuntime() terra.StringValue {
-	return terra.ReferenceString(cpd.ref.Append("policy_runtime"))
+	return terra.ReferenceAsString(cpd.ref.Append("policy_runtime"))
 }
 
 func (cpd CustomPolicyDetailsAttributes) PolicyText() terra.StringValue {
-	return terra.ReferenceString(cpd.ref.Append("policy_text"))
+	return terra.ReferenceAsString(cpd.ref.Append("policy_text"))
 }
 
 type SourceDetailAttributes struct {
@@ -156,15 +156,15 @@ func (sd SourceDetailAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sd SourceDetailAttributes) EventSource() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("event_source"))
+	return terra.ReferenceAsString(sd.ref.Append("event_source"))
 }
 
 func (sd SourceDetailAttributes) MaximumExecutionFrequency() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("maximum_execution_frequency"))
+	return terra.ReferenceAsString(sd.ref.Append("maximum_execution_frequency"))
 }
 
 func (sd SourceDetailAttributes) MessageType() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("message_type"))
+	return terra.ReferenceAsString(sd.ref.Append("message_type"))
 }
 
 type ScopeState struct {

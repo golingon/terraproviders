@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewVpcIpamOrganizationAdminAccount creates a new instance of [VpcIpamOrganizationAdminAccount].
 func NewVpcIpamOrganizationAdminAccount(name string, args VpcIpamOrganizationAdminAccountArgs) *VpcIpamOrganizationAdminAccount {
 	return &VpcIpamOrganizationAdminAccount{
 		Args: args,
@@ -18,28 +19,51 @@ func NewVpcIpamOrganizationAdminAccount(name string, args VpcIpamOrganizationAdm
 
 var _ terra.Resource = (*VpcIpamOrganizationAdminAccount)(nil)
 
+// VpcIpamOrganizationAdminAccount represents the Terraform resource aws_vpc_ipam_organization_admin_account.
 type VpcIpamOrganizationAdminAccount struct {
-	Name  string
-	Args  VpcIpamOrganizationAdminAccountArgs
-	state *vpcIpamOrganizationAdminAccountState
+	Name      string
+	Args      VpcIpamOrganizationAdminAccountArgs
+	state     *vpcIpamOrganizationAdminAccountState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VpcIpamOrganizationAdminAccount].
 func (vioaa *VpcIpamOrganizationAdminAccount) Type() string {
 	return "aws_vpc_ipam_organization_admin_account"
 }
 
+// LocalName returns the local name for [VpcIpamOrganizationAdminAccount].
 func (vioaa *VpcIpamOrganizationAdminAccount) LocalName() string {
 	return vioaa.Name
 }
 
+// Configuration returns the configuration (args) for [VpcIpamOrganizationAdminAccount].
 func (vioaa *VpcIpamOrganizationAdminAccount) Configuration() interface{} {
 	return vioaa.Args
 }
 
+// DependOn is used for other resources to depend on [VpcIpamOrganizationAdminAccount].
+func (vioaa *VpcIpamOrganizationAdminAccount) DependOn() terra.Reference {
+	return terra.ReferenceResource(vioaa)
+}
+
+// Dependencies returns the list of resources [VpcIpamOrganizationAdminAccount] depends_on.
+func (vioaa *VpcIpamOrganizationAdminAccount) Dependencies() terra.Dependencies {
+	return vioaa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VpcIpamOrganizationAdminAccount].
+func (vioaa *VpcIpamOrganizationAdminAccount) LifecycleManagement() *terra.Lifecycle {
+	return vioaa.Lifecycle
+}
+
+// Attributes returns the attributes for [VpcIpamOrganizationAdminAccount].
 func (vioaa *VpcIpamOrganizationAdminAccount) Attributes() vpcIpamOrganizationAdminAccountAttributes {
 	return vpcIpamOrganizationAdminAccountAttributes{ref: terra.ReferenceResource(vioaa)}
 }
 
+// ImportState imports the given attribute values into [VpcIpamOrganizationAdminAccount]'s state.
 func (vioaa *VpcIpamOrganizationAdminAccount) ImportState(av io.Reader) error {
 	vioaa.state = &vpcIpamOrganizationAdminAccountState{}
 	if err := json.NewDecoder(av).Decode(vioaa.state); err != nil {
@@ -48,10 +72,12 @@ func (vioaa *VpcIpamOrganizationAdminAccount) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VpcIpamOrganizationAdminAccount] has state.
 func (vioaa *VpcIpamOrganizationAdminAccount) State() (*vpcIpamOrganizationAdminAccountState, bool) {
 	return vioaa.state, vioaa.state != nil
 }
 
+// StateMust returns the state for [VpcIpamOrganizationAdminAccount]. Panics if the state is nil.
 func (vioaa *VpcIpamOrganizationAdminAccount) StateMust() *vpcIpamOrganizationAdminAccountState {
 	if vioaa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vioaa.Type(), vioaa.LocalName()))
@@ -59,44 +85,45 @@ func (vioaa *VpcIpamOrganizationAdminAccount) StateMust() *vpcIpamOrganizationAd
 	return vioaa.state
 }
 
-func (vioaa *VpcIpamOrganizationAdminAccount) DependOn() terra.Reference {
-	return terra.ReferenceResource(vioaa)
-}
-
+// VpcIpamOrganizationAdminAccountArgs contains the configurations for aws_vpc_ipam_organization_admin_account.
 type VpcIpamOrganizationAdminAccountArgs struct {
 	// DelegatedAdminAccountId: string, required
 	DelegatedAdminAccountId terra.StringValue `hcl:"delegated_admin_account_id,attr" validate:"required"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that VpcIpamOrganizationAdminAccount depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type vpcIpamOrganizationAdminAccountAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_vpc_ipam_organization_admin_account.
 func (vioaa vpcIpamOrganizationAdminAccountAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(vioaa.ref.Append("arn"))
+	return terra.ReferenceAsString(vioaa.ref.Append("arn"))
 }
 
+// DelegatedAdminAccountId returns a reference to field delegated_admin_account_id of aws_vpc_ipam_organization_admin_account.
 func (vioaa vpcIpamOrganizationAdminAccountAttributes) DelegatedAdminAccountId() terra.StringValue {
-	return terra.ReferenceString(vioaa.ref.Append("delegated_admin_account_id"))
+	return terra.ReferenceAsString(vioaa.ref.Append("delegated_admin_account_id"))
 }
 
+// Email returns a reference to field email of aws_vpc_ipam_organization_admin_account.
 func (vioaa vpcIpamOrganizationAdminAccountAttributes) Email() terra.StringValue {
-	return terra.ReferenceString(vioaa.ref.Append("email"))
+	return terra.ReferenceAsString(vioaa.ref.Append("email"))
 }
 
+// Id returns a reference to field id of aws_vpc_ipam_organization_admin_account.
 func (vioaa vpcIpamOrganizationAdminAccountAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vioaa.ref.Append("id"))
+	return terra.ReferenceAsString(vioaa.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_vpc_ipam_organization_admin_account.
 func (vioaa vpcIpamOrganizationAdminAccountAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vioaa.ref.Append("name"))
+	return terra.ReferenceAsString(vioaa.ref.Append("name"))
 }
 
+// ServicePrincipal returns a reference to field service_principal of aws_vpc_ipam_organization_admin_account.
 func (vioaa vpcIpamOrganizationAdminAccountAttributes) ServicePrincipal() terra.StringValue {
-	return terra.ReferenceString(vioaa.ref.Append("service_principal"))
+	return terra.ReferenceAsString(vioaa.ref.Append("service_principal"))
 }
 
 type vpcIpamOrganizationAdminAccountState struct {

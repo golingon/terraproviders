@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataApiGatewayRestApi creates a new instance of [DataApiGatewayRestApi].
 func NewDataApiGatewayRestApi(name string, args DataApiGatewayRestApiArgs) *DataApiGatewayRestApi {
 	return &DataApiGatewayRestApi{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataApiGatewayRestApi(name string, args DataApiGatewayRestApiArgs) *Data
 
 var _ terra.DataResource = (*DataApiGatewayRestApi)(nil)
 
+// DataApiGatewayRestApi represents the Terraform data resource aws_api_gateway_rest_api.
 type DataApiGatewayRestApi struct {
 	Name string
 	Args DataApiGatewayRestApiArgs
 }
 
+// DataSource returns the Terraform object type for [DataApiGatewayRestApi].
 func (agra *DataApiGatewayRestApi) DataSource() string {
 	return "aws_api_gateway_rest_api"
 }
 
+// LocalName returns the local name for [DataApiGatewayRestApi].
 func (agra *DataApiGatewayRestApi) LocalName() string {
 	return agra.Name
 }
 
+// Configuration returns the configuration (args) for [DataApiGatewayRestApi].
 func (agra *DataApiGatewayRestApi) Configuration() interface{} {
 	return agra.Args
 }
 
+// Attributes returns the attributes for [DataApiGatewayRestApi].
 func (agra *DataApiGatewayRestApi) Attributes() dataApiGatewayRestApiAttributes {
 	return dataApiGatewayRestApiAttributes{ref: terra.ReferenceDataResource(agra)}
 }
 
+// DataApiGatewayRestApiArgs contains the configurations for aws_api_gateway_rest_api.
 type DataApiGatewayRestApiArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,50 +58,61 @@ type dataApiGatewayRestApiAttributes struct {
 	ref terra.Reference
 }
 
+// ApiKeySource returns a reference to field api_key_source of aws_api_gateway_rest_api.
 func (agra dataApiGatewayRestApiAttributes) ApiKeySource() terra.StringValue {
-	return terra.ReferenceString(agra.ref.Append("api_key_source"))
+	return terra.ReferenceAsString(agra.ref.Append("api_key_source"))
 }
 
+// Arn returns a reference to field arn of aws_api_gateway_rest_api.
 func (agra dataApiGatewayRestApiAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(agra.ref.Append("arn"))
+	return terra.ReferenceAsString(agra.ref.Append("arn"))
 }
 
+// BinaryMediaTypes returns a reference to field binary_media_types of aws_api_gateway_rest_api.
 func (agra dataApiGatewayRestApiAttributes) BinaryMediaTypes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](agra.ref.Append("binary_media_types"))
+	return terra.ReferenceAsList[terra.StringValue](agra.ref.Append("binary_media_types"))
 }
 
+// Description returns a reference to field description of aws_api_gateway_rest_api.
 func (agra dataApiGatewayRestApiAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(agra.ref.Append("description"))
+	return terra.ReferenceAsString(agra.ref.Append("description"))
 }
 
+// ExecutionArn returns a reference to field execution_arn of aws_api_gateway_rest_api.
 func (agra dataApiGatewayRestApiAttributes) ExecutionArn() terra.StringValue {
-	return terra.ReferenceString(agra.ref.Append("execution_arn"))
+	return terra.ReferenceAsString(agra.ref.Append("execution_arn"))
 }
 
+// Id returns a reference to field id of aws_api_gateway_rest_api.
 func (agra dataApiGatewayRestApiAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(agra.ref.Append("id"))
+	return terra.ReferenceAsString(agra.ref.Append("id"))
 }
 
+// MinimumCompressionSize returns a reference to field minimum_compression_size of aws_api_gateway_rest_api.
 func (agra dataApiGatewayRestApiAttributes) MinimumCompressionSize() terra.NumberValue {
-	return terra.ReferenceNumber(agra.ref.Append("minimum_compression_size"))
+	return terra.ReferenceAsNumber(agra.ref.Append("minimum_compression_size"))
 }
 
+// Name returns a reference to field name of aws_api_gateway_rest_api.
 func (agra dataApiGatewayRestApiAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(agra.ref.Append("name"))
+	return terra.ReferenceAsString(agra.ref.Append("name"))
 }
 
+// Policy returns a reference to field policy of aws_api_gateway_rest_api.
 func (agra dataApiGatewayRestApiAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(agra.ref.Append("policy"))
+	return terra.ReferenceAsString(agra.ref.Append("policy"))
 }
 
+// RootResourceId returns a reference to field root_resource_id of aws_api_gateway_rest_api.
 func (agra dataApiGatewayRestApiAttributes) RootResourceId() terra.StringValue {
-	return terra.ReferenceString(agra.ref.Append("root_resource_id"))
+	return terra.ReferenceAsString(agra.ref.Append("root_resource_id"))
 }
 
+// Tags returns a reference to field tags of aws_api_gateway_rest_api.
 func (agra dataApiGatewayRestApiAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](agra.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](agra.ref.Append("tags"))
 }
 
 func (agra dataApiGatewayRestApiAttributes) EndpointConfiguration() terra.ListValue[dataapigatewayrestapi.EndpointConfigurationAttributes] {
-	return terra.ReferenceList[dataapigatewayrestapi.EndpointConfigurationAttributes](agra.ref.Append("endpoint_configuration"))
+	return terra.ReferenceAsList[dataapigatewayrestapi.EndpointConfigurationAttributes](agra.ref.Append("endpoint_configuration"))
 }

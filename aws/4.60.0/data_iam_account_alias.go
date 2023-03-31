@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataIamAccountAlias creates a new instance of [DataIamAccountAlias].
 func NewDataIamAccountAlias(name string, args DataIamAccountAliasArgs) *DataIamAccountAlias {
 	return &DataIamAccountAlias{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataIamAccountAlias(name string, args DataIamAccountAliasArgs) *DataIamA
 
 var _ terra.DataResource = (*DataIamAccountAlias)(nil)
 
+// DataIamAccountAlias represents the Terraform data resource aws_iam_account_alias.
 type DataIamAccountAlias struct {
 	Name string
 	Args DataIamAccountAliasArgs
 }
 
+// DataSource returns the Terraform object type for [DataIamAccountAlias].
 func (iaa *DataIamAccountAlias) DataSource() string {
 	return "aws_iam_account_alias"
 }
 
+// LocalName returns the local name for [DataIamAccountAlias].
 func (iaa *DataIamAccountAlias) LocalName() string {
 	return iaa.Name
 }
 
+// Configuration returns the configuration (args) for [DataIamAccountAlias].
 func (iaa *DataIamAccountAlias) Configuration() interface{} {
 	return iaa.Args
 }
 
+// Attributes returns the attributes for [DataIamAccountAlias].
 func (iaa *DataIamAccountAlias) Attributes() dataIamAccountAliasAttributes {
 	return dataIamAccountAliasAttributes{ref: terra.ReferenceDataResource(iaa)}
 }
 
+// DataIamAccountAliasArgs contains the configurations for aws_iam_account_alias.
 type DataIamAccountAliasArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -42,10 +49,12 @@ type dataIamAccountAliasAttributes struct {
 	ref terra.Reference
 }
 
+// AccountAlias returns a reference to field account_alias of aws_iam_account_alias.
 func (iaa dataIamAccountAliasAttributes) AccountAlias() terra.StringValue {
-	return terra.ReferenceString(iaa.ref.Append("account_alias"))
+	return terra.ReferenceAsString(iaa.ref.Append("account_alias"))
 }
 
+// Id returns a reference to field id of aws_iam_account_alias.
 func (iaa dataIamAccountAliasAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(iaa.ref.Append("id"))
+	return terra.ReferenceAsString(iaa.ref.Append("id"))
 }

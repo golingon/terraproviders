@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAppconfigDeployment creates a new instance of [AppconfigDeployment].
 func NewAppconfigDeployment(name string, args AppconfigDeploymentArgs) *AppconfigDeployment {
 	return &AppconfigDeployment{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAppconfigDeployment(name string, args AppconfigDeploymentArgs) *Appconfi
 
 var _ terra.Resource = (*AppconfigDeployment)(nil)
 
+// AppconfigDeployment represents the Terraform resource aws_appconfig_deployment.
 type AppconfigDeployment struct {
-	Name  string
-	Args  AppconfigDeploymentArgs
-	state *appconfigDeploymentState
+	Name      string
+	Args      AppconfigDeploymentArgs
+	state     *appconfigDeploymentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppconfigDeployment].
 func (ad *AppconfigDeployment) Type() string {
 	return "aws_appconfig_deployment"
 }
 
+// LocalName returns the local name for [AppconfigDeployment].
 func (ad *AppconfigDeployment) LocalName() string {
 	return ad.Name
 }
 
+// Configuration returns the configuration (args) for [AppconfigDeployment].
 func (ad *AppconfigDeployment) Configuration() interface{} {
 	return ad.Args
 }
 
+// DependOn is used for other resources to depend on [AppconfigDeployment].
+func (ad *AppconfigDeployment) DependOn() terra.Reference {
+	return terra.ReferenceResource(ad)
+}
+
+// Dependencies returns the list of resources [AppconfigDeployment] depends_on.
+func (ad *AppconfigDeployment) Dependencies() terra.Dependencies {
+	return ad.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppconfigDeployment].
+func (ad *AppconfigDeployment) LifecycleManagement() *terra.Lifecycle {
+	return ad.Lifecycle
+}
+
+// Attributes returns the attributes for [AppconfigDeployment].
 func (ad *AppconfigDeployment) Attributes() appconfigDeploymentAttributes {
 	return appconfigDeploymentAttributes{ref: terra.ReferenceResource(ad)}
 }
 
+// ImportState imports the given attribute values into [AppconfigDeployment]'s state.
 func (ad *AppconfigDeployment) ImportState(av io.Reader) error {
 	ad.state = &appconfigDeploymentState{}
 	if err := json.NewDecoder(av).Decode(ad.state); err != nil {
@@ -48,10 +72,12 @@ func (ad *AppconfigDeployment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppconfigDeployment] has state.
 func (ad *AppconfigDeployment) State() (*appconfigDeploymentState, bool) {
 	return ad.state, ad.state != nil
 }
 
+// StateMust returns the state for [AppconfigDeployment]. Panics if the state is nil.
 func (ad *AppconfigDeployment) StateMust() *appconfigDeploymentState {
 	if ad.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ad.Type(), ad.LocalName()))
@@ -59,10 +85,7 @@ func (ad *AppconfigDeployment) StateMust() *appconfigDeploymentState {
 	return ad.state
 }
 
-func (ad *AppconfigDeployment) DependOn() terra.Reference {
-	return terra.ReferenceResource(ad)
-}
-
+// AppconfigDeploymentArgs contains the configurations for aws_appconfig_deployment.
 type AppconfigDeploymentArgs struct {
 	// ApplicationId: string, required
 	ApplicationId terra.StringValue `hcl:"application_id,attr" validate:"required"`
@@ -82,59 +105,69 @@ type AppconfigDeploymentArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that AppconfigDeployment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appconfigDeploymentAttributes struct {
 	ref terra.Reference
 }
 
+// ApplicationId returns a reference to field application_id of aws_appconfig_deployment.
 func (ad appconfigDeploymentAttributes) ApplicationId() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("application_id"))
+	return terra.ReferenceAsString(ad.ref.Append("application_id"))
 }
 
+// Arn returns a reference to field arn of aws_appconfig_deployment.
 func (ad appconfigDeploymentAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("arn"))
+	return terra.ReferenceAsString(ad.ref.Append("arn"))
 }
 
+// ConfigurationProfileId returns a reference to field configuration_profile_id of aws_appconfig_deployment.
 func (ad appconfigDeploymentAttributes) ConfigurationProfileId() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("configuration_profile_id"))
+	return terra.ReferenceAsString(ad.ref.Append("configuration_profile_id"))
 }
 
+// ConfigurationVersion returns a reference to field configuration_version of aws_appconfig_deployment.
 func (ad appconfigDeploymentAttributes) ConfigurationVersion() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("configuration_version"))
+	return terra.ReferenceAsString(ad.ref.Append("configuration_version"))
 }
 
+// DeploymentNumber returns a reference to field deployment_number of aws_appconfig_deployment.
 func (ad appconfigDeploymentAttributes) DeploymentNumber() terra.NumberValue {
-	return terra.ReferenceNumber(ad.ref.Append("deployment_number"))
+	return terra.ReferenceAsNumber(ad.ref.Append("deployment_number"))
 }
 
+// DeploymentStrategyId returns a reference to field deployment_strategy_id of aws_appconfig_deployment.
 func (ad appconfigDeploymentAttributes) DeploymentStrategyId() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("deployment_strategy_id"))
+	return terra.ReferenceAsString(ad.ref.Append("deployment_strategy_id"))
 }
 
+// Description returns a reference to field description of aws_appconfig_deployment.
 func (ad appconfigDeploymentAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("description"))
+	return terra.ReferenceAsString(ad.ref.Append("description"))
 }
 
+// EnvironmentId returns a reference to field environment_id of aws_appconfig_deployment.
 func (ad appconfigDeploymentAttributes) EnvironmentId() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("environment_id"))
+	return terra.ReferenceAsString(ad.ref.Append("environment_id"))
 }
 
+// Id returns a reference to field id of aws_appconfig_deployment.
 func (ad appconfigDeploymentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("id"))
+	return terra.ReferenceAsString(ad.ref.Append("id"))
 }
 
+// State returns a reference to field state of aws_appconfig_deployment.
 func (ad appconfigDeploymentAttributes) State() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("state"))
+	return terra.ReferenceAsString(ad.ref.Append("state"))
 }
 
+// Tags returns a reference to field tags of aws_appconfig_deployment.
 func (ad appconfigDeploymentAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ad.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ad.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_appconfig_deployment.
 func (ad appconfigDeploymentAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ad.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ad.ref.Append("tags_all"))
 }
 
 type appconfigDeploymentState struct {

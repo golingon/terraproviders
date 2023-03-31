@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDatasyncLocationFsxLustreFileSystem creates a new instance of [DatasyncLocationFsxLustreFileSystem].
 func NewDatasyncLocationFsxLustreFileSystem(name string, args DatasyncLocationFsxLustreFileSystemArgs) *DatasyncLocationFsxLustreFileSystem {
 	return &DatasyncLocationFsxLustreFileSystem{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDatasyncLocationFsxLustreFileSystem(name string, args DatasyncLocationFs
 
 var _ terra.Resource = (*DatasyncLocationFsxLustreFileSystem)(nil)
 
+// DatasyncLocationFsxLustreFileSystem represents the Terraform resource aws_datasync_location_fsx_lustre_file_system.
 type DatasyncLocationFsxLustreFileSystem struct {
-	Name  string
-	Args  DatasyncLocationFsxLustreFileSystemArgs
-	state *datasyncLocationFsxLustreFileSystemState
+	Name      string
+	Args      DatasyncLocationFsxLustreFileSystemArgs
+	state     *datasyncLocationFsxLustreFileSystemState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DatasyncLocationFsxLustreFileSystem].
 func (dlflfs *DatasyncLocationFsxLustreFileSystem) Type() string {
 	return "aws_datasync_location_fsx_lustre_file_system"
 }
 
+// LocalName returns the local name for [DatasyncLocationFsxLustreFileSystem].
 func (dlflfs *DatasyncLocationFsxLustreFileSystem) LocalName() string {
 	return dlflfs.Name
 }
 
+// Configuration returns the configuration (args) for [DatasyncLocationFsxLustreFileSystem].
 func (dlflfs *DatasyncLocationFsxLustreFileSystem) Configuration() interface{} {
 	return dlflfs.Args
 }
 
+// DependOn is used for other resources to depend on [DatasyncLocationFsxLustreFileSystem].
+func (dlflfs *DatasyncLocationFsxLustreFileSystem) DependOn() terra.Reference {
+	return terra.ReferenceResource(dlflfs)
+}
+
+// Dependencies returns the list of resources [DatasyncLocationFsxLustreFileSystem] depends_on.
+func (dlflfs *DatasyncLocationFsxLustreFileSystem) Dependencies() terra.Dependencies {
+	return dlflfs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DatasyncLocationFsxLustreFileSystem].
+func (dlflfs *DatasyncLocationFsxLustreFileSystem) LifecycleManagement() *terra.Lifecycle {
+	return dlflfs.Lifecycle
+}
+
+// Attributes returns the attributes for [DatasyncLocationFsxLustreFileSystem].
 func (dlflfs *DatasyncLocationFsxLustreFileSystem) Attributes() datasyncLocationFsxLustreFileSystemAttributes {
 	return datasyncLocationFsxLustreFileSystemAttributes{ref: terra.ReferenceResource(dlflfs)}
 }
 
+// ImportState imports the given attribute values into [DatasyncLocationFsxLustreFileSystem]'s state.
 func (dlflfs *DatasyncLocationFsxLustreFileSystem) ImportState(av io.Reader) error {
 	dlflfs.state = &datasyncLocationFsxLustreFileSystemState{}
 	if err := json.NewDecoder(av).Decode(dlflfs.state); err != nil {
@@ -48,10 +72,12 @@ func (dlflfs *DatasyncLocationFsxLustreFileSystem) ImportState(av io.Reader) err
 	return nil
 }
 
+// State returns the state and a bool indicating if [DatasyncLocationFsxLustreFileSystem] has state.
 func (dlflfs *DatasyncLocationFsxLustreFileSystem) State() (*datasyncLocationFsxLustreFileSystemState, bool) {
 	return dlflfs.state, dlflfs.state != nil
 }
 
+// StateMust returns the state for [DatasyncLocationFsxLustreFileSystem]. Panics if the state is nil.
 func (dlflfs *DatasyncLocationFsxLustreFileSystem) StateMust() *datasyncLocationFsxLustreFileSystemState {
 	if dlflfs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dlflfs.Type(), dlflfs.LocalName()))
@@ -59,10 +85,7 @@ func (dlflfs *DatasyncLocationFsxLustreFileSystem) StateMust() *datasyncLocation
 	return dlflfs.state
 }
 
-func (dlflfs *DatasyncLocationFsxLustreFileSystem) DependOn() terra.Reference {
-	return terra.ReferenceResource(dlflfs)
-}
-
+// DatasyncLocationFsxLustreFileSystemArgs contains the configurations for aws_datasync_location_fsx_lustre_file_system.
 type DatasyncLocationFsxLustreFileSystemArgs struct {
 	// FsxFilesystemArn: string, required
 	FsxFilesystemArn terra.StringValue `hcl:"fsx_filesystem_arn,attr" validate:"required"`
@@ -76,47 +99,54 @@ type DatasyncLocationFsxLustreFileSystemArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that DatasyncLocationFsxLustreFileSystem depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type datasyncLocationFsxLustreFileSystemAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_datasync_location_fsx_lustre_file_system.
 func (dlflfs datasyncLocationFsxLustreFileSystemAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dlflfs.ref.Append("arn"))
+	return terra.ReferenceAsString(dlflfs.ref.Append("arn"))
 }
 
+// CreationTime returns a reference to field creation_time of aws_datasync_location_fsx_lustre_file_system.
 func (dlflfs datasyncLocationFsxLustreFileSystemAttributes) CreationTime() terra.StringValue {
-	return terra.ReferenceString(dlflfs.ref.Append("creation_time"))
+	return terra.ReferenceAsString(dlflfs.ref.Append("creation_time"))
 }
 
+// FsxFilesystemArn returns a reference to field fsx_filesystem_arn of aws_datasync_location_fsx_lustre_file_system.
 func (dlflfs datasyncLocationFsxLustreFileSystemAttributes) FsxFilesystemArn() terra.StringValue {
-	return terra.ReferenceString(dlflfs.ref.Append("fsx_filesystem_arn"))
+	return terra.ReferenceAsString(dlflfs.ref.Append("fsx_filesystem_arn"))
 }
 
+// Id returns a reference to field id of aws_datasync_location_fsx_lustre_file_system.
 func (dlflfs datasyncLocationFsxLustreFileSystemAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dlflfs.ref.Append("id"))
+	return terra.ReferenceAsString(dlflfs.ref.Append("id"))
 }
 
+// SecurityGroupArns returns a reference to field security_group_arns of aws_datasync_location_fsx_lustre_file_system.
 func (dlflfs datasyncLocationFsxLustreFileSystemAttributes) SecurityGroupArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dlflfs.ref.Append("security_group_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](dlflfs.ref.Append("security_group_arns"))
 }
 
+// Subdirectory returns a reference to field subdirectory of aws_datasync_location_fsx_lustre_file_system.
 func (dlflfs datasyncLocationFsxLustreFileSystemAttributes) Subdirectory() terra.StringValue {
-	return terra.ReferenceString(dlflfs.ref.Append("subdirectory"))
+	return terra.ReferenceAsString(dlflfs.ref.Append("subdirectory"))
 }
 
+// Tags returns a reference to field tags of aws_datasync_location_fsx_lustre_file_system.
 func (dlflfs datasyncLocationFsxLustreFileSystemAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dlflfs.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dlflfs.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_datasync_location_fsx_lustre_file_system.
 func (dlflfs datasyncLocationFsxLustreFileSystemAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dlflfs.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dlflfs.ref.Append("tags_all"))
 }
 
+// Uri returns a reference to field uri of aws_datasync_location_fsx_lustre_file_system.
 func (dlflfs datasyncLocationFsxLustreFileSystemAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(dlflfs.ref.Append("uri"))
+	return terra.ReferenceAsString(dlflfs.ref.Append("uri"))
 }
 
 type datasyncLocationFsxLustreFileSystemState struct {

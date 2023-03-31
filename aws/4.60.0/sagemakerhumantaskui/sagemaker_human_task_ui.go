@@ -29,15 +29,15 @@ func (ut UiTemplateAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ut UiTemplateAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(ut.ref.Append("content"))
+	return terra.ReferenceAsString(ut.ref.Append("content"))
 }
 
 func (ut UiTemplateAttributes) ContentSha256() terra.StringValue {
-	return terra.ReferenceString(ut.ref.Append("content_sha256"))
+	return terra.ReferenceAsString(ut.ref.Append("content_sha256"))
 }
 
 func (ut UiTemplateAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(ut.ref.Append("url"))
+	return terra.ReferenceAsString(ut.ref.Append("url"))
 }
 
 type UiTemplateState struct {

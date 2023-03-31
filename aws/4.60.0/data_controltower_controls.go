@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataControltowerControls creates a new instance of [DataControltowerControls].
 func NewDataControltowerControls(name string, args DataControltowerControlsArgs) *DataControltowerControls {
 	return &DataControltowerControls{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataControltowerControls(name string, args DataControltowerControlsArgs)
 
 var _ terra.DataResource = (*DataControltowerControls)(nil)
 
+// DataControltowerControls represents the Terraform data resource aws_controltower_controls.
 type DataControltowerControls struct {
 	Name string
 	Args DataControltowerControlsArgs
 }
 
+// DataSource returns the Terraform object type for [DataControltowerControls].
 func (cc *DataControltowerControls) DataSource() string {
 	return "aws_controltower_controls"
 }
 
+// LocalName returns the local name for [DataControltowerControls].
 func (cc *DataControltowerControls) LocalName() string {
 	return cc.Name
 }
 
+// Configuration returns the configuration (args) for [DataControltowerControls].
 func (cc *DataControltowerControls) Configuration() interface{} {
 	return cc.Args
 }
 
+// Attributes returns the attributes for [DataControltowerControls].
 func (cc *DataControltowerControls) Attributes() dataControltowerControlsAttributes {
 	return dataControltowerControlsAttributes{ref: terra.ReferenceDataResource(cc)}
 }
 
+// DataControltowerControlsArgs contains the configurations for aws_controltower_controls.
 type DataControltowerControlsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,14 +51,17 @@ type dataControltowerControlsAttributes struct {
 	ref terra.Reference
 }
 
+// EnabledControls returns a reference to field enabled_controls of aws_controltower_controls.
 func (cc dataControltowerControlsAttributes) EnabledControls() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cc.ref.Append("enabled_controls"))
+	return terra.ReferenceAsList[terra.StringValue](cc.ref.Append("enabled_controls"))
 }
 
+// Id returns a reference to field id of aws_controltower_controls.
 func (cc dataControltowerControlsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("id"))
+	return terra.ReferenceAsString(cc.ref.Append("id"))
 }
 
+// TargetIdentifier returns a reference to field target_identifier of aws_controltower_controls.
 func (cc dataControltowerControlsAttributes) TargetIdentifier() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("target_identifier"))
+	return terra.ReferenceAsString(cc.ref.Append("target_identifier"))
 }

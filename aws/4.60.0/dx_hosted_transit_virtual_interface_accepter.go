@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDxHostedTransitVirtualInterfaceAccepter creates a new instance of [DxHostedTransitVirtualInterfaceAccepter].
 func NewDxHostedTransitVirtualInterfaceAccepter(name string, args DxHostedTransitVirtualInterfaceAccepterArgs) *DxHostedTransitVirtualInterfaceAccepter {
 	return &DxHostedTransitVirtualInterfaceAccepter{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDxHostedTransitVirtualInterfaceAccepter(name string, args DxHostedTransi
 
 var _ terra.Resource = (*DxHostedTransitVirtualInterfaceAccepter)(nil)
 
+// DxHostedTransitVirtualInterfaceAccepter represents the Terraform resource aws_dx_hosted_transit_virtual_interface_accepter.
 type DxHostedTransitVirtualInterfaceAccepter struct {
-	Name  string
-	Args  DxHostedTransitVirtualInterfaceAccepterArgs
-	state *dxHostedTransitVirtualInterfaceAccepterState
+	Name      string
+	Args      DxHostedTransitVirtualInterfaceAccepterArgs
+	state     *dxHostedTransitVirtualInterfaceAccepterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DxHostedTransitVirtualInterfaceAccepter].
 func (dhtvia *DxHostedTransitVirtualInterfaceAccepter) Type() string {
 	return "aws_dx_hosted_transit_virtual_interface_accepter"
 }
 
+// LocalName returns the local name for [DxHostedTransitVirtualInterfaceAccepter].
 func (dhtvia *DxHostedTransitVirtualInterfaceAccepter) LocalName() string {
 	return dhtvia.Name
 }
 
+// Configuration returns the configuration (args) for [DxHostedTransitVirtualInterfaceAccepter].
 func (dhtvia *DxHostedTransitVirtualInterfaceAccepter) Configuration() interface{} {
 	return dhtvia.Args
 }
 
+// DependOn is used for other resources to depend on [DxHostedTransitVirtualInterfaceAccepter].
+func (dhtvia *DxHostedTransitVirtualInterfaceAccepter) DependOn() terra.Reference {
+	return terra.ReferenceResource(dhtvia)
+}
+
+// Dependencies returns the list of resources [DxHostedTransitVirtualInterfaceAccepter] depends_on.
+func (dhtvia *DxHostedTransitVirtualInterfaceAccepter) Dependencies() terra.Dependencies {
+	return dhtvia.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DxHostedTransitVirtualInterfaceAccepter].
+func (dhtvia *DxHostedTransitVirtualInterfaceAccepter) LifecycleManagement() *terra.Lifecycle {
+	return dhtvia.Lifecycle
+}
+
+// Attributes returns the attributes for [DxHostedTransitVirtualInterfaceAccepter].
 func (dhtvia *DxHostedTransitVirtualInterfaceAccepter) Attributes() dxHostedTransitVirtualInterfaceAccepterAttributes {
 	return dxHostedTransitVirtualInterfaceAccepterAttributes{ref: terra.ReferenceResource(dhtvia)}
 }
 
+// ImportState imports the given attribute values into [DxHostedTransitVirtualInterfaceAccepter]'s state.
 func (dhtvia *DxHostedTransitVirtualInterfaceAccepter) ImportState(av io.Reader) error {
 	dhtvia.state = &dxHostedTransitVirtualInterfaceAccepterState{}
 	if err := json.NewDecoder(av).Decode(dhtvia.state); err != nil {
@@ -49,10 +73,12 @@ func (dhtvia *DxHostedTransitVirtualInterfaceAccepter) ImportState(av io.Reader)
 	return nil
 }
 
+// State returns the state and a bool indicating if [DxHostedTransitVirtualInterfaceAccepter] has state.
 func (dhtvia *DxHostedTransitVirtualInterfaceAccepter) State() (*dxHostedTransitVirtualInterfaceAccepterState, bool) {
 	return dhtvia.state, dhtvia.state != nil
 }
 
+// StateMust returns the state for [DxHostedTransitVirtualInterfaceAccepter]. Panics if the state is nil.
 func (dhtvia *DxHostedTransitVirtualInterfaceAccepter) StateMust() *dxHostedTransitVirtualInterfaceAccepterState {
 	if dhtvia.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dhtvia.Type(), dhtvia.LocalName()))
@@ -60,10 +86,7 @@ func (dhtvia *DxHostedTransitVirtualInterfaceAccepter) StateMust() *dxHostedTran
 	return dhtvia.state
 }
 
-func (dhtvia *DxHostedTransitVirtualInterfaceAccepter) DependOn() terra.Reference {
-	return terra.ReferenceResource(dhtvia)
-}
-
+// DxHostedTransitVirtualInterfaceAccepterArgs contains the configurations for aws_dx_hosted_transit_virtual_interface_accepter.
 type DxHostedTransitVirtualInterfaceAccepterArgs struct {
 	// DxGatewayId: string, required
 	DxGatewayId terra.StringValue `hcl:"dx_gateway_id,attr" validate:"required"`
@@ -77,39 +100,43 @@ type DxHostedTransitVirtualInterfaceAccepterArgs struct {
 	VirtualInterfaceId terra.StringValue `hcl:"virtual_interface_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *dxhostedtransitvirtualinterfaceaccepter.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DxHostedTransitVirtualInterfaceAccepter depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dxHostedTransitVirtualInterfaceAccepterAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_dx_hosted_transit_virtual_interface_accepter.
 func (dhtvia dxHostedTransitVirtualInterfaceAccepterAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dhtvia.ref.Append("arn"))
+	return terra.ReferenceAsString(dhtvia.ref.Append("arn"))
 }
 
+// DxGatewayId returns a reference to field dx_gateway_id of aws_dx_hosted_transit_virtual_interface_accepter.
 func (dhtvia dxHostedTransitVirtualInterfaceAccepterAttributes) DxGatewayId() terra.StringValue {
-	return terra.ReferenceString(dhtvia.ref.Append("dx_gateway_id"))
+	return terra.ReferenceAsString(dhtvia.ref.Append("dx_gateway_id"))
 }
 
+// Id returns a reference to field id of aws_dx_hosted_transit_virtual_interface_accepter.
 func (dhtvia dxHostedTransitVirtualInterfaceAccepterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dhtvia.ref.Append("id"))
+	return terra.ReferenceAsString(dhtvia.ref.Append("id"))
 }
 
+// Tags returns a reference to field tags of aws_dx_hosted_transit_virtual_interface_accepter.
 func (dhtvia dxHostedTransitVirtualInterfaceAccepterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dhtvia.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dhtvia.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_dx_hosted_transit_virtual_interface_accepter.
 func (dhtvia dxHostedTransitVirtualInterfaceAccepterAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dhtvia.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dhtvia.ref.Append("tags_all"))
 }
 
+// VirtualInterfaceId returns a reference to field virtual_interface_id of aws_dx_hosted_transit_virtual_interface_accepter.
 func (dhtvia dxHostedTransitVirtualInterfaceAccepterAttributes) VirtualInterfaceId() terra.StringValue {
-	return terra.ReferenceString(dhtvia.ref.Append("virtual_interface_id"))
+	return terra.ReferenceAsString(dhtvia.ref.Append("virtual_interface_id"))
 }
 
 func (dhtvia dxHostedTransitVirtualInterfaceAccepterAttributes) Timeouts() dxhostedtransitvirtualinterfaceaccepter.TimeoutsAttributes {
-	return terra.ReferenceSingle[dxhostedtransitvirtualinterfaceaccepter.TimeoutsAttributes](dhtvia.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dxhostedtransitvirtualinterfaceaccepter.TimeoutsAttributes](dhtvia.ref.Append("timeouts"))
 }
 
 type dxHostedTransitVirtualInterfaceAccepterState struct {

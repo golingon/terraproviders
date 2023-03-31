@@ -66,7 +66,7 @@ func (d DestinationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DestinationAttributes) Bucket() terra.ListValue[BucketAttributes] {
-	return terra.ReferenceList[BucketAttributes](d.ref.Append("bucket"))
+	return terra.ReferenceAsList[BucketAttributes](d.ref.Append("bucket"))
 }
 
 type BucketAttributes struct {
@@ -86,23 +86,23 @@ func (b BucketAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (b BucketAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("account_id"))
+	return terra.ReferenceAsString(b.ref.Append("account_id"))
 }
 
 func (b BucketAttributes) BucketArn() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("bucket_arn"))
+	return terra.ReferenceAsString(b.ref.Append("bucket_arn"))
 }
 
 func (b BucketAttributes) Format() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("format"))
+	return terra.ReferenceAsString(b.ref.Append("format"))
 }
 
 func (b BucketAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("prefix"))
+	return terra.ReferenceAsString(b.ref.Append("prefix"))
 }
 
 func (b BucketAttributes) Encryption() terra.ListValue[EncryptionAttributes] {
-	return terra.ReferenceList[EncryptionAttributes](b.ref.Append("encryption"))
+	return terra.ReferenceAsList[EncryptionAttributes](b.ref.Append("encryption"))
 }
 
 type EncryptionAttributes struct {
@@ -122,11 +122,11 @@ func (e EncryptionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e EncryptionAttributes) SseKms() terra.ListValue[SseKmsAttributes] {
-	return terra.ReferenceList[SseKmsAttributes](e.ref.Append("sse_kms"))
+	return terra.ReferenceAsList[SseKmsAttributes](e.ref.Append("sse_kms"))
 }
 
 func (e EncryptionAttributes) SseS3() terra.ListValue[SseS3Attributes] {
-	return terra.ReferenceList[SseS3Attributes](e.ref.Append("sse_s3"))
+	return terra.ReferenceAsList[SseS3Attributes](e.ref.Append("sse_s3"))
 }
 
 type SseKmsAttributes struct {
@@ -146,7 +146,7 @@ func (sk SseKmsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sk SseKmsAttributes) KeyId() terra.StringValue {
-	return terra.ReferenceString(sk.ref.Append("key_id"))
+	return terra.ReferenceAsString(sk.ref.Append("key_id"))
 }
 
 type SseS3Attributes struct {
@@ -182,7 +182,7 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("prefix"))
+	return terra.ReferenceAsString(f.ref.Append("prefix"))
 }
 
 type ScheduleAttributes struct {
@@ -202,7 +202,7 @@ func (s ScheduleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s ScheduleAttributes) Frequency() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("frequency"))
+	return terra.ReferenceAsString(s.ref.Append("frequency"))
 }
 
 type DestinationState struct {

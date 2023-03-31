@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataIamSessionContext creates a new instance of [DataIamSessionContext].
 func NewDataIamSessionContext(name string, args DataIamSessionContextArgs) *DataIamSessionContext {
 	return &DataIamSessionContext{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataIamSessionContext(name string, args DataIamSessionContextArgs) *Data
 
 var _ terra.DataResource = (*DataIamSessionContext)(nil)
 
+// DataIamSessionContext represents the Terraform data resource aws_iam_session_context.
 type DataIamSessionContext struct {
 	Name string
 	Args DataIamSessionContextArgs
 }
 
+// DataSource returns the Terraform object type for [DataIamSessionContext].
 func (isc *DataIamSessionContext) DataSource() string {
 	return "aws_iam_session_context"
 }
 
+// LocalName returns the local name for [DataIamSessionContext].
 func (isc *DataIamSessionContext) LocalName() string {
 	return isc.Name
 }
 
+// Configuration returns the configuration (args) for [DataIamSessionContext].
 func (isc *DataIamSessionContext) Configuration() interface{} {
 	return isc.Args
 }
 
+// Attributes returns the attributes for [DataIamSessionContext].
 func (isc *DataIamSessionContext) Attributes() dataIamSessionContextAttributes {
 	return dataIamSessionContextAttributes{ref: terra.ReferenceDataResource(isc)}
 }
 
+// DataIamSessionContextArgs contains the configurations for aws_iam_session_context.
 type DataIamSessionContextArgs struct {
 	// Arn: string, required
 	Arn terra.StringValue `hcl:"arn,attr" validate:"required"`
@@ -44,26 +51,32 @@ type dataIamSessionContextAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_iam_session_context.
 func (isc dataIamSessionContextAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(isc.ref.Append("arn"))
+	return terra.ReferenceAsString(isc.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_iam_session_context.
 func (isc dataIamSessionContextAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(isc.ref.Append("id"))
+	return terra.ReferenceAsString(isc.ref.Append("id"))
 }
 
+// IssuerArn returns a reference to field issuer_arn of aws_iam_session_context.
 func (isc dataIamSessionContextAttributes) IssuerArn() terra.StringValue {
-	return terra.ReferenceString(isc.ref.Append("issuer_arn"))
+	return terra.ReferenceAsString(isc.ref.Append("issuer_arn"))
 }
 
+// IssuerId returns a reference to field issuer_id of aws_iam_session_context.
 func (isc dataIamSessionContextAttributes) IssuerId() terra.StringValue {
-	return terra.ReferenceString(isc.ref.Append("issuer_id"))
+	return terra.ReferenceAsString(isc.ref.Append("issuer_id"))
 }
 
+// IssuerName returns a reference to field issuer_name of aws_iam_session_context.
 func (isc dataIamSessionContextAttributes) IssuerName() terra.StringValue {
-	return terra.ReferenceString(isc.ref.Append("issuer_name"))
+	return terra.ReferenceAsString(isc.ref.Append("issuer_name"))
 }
 
+// SessionName returns a reference to field session_name of aws_iam_session_context.
 func (isc dataIamSessionContextAttributes) SessionName() terra.StringValue {
-	return terra.ReferenceString(isc.ref.Append("session_name"))
+	return terra.ReferenceAsString(isc.ref.Append("session_name"))
 }

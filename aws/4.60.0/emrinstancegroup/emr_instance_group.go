@@ -35,19 +35,19 @@ func (ec EbsConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec EbsConfigAttributes) Iops() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("iops"))
+	return terra.ReferenceAsNumber(ec.ref.Append("iops"))
 }
 
 func (ec EbsConfigAttributes) Size() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("size"))
+	return terra.ReferenceAsNumber(ec.ref.Append("size"))
 }
 
 func (ec EbsConfigAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("type"))
+	return terra.ReferenceAsString(ec.ref.Append("type"))
 }
 
 func (ec EbsConfigAttributes) VolumesPerInstance() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("volumes_per_instance"))
+	return terra.ReferenceAsNumber(ec.ref.Append("volumes_per_instance"))
 }
 
 type EbsConfigState struct {

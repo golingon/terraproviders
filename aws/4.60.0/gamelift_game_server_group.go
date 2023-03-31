@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewGameliftGameServerGroup creates a new instance of [GameliftGameServerGroup].
 func NewGameliftGameServerGroup(name string, args GameliftGameServerGroupArgs) *GameliftGameServerGroup {
 	return &GameliftGameServerGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewGameliftGameServerGroup(name string, args GameliftGameServerGroupArgs) *
 
 var _ terra.Resource = (*GameliftGameServerGroup)(nil)
 
+// GameliftGameServerGroup represents the Terraform resource aws_gamelift_game_server_group.
 type GameliftGameServerGroup struct {
-	Name  string
-	Args  GameliftGameServerGroupArgs
-	state *gameliftGameServerGroupState
+	Name      string
+	Args      GameliftGameServerGroupArgs
+	state     *gameliftGameServerGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GameliftGameServerGroup].
 func (ggsg *GameliftGameServerGroup) Type() string {
 	return "aws_gamelift_game_server_group"
 }
 
+// LocalName returns the local name for [GameliftGameServerGroup].
 func (ggsg *GameliftGameServerGroup) LocalName() string {
 	return ggsg.Name
 }
 
+// Configuration returns the configuration (args) for [GameliftGameServerGroup].
 func (ggsg *GameliftGameServerGroup) Configuration() interface{} {
 	return ggsg.Args
 }
 
+// DependOn is used for other resources to depend on [GameliftGameServerGroup].
+func (ggsg *GameliftGameServerGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(ggsg)
+}
+
+// Dependencies returns the list of resources [GameliftGameServerGroup] depends_on.
+func (ggsg *GameliftGameServerGroup) Dependencies() terra.Dependencies {
+	return ggsg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GameliftGameServerGroup].
+func (ggsg *GameliftGameServerGroup) LifecycleManagement() *terra.Lifecycle {
+	return ggsg.Lifecycle
+}
+
+// Attributes returns the attributes for [GameliftGameServerGroup].
 func (ggsg *GameliftGameServerGroup) Attributes() gameliftGameServerGroupAttributes {
 	return gameliftGameServerGroupAttributes{ref: terra.ReferenceResource(ggsg)}
 }
 
+// ImportState imports the given attribute values into [GameliftGameServerGroup]'s state.
 func (ggsg *GameliftGameServerGroup) ImportState(av io.Reader) error {
 	ggsg.state = &gameliftGameServerGroupState{}
 	if err := json.NewDecoder(av).Decode(ggsg.state); err != nil {
@@ -49,10 +73,12 @@ func (ggsg *GameliftGameServerGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GameliftGameServerGroup] has state.
 func (ggsg *GameliftGameServerGroup) State() (*gameliftGameServerGroupState, bool) {
 	return ggsg.state, ggsg.state != nil
 }
 
+// StateMust returns the state for [GameliftGameServerGroup]. Panics if the state is nil.
 func (ggsg *GameliftGameServerGroup) StateMust() *gameliftGameServerGroupState {
 	if ggsg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ggsg.Type(), ggsg.LocalName()))
@@ -60,10 +86,7 @@ func (ggsg *GameliftGameServerGroup) StateMust() *gameliftGameServerGroupState {
 	return ggsg.state
 }
 
-func (ggsg *GameliftGameServerGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(ggsg)
-}
-
+// GameliftGameServerGroupArgs contains the configurations for aws_gamelift_game_server_group.
 type GameliftGameServerGroupArgs struct {
 	// BalancingStrategy: string, optional
 	BalancingStrategy terra.StringValue `hcl:"balancing_strategy,attr"`
@@ -93,75 +116,85 @@ type GameliftGameServerGroupArgs struct {
 	LaunchTemplate *gameliftgameservergroup.LaunchTemplate `hcl:"launch_template,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *gameliftgameservergroup.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that GameliftGameServerGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type gameliftGameServerGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_gamelift_game_server_group.
 func (ggsg gameliftGameServerGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ggsg.ref.Append("arn"))
+	return terra.ReferenceAsString(ggsg.ref.Append("arn"))
 }
 
+// AutoScalingGroupArn returns a reference to field auto_scaling_group_arn of aws_gamelift_game_server_group.
 func (ggsg gameliftGameServerGroupAttributes) AutoScalingGroupArn() terra.StringValue {
-	return terra.ReferenceString(ggsg.ref.Append("auto_scaling_group_arn"))
+	return terra.ReferenceAsString(ggsg.ref.Append("auto_scaling_group_arn"))
 }
 
+// BalancingStrategy returns a reference to field balancing_strategy of aws_gamelift_game_server_group.
 func (ggsg gameliftGameServerGroupAttributes) BalancingStrategy() terra.StringValue {
-	return terra.ReferenceString(ggsg.ref.Append("balancing_strategy"))
+	return terra.ReferenceAsString(ggsg.ref.Append("balancing_strategy"))
 }
 
+// GameServerGroupName returns a reference to field game_server_group_name of aws_gamelift_game_server_group.
 func (ggsg gameliftGameServerGroupAttributes) GameServerGroupName() terra.StringValue {
-	return terra.ReferenceString(ggsg.ref.Append("game_server_group_name"))
+	return terra.ReferenceAsString(ggsg.ref.Append("game_server_group_name"))
 }
 
+// GameServerProtectionPolicy returns a reference to field game_server_protection_policy of aws_gamelift_game_server_group.
 func (ggsg gameliftGameServerGroupAttributes) GameServerProtectionPolicy() terra.StringValue {
-	return terra.ReferenceString(ggsg.ref.Append("game_server_protection_policy"))
+	return terra.ReferenceAsString(ggsg.ref.Append("game_server_protection_policy"))
 }
 
+// Id returns a reference to field id of aws_gamelift_game_server_group.
 func (ggsg gameliftGameServerGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ggsg.ref.Append("id"))
+	return terra.ReferenceAsString(ggsg.ref.Append("id"))
 }
 
+// MaxSize returns a reference to field max_size of aws_gamelift_game_server_group.
 func (ggsg gameliftGameServerGroupAttributes) MaxSize() terra.NumberValue {
-	return terra.ReferenceNumber(ggsg.ref.Append("max_size"))
+	return terra.ReferenceAsNumber(ggsg.ref.Append("max_size"))
 }
 
+// MinSize returns a reference to field min_size of aws_gamelift_game_server_group.
 func (ggsg gameliftGameServerGroupAttributes) MinSize() terra.NumberValue {
-	return terra.ReferenceNumber(ggsg.ref.Append("min_size"))
+	return terra.ReferenceAsNumber(ggsg.ref.Append("min_size"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_gamelift_game_server_group.
 func (ggsg gameliftGameServerGroupAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(ggsg.ref.Append("role_arn"))
+	return terra.ReferenceAsString(ggsg.ref.Append("role_arn"))
 }
 
+// Tags returns a reference to field tags of aws_gamelift_game_server_group.
 func (ggsg gameliftGameServerGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ggsg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ggsg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_gamelift_game_server_group.
 func (ggsg gameliftGameServerGroupAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ggsg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ggsg.ref.Append("tags_all"))
 }
 
+// VpcSubnets returns a reference to field vpc_subnets of aws_gamelift_game_server_group.
 func (ggsg gameliftGameServerGroupAttributes) VpcSubnets() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ggsg.ref.Append("vpc_subnets"))
+	return terra.ReferenceAsSet[terra.StringValue](ggsg.ref.Append("vpc_subnets"))
 }
 
 func (ggsg gameliftGameServerGroupAttributes) AutoScalingPolicy() terra.ListValue[gameliftgameservergroup.AutoScalingPolicyAttributes] {
-	return terra.ReferenceList[gameliftgameservergroup.AutoScalingPolicyAttributes](ggsg.ref.Append("auto_scaling_policy"))
+	return terra.ReferenceAsList[gameliftgameservergroup.AutoScalingPolicyAttributes](ggsg.ref.Append("auto_scaling_policy"))
 }
 
 func (ggsg gameliftGameServerGroupAttributes) InstanceDefinition() terra.SetValue[gameliftgameservergroup.InstanceDefinitionAttributes] {
-	return terra.ReferenceSet[gameliftgameservergroup.InstanceDefinitionAttributes](ggsg.ref.Append("instance_definition"))
+	return terra.ReferenceAsSet[gameliftgameservergroup.InstanceDefinitionAttributes](ggsg.ref.Append("instance_definition"))
 }
 
 func (ggsg gameliftGameServerGroupAttributes) LaunchTemplate() terra.ListValue[gameliftgameservergroup.LaunchTemplateAttributes] {
-	return terra.ReferenceList[gameliftgameservergroup.LaunchTemplateAttributes](ggsg.ref.Append("launch_template"))
+	return terra.ReferenceAsList[gameliftgameservergroup.LaunchTemplateAttributes](ggsg.ref.Append("launch_template"))
 }
 
 func (ggsg gameliftGameServerGroupAttributes) Timeouts() gameliftgameservergroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[gameliftgameservergroup.TimeoutsAttributes](ggsg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[gameliftgameservergroup.TimeoutsAttributes](ggsg.ref.Append("timeouts"))
 }
 
 type gameliftGameServerGroupState struct {

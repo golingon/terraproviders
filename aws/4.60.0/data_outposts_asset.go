@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataOutpostsAsset creates a new instance of [DataOutpostsAsset].
 func NewDataOutpostsAsset(name string, args DataOutpostsAssetArgs) *DataOutpostsAsset {
 	return &DataOutpostsAsset{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataOutpostsAsset(name string, args DataOutpostsAssetArgs) *DataOutposts
 
 var _ terra.DataResource = (*DataOutpostsAsset)(nil)
 
+// DataOutpostsAsset represents the Terraform data resource aws_outposts_asset.
 type DataOutpostsAsset struct {
 	Name string
 	Args DataOutpostsAssetArgs
 }
 
+// DataSource returns the Terraform object type for [DataOutpostsAsset].
 func (oa *DataOutpostsAsset) DataSource() string {
 	return "aws_outposts_asset"
 }
 
+// LocalName returns the local name for [DataOutpostsAsset].
 func (oa *DataOutpostsAsset) LocalName() string {
 	return oa.Name
 }
 
+// Configuration returns the configuration (args) for [DataOutpostsAsset].
 func (oa *DataOutpostsAsset) Configuration() interface{} {
 	return oa.Args
 }
 
+// Attributes returns the attributes for [DataOutpostsAsset].
 func (oa *DataOutpostsAsset) Attributes() dataOutpostsAssetAttributes {
 	return dataOutpostsAssetAttributes{ref: terra.ReferenceDataResource(oa)}
 }
 
+// DataOutpostsAssetArgs contains the configurations for aws_outposts_asset.
 type DataOutpostsAssetArgs struct {
 	// Arn: string, required
 	Arn terra.StringValue `hcl:"arn,attr" validate:"required"`
@@ -46,30 +53,37 @@ type dataOutpostsAssetAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_outposts_asset.
 func (oa dataOutpostsAssetAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("arn"))
+	return terra.ReferenceAsString(oa.ref.Append("arn"))
 }
 
+// AssetId returns a reference to field asset_id of aws_outposts_asset.
 func (oa dataOutpostsAssetAttributes) AssetId() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("asset_id"))
+	return terra.ReferenceAsString(oa.ref.Append("asset_id"))
 }
 
+// AssetType returns a reference to field asset_type of aws_outposts_asset.
 func (oa dataOutpostsAssetAttributes) AssetType() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("asset_type"))
+	return terra.ReferenceAsString(oa.ref.Append("asset_type"))
 }
 
+// HostId returns a reference to field host_id of aws_outposts_asset.
 func (oa dataOutpostsAssetAttributes) HostId() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("host_id"))
+	return terra.ReferenceAsString(oa.ref.Append("host_id"))
 }
 
+// Id returns a reference to field id of aws_outposts_asset.
 func (oa dataOutpostsAssetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("id"))
+	return terra.ReferenceAsString(oa.ref.Append("id"))
 }
 
+// RackElevation returns a reference to field rack_elevation of aws_outposts_asset.
 func (oa dataOutpostsAssetAttributes) RackElevation() terra.NumberValue {
-	return terra.ReferenceNumber(oa.ref.Append("rack_elevation"))
+	return terra.ReferenceAsNumber(oa.ref.Append("rack_elevation"))
 }
 
+// RackId returns a reference to field rack_id of aws_outposts_asset.
 func (oa dataOutpostsAssetAttributes) RackId() terra.StringValue {
-	return terra.ReferenceString(oa.ref.Append("rack_id"))
+	return terra.ReferenceAsString(oa.ref.Append("rack_id"))
 }

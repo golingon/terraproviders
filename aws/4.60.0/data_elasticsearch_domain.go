@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataElasticsearchDomain creates a new instance of [DataElasticsearchDomain].
 func NewDataElasticsearchDomain(name string, args DataElasticsearchDomainArgs) *DataElasticsearchDomain {
 	return &DataElasticsearchDomain{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataElasticsearchDomain(name string, args DataElasticsearchDomainArgs) *
 
 var _ terra.DataResource = (*DataElasticsearchDomain)(nil)
 
+// DataElasticsearchDomain represents the Terraform data resource aws_elasticsearch_domain.
 type DataElasticsearchDomain struct {
 	Name string
 	Args DataElasticsearchDomainArgs
 }
 
+// DataSource returns the Terraform object type for [DataElasticsearchDomain].
 func (ed *DataElasticsearchDomain) DataSource() string {
 	return "aws_elasticsearch_domain"
 }
 
+// LocalName returns the local name for [DataElasticsearchDomain].
 func (ed *DataElasticsearchDomain) LocalName() string {
 	return ed.Name
 }
 
+// Configuration returns the configuration (args) for [DataElasticsearchDomain].
 func (ed *DataElasticsearchDomain) Configuration() interface{} {
 	return ed.Args
 }
 
+// Attributes returns the attributes for [DataElasticsearchDomain].
 func (ed *DataElasticsearchDomain) Attributes() dataElasticsearchDomainAttributes {
 	return dataElasticsearchDomainAttributes{ref: terra.ReferenceDataResource(ed)}
 }
 
+// DataElasticsearchDomainArgs contains the configurations for aws_elasticsearch_domain.
 type DataElasticsearchDomainArgs struct {
 	// DomainName: string, required
 	DomainName terra.StringValue `hcl:"domain_name,attr" validate:"required"`
@@ -69,94 +76,107 @@ type dataElasticsearchDomainAttributes struct {
 	ref terra.Reference
 }
 
+// AccessPolicies returns a reference to field access_policies of aws_elasticsearch_domain.
 func (ed dataElasticsearchDomainAttributes) AccessPolicies() terra.StringValue {
-	return terra.ReferenceString(ed.ref.Append("access_policies"))
+	return terra.ReferenceAsString(ed.ref.Append("access_policies"))
 }
 
+// AdvancedOptions returns a reference to field advanced_options of aws_elasticsearch_domain.
 func (ed dataElasticsearchDomainAttributes) AdvancedOptions() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ed.ref.Append("advanced_options"))
+	return terra.ReferenceAsMap[terra.StringValue](ed.ref.Append("advanced_options"))
 }
 
+// Arn returns a reference to field arn of aws_elasticsearch_domain.
 func (ed dataElasticsearchDomainAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ed.ref.Append("arn"))
+	return terra.ReferenceAsString(ed.ref.Append("arn"))
 }
 
+// Created returns a reference to field created of aws_elasticsearch_domain.
 func (ed dataElasticsearchDomainAttributes) Created() terra.BoolValue {
-	return terra.ReferenceBool(ed.ref.Append("created"))
+	return terra.ReferenceAsBool(ed.ref.Append("created"))
 }
 
+// Deleted returns a reference to field deleted of aws_elasticsearch_domain.
 func (ed dataElasticsearchDomainAttributes) Deleted() terra.BoolValue {
-	return terra.ReferenceBool(ed.ref.Append("deleted"))
+	return terra.ReferenceAsBool(ed.ref.Append("deleted"))
 }
 
+// DomainId returns a reference to field domain_id of aws_elasticsearch_domain.
 func (ed dataElasticsearchDomainAttributes) DomainId() terra.StringValue {
-	return terra.ReferenceString(ed.ref.Append("domain_id"))
+	return terra.ReferenceAsString(ed.ref.Append("domain_id"))
 }
 
+// DomainName returns a reference to field domain_name of aws_elasticsearch_domain.
 func (ed dataElasticsearchDomainAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(ed.ref.Append("domain_name"))
+	return terra.ReferenceAsString(ed.ref.Append("domain_name"))
 }
 
+// ElasticsearchVersion returns a reference to field elasticsearch_version of aws_elasticsearch_domain.
 func (ed dataElasticsearchDomainAttributes) ElasticsearchVersion() terra.StringValue {
-	return terra.ReferenceString(ed.ref.Append("elasticsearch_version"))
+	return terra.ReferenceAsString(ed.ref.Append("elasticsearch_version"))
 }
 
+// Endpoint returns a reference to field endpoint of aws_elasticsearch_domain.
 func (ed dataElasticsearchDomainAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(ed.ref.Append("endpoint"))
+	return terra.ReferenceAsString(ed.ref.Append("endpoint"))
 }
 
+// Id returns a reference to field id of aws_elasticsearch_domain.
 func (ed dataElasticsearchDomainAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ed.ref.Append("id"))
+	return terra.ReferenceAsString(ed.ref.Append("id"))
 }
 
+// KibanaEndpoint returns a reference to field kibana_endpoint of aws_elasticsearch_domain.
 func (ed dataElasticsearchDomainAttributes) KibanaEndpoint() terra.StringValue {
-	return terra.ReferenceString(ed.ref.Append("kibana_endpoint"))
+	return terra.ReferenceAsString(ed.ref.Append("kibana_endpoint"))
 }
 
+// Processing returns a reference to field processing of aws_elasticsearch_domain.
 func (ed dataElasticsearchDomainAttributes) Processing() terra.BoolValue {
-	return terra.ReferenceBool(ed.ref.Append("processing"))
+	return terra.ReferenceAsBool(ed.ref.Append("processing"))
 }
 
+// Tags returns a reference to field tags of aws_elasticsearch_domain.
 func (ed dataElasticsearchDomainAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ed.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ed.ref.Append("tags"))
 }
 
 func (ed dataElasticsearchDomainAttributes) AdvancedSecurityOptions() terra.ListValue[dataelasticsearchdomain.AdvancedSecurityOptionsAttributes] {
-	return terra.ReferenceList[dataelasticsearchdomain.AdvancedSecurityOptionsAttributes](ed.ref.Append("advanced_security_options"))
+	return terra.ReferenceAsList[dataelasticsearchdomain.AdvancedSecurityOptionsAttributes](ed.ref.Append("advanced_security_options"))
 }
 
 func (ed dataElasticsearchDomainAttributes) AutoTuneOptions() terra.ListValue[dataelasticsearchdomain.AutoTuneOptionsAttributes] {
-	return terra.ReferenceList[dataelasticsearchdomain.AutoTuneOptionsAttributes](ed.ref.Append("auto_tune_options"))
+	return terra.ReferenceAsList[dataelasticsearchdomain.AutoTuneOptionsAttributes](ed.ref.Append("auto_tune_options"))
 }
 
 func (ed dataElasticsearchDomainAttributes) ClusterConfig() terra.ListValue[dataelasticsearchdomain.ClusterConfigAttributes] {
-	return terra.ReferenceList[dataelasticsearchdomain.ClusterConfigAttributes](ed.ref.Append("cluster_config"))
+	return terra.ReferenceAsList[dataelasticsearchdomain.ClusterConfigAttributes](ed.ref.Append("cluster_config"))
 }
 
 func (ed dataElasticsearchDomainAttributes) CognitoOptions() terra.ListValue[dataelasticsearchdomain.CognitoOptionsAttributes] {
-	return terra.ReferenceList[dataelasticsearchdomain.CognitoOptionsAttributes](ed.ref.Append("cognito_options"))
+	return terra.ReferenceAsList[dataelasticsearchdomain.CognitoOptionsAttributes](ed.ref.Append("cognito_options"))
 }
 
 func (ed dataElasticsearchDomainAttributes) EbsOptions() terra.ListValue[dataelasticsearchdomain.EbsOptionsAttributes] {
-	return terra.ReferenceList[dataelasticsearchdomain.EbsOptionsAttributes](ed.ref.Append("ebs_options"))
+	return terra.ReferenceAsList[dataelasticsearchdomain.EbsOptionsAttributes](ed.ref.Append("ebs_options"))
 }
 
 func (ed dataElasticsearchDomainAttributes) EncryptionAtRest() terra.ListValue[dataelasticsearchdomain.EncryptionAtRestAttributes] {
-	return terra.ReferenceList[dataelasticsearchdomain.EncryptionAtRestAttributes](ed.ref.Append("encryption_at_rest"))
+	return terra.ReferenceAsList[dataelasticsearchdomain.EncryptionAtRestAttributes](ed.ref.Append("encryption_at_rest"))
 }
 
 func (ed dataElasticsearchDomainAttributes) LogPublishingOptions() terra.SetValue[dataelasticsearchdomain.LogPublishingOptionsAttributes] {
-	return terra.ReferenceSet[dataelasticsearchdomain.LogPublishingOptionsAttributes](ed.ref.Append("log_publishing_options"))
+	return terra.ReferenceAsSet[dataelasticsearchdomain.LogPublishingOptionsAttributes](ed.ref.Append("log_publishing_options"))
 }
 
 func (ed dataElasticsearchDomainAttributes) NodeToNodeEncryption() terra.ListValue[dataelasticsearchdomain.NodeToNodeEncryptionAttributes] {
-	return terra.ReferenceList[dataelasticsearchdomain.NodeToNodeEncryptionAttributes](ed.ref.Append("node_to_node_encryption"))
+	return terra.ReferenceAsList[dataelasticsearchdomain.NodeToNodeEncryptionAttributes](ed.ref.Append("node_to_node_encryption"))
 }
 
 func (ed dataElasticsearchDomainAttributes) SnapshotOptions() terra.ListValue[dataelasticsearchdomain.SnapshotOptionsAttributes] {
-	return terra.ReferenceList[dataelasticsearchdomain.SnapshotOptionsAttributes](ed.ref.Append("snapshot_options"))
+	return terra.ReferenceAsList[dataelasticsearchdomain.SnapshotOptionsAttributes](ed.ref.Append("snapshot_options"))
 }
 
 func (ed dataElasticsearchDomainAttributes) VpcOptions() terra.ListValue[dataelasticsearchdomain.VpcOptionsAttributes] {
-	return terra.ReferenceList[dataelasticsearchdomain.VpcOptionsAttributes](ed.ref.Append("vpc_options"))
+	return terra.ReferenceAsList[dataelasticsearchdomain.VpcOptionsAttributes](ed.ref.Append("vpc_options"))
 }

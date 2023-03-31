@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewGuarddutyIpset creates a new instance of [GuarddutyIpset].
 func NewGuarddutyIpset(name string, args GuarddutyIpsetArgs) *GuarddutyIpset {
 	return &GuarddutyIpset{
 		Args: args,
@@ -18,28 +19,51 @@ func NewGuarddutyIpset(name string, args GuarddutyIpsetArgs) *GuarddutyIpset {
 
 var _ terra.Resource = (*GuarddutyIpset)(nil)
 
+// GuarddutyIpset represents the Terraform resource aws_guardduty_ipset.
 type GuarddutyIpset struct {
-	Name  string
-	Args  GuarddutyIpsetArgs
-	state *guarddutyIpsetState
+	Name      string
+	Args      GuarddutyIpsetArgs
+	state     *guarddutyIpsetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GuarddutyIpset].
 func (gi *GuarddutyIpset) Type() string {
 	return "aws_guardduty_ipset"
 }
 
+// LocalName returns the local name for [GuarddutyIpset].
 func (gi *GuarddutyIpset) LocalName() string {
 	return gi.Name
 }
 
+// Configuration returns the configuration (args) for [GuarddutyIpset].
 func (gi *GuarddutyIpset) Configuration() interface{} {
 	return gi.Args
 }
 
+// DependOn is used for other resources to depend on [GuarddutyIpset].
+func (gi *GuarddutyIpset) DependOn() terra.Reference {
+	return terra.ReferenceResource(gi)
+}
+
+// Dependencies returns the list of resources [GuarddutyIpset] depends_on.
+func (gi *GuarddutyIpset) Dependencies() terra.Dependencies {
+	return gi.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GuarddutyIpset].
+func (gi *GuarddutyIpset) LifecycleManagement() *terra.Lifecycle {
+	return gi.Lifecycle
+}
+
+// Attributes returns the attributes for [GuarddutyIpset].
 func (gi *GuarddutyIpset) Attributes() guarddutyIpsetAttributes {
 	return guarddutyIpsetAttributes{ref: terra.ReferenceResource(gi)}
 }
 
+// ImportState imports the given attribute values into [GuarddutyIpset]'s state.
 func (gi *GuarddutyIpset) ImportState(av io.Reader) error {
 	gi.state = &guarddutyIpsetState{}
 	if err := json.NewDecoder(av).Decode(gi.state); err != nil {
@@ -48,10 +72,12 @@ func (gi *GuarddutyIpset) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GuarddutyIpset] has state.
 func (gi *GuarddutyIpset) State() (*guarddutyIpsetState, bool) {
 	return gi.state, gi.state != nil
 }
 
+// StateMust returns the state for [GuarddutyIpset]. Panics if the state is nil.
 func (gi *GuarddutyIpset) StateMust() *guarddutyIpsetState {
 	if gi.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", gi.Type(), gi.LocalName()))
@@ -59,10 +85,7 @@ func (gi *GuarddutyIpset) StateMust() *guarddutyIpsetState {
 	return gi.state
 }
 
-func (gi *GuarddutyIpset) DependOn() terra.Reference {
-	return terra.ReferenceResource(gi)
-}
-
+// GuarddutyIpsetArgs contains the configurations for aws_guardduty_ipset.
 type GuarddutyIpsetArgs struct {
 	// Activate: bool, required
 	Activate terra.BoolValue `hcl:"activate,attr" validate:"required"`
@@ -80,47 +103,54 @@ type GuarddutyIpsetArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that GuarddutyIpset depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type guarddutyIpsetAttributes struct {
 	ref terra.Reference
 }
 
+// Activate returns a reference to field activate of aws_guardduty_ipset.
 func (gi guarddutyIpsetAttributes) Activate() terra.BoolValue {
-	return terra.ReferenceBool(gi.ref.Append("activate"))
+	return terra.ReferenceAsBool(gi.ref.Append("activate"))
 }
 
+// Arn returns a reference to field arn of aws_guardduty_ipset.
 func (gi guarddutyIpsetAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(gi.ref.Append("arn"))
+	return terra.ReferenceAsString(gi.ref.Append("arn"))
 }
 
+// DetectorId returns a reference to field detector_id of aws_guardduty_ipset.
 func (gi guarddutyIpsetAttributes) DetectorId() terra.StringValue {
-	return terra.ReferenceString(gi.ref.Append("detector_id"))
+	return terra.ReferenceAsString(gi.ref.Append("detector_id"))
 }
 
+// Format returns a reference to field format of aws_guardduty_ipset.
 func (gi guarddutyIpsetAttributes) Format() terra.StringValue {
-	return terra.ReferenceString(gi.ref.Append("format"))
+	return terra.ReferenceAsString(gi.ref.Append("format"))
 }
 
+// Id returns a reference to field id of aws_guardduty_ipset.
 func (gi guarddutyIpsetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gi.ref.Append("id"))
+	return terra.ReferenceAsString(gi.ref.Append("id"))
 }
 
+// Location returns a reference to field location of aws_guardduty_ipset.
 func (gi guarddutyIpsetAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(gi.ref.Append("location"))
+	return terra.ReferenceAsString(gi.ref.Append("location"))
 }
 
+// Name returns a reference to field name of aws_guardduty_ipset.
 func (gi guarddutyIpsetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(gi.ref.Append("name"))
+	return terra.ReferenceAsString(gi.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_guardduty_ipset.
 func (gi guarddutyIpsetAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gi.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](gi.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_guardduty_ipset.
 func (gi guarddutyIpsetAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gi.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](gi.ref.Append("tags_all"))
 }
 
 type guarddutyIpsetState struct {

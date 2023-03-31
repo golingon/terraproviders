@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDynamodbGlobalTable creates a new instance of [DynamodbGlobalTable].
 func NewDynamodbGlobalTable(name string, args DynamodbGlobalTableArgs) *DynamodbGlobalTable {
 	return &DynamodbGlobalTable{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDynamodbGlobalTable(name string, args DynamodbGlobalTableArgs) *Dynamodb
 
 var _ terra.Resource = (*DynamodbGlobalTable)(nil)
 
+// DynamodbGlobalTable represents the Terraform resource aws_dynamodb_global_table.
 type DynamodbGlobalTable struct {
-	Name  string
-	Args  DynamodbGlobalTableArgs
-	state *dynamodbGlobalTableState
+	Name      string
+	Args      DynamodbGlobalTableArgs
+	state     *dynamodbGlobalTableState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DynamodbGlobalTable].
 func (dgt *DynamodbGlobalTable) Type() string {
 	return "aws_dynamodb_global_table"
 }
 
+// LocalName returns the local name for [DynamodbGlobalTable].
 func (dgt *DynamodbGlobalTable) LocalName() string {
 	return dgt.Name
 }
 
+// Configuration returns the configuration (args) for [DynamodbGlobalTable].
 func (dgt *DynamodbGlobalTable) Configuration() interface{} {
 	return dgt.Args
 }
 
+// DependOn is used for other resources to depend on [DynamodbGlobalTable].
+func (dgt *DynamodbGlobalTable) DependOn() terra.Reference {
+	return terra.ReferenceResource(dgt)
+}
+
+// Dependencies returns the list of resources [DynamodbGlobalTable] depends_on.
+func (dgt *DynamodbGlobalTable) Dependencies() terra.Dependencies {
+	return dgt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DynamodbGlobalTable].
+func (dgt *DynamodbGlobalTable) LifecycleManagement() *terra.Lifecycle {
+	return dgt.Lifecycle
+}
+
+// Attributes returns the attributes for [DynamodbGlobalTable].
 func (dgt *DynamodbGlobalTable) Attributes() dynamodbGlobalTableAttributes {
 	return dynamodbGlobalTableAttributes{ref: terra.ReferenceResource(dgt)}
 }
 
+// ImportState imports the given attribute values into [DynamodbGlobalTable]'s state.
 func (dgt *DynamodbGlobalTable) ImportState(av io.Reader) error {
 	dgt.state = &dynamodbGlobalTableState{}
 	if err := json.NewDecoder(av).Decode(dgt.state); err != nil {
@@ -49,10 +73,12 @@ func (dgt *DynamodbGlobalTable) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DynamodbGlobalTable] has state.
 func (dgt *DynamodbGlobalTable) State() (*dynamodbGlobalTableState, bool) {
 	return dgt.state, dgt.state != nil
 }
 
+// StateMust returns the state for [DynamodbGlobalTable]. Panics if the state is nil.
 func (dgt *DynamodbGlobalTable) StateMust() *dynamodbGlobalTableState {
 	if dgt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dgt.Type(), dgt.LocalName()))
@@ -60,10 +86,7 @@ func (dgt *DynamodbGlobalTable) StateMust() *dynamodbGlobalTableState {
 	return dgt.state
 }
 
-func (dgt *DynamodbGlobalTable) DependOn() terra.Reference {
-	return terra.ReferenceResource(dgt)
-}
-
+// DynamodbGlobalTableArgs contains the configurations for aws_dynamodb_global_table.
 type DynamodbGlobalTableArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -73,31 +96,32 @@ type DynamodbGlobalTableArgs struct {
 	Replica []dynamodbglobaltable.Replica `hcl:"replica,block" validate:"min=1"`
 	// Timeouts: optional
 	Timeouts *dynamodbglobaltable.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DynamodbGlobalTable depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dynamodbGlobalTableAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_dynamodb_global_table.
 func (dgt dynamodbGlobalTableAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dgt.ref.Append("arn"))
+	return terra.ReferenceAsString(dgt.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_dynamodb_global_table.
 func (dgt dynamodbGlobalTableAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dgt.ref.Append("id"))
+	return terra.ReferenceAsString(dgt.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_dynamodb_global_table.
 func (dgt dynamodbGlobalTableAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dgt.ref.Append("name"))
+	return terra.ReferenceAsString(dgt.ref.Append("name"))
 }
 
 func (dgt dynamodbGlobalTableAttributes) Replica() terra.SetValue[dynamodbglobaltable.ReplicaAttributes] {
-	return terra.ReferenceSet[dynamodbglobaltable.ReplicaAttributes](dgt.ref.Append("replica"))
+	return terra.ReferenceAsSet[dynamodbglobaltable.ReplicaAttributes](dgt.ref.Append("replica"))
 }
 
 func (dgt dynamodbGlobalTableAttributes) Timeouts() dynamodbglobaltable.TimeoutsAttributes {
-	return terra.ReferenceSingle[dynamodbglobaltable.TimeoutsAttributes](dgt.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dynamodbglobaltable.TimeoutsAttributes](dgt.ref.Append("timeouts"))
 }
 
 type dynamodbGlobalTableState struct {

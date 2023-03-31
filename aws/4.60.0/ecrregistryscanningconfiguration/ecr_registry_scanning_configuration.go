@@ -38,11 +38,11 @@ func (r RuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RuleAttributes) ScanFrequency() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("scan_frequency"))
+	return terra.ReferenceAsString(r.ref.Append("scan_frequency"))
 }
 
 func (r RuleAttributes) RepositoryFilter() terra.SetValue[RepositoryFilterAttributes] {
-	return terra.ReferenceSet[RepositoryFilterAttributes](r.ref.Append("repository_filter"))
+	return terra.ReferenceAsSet[RepositoryFilterAttributes](r.ref.Append("repository_filter"))
 }
 
 type RepositoryFilterAttributes struct {
@@ -62,11 +62,11 @@ func (rf RepositoryFilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rf RepositoryFilterAttributes) Filter() terra.StringValue {
-	return terra.ReferenceString(rf.ref.Append("filter"))
+	return terra.ReferenceAsString(rf.ref.Append("filter"))
 }
 
 func (rf RepositoryFilterAttributes) FilterType() terra.StringValue {
-	return terra.ReferenceString(rf.ref.Append("filter_type"))
+	return terra.ReferenceAsString(rf.ref.Append("filter_type"))
 }
 
 type RuleState struct {

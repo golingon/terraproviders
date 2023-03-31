@@ -67,11 +67,11 @@ func (cc ContentConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc ContentConfigAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("bucket"))
+	return terra.ReferenceAsString(cc.ref.Append("bucket"))
 }
 
 func (cc ContentConfigAttributes) StorageClass() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("storage_class"))
+	return terra.ReferenceAsString(cc.ref.Append("storage_class"))
 }
 
 type ContentConfigPermissionsAttributes struct {
@@ -91,15 +91,15 @@ func (ccp ContentConfigPermissionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ccp ContentConfigPermissionsAttributes) Access() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ccp.ref.Append("access"))
+	return terra.ReferenceAsList[terra.StringValue](ccp.ref.Append("access"))
 }
 
 func (ccp ContentConfigPermissionsAttributes) Grantee() terra.StringValue {
-	return terra.ReferenceString(ccp.ref.Append("grantee"))
+	return terra.ReferenceAsString(ccp.ref.Append("grantee"))
 }
 
 func (ccp ContentConfigPermissionsAttributes) GranteeType() terra.StringValue {
-	return terra.ReferenceString(ccp.ref.Append("grantee_type"))
+	return terra.ReferenceAsString(ccp.ref.Append("grantee_type"))
 }
 
 type NotificationsAttributes struct {
@@ -119,19 +119,19 @@ func (n NotificationsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (n NotificationsAttributes) Completed() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("completed"))
+	return terra.ReferenceAsString(n.ref.Append("completed"))
 }
 
 func (n NotificationsAttributes) Error() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("error"))
+	return terra.ReferenceAsString(n.ref.Append("error"))
 }
 
 func (n NotificationsAttributes) Progressing() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("progressing"))
+	return terra.ReferenceAsString(n.ref.Append("progressing"))
 }
 
 func (n NotificationsAttributes) Warning() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("warning"))
+	return terra.ReferenceAsString(n.ref.Append("warning"))
 }
 
 type ThumbnailConfigAttributes struct {
@@ -151,11 +151,11 @@ func (tc ThumbnailConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tc ThumbnailConfigAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("bucket"))
+	return terra.ReferenceAsString(tc.ref.Append("bucket"))
 }
 
 func (tc ThumbnailConfigAttributes) StorageClass() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("storage_class"))
+	return terra.ReferenceAsString(tc.ref.Append("storage_class"))
 }
 
 type ThumbnailConfigPermissionsAttributes struct {
@@ -175,15 +175,15 @@ func (tcp ThumbnailConfigPermissionsAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (tcp ThumbnailConfigPermissionsAttributes) Access() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](tcp.ref.Append("access"))
+	return terra.ReferenceAsList[terra.StringValue](tcp.ref.Append("access"))
 }
 
 func (tcp ThumbnailConfigPermissionsAttributes) Grantee() terra.StringValue {
-	return terra.ReferenceString(tcp.ref.Append("grantee"))
+	return terra.ReferenceAsString(tcp.ref.Append("grantee"))
 }
 
 func (tcp ThumbnailConfigPermissionsAttributes) GranteeType() terra.StringValue {
-	return terra.ReferenceString(tcp.ref.Append("grantee_type"))
+	return terra.ReferenceAsString(tcp.ref.Append("grantee_type"))
 }
 
 type ContentConfigState struct {

@@ -72,11 +72,11 @@ func (eo EndpointOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (eo EndpointOptionsAttributes) EnforceHttps() terra.BoolValue {
-	return terra.ReferenceBool(eo.ref.Append("enforce_https"))
+	return terra.ReferenceAsBool(eo.ref.Append("enforce_https"))
 }
 
 func (eo EndpointOptionsAttributes) TlsSecurityPolicy() terra.StringValue {
-	return terra.ReferenceString(eo.ref.Append("tls_security_policy"))
+	return terra.ReferenceAsString(eo.ref.Append("tls_security_policy"))
 }
 
 type IndexFieldAttributes struct {
@@ -96,43 +96,43 @@ func (_if IndexFieldAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (_if IndexFieldAttributes) AnalysisScheme() terra.StringValue {
-	return terra.ReferenceString(_if.ref.Append("analysis_scheme"))
+	return terra.ReferenceAsString(_if.ref.Append("analysis_scheme"))
 }
 
 func (_if IndexFieldAttributes) DefaultValue() terra.StringValue {
-	return terra.ReferenceString(_if.ref.Append("default_value"))
+	return terra.ReferenceAsString(_if.ref.Append("default_value"))
 }
 
 func (_if IndexFieldAttributes) Facet() terra.BoolValue {
-	return terra.ReferenceBool(_if.ref.Append("facet"))
+	return terra.ReferenceAsBool(_if.ref.Append("facet"))
 }
 
 func (_if IndexFieldAttributes) Highlight() terra.BoolValue {
-	return terra.ReferenceBool(_if.ref.Append("highlight"))
+	return terra.ReferenceAsBool(_if.ref.Append("highlight"))
 }
 
 func (_if IndexFieldAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(_if.ref.Append("name"))
+	return terra.ReferenceAsString(_if.ref.Append("name"))
 }
 
 func (_if IndexFieldAttributes) Return() terra.BoolValue {
-	return terra.ReferenceBool(_if.ref.Append("return"))
+	return terra.ReferenceAsBool(_if.ref.Append("return"))
 }
 
 func (_if IndexFieldAttributes) Search() terra.BoolValue {
-	return terra.ReferenceBool(_if.ref.Append("search"))
+	return terra.ReferenceAsBool(_if.ref.Append("search"))
 }
 
 func (_if IndexFieldAttributes) Sort() terra.BoolValue {
-	return terra.ReferenceBool(_if.ref.Append("sort"))
+	return terra.ReferenceAsBool(_if.ref.Append("sort"))
 }
 
 func (_if IndexFieldAttributes) SourceFields() terra.StringValue {
-	return terra.ReferenceString(_if.ref.Append("source_fields"))
+	return terra.ReferenceAsString(_if.ref.Append("source_fields"))
 }
 
 func (_if IndexFieldAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(_if.ref.Append("type"))
+	return terra.ReferenceAsString(_if.ref.Append("type"))
 }
 
 type ScalingParametersAttributes struct {
@@ -152,15 +152,15 @@ func (sp ScalingParametersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sp ScalingParametersAttributes) DesiredInstanceType() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("desired_instance_type"))
+	return terra.ReferenceAsString(sp.ref.Append("desired_instance_type"))
 }
 
 func (sp ScalingParametersAttributes) DesiredPartitionCount() terra.NumberValue {
-	return terra.ReferenceNumber(sp.ref.Append("desired_partition_count"))
+	return terra.ReferenceAsNumber(sp.ref.Append("desired_partition_count"))
 }
 
 func (sp ScalingParametersAttributes) DesiredReplicationCount() terra.NumberValue {
-	return terra.ReferenceNumber(sp.ref.Append("desired_replication_count"))
+	return terra.ReferenceAsNumber(sp.ref.Append("desired_replication_count"))
 }
 
 type TimeoutsAttributes struct {
@@ -180,15 +180,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type EndpointOptionsState struct {

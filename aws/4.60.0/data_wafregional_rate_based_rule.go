@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataWafregionalRateBasedRule creates a new instance of [DataWafregionalRateBasedRule].
 func NewDataWafregionalRateBasedRule(name string, args DataWafregionalRateBasedRuleArgs) *DataWafregionalRateBasedRule {
 	return &DataWafregionalRateBasedRule{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataWafregionalRateBasedRule(name string, args DataWafregionalRateBasedR
 
 var _ terra.DataResource = (*DataWafregionalRateBasedRule)(nil)
 
+// DataWafregionalRateBasedRule represents the Terraform data resource aws_wafregional_rate_based_rule.
 type DataWafregionalRateBasedRule struct {
 	Name string
 	Args DataWafregionalRateBasedRuleArgs
 }
 
+// DataSource returns the Terraform object type for [DataWafregionalRateBasedRule].
 func (wrbr *DataWafregionalRateBasedRule) DataSource() string {
 	return "aws_wafregional_rate_based_rule"
 }
 
+// LocalName returns the local name for [DataWafregionalRateBasedRule].
 func (wrbr *DataWafregionalRateBasedRule) LocalName() string {
 	return wrbr.Name
 }
 
+// Configuration returns the configuration (args) for [DataWafregionalRateBasedRule].
 func (wrbr *DataWafregionalRateBasedRule) Configuration() interface{} {
 	return wrbr.Args
 }
 
+// Attributes returns the attributes for [DataWafregionalRateBasedRule].
 func (wrbr *DataWafregionalRateBasedRule) Attributes() dataWafregionalRateBasedRuleAttributes {
 	return dataWafregionalRateBasedRuleAttributes{ref: terra.ReferenceDataResource(wrbr)}
 }
 
+// DataWafregionalRateBasedRuleArgs contains the configurations for aws_wafregional_rate_based_rule.
 type DataWafregionalRateBasedRuleArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,10 +51,12 @@ type dataWafregionalRateBasedRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_wafregional_rate_based_rule.
 func (wrbr dataWafregionalRateBasedRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(wrbr.ref.Append("id"))
+	return terra.ReferenceAsString(wrbr.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_wafregional_rate_based_rule.
 func (wrbr dataWafregionalRateBasedRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(wrbr.ref.Append("name"))
+	return terra.ReferenceAsString(wrbr.ref.Append("name"))
 }

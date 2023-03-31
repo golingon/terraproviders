@@ -31,19 +31,19 @@ func (sd SubDomainAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sd SubDomainAttributes) BranchName() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("branch_name"))
+	return terra.ReferenceAsString(sd.ref.Append("branch_name"))
 }
 
 func (sd SubDomainAttributes) DnsRecord() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("dns_record"))
+	return terra.ReferenceAsString(sd.ref.Append("dns_record"))
 }
 
 func (sd SubDomainAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("prefix"))
+	return terra.ReferenceAsString(sd.ref.Append("prefix"))
 }
 
 func (sd SubDomainAttributes) Verified() terra.BoolValue {
-	return terra.ReferenceBool(sd.ref.Append("verified"))
+	return terra.ReferenceAsBool(sd.ref.Append("verified"))
 }
 
 type SubDomainState struct {

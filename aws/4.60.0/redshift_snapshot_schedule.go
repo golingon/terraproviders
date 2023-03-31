@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRedshiftSnapshotSchedule creates a new instance of [RedshiftSnapshotSchedule].
 func NewRedshiftSnapshotSchedule(name string, args RedshiftSnapshotScheduleArgs) *RedshiftSnapshotSchedule {
 	return &RedshiftSnapshotSchedule{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRedshiftSnapshotSchedule(name string, args RedshiftSnapshotScheduleArgs)
 
 var _ terra.Resource = (*RedshiftSnapshotSchedule)(nil)
 
+// RedshiftSnapshotSchedule represents the Terraform resource aws_redshift_snapshot_schedule.
 type RedshiftSnapshotSchedule struct {
-	Name  string
-	Args  RedshiftSnapshotScheduleArgs
-	state *redshiftSnapshotScheduleState
+	Name      string
+	Args      RedshiftSnapshotScheduleArgs
+	state     *redshiftSnapshotScheduleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RedshiftSnapshotSchedule].
 func (rss *RedshiftSnapshotSchedule) Type() string {
 	return "aws_redshift_snapshot_schedule"
 }
 
+// LocalName returns the local name for [RedshiftSnapshotSchedule].
 func (rss *RedshiftSnapshotSchedule) LocalName() string {
 	return rss.Name
 }
 
+// Configuration returns the configuration (args) for [RedshiftSnapshotSchedule].
 func (rss *RedshiftSnapshotSchedule) Configuration() interface{} {
 	return rss.Args
 }
 
+// DependOn is used for other resources to depend on [RedshiftSnapshotSchedule].
+func (rss *RedshiftSnapshotSchedule) DependOn() terra.Reference {
+	return terra.ReferenceResource(rss)
+}
+
+// Dependencies returns the list of resources [RedshiftSnapshotSchedule] depends_on.
+func (rss *RedshiftSnapshotSchedule) Dependencies() terra.Dependencies {
+	return rss.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RedshiftSnapshotSchedule].
+func (rss *RedshiftSnapshotSchedule) LifecycleManagement() *terra.Lifecycle {
+	return rss.Lifecycle
+}
+
+// Attributes returns the attributes for [RedshiftSnapshotSchedule].
 func (rss *RedshiftSnapshotSchedule) Attributes() redshiftSnapshotScheduleAttributes {
 	return redshiftSnapshotScheduleAttributes{ref: terra.ReferenceResource(rss)}
 }
 
+// ImportState imports the given attribute values into [RedshiftSnapshotSchedule]'s state.
 func (rss *RedshiftSnapshotSchedule) ImportState(av io.Reader) error {
 	rss.state = &redshiftSnapshotScheduleState{}
 	if err := json.NewDecoder(av).Decode(rss.state); err != nil {
@@ -48,10 +72,12 @@ func (rss *RedshiftSnapshotSchedule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RedshiftSnapshotSchedule] has state.
 func (rss *RedshiftSnapshotSchedule) State() (*redshiftSnapshotScheduleState, bool) {
 	return rss.state, rss.state != nil
 }
 
+// StateMust returns the state for [RedshiftSnapshotSchedule]. Panics if the state is nil.
 func (rss *RedshiftSnapshotSchedule) StateMust() *redshiftSnapshotScheduleState {
 	if rss.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rss.Type(), rss.LocalName()))
@@ -59,10 +85,7 @@ func (rss *RedshiftSnapshotSchedule) StateMust() *redshiftSnapshotScheduleState 
 	return rss.state
 }
 
-func (rss *RedshiftSnapshotSchedule) DependOn() terra.Reference {
-	return terra.ReferenceResource(rss)
-}
-
+// RedshiftSnapshotScheduleArgs contains the configurations for aws_redshift_snapshot_schedule.
 type RedshiftSnapshotScheduleArgs struct {
 	// Definitions: set of string, required
 	Definitions terra.SetValue[terra.StringValue] `hcl:"definitions,attr" validate:"required"`
@@ -80,47 +103,54 @@ type RedshiftSnapshotScheduleArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that RedshiftSnapshotSchedule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type redshiftSnapshotScheduleAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_redshift_snapshot_schedule.
 func (rss redshiftSnapshotScheduleAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rss.ref.Append("arn"))
+	return terra.ReferenceAsString(rss.ref.Append("arn"))
 }
 
+// Definitions returns a reference to field definitions of aws_redshift_snapshot_schedule.
 func (rss redshiftSnapshotScheduleAttributes) Definitions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rss.ref.Append("definitions"))
+	return terra.ReferenceAsSet[terra.StringValue](rss.ref.Append("definitions"))
 }
 
+// Description returns a reference to field description of aws_redshift_snapshot_schedule.
 func (rss redshiftSnapshotScheduleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(rss.ref.Append("description"))
+	return terra.ReferenceAsString(rss.ref.Append("description"))
 }
 
+// ForceDestroy returns a reference to field force_destroy of aws_redshift_snapshot_schedule.
 func (rss redshiftSnapshotScheduleAttributes) ForceDestroy() terra.BoolValue {
-	return terra.ReferenceBool(rss.ref.Append("force_destroy"))
+	return terra.ReferenceAsBool(rss.ref.Append("force_destroy"))
 }
 
+// Id returns a reference to field id of aws_redshift_snapshot_schedule.
 func (rss redshiftSnapshotScheduleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rss.ref.Append("id"))
+	return terra.ReferenceAsString(rss.ref.Append("id"))
 }
 
+// Identifier returns a reference to field identifier of aws_redshift_snapshot_schedule.
 func (rss redshiftSnapshotScheduleAttributes) Identifier() terra.StringValue {
-	return terra.ReferenceString(rss.ref.Append("identifier"))
+	return terra.ReferenceAsString(rss.ref.Append("identifier"))
 }
 
+// IdentifierPrefix returns a reference to field identifier_prefix of aws_redshift_snapshot_schedule.
 func (rss redshiftSnapshotScheduleAttributes) IdentifierPrefix() terra.StringValue {
-	return terra.ReferenceString(rss.ref.Append("identifier_prefix"))
+	return terra.ReferenceAsString(rss.ref.Append("identifier_prefix"))
 }
 
+// Tags returns a reference to field tags of aws_redshift_snapshot_schedule.
 func (rss redshiftSnapshotScheduleAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rss.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rss.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_redshift_snapshot_schedule.
 func (rss redshiftSnapshotScheduleAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rss.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](rss.ref.Append("tags_all"))
 }
 
 type redshiftSnapshotScheduleState struct {

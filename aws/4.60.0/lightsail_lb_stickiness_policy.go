@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewLightsailLbStickinessPolicy creates a new instance of [LightsailLbStickinessPolicy].
 func NewLightsailLbStickinessPolicy(name string, args LightsailLbStickinessPolicyArgs) *LightsailLbStickinessPolicy {
 	return &LightsailLbStickinessPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewLightsailLbStickinessPolicy(name string, args LightsailLbStickinessPolic
 
 var _ terra.Resource = (*LightsailLbStickinessPolicy)(nil)
 
+// LightsailLbStickinessPolicy represents the Terraform resource aws_lightsail_lb_stickiness_policy.
 type LightsailLbStickinessPolicy struct {
-	Name  string
-	Args  LightsailLbStickinessPolicyArgs
-	state *lightsailLbStickinessPolicyState
+	Name      string
+	Args      LightsailLbStickinessPolicyArgs
+	state     *lightsailLbStickinessPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LightsailLbStickinessPolicy].
 func (llsp *LightsailLbStickinessPolicy) Type() string {
 	return "aws_lightsail_lb_stickiness_policy"
 }
 
+// LocalName returns the local name for [LightsailLbStickinessPolicy].
 func (llsp *LightsailLbStickinessPolicy) LocalName() string {
 	return llsp.Name
 }
 
+// Configuration returns the configuration (args) for [LightsailLbStickinessPolicy].
 func (llsp *LightsailLbStickinessPolicy) Configuration() interface{} {
 	return llsp.Args
 }
 
+// DependOn is used for other resources to depend on [LightsailLbStickinessPolicy].
+func (llsp *LightsailLbStickinessPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(llsp)
+}
+
+// Dependencies returns the list of resources [LightsailLbStickinessPolicy] depends_on.
+func (llsp *LightsailLbStickinessPolicy) Dependencies() terra.Dependencies {
+	return llsp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LightsailLbStickinessPolicy].
+func (llsp *LightsailLbStickinessPolicy) LifecycleManagement() *terra.Lifecycle {
+	return llsp.Lifecycle
+}
+
+// Attributes returns the attributes for [LightsailLbStickinessPolicy].
 func (llsp *LightsailLbStickinessPolicy) Attributes() lightsailLbStickinessPolicyAttributes {
 	return lightsailLbStickinessPolicyAttributes{ref: terra.ReferenceResource(llsp)}
 }
 
+// ImportState imports the given attribute values into [LightsailLbStickinessPolicy]'s state.
 func (llsp *LightsailLbStickinessPolicy) ImportState(av io.Reader) error {
 	llsp.state = &lightsailLbStickinessPolicyState{}
 	if err := json.NewDecoder(av).Decode(llsp.state); err != nil {
@@ -48,10 +72,12 @@ func (llsp *LightsailLbStickinessPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LightsailLbStickinessPolicy] has state.
 func (llsp *LightsailLbStickinessPolicy) State() (*lightsailLbStickinessPolicyState, bool) {
 	return llsp.state, llsp.state != nil
 }
 
+// StateMust returns the state for [LightsailLbStickinessPolicy]. Panics if the state is nil.
 func (llsp *LightsailLbStickinessPolicy) StateMust() *lightsailLbStickinessPolicyState {
 	if llsp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", llsp.Type(), llsp.LocalName()))
@@ -59,10 +85,7 @@ func (llsp *LightsailLbStickinessPolicy) StateMust() *lightsailLbStickinessPolic
 	return llsp.state
 }
 
-func (llsp *LightsailLbStickinessPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(llsp)
-}
-
+// LightsailLbStickinessPolicyArgs contains the configurations for aws_lightsail_lb_stickiness_policy.
 type LightsailLbStickinessPolicyArgs struct {
 	// CookieDuration: number, required
 	CookieDuration terra.NumberValue `hcl:"cookie_duration,attr" validate:"required"`
@@ -72,27 +95,29 @@ type LightsailLbStickinessPolicyArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// LbName: string, required
 	LbName terra.StringValue `hcl:"lb_name,attr" validate:"required"`
-	// DependsOn contains resources that LightsailLbStickinessPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lightsailLbStickinessPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// CookieDuration returns a reference to field cookie_duration of aws_lightsail_lb_stickiness_policy.
 func (llsp lightsailLbStickinessPolicyAttributes) CookieDuration() terra.NumberValue {
-	return terra.ReferenceNumber(llsp.ref.Append("cookie_duration"))
+	return terra.ReferenceAsNumber(llsp.ref.Append("cookie_duration"))
 }
 
+// Enabled returns a reference to field enabled of aws_lightsail_lb_stickiness_policy.
 func (llsp lightsailLbStickinessPolicyAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(llsp.ref.Append("enabled"))
+	return terra.ReferenceAsBool(llsp.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of aws_lightsail_lb_stickiness_policy.
 func (llsp lightsailLbStickinessPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(llsp.ref.Append("id"))
+	return terra.ReferenceAsString(llsp.ref.Append("id"))
 }
 
+// LbName returns a reference to field lb_name of aws_lightsail_lb_stickiness_policy.
 func (llsp lightsailLbStickinessPolicyAttributes) LbName() terra.StringValue {
-	return terra.ReferenceString(llsp.ref.Append("lb_name"))
+	return terra.ReferenceAsString(llsp.ref.Append("lb_name"))
 }
 
 type lightsailLbStickinessPolicyState struct {

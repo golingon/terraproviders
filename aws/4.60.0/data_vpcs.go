@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataVpcs creates a new instance of [DataVpcs].
 func NewDataVpcs(name string, args DataVpcsArgs) *DataVpcs {
 	return &DataVpcs{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataVpcs(name string, args DataVpcsArgs) *DataVpcs {
 
 var _ terra.DataResource = (*DataVpcs)(nil)
 
+// DataVpcs represents the Terraform data resource aws_vpcs.
 type DataVpcs struct {
 	Name string
 	Args DataVpcsArgs
 }
 
+// DataSource returns the Terraform object type for [DataVpcs].
 func (v *DataVpcs) DataSource() string {
 	return "aws_vpcs"
 }
 
+// LocalName returns the local name for [DataVpcs].
 func (v *DataVpcs) LocalName() string {
 	return v.Name
 }
 
+// Configuration returns the configuration (args) for [DataVpcs].
 func (v *DataVpcs) Configuration() interface{} {
 	return v.Args
 }
 
+// Attributes returns the attributes for [DataVpcs].
 func (v *DataVpcs) Attributes() dataVpcsAttributes {
 	return dataVpcsAttributes{ref: terra.ReferenceDataResource(v)}
 }
 
+// DataVpcsArgs contains the configurations for aws_vpcs.
 type DataVpcsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,22 +58,25 @@ type dataVpcsAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_vpcs.
 func (v dataVpcsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("id"))
+	return terra.ReferenceAsString(v.ref.Append("id"))
 }
 
+// Ids returns a reference to field ids of aws_vpcs.
 func (v dataVpcsAttributes) Ids() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](v.ref.Append("ids"))
+	return terra.ReferenceAsList[terra.StringValue](v.ref.Append("ids"))
 }
 
+// Tags returns a reference to field tags of aws_vpcs.
 func (v dataVpcsAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](v.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](v.ref.Append("tags"))
 }
 
 func (v dataVpcsAttributes) Filter() terra.SetValue[datavpcs.FilterAttributes] {
-	return terra.ReferenceSet[datavpcs.FilterAttributes](v.ref.Append("filter"))
+	return terra.ReferenceAsSet[datavpcs.FilterAttributes](v.ref.Append("filter"))
 }
 
 func (v dataVpcsAttributes) Timeouts() datavpcs.TimeoutsAttributes {
-	return terra.ReferenceSingle[datavpcs.TimeoutsAttributes](v.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datavpcs.TimeoutsAttributes](v.ref.Append("timeouts"))
 }

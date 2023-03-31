@@ -40,15 +40,15 @@ func (rr RevocationRecordAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rr RevocationRecordAttributes) Reason() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("reason"))
+	return terra.ReferenceAsString(rr.ref.Append("reason"))
 }
 
 func (rr RevocationRecordAttributes) RevokedAt() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("revoked_at"))
+	return terra.ReferenceAsString(rr.ref.Append("revoked_at"))
 }
 
 func (rr RevocationRecordAttributes) RevokedBy() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("revoked_by"))
+	return terra.ReferenceAsString(rr.ref.Append("revoked_by"))
 }
 
 type SignedObjectAttributes struct {
@@ -68,7 +68,7 @@ func (so SignedObjectAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (so SignedObjectAttributes) S3() terra.ListValue[SignedObjectS3Attributes] {
-	return terra.ReferenceList[SignedObjectS3Attributes](so.ref.Append("s3"))
+	return terra.ReferenceAsList[SignedObjectS3Attributes](so.ref.Append("s3"))
 }
 
 type SignedObjectS3Attributes struct {
@@ -88,11 +88,11 @@ func (s SignedObjectS3Attributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SignedObjectS3Attributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("bucket"))
+	return terra.ReferenceAsString(s.ref.Append("bucket"))
 }
 
 func (s SignedObjectS3Attributes) Key() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("key"))
+	return terra.ReferenceAsString(s.ref.Append("key"))
 }
 
 type SourceAttributes struct {
@@ -112,7 +112,7 @@ func (s SourceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SourceAttributes) S3() terra.ListValue[SourceS3Attributes] {
-	return terra.ReferenceList[SourceS3Attributes](s.ref.Append("s3"))
+	return terra.ReferenceAsList[SourceS3Attributes](s.ref.Append("s3"))
 }
 
 type SourceS3Attributes struct {
@@ -132,15 +132,15 @@ func (s SourceS3Attributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SourceS3Attributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("bucket"))
+	return terra.ReferenceAsString(s.ref.Append("bucket"))
 }
 
 func (s SourceS3Attributes) Key() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("key"))
+	return terra.ReferenceAsString(s.ref.Append("key"))
 }
 
 func (s SourceS3Attributes) Version() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("version"))
+	return terra.ReferenceAsString(s.ref.Append("version"))
 }
 
 type RevocationRecordState struct {

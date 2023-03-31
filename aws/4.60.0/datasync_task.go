@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDatasyncTask creates a new instance of [DatasyncTask].
 func NewDatasyncTask(name string, args DatasyncTaskArgs) *DatasyncTask {
 	return &DatasyncTask{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDatasyncTask(name string, args DatasyncTaskArgs) *DatasyncTask {
 
 var _ terra.Resource = (*DatasyncTask)(nil)
 
+// DatasyncTask represents the Terraform resource aws_datasync_task.
 type DatasyncTask struct {
-	Name  string
-	Args  DatasyncTaskArgs
-	state *datasyncTaskState
+	Name      string
+	Args      DatasyncTaskArgs
+	state     *datasyncTaskState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DatasyncTask].
 func (dt *DatasyncTask) Type() string {
 	return "aws_datasync_task"
 }
 
+// LocalName returns the local name for [DatasyncTask].
 func (dt *DatasyncTask) LocalName() string {
 	return dt.Name
 }
 
+// Configuration returns the configuration (args) for [DatasyncTask].
 func (dt *DatasyncTask) Configuration() interface{} {
 	return dt.Args
 }
 
+// DependOn is used for other resources to depend on [DatasyncTask].
+func (dt *DatasyncTask) DependOn() terra.Reference {
+	return terra.ReferenceResource(dt)
+}
+
+// Dependencies returns the list of resources [DatasyncTask] depends_on.
+func (dt *DatasyncTask) Dependencies() terra.Dependencies {
+	return dt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DatasyncTask].
+func (dt *DatasyncTask) LifecycleManagement() *terra.Lifecycle {
+	return dt.Lifecycle
+}
+
+// Attributes returns the attributes for [DatasyncTask].
 func (dt *DatasyncTask) Attributes() datasyncTaskAttributes {
 	return datasyncTaskAttributes{ref: terra.ReferenceResource(dt)}
 }
 
+// ImportState imports the given attribute values into [DatasyncTask]'s state.
 func (dt *DatasyncTask) ImportState(av io.Reader) error {
 	dt.state = &datasyncTaskState{}
 	if err := json.NewDecoder(av).Decode(dt.state); err != nil {
@@ -49,10 +73,12 @@ func (dt *DatasyncTask) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DatasyncTask] has state.
 func (dt *DatasyncTask) State() (*datasyncTaskState, bool) {
 	return dt.state, dt.state != nil
 }
 
+// StateMust returns the state for [DatasyncTask]. Panics if the state is nil.
 func (dt *DatasyncTask) StateMust() *datasyncTaskState {
 	if dt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dt.Type(), dt.LocalName()))
@@ -60,10 +86,7 @@ func (dt *DatasyncTask) StateMust() *datasyncTaskState {
 	return dt.state
 }
 
-func (dt *DatasyncTask) DependOn() terra.Reference {
-	return terra.ReferenceResource(dt)
-}
-
+// DatasyncTaskArgs contains the configurations for aws_datasync_task.
 type DatasyncTaskArgs struct {
 	// CloudwatchLogGroupArn: string, optional
 	CloudwatchLogGroupArn terra.StringValue `hcl:"cloudwatch_log_group_arn,attr"`
@@ -89,63 +112,69 @@ type DatasyncTaskArgs struct {
 	Schedule *datasynctask.Schedule `hcl:"schedule,block"`
 	// Timeouts: optional
 	Timeouts *datasynctask.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DatasyncTask depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type datasyncTaskAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_datasync_task.
 func (dt datasyncTaskAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("arn"))
+	return terra.ReferenceAsString(dt.ref.Append("arn"))
 }
 
+// CloudwatchLogGroupArn returns a reference to field cloudwatch_log_group_arn of aws_datasync_task.
 func (dt datasyncTaskAttributes) CloudwatchLogGroupArn() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("cloudwatch_log_group_arn"))
+	return terra.ReferenceAsString(dt.ref.Append("cloudwatch_log_group_arn"))
 }
 
+// DestinationLocationArn returns a reference to field destination_location_arn of aws_datasync_task.
 func (dt datasyncTaskAttributes) DestinationLocationArn() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("destination_location_arn"))
+	return terra.ReferenceAsString(dt.ref.Append("destination_location_arn"))
 }
 
+// Id returns a reference to field id of aws_datasync_task.
 func (dt datasyncTaskAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("id"))
+	return terra.ReferenceAsString(dt.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_datasync_task.
 func (dt datasyncTaskAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("name"))
+	return terra.ReferenceAsString(dt.ref.Append("name"))
 }
 
+// SourceLocationArn returns a reference to field source_location_arn of aws_datasync_task.
 func (dt datasyncTaskAttributes) SourceLocationArn() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("source_location_arn"))
+	return terra.ReferenceAsString(dt.ref.Append("source_location_arn"))
 }
 
+// Tags returns a reference to field tags of aws_datasync_task.
 func (dt datasyncTaskAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dt.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dt.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_datasync_task.
 func (dt datasyncTaskAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dt.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dt.ref.Append("tags_all"))
 }
 
 func (dt datasyncTaskAttributes) Excludes() terra.ListValue[datasynctask.ExcludesAttributes] {
-	return terra.ReferenceList[datasynctask.ExcludesAttributes](dt.ref.Append("excludes"))
+	return terra.ReferenceAsList[datasynctask.ExcludesAttributes](dt.ref.Append("excludes"))
 }
 
 func (dt datasyncTaskAttributes) Includes() terra.ListValue[datasynctask.IncludesAttributes] {
-	return terra.ReferenceList[datasynctask.IncludesAttributes](dt.ref.Append("includes"))
+	return terra.ReferenceAsList[datasynctask.IncludesAttributes](dt.ref.Append("includes"))
 }
 
 func (dt datasyncTaskAttributes) Options() terra.ListValue[datasynctask.OptionsAttributes] {
-	return terra.ReferenceList[datasynctask.OptionsAttributes](dt.ref.Append("options"))
+	return terra.ReferenceAsList[datasynctask.OptionsAttributes](dt.ref.Append("options"))
 }
 
 func (dt datasyncTaskAttributes) Schedule() terra.ListValue[datasynctask.ScheduleAttributes] {
-	return terra.ReferenceList[datasynctask.ScheduleAttributes](dt.ref.Append("schedule"))
+	return terra.ReferenceAsList[datasynctask.ScheduleAttributes](dt.ref.Append("schedule"))
 }
 
 func (dt datasyncTaskAttributes) Timeouts() datasynctask.TimeoutsAttributes {
-	return terra.ReferenceSingle[datasynctask.TimeoutsAttributes](dt.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datasynctask.TimeoutsAttributes](dt.ref.Append("timeouts"))
 }
 
 type datasyncTaskState struct {

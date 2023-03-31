@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSagemakerUserProfile creates a new instance of [SagemakerUserProfile].
 func NewSagemakerUserProfile(name string, args SagemakerUserProfileArgs) *SagemakerUserProfile {
 	return &SagemakerUserProfile{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSagemakerUserProfile(name string, args SagemakerUserProfileArgs) *Sagema
 
 var _ terra.Resource = (*SagemakerUserProfile)(nil)
 
+// SagemakerUserProfile represents the Terraform resource aws_sagemaker_user_profile.
 type SagemakerUserProfile struct {
-	Name  string
-	Args  SagemakerUserProfileArgs
-	state *sagemakerUserProfileState
+	Name      string
+	Args      SagemakerUserProfileArgs
+	state     *sagemakerUserProfileState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SagemakerUserProfile].
 func (sup *SagemakerUserProfile) Type() string {
 	return "aws_sagemaker_user_profile"
 }
 
+// LocalName returns the local name for [SagemakerUserProfile].
 func (sup *SagemakerUserProfile) LocalName() string {
 	return sup.Name
 }
 
+// Configuration returns the configuration (args) for [SagemakerUserProfile].
 func (sup *SagemakerUserProfile) Configuration() interface{} {
 	return sup.Args
 }
 
+// DependOn is used for other resources to depend on [SagemakerUserProfile].
+func (sup *SagemakerUserProfile) DependOn() terra.Reference {
+	return terra.ReferenceResource(sup)
+}
+
+// Dependencies returns the list of resources [SagemakerUserProfile] depends_on.
+func (sup *SagemakerUserProfile) Dependencies() terra.Dependencies {
+	return sup.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SagemakerUserProfile].
+func (sup *SagemakerUserProfile) LifecycleManagement() *terra.Lifecycle {
+	return sup.Lifecycle
+}
+
+// Attributes returns the attributes for [SagemakerUserProfile].
 func (sup *SagemakerUserProfile) Attributes() sagemakerUserProfileAttributes {
 	return sagemakerUserProfileAttributes{ref: terra.ReferenceResource(sup)}
 }
 
+// ImportState imports the given attribute values into [SagemakerUserProfile]'s state.
 func (sup *SagemakerUserProfile) ImportState(av io.Reader) error {
 	sup.state = &sagemakerUserProfileState{}
 	if err := json.NewDecoder(av).Decode(sup.state); err != nil {
@@ -49,10 +73,12 @@ func (sup *SagemakerUserProfile) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SagemakerUserProfile] has state.
 func (sup *SagemakerUserProfile) State() (*sagemakerUserProfileState, bool) {
 	return sup.state, sup.state != nil
 }
 
+// StateMust returns the state for [SagemakerUserProfile]. Panics if the state is nil.
 func (sup *SagemakerUserProfile) StateMust() *sagemakerUserProfileState {
 	if sup.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sup.Type(), sup.LocalName()))
@@ -60,10 +86,7 @@ func (sup *SagemakerUserProfile) StateMust() *sagemakerUserProfileState {
 	return sup.state
 }
 
-func (sup *SagemakerUserProfile) DependOn() terra.Reference {
-	return terra.ReferenceResource(sup)
-}
-
+// SagemakerUserProfileArgs contains the configurations for aws_sagemaker_user_profile.
 type SagemakerUserProfileArgs struct {
 	// DomainId: string, required
 	DomainId terra.StringValue `hcl:"domain_id,attr" validate:"required"`
@@ -81,51 +104,58 @@ type SagemakerUserProfileArgs struct {
 	UserProfileName terra.StringValue `hcl:"user_profile_name,attr" validate:"required"`
 	// UserSettings: optional
 	UserSettings *sagemakeruserprofile.UserSettings `hcl:"user_settings,block"`
-	// DependsOn contains resources that SagemakerUserProfile depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sagemakerUserProfileAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_sagemaker_user_profile.
 func (sup sagemakerUserProfileAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sup.ref.Append("arn"))
+	return terra.ReferenceAsString(sup.ref.Append("arn"))
 }
 
+// DomainId returns a reference to field domain_id of aws_sagemaker_user_profile.
 func (sup sagemakerUserProfileAttributes) DomainId() terra.StringValue {
-	return terra.ReferenceString(sup.ref.Append("domain_id"))
+	return terra.ReferenceAsString(sup.ref.Append("domain_id"))
 }
 
+// HomeEfsFileSystemUid returns a reference to field home_efs_file_system_uid of aws_sagemaker_user_profile.
 func (sup sagemakerUserProfileAttributes) HomeEfsFileSystemUid() terra.StringValue {
-	return terra.ReferenceString(sup.ref.Append("home_efs_file_system_uid"))
+	return terra.ReferenceAsString(sup.ref.Append("home_efs_file_system_uid"))
 }
 
+// Id returns a reference to field id of aws_sagemaker_user_profile.
 func (sup sagemakerUserProfileAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sup.ref.Append("id"))
+	return terra.ReferenceAsString(sup.ref.Append("id"))
 }
 
+// SingleSignOnUserIdentifier returns a reference to field single_sign_on_user_identifier of aws_sagemaker_user_profile.
 func (sup sagemakerUserProfileAttributes) SingleSignOnUserIdentifier() terra.StringValue {
-	return terra.ReferenceString(sup.ref.Append("single_sign_on_user_identifier"))
+	return terra.ReferenceAsString(sup.ref.Append("single_sign_on_user_identifier"))
 }
 
+// SingleSignOnUserValue returns a reference to field single_sign_on_user_value of aws_sagemaker_user_profile.
 func (sup sagemakerUserProfileAttributes) SingleSignOnUserValue() terra.StringValue {
-	return terra.ReferenceString(sup.ref.Append("single_sign_on_user_value"))
+	return terra.ReferenceAsString(sup.ref.Append("single_sign_on_user_value"))
 }
 
+// Tags returns a reference to field tags of aws_sagemaker_user_profile.
 func (sup sagemakerUserProfileAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sup.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sup.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_sagemaker_user_profile.
 func (sup sagemakerUserProfileAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sup.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sup.ref.Append("tags_all"))
 }
 
+// UserProfileName returns a reference to field user_profile_name of aws_sagemaker_user_profile.
 func (sup sagemakerUserProfileAttributes) UserProfileName() terra.StringValue {
-	return terra.ReferenceString(sup.ref.Append("user_profile_name"))
+	return terra.ReferenceAsString(sup.ref.Append("user_profile_name"))
 }
 
 func (sup sagemakerUserProfileAttributes) UserSettings() terra.ListValue[sagemakeruserprofile.UserSettingsAttributes] {
-	return terra.ReferenceList[sagemakeruserprofile.UserSettingsAttributes](sup.ref.Append("user_settings"))
+	return terra.ReferenceAsList[sagemakeruserprofile.UserSettingsAttributes](sup.ref.Append("user_settings"))
 }
 
 type sagemakerUserProfileState struct {

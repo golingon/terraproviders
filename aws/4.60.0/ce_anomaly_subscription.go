@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCeAnomalySubscription creates a new instance of [CeAnomalySubscription].
 func NewCeAnomalySubscription(name string, args CeAnomalySubscriptionArgs) *CeAnomalySubscription {
 	return &CeAnomalySubscription{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCeAnomalySubscription(name string, args CeAnomalySubscriptionArgs) *CeAn
 
 var _ terra.Resource = (*CeAnomalySubscription)(nil)
 
+// CeAnomalySubscription represents the Terraform resource aws_ce_anomaly_subscription.
 type CeAnomalySubscription struct {
-	Name  string
-	Args  CeAnomalySubscriptionArgs
-	state *ceAnomalySubscriptionState
+	Name      string
+	Args      CeAnomalySubscriptionArgs
+	state     *ceAnomalySubscriptionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CeAnomalySubscription].
 func (cas *CeAnomalySubscription) Type() string {
 	return "aws_ce_anomaly_subscription"
 }
 
+// LocalName returns the local name for [CeAnomalySubscription].
 func (cas *CeAnomalySubscription) LocalName() string {
 	return cas.Name
 }
 
+// Configuration returns the configuration (args) for [CeAnomalySubscription].
 func (cas *CeAnomalySubscription) Configuration() interface{} {
 	return cas.Args
 }
 
+// DependOn is used for other resources to depend on [CeAnomalySubscription].
+func (cas *CeAnomalySubscription) DependOn() terra.Reference {
+	return terra.ReferenceResource(cas)
+}
+
+// Dependencies returns the list of resources [CeAnomalySubscription] depends_on.
+func (cas *CeAnomalySubscription) Dependencies() terra.Dependencies {
+	return cas.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CeAnomalySubscription].
+func (cas *CeAnomalySubscription) LifecycleManagement() *terra.Lifecycle {
+	return cas.Lifecycle
+}
+
+// Attributes returns the attributes for [CeAnomalySubscription].
 func (cas *CeAnomalySubscription) Attributes() ceAnomalySubscriptionAttributes {
 	return ceAnomalySubscriptionAttributes{ref: terra.ReferenceResource(cas)}
 }
 
+// ImportState imports the given attribute values into [CeAnomalySubscription]'s state.
 func (cas *CeAnomalySubscription) ImportState(av io.Reader) error {
 	cas.state = &ceAnomalySubscriptionState{}
 	if err := json.NewDecoder(av).Decode(cas.state); err != nil {
@@ -49,10 +73,12 @@ func (cas *CeAnomalySubscription) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CeAnomalySubscription] has state.
 func (cas *CeAnomalySubscription) State() (*ceAnomalySubscriptionState, bool) {
 	return cas.state, cas.state != nil
 }
 
+// StateMust returns the state for [CeAnomalySubscription]. Panics if the state is nil.
 func (cas *CeAnomalySubscription) StateMust() *ceAnomalySubscriptionState {
 	if cas.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cas.Type(), cas.LocalName()))
@@ -60,10 +86,7 @@ func (cas *CeAnomalySubscription) StateMust() *ceAnomalySubscriptionState {
 	return cas.state
 }
 
-func (cas *CeAnomalySubscription) DependOn() terra.Reference {
-	return terra.ReferenceResource(cas)
-}
-
+// CeAnomalySubscriptionArgs contains the configurations for aws_ce_anomaly_subscription.
 type CeAnomalySubscriptionArgs struct {
 	// AccountId: string, optional
 	AccountId terra.StringValue `hcl:"account_id,attr"`
@@ -85,55 +108,62 @@ type CeAnomalySubscriptionArgs struct {
 	Subscriber []ceanomalysubscription.Subscriber `hcl:"subscriber,block" validate:"min=1"`
 	// ThresholdExpression: optional
 	ThresholdExpression *ceanomalysubscription.ThresholdExpression `hcl:"threshold_expression,block"`
-	// DependsOn contains resources that CeAnomalySubscription depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ceAnomalySubscriptionAttributes struct {
 	ref terra.Reference
 }
 
+// AccountId returns a reference to field account_id of aws_ce_anomaly_subscription.
 func (cas ceAnomalySubscriptionAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(cas.ref.Append("account_id"))
+	return terra.ReferenceAsString(cas.ref.Append("account_id"))
 }
 
+// Arn returns a reference to field arn of aws_ce_anomaly_subscription.
 func (cas ceAnomalySubscriptionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(cas.ref.Append("arn"))
+	return terra.ReferenceAsString(cas.ref.Append("arn"))
 }
 
+// Frequency returns a reference to field frequency of aws_ce_anomaly_subscription.
 func (cas ceAnomalySubscriptionAttributes) Frequency() terra.StringValue {
-	return terra.ReferenceString(cas.ref.Append("frequency"))
+	return terra.ReferenceAsString(cas.ref.Append("frequency"))
 }
 
+// Id returns a reference to field id of aws_ce_anomaly_subscription.
 func (cas ceAnomalySubscriptionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cas.ref.Append("id"))
+	return terra.ReferenceAsString(cas.ref.Append("id"))
 }
 
+// MonitorArnList returns a reference to field monitor_arn_list of aws_ce_anomaly_subscription.
 func (cas ceAnomalySubscriptionAttributes) MonitorArnList() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cas.ref.Append("monitor_arn_list"))
+	return terra.ReferenceAsList[terra.StringValue](cas.ref.Append("monitor_arn_list"))
 }
 
+// Name returns a reference to field name of aws_ce_anomaly_subscription.
 func (cas ceAnomalySubscriptionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cas.ref.Append("name"))
+	return terra.ReferenceAsString(cas.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_ce_anomaly_subscription.
 func (cas ceAnomalySubscriptionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cas.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cas.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_ce_anomaly_subscription.
 func (cas ceAnomalySubscriptionAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cas.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](cas.ref.Append("tags_all"))
 }
 
+// Threshold returns a reference to field threshold of aws_ce_anomaly_subscription.
 func (cas ceAnomalySubscriptionAttributes) Threshold() terra.NumberValue {
-	return terra.ReferenceNumber(cas.ref.Append("threshold"))
+	return terra.ReferenceAsNumber(cas.ref.Append("threshold"))
 }
 
 func (cas ceAnomalySubscriptionAttributes) Subscriber() terra.SetValue[ceanomalysubscription.SubscriberAttributes] {
-	return terra.ReferenceSet[ceanomalysubscription.SubscriberAttributes](cas.ref.Append("subscriber"))
+	return terra.ReferenceAsSet[ceanomalysubscription.SubscriberAttributes](cas.ref.Append("subscriber"))
 }
 
 func (cas ceAnomalySubscriptionAttributes) ThresholdExpression() terra.ListValue[ceanomalysubscription.ThresholdExpressionAttributes] {
-	return terra.ReferenceList[ceanomalysubscription.ThresholdExpressionAttributes](cas.ref.Append("threshold_expression"))
+	return terra.ReferenceAsList[ceanomalysubscription.ThresholdExpressionAttributes](cas.ref.Append("threshold_expression"))
 }
 
 type ceAnomalySubscriptionState struct {

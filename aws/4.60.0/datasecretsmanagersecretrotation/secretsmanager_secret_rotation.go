@@ -26,7 +26,7 @@ func (rr RotationRulesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rr RotationRulesAttributes) AutomaticallyAfterDays() terra.NumberValue {
-	return terra.ReferenceNumber(rr.ref.Append("automatically_after_days"))
+	return terra.ReferenceAsNumber(rr.ref.Append("automatically_after_days"))
 }
 
 type RotationRulesState struct {

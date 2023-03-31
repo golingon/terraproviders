@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCloudfrontOriginAccessControl creates a new instance of [CloudfrontOriginAccessControl].
 func NewCloudfrontOriginAccessControl(name string, args CloudfrontOriginAccessControlArgs) *CloudfrontOriginAccessControl {
 	return &CloudfrontOriginAccessControl{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCloudfrontOriginAccessControl(name string, args CloudfrontOriginAccessCo
 
 var _ terra.Resource = (*CloudfrontOriginAccessControl)(nil)
 
+// CloudfrontOriginAccessControl represents the Terraform resource aws_cloudfront_origin_access_control.
 type CloudfrontOriginAccessControl struct {
-	Name  string
-	Args  CloudfrontOriginAccessControlArgs
-	state *cloudfrontOriginAccessControlState
+	Name      string
+	Args      CloudfrontOriginAccessControlArgs
+	state     *cloudfrontOriginAccessControlState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudfrontOriginAccessControl].
 func (coac *CloudfrontOriginAccessControl) Type() string {
 	return "aws_cloudfront_origin_access_control"
 }
 
+// LocalName returns the local name for [CloudfrontOriginAccessControl].
 func (coac *CloudfrontOriginAccessControl) LocalName() string {
 	return coac.Name
 }
 
+// Configuration returns the configuration (args) for [CloudfrontOriginAccessControl].
 func (coac *CloudfrontOriginAccessControl) Configuration() interface{} {
 	return coac.Args
 }
 
+// DependOn is used for other resources to depend on [CloudfrontOriginAccessControl].
+func (coac *CloudfrontOriginAccessControl) DependOn() terra.Reference {
+	return terra.ReferenceResource(coac)
+}
+
+// Dependencies returns the list of resources [CloudfrontOriginAccessControl] depends_on.
+func (coac *CloudfrontOriginAccessControl) Dependencies() terra.Dependencies {
+	return coac.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudfrontOriginAccessControl].
+func (coac *CloudfrontOriginAccessControl) LifecycleManagement() *terra.Lifecycle {
+	return coac.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudfrontOriginAccessControl].
 func (coac *CloudfrontOriginAccessControl) Attributes() cloudfrontOriginAccessControlAttributes {
 	return cloudfrontOriginAccessControlAttributes{ref: terra.ReferenceResource(coac)}
 }
 
+// ImportState imports the given attribute values into [CloudfrontOriginAccessControl]'s state.
 func (coac *CloudfrontOriginAccessControl) ImportState(av io.Reader) error {
 	coac.state = &cloudfrontOriginAccessControlState{}
 	if err := json.NewDecoder(av).Decode(coac.state); err != nil {
@@ -48,10 +72,12 @@ func (coac *CloudfrontOriginAccessControl) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudfrontOriginAccessControl] has state.
 func (coac *CloudfrontOriginAccessControl) State() (*cloudfrontOriginAccessControlState, bool) {
 	return coac.state, coac.state != nil
 }
 
+// StateMust returns the state for [CloudfrontOriginAccessControl]. Panics if the state is nil.
 func (coac *CloudfrontOriginAccessControl) StateMust() *cloudfrontOriginAccessControlState {
 	if coac.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", coac.Type(), coac.LocalName()))
@@ -59,10 +85,7 @@ func (coac *CloudfrontOriginAccessControl) StateMust() *cloudfrontOriginAccessCo
 	return coac.state
 }
 
-func (coac *CloudfrontOriginAccessControl) DependOn() terra.Reference {
-	return terra.ReferenceResource(coac)
-}
-
+// CloudfrontOriginAccessControlArgs contains the configurations for aws_cloudfront_origin_access_control.
 type CloudfrontOriginAccessControlArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -76,39 +99,44 @@ type CloudfrontOriginAccessControlArgs struct {
 	SigningBehavior terra.StringValue `hcl:"signing_behavior,attr" validate:"required"`
 	// SigningProtocol: string, required
 	SigningProtocol terra.StringValue `hcl:"signing_protocol,attr" validate:"required"`
-	// DependsOn contains resources that CloudfrontOriginAccessControl depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudfrontOriginAccessControlAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of aws_cloudfront_origin_access_control.
 func (coac cloudfrontOriginAccessControlAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(coac.ref.Append("description"))
+	return terra.ReferenceAsString(coac.ref.Append("description"))
 }
 
+// Etag returns a reference to field etag of aws_cloudfront_origin_access_control.
 func (coac cloudfrontOriginAccessControlAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(coac.ref.Append("etag"))
+	return terra.ReferenceAsString(coac.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of aws_cloudfront_origin_access_control.
 func (coac cloudfrontOriginAccessControlAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(coac.ref.Append("id"))
+	return terra.ReferenceAsString(coac.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_cloudfront_origin_access_control.
 func (coac cloudfrontOriginAccessControlAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(coac.ref.Append("name"))
+	return terra.ReferenceAsString(coac.ref.Append("name"))
 }
 
+// OriginAccessControlOriginType returns a reference to field origin_access_control_origin_type of aws_cloudfront_origin_access_control.
 func (coac cloudfrontOriginAccessControlAttributes) OriginAccessControlOriginType() terra.StringValue {
-	return terra.ReferenceString(coac.ref.Append("origin_access_control_origin_type"))
+	return terra.ReferenceAsString(coac.ref.Append("origin_access_control_origin_type"))
 }
 
+// SigningBehavior returns a reference to field signing_behavior of aws_cloudfront_origin_access_control.
 func (coac cloudfrontOriginAccessControlAttributes) SigningBehavior() terra.StringValue {
-	return terra.ReferenceString(coac.ref.Append("signing_behavior"))
+	return terra.ReferenceAsString(coac.ref.Append("signing_behavior"))
 }
 
+// SigningProtocol returns a reference to field signing_protocol of aws_cloudfront_origin_access_control.
 func (coac cloudfrontOriginAccessControlAttributes) SigningProtocol() terra.StringValue {
-	return terra.ReferenceString(coac.ref.Append("signing_protocol"))
+	return terra.ReferenceAsString(coac.ref.Append("signing_protocol"))
 }
 
 type cloudfrontOriginAccessControlState struct {

@@ -38,7 +38,7 @@ func (r RuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RuleAttributes) DefaultRetention() terra.ListValue[DefaultRetentionAttributes] {
-	return terra.ReferenceList[DefaultRetentionAttributes](r.ref.Append("default_retention"))
+	return terra.ReferenceAsList[DefaultRetentionAttributes](r.ref.Append("default_retention"))
 }
 
 type DefaultRetentionAttributes struct {
@@ -58,15 +58,15 @@ func (dr DefaultRetentionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dr DefaultRetentionAttributes) Days() terra.NumberValue {
-	return terra.ReferenceNumber(dr.ref.Append("days"))
+	return terra.ReferenceAsNumber(dr.ref.Append("days"))
 }
 
 func (dr DefaultRetentionAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("mode"))
+	return terra.ReferenceAsString(dr.ref.Append("mode"))
 }
 
 func (dr DefaultRetentionAttributes) Years() terra.NumberValue {
-	return terra.ReferenceNumber(dr.ref.Append("years"))
+	return terra.ReferenceAsNumber(dr.ref.Append("years"))
 }
 
 type RuleState struct {

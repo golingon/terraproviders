@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataKendraThesaurus creates a new instance of [DataKendraThesaurus].
 func NewDataKendraThesaurus(name string, args DataKendraThesaurusArgs) *DataKendraThesaurus {
 	return &DataKendraThesaurus{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataKendraThesaurus(name string, args DataKendraThesaurusArgs) *DataKend
 
 var _ terra.DataResource = (*DataKendraThesaurus)(nil)
 
+// DataKendraThesaurus represents the Terraform data resource aws_kendra_thesaurus.
 type DataKendraThesaurus struct {
 	Name string
 	Args DataKendraThesaurusArgs
 }
 
+// DataSource returns the Terraform object type for [DataKendraThesaurus].
 func (kt *DataKendraThesaurus) DataSource() string {
 	return "aws_kendra_thesaurus"
 }
 
+// LocalName returns the local name for [DataKendraThesaurus].
 func (kt *DataKendraThesaurus) LocalName() string {
 	return kt.Name
 }
 
+// Configuration returns the configuration (args) for [DataKendraThesaurus].
 func (kt *DataKendraThesaurus) Configuration() interface{} {
 	return kt.Args
 }
 
+// Attributes returns the attributes for [DataKendraThesaurus].
 func (kt *DataKendraThesaurus) Attributes() dataKendraThesaurusAttributes {
 	return dataKendraThesaurusAttributes{ref: terra.ReferenceDataResource(kt)}
 }
 
+// DataKendraThesaurusArgs contains the configurations for aws_kendra_thesaurus.
 type DataKendraThesaurusArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,66 +60,81 @@ type dataKendraThesaurusAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_kendra_thesaurus.
 func (kt dataKendraThesaurusAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(kt.ref.Append("arn"))
+	return terra.ReferenceAsString(kt.ref.Append("arn"))
 }
 
+// CreatedAt returns a reference to field created_at of aws_kendra_thesaurus.
 func (kt dataKendraThesaurusAttributes) CreatedAt() terra.StringValue {
-	return terra.ReferenceString(kt.ref.Append("created_at"))
+	return terra.ReferenceAsString(kt.ref.Append("created_at"))
 }
 
+// Description returns a reference to field description of aws_kendra_thesaurus.
 func (kt dataKendraThesaurusAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(kt.ref.Append("description"))
+	return terra.ReferenceAsString(kt.ref.Append("description"))
 }
 
+// ErrorMessage returns a reference to field error_message of aws_kendra_thesaurus.
 func (kt dataKendraThesaurusAttributes) ErrorMessage() terra.StringValue {
-	return terra.ReferenceString(kt.ref.Append("error_message"))
+	return terra.ReferenceAsString(kt.ref.Append("error_message"))
 }
 
+// FileSizeBytes returns a reference to field file_size_bytes of aws_kendra_thesaurus.
 func (kt dataKendraThesaurusAttributes) FileSizeBytes() terra.NumberValue {
-	return terra.ReferenceNumber(kt.ref.Append("file_size_bytes"))
+	return terra.ReferenceAsNumber(kt.ref.Append("file_size_bytes"))
 }
 
+// Id returns a reference to field id of aws_kendra_thesaurus.
 func (kt dataKendraThesaurusAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kt.ref.Append("id"))
+	return terra.ReferenceAsString(kt.ref.Append("id"))
 }
 
+// IndexId returns a reference to field index_id of aws_kendra_thesaurus.
 func (kt dataKendraThesaurusAttributes) IndexId() terra.StringValue {
-	return terra.ReferenceString(kt.ref.Append("index_id"))
+	return terra.ReferenceAsString(kt.ref.Append("index_id"))
 }
 
+// Name returns a reference to field name of aws_kendra_thesaurus.
 func (kt dataKendraThesaurusAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kt.ref.Append("name"))
+	return terra.ReferenceAsString(kt.ref.Append("name"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_kendra_thesaurus.
 func (kt dataKendraThesaurusAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(kt.ref.Append("role_arn"))
+	return terra.ReferenceAsString(kt.ref.Append("role_arn"))
 }
 
+// Status returns a reference to field status of aws_kendra_thesaurus.
 func (kt dataKendraThesaurusAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(kt.ref.Append("status"))
+	return terra.ReferenceAsString(kt.ref.Append("status"))
 }
 
+// SynonymRuleCount returns a reference to field synonym_rule_count of aws_kendra_thesaurus.
 func (kt dataKendraThesaurusAttributes) SynonymRuleCount() terra.NumberValue {
-	return terra.ReferenceNumber(kt.ref.Append("synonym_rule_count"))
+	return terra.ReferenceAsNumber(kt.ref.Append("synonym_rule_count"))
 }
 
+// Tags returns a reference to field tags of aws_kendra_thesaurus.
 func (kt dataKendraThesaurusAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kt.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](kt.ref.Append("tags"))
 }
 
+// TermCount returns a reference to field term_count of aws_kendra_thesaurus.
 func (kt dataKendraThesaurusAttributes) TermCount() terra.NumberValue {
-	return terra.ReferenceNumber(kt.ref.Append("term_count"))
+	return terra.ReferenceAsNumber(kt.ref.Append("term_count"))
 }
 
+// ThesaurusId returns a reference to field thesaurus_id of aws_kendra_thesaurus.
 func (kt dataKendraThesaurusAttributes) ThesaurusId() terra.StringValue {
-	return terra.ReferenceString(kt.ref.Append("thesaurus_id"))
+	return terra.ReferenceAsString(kt.ref.Append("thesaurus_id"))
 }
 
+// UpdatedAt returns a reference to field updated_at of aws_kendra_thesaurus.
 func (kt dataKendraThesaurusAttributes) UpdatedAt() terra.StringValue {
-	return terra.ReferenceString(kt.ref.Append("updated_at"))
+	return terra.ReferenceAsString(kt.ref.Append("updated_at"))
 }
 
 func (kt dataKendraThesaurusAttributes) SourceS3Path() terra.ListValue[datakendrathesaurus.SourceS3PathAttributes] {
-	return terra.ReferenceList[datakendrathesaurus.SourceS3PathAttributes](kt.ref.Append("source_s3_path"))
+	return terra.ReferenceAsList[datakendrathesaurus.SourceS3PathAttributes](kt.ref.Append("source_s3_path"))
 }

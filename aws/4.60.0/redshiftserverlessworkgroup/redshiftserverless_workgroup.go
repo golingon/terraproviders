@@ -43,15 +43,15 @@ func (e EndpointAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e EndpointAttributes) Address() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("address"))
+	return terra.ReferenceAsString(e.ref.Append("address"))
 }
 
 func (e EndpointAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("port"))
+	return terra.ReferenceAsNumber(e.ref.Append("port"))
 }
 
 func (e EndpointAttributes) VpcEndpoint() terra.ListValue[VpcEndpointAttributes] {
-	return terra.ReferenceList[VpcEndpointAttributes](e.ref.Append("vpc_endpoint"))
+	return terra.ReferenceAsList[VpcEndpointAttributes](e.ref.Append("vpc_endpoint"))
 }
 
 type VpcEndpointAttributes struct {
@@ -71,15 +71,15 @@ func (ve VpcEndpointAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ve VpcEndpointAttributes) VpcEndpointId() terra.StringValue {
-	return terra.ReferenceString(ve.ref.Append("vpc_endpoint_id"))
+	return terra.ReferenceAsString(ve.ref.Append("vpc_endpoint_id"))
 }
 
 func (ve VpcEndpointAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(ve.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(ve.ref.Append("vpc_id"))
 }
 
 func (ve VpcEndpointAttributes) NetworkInterface() terra.ListValue[NetworkInterfaceAttributes] {
-	return terra.ReferenceList[NetworkInterfaceAttributes](ve.ref.Append("network_interface"))
+	return terra.ReferenceAsList[NetworkInterfaceAttributes](ve.ref.Append("network_interface"))
 }
 
 type NetworkInterfaceAttributes struct {
@@ -99,19 +99,19 @@ func (ni NetworkInterfaceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ni NetworkInterfaceAttributes) AvailabilityZone() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("availability_zone"))
+	return terra.ReferenceAsString(ni.ref.Append("availability_zone"))
 }
 
 func (ni NetworkInterfaceAttributes) NetworkInterfaceId() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("network_interface_id"))
+	return terra.ReferenceAsString(ni.ref.Append("network_interface_id"))
 }
 
 func (ni NetworkInterfaceAttributes) PrivateIpAddress() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("private_ip_address"))
+	return terra.ReferenceAsString(ni.ref.Append("private_ip_address"))
 }
 
 func (ni NetworkInterfaceAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(ni.ref.Append("subnet_id"))
 }
 
 type ConfigParameterAttributes struct {
@@ -131,11 +131,11 @@ func (cp ConfigParameterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cp ConfigParameterAttributes) ParameterKey() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("parameter_key"))
+	return terra.ReferenceAsString(cp.ref.Append("parameter_key"))
 }
 
 func (cp ConfigParameterAttributes) ParameterValue() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("parameter_value"))
+	return terra.ReferenceAsString(cp.ref.Append("parameter_value"))
 }
 
 type EndpointState struct {

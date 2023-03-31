@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewLightsailDatabase creates a new instance of [LightsailDatabase].
 func NewLightsailDatabase(name string, args LightsailDatabaseArgs) *LightsailDatabase {
 	return &LightsailDatabase{
 		Args: args,
@@ -18,28 +19,51 @@ func NewLightsailDatabase(name string, args LightsailDatabaseArgs) *LightsailDat
 
 var _ terra.Resource = (*LightsailDatabase)(nil)
 
+// LightsailDatabase represents the Terraform resource aws_lightsail_database.
 type LightsailDatabase struct {
-	Name  string
-	Args  LightsailDatabaseArgs
-	state *lightsailDatabaseState
+	Name      string
+	Args      LightsailDatabaseArgs
+	state     *lightsailDatabaseState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LightsailDatabase].
 func (ld *LightsailDatabase) Type() string {
 	return "aws_lightsail_database"
 }
 
+// LocalName returns the local name for [LightsailDatabase].
 func (ld *LightsailDatabase) LocalName() string {
 	return ld.Name
 }
 
+// Configuration returns the configuration (args) for [LightsailDatabase].
 func (ld *LightsailDatabase) Configuration() interface{} {
 	return ld.Args
 }
 
+// DependOn is used for other resources to depend on [LightsailDatabase].
+func (ld *LightsailDatabase) DependOn() terra.Reference {
+	return terra.ReferenceResource(ld)
+}
+
+// Dependencies returns the list of resources [LightsailDatabase] depends_on.
+func (ld *LightsailDatabase) Dependencies() terra.Dependencies {
+	return ld.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LightsailDatabase].
+func (ld *LightsailDatabase) LifecycleManagement() *terra.Lifecycle {
+	return ld.Lifecycle
+}
+
+// Attributes returns the attributes for [LightsailDatabase].
 func (ld *LightsailDatabase) Attributes() lightsailDatabaseAttributes {
 	return lightsailDatabaseAttributes{ref: terra.ReferenceResource(ld)}
 }
 
+// ImportState imports the given attribute values into [LightsailDatabase]'s state.
 func (ld *LightsailDatabase) ImportState(av io.Reader) error {
 	ld.state = &lightsailDatabaseState{}
 	if err := json.NewDecoder(av).Decode(ld.state); err != nil {
@@ -48,10 +72,12 @@ func (ld *LightsailDatabase) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LightsailDatabase] has state.
 func (ld *LightsailDatabase) State() (*lightsailDatabaseState, bool) {
 	return ld.state, ld.state != nil
 }
 
+// StateMust returns the state for [LightsailDatabase]. Panics if the state is nil.
 func (ld *LightsailDatabase) StateMust() *lightsailDatabaseState {
 	if ld.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ld.Type(), ld.LocalName()))
@@ -59,10 +85,7 @@ func (ld *LightsailDatabase) StateMust() *lightsailDatabaseState {
 	return ld.state
 }
 
-func (ld *LightsailDatabase) DependOn() terra.Reference {
-	return terra.ReferenceResource(ld)
-}
-
+// LightsailDatabaseArgs contains the configurations for aws_lightsail_database.
 type LightsailDatabaseArgs struct {
 	// ApplyImmediately: bool, optional
 	ApplyImmediately terra.BoolValue `hcl:"apply_immediately,attr"`
@@ -98,127 +121,154 @@ type LightsailDatabaseArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that LightsailDatabase depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lightsailDatabaseAttributes struct {
 	ref terra.Reference
 }
 
+// ApplyImmediately returns a reference to field apply_immediately of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) ApplyImmediately() terra.BoolValue {
-	return terra.ReferenceBool(ld.ref.Append("apply_immediately"))
+	return terra.ReferenceAsBool(ld.ref.Append("apply_immediately"))
 }
 
+// Arn returns a reference to field arn of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("arn"))
+	return terra.ReferenceAsString(ld.ref.Append("arn"))
 }
 
+// AvailabilityZone returns a reference to field availability_zone of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) AvailabilityZone() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("availability_zone"))
+	return terra.ReferenceAsString(ld.ref.Append("availability_zone"))
 }
 
+// BackupRetentionEnabled returns a reference to field backup_retention_enabled of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) BackupRetentionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ld.ref.Append("backup_retention_enabled"))
+	return terra.ReferenceAsBool(ld.ref.Append("backup_retention_enabled"))
 }
 
+// BlueprintId returns a reference to field blueprint_id of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) BlueprintId() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("blueprint_id"))
+	return terra.ReferenceAsString(ld.ref.Append("blueprint_id"))
 }
 
+// BundleId returns a reference to field bundle_id of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) BundleId() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("bundle_id"))
+	return terra.ReferenceAsString(ld.ref.Append("bundle_id"))
 }
 
+// CaCertificateIdentifier returns a reference to field ca_certificate_identifier of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) CaCertificateIdentifier() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("ca_certificate_identifier"))
+	return terra.ReferenceAsString(ld.ref.Append("ca_certificate_identifier"))
 }
 
+// CpuCount returns a reference to field cpu_count of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) CpuCount() terra.NumberValue {
-	return terra.ReferenceNumber(ld.ref.Append("cpu_count"))
+	return terra.ReferenceAsNumber(ld.ref.Append("cpu_count"))
 }
 
+// CreatedAt returns a reference to field created_at of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) CreatedAt() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("created_at"))
+	return terra.ReferenceAsString(ld.ref.Append("created_at"))
 }
 
+// DiskSize returns a reference to field disk_size of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) DiskSize() terra.NumberValue {
-	return terra.ReferenceNumber(ld.ref.Append("disk_size"))
+	return terra.ReferenceAsNumber(ld.ref.Append("disk_size"))
 }
 
+// Engine returns a reference to field engine of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) Engine() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("engine"))
+	return terra.ReferenceAsString(ld.ref.Append("engine"))
 }
 
+// EngineVersion returns a reference to field engine_version of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) EngineVersion() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("engine_version"))
+	return terra.ReferenceAsString(ld.ref.Append("engine_version"))
 }
 
+// FinalSnapshotName returns a reference to field final_snapshot_name of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) FinalSnapshotName() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("final_snapshot_name"))
+	return terra.ReferenceAsString(ld.ref.Append("final_snapshot_name"))
 }
 
+// Id returns a reference to field id of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("id"))
+	return terra.ReferenceAsString(ld.ref.Append("id"))
 }
 
+// MasterDatabaseName returns a reference to field master_database_name of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) MasterDatabaseName() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("master_database_name"))
+	return terra.ReferenceAsString(ld.ref.Append("master_database_name"))
 }
 
+// MasterEndpointAddress returns a reference to field master_endpoint_address of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) MasterEndpointAddress() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("master_endpoint_address"))
+	return terra.ReferenceAsString(ld.ref.Append("master_endpoint_address"))
 }
 
+// MasterEndpointPort returns a reference to field master_endpoint_port of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) MasterEndpointPort() terra.NumberValue {
-	return terra.ReferenceNumber(ld.ref.Append("master_endpoint_port"))
+	return terra.ReferenceAsNumber(ld.ref.Append("master_endpoint_port"))
 }
 
+// MasterPassword returns a reference to field master_password of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) MasterPassword() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("master_password"))
+	return terra.ReferenceAsString(ld.ref.Append("master_password"))
 }
 
+// MasterUsername returns a reference to field master_username of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) MasterUsername() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("master_username"))
+	return terra.ReferenceAsString(ld.ref.Append("master_username"))
 }
 
+// PreferredBackupWindow returns a reference to field preferred_backup_window of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) PreferredBackupWindow() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("preferred_backup_window"))
+	return terra.ReferenceAsString(ld.ref.Append("preferred_backup_window"))
 }
 
+// PreferredMaintenanceWindow returns a reference to field preferred_maintenance_window of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) PreferredMaintenanceWindow() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("preferred_maintenance_window"))
+	return terra.ReferenceAsString(ld.ref.Append("preferred_maintenance_window"))
 }
 
+// PubliclyAccessible returns a reference to field publicly_accessible of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) PubliclyAccessible() terra.BoolValue {
-	return terra.ReferenceBool(ld.ref.Append("publicly_accessible"))
+	return terra.ReferenceAsBool(ld.ref.Append("publicly_accessible"))
 }
 
+// RamSize returns a reference to field ram_size of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) RamSize() terra.NumberValue {
-	return terra.ReferenceNumber(ld.ref.Append("ram_size"))
+	return terra.ReferenceAsNumber(ld.ref.Append("ram_size"))
 }
 
+// RelationalDatabaseName returns a reference to field relational_database_name of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) RelationalDatabaseName() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("relational_database_name"))
+	return terra.ReferenceAsString(ld.ref.Append("relational_database_name"))
 }
 
+// SecondaryAvailabilityZone returns a reference to field secondary_availability_zone of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) SecondaryAvailabilityZone() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("secondary_availability_zone"))
+	return terra.ReferenceAsString(ld.ref.Append("secondary_availability_zone"))
 }
 
+// SkipFinalSnapshot returns a reference to field skip_final_snapshot of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) SkipFinalSnapshot() terra.BoolValue {
-	return terra.ReferenceBool(ld.ref.Append("skip_final_snapshot"))
+	return terra.ReferenceAsBool(ld.ref.Append("skip_final_snapshot"))
 }
 
+// SupportCode returns a reference to field support_code of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) SupportCode() terra.StringValue {
-	return terra.ReferenceString(ld.ref.Append("support_code"))
+	return terra.ReferenceAsString(ld.ref.Append("support_code"))
 }
 
+// Tags returns a reference to field tags of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ld.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ld.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_lightsail_database.
 func (ld lightsailDatabaseAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ld.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ld.ref.Append("tags_all"))
 }
 
 type lightsailDatabaseState struct {

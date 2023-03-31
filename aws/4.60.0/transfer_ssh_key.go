@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewTransferSshKey creates a new instance of [TransferSshKey].
 func NewTransferSshKey(name string, args TransferSshKeyArgs) *TransferSshKey {
 	return &TransferSshKey{
 		Args: args,
@@ -18,28 +19,51 @@ func NewTransferSshKey(name string, args TransferSshKeyArgs) *TransferSshKey {
 
 var _ terra.Resource = (*TransferSshKey)(nil)
 
+// TransferSshKey represents the Terraform resource aws_transfer_ssh_key.
 type TransferSshKey struct {
-	Name  string
-	Args  TransferSshKeyArgs
-	state *transferSshKeyState
+	Name      string
+	Args      TransferSshKeyArgs
+	state     *transferSshKeyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [TransferSshKey].
 func (tsk *TransferSshKey) Type() string {
 	return "aws_transfer_ssh_key"
 }
 
+// LocalName returns the local name for [TransferSshKey].
 func (tsk *TransferSshKey) LocalName() string {
 	return tsk.Name
 }
 
+// Configuration returns the configuration (args) for [TransferSshKey].
 func (tsk *TransferSshKey) Configuration() interface{} {
 	return tsk.Args
 }
 
+// DependOn is used for other resources to depend on [TransferSshKey].
+func (tsk *TransferSshKey) DependOn() terra.Reference {
+	return terra.ReferenceResource(tsk)
+}
+
+// Dependencies returns the list of resources [TransferSshKey] depends_on.
+func (tsk *TransferSshKey) Dependencies() terra.Dependencies {
+	return tsk.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [TransferSshKey].
+func (tsk *TransferSshKey) LifecycleManagement() *terra.Lifecycle {
+	return tsk.Lifecycle
+}
+
+// Attributes returns the attributes for [TransferSshKey].
 func (tsk *TransferSshKey) Attributes() transferSshKeyAttributes {
 	return transferSshKeyAttributes{ref: terra.ReferenceResource(tsk)}
 }
 
+// ImportState imports the given attribute values into [TransferSshKey]'s state.
 func (tsk *TransferSshKey) ImportState(av io.Reader) error {
 	tsk.state = &transferSshKeyState{}
 	if err := json.NewDecoder(av).Decode(tsk.state); err != nil {
@@ -48,10 +72,12 @@ func (tsk *TransferSshKey) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [TransferSshKey] has state.
 func (tsk *TransferSshKey) State() (*transferSshKeyState, bool) {
 	return tsk.state, tsk.state != nil
 }
 
+// StateMust returns the state for [TransferSshKey]. Panics if the state is nil.
 func (tsk *TransferSshKey) StateMust() *transferSshKeyState {
 	if tsk.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", tsk.Type(), tsk.LocalName()))
@@ -59,10 +85,7 @@ func (tsk *TransferSshKey) StateMust() *transferSshKeyState {
 	return tsk.state
 }
 
-func (tsk *TransferSshKey) DependOn() terra.Reference {
-	return terra.ReferenceResource(tsk)
-}
-
+// TransferSshKeyArgs contains the configurations for aws_transfer_ssh_key.
 type TransferSshKeyArgs struct {
 	// Body: string, required
 	Body terra.StringValue `hcl:"body,attr" validate:"required"`
@@ -72,27 +95,29 @@ type TransferSshKeyArgs struct {
 	ServerId terra.StringValue `hcl:"server_id,attr" validate:"required"`
 	// UserName: string, required
 	UserName terra.StringValue `hcl:"user_name,attr" validate:"required"`
-	// DependsOn contains resources that TransferSshKey depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type transferSshKeyAttributes struct {
 	ref terra.Reference
 }
 
+// Body returns a reference to field body of aws_transfer_ssh_key.
 func (tsk transferSshKeyAttributes) Body() terra.StringValue {
-	return terra.ReferenceString(tsk.ref.Append("body"))
+	return terra.ReferenceAsString(tsk.ref.Append("body"))
 }
 
+// Id returns a reference to field id of aws_transfer_ssh_key.
 func (tsk transferSshKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(tsk.ref.Append("id"))
+	return terra.ReferenceAsString(tsk.ref.Append("id"))
 }
 
+// ServerId returns a reference to field server_id of aws_transfer_ssh_key.
 func (tsk transferSshKeyAttributes) ServerId() terra.StringValue {
-	return terra.ReferenceString(tsk.ref.Append("server_id"))
+	return terra.ReferenceAsString(tsk.ref.Append("server_id"))
 }
 
+// UserName returns a reference to field user_name of aws_transfer_ssh_key.
 func (tsk transferSshKeyAttributes) UserName() terra.StringValue {
-	return terra.ReferenceString(tsk.ref.Append("user_name"))
+	return terra.ReferenceAsString(tsk.ref.Append("user_name"))
 }
 
 type transferSshKeyState struct {

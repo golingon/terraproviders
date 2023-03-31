@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSesv2ConfigurationSet creates a new instance of [Sesv2ConfigurationSet].
 func NewSesv2ConfigurationSet(name string, args Sesv2ConfigurationSetArgs) *Sesv2ConfigurationSet {
 	return &Sesv2ConfigurationSet{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSesv2ConfigurationSet(name string, args Sesv2ConfigurationSetArgs) *Sesv
 
 var _ terra.Resource = (*Sesv2ConfigurationSet)(nil)
 
+// Sesv2ConfigurationSet represents the Terraform resource aws_sesv2_configuration_set.
 type Sesv2ConfigurationSet struct {
-	Name  string
-	Args  Sesv2ConfigurationSetArgs
-	state *sesv2ConfigurationSetState
+	Name      string
+	Args      Sesv2ConfigurationSetArgs
+	state     *sesv2ConfigurationSetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Sesv2ConfigurationSet].
 func (scs *Sesv2ConfigurationSet) Type() string {
 	return "aws_sesv2_configuration_set"
 }
 
+// LocalName returns the local name for [Sesv2ConfigurationSet].
 func (scs *Sesv2ConfigurationSet) LocalName() string {
 	return scs.Name
 }
 
+// Configuration returns the configuration (args) for [Sesv2ConfigurationSet].
 func (scs *Sesv2ConfigurationSet) Configuration() interface{} {
 	return scs.Args
 }
 
+// DependOn is used for other resources to depend on [Sesv2ConfigurationSet].
+func (scs *Sesv2ConfigurationSet) DependOn() terra.Reference {
+	return terra.ReferenceResource(scs)
+}
+
+// Dependencies returns the list of resources [Sesv2ConfigurationSet] depends_on.
+func (scs *Sesv2ConfigurationSet) Dependencies() terra.Dependencies {
+	return scs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Sesv2ConfigurationSet].
+func (scs *Sesv2ConfigurationSet) LifecycleManagement() *terra.Lifecycle {
+	return scs.Lifecycle
+}
+
+// Attributes returns the attributes for [Sesv2ConfigurationSet].
 func (scs *Sesv2ConfigurationSet) Attributes() sesv2ConfigurationSetAttributes {
 	return sesv2ConfigurationSetAttributes{ref: terra.ReferenceResource(scs)}
 }
 
+// ImportState imports the given attribute values into [Sesv2ConfigurationSet]'s state.
 func (scs *Sesv2ConfigurationSet) ImportState(av io.Reader) error {
 	scs.state = &sesv2ConfigurationSetState{}
 	if err := json.NewDecoder(av).Decode(scs.state); err != nil {
@@ -49,10 +73,12 @@ func (scs *Sesv2ConfigurationSet) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Sesv2ConfigurationSet] has state.
 func (scs *Sesv2ConfigurationSet) State() (*sesv2ConfigurationSetState, bool) {
 	return scs.state, scs.state != nil
 }
 
+// StateMust returns the state for [Sesv2ConfigurationSet]. Panics if the state is nil.
 func (scs *Sesv2ConfigurationSet) StateMust() *sesv2ConfigurationSetState {
 	if scs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", scs.Type(), scs.LocalName()))
@@ -60,10 +86,7 @@ func (scs *Sesv2ConfigurationSet) StateMust() *sesv2ConfigurationSetState {
 	return scs.state
 }
 
-func (scs *Sesv2ConfigurationSet) DependOn() terra.Reference {
-	return terra.ReferenceResource(scs)
-}
-
+// Sesv2ConfigurationSetArgs contains the configurations for aws_sesv2_configuration_set.
 type Sesv2ConfigurationSetArgs struct {
 	// ConfigurationSetName: string, required
 	ConfigurationSetName terra.StringValue `hcl:"configuration_set_name,attr" validate:"required"`
@@ -85,55 +108,58 @@ type Sesv2ConfigurationSetArgs struct {
 	TrackingOptions *sesv2configurationset.TrackingOptions `hcl:"tracking_options,block"`
 	// VdmOptions: optional
 	VdmOptions *sesv2configurationset.VdmOptions `hcl:"vdm_options,block"`
-	// DependsOn contains resources that Sesv2ConfigurationSet depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sesv2ConfigurationSetAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_sesv2_configuration_set.
 func (scs sesv2ConfigurationSetAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(scs.ref.Append("arn"))
+	return terra.ReferenceAsString(scs.ref.Append("arn"))
 }
 
+// ConfigurationSetName returns a reference to field configuration_set_name of aws_sesv2_configuration_set.
 func (scs sesv2ConfigurationSetAttributes) ConfigurationSetName() terra.StringValue {
-	return terra.ReferenceString(scs.ref.Append("configuration_set_name"))
+	return terra.ReferenceAsString(scs.ref.Append("configuration_set_name"))
 }
 
+// Id returns a reference to field id of aws_sesv2_configuration_set.
 func (scs sesv2ConfigurationSetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(scs.ref.Append("id"))
+	return terra.ReferenceAsString(scs.ref.Append("id"))
 }
 
+// Tags returns a reference to field tags of aws_sesv2_configuration_set.
 func (scs sesv2ConfigurationSetAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](scs.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](scs.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_sesv2_configuration_set.
 func (scs sesv2ConfigurationSetAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](scs.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](scs.ref.Append("tags_all"))
 }
 
 func (scs sesv2ConfigurationSetAttributes) DeliveryOptions() terra.ListValue[sesv2configurationset.DeliveryOptionsAttributes] {
-	return terra.ReferenceList[sesv2configurationset.DeliveryOptionsAttributes](scs.ref.Append("delivery_options"))
+	return terra.ReferenceAsList[sesv2configurationset.DeliveryOptionsAttributes](scs.ref.Append("delivery_options"))
 }
 
 func (scs sesv2ConfigurationSetAttributes) ReputationOptions() terra.ListValue[sesv2configurationset.ReputationOptionsAttributes] {
-	return terra.ReferenceList[sesv2configurationset.ReputationOptionsAttributes](scs.ref.Append("reputation_options"))
+	return terra.ReferenceAsList[sesv2configurationset.ReputationOptionsAttributes](scs.ref.Append("reputation_options"))
 }
 
 func (scs sesv2ConfigurationSetAttributes) SendingOptions() terra.ListValue[sesv2configurationset.SendingOptionsAttributes] {
-	return terra.ReferenceList[sesv2configurationset.SendingOptionsAttributes](scs.ref.Append("sending_options"))
+	return terra.ReferenceAsList[sesv2configurationset.SendingOptionsAttributes](scs.ref.Append("sending_options"))
 }
 
 func (scs sesv2ConfigurationSetAttributes) SuppressionOptions() terra.ListValue[sesv2configurationset.SuppressionOptionsAttributes] {
-	return terra.ReferenceList[sesv2configurationset.SuppressionOptionsAttributes](scs.ref.Append("suppression_options"))
+	return terra.ReferenceAsList[sesv2configurationset.SuppressionOptionsAttributes](scs.ref.Append("suppression_options"))
 }
 
 func (scs sesv2ConfigurationSetAttributes) TrackingOptions() terra.ListValue[sesv2configurationset.TrackingOptionsAttributes] {
-	return terra.ReferenceList[sesv2configurationset.TrackingOptionsAttributes](scs.ref.Append("tracking_options"))
+	return terra.ReferenceAsList[sesv2configurationset.TrackingOptionsAttributes](scs.ref.Append("tracking_options"))
 }
 
 func (scs sesv2ConfigurationSetAttributes) VdmOptions() terra.ListValue[sesv2configurationset.VdmOptionsAttributes] {
-	return terra.ReferenceList[sesv2configurationset.VdmOptionsAttributes](scs.ref.Append("vdm_options"))
+	return terra.ReferenceAsList[sesv2configurationset.VdmOptionsAttributes](scs.ref.Append("vdm_options"))
 }
 
 type sesv2ConfigurationSetState struct {

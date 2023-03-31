@@ -44,27 +44,27 @@ func (cd CatalogDataAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cd CatalogDataAttributes) AboutText() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("about_text"))
+	return terra.ReferenceAsString(cd.ref.Append("about_text"))
 }
 
 func (cd CatalogDataAttributes) Architectures() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cd.ref.Append("architectures"))
+	return terra.ReferenceAsSet[terra.StringValue](cd.ref.Append("architectures"))
 }
 
 func (cd CatalogDataAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("description"))
+	return terra.ReferenceAsString(cd.ref.Append("description"))
 }
 
 func (cd CatalogDataAttributes) LogoImageBlob() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("logo_image_blob"))
+	return terra.ReferenceAsString(cd.ref.Append("logo_image_blob"))
 }
 
 func (cd CatalogDataAttributes) OperatingSystems() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cd.ref.Append("operating_systems"))
+	return terra.ReferenceAsSet[terra.StringValue](cd.ref.Append("operating_systems"))
 }
 
 func (cd CatalogDataAttributes) UsageText() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("usage_text"))
+	return terra.ReferenceAsString(cd.ref.Append("usage_text"))
 }
 
 type TimeoutsAttributes struct {
@@ -84,7 +84,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type CatalogDataState struct {

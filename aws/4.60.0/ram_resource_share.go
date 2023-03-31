@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewRamResourceShare creates a new instance of [RamResourceShare].
 func NewRamResourceShare(name string, args RamResourceShareArgs) *RamResourceShare {
 	return &RamResourceShare{
 		Args: args,
@@ -19,28 +20,51 @@ func NewRamResourceShare(name string, args RamResourceShareArgs) *RamResourceSha
 
 var _ terra.Resource = (*RamResourceShare)(nil)
 
+// RamResourceShare represents the Terraform resource aws_ram_resource_share.
 type RamResourceShare struct {
-	Name  string
-	Args  RamResourceShareArgs
-	state *ramResourceShareState
+	Name      string
+	Args      RamResourceShareArgs
+	state     *ramResourceShareState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RamResourceShare].
 func (rrs *RamResourceShare) Type() string {
 	return "aws_ram_resource_share"
 }
 
+// LocalName returns the local name for [RamResourceShare].
 func (rrs *RamResourceShare) LocalName() string {
 	return rrs.Name
 }
 
+// Configuration returns the configuration (args) for [RamResourceShare].
 func (rrs *RamResourceShare) Configuration() interface{} {
 	return rrs.Args
 }
 
+// DependOn is used for other resources to depend on [RamResourceShare].
+func (rrs *RamResourceShare) DependOn() terra.Reference {
+	return terra.ReferenceResource(rrs)
+}
+
+// Dependencies returns the list of resources [RamResourceShare] depends_on.
+func (rrs *RamResourceShare) Dependencies() terra.Dependencies {
+	return rrs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RamResourceShare].
+func (rrs *RamResourceShare) LifecycleManagement() *terra.Lifecycle {
+	return rrs.Lifecycle
+}
+
+// Attributes returns the attributes for [RamResourceShare].
 func (rrs *RamResourceShare) Attributes() ramResourceShareAttributes {
 	return ramResourceShareAttributes{ref: terra.ReferenceResource(rrs)}
 }
 
+// ImportState imports the given attribute values into [RamResourceShare]'s state.
 func (rrs *RamResourceShare) ImportState(av io.Reader) error {
 	rrs.state = &ramResourceShareState{}
 	if err := json.NewDecoder(av).Decode(rrs.state); err != nil {
@@ -49,10 +73,12 @@ func (rrs *RamResourceShare) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RamResourceShare] has state.
 func (rrs *RamResourceShare) State() (*ramResourceShareState, bool) {
 	return rrs.state, rrs.state != nil
 }
 
+// StateMust returns the state for [RamResourceShare]. Panics if the state is nil.
 func (rrs *RamResourceShare) StateMust() *ramResourceShareState {
 	if rrs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rrs.Type(), rrs.LocalName()))
@@ -60,10 +86,7 @@ func (rrs *RamResourceShare) StateMust() *ramResourceShareState {
 	return rrs.state
 }
 
-func (rrs *RamResourceShare) DependOn() terra.Reference {
-	return terra.ReferenceResource(rrs)
-}
-
+// RamResourceShareArgs contains the configurations for aws_ram_resource_share.
 type RamResourceShareArgs struct {
 	// AllowExternalPrincipals: bool, optional
 	AllowExternalPrincipals terra.BoolValue `hcl:"allow_external_principals,attr"`
@@ -79,43 +102,48 @@ type RamResourceShareArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Timeouts: optional
 	Timeouts *ramresourceshare.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that RamResourceShare depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ramResourceShareAttributes struct {
 	ref terra.Reference
 }
 
+// AllowExternalPrincipals returns a reference to field allow_external_principals of aws_ram_resource_share.
 func (rrs ramResourceShareAttributes) AllowExternalPrincipals() terra.BoolValue {
-	return terra.ReferenceBool(rrs.ref.Append("allow_external_principals"))
+	return terra.ReferenceAsBool(rrs.ref.Append("allow_external_principals"))
 }
 
+// Arn returns a reference to field arn of aws_ram_resource_share.
 func (rrs ramResourceShareAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rrs.ref.Append("arn"))
+	return terra.ReferenceAsString(rrs.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_ram_resource_share.
 func (rrs ramResourceShareAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rrs.ref.Append("id"))
+	return terra.ReferenceAsString(rrs.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_ram_resource_share.
 func (rrs ramResourceShareAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rrs.ref.Append("name"))
+	return terra.ReferenceAsString(rrs.ref.Append("name"))
 }
 
+// PermissionArns returns a reference to field permission_arns of aws_ram_resource_share.
 func (rrs ramResourceShareAttributes) PermissionArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rrs.ref.Append("permission_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](rrs.ref.Append("permission_arns"))
 }
 
+// Tags returns a reference to field tags of aws_ram_resource_share.
 func (rrs ramResourceShareAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rrs.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rrs.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_ram_resource_share.
 func (rrs ramResourceShareAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rrs.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](rrs.ref.Append("tags_all"))
 }
 
 func (rrs ramResourceShareAttributes) Timeouts() ramresourceshare.TimeoutsAttributes {
-	return terra.ReferenceSingle[ramresourceshare.TimeoutsAttributes](rrs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[ramresourceshare.TimeoutsAttributes](rrs.ref.Append("timeouts"))
 }
 
 type ramResourceShareState struct {

@@ -75,7 +75,7 @@ func (asc AutoStartConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (asc AutoStartConfigurationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(asc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(asc.ref.Append("enabled"))
 }
 
 type AutoStopConfigurationAttributes struct {
@@ -95,11 +95,11 @@ func (asc AutoStopConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (asc AutoStopConfigurationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(asc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(asc.ref.Append("enabled"))
 }
 
 func (asc AutoStopConfigurationAttributes) IdleTimeoutMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(asc.ref.Append("idle_timeout_minutes"))
+	return terra.ReferenceAsNumber(asc.ref.Append("idle_timeout_minutes"))
 }
 
 type InitialCapacityAttributes struct {
@@ -119,11 +119,11 @@ func (ic InitialCapacityAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ic InitialCapacityAttributes) InitialCapacityType() terra.StringValue {
-	return terra.ReferenceString(ic.ref.Append("initial_capacity_type"))
+	return terra.ReferenceAsString(ic.ref.Append("initial_capacity_type"))
 }
 
 func (ic InitialCapacityAttributes) InitialCapacityConfig() terra.ListValue[InitialCapacityConfigAttributes] {
-	return terra.ReferenceList[InitialCapacityConfigAttributes](ic.ref.Append("initial_capacity_config"))
+	return terra.ReferenceAsList[InitialCapacityConfigAttributes](ic.ref.Append("initial_capacity_config"))
 }
 
 type InitialCapacityConfigAttributes struct {
@@ -143,11 +143,11 @@ func (icc InitialCapacityConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (icc InitialCapacityConfigAttributes) WorkerCount() terra.NumberValue {
-	return terra.ReferenceNumber(icc.ref.Append("worker_count"))
+	return terra.ReferenceAsNumber(icc.ref.Append("worker_count"))
 }
 
 func (icc InitialCapacityConfigAttributes) WorkerConfiguration() terra.ListValue[WorkerConfigurationAttributes] {
-	return terra.ReferenceList[WorkerConfigurationAttributes](icc.ref.Append("worker_configuration"))
+	return terra.ReferenceAsList[WorkerConfigurationAttributes](icc.ref.Append("worker_configuration"))
 }
 
 type WorkerConfigurationAttributes struct {
@@ -167,15 +167,15 @@ func (wc WorkerConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (wc WorkerConfigurationAttributes) Cpu() terra.StringValue {
-	return terra.ReferenceString(wc.ref.Append("cpu"))
+	return terra.ReferenceAsString(wc.ref.Append("cpu"))
 }
 
 func (wc WorkerConfigurationAttributes) Disk() terra.StringValue {
-	return terra.ReferenceString(wc.ref.Append("disk"))
+	return terra.ReferenceAsString(wc.ref.Append("disk"))
 }
 
 func (wc WorkerConfigurationAttributes) Memory() terra.StringValue {
-	return terra.ReferenceString(wc.ref.Append("memory"))
+	return terra.ReferenceAsString(wc.ref.Append("memory"))
 }
 
 type MaximumCapacityAttributes struct {
@@ -195,15 +195,15 @@ func (mc MaximumCapacityAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mc MaximumCapacityAttributes) Cpu() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("cpu"))
+	return terra.ReferenceAsString(mc.ref.Append("cpu"))
 }
 
 func (mc MaximumCapacityAttributes) Disk() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("disk"))
+	return terra.ReferenceAsString(mc.ref.Append("disk"))
 }
 
 func (mc MaximumCapacityAttributes) Memory() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("memory"))
+	return terra.ReferenceAsString(mc.ref.Append("memory"))
 }
 
 type NetworkConfigurationAttributes struct {
@@ -223,11 +223,11 @@ func (nc NetworkConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nc NetworkConfigurationAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](nc.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](nc.ref.Append("security_group_ids"))
 }
 
 func (nc NetworkConfigurationAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](nc.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](nc.ref.Append("subnet_ids"))
 }
 
 type AutoStartConfigurationState struct {

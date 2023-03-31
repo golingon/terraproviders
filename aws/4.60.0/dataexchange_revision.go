@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDataexchangeRevision creates a new instance of [DataexchangeRevision].
 func NewDataexchangeRevision(name string, args DataexchangeRevisionArgs) *DataexchangeRevision {
 	return &DataexchangeRevision{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDataexchangeRevision(name string, args DataexchangeRevisionArgs) *Dataex
 
 var _ terra.Resource = (*DataexchangeRevision)(nil)
 
+// DataexchangeRevision represents the Terraform resource aws_dataexchange_revision.
 type DataexchangeRevision struct {
-	Name  string
-	Args  DataexchangeRevisionArgs
-	state *dataexchangeRevisionState
+	Name      string
+	Args      DataexchangeRevisionArgs
+	state     *dataexchangeRevisionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataexchangeRevision].
 func (dr *DataexchangeRevision) Type() string {
 	return "aws_dataexchange_revision"
 }
 
+// LocalName returns the local name for [DataexchangeRevision].
 func (dr *DataexchangeRevision) LocalName() string {
 	return dr.Name
 }
 
+// Configuration returns the configuration (args) for [DataexchangeRevision].
 func (dr *DataexchangeRevision) Configuration() interface{} {
 	return dr.Args
 }
 
+// DependOn is used for other resources to depend on [DataexchangeRevision].
+func (dr *DataexchangeRevision) DependOn() terra.Reference {
+	return terra.ReferenceResource(dr)
+}
+
+// Dependencies returns the list of resources [DataexchangeRevision] depends_on.
+func (dr *DataexchangeRevision) Dependencies() terra.Dependencies {
+	return dr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataexchangeRevision].
+func (dr *DataexchangeRevision) LifecycleManagement() *terra.Lifecycle {
+	return dr.Lifecycle
+}
+
+// Attributes returns the attributes for [DataexchangeRevision].
 func (dr *DataexchangeRevision) Attributes() dataexchangeRevisionAttributes {
 	return dataexchangeRevisionAttributes{ref: terra.ReferenceResource(dr)}
 }
 
+// ImportState imports the given attribute values into [DataexchangeRevision]'s state.
 func (dr *DataexchangeRevision) ImportState(av io.Reader) error {
 	dr.state = &dataexchangeRevisionState{}
 	if err := json.NewDecoder(av).Decode(dr.state); err != nil {
@@ -48,10 +72,12 @@ func (dr *DataexchangeRevision) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataexchangeRevision] has state.
 func (dr *DataexchangeRevision) State() (*dataexchangeRevisionState, bool) {
 	return dr.state, dr.state != nil
 }
 
+// StateMust returns the state for [DataexchangeRevision]. Panics if the state is nil.
 func (dr *DataexchangeRevision) StateMust() *dataexchangeRevisionState {
 	if dr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dr.Type(), dr.LocalName()))
@@ -59,10 +85,7 @@ func (dr *DataexchangeRevision) StateMust() *dataexchangeRevisionState {
 	return dr.state
 }
 
-func (dr *DataexchangeRevision) DependOn() terra.Reference {
-	return terra.ReferenceResource(dr)
-}
-
+// DataexchangeRevisionArgs contains the configurations for aws_dataexchange_revision.
 type DataexchangeRevisionArgs struct {
 	// Comment: string, optional
 	Comment terra.StringValue `hcl:"comment,attr"`
@@ -74,39 +97,44 @@ type DataexchangeRevisionArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that DataexchangeRevision depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataexchangeRevisionAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_dataexchange_revision.
 func (dr dataexchangeRevisionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("arn"))
+	return terra.ReferenceAsString(dr.ref.Append("arn"))
 }
 
+// Comment returns a reference to field comment of aws_dataexchange_revision.
 func (dr dataexchangeRevisionAttributes) Comment() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("comment"))
+	return terra.ReferenceAsString(dr.ref.Append("comment"))
 }
 
+// DataSetId returns a reference to field data_set_id of aws_dataexchange_revision.
 func (dr dataexchangeRevisionAttributes) DataSetId() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("data_set_id"))
+	return terra.ReferenceAsString(dr.ref.Append("data_set_id"))
 }
 
+// Id returns a reference to field id of aws_dataexchange_revision.
 func (dr dataexchangeRevisionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("id"))
+	return terra.ReferenceAsString(dr.ref.Append("id"))
 }
 
+// RevisionId returns a reference to field revision_id of aws_dataexchange_revision.
 func (dr dataexchangeRevisionAttributes) RevisionId() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("revision_id"))
+	return terra.ReferenceAsString(dr.ref.Append("revision_id"))
 }
 
+// Tags returns a reference to field tags of aws_dataexchange_revision.
 func (dr dataexchangeRevisionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dr.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_dataexchange_revision.
 func (dr dataexchangeRevisionAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dr.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dr.ref.Append("tags_all"))
 }
 
 type dataexchangeRevisionState struct {

@@ -59,11 +59,11 @@ func (als AccessLogSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (als AccessLogSettingsAttributes) DestinationArn() terra.StringValue {
-	return terra.ReferenceString(als.ref.Append("destination_arn"))
+	return terra.ReferenceAsString(als.ref.Append("destination_arn"))
 }
 
 func (als AccessLogSettingsAttributes) Format() terra.StringValue {
-	return terra.ReferenceString(als.ref.Append("format"))
+	return terra.ReferenceAsString(als.ref.Append("format"))
 }
 
 type DefaultRouteSettingsAttributes struct {
@@ -83,23 +83,23 @@ func (drs DefaultRouteSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (drs DefaultRouteSettingsAttributes) DataTraceEnabled() terra.BoolValue {
-	return terra.ReferenceBool(drs.ref.Append("data_trace_enabled"))
+	return terra.ReferenceAsBool(drs.ref.Append("data_trace_enabled"))
 }
 
 func (drs DefaultRouteSettingsAttributes) DetailedMetricsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(drs.ref.Append("detailed_metrics_enabled"))
+	return terra.ReferenceAsBool(drs.ref.Append("detailed_metrics_enabled"))
 }
 
 func (drs DefaultRouteSettingsAttributes) LoggingLevel() terra.StringValue {
-	return terra.ReferenceString(drs.ref.Append("logging_level"))
+	return terra.ReferenceAsString(drs.ref.Append("logging_level"))
 }
 
 func (drs DefaultRouteSettingsAttributes) ThrottlingBurstLimit() terra.NumberValue {
-	return terra.ReferenceNumber(drs.ref.Append("throttling_burst_limit"))
+	return terra.ReferenceAsNumber(drs.ref.Append("throttling_burst_limit"))
 }
 
 func (drs DefaultRouteSettingsAttributes) ThrottlingRateLimit() terra.NumberValue {
-	return terra.ReferenceNumber(drs.ref.Append("throttling_rate_limit"))
+	return terra.ReferenceAsNumber(drs.ref.Append("throttling_rate_limit"))
 }
 
 type RouteSettingsAttributes struct {
@@ -119,27 +119,27 @@ func (rs RouteSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rs RouteSettingsAttributes) DataTraceEnabled() terra.BoolValue {
-	return terra.ReferenceBool(rs.ref.Append("data_trace_enabled"))
+	return terra.ReferenceAsBool(rs.ref.Append("data_trace_enabled"))
 }
 
 func (rs RouteSettingsAttributes) DetailedMetricsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(rs.ref.Append("detailed_metrics_enabled"))
+	return terra.ReferenceAsBool(rs.ref.Append("detailed_metrics_enabled"))
 }
 
 func (rs RouteSettingsAttributes) LoggingLevel() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("logging_level"))
+	return terra.ReferenceAsString(rs.ref.Append("logging_level"))
 }
 
 func (rs RouteSettingsAttributes) RouteKey() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("route_key"))
+	return terra.ReferenceAsString(rs.ref.Append("route_key"))
 }
 
 func (rs RouteSettingsAttributes) ThrottlingBurstLimit() terra.NumberValue {
-	return terra.ReferenceNumber(rs.ref.Append("throttling_burst_limit"))
+	return terra.ReferenceAsNumber(rs.ref.Append("throttling_burst_limit"))
 }
 
 func (rs RouteSettingsAttributes) ThrottlingRateLimit() terra.NumberValue {
-	return terra.ReferenceNumber(rs.ref.Append("throttling_rate_limit"))
+	return terra.ReferenceAsNumber(rs.ref.Append("throttling_rate_limit"))
 }
 
 type AccessLogSettingsState struct {

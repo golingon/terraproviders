@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataEc2LocalGatewayVirtualInterfaceGroup creates a new instance of [DataEc2LocalGatewayVirtualInterfaceGroup].
 func NewDataEc2LocalGatewayVirtualInterfaceGroup(name string, args DataEc2LocalGatewayVirtualInterfaceGroupArgs) *DataEc2LocalGatewayVirtualInterfaceGroup {
 	return &DataEc2LocalGatewayVirtualInterfaceGroup{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataEc2LocalGatewayVirtualInterfaceGroup(name string, args DataEc2LocalG
 
 var _ terra.DataResource = (*DataEc2LocalGatewayVirtualInterfaceGroup)(nil)
 
+// DataEc2LocalGatewayVirtualInterfaceGroup represents the Terraform data resource aws_ec2_local_gateway_virtual_interface_group.
 type DataEc2LocalGatewayVirtualInterfaceGroup struct {
 	Name string
 	Args DataEc2LocalGatewayVirtualInterfaceGroupArgs
 }
 
+// DataSource returns the Terraform object type for [DataEc2LocalGatewayVirtualInterfaceGroup].
 func (elgvig *DataEc2LocalGatewayVirtualInterfaceGroup) DataSource() string {
 	return "aws_ec2_local_gateway_virtual_interface_group"
 }
 
+// LocalName returns the local name for [DataEc2LocalGatewayVirtualInterfaceGroup].
 func (elgvig *DataEc2LocalGatewayVirtualInterfaceGroup) LocalName() string {
 	return elgvig.Name
 }
 
+// Configuration returns the configuration (args) for [DataEc2LocalGatewayVirtualInterfaceGroup].
 func (elgvig *DataEc2LocalGatewayVirtualInterfaceGroup) Configuration() interface{} {
 	return elgvig.Args
 }
 
+// Attributes returns the attributes for [DataEc2LocalGatewayVirtualInterfaceGroup].
 func (elgvig *DataEc2LocalGatewayVirtualInterfaceGroup) Attributes() dataEc2LocalGatewayVirtualInterfaceGroupAttributes {
 	return dataEc2LocalGatewayVirtualInterfaceGroupAttributes{ref: terra.ReferenceDataResource(elgvig)}
 }
 
+// DataEc2LocalGatewayVirtualInterfaceGroupArgs contains the configurations for aws_ec2_local_gateway_virtual_interface_group.
 type DataEc2LocalGatewayVirtualInterfaceGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,26 +60,30 @@ type dataEc2LocalGatewayVirtualInterfaceGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_ec2_local_gateway_virtual_interface_group.
 func (elgvig dataEc2LocalGatewayVirtualInterfaceGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(elgvig.ref.Append("id"))
+	return terra.ReferenceAsString(elgvig.ref.Append("id"))
 }
 
+// LocalGatewayId returns a reference to field local_gateway_id of aws_ec2_local_gateway_virtual_interface_group.
 func (elgvig dataEc2LocalGatewayVirtualInterfaceGroupAttributes) LocalGatewayId() terra.StringValue {
-	return terra.ReferenceString(elgvig.ref.Append("local_gateway_id"))
+	return terra.ReferenceAsString(elgvig.ref.Append("local_gateway_id"))
 }
 
+// LocalGatewayVirtualInterfaceIds returns a reference to field local_gateway_virtual_interface_ids of aws_ec2_local_gateway_virtual_interface_group.
 func (elgvig dataEc2LocalGatewayVirtualInterfaceGroupAttributes) LocalGatewayVirtualInterfaceIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](elgvig.ref.Append("local_gateway_virtual_interface_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](elgvig.ref.Append("local_gateway_virtual_interface_ids"))
 }
 
+// Tags returns a reference to field tags of aws_ec2_local_gateway_virtual_interface_group.
 func (elgvig dataEc2LocalGatewayVirtualInterfaceGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](elgvig.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](elgvig.ref.Append("tags"))
 }
 
 func (elgvig dataEc2LocalGatewayVirtualInterfaceGroupAttributes) Filter() terra.SetValue[dataec2localgatewayvirtualinterfacegroup.FilterAttributes] {
-	return terra.ReferenceSet[dataec2localgatewayvirtualinterfacegroup.FilterAttributes](elgvig.ref.Append("filter"))
+	return terra.ReferenceAsSet[dataec2localgatewayvirtualinterfacegroup.FilterAttributes](elgvig.ref.Append("filter"))
 }
 
 func (elgvig dataEc2LocalGatewayVirtualInterfaceGroupAttributes) Timeouts() dataec2localgatewayvirtualinterfacegroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataec2localgatewayvirtualinterfacegroup.TimeoutsAttributes](elgvig.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataec2localgatewayvirtualinterfacegroup.TimeoutsAttributes](elgvig.ref.Append("timeouts"))
 }

@@ -44,11 +44,11 @@ func (ec ExportConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec ExportConfigAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("type"))
+	return terra.ReferenceAsString(ec.ref.Append("type"))
 }
 
 func (ec ExportConfigAttributes) S3Destination() terra.ListValue[S3DestinationAttributes] {
-	return terra.ReferenceList[S3DestinationAttributes](ec.ref.Append("s3_destination"))
+	return terra.ReferenceAsList[S3DestinationAttributes](ec.ref.Append("s3_destination"))
 }
 
 type S3DestinationAttributes struct {
@@ -68,23 +68,23 @@ func (sd S3DestinationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sd S3DestinationAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("bucket"))
+	return terra.ReferenceAsString(sd.ref.Append("bucket"))
 }
 
 func (sd S3DestinationAttributes) EncryptionDisabled() terra.BoolValue {
-	return terra.ReferenceBool(sd.ref.Append("encryption_disabled"))
+	return terra.ReferenceAsBool(sd.ref.Append("encryption_disabled"))
 }
 
 func (sd S3DestinationAttributes) EncryptionKey() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("encryption_key"))
+	return terra.ReferenceAsString(sd.ref.Append("encryption_key"))
 }
 
 func (sd S3DestinationAttributes) Packaging() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("packaging"))
+	return terra.ReferenceAsString(sd.ref.Append("packaging"))
 }
 
 func (sd S3DestinationAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("path"))
+	return terra.ReferenceAsString(sd.ref.Append("path"))
 }
 
 type ExportConfigState struct {

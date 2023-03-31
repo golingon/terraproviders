@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewEc2CapacityReservation creates a new instance of [Ec2CapacityReservation].
 func NewEc2CapacityReservation(name string, args Ec2CapacityReservationArgs) *Ec2CapacityReservation {
 	return &Ec2CapacityReservation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewEc2CapacityReservation(name string, args Ec2CapacityReservationArgs) *Ec
 
 var _ terra.Resource = (*Ec2CapacityReservation)(nil)
 
+// Ec2CapacityReservation represents the Terraform resource aws_ec2_capacity_reservation.
 type Ec2CapacityReservation struct {
-	Name  string
-	Args  Ec2CapacityReservationArgs
-	state *ec2CapacityReservationState
+	Name      string
+	Args      Ec2CapacityReservationArgs
+	state     *ec2CapacityReservationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Ec2CapacityReservation].
 func (ecr *Ec2CapacityReservation) Type() string {
 	return "aws_ec2_capacity_reservation"
 }
 
+// LocalName returns the local name for [Ec2CapacityReservation].
 func (ecr *Ec2CapacityReservation) LocalName() string {
 	return ecr.Name
 }
 
+// Configuration returns the configuration (args) for [Ec2CapacityReservation].
 func (ecr *Ec2CapacityReservation) Configuration() interface{} {
 	return ecr.Args
 }
 
+// DependOn is used for other resources to depend on [Ec2CapacityReservation].
+func (ecr *Ec2CapacityReservation) DependOn() terra.Reference {
+	return terra.ReferenceResource(ecr)
+}
+
+// Dependencies returns the list of resources [Ec2CapacityReservation] depends_on.
+func (ecr *Ec2CapacityReservation) Dependencies() terra.Dependencies {
+	return ecr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Ec2CapacityReservation].
+func (ecr *Ec2CapacityReservation) LifecycleManagement() *terra.Lifecycle {
+	return ecr.Lifecycle
+}
+
+// Attributes returns the attributes for [Ec2CapacityReservation].
 func (ecr *Ec2CapacityReservation) Attributes() ec2CapacityReservationAttributes {
 	return ec2CapacityReservationAttributes{ref: terra.ReferenceResource(ecr)}
 }
 
+// ImportState imports the given attribute values into [Ec2CapacityReservation]'s state.
 func (ecr *Ec2CapacityReservation) ImportState(av io.Reader) error {
 	ecr.state = &ec2CapacityReservationState{}
 	if err := json.NewDecoder(av).Decode(ecr.state); err != nil {
@@ -48,10 +72,12 @@ func (ecr *Ec2CapacityReservation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Ec2CapacityReservation] has state.
 func (ecr *Ec2CapacityReservation) State() (*ec2CapacityReservationState, bool) {
 	return ecr.state, ecr.state != nil
 }
 
+// StateMust returns the state for [Ec2CapacityReservation]. Panics if the state is nil.
 func (ecr *Ec2CapacityReservation) StateMust() *ec2CapacityReservationState {
 	if ecr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ecr.Type(), ecr.LocalName()))
@@ -59,10 +85,7 @@ func (ecr *Ec2CapacityReservation) StateMust() *ec2CapacityReservationState {
 	return ecr.state
 }
 
-func (ecr *Ec2CapacityReservation) DependOn() terra.Reference {
-	return terra.ReferenceResource(ecr)
-}
-
+// Ec2CapacityReservationArgs contains the configurations for aws_ec2_capacity_reservation.
 type Ec2CapacityReservationArgs struct {
 	// AvailabilityZone: string, required
 	AvailabilityZone terra.StringValue `hcl:"availability_zone,attr" validate:"required"`
@@ -94,79 +117,94 @@ type Ec2CapacityReservationArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Tenancy: string, optional
 	Tenancy terra.StringValue `hcl:"tenancy,attr"`
-	// DependsOn contains resources that Ec2CapacityReservation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ec2CapacityReservationAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ec2_capacity_reservation.
 func (ecr ec2CapacityReservationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ecr.ref.Append("arn"))
+	return terra.ReferenceAsString(ecr.ref.Append("arn"))
 }
 
+// AvailabilityZone returns a reference to field availability_zone of aws_ec2_capacity_reservation.
 func (ecr ec2CapacityReservationAttributes) AvailabilityZone() terra.StringValue {
-	return terra.ReferenceString(ecr.ref.Append("availability_zone"))
+	return terra.ReferenceAsString(ecr.ref.Append("availability_zone"))
 }
 
+// EbsOptimized returns a reference to field ebs_optimized of aws_ec2_capacity_reservation.
 func (ecr ec2CapacityReservationAttributes) EbsOptimized() terra.BoolValue {
-	return terra.ReferenceBool(ecr.ref.Append("ebs_optimized"))
+	return terra.ReferenceAsBool(ecr.ref.Append("ebs_optimized"))
 }
 
+// EndDate returns a reference to field end_date of aws_ec2_capacity_reservation.
 func (ecr ec2CapacityReservationAttributes) EndDate() terra.StringValue {
-	return terra.ReferenceString(ecr.ref.Append("end_date"))
+	return terra.ReferenceAsString(ecr.ref.Append("end_date"))
 }
 
+// EndDateType returns a reference to field end_date_type of aws_ec2_capacity_reservation.
 func (ecr ec2CapacityReservationAttributes) EndDateType() terra.StringValue {
-	return terra.ReferenceString(ecr.ref.Append("end_date_type"))
+	return terra.ReferenceAsString(ecr.ref.Append("end_date_type"))
 }
 
+// EphemeralStorage returns a reference to field ephemeral_storage of aws_ec2_capacity_reservation.
 func (ecr ec2CapacityReservationAttributes) EphemeralStorage() terra.BoolValue {
-	return terra.ReferenceBool(ecr.ref.Append("ephemeral_storage"))
+	return terra.ReferenceAsBool(ecr.ref.Append("ephemeral_storage"))
 }
 
+// Id returns a reference to field id of aws_ec2_capacity_reservation.
 func (ecr ec2CapacityReservationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ecr.ref.Append("id"))
+	return terra.ReferenceAsString(ecr.ref.Append("id"))
 }
 
+// InstanceCount returns a reference to field instance_count of aws_ec2_capacity_reservation.
 func (ecr ec2CapacityReservationAttributes) InstanceCount() terra.NumberValue {
-	return terra.ReferenceNumber(ecr.ref.Append("instance_count"))
+	return terra.ReferenceAsNumber(ecr.ref.Append("instance_count"))
 }
 
+// InstanceMatchCriteria returns a reference to field instance_match_criteria of aws_ec2_capacity_reservation.
 func (ecr ec2CapacityReservationAttributes) InstanceMatchCriteria() terra.StringValue {
-	return terra.ReferenceString(ecr.ref.Append("instance_match_criteria"))
+	return terra.ReferenceAsString(ecr.ref.Append("instance_match_criteria"))
 }
 
+// InstancePlatform returns a reference to field instance_platform of aws_ec2_capacity_reservation.
 func (ecr ec2CapacityReservationAttributes) InstancePlatform() terra.StringValue {
-	return terra.ReferenceString(ecr.ref.Append("instance_platform"))
+	return terra.ReferenceAsString(ecr.ref.Append("instance_platform"))
 }
 
+// InstanceType returns a reference to field instance_type of aws_ec2_capacity_reservation.
 func (ecr ec2CapacityReservationAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(ecr.ref.Append("instance_type"))
+	return terra.ReferenceAsString(ecr.ref.Append("instance_type"))
 }
 
+// OutpostArn returns a reference to field outpost_arn of aws_ec2_capacity_reservation.
 func (ecr ec2CapacityReservationAttributes) OutpostArn() terra.StringValue {
-	return terra.ReferenceString(ecr.ref.Append("outpost_arn"))
+	return terra.ReferenceAsString(ecr.ref.Append("outpost_arn"))
 }
 
+// OwnerId returns a reference to field owner_id of aws_ec2_capacity_reservation.
 func (ecr ec2CapacityReservationAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(ecr.ref.Append("owner_id"))
+	return terra.ReferenceAsString(ecr.ref.Append("owner_id"))
 }
 
+// PlacementGroupArn returns a reference to field placement_group_arn of aws_ec2_capacity_reservation.
 func (ecr ec2CapacityReservationAttributes) PlacementGroupArn() terra.StringValue {
-	return terra.ReferenceString(ecr.ref.Append("placement_group_arn"))
+	return terra.ReferenceAsString(ecr.ref.Append("placement_group_arn"))
 }
 
+// Tags returns a reference to field tags of aws_ec2_capacity_reservation.
 func (ecr ec2CapacityReservationAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ecr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ecr.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_ec2_capacity_reservation.
 func (ecr ec2CapacityReservationAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ecr.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ecr.ref.Append("tags_all"))
 }
 
+// Tenancy returns a reference to field tenancy of aws_ec2_capacity_reservation.
 func (ecr ec2CapacityReservationAttributes) Tenancy() terra.StringValue {
-	return terra.ReferenceString(ecr.ref.Append("tenancy"))
+	return terra.ReferenceAsString(ecr.ref.Append("tenancy"))
 }
 
 type ec2CapacityReservationState struct {

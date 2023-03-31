@@ -39,27 +39,27 @@ func (cr CorsRuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cr CorsRuleAttributes) AllowedHeaders() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cr.ref.Append("allowed_headers"))
+	return terra.ReferenceAsSet[terra.StringValue](cr.ref.Append("allowed_headers"))
 }
 
 func (cr CorsRuleAttributes) AllowedMethods() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cr.ref.Append("allowed_methods"))
+	return terra.ReferenceAsSet[terra.StringValue](cr.ref.Append("allowed_methods"))
 }
 
 func (cr CorsRuleAttributes) AllowedOrigins() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cr.ref.Append("allowed_origins"))
+	return terra.ReferenceAsSet[terra.StringValue](cr.ref.Append("allowed_origins"))
 }
 
 func (cr CorsRuleAttributes) ExposeHeaders() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cr.ref.Append("expose_headers"))
+	return terra.ReferenceAsSet[terra.StringValue](cr.ref.Append("expose_headers"))
 }
 
 func (cr CorsRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("id"))
+	return terra.ReferenceAsString(cr.ref.Append("id"))
 }
 
 func (cr CorsRuleAttributes) MaxAgeSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(cr.ref.Append("max_age_seconds"))
+	return terra.ReferenceAsNumber(cr.ref.Append("max_age_seconds"))
 }
 
 type CorsRuleState struct {

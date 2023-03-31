@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewVpcEndpointConnectionAccepter creates a new instance of [VpcEndpointConnectionAccepter].
 func NewVpcEndpointConnectionAccepter(name string, args VpcEndpointConnectionAccepterArgs) *VpcEndpointConnectionAccepter {
 	return &VpcEndpointConnectionAccepter{
 		Args: args,
@@ -18,28 +19,51 @@ func NewVpcEndpointConnectionAccepter(name string, args VpcEndpointConnectionAcc
 
 var _ terra.Resource = (*VpcEndpointConnectionAccepter)(nil)
 
+// VpcEndpointConnectionAccepter represents the Terraform resource aws_vpc_endpoint_connection_accepter.
 type VpcEndpointConnectionAccepter struct {
-	Name  string
-	Args  VpcEndpointConnectionAccepterArgs
-	state *vpcEndpointConnectionAccepterState
+	Name      string
+	Args      VpcEndpointConnectionAccepterArgs
+	state     *vpcEndpointConnectionAccepterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VpcEndpointConnectionAccepter].
 func (veca *VpcEndpointConnectionAccepter) Type() string {
 	return "aws_vpc_endpoint_connection_accepter"
 }
 
+// LocalName returns the local name for [VpcEndpointConnectionAccepter].
 func (veca *VpcEndpointConnectionAccepter) LocalName() string {
 	return veca.Name
 }
 
+// Configuration returns the configuration (args) for [VpcEndpointConnectionAccepter].
 func (veca *VpcEndpointConnectionAccepter) Configuration() interface{} {
 	return veca.Args
 }
 
+// DependOn is used for other resources to depend on [VpcEndpointConnectionAccepter].
+func (veca *VpcEndpointConnectionAccepter) DependOn() terra.Reference {
+	return terra.ReferenceResource(veca)
+}
+
+// Dependencies returns the list of resources [VpcEndpointConnectionAccepter] depends_on.
+func (veca *VpcEndpointConnectionAccepter) Dependencies() terra.Dependencies {
+	return veca.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VpcEndpointConnectionAccepter].
+func (veca *VpcEndpointConnectionAccepter) LifecycleManagement() *terra.Lifecycle {
+	return veca.Lifecycle
+}
+
+// Attributes returns the attributes for [VpcEndpointConnectionAccepter].
 func (veca *VpcEndpointConnectionAccepter) Attributes() vpcEndpointConnectionAccepterAttributes {
 	return vpcEndpointConnectionAccepterAttributes{ref: terra.ReferenceResource(veca)}
 }
 
+// ImportState imports the given attribute values into [VpcEndpointConnectionAccepter]'s state.
 func (veca *VpcEndpointConnectionAccepter) ImportState(av io.Reader) error {
 	veca.state = &vpcEndpointConnectionAccepterState{}
 	if err := json.NewDecoder(av).Decode(veca.state); err != nil {
@@ -48,10 +72,12 @@ func (veca *VpcEndpointConnectionAccepter) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VpcEndpointConnectionAccepter] has state.
 func (veca *VpcEndpointConnectionAccepter) State() (*vpcEndpointConnectionAccepterState, bool) {
 	return veca.state, veca.state != nil
 }
 
+// StateMust returns the state for [VpcEndpointConnectionAccepter]. Panics if the state is nil.
 func (veca *VpcEndpointConnectionAccepter) StateMust() *vpcEndpointConnectionAccepterState {
 	if veca.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", veca.Type(), veca.LocalName()))
@@ -59,10 +85,7 @@ func (veca *VpcEndpointConnectionAccepter) StateMust() *vpcEndpointConnectionAcc
 	return veca.state
 }
 
-func (veca *VpcEndpointConnectionAccepter) DependOn() terra.Reference {
-	return terra.ReferenceResource(veca)
-}
-
+// VpcEndpointConnectionAccepterArgs contains the configurations for aws_vpc_endpoint_connection_accepter.
 type VpcEndpointConnectionAccepterArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,27 +93,29 @@ type VpcEndpointConnectionAccepterArgs struct {
 	VpcEndpointId terra.StringValue `hcl:"vpc_endpoint_id,attr" validate:"required"`
 	// VpcEndpointServiceId: string, required
 	VpcEndpointServiceId terra.StringValue `hcl:"vpc_endpoint_service_id,attr" validate:"required"`
-	// DependsOn contains resources that VpcEndpointConnectionAccepter depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type vpcEndpointConnectionAccepterAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_vpc_endpoint_connection_accepter.
 func (veca vpcEndpointConnectionAccepterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(veca.ref.Append("id"))
+	return terra.ReferenceAsString(veca.ref.Append("id"))
 }
 
+// VpcEndpointId returns a reference to field vpc_endpoint_id of aws_vpc_endpoint_connection_accepter.
 func (veca vpcEndpointConnectionAccepterAttributes) VpcEndpointId() terra.StringValue {
-	return terra.ReferenceString(veca.ref.Append("vpc_endpoint_id"))
+	return terra.ReferenceAsString(veca.ref.Append("vpc_endpoint_id"))
 }
 
+// VpcEndpointServiceId returns a reference to field vpc_endpoint_service_id of aws_vpc_endpoint_connection_accepter.
 func (veca vpcEndpointConnectionAccepterAttributes) VpcEndpointServiceId() terra.StringValue {
-	return terra.ReferenceString(veca.ref.Append("vpc_endpoint_service_id"))
+	return terra.ReferenceAsString(veca.ref.Append("vpc_endpoint_service_id"))
 }
 
+// VpcEndpointState returns a reference to field vpc_endpoint_state of aws_vpc_endpoint_connection_accepter.
 func (veca vpcEndpointConnectionAccepterAttributes) VpcEndpointState() terra.StringValue {
-	return terra.ReferenceString(veca.ref.Append("vpc_endpoint_state"))
+	return terra.ReferenceAsString(veca.ref.Append("vpc_endpoint_state"))
 }
 
 type vpcEndpointConnectionAccepterState struct {

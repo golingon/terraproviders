@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAmplifyBranch creates a new instance of [AmplifyBranch].
 func NewAmplifyBranch(name string, args AmplifyBranchArgs) *AmplifyBranch {
 	return &AmplifyBranch{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAmplifyBranch(name string, args AmplifyBranchArgs) *AmplifyBranch {
 
 var _ terra.Resource = (*AmplifyBranch)(nil)
 
+// AmplifyBranch represents the Terraform resource aws_amplify_branch.
 type AmplifyBranch struct {
-	Name  string
-	Args  AmplifyBranchArgs
-	state *amplifyBranchState
+	Name      string
+	Args      AmplifyBranchArgs
+	state     *amplifyBranchState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AmplifyBranch].
 func (ab *AmplifyBranch) Type() string {
 	return "aws_amplify_branch"
 }
 
+// LocalName returns the local name for [AmplifyBranch].
 func (ab *AmplifyBranch) LocalName() string {
 	return ab.Name
 }
 
+// Configuration returns the configuration (args) for [AmplifyBranch].
 func (ab *AmplifyBranch) Configuration() interface{} {
 	return ab.Args
 }
 
+// DependOn is used for other resources to depend on [AmplifyBranch].
+func (ab *AmplifyBranch) DependOn() terra.Reference {
+	return terra.ReferenceResource(ab)
+}
+
+// Dependencies returns the list of resources [AmplifyBranch] depends_on.
+func (ab *AmplifyBranch) Dependencies() terra.Dependencies {
+	return ab.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AmplifyBranch].
+func (ab *AmplifyBranch) LifecycleManagement() *terra.Lifecycle {
+	return ab.Lifecycle
+}
+
+// Attributes returns the attributes for [AmplifyBranch].
 func (ab *AmplifyBranch) Attributes() amplifyBranchAttributes {
 	return amplifyBranchAttributes{ref: terra.ReferenceResource(ab)}
 }
 
+// ImportState imports the given attribute values into [AmplifyBranch]'s state.
 func (ab *AmplifyBranch) ImportState(av io.Reader) error {
 	ab.state = &amplifyBranchState{}
 	if err := json.NewDecoder(av).Decode(ab.state); err != nil {
@@ -48,10 +72,12 @@ func (ab *AmplifyBranch) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AmplifyBranch] has state.
 func (ab *AmplifyBranch) State() (*amplifyBranchState, bool) {
 	return ab.state, ab.state != nil
 }
 
+// StateMust returns the state for [AmplifyBranch]. Panics if the state is nil.
 func (ab *AmplifyBranch) StateMust() *amplifyBranchState {
 	if ab.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ab.Type(), ab.LocalName()))
@@ -59,10 +85,7 @@ func (ab *AmplifyBranch) StateMust() *amplifyBranchState {
 	return ab.state
 }
 
-func (ab *AmplifyBranch) DependOn() terra.Reference {
-	return terra.ReferenceResource(ab)
-}
-
+// AmplifyBranchArgs contains the configurations for aws_amplify_branch.
 type AmplifyBranchArgs struct {
 	// AppId: string, required
 	AppId terra.StringValue `hcl:"app_id,attr" validate:"required"`
@@ -102,107 +125,129 @@ type AmplifyBranchArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Ttl: string, optional
 	Ttl terra.StringValue `hcl:"ttl,attr"`
-	// DependsOn contains resources that AmplifyBranch depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type amplifyBranchAttributes struct {
 	ref terra.Reference
 }
 
+// AppId returns a reference to field app_id of aws_amplify_branch.
 func (ab amplifyBranchAttributes) AppId() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("app_id"))
+	return terra.ReferenceAsString(ab.ref.Append("app_id"))
 }
 
+// Arn returns a reference to field arn of aws_amplify_branch.
 func (ab amplifyBranchAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("arn"))
+	return terra.ReferenceAsString(ab.ref.Append("arn"))
 }
 
+// AssociatedResources returns a reference to field associated_resources of aws_amplify_branch.
 func (ab amplifyBranchAttributes) AssociatedResources() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ab.ref.Append("associated_resources"))
+	return terra.ReferenceAsList[terra.StringValue](ab.ref.Append("associated_resources"))
 }
 
+// BackendEnvironmentArn returns a reference to field backend_environment_arn of aws_amplify_branch.
 func (ab amplifyBranchAttributes) BackendEnvironmentArn() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("backend_environment_arn"))
+	return terra.ReferenceAsString(ab.ref.Append("backend_environment_arn"))
 }
 
+// BasicAuthCredentials returns a reference to field basic_auth_credentials of aws_amplify_branch.
 func (ab amplifyBranchAttributes) BasicAuthCredentials() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("basic_auth_credentials"))
+	return terra.ReferenceAsString(ab.ref.Append("basic_auth_credentials"))
 }
 
+// BranchName returns a reference to field branch_name of aws_amplify_branch.
 func (ab amplifyBranchAttributes) BranchName() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("branch_name"))
+	return terra.ReferenceAsString(ab.ref.Append("branch_name"))
 }
 
+// CustomDomains returns a reference to field custom_domains of aws_amplify_branch.
 func (ab amplifyBranchAttributes) CustomDomains() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ab.ref.Append("custom_domains"))
+	return terra.ReferenceAsList[terra.StringValue](ab.ref.Append("custom_domains"))
 }
 
+// Description returns a reference to field description of aws_amplify_branch.
 func (ab amplifyBranchAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("description"))
+	return terra.ReferenceAsString(ab.ref.Append("description"))
 }
 
+// DestinationBranch returns a reference to field destination_branch of aws_amplify_branch.
 func (ab amplifyBranchAttributes) DestinationBranch() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("destination_branch"))
+	return terra.ReferenceAsString(ab.ref.Append("destination_branch"))
 }
 
+// DisplayName returns a reference to field display_name of aws_amplify_branch.
 func (ab amplifyBranchAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("display_name"))
+	return terra.ReferenceAsString(ab.ref.Append("display_name"))
 }
 
+// EnableAutoBuild returns a reference to field enable_auto_build of aws_amplify_branch.
 func (ab amplifyBranchAttributes) EnableAutoBuild() terra.BoolValue {
-	return terra.ReferenceBool(ab.ref.Append("enable_auto_build"))
+	return terra.ReferenceAsBool(ab.ref.Append("enable_auto_build"))
 }
 
+// EnableBasicAuth returns a reference to field enable_basic_auth of aws_amplify_branch.
 func (ab amplifyBranchAttributes) EnableBasicAuth() terra.BoolValue {
-	return terra.ReferenceBool(ab.ref.Append("enable_basic_auth"))
+	return terra.ReferenceAsBool(ab.ref.Append("enable_basic_auth"))
 }
 
+// EnableNotification returns a reference to field enable_notification of aws_amplify_branch.
 func (ab amplifyBranchAttributes) EnableNotification() terra.BoolValue {
-	return terra.ReferenceBool(ab.ref.Append("enable_notification"))
+	return terra.ReferenceAsBool(ab.ref.Append("enable_notification"))
 }
 
+// EnablePerformanceMode returns a reference to field enable_performance_mode of aws_amplify_branch.
 func (ab amplifyBranchAttributes) EnablePerformanceMode() terra.BoolValue {
-	return terra.ReferenceBool(ab.ref.Append("enable_performance_mode"))
+	return terra.ReferenceAsBool(ab.ref.Append("enable_performance_mode"))
 }
 
+// EnablePullRequestPreview returns a reference to field enable_pull_request_preview of aws_amplify_branch.
 func (ab amplifyBranchAttributes) EnablePullRequestPreview() terra.BoolValue {
-	return terra.ReferenceBool(ab.ref.Append("enable_pull_request_preview"))
+	return terra.ReferenceAsBool(ab.ref.Append("enable_pull_request_preview"))
 }
 
+// EnvironmentVariables returns a reference to field environment_variables of aws_amplify_branch.
 func (ab amplifyBranchAttributes) EnvironmentVariables() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ab.ref.Append("environment_variables"))
+	return terra.ReferenceAsMap[terra.StringValue](ab.ref.Append("environment_variables"))
 }
 
+// Framework returns a reference to field framework of aws_amplify_branch.
 func (ab amplifyBranchAttributes) Framework() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("framework"))
+	return terra.ReferenceAsString(ab.ref.Append("framework"))
 }
 
+// Id returns a reference to field id of aws_amplify_branch.
 func (ab amplifyBranchAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("id"))
+	return terra.ReferenceAsString(ab.ref.Append("id"))
 }
 
+// PullRequestEnvironmentName returns a reference to field pull_request_environment_name of aws_amplify_branch.
 func (ab amplifyBranchAttributes) PullRequestEnvironmentName() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("pull_request_environment_name"))
+	return terra.ReferenceAsString(ab.ref.Append("pull_request_environment_name"))
 }
 
+// SourceBranch returns a reference to field source_branch of aws_amplify_branch.
 func (ab amplifyBranchAttributes) SourceBranch() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("source_branch"))
+	return terra.ReferenceAsString(ab.ref.Append("source_branch"))
 }
 
+// Stage returns a reference to field stage of aws_amplify_branch.
 func (ab amplifyBranchAttributes) Stage() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("stage"))
+	return terra.ReferenceAsString(ab.ref.Append("stage"))
 }
 
+// Tags returns a reference to field tags of aws_amplify_branch.
 func (ab amplifyBranchAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ab.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ab.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_amplify_branch.
 func (ab amplifyBranchAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ab.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ab.ref.Append("tags_all"))
 }
 
+// Ttl returns a reference to field ttl of aws_amplify_branch.
 func (ab amplifyBranchAttributes) Ttl() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("ttl"))
+	return terra.ReferenceAsString(ab.ref.Append("ttl"))
 }
 
 type amplifyBranchState struct {

@@ -63,19 +63,19 @@ func (t TimelineAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimelineAttributes) Created() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("created"))
+	return terra.ReferenceAsString(t.ref.Append("created"))
 }
 
 func (t TimelineAttributes) LastModified() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("last_modified"))
+	return terra.ReferenceAsString(t.ref.Append("last_modified"))
 }
 
 func (t TimelineAttributes) LastStarted() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("last_started"))
+	return terra.ReferenceAsString(t.ref.Append("last_started"))
 }
 
 func (t TimelineAttributes) LastStopped() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("last_stopped"))
+	return terra.ReferenceAsString(t.ref.Append("last_stopped"))
 }
 
 type ArtifactConfigAttributes struct {
@@ -95,7 +95,7 @@ func (ac ArtifactConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ac ArtifactConfigAttributes) S3Encryption() terra.ListValue[S3EncryptionAttributes] {
-	return terra.ReferenceList[S3EncryptionAttributes](ac.ref.Append("s3_encryption"))
+	return terra.ReferenceAsList[S3EncryptionAttributes](ac.ref.Append("s3_encryption"))
 }
 
 type S3EncryptionAttributes struct {
@@ -115,11 +115,11 @@ func (se S3EncryptionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (se S3EncryptionAttributes) EncryptionMode() terra.StringValue {
-	return terra.ReferenceString(se.ref.Append("encryption_mode"))
+	return terra.ReferenceAsString(se.ref.Append("encryption_mode"))
 }
 
 func (se S3EncryptionAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(se.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(se.ref.Append("kms_key_arn"))
 }
 
 type RunConfigAttributes struct {
@@ -139,19 +139,19 @@ func (rc RunConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rc RunConfigAttributes) ActiveTracing() terra.BoolValue {
-	return terra.ReferenceBool(rc.ref.Append("active_tracing"))
+	return terra.ReferenceAsBool(rc.ref.Append("active_tracing"))
 }
 
 func (rc RunConfigAttributes) EnvironmentVariables() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rc.ref.Append("environment_variables"))
+	return terra.ReferenceAsMap[terra.StringValue](rc.ref.Append("environment_variables"))
 }
 
 func (rc RunConfigAttributes) MemoryInMb() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("memory_in_mb"))
+	return terra.ReferenceAsNumber(rc.ref.Append("memory_in_mb"))
 }
 
 func (rc RunConfigAttributes) TimeoutInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("timeout_in_seconds"))
+	return terra.ReferenceAsNumber(rc.ref.Append("timeout_in_seconds"))
 }
 
 type ScheduleAttributes struct {
@@ -171,11 +171,11 @@ func (s ScheduleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s ScheduleAttributes) DurationInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("duration_in_seconds"))
+	return terra.ReferenceAsNumber(s.ref.Append("duration_in_seconds"))
 }
 
 func (s ScheduleAttributes) Expression() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("expression"))
+	return terra.ReferenceAsString(s.ref.Append("expression"))
 }
 
 type VpcConfigAttributes struct {
@@ -195,15 +195,15 @@ func (vc VpcConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vc VpcConfigAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("security_group_ids"))
 }
 
 func (vc VpcConfigAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("subnet_ids"))
 }
 
 func (vc VpcConfigAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(vc.ref.Append("vpc_id"))
 }
 
 type TimelineState struct {

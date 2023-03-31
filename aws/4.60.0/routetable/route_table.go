@@ -64,59 +64,59 @@ func (r RouteAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RouteAttributes) CarrierGatewayId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("carrier_gateway_id"))
+	return terra.ReferenceAsString(r.ref.Append("carrier_gateway_id"))
 }
 
 func (r RouteAttributes) CidrBlock() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("cidr_block"))
+	return terra.ReferenceAsString(r.ref.Append("cidr_block"))
 }
 
 func (r RouteAttributes) CoreNetworkArn() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("core_network_arn"))
+	return terra.ReferenceAsString(r.ref.Append("core_network_arn"))
 }
 
 func (r RouteAttributes) DestinationPrefixListId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("destination_prefix_list_id"))
+	return terra.ReferenceAsString(r.ref.Append("destination_prefix_list_id"))
 }
 
 func (r RouteAttributes) EgressOnlyGatewayId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("egress_only_gateway_id"))
+	return terra.ReferenceAsString(r.ref.Append("egress_only_gateway_id"))
 }
 
 func (r RouteAttributes) GatewayId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("gateway_id"))
+	return terra.ReferenceAsString(r.ref.Append("gateway_id"))
 }
 
 func (r RouteAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("instance_id"))
+	return terra.ReferenceAsString(r.ref.Append("instance_id"))
 }
 
 func (r RouteAttributes) Ipv6CidrBlock() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("ipv6_cidr_block"))
+	return terra.ReferenceAsString(r.ref.Append("ipv6_cidr_block"))
 }
 
 func (r RouteAttributes) LocalGatewayId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("local_gateway_id"))
+	return terra.ReferenceAsString(r.ref.Append("local_gateway_id"))
 }
 
 func (r RouteAttributes) NatGatewayId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("nat_gateway_id"))
+	return terra.ReferenceAsString(r.ref.Append("nat_gateway_id"))
 }
 
 func (r RouteAttributes) NetworkInterfaceId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("network_interface_id"))
+	return terra.ReferenceAsString(r.ref.Append("network_interface_id"))
 }
 
 func (r RouteAttributes) TransitGatewayId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("transit_gateway_id"))
+	return terra.ReferenceAsString(r.ref.Append("transit_gateway_id"))
 }
 
 func (r RouteAttributes) VpcEndpointId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("vpc_endpoint_id"))
+	return terra.ReferenceAsString(r.ref.Append("vpc_endpoint_id"))
 }
 
 func (r RouteAttributes) VpcPeeringConnectionId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("vpc_peering_connection_id"))
+	return terra.ReferenceAsString(r.ref.Append("vpc_peering_connection_id"))
 }
 
 type TimeoutsAttributes struct {
@@ -136,15 +136,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type RouteState struct {

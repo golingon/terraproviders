@@ -81,11 +81,11 @@ func (r ResourcesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r ResourcesAttributes) RemoteAccessSecurityGroupId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("remote_access_security_group_id"))
+	return terra.ReferenceAsString(r.ref.Append("remote_access_security_group_id"))
 }
 
 func (r ResourcesAttributes) AutoscalingGroups() terra.ListValue[AutoscalingGroupsAttributes] {
-	return terra.ReferenceList[AutoscalingGroupsAttributes](r.ref.Append("autoscaling_groups"))
+	return terra.ReferenceAsList[AutoscalingGroupsAttributes](r.ref.Append("autoscaling_groups"))
 }
 
 type AutoscalingGroupsAttributes struct {
@@ -105,7 +105,7 @@ func (ag AutoscalingGroupsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ag AutoscalingGroupsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ag.ref.Append("name"))
+	return terra.ReferenceAsString(ag.ref.Append("name"))
 }
 
 type LaunchTemplateAttributes struct {
@@ -125,15 +125,15 @@ func (lt LaunchTemplateAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lt LaunchTemplateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("id"))
+	return terra.ReferenceAsString(lt.ref.Append("id"))
 }
 
 func (lt LaunchTemplateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("name"))
+	return terra.ReferenceAsString(lt.ref.Append("name"))
 }
 
 func (lt LaunchTemplateAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("version"))
+	return terra.ReferenceAsString(lt.ref.Append("version"))
 }
 
 type RemoteAccessAttributes struct {
@@ -153,11 +153,11 @@ func (ra RemoteAccessAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ra RemoteAccessAttributes) Ec2SshKey() terra.StringValue {
-	return terra.ReferenceString(ra.ref.Append("ec2_ssh_key"))
+	return terra.ReferenceAsString(ra.ref.Append("ec2_ssh_key"))
 }
 
 func (ra RemoteAccessAttributes) SourceSecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ra.ref.Append("source_security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](ra.ref.Append("source_security_group_ids"))
 }
 
 type ScalingConfigAttributes struct {
@@ -177,15 +177,15 @@ func (sc ScalingConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc ScalingConfigAttributes) DesiredSize() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("desired_size"))
+	return terra.ReferenceAsNumber(sc.ref.Append("desired_size"))
 }
 
 func (sc ScalingConfigAttributes) MaxSize() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("max_size"))
+	return terra.ReferenceAsNumber(sc.ref.Append("max_size"))
 }
 
 func (sc ScalingConfigAttributes) MinSize() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("min_size"))
+	return terra.ReferenceAsNumber(sc.ref.Append("min_size"))
 }
 
 type TaintAttributes struct {
@@ -205,15 +205,15 @@ func (t TaintAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TaintAttributes) Effect() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("effect"))
+	return terra.ReferenceAsString(t.ref.Append("effect"))
 }
 
 func (t TaintAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("key"))
+	return terra.ReferenceAsString(t.ref.Append("key"))
 }
 
 func (t TaintAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("value"))
+	return terra.ReferenceAsString(t.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
@@ -233,15 +233,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type UpdateConfigAttributes struct {
@@ -261,11 +261,11 @@ func (uc UpdateConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (uc UpdateConfigAttributes) MaxUnavailable() terra.NumberValue {
-	return terra.ReferenceNumber(uc.ref.Append("max_unavailable"))
+	return terra.ReferenceAsNumber(uc.ref.Append("max_unavailable"))
 }
 
 func (uc UpdateConfigAttributes) MaxUnavailablePercentage() terra.NumberValue {
-	return terra.ReferenceNumber(uc.ref.Append("max_unavailable_percentage"))
+	return terra.ReferenceAsNumber(uc.ref.Append("max_unavailable_percentage"))
 }
 
 type ResourcesState struct {

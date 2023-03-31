@@ -47,7 +47,7 @@ func (ec ExecutionControlsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec ExecutionControlsAttributes) SsmControls() terra.ListValue[SsmControlsAttributes] {
-	return terra.ReferenceList[SsmControlsAttributes](ec.ref.Append("ssm_controls"))
+	return terra.ReferenceAsList[SsmControlsAttributes](ec.ref.Append("ssm_controls"))
 }
 
 type SsmControlsAttributes struct {
@@ -67,11 +67,11 @@ func (sc SsmControlsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc SsmControlsAttributes) ConcurrentExecutionRatePercentage() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("concurrent_execution_rate_percentage"))
+	return terra.ReferenceAsNumber(sc.ref.Append("concurrent_execution_rate_percentage"))
 }
 
 func (sc SsmControlsAttributes) ErrorPercentage() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("error_percentage"))
+	return terra.ReferenceAsNumber(sc.ref.Append("error_percentage"))
 }
 
 type ParameterAttributes struct {
@@ -91,19 +91,19 @@ func (p ParameterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p ParameterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("name"))
+	return terra.ReferenceAsString(p.ref.Append("name"))
 }
 
 func (p ParameterAttributes) ResourceValue() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("resource_value"))
+	return terra.ReferenceAsString(p.ref.Append("resource_value"))
 }
 
 func (p ParameterAttributes) StaticValue() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("static_value"))
+	return terra.ReferenceAsString(p.ref.Append("static_value"))
 }
 
 func (p ParameterAttributes) StaticValues() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](p.ref.Append("static_values"))
+	return terra.ReferenceAsList[terra.StringValue](p.ref.Append("static_values"))
 }
 
 type ExecutionControlsState struct {

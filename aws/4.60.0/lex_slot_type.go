@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLexSlotType creates a new instance of [LexSlotType].
 func NewLexSlotType(name string, args LexSlotTypeArgs) *LexSlotType {
 	return &LexSlotType{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLexSlotType(name string, args LexSlotTypeArgs) *LexSlotType {
 
 var _ terra.Resource = (*LexSlotType)(nil)
 
+// LexSlotType represents the Terraform resource aws_lex_slot_type.
 type LexSlotType struct {
-	Name  string
-	Args  LexSlotTypeArgs
-	state *lexSlotTypeState
+	Name      string
+	Args      LexSlotTypeArgs
+	state     *lexSlotTypeState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LexSlotType].
 func (lst *LexSlotType) Type() string {
 	return "aws_lex_slot_type"
 }
 
+// LocalName returns the local name for [LexSlotType].
 func (lst *LexSlotType) LocalName() string {
 	return lst.Name
 }
 
+// Configuration returns the configuration (args) for [LexSlotType].
 func (lst *LexSlotType) Configuration() interface{} {
 	return lst.Args
 }
 
+// DependOn is used for other resources to depend on [LexSlotType].
+func (lst *LexSlotType) DependOn() terra.Reference {
+	return terra.ReferenceResource(lst)
+}
+
+// Dependencies returns the list of resources [LexSlotType] depends_on.
+func (lst *LexSlotType) Dependencies() terra.Dependencies {
+	return lst.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LexSlotType].
+func (lst *LexSlotType) LifecycleManagement() *terra.Lifecycle {
+	return lst.Lifecycle
+}
+
+// Attributes returns the attributes for [LexSlotType].
 func (lst *LexSlotType) Attributes() lexSlotTypeAttributes {
 	return lexSlotTypeAttributes{ref: terra.ReferenceResource(lst)}
 }
 
+// ImportState imports the given attribute values into [LexSlotType]'s state.
 func (lst *LexSlotType) ImportState(av io.Reader) error {
 	lst.state = &lexSlotTypeState{}
 	if err := json.NewDecoder(av).Decode(lst.state); err != nil {
@@ -49,10 +73,12 @@ func (lst *LexSlotType) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LexSlotType] has state.
 func (lst *LexSlotType) State() (*lexSlotTypeState, bool) {
 	return lst.state, lst.state != nil
 }
 
+// StateMust returns the state for [LexSlotType]. Panics if the state is nil.
 func (lst *LexSlotType) StateMust() *lexSlotTypeState {
 	if lst.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lst.Type(), lst.LocalName()))
@@ -60,10 +86,7 @@ func (lst *LexSlotType) StateMust() *lexSlotTypeState {
 	return lst.state
 }
 
-func (lst *LexSlotType) DependOn() terra.Reference {
-	return terra.ReferenceResource(lst)
-}
-
+// LexSlotTypeArgs contains the configurations for aws_lex_slot_type.
 type LexSlotTypeArgs struct {
 	// CreateVersion: bool, optional
 	CreateVersion terra.BoolValue `hcl:"create_version,attr"`
@@ -79,55 +102,62 @@ type LexSlotTypeArgs struct {
 	EnumerationValue []lexslottype.EnumerationValue `hcl:"enumeration_value,block" validate:"min=1,max=10000"`
 	// Timeouts: optional
 	Timeouts *lexslottype.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LexSlotType depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lexSlotTypeAttributes struct {
 	ref terra.Reference
 }
 
+// Checksum returns a reference to field checksum of aws_lex_slot_type.
 func (lst lexSlotTypeAttributes) Checksum() terra.StringValue {
-	return terra.ReferenceString(lst.ref.Append("checksum"))
+	return terra.ReferenceAsString(lst.ref.Append("checksum"))
 }
 
+// CreateVersion returns a reference to field create_version of aws_lex_slot_type.
 func (lst lexSlotTypeAttributes) CreateVersion() terra.BoolValue {
-	return terra.ReferenceBool(lst.ref.Append("create_version"))
+	return terra.ReferenceAsBool(lst.ref.Append("create_version"))
 }
 
+// CreatedDate returns a reference to field created_date of aws_lex_slot_type.
 func (lst lexSlotTypeAttributes) CreatedDate() terra.StringValue {
-	return terra.ReferenceString(lst.ref.Append("created_date"))
+	return terra.ReferenceAsString(lst.ref.Append("created_date"))
 }
 
+// Description returns a reference to field description of aws_lex_slot_type.
 func (lst lexSlotTypeAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(lst.ref.Append("description"))
+	return terra.ReferenceAsString(lst.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_lex_slot_type.
 func (lst lexSlotTypeAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lst.ref.Append("id"))
+	return terra.ReferenceAsString(lst.ref.Append("id"))
 }
 
+// LastUpdatedDate returns a reference to field last_updated_date of aws_lex_slot_type.
 func (lst lexSlotTypeAttributes) LastUpdatedDate() terra.StringValue {
-	return terra.ReferenceString(lst.ref.Append("last_updated_date"))
+	return terra.ReferenceAsString(lst.ref.Append("last_updated_date"))
 }
 
+// Name returns a reference to field name of aws_lex_slot_type.
 func (lst lexSlotTypeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lst.ref.Append("name"))
+	return terra.ReferenceAsString(lst.ref.Append("name"))
 }
 
+// ValueSelectionStrategy returns a reference to field value_selection_strategy of aws_lex_slot_type.
 func (lst lexSlotTypeAttributes) ValueSelectionStrategy() terra.StringValue {
-	return terra.ReferenceString(lst.ref.Append("value_selection_strategy"))
+	return terra.ReferenceAsString(lst.ref.Append("value_selection_strategy"))
 }
 
+// Version returns a reference to field version of aws_lex_slot_type.
 func (lst lexSlotTypeAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(lst.ref.Append("version"))
+	return terra.ReferenceAsString(lst.ref.Append("version"))
 }
 
 func (lst lexSlotTypeAttributes) EnumerationValue() terra.SetValue[lexslottype.EnumerationValueAttributes] {
-	return terra.ReferenceSet[lexslottype.EnumerationValueAttributes](lst.ref.Append("enumeration_value"))
+	return terra.ReferenceAsSet[lexslottype.EnumerationValueAttributes](lst.ref.Append("enumeration_value"))
 }
 
 func (lst lexSlotTypeAttributes) Timeouts() lexslottype.TimeoutsAttributes {
-	return terra.ReferenceSingle[lexslottype.TimeoutsAttributes](lst.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[lexslottype.TimeoutsAttributes](lst.ref.Append("timeouts"))
 }
 
 type lexSlotTypeState struct {

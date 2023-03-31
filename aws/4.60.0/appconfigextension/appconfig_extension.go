@@ -51,11 +51,11 @@ func (ap ActionPointAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ap ActionPointAttributes) Point() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("point"))
+	return terra.ReferenceAsString(ap.ref.Append("point"))
 }
 
 func (ap ActionPointAttributes) Action() terra.SetValue[ActionAttributes] {
-	return terra.ReferenceSet[ActionAttributes](ap.ref.Append("action"))
+	return terra.ReferenceAsSet[ActionAttributes](ap.ref.Append("action"))
 }
 
 type ActionAttributes struct {
@@ -75,19 +75,19 @@ func (a ActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a ActionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("description"))
+	return terra.ReferenceAsString(a.ref.Append("description"))
 }
 
 func (a ActionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("name"))
+	return terra.ReferenceAsString(a.ref.Append("name"))
 }
 
 func (a ActionAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("role_arn"))
+	return terra.ReferenceAsString(a.ref.Append("role_arn"))
 }
 
 func (a ActionAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("uri"))
+	return terra.ReferenceAsString(a.ref.Append("uri"))
 }
 
 type ParameterAttributes struct {
@@ -107,15 +107,15 @@ func (p ParameterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p ParameterAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("description"))
+	return terra.ReferenceAsString(p.ref.Append("description"))
 }
 
 func (p ParameterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("name"))
+	return terra.ReferenceAsString(p.ref.Append("name"))
 }
 
 func (p ParameterAttributes) Required() terra.BoolValue {
-	return terra.ReferenceBool(p.ref.Append("required"))
+	return terra.ReferenceAsBool(p.ref.Append("required"))
 }
 
 type ActionPointState struct {

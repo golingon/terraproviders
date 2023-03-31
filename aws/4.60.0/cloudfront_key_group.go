@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCloudfrontKeyGroup creates a new instance of [CloudfrontKeyGroup].
 func NewCloudfrontKeyGroup(name string, args CloudfrontKeyGroupArgs) *CloudfrontKeyGroup {
 	return &CloudfrontKeyGroup{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCloudfrontKeyGroup(name string, args CloudfrontKeyGroupArgs) *Cloudfront
 
 var _ terra.Resource = (*CloudfrontKeyGroup)(nil)
 
+// CloudfrontKeyGroup represents the Terraform resource aws_cloudfront_key_group.
 type CloudfrontKeyGroup struct {
-	Name  string
-	Args  CloudfrontKeyGroupArgs
-	state *cloudfrontKeyGroupState
+	Name      string
+	Args      CloudfrontKeyGroupArgs
+	state     *cloudfrontKeyGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudfrontKeyGroup].
 func (ckg *CloudfrontKeyGroup) Type() string {
 	return "aws_cloudfront_key_group"
 }
 
+// LocalName returns the local name for [CloudfrontKeyGroup].
 func (ckg *CloudfrontKeyGroup) LocalName() string {
 	return ckg.Name
 }
 
+// Configuration returns the configuration (args) for [CloudfrontKeyGroup].
 func (ckg *CloudfrontKeyGroup) Configuration() interface{} {
 	return ckg.Args
 }
 
+// DependOn is used for other resources to depend on [CloudfrontKeyGroup].
+func (ckg *CloudfrontKeyGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(ckg)
+}
+
+// Dependencies returns the list of resources [CloudfrontKeyGroup] depends_on.
+func (ckg *CloudfrontKeyGroup) Dependencies() terra.Dependencies {
+	return ckg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudfrontKeyGroup].
+func (ckg *CloudfrontKeyGroup) LifecycleManagement() *terra.Lifecycle {
+	return ckg.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudfrontKeyGroup].
 func (ckg *CloudfrontKeyGroup) Attributes() cloudfrontKeyGroupAttributes {
 	return cloudfrontKeyGroupAttributes{ref: terra.ReferenceResource(ckg)}
 }
 
+// ImportState imports the given attribute values into [CloudfrontKeyGroup]'s state.
 func (ckg *CloudfrontKeyGroup) ImportState(av io.Reader) error {
 	ckg.state = &cloudfrontKeyGroupState{}
 	if err := json.NewDecoder(av).Decode(ckg.state); err != nil {
@@ -48,10 +72,12 @@ func (ckg *CloudfrontKeyGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudfrontKeyGroup] has state.
 func (ckg *CloudfrontKeyGroup) State() (*cloudfrontKeyGroupState, bool) {
 	return ckg.state, ckg.state != nil
 }
 
+// StateMust returns the state for [CloudfrontKeyGroup]. Panics if the state is nil.
 func (ckg *CloudfrontKeyGroup) StateMust() *cloudfrontKeyGroupState {
 	if ckg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ckg.Type(), ckg.LocalName()))
@@ -59,10 +85,7 @@ func (ckg *CloudfrontKeyGroup) StateMust() *cloudfrontKeyGroupState {
 	return ckg.state
 }
 
-func (ckg *CloudfrontKeyGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(ckg)
-}
-
+// CloudfrontKeyGroupArgs contains the configurations for aws_cloudfront_key_group.
 type CloudfrontKeyGroupArgs struct {
 	// Comment: string, optional
 	Comment terra.StringValue `hcl:"comment,attr"`
@@ -72,31 +95,34 @@ type CloudfrontKeyGroupArgs struct {
 	Items terra.SetValue[terra.StringValue] `hcl:"items,attr" validate:"required"`
 	// Name: string, required
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
-	// DependsOn contains resources that CloudfrontKeyGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudfrontKeyGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Comment returns a reference to field comment of aws_cloudfront_key_group.
 func (ckg cloudfrontKeyGroupAttributes) Comment() terra.StringValue {
-	return terra.ReferenceString(ckg.ref.Append("comment"))
+	return terra.ReferenceAsString(ckg.ref.Append("comment"))
 }
 
+// Etag returns a reference to field etag of aws_cloudfront_key_group.
 func (ckg cloudfrontKeyGroupAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(ckg.ref.Append("etag"))
+	return terra.ReferenceAsString(ckg.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of aws_cloudfront_key_group.
 func (ckg cloudfrontKeyGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ckg.ref.Append("id"))
+	return terra.ReferenceAsString(ckg.ref.Append("id"))
 }
 
+// Items returns a reference to field items of aws_cloudfront_key_group.
 func (ckg cloudfrontKeyGroupAttributes) Items() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ckg.ref.Append("items"))
+	return terra.ReferenceAsSet[terra.StringValue](ckg.ref.Append("items"))
 }
 
+// Name returns a reference to field name of aws_cloudfront_key_group.
 func (ckg cloudfrontKeyGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ckg.ref.Append("name"))
+	return terra.ReferenceAsString(ckg.ref.Append("name"))
 }
 
 type cloudfrontKeyGroupState struct {

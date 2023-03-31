@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewRedshiftSecurityGroup creates a new instance of [RedshiftSecurityGroup].
 func NewRedshiftSecurityGroup(name string, args RedshiftSecurityGroupArgs) *RedshiftSecurityGroup {
 	return &RedshiftSecurityGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewRedshiftSecurityGroup(name string, args RedshiftSecurityGroupArgs) *Reds
 
 var _ terra.Resource = (*RedshiftSecurityGroup)(nil)
 
+// RedshiftSecurityGroup represents the Terraform resource aws_redshift_security_group.
 type RedshiftSecurityGroup struct {
-	Name  string
-	Args  RedshiftSecurityGroupArgs
-	state *redshiftSecurityGroupState
+	Name      string
+	Args      RedshiftSecurityGroupArgs
+	state     *redshiftSecurityGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RedshiftSecurityGroup].
 func (rsg *RedshiftSecurityGroup) Type() string {
 	return "aws_redshift_security_group"
 }
 
+// LocalName returns the local name for [RedshiftSecurityGroup].
 func (rsg *RedshiftSecurityGroup) LocalName() string {
 	return rsg.Name
 }
 
+// Configuration returns the configuration (args) for [RedshiftSecurityGroup].
 func (rsg *RedshiftSecurityGroup) Configuration() interface{} {
 	return rsg.Args
 }
 
+// DependOn is used for other resources to depend on [RedshiftSecurityGroup].
+func (rsg *RedshiftSecurityGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(rsg)
+}
+
+// Dependencies returns the list of resources [RedshiftSecurityGroup] depends_on.
+func (rsg *RedshiftSecurityGroup) Dependencies() terra.Dependencies {
+	return rsg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RedshiftSecurityGroup].
+func (rsg *RedshiftSecurityGroup) LifecycleManagement() *terra.Lifecycle {
+	return rsg.Lifecycle
+}
+
+// Attributes returns the attributes for [RedshiftSecurityGroup].
 func (rsg *RedshiftSecurityGroup) Attributes() redshiftSecurityGroupAttributes {
 	return redshiftSecurityGroupAttributes{ref: terra.ReferenceResource(rsg)}
 }
 
+// ImportState imports the given attribute values into [RedshiftSecurityGroup]'s state.
 func (rsg *RedshiftSecurityGroup) ImportState(av io.Reader) error {
 	rsg.state = &redshiftSecurityGroupState{}
 	if err := json.NewDecoder(av).Decode(rsg.state); err != nil {
@@ -49,10 +73,12 @@ func (rsg *RedshiftSecurityGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RedshiftSecurityGroup] has state.
 func (rsg *RedshiftSecurityGroup) State() (*redshiftSecurityGroupState, bool) {
 	return rsg.state, rsg.state != nil
 }
 
+// StateMust returns the state for [RedshiftSecurityGroup]. Panics if the state is nil.
 func (rsg *RedshiftSecurityGroup) StateMust() *redshiftSecurityGroupState {
 	if rsg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rsg.Type(), rsg.LocalName()))
@@ -60,10 +86,7 @@ func (rsg *RedshiftSecurityGroup) StateMust() *redshiftSecurityGroupState {
 	return rsg.state
 }
 
-func (rsg *RedshiftSecurityGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(rsg)
-}
-
+// RedshiftSecurityGroupArgs contains the configurations for aws_redshift_security_group.
 type RedshiftSecurityGroupArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -73,27 +96,28 @@ type RedshiftSecurityGroupArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// Ingress: min=1
 	Ingress []redshiftsecuritygroup.Ingress `hcl:"ingress,block" validate:"min=1"`
-	// DependsOn contains resources that RedshiftSecurityGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type redshiftSecurityGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of aws_redshift_security_group.
 func (rsg redshiftSecurityGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(rsg.ref.Append("description"))
+	return terra.ReferenceAsString(rsg.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_redshift_security_group.
 func (rsg redshiftSecurityGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rsg.ref.Append("id"))
+	return terra.ReferenceAsString(rsg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_redshift_security_group.
 func (rsg redshiftSecurityGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rsg.ref.Append("name"))
+	return terra.ReferenceAsString(rsg.ref.Append("name"))
 }
 
 func (rsg redshiftSecurityGroupAttributes) Ingress() terra.SetValue[redshiftsecuritygroup.IngressAttributes] {
-	return terra.ReferenceSet[redshiftsecuritygroup.IngressAttributes](rsg.ref.Append("ingress"))
+	return terra.ReferenceAsSet[redshiftsecuritygroup.IngressAttributes](rsg.ref.Append("ingress"))
 }
 
 type redshiftSecurityGroupState struct {

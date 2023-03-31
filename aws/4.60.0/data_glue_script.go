@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataGlueScript creates a new instance of [DataGlueScript].
 func NewDataGlueScript(name string, args DataGlueScriptArgs) *DataGlueScript {
 	return &DataGlueScript{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataGlueScript(name string, args DataGlueScriptArgs) *DataGlueScript {
 
 var _ terra.DataResource = (*DataGlueScript)(nil)
 
+// DataGlueScript represents the Terraform data resource aws_glue_script.
 type DataGlueScript struct {
 	Name string
 	Args DataGlueScriptArgs
 }
 
+// DataSource returns the Terraform object type for [DataGlueScript].
 func (gs *DataGlueScript) DataSource() string {
 	return "aws_glue_script"
 }
 
+// LocalName returns the local name for [DataGlueScript].
 func (gs *DataGlueScript) LocalName() string {
 	return gs.Name
 }
 
+// Configuration returns the configuration (args) for [DataGlueScript].
 func (gs *DataGlueScript) Configuration() interface{} {
 	return gs.Args
 }
 
+// Attributes returns the attributes for [DataGlueScript].
 func (gs *DataGlueScript) Attributes() dataGlueScriptAttributes {
 	return dataGlueScriptAttributes{ref: terra.ReferenceDataResource(gs)}
 }
 
+// DataGlueScriptArgs contains the configurations for aws_glue_script.
 type DataGlueScriptArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,26 +58,30 @@ type dataGlueScriptAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_glue_script.
 func (gs dataGlueScriptAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gs.ref.Append("id"))
+	return terra.ReferenceAsString(gs.ref.Append("id"))
 }
 
+// Language returns a reference to field language of aws_glue_script.
 func (gs dataGlueScriptAttributes) Language() terra.StringValue {
-	return terra.ReferenceString(gs.ref.Append("language"))
+	return terra.ReferenceAsString(gs.ref.Append("language"))
 }
 
+// PythonScript returns a reference to field python_script of aws_glue_script.
 func (gs dataGlueScriptAttributes) PythonScript() terra.StringValue {
-	return terra.ReferenceString(gs.ref.Append("python_script"))
+	return terra.ReferenceAsString(gs.ref.Append("python_script"))
 }
 
+// ScalaCode returns a reference to field scala_code of aws_glue_script.
 func (gs dataGlueScriptAttributes) ScalaCode() terra.StringValue {
-	return terra.ReferenceString(gs.ref.Append("scala_code"))
+	return terra.ReferenceAsString(gs.ref.Append("scala_code"))
 }
 
 func (gs dataGlueScriptAttributes) DagEdge() terra.ListValue[datagluescript.DagEdgeAttributes] {
-	return terra.ReferenceList[datagluescript.DagEdgeAttributes](gs.ref.Append("dag_edge"))
+	return terra.ReferenceAsList[datagluescript.DagEdgeAttributes](gs.ref.Append("dag_edge"))
 }
 
 func (gs dataGlueScriptAttributes) DagNode() terra.ListValue[datagluescript.DagNodeAttributes] {
-	return terra.ReferenceList[datagluescript.DagNodeAttributes](gs.ref.Append("dag_node"))
+	return terra.ReferenceAsList[datagluescript.DagNodeAttributes](gs.ref.Append("dag_node"))
 }

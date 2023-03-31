@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewLoadBalancerListenerPolicy creates a new instance of [LoadBalancerListenerPolicy].
 func NewLoadBalancerListenerPolicy(name string, args LoadBalancerListenerPolicyArgs) *LoadBalancerListenerPolicy {
 	return &LoadBalancerListenerPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewLoadBalancerListenerPolicy(name string, args LoadBalancerListenerPolicyA
 
 var _ terra.Resource = (*LoadBalancerListenerPolicy)(nil)
 
+// LoadBalancerListenerPolicy represents the Terraform resource aws_load_balancer_listener_policy.
 type LoadBalancerListenerPolicy struct {
-	Name  string
-	Args  LoadBalancerListenerPolicyArgs
-	state *loadBalancerListenerPolicyState
+	Name      string
+	Args      LoadBalancerListenerPolicyArgs
+	state     *loadBalancerListenerPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LoadBalancerListenerPolicy].
 func (lblp *LoadBalancerListenerPolicy) Type() string {
 	return "aws_load_balancer_listener_policy"
 }
 
+// LocalName returns the local name for [LoadBalancerListenerPolicy].
 func (lblp *LoadBalancerListenerPolicy) LocalName() string {
 	return lblp.Name
 }
 
+// Configuration returns the configuration (args) for [LoadBalancerListenerPolicy].
 func (lblp *LoadBalancerListenerPolicy) Configuration() interface{} {
 	return lblp.Args
 }
 
+// DependOn is used for other resources to depend on [LoadBalancerListenerPolicy].
+func (lblp *LoadBalancerListenerPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(lblp)
+}
+
+// Dependencies returns the list of resources [LoadBalancerListenerPolicy] depends_on.
+func (lblp *LoadBalancerListenerPolicy) Dependencies() terra.Dependencies {
+	return lblp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LoadBalancerListenerPolicy].
+func (lblp *LoadBalancerListenerPolicy) LifecycleManagement() *terra.Lifecycle {
+	return lblp.Lifecycle
+}
+
+// Attributes returns the attributes for [LoadBalancerListenerPolicy].
 func (lblp *LoadBalancerListenerPolicy) Attributes() loadBalancerListenerPolicyAttributes {
 	return loadBalancerListenerPolicyAttributes{ref: terra.ReferenceResource(lblp)}
 }
 
+// ImportState imports the given attribute values into [LoadBalancerListenerPolicy]'s state.
 func (lblp *LoadBalancerListenerPolicy) ImportState(av io.Reader) error {
 	lblp.state = &loadBalancerListenerPolicyState{}
 	if err := json.NewDecoder(av).Decode(lblp.state); err != nil {
@@ -48,10 +72,12 @@ func (lblp *LoadBalancerListenerPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LoadBalancerListenerPolicy] has state.
 func (lblp *LoadBalancerListenerPolicy) State() (*loadBalancerListenerPolicyState, bool) {
 	return lblp.state, lblp.state != nil
 }
 
+// StateMust returns the state for [LoadBalancerListenerPolicy]. Panics if the state is nil.
 func (lblp *LoadBalancerListenerPolicy) StateMust() *loadBalancerListenerPolicyState {
 	if lblp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lblp.Type(), lblp.LocalName()))
@@ -59,10 +85,7 @@ func (lblp *LoadBalancerListenerPolicy) StateMust() *loadBalancerListenerPolicyS
 	return lblp.state
 }
 
-func (lblp *LoadBalancerListenerPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(lblp)
-}
-
+// LoadBalancerListenerPolicyArgs contains the configurations for aws_load_balancer_listener_policy.
 type LoadBalancerListenerPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -74,31 +97,34 @@ type LoadBalancerListenerPolicyArgs struct {
 	PolicyNames terra.SetValue[terra.StringValue] `hcl:"policy_names,attr"`
 	// Triggers: map of string, optional
 	Triggers terra.MapValue[terra.StringValue] `hcl:"triggers,attr"`
-	// DependsOn contains resources that LoadBalancerListenerPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type loadBalancerListenerPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_load_balancer_listener_policy.
 func (lblp loadBalancerListenerPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lblp.ref.Append("id"))
+	return terra.ReferenceAsString(lblp.ref.Append("id"))
 }
 
+// LoadBalancerName returns a reference to field load_balancer_name of aws_load_balancer_listener_policy.
 func (lblp loadBalancerListenerPolicyAttributes) LoadBalancerName() terra.StringValue {
-	return terra.ReferenceString(lblp.ref.Append("load_balancer_name"))
+	return terra.ReferenceAsString(lblp.ref.Append("load_balancer_name"))
 }
 
+// LoadBalancerPort returns a reference to field load_balancer_port of aws_load_balancer_listener_policy.
 func (lblp loadBalancerListenerPolicyAttributes) LoadBalancerPort() terra.NumberValue {
-	return terra.ReferenceNumber(lblp.ref.Append("load_balancer_port"))
+	return terra.ReferenceAsNumber(lblp.ref.Append("load_balancer_port"))
 }
 
+// PolicyNames returns a reference to field policy_names of aws_load_balancer_listener_policy.
 func (lblp loadBalancerListenerPolicyAttributes) PolicyNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](lblp.ref.Append("policy_names"))
+	return terra.ReferenceAsSet[terra.StringValue](lblp.ref.Append("policy_names"))
 }
 
+// Triggers returns a reference to field triggers of aws_load_balancer_listener_policy.
 func (lblp loadBalancerListenerPolicyAttributes) Triggers() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lblp.ref.Append("triggers"))
+	return terra.ReferenceAsMap[terra.StringValue](lblp.ref.Append("triggers"))
 }
 
 type loadBalancerListenerPolicyState struct {

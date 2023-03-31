@@ -33,11 +33,11 @@ func (imo InstanceMetadataOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (imo InstanceMetadataOptionsAttributes) HttpPutResponseHopLimit() terra.NumberValue {
-	return terra.ReferenceNumber(imo.ref.Append("http_put_response_hop_limit"))
+	return terra.ReferenceAsNumber(imo.ref.Append("http_put_response_hop_limit"))
 }
 
 func (imo InstanceMetadataOptionsAttributes) HttpTokens() terra.StringValue {
-	return terra.ReferenceString(imo.ref.Append("http_tokens"))
+	return terra.ReferenceAsString(imo.ref.Append("http_tokens"))
 }
 
 type LoggingAttributes struct {
@@ -57,7 +57,7 @@ func (l LoggingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (l LoggingAttributes) S3Logs() terra.ListValue[S3LogsAttributes] {
-	return terra.ReferenceList[S3LogsAttributes](l.ref.Append("s3_logs"))
+	return terra.ReferenceAsList[S3LogsAttributes](l.ref.Append("s3_logs"))
 }
 
 type S3LogsAttributes struct {
@@ -77,11 +77,11 @@ func (sl S3LogsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sl S3LogsAttributes) S3BucketName() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("s3_bucket_name"))
+	return terra.ReferenceAsString(sl.ref.Append("s3_bucket_name"))
 }
 
 func (sl S3LogsAttributes) S3KeyPrefix() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("s3_key_prefix"))
+	return terra.ReferenceAsString(sl.ref.Append("s3_key_prefix"))
 }
 
 type InstanceMetadataOptionsState struct {

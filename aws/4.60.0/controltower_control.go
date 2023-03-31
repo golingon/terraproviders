@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewControltowerControl creates a new instance of [ControltowerControl].
 func NewControltowerControl(name string, args ControltowerControlArgs) *ControltowerControl {
 	return &ControltowerControl{
 		Args: args,
@@ -19,28 +20,51 @@ func NewControltowerControl(name string, args ControltowerControlArgs) *Controlt
 
 var _ terra.Resource = (*ControltowerControl)(nil)
 
+// ControltowerControl represents the Terraform resource aws_controltower_control.
 type ControltowerControl struct {
-	Name  string
-	Args  ControltowerControlArgs
-	state *controltowerControlState
+	Name      string
+	Args      ControltowerControlArgs
+	state     *controltowerControlState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ControltowerControl].
 func (cc *ControltowerControl) Type() string {
 	return "aws_controltower_control"
 }
 
+// LocalName returns the local name for [ControltowerControl].
 func (cc *ControltowerControl) LocalName() string {
 	return cc.Name
 }
 
+// Configuration returns the configuration (args) for [ControltowerControl].
 func (cc *ControltowerControl) Configuration() interface{} {
 	return cc.Args
 }
 
+// DependOn is used for other resources to depend on [ControltowerControl].
+func (cc *ControltowerControl) DependOn() terra.Reference {
+	return terra.ReferenceResource(cc)
+}
+
+// Dependencies returns the list of resources [ControltowerControl] depends_on.
+func (cc *ControltowerControl) Dependencies() terra.Dependencies {
+	return cc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ControltowerControl].
+func (cc *ControltowerControl) LifecycleManagement() *terra.Lifecycle {
+	return cc.Lifecycle
+}
+
+// Attributes returns the attributes for [ControltowerControl].
 func (cc *ControltowerControl) Attributes() controltowerControlAttributes {
 	return controltowerControlAttributes{ref: terra.ReferenceResource(cc)}
 }
 
+// ImportState imports the given attribute values into [ControltowerControl]'s state.
 func (cc *ControltowerControl) ImportState(av io.Reader) error {
 	cc.state = &controltowerControlState{}
 	if err := json.NewDecoder(av).Decode(cc.state); err != nil {
@@ -49,10 +73,12 @@ func (cc *ControltowerControl) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ControltowerControl] has state.
 func (cc *ControltowerControl) State() (*controltowerControlState, bool) {
 	return cc.state, cc.state != nil
 }
 
+// StateMust returns the state for [ControltowerControl]. Panics if the state is nil.
 func (cc *ControltowerControl) StateMust() *controltowerControlState {
 	if cc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cc.Type(), cc.LocalName()))
@@ -60,10 +86,7 @@ func (cc *ControltowerControl) StateMust() *controltowerControlState {
 	return cc.state
 }
 
-func (cc *ControltowerControl) DependOn() terra.Reference {
-	return terra.ReferenceResource(cc)
-}
-
+// ControltowerControlArgs contains the configurations for aws_controltower_control.
 type ControltowerControlArgs struct {
 	// ControlIdentifier: string, required
 	ControlIdentifier terra.StringValue `hcl:"control_identifier,attr" validate:"required"`
@@ -73,27 +96,28 @@ type ControltowerControlArgs struct {
 	TargetIdentifier terra.StringValue `hcl:"target_identifier,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *controltowercontrol.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ControltowerControl depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type controltowerControlAttributes struct {
 	ref terra.Reference
 }
 
+// ControlIdentifier returns a reference to field control_identifier of aws_controltower_control.
 func (cc controltowerControlAttributes) ControlIdentifier() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("control_identifier"))
+	return terra.ReferenceAsString(cc.ref.Append("control_identifier"))
 }
 
+// Id returns a reference to field id of aws_controltower_control.
 func (cc controltowerControlAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("id"))
+	return terra.ReferenceAsString(cc.ref.Append("id"))
 }
 
+// TargetIdentifier returns a reference to field target_identifier of aws_controltower_control.
 func (cc controltowerControlAttributes) TargetIdentifier() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("target_identifier"))
+	return terra.ReferenceAsString(cc.ref.Append("target_identifier"))
 }
 
 func (cc controltowerControlAttributes) Timeouts() controltowercontrol.TimeoutsAttributes {
-	return terra.ReferenceSingle[controltowercontrol.TimeoutsAttributes](cc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[controltowercontrol.TimeoutsAttributes](cc.ref.Append("timeouts"))
 }
 
 type controltowerControlState struct {

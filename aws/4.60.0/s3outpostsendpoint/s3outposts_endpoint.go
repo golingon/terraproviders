@@ -26,7 +26,7 @@ func (ni NetworkInterfacesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ni NetworkInterfacesAttributes) NetworkInterfaceId() terra.StringValue {
-	return terra.ReferenceString(ni.ref.Append("network_interface_id"))
+	return terra.ReferenceAsString(ni.ref.Append("network_interface_id"))
 }
 
 type NetworkInterfacesState struct {

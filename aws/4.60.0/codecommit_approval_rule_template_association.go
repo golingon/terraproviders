@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCodecommitApprovalRuleTemplateAssociation creates a new instance of [CodecommitApprovalRuleTemplateAssociation].
 func NewCodecommitApprovalRuleTemplateAssociation(name string, args CodecommitApprovalRuleTemplateAssociationArgs) *CodecommitApprovalRuleTemplateAssociation {
 	return &CodecommitApprovalRuleTemplateAssociation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCodecommitApprovalRuleTemplateAssociation(name string, args CodecommitAp
 
 var _ terra.Resource = (*CodecommitApprovalRuleTemplateAssociation)(nil)
 
+// CodecommitApprovalRuleTemplateAssociation represents the Terraform resource aws_codecommit_approval_rule_template_association.
 type CodecommitApprovalRuleTemplateAssociation struct {
-	Name  string
-	Args  CodecommitApprovalRuleTemplateAssociationArgs
-	state *codecommitApprovalRuleTemplateAssociationState
+	Name      string
+	Args      CodecommitApprovalRuleTemplateAssociationArgs
+	state     *codecommitApprovalRuleTemplateAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CodecommitApprovalRuleTemplateAssociation].
 func (carta *CodecommitApprovalRuleTemplateAssociation) Type() string {
 	return "aws_codecommit_approval_rule_template_association"
 }
 
+// LocalName returns the local name for [CodecommitApprovalRuleTemplateAssociation].
 func (carta *CodecommitApprovalRuleTemplateAssociation) LocalName() string {
 	return carta.Name
 }
 
+// Configuration returns the configuration (args) for [CodecommitApprovalRuleTemplateAssociation].
 func (carta *CodecommitApprovalRuleTemplateAssociation) Configuration() interface{} {
 	return carta.Args
 }
 
+// DependOn is used for other resources to depend on [CodecommitApprovalRuleTemplateAssociation].
+func (carta *CodecommitApprovalRuleTemplateAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(carta)
+}
+
+// Dependencies returns the list of resources [CodecommitApprovalRuleTemplateAssociation] depends_on.
+func (carta *CodecommitApprovalRuleTemplateAssociation) Dependencies() terra.Dependencies {
+	return carta.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CodecommitApprovalRuleTemplateAssociation].
+func (carta *CodecommitApprovalRuleTemplateAssociation) LifecycleManagement() *terra.Lifecycle {
+	return carta.Lifecycle
+}
+
+// Attributes returns the attributes for [CodecommitApprovalRuleTemplateAssociation].
 func (carta *CodecommitApprovalRuleTemplateAssociation) Attributes() codecommitApprovalRuleTemplateAssociationAttributes {
 	return codecommitApprovalRuleTemplateAssociationAttributes{ref: terra.ReferenceResource(carta)}
 }
 
+// ImportState imports the given attribute values into [CodecommitApprovalRuleTemplateAssociation]'s state.
 func (carta *CodecommitApprovalRuleTemplateAssociation) ImportState(av io.Reader) error {
 	carta.state = &codecommitApprovalRuleTemplateAssociationState{}
 	if err := json.NewDecoder(av).Decode(carta.state); err != nil {
@@ -48,10 +72,12 @@ func (carta *CodecommitApprovalRuleTemplateAssociation) ImportState(av io.Reader
 	return nil
 }
 
+// State returns the state and a bool indicating if [CodecommitApprovalRuleTemplateAssociation] has state.
 func (carta *CodecommitApprovalRuleTemplateAssociation) State() (*codecommitApprovalRuleTemplateAssociationState, bool) {
 	return carta.state, carta.state != nil
 }
 
+// StateMust returns the state for [CodecommitApprovalRuleTemplateAssociation]. Panics if the state is nil.
 func (carta *CodecommitApprovalRuleTemplateAssociation) StateMust() *codecommitApprovalRuleTemplateAssociationState {
 	if carta.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", carta.Type(), carta.LocalName()))
@@ -59,10 +85,7 @@ func (carta *CodecommitApprovalRuleTemplateAssociation) StateMust() *codecommitA
 	return carta.state
 }
 
-func (carta *CodecommitApprovalRuleTemplateAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(carta)
-}
-
+// CodecommitApprovalRuleTemplateAssociationArgs contains the configurations for aws_codecommit_approval_rule_template_association.
 type CodecommitApprovalRuleTemplateAssociationArgs struct {
 	// ApprovalRuleTemplateName: string, required
 	ApprovalRuleTemplateName terra.StringValue `hcl:"approval_rule_template_name,attr" validate:"required"`
@@ -70,23 +93,24 @@ type CodecommitApprovalRuleTemplateAssociationArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// RepositoryName: string, required
 	RepositoryName terra.StringValue `hcl:"repository_name,attr" validate:"required"`
-	// DependsOn contains resources that CodecommitApprovalRuleTemplateAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type codecommitApprovalRuleTemplateAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// ApprovalRuleTemplateName returns a reference to field approval_rule_template_name of aws_codecommit_approval_rule_template_association.
 func (carta codecommitApprovalRuleTemplateAssociationAttributes) ApprovalRuleTemplateName() terra.StringValue {
-	return terra.ReferenceString(carta.ref.Append("approval_rule_template_name"))
+	return terra.ReferenceAsString(carta.ref.Append("approval_rule_template_name"))
 }
 
+// Id returns a reference to field id of aws_codecommit_approval_rule_template_association.
 func (carta codecommitApprovalRuleTemplateAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(carta.ref.Append("id"))
+	return terra.ReferenceAsString(carta.ref.Append("id"))
 }
 
+// RepositoryName returns a reference to field repository_name of aws_codecommit_approval_rule_template_association.
 func (carta codecommitApprovalRuleTemplateAssociationAttributes) RepositoryName() terra.StringValue {
-	return terra.ReferenceString(carta.ref.Append("repository_name"))
+	return terra.ReferenceAsString(carta.ref.Append("repository_name"))
 }
 
 type codecommitApprovalRuleTemplateAssociationState struct {

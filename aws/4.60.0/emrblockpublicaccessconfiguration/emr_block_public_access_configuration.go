@@ -31,11 +31,11 @@ func (ppsgrr PermittedPublicSecurityGroupRuleRangeAttributes) InternalTokens() h
 }
 
 func (ppsgrr PermittedPublicSecurityGroupRuleRangeAttributes) MaxRange() terra.NumberValue {
-	return terra.ReferenceNumber(ppsgrr.ref.Append("max_range"))
+	return terra.ReferenceAsNumber(ppsgrr.ref.Append("max_range"))
 }
 
 func (ppsgrr PermittedPublicSecurityGroupRuleRangeAttributes) MinRange() terra.NumberValue {
-	return terra.ReferenceNumber(ppsgrr.ref.Append("min_range"))
+	return terra.ReferenceAsNumber(ppsgrr.ref.Append("min_range"))
 }
 
 type PermittedPublicSecurityGroupRuleRangeState struct {

@@ -137,35 +137,35 @@ func (da DefaultActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (da DefaultActionAttributes) Order() terra.NumberValue {
-	return terra.ReferenceNumber(da.ref.Append("order"))
+	return terra.ReferenceAsNumber(da.ref.Append("order"))
 }
 
 func (da DefaultActionAttributes) TargetGroupArn() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("target_group_arn"))
+	return terra.ReferenceAsString(da.ref.Append("target_group_arn"))
 }
 
 func (da DefaultActionAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(da.ref.Append("type"))
+	return terra.ReferenceAsString(da.ref.Append("type"))
 }
 
 func (da DefaultActionAttributes) AuthenticateCognito() terra.ListValue[AuthenticateCognitoAttributes] {
-	return terra.ReferenceList[AuthenticateCognitoAttributes](da.ref.Append("authenticate_cognito"))
+	return terra.ReferenceAsList[AuthenticateCognitoAttributes](da.ref.Append("authenticate_cognito"))
 }
 
 func (da DefaultActionAttributes) AuthenticateOidc() terra.ListValue[AuthenticateOidcAttributes] {
-	return terra.ReferenceList[AuthenticateOidcAttributes](da.ref.Append("authenticate_oidc"))
+	return terra.ReferenceAsList[AuthenticateOidcAttributes](da.ref.Append("authenticate_oidc"))
 }
 
 func (da DefaultActionAttributes) FixedResponse() terra.ListValue[FixedResponseAttributes] {
-	return terra.ReferenceList[FixedResponseAttributes](da.ref.Append("fixed_response"))
+	return terra.ReferenceAsList[FixedResponseAttributes](da.ref.Append("fixed_response"))
 }
 
 func (da DefaultActionAttributes) Forward() terra.ListValue[ForwardAttributes] {
-	return terra.ReferenceList[ForwardAttributes](da.ref.Append("forward"))
+	return terra.ReferenceAsList[ForwardAttributes](da.ref.Append("forward"))
 }
 
 func (da DefaultActionAttributes) Redirect() terra.ListValue[RedirectAttributes] {
-	return terra.ReferenceList[RedirectAttributes](da.ref.Append("redirect"))
+	return terra.ReferenceAsList[RedirectAttributes](da.ref.Append("redirect"))
 }
 
 type AuthenticateCognitoAttributes struct {
@@ -185,35 +185,35 @@ func (ac AuthenticateCognitoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ac AuthenticateCognitoAttributes) AuthenticationRequestExtraParams() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ac.ref.Append("authentication_request_extra_params"))
+	return terra.ReferenceAsMap[terra.StringValue](ac.ref.Append("authentication_request_extra_params"))
 }
 
 func (ac AuthenticateCognitoAttributes) OnUnauthenticatedRequest() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("on_unauthenticated_request"))
+	return terra.ReferenceAsString(ac.ref.Append("on_unauthenticated_request"))
 }
 
 func (ac AuthenticateCognitoAttributes) Scope() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("scope"))
+	return terra.ReferenceAsString(ac.ref.Append("scope"))
 }
 
 func (ac AuthenticateCognitoAttributes) SessionCookieName() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("session_cookie_name"))
+	return terra.ReferenceAsString(ac.ref.Append("session_cookie_name"))
 }
 
 func (ac AuthenticateCognitoAttributes) SessionTimeout() terra.NumberValue {
-	return terra.ReferenceNumber(ac.ref.Append("session_timeout"))
+	return terra.ReferenceAsNumber(ac.ref.Append("session_timeout"))
 }
 
 func (ac AuthenticateCognitoAttributes) UserPoolArn() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("user_pool_arn"))
+	return terra.ReferenceAsString(ac.ref.Append("user_pool_arn"))
 }
 
 func (ac AuthenticateCognitoAttributes) UserPoolClientId() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("user_pool_client_id"))
+	return terra.ReferenceAsString(ac.ref.Append("user_pool_client_id"))
 }
 
 func (ac AuthenticateCognitoAttributes) UserPoolDomain() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("user_pool_domain"))
+	return terra.ReferenceAsString(ac.ref.Append("user_pool_domain"))
 }
 
 type AuthenticateOidcAttributes struct {
@@ -233,47 +233,47 @@ func (ao AuthenticateOidcAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ao AuthenticateOidcAttributes) AuthenticationRequestExtraParams() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ao.ref.Append("authentication_request_extra_params"))
+	return terra.ReferenceAsMap[terra.StringValue](ao.ref.Append("authentication_request_extra_params"))
 }
 
 func (ao AuthenticateOidcAttributes) AuthorizationEndpoint() terra.StringValue {
-	return terra.ReferenceString(ao.ref.Append("authorization_endpoint"))
+	return terra.ReferenceAsString(ao.ref.Append("authorization_endpoint"))
 }
 
 func (ao AuthenticateOidcAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(ao.ref.Append("client_id"))
+	return terra.ReferenceAsString(ao.ref.Append("client_id"))
 }
 
 func (ao AuthenticateOidcAttributes) ClientSecret() terra.StringValue {
-	return terra.ReferenceString(ao.ref.Append("client_secret"))
+	return terra.ReferenceAsString(ao.ref.Append("client_secret"))
 }
 
 func (ao AuthenticateOidcAttributes) Issuer() terra.StringValue {
-	return terra.ReferenceString(ao.ref.Append("issuer"))
+	return terra.ReferenceAsString(ao.ref.Append("issuer"))
 }
 
 func (ao AuthenticateOidcAttributes) OnUnauthenticatedRequest() terra.StringValue {
-	return terra.ReferenceString(ao.ref.Append("on_unauthenticated_request"))
+	return terra.ReferenceAsString(ao.ref.Append("on_unauthenticated_request"))
 }
 
 func (ao AuthenticateOidcAttributes) Scope() terra.StringValue {
-	return terra.ReferenceString(ao.ref.Append("scope"))
+	return terra.ReferenceAsString(ao.ref.Append("scope"))
 }
 
 func (ao AuthenticateOidcAttributes) SessionCookieName() terra.StringValue {
-	return terra.ReferenceString(ao.ref.Append("session_cookie_name"))
+	return terra.ReferenceAsString(ao.ref.Append("session_cookie_name"))
 }
 
 func (ao AuthenticateOidcAttributes) SessionTimeout() terra.NumberValue {
-	return terra.ReferenceNumber(ao.ref.Append("session_timeout"))
+	return terra.ReferenceAsNumber(ao.ref.Append("session_timeout"))
 }
 
 func (ao AuthenticateOidcAttributes) TokenEndpoint() terra.StringValue {
-	return terra.ReferenceString(ao.ref.Append("token_endpoint"))
+	return terra.ReferenceAsString(ao.ref.Append("token_endpoint"))
 }
 
 func (ao AuthenticateOidcAttributes) UserInfoEndpoint() terra.StringValue {
-	return terra.ReferenceString(ao.ref.Append("user_info_endpoint"))
+	return terra.ReferenceAsString(ao.ref.Append("user_info_endpoint"))
 }
 
 type FixedResponseAttributes struct {
@@ -293,15 +293,15 @@ func (fr FixedResponseAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fr FixedResponseAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(fr.ref.Append("content_type"))
+	return terra.ReferenceAsString(fr.ref.Append("content_type"))
 }
 
 func (fr FixedResponseAttributes) MessageBody() terra.StringValue {
-	return terra.ReferenceString(fr.ref.Append("message_body"))
+	return terra.ReferenceAsString(fr.ref.Append("message_body"))
 }
 
 func (fr FixedResponseAttributes) StatusCode() terra.StringValue {
-	return terra.ReferenceString(fr.ref.Append("status_code"))
+	return terra.ReferenceAsString(fr.ref.Append("status_code"))
 }
 
 type ForwardAttributes struct {
@@ -321,11 +321,11 @@ func (f ForwardAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f ForwardAttributes) Stickiness() terra.ListValue[StickinessAttributes] {
-	return terra.ReferenceList[StickinessAttributes](f.ref.Append("stickiness"))
+	return terra.ReferenceAsList[StickinessAttributes](f.ref.Append("stickiness"))
 }
 
 func (f ForwardAttributes) TargetGroup() terra.SetValue[TargetGroupAttributes] {
-	return terra.ReferenceSet[TargetGroupAttributes](f.ref.Append("target_group"))
+	return terra.ReferenceAsSet[TargetGroupAttributes](f.ref.Append("target_group"))
 }
 
 type StickinessAttributes struct {
@@ -345,11 +345,11 @@ func (s StickinessAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s StickinessAttributes) Duration() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("duration"))
+	return terra.ReferenceAsNumber(s.ref.Append("duration"))
 }
 
 func (s StickinessAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("enabled"))
+	return terra.ReferenceAsBool(s.ref.Append("enabled"))
 }
 
 type TargetGroupAttributes struct {
@@ -369,11 +369,11 @@ func (tg TargetGroupAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tg TargetGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(tg.ref.Append("arn"))
+	return terra.ReferenceAsString(tg.ref.Append("arn"))
 }
 
 func (tg TargetGroupAttributes) Weight() terra.NumberValue {
-	return terra.ReferenceNumber(tg.ref.Append("weight"))
+	return terra.ReferenceAsNumber(tg.ref.Append("weight"))
 }
 
 type RedirectAttributes struct {
@@ -393,27 +393,27 @@ func (r RedirectAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RedirectAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("host"))
+	return terra.ReferenceAsString(r.ref.Append("host"))
 }
 
 func (r RedirectAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("path"))
+	return terra.ReferenceAsString(r.ref.Append("path"))
 }
 
 func (r RedirectAttributes) Port() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("port"))
+	return terra.ReferenceAsString(r.ref.Append("port"))
 }
 
 func (r RedirectAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("protocol"))
+	return terra.ReferenceAsString(r.ref.Append("protocol"))
 }
 
 func (r RedirectAttributes) Query() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("query"))
+	return terra.ReferenceAsString(r.ref.Append("query"))
 }
 
 func (r RedirectAttributes) StatusCode() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("status_code"))
+	return terra.ReferenceAsString(r.ref.Append("status_code"))
 }
 
 type TimeoutsAttributes struct {
@@ -433,7 +433,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type DefaultActionState struct {

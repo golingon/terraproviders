@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCognitoUserGroup creates a new instance of [CognitoUserGroup].
 func NewCognitoUserGroup(name string, args CognitoUserGroupArgs) *CognitoUserGroup {
 	return &CognitoUserGroup{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCognitoUserGroup(name string, args CognitoUserGroupArgs) *CognitoUserGro
 
 var _ terra.Resource = (*CognitoUserGroup)(nil)
 
+// CognitoUserGroup represents the Terraform resource aws_cognito_user_group.
 type CognitoUserGroup struct {
-	Name  string
-	Args  CognitoUserGroupArgs
-	state *cognitoUserGroupState
+	Name      string
+	Args      CognitoUserGroupArgs
+	state     *cognitoUserGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CognitoUserGroup].
 func (cug *CognitoUserGroup) Type() string {
 	return "aws_cognito_user_group"
 }
 
+// LocalName returns the local name for [CognitoUserGroup].
 func (cug *CognitoUserGroup) LocalName() string {
 	return cug.Name
 }
 
+// Configuration returns the configuration (args) for [CognitoUserGroup].
 func (cug *CognitoUserGroup) Configuration() interface{} {
 	return cug.Args
 }
 
+// DependOn is used for other resources to depend on [CognitoUserGroup].
+func (cug *CognitoUserGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(cug)
+}
+
+// Dependencies returns the list of resources [CognitoUserGroup] depends_on.
+func (cug *CognitoUserGroup) Dependencies() terra.Dependencies {
+	return cug.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CognitoUserGroup].
+func (cug *CognitoUserGroup) LifecycleManagement() *terra.Lifecycle {
+	return cug.Lifecycle
+}
+
+// Attributes returns the attributes for [CognitoUserGroup].
 func (cug *CognitoUserGroup) Attributes() cognitoUserGroupAttributes {
 	return cognitoUserGroupAttributes{ref: terra.ReferenceResource(cug)}
 }
 
+// ImportState imports the given attribute values into [CognitoUserGroup]'s state.
 func (cug *CognitoUserGroup) ImportState(av io.Reader) error {
 	cug.state = &cognitoUserGroupState{}
 	if err := json.NewDecoder(av).Decode(cug.state); err != nil {
@@ -48,10 +72,12 @@ func (cug *CognitoUserGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CognitoUserGroup] has state.
 func (cug *CognitoUserGroup) State() (*cognitoUserGroupState, bool) {
 	return cug.state, cug.state != nil
 }
 
+// StateMust returns the state for [CognitoUserGroup]. Panics if the state is nil.
 func (cug *CognitoUserGroup) StateMust() *cognitoUserGroupState {
 	if cug.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cug.Type(), cug.LocalName()))
@@ -59,10 +85,7 @@ func (cug *CognitoUserGroup) StateMust() *cognitoUserGroupState {
 	return cug.state
 }
 
-func (cug *CognitoUserGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(cug)
-}
-
+// CognitoUserGroupArgs contains the configurations for aws_cognito_user_group.
 type CognitoUserGroupArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -76,35 +99,39 @@ type CognitoUserGroupArgs struct {
 	RoleArn terra.StringValue `hcl:"role_arn,attr"`
 	// UserPoolId: string, required
 	UserPoolId terra.StringValue `hcl:"user_pool_id,attr" validate:"required"`
-	// DependsOn contains resources that CognitoUserGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cognitoUserGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of aws_cognito_user_group.
 func (cug cognitoUserGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cug.ref.Append("description"))
+	return terra.ReferenceAsString(cug.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_cognito_user_group.
 func (cug cognitoUserGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cug.ref.Append("id"))
+	return terra.ReferenceAsString(cug.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_cognito_user_group.
 func (cug cognitoUserGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cug.ref.Append("name"))
+	return terra.ReferenceAsString(cug.ref.Append("name"))
 }
 
+// Precedence returns a reference to field precedence of aws_cognito_user_group.
 func (cug cognitoUserGroupAttributes) Precedence() terra.NumberValue {
-	return terra.ReferenceNumber(cug.ref.Append("precedence"))
+	return terra.ReferenceAsNumber(cug.ref.Append("precedence"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_cognito_user_group.
 func (cug cognitoUserGroupAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(cug.ref.Append("role_arn"))
+	return terra.ReferenceAsString(cug.ref.Append("role_arn"))
 }
 
+// UserPoolId returns a reference to field user_pool_id of aws_cognito_user_group.
 func (cug cognitoUserGroupAttributes) UserPoolId() terra.StringValue {
-	return terra.ReferenceString(cug.ref.Append("user_pool_id"))
+	return terra.ReferenceAsString(cug.ref.Append("user_pool_id"))
 }
 
 type cognitoUserGroupState struct {

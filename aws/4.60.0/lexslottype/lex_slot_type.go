@@ -40,11 +40,11 @@ func (ev EnumerationValueAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ev EnumerationValueAttributes) Synonyms() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ev.ref.Append("synonyms"))
+	return terra.ReferenceAsSet[terra.StringValue](ev.ref.Append("synonyms"))
 }
 
 func (ev EnumerationValueAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(ev.ref.Append("value"))
+	return terra.ReferenceAsString(ev.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
@@ -64,15 +64,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type EnumerationValueState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSagemakerWorkteam creates a new instance of [SagemakerWorkteam].
 func NewSagemakerWorkteam(name string, args SagemakerWorkteamArgs) *SagemakerWorkteam {
 	return &SagemakerWorkteam{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSagemakerWorkteam(name string, args SagemakerWorkteamArgs) *SagemakerWor
 
 var _ terra.Resource = (*SagemakerWorkteam)(nil)
 
+// SagemakerWorkteam represents the Terraform resource aws_sagemaker_workteam.
 type SagemakerWorkteam struct {
-	Name  string
-	Args  SagemakerWorkteamArgs
-	state *sagemakerWorkteamState
+	Name      string
+	Args      SagemakerWorkteamArgs
+	state     *sagemakerWorkteamState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SagemakerWorkteam].
 func (sw *SagemakerWorkteam) Type() string {
 	return "aws_sagemaker_workteam"
 }
 
+// LocalName returns the local name for [SagemakerWorkteam].
 func (sw *SagemakerWorkteam) LocalName() string {
 	return sw.Name
 }
 
+// Configuration returns the configuration (args) for [SagemakerWorkteam].
 func (sw *SagemakerWorkteam) Configuration() interface{} {
 	return sw.Args
 }
 
+// DependOn is used for other resources to depend on [SagemakerWorkteam].
+func (sw *SagemakerWorkteam) DependOn() terra.Reference {
+	return terra.ReferenceResource(sw)
+}
+
+// Dependencies returns the list of resources [SagemakerWorkteam] depends_on.
+func (sw *SagemakerWorkteam) Dependencies() terra.Dependencies {
+	return sw.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SagemakerWorkteam].
+func (sw *SagemakerWorkteam) LifecycleManagement() *terra.Lifecycle {
+	return sw.Lifecycle
+}
+
+// Attributes returns the attributes for [SagemakerWorkteam].
 func (sw *SagemakerWorkteam) Attributes() sagemakerWorkteamAttributes {
 	return sagemakerWorkteamAttributes{ref: terra.ReferenceResource(sw)}
 }
 
+// ImportState imports the given attribute values into [SagemakerWorkteam]'s state.
 func (sw *SagemakerWorkteam) ImportState(av io.Reader) error {
 	sw.state = &sagemakerWorkteamState{}
 	if err := json.NewDecoder(av).Decode(sw.state); err != nil {
@@ -49,10 +73,12 @@ func (sw *SagemakerWorkteam) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SagemakerWorkteam] has state.
 func (sw *SagemakerWorkteam) State() (*sagemakerWorkteamState, bool) {
 	return sw.state, sw.state != nil
 }
 
+// StateMust returns the state for [SagemakerWorkteam]. Panics if the state is nil.
 func (sw *SagemakerWorkteam) StateMust() *sagemakerWorkteamState {
 	if sw.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sw.Type(), sw.LocalName()))
@@ -60,10 +86,7 @@ func (sw *SagemakerWorkteam) StateMust() *sagemakerWorkteamState {
 	return sw.state
 }
 
-func (sw *SagemakerWorkteam) DependOn() terra.Reference {
-	return terra.ReferenceResource(sw)
-}
-
+// SagemakerWorkteamArgs contains the configurations for aws_sagemaker_workteam.
 type SagemakerWorkteamArgs struct {
 	// Description: string, required
 	Description terra.StringValue `hcl:"description,attr" validate:"required"`
@@ -81,51 +104,57 @@ type SagemakerWorkteamArgs struct {
 	MemberDefinition []sagemakerworkteam.MemberDefinition `hcl:"member_definition,block" validate:"min=1,max=10"`
 	// NotificationConfiguration: optional
 	NotificationConfiguration *sagemakerworkteam.NotificationConfiguration `hcl:"notification_configuration,block"`
-	// DependsOn contains resources that SagemakerWorkteam depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sagemakerWorkteamAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_sagemaker_workteam.
 func (sw sagemakerWorkteamAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sw.ref.Append("arn"))
+	return terra.ReferenceAsString(sw.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_sagemaker_workteam.
 func (sw sagemakerWorkteamAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sw.ref.Append("description"))
+	return terra.ReferenceAsString(sw.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_sagemaker_workteam.
 func (sw sagemakerWorkteamAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sw.ref.Append("id"))
+	return terra.ReferenceAsString(sw.ref.Append("id"))
 }
 
+// Subdomain returns a reference to field subdomain of aws_sagemaker_workteam.
 func (sw sagemakerWorkteamAttributes) Subdomain() terra.StringValue {
-	return terra.ReferenceString(sw.ref.Append("subdomain"))
+	return terra.ReferenceAsString(sw.ref.Append("subdomain"))
 }
 
+// Tags returns a reference to field tags of aws_sagemaker_workteam.
 func (sw sagemakerWorkteamAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sw.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sw.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_sagemaker_workteam.
 func (sw sagemakerWorkteamAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sw.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sw.ref.Append("tags_all"))
 }
 
+// WorkforceName returns a reference to field workforce_name of aws_sagemaker_workteam.
 func (sw sagemakerWorkteamAttributes) WorkforceName() terra.StringValue {
-	return terra.ReferenceString(sw.ref.Append("workforce_name"))
+	return terra.ReferenceAsString(sw.ref.Append("workforce_name"))
 }
 
+// WorkteamName returns a reference to field workteam_name of aws_sagemaker_workteam.
 func (sw sagemakerWorkteamAttributes) WorkteamName() terra.StringValue {
-	return terra.ReferenceString(sw.ref.Append("workteam_name"))
+	return terra.ReferenceAsString(sw.ref.Append("workteam_name"))
 }
 
 func (sw sagemakerWorkteamAttributes) MemberDefinition() terra.ListValue[sagemakerworkteam.MemberDefinitionAttributes] {
-	return terra.ReferenceList[sagemakerworkteam.MemberDefinitionAttributes](sw.ref.Append("member_definition"))
+	return terra.ReferenceAsList[sagemakerworkteam.MemberDefinitionAttributes](sw.ref.Append("member_definition"))
 }
 
 func (sw sagemakerWorkteamAttributes) NotificationConfiguration() terra.ListValue[sagemakerworkteam.NotificationConfigurationAttributes] {
-	return terra.ReferenceList[sagemakerworkteam.NotificationConfigurationAttributes](sw.ref.Append("notification_configuration"))
+	return terra.ReferenceAsList[sagemakerworkteam.NotificationConfigurationAttributes](sw.ref.Append("notification_configuration"))
 }
 
 type sagemakerWorkteamState struct {

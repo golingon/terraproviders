@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataAcmpcaCertificate creates a new instance of [DataAcmpcaCertificate].
 func NewDataAcmpcaCertificate(name string, args DataAcmpcaCertificateArgs) *DataAcmpcaCertificate {
 	return &DataAcmpcaCertificate{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataAcmpcaCertificate(name string, args DataAcmpcaCertificateArgs) *Data
 
 var _ terra.DataResource = (*DataAcmpcaCertificate)(nil)
 
+// DataAcmpcaCertificate represents the Terraform data resource aws_acmpca_certificate.
 type DataAcmpcaCertificate struct {
 	Name string
 	Args DataAcmpcaCertificateArgs
 }
 
+// DataSource returns the Terraform object type for [DataAcmpcaCertificate].
 func (ac *DataAcmpcaCertificate) DataSource() string {
 	return "aws_acmpca_certificate"
 }
 
+// LocalName returns the local name for [DataAcmpcaCertificate].
 func (ac *DataAcmpcaCertificate) LocalName() string {
 	return ac.Name
 }
 
+// Configuration returns the configuration (args) for [DataAcmpcaCertificate].
 func (ac *DataAcmpcaCertificate) Configuration() interface{} {
 	return ac.Args
 }
 
+// Attributes returns the attributes for [DataAcmpcaCertificate].
 func (ac *DataAcmpcaCertificate) Attributes() dataAcmpcaCertificateAttributes {
 	return dataAcmpcaCertificateAttributes{ref: terra.ReferenceDataResource(ac)}
 }
 
+// DataAcmpcaCertificateArgs contains the configurations for aws_acmpca_certificate.
 type DataAcmpcaCertificateArgs struct {
 	// Arn: string, required
 	Arn terra.StringValue `hcl:"arn,attr" validate:"required"`
@@ -46,22 +53,27 @@ type dataAcmpcaCertificateAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_acmpca_certificate.
 func (ac dataAcmpcaCertificateAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("arn"))
+	return terra.ReferenceAsString(ac.ref.Append("arn"))
 }
 
+// Certificate returns a reference to field certificate of aws_acmpca_certificate.
 func (ac dataAcmpcaCertificateAttributes) Certificate() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("certificate"))
+	return terra.ReferenceAsString(ac.ref.Append("certificate"))
 }
 
+// CertificateAuthorityArn returns a reference to field certificate_authority_arn of aws_acmpca_certificate.
 func (ac dataAcmpcaCertificateAttributes) CertificateAuthorityArn() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("certificate_authority_arn"))
+	return terra.ReferenceAsString(ac.ref.Append("certificate_authority_arn"))
 }
 
+// CertificateChain returns a reference to field certificate_chain of aws_acmpca_certificate.
 func (ac dataAcmpcaCertificateAttributes) CertificateChain() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("certificate_chain"))
+	return terra.ReferenceAsString(ac.ref.Append("certificate_chain"))
 }
 
+// Id returns a reference to field id of aws_acmpca_certificate.
 func (ac dataAcmpcaCertificateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("id"))
+	return terra.ReferenceAsString(ac.ref.Append("id"))
 }

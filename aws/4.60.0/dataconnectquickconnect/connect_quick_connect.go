@@ -39,19 +39,19 @@ func (qcc QuickConnectConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (qcc QuickConnectConfigAttributes) QuickConnectType() terra.StringValue {
-	return terra.ReferenceString(qcc.ref.Append("quick_connect_type"))
+	return terra.ReferenceAsString(qcc.ref.Append("quick_connect_type"))
 }
 
 func (qcc QuickConnectConfigAttributes) PhoneConfig() terra.ListValue[PhoneConfigAttributes] {
-	return terra.ReferenceList[PhoneConfigAttributes](qcc.ref.Append("phone_config"))
+	return terra.ReferenceAsList[PhoneConfigAttributes](qcc.ref.Append("phone_config"))
 }
 
 func (qcc QuickConnectConfigAttributes) QueueConfig() terra.ListValue[QueueConfigAttributes] {
-	return terra.ReferenceList[QueueConfigAttributes](qcc.ref.Append("queue_config"))
+	return terra.ReferenceAsList[QueueConfigAttributes](qcc.ref.Append("queue_config"))
 }
 
 func (qcc QuickConnectConfigAttributes) UserConfig() terra.ListValue[UserConfigAttributes] {
-	return terra.ReferenceList[UserConfigAttributes](qcc.ref.Append("user_config"))
+	return terra.ReferenceAsList[UserConfigAttributes](qcc.ref.Append("user_config"))
 }
 
 type PhoneConfigAttributes struct {
@@ -71,7 +71,7 @@ func (pc PhoneConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pc PhoneConfigAttributes) PhoneNumber() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("phone_number"))
+	return terra.ReferenceAsString(pc.ref.Append("phone_number"))
 }
 
 type QueueConfigAttributes struct {
@@ -91,11 +91,11 @@ func (qc QueueConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (qc QueueConfigAttributes) ContactFlowId() terra.StringValue {
-	return terra.ReferenceString(qc.ref.Append("contact_flow_id"))
+	return terra.ReferenceAsString(qc.ref.Append("contact_flow_id"))
 }
 
 func (qc QueueConfigAttributes) QueueId() terra.StringValue {
-	return terra.ReferenceString(qc.ref.Append("queue_id"))
+	return terra.ReferenceAsString(qc.ref.Append("queue_id"))
 }
 
 type UserConfigAttributes struct {
@@ -115,11 +115,11 @@ func (uc UserConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (uc UserConfigAttributes) ContactFlowId() terra.StringValue {
-	return terra.ReferenceString(uc.ref.Append("contact_flow_id"))
+	return terra.ReferenceAsString(uc.ref.Append("contact_flow_id"))
 }
 
 func (uc UserConfigAttributes) UserId() terra.StringValue {
-	return terra.ReferenceString(uc.ref.Append("user_id"))
+	return terra.ReferenceAsString(uc.ref.Append("user_id"))
 }
 
 type QuickConnectConfigState struct {

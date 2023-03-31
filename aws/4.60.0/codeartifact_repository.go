@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCodeartifactRepository creates a new instance of [CodeartifactRepository].
 func NewCodeartifactRepository(name string, args CodeartifactRepositoryArgs) *CodeartifactRepository {
 	return &CodeartifactRepository{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCodeartifactRepository(name string, args CodeartifactRepositoryArgs) *Co
 
 var _ terra.Resource = (*CodeartifactRepository)(nil)
 
+// CodeartifactRepository represents the Terraform resource aws_codeartifact_repository.
 type CodeartifactRepository struct {
-	Name  string
-	Args  CodeartifactRepositoryArgs
-	state *codeartifactRepositoryState
+	Name      string
+	Args      CodeartifactRepositoryArgs
+	state     *codeartifactRepositoryState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CodeartifactRepository].
 func (cr *CodeartifactRepository) Type() string {
 	return "aws_codeartifact_repository"
 }
 
+// LocalName returns the local name for [CodeartifactRepository].
 func (cr *CodeartifactRepository) LocalName() string {
 	return cr.Name
 }
 
+// Configuration returns the configuration (args) for [CodeartifactRepository].
 func (cr *CodeartifactRepository) Configuration() interface{} {
 	return cr.Args
 }
 
+// DependOn is used for other resources to depend on [CodeartifactRepository].
+func (cr *CodeartifactRepository) DependOn() terra.Reference {
+	return terra.ReferenceResource(cr)
+}
+
+// Dependencies returns the list of resources [CodeartifactRepository] depends_on.
+func (cr *CodeartifactRepository) Dependencies() terra.Dependencies {
+	return cr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CodeartifactRepository].
+func (cr *CodeartifactRepository) LifecycleManagement() *terra.Lifecycle {
+	return cr.Lifecycle
+}
+
+// Attributes returns the attributes for [CodeartifactRepository].
 func (cr *CodeartifactRepository) Attributes() codeartifactRepositoryAttributes {
 	return codeartifactRepositoryAttributes{ref: terra.ReferenceResource(cr)}
 }
 
+// ImportState imports the given attribute values into [CodeartifactRepository]'s state.
 func (cr *CodeartifactRepository) ImportState(av io.Reader) error {
 	cr.state = &codeartifactRepositoryState{}
 	if err := json.NewDecoder(av).Decode(cr.state); err != nil {
@@ -49,10 +73,12 @@ func (cr *CodeartifactRepository) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CodeartifactRepository] has state.
 func (cr *CodeartifactRepository) State() (*codeartifactRepositoryState, bool) {
 	return cr.state, cr.state != nil
 }
 
+// StateMust returns the state for [CodeartifactRepository]. Panics if the state is nil.
 func (cr *CodeartifactRepository) StateMust() *codeartifactRepositoryState {
 	if cr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cr.Type(), cr.LocalName()))
@@ -60,10 +86,7 @@ func (cr *CodeartifactRepository) StateMust() *codeartifactRepositoryState {
 	return cr.state
 }
 
-func (cr *CodeartifactRepository) DependOn() terra.Reference {
-	return terra.ReferenceResource(cr)
-}
-
+// CodeartifactRepositoryArgs contains the configurations for aws_codeartifact_repository.
 type CodeartifactRepositoryArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -83,55 +106,62 @@ type CodeartifactRepositoryArgs struct {
 	ExternalConnections *codeartifactrepository.ExternalConnections `hcl:"external_connections,block"`
 	// Upstream: min=0
 	Upstream []codeartifactrepository.Upstream `hcl:"upstream,block" validate:"min=0"`
-	// DependsOn contains resources that CodeartifactRepository depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type codeartifactRepositoryAttributes struct {
 	ref terra.Reference
 }
 
+// AdministratorAccount returns a reference to field administrator_account of aws_codeartifact_repository.
 func (cr codeartifactRepositoryAttributes) AdministratorAccount() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("administrator_account"))
+	return terra.ReferenceAsString(cr.ref.Append("administrator_account"))
 }
 
+// Arn returns a reference to field arn of aws_codeartifact_repository.
 func (cr codeartifactRepositoryAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("arn"))
+	return terra.ReferenceAsString(cr.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_codeartifact_repository.
 func (cr codeartifactRepositoryAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("description"))
+	return terra.ReferenceAsString(cr.ref.Append("description"))
 }
 
+// Domain returns a reference to field domain of aws_codeartifact_repository.
 func (cr codeartifactRepositoryAttributes) Domain() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("domain"))
+	return terra.ReferenceAsString(cr.ref.Append("domain"))
 }
 
+// DomainOwner returns a reference to field domain_owner of aws_codeartifact_repository.
 func (cr codeartifactRepositoryAttributes) DomainOwner() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("domain_owner"))
+	return terra.ReferenceAsString(cr.ref.Append("domain_owner"))
 }
 
+// Id returns a reference to field id of aws_codeartifact_repository.
 func (cr codeartifactRepositoryAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("id"))
+	return terra.ReferenceAsString(cr.ref.Append("id"))
 }
 
+// Repository returns a reference to field repository of aws_codeartifact_repository.
 func (cr codeartifactRepositoryAttributes) Repository() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("repository"))
+	return terra.ReferenceAsString(cr.ref.Append("repository"))
 }
 
+// Tags returns a reference to field tags of aws_codeartifact_repository.
 func (cr codeartifactRepositoryAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cr.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_codeartifact_repository.
 func (cr codeartifactRepositoryAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cr.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](cr.ref.Append("tags_all"))
 }
 
 func (cr codeartifactRepositoryAttributes) ExternalConnections() terra.ListValue[codeartifactrepository.ExternalConnectionsAttributes] {
-	return terra.ReferenceList[codeartifactrepository.ExternalConnectionsAttributes](cr.ref.Append("external_connections"))
+	return terra.ReferenceAsList[codeartifactrepository.ExternalConnectionsAttributes](cr.ref.Append("external_connections"))
 }
 
 func (cr codeartifactRepositoryAttributes) Upstream() terra.ListValue[codeartifactrepository.UpstreamAttributes] {
-	return terra.ReferenceList[codeartifactrepository.UpstreamAttributes](cr.ref.Append("upstream"))
+	return terra.ReferenceAsList[codeartifactrepository.UpstreamAttributes](cr.ref.Append("upstream"))
 }
 
 type codeartifactRepositoryState struct {

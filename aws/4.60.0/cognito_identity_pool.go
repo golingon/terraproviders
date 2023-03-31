@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCognitoIdentityPool creates a new instance of [CognitoIdentityPool].
 func NewCognitoIdentityPool(name string, args CognitoIdentityPoolArgs) *CognitoIdentityPool {
 	return &CognitoIdentityPool{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCognitoIdentityPool(name string, args CognitoIdentityPoolArgs) *CognitoI
 
 var _ terra.Resource = (*CognitoIdentityPool)(nil)
 
+// CognitoIdentityPool represents the Terraform resource aws_cognito_identity_pool.
 type CognitoIdentityPool struct {
-	Name  string
-	Args  CognitoIdentityPoolArgs
-	state *cognitoIdentityPoolState
+	Name      string
+	Args      CognitoIdentityPoolArgs
+	state     *cognitoIdentityPoolState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CognitoIdentityPool].
 func (cip *CognitoIdentityPool) Type() string {
 	return "aws_cognito_identity_pool"
 }
 
+// LocalName returns the local name for [CognitoIdentityPool].
 func (cip *CognitoIdentityPool) LocalName() string {
 	return cip.Name
 }
 
+// Configuration returns the configuration (args) for [CognitoIdentityPool].
 func (cip *CognitoIdentityPool) Configuration() interface{} {
 	return cip.Args
 }
 
+// DependOn is used for other resources to depend on [CognitoIdentityPool].
+func (cip *CognitoIdentityPool) DependOn() terra.Reference {
+	return terra.ReferenceResource(cip)
+}
+
+// Dependencies returns the list of resources [CognitoIdentityPool] depends_on.
+func (cip *CognitoIdentityPool) Dependencies() terra.Dependencies {
+	return cip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CognitoIdentityPool].
+func (cip *CognitoIdentityPool) LifecycleManagement() *terra.Lifecycle {
+	return cip.Lifecycle
+}
+
+// Attributes returns the attributes for [CognitoIdentityPool].
 func (cip *CognitoIdentityPool) Attributes() cognitoIdentityPoolAttributes {
 	return cognitoIdentityPoolAttributes{ref: terra.ReferenceResource(cip)}
 }
 
+// ImportState imports the given attribute values into [CognitoIdentityPool]'s state.
 func (cip *CognitoIdentityPool) ImportState(av io.Reader) error {
 	cip.state = &cognitoIdentityPoolState{}
 	if err := json.NewDecoder(av).Decode(cip.state); err != nil {
@@ -49,10 +73,12 @@ func (cip *CognitoIdentityPool) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CognitoIdentityPool] has state.
 func (cip *CognitoIdentityPool) State() (*cognitoIdentityPoolState, bool) {
 	return cip.state, cip.state != nil
 }
 
+// StateMust returns the state for [CognitoIdentityPool]. Panics if the state is nil.
 func (cip *CognitoIdentityPool) StateMust() *cognitoIdentityPoolState {
 	if cip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cip.Type(), cip.LocalName()))
@@ -60,10 +86,7 @@ func (cip *CognitoIdentityPool) StateMust() *cognitoIdentityPoolState {
 	return cip.state
 }
 
-func (cip *CognitoIdentityPool) DependOn() terra.Reference {
-	return terra.ReferenceResource(cip)
-}
-
+// CognitoIdentityPoolArgs contains the configurations for aws_cognito_identity_pool.
 type CognitoIdentityPoolArgs struct {
 	// AllowClassicFlow: bool, optional
 	AllowClassicFlow terra.BoolValue `hcl:"allow_classic_flow,attr"`
@@ -87,59 +110,68 @@ type CognitoIdentityPoolArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// CognitoIdentityProviders: min=0
 	CognitoIdentityProviders []cognitoidentitypool.CognitoIdentityProviders `hcl:"cognito_identity_providers,block" validate:"min=0"`
-	// DependsOn contains resources that CognitoIdentityPool depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cognitoIdentityPoolAttributes struct {
 	ref terra.Reference
 }
 
+// AllowClassicFlow returns a reference to field allow_classic_flow of aws_cognito_identity_pool.
 func (cip cognitoIdentityPoolAttributes) AllowClassicFlow() terra.BoolValue {
-	return terra.ReferenceBool(cip.ref.Append("allow_classic_flow"))
+	return terra.ReferenceAsBool(cip.ref.Append("allow_classic_flow"))
 }
 
+// AllowUnauthenticatedIdentities returns a reference to field allow_unauthenticated_identities of aws_cognito_identity_pool.
 func (cip cognitoIdentityPoolAttributes) AllowUnauthenticatedIdentities() terra.BoolValue {
-	return terra.ReferenceBool(cip.ref.Append("allow_unauthenticated_identities"))
+	return terra.ReferenceAsBool(cip.ref.Append("allow_unauthenticated_identities"))
 }
 
+// Arn returns a reference to field arn of aws_cognito_identity_pool.
 func (cip cognitoIdentityPoolAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(cip.ref.Append("arn"))
+	return terra.ReferenceAsString(cip.ref.Append("arn"))
 }
 
+// DeveloperProviderName returns a reference to field developer_provider_name of aws_cognito_identity_pool.
 func (cip cognitoIdentityPoolAttributes) DeveloperProviderName() terra.StringValue {
-	return terra.ReferenceString(cip.ref.Append("developer_provider_name"))
+	return terra.ReferenceAsString(cip.ref.Append("developer_provider_name"))
 }
 
+// Id returns a reference to field id of aws_cognito_identity_pool.
 func (cip cognitoIdentityPoolAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cip.ref.Append("id"))
+	return terra.ReferenceAsString(cip.ref.Append("id"))
 }
 
+// IdentityPoolName returns a reference to field identity_pool_name of aws_cognito_identity_pool.
 func (cip cognitoIdentityPoolAttributes) IdentityPoolName() terra.StringValue {
-	return terra.ReferenceString(cip.ref.Append("identity_pool_name"))
+	return terra.ReferenceAsString(cip.ref.Append("identity_pool_name"))
 }
 
+// OpenidConnectProviderArns returns a reference to field openid_connect_provider_arns of aws_cognito_identity_pool.
 func (cip cognitoIdentityPoolAttributes) OpenidConnectProviderArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cip.ref.Append("openid_connect_provider_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](cip.ref.Append("openid_connect_provider_arns"))
 }
 
+// SamlProviderArns returns a reference to field saml_provider_arns of aws_cognito_identity_pool.
 func (cip cognitoIdentityPoolAttributes) SamlProviderArns() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cip.ref.Append("saml_provider_arns"))
+	return terra.ReferenceAsList[terra.StringValue](cip.ref.Append("saml_provider_arns"))
 }
 
+// SupportedLoginProviders returns a reference to field supported_login_providers of aws_cognito_identity_pool.
 func (cip cognitoIdentityPoolAttributes) SupportedLoginProviders() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cip.ref.Append("supported_login_providers"))
+	return terra.ReferenceAsMap[terra.StringValue](cip.ref.Append("supported_login_providers"))
 }
 
+// Tags returns a reference to field tags of aws_cognito_identity_pool.
 func (cip cognitoIdentityPoolAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cip.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cip.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_cognito_identity_pool.
 func (cip cognitoIdentityPoolAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cip.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](cip.ref.Append("tags_all"))
 }
 
 func (cip cognitoIdentityPoolAttributes) CognitoIdentityProviders() terra.SetValue[cognitoidentitypool.CognitoIdentityProvidersAttributes] {
-	return terra.ReferenceSet[cognitoidentitypool.CognitoIdentityProvidersAttributes](cip.ref.Append("cognito_identity_providers"))
+	return terra.ReferenceAsSet[cognitoidentitypool.CognitoIdentityProvidersAttributes](cip.ref.Append("cognito_identity_providers"))
 }
 
 type cognitoIdentityPoolState struct {

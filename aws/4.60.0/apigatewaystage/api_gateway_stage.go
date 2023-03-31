@@ -40,11 +40,11 @@ func (als AccessLogSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (als AccessLogSettingsAttributes) DestinationArn() terra.StringValue {
-	return terra.ReferenceString(als.ref.Append("destination_arn"))
+	return terra.ReferenceAsString(als.ref.Append("destination_arn"))
 }
 
 func (als AccessLogSettingsAttributes) Format() terra.StringValue {
-	return terra.ReferenceString(als.ref.Append("format"))
+	return terra.ReferenceAsString(als.ref.Append("format"))
 }
 
 type CanarySettingsAttributes struct {
@@ -64,15 +64,15 @@ func (cs CanarySettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cs CanarySettingsAttributes) PercentTraffic() terra.NumberValue {
-	return terra.ReferenceNumber(cs.ref.Append("percent_traffic"))
+	return terra.ReferenceAsNumber(cs.ref.Append("percent_traffic"))
 }
 
 func (cs CanarySettingsAttributes) StageVariableOverrides() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cs.ref.Append("stage_variable_overrides"))
+	return terra.ReferenceAsMap[terra.StringValue](cs.ref.Append("stage_variable_overrides"))
 }
 
 func (cs CanarySettingsAttributes) UseStageCache() terra.BoolValue {
-	return terra.ReferenceBool(cs.ref.Append("use_stage_cache"))
+	return terra.ReferenceAsBool(cs.ref.Append("use_stage_cache"))
 }
 
 type AccessLogSettingsState struct {

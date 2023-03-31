@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSesTemplate creates a new instance of [SesTemplate].
 func NewSesTemplate(name string, args SesTemplateArgs) *SesTemplate {
 	return &SesTemplate{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSesTemplate(name string, args SesTemplateArgs) *SesTemplate {
 
 var _ terra.Resource = (*SesTemplate)(nil)
 
+// SesTemplate represents the Terraform resource aws_ses_template.
 type SesTemplate struct {
-	Name  string
-	Args  SesTemplateArgs
-	state *sesTemplateState
+	Name      string
+	Args      SesTemplateArgs
+	state     *sesTemplateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SesTemplate].
 func (st *SesTemplate) Type() string {
 	return "aws_ses_template"
 }
 
+// LocalName returns the local name for [SesTemplate].
 func (st *SesTemplate) LocalName() string {
 	return st.Name
 }
 
+// Configuration returns the configuration (args) for [SesTemplate].
 func (st *SesTemplate) Configuration() interface{} {
 	return st.Args
 }
 
+// DependOn is used for other resources to depend on [SesTemplate].
+func (st *SesTemplate) DependOn() terra.Reference {
+	return terra.ReferenceResource(st)
+}
+
+// Dependencies returns the list of resources [SesTemplate] depends_on.
+func (st *SesTemplate) Dependencies() terra.Dependencies {
+	return st.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SesTemplate].
+func (st *SesTemplate) LifecycleManagement() *terra.Lifecycle {
+	return st.Lifecycle
+}
+
+// Attributes returns the attributes for [SesTemplate].
 func (st *SesTemplate) Attributes() sesTemplateAttributes {
 	return sesTemplateAttributes{ref: terra.ReferenceResource(st)}
 }
 
+// ImportState imports the given attribute values into [SesTemplate]'s state.
 func (st *SesTemplate) ImportState(av io.Reader) error {
 	st.state = &sesTemplateState{}
 	if err := json.NewDecoder(av).Decode(st.state); err != nil {
@@ -48,10 +72,12 @@ func (st *SesTemplate) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SesTemplate] has state.
 func (st *SesTemplate) State() (*sesTemplateState, bool) {
 	return st.state, st.state != nil
 }
 
+// StateMust returns the state for [SesTemplate]. Panics if the state is nil.
 func (st *SesTemplate) StateMust() *sesTemplateState {
 	if st.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", st.Type(), st.LocalName()))
@@ -59,10 +85,7 @@ func (st *SesTemplate) StateMust() *sesTemplateState {
 	return st.state
 }
 
-func (st *SesTemplate) DependOn() terra.Reference {
-	return terra.ReferenceResource(st)
-}
-
+// SesTemplateArgs contains the configurations for aws_ses_template.
 type SesTemplateArgs struct {
 	// Html: string, optional
 	Html terra.StringValue `hcl:"html,attr"`
@@ -74,35 +97,39 @@ type SesTemplateArgs struct {
 	Subject terra.StringValue `hcl:"subject,attr"`
 	// Text: string, optional
 	Text terra.StringValue `hcl:"text,attr"`
-	// DependsOn contains resources that SesTemplate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sesTemplateAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ses_template.
 func (st sesTemplateAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("arn"))
+	return terra.ReferenceAsString(st.ref.Append("arn"))
 }
 
+// Html returns a reference to field html of aws_ses_template.
 func (st sesTemplateAttributes) Html() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("html"))
+	return terra.ReferenceAsString(st.ref.Append("html"))
 }
 
+// Id returns a reference to field id of aws_ses_template.
 func (st sesTemplateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("id"))
+	return terra.ReferenceAsString(st.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_ses_template.
 func (st sesTemplateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("name"))
+	return terra.ReferenceAsString(st.ref.Append("name"))
 }
 
+// Subject returns a reference to field subject of aws_ses_template.
 func (st sesTemplateAttributes) Subject() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("subject"))
+	return terra.ReferenceAsString(st.ref.Append("subject"))
 }
 
+// Text returns a reference to field text of aws_ses_template.
 func (st sesTemplateAttributes) Text() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("text"))
+	return terra.ReferenceAsString(st.ref.Append("text"))
 }
 
 type sesTemplateState struct {

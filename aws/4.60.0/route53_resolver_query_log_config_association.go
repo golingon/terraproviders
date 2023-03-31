@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRoute53ResolverQueryLogConfigAssociation creates a new instance of [Route53ResolverQueryLogConfigAssociation].
 func NewRoute53ResolverQueryLogConfigAssociation(name string, args Route53ResolverQueryLogConfigAssociationArgs) *Route53ResolverQueryLogConfigAssociation {
 	return &Route53ResolverQueryLogConfigAssociation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRoute53ResolverQueryLogConfigAssociation(name string, args Route53Resolv
 
 var _ terra.Resource = (*Route53ResolverQueryLogConfigAssociation)(nil)
 
+// Route53ResolverQueryLogConfigAssociation represents the Terraform resource aws_route53_resolver_query_log_config_association.
 type Route53ResolverQueryLogConfigAssociation struct {
-	Name  string
-	Args  Route53ResolverQueryLogConfigAssociationArgs
-	state *route53ResolverQueryLogConfigAssociationState
+	Name      string
+	Args      Route53ResolverQueryLogConfigAssociationArgs
+	state     *route53ResolverQueryLogConfigAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Route53ResolverQueryLogConfigAssociation].
 func (rrqlca *Route53ResolverQueryLogConfigAssociation) Type() string {
 	return "aws_route53_resolver_query_log_config_association"
 }
 
+// LocalName returns the local name for [Route53ResolverQueryLogConfigAssociation].
 func (rrqlca *Route53ResolverQueryLogConfigAssociation) LocalName() string {
 	return rrqlca.Name
 }
 
+// Configuration returns the configuration (args) for [Route53ResolverQueryLogConfigAssociation].
 func (rrqlca *Route53ResolverQueryLogConfigAssociation) Configuration() interface{} {
 	return rrqlca.Args
 }
 
+// DependOn is used for other resources to depend on [Route53ResolverQueryLogConfigAssociation].
+func (rrqlca *Route53ResolverQueryLogConfigAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(rrqlca)
+}
+
+// Dependencies returns the list of resources [Route53ResolverQueryLogConfigAssociation] depends_on.
+func (rrqlca *Route53ResolverQueryLogConfigAssociation) Dependencies() terra.Dependencies {
+	return rrqlca.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Route53ResolverQueryLogConfigAssociation].
+func (rrqlca *Route53ResolverQueryLogConfigAssociation) LifecycleManagement() *terra.Lifecycle {
+	return rrqlca.Lifecycle
+}
+
+// Attributes returns the attributes for [Route53ResolverQueryLogConfigAssociation].
 func (rrqlca *Route53ResolverQueryLogConfigAssociation) Attributes() route53ResolverQueryLogConfigAssociationAttributes {
 	return route53ResolverQueryLogConfigAssociationAttributes{ref: terra.ReferenceResource(rrqlca)}
 }
 
+// ImportState imports the given attribute values into [Route53ResolverQueryLogConfigAssociation]'s state.
 func (rrqlca *Route53ResolverQueryLogConfigAssociation) ImportState(av io.Reader) error {
 	rrqlca.state = &route53ResolverQueryLogConfigAssociationState{}
 	if err := json.NewDecoder(av).Decode(rrqlca.state); err != nil {
@@ -48,10 +72,12 @@ func (rrqlca *Route53ResolverQueryLogConfigAssociation) ImportState(av io.Reader
 	return nil
 }
 
+// State returns the state and a bool indicating if [Route53ResolverQueryLogConfigAssociation] has state.
 func (rrqlca *Route53ResolverQueryLogConfigAssociation) State() (*route53ResolverQueryLogConfigAssociationState, bool) {
 	return rrqlca.state, rrqlca.state != nil
 }
 
+// StateMust returns the state for [Route53ResolverQueryLogConfigAssociation]. Panics if the state is nil.
 func (rrqlca *Route53ResolverQueryLogConfigAssociation) StateMust() *route53ResolverQueryLogConfigAssociationState {
 	if rrqlca.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rrqlca.Type(), rrqlca.LocalName()))
@@ -59,10 +85,7 @@ func (rrqlca *Route53ResolverQueryLogConfigAssociation) StateMust() *route53Reso
 	return rrqlca.state
 }
 
-func (rrqlca *Route53ResolverQueryLogConfigAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(rrqlca)
-}
-
+// Route53ResolverQueryLogConfigAssociationArgs contains the configurations for aws_route53_resolver_query_log_config_association.
 type Route53ResolverQueryLogConfigAssociationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,23 +93,24 @@ type Route53ResolverQueryLogConfigAssociationArgs struct {
 	ResolverQueryLogConfigId terra.StringValue `hcl:"resolver_query_log_config_id,attr" validate:"required"`
 	// ResourceId: string, required
 	ResourceId terra.StringValue `hcl:"resource_id,attr" validate:"required"`
-	// DependsOn contains resources that Route53ResolverQueryLogConfigAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type route53ResolverQueryLogConfigAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_route53_resolver_query_log_config_association.
 func (rrqlca route53ResolverQueryLogConfigAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rrqlca.ref.Append("id"))
+	return terra.ReferenceAsString(rrqlca.ref.Append("id"))
 }
 
+// ResolverQueryLogConfigId returns a reference to field resolver_query_log_config_id of aws_route53_resolver_query_log_config_association.
 func (rrqlca route53ResolverQueryLogConfigAssociationAttributes) ResolverQueryLogConfigId() terra.StringValue {
-	return terra.ReferenceString(rrqlca.ref.Append("resolver_query_log_config_id"))
+	return terra.ReferenceAsString(rrqlca.ref.Append("resolver_query_log_config_id"))
 }
 
+// ResourceId returns a reference to field resource_id of aws_route53_resolver_query_log_config_association.
 func (rrqlca route53ResolverQueryLogConfigAssociationAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(rrqlca.ref.Append("resource_id"))
+	return terra.ReferenceAsString(rrqlca.ref.Append("resource_id"))
 }
 
 type route53ResolverQueryLogConfigAssociationState struct {

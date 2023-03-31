@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAmiLaunchPermission creates a new instance of [AmiLaunchPermission].
 func NewAmiLaunchPermission(name string, args AmiLaunchPermissionArgs) *AmiLaunchPermission {
 	return &AmiLaunchPermission{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAmiLaunchPermission(name string, args AmiLaunchPermissionArgs) *AmiLaunc
 
 var _ terra.Resource = (*AmiLaunchPermission)(nil)
 
+// AmiLaunchPermission represents the Terraform resource aws_ami_launch_permission.
 type AmiLaunchPermission struct {
-	Name  string
-	Args  AmiLaunchPermissionArgs
-	state *amiLaunchPermissionState
+	Name      string
+	Args      AmiLaunchPermissionArgs
+	state     *amiLaunchPermissionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AmiLaunchPermission].
 func (alp *AmiLaunchPermission) Type() string {
 	return "aws_ami_launch_permission"
 }
 
+// LocalName returns the local name for [AmiLaunchPermission].
 func (alp *AmiLaunchPermission) LocalName() string {
 	return alp.Name
 }
 
+// Configuration returns the configuration (args) for [AmiLaunchPermission].
 func (alp *AmiLaunchPermission) Configuration() interface{} {
 	return alp.Args
 }
 
+// DependOn is used for other resources to depend on [AmiLaunchPermission].
+func (alp *AmiLaunchPermission) DependOn() terra.Reference {
+	return terra.ReferenceResource(alp)
+}
+
+// Dependencies returns the list of resources [AmiLaunchPermission] depends_on.
+func (alp *AmiLaunchPermission) Dependencies() terra.Dependencies {
+	return alp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AmiLaunchPermission].
+func (alp *AmiLaunchPermission) LifecycleManagement() *terra.Lifecycle {
+	return alp.Lifecycle
+}
+
+// Attributes returns the attributes for [AmiLaunchPermission].
 func (alp *AmiLaunchPermission) Attributes() amiLaunchPermissionAttributes {
 	return amiLaunchPermissionAttributes{ref: terra.ReferenceResource(alp)}
 }
 
+// ImportState imports the given attribute values into [AmiLaunchPermission]'s state.
 func (alp *AmiLaunchPermission) ImportState(av io.Reader) error {
 	alp.state = &amiLaunchPermissionState{}
 	if err := json.NewDecoder(av).Decode(alp.state); err != nil {
@@ -48,10 +72,12 @@ func (alp *AmiLaunchPermission) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AmiLaunchPermission] has state.
 func (alp *AmiLaunchPermission) State() (*amiLaunchPermissionState, bool) {
 	return alp.state, alp.state != nil
 }
 
+// StateMust returns the state for [AmiLaunchPermission]. Panics if the state is nil.
 func (alp *AmiLaunchPermission) StateMust() *amiLaunchPermissionState {
 	if alp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", alp.Type(), alp.LocalName()))
@@ -59,10 +85,7 @@ func (alp *AmiLaunchPermission) StateMust() *amiLaunchPermissionState {
 	return alp.state
 }
 
-func (alp *AmiLaunchPermission) DependOn() terra.Reference {
-	return terra.ReferenceResource(alp)
-}
-
+// AmiLaunchPermissionArgs contains the configurations for aws_ami_launch_permission.
 type AmiLaunchPermissionArgs struct {
 	// AccountId: string, optional
 	AccountId terra.StringValue `hcl:"account_id,attr"`
@@ -76,35 +99,39 @@ type AmiLaunchPermissionArgs struct {
 	OrganizationArn terra.StringValue `hcl:"organization_arn,attr"`
 	// OrganizationalUnitArn: string, optional
 	OrganizationalUnitArn terra.StringValue `hcl:"organizational_unit_arn,attr"`
-	// DependsOn contains resources that AmiLaunchPermission depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type amiLaunchPermissionAttributes struct {
 	ref terra.Reference
 }
 
+// AccountId returns a reference to field account_id of aws_ami_launch_permission.
 func (alp amiLaunchPermissionAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(alp.ref.Append("account_id"))
+	return terra.ReferenceAsString(alp.ref.Append("account_id"))
 }
 
+// Group returns a reference to field group of aws_ami_launch_permission.
 func (alp amiLaunchPermissionAttributes) Group() terra.StringValue {
-	return terra.ReferenceString(alp.ref.Append("group"))
+	return terra.ReferenceAsString(alp.ref.Append("group"))
 }
 
+// Id returns a reference to field id of aws_ami_launch_permission.
 func (alp amiLaunchPermissionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(alp.ref.Append("id"))
+	return terra.ReferenceAsString(alp.ref.Append("id"))
 }
 
+// ImageId returns a reference to field image_id of aws_ami_launch_permission.
 func (alp amiLaunchPermissionAttributes) ImageId() terra.StringValue {
-	return terra.ReferenceString(alp.ref.Append("image_id"))
+	return terra.ReferenceAsString(alp.ref.Append("image_id"))
 }
 
+// OrganizationArn returns a reference to field organization_arn of aws_ami_launch_permission.
 func (alp amiLaunchPermissionAttributes) OrganizationArn() terra.StringValue {
-	return terra.ReferenceString(alp.ref.Append("organization_arn"))
+	return terra.ReferenceAsString(alp.ref.Append("organization_arn"))
 }
 
+// OrganizationalUnitArn returns a reference to field organizational_unit_arn of aws_ami_launch_permission.
 func (alp amiLaunchPermissionAttributes) OrganizationalUnitArn() terra.StringValue {
-	return terra.ReferenceString(alp.ref.Append("organizational_unit_arn"))
+	return terra.ReferenceAsString(alp.ref.Append("organizational_unit_arn"))
 }
 
 type amiLaunchPermissionState struct {

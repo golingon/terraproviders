@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewElasticacheSecurityGroup creates a new instance of [ElasticacheSecurityGroup].
 func NewElasticacheSecurityGroup(name string, args ElasticacheSecurityGroupArgs) *ElasticacheSecurityGroup {
 	return &ElasticacheSecurityGroup{
 		Args: args,
@@ -18,28 +19,51 @@ func NewElasticacheSecurityGroup(name string, args ElasticacheSecurityGroupArgs)
 
 var _ terra.Resource = (*ElasticacheSecurityGroup)(nil)
 
+// ElasticacheSecurityGroup represents the Terraform resource aws_elasticache_security_group.
 type ElasticacheSecurityGroup struct {
-	Name  string
-	Args  ElasticacheSecurityGroupArgs
-	state *elasticacheSecurityGroupState
+	Name      string
+	Args      ElasticacheSecurityGroupArgs
+	state     *elasticacheSecurityGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ElasticacheSecurityGroup].
 func (esg *ElasticacheSecurityGroup) Type() string {
 	return "aws_elasticache_security_group"
 }
 
+// LocalName returns the local name for [ElasticacheSecurityGroup].
 func (esg *ElasticacheSecurityGroup) LocalName() string {
 	return esg.Name
 }
 
+// Configuration returns the configuration (args) for [ElasticacheSecurityGroup].
 func (esg *ElasticacheSecurityGroup) Configuration() interface{} {
 	return esg.Args
 }
 
+// DependOn is used for other resources to depend on [ElasticacheSecurityGroup].
+func (esg *ElasticacheSecurityGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(esg)
+}
+
+// Dependencies returns the list of resources [ElasticacheSecurityGroup] depends_on.
+func (esg *ElasticacheSecurityGroup) Dependencies() terra.Dependencies {
+	return esg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ElasticacheSecurityGroup].
+func (esg *ElasticacheSecurityGroup) LifecycleManagement() *terra.Lifecycle {
+	return esg.Lifecycle
+}
+
+// Attributes returns the attributes for [ElasticacheSecurityGroup].
 func (esg *ElasticacheSecurityGroup) Attributes() elasticacheSecurityGroupAttributes {
 	return elasticacheSecurityGroupAttributes{ref: terra.ReferenceResource(esg)}
 }
 
+// ImportState imports the given attribute values into [ElasticacheSecurityGroup]'s state.
 func (esg *ElasticacheSecurityGroup) ImportState(av io.Reader) error {
 	esg.state = &elasticacheSecurityGroupState{}
 	if err := json.NewDecoder(av).Decode(esg.state); err != nil {
@@ -48,10 +72,12 @@ func (esg *ElasticacheSecurityGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ElasticacheSecurityGroup] has state.
 func (esg *ElasticacheSecurityGroup) State() (*elasticacheSecurityGroupState, bool) {
 	return esg.state, esg.state != nil
 }
 
+// StateMust returns the state for [ElasticacheSecurityGroup]. Panics if the state is nil.
 func (esg *ElasticacheSecurityGroup) StateMust() *elasticacheSecurityGroupState {
 	if esg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", esg.Type(), esg.LocalName()))
@@ -59,10 +85,7 @@ func (esg *ElasticacheSecurityGroup) StateMust() *elasticacheSecurityGroupState 
 	return esg.state
 }
 
-func (esg *ElasticacheSecurityGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(esg)
-}
-
+// ElasticacheSecurityGroupArgs contains the configurations for aws_elasticache_security_group.
 type ElasticacheSecurityGroupArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -72,27 +95,29 @@ type ElasticacheSecurityGroupArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// SecurityGroupNames: set of string, required
 	SecurityGroupNames terra.SetValue[terra.StringValue] `hcl:"security_group_names,attr" validate:"required"`
-	// DependsOn contains resources that ElasticacheSecurityGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type elasticacheSecurityGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of aws_elasticache_security_group.
 func (esg elasticacheSecurityGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(esg.ref.Append("description"))
+	return terra.ReferenceAsString(esg.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_elasticache_security_group.
 func (esg elasticacheSecurityGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(esg.ref.Append("id"))
+	return terra.ReferenceAsString(esg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_elasticache_security_group.
 func (esg elasticacheSecurityGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(esg.ref.Append("name"))
+	return terra.ReferenceAsString(esg.ref.Append("name"))
 }
 
+// SecurityGroupNames returns a reference to field security_group_names of aws_elasticache_security_group.
 func (esg elasticacheSecurityGroupAttributes) SecurityGroupNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](esg.ref.Append("security_group_names"))
+	return terra.ReferenceAsSet[terra.StringValue](esg.ref.Append("security_group_names"))
 }
 
 type elasticacheSecurityGroupState struct {

@@ -28,23 +28,23 @@ func (ac AnalyticsConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ac AnalyticsConfigurationAttributes) ApplicationArn() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("application_arn"))
+	return terra.ReferenceAsString(ac.ref.Append("application_arn"))
 }
 
 func (ac AnalyticsConfigurationAttributes) ApplicationId() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("application_id"))
+	return terra.ReferenceAsString(ac.ref.Append("application_id"))
 }
 
 func (ac AnalyticsConfigurationAttributes) ExternalId() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("external_id"))
+	return terra.ReferenceAsString(ac.ref.Append("external_id"))
 }
 
 func (ac AnalyticsConfigurationAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("role_arn"))
+	return terra.ReferenceAsString(ac.ref.Append("role_arn"))
 }
 
 func (ac AnalyticsConfigurationAttributes) UserDataShared() terra.BoolValue {
-	return terra.ReferenceBool(ac.ref.Append("user_data_shared"))
+	return terra.ReferenceAsBool(ac.ref.Append("user_data_shared"))
 }
 
 type TokenValidityUnitsAttributes struct {
@@ -64,15 +64,15 @@ func (tvu TokenValidityUnitsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tvu TokenValidityUnitsAttributes) AccessToken() terra.StringValue {
-	return terra.ReferenceString(tvu.ref.Append("access_token"))
+	return terra.ReferenceAsString(tvu.ref.Append("access_token"))
 }
 
 func (tvu TokenValidityUnitsAttributes) IdToken() terra.StringValue {
-	return terra.ReferenceString(tvu.ref.Append("id_token"))
+	return terra.ReferenceAsString(tvu.ref.Append("id_token"))
 }
 
 func (tvu TokenValidityUnitsAttributes) RefreshToken() terra.StringValue {
-	return terra.ReferenceString(tvu.ref.Append("refresh_token"))
+	return terra.ReferenceAsString(tvu.ref.Append("refresh_token"))
 }
 
 type AnalyticsConfigurationState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRedshiftPartner creates a new instance of [RedshiftPartner].
 func NewRedshiftPartner(name string, args RedshiftPartnerArgs) *RedshiftPartner {
 	return &RedshiftPartner{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRedshiftPartner(name string, args RedshiftPartnerArgs) *RedshiftPartner 
 
 var _ terra.Resource = (*RedshiftPartner)(nil)
 
+// RedshiftPartner represents the Terraform resource aws_redshift_partner.
 type RedshiftPartner struct {
-	Name  string
-	Args  RedshiftPartnerArgs
-	state *redshiftPartnerState
+	Name      string
+	Args      RedshiftPartnerArgs
+	state     *redshiftPartnerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RedshiftPartner].
 func (rp *RedshiftPartner) Type() string {
 	return "aws_redshift_partner"
 }
 
+// LocalName returns the local name for [RedshiftPartner].
 func (rp *RedshiftPartner) LocalName() string {
 	return rp.Name
 }
 
+// Configuration returns the configuration (args) for [RedshiftPartner].
 func (rp *RedshiftPartner) Configuration() interface{} {
 	return rp.Args
 }
 
+// DependOn is used for other resources to depend on [RedshiftPartner].
+func (rp *RedshiftPartner) DependOn() terra.Reference {
+	return terra.ReferenceResource(rp)
+}
+
+// Dependencies returns the list of resources [RedshiftPartner] depends_on.
+func (rp *RedshiftPartner) Dependencies() terra.Dependencies {
+	return rp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RedshiftPartner].
+func (rp *RedshiftPartner) LifecycleManagement() *terra.Lifecycle {
+	return rp.Lifecycle
+}
+
+// Attributes returns the attributes for [RedshiftPartner].
 func (rp *RedshiftPartner) Attributes() redshiftPartnerAttributes {
 	return redshiftPartnerAttributes{ref: terra.ReferenceResource(rp)}
 }
 
+// ImportState imports the given attribute values into [RedshiftPartner]'s state.
 func (rp *RedshiftPartner) ImportState(av io.Reader) error {
 	rp.state = &redshiftPartnerState{}
 	if err := json.NewDecoder(av).Decode(rp.state); err != nil {
@@ -48,10 +72,12 @@ func (rp *RedshiftPartner) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RedshiftPartner] has state.
 func (rp *RedshiftPartner) State() (*redshiftPartnerState, bool) {
 	return rp.state, rp.state != nil
 }
 
+// StateMust returns the state for [RedshiftPartner]. Panics if the state is nil.
 func (rp *RedshiftPartner) StateMust() *redshiftPartnerState {
 	if rp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rp.Type(), rp.LocalName()))
@@ -59,10 +85,7 @@ func (rp *RedshiftPartner) StateMust() *redshiftPartnerState {
 	return rp.state
 }
 
-func (rp *RedshiftPartner) DependOn() terra.Reference {
-	return terra.ReferenceResource(rp)
-}
-
+// RedshiftPartnerArgs contains the configurations for aws_redshift_partner.
 type RedshiftPartnerArgs struct {
 	// AccountId: string, required
 	AccountId terra.StringValue `hcl:"account_id,attr" validate:"required"`
@@ -74,39 +97,44 @@ type RedshiftPartnerArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// PartnerName: string, required
 	PartnerName terra.StringValue `hcl:"partner_name,attr" validate:"required"`
-	// DependsOn contains resources that RedshiftPartner depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type redshiftPartnerAttributes struct {
 	ref terra.Reference
 }
 
+// AccountId returns a reference to field account_id of aws_redshift_partner.
 func (rp redshiftPartnerAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(rp.ref.Append("account_id"))
+	return terra.ReferenceAsString(rp.ref.Append("account_id"))
 }
 
+// ClusterIdentifier returns a reference to field cluster_identifier of aws_redshift_partner.
 func (rp redshiftPartnerAttributes) ClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(rp.ref.Append("cluster_identifier"))
+	return terra.ReferenceAsString(rp.ref.Append("cluster_identifier"))
 }
 
+// DatabaseName returns a reference to field database_name of aws_redshift_partner.
 func (rp redshiftPartnerAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(rp.ref.Append("database_name"))
+	return terra.ReferenceAsString(rp.ref.Append("database_name"))
 }
 
+// Id returns a reference to field id of aws_redshift_partner.
 func (rp redshiftPartnerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rp.ref.Append("id"))
+	return terra.ReferenceAsString(rp.ref.Append("id"))
 }
 
+// PartnerName returns a reference to field partner_name of aws_redshift_partner.
 func (rp redshiftPartnerAttributes) PartnerName() terra.StringValue {
-	return terra.ReferenceString(rp.ref.Append("partner_name"))
+	return terra.ReferenceAsString(rp.ref.Append("partner_name"))
 }
 
+// Status returns a reference to field status of aws_redshift_partner.
 func (rp redshiftPartnerAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(rp.ref.Append("status"))
+	return terra.ReferenceAsString(rp.ref.Append("status"))
 }
 
+// StatusMessage returns a reference to field status_message of aws_redshift_partner.
 func (rp redshiftPartnerAttributes) StatusMessage() terra.StringValue {
-	return terra.ReferenceString(rp.ref.Append("status_message"))
+	return terra.ReferenceAsString(rp.ref.Append("status_message"))
 }
 
 type redshiftPartnerState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewPinpointApnsVoipSandboxChannel creates a new instance of [PinpointApnsVoipSandboxChannel].
 func NewPinpointApnsVoipSandboxChannel(name string, args PinpointApnsVoipSandboxChannelArgs) *PinpointApnsVoipSandboxChannel {
 	return &PinpointApnsVoipSandboxChannel{
 		Args: args,
@@ -18,28 +19,51 @@ func NewPinpointApnsVoipSandboxChannel(name string, args PinpointApnsVoipSandbox
 
 var _ terra.Resource = (*PinpointApnsVoipSandboxChannel)(nil)
 
+// PinpointApnsVoipSandboxChannel represents the Terraform resource aws_pinpoint_apns_voip_sandbox_channel.
 type PinpointApnsVoipSandboxChannel struct {
-	Name  string
-	Args  PinpointApnsVoipSandboxChannelArgs
-	state *pinpointApnsVoipSandboxChannelState
+	Name      string
+	Args      PinpointApnsVoipSandboxChannelArgs
+	state     *pinpointApnsVoipSandboxChannelState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PinpointApnsVoipSandboxChannel].
 func (pavsc *PinpointApnsVoipSandboxChannel) Type() string {
 	return "aws_pinpoint_apns_voip_sandbox_channel"
 }
 
+// LocalName returns the local name for [PinpointApnsVoipSandboxChannel].
 func (pavsc *PinpointApnsVoipSandboxChannel) LocalName() string {
 	return pavsc.Name
 }
 
+// Configuration returns the configuration (args) for [PinpointApnsVoipSandboxChannel].
 func (pavsc *PinpointApnsVoipSandboxChannel) Configuration() interface{} {
 	return pavsc.Args
 }
 
+// DependOn is used for other resources to depend on [PinpointApnsVoipSandboxChannel].
+func (pavsc *PinpointApnsVoipSandboxChannel) DependOn() terra.Reference {
+	return terra.ReferenceResource(pavsc)
+}
+
+// Dependencies returns the list of resources [PinpointApnsVoipSandboxChannel] depends_on.
+func (pavsc *PinpointApnsVoipSandboxChannel) Dependencies() terra.Dependencies {
+	return pavsc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PinpointApnsVoipSandboxChannel].
+func (pavsc *PinpointApnsVoipSandboxChannel) LifecycleManagement() *terra.Lifecycle {
+	return pavsc.Lifecycle
+}
+
+// Attributes returns the attributes for [PinpointApnsVoipSandboxChannel].
 func (pavsc *PinpointApnsVoipSandboxChannel) Attributes() pinpointApnsVoipSandboxChannelAttributes {
 	return pinpointApnsVoipSandboxChannelAttributes{ref: terra.ReferenceResource(pavsc)}
 }
 
+// ImportState imports the given attribute values into [PinpointApnsVoipSandboxChannel]'s state.
 func (pavsc *PinpointApnsVoipSandboxChannel) ImportState(av io.Reader) error {
 	pavsc.state = &pinpointApnsVoipSandboxChannelState{}
 	if err := json.NewDecoder(av).Decode(pavsc.state); err != nil {
@@ -48,10 +72,12 @@ func (pavsc *PinpointApnsVoipSandboxChannel) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PinpointApnsVoipSandboxChannel] has state.
 func (pavsc *PinpointApnsVoipSandboxChannel) State() (*pinpointApnsVoipSandboxChannelState, bool) {
 	return pavsc.state, pavsc.state != nil
 }
 
+// StateMust returns the state for [PinpointApnsVoipSandboxChannel]. Panics if the state is nil.
 func (pavsc *PinpointApnsVoipSandboxChannel) StateMust() *pinpointApnsVoipSandboxChannelState {
 	if pavsc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pavsc.Type(), pavsc.LocalName()))
@@ -59,10 +85,7 @@ func (pavsc *PinpointApnsVoipSandboxChannel) StateMust() *pinpointApnsVoipSandbo
 	return pavsc.state
 }
 
-func (pavsc *PinpointApnsVoipSandboxChannel) DependOn() terra.Reference {
-	return terra.ReferenceResource(pavsc)
-}
-
+// PinpointApnsVoipSandboxChannelArgs contains the configurations for aws_pinpoint_apns_voip_sandbox_channel.
 type PinpointApnsVoipSandboxChannelArgs struct {
 	// ApplicationId: string, required
 	ApplicationId terra.StringValue `hcl:"application_id,attr" validate:"required"`
@@ -84,51 +107,59 @@ type PinpointApnsVoipSandboxChannelArgs struct {
 	TokenKey terra.StringValue `hcl:"token_key,attr"`
 	// TokenKeyId: string, optional
 	TokenKeyId terra.StringValue `hcl:"token_key_id,attr"`
-	// DependsOn contains resources that PinpointApnsVoipSandboxChannel depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type pinpointApnsVoipSandboxChannelAttributes struct {
 	ref terra.Reference
 }
 
+// ApplicationId returns a reference to field application_id of aws_pinpoint_apns_voip_sandbox_channel.
 func (pavsc pinpointApnsVoipSandboxChannelAttributes) ApplicationId() terra.StringValue {
-	return terra.ReferenceString(pavsc.ref.Append("application_id"))
+	return terra.ReferenceAsString(pavsc.ref.Append("application_id"))
 }
 
+// BundleId returns a reference to field bundle_id of aws_pinpoint_apns_voip_sandbox_channel.
 func (pavsc pinpointApnsVoipSandboxChannelAttributes) BundleId() terra.StringValue {
-	return terra.ReferenceString(pavsc.ref.Append("bundle_id"))
+	return terra.ReferenceAsString(pavsc.ref.Append("bundle_id"))
 }
 
+// Certificate returns a reference to field certificate of aws_pinpoint_apns_voip_sandbox_channel.
 func (pavsc pinpointApnsVoipSandboxChannelAttributes) Certificate() terra.StringValue {
-	return terra.ReferenceString(pavsc.ref.Append("certificate"))
+	return terra.ReferenceAsString(pavsc.ref.Append("certificate"))
 }
 
+// DefaultAuthenticationMethod returns a reference to field default_authentication_method of aws_pinpoint_apns_voip_sandbox_channel.
 func (pavsc pinpointApnsVoipSandboxChannelAttributes) DefaultAuthenticationMethod() terra.StringValue {
-	return terra.ReferenceString(pavsc.ref.Append("default_authentication_method"))
+	return terra.ReferenceAsString(pavsc.ref.Append("default_authentication_method"))
 }
 
+// Enabled returns a reference to field enabled of aws_pinpoint_apns_voip_sandbox_channel.
 func (pavsc pinpointApnsVoipSandboxChannelAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(pavsc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(pavsc.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of aws_pinpoint_apns_voip_sandbox_channel.
 func (pavsc pinpointApnsVoipSandboxChannelAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pavsc.ref.Append("id"))
+	return terra.ReferenceAsString(pavsc.ref.Append("id"))
 }
 
+// PrivateKey returns a reference to field private_key of aws_pinpoint_apns_voip_sandbox_channel.
 func (pavsc pinpointApnsVoipSandboxChannelAttributes) PrivateKey() terra.StringValue {
-	return terra.ReferenceString(pavsc.ref.Append("private_key"))
+	return terra.ReferenceAsString(pavsc.ref.Append("private_key"))
 }
 
+// TeamId returns a reference to field team_id of aws_pinpoint_apns_voip_sandbox_channel.
 func (pavsc pinpointApnsVoipSandboxChannelAttributes) TeamId() terra.StringValue {
-	return terra.ReferenceString(pavsc.ref.Append("team_id"))
+	return terra.ReferenceAsString(pavsc.ref.Append("team_id"))
 }
 
+// TokenKey returns a reference to field token_key of aws_pinpoint_apns_voip_sandbox_channel.
 func (pavsc pinpointApnsVoipSandboxChannelAttributes) TokenKey() terra.StringValue {
-	return terra.ReferenceString(pavsc.ref.Append("token_key"))
+	return terra.ReferenceAsString(pavsc.ref.Append("token_key"))
 }
 
+// TokenKeyId returns a reference to field token_key_id of aws_pinpoint_apns_voip_sandbox_channel.
 func (pavsc pinpointApnsVoipSandboxChannelAttributes) TokenKeyId() terra.StringValue {
-	return terra.ReferenceString(pavsc.ref.Append("token_key_id"))
+	return terra.ReferenceAsString(pavsc.ref.Append("token_key_id"))
 }
 
 type pinpointApnsVoipSandboxChannelState struct {

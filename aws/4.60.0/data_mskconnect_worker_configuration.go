@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataMskconnectWorkerConfiguration creates a new instance of [DataMskconnectWorkerConfiguration].
 func NewDataMskconnectWorkerConfiguration(name string, args DataMskconnectWorkerConfigurationArgs) *DataMskconnectWorkerConfiguration {
 	return &DataMskconnectWorkerConfiguration{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataMskconnectWorkerConfiguration(name string, args DataMskconnectWorker
 
 var _ terra.DataResource = (*DataMskconnectWorkerConfiguration)(nil)
 
+// DataMskconnectWorkerConfiguration represents the Terraform data resource aws_mskconnect_worker_configuration.
 type DataMskconnectWorkerConfiguration struct {
 	Name string
 	Args DataMskconnectWorkerConfigurationArgs
 }
 
+// DataSource returns the Terraform object type for [DataMskconnectWorkerConfiguration].
 func (mwc *DataMskconnectWorkerConfiguration) DataSource() string {
 	return "aws_mskconnect_worker_configuration"
 }
 
+// LocalName returns the local name for [DataMskconnectWorkerConfiguration].
 func (mwc *DataMskconnectWorkerConfiguration) LocalName() string {
 	return mwc.Name
 }
 
+// Configuration returns the configuration (args) for [DataMskconnectWorkerConfiguration].
 func (mwc *DataMskconnectWorkerConfiguration) Configuration() interface{} {
 	return mwc.Args
 }
 
+// Attributes returns the attributes for [DataMskconnectWorkerConfiguration].
 func (mwc *DataMskconnectWorkerConfiguration) Attributes() dataMskconnectWorkerConfigurationAttributes {
 	return dataMskconnectWorkerConfigurationAttributes{ref: terra.ReferenceDataResource(mwc)}
 }
 
+// DataMskconnectWorkerConfigurationArgs contains the configurations for aws_mskconnect_worker_configuration.
 type DataMskconnectWorkerConfigurationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,26 +51,32 @@ type dataMskconnectWorkerConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_mskconnect_worker_configuration.
 func (mwc dataMskconnectWorkerConfigurationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(mwc.ref.Append("arn"))
+	return terra.ReferenceAsString(mwc.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_mskconnect_worker_configuration.
 func (mwc dataMskconnectWorkerConfigurationAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mwc.ref.Append("description"))
+	return terra.ReferenceAsString(mwc.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_mskconnect_worker_configuration.
 func (mwc dataMskconnectWorkerConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mwc.ref.Append("id"))
+	return terra.ReferenceAsString(mwc.ref.Append("id"))
 }
 
+// LatestRevision returns a reference to field latest_revision of aws_mskconnect_worker_configuration.
 func (mwc dataMskconnectWorkerConfigurationAttributes) LatestRevision() terra.NumberValue {
-	return terra.ReferenceNumber(mwc.ref.Append("latest_revision"))
+	return terra.ReferenceAsNumber(mwc.ref.Append("latest_revision"))
 }
 
+// Name returns a reference to field name of aws_mskconnect_worker_configuration.
 func (mwc dataMskconnectWorkerConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mwc.ref.Append("name"))
+	return terra.ReferenceAsString(mwc.ref.Append("name"))
 }
 
+// PropertiesFileContent returns a reference to field properties_file_content of aws_mskconnect_worker_configuration.
 func (mwc dataMskconnectWorkerConfigurationAttributes) PropertiesFileContent() terra.StringValue {
-	return terra.ReferenceString(mwc.ref.Append("properties_file_content"))
+	return terra.ReferenceAsString(mwc.ref.Append("properties_file_content"))
 }

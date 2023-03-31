@@ -60,11 +60,11 @@ func (cc CookiesConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc CookiesConfigAttributes) CookieBehavior() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("cookie_behavior"))
+	return terra.ReferenceAsString(cc.ref.Append("cookie_behavior"))
 }
 
 func (cc CookiesConfigAttributes) Cookies() terra.ListValue[CookiesAttributes] {
-	return terra.ReferenceList[CookiesAttributes](cc.ref.Append("cookies"))
+	return terra.ReferenceAsList[CookiesAttributes](cc.ref.Append("cookies"))
 }
 
 type CookiesAttributes struct {
@@ -84,7 +84,7 @@ func (c CookiesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c CookiesAttributes) Items() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](c.ref.Append("items"))
+	return terra.ReferenceAsSet[terra.StringValue](c.ref.Append("items"))
 }
 
 type HeadersConfigAttributes struct {
@@ -104,11 +104,11 @@ func (hc HeadersConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hc HeadersConfigAttributes) HeaderBehavior() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("header_behavior"))
+	return terra.ReferenceAsString(hc.ref.Append("header_behavior"))
 }
 
 func (hc HeadersConfigAttributes) Headers() terra.ListValue[HeadersAttributes] {
-	return terra.ReferenceList[HeadersAttributes](hc.ref.Append("headers"))
+	return terra.ReferenceAsList[HeadersAttributes](hc.ref.Append("headers"))
 }
 
 type HeadersAttributes struct {
@@ -128,7 +128,7 @@ func (h HeadersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (h HeadersAttributes) Items() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](h.ref.Append("items"))
+	return terra.ReferenceAsSet[terra.StringValue](h.ref.Append("items"))
 }
 
 type QueryStringsConfigAttributes struct {
@@ -148,11 +148,11 @@ func (qsc QueryStringsConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (qsc QueryStringsConfigAttributes) QueryStringBehavior() terra.StringValue {
-	return terra.ReferenceString(qsc.ref.Append("query_string_behavior"))
+	return terra.ReferenceAsString(qsc.ref.Append("query_string_behavior"))
 }
 
 func (qsc QueryStringsConfigAttributes) QueryStrings() terra.ListValue[QueryStringsAttributes] {
-	return terra.ReferenceList[QueryStringsAttributes](qsc.ref.Append("query_strings"))
+	return terra.ReferenceAsList[QueryStringsAttributes](qsc.ref.Append("query_strings"))
 }
 
 type QueryStringsAttributes struct {
@@ -172,7 +172,7 @@ func (qs QueryStringsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (qs QueryStringsAttributes) Items() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](qs.ref.Append("items"))
+	return terra.ReferenceAsSet[terra.StringValue](qs.ref.Append("items"))
 }
 
 type CookiesConfigState struct {

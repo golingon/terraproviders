@@ -60,23 +60,23 @@ func (ar ApprovalRuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ar ApprovalRuleAttributes) ApproveAfterDays() terra.NumberValue {
-	return terra.ReferenceNumber(ar.ref.Append("approve_after_days"))
+	return terra.ReferenceAsNumber(ar.ref.Append("approve_after_days"))
 }
 
 func (ar ApprovalRuleAttributes) ApproveUntilDate() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("approve_until_date"))
+	return terra.ReferenceAsString(ar.ref.Append("approve_until_date"))
 }
 
 func (ar ApprovalRuleAttributes) ComplianceLevel() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("compliance_level"))
+	return terra.ReferenceAsString(ar.ref.Append("compliance_level"))
 }
 
 func (ar ApprovalRuleAttributes) EnableNonSecurity() terra.BoolValue {
-	return terra.ReferenceBool(ar.ref.Append("enable_non_security"))
+	return terra.ReferenceAsBool(ar.ref.Append("enable_non_security"))
 }
 
 func (ar ApprovalRuleAttributes) PatchFilter() terra.ListValue[PatchFilterAttributes] {
-	return terra.ReferenceList[PatchFilterAttributes](ar.ref.Append("patch_filter"))
+	return terra.ReferenceAsList[PatchFilterAttributes](ar.ref.Append("patch_filter"))
 }
 
 type PatchFilterAttributes struct {
@@ -96,11 +96,11 @@ func (pf PatchFilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pf PatchFilterAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(pf.ref.Append("key"))
+	return terra.ReferenceAsString(pf.ref.Append("key"))
 }
 
 func (pf PatchFilterAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](pf.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](pf.ref.Append("values"))
 }
 
 type GlobalFilterAttributes struct {
@@ -120,11 +120,11 @@ func (gf GlobalFilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (gf GlobalFilterAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(gf.ref.Append("key"))
+	return terra.ReferenceAsString(gf.ref.Append("key"))
 }
 
 func (gf GlobalFilterAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](gf.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](gf.ref.Append("values"))
 }
 
 type SourceAttributes struct {
@@ -144,15 +144,15 @@ func (s SourceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SourceAttributes) Configuration() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("configuration"))
+	return terra.ReferenceAsString(s.ref.Append("configuration"))
 }
 
 func (s SourceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s SourceAttributes) Products() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](s.ref.Append("products"))
+	return terra.ReferenceAsList[terra.StringValue](s.ref.Append("products"))
 }
 
 type ApprovalRuleState struct {

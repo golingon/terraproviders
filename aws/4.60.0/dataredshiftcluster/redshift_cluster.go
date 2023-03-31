@@ -26,15 +26,15 @@ func (cn ClusterNodesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cn ClusterNodesAttributes) NodeRole() terra.StringValue {
-	return terra.ReferenceString(cn.ref.Append("node_role"))
+	return terra.ReferenceAsString(cn.ref.Append("node_role"))
 }
 
 func (cn ClusterNodesAttributes) PrivateIpAddress() terra.StringValue {
-	return terra.ReferenceString(cn.ref.Append("private_ip_address"))
+	return terra.ReferenceAsString(cn.ref.Append("private_ip_address"))
 }
 
 func (cn ClusterNodesAttributes) PublicIpAddress() terra.StringValue {
-	return terra.ReferenceString(cn.ref.Append("public_ip_address"))
+	return terra.ReferenceAsString(cn.ref.Append("public_ip_address"))
 }
 
 type ClusterNodesState struct {

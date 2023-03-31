@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataWafregionalIpset creates a new instance of [DataWafregionalIpset].
 func NewDataWafregionalIpset(name string, args DataWafregionalIpsetArgs) *DataWafregionalIpset {
 	return &DataWafregionalIpset{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataWafregionalIpset(name string, args DataWafregionalIpsetArgs) *DataWa
 
 var _ terra.DataResource = (*DataWafregionalIpset)(nil)
 
+// DataWafregionalIpset represents the Terraform data resource aws_wafregional_ipset.
 type DataWafregionalIpset struct {
 	Name string
 	Args DataWafregionalIpsetArgs
 }
 
+// DataSource returns the Terraform object type for [DataWafregionalIpset].
 func (wi *DataWafregionalIpset) DataSource() string {
 	return "aws_wafregional_ipset"
 }
 
+// LocalName returns the local name for [DataWafregionalIpset].
 func (wi *DataWafregionalIpset) LocalName() string {
 	return wi.Name
 }
 
+// Configuration returns the configuration (args) for [DataWafregionalIpset].
 func (wi *DataWafregionalIpset) Configuration() interface{} {
 	return wi.Args
 }
 
+// Attributes returns the attributes for [DataWafregionalIpset].
 func (wi *DataWafregionalIpset) Attributes() dataWafregionalIpsetAttributes {
 	return dataWafregionalIpsetAttributes{ref: terra.ReferenceDataResource(wi)}
 }
 
+// DataWafregionalIpsetArgs contains the configurations for aws_wafregional_ipset.
 type DataWafregionalIpsetArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,10 +51,12 @@ type dataWafregionalIpsetAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_wafregional_ipset.
 func (wi dataWafregionalIpsetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(wi.ref.Append("id"))
+	return terra.ReferenceAsString(wi.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_wafregional_ipset.
 func (wi dataWafregionalIpsetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(wi.ref.Append("name"))
+	return terra.ReferenceAsString(wi.ref.Append("name"))
 }

@@ -31,11 +31,11 @@ func (sac ServiceAccountCredentialsAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (sac ServiceAccountCredentialsAttributes) AccountName() terra.StringValue {
-	return terra.ReferenceString(sac.ref.Append("account_name"))
+	return terra.ReferenceAsString(sac.ref.Append("account_name"))
 }
 
 func (sac ServiceAccountCredentialsAttributes) AccountPassword() terra.StringValue {
-	return terra.ReferenceString(sac.ref.Append("account_password"))
+	return terra.ReferenceAsString(sac.ref.Append("account_password"))
 }
 
 type ServiceAccountCredentialsState struct {

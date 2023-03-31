@@ -57,15 +57,15 @@ func (dc DestinationConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dc DestinationConfigurationAttributes) CloudwatchLogs() terra.ListValue[CloudwatchLogsAttributes] {
-	return terra.ReferenceList[CloudwatchLogsAttributes](dc.ref.Append("cloudwatch_logs"))
+	return terra.ReferenceAsList[CloudwatchLogsAttributes](dc.ref.Append("cloudwatch_logs"))
 }
 
 func (dc DestinationConfigurationAttributes) Firehose() terra.ListValue[FirehoseAttributes] {
-	return terra.ReferenceList[FirehoseAttributes](dc.ref.Append("firehose"))
+	return terra.ReferenceAsList[FirehoseAttributes](dc.ref.Append("firehose"))
 }
 
 func (dc DestinationConfigurationAttributes) S3() terra.ListValue[S3Attributes] {
-	return terra.ReferenceList[S3Attributes](dc.ref.Append("s3"))
+	return terra.ReferenceAsList[S3Attributes](dc.ref.Append("s3"))
 }
 
 type CloudwatchLogsAttributes struct {
@@ -85,7 +85,7 @@ func (cl CloudwatchLogsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cl CloudwatchLogsAttributes) LogGroupName() terra.StringValue {
-	return terra.ReferenceString(cl.ref.Append("log_group_name"))
+	return terra.ReferenceAsString(cl.ref.Append("log_group_name"))
 }
 
 type FirehoseAttributes struct {
@@ -105,7 +105,7 @@ func (f FirehoseAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FirehoseAttributes) DeliveryStreamName() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("delivery_stream_name"))
+	return terra.ReferenceAsString(f.ref.Append("delivery_stream_name"))
 }
 
 type S3Attributes struct {
@@ -125,7 +125,7 @@ func (s S3Attributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s S3Attributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(s.ref.Append("bucket_name"))
 }
 
 type TimeoutsAttributes struct {
@@ -145,15 +145,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DestinationConfigurationState struct {

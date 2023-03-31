@@ -40,11 +40,11 @@ func (svsc ServerlessV2ScalingConfigurationAttributes) InternalTokens() hclwrite
 }
 
 func (svsc ServerlessV2ScalingConfigurationAttributes) MaxCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(svsc.ref.Append("max_capacity"))
+	return terra.ReferenceAsNumber(svsc.ref.Append("max_capacity"))
 }
 
 func (svsc ServerlessV2ScalingConfigurationAttributes) MinCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(svsc.ref.Append("min_capacity"))
+	return terra.ReferenceAsNumber(svsc.ref.Append("min_capacity"))
 }
 
 type TimeoutsAttributes struct {
@@ -64,15 +64,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ServerlessV2ScalingConfigurationState struct {

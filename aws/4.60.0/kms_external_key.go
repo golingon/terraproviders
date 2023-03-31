@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewKmsExternalKey creates a new instance of [KmsExternalKey].
 func NewKmsExternalKey(name string, args KmsExternalKeyArgs) *KmsExternalKey {
 	return &KmsExternalKey{
 		Args: args,
@@ -18,28 +19,51 @@ func NewKmsExternalKey(name string, args KmsExternalKeyArgs) *KmsExternalKey {
 
 var _ terra.Resource = (*KmsExternalKey)(nil)
 
+// KmsExternalKey represents the Terraform resource aws_kms_external_key.
 type KmsExternalKey struct {
-	Name  string
-	Args  KmsExternalKeyArgs
-	state *kmsExternalKeyState
+	Name      string
+	Args      KmsExternalKeyArgs
+	state     *kmsExternalKeyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KmsExternalKey].
 func (kek *KmsExternalKey) Type() string {
 	return "aws_kms_external_key"
 }
 
+// LocalName returns the local name for [KmsExternalKey].
 func (kek *KmsExternalKey) LocalName() string {
 	return kek.Name
 }
 
+// Configuration returns the configuration (args) for [KmsExternalKey].
 func (kek *KmsExternalKey) Configuration() interface{} {
 	return kek.Args
 }
 
+// DependOn is used for other resources to depend on [KmsExternalKey].
+func (kek *KmsExternalKey) DependOn() terra.Reference {
+	return terra.ReferenceResource(kek)
+}
+
+// Dependencies returns the list of resources [KmsExternalKey] depends_on.
+func (kek *KmsExternalKey) Dependencies() terra.Dependencies {
+	return kek.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KmsExternalKey].
+func (kek *KmsExternalKey) LifecycleManagement() *terra.Lifecycle {
+	return kek.Lifecycle
+}
+
+// Attributes returns the attributes for [KmsExternalKey].
 func (kek *KmsExternalKey) Attributes() kmsExternalKeyAttributes {
 	return kmsExternalKeyAttributes{ref: terra.ReferenceResource(kek)}
 }
 
+// ImportState imports the given attribute values into [KmsExternalKey]'s state.
 func (kek *KmsExternalKey) ImportState(av io.Reader) error {
 	kek.state = &kmsExternalKeyState{}
 	if err := json.NewDecoder(av).Decode(kek.state); err != nil {
@@ -48,10 +72,12 @@ func (kek *KmsExternalKey) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [KmsExternalKey] has state.
 func (kek *KmsExternalKey) State() (*kmsExternalKeyState, bool) {
 	return kek.state, kek.state != nil
 }
 
+// StateMust returns the state for [KmsExternalKey]. Panics if the state is nil.
 func (kek *KmsExternalKey) StateMust() *kmsExternalKeyState {
 	if kek.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", kek.Type(), kek.LocalName()))
@@ -59,10 +85,7 @@ func (kek *KmsExternalKey) StateMust() *kmsExternalKeyState {
 	return kek.state
 }
 
-func (kek *KmsExternalKey) DependOn() terra.Reference {
-	return terra.ReferenceResource(kek)
-}
-
+// KmsExternalKeyArgs contains the configurations for aws_kms_external_key.
 type KmsExternalKeyArgs struct {
 	// BypassPolicyLockoutSafetyCheck: bool, optional
 	BypassPolicyLockoutSafetyCheck terra.BoolValue `hcl:"bypass_policy_lockout_safety_check,attr"`
@@ -86,71 +109,84 @@ type KmsExternalKeyArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// ValidTo: string, optional
 	ValidTo terra.StringValue `hcl:"valid_to,attr"`
-	// DependsOn contains resources that KmsExternalKey depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type kmsExternalKeyAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_kms_external_key.
 func (kek kmsExternalKeyAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(kek.ref.Append("arn"))
+	return terra.ReferenceAsString(kek.ref.Append("arn"))
 }
 
+// BypassPolicyLockoutSafetyCheck returns a reference to field bypass_policy_lockout_safety_check of aws_kms_external_key.
 func (kek kmsExternalKeyAttributes) BypassPolicyLockoutSafetyCheck() terra.BoolValue {
-	return terra.ReferenceBool(kek.ref.Append("bypass_policy_lockout_safety_check"))
+	return terra.ReferenceAsBool(kek.ref.Append("bypass_policy_lockout_safety_check"))
 }
 
+// DeletionWindowInDays returns a reference to field deletion_window_in_days of aws_kms_external_key.
 func (kek kmsExternalKeyAttributes) DeletionWindowInDays() terra.NumberValue {
-	return terra.ReferenceNumber(kek.ref.Append("deletion_window_in_days"))
+	return terra.ReferenceAsNumber(kek.ref.Append("deletion_window_in_days"))
 }
 
+// Description returns a reference to field description of aws_kms_external_key.
 func (kek kmsExternalKeyAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(kek.ref.Append("description"))
+	return terra.ReferenceAsString(kek.ref.Append("description"))
 }
 
+// Enabled returns a reference to field enabled of aws_kms_external_key.
 func (kek kmsExternalKeyAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(kek.ref.Append("enabled"))
+	return terra.ReferenceAsBool(kek.ref.Append("enabled"))
 }
 
+// ExpirationModel returns a reference to field expiration_model of aws_kms_external_key.
 func (kek kmsExternalKeyAttributes) ExpirationModel() terra.StringValue {
-	return terra.ReferenceString(kek.ref.Append("expiration_model"))
+	return terra.ReferenceAsString(kek.ref.Append("expiration_model"))
 }
 
+// Id returns a reference to field id of aws_kms_external_key.
 func (kek kmsExternalKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kek.ref.Append("id"))
+	return terra.ReferenceAsString(kek.ref.Append("id"))
 }
 
+// KeyMaterialBase64 returns a reference to field key_material_base64 of aws_kms_external_key.
 func (kek kmsExternalKeyAttributes) KeyMaterialBase64() terra.StringValue {
-	return terra.ReferenceString(kek.ref.Append("key_material_base64"))
+	return terra.ReferenceAsString(kek.ref.Append("key_material_base64"))
 }
 
+// KeyState returns a reference to field key_state of aws_kms_external_key.
 func (kek kmsExternalKeyAttributes) KeyState() terra.StringValue {
-	return terra.ReferenceString(kek.ref.Append("key_state"))
+	return terra.ReferenceAsString(kek.ref.Append("key_state"))
 }
 
+// KeyUsage returns a reference to field key_usage of aws_kms_external_key.
 func (kek kmsExternalKeyAttributes) KeyUsage() terra.StringValue {
-	return terra.ReferenceString(kek.ref.Append("key_usage"))
+	return terra.ReferenceAsString(kek.ref.Append("key_usage"))
 }
 
+// MultiRegion returns a reference to field multi_region of aws_kms_external_key.
 func (kek kmsExternalKeyAttributes) MultiRegion() terra.BoolValue {
-	return terra.ReferenceBool(kek.ref.Append("multi_region"))
+	return terra.ReferenceAsBool(kek.ref.Append("multi_region"))
 }
 
+// Policy returns a reference to field policy of aws_kms_external_key.
 func (kek kmsExternalKeyAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(kek.ref.Append("policy"))
+	return terra.ReferenceAsString(kek.ref.Append("policy"))
 }
 
+// Tags returns a reference to field tags of aws_kms_external_key.
 func (kek kmsExternalKeyAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kek.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](kek.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_kms_external_key.
 func (kek kmsExternalKeyAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kek.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](kek.ref.Append("tags_all"))
 }
 
+// ValidTo returns a reference to field valid_to of aws_kms_external_key.
 func (kek kmsExternalKeyAttributes) ValidTo() terra.StringValue {
-	return terra.ReferenceString(kek.ref.Append("valid_to"))
+	return terra.ReferenceAsString(kek.ref.Append("valid_to"))
 }
 
 type kmsExternalKeyState struct {

@@ -94,11 +94,11 @@ func (lf LoggingFilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lf LoggingFilterAttributes) DefaultBehavior() terra.StringValue {
-	return terra.ReferenceString(lf.ref.Append("default_behavior"))
+	return terra.ReferenceAsString(lf.ref.Append("default_behavior"))
 }
 
 func (lf LoggingFilterAttributes) Filter() terra.SetValue[FilterAttributes] {
-	return terra.ReferenceSet[FilterAttributes](lf.ref.Append("filter"))
+	return terra.ReferenceAsSet[FilterAttributes](lf.ref.Append("filter"))
 }
 
 type FilterAttributes struct {
@@ -118,15 +118,15 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) Behavior() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("behavior"))
+	return terra.ReferenceAsString(f.ref.Append("behavior"))
 }
 
 func (f FilterAttributes) Requirement() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("requirement"))
+	return terra.ReferenceAsString(f.ref.Append("requirement"))
 }
 
 func (f FilterAttributes) Condition() terra.SetValue[ConditionAttributes] {
-	return terra.ReferenceSet[ConditionAttributes](f.ref.Append("condition"))
+	return terra.ReferenceAsSet[ConditionAttributes](f.ref.Append("condition"))
 }
 
 type ConditionAttributes struct {
@@ -146,11 +146,11 @@ func (c ConditionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ConditionAttributes) ActionCondition() terra.ListValue[ActionConditionAttributes] {
-	return terra.ReferenceList[ActionConditionAttributes](c.ref.Append("action_condition"))
+	return terra.ReferenceAsList[ActionConditionAttributes](c.ref.Append("action_condition"))
 }
 
 func (c ConditionAttributes) LabelNameCondition() terra.ListValue[LabelNameConditionAttributes] {
-	return terra.ReferenceList[LabelNameConditionAttributes](c.ref.Append("label_name_condition"))
+	return terra.ReferenceAsList[LabelNameConditionAttributes](c.ref.Append("label_name_condition"))
 }
 
 type ActionConditionAttributes struct {
@@ -170,7 +170,7 @@ func (ac ActionConditionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ac ActionConditionAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("action"))
+	return terra.ReferenceAsString(ac.ref.Append("action"))
 }
 
 type LabelNameConditionAttributes struct {
@@ -190,7 +190,7 @@ func (lnc LabelNameConditionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lnc LabelNameConditionAttributes) LabelName() terra.StringValue {
-	return terra.ReferenceString(lnc.ref.Append("label_name"))
+	return terra.ReferenceAsString(lnc.ref.Append("label_name"))
 }
 
 type RedactedFieldsAttributes struct {
@@ -210,31 +210,31 @@ func (rf RedactedFieldsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rf RedactedFieldsAttributes) AllQueryArguments() terra.ListValue[AllQueryArgumentsAttributes] {
-	return terra.ReferenceList[AllQueryArgumentsAttributes](rf.ref.Append("all_query_arguments"))
+	return terra.ReferenceAsList[AllQueryArgumentsAttributes](rf.ref.Append("all_query_arguments"))
 }
 
 func (rf RedactedFieldsAttributes) Body() terra.ListValue[BodyAttributes] {
-	return terra.ReferenceList[BodyAttributes](rf.ref.Append("body"))
+	return terra.ReferenceAsList[BodyAttributes](rf.ref.Append("body"))
 }
 
 func (rf RedactedFieldsAttributes) Method() terra.ListValue[MethodAttributes] {
-	return terra.ReferenceList[MethodAttributes](rf.ref.Append("method"))
+	return terra.ReferenceAsList[MethodAttributes](rf.ref.Append("method"))
 }
 
 func (rf RedactedFieldsAttributes) QueryString() terra.ListValue[QueryStringAttributes] {
-	return terra.ReferenceList[QueryStringAttributes](rf.ref.Append("query_string"))
+	return terra.ReferenceAsList[QueryStringAttributes](rf.ref.Append("query_string"))
 }
 
 func (rf RedactedFieldsAttributes) SingleHeader() terra.ListValue[SingleHeaderAttributes] {
-	return terra.ReferenceList[SingleHeaderAttributes](rf.ref.Append("single_header"))
+	return terra.ReferenceAsList[SingleHeaderAttributes](rf.ref.Append("single_header"))
 }
 
 func (rf RedactedFieldsAttributes) SingleQueryArgument() terra.ListValue[SingleQueryArgumentAttributes] {
-	return terra.ReferenceList[SingleQueryArgumentAttributes](rf.ref.Append("single_query_argument"))
+	return terra.ReferenceAsList[SingleQueryArgumentAttributes](rf.ref.Append("single_query_argument"))
 }
 
 func (rf RedactedFieldsAttributes) UriPath() terra.ListValue[UriPathAttributes] {
-	return terra.ReferenceList[UriPathAttributes](rf.ref.Append("uri_path"))
+	return terra.ReferenceAsList[UriPathAttributes](rf.ref.Append("uri_path"))
 }
 
 type AllQueryArgumentsAttributes struct {
@@ -318,7 +318,7 @@ func (sh SingleHeaderAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sh SingleHeaderAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sh.ref.Append("name"))
+	return terra.ReferenceAsString(sh.ref.Append("name"))
 }
 
 type SingleQueryArgumentAttributes struct {
@@ -338,7 +338,7 @@ func (sqa SingleQueryArgumentAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sqa SingleQueryArgumentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sqa.ref.Append("name"))
+	return terra.ReferenceAsString(sqa.ref.Append("name"))
 }
 
 type UriPathAttributes struct {

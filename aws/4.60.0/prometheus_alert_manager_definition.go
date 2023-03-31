@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewPrometheusAlertManagerDefinition creates a new instance of [PrometheusAlertManagerDefinition].
 func NewPrometheusAlertManagerDefinition(name string, args PrometheusAlertManagerDefinitionArgs) *PrometheusAlertManagerDefinition {
 	return &PrometheusAlertManagerDefinition{
 		Args: args,
@@ -18,28 +19,51 @@ func NewPrometheusAlertManagerDefinition(name string, args PrometheusAlertManage
 
 var _ terra.Resource = (*PrometheusAlertManagerDefinition)(nil)
 
+// PrometheusAlertManagerDefinition represents the Terraform resource aws_prometheus_alert_manager_definition.
 type PrometheusAlertManagerDefinition struct {
-	Name  string
-	Args  PrometheusAlertManagerDefinitionArgs
-	state *prometheusAlertManagerDefinitionState
+	Name      string
+	Args      PrometheusAlertManagerDefinitionArgs
+	state     *prometheusAlertManagerDefinitionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PrometheusAlertManagerDefinition].
 func (pamd *PrometheusAlertManagerDefinition) Type() string {
 	return "aws_prometheus_alert_manager_definition"
 }
 
+// LocalName returns the local name for [PrometheusAlertManagerDefinition].
 func (pamd *PrometheusAlertManagerDefinition) LocalName() string {
 	return pamd.Name
 }
 
+// Configuration returns the configuration (args) for [PrometheusAlertManagerDefinition].
 func (pamd *PrometheusAlertManagerDefinition) Configuration() interface{} {
 	return pamd.Args
 }
 
+// DependOn is used for other resources to depend on [PrometheusAlertManagerDefinition].
+func (pamd *PrometheusAlertManagerDefinition) DependOn() terra.Reference {
+	return terra.ReferenceResource(pamd)
+}
+
+// Dependencies returns the list of resources [PrometheusAlertManagerDefinition] depends_on.
+func (pamd *PrometheusAlertManagerDefinition) Dependencies() terra.Dependencies {
+	return pamd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PrometheusAlertManagerDefinition].
+func (pamd *PrometheusAlertManagerDefinition) LifecycleManagement() *terra.Lifecycle {
+	return pamd.Lifecycle
+}
+
+// Attributes returns the attributes for [PrometheusAlertManagerDefinition].
 func (pamd *PrometheusAlertManagerDefinition) Attributes() prometheusAlertManagerDefinitionAttributes {
 	return prometheusAlertManagerDefinitionAttributes{ref: terra.ReferenceResource(pamd)}
 }
 
+// ImportState imports the given attribute values into [PrometheusAlertManagerDefinition]'s state.
 func (pamd *PrometheusAlertManagerDefinition) ImportState(av io.Reader) error {
 	pamd.state = &prometheusAlertManagerDefinitionState{}
 	if err := json.NewDecoder(av).Decode(pamd.state); err != nil {
@@ -48,10 +72,12 @@ func (pamd *PrometheusAlertManagerDefinition) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PrometheusAlertManagerDefinition] has state.
 func (pamd *PrometheusAlertManagerDefinition) State() (*prometheusAlertManagerDefinitionState, bool) {
 	return pamd.state, pamd.state != nil
 }
 
+// StateMust returns the state for [PrometheusAlertManagerDefinition]. Panics if the state is nil.
 func (pamd *PrometheusAlertManagerDefinition) StateMust() *prometheusAlertManagerDefinitionState {
 	if pamd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pamd.Type(), pamd.LocalName()))
@@ -59,10 +85,7 @@ func (pamd *PrometheusAlertManagerDefinition) StateMust() *prometheusAlertManage
 	return pamd.state
 }
 
-func (pamd *PrometheusAlertManagerDefinition) DependOn() terra.Reference {
-	return terra.ReferenceResource(pamd)
-}
-
+// PrometheusAlertManagerDefinitionArgs contains the configurations for aws_prometheus_alert_manager_definition.
 type PrometheusAlertManagerDefinitionArgs struct {
 	// Definition: string, required
 	Definition terra.StringValue `hcl:"definition,attr" validate:"required"`
@@ -70,23 +93,24 @@ type PrometheusAlertManagerDefinitionArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// WorkspaceId: string, required
 	WorkspaceId terra.StringValue `hcl:"workspace_id,attr" validate:"required"`
-	// DependsOn contains resources that PrometheusAlertManagerDefinition depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type prometheusAlertManagerDefinitionAttributes struct {
 	ref terra.Reference
 }
 
+// Definition returns a reference to field definition of aws_prometheus_alert_manager_definition.
 func (pamd prometheusAlertManagerDefinitionAttributes) Definition() terra.StringValue {
-	return terra.ReferenceString(pamd.ref.Append("definition"))
+	return terra.ReferenceAsString(pamd.ref.Append("definition"))
 }
 
+// Id returns a reference to field id of aws_prometheus_alert_manager_definition.
 func (pamd prometheusAlertManagerDefinitionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pamd.ref.Append("id"))
+	return terra.ReferenceAsString(pamd.ref.Append("id"))
 }
 
+// WorkspaceId returns a reference to field workspace_id of aws_prometheus_alert_manager_definition.
 func (pamd prometheusAlertManagerDefinitionAttributes) WorkspaceId() terra.StringValue {
-	return terra.ReferenceString(pamd.ref.Append("workspace_id"))
+	return terra.ReferenceAsString(pamd.ref.Append("workspace_id"))
 }
 
 type prometheusAlertManagerDefinitionState struct {

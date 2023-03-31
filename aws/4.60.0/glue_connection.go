@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewGlueConnection creates a new instance of [GlueConnection].
 func NewGlueConnection(name string, args GlueConnectionArgs) *GlueConnection {
 	return &GlueConnection{
 		Args: args,
@@ -19,28 +20,51 @@ func NewGlueConnection(name string, args GlueConnectionArgs) *GlueConnection {
 
 var _ terra.Resource = (*GlueConnection)(nil)
 
+// GlueConnection represents the Terraform resource aws_glue_connection.
 type GlueConnection struct {
-	Name  string
-	Args  GlueConnectionArgs
-	state *glueConnectionState
+	Name      string
+	Args      GlueConnectionArgs
+	state     *glueConnectionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GlueConnection].
 func (gc *GlueConnection) Type() string {
 	return "aws_glue_connection"
 }
 
+// LocalName returns the local name for [GlueConnection].
 func (gc *GlueConnection) LocalName() string {
 	return gc.Name
 }
 
+// Configuration returns the configuration (args) for [GlueConnection].
 func (gc *GlueConnection) Configuration() interface{} {
 	return gc.Args
 }
 
+// DependOn is used for other resources to depend on [GlueConnection].
+func (gc *GlueConnection) DependOn() terra.Reference {
+	return terra.ReferenceResource(gc)
+}
+
+// Dependencies returns the list of resources [GlueConnection] depends_on.
+func (gc *GlueConnection) Dependencies() terra.Dependencies {
+	return gc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GlueConnection].
+func (gc *GlueConnection) LifecycleManagement() *terra.Lifecycle {
+	return gc.Lifecycle
+}
+
+// Attributes returns the attributes for [GlueConnection].
 func (gc *GlueConnection) Attributes() glueConnectionAttributes {
 	return glueConnectionAttributes{ref: terra.ReferenceResource(gc)}
 }
 
+// ImportState imports the given attribute values into [GlueConnection]'s state.
 func (gc *GlueConnection) ImportState(av io.Reader) error {
 	gc.state = &glueConnectionState{}
 	if err := json.NewDecoder(av).Decode(gc.state); err != nil {
@@ -49,10 +73,12 @@ func (gc *GlueConnection) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GlueConnection] has state.
 func (gc *GlueConnection) State() (*glueConnectionState, bool) {
 	return gc.state, gc.state != nil
 }
 
+// StateMust returns the state for [GlueConnection]. Panics if the state is nil.
 func (gc *GlueConnection) StateMust() *glueConnectionState {
 	if gc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", gc.Type(), gc.LocalName()))
@@ -60,10 +86,7 @@ func (gc *GlueConnection) StateMust() *glueConnectionState {
 	return gc.state
 }
 
-func (gc *GlueConnection) DependOn() terra.Reference {
-	return terra.ReferenceResource(gc)
-}
-
+// GlueConnectionArgs contains the configurations for aws_glue_connection.
 type GlueConnectionArgs struct {
 	// CatalogId: string, optional
 	CatalogId terra.StringValue `hcl:"catalog_id,attr"`
@@ -85,55 +108,63 @@ type GlueConnectionArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// PhysicalConnectionRequirements: optional
 	PhysicalConnectionRequirements *glueconnection.PhysicalConnectionRequirements `hcl:"physical_connection_requirements,block"`
-	// DependsOn contains resources that GlueConnection depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type glueConnectionAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_glue_connection.
 func (gc glueConnectionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("arn"))
+	return terra.ReferenceAsString(gc.ref.Append("arn"))
 }
 
+// CatalogId returns a reference to field catalog_id of aws_glue_connection.
 func (gc glueConnectionAttributes) CatalogId() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("catalog_id"))
+	return terra.ReferenceAsString(gc.ref.Append("catalog_id"))
 }
 
+// ConnectionProperties returns a reference to field connection_properties of aws_glue_connection.
 func (gc glueConnectionAttributes) ConnectionProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gc.ref.Append("connection_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](gc.ref.Append("connection_properties"))
 }
 
+// ConnectionType returns a reference to field connection_type of aws_glue_connection.
 func (gc glueConnectionAttributes) ConnectionType() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("connection_type"))
+	return terra.ReferenceAsString(gc.ref.Append("connection_type"))
 }
 
+// Description returns a reference to field description of aws_glue_connection.
 func (gc glueConnectionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("description"))
+	return terra.ReferenceAsString(gc.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_glue_connection.
 func (gc glueConnectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("id"))
+	return terra.ReferenceAsString(gc.ref.Append("id"))
 }
 
+// MatchCriteria returns a reference to field match_criteria of aws_glue_connection.
 func (gc glueConnectionAttributes) MatchCriteria() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](gc.ref.Append("match_criteria"))
+	return terra.ReferenceAsList[terra.StringValue](gc.ref.Append("match_criteria"))
 }
 
+// Name returns a reference to field name of aws_glue_connection.
 func (gc glueConnectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("name"))
+	return terra.ReferenceAsString(gc.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_glue_connection.
 func (gc glueConnectionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](gc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_glue_connection.
 func (gc glueConnectionAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](gc.ref.Append("tags_all"))
 }
 
 func (gc glueConnectionAttributes) PhysicalConnectionRequirements() terra.ListValue[glueconnection.PhysicalConnectionRequirementsAttributes] {
-	return terra.ReferenceList[glueconnection.PhysicalConnectionRequirementsAttributes](gc.ref.Append("physical_connection_requirements"))
+	return terra.ReferenceAsList[glueconnection.PhysicalConnectionRequirementsAttributes](gc.ref.Append("physical_connection_requirements"))
 }
 
 type glueConnectionState struct {

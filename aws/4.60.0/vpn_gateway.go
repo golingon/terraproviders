@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewVpnGateway creates a new instance of [VpnGateway].
 func NewVpnGateway(name string, args VpnGatewayArgs) *VpnGateway {
 	return &VpnGateway{
 		Args: args,
@@ -18,28 +19,51 @@ func NewVpnGateway(name string, args VpnGatewayArgs) *VpnGateway {
 
 var _ terra.Resource = (*VpnGateway)(nil)
 
+// VpnGateway represents the Terraform resource aws_vpn_gateway.
 type VpnGateway struct {
-	Name  string
-	Args  VpnGatewayArgs
-	state *vpnGatewayState
+	Name      string
+	Args      VpnGatewayArgs
+	state     *vpnGatewayState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VpnGateway].
 func (vg *VpnGateway) Type() string {
 	return "aws_vpn_gateway"
 }
 
+// LocalName returns the local name for [VpnGateway].
 func (vg *VpnGateway) LocalName() string {
 	return vg.Name
 }
 
+// Configuration returns the configuration (args) for [VpnGateway].
 func (vg *VpnGateway) Configuration() interface{} {
 	return vg.Args
 }
 
+// DependOn is used for other resources to depend on [VpnGateway].
+func (vg *VpnGateway) DependOn() terra.Reference {
+	return terra.ReferenceResource(vg)
+}
+
+// Dependencies returns the list of resources [VpnGateway] depends_on.
+func (vg *VpnGateway) Dependencies() terra.Dependencies {
+	return vg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VpnGateway].
+func (vg *VpnGateway) LifecycleManagement() *terra.Lifecycle {
+	return vg.Lifecycle
+}
+
+// Attributes returns the attributes for [VpnGateway].
 func (vg *VpnGateway) Attributes() vpnGatewayAttributes {
 	return vpnGatewayAttributes{ref: terra.ReferenceResource(vg)}
 }
 
+// ImportState imports the given attribute values into [VpnGateway]'s state.
 func (vg *VpnGateway) ImportState(av io.Reader) error {
 	vg.state = &vpnGatewayState{}
 	if err := json.NewDecoder(av).Decode(vg.state); err != nil {
@@ -48,10 +72,12 @@ func (vg *VpnGateway) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VpnGateway] has state.
 func (vg *VpnGateway) State() (*vpnGatewayState, bool) {
 	return vg.state, vg.state != nil
 }
 
+// StateMust returns the state for [VpnGateway]. Panics if the state is nil.
 func (vg *VpnGateway) StateMust() *vpnGatewayState {
 	if vg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vg.Type(), vg.LocalName()))
@@ -59,10 +85,7 @@ func (vg *VpnGateway) StateMust() *vpnGatewayState {
 	return vg.state
 }
 
-func (vg *VpnGateway) DependOn() terra.Reference {
-	return terra.ReferenceResource(vg)
-}
-
+// VpnGatewayArgs contains the configurations for aws_vpn_gateway.
 type VpnGatewayArgs struct {
 	// AmazonSideAsn: string, optional
 	AmazonSideAsn terra.StringValue `hcl:"amazon_side_asn,attr"`
@@ -76,39 +99,44 @@ type VpnGatewayArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// VpcId: string, optional
 	VpcId terra.StringValue `hcl:"vpc_id,attr"`
-	// DependsOn contains resources that VpnGateway depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type vpnGatewayAttributes struct {
 	ref terra.Reference
 }
 
+// AmazonSideAsn returns a reference to field amazon_side_asn of aws_vpn_gateway.
 func (vg vpnGatewayAttributes) AmazonSideAsn() terra.StringValue {
-	return terra.ReferenceString(vg.ref.Append("amazon_side_asn"))
+	return terra.ReferenceAsString(vg.ref.Append("amazon_side_asn"))
 }
 
+// Arn returns a reference to field arn of aws_vpn_gateway.
 func (vg vpnGatewayAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(vg.ref.Append("arn"))
+	return terra.ReferenceAsString(vg.ref.Append("arn"))
 }
 
+// AvailabilityZone returns a reference to field availability_zone of aws_vpn_gateway.
 func (vg vpnGatewayAttributes) AvailabilityZone() terra.StringValue {
-	return terra.ReferenceString(vg.ref.Append("availability_zone"))
+	return terra.ReferenceAsString(vg.ref.Append("availability_zone"))
 }
 
+// Id returns a reference to field id of aws_vpn_gateway.
 func (vg vpnGatewayAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vg.ref.Append("id"))
+	return terra.ReferenceAsString(vg.ref.Append("id"))
 }
 
+// Tags returns a reference to field tags of aws_vpn_gateway.
 func (vg vpnGatewayAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](vg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](vg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_vpn_gateway.
 func (vg vpnGatewayAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](vg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](vg.ref.Append("tags_all"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_vpn_gateway.
 func (vg vpnGatewayAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(vg.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(vg.ref.Append("vpc_id"))
 }
 
 type vpnGatewayState struct {

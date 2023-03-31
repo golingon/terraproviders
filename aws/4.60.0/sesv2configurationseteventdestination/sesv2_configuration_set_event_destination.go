@@ -70,27 +70,27 @@ func (ed EventDestinationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ed EventDestinationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(ed.ref.Append("enabled"))
+	return terra.ReferenceAsBool(ed.ref.Append("enabled"))
 }
 
 func (ed EventDestinationAttributes) MatchingEventTypes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ed.ref.Append("matching_event_types"))
+	return terra.ReferenceAsList[terra.StringValue](ed.ref.Append("matching_event_types"))
 }
 
 func (ed EventDestinationAttributes) CloudWatchDestination() terra.ListValue[CloudWatchDestinationAttributes] {
-	return terra.ReferenceList[CloudWatchDestinationAttributes](ed.ref.Append("cloud_watch_destination"))
+	return terra.ReferenceAsList[CloudWatchDestinationAttributes](ed.ref.Append("cloud_watch_destination"))
 }
 
 func (ed EventDestinationAttributes) KinesisFirehoseDestination() terra.ListValue[KinesisFirehoseDestinationAttributes] {
-	return terra.ReferenceList[KinesisFirehoseDestinationAttributes](ed.ref.Append("kinesis_firehose_destination"))
+	return terra.ReferenceAsList[KinesisFirehoseDestinationAttributes](ed.ref.Append("kinesis_firehose_destination"))
 }
 
 func (ed EventDestinationAttributes) PinpointDestination() terra.ListValue[PinpointDestinationAttributes] {
-	return terra.ReferenceList[PinpointDestinationAttributes](ed.ref.Append("pinpoint_destination"))
+	return terra.ReferenceAsList[PinpointDestinationAttributes](ed.ref.Append("pinpoint_destination"))
 }
 
 func (ed EventDestinationAttributes) SnsDestination() terra.ListValue[SnsDestinationAttributes] {
-	return terra.ReferenceList[SnsDestinationAttributes](ed.ref.Append("sns_destination"))
+	return terra.ReferenceAsList[SnsDestinationAttributes](ed.ref.Append("sns_destination"))
 }
 
 type CloudWatchDestinationAttributes struct {
@@ -110,7 +110,7 @@ func (cwd CloudWatchDestinationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cwd CloudWatchDestinationAttributes) DimensionConfiguration() terra.ListValue[DimensionConfigurationAttributes] {
-	return terra.ReferenceList[DimensionConfigurationAttributes](cwd.ref.Append("dimension_configuration"))
+	return terra.ReferenceAsList[DimensionConfigurationAttributes](cwd.ref.Append("dimension_configuration"))
 }
 
 type DimensionConfigurationAttributes struct {
@@ -130,15 +130,15 @@ func (dc DimensionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dc DimensionConfigurationAttributes) DefaultDimensionValue() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("default_dimension_value"))
+	return terra.ReferenceAsString(dc.ref.Append("default_dimension_value"))
 }
 
 func (dc DimensionConfigurationAttributes) DimensionName() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("dimension_name"))
+	return terra.ReferenceAsString(dc.ref.Append("dimension_name"))
 }
 
 func (dc DimensionConfigurationAttributes) DimensionValueSource() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("dimension_value_source"))
+	return terra.ReferenceAsString(dc.ref.Append("dimension_value_source"))
 }
 
 type KinesisFirehoseDestinationAttributes struct {
@@ -158,11 +158,11 @@ func (kfd KinesisFirehoseDestinationAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (kfd KinesisFirehoseDestinationAttributes) DeliveryStreamArn() terra.StringValue {
-	return terra.ReferenceString(kfd.ref.Append("delivery_stream_arn"))
+	return terra.ReferenceAsString(kfd.ref.Append("delivery_stream_arn"))
 }
 
 func (kfd KinesisFirehoseDestinationAttributes) IamRoleArn() terra.StringValue {
-	return terra.ReferenceString(kfd.ref.Append("iam_role_arn"))
+	return terra.ReferenceAsString(kfd.ref.Append("iam_role_arn"))
 }
 
 type PinpointDestinationAttributes struct {
@@ -182,7 +182,7 @@ func (pd PinpointDestinationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pd PinpointDestinationAttributes) ApplicationArn() terra.StringValue {
-	return terra.ReferenceString(pd.ref.Append("application_arn"))
+	return terra.ReferenceAsString(pd.ref.Append("application_arn"))
 }
 
 type SnsDestinationAttributes struct {
@@ -202,7 +202,7 @@ func (sd SnsDestinationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sd SnsDestinationAttributes) TopicArn() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("topic_arn"))
+	return terra.ReferenceAsString(sd.ref.Append("topic_arn"))
 }
 
 type EventDestinationState struct {

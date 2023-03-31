@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLbListener creates a new instance of [LbListener].
 func NewLbListener(name string, args LbListenerArgs) *LbListener {
 	return &LbListener{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLbListener(name string, args LbListenerArgs) *LbListener {
 
 var _ terra.Resource = (*LbListener)(nil)
 
+// LbListener represents the Terraform resource aws_lb_listener.
 type LbListener struct {
-	Name  string
-	Args  LbListenerArgs
-	state *lbListenerState
+	Name      string
+	Args      LbListenerArgs
+	state     *lbListenerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LbListener].
 func (ll *LbListener) Type() string {
 	return "aws_lb_listener"
 }
 
+// LocalName returns the local name for [LbListener].
 func (ll *LbListener) LocalName() string {
 	return ll.Name
 }
 
+// Configuration returns the configuration (args) for [LbListener].
 func (ll *LbListener) Configuration() interface{} {
 	return ll.Args
 }
 
+// DependOn is used for other resources to depend on [LbListener].
+func (ll *LbListener) DependOn() terra.Reference {
+	return terra.ReferenceResource(ll)
+}
+
+// Dependencies returns the list of resources [LbListener] depends_on.
+func (ll *LbListener) Dependencies() terra.Dependencies {
+	return ll.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LbListener].
+func (ll *LbListener) LifecycleManagement() *terra.Lifecycle {
+	return ll.Lifecycle
+}
+
+// Attributes returns the attributes for [LbListener].
 func (ll *LbListener) Attributes() lbListenerAttributes {
 	return lbListenerAttributes{ref: terra.ReferenceResource(ll)}
 }
 
+// ImportState imports the given attribute values into [LbListener]'s state.
 func (ll *LbListener) ImportState(av io.Reader) error {
 	ll.state = &lbListenerState{}
 	if err := json.NewDecoder(av).Decode(ll.state); err != nil {
@@ -49,10 +73,12 @@ func (ll *LbListener) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LbListener] has state.
 func (ll *LbListener) State() (*lbListenerState, bool) {
 	return ll.state, ll.state != nil
 }
 
+// StateMust returns the state for [LbListener]. Panics if the state is nil.
 func (ll *LbListener) StateMust() *lbListenerState {
 	if ll.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ll.Type(), ll.LocalName()))
@@ -60,10 +86,7 @@ func (ll *LbListener) StateMust() *lbListenerState {
 	return ll.state
 }
 
-func (ll *LbListener) DependOn() terra.Reference {
-	return terra.ReferenceResource(ll)
-}
-
+// LbListenerArgs contains the configurations for aws_lb_listener.
 type LbListenerArgs struct {
 	// AlpnPolicy: string, optional
 	AlpnPolicy terra.StringValue `hcl:"alpn_policy,attr"`
@@ -87,59 +110,67 @@ type LbListenerArgs struct {
 	DefaultAction []lblistener.DefaultAction `hcl:"default_action,block" validate:"min=1"`
 	// Timeouts: optional
 	Timeouts *lblistener.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LbListener depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lbListenerAttributes struct {
 	ref terra.Reference
 }
 
+// AlpnPolicy returns a reference to field alpn_policy of aws_lb_listener.
 func (ll lbListenerAttributes) AlpnPolicy() terra.StringValue {
-	return terra.ReferenceString(ll.ref.Append("alpn_policy"))
+	return terra.ReferenceAsString(ll.ref.Append("alpn_policy"))
 }
 
+// Arn returns a reference to field arn of aws_lb_listener.
 func (ll lbListenerAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ll.ref.Append("arn"))
+	return terra.ReferenceAsString(ll.ref.Append("arn"))
 }
 
+// CertificateArn returns a reference to field certificate_arn of aws_lb_listener.
 func (ll lbListenerAttributes) CertificateArn() terra.StringValue {
-	return terra.ReferenceString(ll.ref.Append("certificate_arn"))
+	return terra.ReferenceAsString(ll.ref.Append("certificate_arn"))
 }
 
+// Id returns a reference to field id of aws_lb_listener.
 func (ll lbListenerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ll.ref.Append("id"))
+	return terra.ReferenceAsString(ll.ref.Append("id"))
 }
 
+// LoadBalancerArn returns a reference to field load_balancer_arn of aws_lb_listener.
 func (ll lbListenerAttributes) LoadBalancerArn() terra.StringValue {
-	return terra.ReferenceString(ll.ref.Append("load_balancer_arn"))
+	return terra.ReferenceAsString(ll.ref.Append("load_balancer_arn"))
 }
 
+// Port returns a reference to field port of aws_lb_listener.
 func (ll lbListenerAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(ll.ref.Append("port"))
+	return terra.ReferenceAsNumber(ll.ref.Append("port"))
 }
 
+// Protocol returns a reference to field protocol of aws_lb_listener.
 func (ll lbListenerAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(ll.ref.Append("protocol"))
+	return terra.ReferenceAsString(ll.ref.Append("protocol"))
 }
 
+// SslPolicy returns a reference to field ssl_policy of aws_lb_listener.
 func (ll lbListenerAttributes) SslPolicy() terra.StringValue {
-	return terra.ReferenceString(ll.ref.Append("ssl_policy"))
+	return terra.ReferenceAsString(ll.ref.Append("ssl_policy"))
 }
 
+// Tags returns a reference to field tags of aws_lb_listener.
 func (ll lbListenerAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ll.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ll.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_lb_listener.
 func (ll lbListenerAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ll.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ll.ref.Append("tags_all"))
 }
 
 func (ll lbListenerAttributes) DefaultAction() terra.ListValue[lblistener.DefaultActionAttributes] {
-	return terra.ReferenceList[lblistener.DefaultActionAttributes](ll.ref.Append("default_action"))
+	return terra.ReferenceAsList[lblistener.DefaultActionAttributes](ll.ref.Append("default_action"))
 }
 
 func (ll lbListenerAttributes) Timeouts() lblistener.TimeoutsAttributes {
-	return terra.ReferenceSingle[lblistener.TimeoutsAttributes](ll.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[lblistener.TimeoutsAttributes](ll.ref.Append("timeouts"))
 }
 
 type lbListenerState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCodeartifactDomainPermissionsPolicy creates a new instance of [CodeartifactDomainPermissionsPolicy].
 func NewCodeartifactDomainPermissionsPolicy(name string, args CodeartifactDomainPermissionsPolicyArgs) *CodeartifactDomainPermissionsPolicy {
 	return &CodeartifactDomainPermissionsPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCodeartifactDomainPermissionsPolicy(name string, args CodeartifactDomain
 
 var _ terra.Resource = (*CodeartifactDomainPermissionsPolicy)(nil)
 
+// CodeartifactDomainPermissionsPolicy represents the Terraform resource aws_codeartifact_domain_permissions_policy.
 type CodeartifactDomainPermissionsPolicy struct {
-	Name  string
-	Args  CodeartifactDomainPermissionsPolicyArgs
-	state *codeartifactDomainPermissionsPolicyState
+	Name      string
+	Args      CodeartifactDomainPermissionsPolicyArgs
+	state     *codeartifactDomainPermissionsPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CodeartifactDomainPermissionsPolicy].
 func (cdpp *CodeartifactDomainPermissionsPolicy) Type() string {
 	return "aws_codeartifact_domain_permissions_policy"
 }
 
+// LocalName returns the local name for [CodeartifactDomainPermissionsPolicy].
 func (cdpp *CodeartifactDomainPermissionsPolicy) LocalName() string {
 	return cdpp.Name
 }
 
+// Configuration returns the configuration (args) for [CodeartifactDomainPermissionsPolicy].
 func (cdpp *CodeartifactDomainPermissionsPolicy) Configuration() interface{} {
 	return cdpp.Args
 }
 
+// DependOn is used for other resources to depend on [CodeartifactDomainPermissionsPolicy].
+func (cdpp *CodeartifactDomainPermissionsPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(cdpp)
+}
+
+// Dependencies returns the list of resources [CodeartifactDomainPermissionsPolicy] depends_on.
+func (cdpp *CodeartifactDomainPermissionsPolicy) Dependencies() terra.Dependencies {
+	return cdpp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CodeartifactDomainPermissionsPolicy].
+func (cdpp *CodeartifactDomainPermissionsPolicy) LifecycleManagement() *terra.Lifecycle {
+	return cdpp.Lifecycle
+}
+
+// Attributes returns the attributes for [CodeartifactDomainPermissionsPolicy].
 func (cdpp *CodeartifactDomainPermissionsPolicy) Attributes() codeartifactDomainPermissionsPolicyAttributes {
 	return codeartifactDomainPermissionsPolicyAttributes{ref: terra.ReferenceResource(cdpp)}
 }
 
+// ImportState imports the given attribute values into [CodeartifactDomainPermissionsPolicy]'s state.
 func (cdpp *CodeartifactDomainPermissionsPolicy) ImportState(av io.Reader) error {
 	cdpp.state = &codeartifactDomainPermissionsPolicyState{}
 	if err := json.NewDecoder(av).Decode(cdpp.state); err != nil {
@@ -48,10 +72,12 @@ func (cdpp *CodeartifactDomainPermissionsPolicy) ImportState(av io.Reader) error
 	return nil
 }
 
+// State returns the state and a bool indicating if [CodeartifactDomainPermissionsPolicy] has state.
 func (cdpp *CodeartifactDomainPermissionsPolicy) State() (*codeartifactDomainPermissionsPolicyState, bool) {
 	return cdpp.state, cdpp.state != nil
 }
 
+// StateMust returns the state for [CodeartifactDomainPermissionsPolicy]. Panics if the state is nil.
 func (cdpp *CodeartifactDomainPermissionsPolicy) StateMust() *codeartifactDomainPermissionsPolicyState {
 	if cdpp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cdpp.Type(), cdpp.LocalName()))
@@ -59,10 +85,7 @@ func (cdpp *CodeartifactDomainPermissionsPolicy) StateMust() *codeartifactDomain
 	return cdpp.state
 }
 
-func (cdpp *CodeartifactDomainPermissionsPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(cdpp)
-}
-
+// CodeartifactDomainPermissionsPolicyArgs contains the configurations for aws_codeartifact_domain_permissions_policy.
 type CodeartifactDomainPermissionsPolicyArgs struct {
 	// Domain: string, required
 	Domain terra.StringValue `hcl:"domain,attr" validate:"required"`
@@ -74,35 +97,39 @@ type CodeartifactDomainPermissionsPolicyArgs struct {
 	PolicyDocument terra.StringValue `hcl:"policy_document,attr" validate:"required"`
 	// PolicyRevision: string, optional
 	PolicyRevision terra.StringValue `hcl:"policy_revision,attr"`
-	// DependsOn contains resources that CodeartifactDomainPermissionsPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type codeartifactDomainPermissionsPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Domain returns a reference to field domain of aws_codeartifact_domain_permissions_policy.
 func (cdpp codeartifactDomainPermissionsPolicyAttributes) Domain() terra.StringValue {
-	return terra.ReferenceString(cdpp.ref.Append("domain"))
+	return terra.ReferenceAsString(cdpp.ref.Append("domain"))
 }
 
+// DomainOwner returns a reference to field domain_owner of aws_codeartifact_domain_permissions_policy.
 func (cdpp codeartifactDomainPermissionsPolicyAttributes) DomainOwner() terra.StringValue {
-	return terra.ReferenceString(cdpp.ref.Append("domain_owner"))
+	return terra.ReferenceAsString(cdpp.ref.Append("domain_owner"))
 }
 
+// Id returns a reference to field id of aws_codeartifact_domain_permissions_policy.
 func (cdpp codeartifactDomainPermissionsPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cdpp.ref.Append("id"))
+	return terra.ReferenceAsString(cdpp.ref.Append("id"))
 }
 
+// PolicyDocument returns a reference to field policy_document of aws_codeartifact_domain_permissions_policy.
 func (cdpp codeartifactDomainPermissionsPolicyAttributes) PolicyDocument() terra.StringValue {
-	return terra.ReferenceString(cdpp.ref.Append("policy_document"))
+	return terra.ReferenceAsString(cdpp.ref.Append("policy_document"))
 }
 
+// PolicyRevision returns a reference to field policy_revision of aws_codeartifact_domain_permissions_policy.
 func (cdpp codeartifactDomainPermissionsPolicyAttributes) PolicyRevision() terra.StringValue {
-	return terra.ReferenceString(cdpp.ref.Append("policy_revision"))
+	return terra.ReferenceAsString(cdpp.ref.Append("policy_revision"))
 }
 
+// ResourceArn returns a reference to field resource_arn of aws_codeartifact_domain_permissions_policy.
 func (cdpp codeartifactDomainPermissionsPolicyAttributes) ResourceArn() terra.StringValue {
-	return terra.ReferenceString(cdpp.ref.Append("resource_arn"))
+	return terra.ReferenceAsString(cdpp.ref.Append("resource_arn"))
 }
 
 type codeartifactDomainPermissionsPolicyState struct {

@@ -34,7 +34,7 @@ func (do DeliveryOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (do DeliveryOptionsAttributes) TlsPolicy() terra.StringValue {
-	return terra.ReferenceString(do.ref.Append("tls_policy"))
+	return terra.ReferenceAsString(do.ref.Append("tls_policy"))
 }
 
 type TrackingOptionsAttributes struct {
@@ -54,7 +54,7 @@ func (to TrackingOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (to TrackingOptionsAttributes) CustomRedirectDomain() terra.StringValue {
-	return terra.ReferenceString(to.ref.Append("custom_redirect_domain"))
+	return terra.ReferenceAsString(to.ref.Append("custom_redirect_domain"))
 }
 
 type DeliveryOptionsState struct {

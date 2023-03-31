@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewPinpointAdmChannel creates a new instance of [PinpointAdmChannel].
 func NewPinpointAdmChannel(name string, args PinpointAdmChannelArgs) *PinpointAdmChannel {
 	return &PinpointAdmChannel{
 		Args: args,
@@ -18,28 +19,51 @@ func NewPinpointAdmChannel(name string, args PinpointAdmChannelArgs) *PinpointAd
 
 var _ terra.Resource = (*PinpointAdmChannel)(nil)
 
+// PinpointAdmChannel represents the Terraform resource aws_pinpoint_adm_channel.
 type PinpointAdmChannel struct {
-	Name  string
-	Args  PinpointAdmChannelArgs
-	state *pinpointAdmChannelState
+	Name      string
+	Args      PinpointAdmChannelArgs
+	state     *pinpointAdmChannelState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PinpointAdmChannel].
 func (pac *PinpointAdmChannel) Type() string {
 	return "aws_pinpoint_adm_channel"
 }
 
+// LocalName returns the local name for [PinpointAdmChannel].
 func (pac *PinpointAdmChannel) LocalName() string {
 	return pac.Name
 }
 
+// Configuration returns the configuration (args) for [PinpointAdmChannel].
 func (pac *PinpointAdmChannel) Configuration() interface{} {
 	return pac.Args
 }
 
+// DependOn is used for other resources to depend on [PinpointAdmChannel].
+func (pac *PinpointAdmChannel) DependOn() terra.Reference {
+	return terra.ReferenceResource(pac)
+}
+
+// Dependencies returns the list of resources [PinpointAdmChannel] depends_on.
+func (pac *PinpointAdmChannel) Dependencies() terra.Dependencies {
+	return pac.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PinpointAdmChannel].
+func (pac *PinpointAdmChannel) LifecycleManagement() *terra.Lifecycle {
+	return pac.Lifecycle
+}
+
+// Attributes returns the attributes for [PinpointAdmChannel].
 func (pac *PinpointAdmChannel) Attributes() pinpointAdmChannelAttributes {
 	return pinpointAdmChannelAttributes{ref: terra.ReferenceResource(pac)}
 }
 
+// ImportState imports the given attribute values into [PinpointAdmChannel]'s state.
 func (pac *PinpointAdmChannel) ImportState(av io.Reader) error {
 	pac.state = &pinpointAdmChannelState{}
 	if err := json.NewDecoder(av).Decode(pac.state); err != nil {
@@ -48,10 +72,12 @@ func (pac *PinpointAdmChannel) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PinpointAdmChannel] has state.
 func (pac *PinpointAdmChannel) State() (*pinpointAdmChannelState, bool) {
 	return pac.state, pac.state != nil
 }
 
+// StateMust returns the state for [PinpointAdmChannel]. Panics if the state is nil.
 func (pac *PinpointAdmChannel) StateMust() *pinpointAdmChannelState {
 	if pac.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pac.Type(), pac.LocalName()))
@@ -59,10 +85,7 @@ func (pac *PinpointAdmChannel) StateMust() *pinpointAdmChannelState {
 	return pac.state
 }
 
-func (pac *PinpointAdmChannel) DependOn() terra.Reference {
-	return terra.ReferenceResource(pac)
-}
-
+// PinpointAdmChannelArgs contains the configurations for aws_pinpoint_adm_channel.
 type PinpointAdmChannelArgs struct {
 	// ApplicationId: string, required
 	ApplicationId terra.StringValue `hcl:"application_id,attr" validate:"required"`
@@ -74,31 +97,34 @@ type PinpointAdmChannelArgs struct {
 	Enabled terra.BoolValue `hcl:"enabled,attr"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that PinpointAdmChannel depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type pinpointAdmChannelAttributes struct {
 	ref terra.Reference
 }
 
+// ApplicationId returns a reference to field application_id of aws_pinpoint_adm_channel.
 func (pac pinpointAdmChannelAttributes) ApplicationId() terra.StringValue {
-	return terra.ReferenceString(pac.ref.Append("application_id"))
+	return terra.ReferenceAsString(pac.ref.Append("application_id"))
 }
 
+// ClientId returns a reference to field client_id of aws_pinpoint_adm_channel.
 func (pac pinpointAdmChannelAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(pac.ref.Append("client_id"))
+	return terra.ReferenceAsString(pac.ref.Append("client_id"))
 }
 
+// ClientSecret returns a reference to field client_secret of aws_pinpoint_adm_channel.
 func (pac pinpointAdmChannelAttributes) ClientSecret() terra.StringValue {
-	return terra.ReferenceString(pac.ref.Append("client_secret"))
+	return terra.ReferenceAsString(pac.ref.Append("client_secret"))
 }
 
+// Enabled returns a reference to field enabled of aws_pinpoint_adm_channel.
 func (pac pinpointAdmChannelAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(pac.ref.Append("enabled"))
+	return terra.ReferenceAsBool(pac.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of aws_pinpoint_adm_channel.
 func (pac pinpointAdmChannelAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pac.ref.Append("id"))
+	return terra.ReferenceAsString(pac.ref.Append("id"))
 }
 
 type pinpointAdmChannelState struct {

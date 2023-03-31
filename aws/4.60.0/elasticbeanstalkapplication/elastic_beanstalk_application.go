@@ -35,19 +35,19 @@ func (al AppversionLifecycleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (al AppversionLifecycleAttributes) DeleteSourceFromS3() terra.BoolValue {
-	return terra.ReferenceBool(al.ref.Append("delete_source_from_s3"))
+	return terra.ReferenceAsBool(al.ref.Append("delete_source_from_s3"))
 }
 
 func (al AppversionLifecycleAttributes) MaxAgeInDays() terra.NumberValue {
-	return terra.ReferenceNumber(al.ref.Append("max_age_in_days"))
+	return terra.ReferenceAsNumber(al.ref.Append("max_age_in_days"))
 }
 
 func (al AppversionLifecycleAttributes) MaxCount() terra.NumberValue {
-	return terra.ReferenceNumber(al.ref.Append("max_count"))
+	return terra.ReferenceAsNumber(al.ref.Append("max_count"))
 }
 
 func (al AppversionLifecycleAttributes) ServiceRole() terra.StringValue {
-	return terra.ReferenceString(al.ref.Append("service_role"))
+	return terra.ReferenceAsString(al.ref.Append("service_role"))
 }
 
 type AppversionLifecycleState struct {

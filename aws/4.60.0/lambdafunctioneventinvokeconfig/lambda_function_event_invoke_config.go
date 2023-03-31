@@ -41,11 +41,11 @@ func (dc DestinationConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dc DestinationConfigAttributes) OnFailure() terra.ListValue[OnFailureAttributes] {
-	return terra.ReferenceList[OnFailureAttributes](dc.ref.Append("on_failure"))
+	return terra.ReferenceAsList[OnFailureAttributes](dc.ref.Append("on_failure"))
 }
 
 func (dc DestinationConfigAttributes) OnSuccess() terra.ListValue[OnSuccessAttributes] {
-	return terra.ReferenceList[OnSuccessAttributes](dc.ref.Append("on_success"))
+	return terra.ReferenceAsList[OnSuccessAttributes](dc.ref.Append("on_success"))
 }
 
 type OnFailureAttributes struct {
@@ -65,7 +65,7 @@ func (of OnFailureAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (of OnFailureAttributes) Destination() terra.StringValue {
-	return terra.ReferenceString(of.ref.Append("destination"))
+	return terra.ReferenceAsString(of.ref.Append("destination"))
 }
 
 type OnSuccessAttributes struct {
@@ -85,7 +85,7 @@ func (os OnSuccessAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (os OnSuccessAttributes) Destination() terra.StringValue {
-	return terra.ReferenceString(os.ref.Append("destination"))
+	return terra.ReferenceAsString(os.ref.Append("destination"))
 }
 
 type DestinationConfigState struct {

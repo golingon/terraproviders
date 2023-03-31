@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataImagebuilderImage creates a new instance of [DataImagebuilderImage].
 func NewDataImagebuilderImage(name string, args DataImagebuilderImageArgs) *DataImagebuilderImage {
 	return &DataImagebuilderImage{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataImagebuilderImage(name string, args DataImagebuilderImageArgs) *Data
 
 var _ terra.DataResource = (*DataImagebuilderImage)(nil)
 
+// DataImagebuilderImage represents the Terraform data resource aws_imagebuilder_image.
 type DataImagebuilderImage struct {
 	Name string
 	Args DataImagebuilderImageArgs
 }
 
+// DataSource returns the Terraform object type for [DataImagebuilderImage].
 func (ii *DataImagebuilderImage) DataSource() string {
 	return "aws_imagebuilder_image"
 }
 
+// LocalName returns the local name for [DataImagebuilderImage].
 func (ii *DataImagebuilderImage) LocalName() string {
 	return ii.Name
 }
 
+// Configuration returns the configuration (args) for [DataImagebuilderImage].
 func (ii *DataImagebuilderImage) Configuration() interface{} {
 	return ii.Args
 }
 
+// Attributes returns the attributes for [DataImagebuilderImage].
 func (ii *DataImagebuilderImage) Attributes() dataImagebuilderImageAttributes {
 	return dataImagebuilderImageAttributes{ref: terra.ReferenceDataResource(ii)}
 }
 
+// DataImagebuilderImageArgs contains the configurations for aws_imagebuilder_image.
 type DataImagebuilderImageArgs struct {
 	// Arn: string, required
 	Arn terra.StringValue `hcl:"arn,attr" validate:"required"`
@@ -53,66 +60,80 @@ type dataImagebuilderImageAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_imagebuilder_image.
 func (ii dataImagebuilderImageAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ii.ref.Append("arn"))
+	return terra.ReferenceAsString(ii.ref.Append("arn"))
 }
 
+// BuildVersionArn returns a reference to field build_version_arn of aws_imagebuilder_image.
 func (ii dataImagebuilderImageAttributes) BuildVersionArn() terra.StringValue {
-	return terra.ReferenceString(ii.ref.Append("build_version_arn"))
+	return terra.ReferenceAsString(ii.ref.Append("build_version_arn"))
 }
 
+// ContainerRecipeArn returns a reference to field container_recipe_arn of aws_imagebuilder_image.
 func (ii dataImagebuilderImageAttributes) ContainerRecipeArn() terra.StringValue {
-	return terra.ReferenceString(ii.ref.Append("container_recipe_arn"))
+	return terra.ReferenceAsString(ii.ref.Append("container_recipe_arn"))
 }
 
+// DateCreated returns a reference to field date_created of aws_imagebuilder_image.
 func (ii dataImagebuilderImageAttributes) DateCreated() terra.StringValue {
-	return terra.ReferenceString(ii.ref.Append("date_created"))
+	return terra.ReferenceAsString(ii.ref.Append("date_created"))
 }
 
+// DistributionConfigurationArn returns a reference to field distribution_configuration_arn of aws_imagebuilder_image.
 func (ii dataImagebuilderImageAttributes) DistributionConfigurationArn() terra.StringValue {
-	return terra.ReferenceString(ii.ref.Append("distribution_configuration_arn"))
+	return terra.ReferenceAsString(ii.ref.Append("distribution_configuration_arn"))
 }
 
+// EnhancedImageMetadataEnabled returns a reference to field enhanced_image_metadata_enabled of aws_imagebuilder_image.
 func (ii dataImagebuilderImageAttributes) EnhancedImageMetadataEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ii.ref.Append("enhanced_image_metadata_enabled"))
+	return terra.ReferenceAsBool(ii.ref.Append("enhanced_image_metadata_enabled"))
 }
 
+// Id returns a reference to field id of aws_imagebuilder_image.
 func (ii dataImagebuilderImageAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ii.ref.Append("id"))
+	return terra.ReferenceAsString(ii.ref.Append("id"))
 }
 
+// ImageRecipeArn returns a reference to field image_recipe_arn of aws_imagebuilder_image.
 func (ii dataImagebuilderImageAttributes) ImageRecipeArn() terra.StringValue {
-	return terra.ReferenceString(ii.ref.Append("image_recipe_arn"))
+	return terra.ReferenceAsString(ii.ref.Append("image_recipe_arn"))
 }
 
+// InfrastructureConfigurationArn returns a reference to field infrastructure_configuration_arn of aws_imagebuilder_image.
 func (ii dataImagebuilderImageAttributes) InfrastructureConfigurationArn() terra.StringValue {
-	return terra.ReferenceString(ii.ref.Append("infrastructure_configuration_arn"))
+	return terra.ReferenceAsString(ii.ref.Append("infrastructure_configuration_arn"))
 }
 
+// Name returns a reference to field name of aws_imagebuilder_image.
 func (ii dataImagebuilderImageAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ii.ref.Append("name"))
+	return terra.ReferenceAsString(ii.ref.Append("name"))
 }
 
+// OsVersion returns a reference to field os_version of aws_imagebuilder_image.
 func (ii dataImagebuilderImageAttributes) OsVersion() terra.StringValue {
-	return terra.ReferenceString(ii.ref.Append("os_version"))
+	return terra.ReferenceAsString(ii.ref.Append("os_version"))
 }
 
+// Platform returns a reference to field platform of aws_imagebuilder_image.
 func (ii dataImagebuilderImageAttributes) Platform() terra.StringValue {
-	return terra.ReferenceString(ii.ref.Append("platform"))
+	return terra.ReferenceAsString(ii.ref.Append("platform"))
 }
 
+// Tags returns a reference to field tags of aws_imagebuilder_image.
 func (ii dataImagebuilderImageAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ii.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ii.ref.Append("tags"))
 }
 
+// Version returns a reference to field version of aws_imagebuilder_image.
 func (ii dataImagebuilderImageAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(ii.ref.Append("version"))
+	return terra.ReferenceAsString(ii.ref.Append("version"))
 }
 
 func (ii dataImagebuilderImageAttributes) ImageTestsConfiguration() terra.ListValue[dataimagebuilderimage.ImageTestsConfigurationAttributes] {
-	return terra.ReferenceList[dataimagebuilderimage.ImageTestsConfigurationAttributes](ii.ref.Append("image_tests_configuration"))
+	return terra.ReferenceAsList[dataimagebuilderimage.ImageTestsConfigurationAttributes](ii.ref.Append("image_tests_configuration"))
 }
 
 func (ii dataImagebuilderImageAttributes) OutputResources() terra.ListValue[dataimagebuilderimage.OutputResourcesAttributes] {
-	return terra.ReferenceList[dataimagebuilderimage.OutputResourcesAttributes](ii.ref.Append("output_resources"))
+	return terra.ReferenceAsList[dataimagebuilderimage.OutputResourcesAttributes](ii.ref.Append("output_resources"))
 }

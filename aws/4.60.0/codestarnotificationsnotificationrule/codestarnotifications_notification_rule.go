@@ -31,15 +31,15 @@ func (t TargetAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TargetAttributes) Address() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("address"))
+	return terra.ReferenceAsString(t.ref.Append("address"))
 }
 
 func (t TargetAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("status"))
+	return terra.ReferenceAsString(t.ref.Append("status"))
 }
 
 func (t TargetAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("type"))
+	return terra.ReferenceAsString(t.ref.Append("type"))
 }
 
 type TargetState struct {

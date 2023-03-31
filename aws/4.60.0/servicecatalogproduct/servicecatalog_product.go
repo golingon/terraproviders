@@ -50,27 +50,27 @@ func (pap ProvisioningArtifactParametersAttributes) InternalTokens() hclwrite.To
 }
 
 func (pap ProvisioningArtifactParametersAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(pap.ref.Append("description"))
+	return terra.ReferenceAsString(pap.ref.Append("description"))
 }
 
 func (pap ProvisioningArtifactParametersAttributes) DisableTemplateValidation() terra.BoolValue {
-	return terra.ReferenceBool(pap.ref.Append("disable_template_validation"))
+	return terra.ReferenceAsBool(pap.ref.Append("disable_template_validation"))
 }
 
 func (pap ProvisioningArtifactParametersAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pap.ref.Append("name"))
+	return terra.ReferenceAsString(pap.ref.Append("name"))
 }
 
 func (pap ProvisioningArtifactParametersAttributes) TemplatePhysicalId() terra.StringValue {
-	return terra.ReferenceString(pap.ref.Append("template_physical_id"))
+	return terra.ReferenceAsString(pap.ref.Append("template_physical_id"))
 }
 
 func (pap ProvisioningArtifactParametersAttributes) TemplateUrl() terra.StringValue {
-	return terra.ReferenceString(pap.ref.Append("template_url"))
+	return terra.ReferenceAsString(pap.ref.Append("template_url"))
 }
 
 func (pap ProvisioningArtifactParametersAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(pap.ref.Append("type"))
+	return terra.ReferenceAsString(pap.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
@@ -90,19 +90,19 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ProvisioningArtifactParametersState struct {

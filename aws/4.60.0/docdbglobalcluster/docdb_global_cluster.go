@@ -35,11 +35,11 @@ func (gcm GlobalClusterMembersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (gcm GlobalClusterMembersAttributes) DbClusterArn() terra.StringValue {
-	return terra.ReferenceString(gcm.ref.Append("db_cluster_arn"))
+	return terra.ReferenceAsString(gcm.ref.Append("db_cluster_arn"))
 }
 
 func (gcm GlobalClusterMembersAttributes) IsWriter() terra.BoolValue {
-	return terra.ReferenceBool(gcm.ref.Append("is_writer"))
+	return terra.ReferenceAsBool(gcm.ref.Append("is_writer"))
 }
 
 type TimeoutsAttributes struct {
@@ -59,15 +59,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type GlobalClusterMembersState struct {

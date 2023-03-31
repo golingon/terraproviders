@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCloudwatchLogSubscriptionFilter creates a new instance of [CloudwatchLogSubscriptionFilter].
 func NewCloudwatchLogSubscriptionFilter(name string, args CloudwatchLogSubscriptionFilterArgs) *CloudwatchLogSubscriptionFilter {
 	return &CloudwatchLogSubscriptionFilter{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCloudwatchLogSubscriptionFilter(name string, args CloudwatchLogSubscript
 
 var _ terra.Resource = (*CloudwatchLogSubscriptionFilter)(nil)
 
+// CloudwatchLogSubscriptionFilter represents the Terraform resource aws_cloudwatch_log_subscription_filter.
 type CloudwatchLogSubscriptionFilter struct {
-	Name  string
-	Args  CloudwatchLogSubscriptionFilterArgs
-	state *cloudwatchLogSubscriptionFilterState
+	Name      string
+	Args      CloudwatchLogSubscriptionFilterArgs
+	state     *cloudwatchLogSubscriptionFilterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudwatchLogSubscriptionFilter].
 func (clsf *CloudwatchLogSubscriptionFilter) Type() string {
 	return "aws_cloudwatch_log_subscription_filter"
 }
 
+// LocalName returns the local name for [CloudwatchLogSubscriptionFilter].
 func (clsf *CloudwatchLogSubscriptionFilter) LocalName() string {
 	return clsf.Name
 }
 
+// Configuration returns the configuration (args) for [CloudwatchLogSubscriptionFilter].
 func (clsf *CloudwatchLogSubscriptionFilter) Configuration() interface{} {
 	return clsf.Args
 }
 
+// DependOn is used for other resources to depend on [CloudwatchLogSubscriptionFilter].
+func (clsf *CloudwatchLogSubscriptionFilter) DependOn() terra.Reference {
+	return terra.ReferenceResource(clsf)
+}
+
+// Dependencies returns the list of resources [CloudwatchLogSubscriptionFilter] depends_on.
+func (clsf *CloudwatchLogSubscriptionFilter) Dependencies() terra.Dependencies {
+	return clsf.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudwatchLogSubscriptionFilter].
+func (clsf *CloudwatchLogSubscriptionFilter) LifecycleManagement() *terra.Lifecycle {
+	return clsf.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudwatchLogSubscriptionFilter].
 func (clsf *CloudwatchLogSubscriptionFilter) Attributes() cloudwatchLogSubscriptionFilterAttributes {
 	return cloudwatchLogSubscriptionFilterAttributes{ref: terra.ReferenceResource(clsf)}
 }
 
+// ImportState imports the given attribute values into [CloudwatchLogSubscriptionFilter]'s state.
 func (clsf *CloudwatchLogSubscriptionFilter) ImportState(av io.Reader) error {
 	clsf.state = &cloudwatchLogSubscriptionFilterState{}
 	if err := json.NewDecoder(av).Decode(clsf.state); err != nil {
@@ -48,10 +72,12 @@ func (clsf *CloudwatchLogSubscriptionFilter) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudwatchLogSubscriptionFilter] has state.
 func (clsf *CloudwatchLogSubscriptionFilter) State() (*cloudwatchLogSubscriptionFilterState, bool) {
 	return clsf.state, clsf.state != nil
 }
 
+// StateMust returns the state for [CloudwatchLogSubscriptionFilter]. Panics if the state is nil.
 func (clsf *CloudwatchLogSubscriptionFilter) StateMust() *cloudwatchLogSubscriptionFilterState {
 	if clsf.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", clsf.Type(), clsf.LocalName()))
@@ -59,10 +85,7 @@ func (clsf *CloudwatchLogSubscriptionFilter) StateMust() *cloudwatchLogSubscript
 	return clsf.state
 }
 
-func (clsf *CloudwatchLogSubscriptionFilter) DependOn() terra.Reference {
-	return terra.ReferenceResource(clsf)
-}
-
+// CloudwatchLogSubscriptionFilterArgs contains the configurations for aws_cloudwatch_log_subscription_filter.
 type CloudwatchLogSubscriptionFilterArgs struct {
 	// DestinationArn: string, required
 	DestinationArn terra.StringValue `hcl:"destination_arn,attr" validate:"required"`
@@ -78,39 +101,44 @@ type CloudwatchLogSubscriptionFilterArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// RoleArn: string, optional
 	RoleArn terra.StringValue `hcl:"role_arn,attr"`
-	// DependsOn contains resources that CloudwatchLogSubscriptionFilter depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudwatchLogSubscriptionFilterAttributes struct {
 	ref terra.Reference
 }
 
+// DestinationArn returns a reference to field destination_arn of aws_cloudwatch_log_subscription_filter.
 func (clsf cloudwatchLogSubscriptionFilterAttributes) DestinationArn() terra.StringValue {
-	return terra.ReferenceString(clsf.ref.Append("destination_arn"))
+	return terra.ReferenceAsString(clsf.ref.Append("destination_arn"))
 }
 
+// Distribution returns a reference to field distribution of aws_cloudwatch_log_subscription_filter.
 func (clsf cloudwatchLogSubscriptionFilterAttributes) Distribution() terra.StringValue {
-	return terra.ReferenceString(clsf.ref.Append("distribution"))
+	return terra.ReferenceAsString(clsf.ref.Append("distribution"))
 }
 
+// FilterPattern returns a reference to field filter_pattern of aws_cloudwatch_log_subscription_filter.
 func (clsf cloudwatchLogSubscriptionFilterAttributes) FilterPattern() terra.StringValue {
-	return terra.ReferenceString(clsf.ref.Append("filter_pattern"))
+	return terra.ReferenceAsString(clsf.ref.Append("filter_pattern"))
 }
 
+// Id returns a reference to field id of aws_cloudwatch_log_subscription_filter.
 func (clsf cloudwatchLogSubscriptionFilterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(clsf.ref.Append("id"))
+	return terra.ReferenceAsString(clsf.ref.Append("id"))
 }
 
+// LogGroupName returns a reference to field log_group_name of aws_cloudwatch_log_subscription_filter.
 func (clsf cloudwatchLogSubscriptionFilterAttributes) LogGroupName() terra.StringValue {
-	return terra.ReferenceString(clsf.ref.Append("log_group_name"))
+	return terra.ReferenceAsString(clsf.ref.Append("log_group_name"))
 }
 
+// Name returns a reference to field name of aws_cloudwatch_log_subscription_filter.
 func (clsf cloudwatchLogSubscriptionFilterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(clsf.ref.Append("name"))
+	return terra.ReferenceAsString(clsf.ref.Append("name"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_cloudwatch_log_subscription_filter.
 func (clsf cloudwatchLogSubscriptionFilterAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(clsf.ref.Append("role_arn"))
+	return terra.ReferenceAsString(clsf.ref.Append("role_arn"))
 }
 
 type cloudwatchLogSubscriptionFilterState struct {

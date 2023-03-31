@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataDocdbOrderableDbInstance creates a new instance of [DataDocdbOrderableDbInstance].
 func NewDataDocdbOrderableDbInstance(name string, args DataDocdbOrderableDbInstanceArgs) *DataDocdbOrderableDbInstance {
 	return &DataDocdbOrderableDbInstance{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataDocdbOrderableDbInstance(name string, args DataDocdbOrderableDbInsta
 
 var _ terra.DataResource = (*DataDocdbOrderableDbInstance)(nil)
 
+// DataDocdbOrderableDbInstance represents the Terraform data resource aws_docdb_orderable_db_instance.
 type DataDocdbOrderableDbInstance struct {
 	Name string
 	Args DataDocdbOrderableDbInstanceArgs
 }
 
+// DataSource returns the Terraform object type for [DataDocdbOrderableDbInstance].
 func (dodi *DataDocdbOrderableDbInstance) DataSource() string {
 	return "aws_docdb_orderable_db_instance"
 }
 
+// LocalName returns the local name for [DataDocdbOrderableDbInstance].
 func (dodi *DataDocdbOrderableDbInstance) LocalName() string {
 	return dodi.Name
 }
 
+// Configuration returns the configuration (args) for [DataDocdbOrderableDbInstance].
 func (dodi *DataDocdbOrderableDbInstance) Configuration() interface{} {
 	return dodi.Args
 }
 
+// Attributes returns the attributes for [DataDocdbOrderableDbInstance].
 func (dodi *DataDocdbOrderableDbInstance) Attributes() dataDocdbOrderableDbInstanceAttributes {
 	return dataDocdbOrderableDbInstanceAttributes{ref: terra.ReferenceDataResource(dodi)}
 }
 
+// DataDocdbOrderableDbInstanceArgs contains the configurations for aws_docdb_orderable_db_instance.
 type DataDocdbOrderableDbInstanceArgs struct {
 	// Engine: string, optional
 	Engine terra.StringValue `hcl:"engine,attr"`
@@ -54,34 +61,42 @@ type dataDocdbOrderableDbInstanceAttributes struct {
 	ref terra.Reference
 }
 
+// AvailabilityZones returns a reference to field availability_zones of aws_docdb_orderable_db_instance.
 func (dodi dataDocdbOrderableDbInstanceAttributes) AvailabilityZones() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dodi.ref.Append("availability_zones"))
+	return terra.ReferenceAsList[terra.StringValue](dodi.ref.Append("availability_zones"))
 }
 
+// Engine returns a reference to field engine of aws_docdb_orderable_db_instance.
 func (dodi dataDocdbOrderableDbInstanceAttributes) Engine() terra.StringValue {
-	return terra.ReferenceString(dodi.ref.Append("engine"))
+	return terra.ReferenceAsString(dodi.ref.Append("engine"))
 }
 
+// EngineVersion returns a reference to field engine_version of aws_docdb_orderable_db_instance.
 func (dodi dataDocdbOrderableDbInstanceAttributes) EngineVersion() terra.StringValue {
-	return terra.ReferenceString(dodi.ref.Append("engine_version"))
+	return terra.ReferenceAsString(dodi.ref.Append("engine_version"))
 }
 
+// Id returns a reference to field id of aws_docdb_orderable_db_instance.
 func (dodi dataDocdbOrderableDbInstanceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dodi.ref.Append("id"))
+	return terra.ReferenceAsString(dodi.ref.Append("id"))
 }
 
+// InstanceClass returns a reference to field instance_class of aws_docdb_orderable_db_instance.
 func (dodi dataDocdbOrderableDbInstanceAttributes) InstanceClass() terra.StringValue {
-	return terra.ReferenceString(dodi.ref.Append("instance_class"))
+	return terra.ReferenceAsString(dodi.ref.Append("instance_class"))
 }
 
+// LicenseModel returns a reference to field license_model of aws_docdb_orderable_db_instance.
 func (dodi dataDocdbOrderableDbInstanceAttributes) LicenseModel() terra.StringValue {
-	return terra.ReferenceString(dodi.ref.Append("license_model"))
+	return terra.ReferenceAsString(dodi.ref.Append("license_model"))
 }
 
+// PreferredInstanceClasses returns a reference to field preferred_instance_classes of aws_docdb_orderable_db_instance.
 func (dodi dataDocdbOrderableDbInstanceAttributes) PreferredInstanceClasses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dodi.ref.Append("preferred_instance_classes"))
+	return terra.ReferenceAsList[terra.StringValue](dodi.ref.Append("preferred_instance_classes"))
 }
 
+// Vpc returns a reference to field vpc of aws_docdb_orderable_db_instance.
 func (dodi dataDocdbOrderableDbInstanceAttributes) Vpc() terra.BoolValue {
-	return terra.ReferenceBool(dodi.ref.Append("vpc"))
+	return terra.ReferenceAsBool(dodi.ref.Append("vpc"))
 }

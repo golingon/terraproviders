@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewOpsworksGangliaLayer creates a new instance of [OpsworksGangliaLayer].
 func NewOpsworksGangliaLayer(name string, args OpsworksGangliaLayerArgs) *OpsworksGangliaLayer {
 	return &OpsworksGangliaLayer{
 		Args: args,
@@ -19,28 +20,51 @@ func NewOpsworksGangliaLayer(name string, args OpsworksGangliaLayerArgs) *Opswor
 
 var _ terra.Resource = (*OpsworksGangliaLayer)(nil)
 
+// OpsworksGangliaLayer represents the Terraform resource aws_opsworks_ganglia_layer.
 type OpsworksGangliaLayer struct {
-	Name  string
-	Args  OpsworksGangliaLayerArgs
-	state *opsworksGangliaLayerState
+	Name      string
+	Args      OpsworksGangliaLayerArgs
+	state     *opsworksGangliaLayerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [OpsworksGangliaLayer].
 func (ogl *OpsworksGangliaLayer) Type() string {
 	return "aws_opsworks_ganglia_layer"
 }
 
+// LocalName returns the local name for [OpsworksGangliaLayer].
 func (ogl *OpsworksGangliaLayer) LocalName() string {
 	return ogl.Name
 }
 
+// Configuration returns the configuration (args) for [OpsworksGangliaLayer].
 func (ogl *OpsworksGangliaLayer) Configuration() interface{} {
 	return ogl.Args
 }
 
+// DependOn is used for other resources to depend on [OpsworksGangliaLayer].
+func (ogl *OpsworksGangliaLayer) DependOn() terra.Reference {
+	return terra.ReferenceResource(ogl)
+}
+
+// Dependencies returns the list of resources [OpsworksGangliaLayer] depends_on.
+func (ogl *OpsworksGangliaLayer) Dependencies() terra.Dependencies {
+	return ogl.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [OpsworksGangliaLayer].
+func (ogl *OpsworksGangliaLayer) LifecycleManagement() *terra.Lifecycle {
+	return ogl.Lifecycle
+}
+
+// Attributes returns the attributes for [OpsworksGangliaLayer].
 func (ogl *OpsworksGangliaLayer) Attributes() opsworksGangliaLayerAttributes {
 	return opsworksGangliaLayerAttributes{ref: terra.ReferenceResource(ogl)}
 }
 
+// ImportState imports the given attribute values into [OpsworksGangliaLayer]'s state.
 func (ogl *OpsworksGangliaLayer) ImportState(av io.Reader) error {
 	ogl.state = &opsworksGangliaLayerState{}
 	if err := json.NewDecoder(av).Decode(ogl.state); err != nil {
@@ -49,10 +73,12 @@ func (ogl *OpsworksGangliaLayer) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [OpsworksGangliaLayer] has state.
 func (ogl *OpsworksGangliaLayer) State() (*opsworksGangliaLayerState, bool) {
 	return ogl.state, ogl.state != nil
 }
 
+// StateMust returns the state for [OpsworksGangliaLayer]. Panics if the state is nil.
 func (ogl *OpsworksGangliaLayer) StateMust() *opsworksGangliaLayerState {
 	if ogl.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ogl.Type(), ogl.LocalName()))
@@ -60,10 +86,7 @@ func (ogl *OpsworksGangliaLayer) StateMust() *opsworksGangliaLayerState {
 	return ogl.state
 }
 
-func (ogl *OpsworksGangliaLayer) DependOn() terra.Reference {
-	return terra.ReferenceResource(ogl)
-}
-
+// OpsworksGangliaLayerArgs contains the configurations for aws_opsworks_ganglia_layer.
 type OpsworksGangliaLayerArgs struct {
 	// AutoAssignElasticIps: bool, optional
 	AutoAssignElasticIps terra.BoolValue `hcl:"auto_assign_elastic_ips,attr"`
@@ -121,127 +144,151 @@ type OpsworksGangliaLayerArgs struct {
 	EbsVolume []opsworksganglialayer.EbsVolume `hcl:"ebs_volume,block" validate:"min=0"`
 	// LoadBasedAutoScaling: optional
 	LoadBasedAutoScaling *opsworksganglialayer.LoadBasedAutoScaling `hcl:"load_based_auto_scaling,block"`
-	// DependsOn contains resources that OpsworksGangliaLayer depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type opsworksGangliaLayerAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ogl.ref.Append("arn"))
+	return terra.ReferenceAsString(ogl.ref.Append("arn"))
 }
 
+// AutoAssignElasticIps returns a reference to field auto_assign_elastic_ips of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) AutoAssignElasticIps() terra.BoolValue {
-	return terra.ReferenceBool(ogl.ref.Append("auto_assign_elastic_ips"))
+	return terra.ReferenceAsBool(ogl.ref.Append("auto_assign_elastic_ips"))
 }
 
+// AutoAssignPublicIps returns a reference to field auto_assign_public_ips of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) AutoAssignPublicIps() terra.BoolValue {
-	return terra.ReferenceBool(ogl.ref.Append("auto_assign_public_ips"))
+	return terra.ReferenceAsBool(ogl.ref.Append("auto_assign_public_ips"))
 }
 
+// AutoHealing returns a reference to field auto_healing of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) AutoHealing() terra.BoolValue {
-	return terra.ReferenceBool(ogl.ref.Append("auto_healing"))
+	return terra.ReferenceAsBool(ogl.ref.Append("auto_healing"))
 }
 
+// CustomConfigureRecipes returns a reference to field custom_configure_recipes of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) CustomConfigureRecipes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ogl.ref.Append("custom_configure_recipes"))
+	return terra.ReferenceAsList[terra.StringValue](ogl.ref.Append("custom_configure_recipes"))
 }
 
+// CustomDeployRecipes returns a reference to field custom_deploy_recipes of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) CustomDeployRecipes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ogl.ref.Append("custom_deploy_recipes"))
+	return terra.ReferenceAsList[terra.StringValue](ogl.ref.Append("custom_deploy_recipes"))
 }
 
+// CustomInstanceProfileArn returns a reference to field custom_instance_profile_arn of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) CustomInstanceProfileArn() terra.StringValue {
-	return terra.ReferenceString(ogl.ref.Append("custom_instance_profile_arn"))
+	return terra.ReferenceAsString(ogl.ref.Append("custom_instance_profile_arn"))
 }
 
+// CustomJson returns a reference to field custom_json of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) CustomJson() terra.StringValue {
-	return terra.ReferenceString(ogl.ref.Append("custom_json"))
+	return terra.ReferenceAsString(ogl.ref.Append("custom_json"))
 }
 
+// CustomSecurityGroupIds returns a reference to field custom_security_group_ids of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) CustomSecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ogl.ref.Append("custom_security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](ogl.ref.Append("custom_security_group_ids"))
 }
 
+// CustomSetupRecipes returns a reference to field custom_setup_recipes of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) CustomSetupRecipes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ogl.ref.Append("custom_setup_recipes"))
+	return terra.ReferenceAsList[terra.StringValue](ogl.ref.Append("custom_setup_recipes"))
 }
 
+// CustomShutdownRecipes returns a reference to field custom_shutdown_recipes of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) CustomShutdownRecipes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ogl.ref.Append("custom_shutdown_recipes"))
+	return terra.ReferenceAsList[terra.StringValue](ogl.ref.Append("custom_shutdown_recipes"))
 }
 
+// CustomUndeployRecipes returns a reference to field custom_undeploy_recipes of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) CustomUndeployRecipes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ogl.ref.Append("custom_undeploy_recipes"))
+	return terra.ReferenceAsList[terra.StringValue](ogl.ref.Append("custom_undeploy_recipes"))
 }
 
+// DrainElbOnShutdown returns a reference to field drain_elb_on_shutdown of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) DrainElbOnShutdown() terra.BoolValue {
-	return terra.ReferenceBool(ogl.ref.Append("drain_elb_on_shutdown"))
+	return terra.ReferenceAsBool(ogl.ref.Append("drain_elb_on_shutdown"))
 }
 
+// ElasticLoadBalancer returns a reference to field elastic_load_balancer of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) ElasticLoadBalancer() terra.StringValue {
-	return terra.ReferenceString(ogl.ref.Append("elastic_load_balancer"))
+	return terra.ReferenceAsString(ogl.ref.Append("elastic_load_balancer"))
 }
 
+// Id returns a reference to field id of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ogl.ref.Append("id"))
+	return terra.ReferenceAsString(ogl.ref.Append("id"))
 }
 
+// InstallUpdatesOnBoot returns a reference to field install_updates_on_boot of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) InstallUpdatesOnBoot() terra.BoolValue {
-	return terra.ReferenceBool(ogl.ref.Append("install_updates_on_boot"))
+	return terra.ReferenceAsBool(ogl.ref.Append("install_updates_on_boot"))
 }
 
+// InstanceShutdownTimeout returns a reference to field instance_shutdown_timeout of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) InstanceShutdownTimeout() terra.NumberValue {
-	return terra.ReferenceNumber(ogl.ref.Append("instance_shutdown_timeout"))
+	return terra.ReferenceAsNumber(ogl.ref.Append("instance_shutdown_timeout"))
 }
 
+// Name returns a reference to field name of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ogl.ref.Append("name"))
+	return terra.ReferenceAsString(ogl.ref.Append("name"))
 }
 
+// Password returns a reference to field password of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(ogl.ref.Append("password"))
+	return terra.ReferenceAsString(ogl.ref.Append("password"))
 }
 
+// StackId returns a reference to field stack_id of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) StackId() terra.StringValue {
-	return terra.ReferenceString(ogl.ref.Append("stack_id"))
+	return terra.ReferenceAsString(ogl.ref.Append("stack_id"))
 }
 
+// SystemPackages returns a reference to field system_packages of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) SystemPackages() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ogl.ref.Append("system_packages"))
+	return terra.ReferenceAsSet[terra.StringValue](ogl.ref.Append("system_packages"))
 }
 
+// Tags returns a reference to field tags of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ogl.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ogl.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ogl.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ogl.ref.Append("tags_all"))
 }
 
+// Url returns a reference to field url of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(ogl.ref.Append("url"))
+	return terra.ReferenceAsString(ogl.ref.Append("url"))
 }
 
+// UseEbsOptimizedInstances returns a reference to field use_ebs_optimized_instances of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) UseEbsOptimizedInstances() terra.BoolValue {
-	return terra.ReferenceBool(ogl.ref.Append("use_ebs_optimized_instances"))
+	return terra.ReferenceAsBool(ogl.ref.Append("use_ebs_optimized_instances"))
 }
 
+// Username returns a reference to field username of aws_opsworks_ganglia_layer.
 func (ogl opsworksGangliaLayerAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(ogl.ref.Append("username"))
+	return terra.ReferenceAsString(ogl.ref.Append("username"))
 }
 
 func (ogl opsworksGangliaLayerAttributes) CloudwatchConfiguration() terra.ListValue[opsworksganglialayer.CloudwatchConfigurationAttributes] {
-	return terra.ReferenceList[opsworksganglialayer.CloudwatchConfigurationAttributes](ogl.ref.Append("cloudwatch_configuration"))
+	return terra.ReferenceAsList[opsworksganglialayer.CloudwatchConfigurationAttributes](ogl.ref.Append("cloudwatch_configuration"))
 }
 
 func (ogl opsworksGangliaLayerAttributes) EbsVolume() terra.SetValue[opsworksganglialayer.EbsVolumeAttributes] {
-	return terra.ReferenceSet[opsworksganglialayer.EbsVolumeAttributes](ogl.ref.Append("ebs_volume"))
+	return terra.ReferenceAsSet[opsworksganglialayer.EbsVolumeAttributes](ogl.ref.Append("ebs_volume"))
 }
 
 func (ogl opsworksGangliaLayerAttributes) LoadBasedAutoScaling() terra.ListValue[opsworksganglialayer.LoadBasedAutoScalingAttributes] {
-	return terra.ReferenceList[opsworksganglialayer.LoadBasedAutoScalingAttributes](ogl.ref.Append("load_based_auto_scaling"))
+	return terra.ReferenceAsList[opsworksganglialayer.LoadBasedAutoScalingAttributes](ogl.ref.Append("load_based_auto_scaling"))
 }
 
 type opsworksGangliaLayerState struct {

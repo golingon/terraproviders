@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLaunchConfiguration creates a new instance of [LaunchConfiguration].
 func NewLaunchConfiguration(name string, args LaunchConfigurationArgs) *LaunchConfiguration {
 	return &LaunchConfiguration{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLaunchConfiguration(name string, args LaunchConfigurationArgs) *LaunchCo
 
 var _ terra.Resource = (*LaunchConfiguration)(nil)
 
+// LaunchConfiguration represents the Terraform resource aws_launch_configuration.
 type LaunchConfiguration struct {
-	Name  string
-	Args  LaunchConfigurationArgs
-	state *launchConfigurationState
+	Name      string
+	Args      LaunchConfigurationArgs
+	state     *launchConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LaunchConfiguration].
 func (lc *LaunchConfiguration) Type() string {
 	return "aws_launch_configuration"
 }
 
+// LocalName returns the local name for [LaunchConfiguration].
 func (lc *LaunchConfiguration) LocalName() string {
 	return lc.Name
 }
 
+// Configuration returns the configuration (args) for [LaunchConfiguration].
 func (lc *LaunchConfiguration) Configuration() interface{} {
 	return lc.Args
 }
 
+// DependOn is used for other resources to depend on [LaunchConfiguration].
+func (lc *LaunchConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(lc)
+}
+
+// Dependencies returns the list of resources [LaunchConfiguration] depends_on.
+func (lc *LaunchConfiguration) Dependencies() terra.Dependencies {
+	return lc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LaunchConfiguration].
+func (lc *LaunchConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return lc.Lifecycle
+}
+
+// Attributes returns the attributes for [LaunchConfiguration].
 func (lc *LaunchConfiguration) Attributes() launchConfigurationAttributes {
 	return launchConfigurationAttributes{ref: terra.ReferenceResource(lc)}
 }
 
+// ImportState imports the given attribute values into [LaunchConfiguration]'s state.
 func (lc *LaunchConfiguration) ImportState(av io.Reader) error {
 	lc.state = &launchConfigurationState{}
 	if err := json.NewDecoder(av).Decode(lc.state); err != nil {
@@ -49,10 +73,12 @@ func (lc *LaunchConfiguration) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LaunchConfiguration] has state.
 func (lc *LaunchConfiguration) State() (*launchConfigurationState, bool) {
 	return lc.state, lc.state != nil
 }
 
+// StateMust returns the state for [LaunchConfiguration]. Panics if the state is nil.
 func (lc *LaunchConfiguration) StateMust() *launchConfigurationState {
 	if lc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lc.Type(), lc.LocalName()))
@@ -60,10 +86,7 @@ func (lc *LaunchConfiguration) StateMust() *launchConfigurationState {
 	return lc.state
 }
 
-func (lc *LaunchConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(lc)
-}
-
+// LaunchConfigurationArgs contains the configurations for aws_launch_configuration.
 type LaunchConfigurationArgs struct {
 	// AssociatePublicIpAddress: bool, optional
 	AssociatePublicIpAddress terra.BoolValue `hcl:"associate_public_ip_address,attr"`
@@ -107,99 +130,115 @@ type LaunchConfigurationArgs struct {
 	MetadataOptions *launchconfiguration.MetadataOptions `hcl:"metadata_options,block"`
 	// RootBlockDevice: optional
 	RootBlockDevice *launchconfiguration.RootBlockDevice `hcl:"root_block_device,block"`
-	// DependsOn contains resources that LaunchConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type launchConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_launch_configuration.
 func (lc launchConfigurationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("arn"))
+	return terra.ReferenceAsString(lc.ref.Append("arn"))
 }
 
+// AssociatePublicIpAddress returns a reference to field associate_public_ip_address of aws_launch_configuration.
 func (lc launchConfigurationAttributes) AssociatePublicIpAddress() terra.BoolValue {
-	return terra.ReferenceBool(lc.ref.Append("associate_public_ip_address"))
+	return terra.ReferenceAsBool(lc.ref.Append("associate_public_ip_address"))
 }
 
+// EbsOptimized returns a reference to field ebs_optimized of aws_launch_configuration.
 func (lc launchConfigurationAttributes) EbsOptimized() terra.BoolValue {
-	return terra.ReferenceBool(lc.ref.Append("ebs_optimized"))
+	return terra.ReferenceAsBool(lc.ref.Append("ebs_optimized"))
 }
 
+// EnableMonitoring returns a reference to field enable_monitoring of aws_launch_configuration.
 func (lc launchConfigurationAttributes) EnableMonitoring() terra.BoolValue {
-	return terra.ReferenceBool(lc.ref.Append("enable_monitoring"))
+	return terra.ReferenceAsBool(lc.ref.Append("enable_monitoring"))
 }
 
+// IamInstanceProfile returns a reference to field iam_instance_profile of aws_launch_configuration.
 func (lc launchConfigurationAttributes) IamInstanceProfile() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("iam_instance_profile"))
+	return terra.ReferenceAsString(lc.ref.Append("iam_instance_profile"))
 }
 
+// Id returns a reference to field id of aws_launch_configuration.
 func (lc launchConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("id"))
+	return terra.ReferenceAsString(lc.ref.Append("id"))
 }
 
+// ImageId returns a reference to field image_id of aws_launch_configuration.
 func (lc launchConfigurationAttributes) ImageId() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("image_id"))
+	return terra.ReferenceAsString(lc.ref.Append("image_id"))
 }
 
+// InstanceType returns a reference to field instance_type of aws_launch_configuration.
 func (lc launchConfigurationAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("instance_type"))
+	return terra.ReferenceAsString(lc.ref.Append("instance_type"))
 }
 
+// KeyName returns a reference to field key_name of aws_launch_configuration.
 func (lc launchConfigurationAttributes) KeyName() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("key_name"))
+	return terra.ReferenceAsString(lc.ref.Append("key_name"))
 }
 
+// Name returns a reference to field name of aws_launch_configuration.
 func (lc launchConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("name"))
+	return terra.ReferenceAsString(lc.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_launch_configuration.
 func (lc launchConfigurationAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(lc.ref.Append("name_prefix"))
 }
 
+// PlacementTenancy returns a reference to field placement_tenancy of aws_launch_configuration.
 func (lc launchConfigurationAttributes) PlacementTenancy() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("placement_tenancy"))
+	return terra.ReferenceAsString(lc.ref.Append("placement_tenancy"))
 }
 
+// SecurityGroups returns a reference to field security_groups of aws_launch_configuration.
 func (lc launchConfigurationAttributes) SecurityGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](lc.ref.Append("security_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](lc.ref.Append("security_groups"))
 }
 
+// SpotPrice returns a reference to field spot_price of aws_launch_configuration.
 func (lc launchConfigurationAttributes) SpotPrice() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("spot_price"))
+	return terra.ReferenceAsString(lc.ref.Append("spot_price"))
 }
 
+// UserData returns a reference to field user_data of aws_launch_configuration.
 func (lc launchConfigurationAttributes) UserData() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("user_data"))
+	return terra.ReferenceAsString(lc.ref.Append("user_data"))
 }
 
+// UserDataBase64 returns a reference to field user_data_base64 of aws_launch_configuration.
 func (lc launchConfigurationAttributes) UserDataBase64() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("user_data_base64"))
+	return terra.ReferenceAsString(lc.ref.Append("user_data_base64"))
 }
 
+// VpcClassicLinkId returns a reference to field vpc_classic_link_id of aws_launch_configuration.
 func (lc launchConfigurationAttributes) VpcClassicLinkId() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("vpc_classic_link_id"))
+	return terra.ReferenceAsString(lc.ref.Append("vpc_classic_link_id"))
 }
 
+// VpcClassicLinkSecurityGroups returns a reference to field vpc_classic_link_security_groups of aws_launch_configuration.
 func (lc launchConfigurationAttributes) VpcClassicLinkSecurityGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](lc.ref.Append("vpc_classic_link_security_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](lc.ref.Append("vpc_classic_link_security_groups"))
 }
 
 func (lc launchConfigurationAttributes) EbsBlockDevice() terra.SetValue[launchconfiguration.EbsBlockDeviceAttributes] {
-	return terra.ReferenceSet[launchconfiguration.EbsBlockDeviceAttributes](lc.ref.Append("ebs_block_device"))
+	return terra.ReferenceAsSet[launchconfiguration.EbsBlockDeviceAttributes](lc.ref.Append("ebs_block_device"))
 }
 
 func (lc launchConfigurationAttributes) EphemeralBlockDevice() terra.SetValue[launchconfiguration.EphemeralBlockDeviceAttributes] {
-	return terra.ReferenceSet[launchconfiguration.EphemeralBlockDeviceAttributes](lc.ref.Append("ephemeral_block_device"))
+	return terra.ReferenceAsSet[launchconfiguration.EphemeralBlockDeviceAttributes](lc.ref.Append("ephemeral_block_device"))
 }
 
 func (lc launchConfigurationAttributes) MetadataOptions() terra.ListValue[launchconfiguration.MetadataOptionsAttributes] {
-	return terra.ReferenceList[launchconfiguration.MetadataOptionsAttributes](lc.ref.Append("metadata_options"))
+	return terra.ReferenceAsList[launchconfiguration.MetadataOptionsAttributes](lc.ref.Append("metadata_options"))
 }
 
 func (lc launchConfigurationAttributes) RootBlockDevice() terra.ListValue[launchconfiguration.RootBlockDeviceAttributes] {
-	return terra.ReferenceList[launchconfiguration.RootBlockDeviceAttributes](lc.ref.Append("root_block_device"))
+	return terra.ReferenceAsList[launchconfiguration.RootBlockDeviceAttributes](lc.ref.Append("root_block_device"))
 }
 
 type launchConfigurationState struct {

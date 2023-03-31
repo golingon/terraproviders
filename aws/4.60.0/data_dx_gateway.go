@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataDxGateway creates a new instance of [DataDxGateway].
 func NewDataDxGateway(name string, args DataDxGatewayArgs) *DataDxGateway {
 	return &DataDxGateway{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataDxGateway(name string, args DataDxGatewayArgs) *DataDxGateway {
 
 var _ terra.DataResource = (*DataDxGateway)(nil)
 
+// DataDxGateway represents the Terraform data resource aws_dx_gateway.
 type DataDxGateway struct {
 	Name string
 	Args DataDxGatewayArgs
 }
 
+// DataSource returns the Terraform object type for [DataDxGateway].
 func (dg *DataDxGateway) DataSource() string {
 	return "aws_dx_gateway"
 }
 
+// LocalName returns the local name for [DataDxGateway].
 func (dg *DataDxGateway) LocalName() string {
 	return dg.Name
 }
 
+// Configuration returns the configuration (args) for [DataDxGateway].
 func (dg *DataDxGateway) Configuration() interface{} {
 	return dg.Args
 }
 
+// Attributes returns the attributes for [DataDxGateway].
 func (dg *DataDxGateway) Attributes() dataDxGatewayAttributes {
 	return dataDxGatewayAttributes{ref: terra.ReferenceDataResource(dg)}
 }
 
+// DataDxGatewayArgs contains the configurations for aws_dx_gateway.
 type DataDxGatewayArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,18 +51,22 @@ type dataDxGatewayAttributes struct {
 	ref terra.Reference
 }
 
+// AmazonSideAsn returns a reference to field amazon_side_asn of aws_dx_gateway.
 func (dg dataDxGatewayAttributes) AmazonSideAsn() terra.StringValue {
-	return terra.ReferenceString(dg.ref.Append("amazon_side_asn"))
+	return terra.ReferenceAsString(dg.ref.Append("amazon_side_asn"))
 }
 
+// Id returns a reference to field id of aws_dx_gateway.
 func (dg dataDxGatewayAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dg.ref.Append("id"))
+	return terra.ReferenceAsString(dg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_dx_gateway.
 func (dg dataDxGatewayAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dg.ref.Append("name"))
+	return terra.ReferenceAsString(dg.ref.Append("name"))
 }
 
+// OwnerAccountId returns a reference to field owner_account_id of aws_dx_gateway.
 func (dg dataDxGatewayAttributes) OwnerAccountId() terra.StringValue {
-	return terra.ReferenceString(dg.ref.Append("owner_account_id"))
+	return terra.ReferenceAsString(dg.ref.Append("owner_account_id"))
 }

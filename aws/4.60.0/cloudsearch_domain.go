@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudsearchDomain creates a new instance of [CloudsearchDomain].
 func NewCloudsearchDomain(name string, args CloudsearchDomainArgs) *CloudsearchDomain {
 	return &CloudsearchDomain{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudsearchDomain(name string, args CloudsearchDomainArgs) *CloudsearchD
 
 var _ terra.Resource = (*CloudsearchDomain)(nil)
 
+// CloudsearchDomain represents the Terraform resource aws_cloudsearch_domain.
 type CloudsearchDomain struct {
-	Name  string
-	Args  CloudsearchDomainArgs
-	state *cloudsearchDomainState
+	Name      string
+	Args      CloudsearchDomainArgs
+	state     *cloudsearchDomainState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudsearchDomain].
 func (cd *CloudsearchDomain) Type() string {
 	return "aws_cloudsearch_domain"
 }
 
+// LocalName returns the local name for [CloudsearchDomain].
 func (cd *CloudsearchDomain) LocalName() string {
 	return cd.Name
 }
 
+// Configuration returns the configuration (args) for [CloudsearchDomain].
 func (cd *CloudsearchDomain) Configuration() interface{} {
 	return cd.Args
 }
 
+// DependOn is used for other resources to depend on [CloudsearchDomain].
+func (cd *CloudsearchDomain) DependOn() terra.Reference {
+	return terra.ReferenceResource(cd)
+}
+
+// Dependencies returns the list of resources [CloudsearchDomain] depends_on.
+func (cd *CloudsearchDomain) Dependencies() terra.Dependencies {
+	return cd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudsearchDomain].
+func (cd *CloudsearchDomain) LifecycleManagement() *terra.Lifecycle {
+	return cd.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudsearchDomain].
 func (cd *CloudsearchDomain) Attributes() cloudsearchDomainAttributes {
 	return cloudsearchDomainAttributes{ref: terra.ReferenceResource(cd)}
 }
 
+// ImportState imports the given attribute values into [CloudsearchDomain]'s state.
 func (cd *CloudsearchDomain) ImportState(av io.Reader) error {
 	cd.state = &cloudsearchDomainState{}
 	if err := json.NewDecoder(av).Decode(cd.state); err != nil {
@@ -49,10 +73,12 @@ func (cd *CloudsearchDomain) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudsearchDomain] has state.
 func (cd *CloudsearchDomain) State() (*cloudsearchDomainState, bool) {
 	return cd.state, cd.state != nil
 }
 
+// StateMust returns the state for [CloudsearchDomain]. Panics if the state is nil.
 func (cd *CloudsearchDomain) StateMust() *cloudsearchDomainState {
 	if cd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cd.Type(), cd.LocalName()))
@@ -60,10 +86,7 @@ func (cd *CloudsearchDomain) StateMust() *cloudsearchDomainState {
 	return cd.state
 }
 
-func (cd *CloudsearchDomain) DependOn() terra.Reference {
-	return terra.ReferenceResource(cd)
-}
-
+// CloudsearchDomainArgs contains the configurations for aws_cloudsearch_domain.
 type CloudsearchDomainArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,55 +102,60 @@ type CloudsearchDomainArgs struct {
 	ScalingParameters *cloudsearchdomain.ScalingParameters `hcl:"scaling_parameters,block"`
 	// Timeouts: optional
 	Timeouts *cloudsearchdomain.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CloudsearchDomain depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudsearchDomainAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_cloudsearch_domain.
 func (cd cloudsearchDomainAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("arn"))
+	return terra.ReferenceAsString(cd.ref.Append("arn"))
 }
 
+// DocumentServiceEndpoint returns a reference to field document_service_endpoint of aws_cloudsearch_domain.
 func (cd cloudsearchDomainAttributes) DocumentServiceEndpoint() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("document_service_endpoint"))
+	return terra.ReferenceAsString(cd.ref.Append("document_service_endpoint"))
 }
 
+// DomainId returns a reference to field domain_id of aws_cloudsearch_domain.
 func (cd cloudsearchDomainAttributes) DomainId() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("domain_id"))
+	return terra.ReferenceAsString(cd.ref.Append("domain_id"))
 }
 
+// Id returns a reference to field id of aws_cloudsearch_domain.
 func (cd cloudsearchDomainAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("id"))
+	return terra.ReferenceAsString(cd.ref.Append("id"))
 }
 
+// MultiAz returns a reference to field multi_az of aws_cloudsearch_domain.
 func (cd cloudsearchDomainAttributes) MultiAz() terra.BoolValue {
-	return terra.ReferenceBool(cd.ref.Append("multi_az"))
+	return terra.ReferenceAsBool(cd.ref.Append("multi_az"))
 }
 
+// Name returns a reference to field name of aws_cloudsearch_domain.
 func (cd cloudsearchDomainAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("name"))
+	return terra.ReferenceAsString(cd.ref.Append("name"))
 }
 
+// SearchServiceEndpoint returns a reference to field search_service_endpoint of aws_cloudsearch_domain.
 func (cd cloudsearchDomainAttributes) SearchServiceEndpoint() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("search_service_endpoint"))
+	return terra.ReferenceAsString(cd.ref.Append("search_service_endpoint"))
 }
 
 func (cd cloudsearchDomainAttributes) EndpointOptions() terra.ListValue[cloudsearchdomain.EndpointOptionsAttributes] {
-	return terra.ReferenceList[cloudsearchdomain.EndpointOptionsAttributes](cd.ref.Append("endpoint_options"))
+	return terra.ReferenceAsList[cloudsearchdomain.EndpointOptionsAttributes](cd.ref.Append("endpoint_options"))
 }
 
 func (cd cloudsearchDomainAttributes) IndexField() terra.SetValue[cloudsearchdomain.IndexFieldAttributes] {
-	return terra.ReferenceSet[cloudsearchdomain.IndexFieldAttributes](cd.ref.Append("index_field"))
+	return terra.ReferenceAsSet[cloudsearchdomain.IndexFieldAttributes](cd.ref.Append("index_field"))
 }
 
 func (cd cloudsearchDomainAttributes) ScalingParameters() terra.ListValue[cloudsearchdomain.ScalingParametersAttributes] {
-	return terra.ReferenceList[cloudsearchdomain.ScalingParametersAttributes](cd.ref.Append("scaling_parameters"))
+	return terra.ReferenceAsList[cloudsearchdomain.ScalingParametersAttributes](cd.ref.Append("scaling_parameters"))
 }
 
 func (cd cloudsearchDomainAttributes) Timeouts() cloudsearchdomain.TimeoutsAttributes {
-	return terra.ReferenceSingle[cloudsearchdomain.TimeoutsAttributes](cd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cloudsearchdomain.TimeoutsAttributes](cd.ref.Append("timeouts"))
 }
 
 type cloudsearchDomainState struct {

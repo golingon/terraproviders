@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewWafregionalRegexPatternSet creates a new instance of [WafregionalRegexPatternSet].
 func NewWafregionalRegexPatternSet(name string, args WafregionalRegexPatternSetArgs) *WafregionalRegexPatternSet {
 	return &WafregionalRegexPatternSet{
 		Args: args,
@@ -18,28 +19,51 @@ func NewWafregionalRegexPatternSet(name string, args WafregionalRegexPatternSetA
 
 var _ terra.Resource = (*WafregionalRegexPatternSet)(nil)
 
+// WafregionalRegexPatternSet represents the Terraform resource aws_wafregional_regex_pattern_set.
 type WafregionalRegexPatternSet struct {
-	Name  string
-	Args  WafregionalRegexPatternSetArgs
-	state *wafregionalRegexPatternSetState
+	Name      string
+	Args      WafregionalRegexPatternSetArgs
+	state     *wafregionalRegexPatternSetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [WafregionalRegexPatternSet].
 func (wrps *WafregionalRegexPatternSet) Type() string {
 	return "aws_wafregional_regex_pattern_set"
 }
 
+// LocalName returns the local name for [WafregionalRegexPatternSet].
 func (wrps *WafregionalRegexPatternSet) LocalName() string {
 	return wrps.Name
 }
 
+// Configuration returns the configuration (args) for [WafregionalRegexPatternSet].
 func (wrps *WafregionalRegexPatternSet) Configuration() interface{} {
 	return wrps.Args
 }
 
+// DependOn is used for other resources to depend on [WafregionalRegexPatternSet].
+func (wrps *WafregionalRegexPatternSet) DependOn() terra.Reference {
+	return terra.ReferenceResource(wrps)
+}
+
+// Dependencies returns the list of resources [WafregionalRegexPatternSet] depends_on.
+func (wrps *WafregionalRegexPatternSet) Dependencies() terra.Dependencies {
+	return wrps.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [WafregionalRegexPatternSet].
+func (wrps *WafregionalRegexPatternSet) LifecycleManagement() *terra.Lifecycle {
+	return wrps.Lifecycle
+}
+
+// Attributes returns the attributes for [WafregionalRegexPatternSet].
 func (wrps *WafregionalRegexPatternSet) Attributes() wafregionalRegexPatternSetAttributes {
 	return wafregionalRegexPatternSetAttributes{ref: terra.ReferenceResource(wrps)}
 }
 
+// ImportState imports the given attribute values into [WafregionalRegexPatternSet]'s state.
 func (wrps *WafregionalRegexPatternSet) ImportState(av io.Reader) error {
 	wrps.state = &wafregionalRegexPatternSetState{}
 	if err := json.NewDecoder(av).Decode(wrps.state); err != nil {
@@ -48,10 +72,12 @@ func (wrps *WafregionalRegexPatternSet) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [WafregionalRegexPatternSet] has state.
 func (wrps *WafregionalRegexPatternSet) State() (*wafregionalRegexPatternSetState, bool) {
 	return wrps.state, wrps.state != nil
 }
 
+// StateMust returns the state for [WafregionalRegexPatternSet]. Panics if the state is nil.
 func (wrps *WafregionalRegexPatternSet) StateMust() *wafregionalRegexPatternSetState {
 	if wrps.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", wrps.Type(), wrps.LocalName()))
@@ -59,10 +85,7 @@ func (wrps *WafregionalRegexPatternSet) StateMust() *wafregionalRegexPatternSetS
 	return wrps.state
 }
 
-func (wrps *WafregionalRegexPatternSet) DependOn() terra.Reference {
-	return terra.ReferenceResource(wrps)
-}
-
+// WafregionalRegexPatternSetArgs contains the configurations for aws_wafregional_regex_pattern_set.
 type WafregionalRegexPatternSetArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,23 +93,24 @@ type WafregionalRegexPatternSetArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// RegexPatternStrings: set of string, optional
 	RegexPatternStrings terra.SetValue[terra.StringValue] `hcl:"regex_pattern_strings,attr"`
-	// DependsOn contains resources that WafregionalRegexPatternSet depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type wafregionalRegexPatternSetAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_wafregional_regex_pattern_set.
 func (wrps wafregionalRegexPatternSetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(wrps.ref.Append("id"))
+	return terra.ReferenceAsString(wrps.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_wafregional_regex_pattern_set.
 func (wrps wafregionalRegexPatternSetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(wrps.ref.Append("name"))
+	return terra.ReferenceAsString(wrps.ref.Append("name"))
 }
 
+// RegexPatternStrings returns a reference to field regex_pattern_strings of aws_wafregional_regex_pattern_set.
 func (wrps wafregionalRegexPatternSetAttributes) RegexPatternStrings() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](wrps.ref.Append("regex_pattern_strings"))
+	return terra.ReferenceAsSet[terra.StringValue](wrps.ref.Append("regex_pattern_strings"))
 }
 
 type wafregionalRegexPatternSetState struct {

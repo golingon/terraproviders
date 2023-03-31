@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewGlueRegistry creates a new instance of [GlueRegistry].
 func NewGlueRegistry(name string, args GlueRegistryArgs) *GlueRegistry {
 	return &GlueRegistry{
 		Args: args,
@@ -18,28 +19,51 @@ func NewGlueRegistry(name string, args GlueRegistryArgs) *GlueRegistry {
 
 var _ terra.Resource = (*GlueRegistry)(nil)
 
+// GlueRegistry represents the Terraform resource aws_glue_registry.
 type GlueRegistry struct {
-	Name  string
-	Args  GlueRegistryArgs
-	state *glueRegistryState
+	Name      string
+	Args      GlueRegistryArgs
+	state     *glueRegistryState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GlueRegistry].
 func (gr *GlueRegistry) Type() string {
 	return "aws_glue_registry"
 }
 
+// LocalName returns the local name for [GlueRegistry].
 func (gr *GlueRegistry) LocalName() string {
 	return gr.Name
 }
 
+// Configuration returns the configuration (args) for [GlueRegistry].
 func (gr *GlueRegistry) Configuration() interface{} {
 	return gr.Args
 }
 
+// DependOn is used for other resources to depend on [GlueRegistry].
+func (gr *GlueRegistry) DependOn() terra.Reference {
+	return terra.ReferenceResource(gr)
+}
+
+// Dependencies returns the list of resources [GlueRegistry] depends_on.
+func (gr *GlueRegistry) Dependencies() terra.Dependencies {
+	return gr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GlueRegistry].
+func (gr *GlueRegistry) LifecycleManagement() *terra.Lifecycle {
+	return gr.Lifecycle
+}
+
+// Attributes returns the attributes for [GlueRegistry].
 func (gr *GlueRegistry) Attributes() glueRegistryAttributes {
 	return glueRegistryAttributes{ref: terra.ReferenceResource(gr)}
 }
 
+// ImportState imports the given attribute values into [GlueRegistry]'s state.
 func (gr *GlueRegistry) ImportState(av io.Reader) error {
 	gr.state = &glueRegistryState{}
 	if err := json.NewDecoder(av).Decode(gr.state); err != nil {
@@ -48,10 +72,12 @@ func (gr *GlueRegistry) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GlueRegistry] has state.
 func (gr *GlueRegistry) State() (*glueRegistryState, bool) {
 	return gr.state, gr.state != nil
 }
 
+// StateMust returns the state for [GlueRegistry]. Panics if the state is nil.
 func (gr *GlueRegistry) StateMust() *glueRegistryState {
 	if gr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", gr.Type(), gr.LocalName()))
@@ -59,10 +85,7 @@ func (gr *GlueRegistry) StateMust() *glueRegistryState {
 	return gr.state
 }
 
-func (gr *GlueRegistry) DependOn() terra.Reference {
-	return terra.ReferenceResource(gr)
-}
-
+// GlueRegistryArgs contains the configurations for aws_glue_registry.
 type GlueRegistryArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -74,35 +97,39 @@ type GlueRegistryArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that GlueRegistry depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type glueRegistryAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_glue_registry.
 func (gr glueRegistryAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(gr.ref.Append("arn"))
+	return terra.ReferenceAsString(gr.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_glue_registry.
 func (gr glueRegistryAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(gr.ref.Append("description"))
+	return terra.ReferenceAsString(gr.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_glue_registry.
 func (gr glueRegistryAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gr.ref.Append("id"))
+	return terra.ReferenceAsString(gr.ref.Append("id"))
 }
 
+// RegistryName returns a reference to field registry_name of aws_glue_registry.
 func (gr glueRegistryAttributes) RegistryName() terra.StringValue {
-	return terra.ReferenceString(gr.ref.Append("registry_name"))
+	return terra.ReferenceAsString(gr.ref.Append("registry_name"))
 }
 
+// Tags returns a reference to field tags of aws_glue_registry.
 func (gr glueRegistryAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](gr.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_glue_registry.
 func (gr glueRegistryAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gr.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](gr.ref.Append("tags_all"))
 }
 
 type glueRegistryState struct {

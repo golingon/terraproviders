@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDirectoryServiceRegion creates a new instance of [DirectoryServiceRegion].
 func NewDirectoryServiceRegion(name string, args DirectoryServiceRegionArgs) *DirectoryServiceRegion {
 	return &DirectoryServiceRegion{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDirectoryServiceRegion(name string, args DirectoryServiceRegionArgs) *Di
 
 var _ terra.Resource = (*DirectoryServiceRegion)(nil)
 
+// DirectoryServiceRegion represents the Terraform resource aws_directory_service_region.
 type DirectoryServiceRegion struct {
-	Name  string
-	Args  DirectoryServiceRegionArgs
-	state *directoryServiceRegionState
+	Name      string
+	Args      DirectoryServiceRegionArgs
+	state     *directoryServiceRegionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DirectoryServiceRegion].
 func (dsr *DirectoryServiceRegion) Type() string {
 	return "aws_directory_service_region"
 }
 
+// LocalName returns the local name for [DirectoryServiceRegion].
 func (dsr *DirectoryServiceRegion) LocalName() string {
 	return dsr.Name
 }
 
+// Configuration returns the configuration (args) for [DirectoryServiceRegion].
 func (dsr *DirectoryServiceRegion) Configuration() interface{} {
 	return dsr.Args
 }
 
+// DependOn is used for other resources to depend on [DirectoryServiceRegion].
+func (dsr *DirectoryServiceRegion) DependOn() terra.Reference {
+	return terra.ReferenceResource(dsr)
+}
+
+// Dependencies returns the list of resources [DirectoryServiceRegion] depends_on.
+func (dsr *DirectoryServiceRegion) Dependencies() terra.Dependencies {
+	return dsr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DirectoryServiceRegion].
+func (dsr *DirectoryServiceRegion) LifecycleManagement() *terra.Lifecycle {
+	return dsr.Lifecycle
+}
+
+// Attributes returns the attributes for [DirectoryServiceRegion].
 func (dsr *DirectoryServiceRegion) Attributes() directoryServiceRegionAttributes {
 	return directoryServiceRegionAttributes{ref: terra.ReferenceResource(dsr)}
 }
 
+// ImportState imports the given attribute values into [DirectoryServiceRegion]'s state.
 func (dsr *DirectoryServiceRegion) ImportState(av io.Reader) error {
 	dsr.state = &directoryServiceRegionState{}
 	if err := json.NewDecoder(av).Decode(dsr.state); err != nil {
@@ -49,10 +73,12 @@ func (dsr *DirectoryServiceRegion) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DirectoryServiceRegion] has state.
 func (dsr *DirectoryServiceRegion) State() (*directoryServiceRegionState, bool) {
 	return dsr.state, dsr.state != nil
 }
 
+// StateMust returns the state for [DirectoryServiceRegion]. Panics if the state is nil.
 func (dsr *DirectoryServiceRegion) StateMust() *directoryServiceRegionState {
 	if dsr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dsr.Type(), dsr.LocalName()))
@@ -60,10 +86,7 @@ func (dsr *DirectoryServiceRegion) StateMust() *directoryServiceRegionState {
 	return dsr.state
 }
 
-func (dsr *DirectoryServiceRegion) DependOn() terra.Reference {
-	return terra.ReferenceResource(dsr)
-}
-
+// DirectoryServiceRegionArgs contains the configurations for aws_directory_service_region.
 type DirectoryServiceRegionArgs struct {
 	// DesiredNumberOfDomainControllers: number, optional
 	DesiredNumberOfDomainControllers terra.NumberValue `hcl:"desired_number_of_domain_controllers,attr"`
@@ -81,43 +104,47 @@ type DirectoryServiceRegionArgs struct {
 	Timeouts *directoryserviceregion.Timeouts `hcl:"timeouts,block"`
 	// VpcSettings: required
 	VpcSettings *directoryserviceregion.VpcSettings `hcl:"vpc_settings,block" validate:"required"`
-	// DependsOn contains resources that DirectoryServiceRegion depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type directoryServiceRegionAttributes struct {
 	ref terra.Reference
 }
 
+// DesiredNumberOfDomainControllers returns a reference to field desired_number_of_domain_controllers of aws_directory_service_region.
 func (dsr directoryServiceRegionAttributes) DesiredNumberOfDomainControllers() terra.NumberValue {
-	return terra.ReferenceNumber(dsr.ref.Append("desired_number_of_domain_controllers"))
+	return terra.ReferenceAsNumber(dsr.ref.Append("desired_number_of_domain_controllers"))
 }
 
+// DirectoryId returns a reference to field directory_id of aws_directory_service_region.
 func (dsr directoryServiceRegionAttributes) DirectoryId() terra.StringValue {
-	return terra.ReferenceString(dsr.ref.Append("directory_id"))
+	return terra.ReferenceAsString(dsr.ref.Append("directory_id"))
 }
 
+// Id returns a reference to field id of aws_directory_service_region.
 func (dsr directoryServiceRegionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dsr.ref.Append("id"))
+	return terra.ReferenceAsString(dsr.ref.Append("id"))
 }
 
+// RegionName returns a reference to field region_name of aws_directory_service_region.
 func (dsr directoryServiceRegionAttributes) RegionName() terra.StringValue {
-	return terra.ReferenceString(dsr.ref.Append("region_name"))
+	return terra.ReferenceAsString(dsr.ref.Append("region_name"))
 }
 
+// Tags returns a reference to field tags of aws_directory_service_region.
 func (dsr directoryServiceRegionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dsr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dsr.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_directory_service_region.
 func (dsr directoryServiceRegionAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dsr.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dsr.ref.Append("tags_all"))
 }
 
 func (dsr directoryServiceRegionAttributes) Timeouts() directoryserviceregion.TimeoutsAttributes {
-	return terra.ReferenceSingle[directoryserviceregion.TimeoutsAttributes](dsr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[directoryserviceregion.TimeoutsAttributes](dsr.ref.Append("timeouts"))
 }
 
 func (dsr directoryServiceRegionAttributes) VpcSettings() terra.ListValue[directoryserviceregion.VpcSettingsAttributes] {
-	return terra.ReferenceList[directoryserviceregion.VpcSettingsAttributes](dsr.ref.Append("vpc_settings"))
+	return terra.ReferenceAsList[directoryserviceregion.VpcSettingsAttributes](dsr.ref.Append("vpc_settings"))
 }
 
 type directoryServiceRegionState struct {

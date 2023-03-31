@@ -180,31 +180,31 @@ func (bngi BrokerNodeGroupInfoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (bngi BrokerNodeGroupInfoAttributes) AzDistribution() terra.StringValue {
-	return terra.ReferenceString(bngi.ref.Append("az_distribution"))
+	return terra.ReferenceAsString(bngi.ref.Append("az_distribution"))
 }
 
 func (bngi BrokerNodeGroupInfoAttributes) ClientSubnets() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](bngi.ref.Append("client_subnets"))
+	return terra.ReferenceAsSet[terra.StringValue](bngi.ref.Append("client_subnets"))
 }
 
 func (bngi BrokerNodeGroupInfoAttributes) EbsVolumeSize() terra.NumberValue {
-	return terra.ReferenceNumber(bngi.ref.Append("ebs_volume_size"))
+	return terra.ReferenceAsNumber(bngi.ref.Append("ebs_volume_size"))
 }
 
 func (bngi BrokerNodeGroupInfoAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(bngi.ref.Append("instance_type"))
+	return terra.ReferenceAsString(bngi.ref.Append("instance_type"))
 }
 
 func (bngi BrokerNodeGroupInfoAttributes) SecurityGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](bngi.ref.Append("security_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](bngi.ref.Append("security_groups"))
 }
 
 func (bngi BrokerNodeGroupInfoAttributes) ConnectivityInfo() terra.ListValue[ConnectivityInfoAttributes] {
-	return terra.ReferenceList[ConnectivityInfoAttributes](bngi.ref.Append("connectivity_info"))
+	return terra.ReferenceAsList[ConnectivityInfoAttributes](bngi.ref.Append("connectivity_info"))
 }
 
 func (bngi BrokerNodeGroupInfoAttributes) StorageInfo() terra.ListValue[StorageInfoAttributes] {
-	return terra.ReferenceList[StorageInfoAttributes](bngi.ref.Append("storage_info"))
+	return terra.ReferenceAsList[StorageInfoAttributes](bngi.ref.Append("storage_info"))
 }
 
 type ConnectivityInfoAttributes struct {
@@ -224,7 +224,7 @@ func (ci ConnectivityInfoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ci ConnectivityInfoAttributes) PublicAccess() terra.ListValue[PublicAccessAttributes] {
-	return terra.ReferenceList[PublicAccessAttributes](ci.ref.Append("public_access"))
+	return terra.ReferenceAsList[PublicAccessAttributes](ci.ref.Append("public_access"))
 }
 
 type PublicAccessAttributes struct {
@@ -244,7 +244,7 @@ func (pa PublicAccessAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pa PublicAccessAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(pa.ref.Append("type"))
+	return terra.ReferenceAsString(pa.ref.Append("type"))
 }
 
 type StorageInfoAttributes struct {
@@ -264,7 +264,7 @@ func (si StorageInfoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (si StorageInfoAttributes) EbsStorageInfo() terra.ListValue[EbsStorageInfoAttributes] {
-	return terra.ReferenceList[EbsStorageInfoAttributes](si.ref.Append("ebs_storage_info"))
+	return terra.ReferenceAsList[EbsStorageInfoAttributes](si.ref.Append("ebs_storage_info"))
 }
 
 type EbsStorageInfoAttributes struct {
@@ -284,11 +284,11 @@ func (esi EbsStorageInfoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (esi EbsStorageInfoAttributes) VolumeSize() terra.NumberValue {
-	return terra.ReferenceNumber(esi.ref.Append("volume_size"))
+	return terra.ReferenceAsNumber(esi.ref.Append("volume_size"))
 }
 
 func (esi EbsStorageInfoAttributes) ProvisionedThroughput() terra.ListValue[ProvisionedThroughputAttributes] {
-	return terra.ReferenceList[ProvisionedThroughputAttributes](esi.ref.Append("provisioned_throughput"))
+	return terra.ReferenceAsList[ProvisionedThroughputAttributes](esi.ref.Append("provisioned_throughput"))
 }
 
 type ProvisionedThroughputAttributes struct {
@@ -308,11 +308,11 @@ func (pt ProvisionedThroughputAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pt ProvisionedThroughputAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(pt.ref.Append("enabled"))
+	return terra.ReferenceAsBool(pt.ref.Append("enabled"))
 }
 
 func (pt ProvisionedThroughputAttributes) VolumeThroughput() terra.NumberValue {
-	return terra.ReferenceNumber(pt.ref.Append("volume_throughput"))
+	return terra.ReferenceAsNumber(pt.ref.Append("volume_throughput"))
 }
 
 type ClientAuthenticationAttributes struct {
@@ -332,15 +332,15 @@ func (ca ClientAuthenticationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ca ClientAuthenticationAttributes) Unauthenticated() terra.BoolValue {
-	return terra.ReferenceBool(ca.ref.Append("unauthenticated"))
+	return terra.ReferenceAsBool(ca.ref.Append("unauthenticated"))
 }
 
 func (ca ClientAuthenticationAttributes) Sasl() terra.ListValue[SaslAttributes] {
-	return terra.ReferenceList[SaslAttributes](ca.ref.Append("sasl"))
+	return terra.ReferenceAsList[SaslAttributes](ca.ref.Append("sasl"))
 }
 
 func (ca ClientAuthenticationAttributes) Tls() terra.ListValue[TlsAttributes] {
-	return terra.ReferenceList[TlsAttributes](ca.ref.Append("tls"))
+	return terra.ReferenceAsList[TlsAttributes](ca.ref.Append("tls"))
 }
 
 type SaslAttributes struct {
@@ -360,11 +360,11 @@ func (s SaslAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SaslAttributes) Iam() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("iam"))
+	return terra.ReferenceAsBool(s.ref.Append("iam"))
 }
 
 func (s SaslAttributes) Scram() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("scram"))
+	return terra.ReferenceAsBool(s.ref.Append("scram"))
 }
 
 type TlsAttributes struct {
@@ -384,7 +384,7 @@ func (t TlsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TlsAttributes) CertificateAuthorityArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](t.ref.Append("certificate_authority_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](t.ref.Append("certificate_authority_arns"))
 }
 
 type ConfigurationInfoAttributes struct {
@@ -404,11 +404,11 @@ func (ci ConfigurationInfoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ci ConfigurationInfoAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("arn"))
+	return terra.ReferenceAsString(ci.ref.Append("arn"))
 }
 
 func (ci ConfigurationInfoAttributes) Revision() terra.NumberValue {
-	return terra.ReferenceNumber(ci.ref.Append("revision"))
+	return terra.ReferenceAsNumber(ci.ref.Append("revision"))
 }
 
 type EncryptionInfoAttributes struct {
@@ -428,11 +428,11 @@ func (ei EncryptionInfoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ei EncryptionInfoAttributes) EncryptionAtRestKmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(ei.ref.Append("encryption_at_rest_kms_key_arn"))
+	return terra.ReferenceAsString(ei.ref.Append("encryption_at_rest_kms_key_arn"))
 }
 
 func (ei EncryptionInfoAttributes) EncryptionInTransit() terra.ListValue[EncryptionInTransitAttributes] {
-	return terra.ReferenceList[EncryptionInTransitAttributes](ei.ref.Append("encryption_in_transit"))
+	return terra.ReferenceAsList[EncryptionInTransitAttributes](ei.ref.Append("encryption_in_transit"))
 }
 
 type EncryptionInTransitAttributes struct {
@@ -452,11 +452,11 @@ func (eit EncryptionInTransitAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (eit EncryptionInTransitAttributes) ClientBroker() terra.StringValue {
-	return terra.ReferenceString(eit.ref.Append("client_broker"))
+	return terra.ReferenceAsString(eit.ref.Append("client_broker"))
 }
 
 func (eit EncryptionInTransitAttributes) InCluster() terra.BoolValue {
-	return terra.ReferenceBool(eit.ref.Append("in_cluster"))
+	return terra.ReferenceAsBool(eit.ref.Append("in_cluster"))
 }
 
 type LoggingInfoAttributes struct {
@@ -476,7 +476,7 @@ func (li LoggingInfoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (li LoggingInfoAttributes) BrokerLogs() terra.ListValue[BrokerLogsAttributes] {
-	return terra.ReferenceList[BrokerLogsAttributes](li.ref.Append("broker_logs"))
+	return terra.ReferenceAsList[BrokerLogsAttributes](li.ref.Append("broker_logs"))
 }
 
 type BrokerLogsAttributes struct {
@@ -496,15 +496,15 @@ func (bl BrokerLogsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (bl BrokerLogsAttributes) CloudwatchLogs() terra.ListValue[CloudwatchLogsAttributes] {
-	return terra.ReferenceList[CloudwatchLogsAttributes](bl.ref.Append("cloudwatch_logs"))
+	return terra.ReferenceAsList[CloudwatchLogsAttributes](bl.ref.Append("cloudwatch_logs"))
 }
 
 func (bl BrokerLogsAttributes) Firehose() terra.ListValue[FirehoseAttributes] {
-	return terra.ReferenceList[FirehoseAttributes](bl.ref.Append("firehose"))
+	return terra.ReferenceAsList[FirehoseAttributes](bl.ref.Append("firehose"))
 }
 
 func (bl BrokerLogsAttributes) S3() terra.ListValue[S3Attributes] {
-	return terra.ReferenceList[S3Attributes](bl.ref.Append("s3"))
+	return terra.ReferenceAsList[S3Attributes](bl.ref.Append("s3"))
 }
 
 type CloudwatchLogsAttributes struct {
@@ -524,11 +524,11 @@ func (cl CloudwatchLogsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cl CloudwatchLogsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(cl.ref.Append("enabled"))
+	return terra.ReferenceAsBool(cl.ref.Append("enabled"))
 }
 
 func (cl CloudwatchLogsAttributes) LogGroup() terra.StringValue {
-	return terra.ReferenceString(cl.ref.Append("log_group"))
+	return terra.ReferenceAsString(cl.ref.Append("log_group"))
 }
 
 type FirehoseAttributes struct {
@@ -548,11 +548,11 @@ func (f FirehoseAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FirehoseAttributes) DeliveryStream() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("delivery_stream"))
+	return terra.ReferenceAsString(f.ref.Append("delivery_stream"))
 }
 
 func (f FirehoseAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(f.ref.Append("enabled"))
+	return terra.ReferenceAsBool(f.ref.Append("enabled"))
 }
 
 type S3Attributes struct {
@@ -572,15 +572,15 @@ func (s S3Attributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s S3Attributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("bucket"))
+	return terra.ReferenceAsString(s.ref.Append("bucket"))
 }
 
 func (s S3Attributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("enabled"))
+	return terra.ReferenceAsBool(s.ref.Append("enabled"))
 }
 
 func (s S3Attributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("prefix"))
+	return terra.ReferenceAsString(s.ref.Append("prefix"))
 }
 
 type OpenMonitoringAttributes struct {
@@ -600,7 +600,7 @@ func (om OpenMonitoringAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (om OpenMonitoringAttributes) Prometheus() terra.ListValue[PrometheusAttributes] {
-	return terra.ReferenceList[PrometheusAttributes](om.ref.Append("prometheus"))
+	return terra.ReferenceAsList[PrometheusAttributes](om.ref.Append("prometheus"))
 }
 
 type PrometheusAttributes struct {
@@ -620,11 +620,11 @@ func (p PrometheusAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p PrometheusAttributes) JmxExporter() terra.ListValue[JmxExporterAttributes] {
-	return terra.ReferenceList[JmxExporterAttributes](p.ref.Append("jmx_exporter"))
+	return terra.ReferenceAsList[JmxExporterAttributes](p.ref.Append("jmx_exporter"))
 }
 
 func (p PrometheusAttributes) NodeExporter() terra.ListValue[NodeExporterAttributes] {
-	return terra.ReferenceList[NodeExporterAttributes](p.ref.Append("node_exporter"))
+	return terra.ReferenceAsList[NodeExporterAttributes](p.ref.Append("node_exporter"))
 }
 
 type JmxExporterAttributes struct {
@@ -644,7 +644,7 @@ func (je JmxExporterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (je JmxExporterAttributes) EnabledInBroker() terra.BoolValue {
-	return terra.ReferenceBool(je.ref.Append("enabled_in_broker"))
+	return terra.ReferenceAsBool(je.ref.Append("enabled_in_broker"))
 }
 
 type NodeExporterAttributes struct {
@@ -664,7 +664,7 @@ func (ne NodeExporterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ne NodeExporterAttributes) EnabledInBroker() terra.BoolValue {
-	return terra.ReferenceBool(ne.ref.Append("enabled_in_broker"))
+	return terra.ReferenceAsBool(ne.ref.Append("enabled_in_broker"))
 }
 
 type TimeoutsAttributes struct {
@@ -684,15 +684,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type BrokerNodeGroupInfoState struct {

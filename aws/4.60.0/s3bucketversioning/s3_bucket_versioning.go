@@ -31,11 +31,11 @@ func (vc VersioningConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vc VersioningConfigurationAttributes) MfaDelete() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("mfa_delete"))
+	return terra.ReferenceAsString(vc.ref.Append("mfa_delete"))
 }
 
 func (vc VersioningConfigurationAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("status"))
+	return terra.ReferenceAsString(vc.ref.Append("status"))
 }
 
 type VersioningConfigurationState struct {

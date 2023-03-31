@@ -31,11 +31,11 @@ func (c CredentialsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c CredentialsAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("password"))
+	return terra.ReferenceAsString(c.ref.Append("password"))
 }
 
 func (c CredentialsAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("username"))
+	return terra.ReferenceAsString(c.ref.Append("username"))
 }
 
 type CredentialsState struct {

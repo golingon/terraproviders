@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewKendraDataSource creates a new instance of [KendraDataSource].
 func NewKendraDataSource(name string, args KendraDataSourceArgs) *KendraDataSource {
 	return &KendraDataSource{
 		Args: args,
@@ -19,28 +20,51 @@ func NewKendraDataSource(name string, args KendraDataSourceArgs) *KendraDataSour
 
 var _ terra.Resource = (*KendraDataSource)(nil)
 
+// KendraDataSource represents the Terraform resource aws_kendra_data_source.
 type KendraDataSource struct {
-	Name  string
-	Args  KendraDataSourceArgs
-	state *kendraDataSourceState
+	Name      string
+	Args      KendraDataSourceArgs
+	state     *kendraDataSourceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KendraDataSource].
 func (kds *KendraDataSource) Type() string {
 	return "aws_kendra_data_source"
 }
 
+// LocalName returns the local name for [KendraDataSource].
 func (kds *KendraDataSource) LocalName() string {
 	return kds.Name
 }
 
+// Configuration returns the configuration (args) for [KendraDataSource].
 func (kds *KendraDataSource) Configuration() interface{} {
 	return kds.Args
 }
 
+// DependOn is used for other resources to depend on [KendraDataSource].
+func (kds *KendraDataSource) DependOn() terra.Reference {
+	return terra.ReferenceResource(kds)
+}
+
+// Dependencies returns the list of resources [KendraDataSource] depends_on.
+func (kds *KendraDataSource) Dependencies() terra.Dependencies {
+	return kds.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KendraDataSource].
+func (kds *KendraDataSource) LifecycleManagement() *terra.Lifecycle {
+	return kds.Lifecycle
+}
+
+// Attributes returns the attributes for [KendraDataSource].
 func (kds *KendraDataSource) Attributes() kendraDataSourceAttributes {
 	return kendraDataSourceAttributes{ref: terra.ReferenceResource(kds)}
 }
 
+// ImportState imports the given attribute values into [KendraDataSource]'s state.
 func (kds *KendraDataSource) ImportState(av io.Reader) error {
 	kds.state = &kendraDataSourceState{}
 	if err := json.NewDecoder(av).Decode(kds.state); err != nil {
@@ -49,10 +73,12 @@ func (kds *KendraDataSource) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [KendraDataSource] has state.
 func (kds *KendraDataSource) State() (*kendraDataSourceState, bool) {
 	return kds.state, kds.state != nil
 }
 
+// StateMust returns the state for [KendraDataSource]. Panics if the state is nil.
 func (kds *KendraDataSource) StateMust() *kendraDataSourceState {
 	if kds.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", kds.Type(), kds.LocalName()))
@@ -60,10 +86,7 @@ func (kds *KendraDataSource) StateMust() *kendraDataSourceState {
 	return kds.state
 }
 
-func (kds *KendraDataSource) DependOn() terra.Reference {
-	return terra.ReferenceResource(kds)
-}
-
+// KendraDataSourceArgs contains the configurations for aws_kendra_data_source.
 type KendraDataSourceArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -91,87 +114,101 @@ type KendraDataSourceArgs struct {
 	CustomDocumentEnrichmentConfiguration *kendradatasource.CustomDocumentEnrichmentConfiguration `hcl:"custom_document_enrichment_configuration,block"`
 	// Timeouts: optional
 	Timeouts *kendradatasource.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that KendraDataSource depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type kendraDataSourceAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_kendra_data_source.
 func (kds kendraDataSourceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(kds.ref.Append("arn"))
+	return terra.ReferenceAsString(kds.ref.Append("arn"))
 }
 
+// CreatedAt returns a reference to field created_at of aws_kendra_data_source.
 func (kds kendraDataSourceAttributes) CreatedAt() terra.StringValue {
-	return terra.ReferenceString(kds.ref.Append("created_at"))
+	return terra.ReferenceAsString(kds.ref.Append("created_at"))
 }
 
+// DataSourceId returns a reference to field data_source_id of aws_kendra_data_source.
 func (kds kendraDataSourceAttributes) DataSourceId() terra.StringValue {
-	return terra.ReferenceString(kds.ref.Append("data_source_id"))
+	return terra.ReferenceAsString(kds.ref.Append("data_source_id"))
 }
 
+// Description returns a reference to field description of aws_kendra_data_source.
 func (kds kendraDataSourceAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(kds.ref.Append("description"))
+	return terra.ReferenceAsString(kds.ref.Append("description"))
 }
 
+// ErrorMessage returns a reference to field error_message of aws_kendra_data_source.
 func (kds kendraDataSourceAttributes) ErrorMessage() terra.StringValue {
-	return terra.ReferenceString(kds.ref.Append("error_message"))
+	return terra.ReferenceAsString(kds.ref.Append("error_message"))
 }
 
+// Id returns a reference to field id of aws_kendra_data_source.
 func (kds kendraDataSourceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kds.ref.Append("id"))
+	return terra.ReferenceAsString(kds.ref.Append("id"))
 }
 
+// IndexId returns a reference to field index_id of aws_kendra_data_source.
 func (kds kendraDataSourceAttributes) IndexId() terra.StringValue {
-	return terra.ReferenceString(kds.ref.Append("index_id"))
+	return terra.ReferenceAsString(kds.ref.Append("index_id"))
 }
 
+// LanguageCode returns a reference to field language_code of aws_kendra_data_source.
 func (kds kendraDataSourceAttributes) LanguageCode() terra.StringValue {
-	return terra.ReferenceString(kds.ref.Append("language_code"))
+	return terra.ReferenceAsString(kds.ref.Append("language_code"))
 }
 
+// Name returns a reference to field name of aws_kendra_data_source.
 func (kds kendraDataSourceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kds.ref.Append("name"))
+	return terra.ReferenceAsString(kds.ref.Append("name"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_kendra_data_source.
 func (kds kendraDataSourceAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(kds.ref.Append("role_arn"))
+	return terra.ReferenceAsString(kds.ref.Append("role_arn"))
 }
 
+// Schedule returns a reference to field schedule of aws_kendra_data_source.
 func (kds kendraDataSourceAttributes) Schedule() terra.StringValue {
-	return terra.ReferenceString(kds.ref.Append("schedule"))
+	return terra.ReferenceAsString(kds.ref.Append("schedule"))
 }
 
+// Status returns a reference to field status of aws_kendra_data_source.
 func (kds kendraDataSourceAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(kds.ref.Append("status"))
+	return terra.ReferenceAsString(kds.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of aws_kendra_data_source.
 func (kds kendraDataSourceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kds.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](kds.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_kendra_data_source.
 func (kds kendraDataSourceAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kds.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](kds.ref.Append("tags_all"))
 }
 
+// Type returns a reference to field type of aws_kendra_data_source.
 func (kds kendraDataSourceAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(kds.ref.Append("type"))
+	return terra.ReferenceAsString(kds.ref.Append("type"))
 }
 
+// UpdatedAt returns a reference to field updated_at of aws_kendra_data_source.
 func (kds kendraDataSourceAttributes) UpdatedAt() terra.StringValue {
-	return terra.ReferenceString(kds.ref.Append("updated_at"))
+	return terra.ReferenceAsString(kds.ref.Append("updated_at"))
 }
 
 func (kds kendraDataSourceAttributes) Configuration() terra.ListValue[kendradatasource.ConfigurationAttributes] {
-	return terra.ReferenceList[kendradatasource.ConfigurationAttributes](kds.ref.Append("configuration"))
+	return terra.ReferenceAsList[kendradatasource.ConfigurationAttributes](kds.ref.Append("configuration"))
 }
 
 func (kds kendraDataSourceAttributes) CustomDocumentEnrichmentConfiguration() terra.ListValue[kendradatasource.CustomDocumentEnrichmentConfigurationAttributes] {
-	return terra.ReferenceList[kendradatasource.CustomDocumentEnrichmentConfigurationAttributes](kds.ref.Append("custom_document_enrichment_configuration"))
+	return terra.ReferenceAsList[kendradatasource.CustomDocumentEnrichmentConfigurationAttributes](kds.ref.Append("custom_document_enrichment_configuration"))
 }
 
 func (kds kendraDataSourceAttributes) Timeouts() kendradatasource.TimeoutsAttributes {
-	return terra.ReferenceSingle[kendradatasource.TimeoutsAttributes](kds.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[kendradatasource.TimeoutsAttributes](kds.ref.Append("timeouts"))
 }
 
 type kendraDataSourceState struct {

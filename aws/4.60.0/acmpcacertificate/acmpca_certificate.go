@@ -31,11 +31,11 @@ func (v ValidityAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (v ValidityAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("type"))
+	return terra.ReferenceAsString(v.ref.Append("type"))
 }
 
 func (v ValidityAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("value"))
+	return terra.ReferenceAsString(v.ref.Append("value"))
 }
 
 type ValidityState struct {

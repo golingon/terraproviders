@@ -33,15 +33,15 @@ func (p PredicatesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p PredicatesAttributes) DataId() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("data_id"))
+	return terra.ReferenceAsString(p.ref.Append("data_id"))
 }
 
 func (p PredicatesAttributes) Negated() terra.BoolValue {
-	return terra.ReferenceBool(p.ref.Append("negated"))
+	return terra.ReferenceAsBool(p.ref.Append("negated"))
 }
 
 func (p PredicatesAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("type"))
+	return terra.ReferenceAsString(p.ref.Append("type"))
 }
 
 type PredicatesState struct {

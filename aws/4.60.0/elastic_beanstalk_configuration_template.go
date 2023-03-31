@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewElasticBeanstalkConfigurationTemplate creates a new instance of [ElasticBeanstalkConfigurationTemplate].
 func NewElasticBeanstalkConfigurationTemplate(name string, args ElasticBeanstalkConfigurationTemplateArgs) *ElasticBeanstalkConfigurationTemplate {
 	return &ElasticBeanstalkConfigurationTemplate{
 		Args: args,
@@ -19,28 +20,51 @@ func NewElasticBeanstalkConfigurationTemplate(name string, args ElasticBeanstalk
 
 var _ terra.Resource = (*ElasticBeanstalkConfigurationTemplate)(nil)
 
+// ElasticBeanstalkConfigurationTemplate represents the Terraform resource aws_elastic_beanstalk_configuration_template.
 type ElasticBeanstalkConfigurationTemplate struct {
-	Name  string
-	Args  ElasticBeanstalkConfigurationTemplateArgs
-	state *elasticBeanstalkConfigurationTemplateState
+	Name      string
+	Args      ElasticBeanstalkConfigurationTemplateArgs
+	state     *elasticBeanstalkConfigurationTemplateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ElasticBeanstalkConfigurationTemplate].
 func (ebct *ElasticBeanstalkConfigurationTemplate) Type() string {
 	return "aws_elastic_beanstalk_configuration_template"
 }
 
+// LocalName returns the local name for [ElasticBeanstalkConfigurationTemplate].
 func (ebct *ElasticBeanstalkConfigurationTemplate) LocalName() string {
 	return ebct.Name
 }
 
+// Configuration returns the configuration (args) for [ElasticBeanstalkConfigurationTemplate].
 func (ebct *ElasticBeanstalkConfigurationTemplate) Configuration() interface{} {
 	return ebct.Args
 }
 
+// DependOn is used for other resources to depend on [ElasticBeanstalkConfigurationTemplate].
+func (ebct *ElasticBeanstalkConfigurationTemplate) DependOn() terra.Reference {
+	return terra.ReferenceResource(ebct)
+}
+
+// Dependencies returns the list of resources [ElasticBeanstalkConfigurationTemplate] depends_on.
+func (ebct *ElasticBeanstalkConfigurationTemplate) Dependencies() terra.Dependencies {
+	return ebct.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ElasticBeanstalkConfigurationTemplate].
+func (ebct *ElasticBeanstalkConfigurationTemplate) LifecycleManagement() *terra.Lifecycle {
+	return ebct.Lifecycle
+}
+
+// Attributes returns the attributes for [ElasticBeanstalkConfigurationTemplate].
 func (ebct *ElasticBeanstalkConfigurationTemplate) Attributes() elasticBeanstalkConfigurationTemplateAttributes {
 	return elasticBeanstalkConfigurationTemplateAttributes{ref: terra.ReferenceResource(ebct)}
 }
 
+// ImportState imports the given attribute values into [ElasticBeanstalkConfigurationTemplate]'s state.
 func (ebct *ElasticBeanstalkConfigurationTemplate) ImportState(av io.Reader) error {
 	ebct.state = &elasticBeanstalkConfigurationTemplateState{}
 	if err := json.NewDecoder(av).Decode(ebct.state); err != nil {
@@ -49,10 +73,12 @@ func (ebct *ElasticBeanstalkConfigurationTemplate) ImportState(av io.Reader) err
 	return nil
 }
 
+// State returns the state and a bool indicating if [ElasticBeanstalkConfigurationTemplate] has state.
 func (ebct *ElasticBeanstalkConfigurationTemplate) State() (*elasticBeanstalkConfigurationTemplateState, bool) {
 	return ebct.state, ebct.state != nil
 }
 
+// StateMust returns the state for [ElasticBeanstalkConfigurationTemplate]. Panics if the state is nil.
 func (ebct *ElasticBeanstalkConfigurationTemplate) StateMust() *elasticBeanstalkConfigurationTemplateState {
 	if ebct.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ebct.Type(), ebct.LocalName()))
@@ -60,10 +86,7 @@ func (ebct *ElasticBeanstalkConfigurationTemplate) StateMust() *elasticBeanstalk
 	return ebct.state
 }
 
-func (ebct *ElasticBeanstalkConfigurationTemplate) DependOn() terra.Reference {
-	return terra.ReferenceResource(ebct)
-}
-
+// ElasticBeanstalkConfigurationTemplateArgs contains the configurations for aws_elastic_beanstalk_configuration_template.
 type ElasticBeanstalkConfigurationTemplateArgs struct {
 	// Application: string, required
 	Application terra.StringValue `hcl:"application,attr" validate:"required"`
@@ -79,39 +102,43 @@ type ElasticBeanstalkConfigurationTemplateArgs struct {
 	SolutionStackName terra.StringValue `hcl:"solution_stack_name,attr"`
 	// Setting: min=0
 	Setting []elasticbeanstalkconfigurationtemplate.Setting `hcl:"setting,block" validate:"min=0"`
-	// DependsOn contains resources that ElasticBeanstalkConfigurationTemplate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type elasticBeanstalkConfigurationTemplateAttributes struct {
 	ref terra.Reference
 }
 
+// Application returns a reference to field application of aws_elastic_beanstalk_configuration_template.
 func (ebct elasticBeanstalkConfigurationTemplateAttributes) Application() terra.StringValue {
-	return terra.ReferenceString(ebct.ref.Append("application"))
+	return terra.ReferenceAsString(ebct.ref.Append("application"))
 }
 
+// Description returns a reference to field description of aws_elastic_beanstalk_configuration_template.
 func (ebct elasticBeanstalkConfigurationTemplateAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ebct.ref.Append("description"))
+	return terra.ReferenceAsString(ebct.ref.Append("description"))
 }
 
+// EnvironmentId returns a reference to field environment_id of aws_elastic_beanstalk_configuration_template.
 func (ebct elasticBeanstalkConfigurationTemplateAttributes) EnvironmentId() terra.StringValue {
-	return terra.ReferenceString(ebct.ref.Append("environment_id"))
+	return terra.ReferenceAsString(ebct.ref.Append("environment_id"))
 }
 
+// Id returns a reference to field id of aws_elastic_beanstalk_configuration_template.
 func (ebct elasticBeanstalkConfigurationTemplateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ebct.ref.Append("id"))
+	return terra.ReferenceAsString(ebct.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_elastic_beanstalk_configuration_template.
 func (ebct elasticBeanstalkConfigurationTemplateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ebct.ref.Append("name"))
+	return terra.ReferenceAsString(ebct.ref.Append("name"))
 }
 
+// SolutionStackName returns a reference to field solution_stack_name of aws_elastic_beanstalk_configuration_template.
 func (ebct elasticBeanstalkConfigurationTemplateAttributes) SolutionStackName() terra.StringValue {
-	return terra.ReferenceString(ebct.ref.Append("solution_stack_name"))
+	return terra.ReferenceAsString(ebct.ref.Append("solution_stack_name"))
 }
 
 func (ebct elasticBeanstalkConfigurationTemplateAttributes) Setting() terra.SetValue[elasticbeanstalkconfigurationtemplate.SettingAttributes] {
-	return terra.ReferenceSet[elasticbeanstalkconfigurationtemplate.SettingAttributes](ebct.ref.Append("setting"))
+	return terra.ReferenceAsSet[elasticbeanstalkconfigurationtemplate.SettingAttributes](ebct.ref.Append("setting"))
 }
 
 type elasticBeanstalkConfigurationTemplateState struct {

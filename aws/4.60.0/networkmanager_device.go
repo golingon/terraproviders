@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNetworkmanagerDevice creates a new instance of [NetworkmanagerDevice].
 func NewNetworkmanagerDevice(name string, args NetworkmanagerDeviceArgs) *NetworkmanagerDevice {
 	return &NetworkmanagerDevice{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNetworkmanagerDevice(name string, args NetworkmanagerDeviceArgs) *Networ
 
 var _ terra.Resource = (*NetworkmanagerDevice)(nil)
 
+// NetworkmanagerDevice represents the Terraform resource aws_networkmanager_device.
 type NetworkmanagerDevice struct {
-	Name  string
-	Args  NetworkmanagerDeviceArgs
-	state *networkmanagerDeviceState
+	Name      string
+	Args      NetworkmanagerDeviceArgs
+	state     *networkmanagerDeviceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NetworkmanagerDevice].
 func (nd *NetworkmanagerDevice) Type() string {
 	return "aws_networkmanager_device"
 }
 
+// LocalName returns the local name for [NetworkmanagerDevice].
 func (nd *NetworkmanagerDevice) LocalName() string {
 	return nd.Name
 }
 
+// Configuration returns the configuration (args) for [NetworkmanagerDevice].
 func (nd *NetworkmanagerDevice) Configuration() interface{} {
 	return nd.Args
 }
 
+// DependOn is used for other resources to depend on [NetworkmanagerDevice].
+func (nd *NetworkmanagerDevice) DependOn() terra.Reference {
+	return terra.ReferenceResource(nd)
+}
+
+// Dependencies returns the list of resources [NetworkmanagerDevice] depends_on.
+func (nd *NetworkmanagerDevice) Dependencies() terra.Dependencies {
+	return nd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NetworkmanagerDevice].
+func (nd *NetworkmanagerDevice) LifecycleManagement() *terra.Lifecycle {
+	return nd.Lifecycle
+}
+
+// Attributes returns the attributes for [NetworkmanagerDevice].
 func (nd *NetworkmanagerDevice) Attributes() networkmanagerDeviceAttributes {
 	return networkmanagerDeviceAttributes{ref: terra.ReferenceResource(nd)}
 }
 
+// ImportState imports the given attribute values into [NetworkmanagerDevice]'s state.
 func (nd *NetworkmanagerDevice) ImportState(av io.Reader) error {
 	nd.state = &networkmanagerDeviceState{}
 	if err := json.NewDecoder(av).Decode(nd.state); err != nil {
@@ -49,10 +73,12 @@ func (nd *NetworkmanagerDevice) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NetworkmanagerDevice] has state.
 func (nd *NetworkmanagerDevice) State() (*networkmanagerDeviceState, bool) {
 	return nd.state, nd.state != nil
 }
 
+// StateMust returns the state for [NetworkmanagerDevice]. Panics if the state is nil.
 func (nd *NetworkmanagerDevice) StateMust() *networkmanagerDeviceState {
 	if nd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", nd.Type(), nd.LocalName()))
@@ -60,10 +86,7 @@ func (nd *NetworkmanagerDevice) StateMust() *networkmanagerDeviceState {
 	return nd.state
 }
 
-func (nd *NetworkmanagerDevice) DependOn() terra.Reference {
-	return terra.ReferenceResource(nd)
-}
-
+// NetworkmanagerDeviceArgs contains the configurations for aws_networkmanager_device.
 type NetworkmanagerDeviceArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -91,67 +114,76 @@ type NetworkmanagerDeviceArgs struct {
 	Location *networkmanagerdevice.Location `hcl:"location,block"`
 	// Timeouts: optional
 	Timeouts *networkmanagerdevice.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that NetworkmanagerDevice depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type networkmanagerDeviceAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_networkmanager_device.
 func (nd networkmanagerDeviceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(nd.ref.Append("arn"))
+	return terra.ReferenceAsString(nd.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_networkmanager_device.
 func (nd networkmanagerDeviceAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(nd.ref.Append("description"))
+	return terra.ReferenceAsString(nd.ref.Append("description"))
 }
 
+// GlobalNetworkId returns a reference to field global_network_id of aws_networkmanager_device.
 func (nd networkmanagerDeviceAttributes) GlobalNetworkId() terra.StringValue {
-	return terra.ReferenceString(nd.ref.Append("global_network_id"))
+	return terra.ReferenceAsString(nd.ref.Append("global_network_id"))
 }
 
+// Id returns a reference to field id of aws_networkmanager_device.
 func (nd networkmanagerDeviceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nd.ref.Append("id"))
+	return terra.ReferenceAsString(nd.ref.Append("id"))
 }
 
+// Model returns a reference to field model of aws_networkmanager_device.
 func (nd networkmanagerDeviceAttributes) Model() terra.StringValue {
-	return terra.ReferenceString(nd.ref.Append("model"))
+	return terra.ReferenceAsString(nd.ref.Append("model"))
 }
 
+// SerialNumber returns a reference to field serial_number of aws_networkmanager_device.
 func (nd networkmanagerDeviceAttributes) SerialNumber() terra.StringValue {
-	return terra.ReferenceString(nd.ref.Append("serial_number"))
+	return terra.ReferenceAsString(nd.ref.Append("serial_number"))
 }
 
+// SiteId returns a reference to field site_id of aws_networkmanager_device.
 func (nd networkmanagerDeviceAttributes) SiteId() terra.StringValue {
-	return terra.ReferenceString(nd.ref.Append("site_id"))
+	return terra.ReferenceAsString(nd.ref.Append("site_id"))
 }
 
+// Tags returns a reference to field tags of aws_networkmanager_device.
 func (nd networkmanagerDeviceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](nd.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](nd.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_networkmanager_device.
 func (nd networkmanagerDeviceAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](nd.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](nd.ref.Append("tags_all"))
 }
 
+// Type returns a reference to field type of aws_networkmanager_device.
 func (nd networkmanagerDeviceAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(nd.ref.Append("type"))
+	return terra.ReferenceAsString(nd.ref.Append("type"))
 }
 
+// Vendor returns a reference to field vendor of aws_networkmanager_device.
 func (nd networkmanagerDeviceAttributes) Vendor() terra.StringValue {
-	return terra.ReferenceString(nd.ref.Append("vendor"))
+	return terra.ReferenceAsString(nd.ref.Append("vendor"))
 }
 
 func (nd networkmanagerDeviceAttributes) AwsLocation() terra.ListValue[networkmanagerdevice.AwsLocationAttributes] {
-	return terra.ReferenceList[networkmanagerdevice.AwsLocationAttributes](nd.ref.Append("aws_location"))
+	return terra.ReferenceAsList[networkmanagerdevice.AwsLocationAttributes](nd.ref.Append("aws_location"))
 }
 
 func (nd networkmanagerDeviceAttributes) Location() terra.ListValue[networkmanagerdevice.LocationAttributes] {
-	return terra.ReferenceList[networkmanagerdevice.LocationAttributes](nd.ref.Append("location"))
+	return terra.ReferenceAsList[networkmanagerdevice.LocationAttributes](nd.ref.Append("location"))
 }
 
 func (nd networkmanagerDeviceAttributes) Timeouts() networkmanagerdevice.TimeoutsAttributes {
-	return terra.ReferenceSingle[networkmanagerdevice.TimeoutsAttributes](nd.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[networkmanagerdevice.TimeoutsAttributes](nd.ref.Append("timeouts"))
 }
 
 type networkmanagerDeviceState struct {

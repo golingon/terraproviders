@@ -34,7 +34,7 @@ func (mo MountOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mo MountOptionsAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(mo.ref.Append("version"))
+	return terra.ReferenceAsString(mo.ref.Append("version"))
 }
 
 type OnPremConfigAttributes struct {
@@ -54,7 +54,7 @@ func (opc OnPremConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (opc OnPremConfigAttributes) AgentArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](opc.ref.Append("agent_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](opc.ref.Append("agent_arns"))
 }
 
 type MountOptionsState struct {

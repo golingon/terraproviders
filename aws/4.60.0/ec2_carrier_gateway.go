@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewEc2CarrierGateway creates a new instance of [Ec2CarrierGateway].
 func NewEc2CarrierGateway(name string, args Ec2CarrierGatewayArgs) *Ec2CarrierGateway {
 	return &Ec2CarrierGateway{
 		Args: args,
@@ -18,28 +19,51 @@ func NewEc2CarrierGateway(name string, args Ec2CarrierGatewayArgs) *Ec2CarrierGa
 
 var _ terra.Resource = (*Ec2CarrierGateway)(nil)
 
+// Ec2CarrierGateway represents the Terraform resource aws_ec2_carrier_gateway.
 type Ec2CarrierGateway struct {
-	Name  string
-	Args  Ec2CarrierGatewayArgs
-	state *ec2CarrierGatewayState
+	Name      string
+	Args      Ec2CarrierGatewayArgs
+	state     *ec2CarrierGatewayState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Ec2CarrierGateway].
 func (ecg *Ec2CarrierGateway) Type() string {
 	return "aws_ec2_carrier_gateway"
 }
 
+// LocalName returns the local name for [Ec2CarrierGateway].
 func (ecg *Ec2CarrierGateway) LocalName() string {
 	return ecg.Name
 }
 
+// Configuration returns the configuration (args) for [Ec2CarrierGateway].
 func (ecg *Ec2CarrierGateway) Configuration() interface{} {
 	return ecg.Args
 }
 
+// DependOn is used for other resources to depend on [Ec2CarrierGateway].
+func (ecg *Ec2CarrierGateway) DependOn() terra.Reference {
+	return terra.ReferenceResource(ecg)
+}
+
+// Dependencies returns the list of resources [Ec2CarrierGateway] depends_on.
+func (ecg *Ec2CarrierGateway) Dependencies() terra.Dependencies {
+	return ecg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Ec2CarrierGateway].
+func (ecg *Ec2CarrierGateway) LifecycleManagement() *terra.Lifecycle {
+	return ecg.Lifecycle
+}
+
+// Attributes returns the attributes for [Ec2CarrierGateway].
 func (ecg *Ec2CarrierGateway) Attributes() ec2CarrierGatewayAttributes {
 	return ec2CarrierGatewayAttributes{ref: terra.ReferenceResource(ecg)}
 }
 
+// ImportState imports the given attribute values into [Ec2CarrierGateway]'s state.
 func (ecg *Ec2CarrierGateway) ImportState(av io.Reader) error {
 	ecg.state = &ec2CarrierGatewayState{}
 	if err := json.NewDecoder(av).Decode(ecg.state); err != nil {
@@ -48,10 +72,12 @@ func (ecg *Ec2CarrierGateway) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Ec2CarrierGateway] has state.
 func (ecg *Ec2CarrierGateway) State() (*ec2CarrierGatewayState, bool) {
 	return ecg.state, ecg.state != nil
 }
 
+// StateMust returns the state for [Ec2CarrierGateway]. Panics if the state is nil.
 func (ecg *Ec2CarrierGateway) StateMust() *ec2CarrierGatewayState {
 	if ecg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ecg.Type(), ecg.LocalName()))
@@ -59,10 +85,7 @@ func (ecg *Ec2CarrierGateway) StateMust() *ec2CarrierGatewayState {
 	return ecg.state
 }
 
-func (ecg *Ec2CarrierGateway) DependOn() terra.Reference {
-	return terra.ReferenceResource(ecg)
-}
-
+// Ec2CarrierGatewayArgs contains the configurations for aws_ec2_carrier_gateway.
 type Ec2CarrierGatewayArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -72,35 +95,39 @@ type Ec2CarrierGatewayArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// VpcId: string, required
 	VpcId terra.StringValue `hcl:"vpc_id,attr" validate:"required"`
-	// DependsOn contains resources that Ec2CarrierGateway depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ec2CarrierGatewayAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ec2_carrier_gateway.
 func (ecg ec2CarrierGatewayAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ecg.ref.Append("arn"))
+	return terra.ReferenceAsString(ecg.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_ec2_carrier_gateway.
 func (ecg ec2CarrierGatewayAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ecg.ref.Append("id"))
+	return terra.ReferenceAsString(ecg.ref.Append("id"))
 }
 
+// OwnerId returns a reference to field owner_id of aws_ec2_carrier_gateway.
 func (ecg ec2CarrierGatewayAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(ecg.ref.Append("owner_id"))
+	return terra.ReferenceAsString(ecg.ref.Append("owner_id"))
 }
 
+// Tags returns a reference to field tags of aws_ec2_carrier_gateway.
 func (ecg ec2CarrierGatewayAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ecg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ecg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_ec2_carrier_gateway.
 func (ecg ec2CarrierGatewayAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ecg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ecg.ref.Append("tags_all"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_ec2_carrier_gateway.
 func (ecg ec2CarrierGatewayAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(ecg.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(ecg.ref.Append("vpc_id"))
 }
 
 type ec2CarrierGatewayState struct {

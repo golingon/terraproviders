@@ -38,11 +38,11 @@ func (a AttributeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AttributeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("name"))
+	return terra.ReferenceAsString(a.ref.Append("name"))
 }
 
 func (a AttributeAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("type"))
+	return terra.ReferenceAsString(a.ref.Append("type"))
 }
 
 type GlobalSecondaryIndexAttributes struct {
@@ -62,31 +62,31 @@ func (gsi GlobalSecondaryIndexAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (gsi GlobalSecondaryIndexAttributes) HashKey() terra.StringValue {
-	return terra.ReferenceString(gsi.ref.Append("hash_key"))
+	return terra.ReferenceAsString(gsi.ref.Append("hash_key"))
 }
 
 func (gsi GlobalSecondaryIndexAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(gsi.ref.Append("name"))
+	return terra.ReferenceAsString(gsi.ref.Append("name"))
 }
 
 func (gsi GlobalSecondaryIndexAttributes) NonKeyAttributes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](gsi.ref.Append("non_key_attributes"))
+	return terra.ReferenceAsList[terra.StringValue](gsi.ref.Append("non_key_attributes"))
 }
 
 func (gsi GlobalSecondaryIndexAttributes) ProjectionType() terra.StringValue {
-	return terra.ReferenceString(gsi.ref.Append("projection_type"))
+	return terra.ReferenceAsString(gsi.ref.Append("projection_type"))
 }
 
 func (gsi GlobalSecondaryIndexAttributes) RangeKey() terra.StringValue {
-	return terra.ReferenceString(gsi.ref.Append("range_key"))
+	return terra.ReferenceAsString(gsi.ref.Append("range_key"))
 }
 
 func (gsi GlobalSecondaryIndexAttributes) ReadCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(gsi.ref.Append("read_capacity"))
+	return terra.ReferenceAsNumber(gsi.ref.Append("read_capacity"))
 }
 
 func (gsi GlobalSecondaryIndexAttributes) WriteCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(gsi.ref.Append("write_capacity"))
+	return terra.ReferenceAsNumber(gsi.ref.Append("write_capacity"))
 }
 
 type LocalSecondaryIndexAttributes struct {
@@ -106,19 +106,19 @@ func (lsi LocalSecondaryIndexAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lsi LocalSecondaryIndexAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lsi.ref.Append("name"))
+	return terra.ReferenceAsString(lsi.ref.Append("name"))
 }
 
 func (lsi LocalSecondaryIndexAttributes) NonKeyAttributes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lsi.ref.Append("non_key_attributes"))
+	return terra.ReferenceAsList[terra.StringValue](lsi.ref.Append("non_key_attributes"))
 }
 
 func (lsi LocalSecondaryIndexAttributes) ProjectionType() terra.StringValue {
-	return terra.ReferenceString(lsi.ref.Append("projection_type"))
+	return terra.ReferenceAsString(lsi.ref.Append("projection_type"))
 }
 
 func (lsi LocalSecondaryIndexAttributes) RangeKey() terra.StringValue {
-	return terra.ReferenceString(lsi.ref.Append("range_key"))
+	return terra.ReferenceAsString(lsi.ref.Append("range_key"))
 }
 
 type PointInTimeRecoveryAttributes struct {
@@ -138,7 +138,7 @@ func (pitr PointInTimeRecoveryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pitr PointInTimeRecoveryAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(pitr.ref.Append("enabled"))
+	return terra.ReferenceAsBool(pitr.ref.Append("enabled"))
 }
 
 type ReplicaAttributes struct {
@@ -158,11 +158,11 @@ func (r ReplicaAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r ReplicaAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(r.ref.Append("kms_key_arn"))
 }
 
 func (r ReplicaAttributes) RegionName() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("region_name"))
+	return terra.ReferenceAsString(r.ref.Append("region_name"))
 }
 
 type TtlAttributes struct {
@@ -182,11 +182,11 @@ func (t TtlAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TtlAttributes) AttributeName() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("attribute_name"))
+	return terra.ReferenceAsString(t.ref.Append("attribute_name"))
 }
 
 func (t TtlAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(t.ref.Append("enabled"))
+	return terra.ReferenceAsBool(t.ref.Append("enabled"))
 }
 
 type ServerSideEncryptionAttributes struct {
@@ -206,11 +206,11 @@ func (sse ServerSideEncryptionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sse ServerSideEncryptionAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(sse.ref.Append("enabled"))
+	return terra.ReferenceAsBool(sse.ref.Append("enabled"))
 }
 
 func (sse ServerSideEncryptionAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(sse.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(sse.ref.Append("kms_key_arn"))
 }
 
 type AttributeState struct {

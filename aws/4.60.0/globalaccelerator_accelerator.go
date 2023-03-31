@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewGlobalacceleratorAccelerator creates a new instance of [GlobalacceleratorAccelerator].
 func NewGlobalacceleratorAccelerator(name string, args GlobalacceleratorAcceleratorArgs) *GlobalacceleratorAccelerator {
 	return &GlobalacceleratorAccelerator{
 		Args: args,
@@ -19,28 +20,51 @@ func NewGlobalacceleratorAccelerator(name string, args GlobalacceleratorAccelera
 
 var _ terra.Resource = (*GlobalacceleratorAccelerator)(nil)
 
+// GlobalacceleratorAccelerator represents the Terraform resource aws_globalaccelerator_accelerator.
 type GlobalacceleratorAccelerator struct {
-	Name  string
-	Args  GlobalacceleratorAcceleratorArgs
-	state *globalacceleratorAcceleratorState
+	Name      string
+	Args      GlobalacceleratorAcceleratorArgs
+	state     *globalacceleratorAcceleratorState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GlobalacceleratorAccelerator].
 func (ga *GlobalacceleratorAccelerator) Type() string {
 	return "aws_globalaccelerator_accelerator"
 }
 
+// LocalName returns the local name for [GlobalacceleratorAccelerator].
 func (ga *GlobalacceleratorAccelerator) LocalName() string {
 	return ga.Name
 }
 
+// Configuration returns the configuration (args) for [GlobalacceleratorAccelerator].
 func (ga *GlobalacceleratorAccelerator) Configuration() interface{} {
 	return ga.Args
 }
 
+// DependOn is used for other resources to depend on [GlobalacceleratorAccelerator].
+func (ga *GlobalacceleratorAccelerator) DependOn() terra.Reference {
+	return terra.ReferenceResource(ga)
+}
+
+// Dependencies returns the list of resources [GlobalacceleratorAccelerator] depends_on.
+func (ga *GlobalacceleratorAccelerator) Dependencies() terra.Dependencies {
+	return ga.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GlobalacceleratorAccelerator].
+func (ga *GlobalacceleratorAccelerator) LifecycleManagement() *terra.Lifecycle {
+	return ga.Lifecycle
+}
+
+// Attributes returns the attributes for [GlobalacceleratorAccelerator].
 func (ga *GlobalacceleratorAccelerator) Attributes() globalacceleratorAcceleratorAttributes {
 	return globalacceleratorAcceleratorAttributes{ref: terra.ReferenceResource(ga)}
 }
 
+// ImportState imports the given attribute values into [GlobalacceleratorAccelerator]'s state.
 func (ga *GlobalacceleratorAccelerator) ImportState(av io.Reader) error {
 	ga.state = &globalacceleratorAcceleratorState{}
 	if err := json.NewDecoder(av).Decode(ga.state); err != nil {
@@ -49,10 +73,12 @@ func (ga *GlobalacceleratorAccelerator) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GlobalacceleratorAccelerator] has state.
 func (ga *GlobalacceleratorAccelerator) State() (*globalacceleratorAcceleratorState, bool) {
 	return ga.state, ga.state != nil
 }
 
+// StateMust returns the state for [GlobalacceleratorAccelerator]. Panics if the state is nil.
 func (ga *GlobalacceleratorAccelerator) StateMust() *globalacceleratorAcceleratorState {
 	if ga.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ga.Type(), ga.LocalName()))
@@ -60,10 +86,7 @@ func (ga *GlobalacceleratorAccelerator) StateMust() *globalacceleratorAccelerato
 	return ga.state
 }
 
-func (ga *GlobalacceleratorAccelerator) DependOn() terra.Reference {
-	return terra.ReferenceResource(ga)
-}
-
+// GlobalacceleratorAcceleratorArgs contains the configurations for aws_globalaccelerator_accelerator.
 type GlobalacceleratorAcceleratorArgs struct {
 	// Enabled: bool, optional
 	Enabled terra.BoolValue `hcl:"enabled,attr"`
@@ -85,59 +108,66 @@ type GlobalacceleratorAcceleratorArgs struct {
 	Attributes *globalacceleratoraccelerator.Attributes `hcl:"attributes,block"`
 	// Timeouts: optional
 	Timeouts *globalacceleratoraccelerator.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that GlobalacceleratorAccelerator depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type globalacceleratorAcceleratorAttributes struct {
 	ref terra.Reference
 }
 
+// DnsName returns a reference to field dns_name of aws_globalaccelerator_accelerator.
 func (ga globalacceleratorAcceleratorAttributes) DnsName() terra.StringValue {
-	return terra.ReferenceString(ga.ref.Append("dns_name"))
+	return terra.ReferenceAsString(ga.ref.Append("dns_name"))
 }
 
+// Enabled returns a reference to field enabled of aws_globalaccelerator_accelerator.
 func (ga globalacceleratorAcceleratorAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(ga.ref.Append("enabled"))
+	return terra.ReferenceAsBool(ga.ref.Append("enabled"))
 }
 
+// HostedZoneId returns a reference to field hosted_zone_id of aws_globalaccelerator_accelerator.
 func (ga globalacceleratorAcceleratorAttributes) HostedZoneId() terra.StringValue {
-	return terra.ReferenceString(ga.ref.Append("hosted_zone_id"))
+	return terra.ReferenceAsString(ga.ref.Append("hosted_zone_id"))
 }
 
+// Id returns a reference to field id of aws_globalaccelerator_accelerator.
 func (ga globalacceleratorAcceleratorAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ga.ref.Append("id"))
+	return terra.ReferenceAsString(ga.ref.Append("id"))
 }
 
+// IpAddressType returns a reference to field ip_address_type of aws_globalaccelerator_accelerator.
 func (ga globalacceleratorAcceleratorAttributes) IpAddressType() terra.StringValue {
-	return terra.ReferenceString(ga.ref.Append("ip_address_type"))
+	return terra.ReferenceAsString(ga.ref.Append("ip_address_type"))
 }
 
+// IpAddresses returns a reference to field ip_addresses of aws_globalaccelerator_accelerator.
 func (ga globalacceleratorAcceleratorAttributes) IpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ga.ref.Append("ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](ga.ref.Append("ip_addresses"))
 }
 
+// Name returns a reference to field name of aws_globalaccelerator_accelerator.
 func (ga globalacceleratorAcceleratorAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ga.ref.Append("name"))
+	return terra.ReferenceAsString(ga.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_globalaccelerator_accelerator.
 func (ga globalacceleratorAcceleratorAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ga.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ga.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_globalaccelerator_accelerator.
 func (ga globalacceleratorAcceleratorAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ga.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ga.ref.Append("tags_all"))
 }
 
 func (ga globalacceleratorAcceleratorAttributes) IpSets() terra.ListValue[globalacceleratoraccelerator.IpSetsAttributes] {
-	return terra.ReferenceList[globalacceleratoraccelerator.IpSetsAttributes](ga.ref.Append("ip_sets"))
+	return terra.ReferenceAsList[globalacceleratoraccelerator.IpSetsAttributes](ga.ref.Append("ip_sets"))
 }
 
 func (ga globalacceleratorAcceleratorAttributes) Attributes() terra.ListValue[globalacceleratoraccelerator.AttributesAttributes] {
-	return terra.ReferenceList[globalacceleratoraccelerator.AttributesAttributes](ga.ref.Append("attributes"))
+	return terra.ReferenceAsList[globalacceleratoraccelerator.AttributesAttributes](ga.ref.Append("attributes"))
 }
 
 func (ga globalacceleratorAcceleratorAttributes) Timeouts() globalacceleratoraccelerator.TimeoutsAttributes {
-	return terra.ReferenceSingle[globalacceleratoraccelerator.TimeoutsAttributes](ga.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[globalacceleratoraccelerator.TimeoutsAttributes](ga.ref.Append("timeouts"))
 }
 
 type globalacceleratorAcceleratorState struct {

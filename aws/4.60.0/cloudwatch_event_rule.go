@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCloudwatchEventRule creates a new instance of [CloudwatchEventRule].
 func NewCloudwatchEventRule(name string, args CloudwatchEventRuleArgs) *CloudwatchEventRule {
 	return &CloudwatchEventRule{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCloudwatchEventRule(name string, args CloudwatchEventRuleArgs) *Cloudwat
 
 var _ terra.Resource = (*CloudwatchEventRule)(nil)
 
+// CloudwatchEventRule represents the Terraform resource aws_cloudwatch_event_rule.
 type CloudwatchEventRule struct {
-	Name  string
-	Args  CloudwatchEventRuleArgs
-	state *cloudwatchEventRuleState
+	Name      string
+	Args      CloudwatchEventRuleArgs
+	state     *cloudwatchEventRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudwatchEventRule].
 func (cer *CloudwatchEventRule) Type() string {
 	return "aws_cloudwatch_event_rule"
 }
 
+// LocalName returns the local name for [CloudwatchEventRule].
 func (cer *CloudwatchEventRule) LocalName() string {
 	return cer.Name
 }
 
+// Configuration returns the configuration (args) for [CloudwatchEventRule].
 func (cer *CloudwatchEventRule) Configuration() interface{} {
 	return cer.Args
 }
 
+// DependOn is used for other resources to depend on [CloudwatchEventRule].
+func (cer *CloudwatchEventRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(cer)
+}
+
+// Dependencies returns the list of resources [CloudwatchEventRule] depends_on.
+func (cer *CloudwatchEventRule) Dependencies() terra.Dependencies {
+	return cer.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudwatchEventRule].
+func (cer *CloudwatchEventRule) LifecycleManagement() *terra.Lifecycle {
+	return cer.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudwatchEventRule].
 func (cer *CloudwatchEventRule) Attributes() cloudwatchEventRuleAttributes {
 	return cloudwatchEventRuleAttributes{ref: terra.ReferenceResource(cer)}
 }
 
+// ImportState imports the given attribute values into [CloudwatchEventRule]'s state.
 func (cer *CloudwatchEventRule) ImportState(av io.Reader) error {
 	cer.state = &cloudwatchEventRuleState{}
 	if err := json.NewDecoder(av).Decode(cer.state); err != nil {
@@ -48,10 +72,12 @@ func (cer *CloudwatchEventRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudwatchEventRule] has state.
 func (cer *CloudwatchEventRule) State() (*cloudwatchEventRuleState, bool) {
 	return cer.state, cer.state != nil
 }
 
+// StateMust returns the state for [CloudwatchEventRule]. Panics if the state is nil.
 func (cer *CloudwatchEventRule) StateMust() *cloudwatchEventRuleState {
 	if cer.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cer.Type(), cer.LocalName()))
@@ -59,10 +85,7 @@ func (cer *CloudwatchEventRule) StateMust() *cloudwatchEventRuleState {
 	return cer.state
 }
 
-func (cer *CloudwatchEventRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(cer)
-}
-
+// CloudwatchEventRuleArgs contains the configurations for aws_cloudwatch_event_rule.
 type CloudwatchEventRuleArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -86,59 +109,69 @@ type CloudwatchEventRuleArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that CloudwatchEventRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudwatchEventRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_cloudwatch_event_rule.
 func (cer cloudwatchEventRuleAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(cer.ref.Append("arn"))
+	return terra.ReferenceAsString(cer.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_cloudwatch_event_rule.
 func (cer cloudwatchEventRuleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cer.ref.Append("description"))
+	return terra.ReferenceAsString(cer.ref.Append("description"))
 }
 
+// EventBusName returns a reference to field event_bus_name of aws_cloudwatch_event_rule.
 func (cer cloudwatchEventRuleAttributes) EventBusName() terra.StringValue {
-	return terra.ReferenceString(cer.ref.Append("event_bus_name"))
+	return terra.ReferenceAsString(cer.ref.Append("event_bus_name"))
 }
 
+// EventPattern returns a reference to field event_pattern of aws_cloudwatch_event_rule.
 func (cer cloudwatchEventRuleAttributes) EventPattern() terra.StringValue {
-	return terra.ReferenceString(cer.ref.Append("event_pattern"))
+	return terra.ReferenceAsString(cer.ref.Append("event_pattern"))
 }
 
+// Id returns a reference to field id of aws_cloudwatch_event_rule.
 func (cer cloudwatchEventRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cer.ref.Append("id"))
+	return terra.ReferenceAsString(cer.ref.Append("id"))
 }
 
+// IsEnabled returns a reference to field is_enabled of aws_cloudwatch_event_rule.
 func (cer cloudwatchEventRuleAttributes) IsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cer.ref.Append("is_enabled"))
+	return terra.ReferenceAsBool(cer.ref.Append("is_enabled"))
 }
 
+// Name returns a reference to field name of aws_cloudwatch_event_rule.
 func (cer cloudwatchEventRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cer.ref.Append("name"))
+	return terra.ReferenceAsString(cer.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_cloudwatch_event_rule.
 func (cer cloudwatchEventRuleAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(cer.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(cer.ref.Append("name_prefix"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_cloudwatch_event_rule.
 func (cer cloudwatchEventRuleAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(cer.ref.Append("role_arn"))
+	return terra.ReferenceAsString(cer.ref.Append("role_arn"))
 }
 
+// ScheduleExpression returns a reference to field schedule_expression of aws_cloudwatch_event_rule.
 func (cer cloudwatchEventRuleAttributes) ScheduleExpression() terra.StringValue {
-	return terra.ReferenceString(cer.ref.Append("schedule_expression"))
+	return terra.ReferenceAsString(cer.ref.Append("schedule_expression"))
 }
 
+// Tags returns a reference to field tags of aws_cloudwatch_event_rule.
 func (cer cloudwatchEventRuleAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cer.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cer.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_cloudwatch_event_rule.
 func (cer cloudwatchEventRuleAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cer.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](cer.ref.Append("tags_all"))
 }
 
 type cloudwatchEventRuleState struct {

@@ -46,15 +46,15 @@ func (asgp AutoScalingGroupProviderAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (asgp AutoScalingGroupProviderAttributes) AutoScalingGroupArn() terra.StringValue {
-	return terra.ReferenceString(asgp.ref.Append("auto_scaling_group_arn"))
+	return terra.ReferenceAsString(asgp.ref.Append("auto_scaling_group_arn"))
 }
 
 func (asgp AutoScalingGroupProviderAttributes) ManagedTerminationProtection() terra.StringValue {
-	return terra.ReferenceString(asgp.ref.Append("managed_termination_protection"))
+	return terra.ReferenceAsString(asgp.ref.Append("managed_termination_protection"))
 }
 
 func (asgp AutoScalingGroupProviderAttributes) ManagedScaling() terra.ListValue[ManagedScalingAttributes] {
-	return terra.ReferenceList[ManagedScalingAttributes](asgp.ref.Append("managed_scaling"))
+	return terra.ReferenceAsList[ManagedScalingAttributes](asgp.ref.Append("managed_scaling"))
 }
 
 type ManagedScalingAttributes struct {
@@ -74,23 +74,23 @@ func (ms ManagedScalingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ms ManagedScalingAttributes) InstanceWarmupPeriod() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("instance_warmup_period"))
+	return terra.ReferenceAsNumber(ms.ref.Append("instance_warmup_period"))
 }
 
 func (ms ManagedScalingAttributes) MaximumScalingStepSize() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("maximum_scaling_step_size"))
+	return terra.ReferenceAsNumber(ms.ref.Append("maximum_scaling_step_size"))
 }
 
 func (ms ManagedScalingAttributes) MinimumScalingStepSize() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("minimum_scaling_step_size"))
+	return terra.ReferenceAsNumber(ms.ref.Append("minimum_scaling_step_size"))
 }
 
 func (ms ManagedScalingAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("status"))
+	return terra.ReferenceAsString(ms.ref.Append("status"))
 }
 
 func (ms ManagedScalingAttributes) TargetCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("target_capacity"))
+	return terra.ReferenceAsNumber(ms.ref.Append("target_capacity"))
 }
 
 type AutoScalingGroupProviderState struct {

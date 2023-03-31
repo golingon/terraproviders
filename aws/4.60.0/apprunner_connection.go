@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewApprunnerConnection creates a new instance of [ApprunnerConnection].
 func NewApprunnerConnection(name string, args ApprunnerConnectionArgs) *ApprunnerConnection {
 	return &ApprunnerConnection{
 		Args: args,
@@ -18,28 +19,51 @@ func NewApprunnerConnection(name string, args ApprunnerConnectionArgs) *Apprunne
 
 var _ terra.Resource = (*ApprunnerConnection)(nil)
 
+// ApprunnerConnection represents the Terraform resource aws_apprunner_connection.
 type ApprunnerConnection struct {
-	Name  string
-	Args  ApprunnerConnectionArgs
-	state *apprunnerConnectionState
+	Name      string
+	Args      ApprunnerConnectionArgs
+	state     *apprunnerConnectionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApprunnerConnection].
 func (ac *ApprunnerConnection) Type() string {
 	return "aws_apprunner_connection"
 }
 
+// LocalName returns the local name for [ApprunnerConnection].
 func (ac *ApprunnerConnection) LocalName() string {
 	return ac.Name
 }
 
+// Configuration returns the configuration (args) for [ApprunnerConnection].
 func (ac *ApprunnerConnection) Configuration() interface{} {
 	return ac.Args
 }
 
+// DependOn is used for other resources to depend on [ApprunnerConnection].
+func (ac *ApprunnerConnection) DependOn() terra.Reference {
+	return terra.ReferenceResource(ac)
+}
+
+// Dependencies returns the list of resources [ApprunnerConnection] depends_on.
+func (ac *ApprunnerConnection) Dependencies() terra.Dependencies {
+	return ac.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApprunnerConnection].
+func (ac *ApprunnerConnection) LifecycleManagement() *terra.Lifecycle {
+	return ac.Lifecycle
+}
+
+// Attributes returns the attributes for [ApprunnerConnection].
 func (ac *ApprunnerConnection) Attributes() apprunnerConnectionAttributes {
 	return apprunnerConnectionAttributes{ref: terra.ReferenceResource(ac)}
 }
 
+// ImportState imports the given attribute values into [ApprunnerConnection]'s state.
 func (ac *ApprunnerConnection) ImportState(av io.Reader) error {
 	ac.state = &apprunnerConnectionState{}
 	if err := json.NewDecoder(av).Decode(ac.state); err != nil {
@@ -48,10 +72,12 @@ func (ac *ApprunnerConnection) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApprunnerConnection] has state.
 func (ac *ApprunnerConnection) State() (*apprunnerConnectionState, bool) {
 	return ac.state, ac.state != nil
 }
 
+// StateMust returns the state for [ApprunnerConnection]. Panics if the state is nil.
 func (ac *ApprunnerConnection) StateMust() *apprunnerConnectionState {
 	if ac.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ac.Type(), ac.LocalName()))
@@ -59,10 +85,7 @@ func (ac *ApprunnerConnection) StateMust() *apprunnerConnectionState {
 	return ac.state
 }
 
-func (ac *ApprunnerConnection) DependOn() terra.Reference {
-	return terra.ReferenceResource(ac)
-}
-
+// ApprunnerConnectionArgs contains the configurations for aws_apprunner_connection.
 type ApprunnerConnectionArgs struct {
 	// ConnectionName: string, required
 	ConnectionName terra.StringValue `hcl:"connection_name,attr" validate:"required"`
@@ -74,39 +97,44 @@ type ApprunnerConnectionArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that ApprunnerConnection depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apprunnerConnectionAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_apprunner_connection.
 func (ac apprunnerConnectionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("arn"))
+	return terra.ReferenceAsString(ac.ref.Append("arn"))
 }
 
+// ConnectionName returns a reference to field connection_name of aws_apprunner_connection.
 func (ac apprunnerConnectionAttributes) ConnectionName() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("connection_name"))
+	return terra.ReferenceAsString(ac.ref.Append("connection_name"))
 }
 
+// Id returns a reference to field id of aws_apprunner_connection.
 func (ac apprunnerConnectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("id"))
+	return terra.ReferenceAsString(ac.ref.Append("id"))
 }
 
+// ProviderType returns a reference to field provider_type of aws_apprunner_connection.
 func (ac apprunnerConnectionAttributes) ProviderType() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("provider_type"))
+	return terra.ReferenceAsString(ac.ref.Append("provider_type"))
 }
 
+// Status returns a reference to field status of aws_apprunner_connection.
 func (ac apprunnerConnectionAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("status"))
+	return terra.ReferenceAsString(ac.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of aws_apprunner_connection.
 func (ac apprunnerConnectionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ac.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ac.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_apprunner_connection.
 func (ac apprunnerConnectionAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ac.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ac.ref.Append("tags_all"))
 }
 
 type apprunnerConnectionState struct {

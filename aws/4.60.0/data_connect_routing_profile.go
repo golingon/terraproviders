@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataConnectRoutingProfile creates a new instance of [DataConnectRoutingProfile].
 func NewDataConnectRoutingProfile(name string, args DataConnectRoutingProfileArgs) *DataConnectRoutingProfile {
 	return &DataConnectRoutingProfile{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataConnectRoutingProfile(name string, args DataConnectRoutingProfileArg
 
 var _ terra.DataResource = (*DataConnectRoutingProfile)(nil)
 
+// DataConnectRoutingProfile represents the Terraform data resource aws_connect_routing_profile.
 type DataConnectRoutingProfile struct {
 	Name string
 	Args DataConnectRoutingProfileArgs
 }
 
+// DataSource returns the Terraform object type for [DataConnectRoutingProfile].
 func (crp *DataConnectRoutingProfile) DataSource() string {
 	return "aws_connect_routing_profile"
 }
 
+// LocalName returns the local name for [DataConnectRoutingProfile].
 func (crp *DataConnectRoutingProfile) LocalName() string {
 	return crp.Name
 }
 
+// Configuration returns the configuration (args) for [DataConnectRoutingProfile].
 func (crp *DataConnectRoutingProfile) Configuration() interface{} {
 	return crp.Args
 }
 
+// Attributes returns the attributes for [DataConnectRoutingProfile].
 func (crp *DataConnectRoutingProfile) Attributes() dataConnectRoutingProfileAttributes {
 	return dataConnectRoutingProfileAttributes{ref: terra.ReferenceDataResource(crp)}
 }
 
+// DataConnectRoutingProfileArgs contains the configurations for aws_connect_routing_profile.
 type DataConnectRoutingProfileArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -57,42 +64,50 @@ type dataConnectRoutingProfileAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_connect_routing_profile.
 func (crp dataConnectRoutingProfileAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(crp.ref.Append("arn"))
+	return terra.ReferenceAsString(crp.ref.Append("arn"))
 }
 
+// DefaultOutboundQueueId returns a reference to field default_outbound_queue_id of aws_connect_routing_profile.
 func (crp dataConnectRoutingProfileAttributes) DefaultOutboundQueueId() terra.StringValue {
-	return terra.ReferenceString(crp.ref.Append("default_outbound_queue_id"))
+	return terra.ReferenceAsString(crp.ref.Append("default_outbound_queue_id"))
 }
 
+// Description returns a reference to field description of aws_connect_routing_profile.
 func (crp dataConnectRoutingProfileAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(crp.ref.Append("description"))
+	return terra.ReferenceAsString(crp.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_connect_routing_profile.
 func (crp dataConnectRoutingProfileAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crp.ref.Append("id"))
+	return terra.ReferenceAsString(crp.ref.Append("id"))
 }
 
+// InstanceId returns a reference to field instance_id of aws_connect_routing_profile.
 func (crp dataConnectRoutingProfileAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(crp.ref.Append("instance_id"))
+	return terra.ReferenceAsString(crp.ref.Append("instance_id"))
 }
 
+// Name returns a reference to field name of aws_connect_routing_profile.
 func (crp dataConnectRoutingProfileAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(crp.ref.Append("name"))
+	return terra.ReferenceAsString(crp.ref.Append("name"))
 }
 
+// RoutingProfileId returns a reference to field routing_profile_id of aws_connect_routing_profile.
 func (crp dataConnectRoutingProfileAttributes) RoutingProfileId() terra.StringValue {
-	return terra.ReferenceString(crp.ref.Append("routing_profile_id"))
+	return terra.ReferenceAsString(crp.ref.Append("routing_profile_id"))
 }
 
+// Tags returns a reference to field tags of aws_connect_routing_profile.
 func (crp dataConnectRoutingProfileAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](crp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](crp.ref.Append("tags"))
 }
 
 func (crp dataConnectRoutingProfileAttributes) MediaConcurrencies() terra.SetValue[dataconnectroutingprofile.MediaConcurrenciesAttributes] {
-	return terra.ReferenceSet[dataconnectroutingprofile.MediaConcurrenciesAttributes](crp.ref.Append("media_concurrencies"))
+	return terra.ReferenceAsSet[dataconnectroutingprofile.MediaConcurrenciesAttributes](crp.ref.Append("media_concurrencies"))
 }
 
 func (crp dataConnectRoutingProfileAttributes) QueueConfigs() terra.SetValue[dataconnectroutingprofile.QueueConfigsAttributes] {
-	return terra.ReferenceSet[dataconnectroutingprofile.QueueConfigsAttributes](crp.ref.Append("queue_configs"))
+	return terra.ReferenceAsSet[dataconnectroutingprofile.QueueConfigsAttributes](crp.ref.Append("queue_configs"))
 }

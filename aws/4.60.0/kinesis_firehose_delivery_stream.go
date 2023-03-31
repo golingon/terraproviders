@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewKinesisFirehoseDeliveryStream creates a new instance of [KinesisFirehoseDeliveryStream].
 func NewKinesisFirehoseDeliveryStream(name string, args KinesisFirehoseDeliveryStreamArgs) *KinesisFirehoseDeliveryStream {
 	return &KinesisFirehoseDeliveryStream{
 		Args: args,
@@ -19,28 +20,51 @@ func NewKinesisFirehoseDeliveryStream(name string, args KinesisFirehoseDeliveryS
 
 var _ terra.Resource = (*KinesisFirehoseDeliveryStream)(nil)
 
+// KinesisFirehoseDeliveryStream represents the Terraform resource aws_kinesis_firehose_delivery_stream.
 type KinesisFirehoseDeliveryStream struct {
-	Name  string
-	Args  KinesisFirehoseDeliveryStreamArgs
-	state *kinesisFirehoseDeliveryStreamState
+	Name      string
+	Args      KinesisFirehoseDeliveryStreamArgs
+	state     *kinesisFirehoseDeliveryStreamState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KinesisFirehoseDeliveryStream].
 func (kfds *KinesisFirehoseDeliveryStream) Type() string {
 	return "aws_kinesis_firehose_delivery_stream"
 }
 
+// LocalName returns the local name for [KinesisFirehoseDeliveryStream].
 func (kfds *KinesisFirehoseDeliveryStream) LocalName() string {
 	return kfds.Name
 }
 
+// Configuration returns the configuration (args) for [KinesisFirehoseDeliveryStream].
 func (kfds *KinesisFirehoseDeliveryStream) Configuration() interface{} {
 	return kfds.Args
 }
 
+// DependOn is used for other resources to depend on [KinesisFirehoseDeliveryStream].
+func (kfds *KinesisFirehoseDeliveryStream) DependOn() terra.Reference {
+	return terra.ReferenceResource(kfds)
+}
+
+// Dependencies returns the list of resources [KinesisFirehoseDeliveryStream] depends_on.
+func (kfds *KinesisFirehoseDeliveryStream) Dependencies() terra.Dependencies {
+	return kfds.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KinesisFirehoseDeliveryStream].
+func (kfds *KinesisFirehoseDeliveryStream) LifecycleManagement() *terra.Lifecycle {
+	return kfds.Lifecycle
+}
+
+// Attributes returns the attributes for [KinesisFirehoseDeliveryStream].
 func (kfds *KinesisFirehoseDeliveryStream) Attributes() kinesisFirehoseDeliveryStreamAttributes {
 	return kinesisFirehoseDeliveryStreamAttributes{ref: terra.ReferenceResource(kfds)}
 }
 
+// ImportState imports the given attribute values into [KinesisFirehoseDeliveryStream]'s state.
 func (kfds *KinesisFirehoseDeliveryStream) ImportState(av io.Reader) error {
 	kfds.state = &kinesisFirehoseDeliveryStreamState{}
 	if err := json.NewDecoder(av).Decode(kfds.state); err != nil {
@@ -49,10 +73,12 @@ func (kfds *KinesisFirehoseDeliveryStream) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [KinesisFirehoseDeliveryStream] has state.
 func (kfds *KinesisFirehoseDeliveryStream) State() (*kinesisFirehoseDeliveryStreamState, bool) {
 	return kfds.state, kfds.state != nil
 }
 
+// StateMust returns the state for [KinesisFirehoseDeliveryStream]. Panics if the state is nil.
 func (kfds *KinesisFirehoseDeliveryStream) StateMust() *kinesisFirehoseDeliveryStreamState {
 	if kfds.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", kfds.Type(), kfds.LocalName()))
@@ -60,10 +86,7 @@ func (kfds *KinesisFirehoseDeliveryStream) StateMust() *kinesisFirehoseDeliveryS
 	return kfds.state
 }
 
-func (kfds *KinesisFirehoseDeliveryStream) DependOn() terra.Reference {
-	return terra.ReferenceResource(kfds)
-}
-
+// KinesisFirehoseDeliveryStreamArgs contains the configurations for aws_kinesis_firehose_delivery_stream.
 type KinesisFirehoseDeliveryStreamArgs struct {
 	// Arn: string, optional
 	Arn terra.StringValue `hcl:"arn,attr"`
@@ -99,79 +122,85 @@ type KinesisFirehoseDeliveryStreamArgs struct {
 	SplunkConfiguration *kinesisfirehosedeliverystream.SplunkConfiguration `hcl:"splunk_configuration,block"`
 	// Timeouts: optional
 	Timeouts *kinesisfirehosedeliverystream.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that KinesisFirehoseDeliveryStream depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type kinesisFirehoseDeliveryStreamAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_kinesis_firehose_delivery_stream.
 func (kfds kinesisFirehoseDeliveryStreamAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(kfds.ref.Append("arn"))
+	return terra.ReferenceAsString(kfds.ref.Append("arn"))
 }
 
+// Destination returns a reference to field destination of aws_kinesis_firehose_delivery_stream.
 func (kfds kinesisFirehoseDeliveryStreamAttributes) Destination() terra.StringValue {
-	return terra.ReferenceString(kfds.ref.Append("destination"))
+	return terra.ReferenceAsString(kfds.ref.Append("destination"))
 }
 
+// DestinationId returns a reference to field destination_id of aws_kinesis_firehose_delivery_stream.
 func (kfds kinesisFirehoseDeliveryStreamAttributes) DestinationId() terra.StringValue {
-	return terra.ReferenceString(kfds.ref.Append("destination_id"))
+	return terra.ReferenceAsString(kfds.ref.Append("destination_id"))
 }
 
+// Id returns a reference to field id of aws_kinesis_firehose_delivery_stream.
 func (kfds kinesisFirehoseDeliveryStreamAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kfds.ref.Append("id"))
+	return terra.ReferenceAsString(kfds.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_kinesis_firehose_delivery_stream.
 func (kfds kinesisFirehoseDeliveryStreamAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kfds.ref.Append("name"))
+	return terra.ReferenceAsString(kfds.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_kinesis_firehose_delivery_stream.
 func (kfds kinesisFirehoseDeliveryStreamAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kfds.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](kfds.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_kinesis_firehose_delivery_stream.
 func (kfds kinesisFirehoseDeliveryStreamAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kfds.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](kfds.ref.Append("tags_all"))
 }
 
+// VersionId returns a reference to field version_id of aws_kinesis_firehose_delivery_stream.
 func (kfds kinesisFirehoseDeliveryStreamAttributes) VersionId() terra.StringValue {
-	return terra.ReferenceString(kfds.ref.Append("version_id"))
+	return terra.ReferenceAsString(kfds.ref.Append("version_id"))
 }
 
 func (kfds kinesisFirehoseDeliveryStreamAttributes) ElasticsearchConfiguration() terra.ListValue[kinesisfirehosedeliverystream.ElasticsearchConfigurationAttributes] {
-	return terra.ReferenceList[kinesisfirehosedeliverystream.ElasticsearchConfigurationAttributes](kfds.ref.Append("elasticsearch_configuration"))
+	return terra.ReferenceAsList[kinesisfirehosedeliverystream.ElasticsearchConfigurationAttributes](kfds.ref.Append("elasticsearch_configuration"))
 }
 
 func (kfds kinesisFirehoseDeliveryStreamAttributes) ExtendedS3Configuration() terra.ListValue[kinesisfirehosedeliverystream.ExtendedS3ConfigurationAttributes] {
-	return terra.ReferenceList[kinesisfirehosedeliverystream.ExtendedS3ConfigurationAttributes](kfds.ref.Append("extended_s3_configuration"))
+	return terra.ReferenceAsList[kinesisfirehosedeliverystream.ExtendedS3ConfigurationAttributes](kfds.ref.Append("extended_s3_configuration"))
 }
 
 func (kfds kinesisFirehoseDeliveryStreamAttributes) HttpEndpointConfiguration() terra.ListValue[kinesisfirehosedeliverystream.HttpEndpointConfigurationAttributes] {
-	return terra.ReferenceList[kinesisfirehosedeliverystream.HttpEndpointConfigurationAttributes](kfds.ref.Append("http_endpoint_configuration"))
+	return terra.ReferenceAsList[kinesisfirehosedeliverystream.HttpEndpointConfigurationAttributes](kfds.ref.Append("http_endpoint_configuration"))
 }
 
 func (kfds kinesisFirehoseDeliveryStreamAttributes) KinesisSourceConfiguration() terra.ListValue[kinesisfirehosedeliverystream.KinesisSourceConfigurationAttributes] {
-	return terra.ReferenceList[kinesisfirehosedeliverystream.KinesisSourceConfigurationAttributes](kfds.ref.Append("kinesis_source_configuration"))
+	return terra.ReferenceAsList[kinesisfirehosedeliverystream.KinesisSourceConfigurationAttributes](kfds.ref.Append("kinesis_source_configuration"))
 }
 
 func (kfds kinesisFirehoseDeliveryStreamAttributes) RedshiftConfiguration() terra.ListValue[kinesisfirehosedeliverystream.RedshiftConfigurationAttributes] {
-	return terra.ReferenceList[kinesisfirehosedeliverystream.RedshiftConfigurationAttributes](kfds.ref.Append("redshift_configuration"))
+	return terra.ReferenceAsList[kinesisfirehosedeliverystream.RedshiftConfigurationAttributes](kfds.ref.Append("redshift_configuration"))
 }
 
 func (kfds kinesisFirehoseDeliveryStreamAttributes) S3Configuration() terra.ListValue[kinesisfirehosedeliverystream.S3ConfigurationAttributes] {
-	return terra.ReferenceList[kinesisfirehosedeliverystream.S3ConfigurationAttributes](kfds.ref.Append("s3_configuration"))
+	return terra.ReferenceAsList[kinesisfirehosedeliverystream.S3ConfigurationAttributes](kfds.ref.Append("s3_configuration"))
 }
 
 func (kfds kinesisFirehoseDeliveryStreamAttributes) ServerSideEncryption() terra.ListValue[kinesisfirehosedeliverystream.ServerSideEncryptionAttributes] {
-	return terra.ReferenceList[kinesisfirehosedeliverystream.ServerSideEncryptionAttributes](kfds.ref.Append("server_side_encryption"))
+	return terra.ReferenceAsList[kinesisfirehosedeliverystream.ServerSideEncryptionAttributes](kfds.ref.Append("server_side_encryption"))
 }
 
 func (kfds kinesisFirehoseDeliveryStreamAttributes) SplunkConfiguration() terra.ListValue[kinesisfirehosedeliverystream.SplunkConfigurationAttributes] {
-	return terra.ReferenceList[kinesisfirehosedeliverystream.SplunkConfigurationAttributes](kfds.ref.Append("splunk_configuration"))
+	return terra.ReferenceAsList[kinesisfirehosedeliverystream.SplunkConfigurationAttributes](kfds.ref.Append("splunk_configuration"))
 }
 
 func (kfds kinesisFirehoseDeliveryStreamAttributes) Timeouts() kinesisfirehosedeliverystream.TimeoutsAttributes {
-	return terra.ReferenceSingle[kinesisfirehosedeliverystream.TimeoutsAttributes](kfds.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[kinesisfirehosedeliverystream.TimeoutsAttributes](kfds.ref.Append("timeouts"))
 }
 
 type kinesisFirehoseDeliveryStreamState struct {

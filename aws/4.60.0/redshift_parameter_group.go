@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewRedshiftParameterGroup creates a new instance of [RedshiftParameterGroup].
 func NewRedshiftParameterGroup(name string, args RedshiftParameterGroupArgs) *RedshiftParameterGroup {
 	return &RedshiftParameterGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewRedshiftParameterGroup(name string, args RedshiftParameterGroupArgs) *Re
 
 var _ terra.Resource = (*RedshiftParameterGroup)(nil)
 
+// RedshiftParameterGroup represents the Terraform resource aws_redshift_parameter_group.
 type RedshiftParameterGroup struct {
-	Name  string
-	Args  RedshiftParameterGroupArgs
-	state *redshiftParameterGroupState
+	Name      string
+	Args      RedshiftParameterGroupArgs
+	state     *redshiftParameterGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RedshiftParameterGroup].
 func (rpg *RedshiftParameterGroup) Type() string {
 	return "aws_redshift_parameter_group"
 }
 
+// LocalName returns the local name for [RedshiftParameterGroup].
 func (rpg *RedshiftParameterGroup) LocalName() string {
 	return rpg.Name
 }
 
+// Configuration returns the configuration (args) for [RedshiftParameterGroup].
 func (rpg *RedshiftParameterGroup) Configuration() interface{} {
 	return rpg.Args
 }
 
+// DependOn is used for other resources to depend on [RedshiftParameterGroup].
+func (rpg *RedshiftParameterGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(rpg)
+}
+
+// Dependencies returns the list of resources [RedshiftParameterGroup] depends_on.
+func (rpg *RedshiftParameterGroup) Dependencies() terra.Dependencies {
+	return rpg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RedshiftParameterGroup].
+func (rpg *RedshiftParameterGroup) LifecycleManagement() *terra.Lifecycle {
+	return rpg.Lifecycle
+}
+
+// Attributes returns the attributes for [RedshiftParameterGroup].
 func (rpg *RedshiftParameterGroup) Attributes() redshiftParameterGroupAttributes {
 	return redshiftParameterGroupAttributes{ref: terra.ReferenceResource(rpg)}
 }
 
+// ImportState imports the given attribute values into [RedshiftParameterGroup]'s state.
 func (rpg *RedshiftParameterGroup) ImportState(av io.Reader) error {
 	rpg.state = &redshiftParameterGroupState{}
 	if err := json.NewDecoder(av).Decode(rpg.state); err != nil {
@@ -49,10 +73,12 @@ func (rpg *RedshiftParameterGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RedshiftParameterGroup] has state.
 func (rpg *RedshiftParameterGroup) State() (*redshiftParameterGroupState, bool) {
 	return rpg.state, rpg.state != nil
 }
 
+// StateMust returns the state for [RedshiftParameterGroup]. Panics if the state is nil.
 func (rpg *RedshiftParameterGroup) StateMust() *redshiftParameterGroupState {
 	if rpg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rpg.Type(), rpg.LocalName()))
@@ -60,10 +86,7 @@ func (rpg *RedshiftParameterGroup) StateMust() *redshiftParameterGroupState {
 	return rpg.state
 }
 
-func (rpg *RedshiftParameterGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(rpg)
-}
-
+// RedshiftParameterGroupArgs contains the configurations for aws_redshift_parameter_group.
 type RedshiftParameterGroupArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -79,43 +102,48 @@ type RedshiftParameterGroupArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Parameter: min=0
 	Parameter []redshiftparametergroup.Parameter `hcl:"parameter,block" validate:"min=0"`
-	// DependsOn contains resources that RedshiftParameterGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type redshiftParameterGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_redshift_parameter_group.
 func (rpg redshiftParameterGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rpg.ref.Append("arn"))
+	return terra.ReferenceAsString(rpg.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_redshift_parameter_group.
 func (rpg redshiftParameterGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(rpg.ref.Append("description"))
+	return terra.ReferenceAsString(rpg.ref.Append("description"))
 }
 
+// Family returns a reference to field family of aws_redshift_parameter_group.
 func (rpg redshiftParameterGroupAttributes) Family() terra.StringValue {
-	return terra.ReferenceString(rpg.ref.Append("family"))
+	return terra.ReferenceAsString(rpg.ref.Append("family"))
 }
 
+// Id returns a reference to field id of aws_redshift_parameter_group.
 func (rpg redshiftParameterGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rpg.ref.Append("id"))
+	return terra.ReferenceAsString(rpg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_redshift_parameter_group.
 func (rpg redshiftParameterGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rpg.ref.Append("name"))
+	return terra.ReferenceAsString(rpg.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_redshift_parameter_group.
 func (rpg redshiftParameterGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rpg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rpg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_redshift_parameter_group.
 func (rpg redshiftParameterGroupAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rpg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](rpg.ref.Append("tags_all"))
 }
 
 func (rpg redshiftParameterGroupAttributes) Parameter() terra.SetValue[redshiftparametergroup.ParameterAttributes] {
-	return terra.ReferenceSet[redshiftparametergroup.ParameterAttributes](rpg.ref.Append("parameter"))
+	return terra.ReferenceAsSet[redshiftparametergroup.ParameterAttributes](rpg.ref.Append("parameter"))
 }
 
 type redshiftParameterGroupState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewMemorydbAcl creates a new instance of [MemorydbAcl].
 func NewMemorydbAcl(name string, args MemorydbAclArgs) *MemorydbAcl {
 	return &MemorydbAcl{
 		Args: args,
@@ -18,28 +19,51 @@ func NewMemorydbAcl(name string, args MemorydbAclArgs) *MemorydbAcl {
 
 var _ terra.Resource = (*MemorydbAcl)(nil)
 
+// MemorydbAcl represents the Terraform resource aws_memorydb_acl.
 type MemorydbAcl struct {
-	Name  string
-	Args  MemorydbAclArgs
-	state *memorydbAclState
+	Name      string
+	Args      MemorydbAclArgs
+	state     *memorydbAclState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MemorydbAcl].
 func (ma *MemorydbAcl) Type() string {
 	return "aws_memorydb_acl"
 }
 
+// LocalName returns the local name for [MemorydbAcl].
 func (ma *MemorydbAcl) LocalName() string {
 	return ma.Name
 }
 
+// Configuration returns the configuration (args) for [MemorydbAcl].
 func (ma *MemorydbAcl) Configuration() interface{} {
 	return ma.Args
 }
 
+// DependOn is used for other resources to depend on [MemorydbAcl].
+func (ma *MemorydbAcl) DependOn() terra.Reference {
+	return terra.ReferenceResource(ma)
+}
+
+// Dependencies returns the list of resources [MemorydbAcl] depends_on.
+func (ma *MemorydbAcl) Dependencies() terra.Dependencies {
+	return ma.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MemorydbAcl].
+func (ma *MemorydbAcl) LifecycleManagement() *terra.Lifecycle {
+	return ma.Lifecycle
+}
+
+// Attributes returns the attributes for [MemorydbAcl].
 func (ma *MemorydbAcl) Attributes() memorydbAclAttributes {
 	return memorydbAclAttributes{ref: terra.ReferenceResource(ma)}
 }
 
+// ImportState imports the given attribute values into [MemorydbAcl]'s state.
 func (ma *MemorydbAcl) ImportState(av io.Reader) error {
 	ma.state = &memorydbAclState{}
 	if err := json.NewDecoder(av).Decode(ma.state); err != nil {
@@ -48,10 +72,12 @@ func (ma *MemorydbAcl) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MemorydbAcl] has state.
 func (ma *MemorydbAcl) State() (*memorydbAclState, bool) {
 	return ma.state, ma.state != nil
 }
 
+// StateMust returns the state for [MemorydbAcl]. Panics if the state is nil.
 func (ma *MemorydbAcl) StateMust() *memorydbAclState {
 	if ma.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ma.Type(), ma.LocalName()))
@@ -59,10 +85,7 @@ func (ma *MemorydbAcl) StateMust() *memorydbAclState {
 	return ma.state
 }
 
-func (ma *MemorydbAcl) DependOn() terra.Reference {
-	return terra.ReferenceResource(ma)
-}
-
+// MemorydbAclArgs contains the configurations for aws_memorydb_acl.
 type MemorydbAclArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -76,43 +99,49 @@ type MemorydbAclArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// UserNames: set of string, optional
 	UserNames terra.SetValue[terra.StringValue] `hcl:"user_names,attr"`
-	// DependsOn contains resources that MemorydbAcl depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type memorydbAclAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_memorydb_acl.
 func (ma memorydbAclAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("arn"))
+	return terra.ReferenceAsString(ma.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_memorydb_acl.
 func (ma memorydbAclAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("id"))
+	return terra.ReferenceAsString(ma.ref.Append("id"))
 }
 
+// MinimumEngineVersion returns a reference to field minimum_engine_version of aws_memorydb_acl.
 func (ma memorydbAclAttributes) MinimumEngineVersion() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("minimum_engine_version"))
+	return terra.ReferenceAsString(ma.ref.Append("minimum_engine_version"))
 }
 
+// Name returns a reference to field name of aws_memorydb_acl.
 func (ma memorydbAclAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("name"))
+	return terra.ReferenceAsString(ma.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_memorydb_acl.
 func (ma memorydbAclAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(ma.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(ma.ref.Append("name_prefix"))
 }
 
+// Tags returns a reference to field tags of aws_memorydb_acl.
 func (ma memorydbAclAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ma.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ma.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_memorydb_acl.
 func (ma memorydbAclAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ma.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ma.ref.Append("tags_all"))
 }
 
+// UserNames returns a reference to field user_names of aws_memorydb_acl.
 func (ma memorydbAclAttributes) UserNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ma.ref.Append("user_names"))
+	return terra.ReferenceAsSet[terra.StringValue](ma.ref.Append("user_names"))
 }
 
 type memorydbAclState struct {

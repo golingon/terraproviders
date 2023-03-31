@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataIotEndpoint creates a new instance of [DataIotEndpoint].
 func NewDataIotEndpoint(name string, args DataIotEndpointArgs) *DataIotEndpoint {
 	return &DataIotEndpoint{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataIotEndpoint(name string, args DataIotEndpointArgs) *DataIotEndpoint 
 
 var _ terra.DataResource = (*DataIotEndpoint)(nil)
 
+// DataIotEndpoint represents the Terraform data resource aws_iot_endpoint.
 type DataIotEndpoint struct {
 	Name string
 	Args DataIotEndpointArgs
 }
 
+// DataSource returns the Terraform object type for [DataIotEndpoint].
 func (ie *DataIotEndpoint) DataSource() string {
 	return "aws_iot_endpoint"
 }
 
+// LocalName returns the local name for [DataIotEndpoint].
 func (ie *DataIotEndpoint) LocalName() string {
 	return ie.Name
 }
 
+// Configuration returns the configuration (args) for [DataIotEndpoint].
 func (ie *DataIotEndpoint) Configuration() interface{} {
 	return ie.Args
 }
 
+// Attributes returns the attributes for [DataIotEndpoint].
 func (ie *DataIotEndpoint) Attributes() dataIotEndpointAttributes {
 	return dataIotEndpointAttributes{ref: terra.ReferenceDataResource(ie)}
 }
 
+// DataIotEndpointArgs contains the configurations for aws_iot_endpoint.
 type DataIotEndpointArgs struct {
 	// EndpointType: string, optional
 	EndpointType terra.StringValue `hcl:"endpoint_type,attr"`
@@ -44,14 +51,17 @@ type dataIotEndpointAttributes struct {
 	ref terra.Reference
 }
 
+// EndpointAddress returns a reference to field endpoint_address of aws_iot_endpoint.
 func (ie dataIotEndpointAttributes) EndpointAddress() terra.StringValue {
-	return terra.ReferenceString(ie.ref.Append("endpoint_address"))
+	return terra.ReferenceAsString(ie.ref.Append("endpoint_address"))
 }
 
+// EndpointType returns a reference to field endpoint_type of aws_iot_endpoint.
 func (ie dataIotEndpointAttributes) EndpointType() terra.StringValue {
-	return terra.ReferenceString(ie.ref.Append("endpoint_type"))
+	return terra.ReferenceAsString(ie.ref.Append("endpoint_type"))
 }
 
+// Id returns a reference to field id of aws_iot_endpoint.
 func (ie dataIotEndpointAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ie.ref.Append("id"))
+	return terra.ReferenceAsString(ie.ref.Append("id"))
 }

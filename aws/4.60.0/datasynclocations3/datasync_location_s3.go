@@ -29,7 +29,7 @@ func (sc S3ConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc S3ConfigAttributes) BucketAccessRoleArn() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("bucket_access_role_arn"))
+	return terra.ReferenceAsString(sc.ref.Append("bucket_access_role_arn"))
 }
 
 type S3ConfigState struct {

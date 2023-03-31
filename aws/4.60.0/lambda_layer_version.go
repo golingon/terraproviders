@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewLambdaLayerVersion creates a new instance of [LambdaLayerVersion].
 func NewLambdaLayerVersion(name string, args LambdaLayerVersionArgs) *LambdaLayerVersion {
 	return &LambdaLayerVersion{
 		Args: args,
@@ -18,28 +19,51 @@ func NewLambdaLayerVersion(name string, args LambdaLayerVersionArgs) *LambdaLaye
 
 var _ terra.Resource = (*LambdaLayerVersion)(nil)
 
+// LambdaLayerVersion represents the Terraform resource aws_lambda_layer_version.
 type LambdaLayerVersion struct {
-	Name  string
-	Args  LambdaLayerVersionArgs
-	state *lambdaLayerVersionState
+	Name      string
+	Args      LambdaLayerVersionArgs
+	state     *lambdaLayerVersionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LambdaLayerVersion].
 func (llv *LambdaLayerVersion) Type() string {
 	return "aws_lambda_layer_version"
 }
 
+// LocalName returns the local name for [LambdaLayerVersion].
 func (llv *LambdaLayerVersion) LocalName() string {
 	return llv.Name
 }
 
+// Configuration returns the configuration (args) for [LambdaLayerVersion].
 func (llv *LambdaLayerVersion) Configuration() interface{} {
 	return llv.Args
 }
 
+// DependOn is used for other resources to depend on [LambdaLayerVersion].
+func (llv *LambdaLayerVersion) DependOn() terra.Reference {
+	return terra.ReferenceResource(llv)
+}
+
+// Dependencies returns the list of resources [LambdaLayerVersion] depends_on.
+func (llv *LambdaLayerVersion) Dependencies() terra.Dependencies {
+	return llv.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LambdaLayerVersion].
+func (llv *LambdaLayerVersion) LifecycleManagement() *terra.Lifecycle {
+	return llv.Lifecycle
+}
+
+// Attributes returns the attributes for [LambdaLayerVersion].
 func (llv *LambdaLayerVersion) Attributes() lambdaLayerVersionAttributes {
 	return lambdaLayerVersionAttributes{ref: terra.ReferenceResource(llv)}
 }
 
+// ImportState imports the given attribute values into [LambdaLayerVersion]'s state.
 func (llv *LambdaLayerVersion) ImportState(av io.Reader) error {
 	llv.state = &lambdaLayerVersionState{}
 	if err := json.NewDecoder(av).Decode(llv.state); err != nil {
@@ -48,10 +72,12 @@ func (llv *LambdaLayerVersion) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LambdaLayerVersion] has state.
 func (llv *LambdaLayerVersion) State() (*lambdaLayerVersionState, bool) {
 	return llv.state, llv.state != nil
 }
 
+// StateMust returns the state for [LambdaLayerVersion]. Panics if the state is nil.
 func (llv *LambdaLayerVersion) StateMust() *lambdaLayerVersionState {
 	if llv.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", llv.Type(), llv.LocalName()))
@@ -59,10 +85,7 @@ func (llv *LambdaLayerVersion) StateMust() *lambdaLayerVersionState {
 	return llv.state
 }
 
-func (llv *LambdaLayerVersion) DependOn() terra.Reference {
-	return terra.ReferenceResource(llv)
-}
-
+// LambdaLayerVersionArgs contains the configurations for aws_lambda_layer_version.
 type LambdaLayerVersionArgs struct {
 	// CompatibleArchitectures: set of string, optional
 	CompatibleArchitectures terra.SetValue[terra.StringValue] `hcl:"compatible_architectures,attr"`
@@ -88,87 +111,104 @@ type LambdaLayerVersionArgs struct {
 	SkipDestroy terra.BoolValue `hcl:"skip_destroy,attr"`
 	// SourceCodeHash: string, optional
 	SourceCodeHash terra.StringValue `hcl:"source_code_hash,attr"`
-	// DependsOn contains resources that LambdaLayerVersion depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lambdaLayerVersionAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_lambda_layer_version.
 func (llv lambdaLayerVersionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(llv.ref.Append("arn"))
+	return terra.ReferenceAsString(llv.ref.Append("arn"))
 }
 
+// CompatibleArchitectures returns a reference to field compatible_architectures of aws_lambda_layer_version.
 func (llv lambdaLayerVersionAttributes) CompatibleArchitectures() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](llv.ref.Append("compatible_architectures"))
+	return terra.ReferenceAsSet[terra.StringValue](llv.ref.Append("compatible_architectures"))
 }
 
+// CompatibleRuntimes returns a reference to field compatible_runtimes of aws_lambda_layer_version.
 func (llv lambdaLayerVersionAttributes) CompatibleRuntimes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](llv.ref.Append("compatible_runtimes"))
+	return terra.ReferenceAsSet[terra.StringValue](llv.ref.Append("compatible_runtimes"))
 }
 
+// CreatedDate returns a reference to field created_date of aws_lambda_layer_version.
 func (llv lambdaLayerVersionAttributes) CreatedDate() terra.StringValue {
-	return terra.ReferenceString(llv.ref.Append("created_date"))
+	return terra.ReferenceAsString(llv.ref.Append("created_date"))
 }
 
+// Description returns a reference to field description of aws_lambda_layer_version.
 func (llv lambdaLayerVersionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(llv.ref.Append("description"))
+	return terra.ReferenceAsString(llv.ref.Append("description"))
 }
 
+// Filename returns a reference to field filename of aws_lambda_layer_version.
 func (llv lambdaLayerVersionAttributes) Filename() terra.StringValue {
-	return terra.ReferenceString(llv.ref.Append("filename"))
+	return terra.ReferenceAsString(llv.ref.Append("filename"))
 }
 
+// Id returns a reference to field id of aws_lambda_layer_version.
 func (llv lambdaLayerVersionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(llv.ref.Append("id"))
+	return terra.ReferenceAsString(llv.ref.Append("id"))
 }
 
+// LayerArn returns a reference to field layer_arn of aws_lambda_layer_version.
 func (llv lambdaLayerVersionAttributes) LayerArn() terra.StringValue {
-	return terra.ReferenceString(llv.ref.Append("layer_arn"))
+	return terra.ReferenceAsString(llv.ref.Append("layer_arn"))
 }
 
+// LayerName returns a reference to field layer_name of aws_lambda_layer_version.
 func (llv lambdaLayerVersionAttributes) LayerName() terra.StringValue {
-	return terra.ReferenceString(llv.ref.Append("layer_name"))
+	return terra.ReferenceAsString(llv.ref.Append("layer_name"))
 }
 
+// LicenseInfo returns a reference to field license_info of aws_lambda_layer_version.
 func (llv lambdaLayerVersionAttributes) LicenseInfo() terra.StringValue {
-	return terra.ReferenceString(llv.ref.Append("license_info"))
+	return terra.ReferenceAsString(llv.ref.Append("license_info"))
 }
 
+// S3Bucket returns a reference to field s3_bucket of aws_lambda_layer_version.
 func (llv lambdaLayerVersionAttributes) S3Bucket() terra.StringValue {
-	return terra.ReferenceString(llv.ref.Append("s3_bucket"))
+	return terra.ReferenceAsString(llv.ref.Append("s3_bucket"))
 }
 
+// S3Key returns a reference to field s3_key of aws_lambda_layer_version.
 func (llv lambdaLayerVersionAttributes) S3Key() terra.StringValue {
-	return terra.ReferenceString(llv.ref.Append("s3_key"))
+	return terra.ReferenceAsString(llv.ref.Append("s3_key"))
 }
 
+// S3ObjectVersion returns a reference to field s3_object_version of aws_lambda_layer_version.
 func (llv lambdaLayerVersionAttributes) S3ObjectVersion() terra.StringValue {
-	return terra.ReferenceString(llv.ref.Append("s3_object_version"))
+	return terra.ReferenceAsString(llv.ref.Append("s3_object_version"))
 }
 
+// SigningJobArn returns a reference to field signing_job_arn of aws_lambda_layer_version.
 func (llv lambdaLayerVersionAttributes) SigningJobArn() terra.StringValue {
-	return terra.ReferenceString(llv.ref.Append("signing_job_arn"))
+	return terra.ReferenceAsString(llv.ref.Append("signing_job_arn"))
 }
 
+// SigningProfileVersionArn returns a reference to field signing_profile_version_arn of aws_lambda_layer_version.
 func (llv lambdaLayerVersionAttributes) SigningProfileVersionArn() terra.StringValue {
-	return terra.ReferenceString(llv.ref.Append("signing_profile_version_arn"))
+	return terra.ReferenceAsString(llv.ref.Append("signing_profile_version_arn"))
 }
 
+// SkipDestroy returns a reference to field skip_destroy of aws_lambda_layer_version.
 func (llv lambdaLayerVersionAttributes) SkipDestroy() terra.BoolValue {
-	return terra.ReferenceBool(llv.ref.Append("skip_destroy"))
+	return terra.ReferenceAsBool(llv.ref.Append("skip_destroy"))
 }
 
+// SourceCodeHash returns a reference to field source_code_hash of aws_lambda_layer_version.
 func (llv lambdaLayerVersionAttributes) SourceCodeHash() terra.StringValue {
-	return terra.ReferenceString(llv.ref.Append("source_code_hash"))
+	return terra.ReferenceAsString(llv.ref.Append("source_code_hash"))
 }
 
+// SourceCodeSize returns a reference to field source_code_size of aws_lambda_layer_version.
 func (llv lambdaLayerVersionAttributes) SourceCodeSize() terra.NumberValue {
-	return terra.ReferenceNumber(llv.ref.Append("source_code_size"))
+	return terra.ReferenceAsNumber(llv.ref.Append("source_code_size"))
 }
 
+// Version returns a reference to field version of aws_lambda_layer_version.
 func (llv lambdaLayerVersionAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(llv.ref.Append("version"))
+	return terra.ReferenceAsString(llv.ref.Append("version"))
 }
 
 type lambdaLayerVersionState struct {

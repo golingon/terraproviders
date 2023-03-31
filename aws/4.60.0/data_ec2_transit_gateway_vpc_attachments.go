@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataEc2TransitGatewayVpcAttachments creates a new instance of [DataEc2TransitGatewayVpcAttachments].
 func NewDataEc2TransitGatewayVpcAttachments(name string, args DataEc2TransitGatewayVpcAttachmentsArgs) *DataEc2TransitGatewayVpcAttachments {
 	return &DataEc2TransitGatewayVpcAttachments{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataEc2TransitGatewayVpcAttachments(name string, args DataEc2TransitGate
 
 var _ terra.DataResource = (*DataEc2TransitGatewayVpcAttachments)(nil)
 
+// DataEc2TransitGatewayVpcAttachments represents the Terraform data resource aws_ec2_transit_gateway_vpc_attachments.
 type DataEc2TransitGatewayVpcAttachments struct {
 	Name string
 	Args DataEc2TransitGatewayVpcAttachmentsArgs
 }
 
+// DataSource returns the Terraform object type for [DataEc2TransitGatewayVpcAttachments].
 func (etgva *DataEc2TransitGatewayVpcAttachments) DataSource() string {
 	return "aws_ec2_transit_gateway_vpc_attachments"
 }
 
+// LocalName returns the local name for [DataEc2TransitGatewayVpcAttachments].
 func (etgva *DataEc2TransitGatewayVpcAttachments) LocalName() string {
 	return etgva.Name
 }
 
+// Configuration returns the configuration (args) for [DataEc2TransitGatewayVpcAttachments].
 func (etgva *DataEc2TransitGatewayVpcAttachments) Configuration() interface{} {
 	return etgva.Args
 }
 
+// Attributes returns the attributes for [DataEc2TransitGatewayVpcAttachments].
 func (etgva *DataEc2TransitGatewayVpcAttachments) Attributes() dataEc2TransitGatewayVpcAttachmentsAttributes {
 	return dataEc2TransitGatewayVpcAttachmentsAttributes{ref: terra.ReferenceDataResource(etgva)}
 }
 
+// DataEc2TransitGatewayVpcAttachmentsArgs contains the configurations for aws_ec2_transit_gateway_vpc_attachments.
 type DataEc2TransitGatewayVpcAttachmentsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -49,18 +56,20 @@ type dataEc2TransitGatewayVpcAttachmentsAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_ec2_transit_gateway_vpc_attachments.
 func (etgva dataEc2TransitGatewayVpcAttachmentsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(etgva.ref.Append("id"))
+	return terra.ReferenceAsString(etgva.ref.Append("id"))
 }
 
+// Ids returns a reference to field ids of aws_ec2_transit_gateway_vpc_attachments.
 func (etgva dataEc2TransitGatewayVpcAttachmentsAttributes) Ids() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](etgva.ref.Append("ids"))
+	return terra.ReferenceAsList[terra.StringValue](etgva.ref.Append("ids"))
 }
 
 func (etgva dataEc2TransitGatewayVpcAttachmentsAttributes) Filter() terra.SetValue[dataec2transitgatewayvpcattachments.FilterAttributes] {
-	return terra.ReferenceSet[dataec2transitgatewayvpcattachments.FilterAttributes](etgva.ref.Append("filter"))
+	return terra.ReferenceAsSet[dataec2transitgatewayvpcattachments.FilterAttributes](etgva.ref.Append("filter"))
 }
 
 func (etgva dataEc2TransitGatewayVpcAttachmentsAttributes) Timeouts() dataec2transitgatewayvpcattachments.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataec2transitgatewayvpcattachments.TimeoutsAttributes](etgva.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataec2transitgatewayvpcattachments.TimeoutsAttributes](etgva.ref.Append("timeouts"))
 }

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEmrInstanceGroup creates a new instance of [EmrInstanceGroup].
 func NewEmrInstanceGroup(name string, args EmrInstanceGroupArgs) *EmrInstanceGroup {
 	return &EmrInstanceGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEmrInstanceGroup(name string, args EmrInstanceGroupArgs) *EmrInstanceGro
 
 var _ terra.Resource = (*EmrInstanceGroup)(nil)
 
+// EmrInstanceGroup represents the Terraform resource aws_emr_instance_group.
 type EmrInstanceGroup struct {
-	Name  string
-	Args  EmrInstanceGroupArgs
-	state *emrInstanceGroupState
+	Name      string
+	Args      EmrInstanceGroupArgs
+	state     *emrInstanceGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EmrInstanceGroup].
 func (eig *EmrInstanceGroup) Type() string {
 	return "aws_emr_instance_group"
 }
 
+// LocalName returns the local name for [EmrInstanceGroup].
 func (eig *EmrInstanceGroup) LocalName() string {
 	return eig.Name
 }
 
+// Configuration returns the configuration (args) for [EmrInstanceGroup].
 func (eig *EmrInstanceGroup) Configuration() interface{} {
 	return eig.Args
 }
 
+// DependOn is used for other resources to depend on [EmrInstanceGroup].
+func (eig *EmrInstanceGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(eig)
+}
+
+// Dependencies returns the list of resources [EmrInstanceGroup] depends_on.
+func (eig *EmrInstanceGroup) Dependencies() terra.Dependencies {
+	return eig.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EmrInstanceGroup].
+func (eig *EmrInstanceGroup) LifecycleManagement() *terra.Lifecycle {
+	return eig.Lifecycle
+}
+
+// Attributes returns the attributes for [EmrInstanceGroup].
 func (eig *EmrInstanceGroup) Attributes() emrInstanceGroupAttributes {
 	return emrInstanceGroupAttributes{ref: terra.ReferenceResource(eig)}
 }
 
+// ImportState imports the given attribute values into [EmrInstanceGroup]'s state.
 func (eig *EmrInstanceGroup) ImportState(av io.Reader) error {
 	eig.state = &emrInstanceGroupState{}
 	if err := json.NewDecoder(av).Decode(eig.state); err != nil {
@@ -49,10 +73,12 @@ func (eig *EmrInstanceGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EmrInstanceGroup] has state.
 func (eig *EmrInstanceGroup) State() (*emrInstanceGroupState, bool) {
 	return eig.state, eig.state != nil
 }
 
+// StateMust returns the state for [EmrInstanceGroup]. Panics if the state is nil.
 func (eig *EmrInstanceGroup) StateMust() *emrInstanceGroupState {
 	if eig.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", eig.Type(), eig.LocalName()))
@@ -60,10 +86,7 @@ func (eig *EmrInstanceGroup) StateMust() *emrInstanceGroupState {
 	return eig.state
 }
 
-func (eig *EmrInstanceGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(eig)
-}
-
+// EmrInstanceGroupArgs contains the configurations for aws_emr_instance_group.
 type EmrInstanceGroupArgs struct {
 	// AutoscalingPolicy: string, optional
 	AutoscalingPolicy terra.StringValue `hcl:"autoscaling_policy,attr"`
@@ -85,59 +108,68 @@ type EmrInstanceGroupArgs struct {
 	Name terra.StringValue `hcl:"name,attr"`
 	// EbsConfig: min=0
 	EbsConfig []emrinstancegroup.EbsConfig `hcl:"ebs_config,block" validate:"min=0"`
-	// DependsOn contains resources that EmrInstanceGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type emrInstanceGroupAttributes struct {
 	ref terra.Reference
 }
 
+// AutoscalingPolicy returns a reference to field autoscaling_policy of aws_emr_instance_group.
 func (eig emrInstanceGroupAttributes) AutoscalingPolicy() terra.StringValue {
-	return terra.ReferenceString(eig.ref.Append("autoscaling_policy"))
+	return terra.ReferenceAsString(eig.ref.Append("autoscaling_policy"))
 }
 
+// BidPrice returns a reference to field bid_price of aws_emr_instance_group.
 func (eig emrInstanceGroupAttributes) BidPrice() terra.StringValue {
-	return terra.ReferenceString(eig.ref.Append("bid_price"))
+	return terra.ReferenceAsString(eig.ref.Append("bid_price"))
 }
 
+// ClusterId returns a reference to field cluster_id of aws_emr_instance_group.
 func (eig emrInstanceGroupAttributes) ClusterId() terra.StringValue {
-	return terra.ReferenceString(eig.ref.Append("cluster_id"))
+	return terra.ReferenceAsString(eig.ref.Append("cluster_id"))
 }
 
+// ConfigurationsJson returns a reference to field configurations_json of aws_emr_instance_group.
 func (eig emrInstanceGroupAttributes) ConfigurationsJson() terra.StringValue {
-	return terra.ReferenceString(eig.ref.Append("configurations_json"))
+	return terra.ReferenceAsString(eig.ref.Append("configurations_json"))
 }
 
+// EbsOptimized returns a reference to field ebs_optimized of aws_emr_instance_group.
 func (eig emrInstanceGroupAttributes) EbsOptimized() terra.BoolValue {
-	return terra.ReferenceBool(eig.ref.Append("ebs_optimized"))
+	return terra.ReferenceAsBool(eig.ref.Append("ebs_optimized"))
 }
 
+// Id returns a reference to field id of aws_emr_instance_group.
 func (eig emrInstanceGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(eig.ref.Append("id"))
+	return terra.ReferenceAsString(eig.ref.Append("id"))
 }
 
+// InstanceCount returns a reference to field instance_count of aws_emr_instance_group.
 func (eig emrInstanceGroupAttributes) InstanceCount() terra.NumberValue {
-	return terra.ReferenceNumber(eig.ref.Append("instance_count"))
+	return terra.ReferenceAsNumber(eig.ref.Append("instance_count"))
 }
 
+// InstanceType returns a reference to field instance_type of aws_emr_instance_group.
 func (eig emrInstanceGroupAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(eig.ref.Append("instance_type"))
+	return terra.ReferenceAsString(eig.ref.Append("instance_type"))
 }
 
+// Name returns a reference to field name of aws_emr_instance_group.
 func (eig emrInstanceGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(eig.ref.Append("name"))
+	return terra.ReferenceAsString(eig.ref.Append("name"))
 }
 
+// RunningInstanceCount returns a reference to field running_instance_count of aws_emr_instance_group.
 func (eig emrInstanceGroupAttributes) RunningInstanceCount() terra.NumberValue {
-	return terra.ReferenceNumber(eig.ref.Append("running_instance_count"))
+	return terra.ReferenceAsNumber(eig.ref.Append("running_instance_count"))
 }
 
+// Status returns a reference to field status of aws_emr_instance_group.
 func (eig emrInstanceGroupAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(eig.ref.Append("status"))
+	return terra.ReferenceAsString(eig.ref.Append("status"))
 }
 
 func (eig emrInstanceGroupAttributes) EbsConfig() terra.SetValue[emrinstancegroup.EbsConfigAttributes] {
-	return terra.ReferenceSet[emrinstancegroup.EbsConfigAttributes](eig.ref.Append("ebs_config"))
+	return terra.ReferenceAsSet[emrinstancegroup.EbsConfigAttributes](eig.ref.Append("ebs_config"))
 }
 
 type emrInstanceGroupState struct {

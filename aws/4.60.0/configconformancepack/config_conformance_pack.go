@@ -31,11 +31,11 @@ func (ip InputParameterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ip InputParameterAttributes) ParameterName() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("parameter_name"))
+	return terra.ReferenceAsString(ip.ref.Append("parameter_name"))
 }
 
 func (ip InputParameterAttributes) ParameterValue() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("parameter_value"))
+	return terra.ReferenceAsString(ip.ref.Append("parameter_value"))
 }
 
 type InputParameterState struct {

@@ -72,7 +72,7 @@ func (cc CertificateConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc CertificateConfigurationAttributes) CertificateType() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("certificate_type"))
+	return terra.ReferenceAsString(cc.ref.Append("certificate_type"))
 }
 
 type Ec2InboundPermissionAttributes struct {
@@ -92,19 +92,19 @@ func (eip Ec2InboundPermissionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (eip Ec2InboundPermissionAttributes) FromPort() terra.NumberValue {
-	return terra.ReferenceNumber(eip.ref.Append("from_port"))
+	return terra.ReferenceAsNumber(eip.ref.Append("from_port"))
 }
 
 func (eip Ec2InboundPermissionAttributes) IpRange() terra.StringValue {
-	return terra.ReferenceString(eip.ref.Append("ip_range"))
+	return terra.ReferenceAsString(eip.ref.Append("ip_range"))
 }
 
 func (eip Ec2InboundPermissionAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(eip.ref.Append("protocol"))
+	return terra.ReferenceAsString(eip.ref.Append("protocol"))
 }
 
 func (eip Ec2InboundPermissionAttributes) ToPort() terra.NumberValue {
-	return terra.ReferenceNumber(eip.ref.Append("to_port"))
+	return terra.ReferenceAsNumber(eip.ref.Append("to_port"))
 }
 
 type ResourceCreationLimitPolicyAttributes struct {
@@ -124,11 +124,11 @@ func (rclp ResourceCreationLimitPolicyAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (rclp ResourceCreationLimitPolicyAttributes) NewGameSessionsPerCreator() terra.NumberValue {
-	return terra.ReferenceNumber(rclp.ref.Append("new_game_sessions_per_creator"))
+	return terra.ReferenceAsNumber(rclp.ref.Append("new_game_sessions_per_creator"))
 }
 
 func (rclp ResourceCreationLimitPolicyAttributes) PolicyPeriodInMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(rclp.ref.Append("policy_period_in_minutes"))
+	return terra.ReferenceAsNumber(rclp.ref.Append("policy_period_in_minutes"))
 }
 
 type RuntimeConfigurationAttributes struct {
@@ -148,15 +148,15 @@ func (rc RuntimeConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rc RuntimeConfigurationAttributes) GameSessionActivationTimeoutSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("game_session_activation_timeout_seconds"))
+	return terra.ReferenceAsNumber(rc.ref.Append("game_session_activation_timeout_seconds"))
 }
 
 func (rc RuntimeConfigurationAttributes) MaxConcurrentGameSessionActivations() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("max_concurrent_game_session_activations"))
+	return terra.ReferenceAsNumber(rc.ref.Append("max_concurrent_game_session_activations"))
 }
 
 func (rc RuntimeConfigurationAttributes) ServerProcess() terra.ListValue[ServerProcessAttributes] {
-	return terra.ReferenceList[ServerProcessAttributes](rc.ref.Append("server_process"))
+	return terra.ReferenceAsList[ServerProcessAttributes](rc.ref.Append("server_process"))
 }
 
 type ServerProcessAttributes struct {
@@ -176,15 +176,15 @@ func (sp ServerProcessAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sp ServerProcessAttributes) ConcurrentExecutions() terra.NumberValue {
-	return terra.ReferenceNumber(sp.ref.Append("concurrent_executions"))
+	return terra.ReferenceAsNumber(sp.ref.Append("concurrent_executions"))
 }
 
 func (sp ServerProcessAttributes) LaunchPath() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("launch_path"))
+	return terra.ReferenceAsString(sp.ref.Append("launch_path"))
 }
 
 func (sp ServerProcessAttributes) Parameters() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("parameters"))
+	return terra.ReferenceAsString(sp.ref.Append("parameters"))
 }
 
 type TimeoutsAttributes struct {
@@ -204,11 +204,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type CertificateConfigurationState struct {

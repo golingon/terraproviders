@@ -47,11 +47,11 @@ func (ce ClusterEndpointAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ce ClusterEndpointAttributes) Address() terra.StringValue {
-	return terra.ReferenceString(ce.ref.Append("address"))
+	return terra.ReferenceAsString(ce.ref.Append("address"))
 }
 
 func (ce ClusterEndpointAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(ce.ref.Append("port"))
+	return terra.ReferenceAsNumber(ce.ref.Append("port"))
 }
 
 type ShardsAttributes struct {
@@ -71,19 +71,19 @@ func (s ShardsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s ShardsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s ShardsAttributes) NumNodes() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("num_nodes"))
+	return terra.ReferenceAsNumber(s.ref.Append("num_nodes"))
 }
 
 func (s ShardsAttributes) Slots() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("slots"))
+	return terra.ReferenceAsString(s.ref.Append("slots"))
 }
 
 func (s ShardsAttributes) Nodes() terra.SetValue[NodesAttributes] {
-	return terra.ReferenceSet[NodesAttributes](s.ref.Append("nodes"))
+	return terra.ReferenceAsSet[NodesAttributes](s.ref.Append("nodes"))
 }
 
 type NodesAttributes struct {
@@ -103,19 +103,19 @@ func (n NodesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (n NodesAttributes) AvailabilityZone() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("availability_zone"))
+	return terra.ReferenceAsString(n.ref.Append("availability_zone"))
 }
 
 func (n NodesAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("create_time"))
+	return terra.ReferenceAsString(n.ref.Append("create_time"))
 }
 
 func (n NodesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("name"))
+	return terra.ReferenceAsString(n.ref.Append("name"))
 }
 
 func (n NodesAttributes) Endpoint() terra.ListValue[EndpointAttributes] {
-	return terra.ReferenceList[EndpointAttributes](n.ref.Append("endpoint"))
+	return terra.ReferenceAsList[EndpointAttributes](n.ref.Append("endpoint"))
 }
 
 type EndpointAttributes struct {
@@ -135,11 +135,11 @@ func (e EndpointAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e EndpointAttributes) Address() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("address"))
+	return terra.ReferenceAsString(e.ref.Append("address"))
 }
 
 func (e EndpointAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("port"))
+	return terra.ReferenceAsNumber(e.ref.Append("port"))
 }
 
 type TimeoutsAttributes struct {
@@ -159,15 +159,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ClusterEndpointState struct {

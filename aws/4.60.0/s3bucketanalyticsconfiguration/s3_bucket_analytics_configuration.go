@@ -59,11 +59,11 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("prefix"))
+	return terra.ReferenceAsString(f.ref.Append("prefix"))
 }
 
 func (f FilterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](f.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](f.ref.Append("tags"))
 }
 
 type StorageClassAnalysisAttributes struct {
@@ -83,7 +83,7 @@ func (sca StorageClassAnalysisAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sca StorageClassAnalysisAttributes) DataExport() terra.ListValue[DataExportAttributes] {
-	return terra.ReferenceList[DataExportAttributes](sca.ref.Append("data_export"))
+	return terra.ReferenceAsList[DataExportAttributes](sca.ref.Append("data_export"))
 }
 
 type DataExportAttributes struct {
@@ -103,11 +103,11 @@ func (de DataExportAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (de DataExportAttributes) OutputSchemaVersion() terra.StringValue {
-	return terra.ReferenceString(de.ref.Append("output_schema_version"))
+	return terra.ReferenceAsString(de.ref.Append("output_schema_version"))
 }
 
 func (de DataExportAttributes) Destination() terra.ListValue[DestinationAttributes] {
-	return terra.ReferenceList[DestinationAttributes](de.ref.Append("destination"))
+	return terra.ReferenceAsList[DestinationAttributes](de.ref.Append("destination"))
 }
 
 type DestinationAttributes struct {
@@ -127,7 +127,7 @@ func (d DestinationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DestinationAttributes) S3BucketDestination() terra.ListValue[S3BucketDestinationAttributes] {
-	return terra.ReferenceList[S3BucketDestinationAttributes](d.ref.Append("s3_bucket_destination"))
+	return terra.ReferenceAsList[S3BucketDestinationAttributes](d.ref.Append("s3_bucket_destination"))
 }
 
 type S3BucketDestinationAttributes struct {
@@ -147,19 +147,19 @@ func (sbd S3BucketDestinationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sbd S3BucketDestinationAttributes) BucketAccountId() terra.StringValue {
-	return terra.ReferenceString(sbd.ref.Append("bucket_account_id"))
+	return terra.ReferenceAsString(sbd.ref.Append("bucket_account_id"))
 }
 
 func (sbd S3BucketDestinationAttributes) BucketArn() terra.StringValue {
-	return terra.ReferenceString(sbd.ref.Append("bucket_arn"))
+	return terra.ReferenceAsString(sbd.ref.Append("bucket_arn"))
 }
 
 func (sbd S3BucketDestinationAttributes) Format() terra.StringValue {
-	return terra.ReferenceString(sbd.ref.Append("format"))
+	return terra.ReferenceAsString(sbd.ref.Append("format"))
 }
 
 func (sbd S3BucketDestinationAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(sbd.ref.Append("prefix"))
+	return terra.ReferenceAsString(sbd.ref.Append("prefix"))
 }
 
 type FilterState struct {

@@ -31,11 +31,11 @@ func (e EntryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e EntryAttributes) Cidr() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cidr"))
+	return terra.ReferenceAsString(e.ref.Append("cidr"))
 }
 
 func (e EntryAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("description"))
+	return terra.ReferenceAsString(e.ref.Append("description"))
 }
 
 type EntryState struct {

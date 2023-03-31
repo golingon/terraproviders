@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewElasticacheReplicationGroup creates a new instance of [ElasticacheReplicationGroup].
 func NewElasticacheReplicationGroup(name string, args ElasticacheReplicationGroupArgs) *ElasticacheReplicationGroup {
 	return &ElasticacheReplicationGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewElasticacheReplicationGroup(name string, args ElasticacheReplicationGrou
 
 var _ terra.Resource = (*ElasticacheReplicationGroup)(nil)
 
+// ElasticacheReplicationGroup represents the Terraform resource aws_elasticache_replication_group.
 type ElasticacheReplicationGroup struct {
-	Name  string
-	Args  ElasticacheReplicationGroupArgs
-	state *elasticacheReplicationGroupState
+	Name      string
+	Args      ElasticacheReplicationGroupArgs
+	state     *elasticacheReplicationGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ElasticacheReplicationGroup].
 func (erg *ElasticacheReplicationGroup) Type() string {
 	return "aws_elasticache_replication_group"
 }
 
+// LocalName returns the local name for [ElasticacheReplicationGroup].
 func (erg *ElasticacheReplicationGroup) LocalName() string {
 	return erg.Name
 }
 
+// Configuration returns the configuration (args) for [ElasticacheReplicationGroup].
 func (erg *ElasticacheReplicationGroup) Configuration() interface{} {
 	return erg.Args
 }
 
+// DependOn is used for other resources to depend on [ElasticacheReplicationGroup].
+func (erg *ElasticacheReplicationGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(erg)
+}
+
+// Dependencies returns the list of resources [ElasticacheReplicationGroup] depends_on.
+func (erg *ElasticacheReplicationGroup) Dependencies() terra.Dependencies {
+	return erg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ElasticacheReplicationGroup].
+func (erg *ElasticacheReplicationGroup) LifecycleManagement() *terra.Lifecycle {
+	return erg.Lifecycle
+}
+
+// Attributes returns the attributes for [ElasticacheReplicationGroup].
 func (erg *ElasticacheReplicationGroup) Attributes() elasticacheReplicationGroupAttributes {
 	return elasticacheReplicationGroupAttributes{ref: terra.ReferenceResource(erg)}
 }
 
+// ImportState imports the given attribute values into [ElasticacheReplicationGroup]'s state.
 func (erg *ElasticacheReplicationGroup) ImportState(av io.Reader) error {
 	erg.state = &elasticacheReplicationGroupState{}
 	if err := json.NewDecoder(av).Decode(erg.state); err != nil {
@@ -49,10 +73,12 @@ func (erg *ElasticacheReplicationGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ElasticacheReplicationGroup] has state.
 func (erg *ElasticacheReplicationGroup) State() (*elasticacheReplicationGroupState, bool) {
 	return erg.state, erg.state != nil
 }
 
+// StateMust returns the state for [ElasticacheReplicationGroup]. Panics if the state is nil.
 func (erg *ElasticacheReplicationGroup) StateMust() *elasticacheReplicationGroupState {
 	if erg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", erg.Type(), erg.LocalName()))
@@ -60,10 +86,7 @@ func (erg *ElasticacheReplicationGroup) StateMust() *elasticacheReplicationGroup
 	return erg.state
 }
 
-func (erg *ElasticacheReplicationGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(erg)
-}
-
+// ElasticacheReplicationGroupArgs contains the configurations for aws_elasticache_replication_group.
 type ElasticacheReplicationGroupArgs struct {
 	// ApplyImmediately: bool, optional
 	ApplyImmediately terra.BoolValue `hcl:"apply_immediately,attr"`
@@ -147,203 +170,246 @@ type ElasticacheReplicationGroupArgs struct {
 	LogDeliveryConfiguration []elasticachereplicationgroup.LogDeliveryConfiguration `hcl:"log_delivery_configuration,block" validate:"min=0,max=2"`
 	// Timeouts: optional
 	Timeouts *elasticachereplicationgroup.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ElasticacheReplicationGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type elasticacheReplicationGroupAttributes struct {
 	ref terra.Reference
 }
 
+// ApplyImmediately returns a reference to field apply_immediately of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) ApplyImmediately() terra.BoolValue {
-	return terra.ReferenceBool(erg.ref.Append("apply_immediately"))
+	return terra.ReferenceAsBool(erg.ref.Append("apply_immediately"))
 }
 
+// Arn returns a reference to field arn of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(erg.ref.Append("arn"))
+	return terra.ReferenceAsString(erg.ref.Append("arn"))
 }
 
+// AtRestEncryptionEnabled returns a reference to field at_rest_encryption_enabled of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) AtRestEncryptionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(erg.ref.Append("at_rest_encryption_enabled"))
+	return terra.ReferenceAsBool(erg.ref.Append("at_rest_encryption_enabled"))
 }
 
+// AuthToken returns a reference to field auth_token of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) AuthToken() terra.StringValue {
-	return terra.ReferenceString(erg.ref.Append("auth_token"))
+	return terra.ReferenceAsString(erg.ref.Append("auth_token"))
 }
 
+// AutoMinorVersionUpgrade returns a reference to field auto_minor_version_upgrade of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) AutoMinorVersionUpgrade() terra.StringValue {
-	return terra.ReferenceString(erg.ref.Append("auto_minor_version_upgrade"))
+	return terra.ReferenceAsString(erg.ref.Append("auto_minor_version_upgrade"))
 }
 
+// AutomaticFailoverEnabled returns a reference to field automatic_failover_enabled of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) AutomaticFailoverEnabled() terra.BoolValue {
-	return terra.ReferenceBool(erg.ref.Append("automatic_failover_enabled"))
+	return terra.ReferenceAsBool(erg.ref.Append("automatic_failover_enabled"))
 }
 
+// AvailabilityZones returns a reference to field availability_zones of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) AvailabilityZones() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](erg.ref.Append("availability_zones"))
+	return terra.ReferenceAsSet[terra.StringValue](erg.ref.Append("availability_zones"))
 }
 
+// ClusterEnabled returns a reference to field cluster_enabled of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) ClusterEnabled() terra.BoolValue {
-	return terra.ReferenceBool(erg.ref.Append("cluster_enabled"))
+	return terra.ReferenceAsBool(erg.ref.Append("cluster_enabled"))
 }
 
+// ConfigurationEndpointAddress returns a reference to field configuration_endpoint_address of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) ConfigurationEndpointAddress() terra.StringValue {
-	return terra.ReferenceString(erg.ref.Append("configuration_endpoint_address"))
+	return terra.ReferenceAsString(erg.ref.Append("configuration_endpoint_address"))
 }
 
+// DataTieringEnabled returns a reference to field data_tiering_enabled of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) DataTieringEnabled() terra.BoolValue {
-	return terra.ReferenceBool(erg.ref.Append("data_tiering_enabled"))
+	return terra.ReferenceAsBool(erg.ref.Append("data_tiering_enabled"))
 }
 
+// Description returns a reference to field description of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(erg.ref.Append("description"))
+	return terra.ReferenceAsString(erg.ref.Append("description"))
 }
 
+// Engine returns a reference to field engine of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) Engine() terra.StringValue {
-	return terra.ReferenceString(erg.ref.Append("engine"))
+	return terra.ReferenceAsString(erg.ref.Append("engine"))
 }
 
+// EngineVersion returns a reference to field engine_version of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) EngineVersion() terra.StringValue {
-	return terra.ReferenceString(erg.ref.Append("engine_version"))
+	return terra.ReferenceAsString(erg.ref.Append("engine_version"))
 }
 
+// EngineVersionActual returns a reference to field engine_version_actual of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) EngineVersionActual() terra.StringValue {
-	return terra.ReferenceString(erg.ref.Append("engine_version_actual"))
+	return terra.ReferenceAsString(erg.ref.Append("engine_version_actual"))
 }
 
+// FinalSnapshotIdentifier returns a reference to field final_snapshot_identifier of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) FinalSnapshotIdentifier() terra.StringValue {
-	return terra.ReferenceString(erg.ref.Append("final_snapshot_identifier"))
+	return terra.ReferenceAsString(erg.ref.Append("final_snapshot_identifier"))
 }
 
+// GlobalReplicationGroupId returns a reference to field global_replication_group_id of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) GlobalReplicationGroupId() terra.StringValue {
-	return terra.ReferenceString(erg.ref.Append("global_replication_group_id"))
+	return terra.ReferenceAsString(erg.ref.Append("global_replication_group_id"))
 }
 
+// Id returns a reference to field id of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(erg.ref.Append("id"))
+	return terra.ReferenceAsString(erg.ref.Append("id"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(erg.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(erg.ref.Append("kms_key_id"))
 }
 
+// MaintenanceWindow returns a reference to field maintenance_window of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) MaintenanceWindow() terra.StringValue {
-	return terra.ReferenceString(erg.ref.Append("maintenance_window"))
+	return terra.ReferenceAsString(erg.ref.Append("maintenance_window"))
 }
 
+// MemberClusters returns a reference to field member_clusters of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) MemberClusters() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](erg.ref.Append("member_clusters"))
+	return terra.ReferenceAsSet[terra.StringValue](erg.ref.Append("member_clusters"))
 }
 
+// MultiAzEnabled returns a reference to field multi_az_enabled of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) MultiAzEnabled() terra.BoolValue {
-	return terra.ReferenceBool(erg.ref.Append("multi_az_enabled"))
+	return terra.ReferenceAsBool(erg.ref.Append("multi_az_enabled"))
 }
 
+// NodeType returns a reference to field node_type of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) NodeType() terra.StringValue {
-	return terra.ReferenceString(erg.ref.Append("node_type"))
+	return terra.ReferenceAsString(erg.ref.Append("node_type"))
 }
 
+// NotificationTopicArn returns a reference to field notification_topic_arn of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) NotificationTopicArn() terra.StringValue {
-	return terra.ReferenceString(erg.ref.Append("notification_topic_arn"))
+	return terra.ReferenceAsString(erg.ref.Append("notification_topic_arn"))
 }
 
+// NumCacheClusters returns a reference to field num_cache_clusters of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) NumCacheClusters() terra.NumberValue {
-	return terra.ReferenceNumber(erg.ref.Append("num_cache_clusters"))
+	return terra.ReferenceAsNumber(erg.ref.Append("num_cache_clusters"))
 }
 
+// NumNodeGroups returns a reference to field num_node_groups of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) NumNodeGroups() terra.NumberValue {
-	return terra.ReferenceNumber(erg.ref.Append("num_node_groups"))
+	return terra.ReferenceAsNumber(erg.ref.Append("num_node_groups"))
 }
 
+// NumberCacheClusters returns a reference to field number_cache_clusters of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) NumberCacheClusters() terra.NumberValue {
-	return terra.ReferenceNumber(erg.ref.Append("number_cache_clusters"))
+	return terra.ReferenceAsNumber(erg.ref.Append("number_cache_clusters"))
 }
 
+// ParameterGroupName returns a reference to field parameter_group_name of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) ParameterGroupName() terra.StringValue {
-	return terra.ReferenceString(erg.ref.Append("parameter_group_name"))
+	return terra.ReferenceAsString(erg.ref.Append("parameter_group_name"))
 }
 
+// Port returns a reference to field port of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(erg.ref.Append("port"))
+	return terra.ReferenceAsNumber(erg.ref.Append("port"))
 }
 
+// PreferredCacheClusterAzs returns a reference to field preferred_cache_cluster_azs of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) PreferredCacheClusterAzs() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](erg.ref.Append("preferred_cache_cluster_azs"))
+	return terra.ReferenceAsList[terra.StringValue](erg.ref.Append("preferred_cache_cluster_azs"))
 }
 
+// PrimaryEndpointAddress returns a reference to field primary_endpoint_address of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) PrimaryEndpointAddress() terra.StringValue {
-	return terra.ReferenceString(erg.ref.Append("primary_endpoint_address"))
+	return terra.ReferenceAsString(erg.ref.Append("primary_endpoint_address"))
 }
 
+// ReaderEndpointAddress returns a reference to field reader_endpoint_address of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) ReaderEndpointAddress() terra.StringValue {
-	return terra.ReferenceString(erg.ref.Append("reader_endpoint_address"))
+	return terra.ReferenceAsString(erg.ref.Append("reader_endpoint_address"))
 }
 
+// ReplicasPerNodeGroup returns a reference to field replicas_per_node_group of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) ReplicasPerNodeGroup() terra.NumberValue {
-	return terra.ReferenceNumber(erg.ref.Append("replicas_per_node_group"))
+	return terra.ReferenceAsNumber(erg.ref.Append("replicas_per_node_group"))
 }
 
+// ReplicationGroupDescription returns a reference to field replication_group_description of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) ReplicationGroupDescription() terra.StringValue {
-	return terra.ReferenceString(erg.ref.Append("replication_group_description"))
+	return terra.ReferenceAsString(erg.ref.Append("replication_group_description"))
 }
 
+// ReplicationGroupId returns a reference to field replication_group_id of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) ReplicationGroupId() terra.StringValue {
-	return terra.ReferenceString(erg.ref.Append("replication_group_id"))
+	return terra.ReferenceAsString(erg.ref.Append("replication_group_id"))
 }
 
+// SecurityGroupIds returns a reference to field security_group_ids of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](erg.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](erg.ref.Append("security_group_ids"))
 }
 
+// SecurityGroupNames returns a reference to field security_group_names of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) SecurityGroupNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](erg.ref.Append("security_group_names"))
+	return terra.ReferenceAsSet[terra.StringValue](erg.ref.Append("security_group_names"))
 }
 
+// SnapshotArns returns a reference to field snapshot_arns of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) SnapshotArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](erg.ref.Append("snapshot_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](erg.ref.Append("snapshot_arns"))
 }
 
+// SnapshotName returns a reference to field snapshot_name of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) SnapshotName() terra.StringValue {
-	return terra.ReferenceString(erg.ref.Append("snapshot_name"))
+	return terra.ReferenceAsString(erg.ref.Append("snapshot_name"))
 }
 
+// SnapshotRetentionLimit returns a reference to field snapshot_retention_limit of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) SnapshotRetentionLimit() terra.NumberValue {
-	return terra.ReferenceNumber(erg.ref.Append("snapshot_retention_limit"))
+	return terra.ReferenceAsNumber(erg.ref.Append("snapshot_retention_limit"))
 }
 
+// SnapshotWindow returns a reference to field snapshot_window of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) SnapshotWindow() terra.StringValue {
-	return terra.ReferenceString(erg.ref.Append("snapshot_window"))
+	return terra.ReferenceAsString(erg.ref.Append("snapshot_window"))
 }
 
+// SubnetGroupName returns a reference to field subnet_group_name of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) SubnetGroupName() terra.StringValue {
-	return terra.ReferenceString(erg.ref.Append("subnet_group_name"))
+	return terra.ReferenceAsString(erg.ref.Append("subnet_group_name"))
 }
 
+// Tags returns a reference to field tags of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](erg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](erg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](erg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](erg.ref.Append("tags_all"))
 }
 
+// TransitEncryptionEnabled returns a reference to field transit_encryption_enabled of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) TransitEncryptionEnabled() terra.BoolValue {
-	return terra.ReferenceBool(erg.ref.Append("transit_encryption_enabled"))
+	return terra.ReferenceAsBool(erg.ref.Append("transit_encryption_enabled"))
 }
 
+// UserGroupIds returns a reference to field user_group_ids of aws_elasticache_replication_group.
 func (erg elasticacheReplicationGroupAttributes) UserGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](erg.ref.Append("user_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](erg.ref.Append("user_group_ids"))
 }
 
 func (erg elasticacheReplicationGroupAttributes) ClusterMode() terra.ListValue[elasticachereplicationgroup.ClusterModeAttributes] {
-	return terra.ReferenceList[elasticachereplicationgroup.ClusterModeAttributes](erg.ref.Append("cluster_mode"))
+	return terra.ReferenceAsList[elasticachereplicationgroup.ClusterModeAttributes](erg.ref.Append("cluster_mode"))
 }
 
 func (erg elasticacheReplicationGroupAttributes) LogDeliveryConfiguration() terra.SetValue[elasticachereplicationgroup.LogDeliveryConfigurationAttributes] {
-	return terra.ReferenceSet[elasticachereplicationgroup.LogDeliveryConfigurationAttributes](erg.ref.Append("log_delivery_configuration"))
+	return terra.ReferenceAsSet[elasticachereplicationgroup.LogDeliveryConfigurationAttributes](erg.ref.Append("log_delivery_configuration"))
 }
 
 func (erg elasticacheReplicationGroupAttributes) Timeouts() elasticachereplicationgroup.TimeoutsAttributes {
-	return terra.ReferenceSingle[elasticachereplicationgroup.TimeoutsAttributes](erg.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[elasticachereplicationgroup.TimeoutsAttributes](erg.ref.Append("timeouts"))
 }
 
 type elasticacheReplicationGroupState struct {

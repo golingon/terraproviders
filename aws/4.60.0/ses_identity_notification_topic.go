@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSesIdentityNotificationTopic creates a new instance of [SesIdentityNotificationTopic].
 func NewSesIdentityNotificationTopic(name string, args SesIdentityNotificationTopicArgs) *SesIdentityNotificationTopic {
 	return &SesIdentityNotificationTopic{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSesIdentityNotificationTopic(name string, args SesIdentityNotificationTo
 
 var _ terra.Resource = (*SesIdentityNotificationTopic)(nil)
 
+// SesIdentityNotificationTopic represents the Terraform resource aws_ses_identity_notification_topic.
 type SesIdentityNotificationTopic struct {
-	Name  string
-	Args  SesIdentityNotificationTopicArgs
-	state *sesIdentityNotificationTopicState
+	Name      string
+	Args      SesIdentityNotificationTopicArgs
+	state     *sesIdentityNotificationTopicState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SesIdentityNotificationTopic].
 func (sint *SesIdentityNotificationTopic) Type() string {
 	return "aws_ses_identity_notification_topic"
 }
 
+// LocalName returns the local name for [SesIdentityNotificationTopic].
 func (sint *SesIdentityNotificationTopic) LocalName() string {
 	return sint.Name
 }
 
+// Configuration returns the configuration (args) for [SesIdentityNotificationTopic].
 func (sint *SesIdentityNotificationTopic) Configuration() interface{} {
 	return sint.Args
 }
 
+// DependOn is used for other resources to depend on [SesIdentityNotificationTopic].
+func (sint *SesIdentityNotificationTopic) DependOn() terra.Reference {
+	return terra.ReferenceResource(sint)
+}
+
+// Dependencies returns the list of resources [SesIdentityNotificationTopic] depends_on.
+func (sint *SesIdentityNotificationTopic) Dependencies() terra.Dependencies {
+	return sint.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SesIdentityNotificationTopic].
+func (sint *SesIdentityNotificationTopic) LifecycleManagement() *terra.Lifecycle {
+	return sint.Lifecycle
+}
+
+// Attributes returns the attributes for [SesIdentityNotificationTopic].
 func (sint *SesIdentityNotificationTopic) Attributes() sesIdentityNotificationTopicAttributes {
 	return sesIdentityNotificationTopicAttributes{ref: terra.ReferenceResource(sint)}
 }
 
+// ImportState imports the given attribute values into [SesIdentityNotificationTopic]'s state.
 func (sint *SesIdentityNotificationTopic) ImportState(av io.Reader) error {
 	sint.state = &sesIdentityNotificationTopicState{}
 	if err := json.NewDecoder(av).Decode(sint.state); err != nil {
@@ -48,10 +72,12 @@ func (sint *SesIdentityNotificationTopic) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SesIdentityNotificationTopic] has state.
 func (sint *SesIdentityNotificationTopic) State() (*sesIdentityNotificationTopicState, bool) {
 	return sint.state, sint.state != nil
 }
 
+// StateMust returns the state for [SesIdentityNotificationTopic]. Panics if the state is nil.
 func (sint *SesIdentityNotificationTopic) StateMust() *sesIdentityNotificationTopicState {
 	if sint.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sint.Type(), sint.LocalName()))
@@ -59,10 +85,7 @@ func (sint *SesIdentityNotificationTopic) StateMust() *sesIdentityNotificationTo
 	return sint.state
 }
 
-func (sint *SesIdentityNotificationTopic) DependOn() terra.Reference {
-	return terra.ReferenceResource(sint)
-}
-
+// SesIdentityNotificationTopicArgs contains the configurations for aws_ses_identity_notification_topic.
 type SesIdentityNotificationTopicArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -74,31 +97,34 @@ type SesIdentityNotificationTopicArgs struct {
 	NotificationType terra.StringValue `hcl:"notification_type,attr" validate:"required"`
 	// TopicArn: string, optional
 	TopicArn terra.StringValue `hcl:"topic_arn,attr"`
-	// DependsOn contains resources that SesIdentityNotificationTopic depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sesIdentityNotificationTopicAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_ses_identity_notification_topic.
 func (sint sesIdentityNotificationTopicAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sint.ref.Append("id"))
+	return terra.ReferenceAsString(sint.ref.Append("id"))
 }
 
+// Identity returns a reference to field identity of aws_ses_identity_notification_topic.
 func (sint sesIdentityNotificationTopicAttributes) Identity() terra.StringValue {
-	return terra.ReferenceString(sint.ref.Append("identity"))
+	return terra.ReferenceAsString(sint.ref.Append("identity"))
 }
 
+// IncludeOriginalHeaders returns a reference to field include_original_headers of aws_ses_identity_notification_topic.
 func (sint sesIdentityNotificationTopicAttributes) IncludeOriginalHeaders() terra.BoolValue {
-	return terra.ReferenceBool(sint.ref.Append("include_original_headers"))
+	return terra.ReferenceAsBool(sint.ref.Append("include_original_headers"))
 }
 
+// NotificationType returns a reference to field notification_type of aws_ses_identity_notification_topic.
 func (sint sesIdentityNotificationTopicAttributes) NotificationType() terra.StringValue {
-	return terra.ReferenceString(sint.ref.Append("notification_type"))
+	return terra.ReferenceAsString(sint.ref.Append("notification_type"))
 }
 
+// TopicArn returns a reference to field topic_arn of aws_ses_identity_notification_topic.
 func (sint sesIdentityNotificationTopicAttributes) TopicArn() terra.StringValue {
-	return terra.ReferenceString(sint.ref.Append("topic_arn"))
+	return terra.ReferenceAsString(sint.ref.Append("topic_arn"))
 }
 
 type sesIdentityNotificationTopicState struct {

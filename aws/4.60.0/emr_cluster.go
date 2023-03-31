@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEmrCluster creates a new instance of [EmrCluster].
 func NewEmrCluster(name string, args EmrClusterArgs) *EmrCluster {
 	return &EmrCluster{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEmrCluster(name string, args EmrClusterArgs) *EmrCluster {
 
 var _ terra.Resource = (*EmrCluster)(nil)
 
+// EmrCluster represents the Terraform resource aws_emr_cluster.
 type EmrCluster struct {
-	Name  string
-	Args  EmrClusterArgs
-	state *emrClusterState
+	Name      string
+	Args      EmrClusterArgs
+	state     *emrClusterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EmrCluster].
 func (ec *EmrCluster) Type() string {
 	return "aws_emr_cluster"
 }
 
+// LocalName returns the local name for [EmrCluster].
 func (ec *EmrCluster) LocalName() string {
 	return ec.Name
 }
 
+// Configuration returns the configuration (args) for [EmrCluster].
 func (ec *EmrCluster) Configuration() interface{} {
 	return ec.Args
 }
 
+// DependOn is used for other resources to depend on [EmrCluster].
+func (ec *EmrCluster) DependOn() terra.Reference {
+	return terra.ReferenceResource(ec)
+}
+
+// Dependencies returns the list of resources [EmrCluster] depends_on.
+func (ec *EmrCluster) Dependencies() terra.Dependencies {
+	return ec.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EmrCluster].
+func (ec *EmrCluster) LifecycleManagement() *terra.Lifecycle {
+	return ec.Lifecycle
+}
+
+// Attributes returns the attributes for [EmrCluster].
 func (ec *EmrCluster) Attributes() emrClusterAttributes {
 	return emrClusterAttributes{ref: terra.ReferenceResource(ec)}
 }
 
+// ImportState imports the given attribute values into [EmrCluster]'s state.
 func (ec *EmrCluster) ImportState(av io.Reader) error {
 	ec.state = &emrClusterState{}
 	if err := json.NewDecoder(av).Decode(ec.state); err != nil {
@@ -49,10 +73,12 @@ func (ec *EmrCluster) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EmrCluster] has state.
 func (ec *EmrCluster) State() (*emrClusterState, bool) {
 	return ec.state, ec.state != nil
 }
 
+// StateMust returns the state for [EmrCluster]. Panics if the state is nil.
 func (ec *EmrCluster) StateMust() *emrClusterState {
 	if ec.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ec.Type(), ec.LocalName()))
@@ -60,10 +86,7 @@ func (ec *EmrCluster) StateMust() *emrClusterState {
 	return ec.state
 }
 
-func (ec *EmrCluster) DependOn() terra.Reference {
-	return terra.ReferenceResource(ec)
-}
-
+// EmrClusterArgs contains the configurations for aws_emr_cluster.
 type EmrClusterArgs struct {
 	// AdditionalInfo: string, optional
 	AdditionalInfo terra.StringValue `hcl:"additional_info,attr"`
@@ -127,147 +150,170 @@ type EmrClusterArgs struct {
 	MasterInstanceFleet *emrcluster.MasterInstanceFleet `hcl:"master_instance_fleet,block"`
 	// MasterInstanceGroup: optional
 	MasterInstanceGroup *emrcluster.MasterInstanceGroup `hcl:"master_instance_group,block"`
-	// DependsOn contains resources that EmrCluster depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type emrClusterAttributes struct {
 	ref terra.Reference
 }
 
+// AdditionalInfo returns a reference to field additional_info of aws_emr_cluster.
 func (ec emrClusterAttributes) AdditionalInfo() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("additional_info"))
+	return terra.ReferenceAsString(ec.ref.Append("additional_info"))
 }
 
+// Applications returns a reference to field applications of aws_emr_cluster.
 func (ec emrClusterAttributes) Applications() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ec.ref.Append("applications"))
+	return terra.ReferenceAsSet[terra.StringValue](ec.ref.Append("applications"))
 }
 
+// Arn returns a reference to field arn of aws_emr_cluster.
 func (ec emrClusterAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("arn"))
+	return terra.ReferenceAsString(ec.ref.Append("arn"))
 }
 
+// AutoscalingRole returns a reference to field autoscaling_role of aws_emr_cluster.
 func (ec emrClusterAttributes) AutoscalingRole() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("autoscaling_role"))
+	return terra.ReferenceAsString(ec.ref.Append("autoscaling_role"))
 }
 
+// ClusterState returns a reference to field cluster_state of aws_emr_cluster.
 func (ec emrClusterAttributes) ClusterState() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("cluster_state"))
+	return terra.ReferenceAsString(ec.ref.Append("cluster_state"))
 }
 
+// Configurations returns a reference to field configurations of aws_emr_cluster.
 func (ec emrClusterAttributes) Configurations() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("configurations"))
+	return terra.ReferenceAsString(ec.ref.Append("configurations"))
 }
 
+// ConfigurationsJson returns a reference to field configurations_json of aws_emr_cluster.
 func (ec emrClusterAttributes) ConfigurationsJson() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("configurations_json"))
+	return terra.ReferenceAsString(ec.ref.Append("configurations_json"))
 }
 
+// CustomAmiId returns a reference to field custom_ami_id of aws_emr_cluster.
 func (ec emrClusterAttributes) CustomAmiId() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("custom_ami_id"))
+	return terra.ReferenceAsString(ec.ref.Append("custom_ami_id"))
 }
 
+// EbsRootVolumeSize returns a reference to field ebs_root_volume_size of aws_emr_cluster.
 func (ec emrClusterAttributes) EbsRootVolumeSize() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("ebs_root_volume_size"))
+	return terra.ReferenceAsNumber(ec.ref.Append("ebs_root_volume_size"))
 }
 
+// Id returns a reference to field id of aws_emr_cluster.
 func (ec emrClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("id"))
+	return terra.ReferenceAsString(ec.ref.Append("id"))
 }
 
+// KeepJobFlowAliveWhenNoSteps returns a reference to field keep_job_flow_alive_when_no_steps of aws_emr_cluster.
 func (ec emrClusterAttributes) KeepJobFlowAliveWhenNoSteps() terra.BoolValue {
-	return terra.ReferenceBool(ec.ref.Append("keep_job_flow_alive_when_no_steps"))
+	return terra.ReferenceAsBool(ec.ref.Append("keep_job_flow_alive_when_no_steps"))
 }
 
+// ListStepsStates returns a reference to field list_steps_states of aws_emr_cluster.
 func (ec emrClusterAttributes) ListStepsStates() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ec.ref.Append("list_steps_states"))
+	return terra.ReferenceAsSet[terra.StringValue](ec.ref.Append("list_steps_states"))
 }
 
+// LogEncryptionKmsKeyId returns a reference to field log_encryption_kms_key_id of aws_emr_cluster.
 func (ec emrClusterAttributes) LogEncryptionKmsKeyId() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("log_encryption_kms_key_id"))
+	return terra.ReferenceAsString(ec.ref.Append("log_encryption_kms_key_id"))
 }
 
+// LogUri returns a reference to field log_uri of aws_emr_cluster.
 func (ec emrClusterAttributes) LogUri() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("log_uri"))
+	return terra.ReferenceAsString(ec.ref.Append("log_uri"))
 }
 
+// MasterPublicDns returns a reference to field master_public_dns of aws_emr_cluster.
 func (ec emrClusterAttributes) MasterPublicDns() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("master_public_dns"))
+	return terra.ReferenceAsString(ec.ref.Append("master_public_dns"))
 }
 
+// Name returns a reference to field name of aws_emr_cluster.
 func (ec emrClusterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("name"))
+	return terra.ReferenceAsString(ec.ref.Append("name"))
 }
 
+// ReleaseLabel returns a reference to field release_label of aws_emr_cluster.
 func (ec emrClusterAttributes) ReleaseLabel() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("release_label"))
+	return terra.ReferenceAsString(ec.ref.Append("release_label"))
 }
 
+// ScaleDownBehavior returns a reference to field scale_down_behavior of aws_emr_cluster.
 func (ec emrClusterAttributes) ScaleDownBehavior() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("scale_down_behavior"))
+	return terra.ReferenceAsString(ec.ref.Append("scale_down_behavior"))
 }
 
+// SecurityConfiguration returns a reference to field security_configuration of aws_emr_cluster.
 func (ec emrClusterAttributes) SecurityConfiguration() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("security_configuration"))
+	return terra.ReferenceAsString(ec.ref.Append("security_configuration"))
 }
 
+// ServiceRole returns a reference to field service_role of aws_emr_cluster.
 func (ec emrClusterAttributes) ServiceRole() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("service_role"))
+	return terra.ReferenceAsString(ec.ref.Append("service_role"))
 }
 
+// StepConcurrencyLevel returns a reference to field step_concurrency_level of aws_emr_cluster.
 func (ec emrClusterAttributes) StepConcurrencyLevel() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("step_concurrency_level"))
+	return terra.ReferenceAsNumber(ec.ref.Append("step_concurrency_level"))
 }
 
+// Tags returns a reference to field tags of aws_emr_cluster.
 func (ec emrClusterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ec.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ec.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_emr_cluster.
 func (ec emrClusterAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ec.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ec.ref.Append("tags_all"))
 }
 
+// TerminationProtection returns a reference to field termination_protection of aws_emr_cluster.
 func (ec emrClusterAttributes) TerminationProtection() terra.BoolValue {
-	return terra.ReferenceBool(ec.ref.Append("termination_protection"))
+	return terra.ReferenceAsBool(ec.ref.Append("termination_protection"))
 }
 
+// VisibleToAllUsers returns a reference to field visible_to_all_users of aws_emr_cluster.
 func (ec emrClusterAttributes) VisibleToAllUsers() terra.BoolValue {
-	return terra.ReferenceBool(ec.ref.Append("visible_to_all_users"))
+	return terra.ReferenceAsBool(ec.ref.Append("visible_to_all_users"))
 }
 
 func (ec emrClusterAttributes) Step() terra.ListValue[emrcluster.StepAttributes] {
-	return terra.ReferenceList[emrcluster.StepAttributes](ec.ref.Append("step"))
+	return terra.ReferenceAsList[emrcluster.StepAttributes](ec.ref.Append("step"))
 }
 
 func (ec emrClusterAttributes) AutoTerminationPolicy() terra.ListValue[emrcluster.AutoTerminationPolicyAttributes] {
-	return terra.ReferenceList[emrcluster.AutoTerminationPolicyAttributes](ec.ref.Append("auto_termination_policy"))
+	return terra.ReferenceAsList[emrcluster.AutoTerminationPolicyAttributes](ec.ref.Append("auto_termination_policy"))
 }
 
 func (ec emrClusterAttributes) BootstrapAction() terra.ListValue[emrcluster.BootstrapActionAttributes] {
-	return terra.ReferenceList[emrcluster.BootstrapActionAttributes](ec.ref.Append("bootstrap_action"))
+	return terra.ReferenceAsList[emrcluster.BootstrapActionAttributes](ec.ref.Append("bootstrap_action"))
 }
 
 func (ec emrClusterAttributes) CoreInstanceFleet() terra.ListValue[emrcluster.CoreInstanceFleetAttributes] {
-	return terra.ReferenceList[emrcluster.CoreInstanceFleetAttributes](ec.ref.Append("core_instance_fleet"))
+	return terra.ReferenceAsList[emrcluster.CoreInstanceFleetAttributes](ec.ref.Append("core_instance_fleet"))
 }
 
 func (ec emrClusterAttributes) CoreInstanceGroup() terra.ListValue[emrcluster.CoreInstanceGroupAttributes] {
-	return terra.ReferenceList[emrcluster.CoreInstanceGroupAttributes](ec.ref.Append("core_instance_group"))
+	return terra.ReferenceAsList[emrcluster.CoreInstanceGroupAttributes](ec.ref.Append("core_instance_group"))
 }
 
 func (ec emrClusterAttributes) Ec2Attributes() terra.ListValue[emrcluster.Ec2AttributesAttributes] {
-	return terra.ReferenceList[emrcluster.Ec2AttributesAttributes](ec.ref.Append("ec2_attributes"))
+	return terra.ReferenceAsList[emrcluster.Ec2AttributesAttributes](ec.ref.Append("ec2_attributes"))
 }
 
 func (ec emrClusterAttributes) KerberosAttributes() terra.ListValue[emrcluster.KerberosAttributesAttributes] {
-	return terra.ReferenceList[emrcluster.KerberosAttributesAttributes](ec.ref.Append("kerberos_attributes"))
+	return terra.ReferenceAsList[emrcluster.KerberosAttributesAttributes](ec.ref.Append("kerberos_attributes"))
 }
 
 func (ec emrClusterAttributes) MasterInstanceFleet() terra.ListValue[emrcluster.MasterInstanceFleetAttributes] {
-	return terra.ReferenceList[emrcluster.MasterInstanceFleetAttributes](ec.ref.Append("master_instance_fleet"))
+	return terra.ReferenceAsList[emrcluster.MasterInstanceFleetAttributes](ec.ref.Append("master_instance_fleet"))
 }
 
 func (ec emrClusterAttributes) MasterInstanceGroup() terra.ListValue[emrcluster.MasterInstanceGroupAttributes] {
-	return terra.ReferenceList[emrcluster.MasterInstanceGroupAttributes](ec.ref.Append("master_instance_group"))
+	return terra.ReferenceAsList[emrcluster.MasterInstanceGroupAttributes](ec.ref.Append("master_instance_group"))
 }
 
 type emrClusterState struct {

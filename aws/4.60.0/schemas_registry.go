@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSchemasRegistry creates a new instance of [SchemasRegistry].
 func NewSchemasRegistry(name string, args SchemasRegistryArgs) *SchemasRegistry {
 	return &SchemasRegistry{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSchemasRegistry(name string, args SchemasRegistryArgs) *SchemasRegistry 
 
 var _ terra.Resource = (*SchemasRegistry)(nil)
 
+// SchemasRegistry represents the Terraform resource aws_schemas_registry.
 type SchemasRegistry struct {
-	Name  string
-	Args  SchemasRegistryArgs
-	state *schemasRegistryState
+	Name      string
+	Args      SchemasRegistryArgs
+	state     *schemasRegistryState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SchemasRegistry].
 func (sr *SchemasRegistry) Type() string {
 	return "aws_schemas_registry"
 }
 
+// LocalName returns the local name for [SchemasRegistry].
 func (sr *SchemasRegistry) LocalName() string {
 	return sr.Name
 }
 
+// Configuration returns the configuration (args) for [SchemasRegistry].
 func (sr *SchemasRegistry) Configuration() interface{} {
 	return sr.Args
 }
 
+// DependOn is used for other resources to depend on [SchemasRegistry].
+func (sr *SchemasRegistry) DependOn() terra.Reference {
+	return terra.ReferenceResource(sr)
+}
+
+// Dependencies returns the list of resources [SchemasRegistry] depends_on.
+func (sr *SchemasRegistry) Dependencies() terra.Dependencies {
+	return sr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SchemasRegistry].
+func (sr *SchemasRegistry) LifecycleManagement() *terra.Lifecycle {
+	return sr.Lifecycle
+}
+
+// Attributes returns the attributes for [SchemasRegistry].
 func (sr *SchemasRegistry) Attributes() schemasRegistryAttributes {
 	return schemasRegistryAttributes{ref: terra.ReferenceResource(sr)}
 }
 
+// ImportState imports the given attribute values into [SchemasRegistry]'s state.
 func (sr *SchemasRegistry) ImportState(av io.Reader) error {
 	sr.state = &schemasRegistryState{}
 	if err := json.NewDecoder(av).Decode(sr.state); err != nil {
@@ -48,10 +72,12 @@ func (sr *SchemasRegistry) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SchemasRegistry] has state.
 func (sr *SchemasRegistry) State() (*schemasRegistryState, bool) {
 	return sr.state, sr.state != nil
 }
 
+// StateMust returns the state for [SchemasRegistry]. Panics if the state is nil.
 func (sr *SchemasRegistry) StateMust() *schemasRegistryState {
 	if sr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sr.Type(), sr.LocalName()))
@@ -59,10 +85,7 @@ func (sr *SchemasRegistry) StateMust() *schemasRegistryState {
 	return sr.state
 }
 
-func (sr *SchemasRegistry) DependOn() terra.Reference {
-	return terra.ReferenceResource(sr)
-}
-
+// SchemasRegistryArgs contains the configurations for aws_schemas_registry.
 type SchemasRegistryArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -74,35 +97,39 @@ type SchemasRegistryArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that SchemasRegistry depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type schemasRegistryAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_schemas_registry.
 func (sr schemasRegistryAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("arn"))
+	return terra.ReferenceAsString(sr.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_schemas_registry.
 func (sr schemasRegistryAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("description"))
+	return terra.ReferenceAsString(sr.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_schemas_registry.
 func (sr schemasRegistryAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("id"))
+	return terra.ReferenceAsString(sr.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_schemas_registry.
 func (sr schemasRegistryAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("name"))
+	return terra.ReferenceAsString(sr.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_schemas_registry.
 func (sr schemasRegistryAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sr.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_schemas_registry.
 func (sr schemasRegistryAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sr.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sr.ref.Append("tags_all"))
 }
 
 type schemasRegistryState struct {

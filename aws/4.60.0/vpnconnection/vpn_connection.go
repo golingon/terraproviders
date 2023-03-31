@@ -56,15 +56,15 @@ func (r RoutesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RoutesAttributes) DestinationCidrBlock() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("destination_cidr_block"))
+	return terra.ReferenceAsString(r.ref.Append("destination_cidr_block"))
 }
 
 func (r RoutesAttributes) Source() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("source"))
+	return terra.ReferenceAsString(r.ref.Append("source"))
 }
 
 func (r RoutesAttributes) State() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("state"))
+	return terra.ReferenceAsString(r.ref.Append("state"))
 }
 
 type VgwTelemetryAttributes struct {
@@ -84,27 +84,27 @@ func (vt VgwTelemetryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vt VgwTelemetryAttributes) AcceptedRouteCount() terra.NumberValue {
-	return terra.ReferenceNumber(vt.ref.Append("accepted_route_count"))
+	return terra.ReferenceAsNumber(vt.ref.Append("accepted_route_count"))
 }
 
 func (vt VgwTelemetryAttributes) CertificateArn() terra.StringValue {
-	return terra.ReferenceString(vt.ref.Append("certificate_arn"))
+	return terra.ReferenceAsString(vt.ref.Append("certificate_arn"))
 }
 
 func (vt VgwTelemetryAttributes) LastStatusChange() terra.StringValue {
-	return terra.ReferenceString(vt.ref.Append("last_status_change"))
+	return terra.ReferenceAsString(vt.ref.Append("last_status_change"))
 }
 
 func (vt VgwTelemetryAttributes) OutsideIpAddress() terra.StringValue {
-	return terra.ReferenceString(vt.ref.Append("outside_ip_address"))
+	return terra.ReferenceAsString(vt.ref.Append("outside_ip_address"))
 }
 
 func (vt VgwTelemetryAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(vt.ref.Append("status"))
+	return terra.ReferenceAsString(vt.ref.Append("status"))
 }
 
 func (vt VgwTelemetryAttributes) StatusMessage() terra.StringValue {
-	return terra.ReferenceString(vt.ref.Append("status_message"))
+	return terra.ReferenceAsString(vt.ref.Append("status_message"))
 }
 
 type Tunnel1LogOptionsAttributes struct {
@@ -124,7 +124,7 @@ func (tlo Tunnel1LogOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tlo Tunnel1LogOptionsAttributes) CloudwatchLogOptions() terra.ListValue[Tunnel1LogOptionsCloudwatchLogOptionsAttributes] {
-	return terra.ReferenceList[Tunnel1LogOptionsCloudwatchLogOptionsAttributes](tlo.ref.Append("cloudwatch_log_options"))
+	return terra.ReferenceAsList[Tunnel1LogOptionsCloudwatchLogOptionsAttributes](tlo.ref.Append("cloudwatch_log_options"))
 }
 
 type Tunnel1LogOptionsCloudwatchLogOptionsAttributes struct {
@@ -144,15 +144,15 @@ func (clo Tunnel1LogOptionsCloudwatchLogOptionsAttributes) InternalTokens() hclw
 }
 
 func (clo Tunnel1LogOptionsCloudwatchLogOptionsAttributes) LogEnabled() terra.BoolValue {
-	return terra.ReferenceBool(clo.ref.Append("log_enabled"))
+	return terra.ReferenceAsBool(clo.ref.Append("log_enabled"))
 }
 
 func (clo Tunnel1LogOptionsCloudwatchLogOptionsAttributes) LogGroupArn() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("log_group_arn"))
+	return terra.ReferenceAsString(clo.ref.Append("log_group_arn"))
 }
 
 func (clo Tunnel1LogOptionsCloudwatchLogOptionsAttributes) LogOutputFormat() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("log_output_format"))
+	return terra.ReferenceAsString(clo.ref.Append("log_output_format"))
 }
 
 type Tunnel2LogOptionsAttributes struct {
@@ -172,7 +172,7 @@ func (tlo Tunnel2LogOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tlo Tunnel2LogOptionsAttributes) CloudwatchLogOptions() terra.ListValue[Tunnel2LogOptionsCloudwatchLogOptionsAttributes] {
-	return terra.ReferenceList[Tunnel2LogOptionsCloudwatchLogOptionsAttributes](tlo.ref.Append("cloudwatch_log_options"))
+	return terra.ReferenceAsList[Tunnel2LogOptionsCloudwatchLogOptionsAttributes](tlo.ref.Append("cloudwatch_log_options"))
 }
 
 type Tunnel2LogOptionsCloudwatchLogOptionsAttributes struct {
@@ -192,15 +192,15 @@ func (clo Tunnel2LogOptionsCloudwatchLogOptionsAttributes) InternalTokens() hclw
 }
 
 func (clo Tunnel2LogOptionsCloudwatchLogOptionsAttributes) LogEnabled() terra.BoolValue {
-	return terra.ReferenceBool(clo.ref.Append("log_enabled"))
+	return terra.ReferenceAsBool(clo.ref.Append("log_enabled"))
 }
 
 func (clo Tunnel2LogOptionsCloudwatchLogOptionsAttributes) LogGroupArn() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("log_group_arn"))
+	return terra.ReferenceAsString(clo.ref.Append("log_group_arn"))
 }
 
 func (clo Tunnel2LogOptionsCloudwatchLogOptionsAttributes) LogOutputFormat() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("log_output_format"))
+	return terra.ReferenceAsString(clo.ref.Append("log_output_format"))
 }
 
 type RoutesState struct {

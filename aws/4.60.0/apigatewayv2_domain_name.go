@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApigatewayv2DomainName creates a new instance of [Apigatewayv2DomainName].
 func NewApigatewayv2DomainName(name string, args Apigatewayv2DomainNameArgs) *Apigatewayv2DomainName {
 	return &Apigatewayv2DomainName{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApigatewayv2DomainName(name string, args Apigatewayv2DomainNameArgs) *Ap
 
 var _ terra.Resource = (*Apigatewayv2DomainName)(nil)
 
+// Apigatewayv2DomainName represents the Terraform resource aws_apigatewayv2_domain_name.
 type Apigatewayv2DomainName struct {
-	Name  string
-	Args  Apigatewayv2DomainNameArgs
-	state *apigatewayv2DomainNameState
+	Name      string
+	Args      Apigatewayv2DomainNameArgs
+	state     *apigatewayv2DomainNameState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Apigatewayv2DomainName].
 func (adn *Apigatewayv2DomainName) Type() string {
 	return "aws_apigatewayv2_domain_name"
 }
 
+// LocalName returns the local name for [Apigatewayv2DomainName].
 func (adn *Apigatewayv2DomainName) LocalName() string {
 	return adn.Name
 }
 
+// Configuration returns the configuration (args) for [Apigatewayv2DomainName].
 func (adn *Apigatewayv2DomainName) Configuration() interface{} {
 	return adn.Args
 }
 
+// DependOn is used for other resources to depend on [Apigatewayv2DomainName].
+func (adn *Apigatewayv2DomainName) DependOn() terra.Reference {
+	return terra.ReferenceResource(adn)
+}
+
+// Dependencies returns the list of resources [Apigatewayv2DomainName] depends_on.
+func (adn *Apigatewayv2DomainName) Dependencies() terra.Dependencies {
+	return adn.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Apigatewayv2DomainName].
+func (adn *Apigatewayv2DomainName) LifecycleManagement() *terra.Lifecycle {
+	return adn.Lifecycle
+}
+
+// Attributes returns the attributes for [Apigatewayv2DomainName].
 func (adn *Apigatewayv2DomainName) Attributes() apigatewayv2DomainNameAttributes {
 	return apigatewayv2DomainNameAttributes{ref: terra.ReferenceResource(adn)}
 }
 
+// ImportState imports the given attribute values into [Apigatewayv2DomainName]'s state.
 func (adn *Apigatewayv2DomainName) ImportState(av io.Reader) error {
 	adn.state = &apigatewayv2DomainNameState{}
 	if err := json.NewDecoder(av).Decode(adn.state); err != nil {
@@ -49,10 +73,12 @@ func (adn *Apigatewayv2DomainName) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Apigatewayv2DomainName] has state.
 func (adn *Apigatewayv2DomainName) State() (*apigatewayv2DomainNameState, bool) {
 	return adn.state, adn.state != nil
 }
 
+// StateMust returns the state for [Apigatewayv2DomainName]. Panics if the state is nil.
 func (adn *Apigatewayv2DomainName) StateMust() *apigatewayv2DomainNameState {
 	if adn.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", adn.Type(), adn.LocalName()))
@@ -60,10 +86,7 @@ func (adn *Apigatewayv2DomainName) StateMust() *apigatewayv2DomainNameState {
 	return adn.state
 }
 
-func (adn *Apigatewayv2DomainName) DependOn() terra.Reference {
-	return terra.ReferenceResource(adn)
-}
-
+// Apigatewayv2DomainNameArgs contains the configurations for aws_apigatewayv2_domain_name.
 type Apigatewayv2DomainNameArgs struct {
 	// DomainName: string, required
 	DomainName terra.StringValue `hcl:"domain_name,attr" validate:"required"`
@@ -79,47 +102,51 @@ type Apigatewayv2DomainNameArgs struct {
 	MutualTlsAuthentication *apigatewayv2domainname.MutualTlsAuthentication `hcl:"mutual_tls_authentication,block"`
 	// Timeouts: optional
 	Timeouts *apigatewayv2domainname.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Apigatewayv2DomainName depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apigatewayv2DomainNameAttributes struct {
 	ref terra.Reference
 }
 
+// ApiMappingSelectionExpression returns a reference to field api_mapping_selection_expression of aws_apigatewayv2_domain_name.
 func (adn apigatewayv2DomainNameAttributes) ApiMappingSelectionExpression() terra.StringValue {
-	return terra.ReferenceString(adn.ref.Append("api_mapping_selection_expression"))
+	return terra.ReferenceAsString(adn.ref.Append("api_mapping_selection_expression"))
 }
 
+// Arn returns a reference to field arn of aws_apigatewayv2_domain_name.
 func (adn apigatewayv2DomainNameAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(adn.ref.Append("arn"))
+	return terra.ReferenceAsString(adn.ref.Append("arn"))
 }
 
+// DomainName returns a reference to field domain_name of aws_apigatewayv2_domain_name.
 func (adn apigatewayv2DomainNameAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(adn.ref.Append("domain_name"))
+	return terra.ReferenceAsString(adn.ref.Append("domain_name"))
 }
 
+// Id returns a reference to field id of aws_apigatewayv2_domain_name.
 func (adn apigatewayv2DomainNameAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(adn.ref.Append("id"))
+	return terra.ReferenceAsString(adn.ref.Append("id"))
 }
 
+// Tags returns a reference to field tags of aws_apigatewayv2_domain_name.
 func (adn apigatewayv2DomainNameAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](adn.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](adn.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_apigatewayv2_domain_name.
 func (adn apigatewayv2DomainNameAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](adn.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](adn.ref.Append("tags_all"))
 }
 
 func (adn apigatewayv2DomainNameAttributes) DomainNameConfiguration() terra.ListValue[apigatewayv2domainname.DomainNameConfigurationAttributes] {
-	return terra.ReferenceList[apigatewayv2domainname.DomainNameConfigurationAttributes](adn.ref.Append("domain_name_configuration"))
+	return terra.ReferenceAsList[apigatewayv2domainname.DomainNameConfigurationAttributes](adn.ref.Append("domain_name_configuration"))
 }
 
 func (adn apigatewayv2DomainNameAttributes) MutualTlsAuthentication() terra.ListValue[apigatewayv2domainname.MutualTlsAuthenticationAttributes] {
-	return terra.ReferenceList[apigatewayv2domainname.MutualTlsAuthenticationAttributes](adn.ref.Append("mutual_tls_authentication"))
+	return terra.ReferenceAsList[apigatewayv2domainname.MutualTlsAuthenticationAttributes](adn.ref.Append("mutual_tls_authentication"))
 }
 
 func (adn apigatewayv2DomainNameAttributes) Timeouts() apigatewayv2domainname.TimeoutsAttributes {
-	return terra.ReferenceSingle[apigatewayv2domainname.TimeoutsAttributes](adn.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[apigatewayv2domainname.TimeoutsAttributes](adn.ref.Append("timeouts"))
 }
 
 type apigatewayv2DomainNameState struct {

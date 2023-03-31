@@ -82,67 +82,67 @@ func (cr ComputeResourcesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cr ComputeResourcesAttributes) AllocationStrategy() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("allocation_strategy"))
+	return terra.ReferenceAsString(cr.ref.Append("allocation_strategy"))
 }
 
 func (cr ComputeResourcesAttributes) BidPercentage() terra.NumberValue {
-	return terra.ReferenceNumber(cr.ref.Append("bid_percentage"))
+	return terra.ReferenceAsNumber(cr.ref.Append("bid_percentage"))
 }
 
 func (cr ComputeResourcesAttributes) DesiredVcpus() terra.NumberValue {
-	return terra.ReferenceNumber(cr.ref.Append("desired_vcpus"))
+	return terra.ReferenceAsNumber(cr.ref.Append("desired_vcpus"))
 }
 
 func (cr ComputeResourcesAttributes) Ec2KeyPair() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("ec2_key_pair"))
+	return terra.ReferenceAsString(cr.ref.Append("ec2_key_pair"))
 }
 
 func (cr ComputeResourcesAttributes) ImageId() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("image_id"))
+	return terra.ReferenceAsString(cr.ref.Append("image_id"))
 }
 
 func (cr ComputeResourcesAttributes) InstanceRole() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("instance_role"))
+	return terra.ReferenceAsString(cr.ref.Append("instance_role"))
 }
 
 func (cr ComputeResourcesAttributes) InstanceType() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cr.ref.Append("instance_type"))
+	return terra.ReferenceAsSet[terra.StringValue](cr.ref.Append("instance_type"))
 }
 
 func (cr ComputeResourcesAttributes) MaxVcpus() terra.NumberValue {
-	return terra.ReferenceNumber(cr.ref.Append("max_vcpus"))
+	return terra.ReferenceAsNumber(cr.ref.Append("max_vcpus"))
 }
 
 func (cr ComputeResourcesAttributes) MinVcpus() terra.NumberValue {
-	return terra.ReferenceNumber(cr.ref.Append("min_vcpus"))
+	return terra.ReferenceAsNumber(cr.ref.Append("min_vcpus"))
 }
 
 func (cr ComputeResourcesAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cr.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](cr.ref.Append("security_group_ids"))
 }
 
 func (cr ComputeResourcesAttributes) SpotIamFleetRole() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("spot_iam_fleet_role"))
+	return terra.ReferenceAsString(cr.ref.Append("spot_iam_fleet_role"))
 }
 
 func (cr ComputeResourcesAttributes) Subnets() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cr.ref.Append("subnets"))
+	return terra.ReferenceAsSet[terra.StringValue](cr.ref.Append("subnets"))
 }
 
 func (cr ComputeResourcesAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cr.ref.Append("tags"))
 }
 
 func (cr ComputeResourcesAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("type"))
+	return terra.ReferenceAsString(cr.ref.Append("type"))
 }
 
 func (cr ComputeResourcesAttributes) Ec2Configuration() terra.ListValue[Ec2ConfigurationAttributes] {
-	return terra.ReferenceList[Ec2ConfigurationAttributes](cr.ref.Append("ec2_configuration"))
+	return terra.ReferenceAsList[Ec2ConfigurationAttributes](cr.ref.Append("ec2_configuration"))
 }
 
 func (cr ComputeResourcesAttributes) LaunchTemplate() terra.ListValue[LaunchTemplateAttributes] {
-	return terra.ReferenceList[LaunchTemplateAttributes](cr.ref.Append("launch_template"))
+	return terra.ReferenceAsList[LaunchTemplateAttributes](cr.ref.Append("launch_template"))
 }
 
 type Ec2ConfigurationAttributes struct {
@@ -162,11 +162,11 @@ func (ec Ec2ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec Ec2ConfigurationAttributes) ImageIdOverride() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("image_id_override"))
+	return terra.ReferenceAsString(ec.ref.Append("image_id_override"))
 }
 
 func (ec Ec2ConfigurationAttributes) ImageType() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("image_type"))
+	return terra.ReferenceAsString(ec.ref.Append("image_type"))
 }
 
 type LaunchTemplateAttributes struct {
@@ -186,15 +186,15 @@ func (lt LaunchTemplateAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lt LaunchTemplateAttributes) LaunchTemplateId() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("launch_template_id"))
+	return terra.ReferenceAsString(lt.ref.Append("launch_template_id"))
 }
 
 func (lt LaunchTemplateAttributes) LaunchTemplateName() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("launch_template_name"))
+	return terra.ReferenceAsString(lt.ref.Append("launch_template_name"))
 }
 
 func (lt LaunchTemplateAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("version"))
+	return terra.ReferenceAsString(lt.ref.Append("version"))
 }
 
 type EksConfigurationAttributes struct {
@@ -214,11 +214,11 @@ func (ec EksConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec EksConfigurationAttributes) EksClusterArn() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("eks_cluster_arn"))
+	return terra.ReferenceAsString(ec.ref.Append("eks_cluster_arn"))
 }
 
 func (ec EksConfigurationAttributes) KubernetesNamespace() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("kubernetes_namespace"))
+	return terra.ReferenceAsString(ec.ref.Append("kubernetes_namespace"))
 }
 
 type ComputeResourcesState struct {

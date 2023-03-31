@@ -120,11 +120,11 @@ func (t TargetsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TargetsAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("key"))
+	return terra.ReferenceAsString(t.ref.Append("key"))
 }
 
 func (t TargetsAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](t.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](t.ref.Append("values"))
 }
 
 type TaskInvocationParametersAttributes struct {
@@ -144,19 +144,19 @@ func (tip TaskInvocationParametersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tip TaskInvocationParametersAttributes) AutomationParameters() terra.ListValue[AutomationParametersAttributes] {
-	return terra.ReferenceList[AutomationParametersAttributes](tip.ref.Append("automation_parameters"))
+	return terra.ReferenceAsList[AutomationParametersAttributes](tip.ref.Append("automation_parameters"))
 }
 
 func (tip TaskInvocationParametersAttributes) LambdaParameters() terra.ListValue[LambdaParametersAttributes] {
-	return terra.ReferenceList[LambdaParametersAttributes](tip.ref.Append("lambda_parameters"))
+	return terra.ReferenceAsList[LambdaParametersAttributes](tip.ref.Append("lambda_parameters"))
 }
 
 func (tip TaskInvocationParametersAttributes) RunCommandParameters() terra.ListValue[RunCommandParametersAttributes] {
-	return terra.ReferenceList[RunCommandParametersAttributes](tip.ref.Append("run_command_parameters"))
+	return terra.ReferenceAsList[RunCommandParametersAttributes](tip.ref.Append("run_command_parameters"))
 }
 
 func (tip TaskInvocationParametersAttributes) StepFunctionsParameters() terra.ListValue[StepFunctionsParametersAttributes] {
-	return terra.ReferenceList[StepFunctionsParametersAttributes](tip.ref.Append("step_functions_parameters"))
+	return terra.ReferenceAsList[StepFunctionsParametersAttributes](tip.ref.Append("step_functions_parameters"))
 }
 
 type AutomationParametersAttributes struct {
@@ -176,11 +176,11 @@ func (ap AutomationParametersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ap AutomationParametersAttributes) DocumentVersion() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("document_version"))
+	return terra.ReferenceAsString(ap.ref.Append("document_version"))
 }
 
 func (ap AutomationParametersAttributes) Parameter() terra.SetValue[AutomationParametersParameterAttributes] {
-	return terra.ReferenceSet[AutomationParametersParameterAttributes](ap.ref.Append("parameter"))
+	return terra.ReferenceAsSet[AutomationParametersParameterAttributes](ap.ref.Append("parameter"))
 }
 
 type AutomationParametersParameterAttributes struct {
@@ -200,11 +200,11 @@ func (p AutomationParametersParameterAttributes) InternalTokens() hclwrite.Token
 }
 
 func (p AutomationParametersParameterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("name"))
+	return terra.ReferenceAsString(p.ref.Append("name"))
 }
 
 func (p AutomationParametersParameterAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](p.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](p.ref.Append("values"))
 }
 
 type LambdaParametersAttributes struct {
@@ -224,15 +224,15 @@ func (lp LambdaParametersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lp LambdaParametersAttributes) ClientContext() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("client_context"))
+	return terra.ReferenceAsString(lp.ref.Append("client_context"))
 }
 
 func (lp LambdaParametersAttributes) Payload() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("payload"))
+	return terra.ReferenceAsString(lp.ref.Append("payload"))
 }
 
 func (lp LambdaParametersAttributes) Qualifier() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("qualifier"))
+	return terra.ReferenceAsString(lp.ref.Append("qualifier"))
 }
 
 type RunCommandParametersAttributes struct {
@@ -252,47 +252,47 @@ func (rcp RunCommandParametersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rcp RunCommandParametersAttributes) Comment() terra.StringValue {
-	return terra.ReferenceString(rcp.ref.Append("comment"))
+	return terra.ReferenceAsString(rcp.ref.Append("comment"))
 }
 
 func (rcp RunCommandParametersAttributes) DocumentHash() terra.StringValue {
-	return terra.ReferenceString(rcp.ref.Append("document_hash"))
+	return terra.ReferenceAsString(rcp.ref.Append("document_hash"))
 }
 
 func (rcp RunCommandParametersAttributes) DocumentHashType() terra.StringValue {
-	return terra.ReferenceString(rcp.ref.Append("document_hash_type"))
+	return terra.ReferenceAsString(rcp.ref.Append("document_hash_type"))
 }
 
 func (rcp RunCommandParametersAttributes) DocumentVersion() terra.StringValue {
-	return terra.ReferenceString(rcp.ref.Append("document_version"))
+	return terra.ReferenceAsString(rcp.ref.Append("document_version"))
 }
 
 func (rcp RunCommandParametersAttributes) OutputS3Bucket() terra.StringValue {
-	return terra.ReferenceString(rcp.ref.Append("output_s3_bucket"))
+	return terra.ReferenceAsString(rcp.ref.Append("output_s3_bucket"))
 }
 
 func (rcp RunCommandParametersAttributes) OutputS3KeyPrefix() terra.StringValue {
-	return terra.ReferenceString(rcp.ref.Append("output_s3_key_prefix"))
+	return terra.ReferenceAsString(rcp.ref.Append("output_s3_key_prefix"))
 }
 
 func (rcp RunCommandParametersAttributes) ServiceRoleArn() terra.StringValue {
-	return terra.ReferenceString(rcp.ref.Append("service_role_arn"))
+	return terra.ReferenceAsString(rcp.ref.Append("service_role_arn"))
 }
 
 func (rcp RunCommandParametersAttributes) TimeoutSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(rcp.ref.Append("timeout_seconds"))
+	return terra.ReferenceAsNumber(rcp.ref.Append("timeout_seconds"))
 }
 
 func (rcp RunCommandParametersAttributes) CloudwatchConfig() terra.ListValue[CloudwatchConfigAttributes] {
-	return terra.ReferenceList[CloudwatchConfigAttributes](rcp.ref.Append("cloudwatch_config"))
+	return terra.ReferenceAsList[CloudwatchConfigAttributes](rcp.ref.Append("cloudwatch_config"))
 }
 
 func (rcp RunCommandParametersAttributes) NotificationConfig() terra.ListValue[NotificationConfigAttributes] {
-	return terra.ReferenceList[NotificationConfigAttributes](rcp.ref.Append("notification_config"))
+	return terra.ReferenceAsList[NotificationConfigAttributes](rcp.ref.Append("notification_config"))
 }
 
 func (rcp RunCommandParametersAttributes) Parameter() terra.SetValue[RunCommandParametersParameterAttributes] {
-	return terra.ReferenceSet[RunCommandParametersParameterAttributes](rcp.ref.Append("parameter"))
+	return terra.ReferenceAsSet[RunCommandParametersParameterAttributes](rcp.ref.Append("parameter"))
 }
 
 type CloudwatchConfigAttributes struct {
@@ -312,11 +312,11 @@ func (cc CloudwatchConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc CloudwatchConfigAttributes) CloudwatchLogGroupName() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("cloudwatch_log_group_name"))
+	return terra.ReferenceAsString(cc.ref.Append("cloudwatch_log_group_name"))
 }
 
 func (cc CloudwatchConfigAttributes) CloudwatchOutputEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("cloudwatch_output_enabled"))
+	return terra.ReferenceAsBool(cc.ref.Append("cloudwatch_output_enabled"))
 }
 
 type NotificationConfigAttributes struct {
@@ -336,15 +336,15 @@ func (nc NotificationConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nc NotificationConfigAttributes) NotificationArn() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("notification_arn"))
+	return terra.ReferenceAsString(nc.ref.Append("notification_arn"))
 }
 
 func (nc NotificationConfigAttributes) NotificationEvents() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](nc.ref.Append("notification_events"))
+	return terra.ReferenceAsList[terra.StringValue](nc.ref.Append("notification_events"))
 }
 
 func (nc NotificationConfigAttributes) NotificationType() terra.StringValue {
-	return terra.ReferenceString(nc.ref.Append("notification_type"))
+	return terra.ReferenceAsString(nc.ref.Append("notification_type"))
 }
 
 type RunCommandParametersParameterAttributes struct {
@@ -364,11 +364,11 @@ func (p RunCommandParametersParameterAttributes) InternalTokens() hclwrite.Token
 }
 
 func (p RunCommandParametersParameterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("name"))
+	return terra.ReferenceAsString(p.ref.Append("name"))
 }
 
 func (p RunCommandParametersParameterAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](p.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](p.ref.Append("values"))
 }
 
 type StepFunctionsParametersAttributes struct {
@@ -388,11 +388,11 @@ func (sfp StepFunctionsParametersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sfp StepFunctionsParametersAttributes) Input() terra.StringValue {
-	return terra.ReferenceString(sfp.ref.Append("input"))
+	return terra.ReferenceAsString(sfp.ref.Append("input"))
 }
 
 func (sfp StepFunctionsParametersAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sfp.ref.Append("name"))
+	return terra.ReferenceAsString(sfp.ref.Append("name"))
 }
 
 type TargetsState struct {

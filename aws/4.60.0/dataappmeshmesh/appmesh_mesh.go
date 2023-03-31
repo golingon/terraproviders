@@ -31,7 +31,7 @@ func (s SpecAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SpecAttributes) EgressFilter() terra.ListValue[EgressFilterAttributes] {
-	return terra.ReferenceList[EgressFilterAttributes](s.ref.Append("egress_filter"))
+	return terra.ReferenceAsList[EgressFilterAttributes](s.ref.Append("egress_filter"))
 }
 
 type EgressFilterAttributes struct {
@@ -51,7 +51,7 @@ func (ef EgressFilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ef EgressFilterAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("type"))
+	return terra.ReferenceAsString(ef.ref.Append("type"))
 }
 
 type SpecState struct {

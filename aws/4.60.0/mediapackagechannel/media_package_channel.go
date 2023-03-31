@@ -31,7 +31,7 @@ func (hi HlsIngestAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hi HlsIngestAttributes) IngestEndpoints() terra.ListValue[IngestEndpointsAttributes] {
-	return terra.ReferenceList[IngestEndpointsAttributes](hi.ref.Append("ingest_endpoints"))
+	return terra.ReferenceAsList[IngestEndpointsAttributes](hi.ref.Append("ingest_endpoints"))
 }
 
 type IngestEndpointsAttributes struct {
@@ -51,15 +51,15 @@ func (ie IngestEndpointsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ie IngestEndpointsAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(ie.ref.Append("password"))
+	return terra.ReferenceAsString(ie.ref.Append("password"))
 }
 
 func (ie IngestEndpointsAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(ie.ref.Append("url"))
+	return terra.ReferenceAsString(ie.ref.Append("url"))
 }
 
 func (ie IngestEndpointsAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(ie.ref.Append("username"))
+	return terra.ReferenceAsString(ie.ref.Append("username"))
 }
 
 type HlsIngestState struct {

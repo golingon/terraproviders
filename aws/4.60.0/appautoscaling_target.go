@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAppautoscalingTarget creates a new instance of [AppautoscalingTarget].
 func NewAppautoscalingTarget(name string, args AppautoscalingTargetArgs) *AppautoscalingTarget {
 	return &AppautoscalingTarget{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAppautoscalingTarget(name string, args AppautoscalingTargetArgs) *Appaut
 
 var _ terra.Resource = (*AppautoscalingTarget)(nil)
 
+// AppautoscalingTarget represents the Terraform resource aws_appautoscaling_target.
 type AppautoscalingTarget struct {
-	Name  string
-	Args  AppautoscalingTargetArgs
-	state *appautoscalingTargetState
+	Name      string
+	Args      AppautoscalingTargetArgs
+	state     *appautoscalingTargetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppautoscalingTarget].
 func (at *AppautoscalingTarget) Type() string {
 	return "aws_appautoscaling_target"
 }
 
+// LocalName returns the local name for [AppautoscalingTarget].
 func (at *AppautoscalingTarget) LocalName() string {
 	return at.Name
 }
 
+// Configuration returns the configuration (args) for [AppautoscalingTarget].
 func (at *AppautoscalingTarget) Configuration() interface{} {
 	return at.Args
 }
 
+// DependOn is used for other resources to depend on [AppautoscalingTarget].
+func (at *AppautoscalingTarget) DependOn() terra.Reference {
+	return terra.ReferenceResource(at)
+}
+
+// Dependencies returns the list of resources [AppautoscalingTarget] depends_on.
+func (at *AppautoscalingTarget) Dependencies() terra.Dependencies {
+	return at.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppautoscalingTarget].
+func (at *AppautoscalingTarget) LifecycleManagement() *terra.Lifecycle {
+	return at.Lifecycle
+}
+
+// Attributes returns the attributes for [AppautoscalingTarget].
 func (at *AppautoscalingTarget) Attributes() appautoscalingTargetAttributes {
 	return appautoscalingTargetAttributes{ref: terra.ReferenceResource(at)}
 }
 
+// ImportState imports the given attribute values into [AppautoscalingTarget]'s state.
 func (at *AppautoscalingTarget) ImportState(av io.Reader) error {
 	at.state = &appautoscalingTargetState{}
 	if err := json.NewDecoder(av).Decode(at.state); err != nil {
@@ -48,10 +72,12 @@ func (at *AppautoscalingTarget) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppautoscalingTarget] has state.
 func (at *AppautoscalingTarget) State() (*appautoscalingTargetState, bool) {
 	return at.state, at.state != nil
 }
 
+// StateMust returns the state for [AppautoscalingTarget]. Panics if the state is nil.
 func (at *AppautoscalingTarget) StateMust() *appautoscalingTargetState {
 	if at.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", at.Type(), at.LocalName()))
@@ -59,10 +85,7 @@ func (at *AppautoscalingTarget) StateMust() *appautoscalingTargetState {
 	return at.state
 }
 
-func (at *AppautoscalingTarget) DependOn() terra.Reference {
-	return terra.ReferenceResource(at)
-}
-
+// AppautoscalingTargetArgs contains the configurations for aws_appautoscaling_target.
 type AppautoscalingTargetArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -78,39 +101,44 @@ type AppautoscalingTargetArgs struct {
 	ScalableDimension terra.StringValue `hcl:"scalable_dimension,attr" validate:"required"`
 	// ServiceNamespace: string, required
 	ServiceNamespace terra.StringValue `hcl:"service_namespace,attr" validate:"required"`
-	// DependsOn contains resources that AppautoscalingTarget depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appautoscalingTargetAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_appautoscaling_target.
 func (at appautoscalingTargetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(at.ref.Append("id"))
+	return terra.ReferenceAsString(at.ref.Append("id"))
 }
 
+// MaxCapacity returns a reference to field max_capacity of aws_appautoscaling_target.
 func (at appautoscalingTargetAttributes) MaxCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(at.ref.Append("max_capacity"))
+	return terra.ReferenceAsNumber(at.ref.Append("max_capacity"))
 }
 
+// MinCapacity returns a reference to field min_capacity of aws_appautoscaling_target.
 func (at appautoscalingTargetAttributes) MinCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(at.ref.Append("min_capacity"))
+	return terra.ReferenceAsNumber(at.ref.Append("min_capacity"))
 }
 
+// ResourceId returns a reference to field resource_id of aws_appautoscaling_target.
 func (at appautoscalingTargetAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(at.ref.Append("resource_id"))
+	return terra.ReferenceAsString(at.ref.Append("resource_id"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_appautoscaling_target.
 func (at appautoscalingTargetAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(at.ref.Append("role_arn"))
+	return terra.ReferenceAsString(at.ref.Append("role_arn"))
 }
 
+// ScalableDimension returns a reference to field scalable_dimension of aws_appautoscaling_target.
 func (at appautoscalingTargetAttributes) ScalableDimension() terra.StringValue {
-	return terra.ReferenceString(at.ref.Append("scalable_dimension"))
+	return terra.ReferenceAsString(at.ref.Append("scalable_dimension"))
 }
 
+// ServiceNamespace returns a reference to field service_namespace of aws_appautoscaling_target.
 func (at appautoscalingTargetAttributes) ServiceNamespace() terra.StringValue {
-	return terra.ReferenceString(at.ref.Append("service_namespace"))
+	return terra.ReferenceAsString(at.ref.Append("service_namespace"))
 }
 
 type appautoscalingTargetState struct {

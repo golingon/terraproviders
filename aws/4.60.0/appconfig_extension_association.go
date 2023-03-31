@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAppconfigExtensionAssociation creates a new instance of [AppconfigExtensionAssociation].
 func NewAppconfigExtensionAssociation(name string, args AppconfigExtensionAssociationArgs) *AppconfigExtensionAssociation {
 	return &AppconfigExtensionAssociation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAppconfigExtensionAssociation(name string, args AppconfigExtensionAssoci
 
 var _ terra.Resource = (*AppconfigExtensionAssociation)(nil)
 
+// AppconfigExtensionAssociation represents the Terraform resource aws_appconfig_extension_association.
 type AppconfigExtensionAssociation struct {
-	Name  string
-	Args  AppconfigExtensionAssociationArgs
-	state *appconfigExtensionAssociationState
+	Name      string
+	Args      AppconfigExtensionAssociationArgs
+	state     *appconfigExtensionAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppconfigExtensionAssociation].
 func (aea *AppconfigExtensionAssociation) Type() string {
 	return "aws_appconfig_extension_association"
 }
 
+// LocalName returns the local name for [AppconfigExtensionAssociation].
 func (aea *AppconfigExtensionAssociation) LocalName() string {
 	return aea.Name
 }
 
+// Configuration returns the configuration (args) for [AppconfigExtensionAssociation].
 func (aea *AppconfigExtensionAssociation) Configuration() interface{} {
 	return aea.Args
 }
 
+// DependOn is used for other resources to depend on [AppconfigExtensionAssociation].
+func (aea *AppconfigExtensionAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(aea)
+}
+
+// Dependencies returns the list of resources [AppconfigExtensionAssociation] depends_on.
+func (aea *AppconfigExtensionAssociation) Dependencies() terra.Dependencies {
+	return aea.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppconfigExtensionAssociation].
+func (aea *AppconfigExtensionAssociation) LifecycleManagement() *terra.Lifecycle {
+	return aea.Lifecycle
+}
+
+// Attributes returns the attributes for [AppconfigExtensionAssociation].
 func (aea *AppconfigExtensionAssociation) Attributes() appconfigExtensionAssociationAttributes {
 	return appconfigExtensionAssociationAttributes{ref: terra.ReferenceResource(aea)}
 }
 
+// ImportState imports the given attribute values into [AppconfigExtensionAssociation]'s state.
 func (aea *AppconfigExtensionAssociation) ImportState(av io.Reader) error {
 	aea.state = &appconfigExtensionAssociationState{}
 	if err := json.NewDecoder(av).Decode(aea.state); err != nil {
@@ -48,10 +72,12 @@ func (aea *AppconfigExtensionAssociation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppconfigExtensionAssociation] has state.
 func (aea *AppconfigExtensionAssociation) State() (*appconfigExtensionAssociationState, bool) {
 	return aea.state, aea.state != nil
 }
 
+// StateMust returns the state for [AppconfigExtensionAssociation]. Panics if the state is nil.
 func (aea *AppconfigExtensionAssociation) StateMust() *appconfigExtensionAssociationState {
 	if aea.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", aea.Type(), aea.LocalName()))
@@ -59,10 +85,7 @@ func (aea *AppconfigExtensionAssociation) StateMust() *appconfigExtensionAssocia
 	return aea.state
 }
 
-func (aea *AppconfigExtensionAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(aea)
-}
-
+// AppconfigExtensionAssociationArgs contains the configurations for aws_appconfig_extension_association.
 type AppconfigExtensionAssociationArgs struct {
 	// ExtensionArn: string, required
 	ExtensionArn terra.StringValue `hcl:"extension_arn,attr" validate:"required"`
@@ -72,35 +95,39 @@ type AppconfigExtensionAssociationArgs struct {
 	Parameters terra.MapValue[terra.StringValue] `hcl:"parameters,attr"`
 	// ResourceArn: string, required
 	ResourceArn terra.StringValue `hcl:"resource_arn,attr" validate:"required"`
-	// DependsOn contains resources that AppconfigExtensionAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appconfigExtensionAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_appconfig_extension_association.
 func (aea appconfigExtensionAssociationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(aea.ref.Append("arn"))
+	return terra.ReferenceAsString(aea.ref.Append("arn"))
 }
 
+// ExtensionArn returns a reference to field extension_arn of aws_appconfig_extension_association.
 func (aea appconfigExtensionAssociationAttributes) ExtensionArn() terra.StringValue {
-	return terra.ReferenceString(aea.ref.Append("extension_arn"))
+	return terra.ReferenceAsString(aea.ref.Append("extension_arn"))
 }
 
+// ExtensionVersion returns a reference to field extension_version of aws_appconfig_extension_association.
 func (aea appconfigExtensionAssociationAttributes) ExtensionVersion() terra.NumberValue {
-	return terra.ReferenceNumber(aea.ref.Append("extension_version"))
+	return terra.ReferenceAsNumber(aea.ref.Append("extension_version"))
 }
 
+// Id returns a reference to field id of aws_appconfig_extension_association.
 func (aea appconfigExtensionAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aea.ref.Append("id"))
+	return terra.ReferenceAsString(aea.ref.Append("id"))
 }
 
+// Parameters returns a reference to field parameters of aws_appconfig_extension_association.
 func (aea appconfigExtensionAssociationAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](aea.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](aea.ref.Append("parameters"))
 }
 
+// ResourceArn returns a reference to field resource_arn of aws_appconfig_extension_association.
 func (aea appconfigExtensionAssociationAttributes) ResourceArn() terra.StringValue {
-	return terra.ReferenceString(aea.ref.Append("resource_arn"))
+	return terra.ReferenceAsString(aea.ref.Append("resource_arn"))
 }
 
 type appconfigExtensionAssociationState struct {

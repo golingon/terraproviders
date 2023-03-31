@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataMqBroker creates a new instance of [DataMqBroker].
 func NewDataMqBroker(name string, args DataMqBrokerArgs) *DataMqBroker {
 	return &DataMqBroker{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataMqBroker(name string, args DataMqBrokerArgs) *DataMqBroker {
 
 var _ terra.DataResource = (*DataMqBroker)(nil)
 
+// DataMqBroker represents the Terraform data resource aws_mq_broker.
 type DataMqBroker struct {
 	Name string
 	Args DataMqBrokerArgs
 }
 
+// DataSource returns the Terraform object type for [DataMqBroker].
 func (mb *DataMqBroker) DataSource() string {
 	return "aws_mq_broker"
 }
 
+// LocalName returns the local name for [DataMqBroker].
 func (mb *DataMqBroker) LocalName() string {
 	return mb.Name
 }
 
+// Configuration returns the configuration (args) for [DataMqBroker].
 func (mb *DataMqBroker) Configuration() interface{} {
 	return mb.Args
 }
 
+// Attributes returns the attributes for [DataMqBroker].
 func (mb *DataMqBroker) Attributes() dataMqBrokerAttributes {
 	return dataMqBrokerAttributes{ref: terra.ReferenceDataResource(mb)}
 }
 
+// DataMqBrokerArgs contains the configurations for aws_mq_broker.
 type DataMqBrokerArgs struct {
 	// BrokerId: string, optional
 	BrokerId terra.StringValue `hcl:"broker_id,attr"`
@@ -65,90 +72,105 @@ type dataMqBrokerAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_mq_broker.
 func (mb dataMqBrokerAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(mb.ref.Append("arn"))
+	return terra.ReferenceAsString(mb.ref.Append("arn"))
 }
 
+// AuthenticationStrategy returns a reference to field authentication_strategy of aws_mq_broker.
 func (mb dataMqBrokerAttributes) AuthenticationStrategy() terra.StringValue {
-	return terra.ReferenceString(mb.ref.Append("authentication_strategy"))
+	return terra.ReferenceAsString(mb.ref.Append("authentication_strategy"))
 }
 
+// AutoMinorVersionUpgrade returns a reference to field auto_minor_version_upgrade of aws_mq_broker.
 func (mb dataMqBrokerAttributes) AutoMinorVersionUpgrade() terra.BoolValue {
-	return terra.ReferenceBool(mb.ref.Append("auto_minor_version_upgrade"))
+	return terra.ReferenceAsBool(mb.ref.Append("auto_minor_version_upgrade"))
 }
 
+// BrokerId returns a reference to field broker_id of aws_mq_broker.
 func (mb dataMqBrokerAttributes) BrokerId() terra.StringValue {
-	return terra.ReferenceString(mb.ref.Append("broker_id"))
+	return terra.ReferenceAsString(mb.ref.Append("broker_id"))
 }
 
+// BrokerName returns a reference to field broker_name of aws_mq_broker.
 func (mb dataMqBrokerAttributes) BrokerName() terra.StringValue {
-	return terra.ReferenceString(mb.ref.Append("broker_name"))
+	return terra.ReferenceAsString(mb.ref.Append("broker_name"))
 }
 
+// DeploymentMode returns a reference to field deployment_mode of aws_mq_broker.
 func (mb dataMqBrokerAttributes) DeploymentMode() terra.StringValue {
-	return terra.ReferenceString(mb.ref.Append("deployment_mode"))
+	return terra.ReferenceAsString(mb.ref.Append("deployment_mode"))
 }
 
+// EngineType returns a reference to field engine_type of aws_mq_broker.
 func (mb dataMqBrokerAttributes) EngineType() terra.StringValue {
-	return terra.ReferenceString(mb.ref.Append("engine_type"))
+	return terra.ReferenceAsString(mb.ref.Append("engine_type"))
 }
 
+// EngineVersion returns a reference to field engine_version of aws_mq_broker.
 func (mb dataMqBrokerAttributes) EngineVersion() terra.StringValue {
-	return terra.ReferenceString(mb.ref.Append("engine_version"))
+	return terra.ReferenceAsString(mb.ref.Append("engine_version"))
 }
 
+// HostInstanceType returns a reference to field host_instance_type of aws_mq_broker.
 func (mb dataMqBrokerAttributes) HostInstanceType() terra.StringValue {
-	return terra.ReferenceString(mb.ref.Append("host_instance_type"))
+	return terra.ReferenceAsString(mb.ref.Append("host_instance_type"))
 }
 
+// Id returns a reference to field id of aws_mq_broker.
 func (mb dataMqBrokerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mb.ref.Append("id"))
+	return terra.ReferenceAsString(mb.ref.Append("id"))
 }
 
+// PubliclyAccessible returns a reference to field publicly_accessible of aws_mq_broker.
 func (mb dataMqBrokerAttributes) PubliclyAccessible() terra.BoolValue {
-	return terra.ReferenceBool(mb.ref.Append("publicly_accessible"))
+	return terra.ReferenceAsBool(mb.ref.Append("publicly_accessible"))
 }
 
+// SecurityGroups returns a reference to field security_groups of aws_mq_broker.
 func (mb dataMqBrokerAttributes) SecurityGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](mb.ref.Append("security_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](mb.ref.Append("security_groups"))
 }
 
+// StorageType returns a reference to field storage_type of aws_mq_broker.
 func (mb dataMqBrokerAttributes) StorageType() terra.StringValue {
-	return terra.ReferenceString(mb.ref.Append("storage_type"))
+	return terra.ReferenceAsString(mb.ref.Append("storage_type"))
 }
 
+// SubnetIds returns a reference to field subnet_ids of aws_mq_broker.
 func (mb dataMqBrokerAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](mb.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](mb.ref.Append("subnet_ids"))
 }
 
+// Tags returns a reference to field tags of aws_mq_broker.
 func (mb dataMqBrokerAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mb.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mb.ref.Append("tags"))
 }
 
 func (mb dataMqBrokerAttributes) Configuration() terra.ListValue[datamqbroker.ConfigurationAttributes] {
-	return terra.ReferenceList[datamqbroker.ConfigurationAttributes](mb.ref.Append("configuration"))
+	return terra.ReferenceAsList[datamqbroker.ConfigurationAttributes](mb.ref.Append("configuration"))
 }
 
 func (mb dataMqBrokerAttributes) EncryptionOptions() terra.ListValue[datamqbroker.EncryptionOptionsAttributes] {
-	return terra.ReferenceList[datamqbroker.EncryptionOptionsAttributes](mb.ref.Append("encryption_options"))
+	return terra.ReferenceAsList[datamqbroker.EncryptionOptionsAttributes](mb.ref.Append("encryption_options"))
 }
 
 func (mb dataMqBrokerAttributes) Instances() terra.ListValue[datamqbroker.InstancesAttributes] {
-	return terra.ReferenceList[datamqbroker.InstancesAttributes](mb.ref.Append("instances"))
+	return terra.ReferenceAsList[datamqbroker.InstancesAttributes](mb.ref.Append("instances"))
 }
 
 func (mb dataMqBrokerAttributes) LdapServerMetadata() terra.ListValue[datamqbroker.LdapServerMetadataAttributes] {
-	return terra.ReferenceList[datamqbroker.LdapServerMetadataAttributes](mb.ref.Append("ldap_server_metadata"))
+	return terra.ReferenceAsList[datamqbroker.LdapServerMetadataAttributes](mb.ref.Append("ldap_server_metadata"))
 }
 
 func (mb dataMqBrokerAttributes) Logs() terra.ListValue[datamqbroker.LogsAttributes] {
-	return terra.ReferenceList[datamqbroker.LogsAttributes](mb.ref.Append("logs"))
+	return terra.ReferenceAsList[datamqbroker.LogsAttributes](mb.ref.Append("logs"))
 }
 
 func (mb dataMqBrokerAttributes) MaintenanceWindowStartTime() terra.ListValue[datamqbroker.MaintenanceWindowStartTimeAttributes] {
-	return terra.ReferenceList[datamqbroker.MaintenanceWindowStartTimeAttributes](mb.ref.Append("maintenance_window_start_time"))
+	return terra.ReferenceAsList[datamqbroker.MaintenanceWindowStartTimeAttributes](mb.ref.Append("maintenance_window_start_time"))
 }
 
 func (mb dataMqBrokerAttributes) User() terra.SetValue[datamqbroker.UserAttributes] {
-	return terra.ReferenceSet[datamqbroker.UserAttributes](mb.ref.Append("user"))
+	return terra.ReferenceAsSet[datamqbroker.UserAttributes](mb.ref.Append("user"))
 }

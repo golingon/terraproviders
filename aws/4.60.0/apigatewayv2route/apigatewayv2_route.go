@@ -31,11 +31,11 @@ func (rp RequestParameterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rp RequestParameterAttributes) RequestParameterKey() terra.StringValue {
-	return terra.ReferenceString(rp.ref.Append("request_parameter_key"))
+	return terra.ReferenceAsString(rp.ref.Append("request_parameter_key"))
 }
 
 func (rp RequestParameterAttributes) Required() terra.BoolValue {
-	return terra.ReferenceBool(rp.ref.Append("required"))
+	return terra.ReferenceAsBool(rp.ref.Append("required"))
 }
 
 type RequestParameterState struct {

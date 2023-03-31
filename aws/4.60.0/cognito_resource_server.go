@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCognitoResourceServer creates a new instance of [CognitoResourceServer].
 func NewCognitoResourceServer(name string, args CognitoResourceServerArgs) *CognitoResourceServer {
 	return &CognitoResourceServer{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCognitoResourceServer(name string, args CognitoResourceServerArgs) *Cogn
 
 var _ terra.Resource = (*CognitoResourceServer)(nil)
 
+// CognitoResourceServer represents the Terraform resource aws_cognito_resource_server.
 type CognitoResourceServer struct {
-	Name  string
-	Args  CognitoResourceServerArgs
-	state *cognitoResourceServerState
+	Name      string
+	Args      CognitoResourceServerArgs
+	state     *cognitoResourceServerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CognitoResourceServer].
 func (crs *CognitoResourceServer) Type() string {
 	return "aws_cognito_resource_server"
 }
 
+// LocalName returns the local name for [CognitoResourceServer].
 func (crs *CognitoResourceServer) LocalName() string {
 	return crs.Name
 }
 
+// Configuration returns the configuration (args) for [CognitoResourceServer].
 func (crs *CognitoResourceServer) Configuration() interface{} {
 	return crs.Args
 }
 
+// DependOn is used for other resources to depend on [CognitoResourceServer].
+func (crs *CognitoResourceServer) DependOn() terra.Reference {
+	return terra.ReferenceResource(crs)
+}
+
+// Dependencies returns the list of resources [CognitoResourceServer] depends_on.
+func (crs *CognitoResourceServer) Dependencies() terra.Dependencies {
+	return crs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CognitoResourceServer].
+func (crs *CognitoResourceServer) LifecycleManagement() *terra.Lifecycle {
+	return crs.Lifecycle
+}
+
+// Attributes returns the attributes for [CognitoResourceServer].
 func (crs *CognitoResourceServer) Attributes() cognitoResourceServerAttributes {
 	return cognitoResourceServerAttributes{ref: terra.ReferenceResource(crs)}
 }
 
+// ImportState imports the given attribute values into [CognitoResourceServer]'s state.
 func (crs *CognitoResourceServer) ImportState(av io.Reader) error {
 	crs.state = &cognitoResourceServerState{}
 	if err := json.NewDecoder(av).Decode(crs.state); err != nil {
@@ -49,10 +73,12 @@ func (crs *CognitoResourceServer) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CognitoResourceServer] has state.
 func (crs *CognitoResourceServer) State() (*cognitoResourceServerState, bool) {
 	return crs.state, crs.state != nil
 }
 
+// StateMust returns the state for [CognitoResourceServer]. Panics if the state is nil.
 func (crs *CognitoResourceServer) StateMust() *cognitoResourceServerState {
 	if crs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", crs.Type(), crs.LocalName()))
@@ -60,10 +86,7 @@ func (crs *CognitoResourceServer) StateMust() *cognitoResourceServerState {
 	return crs.state
 }
 
-func (crs *CognitoResourceServer) DependOn() terra.Reference {
-	return terra.ReferenceResource(crs)
-}
-
+// CognitoResourceServerArgs contains the configurations for aws_cognito_resource_server.
 type CognitoResourceServerArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -75,35 +98,38 @@ type CognitoResourceServerArgs struct {
 	UserPoolId terra.StringValue `hcl:"user_pool_id,attr" validate:"required"`
 	// Scope: min=0,max=100
 	Scope []cognitoresourceserver.Scope `hcl:"scope,block" validate:"min=0,max=100"`
-	// DependsOn contains resources that CognitoResourceServer depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cognitoResourceServerAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_cognito_resource_server.
 func (crs cognitoResourceServerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crs.ref.Append("id"))
+	return terra.ReferenceAsString(crs.ref.Append("id"))
 }
 
+// Identifier returns a reference to field identifier of aws_cognito_resource_server.
 func (crs cognitoResourceServerAttributes) Identifier() terra.StringValue {
-	return terra.ReferenceString(crs.ref.Append("identifier"))
+	return terra.ReferenceAsString(crs.ref.Append("identifier"))
 }
 
+// Name returns a reference to field name of aws_cognito_resource_server.
 func (crs cognitoResourceServerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(crs.ref.Append("name"))
+	return terra.ReferenceAsString(crs.ref.Append("name"))
 }
 
+// ScopeIdentifiers returns a reference to field scope_identifiers of aws_cognito_resource_server.
 func (crs cognitoResourceServerAttributes) ScopeIdentifiers() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](crs.ref.Append("scope_identifiers"))
+	return terra.ReferenceAsList[terra.StringValue](crs.ref.Append("scope_identifiers"))
 }
 
+// UserPoolId returns a reference to field user_pool_id of aws_cognito_resource_server.
 func (crs cognitoResourceServerAttributes) UserPoolId() terra.StringValue {
-	return terra.ReferenceString(crs.ref.Append("user_pool_id"))
+	return terra.ReferenceAsString(crs.ref.Append("user_pool_id"))
 }
 
 func (crs cognitoResourceServerAttributes) Scope() terra.SetValue[cognitoresourceserver.ScopeAttributes] {
-	return terra.ReferenceSet[cognitoresourceserver.ScopeAttributes](crs.ref.Append("scope"))
+	return terra.ReferenceAsSet[cognitoresourceserver.ScopeAttributes](crs.ref.Append("scope"))
 }
 
 type cognitoResourceServerState struct {

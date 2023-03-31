@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewFisExperimentTemplate creates a new instance of [FisExperimentTemplate].
 func NewFisExperimentTemplate(name string, args FisExperimentTemplateArgs) *FisExperimentTemplate {
 	return &FisExperimentTemplate{
 		Args: args,
@@ -19,28 +20,51 @@ func NewFisExperimentTemplate(name string, args FisExperimentTemplateArgs) *FisE
 
 var _ terra.Resource = (*FisExperimentTemplate)(nil)
 
+// FisExperimentTemplate represents the Terraform resource aws_fis_experiment_template.
 type FisExperimentTemplate struct {
-	Name  string
-	Args  FisExperimentTemplateArgs
-	state *fisExperimentTemplateState
+	Name      string
+	Args      FisExperimentTemplateArgs
+	state     *fisExperimentTemplateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [FisExperimentTemplate].
 func (fet *FisExperimentTemplate) Type() string {
 	return "aws_fis_experiment_template"
 }
 
+// LocalName returns the local name for [FisExperimentTemplate].
 func (fet *FisExperimentTemplate) LocalName() string {
 	return fet.Name
 }
 
+// Configuration returns the configuration (args) for [FisExperimentTemplate].
 func (fet *FisExperimentTemplate) Configuration() interface{} {
 	return fet.Args
 }
 
+// DependOn is used for other resources to depend on [FisExperimentTemplate].
+func (fet *FisExperimentTemplate) DependOn() terra.Reference {
+	return terra.ReferenceResource(fet)
+}
+
+// Dependencies returns the list of resources [FisExperimentTemplate] depends_on.
+func (fet *FisExperimentTemplate) Dependencies() terra.Dependencies {
+	return fet.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [FisExperimentTemplate].
+func (fet *FisExperimentTemplate) LifecycleManagement() *terra.Lifecycle {
+	return fet.Lifecycle
+}
+
+// Attributes returns the attributes for [FisExperimentTemplate].
 func (fet *FisExperimentTemplate) Attributes() fisExperimentTemplateAttributes {
 	return fisExperimentTemplateAttributes{ref: terra.ReferenceResource(fet)}
 }
 
+// ImportState imports the given attribute values into [FisExperimentTemplate]'s state.
 func (fet *FisExperimentTemplate) ImportState(av io.Reader) error {
 	fet.state = &fisExperimentTemplateState{}
 	if err := json.NewDecoder(av).Decode(fet.state); err != nil {
@@ -49,10 +73,12 @@ func (fet *FisExperimentTemplate) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [FisExperimentTemplate] has state.
 func (fet *FisExperimentTemplate) State() (*fisExperimentTemplateState, bool) {
 	return fet.state, fet.state != nil
 }
 
+// StateMust returns the state for [FisExperimentTemplate]. Panics if the state is nil.
 func (fet *FisExperimentTemplate) StateMust() *fisExperimentTemplateState {
 	if fet.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", fet.Type(), fet.LocalName()))
@@ -60,10 +86,7 @@ func (fet *FisExperimentTemplate) StateMust() *fisExperimentTemplateState {
 	return fet.state
 }
 
-func (fet *FisExperimentTemplate) DependOn() terra.Reference {
-	return terra.ReferenceResource(fet)
-}
-
+// FisExperimentTemplateArgs contains the configurations for aws_fis_experiment_template.
 type FisExperimentTemplateArgs struct {
 	// Description: string, required
 	Description terra.StringValue `hcl:"description,attr" validate:"required"`
@@ -83,47 +106,50 @@ type FisExperimentTemplateArgs struct {
 	Target []fisexperimenttemplate.Target `hcl:"target,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *fisexperimenttemplate.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that FisExperimentTemplate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type fisExperimentTemplateAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of aws_fis_experiment_template.
 func (fet fisExperimentTemplateAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(fet.ref.Append("description"))
+	return terra.ReferenceAsString(fet.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_fis_experiment_template.
 func (fet fisExperimentTemplateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(fet.ref.Append("id"))
+	return terra.ReferenceAsString(fet.ref.Append("id"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_fis_experiment_template.
 func (fet fisExperimentTemplateAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(fet.ref.Append("role_arn"))
+	return terra.ReferenceAsString(fet.ref.Append("role_arn"))
 }
 
+// Tags returns a reference to field tags of aws_fis_experiment_template.
 func (fet fisExperimentTemplateAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](fet.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](fet.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_fis_experiment_template.
 func (fet fisExperimentTemplateAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](fet.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](fet.ref.Append("tags_all"))
 }
 
 func (fet fisExperimentTemplateAttributes) Action() terra.SetValue[fisexperimenttemplate.ActionAttributes] {
-	return terra.ReferenceSet[fisexperimenttemplate.ActionAttributes](fet.ref.Append("action"))
+	return terra.ReferenceAsSet[fisexperimenttemplate.ActionAttributes](fet.ref.Append("action"))
 }
 
 func (fet fisExperimentTemplateAttributes) StopCondition() terra.SetValue[fisexperimenttemplate.StopConditionAttributes] {
-	return terra.ReferenceSet[fisexperimenttemplate.StopConditionAttributes](fet.ref.Append("stop_condition"))
+	return terra.ReferenceAsSet[fisexperimenttemplate.StopConditionAttributes](fet.ref.Append("stop_condition"))
 }
 
 func (fet fisExperimentTemplateAttributes) Target() terra.SetValue[fisexperimenttemplate.TargetAttributes] {
-	return terra.ReferenceSet[fisexperimenttemplate.TargetAttributes](fet.ref.Append("target"))
+	return terra.ReferenceAsSet[fisexperimenttemplate.TargetAttributes](fet.ref.Append("target"))
 }
 
 func (fet fisExperimentTemplateAttributes) Timeouts() fisexperimenttemplate.TimeoutsAttributes {
-	return terra.ReferenceSingle[fisexperimenttemplate.TimeoutsAttributes](fet.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[fisexperimenttemplate.TimeoutsAttributes](fet.ref.Append("timeouts"))
 }
 
 type fisExperimentTemplateState struct {

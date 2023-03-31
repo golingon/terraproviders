@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewKeyspacesKeyspace creates a new instance of [KeyspacesKeyspace].
 func NewKeyspacesKeyspace(name string, args KeyspacesKeyspaceArgs) *KeyspacesKeyspace {
 	return &KeyspacesKeyspace{
 		Args: args,
@@ -19,28 +20,51 @@ func NewKeyspacesKeyspace(name string, args KeyspacesKeyspaceArgs) *KeyspacesKey
 
 var _ terra.Resource = (*KeyspacesKeyspace)(nil)
 
+// KeyspacesKeyspace represents the Terraform resource aws_keyspaces_keyspace.
 type KeyspacesKeyspace struct {
-	Name  string
-	Args  KeyspacesKeyspaceArgs
-	state *keyspacesKeyspaceState
+	Name      string
+	Args      KeyspacesKeyspaceArgs
+	state     *keyspacesKeyspaceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KeyspacesKeyspace].
 func (kk *KeyspacesKeyspace) Type() string {
 	return "aws_keyspaces_keyspace"
 }
 
+// LocalName returns the local name for [KeyspacesKeyspace].
 func (kk *KeyspacesKeyspace) LocalName() string {
 	return kk.Name
 }
 
+// Configuration returns the configuration (args) for [KeyspacesKeyspace].
 func (kk *KeyspacesKeyspace) Configuration() interface{} {
 	return kk.Args
 }
 
+// DependOn is used for other resources to depend on [KeyspacesKeyspace].
+func (kk *KeyspacesKeyspace) DependOn() terra.Reference {
+	return terra.ReferenceResource(kk)
+}
+
+// Dependencies returns the list of resources [KeyspacesKeyspace] depends_on.
+func (kk *KeyspacesKeyspace) Dependencies() terra.Dependencies {
+	return kk.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KeyspacesKeyspace].
+func (kk *KeyspacesKeyspace) LifecycleManagement() *terra.Lifecycle {
+	return kk.Lifecycle
+}
+
+// Attributes returns the attributes for [KeyspacesKeyspace].
 func (kk *KeyspacesKeyspace) Attributes() keyspacesKeyspaceAttributes {
 	return keyspacesKeyspaceAttributes{ref: terra.ReferenceResource(kk)}
 }
 
+// ImportState imports the given attribute values into [KeyspacesKeyspace]'s state.
 func (kk *KeyspacesKeyspace) ImportState(av io.Reader) error {
 	kk.state = &keyspacesKeyspaceState{}
 	if err := json.NewDecoder(av).Decode(kk.state); err != nil {
@@ -49,10 +73,12 @@ func (kk *KeyspacesKeyspace) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [KeyspacesKeyspace] has state.
 func (kk *KeyspacesKeyspace) State() (*keyspacesKeyspaceState, bool) {
 	return kk.state, kk.state != nil
 }
 
+// StateMust returns the state for [KeyspacesKeyspace]. Panics if the state is nil.
 func (kk *KeyspacesKeyspace) StateMust() *keyspacesKeyspaceState {
 	if kk.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", kk.Type(), kk.LocalName()))
@@ -60,10 +86,7 @@ func (kk *KeyspacesKeyspace) StateMust() *keyspacesKeyspaceState {
 	return kk.state
 }
 
-func (kk *KeyspacesKeyspace) DependOn() terra.Reference {
-	return terra.ReferenceResource(kk)
-}
-
+// KeyspacesKeyspaceArgs contains the configurations for aws_keyspaces_keyspace.
 type KeyspacesKeyspaceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -75,35 +98,38 @@ type KeyspacesKeyspaceArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Timeouts: optional
 	Timeouts *keyspaceskeyspace.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that KeyspacesKeyspace depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type keyspacesKeyspaceAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_keyspaces_keyspace.
 func (kk keyspacesKeyspaceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(kk.ref.Append("arn"))
+	return terra.ReferenceAsString(kk.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_keyspaces_keyspace.
 func (kk keyspacesKeyspaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kk.ref.Append("id"))
+	return terra.ReferenceAsString(kk.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_keyspaces_keyspace.
 func (kk keyspacesKeyspaceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kk.ref.Append("name"))
+	return terra.ReferenceAsString(kk.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_keyspaces_keyspace.
 func (kk keyspacesKeyspaceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kk.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](kk.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_keyspaces_keyspace.
 func (kk keyspacesKeyspaceAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kk.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](kk.ref.Append("tags_all"))
 }
 
 func (kk keyspacesKeyspaceAttributes) Timeouts() keyspaceskeyspace.TimeoutsAttributes {
-	return terra.ReferenceSingle[keyspaceskeyspace.TimeoutsAttributes](kk.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[keyspaceskeyspace.TimeoutsAttributes](kk.ref.Append("timeouts"))
 }
 
 type keyspacesKeyspaceState struct {

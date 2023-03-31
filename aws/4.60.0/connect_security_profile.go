@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewConnectSecurityProfile creates a new instance of [ConnectSecurityProfile].
 func NewConnectSecurityProfile(name string, args ConnectSecurityProfileArgs) *ConnectSecurityProfile {
 	return &ConnectSecurityProfile{
 		Args: args,
@@ -18,28 +19,51 @@ func NewConnectSecurityProfile(name string, args ConnectSecurityProfileArgs) *Co
 
 var _ terra.Resource = (*ConnectSecurityProfile)(nil)
 
+// ConnectSecurityProfile represents the Terraform resource aws_connect_security_profile.
 type ConnectSecurityProfile struct {
-	Name  string
-	Args  ConnectSecurityProfileArgs
-	state *connectSecurityProfileState
+	Name      string
+	Args      ConnectSecurityProfileArgs
+	state     *connectSecurityProfileState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ConnectSecurityProfile].
 func (csp *ConnectSecurityProfile) Type() string {
 	return "aws_connect_security_profile"
 }
 
+// LocalName returns the local name for [ConnectSecurityProfile].
 func (csp *ConnectSecurityProfile) LocalName() string {
 	return csp.Name
 }
 
+// Configuration returns the configuration (args) for [ConnectSecurityProfile].
 func (csp *ConnectSecurityProfile) Configuration() interface{} {
 	return csp.Args
 }
 
+// DependOn is used for other resources to depend on [ConnectSecurityProfile].
+func (csp *ConnectSecurityProfile) DependOn() terra.Reference {
+	return terra.ReferenceResource(csp)
+}
+
+// Dependencies returns the list of resources [ConnectSecurityProfile] depends_on.
+func (csp *ConnectSecurityProfile) Dependencies() terra.Dependencies {
+	return csp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ConnectSecurityProfile].
+func (csp *ConnectSecurityProfile) LifecycleManagement() *terra.Lifecycle {
+	return csp.Lifecycle
+}
+
+// Attributes returns the attributes for [ConnectSecurityProfile].
 func (csp *ConnectSecurityProfile) Attributes() connectSecurityProfileAttributes {
 	return connectSecurityProfileAttributes{ref: terra.ReferenceResource(csp)}
 }
 
+// ImportState imports the given attribute values into [ConnectSecurityProfile]'s state.
 func (csp *ConnectSecurityProfile) ImportState(av io.Reader) error {
 	csp.state = &connectSecurityProfileState{}
 	if err := json.NewDecoder(av).Decode(csp.state); err != nil {
@@ -48,10 +72,12 @@ func (csp *ConnectSecurityProfile) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ConnectSecurityProfile] has state.
 func (csp *ConnectSecurityProfile) State() (*connectSecurityProfileState, bool) {
 	return csp.state, csp.state != nil
 }
 
+// StateMust returns the state for [ConnectSecurityProfile]. Panics if the state is nil.
 func (csp *ConnectSecurityProfile) StateMust() *connectSecurityProfileState {
 	if csp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", csp.Type(), csp.LocalName()))
@@ -59,10 +85,7 @@ func (csp *ConnectSecurityProfile) StateMust() *connectSecurityProfileState {
 	return csp.state
 }
 
-func (csp *ConnectSecurityProfile) DependOn() terra.Reference {
-	return terra.ReferenceResource(csp)
-}
-
+// ConnectSecurityProfileArgs contains the configurations for aws_connect_security_profile.
 type ConnectSecurityProfileArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -78,51 +101,59 @@ type ConnectSecurityProfileArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that ConnectSecurityProfile depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type connectSecurityProfileAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_connect_security_profile.
 func (csp connectSecurityProfileAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("arn"))
+	return terra.ReferenceAsString(csp.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_connect_security_profile.
 func (csp connectSecurityProfileAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("description"))
+	return terra.ReferenceAsString(csp.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_connect_security_profile.
 func (csp connectSecurityProfileAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("id"))
+	return terra.ReferenceAsString(csp.ref.Append("id"))
 }
 
+// InstanceId returns a reference to field instance_id of aws_connect_security_profile.
 func (csp connectSecurityProfileAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("instance_id"))
+	return terra.ReferenceAsString(csp.ref.Append("instance_id"))
 }
 
+// Name returns a reference to field name of aws_connect_security_profile.
 func (csp connectSecurityProfileAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("name"))
+	return terra.ReferenceAsString(csp.ref.Append("name"))
 }
 
+// OrganizationResourceId returns a reference to field organization_resource_id of aws_connect_security_profile.
 func (csp connectSecurityProfileAttributes) OrganizationResourceId() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("organization_resource_id"))
+	return terra.ReferenceAsString(csp.ref.Append("organization_resource_id"))
 }
 
+// Permissions returns a reference to field permissions of aws_connect_security_profile.
 func (csp connectSecurityProfileAttributes) Permissions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](csp.ref.Append("permissions"))
+	return terra.ReferenceAsSet[terra.StringValue](csp.ref.Append("permissions"))
 }
 
+// SecurityProfileId returns a reference to field security_profile_id of aws_connect_security_profile.
 func (csp connectSecurityProfileAttributes) SecurityProfileId() terra.StringValue {
-	return terra.ReferenceString(csp.ref.Append("security_profile_id"))
+	return terra.ReferenceAsString(csp.ref.Append("security_profile_id"))
 }
 
+// Tags returns a reference to field tags of aws_connect_security_profile.
 func (csp connectSecurityProfileAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](csp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](csp.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_connect_security_profile.
 func (csp connectSecurityProfileAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](csp.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](csp.ref.Append("tags_all"))
 }
 
 type connectSecurityProfileState struct {

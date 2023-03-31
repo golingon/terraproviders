@@ -38,11 +38,11 @@ func (simt SqlInjectionMatchTuplesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (simt SqlInjectionMatchTuplesAttributes) TextTransformation() terra.StringValue {
-	return terra.ReferenceString(simt.ref.Append("text_transformation"))
+	return terra.ReferenceAsString(simt.ref.Append("text_transformation"))
 }
 
 func (simt SqlInjectionMatchTuplesAttributes) FieldToMatch() terra.ListValue[FieldToMatchAttributes] {
-	return terra.ReferenceList[FieldToMatchAttributes](simt.ref.Append("field_to_match"))
+	return terra.ReferenceAsList[FieldToMatchAttributes](simt.ref.Append("field_to_match"))
 }
 
 type FieldToMatchAttributes struct {
@@ -62,11 +62,11 @@ func (ftm FieldToMatchAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ftm FieldToMatchAttributes) Data() terra.StringValue {
-	return terra.ReferenceString(ftm.ref.Append("data"))
+	return terra.ReferenceAsString(ftm.ref.Append("data"))
 }
 
 func (ftm FieldToMatchAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ftm.ref.Append("type"))
+	return terra.ReferenceAsString(ftm.ref.Append("type"))
 }
 
 type SqlInjectionMatchTuplesState struct {

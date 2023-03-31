@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewGameliftScript creates a new instance of [GameliftScript].
 func NewGameliftScript(name string, args GameliftScriptArgs) *GameliftScript {
 	return &GameliftScript{
 		Args: args,
@@ -19,28 +20,51 @@ func NewGameliftScript(name string, args GameliftScriptArgs) *GameliftScript {
 
 var _ terra.Resource = (*GameliftScript)(nil)
 
+// GameliftScript represents the Terraform resource aws_gamelift_script.
 type GameliftScript struct {
-	Name  string
-	Args  GameliftScriptArgs
-	state *gameliftScriptState
+	Name      string
+	Args      GameliftScriptArgs
+	state     *gameliftScriptState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GameliftScript].
 func (gs *GameliftScript) Type() string {
 	return "aws_gamelift_script"
 }
 
+// LocalName returns the local name for [GameliftScript].
 func (gs *GameliftScript) LocalName() string {
 	return gs.Name
 }
 
+// Configuration returns the configuration (args) for [GameliftScript].
 func (gs *GameliftScript) Configuration() interface{} {
 	return gs.Args
 }
 
+// DependOn is used for other resources to depend on [GameliftScript].
+func (gs *GameliftScript) DependOn() terra.Reference {
+	return terra.ReferenceResource(gs)
+}
+
+// Dependencies returns the list of resources [GameliftScript] depends_on.
+func (gs *GameliftScript) Dependencies() terra.Dependencies {
+	return gs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GameliftScript].
+func (gs *GameliftScript) LifecycleManagement() *terra.Lifecycle {
+	return gs.Lifecycle
+}
+
+// Attributes returns the attributes for [GameliftScript].
 func (gs *GameliftScript) Attributes() gameliftScriptAttributes {
 	return gameliftScriptAttributes{ref: terra.ReferenceResource(gs)}
 }
 
+// ImportState imports the given attribute values into [GameliftScript]'s state.
 func (gs *GameliftScript) ImportState(av io.Reader) error {
 	gs.state = &gameliftScriptState{}
 	if err := json.NewDecoder(av).Decode(gs.state); err != nil {
@@ -49,10 +73,12 @@ func (gs *GameliftScript) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GameliftScript] has state.
 func (gs *GameliftScript) State() (*gameliftScriptState, bool) {
 	return gs.state, gs.state != nil
 }
 
+// StateMust returns the state for [GameliftScript]. Panics if the state is nil.
 func (gs *GameliftScript) StateMust() *gameliftScriptState {
 	if gs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", gs.Type(), gs.LocalName()))
@@ -60,10 +86,7 @@ func (gs *GameliftScript) StateMust() *gameliftScriptState {
 	return gs.state
 }
 
-func (gs *GameliftScript) DependOn() terra.Reference {
-	return terra.ReferenceResource(gs)
-}
-
+// GameliftScriptArgs contains the configurations for aws_gamelift_script.
 type GameliftScriptArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,43 +102,48 @@ type GameliftScriptArgs struct {
 	ZipFile terra.StringValue `hcl:"zip_file,attr"`
 	// StorageLocation: optional
 	StorageLocation *gameliftscript.StorageLocation `hcl:"storage_location,block"`
-	// DependsOn contains resources that GameliftScript depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type gameliftScriptAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_gamelift_script.
 func (gs gameliftScriptAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(gs.ref.Append("arn"))
+	return terra.ReferenceAsString(gs.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_gamelift_script.
 func (gs gameliftScriptAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gs.ref.Append("id"))
+	return terra.ReferenceAsString(gs.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_gamelift_script.
 func (gs gameliftScriptAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(gs.ref.Append("name"))
+	return terra.ReferenceAsString(gs.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_gamelift_script.
 func (gs gameliftScriptAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gs.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](gs.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_gamelift_script.
 func (gs gameliftScriptAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gs.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](gs.ref.Append("tags_all"))
 }
 
+// Version returns a reference to field version of aws_gamelift_script.
 func (gs gameliftScriptAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(gs.ref.Append("version"))
+	return terra.ReferenceAsString(gs.ref.Append("version"))
 }
 
+// ZipFile returns a reference to field zip_file of aws_gamelift_script.
 func (gs gameliftScriptAttributes) ZipFile() terra.StringValue {
-	return terra.ReferenceString(gs.ref.Append("zip_file"))
+	return terra.ReferenceAsString(gs.ref.Append("zip_file"))
 }
 
 func (gs gameliftScriptAttributes) StorageLocation() terra.ListValue[gameliftscript.StorageLocationAttributes] {
-	return terra.ReferenceList[gameliftscript.StorageLocationAttributes](gs.ref.Append("storage_location"))
+	return terra.ReferenceAsList[gameliftscript.StorageLocationAttributes](gs.ref.Append("storage_location"))
 }
 
 type gameliftScriptState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSesv2EmailIdentity creates a new instance of [Sesv2EmailIdentity].
 func NewSesv2EmailIdentity(name string, args Sesv2EmailIdentityArgs) *Sesv2EmailIdentity {
 	return &Sesv2EmailIdentity{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSesv2EmailIdentity(name string, args Sesv2EmailIdentityArgs) *Sesv2Email
 
 var _ terra.Resource = (*Sesv2EmailIdentity)(nil)
 
+// Sesv2EmailIdentity represents the Terraform resource aws_sesv2_email_identity.
 type Sesv2EmailIdentity struct {
-	Name  string
-	Args  Sesv2EmailIdentityArgs
-	state *sesv2EmailIdentityState
+	Name      string
+	Args      Sesv2EmailIdentityArgs
+	state     *sesv2EmailIdentityState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Sesv2EmailIdentity].
 func (sei *Sesv2EmailIdentity) Type() string {
 	return "aws_sesv2_email_identity"
 }
 
+// LocalName returns the local name for [Sesv2EmailIdentity].
 func (sei *Sesv2EmailIdentity) LocalName() string {
 	return sei.Name
 }
 
+// Configuration returns the configuration (args) for [Sesv2EmailIdentity].
 func (sei *Sesv2EmailIdentity) Configuration() interface{} {
 	return sei.Args
 }
 
+// DependOn is used for other resources to depend on [Sesv2EmailIdentity].
+func (sei *Sesv2EmailIdentity) DependOn() terra.Reference {
+	return terra.ReferenceResource(sei)
+}
+
+// Dependencies returns the list of resources [Sesv2EmailIdentity] depends_on.
+func (sei *Sesv2EmailIdentity) Dependencies() terra.Dependencies {
+	return sei.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Sesv2EmailIdentity].
+func (sei *Sesv2EmailIdentity) LifecycleManagement() *terra.Lifecycle {
+	return sei.Lifecycle
+}
+
+// Attributes returns the attributes for [Sesv2EmailIdentity].
 func (sei *Sesv2EmailIdentity) Attributes() sesv2EmailIdentityAttributes {
 	return sesv2EmailIdentityAttributes{ref: terra.ReferenceResource(sei)}
 }
 
+// ImportState imports the given attribute values into [Sesv2EmailIdentity]'s state.
 func (sei *Sesv2EmailIdentity) ImportState(av io.Reader) error {
 	sei.state = &sesv2EmailIdentityState{}
 	if err := json.NewDecoder(av).Decode(sei.state); err != nil {
@@ -49,10 +73,12 @@ func (sei *Sesv2EmailIdentity) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Sesv2EmailIdentity] has state.
 func (sei *Sesv2EmailIdentity) State() (*sesv2EmailIdentityState, bool) {
 	return sei.state, sei.state != nil
 }
 
+// StateMust returns the state for [Sesv2EmailIdentity]. Panics if the state is nil.
 func (sei *Sesv2EmailIdentity) StateMust() *sesv2EmailIdentityState {
 	if sei.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sei.Type(), sei.LocalName()))
@@ -60,10 +86,7 @@ func (sei *Sesv2EmailIdentity) StateMust() *sesv2EmailIdentityState {
 	return sei.state
 }
 
-func (sei *Sesv2EmailIdentity) DependOn() terra.Reference {
-	return terra.ReferenceResource(sei)
-}
-
+// Sesv2EmailIdentityArgs contains the configurations for aws_sesv2_email_identity.
 type Sesv2EmailIdentityArgs struct {
 	// ConfigurationSetName: string, optional
 	ConfigurationSetName terra.StringValue `hcl:"configuration_set_name,attr"`
@@ -77,47 +100,53 @@ type Sesv2EmailIdentityArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// DkimSigningAttributes: optional
 	DkimSigningAttributes *sesv2emailidentity.DkimSigningAttributes `hcl:"dkim_signing_attributes,block"`
-	// DependsOn contains resources that Sesv2EmailIdentity depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sesv2EmailIdentityAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_sesv2_email_identity.
 func (sei sesv2EmailIdentityAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sei.ref.Append("arn"))
+	return terra.ReferenceAsString(sei.ref.Append("arn"))
 }
 
+// ConfigurationSetName returns a reference to field configuration_set_name of aws_sesv2_email_identity.
 func (sei sesv2EmailIdentityAttributes) ConfigurationSetName() terra.StringValue {
-	return terra.ReferenceString(sei.ref.Append("configuration_set_name"))
+	return terra.ReferenceAsString(sei.ref.Append("configuration_set_name"))
 }
 
+// EmailIdentity returns a reference to field email_identity of aws_sesv2_email_identity.
 func (sei sesv2EmailIdentityAttributes) EmailIdentity() terra.StringValue {
-	return terra.ReferenceString(sei.ref.Append("email_identity"))
+	return terra.ReferenceAsString(sei.ref.Append("email_identity"))
 }
 
+// Id returns a reference to field id of aws_sesv2_email_identity.
 func (sei sesv2EmailIdentityAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sei.ref.Append("id"))
+	return terra.ReferenceAsString(sei.ref.Append("id"))
 }
 
+// IdentityType returns a reference to field identity_type of aws_sesv2_email_identity.
 func (sei sesv2EmailIdentityAttributes) IdentityType() terra.StringValue {
-	return terra.ReferenceString(sei.ref.Append("identity_type"))
+	return terra.ReferenceAsString(sei.ref.Append("identity_type"))
 }
 
+// Tags returns a reference to field tags of aws_sesv2_email_identity.
 func (sei sesv2EmailIdentityAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sei.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sei.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_sesv2_email_identity.
 func (sei sesv2EmailIdentityAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sei.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sei.ref.Append("tags_all"))
 }
 
+// VerifiedForSendingStatus returns a reference to field verified_for_sending_status of aws_sesv2_email_identity.
 func (sei sesv2EmailIdentityAttributes) VerifiedForSendingStatus() terra.BoolValue {
-	return terra.ReferenceBool(sei.ref.Append("verified_for_sending_status"))
+	return terra.ReferenceAsBool(sei.ref.Append("verified_for_sending_status"))
 }
 
 func (sei sesv2EmailIdentityAttributes) DkimSigningAttributes() terra.ListValue[sesv2emailidentity.DkimSigningAttributesAttributes] {
-	return terra.ReferenceList[sesv2emailidentity.DkimSigningAttributesAttributes](sei.ref.Append("dkim_signing_attributes"))
+	return terra.ReferenceAsList[sesv2emailidentity.DkimSigningAttributesAttributes](sei.ref.Append("dkim_signing_attributes"))
 }
 
 type sesv2EmailIdentityState struct {

@@ -26,19 +26,19 @@ func (a AccountsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AccountsAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("arn"))
+	return terra.ReferenceAsString(a.ref.Append("arn"))
 }
 
 func (a AccountsAttributes) Email() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("email"))
+	return terra.ReferenceAsString(a.ref.Append("email"))
 }
 
 func (a AccountsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("id"))
+	return terra.ReferenceAsString(a.ref.Append("id"))
 }
 
 func (a AccountsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("name"))
+	return terra.ReferenceAsString(a.ref.Append("name"))
 }
 
 type AccountsState struct {

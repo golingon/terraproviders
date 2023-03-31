@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSagemakerAppImageConfig creates a new instance of [SagemakerAppImageConfig].
 func NewSagemakerAppImageConfig(name string, args SagemakerAppImageConfigArgs) *SagemakerAppImageConfig {
 	return &SagemakerAppImageConfig{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSagemakerAppImageConfig(name string, args SagemakerAppImageConfigArgs) *
 
 var _ terra.Resource = (*SagemakerAppImageConfig)(nil)
 
+// SagemakerAppImageConfig represents the Terraform resource aws_sagemaker_app_image_config.
 type SagemakerAppImageConfig struct {
-	Name  string
-	Args  SagemakerAppImageConfigArgs
-	state *sagemakerAppImageConfigState
+	Name      string
+	Args      SagemakerAppImageConfigArgs
+	state     *sagemakerAppImageConfigState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SagemakerAppImageConfig].
 func (saic *SagemakerAppImageConfig) Type() string {
 	return "aws_sagemaker_app_image_config"
 }
 
+// LocalName returns the local name for [SagemakerAppImageConfig].
 func (saic *SagemakerAppImageConfig) LocalName() string {
 	return saic.Name
 }
 
+// Configuration returns the configuration (args) for [SagemakerAppImageConfig].
 func (saic *SagemakerAppImageConfig) Configuration() interface{} {
 	return saic.Args
 }
 
+// DependOn is used for other resources to depend on [SagemakerAppImageConfig].
+func (saic *SagemakerAppImageConfig) DependOn() terra.Reference {
+	return terra.ReferenceResource(saic)
+}
+
+// Dependencies returns the list of resources [SagemakerAppImageConfig] depends_on.
+func (saic *SagemakerAppImageConfig) Dependencies() terra.Dependencies {
+	return saic.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SagemakerAppImageConfig].
+func (saic *SagemakerAppImageConfig) LifecycleManagement() *terra.Lifecycle {
+	return saic.Lifecycle
+}
+
+// Attributes returns the attributes for [SagemakerAppImageConfig].
 func (saic *SagemakerAppImageConfig) Attributes() sagemakerAppImageConfigAttributes {
 	return sagemakerAppImageConfigAttributes{ref: terra.ReferenceResource(saic)}
 }
 
+// ImportState imports the given attribute values into [SagemakerAppImageConfig]'s state.
 func (saic *SagemakerAppImageConfig) ImportState(av io.Reader) error {
 	saic.state = &sagemakerAppImageConfigState{}
 	if err := json.NewDecoder(av).Decode(saic.state); err != nil {
@@ -49,10 +73,12 @@ func (saic *SagemakerAppImageConfig) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SagemakerAppImageConfig] has state.
 func (saic *SagemakerAppImageConfig) State() (*sagemakerAppImageConfigState, bool) {
 	return saic.state, saic.state != nil
 }
 
+// StateMust returns the state for [SagemakerAppImageConfig]. Panics if the state is nil.
 func (saic *SagemakerAppImageConfig) StateMust() *sagemakerAppImageConfigState {
 	if saic.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", saic.Type(), saic.LocalName()))
@@ -60,10 +86,7 @@ func (saic *SagemakerAppImageConfig) StateMust() *sagemakerAppImageConfigState {
 	return saic.state
 }
 
-func (saic *SagemakerAppImageConfig) DependOn() terra.Reference {
-	return terra.ReferenceResource(saic)
-}
-
+// SagemakerAppImageConfigArgs contains the configurations for aws_sagemaker_app_image_config.
 type SagemakerAppImageConfigArgs struct {
 	// AppImageConfigName: string, required
 	AppImageConfigName terra.StringValue `hcl:"app_image_config_name,attr" validate:"required"`
@@ -75,35 +98,38 @@ type SagemakerAppImageConfigArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// KernelGatewayImageConfig: optional
 	KernelGatewayImageConfig *sagemakerappimageconfig.KernelGatewayImageConfig `hcl:"kernel_gateway_image_config,block"`
-	// DependsOn contains resources that SagemakerAppImageConfig depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sagemakerAppImageConfigAttributes struct {
 	ref terra.Reference
 }
 
+// AppImageConfigName returns a reference to field app_image_config_name of aws_sagemaker_app_image_config.
 func (saic sagemakerAppImageConfigAttributes) AppImageConfigName() terra.StringValue {
-	return terra.ReferenceString(saic.ref.Append("app_image_config_name"))
+	return terra.ReferenceAsString(saic.ref.Append("app_image_config_name"))
 }
 
+// Arn returns a reference to field arn of aws_sagemaker_app_image_config.
 func (saic sagemakerAppImageConfigAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(saic.ref.Append("arn"))
+	return terra.ReferenceAsString(saic.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_sagemaker_app_image_config.
 func (saic sagemakerAppImageConfigAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(saic.ref.Append("id"))
+	return terra.ReferenceAsString(saic.ref.Append("id"))
 }
 
+// Tags returns a reference to field tags of aws_sagemaker_app_image_config.
 func (saic sagemakerAppImageConfigAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](saic.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](saic.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_sagemaker_app_image_config.
 func (saic sagemakerAppImageConfigAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](saic.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](saic.ref.Append("tags_all"))
 }
 
 func (saic sagemakerAppImageConfigAttributes) KernelGatewayImageConfig() terra.ListValue[sagemakerappimageconfig.KernelGatewayImageConfigAttributes] {
-	return terra.ReferenceList[sagemakerappimageconfig.KernelGatewayImageConfigAttributes](saic.ref.Append("kernel_gateway_image_config"))
+	return terra.ReferenceAsList[sagemakerappimageconfig.KernelGatewayImageConfigAttributes](saic.ref.Append("kernel_gateway_image_config"))
 }
 
 type sagemakerAppImageConfigState struct {

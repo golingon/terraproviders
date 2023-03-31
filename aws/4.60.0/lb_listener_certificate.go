@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewLbListenerCertificate creates a new instance of [LbListenerCertificate].
 func NewLbListenerCertificate(name string, args LbListenerCertificateArgs) *LbListenerCertificate {
 	return &LbListenerCertificate{
 		Args: args,
@@ -18,28 +19,51 @@ func NewLbListenerCertificate(name string, args LbListenerCertificateArgs) *LbLi
 
 var _ terra.Resource = (*LbListenerCertificate)(nil)
 
+// LbListenerCertificate represents the Terraform resource aws_lb_listener_certificate.
 type LbListenerCertificate struct {
-	Name  string
-	Args  LbListenerCertificateArgs
-	state *lbListenerCertificateState
+	Name      string
+	Args      LbListenerCertificateArgs
+	state     *lbListenerCertificateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LbListenerCertificate].
 func (llc *LbListenerCertificate) Type() string {
 	return "aws_lb_listener_certificate"
 }
 
+// LocalName returns the local name for [LbListenerCertificate].
 func (llc *LbListenerCertificate) LocalName() string {
 	return llc.Name
 }
 
+// Configuration returns the configuration (args) for [LbListenerCertificate].
 func (llc *LbListenerCertificate) Configuration() interface{} {
 	return llc.Args
 }
 
+// DependOn is used for other resources to depend on [LbListenerCertificate].
+func (llc *LbListenerCertificate) DependOn() terra.Reference {
+	return terra.ReferenceResource(llc)
+}
+
+// Dependencies returns the list of resources [LbListenerCertificate] depends_on.
+func (llc *LbListenerCertificate) Dependencies() terra.Dependencies {
+	return llc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LbListenerCertificate].
+func (llc *LbListenerCertificate) LifecycleManagement() *terra.Lifecycle {
+	return llc.Lifecycle
+}
+
+// Attributes returns the attributes for [LbListenerCertificate].
 func (llc *LbListenerCertificate) Attributes() lbListenerCertificateAttributes {
 	return lbListenerCertificateAttributes{ref: terra.ReferenceResource(llc)}
 }
 
+// ImportState imports the given attribute values into [LbListenerCertificate]'s state.
 func (llc *LbListenerCertificate) ImportState(av io.Reader) error {
 	llc.state = &lbListenerCertificateState{}
 	if err := json.NewDecoder(av).Decode(llc.state); err != nil {
@@ -48,10 +72,12 @@ func (llc *LbListenerCertificate) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LbListenerCertificate] has state.
 func (llc *LbListenerCertificate) State() (*lbListenerCertificateState, bool) {
 	return llc.state, llc.state != nil
 }
 
+// StateMust returns the state for [LbListenerCertificate]. Panics if the state is nil.
 func (llc *LbListenerCertificate) StateMust() *lbListenerCertificateState {
 	if llc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", llc.Type(), llc.LocalName()))
@@ -59,10 +85,7 @@ func (llc *LbListenerCertificate) StateMust() *lbListenerCertificateState {
 	return llc.state
 }
 
-func (llc *LbListenerCertificate) DependOn() terra.Reference {
-	return terra.ReferenceResource(llc)
-}
-
+// LbListenerCertificateArgs contains the configurations for aws_lb_listener_certificate.
 type LbListenerCertificateArgs struct {
 	// CertificateArn: string, required
 	CertificateArn terra.StringValue `hcl:"certificate_arn,attr" validate:"required"`
@@ -70,23 +93,24 @@ type LbListenerCertificateArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// ListenerArn: string, required
 	ListenerArn terra.StringValue `hcl:"listener_arn,attr" validate:"required"`
-	// DependsOn contains resources that LbListenerCertificate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lbListenerCertificateAttributes struct {
 	ref terra.Reference
 }
 
+// CertificateArn returns a reference to field certificate_arn of aws_lb_listener_certificate.
 func (llc lbListenerCertificateAttributes) CertificateArn() terra.StringValue {
-	return terra.ReferenceString(llc.ref.Append("certificate_arn"))
+	return terra.ReferenceAsString(llc.ref.Append("certificate_arn"))
 }
 
+// Id returns a reference to field id of aws_lb_listener_certificate.
 func (llc lbListenerCertificateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(llc.ref.Append("id"))
+	return terra.ReferenceAsString(llc.ref.Append("id"))
 }
 
+// ListenerArn returns a reference to field listener_arn of aws_lb_listener_certificate.
 func (llc lbListenerCertificateAttributes) ListenerArn() terra.StringValue {
-	return terra.ReferenceString(llc.ref.Append("listener_arn"))
+	return terra.ReferenceAsString(llc.ref.Append("listener_arn"))
 }
 
 type lbListenerCertificateState struct {

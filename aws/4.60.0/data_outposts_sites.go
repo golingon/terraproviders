@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataOutpostsSites creates a new instance of [DataOutpostsSites].
 func NewDataOutpostsSites(name string, args DataOutpostsSitesArgs) *DataOutpostsSites {
 	return &DataOutpostsSites{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataOutpostsSites(name string, args DataOutpostsSitesArgs) *DataOutposts
 
 var _ terra.DataResource = (*DataOutpostsSites)(nil)
 
+// DataOutpostsSites represents the Terraform data resource aws_outposts_sites.
 type DataOutpostsSites struct {
 	Name string
 	Args DataOutpostsSitesArgs
 }
 
+// DataSource returns the Terraform object type for [DataOutpostsSites].
 func (os *DataOutpostsSites) DataSource() string {
 	return "aws_outposts_sites"
 }
 
+// LocalName returns the local name for [DataOutpostsSites].
 func (os *DataOutpostsSites) LocalName() string {
 	return os.Name
 }
 
+// Configuration returns the configuration (args) for [DataOutpostsSites].
 func (os *DataOutpostsSites) Configuration() interface{} {
 	return os.Args
 }
 
+// Attributes returns the attributes for [DataOutpostsSites].
 func (os *DataOutpostsSites) Attributes() dataOutpostsSitesAttributes {
 	return dataOutpostsSitesAttributes{ref: terra.ReferenceDataResource(os)}
 }
 
+// DataOutpostsSitesArgs contains the configurations for aws_outposts_sites.
 type DataOutpostsSitesArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -42,10 +49,12 @@ type dataOutpostsSitesAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_outposts_sites.
 func (os dataOutpostsSitesAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(os.ref.Append("id"))
+	return terra.ReferenceAsString(os.ref.Append("id"))
 }
 
+// Ids returns a reference to field ids of aws_outposts_sites.
 func (os dataOutpostsSitesAttributes) Ids() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](os.ref.Append("ids"))
+	return terra.ReferenceAsSet[terra.StringValue](os.ref.Append("ids"))
 }

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataGlueCatalogTable creates a new instance of [DataGlueCatalogTable].
 func NewDataGlueCatalogTable(name string, args DataGlueCatalogTableArgs) *DataGlueCatalogTable {
 	return &DataGlueCatalogTable{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataGlueCatalogTable(name string, args DataGlueCatalogTableArgs) *DataGl
 
 var _ terra.DataResource = (*DataGlueCatalogTable)(nil)
 
+// DataGlueCatalogTable represents the Terraform data resource aws_glue_catalog_table.
 type DataGlueCatalogTable struct {
 	Name string
 	Args DataGlueCatalogTableArgs
 }
 
+// DataSource returns the Terraform object type for [DataGlueCatalogTable].
 func (gct *DataGlueCatalogTable) DataSource() string {
 	return "aws_glue_catalog_table"
 }
 
+// LocalName returns the local name for [DataGlueCatalogTable].
 func (gct *DataGlueCatalogTable) LocalName() string {
 	return gct.Name
 }
 
+// Configuration returns the configuration (args) for [DataGlueCatalogTable].
 func (gct *DataGlueCatalogTable) Configuration() interface{} {
 	return gct.Args
 }
 
+// Attributes returns the attributes for [DataGlueCatalogTable].
 func (gct *DataGlueCatalogTable) Attributes() dataGlueCatalogTableAttributes {
 	return dataGlueCatalogTableAttributes{ref: terra.ReferenceDataResource(gct)}
 }
 
+// DataGlueCatalogTableArgs contains the configurations for aws_glue_catalog_table.
 type DataGlueCatalogTableArgs struct {
 	// CatalogId: string, optional
 	CatalogId terra.StringValue `hcl:"catalog_id,attr"`
@@ -63,74 +70,88 @@ type dataGlueCatalogTableAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_glue_catalog_table.
 func (gct dataGlueCatalogTableAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(gct.ref.Append("arn"))
+	return terra.ReferenceAsString(gct.ref.Append("arn"))
 }
 
+// CatalogId returns a reference to field catalog_id of aws_glue_catalog_table.
 func (gct dataGlueCatalogTableAttributes) CatalogId() terra.StringValue {
-	return terra.ReferenceString(gct.ref.Append("catalog_id"))
+	return terra.ReferenceAsString(gct.ref.Append("catalog_id"))
 }
 
+// DatabaseName returns a reference to field database_name of aws_glue_catalog_table.
 func (gct dataGlueCatalogTableAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(gct.ref.Append("database_name"))
+	return terra.ReferenceAsString(gct.ref.Append("database_name"))
 }
 
+// Description returns a reference to field description of aws_glue_catalog_table.
 func (gct dataGlueCatalogTableAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(gct.ref.Append("description"))
+	return terra.ReferenceAsString(gct.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_glue_catalog_table.
 func (gct dataGlueCatalogTableAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gct.ref.Append("id"))
+	return terra.ReferenceAsString(gct.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_glue_catalog_table.
 func (gct dataGlueCatalogTableAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(gct.ref.Append("name"))
+	return terra.ReferenceAsString(gct.ref.Append("name"))
 }
 
+// Owner returns a reference to field owner of aws_glue_catalog_table.
 func (gct dataGlueCatalogTableAttributes) Owner() terra.StringValue {
-	return terra.ReferenceString(gct.ref.Append("owner"))
+	return terra.ReferenceAsString(gct.ref.Append("owner"))
 }
 
+// Parameters returns a reference to field parameters of aws_glue_catalog_table.
 func (gct dataGlueCatalogTableAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gct.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](gct.ref.Append("parameters"))
 }
 
+// QueryAsOfTime returns a reference to field query_as_of_time of aws_glue_catalog_table.
 func (gct dataGlueCatalogTableAttributes) QueryAsOfTime() terra.StringValue {
-	return terra.ReferenceString(gct.ref.Append("query_as_of_time"))
+	return terra.ReferenceAsString(gct.ref.Append("query_as_of_time"))
 }
 
+// Retention returns a reference to field retention of aws_glue_catalog_table.
 func (gct dataGlueCatalogTableAttributes) Retention() terra.NumberValue {
-	return terra.ReferenceNumber(gct.ref.Append("retention"))
+	return terra.ReferenceAsNumber(gct.ref.Append("retention"))
 }
 
+// TableType returns a reference to field table_type of aws_glue_catalog_table.
 func (gct dataGlueCatalogTableAttributes) TableType() terra.StringValue {
-	return terra.ReferenceString(gct.ref.Append("table_type"))
+	return terra.ReferenceAsString(gct.ref.Append("table_type"))
 }
 
+// TransactionId returns a reference to field transaction_id of aws_glue_catalog_table.
 func (gct dataGlueCatalogTableAttributes) TransactionId() terra.NumberValue {
-	return terra.ReferenceNumber(gct.ref.Append("transaction_id"))
+	return terra.ReferenceAsNumber(gct.ref.Append("transaction_id"))
 }
 
+// ViewExpandedText returns a reference to field view_expanded_text of aws_glue_catalog_table.
 func (gct dataGlueCatalogTableAttributes) ViewExpandedText() terra.StringValue {
-	return terra.ReferenceString(gct.ref.Append("view_expanded_text"))
+	return terra.ReferenceAsString(gct.ref.Append("view_expanded_text"))
 }
 
+// ViewOriginalText returns a reference to field view_original_text of aws_glue_catalog_table.
 func (gct dataGlueCatalogTableAttributes) ViewOriginalText() terra.StringValue {
-	return terra.ReferenceString(gct.ref.Append("view_original_text"))
+	return terra.ReferenceAsString(gct.ref.Append("view_original_text"))
 }
 
 func (gct dataGlueCatalogTableAttributes) PartitionIndex() terra.ListValue[datagluecatalogtable.PartitionIndexAttributes] {
-	return terra.ReferenceList[datagluecatalogtable.PartitionIndexAttributes](gct.ref.Append("partition_index"))
+	return terra.ReferenceAsList[datagluecatalogtable.PartitionIndexAttributes](gct.ref.Append("partition_index"))
 }
 
 func (gct dataGlueCatalogTableAttributes) PartitionKeys() terra.ListValue[datagluecatalogtable.PartitionKeysAttributes] {
-	return terra.ReferenceList[datagluecatalogtable.PartitionKeysAttributes](gct.ref.Append("partition_keys"))
+	return terra.ReferenceAsList[datagluecatalogtable.PartitionKeysAttributes](gct.ref.Append("partition_keys"))
 }
 
 func (gct dataGlueCatalogTableAttributes) StorageDescriptor() terra.ListValue[datagluecatalogtable.StorageDescriptorAttributes] {
-	return terra.ReferenceList[datagluecatalogtable.StorageDescriptorAttributes](gct.ref.Append("storage_descriptor"))
+	return terra.ReferenceAsList[datagluecatalogtable.StorageDescriptorAttributes](gct.ref.Append("storage_descriptor"))
 }
 
 func (gct dataGlueCatalogTableAttributes) TargetTable() terra.ListValue[datagluecatalogtable.TargetTableAttributes] {
-	return terra.ReferenceList[datagluecatalogtable.TargetTableAttributes](gct.ref.Append("target_table"))
+	return terra.ReferenceAsList[datagluecatalogtable.TargetTableAttributes](gct.ref.Append("target_table"))
 }

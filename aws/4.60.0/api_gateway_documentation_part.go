@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApiGatewayDocumentationPart creates a new instance of [ApiGatewayDocumentationPart].
 func NewApiGatewayDocumentationPart(name string, args ApiGatewayDocumentationPartArgs) *ApiGatewayDocumentationPart {
 	return &ApiGatewayDocumentationPart{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApiGatewayDocumentationPart(name string, args ApiGatewayDocumentationPar
 
 var _ terra.Resource = (*ApiGatewayDocumentationPart)(nil)
 
+// ApiGatewayDocumentationPart represents the Terraform resource aws_api_gateway_documentation_part.
 type ApiGatewayDocumentationPart struct {
-	Name  string
-	Args  ApiGatewayDocumentationPartArgs
-	state *apiGatewayDocumentationPartState
+	Name      string
+	Args      ApiGatewayDocumentationPartArgs
+	state     *apiGatewayDocumentationPartState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiGatewayDocumentationPart].
 func (agdp *ApiGatewayDocumentationPart) Type() string {
 	return "aws_api_gateway_documentation_part"
 }
 
+// LocalName returns the local name for [ApiGatewayDocumentationPart].
 func (agdp *ApiGatewayDocumentationPart) LocalName() string {
 	return agdp.Name
 }
 
+// Configuration returns the configuration (args) for [ApiGatewayDocumentationPart].
 func (agdp *ApiGatewayDocumentationPart) Configuration() interface{} {
 	return agdp.Args
 }
 
+// DependOn is used for other resources to depend on [ApiGatewayDocumentationPart].
+func (agdp *ApiGatewayDocumentationPart) DependOn() terra.Reference {
+	return terra.ReferenceResource(agdp)
+}
+
+// Dependencies returns the list of resources [ApiGatewayDocumentationPart] depends_on.
+func (agdp *ApiGatewayDocumentationPart) Dependencies() terra.Dependencies {
+	return agdp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiGatewayDocumentationPart].
+func (agdp *ApiGatewayDocumentationPart) LifecycleManagement() *terra.Lifecycle {
+	return agdp.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiGatewayDocumentationPart].
 func (agdp *ApiGatewayDocumentationPart) Attributes() apiGatewayDocumentationPartAttributes {
 	return apiGatewayDocumentationPartAttributes{ref: terra.ReferenceResource(agdp)}
 }
 
+// ImportState imports the given attribute values into [ApiGatewayDocumentationPart]'s state.
 func (agdp *ApiGatewayDocumentationPart) ImportState(av io.Reader) error {
 	agdp.state = &apiGatewayDocumentationPartState{}
 	if err := json.NewDecoder(av).Decode(agdp.state); err != nil {
@@ -49,10 +73,12 @@ func (agdp *ApiGatewayDocumentationPart) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiGatewayDocumentationPart] has state.
 func (agdp *ApiGatewayDocumentationPart) State() (*apiGatewayDocumentationPartState, bool) {
 	return agdp.state, agdp.state != nil
 }
 
+// StateMust returns the state for [ApiGatewayDocumentationPart]. Panics if the state is nil.
 func (agdp *ApiGatewayDocumentationPart) StateMust() *apiGatewayDocumentationPartState {
 	if agdp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", agdp.Type(), agdp.LocalName()))
@@ -60,10 +86,7 @@ func (agdp *ApiGatewayDocumentationPart) StateMust() *apiGatewayDocumentationPar
 	return agdp.state
 }
 
-func (agdp *ApiGatewayDocumentationPart) DependOn() terra.Reference {
-	return terra.ReferenceResource(agdp)
-}
-
+// ApiGatewayDocumentationPartArgs contains the configurations for aws_api_gateway_documentation_part.
 type ApiGatewayDocumentationPartArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -73,27 +96,28 @@ type ApiGatewayDocumentationPartArgs struct {
 	RestApiId terra.StringValue `hcl:"rest_api_id,attr" validate:"required"`
 	// Location: required
 	Location *apigatewaydocumentationpart.Location `hcl:"location,block" validate:"required"`
-	// DependsOn contains resources that ApiGatewayDocumentationPart depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiGatewayDocumentationPartAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_api_gateway_documentation_part.
 func (agdp apiGatewayDocumentationPartAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(agdp.ref.Append("id"))
+	return terra.ReferenceAsString(agdp.ref.Append("id"))
 }
 
+// Properties returns a reference to field properties of aws_api_gateway_documentation_part.
 func (agdp apiGatewayDocumentationPartAttributes) Properties() terra.StringValue {
-	return terra.ReferenceString(agdp.ref.Append("properties"))
+	return terra.ReferenceAsString(agdp.ref.Append("properties"))
 }
 
+// RestApiId returns a reference to field rest_api_id of aws_api_gateway_documentation_part.
 func (agdp apiGatewayDocumentationPartAttributes) RestApiId() terra.StringValue {
-	return terra.ReferenceString(agdp.ref.Append("rest_api_id"))
+	return terra.ReferenceAsString(agdp.ref.Append("rest_api_id"))
 }
 
 func (agdp apiGatewayDocumentationPartAttributes) Location() terra.ListValue[apigatewaydocumentationpart.LocationAttributes] {
-	return terra.ReferenceList[apigatewaydocumentationpart.LocationAttributes](agdp.ref.Append("location"))
+	return terra.ReferenceAsList[apigatewaydocumentationpart.LocationAttributes](agdp.ref.Append("location"))
 }
 
 type apiGatewayDocumentationPartState struct {

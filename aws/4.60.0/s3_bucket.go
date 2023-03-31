@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewS3Bucket creates a new instance of [S3Bucket].
 func NewS3Bucket(name string, args S3BucketArgs) *S3Bucket {
 	return &S3Bucket{
 		Args: args,
@@ -19,28 +20,51 @@ func NewS3Bucket(name string, args S3BucketArgs) *S3Bucket {
 
 var _ terra.Resource = (*S3Bucket)(nil)
 
+// S3Bucket represents the Terraform resource aws_s3_bucket.
 type S3Bucket struct {
-	Name  string
-	Args  S3BucketArgs
-	state *s3BucketState
+	Name      string
+	Args      S3BucketArgs
+	state     *s3BucketState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [S3Bucket].
 func (sb *S3Bucket) Type() string {
 	return "aws_s3_bucket"
 }
 
+// LocalName returns the local name for [S3Bucket].
 func (sb *S3Bucket) LocalName() string {
 	return sb.Name
 }
 
+// Configuration returns the configuration (args) for [S3Bucket].
 func (sb *S3Bucket) Configuration() interface{} {
 	return sb.Args
 }
 
+// DependOn is used for other resources to depend on [S3Bucket].
+func (sb *S3Bucket) DependOn() terra.Reference {
+	return terra.ReferenceResource(sb)
+}
+
+// Dependencies returns the list of resources [S3Bucket] depends_on.
+func (sb *S3Bucket) Dependencies() terra.Dependencies {
+	return sb.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [S3Bucket].
+func (sb *S3Bucket) LifecycleManagement() *terra.Lifecycle {
+	return sb.Lifecycle
+}
+
+// Attributes returns the attributes for [S3Bucket].
 func (sb *S3Bucket) Attributes() s3BucketAttributes {
 	return s3BucketAttributes{ref: terra.ReferenceResource(sb)}
 }
 
+// ImportState imports the given attribute values into [S3Bucket]'s state.
 func (sb *S3Bucket) ImportState(av io.Reader) error {
 	sb.state = &s3BucketState{}
 	if err := json.NewDecoder(av).Decode(sb.state); err != nil {
@@ -49,10 +73,12 @@ func (sb *S3Bucket) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [S3Bucket] has state.
 func (sb *S3Bucket) State() (*s3BucketState, bool) {
 	return sb.state, sb.state != nil
 }
 
+// StateMust returns the state for [S3Bucket]. Panics if the state is nil.
 func (sb *S3Bucket) StateMust() *s3BucketState {
 	if sb.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sb.Type(), sb.LocalName()))
@@ -60,10 +86,7 @@ func (sb *S3Bucket) StateMust() *s3BucketState {
 	return sb.state
 }
 
-func (sb *S3Bucket) DependOn() terra.Reference {
-	return terra.ReferenceResource(sb)
-}
-
+// S3BucketArgs contains the configurations for aws_s3_bucket.
 type S3BucketArgs struct {
 	// AccelerationStatus: string, optional
 	AccelerationStatus terra.StringValue `hcl:"acceleration_status,attr"`
@@ -107,123 +130,139 @@ type S3BucketArgs struct {
 	Versioning *s3bucket.Versioning `hcl:"versioning,block"`
 	// Website: optional
 	Website *s3bucket.Website `hcl:"website,block"`
-	// DependsOn contains resources that S3Bucket depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type s3BucketAttributes struct {
 	ref terra.Reference
 }
 
+// AccelerationStatus returns a reference to field acceleration_status of aws_s3_bucket.
 func (sb s3BucketAttributes) AccelerationStatus() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("acceleration_status"))
+	return terra.ReferenceAsString(sb.ref.Append("acceleration_status"))
 }
 
+// Acl returns a reference to field acl of aws_s3_bucket.
 func (sb s3BucketAttributes) Acl() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("acl"))
+	return terra.ReferenceAsString(sb.ref.Append("acl"))
 }
 
+// Arn returns a reference to field arn of aws_s3_bucket.
 func (sb s3BucketAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("arn"))
+	return terra.ReferenceAsString(sb.ref.Append("arn"))
 }
 
+// Bucket returns a reference to field bucket of aws_s3_bucket.
 func (sb s3BucketAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("bucket"))
+	return terra.ReferenceAsString(sb.ref.Append("bucket"))
 }
 
+// BucketDomainName returns a reference to field bucket_domain_name of aws_s3_bucket.
 func (sb s3BucketAttributes) BucketDomainName() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("bucket_domain_name"))
+	return terra.ReferenceAsString(sb.ref.Append("bucket_domain_name"))
 }
 
+// BucketPrefix returns a reference to field bucket_prefix of aws_s3_bucket.
 func (sb s3BucketAttributes) BucketPrefix() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("bucket_prefix"))
+	return terra.ReferenceAsString(sb.ref.Append("bucket_prefix"))
 }
 
+// BucketRegionalDomainName returns a reference to field bucket_regional_domain_name of aws_s3_bucket.
 func (sb s3BucketAttributes) BucketRegionalDomainName() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("bucket_regional_domain_name"))
+	return terra.ReferenceAsString(sb.ref.Append("bucket_regional_domain_name"))
 }
 
+// ForceDestroy returns a reference to field force_destroy of aws_s3_bucket.
 func (sb s3BucketAttributes) ForceDestroy() terra.BoolValue {
-	return terra.ReferenceBool(sb.ref.Append("force_destroy"))
+	return terra.ReferenceAsBool(sb.ref.Append("force_destroy"))
 }
 
+// HostedZoneId returns a reference to field hosted_zone_id of aws_s3_bucket.
 func (sb s3BucketAttributes) HostedZoneId() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("hosted_zone_id"))
+	return terra.ReferenceAsString(sb.ref.Append("hosted_zone_id"))
 }
 
+// Id returns a reference to field id of aws_s3_bucket.
 func (sb s3BucketAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("id"))
+	return terra.ReferenceAsString(sb.ref.Append("id"))
 }
 
+// ObjectLockEnabled returns a reference to field object_lock_enabled of aws_s3_bucket.
 func (sb s3BucketAttributes) ObjectLockEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sb.ref.Append("object_lock_enabled"))
+	return terra.ReferenceAsBool(sb.ref.Append("object_lock_enabled"))
 }
 
+// Policy returns a reference to field policy of aws_s3_bucket.
 func (sb s3BucketAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("policy"))
+	return terra.ReferenceAsString(sb.ref.Append("policy"))
 }
 
+// Region returns a reference to field region of aws_s3_bucket.
 func (sb s3BucketAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("region"))
+	return terra.ReferenceAsString(sb.ref.Append("region"))
 }
 
+// RequestPayer returns a reference to field request_payer of aws_s3_bucket.
 func (sb s3BucketAttributes) RequestPayer() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("request_payer"))
+	return terra.ReferenceAsString(sb.ref.Append("request_payer"))
 }
 
+// Tags returns a reference to field tags of aws_s3_bucket.
 func (sb s3BucketAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sb.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sb.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_s3_bucket.
 func (sb s3BucketAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sb.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sb.ref.Append("tags_all"))
 }
 
+// WebsiteDomain returns a reference to field website_domain of aws_s3_bucket.
 func (sb s3BucketAttributes) WebsiteDomain() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("website_domain"))
+	return terra.ReferenceAsString(sb.ref.Append("website_domain"))
 }
 
+// WebsiteEndpoint returns a reference to field website_endpoint of aws_s3_bucket.
 func (sb s3BucketAttributes) WebsiteEndpoint() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("website_endpoint"))
+	return terra.ReferenceAsString(sb.ref.Append("website_endpoint"))
 }
 
 func (sb s3BucketAttributes) CorsRule() terra.ListValue[s3bucket.CorsRuleAttributes] {
-	return terra.ReferenceList[s3bucket.CorsRuleAttributes](sb.ref.Append("cors_rule"))
+	return terra.ReferenceAsList[s3bucket.CorsRuleAttributes](sb.ref.Append("cors_rule"))
 }
 
 func (sb s3BucketAttributes) Grant() terra.SetValue[s3bucket.GrantAttributes] {
-	return terra.ReferenceSet[s3bucket.GrantAttributes](sb.ref.Append("grant"))
+	return terra.ReferenceAsSet[s3bucket.GrantAttributes](sb.ref.Append("grant"))
 }
 
 func (sb s3BucketAttributes) LifecycleRule() terra.ListValue[s3bucket.LifecycleRuleAttributes] {
-	return terra.ReferenceList[s3bucket.LifecycleRuleAttributes](sb.ref.Append("lifecycle_rule"))
+	return terra.ReferenceAsList[s3bucket.LifecycleRuleAttributes](sb.ref.Append("lifecycle_rule"))
 }
 
 func (sb s3BucketAttributes) Logging() terra.ListValue[s3bucket.LoggingAttributes] {
-	return terra.ReferenceList[s3bucket.LoggingAttributes](sb.ref.Append("logging"))
+	return terra.ReferenceAsList[s3bucket.LoggingAttributes](sb.ref.Append("logging"))
 }
 
 func (sb s3BucketAttributes) ObjectLockConfiguration() terra.ListValue[s3bucket.ObjectLockConfigurationAttributes] {
-	return terra.ReferenceList[s3bucket.ObjectLockConfigurationAttributes](sb.ref.Append("object_lock_configuration"))
+	return terra.ReferenceAsList[s3bucket.ObjectLockConfigurationAttributes](sb.ref.Append("object_lock_configuration"))
 }
 
 func (sb s3BucketAttributes) ReplicationConfiguration() terra.ListValue[s3bucket.ReplicationConfigurationAttributes] {
-	return terra.ReferenceList[s3bucket.ReplicationConfigurationAttributes](sb.ref.Append("replication_configuration"))
+	return terra.ReferenceAsList[s3bucket.ReplicationConfigurationAttributes](sb.ref.Append("replication_configuration"))
 }
 
 func (sb s3BucketAttributes) ServerSideEncryptionConfiguration() terra.ListValue[s3bucket.ServerSideEncryptionConfigurationAttributes] {
-	return terra.ReferenceList[s3bucket.ServerSideEncryptionConfigurationAttributes](sb.ref.Append("server_side_encryption_configuration"))
+	return terra.ReferenceAsList[s3bucket.ServerSideEncryptionConfigurationAttributes](sb.ref.Append("server_side_encryption_configuration"))
 }
 
 func (sb s3BucketAttributes) Timeouts() s3bucket.TimeoutsAttributes {
-	return terra.ReferenceSingle[s3bucket.TimeoutsAttributes](sb.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[s3bucket.TimeoutsAttributes](sb.ref.Append("timeouts"))
 }
 
 func (sb s3BucketAttributes) Versioning() terra.ListValue[s3bucket.VersioningAttributes] {
-	return terra.ReferenceList[s3bucket.VersioningAttributes](sb.ref.Append("versioning"))
+	return terra.ReferenceAsList[s3bucket.VersioningAttributes](sb.ref.Append("versioning"))
 }
 
 func (sb s3BucketAttributes) Website() terra.ListValue[s3bucket.WebsiteAttributes] {
-	return terra.ReferenceList[s3bucket.WebsiteAttributes](sb.ref.Append("website"))
+	return terra.ReferenceAsList[s3bucket.WebsiteAttributes](sb.ref.Append("website"))
 }
 
 type s3BucketState struct {

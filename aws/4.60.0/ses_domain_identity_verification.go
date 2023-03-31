@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSesDomainIdentityVerification creates a new instance of [SesDomainIdentityVerification].
 func NewSesDomainIdentityVerification(name string, args SesDomainIdentityVerificationArgs) *SesDomainIdentityVerification {
 	return &SesDomainIdentityVerification{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSesDomainIdentityVerification(name string, args SesDomainIdentityVerific
 
 var _ terra.Resource = (*SesDomainIdentityVerification)(nil)
 
+// SesDomainIdentityVerification represents the Terraform resource aws_ses_domain_identity_verification.
 type SesDomainIdentityVerification struct {
-	Name  string
-	Args  SesDomainIdentityVerificationArgs
-	state *sesDomainIdentityVerificationState
+	Name      string
+	Args      SesDomainIdentityVerificationArgs
+	state     *sesDomainIdentityVerificationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SesDomainIdentityVerification].
 func (sdiv *SesDomainIdentityVerification) Type() string {
 	return "aws_ses_domain_identity_verification"
 }
 
+// LocalName returns the local name for [SesDomainIdentityVerification].
 func (sdiv *SesDomainIdentityVerification) LocalName() string {
 	return sdiv.Name
 }
 
+// Configuration returns the configuration (args) for [SesDomainIdentityVerification].
 func (sdiv *SesDomainIdentityVerification) Configuration() interface{} {
 	return sdiv.Args
 }
 
+// DependOn is used for other resources to depend on [SesDomainIdentityVerification].
+func (sdiv *SesDomainIdentityVerification) DependOn() terra.Reference {
+	return terra.ReferenceResource(sdiv)
+}
+
+// Dependencies returns the list of resources [SesDomainIdentityVerification] depends_on.
+func (sdiv *SesDomainIdentityVerification) Dependencies() terra.Dependencies {
+	return sdiv.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SesDomainIdentityVerification].
+func (sdiv *SesDomainIdentityVerification) LifecycleManagement() *terra.Lifecycle {
+	return sdiv.Lifecycle
+}
+
+// Attributes returns the attributes for [SesDomainIdentityVerification].
 func (sdiv *SesDomainIdentityVerification) Attributes() sesDomainIdentityVerificationAttributes {
 	return sesDomainIdentityVerificationAttributes{ref: terra.ReferenceResource(sdiv)}
 }
 
+// ImportState imports the given attribute values into [SesDomainIdentityVerification]'s state.
 func (sdiv *SesDomainIdentityVerification) ImportState(av io.Reader) error {
 	sdiv.state = &sesDomainIdentityVerificationState{}
 	if err := json.NewDecoder(av).Decode(sdiv.state); err != nil {
@@ -49,10 +73,12 @@ func (sdiv *SesDomainIdentityVerification) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SesDomainIdentityVerification] has state.
 func (sdiv *SesDomainIdentityVerification) State() (*sesDomainIdentityVerificationState, bool) {
 	return sdiv.state, sdiv.state != nil
 }
 
+// StateMust returns the state for [SesDomainIdentityVerification]. Panics if the state is nil.
 func (sdiv *SesDomainIdentityVerification) StateMust() *sesDomainIdentityVerificationState {
 	if sdiv.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sdiv.Type(), sdiv.LocalName()))
@@ -60,10 +86,7 @@ func (sdiv *SesDomainIdentityVerification) StateMust() *sesDomainIdentityVerific
 	return sdiv.state
 }
 
-func (sdiv *SesDomainIdentityVerification) DependOn() terra.Reference {
-	return terra.ReferenceResource(sdiv)
-}
-
+// SesDomainIdentityVerificationArgs contains the configurations for aws_ses_domain_identity_verification.
 type SesDomainIdentityVerificationArgs struct {
 	// Domain: string, required
 	Domain terra.StringValue `hcl:"domain,attr" validate:"required"`
@@ -71,27 +94,28 @@ type SesDomainIdentityVerificationArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// Timeouts: optional
 	Timeouts *sesdomainidentityverification.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SesDomainIdentityVerification depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sesDomainIdentityVerificationAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ses_domain_identity_verification.
 func (sdiv sesDomainIdentityVerificationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sdiv.ref.Append("arn"))
+	return terra.ReferenceAsString(sdiv.ref.Append("arn"))
 }
 
+// Domain returns a reference to field domain of aws_ses_domain_identity_verification.
 func (sdiv sesDomainIdentityVerificationAttributes) Domain() terra.StringValue {
-	return terra.ReferenceString(sdiv.ref.Append("domain"))
+	return terra.ReferenceAsString(sdiv.ref.Append("domain"))
 }
 
+// Id returns a reference to field id of aws_ses_domain_identity_verification.
 func (sdiv sesDomainIdentityVerificationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sdiv.ref.Append("id"))
+	return terra.ReferenceAsString(sdiv.ref.Append("id"))
 }
 
 func (sdiv sesDomainIdentityVerificationAttributes) Timeouts() sesdomainidentityverification.TimeoutsAttributes {
-	return terra.ReferenceSingle[sesdomainidentityverification.TimeoutsAttributes](sdiv.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[sesdomainidentityverification.TimeoutsAttributes](sdiv.ref.Append("timeouts"))
 }
 
 type sesDomainIdentityVerificationState struct {

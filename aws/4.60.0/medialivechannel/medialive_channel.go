@@ -1527,7 +1527,7 @@ func (cis CdiInputSpecificationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cis CdiInputSpecificationAttributes) Resolution() terra.StringValue {
-	return terra.ReferenceString(cis.ref.Append("resolution"))
+	return terra.ReferenceAsString(cis.ref.Append("resolution"))
 }
 
 type DestinationsAttributes struct {
@@ -1547,19 +1547,19 @@ func (d DestinationsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DestinationsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("id"))
+	return terra.ReferenceAsString(d.ref.Append("id"))
 }
 
 func (d DestinationsAttributes) MediaPackageSettings() terra.SetValue[MediaPackageSettingsAttributes] {
-	return terra.ReferenceSet[MediaPackageSettingsAttributes](d.ref.Append("media_package_settings"))
+	return terra.ReferenceAsSet[MediaPackageSettingsAttributes](d.ref.Append("media_package_settings"))
 }
 
 func (d DestinationsAttributes) MultiplexSettings() terra.ListValue[MultiplexSettingsAttributes] {
-	return terra.ReferenceList[MultiplexSettingsAttributes](d.ref.Append("multiplex_settings"))
+	return terra.ReferenceAsList[MultiplexSettingsAttributes](d.ref.Append("multiplex_settings"))
 }
 
 func (d DestinationsAttributes) Settings() terra.SetValue[SettingsAttributes] {
-	return terra.ReferenceSet[SettingsAttributes](d.ref.Append("settings"))
+	return terra.ReferenceAsSet[SettingsAttributes](d.ref.Append("settings"))
 }
 
 type MediaPackageSettingsAttributes struct {
@@ -1579,7 +1579,7 @@ func (mps MediaPackageSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mps MediaPackageSettingsAttributes) ChannelId() terra.StringValue {
-	return terra.ReferenceString(mps.ref.Append("channel_id"))
+	return terra.ReferenceAsString(mps.ref.Append("channel_id"))
 }
 
 type MultiplexSettingsAttributes struct {
@@ -1599,11 +1599,11 @@ func (ms MultiplexSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ms MultiplexSettingsAttributes) MultiplexId() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("multiplex_id"))
+	return terra.ReferenceAsString(ms.ref.Append("multiplex_id"))
 }
 
 func (ms MultiplexSettingsAttributes) ProgramName() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("program_name"))
+	return terra.ReferenceAsString(ms.ref.Append("program_name"))
 }
 
 type SettingsAttributes struct {
@@ -1623,19 +1623,19 @@ func (s SettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SettingsAttributes) PasswordParam() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("password_param"))
+	return terra.ReferenceAsString(s.ref.Append("password_param"))
 }
 
 func (s SettingsAttributes) StreamName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("stream_name"))
+	return terra.ReferenceAsString(s.ref.Append("stream_name"))
 }
 
 func (s SettingsAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("url"))
+	return terra.ReferenceAsString(s.ref.Append("url"))
 }
 
 func (s SettingsAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("username"))
+	return terra.ReferenceAsString(s.ref.Append("username"))
 }
 
 type EncoderSettingsAttributes struct {
@@ -1655,23 +1655,23 @@ func (es EncoderSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (es EncoderSettingsAttributes) AudioDescriptions() terra.SetValue[AudioDescriptionsAttributes] {
-	return terra.ReferenceSet[AudioDescriptionsAttributes](es.ref.Append("audio_descriptions"))
+	return terra.ReferenceAsSet[AudioDescriptionsAttributes](es.ref.Append("audio_descriptions"))
 }
 
 func (es EncoderSettingsAttributes) AvailBlanking() terra.ListValue[AvailBlankingAttributes] {
-	return terra.ReferenceList[AvailBlankingAttributes](es.ref.Append("avail_blanking"))
+	return terra.ReferenceAsList[AvailBlankingAttributes](es.ref.Append("avail_blanking"))
 }
 
 func (es EncoderSettingsAttributes) OutputGroups() terra.ListValue[OutputGroupsAttributes] {
-	return terra.ReferenceList[OutputGroupsAttributes](es.ref.Append("output_groups"))
+	return terra.ReferenceAsList[OutputGroupsAttributes](es.ref.Append("output_groups"))
 }
 
 func (es EncoderSettingsAttributes) TimecodeConfig() terra.ListValue[TimecodeConfigAttributes] {
-	return terra.ReferenceList[TimecodeConfigAttributes](es.ref.Append("timecode_config"))
+	return terra.ReferenceAsList[TimecodeConfigAttributes](es.ref.Append("timecode_config"))
 }
 
 func (es EncoderSettingsAttributes) VideoDescriptions() terra.ListValue[VideoDescriptionsAttributes] {
-	return terra.ReferenceList[VideoDescriptionsAttributes](es.ref.Append("video_descriptions"))
+	return terra.ReferenceAsList[VideoDescriptionsAttributes](es.ref.Append("video_descriptions"))
 }
 
 type AudioDescriptionsAttributes struct {
@@ -1691,47 +1691,47 @@ func (ad AudioDescriptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ad AudioDescriptionsAttributes) AudioSelectorName() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("audio_selector_name"))
+	return terra.ReferenceAsString(ad.ref.Append("audio_selector_name"))
 }
 
 func (ad AudioDescriptionsAttributes) AudioType() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("audio_type"))
+	return terra.ReferenceAsString(ad.ref.Append("audio_type"))
 }
 
 func (ad AudioDescriptionsAttributes) AudioTypeControl() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("audio_type_control"))
+	return terra.ReferenceAsString(ad.ref.Append("audio_type_control"))
 }
 
 func (ad AudioDescriptionsAttributes) LanguageCode() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("language_code"))
+	return terra.ReferenceAsString(ad.ref.Append("language_code"))
 }
 
 func (ad AudioDescriptionsAttributes) LanguageCodeControl() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("language_code_control"))
+	return terra.ReferenceAsString(ad.ref.Append("language_code_control"))
 }
 
 func (ad AudioDescriptionsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("name"))
+	return terra.ReferenceAsString(ad.ref.Append("name"))
 }
 
 func (ad AudioDescriptionsAttributes) StreamName() terra.StringValue {
-	return terra.ReferenceString(ad.ref.Append("stream_name"))
+	return terra.ReferenceAsString(ad.ref.Append("stream_name"))
 }
 
 func (ad AudioDescriptionsAttributes) AudioNormalizationSettings() terra.ListValue[AudioNormalizationSettingsAttributes] {
-	return terra.ReferenceList[AudioNormalizationSettingsAttributes](ad.ref.Append("audio_normalization_settings"))
+	return terra.ReferenceAsList[AudioNormalizationSettingsAttributes](ad.ref.Append("audio_normalization_settings"))
 }
 
 func (ad AudioDescriptionsAttributes) AudioWatermarkSettings() terra.ListValue[AudioWatermarkSettingsAttributes] {
-	return terra.ReferenceList[AudioWatermarkSettingsAttributes](ad.ref.Append("audio_watermark_settings"))
+	return terra.ReferenceAsList[AudioWatermarkSettingsAttributes](ad.ref.Append("audio_watermark_settings"))
 }
 
 func (ad AudioDescriptionsAttributes) CodecSettings() terra.ListValue[AudioDescriptionsCodecSettingsAttributes] {
-	return terra.ReferenceList[AudioDescriptionsCodecSettingsAttributes](ad.ref.Append("codec_settings"))
+	return terra.ReferenceAsList[AudioDescriptionsCodecSettingsAttributes](ad.ref.Append("codec_settings"))
 }
 
 func (ad AudioDescriptionsAttributes) RemixSettings() terra.ListValue[RemixSettingsAttributes] {
-	return terra.ReferenceList[RemixSettingsAttributes](ad.ref.Append("remix_settings"))
+	return terra.ReferenceAsList[RemixSettingsAttributes](ad.ref.Append("remix_settings"))
 }
 
 type AudioNormalizationSettingsAttributes struct {
@@ -1751,15 +1751,15 @@ func (ans AudioNormalizationSettingsAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (ans AudioNormalizationSettingsAttributes) Algorithm() terra.StringValue {
-	return terra.ReferenceString(ans.ref.Append("algorithm"))
+	return terra.ReferenceAsString(ans.ref.Append("algorithm"))
 }
 
 func (ans AudioNormalizationSettingsAttributes) AlgorithmControl() terra.StringValue {
-	return terra.ReferenceString(ans.ref.Append("algorithm_control"))
+	return terra.ReferenceAsString(ans.ref.Append("algorithm_control"))
 }
 
 func (ans AudioNormalizationSettingsAttributes) TargetLkfs() terra.NumberValue {
-	return terra.ReferenceNumber(ans.ref.Append("target_lkfs"))
+	return terra.ReferenceAsNumber(ans.ref.Append("target_lkfs"))
 }
 
 type AudioWatermarkSettingsAttributes struct {
@@ -1779,7 +1779,7 @@ func (aws AudioWatermarkSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (aws AudioWatermarkSettingsAttributes) NielsenWatermarksSettings() terra.ListValue[NielsenWatermarksSettingsAttributes] {
-	return terra.ReferenceList[NielsenWatermarksSettingsAttributes](aws.ref.Append("nielsen_watermarks_settings"))
+	return terra.ReferenceAsList[NielsenWatermarksSettingsAttributes](aws.ref.Append("nielsen_watermarks_settings"))
 }
 
 type NielsenWatermarksSettingsAttributes struct {
@@ -1799,15 +1799,15 @@ func (nws NielsenWatermarksSettingsAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (nws NielsenWatermarksSettingsAttributes) NielsenDistributionType() terra.StringValue {
-	return terra.ReferenceString(nws.ref.Append("nielsen_distribution_type"))
+	return terra.ReferenceAsString(nws.ref.Append("nielsen_distribution_type"))
 }
 
 func (nws NielsenWatermarksSettingsAttributes) NielsenCbetSettings() terra.ListValue[NielsenCbetSettingsAttributes] {
-	return terra.ReferenceList[NielsenCbetSettingsAttributes](nws.ref.Append("nielsen_cbet_settings"))
+	return terra.ReferenceAsList[NielsenCbetSettingsAttributes](nws.ref.Append("nielsen_cbet_settings"))
 }
 
 func (nws NielsenWatermarksSettingsAttributes) NielsenNaesIiNwSettings() terra.ListValue[NielsenNaesIiNwSettingsAttributes] {
-	return terra.ReferenceList[NielsenNaesIiNwSettingsAttributes](nws.ref.Append("nielsen_naes_ii_nw_settings"))
+	return terra.ReferenceAsList[NielsenNaesIiNwSettingsAttributes](nws.ref.Append("nielsen_naes_ii_nw_settings"))
 }
 
 type NielsenCbetSettingsAttributes struct {
@@ -1827,15 +1827,15 @@ func (ncs NielsenCbetSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ncs NielsenCbetSettingsAttributes) CbetCheckDigitString() terra.StringValue {
-	return terra.ReferenceString(ncs.ref.Append("cbet_check_digit_string"))
+	return terra.ReferenceAsString(ncs.ref.Append("cbet_check_digit_string"))
 }
 
 func (ncs NielsenCbetSettingsAttributes) CbetStepaside() terra.StringValue {
-	return terra.ReferenceString(ncs.ref.Append("cbet_stepaside"))
+	return terra.ReferenceAsString(ncs.ref.Append("cbet_stepaside"))
 }
 
 func (ncs NielsenCbetSettingsAttributes) Csid() terra.StringValue {
-	return terra.ReferenceString(ncs.ref.Append("csid"))
+	return terra.ReferenceAsString(ncs.ref.Append("csid"))
 }
 
 type NielsenNaesIiNwSettingsAttributes struct {
@@ -1855,11 +1855,11 @@ func (nnins NielsenNaesIiNwSettingsAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (nnins NielsenNaesIiNwSettingsAttributes) CheckDigitString() terra.StringValue {
-	return terra.ReferenceString(nnins.ref.Append("check_digit_string"))
+	return terra.ReferenceAsString(nnins.ref.Append("check_digit_string"))
 }
 
 func (nnins NielsenNaesIiNwSettingsAttributes) Sid() terra.NumberValue {
-	return terra.ReferenceNumber(nnins.ref.Append("sid"))
+	return terra.ReferenceAsNumber(nnins.ref.Append("sid"))
 }
 
 type AudioDescriptionsCodecSettingsAttributes struct {
@@ -1879,31 +1879,31 @@ func (cs AudioDescriptionsCodecSettingsAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (cs AudioDescriptionsCodecSettingsAttributes) AacSettings() terra.ListValue[AacSettingsAttributes] {
-	return terra.ReferenceList[AacSettingsAttributes](cs.ref.Append("aac_settings"))
+	return terra.ReferenceAsList[AacSettingsAttributes](cs.ref.Append("aac_settings"))
 }
 
 func (cs AudioDescriptionsCodecSettingsAttributes) Ac3Settings() terra.ListValue[Ac3SettingsAttributes] {
-	return terra.ReferenceList[Ac3SettingsAttributes](cs.ref.Append("ac3_settings"))
+	return terra.ReferenceAsList[Ac3SettingsAttributes](cs.ref.Append("ac3_settings"))
 }
 
 func (cs AudioDescriptionsCodecSettingsAttributes) Eac3AtmosSettings() terra.ListValue[Eac3AtmosSettingsAttributes] {
-	return terra.ReferenceList[Eac3AtmosSettingsAttributes](cs.ref.Append("eac3_atmos_settings"))
+	return terra.ReferenceAsList[Eac3AtmosSettingsAttributes](cs.ref.Append("eac3_atmos_settings"))
 }
 
 func (cs AudioDescriptionsCodecSettingsAttributes) Eac3Settings() terra.ListValue[Eac3SettingsAttributes] {
-	return terra.ReferenceList[Eac3SettingsAttributes](cs.ref.Append("eac3_settings"))
+	return terra.ReferenceAsList[Eac3SettingsAttributes](cs.ref.Append("eac3_settings"))
 }
 
 func (cs AudioDescriptionsCodecSettingsAttributes) Mp2Settings() terra.ListValue[Mp2SettingsAttributes] {
-	return terra.ReferenceList[Mp2SettingsAttributes](cs.ref.Append("mp2_settings"))
+	return terra.ReferenceAsList[Mp2SettingsAttributes](cs.ref.Append("mp2_settings"))
 }
 
 func (cs AudioDescriptionsCodecSettingsAttributes) PassThroughSettings() terra.ListValue[PassThroughSettingsAttributes] {
-	return terra.ReferenceList[PassThroughSettingsAttributes](cs.ref.Append("pass_through_settings"))
+	return terra.ReferenceAsList[PassThroughSettingsAttributes](cs.ref.Append("pass_through_settings"))
 }
 
 func (cs AudioDescriptionsCodecSettingsAttributes) WavSettings() terra.ListValue[WavSettingsAttributes] {
-	return terra.ReferenceList[WavSettingsAttributes](cs.ref.Append("wav_settings"))
+	return terra.ReferenceAsList[WavSettingsAttributes](cs.ref.Append("wav_settings"))
 }
 
 type AacSettingsAttributes struct {
@@ -1923,39 +1923,39 @@ func (as AacSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (as AacSettingsAttributes) Bitrate() terra.NumberValue {
-	return terra.ReferenceNumber(as.ref.Append("bitrate"))
+	return terra.ReferenceAsNumber(as.ref.Append("bitrate"))
 }
 
 func (as AacSettingsAttributes) CodingMode() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("coding_mode"))
+	return terra.ReferenceAsString(as.ref.Append("coding_mode"))
 }
 
 func (as AacSettingsAttributes) InputType() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("input_type"))
+	return terra.ReferenceAsString(as.ref.Append("input_type"))
 }
 
 func (as AacSettingsAttributes) Profile() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("profile"))
+	return terra.ReferenceAsString(as.ref.Append("profile"))
 }
 
 func (as AacSettingsAttributes) RateControlMode() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("rate_control_mode"))
+	return terra.ReferenceAsString(as.ref.Append("rate_control_mode"))
 }
 
 func (as AacSettingsAttributes) RawFormat() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("raw_format"))
+	return terra.ReferenceAsString(as.ref.Append("raw_format"))
 }
 
 func (as AacSettingsAttributes) SampleRate() terra.NumberValue {
-	return terra.ReferenceNumber(as.ref.Append("sample_rate"))
+	return terra.ReferenceAsNumber(as.ref.Append("sample_rate"))
 }
 
 func (as AacSettingsAttributes) Spec() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("spec"))
+	return terra.ReferenceAsString(as.ref.Append("spec"))
 }
 
 func (as AacSettingsAttributes) VbrQuality() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("vbr_quality"))
+	return terra.ReferenceAsString(as.ref.Append("vbr_quality"))
 }
 
 type Ac3SettingsAttributes struct {
@@ -1975,31 +1975,31 @@ func (as Ac3SettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (as Ac3SettingsAttributes) Bitrate() terra.NumberValue {
-	return terra.ReferenceNumber(as.ref.Append("bitrate"))
+	return terra.ReferenceAsNumber(as.ref.Append("bitrate"))
 }
 
 func (as Ac3SettingsAttributes) BitstreamMode() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("bitstream_mode"))
+	return terra.ReferenceAsString(as.ref.Append("bitstream_mode"))
 }
 
 func (as Ac3SettingsAttributes) CodingMode() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("coding_mode"))
+	return terra.ReferenceAsString(as.ref.Append("coding_mode"))
 }
 
 func (as Ac3SettingsAttributes) Dialnorm() terra.NumberValue {
-	return terra.ReferenceNumber(as.ref.Append("dialnorm"))
+	return terra.ReferenceAsNumber(as.ref.Append("dialnorm"))
 }
 
 func (as Ac3SettingsAttributes) DrcProfile() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("drc_profile"))
+	return terra.ReferenceAsString(as.ref.Append("drc_profile"))
 }
 
 func (as Ac3SettingsAttributes) LfeFilter() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("lfe_filter"))
+	return terra.ReferenceAsString(as.ref.Append("lfe_filter"))
 }
 
 func (as Ac3SettingsAttributes) MetadataControl() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("metadata_control"))
+	return terra.ReferenceAsString(as.ref.Append("metadata_control"))
 }
 
 type Eac3AtmosSettingsAttributes struct {
@@ -2019,31 +2019,31 @@ func (eas Eac3AtmosSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (eas Eac3AtmosSettingsAttributes) Bitrate() terra.NumberValue {
-	return terra.ReferenceNumber(eas.ref.Append("bitrate"))
+	return terra.ReferenceAsNumber(eas.ref.Append("bitrate"))
 }
 
 func (eas Eac3AtmosSettingsAttributes) CodingMode() terra.StringValue {
-	return terra.ReferenceString(eas.ref.Append("coding_mode"))
+	return terra.ReferenceAsString(eas.ref.Append("coding_mode"))
 }
 
 func (eas Eac3AtmosSettingsAttributes) Dialnorm() terra.NumberValue {
-	return terra.ReferenceNumber(eas.ref.Append("dialnorm"))
+	return terra.ReferenceAsNumber(eas.ref.Append("dialnorm"))
 }
 
 func (eas Eac3AtmosSettingsAttributes) DrcLine() terra.StringValue {
-	return terra.ReferenceString(eas.ref.Append("drc_line"))
+	return terra.ReferenceAsString(eas.ref.Append("drc_line"))
 }
 
 func (eas Eac3AtmosSettingsAttributes) DrcRf() terra.StringValue {
-	return terra.ReferenceString(eas.ref.Append("drc_rf"))
+	return terra.ReferenceAsString(eas.ref.Append("drc_rf"))
 }
 
 func (eas Eac3AtmosSettingsAttributes) HeightTrim() terra.NumberValue {
-	return terra.ReferenceNumber(eas.ref.Append("height_trim"))
+	return terra.ReferenceAsNumber(eas.ref.Append("height_trim"))
 }
 
 func (eas Eac3AtmosSettingsAttributes) SurroundTrim() terra.NumberValue {
-	return terra.ReferenceNumber(eas.ref.Append("surround_trim"))
+	return terra.ReferenceAsNumber(eas.ref.Append("surround_trim"))
 }
 
 type Eac3SettingsAttributes struct {
@@ -2063,83 +2063,83 @@ func (es Eac3SettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (es Eac3SettingsAttributes) AttenuationControl() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("attenuation_control"))
+	return terra.ReferenceAsString(es.ref.Append("attenuation_control"))
 }
 
 func (es Eac3SettingsAttributes) Bitrate() terra.NumberValue {
-	return terra.ReferenceNumber(es.ref.Append("bitrate"))
+	return terra.ReferenceAsNumber(es.ref.Append("bitrate"))
 }
 
 func (es Eac3SettingsAttributes) BitstreamMode() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("bitstream_mode"))
+	return terra.ReferenceAsString(es.ref.Append("bitstream_mode"))
 }
 
 func (es Eac3SettingsAttributes) CodingMode() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("coding_mode"))
+	return terra.ReferenceAsString(es.ref.Append("coding_mode"))
 }
 
 func (es Eac3SettingsAttributes) DcFilter() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("dc_filter"))
+	return terra.ReferenceAsString(es.ref.Append("dc_filter"))
 }
 
 func (es Eac3SettingsAttributes) Dialnorm() terra.NumberValue {
-	return terra.ReferenceNumber(es.ref.Append("dialnorm"))
+	return terra.ReferenceAsNumber(es.ref.Append("dialnorm"))
 }
 
 func (es Eac3SettingsAttributes) DrcLine() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("drc_line"))
+	return terra.ReferenceAsString(es.ref.Append("drc_line"))
 }
 
 func (es Eac3SettingsAttributes) DrcRf() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("drc_rf"))
+	return terra.ReferenceAsString(es.ref.Append("drc_rf"))
 }
 
 func (es Eac3SettingsAttributes) LfeControl() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("lfe_control"))
+	return terra.ReferenceAsString(es.ref.Append("lfe_control"))
 }
 
 func (es Eac3SettingsAttributes) LfeFilter() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("lfe_filter"))
+	return terra.ReferenceAsString(es.ref.Append("lfe_filter"))
 }
 
 func (es Eac3SettingsAttributes) LoRoCenterMixLevel() terra.NumberValue {
-	return terra.ReferenceNumber(es.ref.Append("lo_ro_center_mix_level"))
+	return terra.ReferenceAsNumber(es.ref.Append("lo_ro_center_mix_level"))
 }
 
 func (es Eac3SettingsAttributes) LoRoSurroundMixLevel() terra.NumberValue {
-	return terra.ReferenceNumber(es.ref.Append("lo_ro_surround_mix_level"))
+	return terra.ReferenceAsNumber(es.ref.Append("lo_ro_surround_mix_level"))
 }
 
 func (es Eac3SettingsAttributes) LtRtCenterMixLevel() terra.NumberValue {
-	return terra.ReferenceNumber(es.ref.Append("lt_rt_center_mix_level"))
+	return terra.ReferenceAsNumber(es.ref.Append("lt_rt_center_mix_level"))
 }
 
 func (es Eac3SettingsAttributes) LtRtSurroundMixLevel() terra.NumberValue {
-	return terra.ReferenceNumber(es.ref.Append("lt_rt_surround_mix_level"))
+	return terra.ReferenceAsNumber(es.ref.Append("lt_rt_surround_mix_level"))
 }
 
 func (es Eac3SettingsAttributes) MetadataControl() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("metadata_control"))
+	return terra.ReferenceAsString(es.ref.Append("metadata_control"))
 }
 
 func (es Eac3SettingsAttributes) PassthroughControl() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("passthrough_control"))
+	return terra.ReferenceAsString(es.ref.Append("passthrough_control"))
 }
 
 func (es Eac3SettingsAttributes) PhaseControl() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("phase_control"))
+	return terra.ReferenceAsString(es.ref.Append("phase_control"))
 }
 
 func (es Eac3SettingsAttributes) StereoDownmix() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("stereo_downmix"))
+	return terra.ReferenceAsString(es.ref.Append("stereo_downmix"))
 }
 
 func (es Eac3SettingsAttributes) SurroundExMode() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("surround_ex_mode"))
+	return terra.ReferenceAsString(es.ref.Append("surround_ex_mode"))
 }
 
 func (es Eac3SettingsAttributes) SurroundMode() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("surround_mode"))
+	return terra.ReferenceAsString(es.ref.Append("surround_mode"))
 }
 
 type Mp2SettingsAttributes struct {
@@ -2159,15 +2159,15 @@ func (ms Mp2SettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ms Mp2SettingsAttributes) Bitrate() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("bitrate"))
+	return terra.ReferenceAsNumber(ms.ref.Append("bitrate"))
 }
 
 func (ms Mp2SettingsAttributes) CodingMode() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("coding_mode"))
+	return terra.ReferenceAsString(ms.ref.Append("coding_mode"))
 }
 
 func (ms Mp2SettingsAttributes) SampleRate() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("sample_rate"))
+	return terra.ReferenceAsNumber(ms.ref.Append("sample_rate"))
 }
 
 type PassThroughSettingsAttributes struct {
@@ -2203,15 +2203,15 @@ func (ws WavSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ws WavSettingsAttributes) BitDepth() terra.NumberValue {
-	return terra.ReferenceNumber(ws.ref.Append("bit_depth"))
+	return terra.ReferenceAsNumber(ws.ref.Append("bit_depth"))
 }
 
 func (ws WavSettingsAttributes) CodingMode() terra.StringValue {
-	return terra.ReferenceString(ws.ref.Append("coding_mode"))
+	return terra.ReferenceAsString(ws.ref.Append("coding_mode"))
 }
 
 func (ws WavSettingsAttributes) SampleRate() terra.NumberValue {
-	return terra.ReferenceNumber(ws.ref.Append("sample_rate"))
+	return terra.ReferenceAsNumber(ws.ref.Append("sample_rate"))
 }
 
 type RemixSettingsAttributes struct {
@@ -2231,15 +2231,15 @@ func (rs RemixSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rs RemixSettingsAttributes) ChannelsIn() terra.NumberValue {
-	return terra.ReferenceNumber(rs.ref.Append("channels_in"))
+	return terra.ReferenceAsNumber(rs.ref.Append("channels_in"))
 }
 
 func (rs RemixSettingsAttributes) ChannelsOut() terra.NumberValue {
-	return terra.ReferenceNumber(rs.ref.Append("channels_out"))
+	return terra.ReferenceAsNumber(rs.ref.Append("channels_out"))
 }
 
 func (rs RemixSettingsAttributes) ChannelMappings() terra.SetValue[ChannelMappingsAttributes] {
-	return terra.ReferenceSet[ChannelMappingsAttributes](rs.ref.Append("channel_mappings"))
+	return terra.ReferenceAsSet[ChannelMappingsAttributes](rs.ref.Append("channel_mappings"))
 }
 
 type ChannelMappingsAttributes struct {
@@ -2259,11 +2259,11 @@ func (cm ChannelMappingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cm ChannelMappingsAttributes) OutputChannel() terra.NumberValue {
-	return terra.ReferenceNumber(cm.ref.Append("output_channel"))
+	return terra.ReferenceAsNumber(cm.ref.Append("output_channel"))
 }
 
 func (cm ChannelMappingsAttributes) InputChannelLevels() terra.SetValue[InputChannelLevelsAttributes] {
-	return terra.ReferenceSet[InputChannelLevelsAttributes](cm.ref.Append("input_channel_levels"))
+	return terra.ReferenceAsSet[InputChannelLevelsAttributes](cm.ref.Append("input_channel_levels"))
 }
 
 type InputChannelLevelsAttributes struct {
@@ -2283,11 +2283,11 @@ func (icl InputChannelLevelsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (icl InputChannelLevelsAttributes) Gain() terra.NumberValue {
-	return terra.ReferenceNumber(icl.ref.Append("gain"))
+	return terra.ReferenceAsNumber(icl.ref.Append("gain"))
 }
 
 func (icl InputChannelLevelsAttributes) InputChannel() terra.NumberValue {
-	return terra.ReferenceNumber(icl.ref.Append("input_channel"))
+	return terra.ReferenceAsNumber(icl.ref.Append("input_channel"))
 }
 
 type AvailBlankingAttributes struct {
@@ -2307,11 +2307,11 @@ func (ab AvailBlankingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ab AvailBlankingAttributes) State() terra.StringValue {
-	return terra.ReferenceString(ab.ref.Append("state"))
+	return terra.ReferenceAsString(ab.ref.Append("state"))
 }
 
 func (ab AvailBlankingAttributes) AvailBlankingImage() terra.ListValue[AvailBlankingImageAttributes] {
-	return terra.ReferenceList[AvailBlankingImageAttributes](ab.ref.Append("avail_blanking_image"))
+	return terra.ReferenceAsList[AvailBlankingImageAttributes](ab.ref.Append("avail_blanking_image"))
 }
 
 type AvailBlankingImageAttributes struct {
@@ -2331,15 +2331,15 @@ func (abi AvailBlankingImageAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (abi AvailBlankingImageAttributes) PasswordParam() terra.StringValue {
-	return terra.ReferenceString(abi.ref.Append("password_param"))
+	return terra.ReferenceAsString(abi.ref.Append("password_param"))
 }
 
 func (abi AvailBlankingImageAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(abi.ref.Append("uri"))
+	return terra.ReferenceAsString(abi.ref.Append("uri"))
 }
 
 func (abi AvailBlankingImageAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(abi.ref.Append("username"))
+	return terra.ReferenceAsString(abi.ref.Append("username"))
 }
 
 type OutputGroupsAttributes struct {
@@ -2359,15 +2359,15 @@ func (og OutputGroupsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (og OutputGroupsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(og.ref.Append("name"))
+	return terra.ReferenceAsString(og.ref.Append("name"))
 }
 
 func (og OutputGroupsAttributes) OutputGroupSettings() terra.ListValue[OutputGroupSettingsAttributes] {
-	return terra.ReferenceList[OutputGroupSettingsAttributes](og.ref.Append("output_group_settings"))
+	return terra.ReferenceAsList[OutputGroupSettingsAttributes](og.ref.Append("output_group_settings"))
 }
 
 func (og OutputGroupsAttributes) Outputs() terra.ListValue[OutputsAttributes] {
-	return terra.ReferenceList[OutputsAttributes](og.ref.Append("outputs"))
+	return terra.ReferenceAsList[OutputsAttributes](og.ref.Append("outputs"))
 }
 
 type OutputGroupSettingsAttributes struct {
@@ -2387,35 +2387,35 @@ func (ogs OutputGroupSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ogs OutputGroupSettingsAttributes) ArchiveGroupSettings() terra.ListValue[ArchiveGroupSettingsAttributes] {
-	return terra.ReferenceList[ArchiveGroupSettingsAttributes](ogs.ref.Append("archive_group_settings"))
+	return terra.ReferenceAsList[ArchiveGroupSettingsAttributes](ogs.ref.Append("archive_group_settings"))
 }
 
 func (ogs OutputGroupSettingsAttributes) FrameCaptureGroupSettings() terra.ListValue[FrameCaptureGroupSettingsAttributes] {
-	return terra.ReferenceList[FrameCaptureGroupSettingsAttributes](ogs.ref.Append("frame_capture_group_settings"))
+	return terra.ReferenceAsList[FrameCaptureGroupSettingsAttributes](ogs.ref.Append("frame_capture_group_settings"))
 }
 
 func (ogs OutputGroupSettingsAttributes) HlsGroupSettings() terra.ListValue[HlsGroupSettingsAttributes] {
-	return terra.ReferenceList[HlsGroupSettingsAttributes](ogs.ref.Append("hls_group_settings"))
+	return terra.ReferenceAsList[HlsGroupSettingsAttributes](ogs.ref.Append("hls_group_settings"))
 }
 
 func (ogs OutputGroupSettingsAttributes) MediaPackageGroupSettings() terra.ListValue[MediaPackageGroupSettingsAttributes] {
-	return terra.ReferenceList[MediaPackageGroupSettingsAttributes](ogs.ref.Append("media_package_group_settings"))
+	return terra.ReferenceAsList[MediaPackageGroupSettingsAttributes](ogs.ref.Append("media_package_group_settings"))
 }
 
 func (ogs OutputGroupSettingsAttributes) MsSmoothGroupSettings() terra.ListValue[MsSmoothGroupSettingsAttributes] {
-	return terra.ReferenceList[MsSmoothGroupSettingsAttributes](ogs.ref.Append("ms_smooth_group_settings"))
+	return terra.ReferenceAsList[MsSmoothGroupSettingsAttributes](ogs.ref.Append("ms_smooth_group_settings"))
 }
 
 func (ogs OutputGroupSettingsAttributes) MultiplexGroupSettings() terra.ListValue[MultiplexGroupSettingsAttributes] {
-	return terra.ReferenceList[MultiplexGroupSettingsAttributes](ogs.ref.Append("multiplex_group_settings"))
+	return terra.ReferenceAsList[MultiplexGroupSettingsAttributes](ogs.ref.Append("multiplex_group_settings"))
 }
 
 func (ogs OutputGroupSettingsAttributes) RtmpGroupSettings() terra.ListValue[RtmpGroupSettingsAttributes] {
-	return terra.ReferenceList[RtmpGroupSettingsAttributes](ogs.ref.Append("rtmp_group_settings"))
+	return terra.ReferenceAsList[RtmpGroupSettingsAttributes](ogs.ref.Append("rtmp_group_settings"))
 }
 
 func (ogs OutputGroupSettingsAttributes) UdpGroupSettings() terra.ListValue[UdpGroupSettingsAttributes] {
-	return terra.ReferenceList[UdpGroupSettingsAttributes](ogs.ref.Append("udp_group_settings"))
+	return terra.ReferenceAsList[UdpGroupSettingsAttributes](ogs.ref.Append("udp_group_settings"))
 }
 
 type ArchiveGroupSettingsAttributes struct {
@@ -2435,15 +2435,15 @@ func (ags ArchiveGroupSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ags ArchiveGroupSettingsAttributes) RolloverInterval() terra.NumberValue {
-	return terra.ReferenceNumber(ags.ref.Append("rollover_interval"))
+	return terra.ReferenceAsNumber(ags.ref.Append("rollover_interval"))
 }
 
 func (ags ArchiveGroupSettingsAttributes) ArchiveCdnSettings() terra.ListValue[ArchiveCdnSettingsAttributes] {
-	return terra.ReferenceList[ArchiveCdnSettingsAttributes](ags.ref.Append("archive_cdn_settings"))
+	return terra.ReferenceAsList[ArchiveCdnSettingsAttributes](ags.ref.Append("archive_cdn_settings"))
 }
 
 func (ags ArchiveGroupSettingsAttributes) Destination() terra.ListValue[ArchiveGroupSettingsDestinationAttributes] {
-	return terra.ReferenceList[ArchiveGroupSettingsDestinationAttributes](ags.ref.Append("destination"))
+	return terra.ReferenceAsList[ArchiveGroupSettingsDestinationAttributes](ags.ref.Append("destination"))
 }
 
 type ArchiveCdnSettingsAttributes struct {
@@ -2463,7 +2463,7 @@ func (acs ArchiveCdnSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (acs ArchiveCdnSettingsAttributes) ArchiveS3Settings() terra.ListValue[ArchiveS3SettingsAttributes] {
-	return terra.ReferenceList[ArchiveS3SettingsAttributes](acs.ref.Append("archive_s3_settings"))
+	return terra.ReferenceAsList[ArchiveS3SettingsAttributes](acs.ref.Append("archive_s3_settings"))
 }
 
 type ArchiveS3SettingsAttributes struct {
@@ -2483,7 +2483,7 @@ func (ass ArchiveS3SettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ass ArchiveS3SettingsAttributes) CannedAcl() terra.StringValue {
-	return terra.ReferenceString(ass.ref.Append("canned_acl"))
+	return terra.ReferenceAsString(ass.ref.Append("canned_acl"))
 }
 
 type ArchiveGroupSettingsDestinationAttributes struct {
@@ -2503,7 +2503,7 @@ func (d ArchiveGroupSettingsDestinationAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (d ArchiveGroupSettingsDestinationAttributes) DestinationRefId() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("destination_ref_id"))
+	return terra.ReferenceAsString(d.ref.Append("destination_ref_id"))
 }
 
 type FrameCaptureGroupSettingsAttributes struct {
@@ -2523,11 +2523,11 @@ func (fcgs FrameCaptureGroupSettingsAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (fcgs FrameCaptureGroupSettingsAttributes) Destination() terra.ListValue[FrameCaptureGroupSettingsDestinationAttributes] {
-	return terra.ReferenceList[FrameCaptureGroupSettingsDestinationAttributes](fcgs.ref.Append("destination"))
+	return terra.ReferenceAsList[FrameCaptureGroupSettingsDestinationAttributes](fcgs.ref.Append("destination"))
 }
 
 func (fcgs FrameCaptureGroupSettingsAttributes) FrameCaptureCdnSettings() terra.ListValue[FrameCaptureCdnSettingsAttributes] {
-	return terra.ReferenceList[FrameCaptureCdnSettingsAttributes](fcgs.ref.Append("frame_capture_cdn_settings"))
+	return terra.ReferenceAsList[FrameCaptureCdnSettingsAttributes](fcgs.ref.Append("frame_capture_cdn_settings"))
 }
 
 type FrameCaptureGroupSettingsDestinationAttributes struct {
@@ -2547,7 +2547,7 @@ func (d FrameCaptureGroupSettingsDestinationAttributes) InternalTokens() hclwrit
 }
 
 func (d FrameCaptureGroupSettingsDestinationAttributes) DestinationRefId() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("destination_ref_id"))
+	return terra.ReferenceAsString(d.ref.Append("destination_ref_id"))
 }
 
 type FrameCaptureCdnSettingsAttributes struct {
@@ -2567,7 +2567,7 @@ func (fccs FrameCaptureCdnSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fccs FrameCaptureCdnSettingsAttributes) FrameCaptureS3Settings() terra.ListValue[FrameCaptureS3SettingsAttributes] {
-	return terra.ReferenceList[FrameCaptureS3SettingsAttributes](fccs.ref.Append("frame_capture_s3_settings"))
+	return terra.ReferenceAsList[FrameCaptureS3SettingsAttributes](fccs.ref.Append("frame_capture_s3_settings"))
 }
 
 type FrameCaptureS3SettingsAttributes struct {
@@ -2587,7 +2587,7 @@ func (fcss FrameCaptureS3SettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fcss FrameCaptureS3SettingsAttributes) CannedAcl() terra.StringValue {
-	return terra.ReferenceString(fcss.ref.Append("canned_acl"))
+	return terra.ReferenceAsString(fcss.ref.Append("canned_acl"))
 }
 
 type HlsGroupSettingsAttributes struct {
@@ -2607,171 +2607,171 @@ func (hgs HlsGroupSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hgs HlsGroupSettingsAttributes) AdMarkers() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](hgs.ref.Append("ad_markers"))
+	return terra.ReferenceAsList[terra.StringValue](hgs.ref.Append("ad_markers"))
 }
 
 func (hgs HlsGroupSettingsAttributes) BaseUrlContent() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("base_url_content"))
+	return terra.ReferenceAsString(hgs.ref.Append("base_url_content"))
 }
 
 func (hgs HlsGroupSettingsAttributes) BaseUrlContent1() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("base_url_content1"))
+	return terra.ReferenceAsString(hgs.ref.Append("base_url_content1"))
 }
 
 func (hgs HlsGroupSettingsAttributes) BaseUrlManifest() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("base_url_manifest"))
+	return terra.ReferenceAsString(hgs.ref.Append("base_url_manifest"))
 }
 
 func (hgs HlsGroupSettingsAttributes) BaseUrlManifest1() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("base_url_manifest1"))
+	return terra.ReferenceAsString(hgs.ref.Append("base_url_manifest1"))
 }
 
 func (hgs HlsGroupSettingsAttributes) CaptionLanguageSetting() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("caption_language_setting"))
+	return terra.ReferenceAsString(hgs.ref.Append("caption_language_setting"))
 }
 
 func (hgs HlsGroupSettingsAttributes) ClientCache() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("client_cache"))
+	return terra.ReferenceAsString(hgs.ref.Append("client_cache"))
 }
 
 func (hgs HlsGroupSettingsAttributes) CodecSpecification() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("codec_specification"))
+	return terra.ReferenceAsString(hgs.ref.Append("codec_specification"))
 }
 
 func (hgs HlsGroupSettingsAttributes) ConstantIv() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("constant_iv"))
+	return terra.ReferenceAsString(hgs.ref.Append("constant_iv"))
 }
 
 func (hgs HlsGroupSettingsAttributes) DirectoryStructure() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("directory_structure"))
+	return terra.ReferenceAsString(hgs.ref.Append("directory_structure"))
 }
 
 func (hgs HlsGroupSettingsAttributes) DiscontinuityTags() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("discontinuity_tags"))
+	return terra.ReferenceAsString(hgs.ref.Append("discontinuity_tags"))
 }
 
 func (hgs HlsGroupSettingsAttributes) EncryptionType() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("encryption_type"))
+	return terra.ReferenceAsString(hgs.ref.Append("encryption_type"))
 }
 
 func (hgs HlsGroupSettingsAttributes) HlsId3SegmentTagging() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("hls_id3_segment_tagging"))
+	return terra.ReferenceAsString(hgs.ref.Append("hls_id3_segment_tagging"))
 }
 
 func (hgs HlsGroupSettingsAttributes) IframeOnlyPlaylists() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("iframe_only_playlists"))
+	return terra.ReferenceAsString(hgs.ref.Append("iframe_only_playlists"))
 }
 
 func (hgs HlsGroupSettingsAttributes) IncompleteSegmentBehavior() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("incomplete_segment_behavior"))
+	return terra.ReferenceAsString(hgs.ref.Append("incomplete_segment_behavior"))
 }
 
 func (hgs HlsGroupSettingsAttributes) IndexNSegments() terra.NumberValue {
-	return terra.ReferenceNumber(hgs.ref.Append("index_n_segments"))
+	return terra.ReferenceAsNumber(hgs.ref.Append("index_n_segments"))
 }
 
 func (hgs HlsGroupSettingsAttributes) InputLossAction() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("input_loss_action"))
+	return terra.ReferenceAsString(hgs.ref.Append("input_loss_action"))
 }
 
 func (hgs HlsGroupSettingsAttributes) IvInManifest() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("iv_in_manifest"))
+	return terra.ReferenceAsString(hgs.ref.Append("iv_in_manifest"))
 }
 
 func (hgs HlsGroupSettingsAttributes) IvSource() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("iv_source"))
+	return terra.ReferenceAsString(hgs.ref.Append("iv_source"))
 }
 
 func (hgs HlsGroupSettingsAttributes) KeepSegments() terra.NumberValue {
-	return terra.ReferenceNumber(hgs.ref.Append("keep_segments"))
+	return terra.ReferenceAsNumber(hgs.ref.Append("keep_segments"))
 }
 
 func (hgs HlsGroupSettingsAttributes) KeyFormat() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("key_format"))
+	return terra.ReferenceAsString(hgs.ref.Append("key_format"))
 }
 
 func (hgs HlsGroupSettingsAttributes) KeyFormatVersions() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("key_format_versions"))
+	return terra.ReferenceAsString(hgs.ref.Append("key_format_versions"))
 }
 
 func (hgs HlsGroupSettingsAttributes) ManifestCompression() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("manifest_compression"))
+	return terra.ReferenceAsString(hgs.ref.Append("manifest_compression"))
 }
 
 func (hgs HlsGroupSettingsAttributes) ManifestDurationFormat() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("manifest_duration_format"))
+	return terra.ReferenceAsString(hgs.ref.Append("manifest_duration_format"))
 }
 
 func (hgs HlsGroupSettingsAttributes) MinSegmentLength() terra.NumberValue {
-	return terra.ReferenceNumber(hgs.ref.Append("min_segment_length"))
+	return terra.ReferenceAsNumber(hgs.ref.Append("min_segment_length"))
 }
 
 func (hgs HlsGroupSettingsAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("mode"))
+	return terra.ReferenceAsString(hgs.ref.Append("mode"))
 }
 
 func (hgs HlsGroupSettingsAttributes) OutputSelection() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("output_selection"))
+	return terra.ReferenceAsString(hgs.ref.Append("output_selection"))
 }
 
 func (hgs HlsGroupSettingsAttributes) ProgramDateTime() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("program_date_time"))
+	return terra.ReferenceAsString(hgs.ref.Append("program_date_time"))
 }
 
 func (hgs HlsGroupSettingsAttributes) ProgramDateTimeClock() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("program_date_time_clock"))
+	return terra.ReferenceAsString(hgs.ref.Append("program_date_time_clock"))
 }
 
 func (hgs HlsGroupSettingsAttributes) ProgramDateTimePeriod() terra.NumberValue {
-	return terra.ReferenceNumber(hgs.ref.Append("program_date_time_period"))
+	return terra.ReferenceAsNumber(hgs.ref.Append("program_date_time_period"))
 }
 
 func (hgs HlsGroupSettingsAttributes) RedundantManifest() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("redundant_manifest"))
+	return terra.ReferenceAsString(hgs.ref.Append("redundant_manifest"))
 }
 
 func (hgs HlsGroupSettingsAttributes) SegmentLength() terra.NumberValue {
-	return terra.ReferenceNumber(hgs.ref.Append("segment_length"))
+	return terra.ReferenceAsNumber(hgs.ref.Append("segment_length"))
 }
 
 func (hgs HlsGroupSettingsAttributes) SegmentsPerSubdirectory() terra.NumberValue {
-	return terra.ReferenceNumber(hgs.ref.Append("segments_per_subdirectory"))
+	return terra.ReferenceAsNumber(hgs.ref.Append("segments_per_subdirectory"))
 }
 
 func (hgs HlsGroupSettingsAttributes) StreamInfResolution() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("stream_inf_resolution"))
+	return terra.ReferenceAsString(hgs.ref.Append("stream_inf_resolution"))
 }
 
 func (hgs HlsGroupSettingsAttributes) TimedMetadataId3Frame() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("timed_metadata_id3_frame"))
+	return terra.ReferenceAsString(hgs.ref.Append("timed_metadata_id3_frame"))
 }
 
 func (hgs HlsGroupSettingsAttributes) TimedMetadataId3Period() terra.NumberValue {
-	return terra.ReferenceNumber(hgs.ref.Append("timed_metadata_id3_period"))
+	return terra.ReferenceAsNumber(hgs.ref.Append("timed_metadata_id3_period"))
 }
 
 func (hgs HlsGroupSettingsAttributes) TimestampDeltaMilliseconds() terra.NumberValue {
-	return terra.ReferenceNumber(hgs.ref.Append("timestamp_delta_milliseconds"))
+	return terra.ReferenceAsNumber(hgs.ref.Append("timestamp_delta_milliseconds"))
 }
 
 func (hgs HlsGroupSettingsAttributes) TsFileMode() terra.StringValue {
-	return terra.ReferenceString(hgs.ref.Append("ts_file_mode"))
+	return terra.ReferenceAsString(hgs.ref.Append("ts_file_mode"))
 }
 
 func (hgs HlsGroupSettingsAttributes) CaptionLanguageMappings() terra.SetValue[CaptionLanguageMappingsAttributes] {
-	return terra.ReferenceSet[CaptionLanguageMappingsAttributes](hgs.ref.Append("caption_language_mappings"))
+	return terra.ReferenceAsSet[CaptionLanguageMappingsAttributes](hgs.ref.Append("caption_language_mappings"))
 }
 
 func (hgs HlsGroupSettingsAttributes) Destination() terra.ListValue[HlsGroupSettingsDestinationAttributes] {
-	return terra.ReferenceList[HlsGroupSettingsDestinationAttributes](hgs.ref.Append("destination"))
+	return terra.ReferenceAsList[HlsGroupSettingsDestinationAttributes](hgs.ref.Append("destination"))
 }
 
 func (hgs HlsGroupSettingsAttributes) HlsCdnSettings() terra.ListValue[HlsCdnSettingsAttributes] {
-	return terra.ReferenceList[HlsCdnSettingsAttributes](hgs.ref.Append("hls_cdn_settings"))
+	return terra.ReferenceAsList[HlsCdnSettingsAttributes](hgs.ref.Append("hls_cdn_settings"))
 }
 
 func (hgs HlsGroupSettingsAttributes) KeyProviderSettings() terra.ListValue[KeyProviderSettingsAttributes] {
-	return terra.ReferenceList[KeyProviderSettingsAttributes](hgs.ref.Append("key_provider_settings"))
+	return terra.ReferenceAsList[KeyProviderSettingsAttributes](hgs.ref.Append("key_provider_settings"))
 }
 
 type CaptionLanguageMappingsAttributes struct {
@@ -2791,15 +2791,15 @@ func (clm CaptionLanguageMappingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (clm CaptionLanguageMappingsAttributes) CaptionChannel() terra.NumberValue {
-	return terra.ReferenceNumber(clm.ref.Append("caption_channel"))
+	return terra.ReferenceAsNumber(clm.ref.Append("caption_channel"))
 }
 
 func (clm CaptionLanguageMappingsAttributes) LanguageCode() terra.StringValue {
-	return terra.ReferenceString(clm.ref.Append("language_code"))
+	return terra.ReferenceAsString(clm.ref.Append("language_code"))
 }
 
 func (clm CaptionLanguageMappingsAttributes) LanguageDescription() terra.StringValue {
-	return terra.ReferenceString(clm.ref.Append("language_description"))
+	return terra.ReferenceAsString(clm.ref.Append("language_description"))
 }
 
 type HlsGroupSettingsDestinationAttributes struct {
@@ -2819,7 +2819,7 @@ func (d HlsGroupSettingsDestinationAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (d HlsGroupSettingsDestinationAttributes) DestinationRefId() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("destination_ref_id"))
+	return terra.ReferenceAsString(d.ref.Append("destination_ref_id"))
 }
 
 type HlsCdnSettingsAttributes struct {
@@ -2839,23 +2839,23 @@ func (hcs HlsCdnSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hcs HlsCdnSettingsAttributes) HlsAkamaiSettings() terra.ListValue[HlsAkamaiSettingsAttributes] {
-	return terra.ReferenceList[HlsAkamaiSettingsAttributes](hcs.ref.Append("hls_akamai_settings"))
+	return terra.ReferenceAsList[HlsAkamaiSettingsAttributes](hcs.ref.Append("hls_akamai_settings"))
 }
 
 func (hcs HlsCdnSettingsAttributes) HlsBasicPutSettings() terra.ListValue[HlsBasicPutSettingsAttributes] {
-	return terra.ReferenceList[HlsBasicPutSettingsAttributes](hcs.ref.Append("hls_basic_put_settings"))
+	return terra.ReferenceAsList[HlsBasicPutSettingsAttributes](hcs.ref.Append("hls_basic_put_settings"))
 }
 
 func (hcs HlsCdnSettingsAttributes) HlsMediaStoreSettings() terra.ListValue[HlsMediaStoreSettingsAttributes] {
-	return terra.ReferenceList[HlsMediaStoreSettingsAttributes](hcs.ref.Append("hls_media_store_settings"))
+	return terra.ReferenceAsList[HlsMediaStoreSettingsAttributes](hcs.ref.Append("hls_media_store_settings"))
 }
 
 func (hcs HlsCdnSettingsAttributes) HlsS3Settings() terra.ListValue[HlsS3SettingsAttributes] {
-	return terra.ReferenceList[HlsS3SettingsAttributes](hcs.ref.Append("hls_s3_settings"))
+	return terra.ReferenceAsList[HlsS3SettingsAttributes](hcs.ref.Append("hls_s3_settings"))
 }
 
 func (hcs HlsCdnSettingsAttributes) HlsWebdavSettings() terra.ListValue[HlsWebdavSettingsAttributes] {
-	return terra.ReferenceList[HlsWebdavSettingsAttributes](hcs.ref.Append("hls_webdav_settings"))
+	return terra.ReferenceAsList[HlsWebdavSettingsAttributes](hcs.ref.Append("hls_webdav_settings"))
 }
 
 type HlsAkamaiSettingsAttributes struct {
@@ -2875,31 +2875,31 @@ func (has HlsAkamaiSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (has HlsAkamaiSettingsAttributes) ConnectionRetryInterval() terra.NumberValue {
-	return terra.ReferenceNumber(has.ref.Append("connection_retry_interval"))
+	return terra.ReferenceAsNumber(has.ref.Append("connection_retry_interval"))
 }
 
 func (has HlsAkamaiSettingsAttributes) FilecacheDuration() terra.NumberValue {
-	return terra.ReferenceNumber(has.ref.Append("filecache_duration"))
+	return terra.ReferenceAsNumber(has.ref.Append("filecache_duration"))
 }
 
 func (has HlsAkamaiSettingsAttributes) HttpTransferMode() terra.StringValue {
-	return terra.ReferenceString(has.ref.Append("http_transfer_mode"))
+	return terra.ReferenceAsString(has.ref.Append("http_transfer_mode"))
 }
 
 func (has HlsAkamaiSettingsAttributes) NumRetries() terra.NumberValue {
-	return terra.ReferenceNumber(has.ref.Append("num_retries"))
+	return terra.ReferenceAsNumber(has.ref.Append("num_retries"))
 }
 
 func (has HlsAkamaiSettingsAttributes) RestartDelay() terra.NumberValue {
-	return terra.ReferenceNumber(has.ref.Append("restart_delay"))
+	return terra.ReferenceAsNumber(has.ref.Append("restart_delay"))
 }
 
 func (has HlsAkamaiSettingsAttributes) Salt() terra.StringValue {
-	return terra.ReferenceString(has.ref.Append("salt"))
+	return terra.ReferenceAsString(has.ref.Append("salt"))
 }
 
 func (has HlsAkamaiSettingsAttributes) Token() terra.StringValue {
-	return terra.ReferenceString(has.ref.Append("token"))
+	return terra.ReferenceAsString(has.ref.Append("token"))
 }
 
 type HlsBasicPutSettingsAttributes struct {
@@ -2919,19 +2919,19 @@ func (hbps HlsBasicPutSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hbps HlsBasicPutSettingsAttributes) ConnectionRetryInterval() terra.NumberValue {
-	return terra.ReferenceNumber(hbps.ref.Append("connection_retry_interval"))
+	return terra.ReferenceAsNumber(hbps.ref.Append("connection_retry_interval"))
 }
 
 func (hbps HlsBasicPutSettingsAttributes) FilecacheDuration() terra.NumberValue {
-	return terra.ReferenceNumber(hbps.ref.Append("filecache_duration"))
+	return terra.ReferenceAsNumber(hbps.ref.Append("filecache_duration"))
 }
 
 func (hbps HlsBasicPutSettingsAttributes) NumRetries() terra.NumberValue {
-	return terra.ReferenceNumber(hbps.ref.Append("num_retries"))
+	return terra.ReferenceAsNumber(hbps.ref.Append("num_retries"))
 }
 
 func (hbps HlsBasicPutSettingsAttributes) RestartDelay() terra.NumberValue {
-	return terra.ReferenceNumber(hbps.ref.Append("restart_delay"))
+	return terra.ReferenceAsNumber(hbps.ref.Append("restart_delay"))
 }
 
 type HlsMediaStoreSettingsAttributes struct {
@@ -2951,23 +2951,23 @@ func (hmss HlsMediaStoreSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hmss HlsMediaStoreSettingsAttributes) ConnectionRetryInterval() terra.NumberValue {
-	return terra.ReferenceNumber(hmss.ref.Append("connection_retry_interval"))
+	return terra.ReferenceAsNumber(hmss.ref.Append("connection_retry_interval"))
 }
 
 func (hmss HlsMediaStoreSettingsAttributes) FilecacheDuration() terra.NumberValue {
-	return terra.ReferenceNumber(hmss.ref.Append("filecache_duration"))
+	return terra.ReferenceAsNumber(hmss.ref.Append("filecache_duration"))
 }
 
 func (hmss HlsMediaStoreSettingsAttributes) MediaStoreStorageClass() terra.StringValue {
-	return terra.ReferenceString(hmss.ref.Append("media_store_storage_class"))
+	return terra.ReferenceAsString(hmss.ref.Append("media_store_storage_class"))
 }
 
 func (hmss HlsMediaStoreSettingsAttributes) NumRetries() terra.NumberValue {
-	return terra.ReferenceNumber(hmss.ref.Append("num_retries"))
+	return terra.ReferenceAsNumber(hmss.ref.Append("num_retries"))
 }
 
 func (hmss HlsMediaStoreSettingsAttributes) RestartDelay() terra.NumberValue {
-	return terra.ReferenceNumber(hmss.ref.Append("restart_delay"))
+	return terra.ReferenceAsNumber(hmss.ref.Append("restart_delay"))
 }
 
 type HlsS3SettingsAttributes struct {
@@ -2987,7 +2987,7 @@ func (hss HlsS3SettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hss HlsS3SettingsAttributes) CannedAcl() terra.StringValue {
-	return terra.ReferenceString(hss.ref.Append("canned_acl"))
+	return terra.ReferenceAsString(hss.ref.Append("canned_acl"))
 }
 
 type HlsWebdavSettingsAttributes struct {
@@ -3007,23 +3007,23 @@ func (hws HlsWebdavSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hws HlsWebdavSettingsAttributes) ConnectionRetryInterval() terra.NumberValue {
-	return terra.ReferenceNumber(hws.ref.Append("connection_retry_interval"))
+	return terra.ReferenceAsNumber(hws.ref.Append("connection_retry_interval"))
 }
 
 func (hws HlsWebdavSettingsAttributes) FilecacheDuration() terra.NumberValue {
-	return terra.ReferenceNumber(hws.ref.Append("filecache_duration"))
+	return terra.ReferenceAsNumber(hws.ref.Append("filecache_duration"))
 }
 
 func (hws HlsWebdavSettingsAttributes) HttpTransferMode() terra.StringValue {
-	return terra.ReferenceString(hws.ref.Append("http_transfer_mode"))
+	return terra.ReferenceAsString(hws.ref.Append("http_transfer_mode"))
 }
 
 func (hws HlsWebdavSettingsAttributes) NumRetries() terra.NumberValue {
-	return terra.ReferenceNumber(hws.ref.Append("num_retries"))
+	return terra.ReferenceAsNumber(hws.ref.Append("num_retries"))
 }
 
 func (hws HlsWebdavSettingsAttributes) RestartDelay() terra.NumberValue {
-	return terra.ReferenceNumber(hws.ref.Append("restart_delay"))
+	return terra.ReferenceAsNumber(hws.ref.Append("restart_delay"))
 }
 
 type KeyProviderSettingsAttributes struct {
@@ -3043,7 +3043,7 @@ func (kps KeyProviderSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (kps KeyProviderSettingsAttributes) StaticKeySettings() terra.ListValue[StaticKeySettingsAttributes] {
-	return terra.ReferenceList[StaticKeySettingsAttributes](kps.ref.Append("static_key_settings"))
+	return terra.ReferenceAsList[StaticKeySettingsAttributes](kps.ref.Append("static_key_settings"))
 }
 
 type StaticKeySettingsAttributes struct {
@@ -3063,11 +3063,11 @@ func (sks StaticKeySettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sks StaticKeySettingsAttributes) StaticKeyValue() terra.StringValue {
-	return terra.ReferenceString(sks.ref.Append("static_key_value"))
+	return terra.ReferenceAsString(sks.ref.Append("static_key_value"))
 }
 
 func (sks StaticKeySettingsAttributes) KeyProviderServer() terra.ListValue[KeyProviderServerAttributes] {
-	return terra.ReferenceList[KeyProviderServerAttributes](sks.ref.Append("key_provider_server"))
+	return terra.ReferenceAsList[KeyProviderServerAttributes](sks.ref.Append("key_provider_server"))
 }
 
 type KeyProviderServerAttributes struct {
@@ -3087,15 +3087,15 @@ func (kps KeyProviderServerAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (kps KeyProviderServerAttributes) PasswordParam() terra.StringValue {
-	return terra.ReferenceString(kps.ref.Append("password_param"))
+	return terra.ReferenceAsString(kps.ref.Append("password_param"))
 }
 
 func (kps KeyProviderServerAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(kps.ref.Append("uri"))
+	return terra.ReferenceAsString(kps.ref.Append("uri"))
 }
 
 func (kps KeyProviderServerAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(kps.ref.Append("username"))
+	return terra.ReferenceAsString(kps.ref.Append("username"))
 }
 
 type MediaPackageGroupSettingsAttributes struct {
@@ -3115,7 +3115,7 @@ func (mpgs MediaPackageGroupSettingsAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (mpgs MediaPackageGroupSettingsAttributes) Destination() terra.ListValue[MediaPackageGroupSettingsDestinationAttributes] {
-	return terra.ReferenceList[MediaPackageGroupSettingsDestinationAttributes](mpgs.ref.Append("destination"))
+	return terra.ReferenceAsList[MediaPackageGroupSettingsDestinationAttributes](mpgs.ref.Append("destination"))
 }
 
 type MediaPackageGroupSettingsDestinationAttributes struct {
@@ -3135,7 +3135,7 @@ func (d MediaPackageGroupSettingsDestinationAttributes) InternalTokens() hclwrit
 }
 
 func (d MediaPackageGroupSettingsDestinationAttributes) DestinationRefId() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("destination_ref_id"))
+	return terra.ReferenceAsString(d.ref.Append("destination_ref_id"))
 }
 
 type MsSmoothGroupSettingsAttributes struct {
@@ -3155,79 +3155,79 @@ func (msgs MsSmoothGroupSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (msgs MsSmoothGroupSettingsAttributes) AcquisitionPointId() terra.StringValue {
-	return terra.ReferenceString(msgs.ref.Append("acquisition_point_id"))
+	return terra.ReferenceAsString(msgs.ref.Append("acquisition_point_id"))
 }
 
 func (msgs MsSmoothGroupSettingsAttributes) AudioOnlyTimecodeControl() terra.StringValue {
-	return terra.ReferenceString(msgs.ref.Append("audio_only_timecode_control"))
+	return terra.ReferenceAsString(msgs.ref.Append("audio_only_timecode_control"))
 }
 
 func (msgs MsSmoothGroupSettingsAttributes) CertificateMode() terra.StringValue {
-	return terra.ReferenceString(msgs.ref.Append("certificate_mode"))
+	return terra.ReferenceAsString(msgs.ref.Append("certificate_mode"))
 }
 
 func (msgs MsSmoothGroupSettingsAttributes) ConnectionRetryInterval() terra.NumberValue {
-	return terra.ReferenceNumber(msgs.ref.Append("connection_retry_interval"))
+	return terra.ReferenceAsNumber(msgs.ref.Append("connection_retry_interval"))
 }
 
 func (msgs MsSmoothGroupSettingsAttributes) EventId() terra.StringValue {
-	return terra.ReferenceString(msgs.ref.Append("event_id"))
+	return terra.ReferenceAsString(msgs.ref.Append("event_id"))
 }
 
 func (msgs MsSmoothGroupSettingsAttributes) EventIdMode() terra.StringValue {
-	return terra.ReferenceString(msgs.ref.Append("event_id_mode"))
+	return terra.ReferenceAsString(msgs.ref.Append("event_id_mode"))
 }
 
 func (msgs MsSmoothGroupSettingsAttributes) EventStopBehavior() terra.StringValue {
-	return terra.ReferenceString(msgs.ref.Append("event_stop_behavior"))
+	return terra.ReferenceAsString(msgs.ref.Append("event_stop_behavior"))
 }
 
 func (msgs MsSmoothGroupSettingsAttributes) FilecacheDuration() terra.NumberValue {
-	return terra.ReferenceNumber(msgs.ref.Append("filecache_duration"))
+	return terra.ReferenceAsNumber(msgs.ref.Append("filecache_duration"))
 }
 
 func (msgs MsSmoothGroupSettingsAttributes) FragmentLength() terra.NumberValue {
-	return terra.ReferenceNumber(msgs.ref.Append("fragment_length"))
+	return terra.ReferenceAsNumber(msgs.ref.Append("fragment_length"))
 }
 
 func (msgs MsSmoothGroupSettingsAttributes) InputLossAction() terra.StringValue {
-	return terra.ReferenceString(msgs.ref.Append("input_loss_action"))
+	return terra.ReferenceAsString(msgs.ref.Append("input_loss_action"))
 }
 
 func (msgs MsSmoothGroupSettingsAttributes) NumRetries() terra.NumberValue {
-	return terra.ReferenceNumber(msgs.ref.Append("num_retries"))
+	return terra.ReferenceAsNumber(msgs.ref.Append("num_retries"))
 }
 
 func (msgs MsSmoothGroupSettingsAttributes) RestartDelay() terra.NumberValue {
-	return terra.ReferenceNumber(msgs.ref.Append("restart_delay"))
+	return terra.ReferenceAsNumber(msgs.ref.Append("restart_delay"))
 }
 
 func (msgs MsSmoothGroupSettingsAttributes) SegmentationMode() terra.StringValue {
-	return terra.ReferenceString(msgs.ref.Append("segmentation_mode"))
+	return terra.ReferenceAsString(msgs.ref.Append("segmentation_mode"))
 }
 
 func (msgs MsSmoothGroupSettingsAttributes) SendDelayMs() terra.NumberValue {
-	return terra.ReferenceNumber(msgs.ref.Append("send_delay_ms"))
+	return terra.ReferenceAsNumber(msgs.ref.Append("send_delay_ms"))
 }
 
 func (msgs MsSmoothGroupSettingsAttributes) SparseTrackType() terra.StringValue {
-	return terra.ReferenceString(msgs.ref.Append("sparse_track_type"))
+	return terra.ReferenceAsString(msgs.ref.Append("sparse_track_type"))
 }
 
 func (msgs MsSmoothGroupSettingsAttributes) StreamManifestBehavior() terra.StringValue {
-	return terra.ReferenceString(msgs.ref.Append("stream_manifest_behavior"))
+	return terra.ReferenceAsString(msgs.ref.Append("stream_manifest_behavior"))
 }
 
 func (msgs MsSmoothGroupSettingsAttributes) TimestampOffset() terra.StringValue {
-	return terra.ReferenceString(msgs.ref.Append("timestamp_offset"))
+	return terra.ReferenceAsString(msgs.ref.Append("timestamp_offset"))
 }
 
 func (msgs MsSmoothGroupSettingsAttributes) TimestampOffsetMode() terra.StringValue {
-	return terra.ReferenceString(msgs.ref.Append("timestamp_offset_mode"))
+	return terra.ReferenceAsString(msgs.ref.Append("timestamp_offset_mode"))
 }
 
 func (msgs MsSmoothGroupSettingsAttributes) Destination() terra.ListValue[MsSmoothGroupSettingsDestinationAttributes] {
-	return terra.ReferenceList[MsSmoothGroupSettingsDestinationAttributes](msgs.ref.Append("destination"))
+	return terra.ReferenceAsList[MsSmoothGroupSettingsDestinationAttributes](msgs.ref.Append("destination"))
 }
 
 type MsSmoothGroupSettingsDestinationAttributes struct {
@@ -3247,7 +3247,7 @@ func (d MsSmoothGroupSettingsDestinationAttributes) InternalTokens() hclwrite.To
 }
 
 func (d MsSmoothGroupSettingsDestinationAttributes) DestinationRefId() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("destination_ref_id"))
+	return terra.ReferenceAsString(d.ref.Append("destination_ref_id"))
 }
 
 type MultiplexGroupSettingsAttributes struct {
@@ -3283,31 +3283,31 @@ func (rgs RtmpGroupSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rgs RtmpGroupSettingsAttributes) AdMarkers() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](rgs.ref.Append("ad_markers"))
+	return terra.ReferenceAsList[terra.StringValue](rgs.ref.Append("ad_markers"))
 }
 
 func (rgs RtmpGroupSettingsAttributes) AuthenticationScheme() terra.StringValue {
-	return terra.ReferenceString(rgs.ref.Append("authentication_scheme"))
+	return terra.ReferenceAsString(rgs.ref.Append("authentication_scheme"))
 }
 
 func (rgs RtmpGroupSettingsAttributes) CacheFullBehavior() terra.StringValue {
-	return terra.ReferenceString(rgs.ref.Append("cache_full_behavior"))
+	return terra.ReferenceAsString(rgs.ref.Append("cache_full_behavior"))
 }
 
 func (rgs RtmpGroupSettingsAttributes) CacheLength() terra.NumberValue {
-	return terra.ReferenceNumber(rgs.ref.Append("cache_length"))
+	return terra.ReferenceAsNumber(rgs.ref.Append("cache_length"))
 }
 
 func (rgs RtmpGroupSettingsAttributes) CaptionData() terra.StringValue {
-	return terra.ReferenceString(rgs.ref.Append("caption_data"))
+	return terra.ReferenceAsString(rgs.ref.Append("caption_data"))
 }
 
 func (rgs RtmpGroupSettingsAttributes) InputLossAction() terra.StringValue {
-	return terra.ReferenceString(rgs.ref.Append("input_loss_action"))
+	return terra.ReferenceAsString(rgs.ref.Append("input_loss_action"))
 }
 
 func (rgs RtmpGroupSettingsAttributes) RestartDelay() terra.NumberValue {
-	return terra.ReferenceNumber(rgs.ref.Append("restart_delay"))
+	return terra.ReferenceAsNumber(rgs.ref.Append("restart_delay"))
 }
 
 type UdpGroupSettingsAttributes struct {
@@ -3327,15 +3327,15 @@ func (ugs UdpGroupSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ugs UdpGroupSettingsAttributes) InputLossAction() terra.StringValue {
-	return terra.ReferenceString(ugs.ref.Append("input_loss_action"))
+	return terra.ReferenceAsString(ugs.ref.Append("input_loss_action"))
 }
 
 func (ugs UdpGroupSettingsAttributes) TimedMetadataId3Frame() terra.StringValue {
-	return terra.ReferenceString(ugs.ref.Append("timed_metadata_id3_frame"))
+	return terra.ReferenceAsString(ugs.ref.Append("timed_metadata_id3_frame"))
 }
 
 func (ugs UdpGroupSettingsAttributes) TimedMetadataId3Period() terra.NumberValue {
-	return terra.ReferenceNumber(ugs.ref.Append("timed_metadata_id3_period"))
+	return terra.ReferenceAsNumber(ugs.ref.Append("timed_metadata_id3_period"))
 }
 
 type OutputsAttributes struct {
@@ -3355,23 +3355,23 @@ func (o OutputsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (o OutputsAttributes) AudioDescriptionNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](o.ref.Append("audio_description_names"))
+	return terra.ReferenceAsSet[terra.StringValue](o.ref.Append("audio_description_names"))
 }
 
 func (o OutputsAttributes) CaptionDescriptionNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](o.ref.Append("caption_description_names"))
+	return terra.ReferenceAsSet[terra.StringValue](o.ref.Append("caption_description_names"))
 }
 
 func (o OutputsAttributes) OutputName() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("output_name"))
+	return terra.ReferenceAsString(o.ref.Append("output_name"))
 }
 
 func (o OutputsAttributes) VideoDescriptionName() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("video_description_name"))
+	return terra.ReferenceAsString(o.ref.Append("video_description_name"))
 }
 
 func (o OutputsAttributes) OutputSettings() terra.ListValue[OutputSettingsAttributes] {
-	return terra.ReferenceList[OutputSettingsAttributes](o.ref.Append("output_settings"))
+	return terra.ReferenceAsList[OutputSettingsAttributes](o.ref.Append("output_settings"))
 }
 
 type OutputSettingsAttributes struct {
@@ -3391,35 +3391,35 @@ func (os OutputSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (os OutputSettingsAttributes) ArchiveOutputSettings() terra.ListValue[ArchiveOutputSettingsAttributes] {
-	return terra.ReferenceList[ArchiveOutputSettingsAttributes](os.ref.Append("archive_output_settings"))
+	return terra.ReferenceAsList[ArchiveOutputSettingsAttributes](os.ref.Append("archive_output_settings"))
 }
 
 func (os OutputSettingsAttributes) FrameCaptureOutputSettings() terra.ListValue[FrameCaptureOutputSettingsAttributes] {
-	return terra.ReferenceList[FrameCaptureOutputSettingsAttributes](os.ref.Append("frame_capture_output_settings"))
+	return terra.ReferenceAsList[FrameCaptureOutputSettingsAttributes](os.ref.Append("frame_capture_output_settings"))
 }
 
 func (os OutputSettingsAttributes) HlsOutputSettings() terra.ListValue[HlsOutputSettingsAttributes] {
-	return terra.ReferenceList[HlsOutputSettingsAttributes](os.ref.Append("hls_output_settings"))
+	return terra.ReferenceAsList[HlsOutputSettingsAttributes](os.ref.Append("hls_output_settings"))
 }
 
 func (os OutputSettingsAttributes) MediaPackageOutputSettings() terra.ListValue[MediaPackageOutputSettingsAttributes] {
-	return terra.ReferenceList[MediaPackageOutputSettingsAttributes](os.ref.Append("media_package_output_settings"))
+	return terra.ReferenceAsList[MediaPackageOutputSettingsAttributes](os.ref.Append("media_package_output_settings"))
 }
 
 func (os OutputSettingsAttributes) MsSmoothOutputSettings() terra.ListValue[MsSmoothOutputSettingsAttributes] {
-	return terra.ReferenceList[MsSmoothOutputSettingsAttributes](os.ref.Append("ms_smooth_output_settings"))
+	return terra.ReferenceAsList[MsSmoothOutputSettingsAttributes](os.ref.Append("ms_smooth_output_settings"))
 }
 
 func (os OutputSettingsAttributes) MultiplexOutputSettings() terra.ListValue[MultiplexOutputSettingsAttributes] {
-	return terra.ReferenceList[MultiplexOutputSettingsAttributes](os.ref.Append("multiplex_output_settings"))
+	return terra.ReferenceAsList[MultiplexOutputSettingsAttributes](os.ref.Append("multiplex_output_settings"))
 }
 
 func (os OutputSettingsAttributes) RtmpOutputSettings() terra.ListValue[RtmpOutputSettingsAttributes] {
-	return terra.ReferenceList[RtmpOutputSettingsAttributes](os.ref.Append("rtmp_output_settings"))
+	return terra.ReferenceAsList[RtmpOutputSettingsAttributes](os.ref.Append("rtmp_output_settings"))
 }
 
 func (os OutputSettingsAttributes) UdpOutputSettings() terra.ListValue[UdpOutputSettingsAttributes] {
-	return terra.ReferenceList[UdpOutputSettingsAttributes](os.ref.Append("udp_output_settings"))
+	return terra.ReferenceAsList[UdpOutputSettingsAttributes](os.ref.Append("udp_output_settings"))
 }
 
 type ArchiveOutputSettingsAttributes struct {
@@ -3439,15 +3439,15 @@ func (aos ArchiveOutputSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (aos ArchiveOutputSettingsAttributes) Extension() terra.StringValue {
-	return terra.ReferenceString(aos.ref.Append("extension"))
+	return terra.ReferenceAsString(aos.ref.Append("extension"))
 }
 
 func (aos ArchiveOutputSettingsAttributes) NameModifier() terra.StringValue {
-	return terra.ReferenceString(aos.ref.Append("name_modifier"))
+	return terra.ReferenceAsString(aos.ref.Append("name_modifier"))
 }
 
 func (aos ArchiveOutputSettingsAttributes) ContainerSettings() terra.ListValue[ArchiveOutputSettingsContainerSettingsAttributes] {
-	return terra.ReferenceList[ArchiveOutputSettingsContainerSettingsAttributes](aos.ref.Append("container_settings"))
+	return terra.ReferenceAsList[ArchiveOutputSettingsContainerSettingsAttributes](aos.ref.Append("container_settings"))
 }
 
 type ArchiveOutputSettingsContainerSettingsAttributes struct {
@@ -3467,11 +3467,11 @@ func (cs ArchiveOutputSettingsContainerSettingsAttributes) InternalTokens() hclw
 }
 
 func (cs ArchiveOutputSettingsContainerSettingsAttributes) M2TsSettings() terra.ListValue[ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes] {
-	return terra.ReferenceList[ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes](cs.ref.Append("m2ts_settings"))
+	return terra.ReferenceAsList[ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes](cs.ref.Append("m2ts_settings"))
 }
 
 func (cs ArchiveOutputSettingsContainerSettingsAttributes) RawSettings() terra.ListValue[RawSettingsAttributes] {
-	return terra.ReferenceList[RawSettingsAttributes](cs.ref.Append("raw_settings"))
+	return terra.ReferenceAsList[RawSettingsAttributes](cs.ref.Append("raw_settings"))
 }
 
 type ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes struct {
@@ -3491,191 +3491,191 @@ func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) InternalT
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) AbsentInputAudioBehavior() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("absent_input_audio_behavior"))
+	return terra.ReferenceAsString(ms.ref.Append("absent_input_audio_behavior"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) Arib() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("arib"))
+	return terra.ReferenceAsString(ms.ref.Append("arib"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) AribCaptionsPid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("arib_captions_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("arib_captions_pid"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) AribCaptionsPidControl() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("arib_captions_pid_control"))
+	return terra.ReferenceAsString(ms.ref.Append("arib_captions_pid_control"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) AudioBufferModel() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("audio_buffer_model"))
+	return terra.ReferenceAsString(ms.ref.Append("audio_buffer_model"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) AudioFramesPerPes() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("audio_frames_per_pes"))
+	return terra.ReferenceAsNumber(ms.ref.Append("audio_frames_per_pes"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) AudioPids() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("audio_pids"))
+	return terra.ReferenceAsString(ms.ref.Append("audio_pids"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) AudioStreamType() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("audio_stream_type"))
+	return terra.ReferenceAsString(ms.ref.Append("audio_stream_type"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) Bitrate() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("bitrate"))
+	return terra.ReferenceAsNumber(ms.ref.Append("bitrate"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) BufferModel() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("buffer_model"))
+	return terra.ReferenceAsString(ms.ref.Append("buffer_model"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) CcDescriptor() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("cc_descriptor"))
+	return terra.ReferenceAsString(ms.ref.Append("cc_descriptor"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) DvbSubPids() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("dvb_sub_pids"))
+	return terra.ReferenceAsString(ms.ref.Append("dvb_sub_pids"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) DvbTeletextPid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("dvb_teletext_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("dvb_teletext_pid"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) Ebif() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("ebif"))
+	return terra.ReferenceAsString(ms.ref.Append("ebif"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) EbpAudioInterval() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("ebp_audio_interval"))
+	return terra.ReferenceAsString(ms.ref.Append("ebp_audio_interval"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) EbpLookaheadMs() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("ebp_lookahead_ms"))
+	return terra.ReferenceAsNumber(ms.ref.Append("ebp_lookahead_ms"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) EbpPlacement() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("ebp_placement"))
+	return terra.ReferenceAsString(ms.ref.Append("ebp_placement"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) EcmPid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("ecm_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("ecm_pid"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) EsRateInPes() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("es_rate_in_pes"))
+	return terra.ReferenceAsString(ms.ref.Append("es_rate_in_pes"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) EtvPlatformPid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("etv_platform_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("etv_platform_pid"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) EtvSignalPid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("etv_signal_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("etv_signal_pid"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) FragmentTime() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("fragment_time"))
+	return terra.ReferenceAsNumber(ms.ref.Append("fragment_time"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) Klv() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("klv"))
+	return terra.ReferenceAsString(ms.ref.Append("klv"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) KlvDataPids() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("klv_data_pids"))
+	return terra.ReferenceAsString(ms.ref.Append("klv_data_pids"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) NielsenId3Behavior() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("nielsen_id3_behavior"))
+	return terra.ReferenceAsString(ms.ref.Append("nielsen_id3_behavior"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) NullPacketBitrate() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("null_packet_bitrate"))
+	return terra.ReferenceAsNumber(ms.ref.Append("null_packet_bitrate"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) PatInterval() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("pat_interval"))
+	return terra.ReferenceAsNumber(ms.ref.Append("pat_interval"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) PcrControl() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("pcr_control"))
+	return terra.ReferenceAsString(ms.ref.Append("pcr_control"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) PcrPeriod() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("pcr_period"))
+	return terra.ReferenceAsNumber(ms.ref.Append("pcr_period"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) PcrPid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("pcr_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("pcr_pid"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) PmtInterval() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("pmt_interval"))
+	return terra.ReferenceAsNumber(ms.ref.Append("pmt_interval"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) PmtPid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("pmt_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("pmt_pid"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) ProgramNum() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("program_num"))
+	return terra.ReferenceAsNumber(ms.ref.Append("program_num"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) RateMode() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("rate_mode"))
+	return terra.ReferenceAsString(ms.ref.Append("rate_mode"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) Scte27Pids() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("scte27_pids"))
+	return terra.ReferenceAsString(ms.ref.Append("scte27_pids"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) Scte35Control() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("scte35_control"))
+	return terra.ReferenceAsString(ms.ref.Append("scte35_control"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) Scte35Pid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("scte35_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("scte35_pid"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) SegmentationMarkers() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("segmentation_markers"))
+	return terra.ReferenceAsString(ms.ref.Append("segmentation_markers"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) SegmentationStyle() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("segmentation_style"))
+	return terra.ReferenceAsString(ms.ref.Append("segmentation_style"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) SegmentationTime() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("segmentation_time"))
+	return terra.ReferenceAsNumber(ms.ref.Append("segmentation_time"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) TimedMetadataBehavior() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("timed_metadata_behavior"))
+	return terra.ReferenceAsString(ms.ref.Append("timed_metadata_behavior"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) TimedMetadataPid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("timed_metadata_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("timed_metadata_pid"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) TransportStreamId() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("transport_stream_id"))
+	return terra.ReferenceAsNumber(ms.ref.Append("transport_stream_id"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) VideoPid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("video_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("video_pid"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) DvbNitSettings() terra.ListValue[ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes] {
-	return terra.ReferenceList[ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes](ms.ref.Append("dvb_nit_settings"))
+	return terra.ReferenceAsList[ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes](ms.ref.Append("dvb_nit_settings"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) DvbSdtSettings() terra.ListValue[ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes] {
-	return terra.ReferenceList[ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes](ms.ref.Append("dvb_sdt_settings"))
+	return terra.ReferenceAsList[ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes](ms.ref.Append("dvb_sdt_settings"))
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) DvbTdtSettings() terra.ListValue[ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes] {
-	return terra.ReferenceList[ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes](ms.ref.Append("dvb_tdt_settings"))
+	return terra.ReferenceAsList[ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes](ms.ref.Append("dvb_tdt_settings"))
 }
 
 type ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes struct {
@@ -3695,15 +3695,15 @@ func (dns ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttrib
 }
 
 func (dns ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes) NetworkId() terra.NumberValue {
-	return terra.ReferenceNumber(dns.ref.Append("network_id"))
+	return terra.ReferenceAsNumber(dns.ref.Append("network_id"))
 }
 
 func (dns ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes) NetworkName() terra.StringValue {
-	return terra.ReferenceString(dns.ref.Append("network_name"))
+	return terra.ReferenceAsString(dns.ref.Append("network_name"))
 }
 
 func (dns ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes) RepInterval() terra.NumberValue {
-	return terra.ReferenceNumber(dns.ref.Append("rep_interval"))
+	return terra.ReferenceAsNumber(dns.ref.Append("rep_interval"))
 }
 
 type ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes struct {
@@ -3723,19 +3723,19 @@ func (dss ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttrib
 }
 
 func (dss ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes) OutputSdt() terra.StringValue {
-	return terra.ReferenceString(dss.ref.Append("output_sdt"))
+	return terra.ReferenceAsString(dss.ref.Append("output_sdt"))
 }
 
 func (dss ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes) RepInterval() terra.NumberValue {
-	return terra.ReferenceNumber(dss.ref.Append("rep_interval"))
+	return terra.ReferenceAsNumber(dss.ref.Append("rep_interval"))
 }
 
 func (dss ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes) ServiceName() terra.StringValue {
-	return terra.ReferenceString(dss.ref.Append("service_name"))
+	return terra.ReferenceAsString(dss.ref.Append("service_name"))
 }
 
 func (dss ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes) ServiceProviderName() terra.StringValue {
-	return terra.ReferenceString(dss.ref.Append("service_provider_name"))
+	return terra.ReferenceAsString(dss.ref.Append("service_provider_name"))
 }
 
 type ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes struct {
@@ -3755,7 +3755,7 @@ func (dts ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttrib
 }
 
 func (dts ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes) RepInterval() terra.NumberValue {
-	return terra.ReferenceNumber(dts.ref.Append("rep_interval"))
+	return terra.ReferenceAsNumber(dts.ref.Append("rep_interval"))
 }
 
 type RawSettingsAttributes struct {
@@ -3791,7 +3791,7 @@ func (fcos FrameCaptureOutputSettingsAttributes) InternalTokens() hclwrite.Token
 }
 
 func (fcos FrameCaptureOutputSettingsAttributes) NameModifier() terra.StringValue {
-	return terra.ReferenceString(fcos.ref.Append("name_modifier"))
+	return terra.ReferenceAsString(fcos.ref.Append("name_modifier"))
 }
 
 type HlsOutputSettingsAttributes struct {
@@ -3811,19 +3811,19 @@ func (hos HlsOutputSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hos HlsOutputSettingsAttributes) H265PackagingType() terra.StringValue {
-	return terra.ReferenceString(hos.ref.Append("h265_packaging_type"))
+	return terra.ReferenceAsString(hos.ref.Append("h265_packaging_type"))
 }
 
 func (hos HlsOutputSettingsAttributes) NameModifier() terra.StringValue {
-	return terra.ReferenceString(hos.ref.Append("name_modifier"))
+	return terra.ReferenceAsString(hos.ref.Append("name_modifier"))
 }
 
 func (hos HlsOutputSettingsAttributes) SegmentModifier() terra.StringValue {
-	return terra.ReferenceString(hos.ref.Append("segment_modifier"))
+	return terra.ReferenceAsString(hos.ref.Append("segment_modifier"))
 }
 
 func (hos HlsOutputSettingsAttributes) HlsSettings() terra.ListValue[HlsSettingsAttributes] {
-	return terra.ReferenceList[HlsSettingsAttributes](hos.ref.Append("hls_settings"))
+	return terra.ReferenceAsList[HlsSettingsAttributes](hos.ref.Append("hls_settings"))
 }
 
 type HlsSettingsAttributes struct {
@@ -3843,19 +3843,19 @@ func (hs HlsSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hs HlsSettingsAttributes) AudioOnlyHlsSettings() terra.ListValue[AudioOnlyHlsSettingsAttributes] {
-	return terra.ReferenceList[AudioOnlyHlsSettingsAttributes](hs.ref.Append("audio_only_hls_settings"))
+	return terra.ReferenceAsList[AudioOnlyHlsSettingsAttributes](hs.ref.Append("audio_only_hls_settings"))
 }
 
 func (hs HlsSettingsAttributes) Fmp4HlsSettings() terra.ListValue[Fmp4HlsSettingsAttributes] {
-	return terra.ReferenceList[Fmp4HlsSettingsAttributes](hs.ref.Append("fmp4_hls_settings"))
+	return terra.ReferenceAsList[Fmp4HlsSettingsAttributes](hs.ref.Append("fmp4_hls_settings"))
 }
 
 func (hs HlsSettingsAttributes) FrameCaptureHlsSettings() terra.ListValue[FrameCaptureHlsSettingsAttributes] {
-	return terra.ReferenceList[FrameCaptureHlsSettingsAttributes](hs.ref.Append("frame_capture_hls_settings"))
+	return terra.ReferenceAsList[FrameCaptureHlsSettingsAttributes](hs.ref.Append("frame_capture_hls_settings"))
 }
 
 func (hs HlsSettingsAttributes) StandardHlsSettings() terra.ListValue[StandardHlsSettingsAttributes] {
-	return terra.ReferenceList[StandardHlsSettingsAttributes](hs.ref.Append("standard_hls_settings"))
+	return terra.ReferenceAsList[StandardHlsSettingsAttributes](hs.ref.Append("standard_hls_settings"))
 }
 
 type AudioOnlyHlsSettingsAttributes struct {
@@ -3875,19 +3875,19 @@ func (aohs AudioOnlyHlsSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (aohs AudioOnlyHlsSettingsAttributes) AudioGroupId() terra.StringValue {
-	return terra.ReferenceString(aohs.ref.Append("audio_group_id"))
+	return terra.ReferenceAsString(aohs.ref.Append("audio_group_id"))
 }
 
 func (aohs AudioOnlyHlsSettingsAttributes) AudioTrackType() terra.StringValue {
-	return terra.ReferenceString(aohs.ref.Append("audio_track_type"))
+	return terra.ReferenceAsString(aohs.ref.Append("audio_track_type"))
 }
 
 func (aohs AudioOnlyHlsSettingsAttributes) SegmentType() terra.StringValue {
-	return terra.ReferenceString(aohs.ref.Append("segment_type"))
+	return terra.ReferenceAsString(aohs.ref.Append("segment_type"))
 }
 
 func (aohs AudioOnlyHlsSettingsAttributes) AudioOnlyImage() terra.ListValue[AudioOnlyImageAttributes] {
-	return terra.ReferenceList[AudioOnlyImageAttributes](aohs.ref.Append("audio_only_image"))
+	return terra.ReferenceAsList[AudioOnlyImageAttributes](aohs.ref.Append("audio_only_image"))
 }
 
 type AudioOnlyImageAttributes struct {
@@ -3907,15 +3907,15 @@ func (aoi AudioOnlyImageAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (aoi AudioOnlyImageAttributes) PasswordParam() terra.StringValue {
-	return terra.ReferenceString(aoi.ref.Append("password_param"))
+	return terra.ReferenceAsString(aoi.ref.Append("password_param"))
 }
 
 func (aoi AudioOnlyImageAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(aoi.ref.Append("uri"))
+	return terra.ReferenceAsString(aoi.ref.Append("uri"))
 }
 
 func (aoi AudioOnlyImageAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(aoi.ref.Append("username"))
+	return terra.ReferenceAsString(aoi.ref.Append("username"))
 }
 
 type Fmp4HlsSettingsAttributes struct {
@@ -3935,15 +3935,15 @@ func (fhs Fmp4HlsSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fhs Fmp4HlsSettingsAttributes) AudioRenditionSets() terra.StringValue {
-	return terra.ReferenceString(fhs.ref.Append("audio_rendition_sets"))
+	return terra.ReferenceAsString(fhs.ref.Append("audio_rendition_sets"))
 }
 
 func (fhs Fmp4HlsSettingsAttributes) NielsenId3Behavior() terra.StringValue {
-	return terra.ReferenceString(fhs.ref.Append("nielsen_id3_behavior"))
+	return terra.ReferenceAsString(fhs.ref.Append("nielsen_id3_behavior"))
 }
 
 func (fhs Fmp4HlsSettingsAttributes) TimedMetadataBehavior() terra.StringValue {
-	return terra.ReferenceString(fhs.ref.Append("timed_metadata_behavior"))
+	return terra.ReferenceAsString(fhs.ref.Append("timed_metadata_behavior"))
 }
 
 type FrameCaptureHlsSettingsAttributes struct {
@@ -3979,11 +3979,11 @@ func (shs StandardHlsSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (shs StandardHlsSettingsAttributes) AudioRenditionSets() terra.StringValue {
-	return terra.ReferenceString(shs.ref.Append("audio_rendition_sets"))
+	return terra.ReferenceAsString(shs.ref.Append("audio_rendition_sets"))
 }
 
 func (shs StandardHlsSettingsAttributes) M3U8Settings() terra.ListValue[M3U8SettingsAttributes] {
-	return terra.ReferenceList[M3U8SettingsAttributes](shs.ref.Append("m3u8_settings"))
+	return terra.ReferenceAsList[M3U8SettingsAttributes](shs.ref.Append("m3u8_settings"))
 }
 
 type M3U8SettingsAttributes struct {
@@ -4003,71 +4003,71 @@ func (ms M3U8SettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ms M3U8SettingsAttributes) AudioFramesPerPes() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("audio_frames_per_pes"))
+	return terra.ReferenceAsNumber(ms.ref.Append("audio_frames_per_pes"))
 }
 
 func (ms M3U8SettingsAttributes) AudioPids() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("audio_pids"))
+	return terra.ReferenceAsString(ms.ref.Append("audio_pids"))
 }
 
 func (ms M3U8SettingsAttributes) EcmPid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("ecm_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("ecm_pid"))
 }
 
 func (ms M3U8SettingsAttributes) NielsenId3Behavior() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("nielsen_id3_behavior"))
+	return terra.ReferenceAsString(ms.ref.Append("nielsen_id3_behavior"))
 }
 
 func (ms M3U8SettingsAttributes) PatInterval() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("pat_interval"))
+	return terra.ReferenceAsNumber(ms.ref.Append("pat_interval"))
 }
 
 func (ms M3U8SettingsAttributes) PcrControl() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("pcr_control"))
+	return terra.ReferenceAsString(ms.ref.Append("pcr_control"))
 }
 
 func (ms M3U8SettingsAttributes) PcrPeriod() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("pcr_period"))
+	return terra.ReferenceAsNumber(ms.ref.Append("pcr_period"))
 }
 
 func (ms M3U8SettingsAttributes) PcrPid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("pcr_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("pcr_pid"))
 }
 
 func (ms M3U8SettingsAttributes) PmtInterval() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("pmt_interval"))
+	return terra.ReferenceAsNumber(ms.ref.Append("pmt_interval"))
 }
 
 func (ms M3U8SettingsAttributes) PmtPid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("pmt_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("pmt_pid"))
 }
 
 func (ms M3U8SettingsAttributes) ProgramNum() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("program_num"))
+	return terra.ReferenceAsNumber(ms.ref.Append("program_num"))
 }
 
 func (ms M3U8SettingsAttributes) Scte35Behavior() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("scte35_behavior"))
+	return terra.ReferenceAsString(ms.ref.Append("scte35_behavior"))
 }
 
 func (ms M3U8SettingsAttributes) Scte35Pid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("scte35_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("scte35_pid"))
 }
 
 func (ms M3U8SettingsAttributes) TimedMetadataBehavior() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("timed_metadata_behavior"))
+	return terra.ReferenceAsString(ms.ref.Append("timed_metadata_behavior"))
 }
 
 func (ms M3U8SettingsAttributes) TimedMetadataPid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("timed_metadata_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("timed_metadata_pid"))
 }
 
 func (ms M3U8SettingsAttributes) TransportStreamId() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("transport_stream_id"))
+	return terra.ReferenceAsNumber(ms.ref.Append("transport_stream_id"))
 }
 
 func (ms M3U8SettingsAttributes) VideoPid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("video_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("video_pid"))
 }
 
 type MediaPackageOutputSettingsAttributes struct {
@@ -4103,11 +4103,11 @@ func (msos MsSmoothOutputSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (msos MsSmoothOutputSettingsAttributes) H265PackagingType() terra.StringValue {
-	return terra.ReferenceString(msos.ref.Append("h265_packaging_type"))
+	return terra.ReferenceAsString(msos.ref.Append("h265_packaging_type"))
 }
 
 func (msos MsSmoothOutputSettingsAttributes) NameModifier() terra.StringValue {
-	return terra.ReferenceString(msos.ref.Append("name_modifier"))
+	return terra.ReferenceAsString(msos.ref.Append("name_modifier"))
 }
 
 type MultiplexOutputSettingsAttributes struct {
@@ -4127,7 +4127,7 @@ func (mos MultiplexOutputSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mos MultiplexOutputSettingsAttributes) Destination() terra.ListValue[MultiplexOutputSettingsDestinationAttributes] {
-	return terra.ReferenceList[MultiplexOutputSettingsDestinationAttributes](mos.ref.Append("destination"))
+	return terra.ReferenceAsList[MultiplexOutputSettingsDestinationAttributes](mos.ref.Append("destination"))
 }
 
 type MultiplexOutputSettingsDestinationAttributes struct {
@@ -4147,7 +4147,7 @@ func (d MultiplexOutputSettingsDestinationAttributes) InternalTokens() hclwrite.
 }
 
 func (d MultiplexOutputSettingsDestinationAttributes) DestinationRefId() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("destination_ref_id"))
+	return terra.ReferenceAsString(d.ref.Append("destination_ref_id"))
 }
 
 type RtmpOutputSettingsAttributes struct {
@@ -4167,19 +4167,19 @@ func (ros RtmpOutputSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ros RtmpOutputSettingsAttributes) CertficateMode() terra.StringValue {
-	return terra.ReferenceString(ros.ref.Append("certficate_mode"))
+	return terra.ReferenceAsString(ros.ref.Append("certficate_mode"))
 }
 
 func (ros RtmpOutputSettingsAttributes) ConnectionRetryInterval() terra.NumberValue {
-	return terra.ReferenceNumber(ros.ref.Append("connection_retry_interval"))
+	return terra.ReferenceAsNumber(ros.ref.Append("connection_retry_interval"))
 }
 
 func (ros RtmpOutputSettingsAttributes) NumRetries() terra.NumberValue {
-	return terra.ReferenceNumber(ros.ref.Append("num_retries"))
+	return terra.ReferenceAsNumber(ros.ref.Append("num_retries"))
 }
 
 func (ros RtmpOutputSettingsAttributes) Destination() terra.ListValue[RtmpOutputSettingsDestinationAttributes] {
-	return terra.ReferenceList[RtmpOutputSettingsDestinationAttributes](ros.ref.Append("destination"))
+	return terra.ReferenceAsList[RtmpOutputSettingsDestinationAttributes](ros.ref.Append("destination"))
 }
 
 type RtmpOutputSettingsDestinationAttributes struct {
@@ -4199,7 +4199,7 @@ func (d RtmpOutputSettingsDestinationAttributes) InternalTokens() hclwrite.Token
 }
 
 func (d RtmpOutputSettingsDestinationAttributes) DestinationRefId() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("destination_ref_id"))
+	return terra.ReferenceAsString(d.ref.Append("destination_ref_id"))
 }
 
 type UdpOutputSettingsAttributes struct {
@@ -4219,19 +4219,19 @@ func (uos UdpOutputSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (uos UdpOutputSettingsAttributes) BufferMsec() terra.NumberValue {
-	return terra.ReferenceNumber(uos.ref.Append("buffer_msec"))
+	return terra.ReferenceAsNumber(uos.ref.Append("buffer_msec"))
 }
 
 func (uos UdpOutputSettingsAttributes) ContainerSettings() terra.ListValue[UdpOutputSettingsContainerSettingsAttributes] {
-	return terra.ReferenceList[UdpOutputSettingsContainerSettingsAttributes](uos.ref.Append("container_settings"))
+	return terra.ReferenceAsList[UdpOutputSettingsContainerSettingsAttributes](uos.ref.Append("container_settings"))
 }
 
 func (uos UdpOutputSettingsAttributes) Destination() terra.ListValue[UdpOutputSettingsDestinationAttributes] {
-	return terra.ReferenceList[UdpOutputSettingsDestinationAttributes](uos.ref.Append("destination"))
+	return terra.ReferenceAsList[UdpOutputSettingsDestinationAttributes](uos.ref.Append("destination"))
 }
 
 func (uos UdpOutputSettingsAttributes) FecOutputSettings() terra.ListValue[FecOutputSettingsAttributes] {
-	return terra.ReferenceList[FecOutputSettingsAttributes](uos.ref.Append("fec_output_settings"))
+	return terra.ReferenceAsList[FecOutputSettingsAttributes](uos.ref.Append("fec_output_settings"))
 }
 
 type UdpOutputSettingsContainerSettingsAttributes struct {
@@ -4251,7 +4251,7 @@ func (cs UdpOutputSettingsContainerSettingsAttributes) InternalTokens() hclwrite
 }
 
 func (cs UdpOutputSettingsContainerSettingsAttributes) M2TsSettings() terra.ListValue[UdpOutputSettingsContainerSettingsM2TsSettingsAttributes] {
-	return terra.ReferenceList[UdpOutputSettingsContainerSettingsM2TsSettingsAttributes](cs.ref.Append("m2ts_settings"))
+	return terra.ReferenceAsList[UdpOutputSettingsContainerSettingsM2TsSettingsAttributes](cs.ref.Append("m2ts_settings"))
 }
 
 type UdpOutputSettingsContainerSettingsM2TsSettingsAttributes struct {
@@ -4271,191 +4271,191 @@ func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) InternalToken
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) AbsentInputAudioBehavior() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("absent_input_audio_behavior"))
+	return terra.ReferenceAsString(ms.ref.Append("absent_input_audio_behavior"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) Arib() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("arib"))
+	return terra.ReferenceAsString(ms.ref.Append("arib"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) AribCaptionsPid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("arib_captions_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("arib_captions_pid"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) AribCaptionsPidControl() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("arib_captions_pid_control"))
+	return terra.ReferenceAsString(ms.ref.Append("arib_captions_pid_control"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) AudioBufferModel() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("audio_buffer_model"))
+	return terra.ReferenceAsString(ms.ref.Append("audio_buffer_model"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) AudioFramesPerPes() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("audio_frames_per_pes"))
+	return terra.ReferenceAsNumber(ms.ref.Append("audio_frames_per_pes"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) AudioPids() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("audio_pids"))
+	return terra.ReferenceAsString(ms.ref.Append("audio_pids"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) AudioStreamType() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("audio_stream_type"))
+	return terra.ReferenceAsString(ms.ref.Append("audio_stream_type"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) Bitrate() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("bitrate"))
+	return terra.ReferenceAsNumber(ms.ref.Append("bitrate"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) BufferModel() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("buffer_model"))
+	return terra.ReferenceAsString(ms.ref.Append("buffer_model"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) CcDescriptor() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("cc_descriptor"))
+	return terra.ReferenceAsString(ms.ref.Append("cc_descriptor"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) DvbSubPids() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("dvb_sub_pids"))
+	return terra.ReferenceAsString(ms.ref.Append("dvb_sub_pids"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) DvbTeletextPid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("dvb_teletext_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("dvb_teletext_pid"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) Ebif() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("ebif"))
+	return terra.ReferenceAsString(ms.ref.Append("ebif"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) EbpAudioInterval() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("ebp_audio_interval"))
+	return terra.ReferenceAsString(ms.ref.Append("ebp_audio_interval"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) EbpLookaheadMs() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("ebp_lookahead_ms"))
+	return terra.ReferenceAsNumber(ms.ref.Append("ebp_lookahead_ms"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) EbpPlacement() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("ebp_placement"))
+	return terra.ReferenceAsString(ms.ref.Append("ebp_placement"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) EcmPid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("ecm_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("ecm_pid"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) EsRateInPes() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("es_rate_in_pes"))
+	return terra.ReferenceAsString(ms.ref.Append("es_rate_in_pes"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) EtvPlatformPid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("etv_platform_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("etv_platform_pid"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) EtvSignalPid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("etv_signal_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("etv_signal_pid"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) FragmentTime() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("fragment_time"))
+	return terra.ReferenceAsNumber(ms.ref.Append("fragment_time"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) Klv() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("klv"))
+	return terra.ReferenceAsString(ms.ref.Append("klv"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) KlvDataPids() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("klv_data_pids"))
+	return terra.ReferenceAsString(ms.ref.Append("klv_data_pids"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) NielsenId3Behavior() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("nielsen_id3_behavior"))
+	return terra.ReferenceAsString(ms.ref.Append("nielsen_id3_behavior"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) NullPacketBitrate() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("null_packet_bitrate"))
+	return terra.ReferenceAsNumber(ms.ref.Append("null_packet_bitrate"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) PatInterval() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("pat_interval"))
+	return terra.ReferenceAsNumber(ms.ref.Append("pat_interval"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) PcrControl() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("pcr_control"))
+	return terra.ReferenceAsString(ms.ref.Append("pcr_control"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) PcrPeriod() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("pcr_period"))
+	return terra.ReferenceAsNumber(ms.ref.Append("pcr_period"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) PcrPid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("pcr_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("pcr_pid"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) PmtInterval() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("pmt_interval"))
+	return terra.ReferenceAsNumber(ms.ref.Append("pmt_interval"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) PmtPid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("pmt_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("pmt_pid"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) ProgramNum() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("program_num"))
+	return terra.ReferenceAsNumber(ms.ref.Append("program_num"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) RateMode() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("rate_mode"))
+	return terra.ReferenceAsString(ms.ref.Append("rate_mode"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) Scte27Pids() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("scte27_pids"))
+	return terra.ReferenceAsString(ms.ref.Append("scte27_pids"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) Scte35Control() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("scte35_control"))
+	return terra.ReferenceAsString(ms.ref.Append("scte35_control"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) Scte35Pid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("scte35_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("scte35_pid"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) SegmentationMarkers() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("segmentation_markers"))
+	return terra.ReferenceAsString(ms.ref.Append("segmentation_markers"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) SegmentationStyle() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("segmentation_style"))
+	return terra.ReferenceAsString(ms.ref.Append("segmentation_style"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) SegmentationTime() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("segmentation_time"))
+	return terra.ReferenceAsNumber(ms.ref.Append("segmentation_time"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) TimedMetadataBehavior() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("timed_metadata_behavior"))
+	return terra.ReferenceAsString(ms.ref.Append("timed_metadata_behavior"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) TimedMetadataPid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("timed_metadata_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("timed_metadata_pid"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) TransportStreamId() terra.NumberValue {
-	return terra.ReferenceNumber(ms.ref.Append("transport_stream_id"))
+	return terra.ReferenceAsNumber(ms.ref.Append("transport_stream_id"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) VideoPid() terra.StringValue {
-	return terra.ReferenceString(ms.ref.Append("video_pid"))
+	return terra.ReferenceAsString(ms.ref.Append("video_pid"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) DvbNitSettings() terra.ListValue[UdpOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes] {
-	return terra.ReferenceList[UdpOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes](ms.ref.Append("dvb_nit_settings"))
+	return terra.ReferenceAsList[UdpOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes](ms.ref.Append("dvb_nit_settings"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) DvbSdtSettings() terra.ListValue[UdpOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes] {
-	return terra.ReferenceList[UdpOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes](ms.ref.Append("dvb_sdt_settings"))
+	return terra.ReferenceAsList[UdpOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes](ms.ref.Append("dvb_sdt_settings"))
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) DvbTdtSettings() terra.ListValue[UdpOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes] {
-	return terra.ReferenceList[UdpOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes](ms.ref.Append("dvb_tdt_settings"))
+	return terra.ReferenceAsList[UdpOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes](ms.ref.Append("dvb_tdt_settings"))
 }
 
 type UdpOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes struct {
@@ -4475,15 +4475,15 @@ func (dns UdpOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes
 }
 
 func (dns UdpOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes) NetworkId() terra.NumberValue {
-	return terra.ReferenceNumber(dns.ref.Append("network_id"))
+	return terra.ReferenceAsNumber(dns.ref.Append("network_id"))
 }
 
 func (dns UdpOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes) NetworkName() terra.StringValue {
-	return terra.ReferenceString(dns.ref.Append("network_name"))
+	return terra.ReferenceAsString(dns.ref.Append("network_name"))
 }
 
 func (dns UdpOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes) RepInterval() terra.NumberValue {
-	return terra.ReferenceNumber(dns.ref.Append("rep_interval"))
+	return terra.ReferenceAsNumber(dns.ref.Append("rep_interval"))
 }
 
 type UdpOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes struct {
@@ -4503,19 +4503,19 @@ func (dss UdpOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes
 }
 
 func (dss UdpOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes) OutputSdt() terra.StringValue {
-	return terra.ReferenceString(dss.ref.Append("output_sdt"))
+	return terra.ReferenceAsString(dss.ref.Append("output_sdt"))
 }
 
 func (dss UdpOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes) RepInterval() terra.NumberValue {
-	return terra.ReferenceNumber(dss.ref.Append("rep_interval"))
+	return terra.ReferenceAsNumber(dss.ref.Append("rep_interval"))
 }
 
 func (dss UdpOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes) ServiceName() terra.StringValue {
-	return terra.ReferenceString(dss.ref.Append("service_name"))
+	return terra.ReferenceAsString(dss.ref.Append("service_name"))
 }
 
 func (dss UdpOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes) ServiceProviderName() terra.StringValue {
-	return terra.ReferenceString(dss.ref.Append("service_provider_name"))
+	return terra.ReferenceAsString(dss.ref.Append("service_provider_name"))
 }
 
 type UdpOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes struct {
@@ -4535,7 +4535,7 @@ func (dts UdpOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes
 }
 
 func (dts UdpOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes) RepInterval() terra.NumberValue {
-	return terra.ReferenceNumber(dts.ref.Append("rep_interval"))
+	return terra.ReferenceAsNumber(dts.ref.Append("rep_interval"))
 }
 
 type UdpOutputSettingsDestinationAttributes struct {
@@ -4555,7 +4555,7 @@ func (d UdpOutputSettingsDestinationAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (d UdpOutputSettingsDestinationAttributes) DestinationRefId() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("destination_ref_id"))
+	return terra.ReferenceAsString(d.ref.Append("destination_ref_id"))
 }
 
 type FecOutputSettingsAttributes struct {
@@ -4575,15 +4575,15 @@ func (fos FecOutputSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fos FecOutputSettingsAttributes) ColumnDepth() terra.NumberValue {
-	return terra.ReferenceNumber(fos.ref.Append("column_depth"))
+	return terra.ReferenceAsNumber(fos.ref.Append("column_depth"))
 }
 
 func (fos FecOutputSettingsAttributes) IncludeFec() terra.StringValue {
-	return terra.ReferenceString(fos.ref.Append("include_fec"))
+	return terra.ReferenceAsString(fos.ref.Append("include_fec"))
 }
 
 func (fos FecOutputSettingsAttributes) RowLength() terra.NumberValue {
-	return terra.ReferenceNumber(fos.ref.Append("row_length"))
+	return terra.ReferenceAsNumber(fos.ref.Append("row_length"))
 }
 
 type TimecodeConfigAttributes struct {
@@ -4603,11 +4603,11 @@ func (tc TimecodeConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tc TimecodeConfigAttributes) Source() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("source"))
+	return terra.ReferenceAsString(tc.ref.Append("source"))
 }
 
 func (tc TimecodeConfigAttributes) SyncThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(tc.ref.Append("sync_threshold"))
+	return terra.ReferenceAsNumber(tc.ref.Append("sync_threshold"))
 }
 
 type VideoDescriptionsAttributes struct {
@@ -4627,31 +4627,31 @@ func (vd VideoDescriptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vd VideoDescriptionsAttributes) Height() terra.NumberValue {
-	return terra.ReferenceNumber(vd.ref.Append("height"))
+	return terra.ReferenceAsNumber(vd.ref.Append("height"))
 }
 
 func (vd VideoDescriptionsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(vd.ref.Append("name"))
+	return terra.ReferenceAsString(vd.ref.Append("name"))
 }
 
 func (vd VideoDescriptionsAttributes) RespondToAfd() terra.StringValue {
-	return terra.ReferenceString(vd.ref.Append("respond_to_afd"))
+	return terra.ReferenceAsString(vd.ref.Append("respond_to_afd"))
 }
 
 func (vd VideoDescriptionsAttributes) ScalingBehavior() terra.StringValue {
-	return terra.ReferenceString(vd.ref.Append("scaling_behavior"))
+	return terra.ReferenceAsString(vd.ref.Append("scaling_behavior"))
 }
 
 func (vd VideoDescriptionsAttributes) Sharpness() terra.NumberValue {
-	return terra.ReferenceNumber(vd.ref.Append("sharpness"))
+	return terra.ReferenceAsNumber(vd.ref.Append("sharpness"))
 }
 
 func (vd VideoDescriptionsAttributes) Width() terra.NumberValue {
-	return terra.ReferenceNumber(vd.ref.Append("width"))
+	return terra.ReferenceAsNumber(vd.ref.Append("width"))
 }
 
 func (vd VideoDescriptionsAttributes) CodecSettings() terra.ListValue[VideoDescriptionsCodecSettingsAttributes] {
-	return terra.ReferenceList[VideoDescriptionsCodecSettingsAttributes](vd.ref.Append("codec_settings"))
+	return terra.ReferenceAsList[VideoDescriptionsCodecSettingsAttributes](vd.ref.Append("codec_settings"))
 }
 
 type VideoDescriptionsCodecSettingsAttributes struct {
@@ -4671,11 +4671,11 @@ func (cs VideoDescriptionsCodecSettingsAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (cs VideoDescriptionsCodecSettingsAttributes) FrameCaptureSettings() terra.ListValue[FrameCaptureSettingsAttributes] {
-	return terra.ReferenceList[FrameCaptureSettingsAttributes](cs.ref.Append("frame_capture_settings"))
+	return terra.ReferenceAsList[FrameCaptureSettingsAttributes](cs.ref.Append("frame_capture_settings"))
 }
 
 func (cs VideoDescriptionsCodecSettingsAttributes) H264Settings() terra.ListValue[H264SettingsAttributes] {
-	return terra.ReferenceList[H264SettingsAttributes](cs.ref.Append("h264_settings"))
+	return terra.ReferenceAsList[H264SettingsAttributes](cs.ref.Append("h264_settings"))
 }
 
 type FrameCaptureSettingsAttributes struct {
@@ -4695,11 +4695,11 @@ func (fcs FrameCaptureSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fcs FrameCaptureSettingsAttributes) CaptureInterval() terra.NumberValue {
-	return terra.ReferenceNumber(fcs.ref.Append("capture_interval"))
+	return terra.ReferenceAsNumber(fcs.ref.Append("capture_interval"))
 }
 
 func (fcs FrameCaptureSettingsAttributes) CaptureIntervalUnits() terra.StringValue {
-	return terra.ReferenceString(fcs.ref.Append("capture_interval_units"))
+	return terra.ReferenceAsString(fcs.ref.Append("capture_interval_units"))
 }
 
 type H264SettingsAttributes struct {
@@ -4719,163 +4719,163 @@ func (hs H264SettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hs H264SettingsAttributes) AdaptiveQuantization() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("adaptive_quantization"))
+	return terra.ReferenceAsString(hs.ref.Append("adaptive_quantization"))
 }
 
 func (hs H264SettingsAttributes) AfdSignaling() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("afd_signaling"))
+	return terra.ReferenceAsString(hs.ref.Append("afd_signaling"))
 }
 
 func (hs H264SettingsAttributes) Bitrate() terra.NumberValue {
-	return terra.ReferenceNumber(hs.ref.Append("bitrate"))
+	return terra.ReferenceAsNumber(hs.ref.Append("bitrate"))
 }
 
 func (hs H264SettingsAttributes) BufFillPct() terra.NumberValue {
-	return terra.ReferenceNumber(hs.ref.Append("buf_fill_pct"))
+	return terra.ReferenceAsNumber(hs.ref.Append("buf_fill_pct"))
 }
 
 func (hs H264SettingsAttributes) BufSize() terra.NumberValue {
-	return terra.ReferenceNumber(hs.ref.Append("buf_size"))
+	return terra.ReferenceAsNumber(hs.ref.Append("buf_size"))
 }
 
 func (hs H264SettingsAttributes) ColorMetadata() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("color_metadata"))
+	return terra.ReferenceAsString(hs.ref.Append("color_metadata"))
 }
 
 func (hs H264SettingsAttributes) EntropyEncoding() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("entropy_encoding"))
+	return terra.ReferenceAsString(hs.ref.Append("entropy_encoding"))
 }
 
 func (hs H264SettingsAttributes) FixedAfd() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("fixed_afd"))
+	return terra.ReferenceAsString(hs.ref.Append("fixed_afd"))
 }
 
 func (hs H264SettingsAttributes) FlickerAq() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("flicker_aq"))
+	return terra.ReferenceAsString(hs.ref.Append("flicker_aq"))
 }
 
 func (hs H264SettingsAttributes) ForceFieldPictures() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("force_field_pictures"))
+	return terra.ReferenceAsString(hs.ref.Append("force_field_pictures"))
 }
 
 func (hs H264SettingsAttributes) FramerateControl() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("framerate_control"))
+	return terra.ReferenceAsString(hs.ref.Append("framerate_control"))
 }
 
 func (hs H264SettingsAttributes) FramerateDenominator() terra.NumberValue {
-	return terra.ReferenceNumber(hs.ref.Append("framerate_denominator"))
+	return terra.ReferenceAsNumber(hs.ref.Append("framerate_denominator"))
 }
 
 func (hs H264SettingsAttributes) FramerateNumerator() terra.NumberValue {
-	return terra.ReferenceNumber(hs.ref.Append("framerate_numerator"))
+	return terra.ReferenceAsNumber(hs.ref.Append("framerate_numerator"))
 }
 
 func (hs H264SettingsAttributes) GopBReference() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("gop_b_reference"))
+	return terra.ReferenceAsString(hs.ref.Append("gop_b_reference"))
 }
 
 func (hs H264SettingsAttributes) GopClosedCadence() terra.NumberValue {
-	return terra.ReferenceNumber(hs.ref.Append("gop_closed_cadence"))
+	return terra.ReferenceAsNumber(hs.ref.Append("gop_closed_cadence"))
 }
 
 func (hs H264SettingsAttributes) GopNumBFrames() terra.NumberValue {
-	return terra.ReferenceNumber(hs.ref.Append("gop_num_b_frames"))
+	return terra.ReferenceAsNumber(hs.ref.Append("gop_num_b_frames"))
 }
 
 func (hs H264SettingsAttributes) GopSize() terra.NumberValue {
-	return terra.ReferenceNumber(hs.ref.Append("gop_size"))
+	return terra.ReferenceAsNumber(hs.ref.Append("gop_size"))
 }
 
 func (hs H264SettingsAttributes) GopSizeUnits() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("gop_size_units"))
+	return terra.ReferenceAsString(hs.ref.Append("gop_size_units"))
 }
 
 func (hs H264SettingsAttributes) Level() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("level"))
+	return terra.ReferenceAsString(hs.ref.Append("level"))
 }
 
 func (hs H264SettingsAttributes) LookAheadRateControl() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("look_ahead_rate_control"))
+	return terra.ReferenceAsString(hs.ref.Append("look_ahead_rate_control"))
 }
 
 func (hs H264SettingsAttributes) MaxBitrate() terra.NumberValue {
-	return terra.ReferenceNumber(hs.ref.Append("max_bitrate"))
+	return terra.ReferenceAsNumber(hs.ref.Append("max_bitrate"))
 }
 
 func (hs H264SettingsAttributes) MinIInterval() terra.NumberValue {
-	return terra.ReferenceNumber(hs.ref.Append("min_i_interval"))
+	return terra.ReferenceAsNumber(hs.ref.Append("min_i_interval"))
 }
 
 func (hs H264SettingsAttributes) NumRefFrames() terra.NumberValue {
-	return terra.ReferenceNumber(hs.ref.Append("num_ref_frames"))
+	return terra.ReferenceAsNumber(hs.ref.Append("num_ref_frames"))
 }
 
 func (hs H264SettingsAttributes) ParControl() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("par_control"))
+	return terra.ReferenceAsString(hs.ref.Append("par_control"))
 }
 
 func (hs H264SettingsAttributes) ParDenominator() terra.NumberValue {
-	return terra.ReferenceNumber(hs.ref.Append("par_denominator"))
+	return terra.ReferenceAsNumber(hs.ref.Append("par_denominator"))
 }
 
 func (hs H264SettingsAttributes) ParNumerator() terra.NumberValue {
-	return terra.ReferenceNumber(hs.ref.Append("par_numerator"))
+	return terra.ReferenceAsNumber(hs.ref.Append("par_numerator"))
 }
 
 func (hs H264SettingsAttributes) Profile() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("profile"))
+	return terra.ReferenceAsString(hs.ref.Append("profile"))
 }
 
 func (hs H264SettingsAttributes) QualityLevel() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("quality_level"))
+	return terra.ReferenceAsString(hs.ref.Append("quality_level"))
 }
 
 func (hs H264SettingsAttributes) QvbrQualityLevel() terra.NumberValue {
-	return terra.ReferenceNumber(hs.ref.Append("qvbr_quality_level"))
+	return terra.ReferenceAsNumber(hs.ref.Append("qvbr_quality_level"))
 }
 
 func (hs H264SettingsAttributes) RateControlMode() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("rate_control_mode"))
+	return terra.ReferenceAsString(hs.ref.Append("rate_control_mode"))
 }
 
 func (hs H264SettingsAttributes) ScanType() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("scan_type"))
+	return terra.ReferenceAsString(hs.ref.Append("scan_type"))
 }
 
 func (hs H264SettingsAttributes) SceneChangeDetect() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("scene_change_detect"))
+	return terra.ReferenceAsString(hs.ref.Append("scene_change_detect"))
 }
 
 func (hs H264SettingsAttributes) Slices() terra.NumberValue {
-	return terra.ReferenceNumber(hs.ref.Append("slices"))
+	return terra.ReferenceAsNumber(hs.ref.Append("slices"))
 }
 
 func (hs H264SettingsAttributes) Softness() terra.NumberValue {
-	return terra.ReferenceNumber(hs.ref.Append("softness"))
+	return terra.ReferenceAsNumber(hs.ref.Append("softness"))
 }
 
 func (hs H264SettingsAttributes) SpatialAq() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("spatial_aq"))
+	return terra.ReferenceAsString(hs.ref.Append("spatial_aq"))
 }
 
 func (hs H264SettingsAttributes) SubgopLength() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("subgop_length"))
+	return terra.ReferenceAsString(hs.ref.Append("subgop_length"))
 }
 
 func (hs H264SettingsAttributes) Syntax() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("syntax"))
+	return terra.ReferenceAsString(hs.ref.Append("syntax"))
 }
 
 func (hs H264SettingsAttributes) TemporalAq() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("temporal_aq"))
+	return terra.ReferenceAsString(hs.ref.Append("temporal_aq"))
 }
 
 func (hs H264SettingsAttributes) TimecodeInsertion() terra.StringValue {
-	return terra.ReferenceString(hs.ref.Append("timecode_insertion"))
+	return terra.ReferenceAsString(hs.ref.Append("timecode_insertion"))
 }
 
 func (hs H264SettingsAttributes) FilterSettings() terra.ListValue[FilterSettingsAttributes] {
-	return terra.ReferenceList[FilterSettingsAttributes](hs.ref.Append("filter_settings"))
+	return terra.ReferenceAsList[FilterSettingsAttributes](hs.ref.Append("filter_settings"))
 }
 
 type FilterSettingsAttributes struct {
@@ -4895,7 +4895,7 @@ func (fs FilterSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fs FilterSettingsAttributes) TemporalFilterSettings() terra.ListValue[TemporalFilterSettingsAttributes] {
-	return terra.ReferenceList[TemporalFilterSettingsAttributes](fs.ref.Append("temporal_filter_settings"))
+	return terra.ReferenceAsList[TemporalFilterSettingsAttributes](fs.ref.Append("temporal_filter_settings"))
 }
 
 type TemporalFilterSettingsAttributes struct {
@@ -4915,11 +4915,11 @@ func (tfs TemporalFilterSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tfs TemporalFilterSettingsAttributes) PostFilterSharpening() terra.StringValue {
-	return terra.ReferenceString(tfs.ref.Append("post_filter_sharpening"))
+	return terra.ReferenceAsString(tfs.ref.Append("post_filter_sharpening"))
 }
 
 func (tfs TemporalFilterSettingsAttributes) Strength() terra.StringValue {
-	return terra.ReferenceString(tfs.ref.Append("strength"))
+	return terra.ReferenceAsString(tfs.ref.Append("strength"))
 }
 
 type InputAttachmentsAttributes struct {
@@ -4939,19 +4939,19 @@ func (ia InputAttachmentsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ia InputAttachmentsAttributes) InputAttachmentName() terra.StringValue {
-	return terra.ReferenceString(ia.ref.Append("input_attachment_name"))
+	return terra.ReferenceAsString(ia.ref.Append("input_attachment_name"))
 }
 
 func (ia InputAttachmentsAttributes) InputId() terra.StringValue {
-	return terra.ReferenceString(ia.ref.Append("input_id"))
+	return terra.ReferenceAsString(ia.ref.Append("input_id"))
 }
 
 func (ia InputAttachmentsAttributes) AutomaticInputFailoverSettings() terra.ListValue[AutomaticInputFailoverSettingsAttributes] {
-	return terra.ReferenceList[AutomaticInputFailoverSettingsAttributes](ia.ref.Append("automatic_input_failover_settings"))
+	return terra.ReferenceAsList[AutomaticInputFailoverSettingsAttributes](ia.ref.Append("automatic_input_failover_settings"))
 }
 
 func (ia InputAttachmentsAttributes) InputSettings() terra.ListValue[InputSettingsAttributes] {
-	return terra.ReferenceList[InputSettingsAttributes](ia.ref.Append("input_settings"))
+	return terra.ReferenceAsList[InputSettingsAttributes](ia.ref.Append("input_settings"))
 }
 
 type AutomaticInputFailoverSettingsAttributes struct {
@@ -4971,19 +4971,19 @@ func (aifs AutomaticInputFailoverSettingsAttributes) InternalTokens() hclwrite.T
 }
 
 func (aifs AutomaticInputFailoverSettingsAttributes) ErrorClearTimeMsec() terra.NumberValue {
-	return terra.ReferenceNumber(aifs.ref.Append("error_clear_time_msec"))
+	return terra.ReferenceAsNumber(aifs.ref.Append("error_clear_time_msec"))
 }
 
 func (aifs AutomaticInputFailoverSettingsAttributes) InputPreference() terra.StringValue {
-	return terra.ReferenceString(aifs.ref.Append("input_preference"))
+	return terra.ReferenceAsString(aifs.ref.Append("input_preference"))
 }
 
 func (aifs AutomaticInputFailoverSettingsAttributes) SecondaryInputId() terra.StringValue {
-	return terra.ReferenceString(aifs.ref.Append("secondary_input_id"))
+	return terra.ReferenceAsString(aifs.ref.Append("secondary_input_id"))
 }
 
 func (aifs AutomaticInputFailoverSettingsAttributes) FailoverCondition() terra.SetValue[FailoverConditionAttributes] {
-	return terra.ReferenceSet[FailoverConditionAttributes](aifs.ref.Append("failover_condition"))
+	return terra.ReferenceAsSet[FailoverConditionAttributes](aifs.ref.Append("failover_condition"))
 }
 
 type FailoverConditionAttributes struct {
@@ -5003,7 +5003,7 @@ func (fc FailoverConditionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fc FailoverConditionAttributes) FailoverConditionSettings() terra.ListValue[FailoverConditionSettingsAttributes] {
-	return terra.ReferenceList[FailoverConditionSettingsAttributes](fc.ref.Append("failover_condition_settings"))
+	return terra.ReferenceAsList[FailoverConditionSettingsAttributes](fc.ref.Append("failover_condition_settings"))
 }
 
 type FailoverConditionSettingsAttributes struct {
@@ -5023,15 +5023,15 @@ func (fcs FailoverConditionSettingsAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (fcs FailoverConditionSettingsAttributes) AudioSilenceSettings() terra.ListValue[AudioSilenceSettingsAttributes] {
-	return terra.ReferenceList[AudioSilenceSettingsAttributes](fcs.ref.Append("audio_silence_settings"))
+	return terra.ReferenceAsList[AudioSilenceSettingsAttributes](fcs.ref.Append("audio_silence_settings"))
 }
 
 func (fcs FailoverConditionSettingsAttributes) InputLossSettings() terra.ListValue[InputLossSettingsAttributes] {
-	return terra.ReferenceList[InputLossSettingsAttributes](fcs.ref.Append("input_loss_settings"))
+	return terra.ReferenceAsList[InputLossSettingsAttributes](fcs.ref.Append("input_loss_settings"))
 }
 
 func (fcs FailoverConditionSettingsAttributes) VideoBlackSettings() terra.ListValue[VideoBlackSettingsAttributes] {
-	return terra.ReferenceList[VideoBlackSettingsAttributes](fcs.ref.Append("video_black_settings"))
+	return terra.ReferenceAsList[VideoBlackSettingsAttributes](fcs.ref.Append("video_black_settings"))
 }
 
 type AudioSilenceSettingsAttributes struct {
@@ -5051,11 +5051,11 @@ func (ass AudioSilenceSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ass AudioSilenceSettingsAttributes) AudioSelectorName() terra.StringValue {
-	return terra.ReferenceString(ass.ref.Append("audio_selector_name"))
+	return terra.ReferenceAsString(ass.ref.Append("audio_selector_name"))
 }
 
 func (ass AudioSilenceSettingsAttributes) AudioSilenceThresholdMsec() terra.NumberValue {
-	return terra.ReferenceNumber(ass.ref.Append("audio_silence_threshold_msec"))
+	return terra.ReferenceAsNumber(ass.ref.Append("audio_silence_threshold_msec"))
 }
 
 type InputLossSettingsAttributes struct {
@@ -5075,7 +5075,7 @@ func (ils InputLossSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ils InputLossSettingsAttributes) InputLossThresholdMsec() terra.NumberValue {
-	return terra.ReferenceNumber(ils.ref.Append("input_loss_threshold_msec"))
+	return terra.ReferenceAsNumber(ils.ref.Append("input_loss_threshold_msec"))
 }
 
 type VideoBlackSettingsAttributes struct {
@@ -5095,11 +5095,11 @@ func (vbs VideoBlackSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vbs VideoBlackSettingsAttributes) BlackDetectThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(vbs.ref.Append("black_detect_threshold"))
+	return terra.ReferenceAsNumber(vbs.ref.Append("black_detect_threshold"))
 }
 
 func (vbs VideoBlackSettingsAttributes) VideoBlackThresholdMsec() terra.NumberValue {
-	return terra.ReferenceNumber(vbs.ref.Append("video_black_threshold_msec"))
+	return terra.ReferenceAsNumber(vbs.ref.Append("video_black_threshold_msec"))
 }
 
 type InputSettingsAttributes struct {
@@ -5119,47 +5119,47 @@ func (is InputSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (is InputSettingsAttributes) DeblockFilter() terra.StringValue {
-	return terra.ReferenceString(is.ref.Append("deblock_filter"))
+	return terra.ReferenceAsString(is.ref.Append("deblock_filter"))
 }
 
 func (is InputSettingsAttributes) DenoiseFilter() terra.StringValue {
-	return terra.ReferenceString(is.ref.Append("denoise_filter"))
+	return terra.ReferenceAsString(is.ref.Append("denoise_filter"))
 }
 
 func (is InputSettingsAttributes) FilterStrength() terra.NumberValue {
-	return terra.ReferenceNumber(is.ref.Append("filter_strength"))
+	return terra.ReferenceAsNumber(is.ref.Append("filter_strength"))
 }
 
 func (is InputSettingsAttributes) InputFilter() terra.StringValue {
-	return terra.ReferenceString(is.ref.Append("input_filter"))
+	return terra.ReferenceAsString(is.ref.Append("input_filter"))
 }
 
 func (is InputSettingsAttributes) Scte35Pid() terra.NumberValue {
-	return terra.ReferenceNumber(is.ref.Append("scte35_pid"))
+	return terra.ReferenceAsNumber(is.ref.Append("scte35_pid"))
 }
 
 func (is InputSettingsAttributes) Smpte2038DataPreference() terra.StringValue {
-	return terra.ReferenceString(is.ref.Append("smpte2038_data_preference"))
+	return terra.ReferenceAsString(is.ref.Append("smpte2038_data_preference"))
 }
 
 func (is InputSettingsAttributes) SourceEndBehavior() terra.StringValue {
-	return terra.ReferenceString(is.ref.Append("source_end_behavior"))
+	return terra.ReferenceAsString(is.ref.Append("source_end_behavior"))
 }
 
 func (is InputSettingsAttributes) AudioSelector() terra.ListValue[AudioSelectorAttributes] {
-	return terra.ReferenceList[AudioSelectorAttributes](is.ref.Append("audio_selector"))
+	return terra.ReferenceAsList[AudioSelectorAttributes](is.ref.Append("audio_selector"))
 }
 
 func (is InputSettingsAttributes) CaptionSelector() terra.ListValue[CaptionSelectorAttributes] {
-	return terra.ReferenceList[CaptionSelectorAttributes](is.ref.Append("caption_selector"))
+	return terra.ReferenceAsList[CaptionSelectorAttributes](is.ref.Append("caption_selector"))
 }
 
 func (is InputSettingsAttributes) NetworkInputSettings() terra.ListValue[NetworkInputSettingsAttributes] {
-	return terra.ReferenceList[NetworkInputSettingsAttributes](is.ref.Append("network_input_settings"))
+	return terra.ReferenceAsList[NetworkInputSettingsAttributes](is.ref.Append("network_input_settings"))
 }
 
 func (is InputSettingsAttributes) VideoSelector() terra.ListValue[VideoSelectorAttributes] {
-	return terra.ReferenceList[VideoSelectorAttributes](is.ref.Append("video_selector"))
+	return terra.ReferenceAsList[VideoSelectorAttributes](is.ref.Append("video_selector"))
 }
 
 type AudioSelectorAttributes struct {
@@ -5179,11 +5179,11 @@ func (as AudioSelectorAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (as AudioSelectorAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("name"))
+	return terra.ReferenceAsString(as.ref.Append("name"))
 }
 
 func (as AudioSelectorAttributes) SelectorSettings() terra.ListValue[AudioSelectorSelectorSettingsAttributes] {
-	return terra.ReferenceList[AudioSelectorSelectorSettingsAttributes](as.ref.Append("selector_settings"))
+	return terra.ReferenceAsList[AudioSelectorSelectorSettingsAttributes](as.ref.Append("selector_settings"))
 }
 
 type AudioSelectorSelectorSettingsAttributes struct {
@@ -5203,19 +5203,19 @@ func (ss AudioSelectorSelectorSettingsAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (ss AudioSelectorSelectorSettingsAttributes) AudioHlsRenditionSelection() terra.ListValue[AudioHlsRenditionSelectionAttributes] {
-	return terra.ReferenceList[AudioHlsRenditionSelectionAttributes](ss.ref.Append("audio_hls_rendition_selection"))
+	return terra.ReferenceAsList[AudioHlsRenditionSelectionAttributes](ss.ref.Append("audio_hls_rendition_selection"))
 }
 
 func (ss AudioSelectorSelectorSettingsAttributes) AudioLanguageSelection() terra.ListValue[AudioLanguageSelectionAttributes] {
-	return terra.ReferenceList[AudioLanguageSelectionAttributes](ss.ref.Append("audio_language_selection"))
+	return terra.ReferenceAsList[AudioLanguageSelectionAttributes](ss.ref.Append("audio_language_selection"))
 }
 
 func (ss AudioSelectorSelectorSettingsAttributes) AudioPidSelection() terra.ListValue[AudioPidSelectionAttributes] {
-	return terra.ReferenceList[AudioPidSelectionAttributes](ss.ref.Append("audio_pid_selection"))
+	return terra.ReferenceAsList[AudioPidSelectionAttributes](ss.ref.Append("audio_pid_selection"))
 }
 
 func (ss AudioSelectorSelectorSettingsAttributes) AudioTrackSelection() terra.ListValue[AudioTrackSelectionAttributes] {
-	return terra.ReferenceList[AudioTrackSelectionAttributes](ss.ref.Append("audio_track_selection"))
+	return terra.ReferenceAsList[AudioTrackSelectionAttributes](ss.ref.Append("audio_track_selection"))
 }
 
 type AudioHlsRenditionSelectionAttributes struct {
@@ -5235,11 +5235,11 @@ func (ahrs AudioHlsRenditionSelectionAttributes) InternalTokens() hclwrite.Token
 }
 
 func (ahrs AudioHlsRenditionSelectionAttributes) GroupId() terra.StringValue {
-	return terra.ReferenceString(ahrs.ref.Append("group_id"))
+	return terra.ReferenceAsString(ahrs.ref.Append("group_id"))
 }
 
 func (ahrs AudioHlsRenditionSelectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ahrs.ref.Append("name"))
+	return terra.ReferenceAsString(ahrs.ref.Append("name"))
 }
 
 type AudioLanguageSelectionAttributes struct {
@@ -5259,11 +5259,11 @@ func (als AudioLanguageSelectionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (als AudioLanguageSelectionAttributes) LanguageCode() terra.StringValue {
-	return terra.ReferenceString(als.ref.Append("language_code"))
+	return terra.ReferenceAsString(als.ref.Append("language_code"))
 }
 
 func (als AudioLanguageSelectionAttributes) LanguageSelectionPolicy() terra.StringValue {
-	return terra.ReferenceString(als.ref.Append("language_selection_policy"))
+	return terra.ReferenceAsString(als.ref.Append("language_selection_policy"))
 }
 
 type AudioPidSelectionAttributes struct {
@@ -5283,7 +5283,7 @@ func (aps AudioPidSelectionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (aps AudioPidSelectionAttributes) Pid() terra.NumberValue {
-	return terra.ReferenceNumber(aps.ref.Append("pid"))
+	return terra.ReferenceAsNumber(aps.ref.Append("pid"))
 }
 
 type AudioTrackSelectionAttributes struct {
@@ -5303,7 +5303,7 @@ func (ats AudioTrackSelectionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ats AudioTrackSelectionAttributes) Track() terra.SetValue[TrackAttributes] {
-	return terra.ReferenceSet[TrackAttributes](ats.ref.Append("track"))
+	return terra.ReferenceAsSet[TrackAttributes](ats.ref.Append("track"))
 }
 
 type TrackAttributes struct {
@@ -5323,7 +5323,7 @@ func (t TrackAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TrackAttributes) Track() terra.NumberValue {
-	return terra.ReferenceNumber(t.ref.Append("track"))
+	return terra.ReferenceAsNumber(t.ref.Append("track"))
 }
 
 type CaptionSelectorAttributes struct {
@@ -5343,15 +5343,15 @@ func (cs CaptionSelectorAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cs CaptionSelectorAttributes) LanguageCode() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("language_code"))
+	return terra.ReferenceAsString(cs.ref.Append("language_code"))
 }
 
 func (cs CaptionSelectorAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("name"))
+	return terra.ReferenceAsString(cs.ref.Append("name"))
 }
 
 func (cs CaptionSelectorAttributes) SelectorSettings() terra.ListValue[CaptionSelectorSelectorSettingsAttributes] {
-	return terra.ReferenceList[CaptionSelectorSelectorSettingsAttributes](cs.ref.Append("selector_settings"))
+	return terra.ReferenceAsList[CaptionSelectorSelectorSettingsAttributes](cs.ref.Append("selector_settings"))
 }
 
 type CaptionSelectorSelectorSettingsAttributes struct {
@@ -5371,27 +5371,27 @@ func (ss CaptionSelectorSelectorSettingsAttributes) InternalTokens() hclwrite.To
 }
 
 func (ss CaptionSelectorSelectorSettingsAttributes) AncillarySourceSettings() terra.ListValue[AncillarySourceSettingsAttributes] {
-	return terra.ReferenceList[AncillarySourceSettingsAttributes](ss.ref.Append("ancillary_source_settings"))
+	return terra.ReferenceAsList[AncillarySourceSettingsAttributes](ss.ref.Append("ancillary_source_settings"))
 }
 
 func (ss CaptionSelectorSelectorSettingsAttributes) DvbTdtSettings() terra.ListValue[SelectorSettingsDvbTdtSettingsAttributes] {
-	return terra.ReferenceList[SelectorSettingsDvbTdtSettingsAttributes](ss.ref.Append("dvb_tdt_settings"))
+	return terra.ReferenceAsList[SelectorSettingsDvbTdtSettingsAttributes](ss.ref.Append("dvb_tdt_settings"))
 }
 
 func (ss CaptionSelectorSelectorSettingsAttributes) EmbeddedSourceSettings() terra.ListValue[EmbeddedSourceSettingsAttributes] {
-	return terra.ReferenceList[EmbeddedSourceSettingsAttributes](ss.ref.Append("embedded_source_settings"))
+	return terra.ReferenceAsList[EmbeddedSourceSettingsAttributes](ss.ref.Append("embedded_source_settings"))
 }
 
 func (ss CaptionSelectorSelectorSettingsAttributes) Scte20SourceSettings() terra.ListValue[Scte20SourceSettingsAttributes] {
-	return terra.ReferenceList[Scte20SourceSettingsAttributes](ss.ref.Append("scte20_source_settings"))
+	return terra.ReferenceAsList[Scte20SourceSettingsAttributes](ss.ref.Append("scte20_source_settings"))
 }
 
 func (ss CaptionSelectorSelectorSettingsAttributes) Scte27SourceSettings() terra.ListValue[Scte27SourceSettingsAttributes] {
-	return terra.ReferenceList[Scte27SourceSettingsAttributes](ss.ref.Append("scte27_source_settings"))
+	return terra.ReferenceAsList[Scte27SourceSettingsAttributes](ss.ref.Append("scte27_source_settings"))
 }
 
 func (ss CaptionSelectorSelectorSettingsAttributes) TeletextSourceSettings() terra.ListValue[TeletextSourceSettingsAttributes] {
-	return terra.ReferenceList[TeletextSourceSettingsAttributes](ss.ref.Append("teletext_source_settings"))
+	return terra.ReferenceAsList[TeletextSourceSettingsAttributes](ss.ref.Append("teletext_source_settings"))
 }
 
 type AncillarySourceSettingsAttributes struct {
@@ -5411,7 +5411,7 @@ func (ass AncillarySourceSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ass AncillarySourceSettingsAttributes) SourceAncillaryChannelNumber() terra.NumberValue {
-	return terra.ReferenceNumber(ass.ref.Append("source_ancillary_channel_number"))
+	return terra.ReferenceAsNumber(ass.ref.Append("source_ancillary_channel_number"))
 }
 
 type SelectorSettingsDvbTdtSettingsAttributes struct {
@@ -5431,11 +5431,11 @@ func (dts SelectorSettingsDvbTdtSettingsAttributes) InternalTokens() hclwrite.To
 }
 
 func (dts SelectorSettingsDvbTdtSettingsAttributes) OcrLanguage() terra.StringValue {
-	return terra.ReferenceString(dts.ref.Append("ocr_language"))
+	return terra.ReferenceAsString(dts.ref.Append("ocr_language"))
 }
 
 func (dts SelectorSettingsDvbTdtSettingsAttributes) Pid() terra.NumberValue {
-	return terra.ReferenceNumber(dts.ref.Append("pid"))
+	return terra.ReferenceAsNumber(dts.ref.Append("pid"))
 }
 
 type EmbeddedSourceSettingsAttributes struct {
@@ -5455,19 +5455,19 @@ func (ess EmbeddedSourceSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ess EmbeddedSourceSettingsAttributes) Convert608To708() terra.StringValue {
-	return terra.ReferenceString(ess.ref.Append("convert_608_to_708"))
+	return terra.ReferenceAsString(ess.ref.Append("convert_608_to_708"))
 }
 
 func (ess EmbeddedSourceSettingsAttributes) Scte20Detection() terra.StringValue {
-	return terra.ReferenceString(ess.ref.Append("scte20_detection"))
+	return terra.ReferenceAsString(ess.ref.Append("scte20_detection"))
 }
 
 func (ess EmbeddedSourceSettingsAttributes) Source608ChannelNumber() terra.NumberValue {
-	return terra.ReferenceNumber(ess.ref.Append("source_608_channel_number"))
+	return terra.ReferenceAsNumber(ess.ref.Append("source_608_channel_number"))
 }
 
 func (ess EmbeddedSourceSettingsAttributes) Source608TrackNumber() terra.NumberValue {
-	return terra.ReferenceNumber(ess.ref.Append("source_608_track_number"))
+	return terra.ReferenceAsNumber(ess.ref.Append("source_608_track_number"))
 }
 
 type Scte20SourceSettingsAttributes struct {
@@ -5487,11 +5487,11 @@ func (sss Scte20SourceSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sss Scte20SourceSettingsAttributes) Convert608To708() terra.StringValue {
-	return terra.ReferenceString(sss.ref.Append("convert_608_to_708"))
+	return terra.ReferenceAsString(sss.ref.Append("convert_608_to_708"))
 }
 
 func (sss Scte20SourceSettingsAttributes) Source608ChannelNumber() terra.NumberValue {
-	return terra.ReferenceNumber(sss.ref.Append("source_608_channel_number"))
+	return terra.ReferenceAsNumber(sss.ref.Append("source_608_channel_number"))
 }
 
 type Scte27SourceSettingsAttributes struct {
@@ -5511,11 +5511,11 @@ func (sss Scte27SourceSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sss Scte27SourceSettingsAttributes) OcrLanguage() terra.StringValue {
-	return terra.ReferenceString(sss.ref.Append("ocr_language"))
+	return terra.ReferenceAsString(sss.ref.Append("ocr_language"))
 }
 
 func (sss Scte27SourceSettingsAttributes) Pid() terra.NumberValue {
-	return terra.ReferenceNumber(sss.ref.Append("pid"))
+	return terra.ReferenceAsNumber(sss.ref.Append("pid"))
 }
 
 type TeletextSourceSettingsAttributes struct {
@@ -5535,11 +5535,11 @@ func (tss TeletextSourceSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tss TeletextSourceSettingsAttributes) PageNumber() terra.StringValue {
-	return terra.ReferenceString(tss.ref.Append("page_number"))
+	return terra.ReferenceAsString(tss.ref.Append("page_number"))
 }
 
 func (tss TeletextSourceSettingsAttributes) OutputRectangle() terra.ListValue[OutputRectangleAttributes] {
-	return terra.ReferenceList[OutputRectangleAttributes](tss.ref.Append("output_rectangle"))
+	return terra.ReferenceAsList[OutputRectangleAttributes](tss.ref.Append("output_rectangle"))
 }
 
 type OutputRectangleAttributes struct {
@@ -5559,19 +5559,19 @@ func (or OutputRectangleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (or OutputRectangleAttributes) Height() terra.NumberValue {
-	return terra.ReferenceNumber(or.ref.Append("height"))
+	return terra.ReferenceAsNumber(or.ref.Append("height"))
 }
 
 func (or OutputRectangleAttributes) LeftOffset() terra.NumberValue {
-	return terra.ReferenceNumber(or.ref.Append("left_offset"))
+	return terra.ReferenceAsNumber(or.ref.Append("left_offset"))
 }
 
 func (or OutputRectangleAttributes) TopOffset() terra.NumberValue {
-	return terra.ReferenceNumber(or.ref.Append("top_offset"))
+	return terra.ReferenceAsNumber(or.ref.Append("top_offset"))
 }
 
 func (or OutputRectangleAttributes) Width() terra.NumberValue {
-	return terra.ReferenceNumber(or.ref.Append("width"))
+	return terra.ReferenceAsNumber(or.ref.Append("width"))
 }
 
 type NetworkInputSettingsAttributes struct {
@@ -5591,11 +5591,11 @@ func (nis NetworkInputSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nis NetworkInputSettingsAttributes) ServerValidation() terra.StringValue {
-	return terra.ReferenceString(nis.ref.Append("server_validation"))
+	return terra.ReferenceAsString(nis.ref.Append("server_validation"))
 }
 
 func (nis NetworkInputSettingsAttributes) HlsInputSettings() terra.ListValue[HlsInputSettingsAttributes] {
-	return terra.ReferenceList[HlsInputSettingsAttributes](nis.ref.Append("hls_input_settings"))
+	return terra.ReferenceAsList[HlsInputSettingsAttributes](nis.ref.Append("hls_input_settings"))
 }
 
 type HlsInputSettingsAttributes struct {
@@ -5615,23 +5615,23 @@ func (his HlsInputSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (his HlsInputSettingsAttributes) Bandwidth() terra.NumberValue {
-	return terra.ReferenceNumber(his.ref.Append("bandwidth"))
+	return terra.ReferenceAsNumber(his.ref.Append("bandwidth"))
 }
 
 func (his HlsInputSettingsAttributes) BufferSegments() terra.NumberValue {
-	return terra.ReferenceNumber(his.ref.Append("buffer_segments"))
+	return terra.ReferenceAsNumber(his.ref.Append("buffer_segments"))
 }
 
 func (his HlsInputSettingsAttributes) Retries() terra.NumberValue {
-	return terra.ReferenceNumber(his.ref.Append("retries"))
+	return terra.ReferenceAsNumber(his.ref.Append("retries"))
 }
 
 func (his HlsInputSettingsAttributes) RetryInterval() terra.NumberValue {
-	return terra.ReferenceNumber(his.ref.Append("retry_interval"))
+	return terra.ReferenceAsNumber(his.ref.Append("retry_interval"))
 }
 
 func (his HlsInputSettingsAttributes) Scte35Source() terra.StringValue {
-	return terra.ReferenceString(his.ref.Append("scte35_source"))
+	return terra.ReferenceAsString(his.ref.Append("scte35_source"))
 }
 
 type VideoSelectorAttributes struct {
@@ -5651,11 +5651,11 @@ func (vs VideoSelectorAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vs VideoSelectorAttributes) ColorSpace() terra.StringValue {
-	return terra.ReferenceString(vs.ref.Append("color_space"))
+	return terra.ReferenceAsString(vs.ref.Append("color_space"))
 }
 
 func (vs VideoSelectorAttributes) ColorSpaceUsage() terra.StringValue {
-	return terra.ReferenceString(vs.ref.Append("color_space_usage"))
+	return terra.ReferenceAsString(vs.ref.Append("color_space_usage"))
 }
 
 type InputSpecificationAttributes struct {
@@ -5675,15 +5675,15 @@ func (is InputSpecificationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (is InputSpecificationAttributes) Codec() terra.StringValue {
-	return terra.ReferenceString(is.ref.Append("codec"))
+	return terra.ReferenceAsString(is.ref.Append("codec"))
 }
 
 func (is InputSpecificationAttributes) InputResolution() terra.StringValue {
-	return terra.ReferenceString(is.ref.Append("input_resolution"))
+	return terra.ReferenceAsString(is.ref.Append("input_resolution"))
 }
 
 func (is InputSpecificationAttributes) MaximumBitrate() terra.StringValue {
-	return terra.ReferenceString(is.ref.Append("maximum_bitrate"))
+	return terra.ReferenceAsString(is.ref.Append("maximum_bitrate"))
 }
 
 type MaintenanceAttributes struct {
@@ -5703,11 +5703,11 @@ func (m MaintenanceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m MaintenanceAttributes) MaintenanceDay() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("maintenance_day"))
+	return terra.ReferenceAsString(m.ref.Append("maintenance_day"))
 }
 
 func (m MaintenanceAttributes) MaintenanceStartTime() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("maintenance_start_time"))
+	return terra.ReferenceAsString(m.ref.Append("maintenance_start_time"))
 }
 
 type TimeoutsAttributes struct {
@@ -5727,15 +5727,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type VpcAttributes struct {
@@ -5755,19 +5755,19 @@ func (v VpcAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (v VpcAttributes) AvailabilityZones() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](v.ref.Append("availability_zones"))
+	return terra.ReferenceAsList[terra.StringValue](v.ref.Append("availability_zones"))
 }
 
 func (v VpcAttributes) PublicAddressAllocationIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](v.ref.Append("public_address_allocation_ids"))
+	return terra.ReferenceAsList[terra.StringValue](v.ref.Append("public_address_allocation_ids"))
 }
 
 func (v VpcAttributes) SecurityGroupIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](v.ref.Append("security_group_ids"))
+	return terra.ReferenceAsList[terra.StringValue](v.ref.Append("security_group_ids"))
 }
 
 func (v VpcAttributes) SubnetIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](v.ref.Append("subnet_ids"))
+	return terra.ReferenceAsList[terra.StringValue](v.ref.Append("subnet_ids"))
 }
 
 type CdiInputSpecificationState struct {

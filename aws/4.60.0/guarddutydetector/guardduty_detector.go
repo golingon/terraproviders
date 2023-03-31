@@ -63,15 +63,15 @@ func (d DatasourcesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DatasourcesAttributes) Kubernetes() terra.ListValue[KubernetesAttributes] {
-	return terra.ReferenceList[KubernetesAttributes](d.ref.Append("kubernetes"))
+	return terra.ReferenceAsList[KubernetesAttributes](d.ref.Append("kubernetes"))
 }
 
 func (d DatasourcesAttributes) MalwareProtection() terra.ListValue[MalwareProtectionAttributes] {
-	return terra.ReferenceList[MalwareProtectionAttributes](d.ref.Append("malware_protection"))
+	return terra.ReferenceAsList[MalwareProtectionAttributes](d.ref.Append("malware_protection"))
 }
 
 func (d DatasourcesAttributes) S3Logs() terra.ListValue[S3LogsAttributes] {
-	return terra.ReferenceList[S3LogsAttributes](d.ref.Append("s3_logs"))
+	return terra.ReferenceAsList[S3LogsAttributes](d.ref.Append("s3_logs"))
 }
 
 type KubernetesAttributes struct {
@@ -91,7 +91,7 @@ func (k KubernetesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (k KubernetesAttributes) AuditLogs() terra.ListValue[AuditLogsAttributes] {
-	return terra.ReferenceList[AuditLogsAttributes](k.ref.Append("audit_logs"))
+	return terra.ReferenceAsList[AuditLogsAttributes](k.ref.Append("audit_logs"))
 }
 
 type AuditLogsAttributes struct {
@@ -111,7 +111,7 @@ func (al AuditLogsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (al AuditLogsAttributes) Enable() terra.BoolValue {
-	return terra.ReferenceBool(al.ref.Append("enable"))
+	return terra.ReferenceAsBool(al.ref.Append("enable"))
 }
 
 type MalwareProtectionAttributes struct {
@@ -131,7 +131,7 @@ func (mp MalwareProtectionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mp MalwareProtectionAttributes) ScanEc2InstanceWithFindings() terra.ListValue[ScanEc2InstanceWithFindingsAttributes] {
-	return terra.ReferenceList[ScanEc2InstanceWithFindingsAttributes](mp.ref.Append("scan_ec2_instance_with_findings"))
+	return terra.ReferenceAsList[ScanEc2InstanceWithFindingsAttributes](mp.ref.Append("scan_ec2_instance_with_findings"))
 }
 
 type ScanEc2InstanceWithFindingsAttributes struct {
@@ -151,7 +151,7 @@ func (seiwf ScanEc2InstanceWithFindingsAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (seiwf ScanEc2InstanceWithFindingsAttributes) EbsVolumes() terra.ListValue[EbsVolumesAttributes] {
-	return terra.ReferenceList[EbsVolumesAttributes](seiwf.ref.Append("ebs_volumes"))
+	return terra.ReferenceAsList[EbsVolumesAttributes](seiwf.ref.Append("ebs_volumes"))
 }
 
 type EbsVolumesAttributes struct {
@@ -171,7 +171,7 @@ func (ev EbsVolumesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ev EbsVolumesAttributes) Enable() terra.BoolValue {
-	return terra.ReferenceBool(ev.ref.Append("enable"))
+	return terra.ReferenceAsBool(ev.ref.Append("enable"))
 }
 
 type S3LogsAttributes struct {
@@ -191,7 +191,7 @@ func (sl S3LogsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sl S3LogsAttributes) Enable() terra.BoolValue {
-	return terra.ReferenceBool(sl.ref.Append("enable"))
+	return terra.ReferenceAsBool(sl.ref.Append("enable"))
 }
 
 type DatasourcesState struct {

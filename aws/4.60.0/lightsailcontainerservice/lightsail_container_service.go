@@ -55,7 +55,7 @@ func (pra PrivateRegistryAccessAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pra PrivateRegistryAccessAttributes) EcrImagePullerRole() terra.ListValue[EcrImagePullerRoleAttributes] {
-	return terra.ReferenceList[EcrImagePullerRoleAttributes](pra.ref.Append("ecr_image_puller_role"))
+	return terra.ReferenceAsList[EcrImagePullerRoleAttributes](pra.ref.Append("ecr_image_puller_role"))
 }
 
 type EcrImagePullerRoleAttributes struct {
@@ -75,11 +75,11 @@ func (eipr EcrImagePullerRoleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (eipr EcrImagePullerRoleAttributes) IsActive() terra.BoolValue {
-	return terra.ReferenceBool(eipr.ref.Append("is_active"))
+	return terra.ReferenceAsBool(eipr.ref.Append("is_active"))
 }
 
 func (eipr EcrImagePullerRoleAttributes) PrincipalArn() terra.StringValue {
-	return terra.ReferenceString(eipr.ref.Append("principal_arn"))
+	return terra.ReferenceAsString(eipr.ref.Append("principal_arn"))
 }
 
 type PublicDomainNamesAttributes struct {
@@ -99,7 +99,7 @@ func (pdn PublicDomainNamesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pdn PublicDomainNamesAttributes) Certificate() terra.SetValue[CertificateAttributes] {
-	return terra.ReferenceSet[CertificateAttributes](pdn.ref.Append("certificate"))
+	return terra.ReferenceAsSet[CertificateAttributes](pdn.ref.Append("certificate"))
 }
 
 type CertificateAttributes struct {
@@ -119,11 +119,11 @@ func (c CertificateAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c CertificateAttributes) CertificateName() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("certificate_name"))
+	return terra.ReferenceAsString(c.ref.Append("certificate_name"))
 }
 
 func (c CertificateAttributes) DomainNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](c.ref.Append("domain_names"))
+	return terra.ReferenceAsList[terra.StringValue](c.ref.Append("domain_names"))
 }
 
 type TimeoutsAttributes struct {
@@ -143,15 +143,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type PrivateRegistryAccessState struct {

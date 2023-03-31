@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataKendraQuerySuggestionsBlockList creates a new instance of [DataKendraQuerySuggestionsBlockList].
 func NewDataKendraQuerySuggestionsBlockList(name string, args DataKendraQuerySuggestionsBlockListArgs) *DataKendraQuerySuggestionsBlockList {
 	return &DataKendraQuerySuggestionsBlockList{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataKendraQuerySuggestionsBlockList(name string, args DataKendraQuerySug
 
 var _ terra.DataResource = (*DataKendraQuerySuggestionsBlockList)(nil)
 
+// DataKendraQuerySuggestionsBlockList represents the Terraform data resource aws_kendra_query_suggestions_block_list.
 type DataKendraQuerySuggestionsBlockList struct {
 	Name string
 	Args DataKendraQuerySuggestionsBlockListArgs
 }
 
+// DataSource returns the Terraform object type for [DataKendraQuerySuggestionsBlockList].
 func (kqsbl *DataKendraQuerySuggestionsBlockList) DataSource() string {
 	return "aws_kendra_query_suggestions_block_list"
 }
 
+// LocalName returns the local name for [DataKendraQuerySuggestionsBlockList].
 func (kqsbl *DataKendraQuerySuggestionsBlockList) LocalName() string {
 	return kqsbl.Name
 }
 
+// Configuration returns the configuration (args) for [DataKendraQuerySuggestionsBlockList].
 func (kqsbl *DataKendraQuerySuggestionsBlockList) Configuration() interface{} {
 	return kqsbl.Args
 }
 
+// Attributes returns the attributes for [DataKendraQuerySuggestionsBlockList].
 func (kqsbl *DataKendraQuerySuggestionsBlockList) Attributes() dataKendraQuerySuggestionsBlockListAttributes {
 	return dataKendraQuerySuggestionsBlockListAttributes{ref: terra.ReferenceDataResource(kqsbl)}
 }
 
+// DataKendraQuerySuggestionsBlockListArgs contains the configurations for aws_kendra_query_suggestions_block_list.
 type DataKendraQuerySuggestionsBlockListArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,62 +60,76 @@ type dataKendraQuerySuggestionsBlockListAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_kendra_query_suggestions_block_list.
 func (kqsbl dataKendraQuerySuggestionsBlockListAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(kqsbl.ref.Append("arn"))
+	return terra.ReferenceAsString(kqsbl.ref.Append("arn"))
 }
 
+// CreatedAt returns a reference to field created_at of aws_kendra_query_suggestions_block_list.
 func (kqsbl dataKendraQuerySuggestionsBlockListAttributes) CreatedAt() terra.StringValue {
-	return terra.ReferenceString(kqsbl.ref.Append("created_at"))
+	return terra.ReferenceAsString(kqsbl.ref.Append("created_at"))
 }
 
+// Description returns a reference to field description of aws_kendra_query_suggestions_block_list.
 func (kqsbl dataKendraQuerySuggestionsBlockListAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(kqsbl.ref.Append("description"))
+	return terra.ReferenceAsString(kqsbl.ref.Append("description"))
 }
 
+// ErrorMessage returns a reference to field error_message of aws_kendra_query_suggestions_block_list.
 func (kqsbl dataKendraQuerySuggestionsBlockListAttributes) ErrorMessage() terra.StringValue {
-	return terra.ReferenceString(kqsbl.ref.Append("error_message"))
+	return terra.ReferenceAsString(kqsbl.ref.Append("error_message"))
 }
 
+// FileSizeBytes returns a reference to field file_size_bytes of aws_kendra_query_suggestions_block_list.
 func (kqsbl dataKendraQuerySuggestionsBlockListAttributes) FileSizeBytes() terra.NumberValue {
-	return terra.ReferenceNumber(kqsbl.ref.Append("file_size_bytes"))
+	return terra.ReferenceAsNumber(kqsbl.ref.Append("file_size_bytes"))
 }
 
+// Id returns a reference to field id of aws_kendra_query_suggestions_block_list.
 func (kqsbl dataKendraQuerySuggestionsBlockListAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kqsbl.ref.Append("id"))
+	return terra.ReferenceAsString(kqsbl.ref.Append("id"))
 }
 
+// IndexId returns a reference to field index_id of aws_kendra_query_suggestions_block_list.
 func (kqsbl dataKendraQuerySuggestionsBlockListAttributes) IndexId() terra.StringValue {
-	return terra.ReferenceString(kqsbl.ref.Append("index_id"))
+	return terra.ReferenceAsString(kqsbl.ref.Append("index_id"))
 }
 
+// ItemCount returns a reference to field item_count of aws_kendra_query_suggestions_block_list.
 func (kqsbl dataKendraQuerySuggestionsBlockListAttributes) ItemCount() terra.NumberValue {
-	return terra.ReferenceNumber(kqsbl.ref.Append("item_count"))
+	return terra.ReferenceAsNumber(kqsbl.ref.Append("item_count"))
 }
 
+// Name returns a reference to field name of aws_kendra_query_suggestions_block_list.
 func (kqsbl dataKendraQuerySuggestionsBlockListAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kqsbl.ref.Append("name"))
+	return terra.ReferenceAsString(kqsbl.ref.Append("name"))
 }
 
+// QuerySuggestionsBlockListId returns a reference to field query_suggestions_block_list_id of aws_kendra_query_suggestions_block_list.
 func (kqsbl dataKendraQuerySuggestionsBlockListAttributes) QuerySuggestionsBlockListId() terra.StringValue {
-	return terra.ReferenceString(kqsbl.ref.Append("query_suggestions_block_list_id"))
+	return terra.ReferenceAsString(kqsbl.ref.Append("query_suggestions_block_list_id"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_kendra_query_suggestions_block_list.
 func (kqsbl dataKendraQuerySuggestionsBlockListAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(kqsbl.ref.Append("role_arn"))
+	return terra.ReferenceAsString(kqsbl.ref.Append("role_arn"))
 }
 
+// Status returns a reference to field status of aws_kendra_query_suggestions_block_list.
 func (kqsbl dataKendraQuerySuggestionsBlockListAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(kqsbl.ref.Append("status"))
+	return terra.ReferenceAsString(kqsbl.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of aws_kendra_query_suggestions_block_list.
 func (kqsbl dataKendraQuerySuggestionsBlockListAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](kqsbl.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](kqsbl.ref.Append("tags"))
 }
 
+// UpdatedAt returns a reference to field updated_at of aws_kendra_query_suggestions_block_list.
 func (kqsbl dataKendraQuerySuggestionsBlockListAttributes) UpdatedAt() terra.StringValue {
-	return terra.ReferenceString(kqsbl.ref.Append("updated_at"))
+	return terra.ReferenceAsString(kqsbl.ref.Append("updated_at"))
 }
 
 func (kqsbl dataKendraQuerySuggestionsBlockListAttributes) SourceS3Path() terra.ListValue[datakendraquerysuggestionsblocklist.SourceS3PathAttributes] {
-	return terra.ReferenceList[datakendraquerysuggestionsblocklist.SourceS3PathAttributes](kqsbl.ref.Append("source_s3_path"))
+	return terra.ReferenceAsList[datakendraquerysuggestionsblocklist.SourceS3PathAttributes](kqsbl.ref.Append("source_s3_path"))
 }

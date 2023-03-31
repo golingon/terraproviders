@@ -63,11 +63,11 @@ func (cu CapacityUnitsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cu CapacityUnitsAttributes) QueryCapacityUnits() terra.NumberValue {
-	return terra.ReferenceNumber(cu.ref.Append("query_capacity_units"))
+	return terra.ReferenceAsNumber(cu.ref.Append("query_capacity_units"))
 }
 
 func (cu CapacityUnitsAttributes) StorageCapacityUnits() terra.NumberValue {
-	return terra.ReferenceNumber(cu.ref.Append("storage_capacity_units"))
+	return terra.ReferenceAsNumber(cu.ref.Append("storage_capacity_units"))
 }
 
 type DocumentMetadataConfigurationUpdatesAttributes struct {
@@ -87,19 +87,19 @@ func (dmcu DocumentMetadataConfigurationUpdatesAttributes) InternalTokens() hclw
 }
 
 func (dmcu DocumentMetadataConfigurationUpdatesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dmcu.ref.Append("name"))
+	return terra.ReferenceAsString(dmcu.ref.Append("name"))
 }
 
 func (dmcu DocumentMetadataConfigurationUpdatesAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(dmcu.ref.Append("type"))
+	return terra.ReferenceAsString(dmcu.ref.Append("type"))
 }
 
 func (dmcu DocumentMetadataConfigurationUpdatesAttributes) Relevance() terra.ListValue[RelevanceAttributes] {
-	return terra.ReferenceList[RelevanceAttributes](dmcu.ref.Append("relevance"))
+	return terra.ReferenceAsList[RelevanceAttributes](dmcu.ref.Append("relevance"))
 }
 
 func (dmcu DocumentMetadataConfigurationUpdatesAttributes) Search() terra.ListValue[SearchAttributes] {
-	return terra.ReferenceList[SearchAttributes](dmcu.ref.Append("search"))
+	return terra.ReferenceAsList[SearchAttributes](dmcu.ref.Append("search"))
 }
 
 type RelevanceAttributes struct {
@@ -119,23 +119,23 @@ func (r RelevanceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RelevanceAttributes) Duration() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("duration"))
+	return terra.ReferenceAsString(r.ref.Append("duration"))
 }
 
 func (r RelevanceAttributes) Freshness() terra.BoolValue {
-	return terra.ReferenceBool(r.ref.Append("freshness"))
+	return terra.ReferenceAsBool(r.ref.Append("freshness"))
 }
 
 func (r RelevanceAttributes) Importance() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("importance"))
+	return terra.ReferenceAsNumber(r.ref.Append("importance"))
 }
 
 func (r RelevanceAttributes) RankOrder() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("rank_order"))
+	return terra.ReferenceAsString(r.ref.Append("rank_order"))
 }
 
 func (r RelevanceAttributes) ValuesImportanceMap() terra.MapValue[terra.NumberValue] {
-	return terra.ReferenceMap[terra.NumberValue](r.ref.Append("values_importance_map"))
+	return terra.ReferenceAsMap[terra.NumberValue](r.ref.Append("values_importance_map"))
 }
 
 type SearchAttributes struct {
@@ -155,19 +155,19 @@ func (s SearchAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SearchAttributes) Displayable() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("displayable"))
+	return terra.ReferenceAsBool(s.ref.Append("displayable"))
 }
 
 func (s SearchAttributes) Facetable() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("facetable"))
+	return terra.ReferenceAsBool(s.ref.Append("facetable"))
 }
 
 func (s SearchAttributes) Searchable() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("searchable"))
+	return terra.ReferenceAsBool(s.ref.Append("searchable"))
 }
 
 func (s SearchAttributes) Sortable() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("sortable"))
+	return terra.ReferenceAsBool(s.ref.Append("sortable"))
 }
 
 type IndexStatisticsAttributes struct {
@@ -187,11 +187,11 @@ func (is IndexStatisticsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (is IndexStatisticsAttributes) FaqStatistics() terra.ListValue[FaqStatisticsAttributes] {
-	return terra.ReferenceList[FaqStatisticsAttributes](is.ref.Append("faq_statistics"))
+	return terra.ReferenceAsList[FaqStatisticsAttributes](is.ref.Append("faq_statistics"))
 }
 
 func (is IndexStatisticsAttributes) TextDocumentStatistics() terra.ListValue[TextDocumentStatisticsAttributes] {
-	return terra.ReferenceList[TextDocumentStatisticsAttributes](is.ref.Append("text_document_statistics"))
+	return terra.ReferenceAsList[TextDocumentStatisticsAttributes](is.ref.Append("text_document_statistics"))
 }
 
 type FaqStatisticsAttributes struct {
@@ -211,7 +211,7 @@ func (fs FaqStatisticsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fs FaqStatisticsAttributes) IndexedQuestionAnswersCount() terra.NumberValue {
-	return terra.ReferenceNumber(fs.ref.Append("indexed_question_answers_count"))
+	return terra.ReferenceAsNumber(fs.ref.Append("indexed_question_answers_count"))
 }
 
 type TextDocumentStatisticsAttributes struct {
@@ -231,11 +231,11 @@ func (tds TextDocumentStatisticsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tds TextDocumentStatisticsAttributes) IndexedTextBytes() terra.NumberValue {
-	return terra.ReferenceNumber(tds.ref.Append("indexed_text_bytes"))
+	return terra.ReferenceAsNumber(tds.ref.Append("indexed_text_bytes"))
 }
 
 func (tds TextDocumentStatisticsAttributes) IndexedTextDocumentsCount() terra.NumberValue {
-	return terra.ReferenceNumber(tds.ref.Append("indexed_text_documents_count"))
+	return terra.ReferenceAsNumber(tds.ref.Append("indexed_text_documents_count"))
 }
 
 type ServerSideEncryptionConfigurationAttributes struct {
@@ -255,7 +255,7 @@ func (ssec ServerSideEncryptionConfigurationAttributes) InternalTokens() hclwrit
 }
 
 func (ssec ServerSideEncryptionConfigurationAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(ssec.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(ssec.ref.Append("kms_key_id"))
 }
 
 type UserGroupResolutionConfigurationAttributes struct {
@@ -275,7 +275,7 @@ func (ugrc UserGroupResolutionConfigurationAttributes) InternalTokens() hclwrite
 }
 
 func (ugrc UserGroupResolutionConfigurationAttributes) UserGroupResolutionMode() terra.StringValue {
-	return terra.ReferenceString(ugrc.ref.Append("user_group_resolution_mode"))
+	return terra.ReferenceAsString(ugrc.ref.Append("user_group_resolution_mode"))
 }
 
 type UserTokenConfigurationsAttributes struct {
@@ -295,11 +295,11 @@ func (utc UserTokenConfigurationsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (utc UserTokenConfigurationsAttributes) JsonTokenTypeConfiguration() terra.ListValue[JsonTokenTypeConfigurationAttributes] {
-	return terra.ReferenceList[JsonTokenTypeConfigurationAttributes](utc.ref.Append("json_token_type_configuration"))
+	return terra.ReferenceAsList[JsonTokenTypeConfigurationAttributes](utc.ref.Append("json_token_type_configuration"))
 }
 
 func (utc UserTokenConfigurationsAttributes) JwtTokenTypeConfiguration() terra.ListValue[JwtTokenTypeConfigurationAttributes] {
-	return terra.ReferenceList[JwtTokenTypeConfigurationAttributes](utc.ref.Append("jwt_token_type_configuration"))
+	return terra.ReferenceAsList[JwtTokenTypeConfigurationAttributes](utc.ref.Append("jwt_token_type_configuration"))
 }
 
 type JsonTokenTypeConfigurationAttributes struct {
@@ -319,11 +319,11 @@ func (jttc JsonTokenTypeConfigurationAttributes) InternalTokens() hclwrite.Token
 }
 
 func (jttc JsonTokenTypeConfigurationAttributes) GroupAttributeField() terra.StringValue {
-	return terra.ReferenceString(jttc.ref.Append("group_attribute_field"))
+	return terra.ReferenceAsString(jttc.ref.Append("group_attribute_field"))
 }
 
 func (jttc JsonTokenTypeConfigurationAttributes) UserNameAttributeField() terra.StringValue {
-	return terra.ReferenceString(jttc.ref.Append("user_name_attribute_field"))
+	return terra.ReferenceAsString(jttc.ref.Append("user_name_attribute_field"))
 }
 
 type JwtTokenTypeConfigurationAttributes struct {
@@ -343,31 +343,31 @@ func (jttc JwtTokenTypeConfigurationAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (jttc JwtTokenTypeConfigurationAttributes) ClaimRegex() terra.StringValue {
-	return terra.ReferenceString(jttc.ref.Append("claim_regex"))
+	return terra.ReferenceAsString(jttc.ref.Append("claim_regex"))
 }
 
 func (jttc JwtTokenTypeConfigurationAttributes) GroupAttributeField() terra.StringValue {
-	return terra.ReferenceString(jttc.ref.Append("group_attribute_field"))
+	return terra.ReferenceAsString(jttc.ref.Append("group_attribute_field"))
 }
 
 func (jttc JwtTokenTypeConfigurationAttributes) Issuer() terra.StringValue {
-	return terra.ReferenceString(jttc.ref.Append("issuer"))
+	return terra.ReferenceAsString(jttc.ref.Append("issuer"))
 }
 
 func (jttc JwtTokenTypeConfigurationAttributes) KeyLocation() terra.StringValue {
-	return terra.ReferenceString(jttc.ref.Append("key_location"))
+	return terra.ReferenceAsString(jttc.ref.Append("key_location"))
 }
 
 func (jttc JwtTokenTypeConfigurationAttributes) SecretsManagerArn() terra.StringValue {
-	return terra.ReferenceString(jttc.ref.Append("secrets_manager_arn"))
+	return terra.ReferenceAsString(jttc.ref.Append("secrets_manager_arn"))
 }
 
 func (jttc JwtTokenTypeConfigurationAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(jttc.ref.Append("url"))
+	return terra.ReferenceAsString(jttc.ref.Append("url"))
 }
 
 func (jttc JwtTokenTypeConfigurationAttributes) UserNameAttributeField() terra.StringValue {
-	return terra.ReferenceString(jttc.ref.Append("user_name_attribute_field"))
+	return terra.ReferenceAsString(jttc.ref.Append("user_name_attribute_field"))
 }
 
 type CapacityUnitsState struct {

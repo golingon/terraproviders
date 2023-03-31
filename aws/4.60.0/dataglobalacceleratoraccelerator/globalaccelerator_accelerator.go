@@ -28,15 +28,15 @@ func (a AttributesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AttributesAttributes) FlowLogsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(a.ref.Append("flow_logs_enabled"))
+	return terra.ReferenceAsBool(a.ref.Append("flow_logs_enabled"))
 }
 
 func (a AttributesAttributes) FlowLogsS3Bucket() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("flow_logs_s3_bucket"))
+	return terra.ReferenceAsString(a.ref.Append("flow_logs_s3_bucket"))
 }
 
 func (a AttributesAttributes) FlowLogsS3Prefix() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("flow_logs_s3_prefix"))
+	return terra.ReferenceAsString(a.ref.Append("flow_logs_s3_prefix"))
 }
 
 type IpSetsAttributes struct {
@@ -56,11 +56,11 @@ func (is IpSetsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (is IpSetsAttributes) IpAddresses() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](is.ref.Append("ip_addresses"))
+	return terra.ReferenceAsList[terra.StringValue](is.ref.Append("ip_addresses"))
 }
 
 func (is IpSetsAttributes) IpFamily() terra.StringValue {
-	return terra.ReferenceString(is.ref.Append("ip_family"))
+	return terra.ReferenceAsString(is.ref.Append("ip_family"))
 }
 
 type AttributesState struct {

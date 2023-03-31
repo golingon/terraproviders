@@ -26,11 +26,11 @@ func (b BandwidthAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (b BandwidthAttributes) DownloadSpeed() terra.NumberValue {
-	return terra.ReferenceNumber(b.ref.Append("download_speed"))
+	return terra.ReferenceAsNumber(b.ref.Append("download_speed"))
 }
 
 func (b BandwidthAttributes) UploadSpeed() terra.NumberValue {
-	return terra.ReferenceNumber(b.ref.Append("upload_speed"))
+	return terra.ReferenceAsNumber(b.ref.Append("upload_speed"))
 }
 
 type BandwidthState struct {

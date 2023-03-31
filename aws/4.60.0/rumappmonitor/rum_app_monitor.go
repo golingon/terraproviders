@@ -50,39 +50,39 @@ func (amc AppMonitorConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (amc AppMonitorConfigurationAttributes) AllowCookies() terra.BoolValue {
-	return terra.ReferenceBool(amc.ref.Append("allow_cookies"))
+	return terra.ReferenceAsBool(amc.ref.Append("allow_cookies"))
 }
 
 func (amc AppMonitorConfigurationAttributes) EnableXray() terra.BoolValue {
-	return terra.ReferenceBool(amc.ref.Append("enable_xray"))
+	return terra.ReferenceAsBool(amc.ref.Append("enable_xray"))
 }
 
 func (amc AppMonitorConfigurationAttributes) ExcludedPages() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](amc.ref.Append("excluded_pages"))
+	return terra.ReferenceAsSet[terra.StringValue](amc.ref.Append("excluded_pages"))
 }
 
 func (amc AppMonitorConfigurationAttributes) FavoritePages() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](amc.ref.Append("favorite_pages"))
+	return terra.ReferenceAsSet[terra.StringValue](amc.ref.Append("favorite_pages"))
 }
 
 func (amc AppMonitorConfigurationAttributes) GuestRoleArn() terra.StringValue {
-	return terra.ReferenceString(amc.ref.Append("guest_role_arn"))
+	return terra.ReferenceAsString(amc.ref.Append("guest_role_arn"))
 }
 
 func (amc AppMonitorConfigurationAttributes) IdentityPoolId() terra.StringValue {
-	return terra.ReferenceString(amc.ref.Append("identity_pool_id"))
+	return terra.ReferenceAsString(amc.ref.Append("identity_pool_id"))
 }
 
 func (amc AppMonitorConfigurationAttributes) IncludedPages() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](amc.ref.Append("included_pages"))
+	return terra.ReferenceAsSet[terra.StringValue](amc.ref.Append("included_pages"))
 }
 
 func (amc AppMonitorConfigurationAttributes) SessionSampleRate() terra.NumberValue {
-	return terra.ReferenceNumber(amc.ref.Append("session_sample_rate"))
+	return terra.ReferenceAsNumber(amc.ref.Append("session_sample_rate"))
 }
 
 func (amc AppMonitorConfigurationAttributes) Telemetries() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](amc.ref.Append("telemetries"))
+	return terra.ReferenceAsSet[terra.StringValue](amc.ref.Append("telemetries"))
 }
 
 type CustomEventsAttributes struct {
@@ -102,7 +102,7 @@ func (ce CustomEventsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ce CustomEventsAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ce.ref.Append("status"))
+	return terra.ReferenceAsString(ce.ref.Append("status"))
 }
 
 type AppMonitorConfigurationState struct {

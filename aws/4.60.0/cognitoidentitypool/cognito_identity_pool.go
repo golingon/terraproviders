@@ -33,15 +33,15 @@ func (cip CognitoIdentityProvidersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cip CognitoIdentityProvidersAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(cip.ref.Append("client_id"))
+	return terra.ReferenceAsString(cip.ref.Append("client_id"))
 }
 
 func (cip CognitoIdentityProvidersAttributes) ProviderName() terra.StringValue {
-	return terra.ReferenceString(cip.ref.Append("provider_name"))
+	return terra.ReferenceAsString(cip.ref.Append("provider_name"))
 }
 
 func (cip CognitoIdentityProvidersAttributes) ServerSideTokenCheck() terra.BoolValue {
-	return terra.ReferenceBool(cip.ref.Append("server_side_token_check"))
+	return terra.ReferenceAsBool(cip.ref.Append("server_side_token_check"))
 }
 
 type CognitoIdentityProvidersState struct {

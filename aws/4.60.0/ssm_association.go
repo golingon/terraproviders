@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSsmAssociation creates a new instance of [SsmAssociation].
 func NewSsmAssociation(name string, args SsmAssociationArgs) *SsmAssociation {
 	return &SsmAssociation{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSsmAssociation(name string, args SsmAssociationArgs) *SsmAssociation {
 
 var _ terra.Resource = (*SsmAssociation)(nil)
 
+// SsmAssociation represents the Terraform resource aws_ssm_association.
 type SsmAssociation struct {
-	Name  string
-	Args  SsmAssociationArgs
-	state *ssmAssociationState
+	Name      string
+	Args      SsmAssociationArgs
+	state     *ssmAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SsmAssociation].
 func (sa *SsmAssociation) Type() string {
 	return "aws_ssm_association"
 }
 
+// LocalName returns the local name for [SsmAssociation].
 func (sa *SsmAssociation) LocalName() string {
 	return sa.Name
 }
 
+// Configuration returns the configuration (args) for [SsmAssociation].
 func (sa *SsmAssociation) Configuration() interface{} {
 	return sa.Args
 }
 
+// DependOn is used for other resources to depend on [SsmAssociation].
+func (sa *SsmAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(sa)
+}
+
+// Dependencies returns the list of resources [SsmAssociation] depends_on.
+func (sa *SsmAssociation) Dependencies() terra.Dependencies {
+	return sa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SsmAssociation].
+func (sa *SsmAssociation) LifecycleManagement() *terra.Lifecycle {
+	return sa.Lifecycle
+}
+
+// Attributes returns the attributes for [SsmAssociation].
 func (sa *SsmAssociation) Attributes() ssmAssociationAttributes {
 	return ssmAssociationAttributes{ref: terra.ReferenceResource(sa)}
 }
 
+// ImportState imports the given attribute values into [SsmAssociation]'s state.
 func (sa *SsmAssociation) ImportState(av io.Reader) error {
 	sa.state = &ssmAssociationState{}
 	if err := json.NewDecoder(av).Decode(sa.state); err != nil {
@@ -49,10 +73,12 @@ func (sa *SsmAssociation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SsmAssociation] has state.
 func (sa *SsmAssociation) State() (*ssmAssociationState, bool) {
 	return sa.state, sa.state != nil
 }
 
+// StateMust returns the state for [SsmAssociation]. Panics if the state is nil.
 func (sa *SsmAssociation) StateMust() *ssmAssociationState {
 	if sa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sa.Type(), sa.LocalName()))
@@ -60,10 +86,7 @@ func (sa *SsmAssociation) StateMust() *ssmAssociationState {
 	return sa.state
 }
 
-func (sa *SsmAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(sa)
-}
-
+// SsmAssociationArgs contains the configurations for aws_ssm_association.
 type SsmAssociationArgs struct {
 	// ApplyOnlyAtCronInterval: bool, optional
 	ApplyOnlyAtCronInterval terra.BoolValue `hcl:"apply_only_at_cron_interval,attr"`
@@ -95,79 +118,92 @@ type SsmAssociationArgs struct {
 	OutputLocation *ssmassociation.OutputLocation `hcl:"output_location,block"`
 	// Targets: min=0,max=5
 	Targets []ssmassociation.Targets `hcl:"targets,block" validate:"min=0,max=5"`
-	// DependsOn contains resources that SsmAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ssmAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// ApplyOnlyAtCronInterval returns a reference to field apply_only_at_cron_interval of aws_ssm_association.
 func (sa ssmAssociationAttributes) ApplyOnlyAtCronInterval() terra.BoolValue {
-	return terra.ReferenceBool(sa.ref.Append("apply_only_at_cron_interval"))
+	return terra.ReferenceAsBool(sa.ref.Append("apply_only_at_cron_interval"))
 }
 
+// Arn returns a reference to field arn of aws_ssm_association.
 func (sa ssmAssociationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("arn"))
+	return terra.ReferenceAsString(sa.ref.Append("arn"))
 }
 
+// AssociationId returns a reference to field association_id of aws_ssm_association.
 func (sa ssmAssociationAttributes) AssociationId() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("association_id"))
+	return terra.ReferenceAsString(sa.ref.Append("association_id"))
 }
 
+// AssociationName returns a reference to field association_name of aws_ssm_association.
 func (sa ssmAssociationAttributes) AssociationName() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("association_name"))
+	return terra.ReferenceAsString(sa.ref.Append("association_name"))
 }
 
+// AutomationTargetParameterName returns a reference to field automation_target_parameter_name of aws_ssm_association.
 func (sa ssmAssociationAttributes) AutomationTargetParameterName() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("automation_target_parameter_name"))
+	return terra.ReferenceAsString(sa.ref.Append("automation_target_parameter_name"))
 }
 
+// ComplianceSeverity returns a reference to field compliance_severity of aws_ssm_association.
 func (sa ssmAssociationAttributes) ComplianceSeverity() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("compliance_severity"))
+	return terra.ReferenceAsString(sa.ref.Append("compliance_severity"))
 }
 
+// DocumentVersion returns a reference to field document_version of aws_ssm_association.
 func (sa ssmAssociationAttributes) DocumentVersion() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("document_version"))
+	return terra.ReferenceAsString(sa.ref.Append("document_version"))
 }
 
+// Id returns a reference to field id of aws_ssm_association.
 func (sa ssmAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("id"))
+	return terra.ReferenceAsString(sa.ref.Append("id"))
 }
 
+// InstanceId returns a reference to field instance_id of aws_ssm_association.
 func (sa ssmAssociationAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("instance_id"))
+	return terra.ReferenceAsString(sa.ref.Append("instance_id"))
 }
 
+// MaxConcurrency returns a reference to field max_concurrency of aws_ssm_association.
 func (sa ssmAssociationAttributes) MaxConcurrency() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("max_concurrency"))
+	return terra.ReferenceAsString(sa.ref.Append("max_concurrency"))
 }
 
+// MaxErrors returns a reference to field max_errors of aws_ssm_association.
 func (sa ssmAssociationAttributes) MaxErrors() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("max_errors"))
+	return terra.ReferenceAsString(sa.ref.Append("max_errors"))
 }
 
+// Name returns a reference to field name of aws_ssm_association.
 func (sa ssmAssociationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("name"))
+	return terra.ReferenceAsString(sa.ref.Append("name"))
 }
 
+// Parameters returns a reference to field parameters of aws_ssm_association.
 func (sa ssmAssociationAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sa.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](sa.ref.Append("parameters"))
 }
 
+// ScheduleExpression returns a reference to field schedule_expression of aws_ssm_association.
 func (sa ssmAssociationAttributes) ScheduleExpression() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("schedule_expression"))
+	return terra.ReferenceAsString(sa.ref.Append("schedule_expression"))
 }
 
+// WaitForSuccessTimeoutSeconds returns a reference to field wait_for_success_timeout_seconds of aws_ssm_association.
 func (sa ssmAssociationAttributes) WaitForSuccessTimeoutSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(sa.ref.Append("wait_for_success_timeout_seconds"))
+	return terra.ReferenceAsNumber(sa.ref.Append("wait_for_success_timeout_seconds"))
 }
 
 func (sa ssmAssociationAttributes) OutputLocation() terra.ListValue[ssmassociation.OutputLocationAttributes] {
-	return terra.ReferenceList[ssmassociation.OutputLocationAttributes](sa.ref.Append("output_location"))
+	return terra.ReferenceAsList[ssmassociation.OutputLocationAttributes](sa.ref.Append("output_location"))
 }
 
 func (sa ssmAssociationAttributes) Targets() terra.ListValue[ssmassociation.TargetsAttributes] {
-	return terra.ReferenceList[ssmassociation.TargetsAttributes](sa.ref.Append("targets"))
+	return terra.ReferenceAsList[ssmassociation.TargetsAttributes](sa.ref.Append("targets"))
 }
 
 type ssmAssociationState struct {

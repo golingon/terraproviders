@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataKinesisFirehoseDeliveryStream creates a new instance of [DataKinesisFirehoseDeliveryStream].
 func NewDataKinesisFirehoseDeliveryStream(name string, args DataKinesisFirehoseDeliveryStreamArgs) *DataKinesisFirehoseDeliveryStream {
 	return &DataKinesisFirehoseDeliveryStream{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataKinesisFirehoseDeliveryStream(name string, args DataKinesisFirehoseD
 
 var _ terra.DataResource = (*DataKinesisFirehoseDeliveryStream)(nil)
 
+// DataKinesisFirehoseDeliveryStream represents the Terraform data resource aws_kinesis_firehose_delivery_stream.
 type DataKinesisFirehoseDeliveryStream struct {
 	Name string
 	Args DataKinesisFirehoseDeliveryStreamArgs
 }
 
+// DataSource returns the Terraform object type for [DataKinesisFirehoseDeliveryStream].
 func (kfds *DataKinesisFirehoseDeliveryStream) DataSource() string {
 	return "aws_kinesis_firehose_delivery_stream"
 }
 
+// LocalName returns the local name for [DataKinesisFirehoseDeliveryStream].
 func (kfds *DataKinesisFirehoseDeliveryStream) LocalName() string {
 	return kfds.Name
 }
 
+// Configuration returns the configuration (args) for [DataKinesisFirehoseDeliveryStream].
 func (kfds *DataKinesisFirehoseDeliveryStream) Configuration() interface{} {
 	return kfds.Args
 }
 
+// Attributes returns the attributes for [DataKinesisFirehoseDeliveryStream].
 func (kfds *DataKinesisFirehoseDeliveryStream) Attributes() dataKinesisFirehoseDeliveryStreamAttributes {
 	return dataKinesisFirehoseDeliveryStreamAttributes{ref: terra.ReferenceDataResource(kfds)}
 }
 
+// DataKinesisFirehoseDeliveryStreamArgs contains the configurations for aws_kinesis_firehose_delivery_stream.
 type DataKinesisFirehoseDeliveryStreamArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,14 +51,17 @@ type dataKinesisFirehoseDeliveryStreamAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_kinesis_firehose_delivery_stream.
 func (kfds dataKinesisFirehoseDeliveryStreamAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(kfds.ref.Append("arn"))
+	return terra.ReferenceAsString(kfds.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_kinesis_firehose_delivery_stream.
 func (kfds dataKinesisFirehoseDeliveryStreamAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kfds.ref.Append("id"))
+	return terra.ReferenceAsString(kfds.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_kinesis_firehose_delivery_stream.
 func (kfds dataKinesisFirehoseDeliveryStreamAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(kfds.ref.Append("name"))
+	return terra.ReferenceAsString(kfds.ref.Append("name"))
 }

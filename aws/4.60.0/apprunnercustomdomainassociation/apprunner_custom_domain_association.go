@@ -26,19 +26,19 @@ func (cvr CertificateValidationRecordsAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (cvr CertificateValidationRecordsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cvr.ref.Append("name"))
+	return terra.ReferenceAsString(cvr.ref.Append("name"))
 }
 
 func (cvr CertificateValidationRecordsAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(cvr.ref.Append("status"))
+	return terra.ReferenceAsString(cvr.ref.Append("status"))
 }
 
 func (cvr CertificateValidationRecordsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(cvr.ref.Append("type"))
+	return terra.ReferenceAsString(cvr.ref.Append("type"))
 }
 
 func (cvr CertificateValidationRecordsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(cvr.ref.Append("value"))
+	return terra.ReferenceAsString(cvr.ref.Append("value"))
 }
 
 type CertificateValidationRecordsState struct {

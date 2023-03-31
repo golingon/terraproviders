@@ -59,11 +59,11 @@ func (asp AutoScalingPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (asp AutoScalingPolicyAttributes) EstimatedInstanceWarmup() terra.NumberValue {
-	return terra.ReferenceNumber(asp.ref.Append("estimated_instance_warmup"))
+	return terra.ReferenceAsNumber(asp.ref.Append("estimated_instance_warmup"))
 }
 
 func (asp AutoScalingPolicyAttributes) TargetTrackingConfiguration() terra.ListValue[TargetTrackingConfigurationAttributes] {
-	return terra.ReferenceList[TargetTrackingConfigurationAttributes](asp.ref.Append("target_tracking_configuration"))
+	return terra.ReferenceAsList[TargetTrackingConfigurationAttributes](asp.ref.Append("target_tracking_configuration"))
 }
 
 type TargetTrackingConfigurationAttributes struct {
@@ -83,7 +83,7 @@ func (ttc TargetTrackingConfigurationAttributes) InternalTokens() hclwrite.Token
 }
 
 func (ttc TargetTrackingConfigurationAttributes) TargetValue() terra.NumberValue {
-	return terra.ReferenceNumber(ttc.ref.Append("target_value"))
+	return terra.ReferenceAsNumber(ttc.ref.Append("target_value"))
 }
 
 type InstanceDefinitionAttributes struct {
@@ -103,11 +103,11 @@ func (id InstanceDefinitionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (id InstanceDefinitionAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(id.ref.Append("instance_type"))
+	return terra.ReferenceAsString(id.ref.Append("instance_type"))
 }
 
 func (id InstanceDefinitionAttributes) WeightedCapacity() terra.StringValue {
-	return terra.ReferenceString(id.ref.Append("weighted_capacity"))
+	return terra.ReferenceAsString(id.ref.Append("weighted_capacity"))
 }
 
 type LaunchTemplateAttributes struct {
@@ -127,15 +127,15 @@ func (lt LaunchTemplateAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lt LaunchTemplateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("id"))
+	return terra.ReferenceAsString(lt.ref.Append("id"))
 }
 
 func (lt LaunchTemplateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("name"))
+	return terra.ReferenceAsString(lt.ref.Append("name"))
 }
 
 func (lt LaunchTemplateAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("version"))
+	return terra.ReferenceAsString(lt.ref.Append("version"))
 }
 
 type TimeoutsAttributes struct {
@@ -155,11 +155,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type AutoScalingPolicyState struct {

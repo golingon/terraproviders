@@ -40,11 +40,11 @@ func (ip IdentityProviderAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ip IdentityProviderAttributes) SamlMetadata() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("saml_metadata"))
+	return terra.ReferenceAsString(ip.ref.Append("saml_metadata"))
 }
 
 func (ip IdentityProviderAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("type"))
+	return terra.ReferenceAsString(ip.ref.Append("type"))
 }
 
 type NetworkAttributes struct {
@@ -64,15 +64,15 @@ func (n NetworkAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (n NetworkAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](n.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](n.ref.Append("security_group_ids"))
 }
 
 func (n NetworkAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](n.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](n.ref.Append("subnet_ids"))
 }
 
 func (n NetworkAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(n.ref.Append("vpc_id"))
 }
 
 type IdentityProviderState struct {

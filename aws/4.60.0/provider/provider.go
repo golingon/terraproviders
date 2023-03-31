@@ -833,43 +833,43 @@ func (ar AssumeRoleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ar AssumeRoleAttributes) Duration() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("duration"))
+	return terra.ReferenceAsString(ar.ref.Append("duration"))
 }
 
 func (ar AssumeRoleAttributes) DurationSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(ar.ref.Append("duration_seconds"))
+	return terra.ReferenceAsNumber(ar.ref.Append("duration_seconds"))
 }
 
 func (ar AssumeRoleAttributes) ExternalId() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("external_id"))
+	return terra.ReferenceAsString(ar.ref.Append("external_id"))
 }
 
 func (ar AssumeRoleAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("policy"))
+	return terra.ReferenceAsString(ar.ref.Append("policy"))
 }
 
 func (ar AssumeRoleAttributes) PolicyArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ar.ref.Append("policy_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](ar.ref.Append("policy_arns"))
 }
 
 func (ar AssumeRoleAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("role_arn"))
+	return terra.ReferenceAsString(ar.ref.Append("role_arn"))
 }
 
 func (ar AssumeRoleAttributes) SessionName() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("session_name"))
+	return terra.ReferenceAsString(ar.ref.Append("session_name"))
 }
 
 func (ar AssumeRoleAttributes) SourceIdentity() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("source_identity"))
+	return terra.ReferenceAsString(ar.ref.Append("source_identity"))
 }
 
 func (ar AssumeRoleAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ar.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ar.ref.Append("tags"))
 }
 
 func (ar AssumeRoleAttributes) TransitiveTagKeys() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ar.ref.Append("transitive_tag_keys"))
+	return terra.ReferenceAsSet[terra.StringValue](ar.ref.Append("transitive_tag_keys"))
 }
 
 type AssumeRoleWithWebIdentityAttributes struct {
@@ -889,31 +889,31 @@ func (arwwi AssumeRoleWithWebIdentityAttributes) InternalTokens() hclwrite.Token
 }
 
 func (arwwi AssumeRoleWithWebIdentityAttributes) Duration() terra.StringValue {
-	return terra.ReferenceString(arwwi.ref.Append("duration"))
+	return terra.ReferenceAsString(arwwi.ref.Append("duration"))
 }
 
 func (arwwi AssumeRoleWithWebIdentityAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(arwwi.ref.Append("policy"))
+	return terra.ReferenceAsString(arwwi.ref.Append("policy"))
 }
 
 func (arwwi AssumeRoleWithWebIdentityAttributes) PolicyArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](arwwi.ref.Append("policy_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](arwwi.ref.Append("policy_arns"))
 }
 
 func (arwwi AssumeRoleWithWebIdentityAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(arwwi.ref.Append("role_arn"))
+	return terra.ReferenceAsString(arwwi.ref.Append("role_arn"))
 }
 
 func (arwwi AssumeRoleWithWebIdentityAttributes) SessionName() terra.StringValue {
-	return terra.ReferenceString(arwwi.ref.Append("session_name"))
+	return terra.ReferenceAsString(arwwi.ref.Append("session_name"))
 }
 
 func (arwwi AssumeRoleWithWebIdentityAttributes) WebIdentityToken() terra.StringValue {
-	return terra.ReferenceString(arwwi.ref.Append("web_identity_token"))
+	return terra.ReferenceAsString(arwwi.ref.Append("web_identity_token"))
 }
 
 func (arwwi AssumeRoleWithWebIdentityAttributes) WebIdentityTokenFile() terra.StringValue {
-	return terra.ReferenceString(arwwi.ref.Append("web_identity_token_file"))
+	return terra.ReferenceAsString(arwwi.ref.Append("web_identity_token_file"))
 }
 
 type DefaultTagsAttributes struct {
@@ -933,7 +933,7 @@ func (dt DefaultTagsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dt DefaultTagsAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dt.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dt.ref.Append("tags"))
 }
 
 type EndpointsAttributes struct {
@@ -953,1511 +953,1511 @@ func (e EndpointsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e EndpointsAttributes) Accessanalyzer() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("accessanalyzer"))
+	return terra.ReferenceAsString(e.ref.Append("accessanalyzer"))
 }
 
 func (e EndpointsAttributes) Account() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("account"))
+	return terra.ReferenceAsString(e.ref.Append("account"))
 }
 
 func (e EndpointsAttributes) Acm() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("acm"))
+	return terra.ReferenceAsString(e.ref.Append("acm"))
 }
 
 func (e EndpointsAttributes) Acmpca() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("acmpca"))
+	return terra.ReferenceAsString(e.ref.Append("acmpca"))
 }
 
 func (e EndpointsAttributes) Alexaforbusiness() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("alexaforbusiness"))
+	return terra.ReferenceAsString(e.ref.Append("alexaforbusiness"))
 }
 
 func (e EndpointsAttributes) Amg() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("amg"))
+	return terra.ReferenceAsString(e.ref.Append("amg"))
 }
 
 func (e EndpointsAttributes) Amp() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("amp"))
+	return terra.ReferenceAsString(e.ref.Append("amp"))
 }
 
 func (e EndpointsAttributes) Amplify() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("amplify"))
+	return terra.ReferenceAsString(e.ref.Append("amplify"))
 }
 
 func (e EndpointsAttributes) Amplifybackend() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("amplifybackend"))
+	return terra.ReferenceAsString(e.ref.Append("amplifybackend"))
 }
 
 func (e EndpointsAttributes) Amplifyuibuilder() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("amplifyuibuilder"))
+	return terra.ReferenceAsString(e.ref.Append("amplifyuibuilder"))
 }
 
 func (e EndpointsAttributes) Apigateway() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("apigateway"))
+	return terra.ReferenceAsString(e.ref.Append("apigateway"))
 }
 
 func (e EndpointsAttributes) Apigatewaymanagementapi() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("apigatewaymanagementapi"))
+	return terra.ReferenceAsString(e.ref.Append("apigatewaymanagementapi"))
 }
 
 func (e EndpointsAttributes) Apigatewayv2() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("apigatewayv2"))
+	return terra.ReferenceAsString(e.ref.Append("apigatewayv2"))
 }
 
 func (e EndpointsAttributes) Appautoscaling() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("appautoscaling"))
+	return terra.ReferenceAsString(e.ref.Append("appautoscaling"))
 }
 
 func (e EndpointsAttributes) Appconfig() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("appconfig"))
+	return terra.ReferenceAsString(e.ref.Append("appconfig"))
 }
 
 func (e EndpointsAttributes) Appconfigdata() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("appconfigdata"))
+	return terra.ReferenceAsString(e.ref.Append("appconfigdata"))
 }
 
 func (e EndpointsAttributes) Appflow() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("appflow"))
+	return terra.ReferenceAsString(e.ref.Append("appflow"))
 }
 
 func (e EndpointsAttributes) Appintegrations() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("appintegrations"))
+	return terra.ReferenceAsString(e.ref.Append("appintegrations"))
 }
 
 func (e EndpointsAttributes) Appintegrationsservice() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("appintegrationsservice"))
+	return terra.ReferenceAsString(e.ref.Append("appintegrationsservice"))
 }
 
 func (e EndpointsAttributes) Applicationautoscaling() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("applicationautoscaling"))
+	return terra.ReferenceAsString(e.ref.Append("applicationautoscaling"))
 }
 
 func (e EndpointsAttributes) Applicationcostprofiler() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("applicationcostprofiler"))
+	return terra.ReferenceAsString(e.ref.Append("applicationcostprofiler"))
 }
 
 func (e EndpointsAttributes) Applicationdiscovery() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("applicationdiscovery"))
+	return terra.ReferenceAsString(e.ref.Append("applicationdiscovery"))
 }
 
 func (e EndpointsAttributes) Applicationdiscoveryservice() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("applicationdiscoveryservice"))
+	return terra.ReferenceAsString(e.ref.Append("applicationdiscoveryservice"))
 }
 
 func (e EndpointsAttributes) Applicationinsights() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("applicationinsights"))
+	return terra.ReferenceAsString(e.ref.Append("applicationinsights"))
 }
 
 func (e EndpointsAttributes) Appmesh() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("appmesh"))
+	return terra.ReferenceAsString(e.ref.Append("appmesh"))
 }
 
 func (e EndpointsAttributes) Appregistry() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("appregistry"))
+	return terra.ReferenceAsString(e.ref.Append("appregistry"))
 }
 
 func (e EndpointsAttributes) Apprunner() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("apprunner"))
+	return terra.ReferenceAsString(e.ref.Append("apprunner"))
 }
 
 func (e EndpointsAttributes) Appstream() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("appstream"))
+	return terra.ReferenceAsString(e.ref.Append("appstream"))
 }
 
 func (e EndpointsAttributes) Appsync() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("appsync"))
+	return terra.ReferenceAsString(e.ref.Append("appsync"))
 }
 
 func (e EndpointsAttributes) Athena() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("athena"))
+	return terra.ReferenceAsString(e.ref.Append("athena"))
 }
 
 func (e EndpointsAttributes) Auditmanager() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("auditmanager"))
+	return terra.ReferenceAsString(e.ref.Append("auditmanager"))
 }
 
 func (e EndpointsAttributes) Augmentedairuntime() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("augmentedairuntime"))
+	return terra.ReferenceAsString(e.ref.Append("augmentedairuntime"))
 }
 
 func (e EndpointsAttributes) Autoscaling() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("autoscaling"))
+	return terra.ReferenceAsString(e.ref.Append("autoscaling"))
 }
 
 func (e EndpointsAttributes) Autoscalingplans() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("autoscalingplans"))
+	return terra.ReferenceAsString(e.ref.Append("autoscalingplans"))
 }
 
 func (e EndpointsAttributes) Backup() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("backup"))
+	return terra.ReferenceAsString(e.ref.Append("backup"))
 }
 
 func (e EndpointsAttributes) Backupgateway() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("backupgateway"))
+	return terra.ReferenceAsString(e.ref.Append("backupgateway"))
 }
 
 func (e EndpointsAttributes) Batch() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("batch"))
+	return terra.ReferenceAsString(e.ref.Append("batch"))
 }
 
 func (e EndpointsAttributes) Beanstalk() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("beanstalk"))
+	return terra.ReferenceAsString(e.ref.Append("beanstalk"))
 }
 
 func (e EndpointsAttributes) Billingconductor() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("billingconductor"))
+	return terra.ReferenceAsString(e.ref.Append("billingconductor"))
 }
 
 func (e EndpointsAttributes) Braket() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("braket"))
+	return terra.ReferenceAsString(e.ref.Append("braket"))
 }
 
 func (e EndpointsAttributes) Budgets() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("budgets"))
+	return terra.ReferenceAsString(e.ref.Append("budgets"))
 }
 
 func (e EndpointsAttributes) Ce() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("ce"))
+	return terra.ReferenceAsString(e.ref.Append("ce"))
 }
 
 func (e EndpointsAttributes) Chime() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("chime"))
+	return terra.ReferenceAsString(e.ref.Append("chime"))
 }
 
 func (e EndpointsAttributes) Chimesdkidentity() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("chimesdkidentity"))
+	return terra.ReferenceAsString(e.ref.Append("chimesdkidentity"))
 }
 
 func (e EndpointsAttributes) Chimesdkmeetings() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("chimesdkmeetings"))
+	return terra.ReferenceAsString(e.ref.Append("chimesdkmeetings"))
 }
 
 func (e EndpointsAttributes) Chimesdkmessaging() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("chimesdkmessaging"))
+	return terra.ReferenceAsString(e.ref.Append("chimesdkmessaging"))
 }
 
 func (e EndpointsAttributes) Cloud9() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cloud9"))
+	return terra.ReferenceAsString(e.ref.Append("cloud9"))
 }
 
 func (e EndpointsAttributes) Cloudcontrol() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cloudcontrol"))
+	return terra.ReferenceAsString(e.ref.Append("cloudcontrol"))
 }
 
 func (e EndpointsAttributes) Cloudcontrolapi() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cloudcontrolapi"))
+	return terra.ReferenceAsString(e.ref.Append("cloudcontrolapi"))
 }
 
 func (e EndpointsAttributes) Clouddirectory() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("clouddirectory"))
+	return terra.ReferenceAsString(e.ref.Append("clouddirectory"))
 }
 
 func (e EndpointsAttributes) Cloudformation() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cloudformation"))
+	return terra.ReferenceAsString(e.ref.Append("cloudformation"))
 }
 
 func (e EndpointsAttributes) Cloudfront() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cloudfront"))
+	return terra.ReferenceAsString(e.ref.Append("cloudfront"))
 }
 
 func (e EndpointsAttributes) Cloudhsm() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cloudhsm"))
+	return terra.ReferenceAsString(e.ref.Append("cloudhsm"))
 }
 
 func (e EndpointsAttributes) Cloudhsmv2() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cloudhsmv2"))
+	return terra.ReferenceAsString(e.ref.Append("cloudhsmv2"))
 }
 
 func (e EndpointsAttributes) Cloudsearch() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cloudsearch"))
+	return terra.ReferenceAsString(e.ref.Append("cloudsearch"))
 }
 
 func (e EndpointsAttributes) Cloudsearchdomain() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cloudsearchdomain"))
+	return terra.ReferenceAsString(e.ref.Append("cloudsearchdomain"))
 }
 
 func (e EndpointsAttributes) Cloudtrail() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cloudtrail"))
+	return terra.ReferenceAsString(e.ref.Append("cloudtrail"))
 }
 
 func (e EndpointsAttributes) Cloudwatch() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cloudwatch"))
+	return terra.ReferenceAsString(e.ref.Append("cloudwatch"))
 }
 
 func (e EndpointsAttributes) Cloudwatchevents() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cloudwatchevents"))
+	return terra.ReferenceAsString(e.ref.Append("cloudwatchevents"))
 }
 
 func (e EndpointsAttributes) Cloudwatchevidently() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cloudwatchevidently"))
+	return terra.ReferenceAsString(e.ref.Append("cloudwatchevidently"))
 }
 
 func (e EndpointsAttributes) Cloudwatchlog() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cloudwatchlog"))
+	return terra.ReferenceAsString(e.ref.Append("cloudwatchlog"))
 }
 
 func (e EndpointsAttributes) Cloudwatchlogs() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cloudwatchlogs"))
+	return terra.ReferenceAsString(e.ref.Append("cloudwatchlogs"))
 }
 
 func (e EndpointsAttributes) Cloudwatchobservabilityaccessmanager() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cloudwatchobservabilityaccessmanager"))
+	return terra.ReferenceAsString(e.ref.Append("cloudwatchobservabilityaccessmanager"))
 }
 
 func (e EndpointsAttributes) Cloudwatchrum() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cloudwatchrum"))
+	return terra.ReferenceAsString(e.ref.Append("cloudwatchrum"))
 }
 
 func (e EndpointsAttributes) Codeartifact() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("codeartifact"))
+	return terra.ReferenceAsString(e.ref.Append("codeartifact"))
 }
 
 func (e EndpointsAttributes) Codebuild() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("codebuild"))
+	return terra.ReferenceAsString(e.ref.Append("codebuild"))
 }
 
 func (e EndpointsAttributes) Codecommit() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("codecommit"))
+	return terra.ReferenceAsString(e.ref.Append("codecommit"))
 }
 
 func (e EndpointsAttributes) Codedeploy() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("codedeploy"))
+	return terra.ReferenceAsString(e.ref.Append("codedeploy"))
 }
 
 func (e EndpointsAttributes) Codeguruprofiler() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("codeguruprofiler"))
+	return terra.ReferenceAsString(e.ref.Append("codeguruprofiler"))
 }
 
 func (e EndpointsAttributes) Codegurureviewer() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("codegurureviewer"))
+	return terra.ReferenceAsString(e.ref.Append("codegurureviewer"))
 }
 
 func (e EndpointsAttributes) Codepipeline() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("codepipeline"))
+	return terra.ReferenceAsString(e.ref.Append("codepipeline"))
 }
 
 func (e EndpointsAttributes) Codestar() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("codestar"))
+	return terra.ReferenceAsString(e.ref.Append("codestar"))
 }
 
 func (e EndpointsAttributes) Codestarconnections() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("codestarconnections"))
+	return terra.ReferenceAsString(e.ref.Append("codestarconnections"))
 }
 
 func (e EndpointsAttributes) Codestarnotifications() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("codestarnotifications"))
+	return terra.ReferenceAsString(e.ref.Append("codestarnotifications"))
 }
 
 func (e EndpointsAttributes) Cognitoidentity() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cognitoidentity"))
+	return terra.ReferenceAsString(e.ref.Append("cognitoidentity"))
 }
 
 func (e EndpointsAttributes) Cognitoidentityprovider() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cognitoidentityprovider"))
+	return terra.ReferenceAsString(e.ref.Append("cognitoidentityprovider"))
 }
 
 func (e EndpointsAttributes) Cognitoidp() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cognitoidp"))
+	return terra.ReferenceAsString(e.ref.Append("cognitoidp"))
 }
 
 func (e EndpointsAttributes) Cognitosync() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cognitosync"))
+	return terra.ReferenceAsString(e.ref.Append("cognitosync"))
 }
 
 func (e EndpointsAttributes) Comprehend() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("comprehend"))
+	return terra.ReferenceAsString(e.ref.Append("comprehend"))
 }
 
 func (e EndpointsAttributes) Comprehendmedical() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("comprehendmedical"))
+	return terra.ReferenceAsString(e.ref.Append("comprehendmedical"))
 }
 
 func (e EndpointsAttributes) Computeoptimizer() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("computeoptimizer"))
+	return terra.ReferenceAsString(e.ref.Append("computeoptimizer"))
 }
 
 func (e EndpointsAttributes) Config() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("config"))
+	return terra.ReferenceAsString(e.ref.Append("config"))
 }
 
 func (e EndpointsAttributes) Configservice() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("configservice"))
+	return terra.ReferenceAsString(e.ref.Append("configservice"))
 }
 
 func (e EndpointsAttributes) Connect() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("connect"))
+	return terra.ReferenceAsString(e.ref.Append("connect"))
 }
 
 func (e EndpointsAttributes) Connectcontactlens() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("connectcontactlens"))
+	return terra.ReferenceAsString(e.ref.Append("connectcontactlens"))
 }
 
 func (e EndpointsAttributes) Connectparticipant() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("connectparticipant"))
+	return terra.ReferenceAsString(e.ref.Append("connectparticipant"))
 }
 
 func (e EndpointsAttributes) Connectwisdomservice() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("connectwisdomservice"))
+	return terra.ReferenceAsString(e.ref.Append("connectwisdomservice"))
 }
 
 func (e EndpointsAttributes) Controltower() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("controltower"))
+	return terra.ReferenceAsString(e.ref.Append("controltower"))
 }
 
 func (e EndpointsAttributes) Costandusagereportservice() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("costandusagereportservice"))
+	return terra.ReferenceAsString(e.ref.Append("costandusagereportservice"))
 }
 
 func (e EndpointsAttributes) Costexplorer() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("costexplorer"))
+	return terra.ReferenceAsString(e.ref.Append("costexplorer"))
 }
 
 func (e EndpointsAttributes) Cur() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("cur"))
+	return terra.ReferenceAsString(e.ref.Append("cur"))
 }
 
 func (e EndpointsAttributes) Customerprofiles() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("customerprofiles"))
+	return terra.ReferenceAsString(e.ref.Append("customerprofiles"))
 }
 
 func (e EndpointsAttributes) Databasemigration() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("databasemigration"))
+	return terra.ReferenceAsString(e.ref.Append("databasemigration"))
 }
 
 func (e EndpointsAttributes) Databasemigrationservice() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("databasemigrationservice"))
+	return terra.ReferenceAsString(e.ref.Append("databasemigrationservice"))
 }
 
 func (e EndpointsAttributes) Databrew() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("databrew"))
+	return terra.ReferenceAsString(e.ref.Append("databrew"))
 }
 
 func (e EndpointsAttributes) Dataexchange() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("dataexchange"))
+	return terra.ReferenceAsString(e.ref.Append("dataexchange"))
 }
 
 func (e EndpointsAttributes) Datapipeline() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("datapipeline"))
+	return terra.ReferenceAsString(e.ref.Append("datapipeline"))
 }
 
 func (e EndpointsAttributes) Datasync() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("datasync"))
+	return terra.ReferenceAsString(e.ref.Append("datasync"))
 }
 
 func (e EndpointsAttributes) Dax() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("dax"))
+	return terra.ReferenceAsString(e.ref.Append("dax"))
 }
 
 func (e EndpointsAttributes) Deploy() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("deploy"))
+	return terra.ReferenceAsString(e.ref.Append("deploy"))
 }
 
 func (e EndpointsAttributes) Detective() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("detective"))
+	return terra.ReferenceAsString(e.ref.Append("detective"))
 }
 
 func (e EndpointsAttributes) Devicefarm() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("devicefarm"))
+	return terra.ReferenceAsString(e.ref.Append("devicefarm"))
 }
 
 func (e EndpointsAttributes) Devopsguru() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("devopsguru"))
+	return terra.ReferenceAsString(e.ref.Append("devopsguru"))
 }
 
 func (e EndpointsAttributes) Directconnect() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("directconnect"))
+	return terra.ReferenceAsString(e.ref.Append("directconnect"))
 }
 
 func (e EndpointsAttributes) Directoryservice() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("directoryservice"))
+	return terra.ReferenceAsString(e.ref.Append("directoryservice"))
 }
 
 func (e EndpointsAttributes) Discovery() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("discovery"))
+	return terra.ReferenceAsString(e.ref.Append("discovery"))
 }
 
 func (e EndpointsAttributes) Dlm() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("dlm"))
+	return terra.ReferenceAsString(e.ref.Append("dlm"))
 }
 
 func (e EndpointsAttributes) Dms() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("dms"))
+	return terra.ReferenceAsString(e.ref.Append("dms"))
 }
 
 func (e EndpointsAttributes) Docdb() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("docdb"))
+	return terra.ReferenceAsString(e.ref.Append("docdb"))
 }
 
 func (e EndpointsAttributes) Drs() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("drs"))
+	return terra.ReferenceAsString(e.ref.Append("drs"))
 }
 
 func (e EndpointsAttributes) Ds() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("ds"))
+	return terra.ReferenceAsString(e.ref.Append("ds"))
 }
 
 func (e EndpointsAttributes) Dynamodb() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("dynamodb"))
+	return terra.ReferenceAsString(e.ref.Append("dynamodb"))
 }
 
 func (e EndpointsAttributes) Dynamodbstreams() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("dynamodbstreams"))
+	return terra.ReferenceAsString(e.ref.Append("dynamodbstreams"))
 }
 
 func (e EndpointsAttributes) Ebs() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("ebs"))
+	return terra.ReferenceAsString(e.ref.Append("ebs"))
 }
 
 func (e EndpointsAttributes) Ec2() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("ec2"))
+	return terra.ReferenceAsString(e.ref.Append("ec2"))
 }
 
 func (e EndpointsAttributes) Ec2Instanceconnect() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("ec2instanceconnect"))
+	return terra.ReferenceAsString(e.ref.Append("ec2instanceconnect"))
 }
 
 func (e EndpointsAttributes) Ecr() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("ecr"))
+	return terra.ReferenceAsString(e.ref.Append("ecr"))
 }
 
 func (e EndpointsAttributes) Ecrpublic() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("ecrpublic"))
+	return terra.ReferenceAsString(e.ref.Append("ecrpublic"))
 }
 
 func (e EndpointsAttributes) Ecs() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("ecs"))
+	return terra.ReferenceAsString(e.ref.Append("ecs"))
 }
 
 func (e EndpointsAttributes) Efs() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("efs"))
+	return terra.ReferenceAsString(e.ref.Append("efs"))
 }
 
 func (e EndpointsAttributes) Eks() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("eks"))
+	return terra.ReferenceAsString(e.ref.Append("eks"))
 }
 
 func (e EndpointsAttributes) Elasticache() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("elasticache"))
+	return terra.ReferenceAsString(e.ref.Append("elasticache"))
 }
 
 func (e EndpointsAttributes) Elasticbeanstalk() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("elasticbeanstalk"))
+	return terra.ReferenceAsString(e.ref.Append("elasticbeanstalk"))
 }
 
 func (e EndpointsAttributes) Elasticinference() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("elasticinference"))
+	return terra.ReferenceAsString(e.ref.Append("elasticinference"))
 }
 
 func (e EndpointsAttributes) Elasticloadbalancing() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("elasticloadbalancing"))
+	return terra.ReferenceAsString(e.ref.Append("elasticloadbalancing"))
 }
 
 func (e EndpointsAttributes) Elasticloadbalancingv2() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("elasticloadbalancingv2"))
+	return terra.ReferenceAsString(e.ref.Append("elasticloadbalancingv2"))
 }
 
 func (e EndpointsAttributes) Elasticsearch() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("elasticsearch"))
+	return terra.ReferenceAsString(e.ref.Append("elasticsearch"))
 }
 
 func (e EndpointsAttributes) Elasticsearchservice() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("elasticsearchservice"))
+	return terra.ReferenceAsString(e.ref.Append("elasticsearchservice"))
 }
 
 func (e EndpointsAttributes) Elastictranscoder() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("elastictranscoder"))
+	return terra.ReferenceAsString(e.ref.Append("elastictranscoder"))
 }
 
 func (e EndpointsAttributes) Elb() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("elb"))
+	return terra.ReferenceAsString(e.ref.Append("elb"))
 }
 
 func (e EndpointsAttributes) Elbv2() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("elbv2"))
+	return terra.ReferenceAsString(e.ref.Append("elbv2"))
 }
 
 func (e EndpointsAttributes) Emr() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("emr"))
+	return terra.ReferenceAsString(e.ref.Append("emr"))
 }
 
 func (e EndpointsAttributes) Emrcontainers() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("emrcontainers"))
+	return terra.ReferenceAsString(e.ref.Append("emrcontainers"))
 }
 
 func (e EndpointsAttributes) Emrserverless() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("emrserverless"))
+	return terra.ReferenceAsString(e.ref.Append("emrserverless"))
 }
 
 func (e EndpointsAttributes) Es() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("es"))
+	return terra.ReferenceAsString(e.ref.Append("es"))
 }
 
 func (e EndpointsAttributes) Eventbridge() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("eventbridge"))
+	return terra.ReferenceAsString(e.ref.Append("eventbridge"))
 }
 
 func (e EndpointsAttributes) Events() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("events"))
+	return terra.ReferenceAsString(e.ref.Append("events"))
 }
 
 func (e EndpointsAttributes) Evidently() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("evidently"))
+	return terra.ReferenceAsString(e.ref.Append("evidently"))
 }
 
 func (e EndpointsAttributes) Finspace() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("finspace"))
+	return terra.ReferenceAsString(e.ref.Append("finspace"))
 }
 
 func (e EndpointsAttributes) Finspacedata() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("finspacedata"))
+	return terra.ReferenceAsString(e.ref.Append("finspacedata"))
 }
 
 func (e EndpointsAttributes) Firehose() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("firehose"))
+	return terra.ReferenceAsString(e.ref.Append("firehose"))
 }
 
 func (e EndpointsAttributes) Fis() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("fis"))
+	return terra.ReferenceAsString(e.ref.Append("fis"))
 }
 
 func (e EndpointsAttributes) Fms() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("fms"))
+	return terra.ReferenceAsString(e.ref.Append("fms"))
 }
 
 func (e EndpointsAttributes) Forecast() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("forecast"))
+	return terra.ReferenceAsString(e.ref.Append("forecast"))
 }
 
 func (e EndpointsAttributes) Forecastquery() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("forecastquery"))
+	return terra.ReferenceAsString(e.ref.Append("forecastquery"))
 }
 
 func (e EndpointsAttributes) Forecastqueryservice() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("forecastqueryservice"))
+	return terra.ReferenceAsString(e.ref.Append("forecastqueryservice"))
 }
 
 func (e EndpointsAttributes) Forecastservice() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("forecastservice"))
+	return terra.ReferenceAsString(e.ref.Append("forecastservice"))
 }
 
 func (e EndpointsAttributes) Frauddetector() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("frauddetector"))
+	return terra.ReferenceAsString(e.ref.Append("frauddetector"))
 }
 
 func (e EndpointsAttributes) Fsx() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("fsx"))
+	return terra.ReferenceAsString(e.ref.Append("fsx"))
 }
 
 func (e EndpointsAttributes) Gamelift() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("gamelift"))
+	return terra.ReferenceAsString(e.ref.Append("gamelift"))
 }
 
 func (e EndpointsAttributes) Glacier() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("glacier"))
+	return terra.ReferenceAsString(e.ref.Append("glacier"))
 }
 
 func (e EndpointsAttributes) Globalaccelerator() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("globalaccelerator"))
+	return terra.ReferenceAsString(e.ref.Append("globalaccelerator"))
 }
 
 func (e EndpointsAttributes) Glue() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("glue"))
+	return terra.ReferenceAsString(e.ref.Append("glue"))
 }
 
 func (e EndpointsAttributes) Gluedatabrew() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("gluedatabrew"))
+	return terra.ReferenceAsString(e.ref.Append("gluedatabrew"))
 }
 
 func (e EndpointsAttributes) Grafana() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("grafana"))
+	return terra.ReferenceAsString(e.ref.Append("grafana"))
 }
 
 func (e EndpointsAttributes) Greengrass() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("greengrass"))
+	return terra.ReferenceAsString(e.ref.Append("greengrass"))
 }
 
 func (e EndpointsAttributes) Greengrassv2() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("greengrassv2"))
+	return terra.ReferenceAsString(e.ref.Append("greengrassv2"))
 }
 
 func (e EndpointsAttributes) Groundstation() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("groundstation"))
+	return terra.ReferenceAsString(e.ref.Append("groundstation"))
 }
 
 func (e EndpointsAttributes) Guardduty() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("guardduty"))
+	return terra.ReferenceAsString(e.ref.Append("guardduty"))
 }
 
 func (e EndpointsAttributes) Health() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("health"))
+	return terra.ReferenceAsString(e.ref.Append("health"))
 }
 
 func (e EndpointsAttributes) Healthlake() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("healthlake"))
+	return terra.ReferenceAsString(e.ref.Append("healthlake"))
 }
 
 func (e EndpointsAttributes) Honeycode() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("honeycode"))
+	return terra.ReferenceAsString(e.ref.Append("honeycode"))
 }
 
 func (e EndpointsAttributes) Iam() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("iam"))
+	return terra.ReferenceAsString(e.ref.Append("iam"))
 }
 
 func (e EndpointsAttributes) Identitystore() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("identitystore"))
+	return terra.ReferenceAsString(e.ref.Append("identitystore"))
 }
 
 func (e EndpointsAttributes) Imagebuilder() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("imagebuilder"))
+	return terra.ReferenceAsString(e.ref.Append("imagebuilder"))
 }
 
 func (e EndpointsAttributes) Inspector() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("inspector"))
+	return terra.ReferenceAsString(e.ref.Append("inspector"))
 }
 
 func (e EndpointsAttributes) Inspector2() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("inspector2"))
+	return terra.ReferenceAsString(e.ref.Append("inspector2"))
 }
 
 func (e EndpointsAttributes) Inspectorv2() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("inspectorv2"))
+	return terra.ReferenceAsString(e.ref.Append("inspectorv2"))
 }
 
 func (e EndpointsAttributes) Iot() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("iot"))
+	return terra.ReferenceAsString(e.ref.Append("iot"))
 }
 
 func (e EndpointsAttributes) Iot1Clickdevices() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("iot1clickdevices"))
+	return terra.ReferenceAsString(e.ref.Append("iot1clickdevices"))
 }
 
 func (e EndpointsAttributes) Iot1Clickdevicesservice() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("iot1clickdevicesservice"))
+	return terra.ReferenceAsString(e.ref.Append("iot1clickdevicesservice"))
 }
 
 func (e EndpointsAttributes) Iot1Clickprojects() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("iot1clickprojects"))
+	return terra.ReferenceAsString(e.ref.Append("iot1clickprojects"))
 }
 
 func (e EndpointsAttributes) Iotanalytics() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("iotanalytics"))
+	return terra.ReferenceAsString(e.ref.Append("iotanalytics"))
 }
 
 func (e EndpointsAttributes) Iotdata() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("iotdata"))
+	return terra.ReferenceAsString(e.ref.Append("iotdata"))
 }
 
 func (e EndpointsAttributes) Iotdataplane() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("iotdataplane"))
+	return terra.ReferenceAsString(e.ref.Append("iotdataplane"))
 }
 
 func (e EndpointsAttributes) Iotdeviceadvisor() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("iotdeviceadvisor"))
+	return terra.ReferenceAsString(e.ref.Append("iotdeviceadvisor"))
 }
 
 func (e EndpointsAttributes) Iotevents() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("iotevents"))
+	return terra.ReferenceAsString(e.ref.Append("iotevents"))
 }
 
 func (e EndpointsAttributes) Ioteventsdata() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("ioteventsdata"))
+	return terra.ReferenceAsString(e.ref.Append("ioteventsdata"))
 }
 
 func (e EndpointsAttributes) Iotfleethub() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("iotfleethub"))
+	return terra.ReferenceAsString(e.ref.Append("iotfleethub"))
 }
 
 func (e EndpointsAttributes) Iotjobsdata() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("iotjobsdata"))
+	return terra.ReferenceAsString(e.ref.Append("iotjobsdata"))
 }
 
 func (e EndpointsAttributes) Iotjobsdataplane() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("iotjobsdataplane"))
+	return terra.ReferenceAsString(e.ref.Append("iotjobsdataplane"))
 }
 
 func (e EndpointsAttributes) Iotsecuretunneling() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("iotsecuretunneling"))
+	return terra.ReferenceAsString(e.ref.Append("iotsecuretunneling"))
 }
 
 func (e EndpointsAttributes) Iotsitewise() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("iotsitewise"))
+	return terra.ReferenceAsString(e.ref.Append("iotsitewise"))
 }
 
 func (e EndpointsAttributes) Iotthingsgraph() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("iotthingsgraph"))
+	return terra.ReferenceAsString(e.ref.Append("iotthingsgraph"))
 }
 
 func (e EndpointsAttributes) Iottwinmaker() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("iottwinmaker"))
+	return terra.ReferenceAsString(e.ref.Append("iottwinmaker"))
 }
 
 func (e EndpointsAttributes) Iotwireless() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("iotwireless"))
+	return terra.ReferenceAsString(e.ref.Append("iotwireless"))
 }
 
 func (e EndpointsAttributes) Ivs() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("ivs"))
+	return terra.ReferenceAsString(e.ref.Append("ivs"))
 }
 
 func (e EndpointsAttributes) Ivschat() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("ivschat"))
+	return terra.ReferenceAsString(e.ref.Append("ivschat"))
 }
 
 func (e EndpointsAttributes) Kafka() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("kafka"))
+	return terra.ReferenceAsString(e.ref.Append("kafka"))
 }
 
 func (e EndpointsAttributes) Kafkaconnect() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("kafkaconnect"))
+	return terra.ReferenceAsString(e.ref.Append("kafkaconnect"))
 }
 
 func (e EndpointsAttributes) Kendra() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("kendra"))
+	return terra.ReferenceAsString(e.ref.Append("kendra"))
 }
 
 func (e EndpointsAttributes) Keyspaces() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("keyspaces"))
+	return terra.ReferenceAsString(e.ref.Append("keyspaces"))
 }
 
 func (e EndpointsAttributes) Kinesis() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("kinesis"))
+	return terra.ReferenceAsString(e.ref.Append("kinesis"))
 }
 
 func (e EndpointsAttributes) Kinesisanalytics() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("kinesisanalytics"))
+	return terra.ReferenceAsString(e.ref.Append("kinesisanalytics"))
 }
 
 func (e EndpointsAttributes) Kinesisanalyticsv2() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("kinesisanalyticsv2"))
+	return terra.ReferenceAsString(e.ref.Append("kinesisanalyticsv2"))
 }
 
 func (e EndpointsAttributes) Kinesisvideo() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("kinesisvideo"))
+	return terra.ReferenceAsString(e.ref.Append("kinesisvideo"))
 }
 
 func (e EndpointsAttributes) Kinesisvideoarchivedmedia() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("kinesisvideoarchivedmedia"))
+	return terra.ReferenceAsString(e.ref.Append("kinesisvideoarchivedmedia"))
 }
 
 func (e EndpointsAttributes) Kinesisvideomedia() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("kinesisvideomedia"))
+	return terra.ReferenceAsString(e.ref.Append("kinesisvideomedia"))
 }
 
 func (e EndpointsAttributes) Kinesisvideosignaling() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("kinesisvideosignaling"))
+	return terra.ReferenceAsString(e.ref.Append("kinesisvideosignaling"))
 }
 
 func (e EndpointsAttributes) Kinesisvideosignalingchannels() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("kinesisvideosignalingchannels"))
+	return terra.ReferenceAsString(e.ref.Append("kinesisvideosignalingchannels"))
 }
 
 func (e EndpointsAttributes) Kms() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("kms"))
+	return terra.ReferenceAsString(e.ref.Append("kms"))
 }
 
 func (e EndpointsAttributes) Lakeformation() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("lakeformation"))
+	return terra.ReferenceAsString(e.ref.Append("lakeformation"))
 }
 
 func (e EndpointsAttributes) Lambda() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("lambda"))
+	return terra.ReferenceAsString(e.ref.Append("lambda"))
 }
 
 func (e EndpointsAttributes) Lex() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("lex"))
+	return terra.ReferenceAsString(e.ref.Append("lex"))
 }
 
 func (e EndpointsAttributes) Lexmodelbuilding() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("lexmodelbuilding"))
+	return terra.ReferenceAsString(e.ref.Append("lexmodelbuilding"))
 }
 
 func (e EndpointsAttributes) Lexmodelbuildingservice() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("lexmodelbuildingservice"))
+	return terra.ReferenceAsString(e.ref.Append("lexmodelbuildingservice"))
 }
 
 func (e EndpointsAttributes) Lexmodels() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("lexmodels"))
+	return terra.ReferenceAsString(e.ref.Append("lexmodels"))
 }
 
 func (e EndpointsAttributes) Lexmodelsv2() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("lexmodelsv2"))
+	return terra.ReferenceAsString(e.ref.Append("lexmodelsv2"))
 }
 
 func (e EndpointsAttributes) Lexruntime() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("lexruntime"))
+	return terra.ReferenceAsString(e.ref.Append("lexruntime"))
 }
 
 func (e EndpointsAttributes) Lexruntimeservice() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("lexruntimeservice"))
+	return terra.ReferenceAsString(e.ref.Append("lexruntimeservice"))
 }
 
 func (e EndpointsAttributes) Lexruntimev2() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("lexruntimev2"))
+	return terra.ReferenceAsString(e.ref.Append("lexruntimev2"))
 }
 
 func (e EndpointsAttributes) Lexv2Models() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("lexv2models"))
+	return terra.ReferenceAsString(e.ref.Append("lexv2models"))
 }
 
 func (e EndpointsAttributes) Lexv2Runtime() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("lexv2runtime"))
+	return terra.ReferenceAsString(e.ref.Append("lexv2runtime"))
 }
 
 func (e EndpointsAttributes) Licensemanager() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("licensemanager"))
+	return terra.ReferenceAsString(e.ref.Append("licensemanager"))
 }
 
 func (e EndpointsAttributes) Lightsail() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("lightsail"))
+	return terra.ReferenceAsString(e.ref.Append("lightsail"))
 }
 
 func (e EndpointsAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("location"))
+	return terra.ReferenceAsString(e.ref.Append("location"))
 }
 
 func (e EndpointsAttributes) Locationservice() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("locationservice"))
+	return terra.ReferenceAsString(e.ref.Append("locationservice"))
 }
 
 func (e EndpointsAttributes) Logs() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("logs"))
+	return terra.ReferenceAsString(e.ref.Append("logs"))
 }
 
 func (e EndpointsAttributes) Lookoutequipment() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("lookoutequipment"))
+	return terra.ReferenceAsString(e.ref.Append("lookoutequipment"))
 }
 
 func (e EndpointsAttributes) Lookoutforvision() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("lookoutforvision"))
+	return terra.ReferenceAsString(e.ref.Append("lookoutforvision"))
 }
 
 func (e EndpointsAttributes) Lookoutmetrics() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("lookoutmetrics"))
+	return terra.ReferenceAsString(e.ref.Append("lookoutmetrics"))
 }
 
 func (e EndpointsAttributes) Lookoutvision() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("lookoutvision"))
+	return terra.ReferenceAsString(e.ref.Append("lookoutvision"))
 }
 
 func (e EndpointsAttributes) Machinelearning() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("machinelearning"))
+	return terra.ReferenceAsString(e.ref.Append("machinelearning"))
 }
 
 func (e EndpointsAttributes) Macie() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("macie"))
+	return terra.ReferenceAsString(e.ref.Append("macie"))
 }
 
 func (e EndpointsAttributes) Macie2() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("macie2"))
+	return terra.ReferenceAsString(e.ref.Append("macie2"))
 }
 
 func (e EndpointsAttributes) Managedblockchain() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("managedblockchain"))
+	return terra.ReferenceAsString(e.ref.Append("managedblockchain"))
 }
 
 func (e EndpointsAttributes) Managedgrafana() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("managedgrafana"))
+	return terra.ReferenceAsString(e.ref.Append("managedgrafana"))
 }
 
 func (e EndpointsAttributes) Marketplacecatalog() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("marketplacecatalog"))
+	return terra.ReferenceAsString(e.ref.Append("marketplacecatalog"))
 }
 
 func (e EndpointsAttributes) Marketplacecommerceanalytics() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("marketplacecommerceanalytics"))
+	return terra.ReferenceAsString(e.ref.Append("marketplacecommerceanalytics"))
 }
 
 func (e EndpointsAttributes) Marketplaceentitlement() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("marketplaceentitlement"))
+	return terra.ReferenceAsString(e.ref.Append("marketplaceentitlement"))
 }
 
 func (e EndpointsAttributes) Marketplaceentitlementservice() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("marketplaceentitlementservice"))
+	return terra.ReferenceAsString(e.ref.Append("marketplaceentitlementservice"))
 }
 
 func (e EndpointsAttributes) Marketplacemetering() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("marketplacemetering"))
+	return terra.ReferenceAsString(e.ref.Append("marketplacemetering"))
 }
 
 func (e EndpointsAttributes) Mediaconnect() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("mediaconnect"))
+	return terra.ReferenceAsString(e.ref.Append("mediaconnect"))
 }
 
 func (e EndpointsAttributes) Mediaconvert() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("mediaconvert"))
+	return terra.ReferenceAsString(e.ref.Append("mediaconvert"))
 }
 
 func (e EndpointsAttributes) Medialive() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("medialive"))
+	return terra.ReferenceAsString(e.ref.Append("medialive"))
 }
 
 func (e EndpointsAttributes) Mediapackage() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("mediapackage"))
+	return terra.ReferenceAsString(e.ref.Append("mediapackage"))
 }
 
 func (e EndpointsAttributes) Mediapackagevod() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("mediapackagevod"))
+	return terra.ReferenceAsString(e.ref.Append("mediapackagevod"))
 }
 
 func (e EndpointsAttributes) Mediastore() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("mediastore"))
+	return terra.ReferenceAsString(e.ref.Append("mediastore"))
 }
 
 func (e EndpointsAttributes) Mediastoredata() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("mediastoredata"))
+	return terra.ReferenceAsString(e.ref.Append("mediastoredata"))
 }
 
 func (e EndpointsAttributes) Mediatailor() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("mediatailor"))
+	return terra.ReferenceAsString(e.ref.Append("mediatailor"))
 }
 
 func (e EndpointsAttributes) Memorydb() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("memorydb"))
+	return terra.ReferenceAsString(e.ref.Append("memorydb"))
 }
 
 func (e EndpointsAttributes) Meteringmarketplace() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("meteringmarketplace"))
+	return terra.ReferenceAsString(e.ref.Append("meteringmarketplace"))
 }
 
 func (e EndpointsAttributes) Mgh() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("mgh"))
+	return terra.ReferenceAsString(e.ref.Append("mgh"))
 }
 
 func (e EndpointsAttributes) Mgn() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("mgn"))
+	return terra.ReferenceAsString(e.ref.Append("mgn"))
 }
 
 func (e EndpointsAttributes) Migrationhub() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("migrationhub"))
+	return terra.ReferenceAsString(e.ref.Append("migrationhub"))
 }
 
 func (e EndpointsAttributes) Migrationhubconfig() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("migrationhubconfig"))
+	return terra.ReferenceAsString(e.ref.Append("migrationhubconfig"))
 }
 
 func (e EndpointsAttributes) Migrationhubrefactorspaces() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("migrationhubrefactorspaces"))
+	return terra.ReferenceAsString(e.ref.Append("migrationhubrefactorspaces"))
 }
 
 func (e EndpointsAttributes) Migrationhubstrategy() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("migrationhubstrategy"))
+	return terra.ReferenceAsString(e.ref.Append("migrationhubstrategy"))
 }
 
 func (e EndpointsAttributes) Migrationhubstrategyrecommendations() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("migrationhubstrategyrecommendations"))
+	return terra.ReferenceAsString(e.ref.Append("migrationhubstrategyrecommendations"))
 }
 
 func (e EndpointsAttributes) Mobile() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("mobile"))
+	return terra.ReferenceAsString(e.ref.Append("mobile"))
 }
 
 func (e EndpointsAttributes) Mq() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("mq"))
+	return terra.ReferenceAsString(e.ref.Append("mq"))
 }
 
 func (e EndpointsAttributes) Msk() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("msk"))
+	return terra.ReferenceAsString(e.ref.Append("msk"))
 }
 
 func (e EndpointsAttributes) Mturk() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("mturk"))
+	return terra.ReferenceAsString(e.ref.Append("mturk"))
 }
 
 func (e EndpointsAttributes) Mwaa() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("mwaa"))
+	return terra.ReferenceAsString(e.ref.Append("mwaa"))
 }
 
 func (e EndpointsAttributes) Neptune() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("neptune"))
+	return terra.ReferenceAsString(e.ref.Append("neptune"))
 }
 
 func (e EndpointsAttributes) Networkfirewall() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("networkfirewall"))
+	return terra.ReferenceAsString(e.ref.Append("networkfirewall"))
 }
 
 func (e EndpointsAttributes) Networkmanager() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("networkmanager"))
+	return terra.ReferenceAsString(e.ref.Append("networkmanager"))
 }
 
 func (e EndpointsAttributes) Nimble() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("nimble"))
+	return terra.ReferenceAsString(e.ref.Append("nimble"))
 }
 
 func (e EndpointsAttributes) Nimblestudio() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("nimblestudio"))
+	return terra.ReferenceAsString(e.ref.Append("nimblestudio"))
 }
 
 func (e EndpointsAttributes) Oam() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("oam"))
+	return terra.ReferenceAsString(e.ref.Append("oam"))
 }
 
 func (e EndpointsAttributes) Opensearch() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("opensearch"))
+	return terra.ReferenceAsString(e.ref.Append("opensearch"))
 }
 
 func (e EndpointsAttributes) Opensearchserverless() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("opensearchserverless"))
+	return terra.ReferenceAsString(e.ref.Append("opensearchserverless"))
 }
 
 func (e EndpointsAttributes) Opensearchservice() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("opensearchservice"))
+	return terra.ReferenceAsString(e.ref.Append("opensearchservice"))
 }
 
 func (e EndpointsAttributes) Opsworks() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("opsworks"))
+	return terra.ReferenceAsString(e.ref.Append("opsworks"))
 }
 
 func (e EndpointsAttributes) Opsworkscm() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("opsworkscm"))
+	return terra.ReferenceAsString(e.ref.Append("opsworkscm"))
 }
 
 func (e EndpointsAttributes) Organizations() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("organizations"))
+	return terra.ReferenceAsString(e.ref.Append("organizations"))
 }
 
 func (e EndpointsAttributes) Outposts() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("outposts"))
+	return terra.ReferenceAsString(e.ref.Append("outposts"))
 }
 
 func (e EndpointsAttributes) Panorama() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("panorama"))
+	return terra.ReferenceAsString(e.ref.Append("panorama"))
 }
 
 func (e EndpointsAttributes) Personalize() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("personalize"))
+	return terra.ReferenceAsString(e.ref.Append("personalize"))
 }
 
 func (e EndpointsAttributes) Personalizeevents() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("personalizeevents"))
+	return terra.ReferenceAsString(e.ref.Append("personalizeevents"))
 }
 
 func (e EndpointsAttributes) Personalizeruntime() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("personalizeruntime"))
+	return terra.ReferenceAsString(e.ref.Append("personalizeruntime"))
 }
 
 func (e EndpointsAttributes) Pi() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("pi"))
+	return terra.ReferenceAsString(e.ref.Append("pi"))
 }
 
 func (e EndpointsAttributes) Pinpoint() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("pinpoint"))
+	return terra.ReferenceAsString(e.ref.Append("pinpoint"))
 }
 
 func (e EndpointsAttributes) Pinpointemail() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("pinpointemail"))
+	return terra.ReferenceAsString(e.ref.Append("pinpointemail"))
 }
 
 func (e EndpointsAttributes) Pinpointsmsvoice() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("pinpointsmsvoice"))
+	return terra.ReferenceAsString(e.ref.Append("pinpointsmsvoice"))
 }
 
 func (e EndpointsAttributes) Pipes() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("pipes"))
+	return terra.ReferenceAsString(e.ref.Append("pipes"))
 }
 
 func (e EndpointsAttributes) Polly() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("polly"))
+	return terra.ReferenceAsString(e.ref.Append("polly"))
 }
 
 func (e EndpointsAttributes) Pricing() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("pricing"))
+	return terra.ReferenceAsString(e.ref.Append("pricing"))
 }
 
 func (e EndpointsAttributes) Prometheus() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("prometheus"))
+	return terra.ReferenceAsString(e.ref.Append("prometheus"))
 }
 
 func (e EndpointsAttributes) Prometheusservice() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("prometheusservice"))
+	return terra.ReferenceAsString(e.ref.Append("prometheusservice"))
 }
 
 func (e EndpointsAttributes) Proton() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("proton"))
+	return terra.ReferenceAsString(e.ref.Append("proton"))
 }
 
 func (e EndpointsAttributes) Qldb() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("qldb"))
+	return terra.ReferenceAsString(e.ref.Append("qldb"))
 }
 
 func (e EndpointsAttributes) Qldbsession() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("qldbsession"))
+	return terra.ReferenceAsString(e.ref.Append("qldbsession"))
 }
 
 func (e EndpointsAttributes) Quicksight() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("quicksight"))
+	return terra.ReferenceAsString(e.ref.Append("quicksight"))
 }
 
 func (e EndpointsAttributes) Ram() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("ram"))
+	return terra.ReferenceAsString(e.ref.Append("ram"))
 }
 
 func (e EndpointsAttributes) Rbin() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("rbin"))
+	return terra.ReferenceAsString(e.ref.Append("rbin"))
 }
 
 func (e EndpointsAttributes) Rds() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("rds"))
+	return terra.ReferenceAsString(e.ref.Append("rds"))
 }
 
 func (e EndpointsAttributes) Rdsdata() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("rdsdata"))
+	return terra.ReferenceAsString(e.ref.Append("rdsdata"))
 }
 
 func (e EndpointsAttributes) Rdsdataservice() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("rdsdataservice"))
+	return terra.ReferenceAsString(e.ref.Append("rdsdataservice"))
 }
 
 func (e EndpointsAttributes) Recyclebin() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("recyclebin"))
+	return terra.ReferenceAsString(e.ref.Append("recyclebin"))
 }
 
 func (e EndpointsAttributes) Redshift() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("redshift"))
+	return terra.ReferenceAsString(e.ref.Append("redshift"))
 }
 
 func (e EndpointsAttributes) Redshiftdata() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("redshiftdata"))
+	return terra.ReferenceAsString(e.ref.Append("redshiftdata"))
 }
 
 func (e EndpointsAttributes) Redshiftdataapiservice() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("redshiftdataapiservice"))
+	return terra.ReferenceAsString(e.ref.Append("redshiftdataapiservice"))
 }
 
 func (e EndpointsAttributes) Redshiftserverless() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("redshiftserverless"))
+	return terra.ReferenceAsString(e.ref.Append("redshiftserverless"))
 }
 
 func (e EndpointsAttributes) Rekognition() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("rekognition"))
+	return terra.ReferenceAsString(e.ref.Append("rekognition"))
 }
 
 func (e EndpointsAttributes) Resiliencehub() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("resiliencehub"))
+	return terra.ReferenceAsString(e.ref.Append("resiliencehub"))
 }
 
 func (e EndpointsAttributes) Resourceexplorer2() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("resourceexplorer2"))
+	return terra.ReferenceAsString(e.ref.Append("resourceexplorer2"))
 }
 
 func (e EndpointsAttributes) Resourcegroups() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("resourcegroups"))
+	return terra.ReferenceAsString(e.ref.Append("resourcegroups"))
 }
 
 func (e EndpointsAttributes) Resourcegroupstagging() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("resourcegroupstagging"))
+	return terra.ReferenceAsString(e.ref.Append("resourcegroupstagging"))
 }
 
 func (e EndpointsAttributes) Resourcegroupstaggingapi() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("resourcegroupstaggingapi"))
+	return terra.ReferenceAsString(e.ref.Append("resourcegroupstaggingapi"))
 }
 
 func (e EndpointsAttributes) Robomaker() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("robomaker"))
+	return terra.ReferenceAsString(e.ref.Append("robomaker"))
 }
 
 func (e EndpointsAttributes) Rolesanywhere() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("rolesanywhere"))
+	return terra.ReferenceAsString(e.ref.Append("rolesanywhere"))
 }
 
 func (e EndpointsAttributes) Route53() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("route53"))
+	return terra.ReferenceAsString(e.ref.Append("route53"))
 }
 
 func (e EndpointsAttributes) Route53Domains() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("route53domains"))
+	return terra.ReferenceAsString(e.ref.Append("route53domains"))
 }
 
 func (e EndpointsAttributes) Route53Recoverycluster() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("route53recoverycluster"))
+	return terra.ReferenceAsString(e.ref.Append("route53recoverycluster"))
 }
 
 func (e EndpointsAttributes) Route53Recoverycontrolconfig() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("route53recoverycontrolconfig"))
+	return terra.ReferenceAsString(e.ref.Append("route53recoverycontrolconfig"))
 }
 
 func (e EndpointsAttributes) Route53Recoveryreadiness() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("route53recoveryreadiness"))
+	return terra.ReferenceAsString(e.ref.Append("route53recoveryreadiness"))
 }
 
 func (e EndpointsAttributes) Route53Resolver() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("route53resolver"))
+	return terra.ReferenceAsString(e.ref.Append("route53resolver"))
 }
 
 func (e EndpointsAttributes) Rum() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("rum"))
+	return terra.ReferenceAsString(e.ref.Append("rum"))
 }
 
 func (e EndpointsAttributes) S3() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("s3"))
+	return terra.ReferenceAsString(e.ref.Append("s3"))
 }
 
 func (e EndpointsAttributes) S3Api() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("s3api"))
+	return terra.ReferenceAsString(e.ref.Append("s3api"))
 }
 
 func (e EndpointsAttributes) S3Control() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("s3control"))
+	return terra.ReferenceAsString(e.ref.Append("s3control"))
 }
 
 func (e EndpointsAttributes) S3Outposts() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("s3outposts"))
+	return terra.ReferenceAsString(e.ref.Append("s3outposts"))
 }
 
 func (e EndpointsAttributes) Sagemaker() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("sagemaker"))
+	return terra.ReferenceAsString(e.ref.Append("sagemaker"))
 }
 
 func (e EndpointsAttributes) Sagemakera2Iruntime() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("sagemakera2iruntime"))
+	return terra.ReferenceAsString(e.ref.Append("sagemakera2iruntime"))
 }
 
 func (e EndpointsAttributes) Sagemakeredge() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("sagemakeredge"))
+	return terra.ReferenceAsString(e.ref.Append("sagemakeredge"))
 }
 
 func (e EndpointsAttributes) Sagemakeredgemanager() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("sagemakeredgemanager"))
+	return terra.ReferenceAsString(e.ref.Append("sagemakeredgemanager"))
 }
 
 func (e EndpointsAttributes) Sagemakerfeaturestoreruntime() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("sagemakerfeaturestoreruntime"))
+	return terra.ReferenceAsString(e.ref.Append("sagemakerfeaturestoreruntime"))
 }
 
 func (e EndpointsAttributes) Sagemakerruntime() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("sagemakerruntime"))
+	return terra.ReferenceAsString(e.ref.Append("sagemakerruntime"))
 }
 
 func (e EndpointsAttributes) Savingsplans() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("savingsplans"))
+	return terra.ReferenceAsString(e.ref.Append("savingsplans"))
 }
 
 func (e EndpointsAttributes) Scheduler() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("scheduler"))
+	return terra.ReferenceAsString(e.ref.Append("scheduler"))
 }
 
 func (e EndpointsAttributes) Schemas() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("schemas"))
+	return terra.ReferenceAsString(e.ref.Append("schemas"))
 }
 
 func (e EndpointsAttributes) Sdb() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("sdb"))
+	return terra.ReferenceAsString(e.ref.Append("sdb"))
 }
 
 func (e EndpointsAttributes) Secretsmanager() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("secretsmanager"))
+	return terra.ReferenceAsString(e.ref.Append("secretsmanager"))
 }
 
 func (e EndpointsAttributes) Securityhub() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("securityhub"))
+	return terra.ReferenceAsString(e.ref.Append("securityhub"))
 }
 
 func (e EndpointsAttributes) Serverlessapplicationrepository() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("serverlessapplicationrepository"))
+	return terra.ReferenceAsString(e.ref.Append("serverlessapplicationrepository"))
 }
 
 func (e EndpointsAttributes) Serverlessapprepo() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("serverlessapprepo"))
+	return terra.ReferenceAsString(e.ref.Append("serverlessapprepo"))
 }
 
 func (e EndpointsAttributes) Serverlessrepo() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("serverlessrepo"))
+	return terra.ReferenceAsString(e.ref.Append("serverlessrepo"))
 }
 
 func (e EndpointsAttributes) Servicecatalog() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("servicecatalog"))
+	return terra.ReferenceAsString(e.ref.Append("servicecatalog"))
 }
 
 func (e EndpointsAttributes) Servicecatalogappregistry() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("servicecatalogappregistry"))
+	return terra.ReferenceAsString(e.ref.Append("servicecatalogappregistry"))
 }
 
 func (e EndpointsAttributes) Servicediscovery() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("servicediscovery"))
+	return terra.ReferenceAsString(e.ref.Append("servicediscovery"))
 }
 
 func (e EndpointsAttributes) Servicequotas() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("servicequotas"))
+	return terra.ReferenceAsString(e.ref.Append("servicequotas"))
 }
 
 func (e EndpointsAttributes) Ses() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("ses"))
+	return terra.ReferenceAsString(e.ref.Append("ses"))
 }
 
 func (e EndpointsAttributes) Sesv2() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("sesv2"))
+	return terra.ReferenceAsString(e.ref.Append("sesv2"))
 }
 
 func (e EndpointsAttributes) Sfn() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("sfn"))
+	return terra.ReferenceAsString(e.ref.Append("sfn"))
 }
 
 func (e EndpointsAttributes) Shield() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("shield"))
+	return terra.ReferenceAsString(e.ref.Append("shield"))
 }
 
 func (e EndpointsAttributes) Signer() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("signer"))
+	return terra.ReferenceAsString(e.ref.Append("signer"))
 }
 
 func (e EndpointsAttributes) Simpledb() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("simpledb"))
+	return terra.ReferenceAsString(e.ref.Append("simpledb"))
 }
 
 func (e EndpointsAttributes) Sms() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("sms"))
+	return terra.ReferenceAsString(e.ref.Append("sms"))
 }
 
 func (e EndpointsAttributes) Snowball() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("snowball"))
+	return terra.ReferenceAsString(e.ref.Append("snowball"))
 }
 
 func (e EndpointsAttributes) Snowdevicemanagement() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("snowdevicemanagement"))
+	return terra.ReferenceAsString(e.ref.Append("snowdevicemanagement"))
 }
 
 func (e EndpointsAttributes) Sns() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("sns"))
+	return terra.ReferenceAsString(e.ref.Append("sns"))
 }
 
 func (e EndpointsAttributes) Sqs() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("sqs"))
+	return terra.ReferenceAsString(e.ref.Append("sqs"))
 }
 
 func (e EndpointsAttributes) Ssm() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("ssm"))
+	return terra.ReferenceAsString(e.ref.Append("ssm"))
 }
 
 func (e EndpointsAttributes) Ssmcontacts() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("ssmcontacts"))
+	return terra.ReferenceAsString(e.ref.Append("ssmcontacts"))
 }
 
 func (e EndpointsAttributes) Ssmincidents() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("ssmincidents"))
+	return terra.ReferenceAsString(e.ref.Append("ssmincidents"))
 }
 
 func (e EndpointsAttributes) Sso() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("sso"))
+	return terra.ReferenceAsString(e.ref.Append("sso"))
 }
 
 func (e EndpointsAttributes) Ssoadmin() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("ssoadmin"))
+	return terra.ReferenceAsString(e.ref.Append("ssoadmin"))
 }
 
 func (e EndpointsAttributes) Ssooidc() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("ssooidc"))
+	return terra.ReferenceAsString(e.ref.Append("ssooidc"))
 }
 
 func (e EndpointsAttributes) Stepfunctions() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("stepfunctions"))
+	return terra.ReferenceAsString(e.ref.Append("stepfunctions"))
 }
 
 func (e EndpointsAttributes) Storagegateway() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("storagegateway"))
+	return terra.ReferenceAsString(e.ref.Append("storagegateway"))
 }
 
 func (e EndpointsAttributes) Sts() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("sts"))
+	return terra.ReferenceAsString(e.ref.Append("sts"))
 }
 
 func (e EndpointsAttributes) Support() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("support"))
+	return terra.ReferenceAsString(e.ref.Append("support"))
 }
 
 func (e EndpointsAttributes) Swf() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("swf"))
+	return terra.ReferenceAsString(e.ref.Append("swf"))
 }
 
 func (e EndpointsAttributes) Synthetics() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("synthetics"))
+	return terra.ReferenceAsString(e.ref.Append("synthetics"))
 }
 
 func (e EndpointsAttributes) Textract() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("textract"))
+	return terra.ReferenceAsString(e.ref.Append("textract"))
 }
 
 func (e EndpointsAttributes) Timestreamquery() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("timestreamquery"))
+	return terra.ReferenceAsString(e.ref.Append("timestreamquery"))
 }
 
 func (e EndpointsAttributes) Timestreamwrite() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("timestreamwrite"))
+	return terra.ReferenceAsString(e.ref.Append("timestreamwrite"))
 }
 
 func (e EndpointsAttributes) Transcribe() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("transcribe"))
+	return terra.ReferenceAsString(e.ref.Append("transcribe"))
 }
 
 func (e EndpointsAttributes) Transcribeservice() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("transcribeservice"))
+	return terra.ReferenceAsString(e.ref.Append("transcribeservice"))
 }
 
 func (e EndpointsAttributes) Transcribestreaming() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("transcribestreaming"))
+	return terra.ReferenceAsString(e.ref.Append("transcribestreaming"))
 }
 
 func (e EndpointsAttributes) Transcribestreamingservice() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("transcribestreamingservice"))
+	return terra.ReferenceAsString(e.ref.Append("transcribestreamingservice"))
 }
 
 func (e EndpointsAttributes) Transfer() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("transfer"))
+	return terra.ReferenceAsString(e.ref.Append("transfer"))
 }
 
 func (e EndpointsAttributes) Translate() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("translate"))
+	return terra.ReferenceAsString(e.ref.Append("translate"))
 }
 
 func (e EndpointsAttributes) Voiceid() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("voiceid"))
+	return terra.ReferenceAsString(e.ref.Append("voiceid"))
 }
 
 func (e EndpointsAttributes) Waf() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("waf"))
+	return terra.ReferenceAsString(e.ref.Append("waf"))
 }
 
 func (e EndpointsAttributes) Wafregional() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("wafregional"))
+	return terra.ReferenceAsString(e.ref.Append("wafregional"))
 }
 
 func (e EndpointsAttributes) Wafv2() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("wafv2"))
+	return terra.ReferenceAsString(e.ref.Append("wafv2"))
 }
 
 func (e EndpointsAttributes) Wellarchitected() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("wellarchitected"))
+	return terra.ReferenceAsString(e.ref.Append("wellarchitected"))
 }
 
 func (e EndpointsAttributes) Wisdom() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("wisdom"))
+	return terra.ReferenceAsString(e.ref.Append("wisdom"))
 }
 
 func (e EndpointsAttributes) Workdocs() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("workdocs"))
+	return terra.ReferenceAsString(e.ref.Append("workdocs"))
 }
 
 func (e EndpointsAttributes) Worklink() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("worklink"))
+	return terra.ReferenceAsString(e.ref.Append("worklink"))
 }
 
 func (e EndpointsAttributes) Workmail() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("workmail"))
+	return terra.ReferenceAsString(e.ref.Append("workmail"))
 }
 
 func (e EndpointsAttributes) Workmailmessageflow() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("workmailmessageflow"))
+	return terra.ReferenceAsString(e.ref.Append("workmailmessageflow"))
 }
 
 func (e EndpointsAttributes) Workspaces() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("workspaces"))
+	return terra.ReferenceAsString(e.ref.Append("workspaces"))
 }
 
 func (e EndpointsAttributes) Workspacesweb() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("workspacesweb"))
+	return terra.ReferenceAsString(e.ref.Append("workspacesweb"))
 }
 
 func (e EndpointsAttributes) Xray() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("xray"))
+	return terra.ReferenceAsString(e.ref.Append("xray"))
 }
 
 type IgnoreTagsAttributes struct {
@@ -2477,11 +2477,11 @@ func (it IgnoreTagsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (it IgnoreTagsAttributes) KeyPrefixes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](it.ref.Append("key_prefixes"))
+	return terra.ReferenceAsSet[terra.StringValue](it.ref.Append("key_prefixes"))
 }
 
 func (it IgnoreTagsAttributes) Keys() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](it.ref.Append("keys"))
+	return terra.ReferenceAsSet[terra.StringValue](it.ref.Append("keys"))
 }
 
 type AssumeRoleState struct {

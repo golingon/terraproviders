@@ -29,7 +29,7 @@ func (rc RoutingConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rc RoutingConfigAttributes) AdditionalVersionWeights() terra.MapValue[terra.NumberValue] {
-	return terra.ReferenceMap[terra.NumberValue](rc.ref.Append("additional_version_weights"))
+	return terra.ReferenceAsMap[terra.NumberValue](rc.ref.Append("additional_version_weights"))
 }
 
 type RoutingConfigState struct {

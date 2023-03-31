@@ -37,19 +37,19 @@ func (as AllSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (as AllSettingsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("name"))
+	return terra.ReferenceAsString(as.ref.Append("name"))
 }
 
 func (as AllSettingsAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("namespace"))
+	return terra.ReferenceAsString(as.ref.Append("namespace"))
 }
 
 func (as AllSettingsAttributes) Resource() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("resource"))
+	return terra.ReferenceAsString(as.ref.Append("resource"))
 }
 
 func (as AllSettingsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("value"))
+	return terra.ReferenceAsString(as.ref.Append("value"))
 }
 
 type SettingAttributes struct {
@@ -69,19 +69,19 @@ func (s SettingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SettingAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s SettingAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("namespace"))
+	return terra.ReferenceAsString(s.ref.Append("namespace"))
 }
 
 func (s SettingAttributes) Resource() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("resource"))
+	return terra.ReferenceAsString(s.ref.Append("resource"))
 }
 
 func (s SettingAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("value"))
+	return terra.ReferenceAsString(s.ref.Append("value"))
 }
 
 type AllSettingsState struct {

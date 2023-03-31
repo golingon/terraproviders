@@ -31,11 +31,11 @@ func (es EventSubscriptionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (es EventSubscriptionAttributes) Event() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("event"))
+	return terra.ReferenceAsString(es.ref.Append("event"))
 }
 
 func (es EventSubscriptionAttributes) TopicArn() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("topic_arn"))
+	return terra.ReferenceAsString(es.ref.Append("topic_arn"))
 }
 
 type EventSubscriptionState struct {

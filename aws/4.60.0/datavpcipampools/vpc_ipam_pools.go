@@ -33,79 +33,79 @@ func (ip IpamPoolsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ip IpamPoolsAttributes) AddressFamily() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("address_family"))
+	return terra.ReferenceAsString(ip.ref.Append("address_family"))
 }
 
 func (ip IpamPoolsAttributes) AllocationDefaultNetmaskLength() terra.NumberValue {
-	return terra.ReferenceNumber(ip.ref.Append("allocation_default_netmask_length"))
+	return terra.ReferenceAsNumber(ip.ref.Append("allocation_default_netmask_length"))
 }
 
 func (ip IpamPoolsAttributes) AllocationMaxNetmaskLength() terra.NumberValue {
-	return terra.ReferenceNumber(ip.ref.Append("allocation_max_netmask_length"))
+	return terra.ReferenceAsNumber(ip.ref.Append("allocation_max_netmask_length"))
 }
 
 func (ip IpamPoolsAttributes) AllocationMinNetmaskLength() terra.NumberValue {
-	return terra.ReferenceNumber(ip.ref.Append("allocation_min_netmask_length"))
+	return terra.ReferenceAsNumber(ip.ref.Append("allocation_min_netmask_length"))
 }
 
 func (ip IpamPoolsAttributes) AllocationResourceTags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ip.ref.Append("allocation_resource_tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ip.ref.Append("allocation_resource_tags"))
 }
 
 func (ip IpamPoolsAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("arn"))
+	return terra.ReferenceAsString(ip.ref.Append("arn"))
 }
 
 func (ip IpamPoolsAttributes) AutoImport() terra.BoolValue {
-	return terra.ReferenceBool(ip.ref.Append("auto_import"))
+	return terra.ReferenceAsBool(ip.ref.Append("auto_import"))
 }
 
 func (ip IpamPoolsAttributes) AwsService() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("aws_service"))
+	return terra.ReferenceAsString(ip.ref.Append("aws_service"))
 }
 
 func (ip IpamPoolsAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("description"))
+	return terra.ReferenceAsString(ip.ref.Append("description"))
 }
 
 func (ip IpamPoolsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("id"))
+	return terra.ReferenceAsString(ip.ref.Append("id"))
 }
 
 func (ip IpamPoolsAttributes) IpamPoolId() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("ipam_pool_id"))
+	return terra.ReferenceAsString(ip.ref.Append("ipam_pool_id"))
 }
 
 func (ip IpamPoolsAttributes) IpamScopeId() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("ipam_scope_id"))
+	return terra.ReferenceAsString(ip.ref.Append("ipam_scope_id"))
 }
 
 func (ip IpamPoolsAttributes) IpamScopeType() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("ipam_scope_type"))
+	return terra.ReferenceAsString(ip.ref.Append("ipam_scope_type"))
 }
 
 func (ip IpamPoolsAttributes) Locale() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("locale"))
+	return terra.ReferenceAsString(ip.ref.Append("locale"))
 }
 
 func (ip IpamPoolsAttributes) PoolDepth() terra.NumberValue {
-	return terra.ReferenceNumber(ip.ref.Append("pool_depth"))
+	return terra.ReferenceAsNumber(ip.ref.Append("pool_depth"))
 }
 
 func (ip IpamPoolsAttributes) PubliclyAdvertisable() terra.BoolValue {
-	return terra.ReferenceBool(ip.ref.Append("publicly_advertisable"))
+	return terra.ReferenceAsBool(ip.ref.Append("publicly_advertisable"))
 }
 
 func (ip IpamPoolsAttributes) SourceIpamPoolId() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("source_ipam_pool_id"))
+	return terra.ReferenceAsString(ip.ref.Append("source_ipam_pool_id"))
 }
 
 func (ip IpamPoolsAttributes) State() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("state"))
+	return terra.ReferenceAsString(ip.ref.Append("state"))
 }
 
 func (ip IpamPoolsAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ip.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ip.ref.Append("tags"))
 }
 
 type FilterAttributes struct {
@@ -125,11 +125,11 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
 func (f FilterAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](f.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](f.ref.Append("values"))
 }
 
 type IpamPoolsState struct {

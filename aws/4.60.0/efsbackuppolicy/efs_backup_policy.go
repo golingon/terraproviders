@@ -29,7 +29,7 @@ func (bp BackupPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (bp BackupPolicyAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(bp.ref.Append("status"))
+	return terra.ReferenceAsString(bp.ref.Append("status"))
 }
 
 type BackupPolicyState struct {

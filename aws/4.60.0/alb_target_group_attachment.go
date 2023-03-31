@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAlbTargetGroupAttachment creates a new instance of [AlbTargetGroupAttachment].
 func NewAlbTargetGroupAttachment(name string, args AlbTargetGroupAttachmentArgs) *AlbTargetGroupAttachment {
 	return &AlbTargetGroupAttachment{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAlbTargetGroupAttachment(name string, args AlbTargetGroupAttachmentArgs)
 
 var _ terra.Resource = (*AlbTargetGroupAttachment)(nil)
 
+// AlbTargetGroupAttachment represents the Terraform resource aws_alb_target_group_attachment.
 type AlbTargetGroupAttachment struct {
-	Name  string
-	Args  AlbTargetGroupAttachmentArgs
-	state *albTargetGroupAttachmentState
+	Name      string
+	Args      AlbTargetGroupAttachmentArgs
+	state     *albTargetGroupAttachmentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AlbTargetGroupAttachment].
 func (atga *AlbTargetGroupAttachment) Type() string {
 	return "aws_alb_target_group_attachment"
 }
 
+// LocalName returns the local name for [AlbTargetGroupAttachment].
 func (atga *AlbTargetGroupAttachment) LocalName() string {
 	return atga.Name
 }
 
+// Configuration returns the configuration (args) for [AlbTargetGroupAttachment].
 func (atga *AlbTargetGroupAttachment) Configuration() interface{} {
 	return atga.Args
 }
 
+// DependOn is used for other resources to depend on [AlbTargetGroupAttachment].
+func (atga *AlbTargetGroupAttachment) DependOn() terra.Reference {
+	return terra.ReferenceResource(atga)
+}
+
+// Dependencies returns the list of resources [AlbTargetGroupAttachment] depends_on.
+func (atga *AlbTargetGroupAttachment) Dependencies() terra.Dependencies {
+	return atga.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AlbTargetGroupAttachment].
+func (atga *AlbTargetGroupAttachment) LifecycleManagement() *terra.Lifecycle {
+	return atga.Lifecycle
+}
+
+// Attributes returns the attributes for [AlbTargetGroupAttachment].
 func (atga *AlbTargetGroupAttachment) Attributes() albTargetGroupAttachmentAttributes {
 	return albTargetGroupAttachmentAttributes{ref: terra.ReferenceResource(atga)}
 }
 
+// ImportState imports the given attribute values into [AlbTargetGroupAttachment]'s state.
 func (atga *AlbTargetGroupAttachment) ImportState(av io.Reader) error {
 	atga.state = &albTargetGroupAttachmentState{}
 	if err := json.NewDecoder(av).Decode(atga.state); err != nil {
@@ -48,10 +72,12 @@ func (atga *AlbTargetGroupAttachment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AlbTargetGroupAttachment] has state.
 func (atga *AlbTargetGroupAttachment) State() (*albTargetGroupAttachmentState, bool) {
 	return atga.state, atga.state != nil
 }
 
+// StateMust returns the state for [AlbTargetGroupAttachment]. Panics if the state is nil.
 func (atga *AlbTargetGroupAttachment) StateMust() *albTargetGroupAttachmentState {
 	if atga.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", atga.Type(), atga.LocalName()))
@@ -59,10 +85,7 @@ func (atga *AlbTargetGroupAttachment) StateMust() *albTargetGroupAttachmentState
 	return atga.state
 }
 
-func (atga *AlbTargetGroupAttachment) DependOn() terra.Reference {
-	return terra.ReferenceResource(atga)
-}
-
+// AlbTargetGroupAttachmentArgs contains the configurations for aws_alb_target_group_attachment.
 type AlbTargetGroupAttachmentArgs struct {
 	// AvailabilityZone: string, optional
 	AvailabilityZone terra.StringValue `hcl:"availability_zone,attr"`
@@ -74,31 +97,34 @@ type AlbTargetGroupAttachmentArgs struct {
 	TargetGroupArn terra.StringValue `hcl:"target_group_arn,attr" validate:"required"`
 	// TargetId: string, required
 	TargetId terra.StringValue `hcl:"target_id,attr" validate:"required"`
-	// DependsOn contains resources that AlbTargetGroupAttachment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type albTargetGroupAttachmentAttributes struct {
 	ref terra.Reference
 }
 
+// AvailabilityZone returns a reference to field availability_zone of aws_alb_target_group_attachment.
 func (atga albTargetGroupAttachmentAttributes) AvailabilityZone() terra.StringValue {
-	return terra.ReferenceString(atga.ref.Append("availability_zone"))
+	return terra.ReferenceAsString(atga.ref.Append("availability_zone"))
 }
 
+// Id returns a reference to field id of aws_alb_target_group_attachment.
 func (atga albTargetGroupAttachmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(atga.ref.Append("id"))
+	return terra.ReferenceAsString(atga.ref.Append("id"))
 }
 
+// Port returns a reference to field port of aws_alb_target_group_attachment.
 func (atga albTargetGroupAttachmentAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(atga.ref.Append("port"))
+	return terra.ReferenceAsNumber(atga.ref.Append("port"))
 }
 
+// TargetGroupArn returns a reference to field target_group_arn of aws_alb_target_group_attachment.
 func (atga albTargetGroupAttachmentAttributes) TargetGroupArn() terra.StringValue {
-	return terra.ReferenceString(atga.ref.Append("target_group_arn"))
+	return terra.ReferenceAsString(atga.ref.Append("target_group_arn"))
 }
 
+// TargetId returns a reference to field target_id of aws_alb_target_group_attachment.
 func (atga albTargetGroupAttachmentAttributes) TargetId() terra.StringValue {
-	return terra.ReferenceString(atga.ref.Append("target_id"))
+	return terra.ReferenceAsString(atga.ref.Append("target_id"))
 }
 
 type albTargetGroupAttachmentState struct {

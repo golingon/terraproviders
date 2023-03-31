@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewIamSigningCertificate creates a new instance of [IamSigningCertificate].
 func NewIamSigningCertificate(name string, args IamSigningCertificateArgs) *IamSigningCertificate {
 	return &IamSigningCertificate{
 		Args: args,
@@ -18,28 +19,51 @@ func NewIamSigningCertificate(name string, args IamSigningCertificateArgs) *IamS
 
 var _ terra.Resource = (*IamSigningCertificate)(nil)
 
+// IamSigningCertificate represents the Terraform resource aws_iam_signing_certificate.
 type IamSigningCertificate struct {
-	Name  string
-	Args  IamSigningCertificateArgs
-	state *iamSigningCertificateState
+	Name      string
+	Args      IamSigningCertificateArgs
+	state     *iamSigningCertificateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IamSigningCertificate].
 func (isc *IamSigningCertificate) Type() string {
 	return "aws_iam_signing_certificate"
 }
 
+// LocalName returns the local name for [IamSigningCertificate].
 func (isc *IamSigningCertificate) LocalName() string {
 	return isc.Name
 }
 
+// Configuration returns the configuration (args) for [IamSigningCertificate].
 func (isc *IamSigningCertificate) Configuration() interface{} {
 	return isc.Args
 }
 
+// DependOn is used for other resources to depend on [IamSigningCertificate].
+func (isc *IamSigningCertificate) DependOn() terra.Reference {
+	return terra.ReferenceResource(isc)
+}
+
+// Dependencies returns the list of resources [IamSigningCertificate] depends_on.
+func (isc *IamSigningCertificate) Dependencies() terra.Dependencies {
+	return isc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IamSigningCertificate].
+func (isc *IamSigningCertificate) LifecycleManagement() *terra.Lifecycle {
+	return isc.Lifecycle
+}
+
+// Attributes returns the attributes for [IamSigningCertificate].
 func (isc *IamSigningCertificate) Attributes() iamSigningCertificateAttributes {
 	return iamSigningCertificateAttributes{ref: terra.ReferenceResource(isc)}
 }
 
+// ImportState imports the given attribute values into [IamSigningCertificate]'s state.
 func (isc *IamSigningCertificate) ImportState(av io.Reader) error {
 	isc.state = &iamSigningCertificateState{}
 	if err := json.NewDecoder(av).Decode(isc.state); err != nil {
@@ -48,10 +72,12 @@ func (isc *IamSigningCertificate) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IamSigningCertificate] has state.
 func (isc *IamSigningCertificate) State() (*iamSigningCertificateState, bool) {
 	return isc.state, isc.state != nil
 }
 
+// StateMust returns the state for [IamSigningCertificate]. Panics if the state is nil.
 func (isc *IamSigningCertificate) StateMust() *iamSigningCertificateState {
 	if isc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", isc.Type(), isc.LocalName()))
@@ -59,10 +85,7 @@ func (isc *IamSigningCertificate) StateMust() *iamSigningCertificateState {
 	return isc.state
 }
 
-func (isc *IamSigningCertificate) DependOn() terra.Reference {
-	return terra.ReferenceResource(isc)
-}
-
+// IamSigningCertificateArgs contains the configurations for aws_iam_signing_certificate.
 type IamSigningCertificateArgs struct {
 	// CertificateBody: string, required
 	CertificateBody terra.StringValue `hcl:"certificate_body,attr" validate:"required"`
@@ -72,31 +95,34 @@ type IamSigningCertificateArgs struct {
 	Status terra.StringValue `hcl:"status,attr"`
 	// UserName: string, required
 	UserName terra.StringValue `hcl:"user_name,attr" validate:"required"`
-	// DependsOn contains resources that IamSigningCertificate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iamSigningCertificateAttributes struct {
 	ref terra.Reference
 }
 
+// CertificateBody returns a reference to field certificate_body of aws_iam_signing_certificate.
 func (isc iamSigningCertificateAttributes) CertificateBody() terra.StringValue {
-	return terra.ReferenceString(isc.ref.Append("certificate_body"))
+	return terra.ReferenceAsString(isc.ref.Append("certificate_body"))
 }
 
+// CertificateId returns a reference to field certificate_id of aws_iam_signing_certificate.
 func (isc iamSigningCertificateAttributes) CertificateId() terra.StringValue {
-	return terra.ReferenceString(isc.ref.Append("certificate_id"))
+	return terra.ReferenceAsString(isc.ref.Append("certificate_id"))
 }
 
+// Id returns a reference to field id of aws_iam_signing_certificate.
 func (isc iamSigningCertificateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(isc.ref.Append("id"))
+	return terra.ReferenceAsString(isc.ref.Append("id"))
 }
 
+// Status returns a reference to field status of aws_iam_signing_certificate.
 func (isc iamSigningCertificateAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(isc.ref.Append("status"))
+	return terra.ReferenceAsString(isc.ref.Append("status"))
 }
 
+// UserName returns a reference to field user_name of aws_iam_signing_certificate.
 func (isc iamSigningCertificateAttributes) UserName() terra.StringValue {
-	return terra.ReferenceString(isc.ref.Append("user_name"))
+	return terra.ReferenceAsString(isc.ref.Append("user_name"))
 }
 
 type iamSigningCertificateState struct {

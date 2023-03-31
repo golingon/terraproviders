@@ -42,15 +42,15 @@ func (ae AutoEnableAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ae AutoEnableAttributes) Ec2() terra.BoolValue {
-	return terra.ReferenceBool(ae.ref.Append("ec2"))
+	return terra.ReferenceAsBool(ae.ref.Append("ec2"))
 }
 
 func (ae AutoEnableAttributes) Ecr() terra.BoolValue {
-	return terra.ReferenceBool(ae.ref.Append("ecr"))
+	return terra.ReferenceAsBool(ae.ref.Append("ecr"))
 }
 
 func (ae AutoEnableAttributes) Lambda() terra.BoolValue {
-	return terra.ReferenceBool(ae.ref.Append("lambda"))
+	return terra.ReferenceAsBool(ae.ref.Append("lambda"))
 }
 
 type TimeoutsAttributes struct {
@@ -70,15 +70,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AutoEnableState struct {

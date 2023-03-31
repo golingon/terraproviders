@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSecurityGroupRule creates a new instance of [SecurityGroupRule].
 func NewSecurityGroupRule(name string, args SecurityGroupRuleArgs) *SecurityGroupRule {
 	return &SecurityGroupRule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSecurityGroupRule(name string, args SecurityGroupRuleArgs) *SecurityGrou
 
 var _ terra.Resource = (*SecurityGroupRule)(nil)
 
+// SecurityGroupRule represents the Terraform resource aws_security_group_rule.
 type SecurityGroupRule struct {
-	Name  string
-	Args  SecurityGroupRuleArgs
-	state *securityGroupRuleState
+	Name      string
+	Args      SecurityGroupRuleArgs
+	state     *securityGroupRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SecurityGroupRule].
 func (sgr *SecurityGroupRule) Type() string {
 	return "aws_security_group_rule"
 }
 
+// LocalName returns the local name for [SecurityGroupRule].
 func (sgr *SecurityGroupRule) LocalName() string {
 	return sgr.Name
 }
 
+// Configuration returns the configuration (args) for [SecurityGroupRule].
 func (sgr *SecurityGroupRule) Configuration() interface{} {
 	return sgr.Args
 }
 
+// DependOn is used for other resources to depend on [SecurityGroupRule].
+func (sgr *SecurityGroupRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(sgr)
+}
+
+// Dependencies returns the list of resources [SecurityGroupRule] depends_on.
+func (sgr *SecurityGroupRule) Dependencies() terra.Dependencies {
+	return sgr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SecurityGroupRule].
+func (sgr *SecurityGroupRule) LifecycleManagement() *terra.Lifecycle {
+	return sgr.Lifecycle
+}
+
+// Attributes returns the attributes for [SecurityGroupRule].
 func (sgr *SecurityGroupRule) Attributes() securityGroupRuleAttributes {
 	return securityGroupRuleAttributes{ref: terra.ReferenceResource(sgr)}
 }
 
+// ImportState imports the given attribute values into [SecurityGroupRule]'s state.
 func (sgr *SecurityGroupRule) ImportState(av io.Reader) error {
 	sgr.state = &securityGroupRuleState{}
 	if err := json.NewDecoder(av).Decode(sgr.state); err != nil {
@@ -49,10 +73,12 @@ func (sgr *SecurityGroupRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SecurityGroupRule] has state.
 func (sgr *SecurityGroupRule) State() (*securityGroupRuleState, bool) {
 	return sgr.state, sgr.state != nil
 }
 
+// StateMust returns the state for [SecurityGroupRule]. Panics if the state is nil.
 func (sgr *SecurityGroupRule) StateMust() *securityGroupRuleState {
 	if sgr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sgr.Type(), sgr.LocalName()))
@@ -60,10 +86,7 @@ func (sgr *SecurityGroupRule) StateMust() *securityGroupRuleState {
 	return sgr.state
 }
 
-func (sgr *SecurityGroupRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(sgr)
-}
-
+// SecurityGroupRuleArgs contains the configurations for aws_security_group_rule.
 type SecurityGroupRuleArgs struct {
 	// CidrBlocks: list of string, optional
 	CidrBlocks terra.ListValue[terra.StringValue] `hcl:"cidr_blocks,attr"`
@@ -91,67 +114,78 @@ type SecurityGroupRuleArgs struct {
 	Type terra.StringValue `hcl:"type,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *securitygrouprule.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that SecurityGroupRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type securityGroupRuleAttributes struct {
 	ref terra.Reference
 }
 
+// CidrBlocks returns a reference to field cidr_blocks of aws_security_group_rule.
 func (sgr securityGroupRuleAttributes) CidrBlocks() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sgr.ref.Append("cidr_blocks"))
+	return terra.ReferenceAsList[terra.StringValue](sgr.ref.Append("cidr_blocks"))
 }
 
+// Description returns a reference to field description of aws_security_group_rule.
 func (sgr securityGroupRuleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sgr.ref.Append("description"))
+	return terra.ReferenceAsString(sgr.ref.Append("description"))
 }
 
+// FromPort returns a reference to field from_port of aws_security_group_rule.
 func (sgr securityGroupRuleAttributes) FromPort() terra.NumberValue {
-	return terra.ReferenceNumber(sgr.ref.Append("from_port"))
+	return terra.ReferenceAsNumber(sgr.ref.Append("from_port"))
 }
 
+// Id returns a reference to field id of aws_security_group_rule.
 func (sgr securityGroupRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sgr.ref.Append("id"))
+	return terra.ReferenceAsString(sgr.ref.Append("id"))
 }
 
+// Ipv6CidrBlocks returns a reference to field ipv6_cidr_blocks of aws_security_group_rule.
 func (sgr securityGroupRuleAttributes) Ipv6CidrBlocks() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sgr.ref.Append("ipv6_cidr_blocks"))
+	return terra.ReferenceAsList[terra.StringValue](sgr.ref.Append("ipv6_cidr_blocks"))
 }
 
+// PrefixListIds returns a reference to field prefix_list_ids of aws_security_group_rule.
 func (sgr securityGroupRuleAttributes) PrefixListIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sgr.ref.Append("prefix_list_ids"))
+	return terra.ReferenceAsList[terra.StringValue](sgr.ref.Append("prefix_list_ids"))
 }
 
+// Protocol returns a reference to field protocol of aws_security_group_rule.
 func (sgr securityGroupRuleAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(sgr.ref.Append("protocol"))
+	return terra.ReferenceAsString(sgr.ref.Append("protocol"))
 }
 
+// SecurityGroupId returns a reference to field security_group_id of aws_security_group_rule.
 func (sgr securityGroupRuleAttributes) SecurityGroupId() terra.StringValue {
-	return terra.ReferenceString(sgr.ref.Append("security_group_id"))
+	return terra.ReferenceAsString(sgr.ref.Append("security_group_id"))
 }
 
+// SecurityGroupRuleId returns a reference to field security_group_rule_id of aws_security_group_rule.
 func (sgr securityGroupRuleAttributes) SecurityGroupRuleId() terra.StringValue {
-	return terra.ReferenceString(sgr.ref.Append("security_group_rule_id"))
+	return terra.ReferenceAsString(sgr.ref.Append("security_group_rule_id"))
 }
 
+// Self returns a reference to field self of aws_security_group_rule.
 func (sgr securityGroupRuleAttributes) Self() terra.BoolValue {
-	return terra.ReferenceBool(sgr.ref.Append("self"))
+	return terra.ReferenceAsBool(sgr.ref.Append("self"))
 }
 
+// SourceSecurityGroupId returns a reference to field source_security_group_id of aws_security_group_rule.
 func (sgr securityGroupRuleAttributes) SourceSecurityGroupId() terra.StringValue {
-	return terra.ReferenceString(sgr.ref.Append("source_security_group_id"))
+	return terra.ReferenceAsString(sgr.ref.Append("source_security_group_id"))
 }
 
+// ToPort returns a reference to field to_port of aws_security_group_rule.
 func (sgr securityGroupRuleAttributes) ToPort() terra.NumberValue {
-	return terra.ReferenceNumber(sgr.ref.Append("to_port"))
+	return terra.ReferenceAsNumber(sgr.ref.Append("to_port"))
 }
 
+// Type returns a reference to field type of aws_security_group_rule.
 func (sgr securityGroupRuleAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(sgr.ref.Append("type"))
+	return terra.ReferenceAsString(sgr.ref.Append("type"))
 }
 
 func (sgr securityGroupRuleAttributes) Timeouts() securitygrouprule.TimeoutsAttributes {
-	return terra.ReferenceSingle[securitygrouprule.TimeoutsAttributes](sgr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[securitygrouprule.TimeoutsAttributes](sgr.ref.Append("timeouts"))
 }
 
 type securityGroupRuleState struct {

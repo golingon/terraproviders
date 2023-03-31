@@ -205,7 +205,7 @@ func (ars AccountRecoverySettingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ars AccountRecoverySettingAttributes) RecoveryMechanism() terra.SetValue[RecoveryMechanismAttributes] {
-	return terra.ReferenceSet[RecoveryMechanismAttributes](ars.ref.Append("recovery_mechanism"))
+	return terra.ReferenceAsSet[RecoveryMechanismAttributes](ars.ref.Append("recovery_mechanism"))
 }
 
 type RecoveryMechanismAttributes struct {
@@ -225,11 +225,11 @@ func (rm RecoveryMechanismAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rm RecoveryMechanismAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rm.ref.Append("name"))
+	return terra.ReferenceAsString(rm.ref.Append("name"))
 }
 
 func (rm RecoveryMechanismAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(rm.ref.Append("priority"))
+	return terra.ReferenceAsNumber(rm.ref.Append("priority"))
 }
 
 type AdminCreateUserConfigAttributes struct {
@@ -249,11 +249,11 @@ func (acuc AdminCreateUserConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (acuc AdminCreateUserConfigAttributes) AllowAdminCreateUserOnly() terra.BoolValue {
-	return terra.ReferenceBool(acuc.ref.Append("allow_admin_create_user_only"))
+	return terra.ReferenceAsBool(acuc.ref.Append("allow_admin_create_user_only"))
 }
 
 func (acuc AdminCreateUserConfigAttributes) InviteMessageTemplate() terra.ListValue[InviteMessageTemplateAttributes] {
-	return terra.ReferenceList[InviteMessageTemplateAttributes](acuc.ref.Append("invite_message_template"))
+	return terra.ReferenceAsList[InviteMessageTemplateAttributes](acuc.ref.Append("invite_message_template"))
 }
 
 type InviteMessageTemplateAttributes struct {
@@ -273,15 +273,15 @@ func (imt InviteMessageTemplateAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (imt InviteMessageTemplateAttributes) EmailMessage() terra.StringValue {
-	return terra.ReferenceString(imt.ref.Append("email_message"))
+	return terra.ReferenceAsString(imt.ref.Append("email_message"))
 }
 
 func (imt InviteMessageTemplateAttributes) EmailSubject() terra.StringValue {
-	return terra.ReferenceString(imt.ref.Append("email_subject"))
+	return terra.ReferenceAsString(imt.ref.Append("email_subject"))
 }
 
 func (imt InviteMessageTemplateAttributes) SmsMessage() terra.StringValue {
-	return terra.ReferenceString(imt.ref.Append("sms_message"))
+	return terra.ReferenceAsString(imt.ref.Append("sms_message"))
 }
 
 type DeviceConfigurationAttributes struct {
@@ -301,11 +301,11 @@ func (dc DeviceConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dc DeviceConfigurationAttributes) ChallengeRequiredOnNewDevice() terra.BoolValue {
-	return terra.ReferenceBool(dc.ref.Append("challenge_required_on_new_device"))
+	return terra.ReferenceAsBool(dc.ref.Append("challenge_required_on_new_device"))
 }
 
 func (dc DeviceConfigurationAttributes) DeviceOnlyRememberedOnUserPrompt() terra.BoolValue {
-	return terra.ReferenceBool(dc.ref.Append("device_only_remembered_on_user_prompt"))
+	return terra.ReferenceAsBool(dc.ref.Append("device_only_remembered_on_user_prompt"))
 }
 
 type EmailConfigurationAttributes struct {
@@ -325,23 +325,23 @@ func (ec EmailConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec EmailConfigurationAttributes) ConfigurationSet() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("configuration_set"))
+	return terra.ReferenceAsString(ec.ref.Append("configuration_set"))
 }
 
 func (ec EmailConfigurationAttributes) EmailSendingAccount() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("email_sending_account"))
+	return terra.ReferenceAsString(ec.ref.Append("email_sending_account"))
 }
 
 func (ec EmailConfigurationAttributes) FromEmailAddress() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("from_email_address"))
+	return terra.ReferenceAsString(ec.ref.Append("from_email_address"))
 }
 
 func (ec EmailConfigurationAttributes) ReplyToEmailAddress() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("reply_to_email_address"))
+	return terra.ReferenceAsString(ec.ref.Append("reply_to_email_address"))
 }
 
 func (ec EmailConfigurationAttributes) SourceArn() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("source_arn"))
+	return terra.ReferenceAsString(ec.ref.Append("source_arn"))
 }
 
 type LambdaConfigAttributes struct {
@@ -361,55 +361,55 @@ func (lc LambdaConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lc LambdaConfigAttributes) CreateAuthChallenge() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("create_auth_challenge"))
+	return terra.ReferenceAsString(lc.ref.Append("create_auth_challenge"))
 }
 
 func (lc LambdaConfigAttributes) CustomMessage() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("custom_message"))
+	return terra.ReferenceAsString(lc.ref.Append("custom_message"))
 }
 
 func (lc LambdaConfigAttributes) DefineAuthChallenge() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("define_auth_challenge"))
+	return terra.ReferenceAsString(lc.ref.Append("define_auth_challenge"))
 }
 
 func (lc LambdaConfigAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(lc.ref.Append("kms_key_id"))
 }
 
 func (lc LambdaConfigAttributes) PostAuthentication() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("post_authentication"))
+	return terra.ReferenceAsString(lc.ref.Append("post_authentication"))
 }
 
 func (lc LambdaConfigAttributes) PostConfirmation() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("post_confirmation"))
+	return terra.ReferenceAsString(lc.ref.Append("post_confirmation"))
 }
 
 func (lc LambdaConfigAttributes) PreAuthentication() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("pre_authentication"))
+	return terra.ReferenceAsString(lc.ref.Append("pre_authentication"))
 }
 
 func (lc LambdaConfigAttributes) PreSignUp() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("pre_sign_up"))
+	return terra.ReferenceAsString(lc.ref.Append("pre_sign_up"))
 }
 
 func (lc LambdaConfigAttributes) PreTokenGeneration() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("pre_token_generation"))
+	return terra.ReferenceAsString(lc.ref.Append("pre_token_generation"))
 }
 
 func (lc LambdaConfigAttributes) UserMigration() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("user_migration"))
+	return terra.ReferenceAsString(lc.ref.Append("user_migration"))
 }
 
 func (lc LambdaConfigAttributes) VerifyAuthChallengeResponse() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("verify_auth_challenge_response"))
+	return terra.ReferenceAsString(lc.ref.Append("verify_auth_challenge_response"))
 }
 
 func (lc LambdaConfigAttributes) CustomEmailSender() terra.ListValue[CustomEmailSenderAttributes] {
-	return terra.ReferenceList[CustomEmailSenderAttributes](lc.ref.Append("custom_email_sender"))
+	return terra.ReferenceAsList[CustomEmailSenderAttributes](lc.ref.Append("custom_email_sender"))
 }
 
 func (lc LambdaConfigAttributes) CustomSmsSender() terra.ListValue[CustomSmsSenderAttributes] {
-	return terra.ReferenceList[CustomSmsSenderAttributes](lc.ref.Append("custom_sms_sender"))
+	return terra.ReferenceAsList[CustomSmsSenderAttributes](lc.ref.Append("custom_sms_sender"))
 }
 
 type CustomEmailSenderAttributes struct {
@@ -429,11 +429,11 @@ func (ces CustomEmailSenderAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ces CustomEmailSenderAttributes) LambdaArn() terra.StringValue {
-	return terra.ReferenceString(ces.ref.Append("lambda_arn"))
+	return terra.ReferenceAsString(ces.ref.Append("lambda_arn"))
 }
 
 func (ces CustomEmailSenderAttributes) LambdaVersion() terra.StringValue {
-	return terra.ReferenceString(ces.ref.Append("lambda_version"))
+	return terra.ReferenceAsString(ces.ref.Append("lambda_version"))
 }
 
 type CustomSmsSenderAttributes struct {
@@ -453,11 +453,11 @@ func (css CustomSmsSenderAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (css CustomSmsSenderAttributes) LambdaArn() terra.StringValue {
-	return terra.ReferenceString(css.ref.Append("lambda_arn"))
+	return terra.ReferenceAsString(css.ref.Append("lambda_arn"))
 }
 
 func (css CustomSmsSenderAttributes) LambdaVersion() terra.StringValue {
-	return terra.ReferenceString(css.ref.Append("lambda_version"))
+	return terra.ReferenceAsString(css.ref.Append("lambda_version"))
 }
 
 type PasswordPolicyAttributes struct {
@@ -477,27 +477,27 @@ func (pp PasswordPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pp PasswordPolicyAttributes) MinimumLength() terra.NumberValue {
-	return terra.ReferenceNumber(pp.ref.Append("minimum_length"))
+	return terra.ReferenceAsNumber(pp.ref.Append("minimum_length"))
 }
 
 func (pp PasswordPolicyAttributes) RequireLowercase() terra.BoolValue {
-	return terra.ReferenceBool(pp.ref.Append("require_lowercase"))
+	return terra.ReferenceAsBool(pp.ref.Append("require_lowercase"))
 }
 
 func (pp PasswordPolicyAttributes) RequireNumbers() terra.BoolValue {
-	return terra.ReferenceBool(pp.ref.Append("require_numbers"))
+	return terra.ReferenceAsBool(pp.ref.Append("require_numbers"))
 }
 
 func (pp PasswordPolicyAttributes) RequireSymbols() terra.BoolValue {
-	return terra.ReferenceBool(pp.ref.Append("require_symbols"))
+	return terra.ReferenceAsBool(pp.ref.Append("require_symbols"))
 }
 
 func (pp PasswordPolicyAttributes) RequireUppercase() terra.BoolValue {
-	return terra.ReferenceBool(pp.ref.Append("require_uppercase"))
+	return terra.ReferenceAsBool(pp.ref.Append("require_uppercase"))
 }
 
 func (pp PasswordPolicyAttributes) TemporaryPasswordValidityDays() terra.NumberValue {
-	return terra.ReferenceNumber(pp.ref.Append("temporary_password_validity_days"))
+	return terra.ReferenceAsNumber(pp.ref.Append("temporary_password_validity_days"))
 }
 
 type SchemaAttributes struct {
@@ -517,31 +517,31 @@ func (s SchemaAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SchemaAttributes) AttributeDataType() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("attribute_data_type"))
+	return terra.ReferenceAsString(s.ref.Append("attribute_data_type"))
 }
 
 func (s SchemaAttributes) DeveloperOnlyAttribute() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("developer_only_attribute"))
+	return terra.ReferenceAsBool(s.ref.Append("developer_only_attribute"))
 }
 
 func (s SchemaAttributes) Mutable() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("mutable"))
+	return terra.ReferenceAsBool(s.ref.Append("mutable"))
 }
 
 func (s SchemaAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s SchemaAttributes) Required() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("required"))
+	return terra.ReferenceAsBool(s.ref.Append("required"))
 }
 
 func (s SchemaAttributes) NumberAttributeConstraints() terra.ListValue[NumberAttributeConstraintsAttributes] {
-	return terra.ReferenceList[NumberAttributeConstraintsAttributes](s.ref.Append("number_attribute_constraints"))
+	return terra.ReferenceAsList[NumberAttributeConstraintsAttributes](s.ref.Append("number_attribute_constraints"))
 }
 
 func (s SchemaAttributes) StringAttributeConstraints() terra.ListValue[StringAttributeConstraintsAttributes] {
-	return terra.ReferenceList[StringAttributeConstraintsAttributes](s.ref.Append("string_attribute_constraints"))
+	return terra.ReferenceAsList[StringAttributeConstraintsAttributes](s.ref.Append("string_attribute_constraints"))
 }
 
 type NumberAttributeConstraintsAttributes struct {
@@ -561,11 +561,11 @@ func (nac NumberAttributeConstraintsAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (nac NumberAttributeConstraintsAttributes) MaxValue() terra.StringValue {
-	return terra.ReferenceString(nac.ref.Append("max_value"))
+	return terra.ReferenceAsString(nac.ref.Append("max_value"))
 }
 
 func (nac NumberAttributeConstraintsAttributes) MinValue() terra.StringValue {
-	return terra.ReferenceString(nac.ref.Append("min_value"))
+	return terra.ReferenceAsString(nac.ref.Append("min_value"))
 }
 
 type StringAttributeConstraintsAttributes struct {
@@ -585,11 +585,11 @@ func (sac StringAttributeConstraintsAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (sac StringAttributeConstraintsAttributes) MaxLength() terra.StringValue {
-	return terra.ReferenceString(sac.ref.Append("max_length"))
+	return terra.ReferenceAsString(sac.ref.Append("max_length"))
 }
 
 func (sac StringAttributeConstraintsAttributes) MinLength() terra.StringValue {
-	return terra.ReferenceString(sac.ref.Append("min_length"))
+	return terra.ReferenceAsString(sac.ref.Append("min_length"))
 }
 
 type SmsConfigurationAttributes struct {
@@ -609,15 +609,15 @@ func (sc SmsConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc SmsConfigurationAttributes) ExternalId() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("external_id"))
+	return terra.ReferenceAsString(sc.ref.Append("external_id"))
 }
 
 func (sc SmsConfigurationAttributes) SnsCallerArn() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("sns_caller_arn"))
+	return terra.ReferenceAsString(sc.ref.Append("sns_caller_arn"))
 }
 
 func (sc SmsConfigurationAttributes) SnsRegion() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("sns_region"))
+	return terra.ReferenceAsString(sc.ref.Append("sns_region"))
 }
 
 type SoftwareTokenMfaConfigurationAttributes struct {
@@ -637,7 +637,7 @@ func (stmc SoftwareTokenMfaConfigurationAttributes) InternalTokens() hclwrite.To
 }
 
 func (stmc SoftwareTokenMfaConfigurationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(stmc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(stmc.ref.Append("enabled"))
 }
 
 type UserAttributeUpdateSettingsAttributes struct {
@@ -657,7 +657,7 @@ func (uaus UserAttributeUpdateSettingsAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (uaus UserAttributeUpdateSettingsAttributes) AttributesRequireVerificationBeforeUpdate() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](uaus.ref.Append("attributes_require_verification_before_update"))
+	return terra.ReferenceAsSet[terra.StringValue](uaus.ref.Append("attributes_require_verification_before_update"))
 }
 
 type UserPoolAddOnsAttributes struct {
@@ -677,7 +677,7 @@ func (upao UserPoolAddOnsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (upao UserPoolAddOnsAttributes) AdvancedSecurityMode() terra.StringValue {
-	return terra.ReferenceString(upao.ref.Append("advanced_security_mode"))
+	return terra.ReferenceAsString(upao.ref.Append("advanced_security_mode"))
 }
 
 type UsernameConfigurationAttributes struct {
@@ -697,7 +697,7 @@ func (uc UsernameConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (uc UsernameConfigurationAttributes) CaseSensitive() terra.BoolValue {
-	return terra.ReferenceBool(uc.ref.Append("case_sensitive"))
+	return terra.ReferenceAsBool(uc.ref.Append("case_sensitive"))
 }
 
 type VerificationMessageTemplateAttributes struct {
@@ -717,27 +717,27 @@ func (vmt VerificationMessageTemplateAttributes) InternalTokens() hclwrite.Token
 }
 
 func (vmt VerificationMessageTemplateAttributes) DefaultEmailOption() terra.StringValue {
-	return terra.ReferenceString(vmt.ref.Append("default_email_option"))
+	return terra.ReferenceAsString(vmt.ref.Append("default_email_option"))
 }
 
 func (vmt VerificationMessageTemplateAttributes) EmailMessage() terra.StringValue {
-	return terra.ReferenceString(vmt.ref.Append("email_message"))
+	return terra.ReferenceAsString(vmt.ref.Append("email_message"))
 }
 
 func (vmt VerificationMessageTemplateAttributes) EmailMessageByLink() terra.StringValue {
-	return terra.ReferenceString(vmt.ref.Append("email_message_by_link"))
+	return terra.ReferenceAsString(vmt.ref.Append("email_message_by_link"))
 }
 
 func (vmt VerificationMessageTemplateAttributes) EmailSubject() terra.StringValue {
-	return terra.ReferenceString(vmt.ref.Append("email_subject"))
+	return terra.ReferenceAsString(vmt.ref.Append("email_subject"))
 }
 
 func (vmt VerificationMessageTemplateAttributes) EmailSubjectByLink() terra.StringValue {
-	return terra.ReferenceString(vmt.ref.Append("email_subject_by_link"))
+	return terra.ReferenceAsString(vmt.ref.Append("email_subject_by_link"))
 }
 
 func (vmt VerificationMessageTemplateAttributes) SmsMessage() terra.StringValue {
-	return terra.ReferenceString(vmt.ref.Append("sms_message"))
+	return terra.ReferenceAsString(vmt.ref.Append("sms_message"))
 }
 
 type AccountRecoverySettingState struct {

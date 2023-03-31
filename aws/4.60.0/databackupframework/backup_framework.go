@@ -35,15 +35,15 @@ func (c ControlAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ControlAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 func (c ControlAttributes) InputParameter() terra.SetValue[InputParameterAttributes] {
-	return terra.ReferenceSet[InputParameterAttributes](c.ref.Append("input_parameter"))
+	return terra.ReferenceAsSet[InputParameterAttributes](c.ref.Append("input_parameter"))
 }
 
 func (c ControlAttributes) Scope() terra.ListValue[ScopeAttributes] {
-	return terra.ReferenceList[ScopeAttributes](c.ref.Append("scope"))
+	return terra.ReferenceAsList[ScopeAttributes](c.ref.Append("scope"))
 }
 
 type InputParameterAttributes struct {
@@ -63,11 +63,11 @@ func (ip InputParameterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ip InputParameterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("name"))
+	return terra.ReferenceAsString(ip.ref.Append("name"))
 }
 
 func (ip InputParameterAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("value"))
+	return terra.ReferenceAsString(ip.ref.Append("value"))
 }
 
 type ScopeAttributes struct {
@@ -87,15 +87,15 @@ func (s ScopeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s ScopeAttributes) ComplianceResourceIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("compliance_resource_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("compliance_resource_ids"))
 }
 
 func (s ScopeAttributes) ComplianceResourceTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](s.ref.Append("compliance_resource_types"))
+	return terra.ReferenceAsSet[terra.StringValue](s.ref.Append("compliance_resource_types"))
 }
 
 func (s ScopeAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](s.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](s.ref.Append("tags"))
 }
 
 type ControlState struct {

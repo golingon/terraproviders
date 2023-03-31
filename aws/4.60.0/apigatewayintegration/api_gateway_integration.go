@@ -29,7 +29,7 @@ func (tc TlsConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tc TlsConfigAttributes) InsecureSkipVerification() terra.BoolValue {
-	return terra.ReferenceBool(tc.ref.Append("insecure_skip_verification"))
+	return terra.ReferenceAsBool(tc.ref.Append("insecure_skip_verification"))
 }
 
 type TlsConfigState struct {

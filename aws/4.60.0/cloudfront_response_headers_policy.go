@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudfrontResponseHeadersPolicy creates a new instance of [CloudfrontResponseHeadersPolicy].
 func NewCloudfrontResponseHeadersPolicy(name string, args CloudfrontResponseHeadersPolicyArgs) *CloudfrontResponseHeadersPolicy {
 	return &CloudfrontResponseHeadersPolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudfrontResponseHeadersPolicy(name string, args CloudfrontResponseHead
 
 var _ terra.Resource = (*CloudfrontResponseHeadersPolicy)(nil)
 
+// CloudfrontResponseHeadersPolicy represents the Terraform resource aws_cloudfront_response_headers_policy.
 type CloudfrontResponseHeadersPolicy struct {
-	Name  string
-	Args  CloudfrontResponseHeadersPolicyArgs
-	state *cloudfrontResponseHeadersPolicyState
+	Name      string
+	Args      CloudfrontResponseHeadersPolicyArgs
+	state     *cloudfrontResponseHeadersPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudfrontResponseHeadersPolicy].
 func (crhp *CloudfrontResponseHeadersPolicy) Type() string {
 	return "aws_cloudfront_response_headers_policy"
 }
 
+// LocalName returns the local name for [CloudfrontResponseHeadersPolicy].
 func (crhp *CloudfrontResponseHeadersPolicy) LocalName() string {
 	return crhp.Name
 }
 
+// Configuration returns the configuration (args) for [CloudfrontResponseHeadersPolicy].
 func (crhp *CloudfrontResponseHeadersPolicy) Configuration() interface{} {
 	return crhp.Args
 }
 
+// DependOn is used for other resources to depend on [CloudfrontResponseHeadersPolicy].
+func (crhp *CloudfrontResponseHeadersPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(crhp)
+}
+
+// Dependencies returns the list of resources [CloudfrontResponseHeadersPolicy] depends_on.
+func (crhp *CloudfrontResponseHeadersPolicy) Dependencies() terra.Dependencies {
+	return crhp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudfrontResponseHeadersPolicy].
+func (crhp *CloudfrontResponseHeadersPolicy) LifecycleManagement() *terra.Lifecycle {
+	return crhp.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudfrontResponseHeadersPolicy].
 func (crhp *CloudfrontResponseHeadersPolicy) Attributes() cloudfrontResponseHeadersPolicyAttributes {
 	return cloudfrontResponseHeadersPolicyAttributes{ref: terra.ReferenceResource(crhp)}
 }
 
+// ImportState imports the given attribute values into [CloudfrontResponseHeadersPolicy]'s state.
 func (crhp *CloudfrontResponseHeadersPolicy) ImportState(av io.Reader) error {
 	crhp.state = &cloudfrontResponseHeadersPolicyState{}
 	if err := json.NewDecoder(av).Decode(crhp.state); err != nil {
@@ -49,10 +73,12 @@ func (crhp *CloudfrontResponseHeadersPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudfrontResponseHeadersPolicy] has state.
 func (crhp *CloudfrontResponseHeadersPolicy) State() (*cloudfrontResponseHeadersPolicyState, bool) {
 	return crhp.state, crhp.state != nil
 }
 
+// StateMust returns the state for [CloudfrontResponseHeadersPolicy]. Panics if the state is nil.
 func (crhp *CloudfrontResponseHeadersPolicy) StateMust() *cloudfrontResponseHeadersPolicyState {
 	if crhp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", crhp.Type(), crhp.LocalName()))
@@ -60,10 +86,7 @@ func (crhp *CloudfrontResponseHeadersPolicy) StateMust() *cloudfrontResponseHead
 	return crhp.state
 }
 
-func (crhp *CloudfrontResponseHeadersPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(crhp)
-}
-
+// CloudfrontResponseHeadersPolicyArgs contains the configurations for aws_cloudfront_response_headers_policy.
 type CloudfrontResponseHeadersPolicyArgs struct {
 	// Comment: string, optional
 	Comment terra.StringValue `hcl:"comment,attr"`
@@ -81,43 +104,45 @@ type CloudfrontResponseHeadersPolicyArgs struct {
 	SecurityHeadersConfig *cloudfrontresponseheaderspolicy.SecurityHeadersConfig `hcl:"security_headers_config,block"`
 	// ServerTimingHeadersConfig: optional
 	ServerTimingHeadersConfig *cloudfrontresponseheaderspolicy.ServerTimingHeadersConfig `hcl:"server_timing_headers_config,block"`
-	// DependsOn contains resources that CloudfrontResponseHeadersPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudfrontResponseHeadersPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Comment returns a reference to field comment of aws_cloudfront_response_headers_policy.
 func (crhp cloudfrontResponseHeadersPolicyAttributes) Comment() terra.StringValue {
-	return terra.ReferenceString(crhp.ref.Append("comment"))
+	return terra.ReferenceAsString(crhp.ref.Append("comment"))
 }
 
+// Etag returns a reference to field etag of aws_cloudfront_response_headers_policy.
 func (crhp cloudfrontResponseHeadersPolicyAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(crhp.ref.Append("etag"))
+	return terra.ReferenceAsString(crhp.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of aws_cloudfront_response_headers_policy.
 func (crhp cloudfrontResponseHeadersPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(crhp.ref.Append("id"))
+	return terra.ReferenceAsString(crhp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_cloudfront_response_headers_policy.
 func (crhp cloudfrontResponseHeadersPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(crhp.ref.Append("name"))
+	return terra.ReferenceAsString(crhp.ref.Append("name"))
 }
 
 func (crhp cloudfrontResponseHeadersPolicyAttributes) CorsConfig() terra.ListValue[cloudfrontresponseheaderspolicy.CorsConfigAttributes] {
-	return terra.ReferenceList[cloudfrontresponseheaderspolicy.CorsConfigAttributes](crhp.ref.Append("cors_config"))
+	return terra.ReferenceAsList[cloudfrontresponseheaderspolicy.CorsConfigAttributes](crhp.ref.Append("cors_config"))
 }
 
 func (crhp cloudfrontResponseHeadersPolicyAttributes) CustomHeadersConfig() terra.ListValue[cloudfrontresponseheaderspolicy.CustomHeadersConfigAttributes] {
-	return terra.ReferenceList[cloudfrontresponseheaderspolicy.CustomHeadersConfigAttributes](crhp.ref.Append("custom_headers_config"))
+	return terra.ReferenceAsList[cloudfrontresponseheaderspolicy.CustomHeadersConfigAttributes](crhp.ref.Append("custom_headers_config"))
 }
 
 func (crhp cloudfrontResponseHeadersPolicyAttributes) SecurityHeadersConfig() terra.ListValue[cloudfrontresponseheaderspolicy.SecurityHeadersConfigAttributes] {
-	return terra.ReferenceList[cloudfrontresponseheaderspolicy.SecurityHeadersConfigAttributes](crhp.ref.Append("security_headers_config"))
+	return terra.ReferenceAsList[cloudfrontresponseheaderspolicy.SecurityHeadersConfigAttributes](crhp.ref.Append("security_headers_config"))
 }
 
 func (crhp cloudfrontResponseHeadersPolicyAttributes) ServerTimingHeadersConfig() terra.ListValue[cloudfrontresponseheaderspolicy.ServerTimingHeadersConfigAttributes] {
-	return terra.ReferenceList[cloudfrontresponseheaderspolicy.ServerTimingHeadersConfigAttributes](crhp.ref.Append("server_timing_headers_config"))
+	return terra.ReferenceAsList[cloudfrontresponseheaderspolicy.ServerTimingHeadersConfigAttributes](crhp.ref.Append("server_timing_headers_config"))
 }
 
 type cloudfrontResponseHeadersPolicyState struct {

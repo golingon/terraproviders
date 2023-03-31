@@ -26,19 +26,19 @@ func (par PoolAddressRangesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (par PoolAddressRangesAttributes) AddressCount() terra.NumberValue {
-	return terra.ReferenceNumber(par.ref.Append("address_count"))
+	return terra.ReferenceAsNumber(par.ref.Append("address_count"))
 }
 
 func (par PoolAddressRangesAttributes) AvailableAddressCount() terra.NumberValue {
-	return terra.ReferenceNumber(par.ref.Append("available_address_count"))
+	return terra.ReferenceAsNumber(par.ref.Append("available_address_count"))
 }
 
 func (par PoolAddressRangesAttributes) FirstAddress() terra.StringValue {
-	return terra.ReferenceString(par.ref.Append("first_address"))
+	return terra.ReferenceAsString(par.ref.Append("first_address"))
 }
 
 func (par PoolAddressRangesAttributes) LastAddress() terra.StringValue {
-	return terra.ReferenceString(par.ref.Append("last_address"))
+	return terra.ReferenceAsString(par.ref.Append("last_address"))
 }
 
 type PoolAddressRangesState struct {

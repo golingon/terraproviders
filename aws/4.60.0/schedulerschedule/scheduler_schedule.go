@@ -158,11 +158,11 @@ func (ftw FlexibleTimeWindowAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ftw FlexibleTimeWindowAttributes) MaximumWindowInMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(ftw.ref.Append("maximum_window_in_minutes"))
+	return terra.ReferenceAsNumber(ftw.ref.Append("maximum_window_in_minutes"))
 }
 
 func (ftw FlexibleTimeWindowAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(ftw.ref.Append("mode"))
+	return terra.ReferenceAsString(ftw.ref.Append("mode"))
 }
 
 type TargetAttributes struct {
@@ -182,43 +182,43 @@ func (t TargetAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TargetAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("arn"))
+	return terra.ReferenceAsString(t.ref.Append("arn"))
 }
 
 func (t TargetAttributes) Input() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("input"))
+	return terra.ReferenceAsString(t.ref.Append("input"))
 }
 
 func (t TargetAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("role_arn"))
+	return terra.ReferenceAsString(t.ref.Append("role_arn"))
 }
 
 func (t TargetAttributes) DeadLetterConfig() terra.ListValue[DeadLetterConfigAttributes] {
-	return terra.ReferenceList[DeadLetterConfigAttributes](t.ref.Append("dead_letter_config"))
+	return terra.ReferenceAsList[DeadLetterConfigAttributes](t.ref.Append("dead_letter_config"))
 }
 
 func (t TargetAttributes) EcsParameters() terra.ListValue[EcsParametersAttributes] {
-	return terra.ReferenceList[EcsParametersAttributes](t.ref.Append("ecs_parameters"))
+	return terra.ReferenceAsList[EcsParametersAttributes](t.ref.Append("ecs_parameters"))
 }
 
 func (t TargetAttributes) EventbridgeParameters() terra.ListValue[EventbridgeParametersAttributes] {
-	return terra.ReferenceList[EventbridgeParametersAttributes](t.ref.Append("eventbridge_parameters"))
+	return terra.ReferenceAsList[EventbridgeParametersAttributes](t.ref.Append("eventbridge_parameters"))
 }
 
 func (t TargetAttributes) KinesisParameters() terra.ListValue[KinesisParametersAttributes] {
-	return terra.ReferenceList[KinesisParametersAttributes](t.ref.Append("kinesis_parameters"))
+	return terra.ReferenceAsList[KinesisParametersAttributes](t.ref.Append("kinesis_parameters"))
 }
 
 func (t TargetAttributes) RetryPolicy() terra.ListValue[RetryPolicyAttributes] {
-	return terra.ReferenceList[RetryPolicyAttributes](t.ref.Append("retry_policy"))
+	return terra.ReferenceAsList[RetryPolicyAttributes](t.ref.Append("retry_policy"))
 }
 
 func (t TargetAttributes) SagemakerPipelineParameters() terra.ListValue[SagemakerPipelineParametersAttributes] {
-	return terra.ReferenceList[SagemakerPipelineParametersAttributes](t.ref.Append("sagemaker_pipeline_parameters"))
+	return terra.ReferenceAsList[SagemakerPipelineParametersAttributes](t.ref.Append("sagemaker_pipeline_parameters"))
 }
 
 func (t TargetAttributes) SqsParameters() terra.ListValue[SqsParametersAttributes] {
-	return terra.ReferenceList[SqsParametersAttributes](t.ref.Append("sqs_parameters"))
+	return terra.ReferenceAsList[SqsParametersAttributes](t.ref.Append("sqs_parameters"))
 }
 
 type DeadLetterConfigAttributes struct {
@@ -238,7 +238,7 @@ func (dlc DeadLetterConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dlc DeadLetterConfigAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dlc.ref.Append("arn"))
+	return terra.ReferenceAsString(dlc.ref.Append("arn"))
 }
 
 type EcsParametersAttributes struct {
@@ -258,59 +258,59 @@ func (ep EcsParametersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ep EcsParametersAttributes) EnableEcsManagedTags() terra.BoolValue {
-	return terra.ReferenceBool(ep.ref.Append("enable_ecs_managed_tags"))
+	return terra.ReferenceAsBool(ep.ref.Append("enable_ecs_managed_tags"))
 }
 
 func (ep EcsParametersAttributes) EnableExecuteCommand() terra.BoolValue {
-	return terra.ReferenceBool(ep.ref.Append("enable_execute_command"))
+	return terra.ReferenceAsBool(ep.ref.Append("enable_execute_command"))
 }
 
 func (ep EcsParametersAttributes) Group() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("group"))
+	return terra.ReferenceAsString(ep.ref.Append("group"))
 }
 
 func (ep EcsParametersAttributes) LaunchType() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("launch_type"))
+	return terra.ReferenceAsString(ep.ref.Append("launch_type"))
 }
 
 func (ep EcsParametersAttributes) PlatformVersion() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("platform_version"))
+	return terra.ReferenceAsString(ep.ref.Append("platform_version"))
 }
 
 func (ep EcsParametersAttributes) PropagateTags() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("propagate_tags"))
+	return terra.ReferenceAsString(ep.ref.Append("propagate_tags"))
 }
 
 func (ep EcsParametersAttributes) ReferenceId() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("reference_id"))
+	return terra.ReferenceAsString(ep.ref.Append("reference_id"))
 }
 
 func (ep EcsParametersAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ep.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ep.ref.Append("tags"))
 }
 
 func (ep EcsParametersAttributes) TaskCount() terra.NumberValue {
-	return terra.ReferenceNumber(ep.ref.Append("task_count"))
+	return terra.ReferenceAsNumber(ep.ref.Append("task_count"))
 }
 
 func (ep EcsParametersAttributes) TaskDefinitionArn() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("task_definition_arn"))
+	return terra.ReferenceAsString(ep.ref.Append("task_definition_arn"))
 }
 
 func (ep EcsParametersAttributes) CapacityProviderStrategy() terra.SetValue[CapacityProviderStrategyAttributes] {
-	return terra.ReferenceSet[CapacityProviderStrategyAttributes](ep.ref.Append("capacity_provider_strategy"))
+	return terra.ReferenceAsSet[CapacityProviderStrategyAttributes](ep.ref.Append("capacity_provider_strategy"))
 }
 
 func (ep EcsParametersAttributes) NetworkConfiguration() terra.ListValue[NetworkConfigurationAttributes] {
-	return terra.ReferenceList[NetworkConfigurationAttributes](ep.ref.Append("network_configuration"))
+	return terra.ReferenceAsList[NetworkConfigurationAttributes](ep.ref.Append("network_configuration"))
 }
 
 func (ep EcsParametersAttributes) PlacementConstraints() terra.SetValue[PlacementConstraintsAttributes] {
-	return terra.ReferenceSet[PlacementConstraintsAttributes](ep.ref.Append("placement_constraints"))
+	return terra.ReferenceAsSet[PlacementConstraintsAttributes](ep.ref.Append("placement_constraints"))
 }
 
 func (ep EcsParametersAttributes) PlacementStrategy() terra.SetValue[PlacementStrategyAttributes] {
-	return terra.ReferenceSet[PlacementStrategyAttributes](ep.ref.Append("placement_strategy"))
+	return terra.ReferenceAsSet[PlacementStrategyAttributes](ep.ref.Append("placement_strategy"))
 }
 
 type CapacityProviderStrategyAttributes struct {
@@ -330,15 +330,15 @@ func (cps CapacityProviderStrategyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cps CapacityProviderStrategyAttributes) Base() terra.NumberValue {
-	return terra.ReferenceNumber(cps.ref.Append("base"))
+	return terra.ReferenceAsNumber(cps.ref.Append("base"))
 }
 
 func (cps CapacityProviderStrategyAttributes) CapacityProvider() terra.StringValue {
-	return terra.ReferenceString(cps.ref.Append("capacity_provider"))
+	return terra.ReferenceAsString(cps.ref.Append("capacity_provider"))
 }
 
 func (cps CapacityProviderStrategyAttributes) Weight() terra.NumberValue {
-	return terra.ReferenceNumber(cps.ref.Append("weight"))
+	return terra.ReferenceAsNumber(cps.ref.Append("weight"))
 }
 
 type NetworkConfigurationAttributes struct {
@@ -358,15 +358,15 @@ func (nc NetworkConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nc NetworkConfigurationAttributes) AssignPublicIp() terra.BoolValue {
-	return terra.ReferenceBool(nc.ref.Append("assign_public_ip"))
+	return terra.ReferenceAsBool(nc.ref.Append("assign_public_ip"))
 }
 
 func (nc NetworkConfigurationAttributes) SecurityGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](nc.ref.Append("security_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](nc.ref.Append("security_groups"))
 }
 
 func (nc NetworkConfigurationAttributes) Subnets() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](nc.ref.Append("subnets"))
+	return terra.ReferenceAsSet[terra.StringValue](nc.ref.Append("subnets"))
 }
 
 type PlacementConstraintsAttributes struct {
@@ -386,11 +386,11 @@ func (pc PlacementConstraintsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pc PlacementConstraintsAttributes) Expression() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("expression"))
+	return terra.ReferenceAsString(pc.ref.Append("expression"))
 }
 
 func (pc PlacementConstraintsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("type"))
+	return terra.ReferenceAsString(pc.ref.Append("type"))
 }
 
 type PlacementStrategyAttributes struct {
@@ -410,11 +410,11 @@ func (ps PlacementStrategyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ps PlacementStrategyAttributes) Field() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("field"))
+	return terra.ReferenceAsString(ps.ref.Append("field"))
 }
 
 func (ps PlacementStrategyAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("type"))
+	return terra.ReferenceAsString(ps.ref.Append("type"))
 }
 
 type EventbridgeParametersAttributes struct {
@@ -434,11 +434,11 @@ func (ep EventbridgeParametersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ep EventbridgeParametersAttributes) DetailType() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("detail_type"))
+	return terra.ReferenceAsString(ep.ref.Append("detail_type"))
 }
 
 func (ep EventbridgeParametersAttributes) Source() terra.StringValue {
-	return terra.ReferenceString(ep.ref.Append("source"))
+	return terra.ReferenceAsString(ep.ref.Append("source"))
 }
 
 type KinesisParametersAttributes struct {
@@ -458,7 +458,7 @@ func (kp KinesisParametersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (kp KinesisParametersAttributes) PartitionKey() terra.StringValue {
-	return terra.ReferenceString(kp.ref.Append("partition_key"))
+	return terra.ReferenceAsString(kp.ref.Append("partition_key"))
 }
 
 type RetryPolicyAttributes struct {
@@ -478,11 +478,11 @@ func (rp RetryPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rp RetryPolicyAttributes) MaximumEventAgeInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(rp.ref.Append("maximum_event_age_in_seconds"))
+	return terra.ReferenceAsNumber(rp.ref.Append("maximum_event_age_in_seconds"))
 }
 
 func (rp RetryPolicyAttributes) MaximumRetryAttempts() terra.NumberValue {
-	return terra.ReferenceNumber(rp.ref.Append("maximum_retry_attempts"))
+	return terra.ReferenceAsNumber(rp.ref.Append("maximum_retry_attempts"))
 }
 
 type SagemakerPipelineParametersAttributes struct {
@@ -502,7 +502,7 @@ func (spp SagemakerPipelineParametersAttributes) InternalTokens() hclwrite.Token
 }
 
 func (spp SagemakerPipelineParametersAttributes) PipelineParameter() terra.SetValue[PipelineParameterAttributes] {
-	return terra.ReferenceSet[PipelineParameterAttributes](spp.ref.Append("pipeline_parameter"))
+	return terra.ReferenceAsSet[PipelineParameterAttributes](spp.ref.Append("pipeline_parameter"))
 }
 
 type PipelineParameterAttributes struct {
@@ -522,11 +522,11 @@ func (pp PipelineParameterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pp PipelineParameterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(pp.ref.Append("name"))
+	return terra.ReferenceAsString(pp.ref.Append("name"))
 }
 
 func (pp PipelineParameterAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(pp.ref.Append("value"))
+	return terra.ReferenceAsString(pp.ref.Append("value"))
 }
 
 type SqsParametersAttributes struct {
@@ -546,7 +546,7 @@ func (sp SqsParametersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sp SqsParametersAttributes) MessageGroupId() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("message_group_id"))
+	return terra.ReferenceAsString(sp.ref.Append("message_group_id"))
 }
 
 type FlexibleTimeWindowState struct {

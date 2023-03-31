@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataDocdbEngineVersion creates a new instance of [DataDocdbEngineVersion].
 func NewDataDocdbEngineVersion(name string, args DataDocdbEngineVersionArgs) *DataDocdbEngineVersion {
 	return &DataDocdbEngineVersion{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataDocdbEngineVersion(name string, args DataDocdbEngineVersionArgs) *Da
 
 var _ terra.DataResource = (*DataDocdbEngineVersion)(nil)
 
+// DataDocdbEngineVersion represents the Terraform data resource aws_docdb_engine_version.
 type DataDocdbEngineVersion struct {
 	Name string
 	Args DataDocdbEngineVersionArgs
 }
 
+// DataSource returns the Terraform object type for [DataDocdbEngineVersion].
 func (dev *DataDocdbEngineVersion) DataSource() string {
 	return "aws_docdb_engine_version"
 }
 
+// LocalName returns the local name for [DataDocdbEngineVersion].
 func (dev *DataDocdbEngineVersion) LocalName() string {
 	return dev.Name
 }
 
+// Configuration returns the configuration (args) for [DataDocdbEngineVersion].
 func (dev *DataDocdbEngineVersion) Configuration() interface{} {
 	return dev.Args
 }
 
+// Attributes returns the attributes for [DataDocdbEngineVersion].
 func (dev *DataDocdbEngineVersion) Attributes() dataDocdbEngineVersionAttributes {
 	return dataDocdbEngineVersionAttributes{ref: terra.ReferenceDataResource(dev)}
 }
 
+// DataDocdbEngineVersionArgs contains the configurations for aws_docdb_engine_version.
 type DataDocdbEngineVersionArgs struct {
 	// Engine: string, optional
 	Engine terra.StringValue `hcl:"engine,attr"`
@@ -50,42 +57,52 @@ type dataDocdbEngineVersionAttributes struct {
 	ref terra.Reference
 }
 
+// Engine returns a reference to field engine of aws_docdb_engine_version.
 func (dev dataDocdbEngineVersionAttributes) Engine() terra.StringValue {
-	return terra.ReferenceString(dev.ref.Append("engine"))
+	return terra.ReferenceAsString(dev.ref.Append("engine"))
 }
 
+// EngineDescription returns a reference to field engine_description of aws_docdb_engine_version.
 func (dev dataDocdbEngineVersionAttributes) EngineDescription() terra.StringValue {
-	return terra.ReferenceString(dev.ref.Append("engine_description"))
+	return terra.ReferenceAsString(dev.ref.Append("engine_description"))
 }
 
+// ExportableLogTypes returns a reference to field exportable_log_types of aws_docdb_engine_version.
 func (dev dataDocdbEngineVersionAttributes) ExportableLogTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dev.ref.Append("exportable_log_types"))
+	return terra.ReferenceAsSet[terra.StringValue](dev.ref.Append("exportable_log_types"))
 }
 
+// Id returns a reference to field id of aws_docdb_engine_version.
 func (dev dataDocdbEngineVersionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dev.ref.Append("id"))
+	return terra.ReferenceAsString(dev.ref.Append("id"))
 }
 
+// ParameterGroupFamily returns a reference to field parameter_group_family of aws_docdb_engine_version.
 func (dev dataDocdbEngineVersionAttributes) ParameterGroupFamily() terra.StringValue {
-	return terra.ReferenceString(dev.ref.Append("parameter_group_family"))
+	return terra.ReferenceAsString(dev.ref.Append("parameter_group_family"))
 }
 
+// PreferredVersions returns a reference to field preferred_versions of aws_docdb_engine_version.
 func (dev dataDocdbEngineVersionAttributes) PreferredVersions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dev.ref.Append("preferred_versions"))
+	return terra.ReferenceAsList[terra.StringValue](dev.ref.Append("preferred_versions"))
 }
 
+// SupportsLogExportsToCloudwatch returns a reference to field supports_log_exports_to_cloudwatch of aws_docdb_engine_version.
 func (dev dataDocdbEngineVersionAttributes) SupportsLogExportsToCloudwatch() terra.BoolValue {
-	return terra.ReferenceBool(dev.ref.Append("supports_log_exports_to_cloudwatch"))
+	return terra.ReferenceAsBool(dev.ref.Append("supports_log_exports_to_cloudwatch"))
 }
 
+// ValidUpgradeTargets returns a reference to field valid_upgrade_targets of aws_docdb_engine_version.
 func (dev dataDocdbEngineVersionAttributes) ValidUpgradeTargets() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dev.ref.Append("valid_upgrade_targets"))
+	return terra.ReferenceAsSet[terra.StringValue](dev.ref.Append("valid_upgrade_targets"))
 }
 
+// Version returns a reference to field version of aws_docdb_engine_version.
 func (dev dataDocdbEngineVersionAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(dev.ref.Append("version"))
+	return terra.ReferenceAsString(dev.ref.Append("version"))
 }
 
+// VersionDescription returns a reference to field version_description of aws_docdb_engine_version.
 func (dev dataDocdbEngineVersionAttributes) VersionDescription() terra.StringValue {
-	return terra.ReferenceString(dev.ref.Append("version_description"))
+	return terra.ReferenceAsString(dev.ref.Append("version_description"))
 }

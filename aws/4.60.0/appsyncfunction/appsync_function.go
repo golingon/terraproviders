@@ -45,11 +45,11 @@ func (r RuntimeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RuntimeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("name"))
+	return terra.ReferenceAsString(r.ref.Append("name"))
 }
 
 func (r RuntimeAttributes) RuntimeVersion() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("runtime_version"))
+	return terra.ReferenceAsString(r.ref.Append("runtime_version"))
 }
 
 type SyncConfigAttributes struct {
@@ -69,15 +69,15 @@ func (sc SyncConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc SyncConfigAttributes) ConflictDetection() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("conflict_detection"))
+	return terra.ReferenceAsString(sc.ref.Append("conflict_detection"))
 }
 
 func (sc SyncConfigAttributes) ConflictHandler() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("conflict_handler"))
+	return terra.ReferenceAsString(sc.ref.Append("conflict_handler"))
 }
 
 func (sc SyncConfigAttributes) LambdaConflictHandlerConfig() terra.ListValue[LambdaConflictHandlerConfigAttributes] {
-	return terra.ReferenceList[LambdaConflictHandlerConfigAttributes](sc.ref.Append("lambda_conflict_handler_config"))
+	return terra.ReferenceAsList[LambdaConflictHandlerConfigAttributes](sc.ref.Append("lambda_conflict_handler_config"))
 }
 
 type LambdaConflictHandlerConfigAttributes struct {
@@ -97,7 +97,7 @@ func (lchc LambdaConflictHandlerConfigAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (lchc LambdaConflictHandlerConfigAttributes) LambdaConflictHandlerArn() terra.StringValue {
-	return terra.ReferenceString(lchc.ref.Append("lambda_conflict_handler_arn"))
+	return terra.ReferenceAsString(lchc.ref.Append("lambda_conflict_handler_arn"))
 }
 
 type RuntimeState struct {

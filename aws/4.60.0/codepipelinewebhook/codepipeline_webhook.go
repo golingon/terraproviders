@@ -38,11 +38,11 @@ func (ac AuthenticationConfigurationAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (ac AuthenticationConfigurationAttributes) AllowedIpRange() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("allowed_ip_range"))
+	return terra.ReferenceAsString(ac.ref.Append("allowed_ip_range"))
 }
 
 func (ac AuthenticationConfigurationAttributes) SecretToken() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("secret_token"))
+	return terra.ReferenceAsString(ac.ref.Append("secret_token"))
 }
 
 type FilterAttributes struct {
@@ -62,11 +62,11 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) JsonPath() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("json_path"))
+	return terra.ReferenceAsString(f.ref.Append("json_path"))
 }
 
 func (f FilterAttributes) MatchEquals() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("match_equals"))
+	return terra.ReferenceAsString(f.ref.Append("match_equals"))
 }
 
 type AuthenticationConfigurationState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDxTransitVirtualInterface creates a new instance of [DxTransitVirtualInterface].
 func NewDxTransitVirtualInterface(name string, args DxTransitVirtualInterfaceArgs) *DxTransitVirtualInterface {
 	return &DxTransitVirtualInterface{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDxTransitVirtualInterface(name string, args DxTransitVirtualInterfaceArg
 
 var _ terra.Resource = (*DxTransitVirtualInterface)(nil)
 
+// DxTransitVirtualInterface represents the Terraform resource aws_dx_transit_virtual_interface.
 type DxTransitVirtualInterface struct {
-	Name  string
-	Args  DxTransitVirtualInterfaceArgs
-	state *dxTransitVirtualInterfaceState
+	Name      string
+	Args      DxTransitVirtualInterfaceArgs
+	state     *dxTransitVirtualInterfaceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DxTransitVirtualInterface].
 func (dtvi *DxTransitVirtualInterface) Type() string {
 	return "aws_dx_transit_virtual_interface"
 }
 
+// LocalName returns the local name for [DxTransitVirtualInterface].
 func (dtvi *DxTransitVirtualInterface) LocalName() string {
 	return dtvi.Name
 }
 
+// Configuration returns the configuration (args) for [DxTransitVirtualInterface].
 func (dtvi *DxTransitVirtualInterface) Configuration() interface{} {
 	return dtvi.Args
 }
 
+// DependOn is used for other resources to depend on [DxTransitVirtualInterface].
+func (dtvi *DxTransitVirtualInterface) DependOn() terra.Reference {
+	return terra.ReferenceResource(dtvi)
+}
+
+// Dependencies returns the list of resources [DxTransitVirtualInterface] depends_on.
+func (dtvi *DxTransitVirtualInterface) Dependencies() terra.Dependencies {
+	return dtvi.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DxTransitVirtualInterface].
+func (dtvi *DxTransitVirtualInterface) LifecycleManagement() *terra.Lifecycle {
+	return dtvi.Lifecycle
+}
+
+// Attributes returns the attributes for [DxTransitVirtualInterface].
 func (dtvi *DxTransitVirtualInterface) Attributes() dxTransitVirtualInterfaceAttributes {
 	return dxTransitVirtualInterfaceAttributes{ref: terra.ReferenceResource(dtvi)}
 }
 
+// ImportState imports the given attribute values into [DxTransitVirtualInterface]'s state.
 func (dtvi *DxTransitVirtualInterface) ImportState(av io.Reader) error {
 	dtvi.state = &dxTransitVirtualInterfaceState{}
 	if err := json.NewDecoder(av).Decode(dtvi.state); err != nil {
@@ -49,10 +73,12 @@ func (dtvi *DxTransitVirtualInterface) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DxTransitVirtualInterface] has state.
 func (dtvi *DxTransitVirtualInterface) State() (*dxTransitVirtualInterfaceState, bool) {
 	return dtvi.state, dtvi.state != nil
 }
 
+// StateMust returns the state for [DxTransitVirtualInterface]. Panics if the state is nil.
 func (dtvi *DxTransitVirtualInterface) StateMust() *dxTransitVirtualInterfaceState {
 	if dtvi.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dtvi.Type(), dtvi.LocalName()))
@@ -60,10 +86,7 @@ func (dtvi *DxTransitVirtualInterface) StateMust() *dxTransitVirtualInterfaceSta
 	return dtvi.state
 }
 
-func (dtvi *DxTransitVirtualInterface) DependOn() terra.Reference {
-	return terra.ReferenceResource(dtvi)
-}
-
+// DxTransitVirtualInterfaceArgs contains the configurations for aws_dx_transit_virtual_interface.
 type DxTransitVirtualInterfaceArgs struct {
 	// AddressFamily: string, required
 	AddressFamily terra.StringValue `hcl:"address_family,attr" validate:"required"`
@@ -95,87 +118,103 @@ type DxTransitVirtualInterfaceArgs struct {
 	Vlan terra.NumberValue `hcl:"vlan,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *dxtransitvirtualinterface.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DxTransitVirtualInterface depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dxTransitVirtualInterfaceAttributes struct {
 	ref terra.Reference
 }
 
+// AddressFamily returns a reference to field address_family of aws_dx_transit_virtual_interface.
 func (dtvi dxTransitVirtualInterfaceAttributes) AddressFamily() terra.StringValue {
-	return terra.ReferenceString(dtvi.ref.Append("address_family"))
+	return terra.ReferenceAsString(dtvi.ref.Append("address_family"))
 }
 
+// AmazonAddress returns a reference to field amazon_address of aws_dx_transit_virtual_interface.
 func (dtvi dxTransitVirtualInterfaceAttributes) AmazonAddress() terra.StringValue {
-	return terra.ReferenceString(dtvi.ref.Append("amazon_address"))
+	return terra.ReferenceAsString(dtvi.ref.Append("amazon_address"))
 }
 
+// AmazonSideAsn returns a reference to field amazon_side_asn of aws_dx_transit_virtual_interface.
 func (dtvi dxTransitVirtualInterfaceAttributes) AmazonSideAsn() terra.StringValue {
-	return terra.ReferenceString(dtvi.ref.Append("amazon_side_asn"))
+	return terra.ReferenceAsString(dtvi.ref.Append("amazon_side_asn"))
 }
 
+// Arn returns a reference to field arn of aws_dx_transit_virtual_interface.
 func (dtvi dxTransitVirtualInterfaceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dtvi.ref.Append("arn"))
+	return terra.ReferenceAsString(dtvi.ref.Append("arn"))
 }
 
+// AwsDevice returns a reference to field aws_device of aws_dx_transit_virtual_interface.
 func (dtvi dxTransitVirtualInterfaceAttributes) AwsDevice() terra.StringValue {
-	return terra.ReferenceString(dtvi.ref.Append("aws_device"))
+	return terra.ReferenceAsString(dtvi.ref.Append("aws_device"))
 }
 
+// BgpAsn returns a reference to field bgp_asn of aws_dx_transit_virtual_interface.
 func (dtvi dxTransitVirtualInterfaceAttributes) BgpAsn() terra.NumberValue {
-	return terra.ReferenceNumber(dtvi.ref.Append("bgp_asn"))
+	return terra.ReferenceAsNumber(dtvi.ref.Append("bgp_asn"))
 }
 
+// BgpAuthKey returns a reference to field bgp_auth_key of aws_dx_transit_virtual_interface.
 func (dtvi dxTransitVirtualInterfaceAttributes) BgpAuthKey() terra.StringValue {
-	return terra.ReferenceString(dtvi.ref.Append("bgp_auth_key"))
+	return terra.ReferenceAsString(dtvi.ref.Append("bgp_auth_key"))
 }
 
+// ConnectionId returns a reference to field connection_id of aws_dx_transit_virtual_interface.
 func (dtvi dxTransitVirtualInterfaceAttributes) ConnectionId() terra.StringValue {
-	return terra.ReferenceString(dtvi.ref.Append("connection_id"))
+	return terra.ReferenceAsString(dtvi.ref.Append("connection_id"))
 }
 
+// CustomerAddress returns a reference to field customer_address of aws_dx_transit_virtual_interface.
 func (dtvi dxTransitVirtualInterfaceAttributes) CustomerAddress() terra.StringValue {
-	return terra.ReferenceString(dtvi.ref.Append("customer_address"))
+	return terra.ReferenceAsString(dtvi.ref.Append("customer_address"))
 }
 
+// DxGatewayId returns a reference to field dx_gateway_id of aws_dx_transit_virtual_interface.
 func (dtvi dxTransitVirtualInterfaceAttributes) DxGatewayId() terra.StringValue {
-	return terra.ReferenceString(dtvi.ref.Append("dx_gateway_id"))
+	return terra.ReferenceAsString(dtvi.ref.Append("dx_gateway_id"))
 }
 
+// Id returns a reference to field id of aws_dx_transit_virtual_interface.
 func (dtvi dxTransitVirtualInterfaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dtvi.ref.Append("id"))
+	return terra.ReferenceAsString(dtvi.ref.Append("id"))
 }
 
+// JumboFrameCapable returns a reference to field jumbo_frame_capable of aws_dx_transit_virtual_interface.
 func (dtvi dxTransitVirtualInterfaceAttributes) JumboFrameCapable() terra.BoolValue {
-	return terra.ReferenceBool(dtvi.ref.Append("jumbo_frame_capable"))
+	return terra.ReferenceAsBool(dtvi.ref.Append("jumbo_frame_capable"))
 }
 
+// Mtu returns a reference to field mtu of aws_dx_transit_virtual_interface.
 func (dtvi dxTransitVirtualInterfaceAttributes) Mtu() terra.NumberValue {
-	return terra.ReferenceNumber(dtvi.ref.Append("mtu"))
+	return terra.ReferenceAsNumber(dtvi.ref.Append("mtu"))
 }
 
+// Name returns a reference to field name of aws_dx_transit_virtual_interface.
 func (dtvi dxTransitVirtualInterfaceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dtvi.ref.Append("name"))
+	return terra.ReferenceAsString(dtvi.ref.Append("name"))
 }
 
+// SitelinkEnabled returns a reference to field sitelink_enabled of aws_dx_transit_virtual_interface.
 func (dtvi dxTransitVirtualInterfaceAttributes) SitelinkEnabled() terra.BoolValue {
-	return terra.ReferenceBool(dtvi.ref.Append("sitelink_enabled"))
+	return terra.ReferenceAsBool(dtvi.ref.Append("sitelink_enabled"))
 }
 
+// Tags returns a reference to field tags of aws_dx_transit_virtual_interface.
 func (dtvi dxTransitVirtualInterfaceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dtvi.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dtvi.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_dx_transit_virtual_interface.
 func (dtvi dxTransitVirtualInterfaceAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dtvi.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dtvi.ref.Append("tags_all"))
 }
 
+// Vlan returns a reference to field vlan of aws_dx_transit_virtual_interface.
 func (dtvi dxTransitVirtualInterfaceAttributes) Vlan() terra.NumberValue {
-	return terra.ReferenceNumber(dtvi.ref.Append("vlan"))
+	return terra.ReferenceAsNumber(dtvi.ref.Append("vlan"))
 }
 
 func (dtvi dxTransitVirtualInterfaceAttributes) Timeouts() dxtransitvirtualinterface.TimeoutsAttributes {
-	return terra.ReferenceSingle[dxtransitvirtualinterface.TimeoutsAttributes](dtvi.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dxtransitvirtualinterface.TimeoutsAttributes](dtvi.ref.Append("timeouts"))
 }
 
 type dxTransitVirtualInterfaceState struct {

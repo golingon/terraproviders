@@ -28,11 +28,11 @@ func (ec EncryptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec EncryptionConfigurationAttributes) EncryptionType() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("encryption_type"))
+	return terra.ReferenceAsString(ec.ref.Append("encryption_type"))
 }
 
 func (ec EncryptionConfigurationAttributes) KmsKey() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("kms_key"))
+	return terra.ReferenceAsString(ec.ref.Append("kms_key"))
 }
 
 type ImageScanningConfigurationAttributes struct {
@@ -52,7 +52,7 @@ func (isc ImageScanningConfigurationAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (isc ImageScanningConfigurationAttributes) ScanOnPush() terra.BoolValue {
-	return terra.ReferenceBool(isc.ref.Append("scan_on_push"))
+	return terra.ReferenceAsBool(isc.ref.Append("scan_on_push"))
 }
 
 type EncryptionConfigurationState struct {

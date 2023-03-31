@@ -35,15 +35,15 @@ func (mrc MultiRegionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mrc MultiRegionConfigurationAttributes) MultiRegionKeyType() terra.StringValue {
-	return terra.ReferenceString(mrc.ref.Append("multi_region_key_type"))
+	return terra.ReferenceAsString(mrc.ref.Append("multi_region_key_type"))
 }
 
 func (mrc MultiRegionConfigurationAttributes) PrimaryKey() terra.ListValue[PrimaryKeyAttributes] {
-	return terra.ReferenceList[PrimaryKeyAttributes](mrc.ref.Append("primary_key"))
+	return terra.ReferenceAsList[PrimaryKeyAttributes](mrc.ref.Append("primary_key"))
 }
 
 func (mrc MultiRegionConfigurationAttributes) ReplicaKeys() terra.ListValue[ReplicaKeysAttributes] {
-	return terra.ReferenceList[ReplicaKeysAttributes](mrc.ref.Append("replica_keys"))
+	return terra.ReferenceAsList[ReplicaKeysAttributes](mrc.ref.Append("replica_keys"))
 }
 
 type PrimaryKeyAttributes struct {
@@ -63,11 +63,11 @@ func (pk PrimaryKeyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pk PrimaryKeyAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(pk.ref.Append("arn"))
+	return terra.ReferenceAsString(pk.ref.Append("arn"))
 }
 
 func (pk PrimaryKeyAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(pk.ref.Append("region"))
+	return terra.ReferenceAsString(pk.ref.Append("region"))
 }
 
 type ReplicaKeysAttributes struct {
@@ -87,11 +87,11 @@ func (rk ReplicaKeysAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rk ReplicaKeysAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rk.ref.Append("arn"))
+	return terra.ReferenceAsString(rk.ref.Append("arn"))
 }
 
 func (rk ReplicaKeysAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(rk.ref.Append("region"))
+	return terra.ReferenceAsString(rk.ref.Append("region"))
 }
 
 type MultiRegionConfigurationState struct {

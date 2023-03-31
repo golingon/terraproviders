@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewS3ControlBucket creates a new instance of [S3ControlBucket].
 func NewS3ControlBucket(name string, args S3ControlBucketArgs) *S3ControlBucket {
 	return &S3ControlBucket{
 		Args: args,
@@ -18,28 +19,51 @@ func NewS3ControlBucket(name string, args S3ControlBucketArgs) *S3ControlBucket 
 
 var _ terra.Resource = (*S3ControlBucket)(nil)
 
+// S3ControlBucket represents the Terraform resource aws_s3control_bucket.
 type S3ControlBucket struct {
-	Name  string
-	Args  S3ControlBucketArgs
-	state *s3ControlBucketState
+	Name      string
+	Args      S3ControlBucketArgs
+	state     *s3ControlBucketState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [S3ControlBucket].
 func (sb *S3ControlBucket) Type() string {
 	return "aws_s3control_bucket"
 }
 
+// LocalName returns the local name for [S3ControlBucket].
 func (sb *S3ControlBucket) LocalName() string {
 	return sb.Name
 }
 
+// Configuration returns the configuration (args) for [S3ControlBucket].
 func (sb *S3ControlBucket) Configuration() interface{} {
 	return sb.Args
 }
 
+// DependOn is used for other resources to depend on [S3ControlBucket].
+func (sb *S3ControlBucket) DependOn() terra.Reference {
+	return terra.ReferenceResource(sb)
+}
+
+// Dependencies returns the list of resources [S3ControlBucket] depends_on.
+func (sb *S3ControlBucket) Dependencies() terra.Dependencies {
+	return sb.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [S3ControlBucket].
+func (sb *S3ControlBucket) LifecycleManagement() *terra.Lifecycle {
+	return sb.Lifecycle
+}
+
+// Attributes returns the attributes for [S3ControlBucket].
 func (sb *S3ControlBucket) Attributes() s3ControlBucketAttributes {
 	return s3ControlBucketAttributes{ref: terra.ReferenceResource(sb)}
 }
 
+// ImportState imports the given attribute values into [S3ControlBucket]'s state.
 func (sb *S3ControlBucket) ImportState(av io.Reader) error {
 	sb.state = &s3ControlBucketState{}
 	if err := json.NewDecoder(av).Decode(sb.state); err != nil {
@@ -48,10 +72,12 @@ func (sb *S3ControlBucket) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [S3ControlBucket] has state.
 func (sb *S3ControlBucket) State() (*s3ControlBucketState, bool) {
 	return sb.state, sb.state != nil
 }
 
+// StateMust returns the state for [S3ControlBucket]. Panics if the state is nil.
 func (sb *S3ControlBucket) StateMust() *s3ControlBucketState {
 	if sb.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sb.Type(), sb.LocalName()))
@@ -59,10 +85,7 @@ func (sb *S3ControlBucket) StateMust() *s3ControlBucketState {
 	return sb.state
 }
 
-func (sb *S3ControlBucket) DependOn() terra.Reference {
-	return terra.ReferenceResource(sb)
-}
-
+// S3ControlBucketArgs contains the configurations for aws_s3control_bucket.
 type S3ControlBucketArgs struct {
 	// Bucket: string, required
 	Bucket terra.StringValue `hcl:"bucket,attr" validate:"required"`
@@ -74,43 +97,49 @@ type S3ControlBucketArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that S3ControlBucket depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type s3ControlBucketAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_s3control_bucket.
 func (sb s3ControlBucketAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("arn"))
+	return terra.ReferenceAsString(sb.ref.Append("arn"))
 }
 
+// Bucket returns a reference to field bucket of aws_s3control_bucket.
 func (sb s3ControlBucketAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("bucket"))
+	return terra.ReferenceAsString(sb.ref.Append("bucket"))
 }
 
+// CreationDate returns a reference to field creation_date of aws_s3control_bucket.
 func (sb s3ControlBucketAttributes) CreationDate() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("creation_date"))
+	return terra.ReferenceAsString(sb.ref.Append("creation_date"))
 }
 
+// Id returns a reference to field id of aws_s3control_bucket.
 func (sb s3ControlBucketAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("id"))
+	return terra.ReferenceAsString(sb.ref.Append("id"))
 }
 
+// OutpostId returns a reference to field outpost_id of aws_s3control_bucket.
 func (sb s3ControlBucketAttributes) OutpostId() terra.StringValue {
-	return terra.ReferenceString(sb.ref.Append("outpost_id"))
+	return terra.ReferenceAsString(sb.ref.Append("outpost_id"))
 }
 
+// PublicAccessBlockEnabled returns a reference to field public_access_block_enabled of aws_s3control_bucket.
 func (sb s3ControlBucketAttributes) PublicAccessBlockEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sb.ref.Append("public_access_block_enabled"))
+	return terra.ReferenceAsBool(sb.ref.Append("public_access_block_enabled"))
 }
 
+// Tags returns a reference to field tags of aws_s3control_bucket.
 func (sb s3ControlBucketAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sb.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sb.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_s3control_bucket.
 func (sb s3ControlBucketAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sb.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sb.ref.Append("tags_all"))
 }
 
 type s3ControlBucketState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAutoscalingSchedule creates a new instance of [AutoscalingSchedule].
 func NewAutoscalingSchedule(name string, args AutoscalingScheduleArgs) *AutoscalingSchedule {
 	return &AutoscalingSchedule{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAutoscalingSchedule(name string, args AutoscalingScheduleArgs) *Autoscal
 
 var _ terra.Resource = (*AutoscalingSchedule)(nil)
 
+// AutoscalingSchedule represents the Terraform resource aws_autoscaling_schedule.
 type AutoscalingSchedule struct {
-	Name  string
-	Args  AutoscalingScheduleArgs
-	state *autoscalingScheduleState
+	Name      string
+	Args      AutoscalingScheduleArgs
+	state     *autoscalingScheduleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AutoscalingSchedule].
 func (as *AutoscalingSchedule) Type() string {
 	return "aws_autoscaling_schedule"
 }
 
+// LocalName returns the local name for [AutoscalingSchedule].
 func (as *AutoscalingSchedule) LocalName() string {
 	return as.Name
 }
 
+// Configuration returns the configuration (args) for [AutoscalingSchedule].
 func (as *AutoscalingSchedule) Configuration() interface{} {
 	return as.Args
 }
 
+// DependOn is used for other resources to depend on [AutoscalingSchedule].
+func (as *AutoscalingSchedule) DependOn() terra.Reference {
+	return terra.ReferenceResource(as)
+}
+
+// Dependencies returns the list of resources [AutoscalingSchedule] depends_on.
+func (as *AutoscalingSchedule) Dependencies() terra.Dependencies {
+	return as.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AutoscalingSchedule].
+func (as *AutoscalingSchedule) LifecycleManagement() *terra.Lifecycle {
+	return as.Lifecycle
+}
+
+// Attributes returns the attributes for [AutoscalingSchedule].
 func (as *AutoscalingSchedule) Attributes() autoscalingScheduleAttributes {
 	return autoscalingScheduleAttributes{ref: terra.ReferenceResource(as)}
 }
 
+// ImportState imports the given attribute values into [AutoscalingSchedule]'s state.
 func (as *AutoscalingSchedule) ImportState(av io.Reader) error {
 	as.state = &autoscalingScheduleState{}
 	if err := json.NewDecoder(av).Decode(as.state); err != nil {
@@ -48,10 +72,12 @@ func (as *AutoscalingSchedule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AutoscalingSchedule] has state.
 func (as *AutoscalingSchedule) State() (*autoscalingScheduleState, bool) {
 	return as.state, as.state != nil
 }
 
+// StateMust returns the state for [AutoscalingSchedule]. Panics if the state is nil.
 func (as *AutoscalingSchedule) StateMust() *autoscalingScheduleState {
 	if as.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", as.Type(), as.LocalName()))
@@ -59,10 +85,7 @@ func (as *AutoscalingSchedule) StateMust() *autoscalingScheduleState {
 	return as.state
 }
 
-func (as *AutoscalingSchedule) DependOn() terra.Reference {
-	return terra.ReferenceResource(as)
-}
-
+// AutoscalingScheduleArgs contains the configurations for aws_autoscaling_schedule.
 type AutoscalingScheduleArgs struct {
 	// AutoscalingGroupName: string, required
 	AutoscalingGroupName terra.StringValue `hcl:"autoscaling_group_name,attr" validate:"required"`
@@ -84,55 +107,64 @@ type AutoscalingScheduleArgs struct {
 	StartTime terra.StringValue `hcl:"start_time,attr"`
 	// TimeZone: string, optional
 	TimeZone terra.StringValue `hcl:"time_zone,attr"`
-	// DependsOn contains resources that AutoscalingSchedule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type autoscalingScheduleAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_autoscaling_schedule.
 func (as autoscalingScheduleAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("arn"))
+	return terra.ReferenceAsString(as.ref.Append("arn"))
 }
 
+// AutoscalingGroupName returns a reference to field autoscaling_group_name of aws_autoscaling_schedule.
 func (as autoscalingScheduleAttributes) AutoscalingGroupName() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("autoscaling_group_name"))
+	return terra.ReferenceAsString(as.ref.Append("autoscaling_group_name"))
 }
 
+// DesiredCapacity returns a reference to field desired_capacity of aws_autoscaling_schedule.
 func (as autoscalingScheduleAttributes) DesiredCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(as.ref.Append("desired_capacity"))
+	return terra.ReferenceAsNumber(as.ref.Append("desired_capacity"))
 }
 
+// EndTime returns a reference to field end_time of aws_autoscaling_schedule.
 func (as autoscalingScheduleAttributes) EndTime() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("end_time"))
+	return terra.ReferenceAsString(as.ref.Append("end_time"))
 }
 
+// Id returns a reference to field id of aws_autoscaling_schedule.
 func (as autoscalingScheduleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("id"))
+	return terra.ReferenceAsString(as.ref.Append("id"))
 }
 
+// MaxSize returns a reference to field max_size of aws_autoscaling_schedule.
 func (as autoscalingScheduleAttributes) MaxSize() terra.NumberValue {
-	return terra.ReferenceNumber(as.ref.Append("max_size"))
+	return terra.ReferenceAsNumber(as.ref.Append("max_size"))
 }
 
+// MinSize returns a reference to field min_size of aws_autoscaling_schedule.
 func (as autoscalingScheduleAttributes) MinSize() terra.NumberValue {
-	return terra.ReferenceNumber(as.ref.Append("min_size"))
+	return terra.ReferenceAsNumber(as.ref.Append("min_size"))
 }
 
+// Recurrence returns a reference to field recurrence of aws_autoscaling_schedule.
 func (as autoscalingScheduleAttributes) Recurrence() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("recurrence"))
+	return terra.ReferenceAsString(as.ref.Append("recurrence"))
 }
 
+// ScheduledActionName returns a reference to field scheduled_action_name of aws_autoscaling_schedule.
 func (as autoscalingScheduleAttributes) ScheduledActionName() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("scheduled_action_name"))
+	return terra.ReferenceAsString(as.ref.Append("scheduled_action_name"))
 }
 
+// StartTime returns a reference to field start_time of aws_autoscaling_schedule.
 func (as autoscalingScheduleAttributes) StartTime() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("start_time"))
+	return terra.ReferenceAsString(as.ref.Append("start_time"))
 }
 
+// TimeZone returns a reference to field time_zone of aws_autoscaling_schedule.
 func (as autoscalingScheduleAttributes) TimeZone() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("time_zone"))
+	return terra.ReferenceAsString(as.ref.Append("time_zone"))
 }
 
 type autoscalingScheduleState struct {

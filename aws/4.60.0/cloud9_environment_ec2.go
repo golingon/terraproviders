@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCloud9EnvironmentEc2 creates a new instance of [Cloud9EnvironmentEc2].
 func NewCloud9EnvironmentEc2(name string, args Cloud9EnvironmentEc2Args) *Cloud9EnvironmentEc2 {
 	return &Cloud9EnvironmentEc2{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCloud9EnvironmentEc2(name string, args Cloud9EnvironmentEc2Args) *Cloud9
 
 var _ terra.Resource = (*Cloud9EnvironmentEc2)(nil)
 
+// Cloud9EnvironmentEc2 represents the Terraform resource aws_cloud9_environment_ec2.
 type Cloud9EnvironmentEc2 struct {
-	Name  string
-	Args  Cloud9EnvironmentEc2Args
-	state *cloud9EnvironmentEc2State
+	Name      string
+	Args      Cloud9EnvironmentEc2Args
+	state     *cloud9EnvironmentEc2State
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Cloud9EnvironmentEc2].
 func (cee *Cloud9EnvironmentEc2) Type() string {
 	return "aws_cloud9_environment_ec2"
 }
 
+// LocalName returns the local name for [Cloud9EnvironmentEc2].
 func (cee *Cloud9EnvironmentEc2) LocalName() string {
 	return cee.Name
 }
 
+// Configuration returns the configuration (args) for [Cloud9EnvironmentEc2].
 func (cee *Cloud9EnvironmentEc2) Configuration() interface{} {
 	return cee.Args
 }
 
+// DependOn is used for other resources to depend on [Cloud9EnvironmentEc2].
+func (cee *Cloud9EnvironmentEc2) DependOn() terra.Reference {
+	return terra.ReferenceResource(cee)
+}
+
+// Dependencies returns the list of resources [Cloud9EnvironmentEc2] depends_on.
+func (cee *Cloud9EnvironmentEc2) Dependencies() terra.Dependencies {
+	return cee.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Cloud9EnvironmentEc2].
+func (cee *Cloud9EnvironmentEc2) LifecycleManagement() *terra.Lifecycle {
+	return cee.Lifecycle
+}
+
+// Attributes returns the attributes for [Cloud9EnvironmentEc2].
 func (cee *Cloud9EnvironmentEc2) Attributes() cloud9EnvironmentEc2Attributes {
 	return cloud9EnvironmentEc2Attributes{ref: terra.ReferenceResource(cee)}
 }
 
+// ImportState imports the given attribute values into [Cloud9EnvironmentEc2]'s state.
 func (cee *Cloud9EnvironmentEc2) ImportState(av io.Reader) error {
 	cee.state = &cloud9EnvironmentEc2State{}
 	if err := json.NewDecoder(av).Decode(cee.state); err != nil {
@@ -48,10 +72,12 @@ func (cee *Cloud9EnvironmentEc2) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Cloud9EnvironmentEc2] has state.
 func (cee *Cloud9EnvironmentEc2) State() (*cloud9EnvironmentEc2State, bool) {
 	return cee.state, cee.state != nil
 }
 
+// StateMust returns the state for [Cloud9EnvironmentEc2]. Panics if the state is nil.
 func (cee *Cloud9EnvironmentEc2) StateMust() *cloud9EnvironmentEc2State {
 	if cee.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cee.Type(), cee.LocalName()))
@@ -59,10 +85,7 @@ func (cee *Cloud9EnvironmentEc2) StateMust() *cloud9EnvironmentEc2State {
 	return cee.state
 }
 
-func (cee *Cloud9EnvironmentEc2) DependOn() terra.Reference {
-	return terra.ReferenceResource(cee)
-}
-
+// Cloud9EnvironmentEc2Args contains the configurations for aws_cloud9_environment_ec2.
 type Cloud9EnvironmentEc2Args struct {
 	// AutomaticStopTimeMinutes: number, optional
 	AutomaticStopTimeMinutes terra.NumberValue `hcl:"automatic_stop_time_minutes,attr"`
@@ -86,63 +109,74 @@ type Cloud9EnvironmentEc2Args struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that Cloud9EnvironmentEc2 depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloud9EnvironmentEc2Attributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_cloud9_environment_ec2.
 func (cee cloud9EnvironmentEc2Attributes) Arn() terra.StringValue {
-	return terra.ReferenceString(cee.ref.Append("arn"))
+	return terra.ReferenceAsString(cee.ref.Append("arn"))
 }
 
+// AutomaticStopTimeMinutes returns a reference to field automatic_stop_time_minutes of aws_cloud9_environment_ec2.
 func (cee cloud9EnvironmentEc2Attributes) AutomaticStopTimeMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(cee.ref.Append("automatic_stop_time_minutes"))
+	return terra.ReferenceAsNumber(cee.ref.Append("automatic_stop_time_minutes"))
 }
 
+// ConnectionType returns a reference to field connection_type of aws_cloud9_environment_ec2.
 func (cee cloud9EnvironmentEc2Attributes) ConnectionType() terra.StringValue {
-	return terra.ReferenceString(cee.ref.Append("connection_type"))
+	return terra.ReferenceAsString(cee.ref.Append("connection_type"))
 }
 
+// Description returns a reference to field description of aws_cloud9_environment_ec2.
 func (cee cloud9EnvironmentEc2Attributes) Description() terra.StringValue {
-	return terra.ReferenceString(cee.ref.Append("description"))
+	return terra.ReferenceAsString(cee.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_cloud9_environment_ec2.
 func (cee cloud9EnvironmentEc2Attributes) Id() terra.StringValue {
-	return terra.ReferenceString(cee.ref.Append("id"))
+	return terra.ReferenceAsString(cee.ref.Append("id"))
 }
 
+// ImageId returns a reference to field image_id of aws_cloud9_environment_ec2.
 func (cee cloud9EnvironmentEc2Attributes) ImageId() terra.StringValue {
-	return terra.ReferenceString(cee.ref.Append("image_id"))
+	return terra.ReferenceAsString(cee.ref.Append("image_id"))
 }
 
+// InstanceType returns a reference to field instance_type of aws_cloud9_environment_ec2.
 func (cee cloud9EnvironmentEc2Attributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(cee.ref.Append("instance_type"))
+	return terra.ReferenceAsString(cee.ref.Append("instance_type"))
 }
 
+// Name returns a reference to field name of aws_cloud9_environment_ec2.
 func (cee cloud9EnvironmentEc2Attributes) Name() terra.StringValue {
-	return terra.ReferenceString(cee.ref.Append("name"))
+	return terra.ReferenceAsString(cee.ref.Append("name"))
 }
 
+// OwnerArn returns a reference to field owner_arn of aws_cloud9_environment_ec2.
 func (cee cloud9EnvironmentEc2Attributes) OwnerArn() terra.StringValue {
-	return terra.ReferenceString(cee.ref.Append("owner_arn"))
+	return terra.ReferenceAsString(cee.ref.Append("owner_arn"))
 }
 
+// SubnetId returns a reference to field subnet_id of aws_cloud9_environment_ec2.
 func (cee cloud9EnvironmentEc2Attributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(cee.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(cee.ref.Append("subnet_id"))
 }
 
+// Tags returns a reference to field tags of aws_cloud9_environment_ec2.
 func (cee cloud9EnvironmentEc2Attributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cee.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cee.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_cloud9_environment_ec2.
 func (cee cloud9EnvironmentEc2Attributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cee.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](cee.ref.Append("tags_all"))
 }
 
+// Type returns a reference to field type of aws_cloud9_environment_ec2.
 func (cee cloud9EnvironmentEc2Attributes) Type() terra.StringValue {
-	return terra.ReferenceString(cee.ref.Append("type"))
+	return terra.ReferenceAsString(cee.ref.Append("type"))
 }
 
 type cloud9EnvironmentEc2State struct {

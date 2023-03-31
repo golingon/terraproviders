@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewApiGatewayVpcLink creates a new instance of [ApiGatewayVpcLink].
 func NewApiGatewayVpcLink(name string, args ApiGatewayVpcLinkArgs) *ApiGatewayVpcLink {
 	return &ApiGatewayVpcLink{
 		Args: args,
@@ -18,28 +19,51 @@ func NewApiGatewayVpcLink(name string, args ApiGatewayVpcLinkArgs) *ApiGatewayVp
 
 var _ terra.Resource = (*ApiGatewayVpcLink)(nil)
 
+// ApiGatewayVpcLink represents the Terraform resource aws_api_gateway_vpc_link.
 type ApiGatewayVpcLink struct {
-	Name  string
-	Args  ApiGatewayVpcLinkArgs
-	state *apiGatewayVpcLinkState
+	Name      string
+	Args      ApiGatewayVpcLinkArgs
+	state     *apiGatewayVpcLinkState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiGatewayVpcLink].
 func (agvl *ApiGatewayVpcLink) Type() string {
 	return "aws_api_gateway_vpc_link"
 }
 
+// LocalName returns the local name for [ApiGatewayVpcLink].
 func (agvl *ApiGatewayVpcLink) LocalName() string {
 	return agvl.Name
 }
 
+// Configuration returns the configuration (args) for [ApiGatewayVpcLink].
 func (agvl *ApiGatewayVpcLink) Configuration() interface{} {
 	return agvl.Args
 }
 
+// DependOn is used for other resources to depend on [ApiGatewayVpcLink].
+func (agvl *ApiGatewayVpcLink) DependOn() terra.Reference {
+	return terra.ReferenceResource(agvl)
+}
+
+// Dependencies returns the list of resources [ApiGatewayVpcLink] depends_on.
+func (agvl *ApiGatewayVpcLink) Dependencies() terra.Dependencies {
+	return agvl.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiGatewayVpcLink].
+func (agvl *ApiGatewayVpcLink) LifecycleManagement() *terra.Lifecycle {
+	return agvl.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiGatewayVpcLink].
 func (agvl *ApiGatewayVpcLink) Attributes() apiGatewayVpcLinkAttributes {
 	return apiGatewayVpcLinkAttributes{ref: terra.ReferenceResource(agvl)}
 }
 
+// ImportState imports the given attribute values into [ApiGatewayVpcLink]'s state.
 func (agvl *ApiGatewayVpcLink) ImportState(av io.Reader) error {
 	agvl.state = &apiGatewayVpcLinkState{}
 	if err := json.NewDecoder(av).Decode(agvl.state); err != nil {
@@ -48,10 +72,12 @@ func (agvl *ApiGatewayVpcLink) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiGatewayVpcLink] has state.
 func (agvl *ApiGatewayVpcLink) State() (*apiGatewayVpcLinkState, bool) {
 	return agvl.state, agvl.state != nil
 }
 
+// StateMust returns the state for [ApiGatewayVpcLink]. Panics if the state is nil.
 func (agvl *ApiGatewayVpcLink) StateMust() *apiGatewayVpcLinkState {
 	if agvl.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", agvl.Type(), agvl.LocalName()))
@@ -59,10 +85,7 @@ func (agvl *ApiGatewayVpcLink) StateMust() *apiGatewayVpcLinkState {
 	return agvl.state
 }
 
-func (agvl *ApiGatewayVpcLink) DependOn() terra.Reference {
-	return terra.ReferenceResource(agvl)
-}
-
+// ApiGatewayVpcLinkArgs contains the configurations for aws_api_gateway_vpc_link.
 type ApiGatewayVpcLinkArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -76,39 +99,44 @@ type ApiGatewayVpcLinkArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// TargetArns: list of string, required
 	TargetArns terra.ListValue[terra.StringValue] `hcl:"target_arns,attr" validate:"required"`
-	// DependsOn contains resources that ApiGatewayVpcLink depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiGatewayVpcLinkAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_api_gateway_vpc_link.
 func (agvl apiGatewayVpcLinkAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(agvl.ref.Append("arn"))
+	return terra.ReferenceAsString(agvl.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_api_gateway_vpc_link.
 func (agvl apiGatewayVpcLinkAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(agvl.ref.Append("description"))
+	return terra.ReferenceAsString(agvl.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_api_gateway_vpc_link.
 func (agvl apiGatewayVpcLinkAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(agvl.ref.Append("id"))
+	return terra.ReferenceAsString(agvl.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_api_gateway_vpc_link.
 func (agvl apiGatewayVpcLinkAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(agvl.ref.Append("name"))
+	return terra.ReferenceAsString(agvl.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_api_gateway_vpc_link.
 func (agvl apiGatewayVpcLinkAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](agvl.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](agvl.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_api_gateway_vpc_link.
 func (agvl apiGatewayVpcLinkAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](agvl.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](agvl.ref.Append("tags_all"))
 }
 
+// TargetArns returns a reference to field target_arns of aws_api_gateway_vpc_link.
 func (agvl apiGatewayVpcLinkAttributes) TargetArns() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](agvl.ref.Append("target_arns"))
+	return terra.ReferenceAsList[terra.StringValue](agvl.ref.Append("target_arns"))
 }
 
 type apiGatewayVpcLinkState struct {

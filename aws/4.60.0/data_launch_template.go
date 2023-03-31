@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataLaunchTemplate creates a new instance of [DataLaunchTemplate].
 func NewDataLaunchTemplate(name string, args DataLaunchTemplateArgs) *DataLaunchTemplate {
 	return &DataLaunchTemplate{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataLaunchTemplate(name string, args DataLaunchTemplateArgs) *DataLaunch
 
 var _ terra.DataResource = (*DataLaunchTemplate)(nil)
 
+// DataLaunchTemplate represents the Terraform data resource aws_launch_template.
 type DataLaunchTemplate struct {
 	Name string
 	Args DataLaunchTemplateArgs
 }
 
+// DataSource returns the Terraform object type for [DataLaunchTemplate].
 func (lt *DataLaunchTemplate) DataSource() string {
 	return "aws_launch_template"
 }
 
+// LocalName returns the local name for [DataLaunchTemplate].
 func (lt *DataLaunchTemplate) LocalName() string {
 	return lt.Name
 }
 
+// Configuration returns the configuration (args) for [DataLaunchTemplate].
 func (lt *DataLaunchTemplate) Configuration() interface{} {
 	return lt.Args
 }
 
+// Attributes returns the attributes for [DataLaunchTemplate].
 func (lt *DataLaunchTemplate) Attributes() dataLaunchTemplateAttributes {
 	return dataLaunchTemplateAttributes{ref: terra.ReferenceDataResource(lt)}
 }
 
+// DataLaunchTemplateArgs contains the configurations for aws_launch_template.
 type DataLaunchTemplateArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -91,162 +98,181 @@ type dataLaunchTemplateAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_launch_template.
 func (lt dataLaunchTemplateAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("arn"))
+	return terra.ReferenceAsString(lt.ref.Append("arn"))
 }
 
+// DefaultVersion returns a reference to field default_version of aws_launch_template.
 func (lt dataLaunchTemplateAttributes) DefaultVersion() terra.NumberValue {
-	return terra.ReferenceNumber(lt.ref.Append("default_version"))
+	return terra.ReferenceAsNumber(lt.ref.Append("default_version"))
 }
 
+// Description returns a reference to field description of aws_launch_template.
 func (lt dataLaunchTemplateAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("description"))
+	return terra.ReferenceAsString(lt.ref.Append("description"))
 }
 
+// DisableApiStop returns a reference to field disable_api_stop of aws_launch_template.
 func (lt dataLaunchTemplateAttributes) DisableApiStop() terra.BoolValue {
-	return terra.ReferenceBool(lt.ref.Append("disable_api_stop"))
+	return terra.ReferenceAsBool(lt.ref.Append("disable_api_stop"))
 }
 
+// DisableApiTermination returns a reference to field disable_api_termination of aws_launch_template.
 func (lt dataLaunchTemplateAttributes) DisableApiTermination() terra.BoolValue {
-	return terra.ReferenceBool(lt.ref.Append("disable_api_termination"))
+	return terra.ReferenceAsBool(lt.ref.Append("disable_api_termination"))
 }
 
+// EbsOptimized returns a reference to field ebs_optimized of aws_launch_template.
 func (lt dataLaunchTemplateAttributes) EbsOptimized() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("ebs_optimized"))
+	return terra.ReferenceAsString(lt.ref.Append("ebs_optimized"))
 }
 
+// Id returns a reference to field id of aws_launch_template.
 func (lt dataLaunchTemplateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("id"))
+	return terra.ReferenceAsString(lt.ref.Append("id"))
 }
 
+// ImageId returns a reference to field image_id of aws_launch_template.
 func (lt dataLaunchTemplateAttributes) ImageId() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("image_id"))
+	return terra.ReferenceAsString(lt.ref.Append("image_id"))
 }
 
+// InstanceInitiatedShutdownBehavior returns a reference to field instance_initiated_shutdown_behavior of aws_launch_template.
 func (lt dataLaunchTemplateAttributes) InstanceInitiatedShutdownBehavior() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("instance_initiated_shutdown_behavior"))
+	return terra.ReferenceAsString(lt.ref.Append("instance_initiated_shutdown_behavior"))
 }
 
+// InstanceType returns a reference to field instance_type of aws_launch_template.
 func (lt dataLaunchTemplateAttributes) InstanceType() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("instance_type"))
+	return terra.ReferenceAsString(lt.ref.Append("instance_type"))
 }
 
+// KernelId returns a reference to field kernel_id of aws_launch_template.
 func (lt dataLaunchTemplateAttributes) KernelId() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("kernel_id"))
+	return terra.ReferenceAsString(lt.ref.Append("kernel_id"))
 }
 
+// KeyName returns a reference to field key_name of aws_launch_template.
 func (lt dataLaunchTemplateAttributes) KeyName() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("key_name"))
+	return terra.ReferenceAsString(lt.ref.Append("key_name"))
 }
 
+// LatestVersion returns a reference to field latest_version of aws_launch_template.
 func (lt dataLaunchTemplateAttributes) LatestVersion() terra.NumberValue {
-	return terra.ReferenceNumber(lt.ref.Append("latest_version"))
+	return terra.ReferenceAsNumber(lt.ref.Append("latest_version"))
 }
 
+// Name returns a reference to field name of aws_launch_template.
 func (lt dataLaunchTemplateAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("name"))
+	return terra.ReferenceAsString(lt.ref.Append("name"))
 }
 
+// RamDiskId returns a reference to field ram_disk_id of aws_launch_template.
 func (lt dataLaunchTemplateAttributes) RamDiskId() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("ram_disk_id"))
+	return terra.ReferenceAsString(lt.ref.Append("ram_disk_id"))
 }
 
+// SecurityGroupNames returns a reference to field security_group_names of aws_launch_template.
 func (lt dataLaunchTemplateAttributes) SecurityGroupNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](lt.ref.Append("security_group_names"))
+	return terra.ReferenceAsSet[terra.StringValue](lt.ref.Append("security_group_names"))
 }
 
+// Tags returns a reference to field tags of aws_launch_template.
 func (lt dataLaunchTemplateAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lt.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](lt.ref.Append("tags"))
 }
 
+// UserData returns a reference to field user_data of aws_launch_template.
 func (lt dataLaunchTemplateAttributes) UserData() terra.StringValue {
-	return terra.ReferenceString(lt.ref.Append("user_data"))
+	return terra.ReferenceAsString(lt.ref.Append("user_data"))
 }
 
+// VpcSecurityGroupIds returns a reference to field vpc_security_group_ids of aws_launch_template.
 func (lt dataLaunchTemplateAttributes) VpcSecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](lt.ref.Append("vpc_security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](lt.ref.Append("vpc_security_group_ids"))
 }
 
 func (lt dataLaunchTemplateAttributes) BlockDeviceMappings() terra.ListValue[datalaunchtemplate.BlockDeviceMappingsAttributes] {
-	return terra.ReferenceList[datalaunchtemplate.BlockDeviceMappingsAttributes](lt.ref.Append("block_device_mappings"))
+	return terra.ReferenceAsList[datalaunchtemplate.BlockDeviceMappingsAttributes](lt.ref.Append("block_device_mappings"))
 }
 
 func (lt dataLaunchTemplateAttributes) CapacityReservationSpecification() terra.ListValue[datalaunchtemplate.CapacityReservationSpecificationAttributes] {
-	return terra.ReferenceList[datalaunchtemplate.CapacityReservationSpecificationAttributes](lt.ref.Append("capacity_reservation_specification"))
+	return terra.ReferenceAsList[datalaunchtemplate.CapacityReservationSpecificationAttributes](lt.ref.Append("capacity_reservation_specification"))
 }
 
 func (lt dataLaunchTemplateAttributes) CpuOptions() terra.ListValue[datalaunchtemplate.CpuOptionsAttributes] {
-	return terra.ReferenceList[datalaunchtemplate.CpuOptionsAttributes](lt.ref.Append("cpu_options"))
+	return terra.ReferenceAsList[datalaunchtemplate.CpuOptionsAttributes](lt.ref.Append("cpu_options"))
 }
 
 func (lt dataLaunchTemplateAttributes) CreditSpecification() terra.ListValue[datalaunchtemplate.CreditSpecificationAttributes] {
-	return terra.ReferenceList[datalaunchtemplate.CreditSpecificationAttributes](lt.ref.Append("credit_specification"))
+	return terra.ReferenceAsList[datalaunchtemplate.CreditSpecificationAttributes](lt.ref.Append("credit_specification"))
 }
 
 func (lt dataLaunchTemplateAttributes) ElasticGpuSpecifications() terra.ListValue[datalaunchtemplate.ElasticGpuSpecificationsAttributes] {
-	return terra.ReferenceList[datalaunchtemplate.ElasticGpuSpecificationsAttributes](lt.ref.Append("elastic_gpu_specifications"))
+	return terra.ReferenceAsList[datalaunchtemplate.ElasticGpuSpecificationsAttributes](lt.ref.Append("elastic_gpu_specifications"))
 }
 
 func (lt dataLaunchTemplateAttributes) ElasticInferenceAccelerator() terra.ListValue[datalaunchtemplate.ElasticInferenceAcceleratorAttributes] {
-	return terra.ReferenceList[datalaunchtemplate.ElasticInferenceAcceleratorAttributes](lt.ref.Append("elastic_inference_accelerator"))
+	return terra.ReferenceAsList[datalaunchtemplate.ElasticInferenceAcceleratorAttributes](lt.ref.Append("elastic_inference_accelerator"))
 }
 
 func (lt dataLaunchTemplateAttributes) EnclaveOptions() terra.ListValue[datalaunchtemplate.EnclaveOptionsAttributes] {
-	return terra.ReferenceList[datalaunchtemplate.EnclaveOptionsAttributes](lt.ref.Append("enclave_options"))
+	return terra.ReferenceAsList[datalaunchtemplate.EnclaveOptionsAttributes](lt.ref.Append("enclave_options"))
 }
 
 func (lt dataLaunchTemplateAttributes) HibernationOptions() terra.ListValue[datalaunchtemplate.HibernationOptionsAttributes] {
-	return terra.ReferenceList[datalaunchtemplate.HibernationOptionsAttributes](lt.ref.Append("hibernation_options"))
+	return terra.ReferenceAsList[datalaunchtemplate.HibernationOptionsAttributes](lt.ref.Append("hibernation_options"))
 }
 
 func (lt dataLaunchTemplateAttributes) IamInstanceProfile() terra.ListValue[datalaunchtemplate.IamInstanceProfileAttributes] {
-	return terra.ReferenceList[datalaunchtemplate.IamInstanceProfileAttributes](lt.ref.Append("iam_instance_profile"))
+	return terra.ReferenceAsList[datalaunchtemplate.IamInstanceProfileAttributes](lt.ref.Append("iam_instance_profile"))
 }
 
 func (lt dataLaunchTemplateAttributes) InstanceMarketOptions() terra.ListValue[datalaunchtemplate.InstanceMarketOptionsAttributes] {
-	return terra.ReferenceList[datalaunchtemplate.InstanceMarketOptionsAttributes](lt.ref.Append("instance_market_options"))
+	return terra.ReferenceAsList[datalaunchtemplate.InstanceMarketOptionsAttributes](lt.ref.Append("instance_market_options"))
 }
 
 func (lt dataLaunchTemplateAttributes) InstanceRequirements() terra.ListValue[datalaunchtemplate.InstanceRequirementsAttributes] {
-	return terra.ReferenceList[datalaunchtemplate.InstanceRequirementsAttributes](lt.ref.Append("instance_requirements"))
+	return terra.ReferenceAsList[datalaunchtemplate.InstanceRequirementsAttributes](lt.ref.Append("instance_requirements"))
 }
 
 func (lt dataLaunchTemplateAttributes) LicenseSpecification() terra.ListValue[datalaunchtemplate.LicenseSpecificationAttributes] {
-	return terra.ReferenceList[datalaunchtemplate.LicenseSpecificationAttributes](lt.ref.Append("license_specification"))
+	return terra.ReferenceAsList[datalaunchtemplate.LicenseSpecificationAttributes](lt.ref.Append("license_specification"))
 }
 
 func (lt dataLaunchTemplateAttributes) MaintenanceOptions() terra.ListValue[datalaunchtemplate.MaintenanceOptionsAttributes] {
-	return terra.ReferenceList[datalaunchtemplate.MaintenanceOptionsAttributes](lt.ref.Append("maintenance_options"))
+	return terra.ReferenceAsList[datalaunchtemplate.MaintenanceOptionsAttributes](lt.ref.Append("maintenance_options"))
 }
 
 func (lt dataLaunchTemplateAttributes) MetadataOptions() terra.ListValue[datalaunchtemplate.MetadataOptionsAttributes] {
-	return terra.ReferenceList[datalaunchtemplate.MetadataOptionsAttributes](lt.ref.Append("metadata_options"))
+	return terra.ReferenceAsList[datalaunchtemplate.MetadataOptionsAttributes](lt.ref.Append("metadata_options"))
 }
 
 func (lt dataLaunchTemplateAttributes) Monitoring() terra.ListValue[datalaunchtemplate.MonitoringAttributes] {
-	return terra.ReferenceList[datalaunchtemplate.MonitoringAttributes](lt.ref.Append("monitoring"))
+	return terra.ReferenceAsList[datalaunchtemplate.MonitoringAttributes](lt.ref.Append("monitoring"))
 }
 
 func (lt dataLaunchTemplateAttributes) NetworkInterfaces() terra.ListValue[datalaunchtemplate.NetworkInterfacesAttributes] {
-	return terra.ReferenceList[datalaunchtemplate.NetworkInterfacesAttributes](lt.ref.Append("network_interfaces"))
+	return terra.ReferenceAsList[datalaunchtemplate.NetworkInterfacesAttributes](lt.ref.Append("network_interfaces"))
 }
 
 func (lt dataLaunchTemplateAttributes) Placement() terra.ListValue[datalaunchtemplate.PlacementAttributes] {
-	return terra.ReferenceList[datalaunchtemplate.PlacementAttributes](lt.ref.Append("placement"))
+	return terra.ReferenceAsList[datalaunchtemplate.PlacementAttributes](lt.ref.Append("placement"))
 }
 
 func (lt dataLaunchTemplateAttributes) PrivateDnsNameOptions() terra.ListValue[datalaunchtemplate.PrivateDnsNameOptionsAttributes] {
-	return terra.ReferenceList[datalaunchtemplate.PrivateDnsNameOptionsAttributes](lt.ref.Append("private_dns_name_options"))
+	return terra.ReferenceAsList[datalaunchtemplate.PrivateDnsNameOptionsAttributes](lt.ref.Append("private_dns_name_options"))
 }
 
 func (lt dataLaunchTemplateAttributes) TagSpecifications() terra.ListValue[datalaunchtemplate.TagSpecificationsAttributes] {
-	return terra.ReferenceList[datalaunchtemplate.TagSpecificationsAttributes](lt.ref.Append("tag_specifications"))
+	return terra.ReferenceAsList[datalaunchtemplate.TagSpecificationsAttributes](lt.ref.Append("tag_specifications"))
 }
 
 func (lt dataLaunchTemplateAttributes) Filter() terra.SetValue[datalaunchtemplate.FilterAttributes] {
-	return terra.ReferenceSet[datalaunchtemplate.FilterAttributes](lt.ref.Append("filter"))
+	return terra.ReferenceAsSet[datalaunchtemplate.FilterAttributes](lt.ref.Append("filter"))
 }
 
 func (lt dataLaunchTemplateAttributes) Timeouts() datalaunchtemplate.TimeoutsAttributes {
-	return terra.ReferenceSingle[datalaunchtemplate.TimeoutsAttributes](lt.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datalaunchtemplate.TimeoutsAttributes](lt.ref.Append("timeouts"))
 }

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLakeformationPermissions creates a new instance of [LakeformationPermissions].
 func NewLakeformationPermissions(name string, args LakeformationPermissionsArgs) *LakeformationPermissions {
 	return &LakeformationPermissions{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLakeformationPermissions(name string, args LakeformationPermissionsArgs)
 
 var _ terra.Resource = (*LakeformationPermissions)(nil)
 
+// LakeformationPermissions represents the Terraform resource aws_lakeformation_permissions.
 type LakeformationPermissions struct {
-	Name  string
-	Args  LakeformationPermissionsArgs
-	state *lakeformationPermissionsState
+	Name      string
+	Args      LakeformationPermissionsArgs
+	state     *lakeformationPermissionsState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LakeformationPermissions].
 func (lp *LakeformationPermissions) Type() string {
 	return "aws_lakeformation_permissions"
 }
 
+// LocalName returns the local name for [LakeformationPermissions].
 func (lp *LakeformationPermissions) LocalName() string {
 	return lp.Name
 }
 
+// Configuration returns the configuration (args) for [LakeformationPermissions].
 func (lp *LakeformationPermissions) Configuration() interface{} {
 	return lp.Args
 }
 
+// DependOn is used for other resources to depend on [LakeformationPermissions].
+func (lp *LakeformationPermissions) DependOn() terra.Reference {
+	return terra.ReferenceResource(lp)
+}
+
+// Dependencies returns the list of resources [LakeformationPermissions] depends_on.
+func (lp *LakeformationPermissions) Dependencies() terra.Dependencies {
+	return lp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LakeformationPermissions].
+func (lp *LakeformationPermissions) LifecycleManagement() *terra.Lifecycle {
+	return lp.Lifecycle
+}
+
+// Attributes returns the attributes for [LakeformationPermissions].
 func (lp *LakeformationPermissions) Attributes() lakeformationPermissionsAttributes {
 	return lakeformationPermissionsAttributes{ref: terra.ReferenceResource(lp)}
 }
 
+// ImportState imports the given attribute values into [LakeformationPermissions]'s state.
 func (lp *LakeformationPermissions) ImportState(av io.Reader) error {
 	lp.state = &lakeformationPermissionsState{}
 	if err := json.NewDecoder(av).Decode(lp.state); err != nil {
@@ -49,10 +73,12 @@ func (lp *LakeformationPermissions) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LakeformationPermissions] has state.
 func (lp *LakeformationPermissions) State() (*lakeformationPermissionsState, bool) {
 	return lp.state, lp.state != nil
 }
 
+// StateMust returns the state for [LakeformationPermissions]. Panics if the state is nil.
 func (lp *LakeformationPermissions) StateMust() *lakeformationPermissionsState {
 	if lp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lp.Type(), lp.LocalName()))
@@ -60,10 +86,7 @@ func (lp *LakeformationPermissions) StateMust() *lakeformationPermissionsState {
 	return lp.state
 }
 
-func (lp *LakeformationPermissions) DependOn() terra.Reference {
-	return terra.ReferenceResource(lp)
-}
-
+// LakeformationPermissionsArgs contains the configurations for aws_lakeformation_permissions.
 type LakeformationPermissionsArgs struct {
 	// CatalogId: string, optional
 	CatalogId terra.StringValue `hcl:"catalog_id,attr"`
@@ -89,59 +112,63 @@ type LakeformationPermissionsArgs struct {
 	Table *lakeformationpermissions.Table `hcl:"table,block"`
 	// TableWithColumns: optional
 	TableWithColumns *lakeformationpermissions.TableWithColumns `hcl:"table_with_columns,block"`
-	// DependsOn contains resources that LakeformationPermissions depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lakeformationPermissionsAttributes struct {
 	ref terra.Reference
 }
 
+// CatalogId returns a reference to field catalog_id of aws_lakeformation_permissions.
 func (lp lakeformationPermissionsAttributes) CatalogId() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("catalog_id"))
+	return terra.ReferenceAsString(lp.ref.Append("catalog_id"))
 }
 
+// CatalogResource returns a reference to field catalog_resource of aws_lakeformation_permissions.
 func (lp lakeformationPermissionsAttributes) CatalogResource() terra.BoolValue {
-	return terra.ReferenceBool(lp.ref.Append("catalog_resource"))
+	return terra.ReferenceAsBool(lp.ref.Append("catalog_resource"))
 }
 
+// Id returns a reference to field id of aws_lakeformation_permissions.
 func (lp lakeformationPermissionsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("id"))
+	return terra.ReferenceAsString(lp.ref.Append("id"))
 }
 
+// Permissions returns a reference to field permissions of aws_lakeformation_permissions.
 func (lp lakeformationPermissionsAttributes) Permissions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lp.ref.Append("permissions"))
+	return terra.ReferenceAsList[terra.StringValue](lp.ref.Append("permissions"))
 }
 
+// PermissionsWithGrantOption returns a reference to field permissions_with_grant_option of aws_lakeformation_permissions.
 func (lp lakeformationPermissionsAttributes) PermissionsWithGrantOption() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](lp.ref.Append("permissions_with_grant_option"))
+	return terra.ReferenceAsList[terra.StringValue](lp.ref.Append("permissions_with_grant_option"))
 }
 
+// Principal returns a reference to field principal of aws_lakeformation_permissions.
 func (lp lakeformationPermissionsAttributes) Principal() terra.StringValue {
-	return terra.ReferenceString(lp.ref.Append("principal"))
+	return terra.ReferenceAsString(lp.ref.Append("principal"))
 }
 
 func (lp lakeformationPermissionsAttributes) DataLocation() terra.ListValue[lakeformationpermissions.DataLocationAttributes] {
-	return terra.ReferenceList[lakeformationpermissions.DataLocationAttributes](lp.ref.Append("data_location"))
+	return terra.ReferenceAsList[lakeformationpermissions.DataLocationAttributes](lp.ref.Append("data_location"))
 }
 
 func (lp lakeformationPermissionsAttributes) Database() terra.ListValue[lakeformationpermissions.DatabaseAttributes] {
-	return terra.ReferenceList[lakeformationpermissions.DatabaseAttributes](lp.ref.Append("database"))
+	return terra.ReferenceAsList[lakeformationpermissions.DatabaseAttributes](lp.ref.Append("database"))
 }
 
 func (lp lakeformationPermissionsAttributes) LfTag() terra.ListValue[lakeformationpermissions.LfTagAttributes] {
-	return terra.ReferenceList[lakeformationpermissions.LfTagAttributes](lp.ref.Append("lf_tag"))
+	return terra.ReferenceAsList[lakeformationpermissions.LfTagAttributes](lp.ref.Append("lf_tag"))
 }
 
 func (lp lakeformationPermissionsAttributes) LfTagPolicy() terra.ListValue[lakeformationpermissions.LfTagPolicyAttributes] {
-	return terra.ReferenceList[lakeformationpermissions.LfTagPolicyAttributes](lp.ref.Append("lf_tag_policy"))
+	return terra.ReferenceAsList[lakeformationpermissions.LfTagPolicyAttributes](lp.ref.Append("lf_tag_policy"))
 }
 
 func (lp lakeformationPermissionsAttributes) Table() terra.ListValue[lakeformationpermissions.TableAttributes] {
-	return terra.ReferenceList[lakeformationpermissions.TableAttributes](lp.ref.Append("table"))
+	return terra.ReferenceAsList[lakeformationpermissions.TableAttributes](lp.ref.Append("table"))
 }
 
 func (lp lakeformationPermissionsAttributes) TableWithColumns() terra.ListValue[lakeformationpermissions.TableWithColumnsAttributes] {
-	return terra.ReferenceList[lakeformationpermissions.TableWithColumnsAttributes](lp.ref.Append("table_with_columns"))
+	return terra.ReferenceAsList[lakeformationpermissions.TableWithColumnsAttributes](lp.ref.Append("table_with_columns"))
 }
 
 type lakeformationPermissionsState struct {

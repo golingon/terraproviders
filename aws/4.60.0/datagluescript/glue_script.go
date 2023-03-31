@@ -53,15 +53,15 @@ func (de DagEdgeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (de DagEdgeAttributes) Source() terra.StringValue {
-	return terra.ReferenceString(de.ref.Append("source"))
+	return terra.ReferenceAsString(de.ref.Append("source"))
 }
 
 func (de DagEdgeAttributes) Target() terra.StringValue {
-	return terra.ReferenceString(de.ref.Append("target"))
+	return terra.ReferenceAsString(de.ref.Append("target"))
 }
 
 func (de DagEdgeAttributes) TargetParameter() terra.StringValue {
-	return terra.ReferenceString(de.ref.Append("target_parameter"))
+	return terra.ReferenceAsString(de.ref.Append("target_parameter"))
 }
 
 type DagNodeAttributes struct {
@@ -81,19 +81,19 @@ func (dn DagNodeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dn DagNodeAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dn.ref.Append("id"))
+	return terra.ReferenceAsString(dn.ref.Append("id"))
 }
 
 func (dn DagNodeAttributes) LineNumber() terra.NumberValue {
-	return terra.ReferenceNumber(dn.ref.Append("line_number"))
+	return terra.ReferenceAsNumber(dn.ref.Append("line_number"))
 }
 
 func (dn DagNodeAttributes) NodeType() terra.StringValue {
-	return terra.ReferenceString(dn.ref.Append("node_type"))
+	return terra.ReferenceAsString(dn.ref.Append("node_type"))
 }
 
 func (dn DagNodeAttributes) Args() terra.ListValue[ArgsAttributes] {
-	return terra.ReferenceList[ArgsAttributes](dn.ref.Append("args"))
+	return terra.ReferenceAsList[ArgsAttributes](dn.ref.Append("args"))
 }
 
 type ArgsAttributes struct {
@@ -113,15 +113,15 @@ func (a ArgsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a ArgsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("name"))
+	return terra.ReferenceAsString(a.ref.Append("name"))
 }
 
 func (a ArgsAttributes) Param() terra.BoolValue {
-	return terra.ReferenceBool(a.ref.Append("param"))
+	return terra.ReferenceAsBool(a.ref.Append("param"))
 }
 
 func (a ArgsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("value"))
+	return terra.ReferenceAsString(a.ref.Append("value"))
 }
 
 type DagEdgeState struct {

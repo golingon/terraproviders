@@ -49,7 +49,7 @@ func (ca CacheAttributesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ca CacheAttributesAttributes) CacheStaleTimeoutInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(ca.ref.Append("cache_stale_timeout_in_seconds"))
+	return terra.ReferenceAsNumber(ca.ref.Append("cache_stale_timeout_in_seconds"))
 }
 
 type NfsFileShareDefaultsAttributes struct {
@@ -69,19 +69,19 @@ func (nfsd NfsFileShareDefaultsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nfsd NfsFileShareDefaultsAttributes) DirectoryMode() terra.StringValue {
-	return terra.ReferenceString(nfsd.ref.Append("directory_mode"))
+	return terra.ReferenceAsString(nfsd.ref.Append("directory_mode"))
 }
 
 func (nfsd NfsFileShareDefaultsAttributes) FileMode() terra.StringValue {
-	return terra.ReferenceString(nfsd.ref.Append("file_mode"))
+	return terra.ReferenceAsString(nfsd.ref.Append("file_mode"))
 }
 
 func (nfsd NfsFileShareDefaultsAttributes) GroupId() terra.StringValue {
-	return terra.ReferenceString(nfsd.ref.Append("group_id"))
+	return terra.ReferenceAsString(nfsd.ref.Append("group_id"))
 }
 
 func (nfsd NfsFileShareDefaultsAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(nfsd.ref.Append("owner_id"))
+	return terra.ReferenceAsString(nfsd.ref.Append("owner_id"))
 }
 
 type TimeoutsAttributes struct {
@@ -101,15 +101,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type CacheAttributesState struct {

@@ -95,15 +95,15 @@ func (lu LastUpdatedAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lu LastUpdatedAttributes) CreatedAt() terra.StringValue {
-	return terra.ReferenceString(lu.ref.Append("created_at"))
+	return terra.ReferenceAsString(lu.ref.Append("created_at"))
 }
 
 func (lu LastUpdatedAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(lu.ref.Append("status"))
+	return terra.ReferenceAsString(lu.ref.Append("status"))
 }
 
 func (lu LastUpdatedAttributes) Error() terra.ListValue[ErrorAttributes] {
-	return terra.ReferenceList[ErrorAttributes](lu.ref.Append("error"))
+	return terra.ReferenceAsList[ErrorAttributes](lu.ref.Append("error"))
 }
 
 type ErrorAttributes struct {
@@ -123,11 +123,11 @@ func (e ErrorAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e ErrorAttributes) ErrorCode() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("error_code"))
+	return terra.ReferenceAsString(e.ref.Append("error_code"))
 }
 
 func (e ErrorAttributes) ErrorMessage() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("error_message"))
+	return terra.ReferenceAsString(e.ref.Append("error_message"))
 }
 
 type LoggingConfigurationAttributes struct {
@@ -147,23 +147,23 @@ func (lc LoggingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lc LoggingConfigurationAttributes) DagProcessingLogs() terra.ListValue[DagProcessingLogsAttributes] {
-	return terra.ReferenceList[DagProcessingLogsAttributes](lc.ref.Append("dag_processing_logs"))
+	return terra.ReferenceAsList[DagProcessingLogsAttributes](lc.ref.Append("dag_processing_logs"))
 }
 
 func (lc LoggingConfigurationAttributes) SchedulerLogs() terra.ListValue[SchedulerLogsAttributes] {
-	return terra.ReferenceList[SchedulerLogsAttributes](lc.ref.Append("scheduler_logs"))
+	return terra.ReferenceAsList[SchedulerLogsAttributes](lc.ref.Append("scheduler_logs"))
 }
 
 func (lc LoggingConfigurationAttributes) TaskLogs() terra.ListValue[TaskLogsAttributes] {
-	return terra.ReferenceList[TaskLogsAttributes](lc.ref.Append("task_logs"))
+	return terra.ReferenceAsList[TaskLogsAttributes](lc.ref.Append("task_logs"))
 }
 
 func (lc LoggingConfigurationAttributes) WebserverLogs() terra.ListValue[WebserverLogsAttributes] {
-	return terra.ReferenceList[WebserverLogsAttributes](lc.ref.Append("webserver_logs"))
+	return terra.ReferenceAsList[WebserverLogsAttributes](lc.ref.Append("webserver_logs"))
 }
 
 func (lc LoggingConfigurationAttributes) WorkerLogs() terra.ListValue[WorkerLogsAttributes] {
-	return terra.ReferenceList[WorkerLogsAttributes](lc.ref.Append("worker_logs"))
+	return terra.ReferenceAsList[WorkerLogsAttributes](lc.ref.Append("worker_logs"))
 }
 
 type DagProcessingLogsAttributes struct {
@@ -183,15 +183,15 @@ func (dpl DagProcessingLogsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dpl DagProcessingLogsAttributes) CloudWatchLogGroupArn() terra.StringValue {
-	return terra.ReferenceString(dpl.ref.Append("cloud_watch_log_group_arn"))
+	return terra.ReferenceAsString(dpl.ref.Append("cloud_watch_log_group_arn"))
 }
 
 func (dpl DagProcessingLogsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(dpl.ref.Append("enabled"))
+	return terra.ReferenceAsBool(dpl.ref.Append("enabled"))
 }
 
 func (dpl DagProcessingLogsAttributes) LogLevel() terra.StringValue {
-	return terra.ReferenceString(dpl.ref.Append("log_level"))
+	return terra.ReferenceAsString(dpl.ref.Append("log_level"))
 }
 
 type SchedulerLogsAttributes struct {
@@ -211,15 +211,15 @@ func (sl SchedulerLogsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sl SchedulerLogsAttributes) CloudWatchLogGroupArn() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("cloud_watch_log_group_arn"))
+	return terra.ReferenceAsString(sl.ref.Append("cloud_watch_log_group_arn"))
 }
 
 func (sl SchedulerLogsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(sl.ref.Append("enabled"))
+	return terra.ReferenceAsBool(sl.ref.Append("enabled"))
 }
 
 func (sl SchedulerLogsAttributes) LogLevel() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("log_level"))
+	return terra.ReferenceAsString(sl.ref.Append("log_level"))
 }
 
 type TaskLogsAttributes struct {
@@ -239,15 +239,15 @@ func (tl TaskLogsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tl TaskLogsAttributes) CloudWatchLogGroupArn() terra.StringValue {
-	return terra.ReferenceString(tl.ref.Append("cloud_watch_log_group_arn"))
+	return terra.ReferenceAsString(tl.ref.Append("cloud_watch_log_group_arn"))
 }
 
 func (tl TaskLogsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(tl.ref.Append("enabled"))
+	return terra.ReferenceAsBool(tl.ref.Append("enabled"))
 }
 
 func (tl TaskLogsAttributes) LogLevel() terra.StringValue {
-	return terra.ReferenceString(tl.ref.Append("log_level"))
+	return terra.ReferenceAsString(tl.ref.Append("log_level"))
 }
 
 type WebserverLogsAttributes struct {
@@ -267,15 +267,15 @@ func (wl WebserverLogsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (wl WebserverLogsAttributes) CloudWatchLogGroupArn() terra.StringValue {
-	return terra.ReferenceString(wl.ref.Append("cloud_watch_log_group_arn"))
+	return terra.ReferenceAsString(wl.ref.Append("cloud_watch_log_group_arn"))
 }
 
 func (wl WebserverLogsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(wl.ref.Append("enabled"))
+	return terra.ReferenceAsBool(wl.ref.Append("enabled"))
 }
 
 func (wl WebserverLogsAttributes) LogLevel() terra.StringValue {
-	return terra.ReferenceString(wl.ref.Append("log_level"))
+	return terra.ReferenceAsString(wl.ref.Append("log_level"))
 }
 
 type WorkerLogsAttributes struct {
@@ -295,15 +295,15 @@ func (wl WorkerLogsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (wl WorkerLogsAttributes) CloudWatchLogGroupArn() terra.StringValue {
-	return terra.ReferenceString(wl.ref.Append("cloud_watch_log_group_arn"))
+	return terra.ReferenceAsString(wl.ref.Append("cloud_watch_log_group_arn"))
 }
 
 func (wl WorkerLogsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(wl.ref.Append("enabled"))
+	return terra.ReferenceAsBool(wl.ref.Append("enabled"))
 }
 
 func (wl WorkerLogsAttributes) LogLevel() terra.StringValue {
-	return terra.ReferenceString(wl.ref.Append("log_level"))
+	return terra.ReferenceAsString(wl.ref.Append("log_level"))
 }
 
 type NetworkConfigurationAttributes struct {
@@ -323,11 +323,11 @@ func (nc NetworkConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nc NetworkConfigurationAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](nc.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](nc.ref.Append("security_group_ids"))
 }
 
 func (nc NetworkConfigurationAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](nc.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](nc.ref.Append("subnet_ids"))
 }
 
 type TimeoutsAttributes struct {
@@ -347,15 +347,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type LastUpdatedState struct {

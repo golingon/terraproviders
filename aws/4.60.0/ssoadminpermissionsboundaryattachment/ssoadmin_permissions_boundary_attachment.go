@@ -38,11 +38,11 @@ func (pb PermissionsBoundaryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pb PermissionsBoundaryAttributes) ManagedPolicyArn() terra.StringValue {
-	return terra.ReferenceString(pb.ref.Append("managed_policy_arn"))
+	return terra.ReferenceAsString(pb.ref.Append("managed_policy_arn"))
 }
 
 func (pb PermissionsBoundaryAttributes) CustomerManagedPolicyReference() terra.ListValue[CustomerManagedPolicyReferenceAttributes] {
-	return terra.ReferenceList[CustomerManagedPolicyReferenceAttributes](pb.ref.Append("customer_managed_policy_reference"))
+	return terra.ReferenceAsList[CustomerManagedPolicyReferenceAttributes](pb.ref.Append("customer_managed_policy_reference"))
 }
 
 type CustomerManagedPolicyReferenceAttributes struct {
@@ -62,11 +62,11 @@ func (cmpr CustomerManagedPolicyReferenceAttributes) InternalTokens() hclwrite.T
 }
 
 func (cmpr CustomerManagedPolicyReferenceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cmpr.ref.Append("name"))
+	return terra.ReferenceAsString(cmpr.ref.Append("name"))
 }
 
 func (cmpr CustomerManagedPolicyReferenceAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(cmpr.ref.Append("path"))
+	return terra.ReferenceAsString(cmpr.ref.Append("path"))
 }
 
 type PermissionsBoundaryState struct {

@@ -46,15 +46,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type WorkspacePropertiesAttributes struct {
@@ -74,23 +74,23 @@ func (wp WorkspacePropertiesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (wp WorkspacePropertiesAttributes) ComputeTypeName() terra.StringValue {
-	return terra.ReferenceString(wp.ref.Append("compute_type_name"))
+	return terra.ReferenceAsString(wp.ref.Append("compute_type_name"))
 }
 
 func (wp WorkspacePropertiesAttributes) RootVolumeSizeGib() terra.NumberValue {
-	return terra.ReferenceNumber(wp.ref.Append("root_volume_size_gib"))
+	return terra.ReferenceAsNumber(wp.ref.Append("root_volume_size_gib"))
 }
 
 func (wp WorkspacePropertiesAttributes) RunningMode() terra.StringValue {
-	return terra.ReferenceString(wp.ref.Append("running_mode"))
+	return terra.ReferenceAsString(wp.ref.Append("running_mode"))
 }
 
 func (wp WorkspacePropertiesAttributes) RunningModeAutoStopTimeoutInMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(wp.ref.Append("running_mode_auto_stop_timeout_in_minutes"))
+	return terra.ReferenceAsNumber(wp.ref.Append("running_mode_auto_stop_timeout_in_minutes"))
 }
 
 func (wp WorkspacePropertiesAttributes) UserVolumeSizeGib() terra.NumberValue {
-	return terra.ReferenceNumber(wp.ref.Append("user_volume_size_gib"))
+	return terra.ReferenceAsNumber(wp.ref.Append("user_volume_size_gib"))
 }
 
 type TimeoutsState struct {

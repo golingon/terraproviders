@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataRedshiftServiceAccount creates a new instance of [DataRedshiftServiceAccount].
 func NewDataRedshiftServiceAccount(name string, args DataRedshiftServiceAccountArgs) *DataRedshiftServiceAccount {
 	return &DataRedshiftServiceAccount{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataRedshiftServiceAccount(name string, args DataRedshiftServiceAccountA
 
 var _ terra.DataResource = (*DataRedshiftServiceAccount)(nil)
 
+// DataRedshiftServiceAccount represents the Terraform data resource aws_redshift_service_account.
 type DataRedshiftServiceAccount struct {
 	Name string
 	Args DataRedshiftServiceAccountArgs
 }
 
+// DataSource returns the Terraform object type for [DataRedshiftServiceAccount].
 func (rsa *DataRedshiftServiceAccount) DataSource() string {
 	return "aws_redshift_service_account"
 }
 
+// LocalName returns the local name for [DataRedshiftServiceAccount].
 func (rsa *DataRedshiftServiceAccount) LocalName() string {
 	return rsa.Name
 }
 
+// Configuration returns the configuration (args) for [DataRedshiftServiceAccount].
 func (rsa *DataRedshiftServiceAccount) Configuration() interface{} {
 	return rsa.Args
 }
 
+// Attributes returns the attributes for [DataRedshiftServiceAccount].
 func (rsa *DataRedshiftServiceAccount) Attributes() dataRedshiftServiceAccountAttributes {
 	return dataRedshiftServiceAccountAttributes{ref: terra.ReferenceDataResource(rsa)}
 }
 
+// DataRedshiftServiceAccountArgs contains the configurations for aws_redshift_service_account.
 type DataRedshiftServiceAccountArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,14 +51,17 @@ type dataRedshiftServiceAccountAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_redshift_service_account.
 func (rsa dataRedshiftServiceAccountAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rsa.ref.Append("arn"))
+	return terra.ReferenceAsString(rsa.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_redshift_service_account.
 func (rsa dataRedshiftServiceAccountAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rsa.ref.Append("id"))
+	return terra.ReferenceAsString(rsa.ref.Append("id"))
 }
 
+// Region returns a reference to field region of aws_redshift_service_account.
 func (rsa dataRedshiftServiceAccountAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(rsa.ref.Append("region"))
+	return terra.ReferenceAsString(rsa.ref.Append("region"))
 }

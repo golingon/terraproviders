@@ -85,51 +85,51 @@ func (sd StorageDescriptorAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sd StorageDescriptorAttributes) BucketColumns() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sd.ref.Append("bucket_columns"))
+	return terra.ReferenceAsList[terra.StringValue](sd.ref.Append("bucket_columns"))
 }
 
 func (sd StorageDescriptorAttributes) Compressed() terra.BoolValue {
-	return terra.ReferenceBool(sd.ref.Append("compressed"))
+	return terra.ReferenceAsBool(sd.ref.Append("compressed"))
 }
 
 func (sd StorageDescriptorAttributes) InputFormat() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("input_format"))
+	return terra.ReferenceAsString(sd.ref.Append("input_format"))
 }
 
 func (sd StorageDescriptorAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("location"))
+	return terra.ReferenceAsString(sd.ref.Append("location"))
 }
 
 func (sd StorageDescriptorAttributes) NumberOfBuckets() terra.NumberValue {
-	return terra.ReferenceNumber(sd.ref.Append("number_of_buckets"))
+	return terra.ReferenceAsNumber(sd.ref.Append("number_of_buckets"))
 }
 
 func (sd StorageDescriptorAttributes) OutputFormat() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("output_format"))
+	return terra.ReferenceAsString(sd.ref.Append("output_format"))
 }
 
 func (sd StorageDescriptorAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sd.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](sd.ref.Append("parameters"))
 }
 
 func (sd StorageDescriptorAttributes) StoredAsSubDirectories() terra.BoolValue {
-	return terra.ReferenceBool(sd.ref.Append("stored_as_sub_directories"))
+	return terra.ReferenceAsBool(sd.ref.Append("stored_as_sub_directories"))
 }
 
 func (sd StorageDescriptorAttributes) Columns() terra.ListValue[ColumnsAttributes] {
-	return terra.ReferenceList[ColumnsAttributes](sd.ref.Append("columns"))
+	return terra.ReferenceAsList[ColumnsAttributes](sd.ref.Append("columns"))
 }
 
 func (sd StorageDescriptorAttributes) SerDeInfo() terra.ListValue[SerDeInfoAttributes] {
-	return terra.ReferenceList[SerDeInfoAttributes](sd.ref.Append("ser_de_info"))
+	return terra.ReferenceAsList[SerDeInfoAttributes](sd.ref.Append("ser_de_info"))
 }
 
 func (sd StorageDescriptorAttributes) SkewedInfo() terra.ListValue[SkewedInfoAttributes] {
-	return terra.ReferenceList[SkewedInfoAttributes](sd.ref.Append("skewed_info"))
+	return terra.ReferenceAsList[SkewedInfoAttributes](sd.ref.Append("skewed_info"))
 }
 
 func (sd StorageDescriptorAttributes) SortColumns() terra.ListValue[SortColumnsAttributes] {
-	return terra.ReferenceList[SortColumnsAttributes](sd.ref.Append("sort_columns"))
+	return terra.ReferenceAsList[SortColumnsAttributes](sd.ref.Append("sort_columns"))
 }
 
 type ColumnsAttributes struct {
@@ -149,15 +149,15 @@ func (c ColumnsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ColumnsAttributes) Comment() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("comment"))
+	return terra.ReferenceAsString(c.ref.Append("comment"))
 }
 
 func (c ColumnsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("name"))
+	return terra.ReferenceAsString(c.ref.Append("name"))
 }
 
 func (c ColumnsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("type"))
+	return terra.ReferenceAsString(c.ref.Append("type"))
 }
 
 type SerDeInfoAttributes struct {
@@ -177,15 +177,15 @@ func (sdi SerDeInfoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sdi SerDeInfoAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sdi.ref.Append("name"))
+	return terra.ReferenceAsString(sdi.ref.Append("name"))
 }
 
 func (sdi SerDeInfoAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sdi.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](sdi.ref.Append("parameters"))
 }
 
 func (sdi SerDeInfoAttributes) SerializationLibrary() terra.StringValue {
-	return terra.ReferenceString(sdi.ref.Append("serialization_library"))
+	return terra.ReferenceAsString(sdi.ref.Append("serialization_library"))
 }
 
 type SkewedInfoAttributes struct {
@@ -205,15 +205,15 @@ func (si SkewedInfoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (si SkewedInfoAttributes) SkewedColumnNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](si.ref.Append("skewed_column_names"))
+	return terra.ReferenceAsList[terra.StringValue](si.ref.Append("skewed_column_names"))
 }
 
 func (si SkewedInfoAttributes) SkewedColumnValueLocationMaps() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](si.ref.Append("skewed_column_value_location_maps"))
+	return terra.ReferenceAsMap[terra.StringValue](si.ref.Append("skewed_column_value_location_maps"))
 }
 
 func (si SkewedInfoAttributes) SkewedColumnValues() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](si.ref.Append("skewed_column_values"))
+	return terra.ReferenceAsList[terra.StringValue](si.ref.Append("skewed_column_values"))
 }
 
 type SortColumnsAttributes struct {
@@ -233,11 +233,11 @@ func (sc SortColumnsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc SortColumnsAttributes) Column() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("column"))
+	return terra.ReferenceAsString(sc.ref.Append("column"))
 }
 
 func (sc SortColumnsAttributes) SortOrder() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("sort_order"))
+	return terra.ReferenceAsNumber(sc.ref.Append("sort_order"))
 }
 
 type StorageDescriptorState struct {

@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataRegion creates a new instance of [DataRegion].
 func NewDataRegion(name string, args DataRegionArgs) *DataRegion {
 	return &DataRegion{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataRegion(name string, args DataRegionArgs) *DataRegion {
 
 var _ terra.DataResource = (*DataRegion)(nil)
 
+// DataRegion represents the Terraform data resource aws_region.
 type DataRegion struct {
 	Name string
 	Args DataRegionArgs
 }
 
+// DataSource returns the Terraform object type for [DataRegion].
 func (r *DataRegion) DataSource() string {
 	return "aws_region"
 }
 
+// LocalName returns the local name for [DataRegion].
 func (r *DataRegion) LocalName() string {
 	return r.Name
 }
 
+// Configuration returns the configuration (args) for [DataRegion].
 func (r *DataRegion) Configuration() interface{} {
 	return r.Args
 }
 
+// Attributes returns the attributes for [DataRegion].
 func (r *DataRegion) Attributes() dataRegionAttributes {
 	return dataRegionAttributes{ref: terra.ReferenceDataResource(r)}
 }
 
+// DataRegionArgs contains the configurations for aws_region.
 type DataRegionArgs struct {
 	// Endpoint: string, optional
 	Endpoint terra.StringValue `hcl:"endpoint,attr"`
@@ -46,18 +53,22 @@ type dataRegionAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of aws_region.
 func (r dataRegionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("description"))
+	return terra.ReferenceAsString(r.ref.Append("description"))
 }
 
+// Endpoint returns a reference to field endpoint of aws_region.
 func (r dataRegionAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("endpoint"))
+	return terra.ReferenceAsString(r.ref.Append("endpoint"))
 }
 
+// Id returns a reference to field id of aws_region.
 func (r dataRegionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("id"))
+	return terra.ReferenceAsString(r.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_region.
 func (r dataRegionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("name"))
+	return terra.ReferenceAsString(r.ref.Append("name"))
 }

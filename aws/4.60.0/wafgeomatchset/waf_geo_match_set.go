@@ -31,11 +31,11 @@ func (gmc GeoMatchConstraintAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (gmc GeoMatchConstraintAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(gmc.ref.Append("type"))
+	return terra.ReferenceAsString(gmc.ref.Append("type"))
 }
 
 func (gmc GeoMatchConstraintAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(gmc.ref.Append("value"))
+	return terra.ReferenceAsString(gmc.ref.Append("value"))
 }
 
 type GeoMatchConstraintState struct {

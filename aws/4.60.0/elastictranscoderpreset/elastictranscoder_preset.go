@@ -119,23 +119,23 @@ func (a AudioAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AudioAttributes) AudioPackingMode() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("audio_packing_mode"))
+	return terra.ReferenceAsString(a.ref.Append("audio_packing_mode"))
 }
 
 func (a AudioAttributes) BitRate() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("bit_rate"))
+	return terra.ReferenceAsString(a.ref.Append("bit_rate"))
 }
 
 func (a AudioAttributes) Channels() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("channels"))
+	return terra.ReferenceAsString(a.ref.Append("channels"))
 }
 
 func (a AudioAttributes) Codec() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("codec"))
+	return terra.ReferenceAsString(a.ref.Append("codec"))
 }
 
 func (a AudioAttributes) SampleRate() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("sample_rate"))
+	return terra.ReferenceAsString(a.ref.Append("sample_rate"))
 }
 
 type AudioCodecOptionsAttributes struct {
@@ -155,19 +155,19 @@ func (aco AudioCodecOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (aco AudioCodecOptionsAttributes) BitDepth() terra.StringValue {
-	return terra.ReferenceString(aco.ref.Append("bit_depth"))
+	return terra.ReferenceAsString(aco.ref.Append("bit_depth"))
 }
 
 func (aco AudioCodecOptionsAttributes) BitOrder() terra.StringValue {
-	return terra.ReferenceString(aco.ref.Append("bit_order"))
+	return terra.ReferenceAsString(aco.ref.Append("bit_order"))
 }
 
 func (aco AudioCodecOptionsAttributes) Profile() terra.StringValue {
-	return terra.ReferenceString(aco.ref.Append("profile"))
+	return terra.ReferenceAsString(aco.ref.Append("profile"))
 }
 
 func (aco AudioCodecOptionsAttributes) Signed() terra.StringValue {
-	return terra.ReferenceString(aco.ref.Append("signed"))
+	return terra.ReferenceAsString(aco.ref.Append("signed"))
 }
 
 type ThumbnailsAttributes struct {
@@ -187,35 +187,35 @@ func (t ThumbnailsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t ThumbnailsAttributes) AspectRatio() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("aspect_ratio"))
+	return terra.ReferenceAsString(t.ref.Append("aspect_ratio"))
 }
 
 func (t ThumbnailsAttributes) Format() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("format"))
+	return terra.ReferenceAsString(t.ref.Append("format"))
 }
 
 func (t ThumbnailsAttributes) Interval() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("interval"))
+	return terra.ReferenceAsString(t.ref.Append("interval"))
 }
 
 func (t ThumbnailsAttributes) MaxHeight() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("max_height"))
+	return terra.ReferenceAsString(t.ref.Append("max_height"))
 }
 
 func (t ThumbnailsAttributes) MaxWidth() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("max_width"))
+	return terra.ReferenceAsString(t.ref.Append("max_width"))
 }
 
 func (t ThumbnailsAttributes) PaddingPolicy() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("padding_policy"))
+	return terra.ReferenceAsString(t.ref.Append("padding_policy"))
 }
 
 func (t ThumbnailsAttributes) Resolution() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("resolution"))
+	return terra.ReferenceAsString(t.ref.Append("resolution"))
 }
 
 func (t ThumbnailsAttributes) SizingPolicy() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("sizing_policy"))
+	return terra.ReferenceAsString(t.ref.Append("sizing_policy"))
 }
 
 type VideoAttributes struct {
@@ -235,55 +235,55 @@ func (v VideoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (v VideoAttributes) AspectRatio() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("aspect_ratio"))
+	return terra.ReferenceAsString(v.ref.Append("aspect_ratio"))
 }
 
 func (v VideoAttributes) BitRate() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("bit_rate"))
+	return terra.ReferenceAsString(v.ref.Append("bit_rate"))
 }
 
 func (v VideoAttributes) Codec() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("codec"))
+	return terra.ReferenceAsString(v.ref.Append("codec"))
 }
 
 func (v VideoAttributes) DisplayAspectRatio() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("display_aspect_ratio"))
+	return terra.ReferenceAsString(v.ref.Append("display_aspect_ratio"))
 }
 
 func (v VideoAttributes) FixedGop() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("fixed_gop"))
+	return terra.ReferenceAsString(v.ref.Append("fixed_gop"))
 }
 
 func (v VideoAttributes) FrameRate() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("frame_rate"))
+	return terra.ReferenceAsString(v.ref.Append("frame_rate"))
 }
 
 func (v VideoAttributes) KeyframesMaxDist() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("keyframes_max_dist"))
+	return terra.ReferenceAsString(v.ref.Append("keyframes_max_dist"))
 }
 
 func (v VideoAttributes) MaxFrameRate() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("max_frame_rate"))
+	return terra.ReferenceAsString(v.ref.Append("max_frame_rate"))
 }
 
 func (v VideoAttributes) MaxHeight() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("max_height"))
+	return terra.ReferenceAsString(v.ref.Append("max_height"))
 }
 
 func (v VideoAttributes) MaxWidth() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("max_width"))
+	return terra.ReferenceAsString(v.ref.Append("max_width"))
 }
 
 func (v VideoAttributes) PaddingPolicy() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("padding_policy"))
+	return terra.ReferenceAsString(v.ref.Append("padding_policy"))
 }
 
 func (v VideoAttributes) Resolution() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("resolution"))
+	return terra.ReferenceAsString(v.ref.Append("resolution"))
 }
 
 func (v VideoAttributes) SizingPolicy() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("sizing_policy"))
+	return terra.ReferenceAsString(v.ref.Append("sizing_policy"))
 }
 
 type VideoWatermarksAttributes struct {
@@ -303,43 +303,43 @@ func (vw VideoWatermarksAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vw VideoWatermarksAttributes) HorizontalAlign() terra.StringValue {
-	return terra.ReferenceString(vw.ref.Append("horizontal_align"))
+	return terra.ReferenceAsString(vw.ref.Append("horizontal_align"))
 }
 
 func (vw VideoWatermarksAttributes) HorizontalOffset() terra.StringValue {
-	return terra.ReferenceString(vw.ref.Append("horizontal_offset"))
+	return terra.ReferenceAsString(vw.ref.Append("horizontal_offset"))
 }
 
 func (vw VideoWatermarksAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vw.ref.Append("id"))
+	return terra.ReferenceAsString(vw.ref.Append("id"))
 }
 
 func (vw VideoWatermarksAttributes) MaxHeight() terra.StringValue {
-	return terra.ReferenceString(vw.ref.Append("max_height"))
+	return terra.ReferenceAsString(vw.ref.Append("max_height"))
 }
 
 func (vw VideoWatermarksAttributes) MaxWidth() terra.StringValue {
-	return terra.ReferenceString(vw.ref.Append("max_width"))
+	return terra.ReferenceAsString(vw.ref.Append("max_width"))
 }
 
 func (vw VideoWatermarksAttributes) Opacity() terra.StringValue {
-	return terra.ReferenceString(vw.ref.Append("opacity"))
+	return terra.ReferenceAsString(vw.ref.Append("opacity"))
 }
 
 func (vw VideoWatermarksAttributes) SizingPolicy() terra.StringValue {
-	return terra.ReferenceString(vw.ref.Append("sizing_policy"))
+	return terra.ReferenceAsString(vw.ref.Append("sizing_policy"))
 }
 
 func (vw VideoWatermarksAttributes) Target() terra.StringValue {
-	return terra.ReferenceString(vw.ref.Append("target"))
+	return terra.ReferenceAsString(vw.ref.Append("target"))
 }
 
 func (vw VideoWatermarksAttributes) VerticalAlign() terra.StringValue {
-	return terra.ReferenceString(vw.ref.Append("vertical_align"))
+	return terra.ReferenceAsString(vw.ref.Append("vertical_align"))
 }
 
 func (vw VideoWatermarksAttributes) VerticalOffset() terra.StringValue {
-	return terra.ReferenceString(vw.ref.Append("vertical_offset"))
+	return terra.ReferenceAsString(vw.ref.Append("vertical_offset"))
 }
 
 type AudioState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSnsTopic creates a new instance of [SnsTopic].
 func NewSnsTopic(name string, args SnsTopicArgs) *SnsTopic {
 	return &SnsTopic{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSnsTopic(name string, args SnsTopicArgs) *SnsTopic {
 
 var _ terra.Resource = (*SnsTopic)(nil)
 
+// SnsTopic represents the Terraform resource aws_sns_topic.
 type SnsTopic struct {
-	Name  string
-	Args  SnsTopicArgs
-	state *snsTopicState
+	Name      string
+	Args      SnsTopicArgs
+	state     *snsTopicState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SnsTopic].
 func (st *SnsTopic) Type() string {
 	return "aws_sns_topic"
 }
 
+// LocalName returns the local name for [SnsTopic].
 func (st *SnsTopic) LocalName() string {
 	return st.Name
 }
 
+// Configuration returns the configuration (args) for [SnsTopic].
 func (st *SnsTopic) Configuration() interface{} {
 	return st.Args
 }
 
+// DependOn is used for other resources to depend on [SnsTopic].
+func (st *SnsTopic) DependOn() terra.Reference {
+	return terra.ReferenceResource(st)
+}
+
+// Dependencies returns the list of resources [SnsTopic] depends_on.
+func (st *SnsTopic) Dependencies() terra.Dependencies {
+	return st.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SnsTopic].
+func (st *SnsTopic) LifecycleManagement() *terra.Lifecycle {
+	return st.Lifecycle
+}
+
+// Attributes returns the attributes for [SnsTopic].
 func (st *SnsTopic) Attributes() snsTopicAttributes {
 	return snsTopicAttributes{ref: terra.ReferenceResource(st)}
 }
 
+// ImportState imports the given attribute values into [SnsTopic]'s state.
 func (st *SnsTopic) ImportState(av io.Reader) error {
 	st.state = &snsTopicState{}
 	if err := json.NewDecoder(av).Decode(st.state); err != nil {
@@ -48,10 +72,12 @@ func (st *SnsTopic) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SnsTopic] has state.
 func (st *SnsTopic) State() (*snsTopicState, bool) {
 	return st.state, st.state != nil
 }
 
+// StateMust returns the state for [SnsTopic]. Panics if the state is nil.
 func (st *SnsTopic) StateMust() *snsTopicState {
 	if st.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", st.Type(), st.LocalName()))
@@ -59,10 +85,7 @@ func (st *SnsTopic) StateMust() *snsTopicState {
 	return st.state
 }
 
-func (st *SnsTopic) DependOn() terra.Reference {
-	return terra.ReferenceResource(st)
-}
-
+// SnsTopicArgs contains the configurations for aws_sns_topic.
 type SnsTopicArgs struct {
 	// ApplicationFailureFeedbackRoleArn: string, optional
 	ApplicationFailureFeedbackRoleArn terra.StringValue `hcl:"application_failure_feedback_role_arn,attr"`
@@ -120,131 +143,159 @@ type SnsTopicArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// TracingConfig: string, optional
 	TracingConfig terra.StringValue `hcl:"tracing_config,attr"`
-	// DependsOn contains resources that SnsTopic depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type snsTopicAttributes struct {
 	ref terra.Reference
 }
 
+// ApplicationFailureFeedbackRoleArn returns a reference to field application_failure_feedback_role_arn of aws_sns_topic.
 func (st snsTopicAttributes) ApplicationFailureFeedbackRoleArn() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("application_failure_feedback_role_arn"))
+	return terra.ReferenceAsString(st.ref.Append("application_failure_feedback_role_arn"))
 }
 
+// ApplicationSuccessFeedbackRoleArn returns a reference to field application_success_feedback_role_arn of aws_sns_topic.
 func (st snsTopicAttributes) ApplicationSuccessFeedbackRoleArn() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("application_success_feedback_role_arn"))
+	return terra.ReferenceAsString(st.ref.Append("application_success_feedback_role_arn"))
 }
 
+// ApplicationSuccessFeedbackSampleRate returns a reference to field application_success_feedback_sample_rate of aws_sns_topic.
 func (st snsTopicAttributes) ApplicationSuccessFeedbackSampleRate() terra.NumberValue {
-	return terra.ReferenceNumber(st.ref.Append("application_success_feedback_sample_rate"))
+	return terra.ReferenceAsNumber(st.ref.Append("application_success_feedback_sample_rate"))
 }
 
+// Arn returns a reference to field arn of aws_sns_topic.
 func (st snsTopicAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("arn"))
+	return terra.ReferenceAsString(st.ref.Append("arn"))
 }
 
+// ContentBasedDeduplication returns a reference to field content_based_deduplication of aws_sns_topic.
 func (st snsTopicAttributes) ContentBasedDeduplication() terra.BoolValue {
-	return terra.ReferenceBool(st.ref.Append("content_based_deduplication"))
+	return terra.ReferenceAsBool(st.ref.Append("content_based_deduplication"))
 }
 
+// DeliveryPolicy returns a reference to field delivery_policy of aws_sns_topic.
 func (st snsTopicAttributes) DeliveryPolicy() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("delivery_policy"))
+	return terra.ReferenceAsString(st.ref.Append("delivery_policy"))
 }
 
+// DisplayName returns a reference to field display_name of aws_sns_topic.
 func (st snsTopicAttributes) DisplayName() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("display_name"))
+	return terra.ReferenceAsString(st.ref.Append("display_name"))
 }
 
+// FifoTopic returns a reference to field fifo_topic of aws_sns_topic.
 func (st snsTopicAttributes) FifoTopic() terra.BoolValue {
-	return terra.ReferenceBool(st.ref.Append("fifo_topic"))
+	return terra.ReferenceAsBool(st.ref.Append("fifo_topic"))
 }
 
+// FirehoseFailureFeedbackRoleArn returns a reference to field firehose_failure_feedback_role_arn of aws_sns_topic.
 func (st snsTopicAttributes) FirehoseFailureFeedbackRoleArn() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("firehose_failure_feedback_role_arn"))
+	return terra.ReferenceAsString(st.ref.Append("firehose_failure_feedback_role_arn"))
 }
 
+// FirehoseSuccessFeedbackRoleArn returns a reference to field firehose_success_feedback_role_arn of aws_sns_topic.
 func (st snsTopicAttributes) FirehoseSuccessFeedbackRoleArn() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("firehose_success_feedback_role_arn"))
+	return terra.ReferenceAsString(st.ref.Append("firehose_success_feedback_role_arn"))
 }
 
+// FirehoseSuccessFeedbackSampleRate returns a reference to field firehose_success_feedback_sample_rate of aws_sns_topic.
 func (st snsTopicAttributes) FirehoseSuccessFeedbackSampleRate() terra.NumberValue {
-	return terra.ReferenceNumber(st.ref.Append("firehose_success_feedback_sample_rate"))
+	return terra.ReferenceAsNumber(st.ref.Append("firehose_success_feedback_sample_rate"))
 }
 
+// HttpFailureFeedbackRoleArn returns a reference to field http_failure_feedback_role_arn of aws_sns_topic.
 func (st snsTopicAttributes) HttpFailureFeedbackRoleArn() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("http_failure_feedback_role_arn"))
+	return terra.ReferenceAsString(st.ref.Append("http_failure_feedback_role_arn"))
 }
 
+// HttpSuccessFeedbackRoleArn returns a reference to field http_success_feedback_role_arn of aws_sns_topic.
 func (st snsTopicAttributes) HttpSuccessFeedbackRoleArn() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("http_success_feedback_role_arn"))
+	return terra.ReferenceAsString(st.ref.Append("http_success_feedback_role_arn"))
 }
 
+// HttpSuccessFeedbackSampleRate returns a reference to field http_success_feedback_sample_rate of aws_sns_topic.
 func (st snsTopicAttributes) HttpSuccessFeedbackSampleRate() terra.NumberValue {
-	return terra.ReferenceNumber(st.ref.Append("http_success_feedback_sample_rate"))
+	return terra.ReferenceAsNumber(st.ref.Append("http_success_feedback_sample_rate"))
 }
 
+// Id returns a reference to field id of aws_sns_topic.
 func (st snsTopicAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("id"))
+	return terra.ReferenceAsString(st.ref.Append("id"))
 }
 
+// KmsMasterKeyId returns a reference to field kms_master_key_id of aws_sns_topic.
 func (st snsTopicAttributes) KmsMasterKeyId() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("kms_master_key_id"))
+	return terra.ReferenceAsString(st.ref.Append("kms_master_key_id"))
 }
 
+// LambdaFailureFeedbackRoleArn returns a reference to field lambda_failure_feedback_role_arn of aws_sns_topic.
 func (st snsTopicAttributes) LambdaFailureFeedbackRoleArn() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("lambda_failure_feedback_role_arn"))
+	return terra.ReferenceAsString(st.ref.Append("lambda_failure_feedback_role_arn"))
 }
 
+// LambdaSuccessFeedbackRoleArn returns a reference to field lambda_success_feedback_role_arn of aws_sns_topic.
 func (st snsTopicAttributes) LambdaSuccessFeedbackRoleArn() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("lambda_success_feedback_role_arn"))
+	return terra.ReferenceAsString(st.ref.Append("lambda_success_feedback_role_arn"))
 }
 
+// LambdaSuccessFeedbackSampleRate returns a reference to field lambda_success_feedback_sample_rate of aws_sns_topic.
 func (st snsTopicAttributes) LambdaSuccessFeedbackSampleRate() terra.NumberValue {
-	return terra.ReferenceNumber(st.ref.Append("lambda_success_feedback_sample_rate"))
+	return terra.ReferenceAsNumber(st.ref.Append("lambda_success_feedback_sample_rate"))
 }
 
+// Name returns a reference to field name of aws_sns_topic.
 func (st snsTopicAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("name"))
+	return terra.ReferenceAsString(st.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_sns_topic.
 func (st snsTopicAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(st.ref.Append("name_prefix"))
 }
 
+// Owner returns a reference to field owner of aws_sns_topic.
 func (st snsTopicAttributes) Owner() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("owner"))
+	return terra.ReferenceAsString(st.ref.Append("owner"))
 }
 
+// Policy returns a reference to field policy of aws_sns_topic.
 func (st snsTopicAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("policy"))
+	return terra.ReferenceAsString(st.ref.Append("policy"))
 }
 
+// SignatureVersion returns a reference to field signature_version of aws_sns_topic.
 func (st snsTopicAttributes) SignatureVersion() terra.NumberValue {
-	return terra.ReferenceNumber(st.ref.Append("signature_version"))
+	return terra.ReferenceAsNumber(st.ref.Append("signature_version"))
 }
 
+// SqsFailureFeedbackRoleArn returns a reference to field sqs_failure_feedback_role_arn of aws_sns_topic.
 func (st snsTopicAttributes) SqsFailureFeedbackRoleArn() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("sqs_failure_feedback_role_arn"))
+	return terra.ReferenceAsString(st.ref.Append("sqs_failure_feedback_role_arn"))
 }
 
+// SqsSuccessFeedbackRoleArn returns a reference to field sqs_success_feedback_role_arn of aws_sns_topic.
 func (st snsTopicAttributes) SqsSuccessFeedbackRoleArn() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("sqs_success_feedback_role_arn"))
+	return terra.ReferenceAsString(st.ref.Append("sqs_success_feedback_role_arn"))
 }
 
+// SqsSuccessFeedbackSampleRate returns a reference to field sqs_success_feedback_sample_rate of aws_sns_topic.
 func (st snsTopicAttributes) SqsSuccessFeedbackSampleRate() terra.NumberValue {
-	return terra.ReferenceNumber(st.ref.Append("sqs_success_feedback_sample_rate"))
+	return terra.ReferenceAsNumber(st.ref.Append("sqs_success_feedback_sample_rate"))
 }
 
+// Tags returns a reference to field tags of aws_sns_topic.
 func (st snsTopicAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](st.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](st.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_sns_topic.
 func (st snsTopicAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](st.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](st.ref.Append("tags_all"))
 }
 
+// TracingConfig returns a reference to field tracing_config of aws_sns_topic.
 func (st snsTopicAttributes) TracingConfig() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("tracing_config"))
+	return terra.ReferenceAsString(st.ref.Append("tracing_config"))
 }
 
 type snsTopicState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAutoscalingGroupTag creates a new instance of [AutoscalingGroupTag].
 func NewAutoscalingGroupTag(name string, args AutoscalingGroupTagArgs) *AutoscalingGroupTag {
 	return &AutoscalingGroupTag{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAutoscalingGroupTag(name string, args AutoscalingGroupTagArgs) *Autoscal
 
 var _ terra.Resource = (*AutoscalingGroupTag)(nil)
 
+// AutoscalingGroupTag represents the Terraform resource aws_autoscaling_group_tag.
 type AutoscalingGroupTag struct {
-	Name  string
-	Args  AutoscalingGroupTagArgs
-	state *autoscalingGroupTagState
+	Name      string
+	Args      AutoscalingGroupTagArgs
+	state     *autoscalingGroupTagState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AutoscalingGroupTag].
 func (agt *AutoscalingGroupTag) Type() string {
 	return "aws_autoscaling_group_tag"
 }
 
+// LocalName returns the local name for [AutoscalingGroupTag].
 func (agt *AutoscalingGroupTag) LocalName() string {
 	return agt.Name
 }
 
+// Configuration returns the configuration (args) for [AutoscalingGroupTag].
 func (agt *AutoscalingGroupTag) Configuration() interface{} {
 	return agt.Args
 }
 
+// DependOn is used for other resources to depend on [AutoscalingGroupTag].
+func (agt *AutoscalingGroupTag) DependOn() terra.Reference {
+	return terra.ReferenceResource(agt)
+}
+
+// Dependencies returns the list of resources [AutoscalingGroupTag] depends_on.
+func (agt *AutoscalingGroupTag) Dependencies() terra.Dependencies {
+	return agt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AutoscalingGroupTag].
+func (agt *AutoscalingGroupTag) LifecycleManagement() *terra.Lifecycle {
+	return agt.Lifecycle
+}
+
+// Attributes returns the attributes for [AutoscalingGroupTag].
 func (agt *AutoscalingGroupTag) Attributes() autoscalingGroupTagAttributes {
 	return autoscalingGroupTagAttributes{ref: terra.ReferenceResource(agt)}
 }
 
+// ImportState imports the given attribute values into [AutoscalingGroupTag]'s state.
 func (agt *AutoscalingGroupTag) ImportState(av io.Reader) error {
 	agt.state = &autoscalingGroupTagState{}
 	if err := json.NewDecoder(av).Decode(agt.state); err != nil {
@@ -49,10 +73,12 @@ func (agt *AutoscalingGroupTag) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AutoscalingGroupTag] has state.
 func (agt *AutoscalingGroupTag) State() (*autoscalingGroupTagState, bool) {
 	return agt.state, agt.state != nil
 }
 
+// StateMust returns the state for [AutoscalingGroupTag]. Panics if the state is nil.
 func (agt *AutoscalingGroupTag) StateMust() *autoscalingGroupTagState {
 	if agt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", agt.Type(), agt.LocalName()))
@@ -60,10 +86,7 @@ func (agt *AutoscalingGroupTag) StateMust() *autoscalingGroupTagState {
 	return agt.state
 }
 
-func (agt *AutoscalingGroupTag) DependOn() terra.Reference {
-	return terra.ReferenceResource(agt)
-}
-
+// AutoscalingGroupTagArgs contains the configurations for aws_autoscaling_group_tag.
 type AutoscalingGroupTagArgs struct {
 	// AutoscalingGroupName: string, required
 	AutoscalingGroupName terra.StringValue `hcl:"autoscaling_group_name,attr" validate:"required"`
@@ -71,23 +94,23 @@ type AutoscalingGroupTagArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// Tag: required
 	Tag *autoscalinggrouptag.Tag `hcl:"tag,block" validate:"required"`
-	// DependsOn contains resources that AutoscalingGroupTag depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type autoscalingGroupTagAttributes struct {
 	ref terra.Reference
 }
 
+// AutoscalingGroupName returns a reference to field autoscaling_group_name of aws_autoscaling_group_tag.
 func (agt autoscalingGroupTagAttributes) AutoscalingGroupName() terra.StringValue {
-	return terra.ReferenceString(agt.ref.Append("autoscaling_group_name"))
+	return terra.ReferenceAsString(agt.ref.Append("autoscaling_group_name"))
 }
 
+// Id returns a reference to field id of aws_autoscaling_group_tag.
 func (agt autoscalingGroupTagAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(agt.ref.Append("id"))
+	return terra.ReferenceAsString(agt.ref.Append("id"))
 }
 
 func (agt autoscalingGroupTagAttributes) Tag() terra.ListValue[autoscalinggrouptag.TagAttributes] {
-	return terra.ReferenceList[autoscalinggrouptag.TagAttributes](agt.ref.Append("tag"))
+	return terra.ReferenceAsList[autoscalinggrouptag.TagAttributes](agt.ref.Append("tag"))
 }
 
 type autoscalingGroupTagState struct {

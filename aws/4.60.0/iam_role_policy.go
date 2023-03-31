@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewIamRolePolicy creates a new instance of [IamRolePolicy].
 func NewIamRolePolicy(name string, args IamRolePolicyArgs) *IamRolePolicy {
 	return &IamRolePolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewIamRolePolicy(name string, args IamRolePolicyArgs) *IamRolePolicy {
 
 var _ terra.Resource = (*IamRolePolicy)(nil)
 
+// IamRolePolicy represents the Terraform resource aws_iam_role_policy.
 type IamRolePolicy struct {
-	Name  string
-	Args  IamRolePolicyArgs
-	state *iamRolePolicyState
+	Name      string
+	Args      IamRolePolicyArgs
+	state     *iamRolePolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IamRolePolicy].
 func (irp *IamRolePolicy) Type() string {
 	return "aws_iam_role_policy"
 }
 
+// LocalName returns the local name for [IamRolePolicy].
 func (irp *IamRolePolicy) LocalName() string {
 	return irp.Name
 }
 
+// Configuration returns the configuration (args) for [IamRolePolicy].
 func (irp *IamRolePolicy) Configuration() interface{} {
 	return irp.Args
 }
 
+// DependOn is used for other resources to depend on [IamRolePolicy].
+func (irp *IamRolePolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(irp)
+}
+
+// Dependencies returns the list of resources [IamRolePolicy] depends_on.
+func (irp *IamRolePolicy) Dependencies() terra.Dependencies {
+	return irp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IamRolePolicy].
+func (irp *IamRolePolicy) LifecycleManagement() *terra.Lifecycle {
+	return irp.Lifecycle
+}
+
+// Attributes returns the attributes for [IamRolePolicy].
 func (irp *IamRolePolicy) Attributes() iamRolePolicyAttributes {
 	return iamRolePolicyAttributes{ref: terra.ReferenceResource(irp)}
 }
 
+// ImportState imports the given attribute values into [IamRolePolicy]'s state.
 func (irp *IamRolePolicy) ImportState(av io.Reader) error {
 	irp.state = &iamRolePolicyState{}
 	if err := json.NewDecoder(av).Decode(irp.state); err != nil {
@@ -48,10 +72,12 @@ func (irp *IamRolePolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IamRolePolicy] has state.
 func (irp *IamRolePolicy) State() (*iamRolePolicyState, bool) {
 	return irp.state, irp.state != nil
 }
 
+// StateMust returns the state for [IamRolePolicy]. Panics if the state is nil.
 func (irp *IamRolePolicy) StateMust() *iamRolePolicyState {
 	if irp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", irp.Type(), irp.LocalName()))
@@ -59,10 +85,7 @@ func (irp *IamRolePolicy) StateMust() *iamRolePolicyState {
 	return irp.state
 }
 
-func (irp *IamRolePolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(irp)
-}
-
+// IamRolePolicyArgs contains the configurations for aws_iam_role_policy.
 type IamRolePolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -74,31 +97,34 @@ type IamRolePolicyArgs struct {
 	Policy terra.StringValue `hcl:"policy,attr" validate:"required"`
 	// Role: string, required
 	Role terra.StringValue `hcl:"role,attr" validate:"required"`
-	// DependsOn contains resources that IamRolePolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iamRolePolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_iam_role_policy.
 func (irp iamRolePolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(irp.ref.Append("id"))
+	return terra.ReferenceAsString(irp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_iam_role_policy.
 func (irp iamRolePolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(irp.ref.Append("name"))
+	return terra.ReferenceAsString(irp.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_iam_role_policy.
 func (irp iamRolePolicyAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(irp.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(irp.ref.Append("name_prefix"))
 }
 
+// Policy returns a reference to field policy of aws_iam_role_policy.
 func (irp iamRolePolicyAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(irp.ref.Append("policy"))
+	return terra.ReferenceAsString(irp.ref.Append("policy"))
 }
 
+// Role returns a reference to field role of aws_iam_role_policy.
 func (irp iamRolePolicyAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(irp.ref.Append("role"))
+	return terra.ReferenceAsString(irp.ref.Append("role"))
 }
 
 type iamRolePolicyState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewConnectUserHierarchyStructure creates a new instance of [ConnectUserHierarchyStructure].
 func NewConnectUserHierarchyStructure(name string, args ConnectUserHierarchyStructureArgs) *ConnectUserHierarchyStructure {
 	return &ConnectUserHierarchyStructure{
 		Args: args,
@@ -19,28 +20,51 @@ func NewConnectUserHierarchyStructure(name string, args ConnectUserHierarchyStru
 
 var _ terra.Resource = (*ConnectUserHierarchyStructure)(nil)
 
+// ConnectUserHierarchyStructure represents the Terraform resource aws_connect_user_hierarchy_structure.
 type ConnectUserHierarchyStructure struct {
-	Name  string
-	Args  ConnectUserHierarchyStructureArgs
-	state *connectUserHierarchyStructureState
+	Name      string
+	Args      ConnectUserHierarchyStructureArgs
+	state     *connectUserHierarchyStructureState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ConnectUserHierarchyStructure].
 func (cuhs *ConnectUserHierarchyStructure) Type() string {
 	return "aws_connect_user_hierarchy_structure"
 }
 
+// LocalName returns the local name for [ConnectUserHierarchyStructure].
 func (cuhs *ConnectUserHierarchyStructure) LocalName() string {
 	return cuhs.Name
 }
 
+// Configuration returns the configuration (args) for [ConnectUserHierarchyStructure].
 func (cuhs *ConnectUserHierarchyStructure) Configuration() interface{} {
 	return cuhs.Args
 }
 
+// DependOn is used for other resources to depend on [ConnectUserHierarchyStructure].
+func (cuhs *ConnectUserHierarchyStructure) DependOn() terra.Reference {
+	return terra.ReferenceResource(cuhs)
+}
+
+// Dependencies returns the list of resources [ConnectUserHierarchyStructure] depends_on.
+func (cuhs *ConnectUserHierarchyStructure) Dependencies() terra.Dependencies {
+	return cuhs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ConnectUserHierarchyStructure].
+func (cuhs *ConnectUserHierarchyStructure) LifecycleManagement() *terra.Lifecycle {
+	return cuhs.Lifecycle
+}
+
+// Attributes returns the attributes for [ConnectUserHierarchyStructure].
 func (cuhs *ConnectUserHierarchyStructure) Attributes() connectUserHierarchyStructureAttributes {
 	return connectUserHierarchyStructureAttributes{ref: terra.ReferenceResource(cuhs)}
 }
 
+// ImportState imports the given attribute values into [ConnectUserHierarchyStructure]'s state.
 func (cuhs *ConnectUserHierarchyStructure) ImportState(av io.Reader) error {
 	cuhs.state = &connectUserHierarchyStructureState{}
 	if err := json.NewDecoder(av).Decode(cuhs.state); err != nil {
@@ -49,10 +73,12 @@ func (cuhs *ConnectUserHierarchyStructure) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ConnectUserHierarchyStructure] has state.
 func (cuhs *ConnectUserHierarchyStructure) State() (*connectUserHierarchyStructureState, bool) {
 	return cuhs.state, cuhs.state != nil
 }
 
+// StateMust returns the state for [ConnectUserHierarchyStructure]. Panics if the state is nil.
 func (cuhs *ConnectUserHierarchyStructure) StateMust() *connectUserHierarchyStructureState {
 	if cuhs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cuhs.Type(), cuhs.LocalName()))
@@ -60,10 +86,7 @@ func (cuhs *ConnectUserHierarchyStructure) StateMust() *connectUserHierarchyStru
 	return cuhs.state
 }
 
-func (cuhs *ConnectUserHierarchyStructure) DependOn() terra.Reference {
-	return terra.ReferenceResource(cuhs)
-}
-
+// ConnectUserHierarchyStructureArgs contains the configurations for aws_connect_user_hierarchy_structure.
 type ConnectUserHierarchyStructureArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -71,23 +94,23 @@ type ConnectUserHierarchyStructureArgs struct {
 	InstanceId terra.StringValue `hcl:"instance_id,attr" validate:"required"`
 	// HierarchyStructure: required
 	HierarchyStructure *connectuserhierarchystructure.HierarchyStructure `hcl:"hierarchy_structure,block" validate:"required"`
-	// DependsOn contains resources that ConnectUserHierarchyStructure depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type connectUserHierarchyStructureAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_connect_user_hierarchy_structure.
 func (cuhs connectUserHierarchyStructureAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cuhs.ref.Append("id"))
+	return terra.ReferenceAsString(cuhs.ref.Append("id"))
 }
 
+// InstanceId returns a reference to field instance_id of aws_connect_user_hierarchy_structure.
 func (cuhs connectUserHierarchyStructureAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(cuhs.ref.Append("instance_id"))
+	return terra.ReferenceAsString(cuhs.ref.Append("instance_id"))
 }
 
 func (cuhs connectUserHierarchyStructureAttributes) HierarchyStructure() terra.ListValue[connectuserhierarchystructure.HierarchyStructureAttributes] {
-	return terra.ReferenceList[connectuserhierarchystructure.HierarchyStructureAttributes](cuhs.ref.Append("hierarchy_structure"))
+	return terra.ReferenceAsList[connectuserhierarchystructure.HierarchyStructureAttributes](cuhs.ref.Append("hierarchy_structure"))
 }
 
 type connectUserHierarchyStructureState struct {

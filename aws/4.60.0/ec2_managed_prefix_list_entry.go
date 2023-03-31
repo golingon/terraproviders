@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewEc2ManagedPrefixListEntry creates a new instance of [Ec2ManagedPrefixListEntry].
 func NewEc2ManagedPrefixListEntry(name string, args Ec2ManagedPrefixListEntryArgs) *Ec2ManagedPrefixListEntry {
 	return &Ec2ManagedPrefixListEntry{
 		Args: args,
@@ -18,28 +19,51 @@ func NewEc2ManagedPrefixListEntry(name string, args Ec2ManagedPrefixListEntryArg
 
 var _ terra.Resource = (*Ec2ManagedPrefixListEntry)(nil)
 
+// Ec2ManagedPrefixListEntry represents the Terraform resource aws_ec2_managed_prefix_list_entry.
 type Ec2ManagedPrefixListEntry struct {
-	Name  string
-	Args  Ec2ManagedPrefixListEntryArgs
-	state *ec2ManagedPrefixListEntryState
+	Name      string
+	Args      Ec2ManagedPrefixListEntryArgs
+	state     *ec2ManagedPrefixListEntryState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Ec2ManagedPrefixListEntry].
 func (emple *Ec2ManagedPrefixListEntry) Type() string {
 	return "aws_ec2_managed_prefix_list_entry"
 }
 
+// LocalName returns the local name for [Ec2ManagedPrefixListEntry].
 func (emple *Ec2ManagedPrefixListEntry) LocalName() string {
 	return emple.Name
 }
 
+// Configuration returns the configuration (args) for [Ec2ManagedPrefixListEntry].
 func (emple *Ec2ManagedPrefixListEntry) Configuration() interface{} {
 	return emple.Args
 }
 
+// DependOn is used for other resources to depend on [Ec2ManagedPrefixListEntry].
+func (emple *Ec2ManagedPrefixListEntry) DependOn() terra.Reference {
+	return terra.ReferenceResource(emple)
+}
+
+// Dependencies returns the list of resources [Ec2ManagedPrefixListEntry] depends_on.
+func (emple *Ec2ManagedPrefixListEntry) Dependencies() terra.Dependencies {
+	return emple.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Ec2ManagedPrefixListEntry].
+func (emple *Ec2ManagedPrefixListEntry) LifecycleManagement() *terra.Lifecycle {
+	return emple.Lifecycle
+}
+
+// Attributes returns the attributes for [Ec2ManagedPrefixListEntry].
 func (emple *Ec2ManagedPrefixListEntry) Attributes() ec2ManagedPrefixListEntryAttributes {
 	return ec2ManagedPrefixListEntryAttributes{ref: terra.ReferenceResource(emple)}
 }
 
+// ImportState imports the given attribute values into [Ec2ManagedPrefixListEntry]'s state.
 func (emple *Ec2ManagedPrefixListEntry) ImportState(av io.Reader) error {
 	emple.state = &ec2ManagedPrefixListEntryState{}
 	if err := json.NewDecoder(av).Decode(emple.state); err != nil {
@@ -48,10 +72,12 @@ func (emple *Ec2ManagedPrefixListEntry) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Ec2ManagedPrefixListEntry] has state.
 func (emple *Ec2ManagedPrefixListEntry) State() (*ec2ManagedPrefixListEntryState, bool) {
 	return emple.state, emple.state != nil
 }
 
+// StateMust returns the state for [Ec2ManagedPrefixListEntry]. Panics if the state is nil.
 func (emple *Ec2ManagedPrefixListEntry) StateMust() *ec2ManagedPrefixListEntryState {
 	if emple.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", emple.Type(), emple.LocalName()))
@@ -59,10 +85,7 @@ func (emple *Ec2ManagedPrefixListEntry) StateMust() *ec2ManagedPrefixListEntrySt
 	return emple.state
 }
 
-func (emple *Ec2ManagedPrefixListEntry) DependOn() terra.Reference {
-	return terra.ReferenceResource(emple)
-}
-
+// Ec2ManagedPrefixListEntryArgs contains the configurations for aws_ec2_managed_prefix_list_entry.
 type Ec2ManagedPrefixListEntryArgs struct {
 	// Cidr: string, required
 	Cidr terra.StringValue `hcl:"cidr,attr" validate:"required"`
@@ -72,27 +95,29 @@ type Ec2ManagedPrefixListEntryArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// PrefixListId: string, required
 	PrefixListId terra.StringValue `hcl:"prefix_list_id,attr" validate:"required"`
-	// DependsOn contains resources that Ec2ManagedPrefixListEntry depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ec2ManagedPrefixListEntryAttributes struct {
 	ref terra.Reference
 }
 
+// Cidr returns a reference to field cidr of aws_ec2_managed_prefix_list_entry.
 func (emple ec2ManagedPrefixListEntryAttributes) Cidr() terra.StringValue {
-	return terra.ReferenceString(emple.ref.Append("cidr"))
+	return terra.ReferenceAsString(emple.ref.Append("cidr"))
 }
 
+// Description returns a reference to field description of aws_ec2_managed_prefix_list_entry.
 func (emple ec2ManagedPrefixListEntryAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(emple.ref.Append("description"))
+	return terra.ReferenceAsString(emple.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_ec2_managed_prefix_list_entry.
 func (emple ec2ManagedPrefixListEntryAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(emple.ref.Append("id"))
+	return terra.ReferenceAsString(emple.ref.Append("id"))
 }
 
+// PrefixListId returns a reference to field prefix_list_id of aws_ec2_managed_prefix_list_entry.
 func (emple ec2ManagedPrefixListEntryAttributes) PrefixListId() terra.StringValue {
-	return terra.ReferenceString(emple.ref.Append("prefix_list_id"))
+	return terra.ReferenceAsString(emple.ref.Append("prefix_list_id"))
 }
 
 type ec2ManagedPrefixListEntryState struct {

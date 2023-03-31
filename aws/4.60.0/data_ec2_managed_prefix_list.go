@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataEc2ManagedPrefixList creates a new instance of [DataEc2ManagedPrefixList].
 func NewDataEc2ManagedPrefixList(name string, args DataEc2ManagedPrefixListArgs) *DataEc2ManagedPrefixList {
 	return &DataEc2ManagedPrefixList{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataEc2ManagedPrefixList(name string, args DataEc2ManagedPrefixListArgs)
 
 var _ terra.DataResource = (*DataEc2ManagedPrefixList)(nil)
 
+// DataEc2ManagedPrefixList represents the Terraform data resource aws_ec2_managed_prefix_list.
 type DataEc2ManagedPrefixList struct {
 	Name string
 	Args DataEc2ManagedPrefixListArgs
 }
 
+// DataSource returns the Terraform object type for [DataEc2ManagedPrefixList].
 func (empl *DataEc2ManagedPrefixList) DataSource() string {
 	return "aws_ec2_managed_prefix_list"
 }
 
+// LocalName returns the local name for [DataEc2ManagedPrefixList].
 func (empl *DataEc2ManagedPrefixList) LocalName() string {
 	return empl.Name
 }
 
+// Configuration returns the configuration (args) for [DataEc2ManagedPrefixList].
 func (empl *DataEc2ManagedPrefixList) Configuration() interface{} {
 	return empl.Args
 }
 
+// Attributes returns the attributes for [DataEc2ManagedPrefixList].
 func (empl *DataEc2ManagedPrefixList) Attributes() dataEc2ManagedPrefixListAttributes {
 	return dataEc2ManagedPrefixListAttributes{ref: terra.ReferenceDataResource(empl)}
 }
 
+// DataEc2ManagedPrefixListArgs contains the configurations for aws_ec2_managed_prefix_list.
 type DataEc2ManagedPrefixListArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -55,46 +62,54 @@ type dataEc2ManagedPrefixListAttributes struct {
 	ref terra.Reference
 }
 
+// AddressFamily returns a reference to field address_family of aws_ec2_managed_prefix_list.
 func (empl dataEc2ManagedPrefixListAttributes) AddressFamily() terra.StringValue {
-	return terra.ReferenceString(empl.ref.Append("address_family"))
+	return terra.ReferenceAsString(empl.ref.Append("address_family"))
 }
 
+// Arn returns a reference to field arn of aws_ec2_managed_prefix_list.
 func (empl dataEc2ManagedPrefixListAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(empl.ref.Append("arn"))
+	return terra.ReferenceAsString(empl.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_ec2_managed_prefix_list.
 func (empl dataEc2ManagedPrefixListAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(empl.ref.Append("id"))
+	return terra.ReferenceAsString(empl.ref.Append("id"))
 }
 
+// MaxEntries returns a reference to field max_entries of aws_ec2_managed_prefix_list.
 func (empl dataEc2ManagedPrefixListAttributes) MaxEntries() terra.NumberValue {
-	return terra.ReferenceNumber(empl.ref.Append("max_entries"))
+	return terra.ReferenceAsNumber(empl.ref.Append("max_entries"))
 }
 
+// Name returns a reference to field name of aws_ec2_managed_prefix_list.
 func (empl dataEc2ManagedPrefixListAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(empl.ref.Append("name"))
+	return terra.ReferenceAsString(empl.ref.Append("name"))
 }
 
+// OwnerId returns a reference to field owner_id of aws_ec2_managed_prefix_list.
 func (empl dataEc2ManagedPrefixListAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(empl.ref.Append("owner_id"))
+	return terra.ReferenceAsString(empl.ref.Append("owner_id"))
 }
 
+// Tags returns a reference to field tags of aws_ec2_managed_prefix_list.
 func (empl dataEc2ManagedPrefixListAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](empl.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](empl.ref.Append("tags"))
 }
 
+// Version returns a reference to field version of aws_ec2_managed_prefix_list.
 func (empl dataEc2ManagedPrefixListAttributes) Version() terra.NumberValue {
-	return terra.ReferenceNumber(empl.ref.Append("version"))
+	return terra.ReferenceAsNumber(empl.ref.Append("version"))
 }
 
 func (empl dataEc2ManagedPrefixListAttributes) Entries() terra.SetValue[dataec2managedprefixlist.EntriesAttributes] {
-	return terra.ReferenceSet[dataec2managedprefixlist.EntriesAttributes](empl.ref.Append("entries"))
+	return terra.ReferenceAsSet[dataec2managedprefixlist.EntriesAttributes](empl.ref.Append("entries"))
 }
 
 func (empl dataEc2ManagedPrefixListAttributes) Filter() terra.SetValue[dataec2managedprefixlist.FilterAttributes] {
-	return terra.ReferenceSet[dataec2managedprefixlist.FilterAttributes](empl.ref.Append("filter"))
+	return terra.ReferenceAsSet[dataec2managedprefixlist.FilterAttributes](empl.ref.Append("filter"))
 }
 
 func (empl dataEc2ManagedPrefixListAttributes) Timeouts() dataec2managedprefixlist.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataec2managedprefixlist.TimeoutsAttributes](empl.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataec2managedprefixlist.TimeoutsAttributes](empl.ref.Append("timeouts"))
 }

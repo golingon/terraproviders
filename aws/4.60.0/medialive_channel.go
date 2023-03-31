@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMedialiveChannel creates a new instance of [MedialiveChannel].
 func NewMedialiveChannel(name string, args MedialiveChannelArgs) *MedialiveChannel {
 	return &MedialiveChannel{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMedialiveChannel(name string, args MedialiveChannelArgs) *MedialiveChann
 
 var _ terra.Resource = (*MedialiveChannel)(nil)
 
+// MedialiveChannel represents the Terraform resource aws_medialive_channel.
 type MedialiveChannel struct {
-	Name  string
-	Args  MedialiveChannelArgs
-	state *medialiveChannelState
+	Name      string
+	Args      MedialiveChannelArgs
+	state     *medialiveChannelState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MedialiveChannel].
 func (mc *MedialiveChannel) Type() string {
 	return "aws_medialive_channel"
 }
 
+// LocalName returns the local name for [MedialiveChannel].
 func (mc *MedialiveChannel) LocalName() string {
 	return mc.Name
 }
 
+// Configuration returns the configuration (args) for [MedialiveChannel].
 func (mc *MedialiveChannel) Configuration() interface{} {
 	return mc.Args
 }
 
+// DependOn is used for other resources to depend on [MedialiveChannel].
+func (mc *MedialiveChannel) DependOn() terra.Reference {
+	return terra.ReferenceResource(mc)
+}
+
+// Dependencies returns the list of resources [MedialiveChannel] depends_on.
+func (mc *MedialiveChannel) Dependencies() terra.Dependencies {
+	return mc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MedialiveChannel].
+func (mc *MedialiveChannel) LifecycleManagement() *terra.Lifecycle {
+	return mc.Lifecycle
+}
+
+// Attributes returns the attributes for [MedialiveChannel].
 func (mc *MedialiveChannel) Attributes() medialiveChannelAttributes {
 	return medialiveChannelAttributes{ref: terra.ReferenceResource(mc)}
 }
 
+// ImportState imports the given attribute values into [MedialiveChannel]'s state.
 func (mc *MedialiveChannel) ImportState(av io.Reader) error {
 	mc.state = &medialiveChannelState{}
 	if err := json.NewDecoder(av).Decode(mc.state); err != nil {
@@ -49,10 +73,12 @@ func (mc *MedialiveChannel) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MedialiveChannel] has state.
 func (mc *MedialiveChannel) State() (*medialiveChannelState, bool) {
 	return mc.state, mc.state != nil
 }
 
+// StateMust returns the state for [MedialiveChannel]. Panics if the state is nil.
 func (mc *MedialiveChannel) StateMust() *medialiveChannelState {
 	if mc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mc.Type(), mc.LocalName()))
@@ -60,10 +86,7 @@ func (mc *MedialiveChannel) StateMust() *medialiveChannelState {
 	return mc.state
 }
 
-func (mc *MedialiveChannel) DependOn() terra.Reference {
-	return terra.ReferenceResource(mc)
-}
-
+// MedialiveChannelArgs contains the configurations for aws_medialive_channel.
 type MedialiveChannelArgs struct {
 	// ChannelClass: string, required
 	ChannelClass terra.StringValue `hcl:"channel_class,attr" validate:"required"`
@@ -97,83 +120,91 @@ type MedialiveChannelArgs struct {
 	Timeouts *medialivechannel.Timeouts `hcl:"timeouts,block"`
 	// Vpc: optional
 	Vpc *medialivechannel.Vpc `hcl:"vpc,block"`
-	// DependsOn contains resources that MedialiveChannel depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type medialiveChannelAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_medialive_channel.
 func (mc medialiveChannelAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("arn"))
+	return terra.ReferenceAsString(mc.ref.Append("arn"))
 }
 
+// ChannelClass returns a reference to field channel_class of aws_medialive_channel.
 func (mc medialiveChannelAttributes) ChannelClass() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("channel_class"))
+	return terra.ReferenceAsString(mc.ref.Append("channel_class"))
 }
 
+// ChannelId returns a reference to field channel_id of aws_medialive_channel.
 func (mc medialiveChannelAttributes) ChannelId() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("channel_id"))
+	return terra.ReferenceAsString(mc.ref.Append("channel_id"))
 }
 
+// Id returns a reference to field id of aws_medialive_channel.
 func (mc medialiveChannelAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("id"))
+	return terra.ReferenceAsString(mc.ref.Append("id"))
 }
 
+// LogLevel returns a reference to field log_level of aws_medialive_channel.
 func (mc medialiveChannelAttributes) LogLevel() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("log_level"))
+	return terra.ReferenceAsString(mc.ref.Append("log_level"))
 }
 
+// Name returns a reference to field name of aws_medialive_channel.
 func (mc medialiveChannelAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("name"))
+	return terra.ReferenceAsString(mc.ref.Append("name"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_medialive_channel.
 func (mc medialiveChannelAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("role_arn"))
+	return terra.ReferenceAsString(mc.ref.Append("role_arn"))
 }
 
+// StartChannel returns a reference to field start_channel of aws_medialive_channel.
 func (mc medialiveChannelAttributes) StartChannel() terra.BoolValue {
-	return terra.ReferenceBool(mc.ref.Append("start_channel"))
+	return terra.ReferenceAsBool(mc.ref.Append("start_channel"))
 }
 
+// Tags returns a reference to field tags of aws_medialive_channel.
 func (mc medialiveChannelAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_medialive_channel.
 func (mc medialiveChannelAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](mc.ref.Append("tags_all"))
 }
 
 func (mc medialiveChannelAttributes) CdiInputSpecification() terra.ListValue[medialivechannel.CdiInputSpecificationAttributes] {
-	return terra.ReferenceList[medialivechannel.CdiInputSpecificationAttributes](mc.ref.Append("cdi_input_specification"))
+	return terra.ReferenceAsList[medialivechannel.CdiInputSpecificationAttributes](mc.ref.Append("cdi_input_specification"))
 }
 
 func (mc medialiveChannelAttributes) Destinations() terra.SetValue[medialivechannel.DestinationsAttributes] {
-	return terra.ReferenceSet[medialivechannel.DestinationsAttributes](mc.ref.Append("destinations"))
+	return terra.ReferenceAsSet[medialivechannel.DestinationsAttributes](mc.ref.Append("destinations"))
 }
 
 func (mc medialiveChannelAttributes) EncoderSettings() terra.ListValue[medialivechannel.EncoderSettingsAttributes] {
-	return terra.ReferenceList[medialivechannel.EncoderSettingsAttributes](mc.ref.Append("encoder_settings"))
+	return terra.ReferenceAsList[medialivechannel.EncoderSettingsAttributes](mc.ref.Append("encoder_settings"))
 }
 
 func (mc medialiveChannelAttributes) InputAttachments() terra.SetValue[medialivechannel.InputAttachmentsAttributes] {
-	return terra.ReferenceSet[medialivechannel.InputAttachmentsAttributes](mc.ref.Append("input_attachments"))
+	return terra.ReferenceAsSet[medialivechannel.InputAttachmentsAttributes](mc.ref.Append("input_attachments"))
 }
 
 func (mc medialiveChannelAttributes) InputSpecification() terra.ListValue[medialivechannel.InputSpecificationAttributes] {
-	return terra.ReferenceList[medialivechannel.InputSpecificationAttributes](mc.ref.Append("input_specification"))
+	return terra.ReferenceAsList[medialivechannel.InputSpecificationAttributes](mc.ref.Append("input_specification"))
 }
 
 func (mc medialiveChannelAttributes) Maintenance() terra.ListValue[medialivechannel.MaintenanceAttributes] {
-	return terra.ReferenceList[medialivechannel.MaintenanceAttributes](mc.ref.Append("maintenance"))
+	return terra.ReferenceAsList[medialivechannel.MaintenanceAttributes](mc.ref.Append("maintenance"))
 }
 
 func (mc medialiveChannelAttributes) Timeouts() medialivechannel.TimeoutsAttributes {
-	return terra.ReferenceSingle[medialivechannel.TimeoutsAttributes](mc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[medialivechannel.TimeoutsAttributes](mc.ref.Append("timeouts"))
 }
 
 func (mc medialiveChannelAttributes) Vpc() terra.ListValue[medialivechannel.VpcAttributes] {
-	return terra.ReferenceList[medialivechannel.VpcAttributes](mc.ref.Append("vpc"))
+	return terra.ReferenceAsList[medialivechannel.VpcAttributes](mc.ref.Append("vpc"))
 }
 
 type medialiveChannelState struct {

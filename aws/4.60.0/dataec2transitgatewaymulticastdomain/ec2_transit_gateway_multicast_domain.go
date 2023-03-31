@@ -42,11 +42,11 @@ func (a AssociationsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AssociationsAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(a.ref.Append("subnet_id"))
 }
 
 func (a AssociationsAttributes) TransitGatewayAttachmentId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("transit_gateway_attachment_id"))
+	return terra.ReferenceAsString(a.ref.Append("transit_gateway_attachment_id"))
 }
 
 type MembersAttributes struct {
@@ -66,11 +66,11 @@ func (m MembersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m MembersAttributes) GroupIpAddress() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("group_ip_address"))
+	return terra.ReferenceAsString(m.ref.Append("group_ip_address"))
 }
 
 func (m MembersAttributes) NetworkInterfaceId() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("network_interface_id"))
+	return terra.ReferenceAsString(m.ref.Append("network_interface_id"))
 }
 
 type SourcesAttributes struct {
@@ -90,11 +90,11 @@ func (s SourcesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SourcesAttributes) GroupIpAddress() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("group_ip_address"))
+	return terra.ReferenceAsString(s.ref.Append("group_ip_address"))
 }
 
 func (s SourcesAttributes) NetworkInterfaceId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("network_interface_id"))
+	return terra.ReferenceAsString(s.ref.Append("network_interface_id"))
 }
 
 type FilterAttributes struct {
@@ -114,11 +114,11 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
 func (f FilterAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](f.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](f.ref.Append("values"))
 }
 
 type TimeoutsAttributes struct {
@@ -138,7 +138,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type AssociationsState struct {

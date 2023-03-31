@@ -31,11 +31,11 @@ func (ru ResourceUrisAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ru ResourceUrisAttributes) ResourceType() terra.StringValue {
-	return terra.ReferenceString(ru.ref.Append("resource_type"))
+	return terra.ReferenceAsString(ru.ref.Append("resource_type"))
 }
 
 func (ru ResourceUrisAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(ru.ref.Append("uri"))
+	return terra.ReferenceAsString(ru.ref.Append("uri"))
 }
 
 type ResourceUrisState struct {

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataNetworkAcls creates a new instance of [DataNetworkAcls].
 func NewDataNetworkAcls(name string, args DataNetworkAclsArgs) *DataNetworkAcls {
 	return &DataNetworkAcls{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataNetworkAcls(name string, args DataNetworkAclsArgs) *DataNetworkAcls 
 
 var _ terra.DataResource = (*DataNetworkAcls)(nil)
 
+// DataNetworkAcls represents the Terraform data resource aws_network_acls.
 type DataNetworkAcls struct {
 	Name string
 	Args DataNetworkAclsArgs
 }
 
+// DataSource returns the Terraform object type for [DataNetworkAcls].
 func (na *DataNetworkAcls) DataSource() string {
 	return "aws_network_acls"
 }
 
+// LocalName returns the local name for [DataNetworkAcls].
 func (na *DataNetworkAcls) LocalName() string {
 	return na.Name
 }
 
+// Configuration returns the configuration (args) for [DataNetworkAcls].
 func (na *DataNetworkAcls) Configuration() interface{} {
 	return na.Args
 }
 
+// Attributes returns the attributes for [DataNetworkAcls].
 func (na *DataNetworkAcls) Attributes() dataNetworkAclsAttributes {
 	return dataNetworkAclsAttributes{ref: terra.ReferenceDataResource(na)}
 }
 
+// DataNetworkAclsArgs contains the configurations for aws_network_acls.
 type DataNetworkAclsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,26 +60,30 @@ type dataNetworkAclsAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_network_acls.
 func (na dataNetworkAclsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(na.ref.Append("id"))
+	return terra.ReferenceAsString(na.ref.Append("id"))
 }
 
+// Ids returns a reference to field ids of aws_network_acls.
 func (na dataNetworkAclsAttributes) Ids() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](na.ref.Append("ids"))
+	return terra.ReferenceAsList[terra.StringValue](na.ref.Append("ids"))
 }
 
+// Tags returns a reference to field tags of aws_network_acls.
 func (na dataNetworkAclsAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](na.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](na.ref.Append("tags"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_network_acls.
 func (na dataNetworkAclsAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(na.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(na.ref.Append("vpc_id"))
 }
 
 func (na dataNetworkAclsAttributes) Filter() terra.SetValue[datanetworkacls.FilterAttributes] {
-	return terra.ReferenceSet[datanetworkacls.FilterAttributes](na.ref.Append("filter"))
+	return terra.ReferenceAsSet[datanetworkacls.FilterAttributes](na.ref.Append("filter"))
 }
 
 func (na dataNetworkAclsAttributes) Timeouts() datanetworkacls.TimeoutsAttributes {
-	return terra.ReferenceSingle[datanetworkacls.TimeoutsAttributes](na.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datanetworkacls.TimeoutsAttributes](na.ref.Append("timeouts"))
 }

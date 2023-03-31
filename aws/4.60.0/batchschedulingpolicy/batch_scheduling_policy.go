@@ -40,15 +40,15 @@ func (fsp FairSharePolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fsp FairSharePolicyAttributes) ComputeReservation() terra.NumberValue {
-	return terra.ReferenceNumber(fsp.ref.Append("compute_reservation"))
+	return terra.ReferenceAsNumber(fsp.ref.Append("compute_reservation"))
 }
 
 func (fsp FairSharePolicyAttributes) ShareDecaySeconds() terra.NumberValue {
-	return terra.ReferenceNumber(fsp.ref.Append("share_decay_seconds"))
+	return terra.ReferenceAsNumber(fsp.ref.Append("share_decay_seconds"))
 }
 
 func (fsp FairSharePolicyAttributes) ShareDistribution() terra.SetValue[ShareDistributionAttributes] {
-	return terra.ReferenceSet[ShareDistributionAttributes](fsp.ref.Append("share_distribution"))
+	return terra.ReferenceAsSet[ShareDistributionAttributes](fsp.ref.Append("share_distribution"))
 }
 
 type ShareDistributionAttributes struct {
@@ -68,11 +68,11 @@ func (sd ShareDistributionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sd ShareDistributionAttributes) ShareIdentifier() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("share_identifier"))
+	return terra.ReferenceAsString(sd.ref.Append("share_identifier"))
 }
 
 func (sd ShareDistributionAttributes) WeightFactor() terra.NumberValue {
-	return terra.ReferenceNumber(sd.ref.Append("weight_factor"))
+	return terra.ReferenceAsNumber(sd.ref.Append("weight_factor"))
 }
 
 type FairSharePolicyState struct {

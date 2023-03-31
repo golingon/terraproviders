@@ -40,19 +40,19 @@ func (dvo DomainValidationOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dvo DomainValidationOptionsAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(dvo.ref.Append("domain_name"))
+	return terra.ReferenceAsString(dvo.ref.Append("domain_name"))
 }
 
 func (dvo DomainValidationOptionsAttributes) ResourceRecordName() terra.StringValue {
-	return terra.ReferenceString(dvo.ref.Append("resource_record_name"))
+	return terra.ReferenceAsString(dvo.ref.Append("resource_record_name"))
 }
 
 func (dvo DomainValidationOptionsAttributes) ResourceRecordType() terra.StringValue {
-	return terra.ReferenceString(dvo.ref.Append("resource_record_type"))
+	return terra.ReferenceAsString(dvo.ref.Append("resource_record_type"))
 }
 
 func (dvo DomainValidationOptionsAttributes) ResourceRecordValue() terra.StringValue {
-	return terra.ReferenceString(dvo.ref.Append("resource_record_value"))
+	return terra.ReferenceAsString(dvo.ref.Append("resource_record_value"))
 }
 
 type RenewalSummaryAttributes struct {
@@ -72,15 +72,15 @@ func (rs RenewalSummaryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rs RenewalSummaryAttributes) RenewalStatus() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("renewal_status"))
+	return terra.ReferenceAsString(rs.ref.Append("renewal_status"))
 }
 
 func (rs RenewalSummaryAttributes) RenewalStatusReason() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("renewal_status_reason"))
+	return terra.ReferenceAsString(rs.ref.Append("renewal_status_reason"))
 }
 
 func (rs RenewalSummaryAttributes) UpdatedAt() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("updated_at"))
+	return terra.ReferenceAsString(rs.ref.Append("updated_at"))
 }
 
 type OptionsAttributes struct {
@@ -100,7 +100,7 @@ func (o OptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (o OptionsAttributes) CertificateTransparencyLoggingPreference() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("certificate_transparency_logging_preference"))
+	return terra.ReferenceAsString(o.ref.Append("certificate_transparency_logging_preference"))
 }
 
 type ValidationOptionAttributes struct {
@@ -120,11 +120,11 @@ func (vo ValidationOptionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vo ValidationOptionAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(vo.ref.Append("domain_name"))
+	return terra.ReferenceAsString(vo.ref.Append("domain_name"))
 }
 
 func (vo ValidationOptionAttributes) ValidationDomain() terra.StringValue {
-	return terra.ReferenceString(vo.ref.Append("validation_domain"))
+	return terra.ReferenceAsString(vo.ref.Append("validation_domain"))
 }
 
 type DomainValidationOptionsState struct {

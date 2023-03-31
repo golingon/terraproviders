@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewLbCookieStickinessPolicy creates a new instance of [LbCookieStickinessPolicy].
 func NewLbCookieStickinessPolicy(name string, args LbCookieStickinessPolicyArgs) *LbCookieStickinessPolicy {
 	return &LbCookieStickinessPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewLbCookieStickinessPolicy(name string, args LbCookieStickinessPolicyArgs)
 
 var _ terra.Resource = (*LbCookieStickinessPolicy)(nil)
 
+// LbCookieStickinessPolicy represents the Terraform resource aws_lb_cookie_stickiness_policy.
 type LbCookieStickinessPolicy struct {
-	Name  string
-	Args  LbCookieStickinessPolicyArgs
-	state *lbCookieStickinessPolicyState
+	Name      string
+	Args      LbCookieStickinessPolicyArgs
+	state     *lbCookieStickinessPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LbCookieStickinessPolicy].
 func (lcsp *LbCookieStickinessPolicy) Type() string {
 	return "aws_lb_cookie_stickiness_policy"
 }
 
+// LocalName returns the local name for [LbCookieStickinessPolicy].
 func (lcsp *LbCookieStickinessPolicy) LocalName() string {
 	return lcsp.Name
 }
 
+// Configuration returns the configuration (args) for [LbCookieStickinessPolicy].
 func (lcsp *LbCookieStickinessPolicy) Configuration() interface{} {
 	return lcsp.Args
 }
 
+// DependOn is used for other resources to depend on [LbCookieStickinessPolicy].
+func (lcsp *LbCookieStickinessPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(lcsp)
+}
+
+// Dependencies returns the list of resources [LbCookieStickinessPolicy] depends_on.
+func (lcsp *LbCookieStickinessPolicy) Dependencies() terra.Dependencies {
+	return lcsp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LbCookieStickinessPolicy].
+func (lcsp *LbCookieStickinessPolicy) LifecycleManagement() *terra.Lifecycle {
+	return lcsp.Lifecycle
+}
+
+// Attributes returns the attributes for [LbCookieStickinessPolicy].
 func (lcsp *LbCookieStickinessPolicy) Attributes() lbCookieStickinessPolicyAttributes {
 	return lbCookieStickinessPolicyAttributes{ref: terra.ReferenceResource(lcsp)}
 }
 
+// ImportState imports the given attribute values into [LbCookieStickinessPolicy]'s state.
 func (lcsp *LbCookieStickinessPolicy) ImportState(av io.Reader) error {
 	lcsp.state = &lbCookieStickinessPolicyState{}
 	if err := json.NewDecoder(av).Decode(lcsp.state); err != nil {
@@ -48,10 +72,12 @@ func (lcsp *LbCookieStickinessPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LbCookieStickinessPolicy] has state.
 func (lcsp *LbCookieStickinessPolicy) State() (*lbCookieStickinessPolicyState, bool) {
 	return lcsp.state, lcsp.state != nil
 }
 
+// StateMust returns the state for [LbCookieStickinessPolicy]. Panics if the state is nil.
 func (lcsp *LbCookieStickinessPolicy) StateMust() *lbCookieStickinessPolicyState {
 	if lcsp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lcsp.Type(), lcsp.LocalName()))
@@ -59,10 +85,7 @@ func (lcsp *LbCookieStickinessPolicy) StateMust() *lbCookieStickinessPolicyState
 	return lcsp.state
 }
 
-func (lcsp *LbCookieStickinessPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(lcsp)
-}
-
+// LbCookieStickinessPolicyArgs contains the configurations for aws_lb_cookie_stickiness_policy.
 type LbCookieStickinessPolicyArgs struct {
 	// CookieExpirationPeriod: number, optional
 	CookieExpirationPeriod terra.NumberValue `hcl:"cookie_expiration_period,attr"`
@@ -74,31 +97,34 @@ type LbCookieStickinessPolicyArgs struct {
 	LoadBalancer terra.StringValue `hcl:"load_balancer,attr" validate:"required"`
 	// Name: string, required
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
-	// DependsOn contains resources that LbCookieStickinessPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lbCookieStickinessPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// CookieExpirationPeriod returns a reference to field cookie_expiration_period of aws_lb_cookie_stickiness_policy.
 func (lcsp lbCookieStickinessPolicyAttributes) CookieExpirationPeriod() terra.NumberValue {
-	return terra.ReferenceNumber(lcsp.ref.Append("cookie_expiration_period"))
+	return terra.ReferenceAsNumber(lcsp.ref.Append("cookie_expiration_period"))
 }
 
+// Id returns a reference to field id of aws_lb_cookie_stickiness_policy.
 func (lcsp lbCookieStickinessPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lcsp.ref.Append("id"))
+	return terra.ReferenceAsString(lcsp.ref.Append("id"))
 }
 
+// LbPort returns a reference to field lb_port of aws_lb_cookie_stickiness_policy.
 func (lcsp lbCookieStickinessPolicyAttributes) LbPort() terra.NumberValue {
-	return terra.ReferenceNumber(lcsp.ref.Append("lb_port"))
+	return terra.ReferenceAsNumber(lcsp.ref.Append("lb_port"))
 }
 
+// LoadBalancer returns a reference to field load_balancer of aws_lb_cookie_stickiness_policy.
 func (lcsp lbCookieStickinessPolicyAttributes) LoadBalancer() terra.StringValue {
-	return terra.ReferenceString(lcsp.ref.Append("load_balancer"))
+	return terra.ReferenceAsString(lcsp.ref.Append("load_balancer"))
 }
 
+// Name returns a reference to field name of aws_lb_cookie_stickiness_policy.
 func (lcsp lbCookieStickinessPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lcsp.ref.Append("name"))
+	return terra.ReferenceAsString(lcsp.ref.Append("name"))
 }
 
 type lbCookieStickinessPolicyState struct {

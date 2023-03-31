@@ -33,15 +33,15 @@ func (t TagAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TagAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("key"))
+	return terra.ReferenceAsString(t.ref.Append("key"))
 }
 
 func (t TagAttributes) PropagateAtLaunch() terra.BoolValue {
-	return terra.ReferenceBool(t.ref.Append("propagate_at_launch"))
+	return terra.ReferenceAsBool(t.ref.Append("propagate_at_launch"))
 }
 
 func (t TagAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("value"))
+	return terra.ReferenceAsString(t.ref.Append("value"))
 }
 
 type TagState struct {

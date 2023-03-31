@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataCognitoUserPoolClients creates a new instance of [DataCognitoUserPoolClients].
 func NewDataCognitoUserPoolClients(name string, args DataCognitoUserPoolClientsArgs) *DataCognitoUserPoolClients {
 	return &DataCognitoUserPoolClients{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataCognitoUserPoolClients(name string, args DataCognitoUserPoolClientsA
 
 var _ terra.DataResource = (*DataCognitoUserPoolClients)(nil)
 
+// DataCognitoUserPoolClients represents the Terraform data resource aws_cognito_user_pool_clients.
 type DataCognitoUserPoolClients struct {
 	Name string
 	Args DataCognitoUserPoolClientsArgs
 }
 
+// DataSource returns the Terraform object type for [DataCognitoUserPoolClients].
 func (cupc *DataCognitoUserPoolClients) DataSource() string {
 	return "aws_cognito_user_pool_clients"
 }
 
+// LocalName returns the local name for [DataCognitoUserPoolClients].
 func (cupc *DataCognitoUserPoolClients) LocalName() string {
 	return cupc.Name
 }
 
+// Configuration returns the configuration (args) for [DataCognitoUserPoolClients].
 func (cupc *DataCognitoUserPoolClients) Configuration() interface{} {
 	return cupc.Args
 }
 
+// Attributes returns the attributes for [DataCognitoUserPoolClients].
 func (cupc *DataCognitoUserPoolClients) Attributes() dataCognitoUserPoolClientsAttributes {
 	return dataCognitoUserPoolClientsAttributes{ref: terra.ReferenceDataResource(cupc)}
 }
 
+// DataCognitoUserPoolClientsArgs contains the configurations for aws_cognito_user_pool_clients.
 type DataCognitoUserPoolClientsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,18 +51,22 @@ type dataCognitoUserPoolClientsAttributes struct {
 	ref terra.Reference
 }
 
+// ClientIds returns a reference to field client_ids of aws_cognito_user_pool_clients.
 func (cupc dataCognitoUserPoolClientsAttributes) ClientIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cupc.ref.Append("client_ids"))
+	return terra.ReferenceAsList[terra.StringValue](cupc.ref.Append("client_ids"))
 }
 
+// ClientNames returns a reference to field client_names of aws_cognito_user_pool_clients.
 func (cupc dataCognitoUserPoolClientsAttributes) ClientNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cupc.ref.Append("client_names"))
+	return terra.ReferenceAsList[terra.StringValue](cupc.ref.Append("client_names"))
 }
 
+// Id returns a reference to field id of aws_cognito_user_pool_clients.
 func (cupc dataCognitoUserPoolClientsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cupc.ref.Append("id"))
+	return terra.ReferenceAsString(cupc.ref.Append("id"))
 }
 
+// UserPoolId returns a reference to field user_pool_id of aws_cognito_user_pool_clients.
 func (cupc dataCognitoUserPoolClientsAttributes) UserPoolId() terra.StringValue {
-	return terra.ReferenceString(cupc.ref.Append("user_pool_id"))
+	return terra.ReferenceAsString(cupc.ref.Append("user_pool_id"))
 }

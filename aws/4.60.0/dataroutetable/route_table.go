@@ -40,23 +40,23 @@ func (a AssociationsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AssociationsAttributes) GatewayId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("gateway_id"))
+	return terra.ReferenceAsString(a.ref.Append("gateway_id"))
 }
 
 func (a AssociationsAttributes) Main() terra.BoolValue {
-	return terra.ReferenceBool(a.ref.Append("main"))
+	return terra.ReferenceAsBool(a.ref.Append("main"))
 }
 
 func (a AssociationsAttributes) RouteTableAssociationId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("route_table_association_id"))
+	return terra.ReferenceAsString(a.ref.Append("route_table_association_id"))
 }
 
 func (a AssociationsAttributes) RouteTableId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("route_table_id"))
+	return terra.ReferenceAsString(a.ref.Append("route_table_id"))
 }
 
 func (a AssociationsAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(a.ref.Append("subnet_id"))
 }
 
 type RoutesAttributes struct {
@@ -76,59 +76,59 @@ func (r RoutesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RoutesAttributes) CarrierGatewayId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("carrier_gateway_id"))
+	return terra.ReferenceAsString(r.ref.Append("carrier_gateway_id"))
 }
 
 func (r RoutesAttributes) CidrBlock() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("cidr_block"))
+	return terra.ReferenceAsString(r.ref.Append("cidr_block"))
 }
 
 func (r RoutesAttributes) CoreNetworkArn() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("core_network_arn"))
+	return terra.ReferenceAsString(r.ref.Append("core_network_arn"))
 }
 
 func (r RoutesAttributes) DestinationPrefixListId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("destination_prefix_list_id"))
+	return terra.ReferenceAsString(r.ref.Append("destination_prefix_list_id"))
 }
 
 func (r RoutesAttributes) EgressOnlyGatewayId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("egress_only_gateway_id"))
+	return terra.ReferenceAsString(r.ref.Append("egress_only_gateway_id"))
 }
 
 func (r RoutesAttributes) GatewayId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("gateway_id"))
+	return terra.ReferenceAsString(r.ref.Append("gateway_id"))
 }
 
 func (r RoutesAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("instance_id"))
+	return terra.ReferenceAsString(r.ref.Append("instance_id"))
 }
 
 func (r RoutesAttributes) Ipv6CidrBlock() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("ipv6_cidr_block"))
+	return terra.ReferenceAsString(r.ref.Append("ipv6_cidr_block"))
 }
 
 func (r RoutesAttributes) LocalGatewayId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("local_gateway_id"))
+	return terra.ReferenceAsString(r.ref.Append("local_gateway_id"))
 }
 
 func (r RoutesAttributes) NatGatewayId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("nat_gateway_id"))
+	return terra.ReferenceAsString(r.ref.Append("nat_gateway_id"))
 }
 
 func (r RoutesAttributes) NetworkInterfaceId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("network_interface_id"))
+	return terra.ReferenceAsString(r.ref.Append("network_interface_id"))
 }
 
 func (r RoutesAttributes) TransitGatewayId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("transit_gateway_id"))
+	return terra.ReferenceAsString(r.ref.Append("transit_gateway_id"))
 }
 
 func (r RoutesAttributes) VpcEndpointId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("vpc_endpoint_id"))
+	return terra.ReferenceAsString(r.ref.Append("vpc_endpoint_id"))
 }
 
 func (r RoutesAttributes) VpcPeeringConnectionId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("vpc_peering_connection_id"))
+	return terra.ReferenceAsString(r.ref.Append("vpc_peering_connection_id"))
 }
 
 type FilterAttributes struct {
@@ -148,11 +148,11 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
 func (f FilterAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](f.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](f.ref.Append("values"))
 }
 
 type TimeoutsAttributes struct {
@@ -172,7 +172,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type AssociationsState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRoute53ZoneAssociation creates a new instance of [Route53ZoneAssociation].
 func NewRoute53ZoneAssociation(name string, args Route53ZoneAssociationArgs) *Route53ZoneAssociation {
 	return &Route53ZoneAssociation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRoute53ZoneAssociation(name string, args Route53ZoneAssociationArgs) *Ro
 
 var _ terra.Resource = (*Route53ZoneAssociation)(nil)
 
+// Route53ZoneAssociation represents the Terraform resource aws_route53_zone_association.
 type Route53ZoneAssociation struct {
-	Name  string
-	Args  Route53ZoneAssociationArgs
-	state *route53ZoneAssociationState
+	Name      string
+	Args      Route53ZoneAssociationArgs
+	state     *route53ZoneAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Route53ZoneAssociation].
 func (rza *Route53ZoneAssociation) Type() string {
 	return "aws_route53_zone_association"
 }
 
+// LocalName returns the local name for [Route53ZoneAssociation].
 func (rza *Route53ZoneAssociation) LocalName() string {
 	return rza.Name
 }
 
+// Configuration returns the configuration (args) for [Route53ZoneAssociation].
 func (rza *Route53ZoneAssociation) Configuration() interface{} {
 	return rza.Args
 }
 
+// DependOn is used for other resources to depend on [Route53ZoneAssociation].
+func (rza *Route53ZoneAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(rza)
+}
+
+// Dependencies returns the list of resources [Route53ZoneAssociation] depends_on.
+func (rza *Route53ZoneAssociation) Dependencies() terra.Dependencies {
+	return rza.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Route53ZoneAssociation].
+func (rza *Route53ZoneAssociation) LifecycleManagement() *terra.Lifecycle {
+	return rza.Lifecycle
+}
+
+// Attributes returns the attributes for [Route53ZoneAssociation].
 func (rza *Route53ZoneAssociation) Attributes() route53ZoneAssociationAttributes {
 	return route53ZoneAssociationAttributes{ref: terra.ReferenceResource(rza)}
 }
 
+// ImportState imports the given attribute values into [Route53ZoneAssociation]'s state.
 func (rza *Route53ZoneAssociation) ImportState(av io.Reader) error {
 	rza.state = &route53ZoneAssociationState{}
 	if err := json.NewDecoder(av).Decode(rza.state); err != nil {
@@ -48,10 +72,12 @@ func (rza *Route53ZoneAssociation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Route53ZoneAssociation] has state.
 func (rza *Route53ZoneAssociation) State() (*route53ZoneAssociationState, bool) {
 	return rza.state, rza.state != nil
 }
 
+// StateMust returns the state for [Route53ZoneAssociation]. Panics if the state is nil.
 func (rza *Route53ZoneAssociation) StateMust() *route53ZoneAssociationState {
 	if rza.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rza.Type(), rza.LocalName()))
@@ -59,10 +85,7 @@ func (rza *Route53ZoneAssociation) StateMust() *route53ZoneAssociationState {
 	return rza.state
 }
 
-func (rza *Route53ZoneAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(rza)
-}
-
+// Route53ZoneAssociationArgs contains the configurations for aws_route53_zone_association.
 type Route53ZoneAssociationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -72,31 +95,34 @@ type Route53ZoneAssociationArgs struct {
 	VpcRegion terra.StringValue `hcl:"vpc_region,attr"`
 	// ZoneId: string, required
 	ZoneId terra.StringValue `hcl:"zone_id,attr" validate:"required"`
-	// DependsOn contains resources that Route53ZoneAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type route53ZoneAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_route53_zone_association.
 func (rza route53ZoneAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rza.ref.Append("id"))
+	return terra.ReferenceAsString(rza.ref.Append("id"))
 }
 
+// OwningAccount returns a reference to field owning_account of aws_route53_zone_association.
 func (rza route53ZoneAssociationAttributes) OwningAccount() terra.StringValue {
-	return terra.ReferenceString(rza.ref.Append("owning_account"))
+	return terra.ReferenceAsString(rza.ref.Append("owning_account"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_route53_zone_association.
 func (rza route53ZoneAssociationAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(rza.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(rza.ref.Append("vpc_id"))
 }
 
+// VpcRegion returns a reference to field vpc_region of aws_route53_zone_association.
 func (rza route53ZoneAssociationAttributes) VpcRegion() terra.StringValue {
-	return terra.ReferenceString(rza.ref.Append("vpc_region"))
+	return terra.ReferenceAsString(rza.ref.Append("vpc_region"))
 }
 
+// ZoneId returns a reference to field zone_id of aws_route53_zone_association.
 func (rza route53ZoneAssociationAttributes) ZoneId() terra.StringValue {
-	return terra.ReferenceString(rza.ref.Append("zone_id"))
+	return terra.ReferenceAsString(rza.ref.Append("zone_id"))
 }
 
 type route53ZoneAssociationState struct {

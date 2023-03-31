@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewStoragegatewayWorkingStorage creates a new instance of [StoragegatewayWorkingStorage].
 func NewStoragegatewayWorkingStorage(name string, args StoragegatewayWorkingStorageArgs) *StoragegatewayWorkingStorage {
 	return &StoragegatewayWorkingStorage{
 		Args: args,
@@ -18,28 +19,51 @@ func NewStoragegatewayWorkingStorage(name string, args StoragegatewayWorkingStor
 
 var _ terra.Resource = (*StoragegatewayWorkingStorage)(nil)
 
+// StoragegatewayWorkingStorage represents the Terraform resource aws_storagegateway_working_storage.
 type StoragegatewayWorkingStorage struct {
-	Name  string
-	Args  StoragegatewayWorkingStorageArgs
-	state *storagegatewayWorkingStorageState
+	Name      string
+	Args      StoragegatewayWorkingStorageArgs
+	state     *storagegatewayWorkingStorageState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StoragegatewayWorkingStorage].
 func (sws *StoragegatewayWorkingStorage) Type() string {
 	return "aws_storagegateway_working_storage"
 }
 
+// LocalName returns the local name for [StoragegatewayWorkingStorage].
 func (sws *StoragegatewayWorkingStorage) LocalName() string {
 	return sws.Name
 }
 
+// Configuration returns the configuration (args) for [StoragegatewayWorkingStorage].
 func (sws *StoragegatewayWorkingStorage) Configuration() interface{} {
 	return sws.Args
 }
 
+// DependOn is used for other resources to depend on [StoragegatewayWorkingStorage].
+func (sws *StoragegatewayWorkingStorage) DependOn() terra.Reference {
+	return terra.ReferenceResource(sws)
+}
+
+// Dependencies returns the list of resources [StoragegatewayWorkingStorage] depends_on.
+func (sws *StoragegatewayWorkingStorage) Dependencies() terra.Dependencies {
+	return sws.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StoragegatewayWorkingStorage].
+func (sws *StoragegatewayWorkingStorage) LifecycleManagement() *terra.Lifecycle {
+	return sws.Lifecycle
+}
+
+// Attributes returns the attributes for [StoragegatewayWorkingStorage].
 func (sws *StoragegatewayWorkingStorage) Attributes() storagegatewayWorkingStorageAttributes {
 	return storagegatewayWorkingStorageAttributes{ref: terra.ReferenceResource(sws)}
 }
 
+// ImportState imports the given attribute values into [StoragegatewayWorkingStorage]'s state.
 func (sws *StoragegatewayWorkingStorage) ImportState(av io.Reader) error {
 	sws.state = &storagegatewayWorkingStorageState{}
 	if err := json.NewDecoder(av).Decode(sws.state); err != nil {
@@ -48,10 +72,12 @@ func (sws *StoragegatewayWorkingStorage) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [StoragegatewayWorkingStorage] has state.
 func (sws *StoragegatewayWorkingStorage) State() (*storagegatewayWorkingStorageState, bool) {
 	return sws.state, sws.state != nil
 }
 
+// StateMust returns the state for [StoragegatewayWorkingStorage]. Panics if the state is nil.
 func (sws *StoragegatewayWorkingStorage) StateMust() *storagegatewayWorkingStorageState {
 	if sws.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sws.Type(), sws.LocalName()))
@@ -59,10 +85,7 @@ func (sws *StoragegatewayWorkingStorage) StateMust() *storagegatewayWorkingStora
 	return sws.state
 }
 
-func (sws *StoragegatewayWorkingStorage) DependOn() terra.Reference {
-	return terra.ReferenceResource(sws)
-}
-
+// StoragegatewayWorkingStorageArgs contains the configurations for aws_storagegateway_working_storage.
 type StoragegatewayWorkingStorageArgs struct {
 	// DiskId: string, required
 	DiskId terra.StringValue `hcl:"disk_id,attr" validate:"required"`
@@ -70,23 +93,24 @@ type StoragegatewayWorkingStorageArgs struct {
 	GatewayArn terra.StringValue `hcl:"gateway_arn,attr" validate:"required"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that StoragegatewayWorkingStorage depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type storagegatewayWorkingStorageAttributes struct {
 	ref terra.Reference
 }
 
+// DiskId returns a reference to field disk_id of aws_storagegateway_working_storage.
 func (sws storagegatewayWorkingStorageAttributes) DiskId() terra.StringValue {
-	return terra.ReferenceString(sws.ref.Append("disk_id"))
+	return terra.ReferenceAsString(sws.ref.Append("disk_id"))
 }
 
+// GatewayArn returns a reference to field gateway_arn of aws_storagegateway_working_storage.
 func (sws storagegatewayWorkingStorageAttributes) GatewayArn() terra.StringValue {
-	return terra.ReferenceString(sws.ref.Append("gateway_arn"))
+	return terra.ReferenceAsString(sws.ref.Append("gateway_arn"))
 }
 
+// Id returns a reference to field id of aws_storagegateway_working_storage.
 func (sws storagegatewayWorkingStorageAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sws.ref.Append("id"))
+	return terra.ReferenceAsString(sws.ref.Append("id"))
 }
 
 type storagegatewayWorkingStorageState struct {

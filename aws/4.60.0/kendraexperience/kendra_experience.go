@@ -56,11 +56,11 @@ func (e EndpointsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e EndpointsAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("endpoint"))
+	return terra.ReferenceAsString(e.ref.Append("endpoint"))
 }
 
 func (e EndpointsAttributes) EndpointType() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("endpoint_type"))
+	return terra.ReferenceAsString(e.ref.Append("endpoint_type"))
 }
 
 type ConfigurationAttributes struct {
@@ -80,11 +80,11 @@ func (c ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ConfigurationAttributes) ContentSourceConfiguration() terra.ListValue[ContentSourceConfigurationAttributes] {
-	return terra.ReferenceList[ContentSourceConfigurationAttributes](c.ref.Append("content_source_configuration"))
+	return terra.ReferenceAsList[ContentSourceConfigurationAttributes](c.ref.Append("content_source_configuration"))
 }
 
 func (c ConfigurationAttributes) UserIdentityConfiguration() terra.ListValue[UserIdentityConfigurationAttributes] {
-	return terra.ReferenceList[UserIdentityConfigurationAttributes](c.ref.Append("user_identity_configuration"))
+	return terra.ReferenceAsList[UserIdentityConfigurationAttributes](c.ref.Append("user_identity_configuration"))
 }
 
 type ContentSourceConfigurationAttributes struct {
@@ -104,15 +104,15 @@ func (csc ContentSourceConfigurationAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (csc ContentSourceConfigurationAttributes) DataSourceIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](csc.ref.Append("data_source_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](csc.ref.Append("data_source_ids"))
 }
 
 func (csc ContentSourceConfigurationAttributes) DirectPutContent() terra.BoolValue {
-	return terra.ReferenceBool(csc.ref.Append("direct_put_content"))
+	return terra.ReferenceAsBool(csc.ref.Append("direct_put_content"))
 }
 
 func (csc ContentSourceConfigurationAttributes) FaqIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](csc.ref.Append("faq_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](csc.ref.Append("faq_ids"))
 }
 
 type UserIdentityConfigurationAttributes struct {
@@ -132,7 +132,7 @@ func (uic UserIdentityConfigurationAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (uic UserIdentityConfigurationAttributes) IdentityAttributeName() terra.StringValue {
-	return terra.ReferenceString(uic.ref.Append("identity_attribute_name"))
+	return terra.ReferenceAsString(uic.ref.Append("identity_attribute_name"))
 }
 
 type TimeoutsAttributes struct {
@@ -152,15 +152,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type EndpointsState struct {

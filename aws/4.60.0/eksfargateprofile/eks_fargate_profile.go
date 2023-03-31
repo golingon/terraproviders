@@ -38,11 +38,11 @@ func (s SelectorAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SelectorAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](s.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](s.ref.Append("labels"))
 }
 
 func (s SelectorAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("namespace"))
+	return terra.ReferenceAsString(s.ref.Append("namespace"))
 }
 
 type TimeoutsAttributes struct {
@@ -62,11 +62,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type SelectorState struct {

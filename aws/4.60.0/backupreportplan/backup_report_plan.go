@@ -42,15 +42,15 @@ func (rdc ReportDeliveryChannelAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rdc ReportDeliveryChannelAttributes) Formats() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rdc.ref.Append("formats"))
+	return terra.ReferenceAsSet[terra.StringValue](rdc.ref.Append("formats"))
 }
 
 func (rdc ReportDeliveryChannelAttributes) S3BucketName() terra.StringValue {
-	return terra.ReferenceString(rdc.ref.Append("s3_bucket_name"))
+	return terra.ReferenceAsString(rdc.ref.Append("s3_bucket_name"))
 }
 
 func (rdc ReportDeliveryChannelAttributes) S3KeyPrefix() terra.StringValue {
-	return terra.ReferenceString(rdc.ref.Append("s3_key_prefix"))
+	return terra.ReferenceAsString(rdc.ref.Append("s3_key_prefix"))
 }
 
 type ReportSettingAttributes struct {
@@ -70,15 +70,15 @@ func (rs ReportSettingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rs ReportSettingAttributes) FrameworkArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rs.ref.Append("framework_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](rs.ref.Append("framework_arns"))
 }
 
 func (rs ReportSettingAttributes) NumberOfFrameworks() terra.NumberValue {
-	return terra.ReferenceNumber(rs.ref.Append("number_of_frameworks"))
+	return terra.ReferenceAsNumber(rs.ref.Append("number_of_frameworks"))
 }
 
 func (rs ReportSettingAttributes) ReportTemplate() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("report_template"))
+	return terra.ReferenceAsString(rs.ref.Append("report_template"))
 }
 
 type ReportDeliveryChannelState struct {

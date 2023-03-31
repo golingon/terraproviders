@@ -31,35 +31,35 @@ func (cms ControlMappingSourcesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cms ControlMappingSourcesAttributes) SourceDescription() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("source_description"))
+	return terra.ReferenceAsString(cms.ref.Append("source_description"))
 }
 
 func (cms ControlMappingSourcesAttributes) SourceFrequency() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("source_frequency"))
+	return terra.ReferenceAsString(cms.ref.Append("source_frequency"))
 }
 
 func (cms ControlMappingSourcesAttributes) SourceId() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("source_id"))
+	return terra.ReferenceAsString(cms.ref.Append("source_id"))
 }
 
 func (cms ControlMappingSourcesAttributes) SourceName() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("source_name"))
+	return terra.ReferenceAsString(cms.ref.Append("source_name"))
 }
 
 func (cms ControlMappingSourcesAttributes) SourceSetUpOption() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("source_set_up_option"))
+	return terra.ReferenceAsString(cms.ref.Append("source_set_up_option"))
 }
 
 func (cms ControlMappingSourcesAttributes) SourceType() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("source_type"))
+	return terra.ReferenceAsString(cms.ref.Append("source_type"))
 }
 
 func (cms ControlMappingSourcesAttributes) TroubleshootingText() terra.StringValue {
-	return terra.ReferenceString(cms.ref.Append("troubleshooting_text"))
+	return terra.ReferenceAsString(cms.ref.Append("troubleshooting_text"))
 }
 
 func (cms ControlMappingSourcesAttributes) SourceKeyword() terra.ListValue[SourceKeywordAttributes] {
-	return terra.ReferenceList[SourceKeywordAttributes](cms.ref.Append("source_keyword"))
+	return terra.ReferenceAsList[SourceKeywordAttributes](cms.ref.Append("source_keyword"))
 }
 
 type SourceKeywordAttributes struct {
@@ -79,11 +79,11 @@ func (sk SourceKeywordAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sk SourceKeywordAttributes) KeywordInputType() terra.StringValue {
-	return terra.ReferenceString(sk.ref.Append("keyword_input_type"))
+	return terra.ReferenceAsString(sk.ref.Append("keyword_input_type"))
 }
 
 func (sk SourceKeywordAttributes) KeywordValue() terra.StringValue {
-	return terra.ReferenceString(sk.ref.Append("keyword_value"))
+	return terra.ReferenceAsString(sk.ref.Append("keyword_value"))
 }
 
 type ControlMappingSourcesState struct {

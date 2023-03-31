@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewApiGatewayClientCertificate creates a new instance of [ApiGatewayClientCertificate].
 func NewApiGatewayClientCertificate(name string, args ApiGatewayClientCertificateArgs) *ApiGatewayClientCertificate {
 	return &ApiGatewayClientCertificate{
 		Args: args,
@@ -18,28 +19,51 @@ func NewApiGatewayClientCertificate(name string, args ApiGatewayClientCertificat
 
 var _ terra.Resource = (*ApiGatewayClientCertificate)(nil)
 
+// ApiGatewayClientCertificate represents the Terraform resource aws_api_gateway_client_certificate.
 type ApiGatewayClientCertificate struct {
-	Name  string
-	Args  ApiGatewayClientCertificateArgs
-	state *apiGatewayClientCertificateState
+	Name      string
+	Args      ApiGatewayClientCertificateArgs
+	state     *apiGatewayClientCertificateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiGatewayClientCertificate].
 func (agcc *ApiGatewayClientCertificate) Type() string {
 	return "aws_api_gateway_client_certificate"
 }
 
+// LocalName returns the local name for [ApiGatewayClientCertificate].
 func (agcc *ApiGatewayClientCertificate) LocalName() string {
 	return agcc.Name
 }
 
+// Configuration returns the configuration (args) for [ApiGatewayClientCertificate].
 func (agcc *ApiGatewayClientCertificate) Configuration() interface{} {
 	return agcc.Args
 }
 
+// DependOn is used for other resources to depend on [ApiGatewayClientCertificate].
+func (agcc *ApiGatewayClientCertificate) DependOn() terra.Reference {
+	return terra.ReferenceResource(agcc)
+}
+
+// Dependencies returns the list of resources [ApiGatewayClientCertificate] depends_on.
+func (agcc *ApiGatewayClientCertificate) Dependencies() terra.Dependencies {
+	return agcc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiGatewayClientCertificate].
+func (agcc *ApiGatewayClientCertificate) LifecycleManagement() *terra.Lifecycle {
+	return agcc.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiGatewayClientCertificate].
 func (agcc *ApiGatewayClientCertificate) Attributes() apiGatewayClientCertificateAttributes {
 	return apiGatewayClientCertificateAttributes{ref: terra.ReferenceResource(agcc)}
 }
 
+// ImportState imports the given attribute values into [ApiGatewayClientCertificate]'s state.
 func (agcc *ApiGatewayClientCertificate) ImportState(av io.Reader) error {
 	agcc.state = &apiGatewayClientCertificateState{}
 	if err := json.NewDecoder(av).Decode(agcc.state); err != nil {
@@ -48,10 +72,12 @@ func (agcc *ApiGatewayClientCertificate) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiGatewayClientCertificate] has state.
 func (agcc *ApiGatewayClientCertificate) State() (*apiGatewayClientCertificateState, bool) {
 	return agcc.state, agcc.state != nil
 }
 
+// StateMust returns the state for [ApiGatewayClientCertificate]. Panics if the state is nil.
 func (agcc *ApiGatewayClientCertificate) StateMust() *apiGatewayClientCertificateState {
 	if agcc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", agcc.Type(), agcc.LocalName()))
@@ -59,10 +85,7 @@ func (agcc *ApiGatewayClientCertificate) StateMust() *apiGatewayClientCertificat
 	return agcc.state
 }
 
-func (agcc *ApiGatewayClientCertificate) DependOn() terra.Reference {
-	return terra.ReferenceResource(agcc)
-}
-
+// ApiGatewayClientCertificateArgs contains the configurations for aws_api_gateway_client_certificate.
 type ApiGatewayClientCertificateArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -72,43 +95,49 @@ type ApiGatewayClientCertificateArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that ApiGatewayClientCertificate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiGatewayClientCertificateAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_api_gateway_client_certificate.
 func (agcc apiGatewayClientCertificateAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(agcc.ref.Append("arn"))
+	return terra.ReferenceAsString(agcc.ref.Append("arn"))
 }
 
+// CreatedDate returns a reference to field created_date of aws_api_gateway_client_certificate.
 func (agcc apiGatewayClientCertificateAttributes) CreatedDate() terra.StringValue {
-	return terra.ReferenceString(agcc.ref.Append("created_date"))
+	return terra.ReferenceAsString(agcc.ref.Append("created_date"))
 }
 
+// Description returns a reference to field description of aws_api_gateway_client_certificate.
 func (agcc apiGatewayClientCertificateAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(agcc.ref.Append("description"))
+	return terra.ReferenceAsString(agcc.ref.Append("description"))
 }
 
+// ExpirationDate returns a reference to field expiration_date of aws_api_gateway_client_certificate.
 func (agcc apiGatewayClientCertificateAttributes) ExpirationDate() terra.StringValue {
-	return terra.ReferenceString(agcc.ref.Append("expiration_date"))
+	return terra.ReferenceAsString(agcc.ref.Append("expiration_date"))
 }
 
+// Id returns a reference to field id of aws_api_gateway_client_certificate.
 func (agcc apiGatewayClientCertificateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(agcc.ref.Append("id"))
+	return terra.ReferenceAsString(agcc.ref.Append("id"))
 }
 
+// PemEncodedCertificate returns a reference to field pem_encoded_certificate of aws_api_gateway_client_certificate.
 func (agcc apiGatewayClientCertificateAttributes) PemEncodedCertificate() terra.StringValue {
-	return terra.ReferenceString(agcc.ref.Append("pem_encoded_certificate"))
+	return terra.ReferenceAsString(agcc.ref.Append("pem_encoded_certificate"))
 }
 
+// Tags returns a reference to field tags of aws_api_gateway_client_certificate.
 func (agcc apiGatewayClientCertificateAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](agcc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](agcc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_api_gateway_client_certificate.
 func (agcc apiGatewayClientCertificateAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](agcc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](agcc.ref.Append("tags_all"))
 }
 
 type apiGatewayClientCertificateState struct {

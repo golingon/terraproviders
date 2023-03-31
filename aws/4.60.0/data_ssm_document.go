@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataSsmDocument creates a new instance of [DataSsmDocument].
 func NewDataSsmDocument(name string, args DataSsmDocumentArgs) *DataSsmDocument {
 	return &DataSsmDocument{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataSsmDocument(name string, args DataSsmDocumentArgs) *DataSsmDocument 
 
 var _ terra.DataResource = (*DataSsmDocument)(nil)
 
+// DataSsmDocument represents the Terraform data resource aws_ssm_document.
 type DataSsmDocument struct {
 	Name string
 	Args DataSsmDocumentArgs
 }
 
+// DataSource returns the Terraform object type for [DataSsmDocument].
 func (sd *DataSsmDocument) DataSource() string {
 	return "aws_ssm_document"
 }
 
+// LocalName returns the local name for [DataSsmDocument].
 func (sd *DataSsmDocument) LocalName() string {
 	return sd.Name
 }
 
+// Configuration returns the configuration (args) for [DataSsmDocument].
 func (sd *DataSsmDocument) Configuration() interface{} {
 	return sd.Args
 }
 
+// Attributes returns the attributes for [DataSsmDocument].
 func (sd *DataSsmDocument) Attributes() dataSsmDocumentAttributes {
 	return dataSsmDocumentAttributes{ref: terra.ReferenceDataResource(sd)}
 }
 
+// DataSsmDocumentArgs contains the configurations for aws_ssm_document.
 type DataSsmDocumentArgs struct {
 	// DocumentFormat: string, optional
 	DocumentFormat terra.StringValue `hcl:"document_format,attr"`
@@ -48,30 +55,37 @@ type dataSsmDocumentAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ssm_document.
 func (sd dataSsmDocumentAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("arn"))
+	return terra.ReferenceAsString(sd.ref.Append("arn"))
 }
 
+// Content returns a reference to field content of aws_ssm_document.
 func (sd dataSsmDocumentAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("content"))
+	return terra.ReferenceAsString(sd.ref.Append("content"))
 }
 
+// DocumentFormat returns a reference to field document_format of aws_ssm_document.
 func (sd dataSsmDocumentAttributes) DocumentFormat() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("document_format"))
+	return terra.ReferenceAsString(sd.ref.Append("document_format"))
 }
 
+// DocumentType returns a reference to field document_type of aws_ssm_document.
 func (sd dataSsmDocumentAttributes) DocumentType() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("document_type"))
+	return terra.ReferenceAsString(sd.ref.Append("document_type"))
 }
 
+// DocumentVersion returns a reference to field document_version of aws_ssm_document.
 func (sd dataSsmDocumentAttributes) DocumentVersion() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("document_version"))
+	return terra.ReferenceAsString(sd.ref.Append("document_version"))
 }
 
+// Id returns a reference to field id of aws_ssm_document.
 func (sd dataSsmDocumentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("id"))
+	return terra.ReferenceAsString(sd.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_ssm_document.
 func (sd dataSsmDocumentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("name"))
+	return terra.ReferenceAsString(sd.ref.Append("name"))
 }

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCloud9EnvironmentMembership creates a new instance of [Cloud9EnvironmentMembership].
 func NewCloud9EnvironmentMembership(name string, args Cloud9EnvironmentMembershipArgs) *Cloud9EnvironmentMembership {
 	return &Cloud9EnvironmentMembership{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCloud9EnvironmentMembership(name string, args Cloud9EnvironmentMembershi
 
 var _ terra.Resource = (*Cloud9EnvironmentMembership)(nil)
 
+// Cloud9EnvironmentMembership represents the Terraform resource aws_cloud9_environment_membership.
 type Cloud9EnvironmentMembership struct {
-	Name  string
-	Args  Cloud9EnvironmentMembershipArgs
-	state *cloud9EnvironmentMembershipState
+	Name      string
+	Args      Cloud9EnvironmentMembershipArgs
+	state     *cloud9EnvironmentMembershipState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Cloud9EnvironmentMembership].
 func (cem *Cloud9EnvironmentMembership) Type() string {
 	return "aws_cloud9_environment_membership"
 }
 
+// LocalName returns the local name for [Cloud9EnvironmentMembership].
 func (cem *Cloud9EnvironmentMembership) LocalName() string {
 	return cem.Name
 }
 
+// Configuration returns the configuration (args) for [Cloud9EnvironmentMembership].
 func (cem *Cloud9EnvironmentMembership) Configuration() interface{} {
 	return cem.Args
 }
 
+// DependOn is used for other resources to depend on [Cloud9EnvironmentMembership].
+func (cem *Cloud9EnvironmentMembership) DependOn() terra.Reference {
+	return terra.ReferenceResource(cem)
+}
+
+// Dependencies returns the list of resources [Cloud9EnvironmentMembership] depends_on.
+func (cem *Cloud9EnvironmentMembership) Dependencies() terra.Dependencies {
+	return cem.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Cloud9EnvironmentMembership].
+func (cem *Cloud9EnvironmentMembership) LifecycleManagement() *terra.Lifecycle {
+	return cem.Lifecycle
+}
+
+// Attributes returns the attributes for [Cloud9EnvironmentMembership].
 func (cem *Cloud9EnvironmentMembership) Attributes() cloud9EnvironmentMembershipAttributes {
 	return cloud9EnvironmentMembershipAttributes{ref: terra.ReferenceResource(cem)}
 }
 
+// ImportState imports the given attribute values into [Cloud9EnvironmentMembership]'s state.
 func (cem *Cloud9EnvironmentMembership) ImportState(av io.Reader) error {
 	cem.state = &cloud9EnvironmentMembershipState{}
 	if err := json.NewDecoder(av).Decode(cem.state); err != nil {
@@ -48,10 +72,12 @@ func (cem *Cloud9EnvironmentMembership) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Cloud9EnvironmentMembership] has state.
 func (cem *Cloud9EnvironmentMembership) State() (*cloud9EnvironmentMembershipState, bool) {
 	return cem.state, cem.state != nil
 }
 
+// StateMust returns the state for [Cloud9EnvironmentMembership]. Panics if the state is nil.
 func (cem *Cloud9EnvironmentMembership) StateMust() *cloud9EnvironmentMembershipState {
 	if cem.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cem.Type(), cem.LocalName()))
@@ -59,10 +85,7 @@ func (cem *Cloud9EnvironmentMembership) StateMust() *cloud9EnvironmentMembership
 	return cem.state
 }
 
-func (cem *Cloud9EnvironmentMembership) DependOn() terra.Reference {
-	return terra.ReferenceResource(cem)
-}
-
+// Cloud9EnvironmentMembershipArgs contains the configurations for aws_cloud9_environment_membership.
 type Cloud9EnvironmentMembershipArgs struct {
 	// EnvironmentId: string, required
 	EnvironmentId terra.StringValue `hcl:"environment_id,attr" validate:"required"`
@@ -72,31 +95,34 @@ type Cloud9EnvironmentMembershipArgs struct {
 	Permissions terra.StringValue `hcl:"permissions,attr" validate:"required"`
 	// UserArn: string, required
 	UserArn terra.StringValue `hcl:"user_arn,attr" validate:"required"`
-	// DependsOn contains resources that Cloud9EnvironmentMembership depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloud9EnvironmentMembershipAttributes struct {
 	ref terra.Reference
 }
 
+// EnvironmentId returns a reference to field environment_id of aws_cloud9_environment_membership.
 func (cem cloud9EnvironmentMembershipAttributes) EnvironmentId() terra.StringValue {
-	return terra.ReferenceString(cem.ref.Append("environment_id"))
+	return terra.ReferenceAsString(cem.ref.Append("environment_id"))
 }
 
+// Id returns a reference to field id of aws_cloud9_environment_membership.
 func (cem cloud9EnvironmentMembershipAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cem.ref.Append("id"))
+	return terra.ReferenceAsString(cem.ref.Append("id"))
 }
 
+// Permissions returns a reference to field permissions of aws_cloud9_environment_membership.
 func (cem cloud9EnvironmentMembershipAttributes) Permissions() terra.StringValue {
-	return terra.ReferenceString(cem.ref.Append("permissions"))
+	return terra.ReferenceAsString(cem.ref.Append("permissions"))
 }
 
+// UserArn returns a reference to field user_arn of aws_cloud9_environment_membership.
 func (cem cloud9EnvironmentMembershipAttributes) UserArn() terra.StringValue {
-	return terra.ReferenceString(cem.ref.Append("user_arn"))
+	return terra.ReferenceAsString(cem.ref.Append("user_arn"))
 }
 
+// UserId returns a reference to field user_id of aws_cloud9_environment_membership.
 func (cem cloud9EnvironmentMembershipAttributes) UserId() terra.StringValue {
-	return terra.ReferenceString(cem.ref.Append("user_id"))
+	return terra.ReferenceAsString(cem.ref.Append("user_id"))
 }
 
 type cloud9EnvironmentMembershipState struct {

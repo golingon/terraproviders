@@ -26,19 +26,19 @@ func (ldc LogDeliveryConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ldc LogDeliveryConfigurationAttributes) Destination() terra.StringValue {
-	return terra.ReferenceString(ldc.ref.Append("destination"))
+	return terra.ReferenceAsString(ldc.ref.Append("destination"))
 }
 
 func (ldc LogDeliveryConfigurationAttributes) DestinationType() terra.StringValue {
-	return terra.ReferenceString(ldc.ref.Append("destination_type"))
+	return terra.ReferenceAsString(ldc.ref.Append("destination_type"))
 }
 
 func (ldc LogDeliveryConfigurationAttributes) LogFormat() terra.StringValue {
-	return terra.ReferenceString(ldc.ref.Append("log_format"))
+	return terra.ReferenceAsString(ldc.ref.Append("log_format"))
 }
 
 func (ldc LogDeliveryConfigurationAttributes) LogType() terra.StringValue {
-	return terra.ReferenceString(ldc.ref.Append("log_type"))
+	return terra.ReferenceAsString(ldc.ref.Append("log_type"))
 }
 
 type LogDeliveryConfigurationState struct {

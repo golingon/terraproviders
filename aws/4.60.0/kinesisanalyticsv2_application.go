@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewKinesisanalyticsv2Application creates a new instance of [Kinesisanalyticsv2Application].
 func NewKinesisanalyticsv2Application(name string, args Kinesisanalyticsv2ApplicationArgs) *Kinesisanalyticsv2Application {
 	return &Kinesisanalyticsv2Application{
 		Args: args,
@@ -19,28 +20,51 @@ func NewKinesisanalyticsv2Application(name string, args Kinesisanalyticsv2Applic
 
 var _ terra.Resource = (*Kinesisanalyticsv2Application)(nil)
 
+// Kinesisanalyticsv2Application represents the Terraform resource aws_kinesisanalyticsv2_application.
 type Kinesisanalyticsv2Application struct {
-	Name  string
-	Args  Kinesisanalyticsv2ApplicationArgs
-	state *kinesisanalyticsv2ApplicationState
+	Name      string
+	Args      Kinesisanalyticsv2ApplicationArgs
+	state     *kinesisanalyticsv2ApplicationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Kinesisanalyticsv2Application].
 func (ka *Kinesisanalyticsv2Application) Type() string {
 	return "aws_kinesisanalyticsv2_application"
 }
 
+// LocalName returns the local name for [Kinesisanalyticsv2Application].
 func (ka *Kinesisanalyticsv2Application) LocalName() string {
 	return ka.Name
 }
 
+// Configuration returns the configuration (args) for [Kinesisanalyticsv2Application].
 func (ka *Kinesisanalyticsv2Application) Configuration() interface{} {
 	return ka.Args
 }
 
+// DependOn is used for other resources to depend on [Kinesisanalyticsv2Application].
+func (ka *Kinesisanalyticsv2Application) DependOn() terra.Reference {
+	return terra.ReferenceResource(ka)
+}
+
+// Dependencies returns the list of resources [Kinesisanalyticsv2Application] depends_on.
+func (ka *Kinesisanalyticsv2Application) Dependencies() terra.Dependencies {
+	return ka.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Kinesisanalyticsv2Application].
+func (ka *Kinesisanalyticsv2Application) LifecycleManagement() *terra.Lifecycle {
+	return ka.Lifecycle
+}
+
+// Attributes returns the attributes for [Kinesisanalyticsv2Application].
 func (ka *Kinesisanalyticsv2Application) Attributes() kinesisanalyticsv2ApplicationAttributes {
 	return kinesisanalyticsv2ApplicationAttributes{ref: terra.ReferenceResource(ka)}
 }
 
+// ImportState imports the given attribute values into [Kinesisanalyticsv2Application]'s state.
 func (ka *Kinesisanalyticsv2Application) ImportState(av io.Reader) error {
 	ka.state = &kinesisanalyticsv2ApplicationState{}
 	if err := json.NewDecoder(av).Decode(ka.state); err != nil {
@@ -49,10 +73,12 @@ func (ka *Kinesisanalyticsv2Application) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Kinesisanalyticsv2Application] has state.
 func (ka *Kinesisanalyticsv2Application) State() (*kinesisanalyticsv2ApplicationState, bool) {
 	return ka.state, ka.state != nil
 }
 
+// StateMust returns the state for [Kinesisanalyticsv2Application]. Panics if the state is nil.
 func (ka *Kinesisanalyticsv2Application) StateMust() *kinesisanalyticsv2ApplicationState {
 	if ka.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ka.Type(), ka.LocalName()))
@@ -60,10 +86,7 @@ func (ka *Kinesisanalyticsv2Application) StateMust() *kinesisanalyticsv2Applicat
 	return ka.state
 }
 
-func (ka *Kinesisanalyticsv2Application) DependOn() terra.Reference {
-	return terra.ReferenceResource(ka)
-}
-
+// Kinesisanalyticsv2ApplicationArgs contains the configurations for aws_kinesisanalyticsv2_application.
 type Kinesisanalyticsv2ApplicationArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -89,79 +112,91 @@ type Kinesisanalyticsv2ApplicationArgs struct {
 	CloudwatchLoggingOptions *kinesisanalyticsv2application.CloudwatchLoggingOptions `hcl:"cloudwatch_logging_options,block"`
 	// Timeouts: optional
 	Timeouts *kinesisanalyticsv2application.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Kinesisanalyticsv2Application depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type kinesisanalyticsv2ApplicationAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_kinesisanalyticsv2_application.
 func (ka kinesisanalyticsv2ApplicationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("arn"))
+	return terra.ReferenceAsString(ka.ref.Append("arn"))
 }
 
+// CreateTimestamp returns a reference to field create_timestamp of aws_kinesisanalyticsv2_application.
 func (ka kinesisanalyticsv2ApplicationAttributes) CreateTimestamp() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("create_timestamp"))
+	return terra.ReferenceAsString(ka.ref.Append("create_timestamp"))
 }
 
+// Description returns a reference to field description of aws_kinesisanalyticsv2_application.
 func (ka kinesisanalyticsv2ApplicationAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("description"))
+	return terra.ReferenceAsString(ka.ref.Append("description"))
 }
 
+// ForceStop returns a reference to field force_stop of aws_kinesisanalyticsv2_application.
 func (ka kinesisanalyticsv2ApplicationAttributes) ForceStop() terra.BoolValue {
-	return terra.ReferenceBool(ka.ref.Append("force_stop"))
+	return terra.ReferenceAsBool(ka.ref.Append("force_stop"))
 }
 
+// Id returns a reference to field id of aws_kinesisanalyticsv2_application.
 func (ka kinesisanalyticsv2ApplicationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("id"))
+	return terra.ReferenceAsString(ka.ref.Append("id"))
 }
 
+// LastUpdateTimestamp returns a reference to field last_update_timestamp of aws_kinesisanalyticsv2_application.
 func (ka kinesisanalyticsv2ApplicationAttributes) LastUpdateTimestamp() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("last_update_timestamp"))
+	return terra.ReferenceAsString(ka.ref.Append("last_update_timestamp"))
 }
 
+// Name returns a reference to field name of aws_kinesisanalyticsv2_application.
 func (ka kinesisanalyticsv2ApplicationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("name"))
+	return terra.ReferenceAsString(ka.ref.Append("name"))
 }
 
+// RuntimeEnvironment returns a reference to field runtime_environment of aws_kinesisanalyticsv2_application.
 func (ka kinesisanalyticsv2ApplicationAttributes) RuntimeEnvironment() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("runtime_environment"))
+	return terra.ReferenceAsString(ka.ref.Append("runtime_environment"))
 }
 
+// ServiceExecutionRole returns a reference to field service_execution_role of aws_kinesisanalyticsv2_application.
 func (ka kinesisanalyticsv2ApplicationAttributes) ServiceExecutionRole() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("service_execution_role"))
+	return terra.ReferenceAsString(ka.ref.Append("service_execution_role"))
 }
 
+// StartApplication returns a reference to field start_application of aws_kinesisanalyticsv2_application.
 func (ka kinesisanalyticsv2ApplicationAttributes) StartApplication() terra.BoolValue {
-	return terra.ReferenceBool(ka.ref.Append("start_application"))
+	return terra.ReferenceAsBool(ka.ref.Append("start_application"))
 }
 
+// Status returns a reference to field status of aws_kinesisanalyticsv2_application.
 func (ka kinesisanalyticsv2ApplicationAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ka.ref.Append("status"))
+	return terra.ReferenceAsString(ka.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of aws_kinesisanalyticsv2_application.
 func (ka kinesisanalyticsv2ApplicationAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ka.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ka.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_kinesisanalyticsv2_application.
 func (ka kinesisanalyticsv2ApplicationAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ka.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ka.ref.Append("tags_all"))
 }
 
+// VersionId returns a reference to field version_id of aws_kinesisanalyticsv2_application.
 func (ka kinesisanalyticsv2ApplicationAttributes) VersionId() terra.NumberValue {
-	return terra.ReferenceNumber(ka.ref.Append("version_id"))
+	return terra.ReferenceAsNumber(ka.ref.Append("version_id"))
 }
 
 func (ka kinesisanalyticsv2ApplicationAttributes) ApplicationConfiguration() terra.ListValue[kinesisanalyticsv2application.ApplicationConfigurationAttributes] {
-	return terra.ReferenceList[kinesisanalyticsv2application.ApplicationConfigurationAttributes](ka.ref.Append("application_configuration"))
+	return terra.ReferenceAsList[kinesisanalyticsv2application.ApplicationConfigurationAttributes](ka.ref.Append("application_configuration"))
 }
 
 func (ka kinesisanalyticsv2ApplicationAttributes) CloudwatchLoggingOptions() terra.ListValue[kinesisanalyticsv2application.CloudwatchLoggingOptionsAttributes] {
-	return terra.ReferenceList[kinesisanalyticsv2application.CloudwatchLoggingOptionsAttributes](ka.ref.Append("cloudwatch_logging_options"))
+	return terra.ReferenceAsList[kinesisanalyticsv2application.CloudwatchLoggingOptionsAttributes](ka.ref.Append("cloudwatch_logging_options"))
 }
 
 func (ka kinesisanalyticsv2ApplicationAttributes) Timeouts() kinesisanalyticsv2application.TimeoutsAttributes {
-	return terra.ReferenceSingle[kinesisanalyticsv2application.TimeoutsAttributes](ka.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[kinesisanalyticsv2application.TimeoutsAttributes](ka.ref.Append("timeouts"))
 }
 
 type kinesisanalyticsv2ApplicationState struct {

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataCeTags creates a new instance of [DataCeTags].
 func NewDataCeTags(name string, args DataCeTagsArgs) *DataCeTags {
 	return &DataCeTags{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataCeTags(name string, args DataCeTagsArgs) *DataCeTags {
 
 var _ terra.DataResource = (*DataCeTags)(nil)
 
+// DataCeTags represents the Terraform data resource aws_ce_tags.
 type DataCeTags struct {
 	Name string
 	Args DataCeTagsArgs
 }
 
+// DataSource returns the Terraform object type for [DataCeTags].
 func (ct *DataCeTags) DataSource() string {
 	return "aws_ce_tags"
 }
 
+// LocalName returns the local name for [DataCeTags].
 func (ct *DataCeTags) LocalName() string {
 	return ct.Name
 }
 
+// Configuration returns the configuration (args) for [DataCeTags].
 func (ct *DataCeTags) Configuration() interface{} {
 	return ct.Args
 }
 
+// Attributes returns the attributes for [DataCeTags].
 func (ct *DataCeTags) Attributes() dataCeTagsAttributes {
 	return dataCeTagsAttributes{ref: terra.ReferenceDataResource(ct)}
 }
 
+// DataCeTagsArgs contains the configurations for aws_ce_tags.
 type DataCeTagsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -55,30 +62,34 @@ type dataCeTagsAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_ce_tags.
 func (ct dataCeTagsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("id"))
+	return terra.ReferenceAsString(ct.ref.Append("id"))
 }
 
+// SearchString returns a reference to field search_string of aws_ce_tags.
 func (ct dataCeTagsAttributes) SearchString() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("search_string"))
+	return terra.ReferenceAsString(ct.ref.Append("search_string"))
 }
 
+// TagKey returns a reference to field tag_key of aws_ce_tags.
 func (ct dataCeTagsAttributes) TagKey() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("tag_key"))
+	return terra.ReferenceAsString(ct.ref.Append("tag_key"))
 }
 
+// Tags returns a reference to field tags of aws_ce_tags.
 func (ct dataCeTagsAttributes) Tags() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ct.ref.Append("tags"))
+	return terra.ReferenceAsSet[terra.StringValue](ct.ref.Append("tags"))
 }
 
 func (ct dataCeTagsAttributes) Filter() terra.ListValue[datacetags.FilterAttributes] {
-	return terra.ReferenceList[datacetags.FilterAttributes](ct.ref.Append("filter"))
+	return terra.ReferenceAsList[datacetags.FilterAttributes](ct.ref.Append("filter"))
 }
 
 func (ct dataCeTagsAttributes) SortBy() terra.ListValue[datacetags.SortByAttributes] {
-	return terra.ReferenceList[datacetags.SortByAttributes](ct.ref.Append("sort_by"))
+	return terra.ReferenceAsList[datacetags.SortByAttributes](ct.ref.Append("sort_by"))
 }
 
 func (ct dataCeTagsAttributes) TimePeriod() terra.ListValue[datacetags.TimePeriodAttributes] {
-	return terra.ReferenceList[datacetags.TimePeriodAttributes](ct.ref.Append("time_period"))
+	return terra.ReferenceAsList[datacetags.TimePeriodAttributes](ct.ref.Append("time_period"))
 }

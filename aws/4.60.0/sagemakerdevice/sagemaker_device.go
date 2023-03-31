@@ -33,15 +33,15 @@ func (d DeviceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DeviceAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("description"))
+	return terra.ReferenceAsString(d.ref.Append("description"))
 }
 
 func (d DeviceAttributes) DeviceName() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("device_name"))
+	return terra.ReferenceAsString(d.ref.Append("device_name"))
 }
 
 func (d DeviceAttributes) IotThingName() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("iot_thing_name"))
+	return terra.ReferenceAsString(d.ref.Append("iot_thing_name"))
 }
 
 type DeviceState struct {

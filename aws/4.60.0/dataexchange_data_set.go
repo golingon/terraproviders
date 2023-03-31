@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDataexchangeDataSet creates a new instance of [DataexchangeDataSet].
 func NewDataexchangeDataSet(name string, args DataexchangeDataSetArgs) *DataexchangeDataSet {
 	return &DataexchangeDataSet{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDataexchangeDataSet(name string, args DataexchangeDataSetArgs) *Dataexch
 
 var _ terra.Resource = (*DataexchangeDataSet)(nil)
 
+// DataexchangeDataSet represents the Terraform resource aws_dataexchange_data_set.
 type DataexchangeDataSet struct {
-	Name  string
-	Args  DataexchangeDataSetArgs
-	state *dataexchangeDataSetState
+	Name      string
+	Args      DataexchangeDataSetArgs
+	state     *dataexchangeDataSetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DataexchangeDataSet].
 func (dds *DataexchangeDataSet) Type() string {
 	return "aws_dataexchange_data_set"
 }
 
+// LocalName returns the local name for [DataexchangeDataSet].
 func (dds *DataexchangeDataSet) LocalName() string {
 	return dds.Name
 }
 
+// Configuration returns the configuration (args) for [DataexchangeDataSet].
 func (dds *DataexchangeDataSet) Configuration() interface{} {
 	return dds.Args
 }
 
+// DependOn is used for other resources to depend on [DataexchangeDataSet].
+func (dds *DataexchangeDataSet) DependOn() terra.Reference {
+	return terra.ReferenceResource(dds)
+}
+
+// Dependencies returns the list of resources [DataexchangeDataSet] depends_on.
+func (dds *DataexchangeDataSet) Dependencies() terra.Dependencies {
+	return dds.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DataexchangeDataSet].
+func (dds *DataexchangeDataSet) LifecycleManagement() *terra.Lifecycle {
+	return dds.Lifecycle
+}
+
+// Attributes returns the attributes for [DataexchangeDataSet].
 func (dds *DataexchangeDataSet) Attributes() dataexchangeDataSetAttributes {
 	return dataexchangeDataSetAttributes{ref: terra.ReferenceResource(dds)}
 }
 
+// ImportState imports the given attribute values into [DataexchangeDataSet]'s state.
 func (dds *DataexchangeDataSet) ImportState(av io.Reader) error {
 	dds.state = &dataexchangeDataSetState{}
 	if err := json.NewDecoder(av).Decode(dds.state); err != nil {
@@ -48,10 +72,12 @@ func (dds *DataexchangeDataSet) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DataexchangeDataSet] has state.
 func (dds *DataexchangeDataSet) State() (*dataexchangeDataSetState, bool) {
 	return dds.state, dds.state != nil
 }
 
+// StateMust returns the state for [DataexchangeDataSet]. Panics if the state is nil.
 func (dds *DataexchangeDataSet) StateMust() *dataexchangeDataSetState {
 	if dds.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dds.Type(), dds.LocalName()))
@@ -59,10 +85,7 @@ func (dds *DataexchangeDataSet) StateMust() *dataexchangeDataSetState {
 	return dds.state
 }
 
-func (dds *DataexchangeDataSet) DependOn() terra.Reference {
-	return terra.ReferenceResource(dds)
-}
-
+// DataexchangeDataSetArgs contains the configurations for aws_dataexchange_data_set.
 type DataexchangeDataSetArgs struct {
 	// AssetType: string, required
 	AssetType terra.StringValue `hcl:"asset_type,attr" validate:"required"`
@@ -76,39 +99,44 @@ type DataexchangeDataSetArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that DataexchangeDataSet depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dataexchangeDataSetAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_dataexchange_data_set.
 func (dds dataexchangeDataSetAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dds.ref.Append("arn"))
+	return terra.ReferenceAsString(dds.ref.Append("arn"))
 }
 
+// AssetType returns a reference to field asset_type of aws_dataexchange_data_set.
 func (dds dataexchangeDataSetAttributes) AssetType() terra.StringValue {
-	return terra.ReferenceString(dds.ref.Append("asset_type"))
+	return terra.ReferenceAsString(dds.ref.Append("asset_type"))
 }
 
+// Description returns a reference to field description of aws_dataexchange_data_set.
 func (dds dataexchangeDataSetAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dds.ref.Append("description"))
+	return terra.ReferenceAsString(dds.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_dataexchange_data_set.
 func (dds dataexchangeDataSetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dds.ref.Append("id"))
+	return terra.ReferenceAsString(dds.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_dataexchange_data_set.
 func (dds dataexchangeDataSetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dds.ref.Append("name"))
+	return terra.ReferenceAsString(dds.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_dataexchange_data_set.
 func (dds dataexchangeDataSetAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dds.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dds.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_dataexchange_data_set.
 func (dds dataexchangeDataSetAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dds.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dds.ref.Append("tags_all"))
 }
 
 type dataexchangeDataSetState struct {

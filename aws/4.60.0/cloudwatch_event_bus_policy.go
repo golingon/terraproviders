@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCloudwatchEventBusPolicy creates a new instance of [CloudwatchEventBusPolicy].
 func NewCloudwatchEventBusPolicy(name string, args CloudwatchEventBusPolicyArgs) *CloudwatchEventBusPolicy {
 	return &CloudwatchEventBusPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCloudwatchEventBusPolicy(name string, args CloudwatchEventBusPolicyArgs)
 
 var _ terra.Resource = (*CloudwatchEventBusPolicy)(nil)
 
+// CloudwatchEventBusPolicy represents the Terraform resource aws_cloudwatch_event_bus_policy.
 type CloudwatchEventBusPolicy struct {
-	Name  string
-	Args  CloudwatchEventBusPolicyArgs
-	state *cloudwatchEventBusPolicyState
+	Name      string
+	Args      CloudwatchEventBusPolicyArgs
+	state     *cloudwatchEventBusPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudwatchEventBusPolicy].
 func (cebp *CloudwatchEventBusPolicy) Type() string {
 	return "aws_cloudwatch_event_bus_policy"
 }
 
+// LocalName returns the local name for [CloudwatchEventBusPolicy].
 func (cebp *CloudwatchEventBusPolicy) LocalName() string {
 	return cebp.Name
 }
 
+// Configuration returns the configuration (args) for [CloudwatchEventBusPolicy].
 func (cebp *CloudwatchEventBusPolicy) Configuration() interface{} {
 	return cebp.Args
 }
 
+// DependOn is used for other resources to depend on [CloudwatchEventBusPolicy].
+func (cebp *CloudwatchEventBusPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(cebp)
+}
+
+// Dependencies returns the list of resources [CloudwatchEventBusPolicy] depends_on.
+func (cebp *CloudwatchEventBusPolicy) Dependencies() terra.Dependencies {
+	return cebp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudwatchEventBusPolicy].
+func (cebp *CloudwatchEventBusPolicy) LifecycleManagement() *terra.Lifecycle {
+	return cebp.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudwatchEventBusPolicy].
 func (cebp *CloudwatchEventBusPolicy) Attributes() cloudwatchEventBusPolicyAttributes {
 	return cloudwatchEventBusPolicyAttributes{ref: terra.ReferenceResource(cebp)}
 }
 
+// ImportState imports the given attribute values into [CloudwatchEventBusPolicy]'s state.
 func (cebp *CloudwatchEventBusPolicy) ImportState(av io.Reader) error {
 	cebp.state = &cloudwatchEventBusPolicyState{}
 	if err := json.NewDecoder(av).Decode(cebp.state); err != nil {
@@ -48,10 +72,12 @@ func (cebp *CloudwatchEventBusPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudwatchEventBusPolicy] has state.
 func (cebp *CloudwatchEventBusPolicy) State() (*cloudwatchEventBusPolicyState, bool) {
 	return cebp.state, cebp.state != nil
 }
 
+// StateMust returns the state for [CloudwatchEventBusPolicy]. Panics if the state is nil.
 func (cebp *CloudwatchEventBusPolicy) StateMust() *cloudwatchEventBusPolicyState {
 	if cebp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cebp.Type(), cebp.LocalName()))
@@ -59,10 +85,7 @@ func (cebp *CloudwatchEventBusPolicy) StateMust() *cloudwatchEventBusPolicyState
 	return cebp.state
 }
 
-func (cebp *CloudwatchEventBusPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(cebp)
-}
-
+// CloudwatchEventBusPolicyArgs contains the configurations for aws_cloudwatch_event_bus_policy.
 type CloudwatchEventBusPolicyArgs struct {
 	// EventBusName: string, optional
 	EventBusName terra.StringValue `hcl:"event_bus_name,attr"`
@@ -70,23 +93,24 @@ type CloudwatchEventBusPolicyArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// Policy: string, required
 	Policy terra.StringValue `hcl:"policy,attr" validate:"required"`
-	// DependsOn contains resources that CloudwatchEventBusPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudwatchEventBusPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// EventBusName returns a reference to field event_bus_name of aws_cloudwatch_event_bus_policy.
 func (cebp cloudwatchEventBusPolicyAttributes) EventBusName() terra.StringValue {
-	return terra.ReferenceString(cebp.ref.Append("event_bus_name"))
+	return terra.ReferenceAsString(cebp.ref.Append("event_bus_name"))
 }
 
+// Id returns a reference to field id of aws_cloudwatch_event_bus_policy.
 func (cebp cloudwatchEventBusPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cebp.ref.Append("id"))
+	return terra.ReferenceAsString(cebp.ref.Append("id"))
 }
 
+// Policy returns a reference to field policy of aws_cloudwatch_event_bus_policy.
 func (cebp cloudwatchEventBusPolicyAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(cebp.ref.Append("policy"))
+	return terra.ReferenceAsString(cebp.ref.Append("policy"))
 }
 
 type cloudwatchEventBusPolicyState struct {

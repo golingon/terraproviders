@@ -54,15 +54,15 @@ func (ec EncryptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec EncryptionConfigurationAttributes) CloudwatchEncryption() terra.ListValue[CloudwatchEncryptionAttributes] {
-	return terra.ReferenceList[CloudwatchEncryptionAttributes](ec.ref.Append("cloudwatch_encryption"))
+	return terra.ReferenceAsList[CloudwatchEncryptionAttributes](ec.ref.Append("cloudwatch_encryption"))
 }
 
 func (ec EncryptionConfigurationAttributes) JobBookmarksEncryption() terra.ListValue[JobBookmarksEncryptionAttributes] {
-	return terra.ReferenceList[JobBookmarksEncryptionAttributes](ec.ref.Append("job_bookmarks_encryption"))
+	return terra.ReferenceAsList[JobBookmarksEncryptionAttributes](ec.ref.Append("job_bookmarks_encryption"))
 }
 
 func (ec EncryptionConfigurationAttributes) S3Encryption() terra.ListValue[S3EncryptionAttributes] {
-	return terra.ReferenceList[S3EncryptionAttributes](ec.ref.Append("s3_encryption"))
+	return terra.ReferenceAsList[S3EncryptionAttributes](ec.ref.Append("s3_encryption"))
 }
 
 type CloudwatchEncryptionAttributes struct {
@@ -82,11 +82,11 @@ func (ce CloudwatchEncryptionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ce CloudwatchEncryptionAttributes) CloudwatchEncryptionMode() terra.StringValue {
-	return terra.ReferenceString(ce.ref.Append("cloudwatch_encryption_mode"))
+	return terra.ReferenceAsString(ce.ref.Append("cloudwatch_encryption_mode"))
 }
 
 func (ce CloudwatchEncryptionAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(ce.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(ce.ref.Append("kms_key_arn"))
 }
 
 type JobBookmarksEncryptionAttributes struct {
@@ -106,11 +106,11 @@ func (jbe JobBookmarksEncryptionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (jbe JobBookmarksEncryptionAttributes) JobBookmarksEncryptionMode() terra.StringValue {
-	return terra.ReferenceString(jbe.ref.Append("job_bookmarks_encryption_mode"))
+	return terra.ReferenceAsString(jbe.ref.Append("job_bookmarks_encryption_mode"))
 }
 
 func (jbe JobBookmarksEncryptionAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(jbe.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(jbe.ref.Append("kms_key_arn"))
 }
 
 type S3EncryptionAttributes struct {
@@ -130,11 +130,11 @@ func (se S3EncryptionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (se S3EncryptionAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(se.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(se.ref.Append("kms_key_arn"))
 }
 
 func (se S3EncryptionAttributes) S3EncryptionMode() terra.StringValue {
-	return terra.ReferenceString(se.ref.Append("s3_encryption_mode"))
+	return terra.ReferenceAsString(se.ref.Append("s3_encryption_mode"))
 }
 
 type EncryptionConfigurationState struct {

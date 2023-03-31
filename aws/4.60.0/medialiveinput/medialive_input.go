@@ -64,7 +64,7 @@ func (d DestinationsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DestinationsAttributes) StreamName() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("stream_name"))
+	return terra.ReferenceAsString(d.ref.Append("stream_name"))
 }
 
 type InputDevicesAttributes struct {
@@ -84,7 +84,7 @@ func (id InputDevicesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (id InputDevicesAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(id.ref.Append("id"))
+	return terra.ReferenceAsString(id.ref.Append("id"))
 }
 
 type MediaConnectFlowsAttributes struct {
@@ -104,7 +104,7 @@ func (mcf MediaConnectFlowsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mcf MediaConnectFlowsAttributes) FlowArn() terra.StringValue {
-	return terra.ReferenceString(mcf.ref.Append("flow_arn"))
+	return terra.ReferenceAsString(mcf.ref.Append("flow_arn"))
 }
 
 type SourcesAttributes struct {
@@ -124,15 +124,15 @@ func (s SourcesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SourcesAttributes) PasswordParam() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("password_param"))
+	return terra.ReferenceAsString(s.ref.Append("password_param"))
 }
 
 func (s SourcesAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("url"))
+	return terra.ReferenceAsString(s.ref.Append("url"))
 }
 
 func (s SourcesAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("username"))
+	return terra.ReferenceAsString(s.ref.Append("username"))
 }
 
 type TimeoutsAttributes struct {
@@ -152,15 +152,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type VpcAttributes struct {
@@ -180,11 +180,11 @@ func (v VpcAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (v VpcAttributes) SecurityGroupIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](v.ref.Append("security_group_ids"))
+	return terra.ReferenceAsList[terra.StringValue](v.ref.Append("security_group_ids"))
 }
 
 func (v VpcAttributes) SubnetIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](v.ref.Append("subnet_ids"))
+	return terra.ReferenceAsList[terra.StringValue](v.ref.Append("subnet_ids"))
 }
 
 type DestinationsState struct {

@@ -40,7 +40,7 @@ func (s SpecAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SpecAttributes) Provider() terra.ListValue[ProviderAttributes] {
-	return terra.ReferenceList[ProviderAttributes](s.ref.Append("provider"))
+	return terra.ReferenceAsList[ProviderAttributes](s.ref.Append("provider"))
 }
 
 type ProviderAttributes struct {
@@ -60,11 +60,11 @@ func (p ProviderAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p ProviderAttributes) VirtualNode() terra.ListValue[VirtualNodeAttributes] {
-	return terra.ReferenceList[VirtualNodeAttributes](p.ref.Append("virtual_node"))
+	return terra.ReferenceAsList[VirtualNodeAttributes](p.ref.Append("virtual_node"))
 }
 
 func (p ProviderAttributes) VirtualRouter() terra.ListValue[VirtualRouterAttributes] {
-	return terra.ReferenceList[VirtualRouterAttributes](p.ref.Append("virtual_router"))
+	return terra.ReferenceAsList[VirtualRouterAttributes](p.ref.Append("virtual_router"))
 }
 
 type VirtualNodeAttributes struct {
@@ -84,7 +84,7 @@ func (vn VirtualNodeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vn VirtualNodeAttributes) VirtualNodeName() terra.StringValue {
-	return terra.ReferenceString(vn.ref.Append("virtual_node_name"))
+	return terra.ReferenceAsString(vn.ref.Append("virtual_node_name"))
 }
 
 type VirtualRouterAttributes struct {
@@ -104,7 +104,7 @@ func (vr VirtualRouterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vr VirtualRouterAttributes) VirtualRouterName() terra.StringValue {
-	return terra.ReferenceString(vr.ref.Append("virtual_router_name"))
+	return terra.ReferenceAsString(vr.ref.Append("virtual_router_name"))
 }
 
 type SpecState struct {

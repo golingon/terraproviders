@@ -45,11 +45,11 @@ func (hdm HomeDirectoryMappingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hdm HomeDirectoryMappingsAttributes) Entry() terra.StringValue {
-	return terra.ReferenceString(hdm.ref.Append("entry"))
+	return terra.ReferenceAsString(hdm.ref.Append("entry"))
 }
 
 func (hdm HomeDirectoryMappingsAttributes) Target() terra.StringValue {
-	return terra.ReferenceString(hdm.ref.Append("target"))
+	return terra.ReferenceAsString(hdm.ref.Append("target"))
 }
 
 type PosixProfileAttributes struct {
@@ -69,15 +69,15 @@ func (pp PosixProfileAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pp PosixProfileAttributes) Gid() terra.NumberValue {
-	return terra.ReferenceNumber(pp.ref.Append("gid"))
+	return terra.ReferenceAsNumber(pp.ref.Append("gid"))
 }
 
 func (pp PosixProfileAttributes) SecondaryGids() terra.SetValue[terra.NumberValue] {
-	return terra.ReferenceSet[terra.NumberValue](pp.ref.Append("secondary_gids"))
+	return terra.ReferenceAsSet[terra.NumberValue](pp.ref.Append("secondary_gids"))
 }
 
 func (pp PosixProfileAttributes) Uid() terra.NumberValue {
-	return terra.ReferenceNumber(pp.ref.Append("uid"))
+	return terra.ReferenceAsNumber(pp.ref.Append("uid"))
 }
 
 type TimeoutsAttributes struct {
@@ -97,7 +97,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type HomeDirectoryMappingsState struct {

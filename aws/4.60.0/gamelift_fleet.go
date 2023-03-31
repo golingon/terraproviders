@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewGameliftFleet creates a new instance of [GameliftFleet].
 func NewGameliftFleet(name string, args GameliftFleetArgs) *GameliftFleet {
 	return &GameliftFleet{
 		Args: args,
@@ -19,28 +20,51 @@ func NewGameliftFleet(name string, args GameliftFleetArgs) *GameliftFleet {
 
 var _ terra.Resource = (*GameliftFleet)(nil)
 
+// GameliftFleet represents the Terraform resource aws_gamelift_fleet.
 type GameliftFleet struct {
-	Name  string
-	Args  GameliftFleetArgs
-	state *gameliftFleetState
+	Name      string
+	Args      GameliftFleetArgs
+	state     *gameliftFleetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GameliftFleet].
 func (gf *GameliftFleet) Type() string {
 	return "aws_gamelift_fleet"
 }
 
+// LocalName returns the local name for [GameliftFleet].
 func (gf *GameliftFleet) LocalName() string {
 	return gf.Name
 }
 
+// Configuration returns the configuration (args) for [GameliftFleet].
 func (gf *GameliftFleet) Configuration() interface{} {
 	return gf.Args
 }
 
+// DependOn is used for other resources to depend on [GameliftFleet].
+func (gf *GameliftFleet) DependOn() terra.Reference {
+	return terra.ReferenceResource(gf)
+}
+
+// Dependencies returns the list of resources [GameliftFleet] depends_on.
+func (gf *GameliftFleet) Dependencies() terra.Dependencies {
+	return gf.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GameliftFleet].
+func (gf *GameliftFleet) LifecycleManagement() *terra.Lifecycle {
+	return gf.Lifecycle
+}
+
+// Attributes returns the attributes for [GameliftFleet].
 func (gf *GameliftFleet) Attributes() gameliftFleetAttributes {
 	return gameliftFleetAttributes{ref: terra.ReferenceResource(gf)}
 }
 
+// ImportState imports the given attribute values into [GameliftFleet]'s state.
 func (gf *GameliftFleet) ImportState(av io.Reader) error {
 	gf.state = &gameliftFleetState{}
 	if err := json.NewDecoder(av).Decode(gf.state); err != nil {
@@ -49,10 +73,12 @@ func (gf *GameliftFleet) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GameliftFleet] has state.
 func (gf *GameliftFleet) State() (*gameliftFleetState, bool) {
 	return gf.state, gf.state != nil
 }
 
+// StateMust returns the state for [GameliftFleet]. Panics if the state is nil.
 func (gf *GameliftFleet) StateMust() *gameliftFleetState {
 	if gf.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", gf.Type(), gf.LocalName()))
@@ -60,10 +86,7 @@ func (gf *GameliftFleet) StateMust() *gameliftFleetState {
 	return gf.state
 }
 
-func (gf *GameliftFleet) DependOn() terra.Reference {
-	return terra.ReferenceResource(gf)
-}
-
+// GameliftFleetArgs contains the configurations for aws_gamelift_fleet.
 type GameliftFleetArgs struct {
 	// BuildId: string, optional
 	BuildId terra.StringValue `hcl:"build_id,attr"`
@@ -99,99 +122,114 @@ type GameliftFleetArgs struct {
 	RuntimeConfiguration *gameliftfleet.RuntimeConfiguration `hcl:"runtime_configuration,block"`
 	// Timeouts: optional
 	Timeouts *gameliftfleet.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that GameliftFleet depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type gameliftFleetAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_gamelift_fleet.
 func (gf gameliftFleetAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(gf.ref.Append("arn"))
+	return terra.ReferenceAsString(gf.ref.Append("arn"))
 }
 
+// BuildArn returns a reference to field build_arn of aws_gamelift_fleet.
 func (gf gameliftFleetAttributes) BuildArn() terra.StringValue {
-	return terra.ReferenceString(gf.ref.Append("build_arn"))
+	return terra.ReferenceAsString(gf.ref.Append("build_arn"))
 }
 
+// BuildId returns a reference to field build_id of aws_gamelift_fleet.
 func (gf gameliftFleetAttributes) BuildId() terra.StringValue {
-	return terra.ReferenceString(gf.ref.Append("build_id"))
+	return terra.ReferenceAsString(gf.ref.Append("build_id"))
 }
 
+// Description returns a reference to field description of aws_gamelift_fleet.
 func (gf gameliftFleetAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(gf.ref.Append("description"))
+	return terra.ReferenceAsString(gf.ref.Append("description"))
 }
 
+// Ec2InstanceType returns a reference to field ec2_instance_type of aws_gamelift_fleet.
 func (gf gameliftFleetAttributes) Ec2InstanceType() terra.StringValue {
-	return terra.ReferenceString(gf.ref.Append("ec2_instance_type"))
+	return terra.ReferenceAsString(gf.ref.Append("ec2_instance_type"))
 }
 
+// FleetType returns a reference to field fleet_type of aws_gamelift_fleet.
 func (gf gameliftFleetAttributes) FleetType() terra.StringValue {
-	return terra.ReferenceString(gf.ref.Append("fleet_type"))
+	return terra.ReferenceAsString(gf.ref.Append("fleet_type"))
 }
 
+// Id returns a reference to field id of aws_gamelift_fleet.
 func (gf gameliftFleetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gf.ref.Append("id"))
+	return terra.ReferenceAsString(gf.ref.Append("id"))
 }
 
+// InstanceRoleArn returns a reference to field instance_role_arn of aws_gamelift_fleet.
 func (gf gameliftFleetAttributes) InstanceRoleArn() terra.StringValue {
-	return terra.ReferenceString(gf.ref.Append("instance_role_arn"))
+	return terra.ReferenceAsString(gf.ref.Append("instance_role_arn"))
 }
 
+// LogPaths returns a reference to field log_paths of aws_gamelift_fleet.
 func (gf gameliftFleetAttributes) LogPaths() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](gf.ref.Append("log_paths"))
+	return terra.ReferenceAsList[terra.StringValue](gf.ref.Append("log_paths"))
 }
 
+// MetricGroups returns a reference to field metric_groups of aws_gamelift_fleet.
 func (gf gameliftFleetAttributes) MetricGroups() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](gf.ref.Append("metric_groups"))
+	return terra.ReferenceAsList[terra.StringValue](gf.ref.Append("metric_groups"))
 }
 
+// Name returns a reference to field name of aws_gamelift_fleet.
 func (gf gameliftFleetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(gf.ref.Append("name"))
+	return terra.ReferenceAsString(gf.ref.Append("name"))
 }
 
+// NewGameSessionProtectionPolicy returns a reference to field new_game_session_protection_policy of aws_gamelift_fleet.
 func (gf gameliftFleetAttributes) NewGameSessionProtectionPolicy() terra.StringValue {
-	return terra.ReferenceString(gf.ref.Append("new_game_session_protection_policy"))
+	return terra.ReferenceAsString(gf.ref.Append("new_game_session_protection_policy"))
 }
 
+// OperatingSystem returns a reference to field operating_system of aws_gamelift_fleet.
 func (gf gameliftFleetAttributes) OperatingSystem() terra.StringValue {
-	return terra.ReferenceString(gf.ref.Append("operating_system"))
+	return terra.ReferenceAsString(gf.ref.Append("operating_system"))
 }
 
+// ScriptArn returns a reference to field script_arn of aws_gamelift_fleet.
 func (gf gameliftFleetAttributes) ScriptArn() terra.StringValue {
-	return terra.ReferenceString(gf.ref.Append("script_arn"))
+	return terra.ReferenceAsString(gf.ref.Append("script_arn"))
 }
 
+// ScriptId returns a reference to field script_id of aws_gamelift_fleet.
 func (gf gameliftFleetAttributes) ScriptId() terra.StringValue {
-	return terra.ReferenceString(gf.ref.Append("script_id"))
+	return terra.ReferenceAsString(gf.ref.Append("script_id"))
 }
 
+// Tags returns a reference to field tags of aws_gamelift_fleet.
 func (gf gameliftFleetAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gf.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](gf.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_gamelift_fleet.
 func (gf gameliftFleetAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gf.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](gf.ref.Append("tags_all"))
 }
 
 func (gf gameliftFleetAttributes) CertificateConfiguration() terra.ListValue[gameliftfleet.CertificateConfigurationAttributes] {
-	return terra.ReferenceList[gameliftfleet.CertificateConfigurationAttributes](gf.ref.Append("certificate_configuration"))
+	return terra.ReferenceAsList[gameliftfleet.CertificateConfigurationAttributes](gf.ref.Append("certificate_configuration"))
 }
 
 func (gf gameliftFleetAttributes) Ec2InboundPermission() terra.SetValue[gameliftfleet.Ec2InboundPermissionAttributes] {
-	return terra.ReferenceSet[gameliftfleet.Ec2InboundPermissionAttributes](gf.ref.Append("ec2_inbound_permission"))
+	return terra.ReferenceAsSet[gameliftfleet.Ec2InboundPermissionAttributes](gf.ref.Append("ec2_inbound_permission"))
 }
 
 func (gf gameliftFleetAttributes) ResourceCreationLimitPolicy() terra.ListValue[gameliftfleet.ResourceCreationLimitPolicyAttributes] {
-	return terra.ReferenceList[gameliftfleet.ResourceCreationLimitPolicyAttributes](gf.ref.Append("resource_creation_limit_policy"))
+	return terra.ReferenceAsList[gameliftfleet.ResourceCreationLimitPolicyAttributes](gf.ref.Append("resource_creation_limit_policy"))
 }
 
 func (gf gameliftFleetAttributes) RuntimeConfiguration() terra.ListValue[gameliftfleet.RuntimeConfigurationAttributes] {
-	return terra.ReferenceList[gameliftfleet.RuntimeConfigurationAttributes](gf.ref.Append("runtime_configuration"))
+	return terra.ReferenceAsList[gameliftfleet.RuntimeConfigurationAttributes](gf.ref.Append("runtime_configuration"))
 }
 
 func (gf gameliftFleetAttributes) Timeouts() gameliftfleet.TimeoutsAttributes {
-	return terra.ReferenceSingle[gameliftfleet.TimeoutsAttributes](gf.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[gameliftfleet.TimeoutsAttributes](gf.ref.Append("timeouts"))
 }
 
 type gameliftFleetState struct {

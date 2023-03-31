@@ -48,7 +48,7 @@ func (dc DestinationConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dc DestinationConfigurationAttributes) S3() terra.ListValue[S3Attributes] {
-	return terra.ReferenceList[S3Attributes](dc.ref.Append("s3"))
+	return terra.ReferenceAsList[S3Attributes](dc.ref.Append("s3"))
 }
 
 type S3Attributes struct {
@@ -68,7 +68,7 @@ func (s S3Attributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s S3Attributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(s.ref.Append("bucket_name"))
 }
 
 type ThumbnailConfigurationAttributes struct {
@@ -88,11 +88,11 @@ func (tc ThumbnailConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tc ThumbnailConfigurationAttributes) RecordingMode() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("recording_mode"))
+	return terra.ReferenceAsString(tc.ref.Append("recording_mode"))
 }
 
 func (tc ThumbnailConfigurationAttributes) TargetIntervalSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(tc.ref.Append("target_interval_seconds"))
+	return terra.ReferenceAsNumber(tc.ref.Append("target_interval_seconds"))
 }
 
 type TimeoutsAttributes struct {
@@ -112,11 +112,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type DestinationConfigurationState struct {

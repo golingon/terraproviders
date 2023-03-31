@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataTransferServer creates a new instance of [DataTransferServer].
 func NewDataTransferServer(name string, args DataTransferServerArgs) *DataTransferServer {
 	return &DataTransferServer{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataTransferServer(name string, args DataTransferServerArgs) *DataTransf
 
 var _ terra.DataResource = (*DataTransferServer)(nil)
 
+// DataTransferServer represents the Terraform data resource aws_transfer_server.
 type DataTransferServer struct {
 	Name string
 	Args DataTransferServerArgs
 }
 
+// DataSource returns the Terraform object type for [DataTransferServer].
 func (ts *DataTransferServer) DataSource() string {
 	return "aws_transfer_server"
 }
 
+// LocalName returns the local name for [DataTransferServer].
 func (ts *DataTransferServer) LocalName() string {
 	return ts.Name
 }
 
+// Configuration returns the configuration (args) for [DataTransferServer].
 func (ts *DataTransferServer) Configuration() interface{} {
 	return ts.Args
 }
 
+// Attributes returns the attributes for [DataTransferServer].
 func (ts *DataTransferServer) Attributes() dataTransferServerAttributes {
 	return dataTransferServerAttributes{ref: terra.ReferenceDataResource(ts)}
 }
 
+// DataTransferServerArgs contains the configurations for aws_transfer_server.
 type DataTransferServerArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,54 +51,67 @@ type dataTransferServerAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_transfer_server.
 func (ts dataTransferServerAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ts.ref.Append("arn"))
+	return terra.ReferenceAsString(ts.ref.Append("arn"))
 }
 
+// Certificate returns a reference to field certificate of aws_transfer_server.
 func (ts dataTransferServerAttributes) Certificate() terra.StringValue {
-	return terra.ReferenceString(ts.ref.Append("certificate"))
+	return terra.ReferenceAsString(ts.ref.Append("certificate"))
 }
 
+// Domain returns a reference to field domain of aws_transfer_server.
 func (ts dataTransferServerAttributes) Domain() terra.StringValue {
-	return terra.ReferenceString(ts.ref.Append("domain"))
+	return terra.ReferenceAsString(ts.ref.Append("domain"))
 }
 
+// Endpoint returns a reference to field endpoint of aws_transfer_server.
 func (ts dataTransferServerAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(ts.ref.Append("endpoint"))
+	return terra.ReferenceAsString(ts.ref.Append("endpoint"))
 }
 
+// EndpointType returns a reference to field endpoint_type of aws_transfer_server.
 func (ts dataTransferServerAttributes) EndpointType() terra.StringValue {
-	return terra.ReferenceString(ts.ref.Append("endpoint_type"))
+	return terra.ReferenceAsString(ts.ref.Append("endpoint_type"))
 }
 
+// Id returns a reference to field id of aws_transfer_server.
 func (ts dataTransferServerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ts.ref.Append("id"))
+	return terra.ReferenceAsString(ts.ref.Append("id"))
 }
 
+// IdentityProviderType returns a reference to field identity_provider_type of aws_transfer_server.
 func (ts dataTransferServerAttributes) IdentityProviderType() terra.StringValue {
-	return terra.ReferenceString(ts.ref.Append("identity_provider_type"))
+	return terra.ReferenceAsString(ts.ref.Append("identity_provider_type"))
 }
 
+// InvocationRole returns a reference to field invocation_role of aws_transfer_server.
 func (ts dataTransferServerAttributes) InvocationRole() terra.StringValue {
-	return terra.ReferenceString(ts.ref.Append("invocation_role"))
+	return terra.ReferenceAsString(ts.ref.Append("invocation_role"))
 }
 
+// LoggingRole returns a reference to field logging_role of aws_transfer_server.
 func (ts dataTransferServerAttributes) LoggingRole() terra.StringValue {
-	return terra.ReferenceString(ts.ref.Append("logging_role"))
+	return terra.ReferenceAsString(ts.ref.Append("logging_role"))
 }
 
+// Protocols returns a reference to field protocols of aws_transfer_server.
 func (ts dataTransferServerAttributes) Protocols() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ts.ref.Append("protocols"))
+	return terra.ReferenceAsList[terra.StringValue](ts.ref.Append("protocols"))
 }
 
+// SecurityPolicyName returns a reference to field security_policy_name of aws_transfer_server.
 func (ts dataTransferServerAttributes) SecurityPolicyName() terra.StringValue {
-	return terra.ReferenceString(ts.ref.Append("security_policy_name"))
+	return terra.ReferenceAsString(ts.ref.Append("security_policy_name"))
 }
 
+// ServerId returns a reference to field server_id of aws_transfer_server.
 func (ts dataTransferServerAttributes) ServerId() terra.StringValue {
-	return terra.ReferenceString(ts.ref.Append("server_id"))
+	return terra.ReferenceAsString(ts.ref.Append("server_id"))
 }
 
+// Url returns a reference to field url of aws_transfer_server.
 func (ts dataTransferServerAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(ts.ref.Append("url"))
+	return terra.ReferenceAsString(ts.ref.Append("url"))
 }

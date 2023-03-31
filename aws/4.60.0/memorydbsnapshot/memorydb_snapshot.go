@@ -33,55 +33,55 @@ func (cc ClusterConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc ClusterConfigurationAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("description"))
+	return terra.ReferenceAsString(cc.ref.Append("description"))
 }
 
 func (cc ClusterConfigurationAttributes) EngineVersion() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("engine_version"))
+	return terra.ReferenceAsString(cc.ref.Append("engine_version"))
 }
 
 func (cc ClusterConfigurationAttributes) MaintenanceWindow() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("maintenance_window"))
+	return terra.ReferenceAsString(cc.ref.Append("maintenance_window"))
 }
 
 func (cc ClusterConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("name"))
+	return terra.ReferenceAsString(cc.ref.Append("name"))
 }
 
 func (cc ClusterConfigurationAttributes) NodeType() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("node_type"))
+	return terra.ReferenceAsString(cc.ref.Append("node_type"))
 }
 
 func (cc ClusterConfigurationAttributes) NumShards() terra.NumberValue {
-	return terra.ReferenceNumber(cc.ref.Append("num_shards"))
+	return terra.ReferenceAsNumber(cc.ref.Append("num_shards"))
 }
 
 func (cc ClusterConfigurationAttributes) ParameterGroupName() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("parameter_group_name"))
+	return terra.ReferenceAsString(cc.ref.Append("parameter_group_name"))
 }
 
 func (cc ClusterConfigurationAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(cc.ref.Append("port"))
+	return terra.ReferenceAsNumber(cc.ref.Append("port"))
 }
 
 func (cc ClusterConfigurationAttributes) SnapshotRetentionLimit() terra.NumberValue {
-	return terra.ReferenceNumber(cc.ref.Append("snapshot_retention_limit"))
+	return terra.ReferenceAsNumber(cc.ref.Append("snapshot_retention_limit"))
 }
 
 func (cc ClusterConfigurationAttributes) SnapshotWindow() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("snapshot_window"))
+	return terra.ReferenceAsString(cc.ref.Append("snapshot_window"))
 }
 
 func (cc ClusterConfigurationAttributes) SubnetGroupName() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("subnet_group_name"))
+	return terra.ReferenceAsString(cc.ref.Append("subnet_group_name"))
 }
 
 func (cc ClusterConfigurationAttributes) TopicArn() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("topic_arn"))
+	return terra.ReferenceAsString(cc.ref.Append("topic_arn"))
 }
 
 func (cc ClusterConfigurationAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(cc.ref.Append("vpc_id"))
 }
 
 type TimeoutsAttributes struct {
@@ -101,11 +101,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type ClusterConfigurationState struct {

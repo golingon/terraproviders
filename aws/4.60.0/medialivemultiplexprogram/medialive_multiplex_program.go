@@ -69,19 +69,19 @@ func (mps MultiplexProgramSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mps MultiplexProgramSettingsAttributes) PreferredChannelPipeline() terra.StringValue {
-	return terra.ReferenceString(mps.ref.Append("preferred_channel_pipeline"))
+	return terra.ReferenceAsString(mps.ref.Append("preferred_channel_pipeline"))
 }
 
 func (mps MultiplexProgramSettingsAttributes) ProgramNumber() terra.NumberValue {
-	return terra.ReferenceNumber(mps.ref.Append("program_number"))
+	return terra.ReferenceAsNumber(mps.ref.Append("program_number"))
 }
 
 func (mps MultiplexProgramSettingsAttributes) ServiceDescriptor() terra.ListValue[ServiceDescriptorAttributes] {
-	return terra.ReferenceList[ServiceDescriptorAttributes](mps.ref.Append("service_descriptor"))
+	return terra.ReferenceAsList[ServiceDescriptorAttributes](mps.ref.Append("service_descriptor"))
 }
 
 func (mps MultiplexProgramSettingsAttributes) VideoSettings() terra.ListValue[VideoSettingsAttributes] {
-	return terra.ReferenceList[VideoSettingsAttributes](mps.ref.Append("video_settings"))
+	return terra.ReferenceAsList[VideoSettingsAttributes](mps.ref.Append("video_settings"))
 }
 
 type ServiceDescriptorAttributes struct {
@@ -101,11 +101,11 @@ func (sd ServiceDescriptorAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sd ServiceDescriptorAttributes) ProviderName() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("provider_name"))
+	return terra.ReferenceAsString(sd.ref.Append("provider_name"))
 }
 
 func (sd ServiceDescriptorAttributes) ServiceName() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("service_name"))
+	return terra.ReferenceAsString(sd.ref.Append("service_name"))
 }
 
 type VideoSettingsAttributes struct {
@@ -125,15 +125,15 @@ func (vs VideoSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vs VideoSettingsAttributes) ConstantBitrate() terra.NumberValue {
-	return terra.ReferenceNumber(vs.ref.Append("constant_bitrate"))
+	return terra.ReferenceAsNumber(vs.ref.Append("constant_bitrate"))
 }
 
 func (vs VideoSettingsAttributes) StatemuxSettings() terra.ListValue[StatemuxSettingsAttributes] {
-	return terra.ReferenceList[StatemuxSettingsAttributes](vs.ref.Append("statemux_settings"))
+	return terra.ReferenceAsList[StatemuxSettingsAttributes](vs.ref.Append("statemux_settings"))
 }
 
 func (vs VideoSettingsAttributes) StatmuxSettings() terra.ListValue[StatmuxSettingsAttributes] {
-	return terra.ReferenceList[StatmuxSettingsAttributes](vs.ref.Append("statmux_settings"))
+	return terra.ReferenceAsList[StatmuxSettingsAttributes](vs.ref.Append("statmux_settings"))
 }
 
 type StatemuxSettingsAttributes struct {
@@ -153,15 +153,15 @@ func (ss StatemuxSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ss StatemuxSettingsAttributes) MaximumBitrate() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("maximum_bitrate"))
+	return terra.ReferenceAsNumber(ss.ref.Append("maximum_bitrate"))
 }
 
 func (ss StatemuxSettingsAttributes) MinimumBitrate() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("minimum_bitrate"))
+	return terra.ReferenceAsNumber(ss.ref.Append("minimum_bitrate"))
 }
 
 func (ss StatemuxSettingsAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("priority"))
+	return terra.ReferenceAsNumber(ss.ref.Append("priority"))
 }
 
 type StatmuxSettingsAttributes struct {
@@ -181,15 +181,15 @@ func (ss StatmuxSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ss StatmuxSettingsAttributes) MaximumBitrate() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("maximum_bitrate"))
+	return terra.ReferenceAsNumber(ss.ref.Append("maximum_bitrate"))
 }
 
 func (ss StatmuxSettingsAttributes) MinimumBitrate() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("minimum_bitrate"))
+	return terra.ReferenceAsNumber(ss.ref.Append("minimum_bitrate"))
 }
 
 func (ss StatmuxSettingsAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("priority"))
+	return terra.ReferenceAsNumber(ss.ref.Append("priority"))
 }
 
 type MultiplexProgramSettingsState struct {

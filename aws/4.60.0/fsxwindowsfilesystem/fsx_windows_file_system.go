@@ -57,15 +57,15 @@ func (alc AuditLogConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (alc AuditLogConfigurationAttributes) AuditLogDestination() terra.StringValue {
-	return terra.ReferenceString(alc.ref.Append("audit_log_destination"))
+	return terra.ReferenceAsString(alc.ref.Append("audit_log_destination"))
 }
 
 func (alc AuditLogConfigurationAttributes) FileAccessAuditLogLevel() terra.StringValue {
-	return terra.ReferenceString(alc.ref.Append("file_access_audit_log_level"))
+	return terra.ReferenceAsString(alc.ref.Append("file_access_audit_log_level"))
 }
 
 func (alc AuditLogConfigurationAttributes) FileShareAccessAuditLogLevel() terra.StringValue {
-	return terra.ReferenceString(alc.ref.Append("file_share_access_audit_log_level"))
+	return terra.ReferenceAsString(alc.ref.Append("file_share_access_audit_log_level"))
 }
 
 type SelfManagedActiveDirectoryAttributes struct {
@@ -85,27 +85,27 @@ func (smad SelfManagedActiveDirectoryAttributes) InternalTokens() hclwrite.Token
 }
 
 func (smad SelfManagedActiveDirectoryAttributes) DnsIps() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](smad.ref.Append("dns_ips"))
+	return terra.ReferenceAsSet[terra.StringValue](smad.ref.Append("dns_ips"))
 }
 
 func (smad SelfManagedActiveDirectoryAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(smad.ref.Append("domain_name"))
+	return terra.ReferenceAsString(smad.ref.Append("domain_name"))
 }
 
 func (smad SelfManagedActiveDirectoryAttributes) FileSystemAdministratorsGroup() terra.StringValue {
-	return terra.ReferenceString(smad.ref.Append("file_system_administrators_group"))
+	return terra.ReferenceAsString(smad.ref.Append("file_system_administrators_group"))
 }
 
 func (smad SelfManagedActiveDirectoryAttributes) OrganizationalUnitDistinguishedName() terra.StringValue {
-	return terra.ReferenceString(smad.ref.Append("organizational_unit_distinguished_name"))
+	return terra.ReferenceAsString(smad.ref.Append("organizational_unit_distinguished_name"))
 }
 
 func (smad SelfManagedActiveDirectoryAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(smad.ref.Append("password"))
+	return terra.ReferenceAsString(smad.ref.Append("password"))
 }
 
 func (smad SelfManagedActiveDirectoryAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(smad.ref.Append("username"))
+	return terra.ReferenceAsString(smad.ref.Append("username"))
 }
 
 type TimeoutsAttributes struct {
@@ -125,15 +125,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type AuditLogConfigurationState struct {

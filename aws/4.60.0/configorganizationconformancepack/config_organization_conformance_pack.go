@@ -40,11 +40,11 @@ func (ip InputParameterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ip InputParameterAttributes) ParameterName() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("parameter_name"))
+	return terra.ReferenceAsString(ip.ref.Append("parameter_name"))
 }
 
 func (ip InputParameterAttributes) ParameterValue() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("parameter_value"))
+	return terra.ReferenceAsString(ip.ref.Append("parameter_value"))
 }
 
 type TimeoutsAttributes struct {
@@ -64,15 +64,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type InputParameterState struct {

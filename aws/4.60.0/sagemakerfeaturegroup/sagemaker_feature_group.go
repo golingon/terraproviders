@@ -68,11 +68,11 @@ func (fd FeatureDefinitionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fd FeatureDefinitionAttributes) FeatureName() terra.StringValue {
-	return terra.ReferenceString(fd.ref.Append("feature_name"))
+	return terra.ReferenceAsString(fd.ref.Append("feature_name"))
 }
 
 func (fd FeatureDefinitionAttributes) FeatureType() terra.StringValue {
-	return terra.ReferenceString(fd.ref.Append("feature_type"))
+	return terra.ReferenceAsString(fd.ref.Append("feature_type"))
 }
 
 type OfflineStoreConfigAttributes struct {
@@ -92,15 +92,15 @@ func (osc OfflineStoreConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (osc OfflineStoreConfigAttributes) DisableGlueTableCreation() terra.BoolValue {
-	return terra.ReferenceBool(osc.ref.Append("disable_glue_table_creation"))
+	return terra.ReferenceAsBool(osc.ref.Append("disable_glue_table_creation"))
 }
 
 func (osc OfflineStoreConfigAttributes) DataCatalogConfig() terra.ListValue[DataCatalogConfigAttributes] {
-	return terra.ReferenceList[DataCatalogConfigAttributes](osc.ref.Append("data_catalog_config"))
+	return terra.ReferenceAsList[DataCatalogConfigAttributes](osc.ref.Append("data_catalog_config"))
 }
 
 func (osc OfflineStoreConfigAttributes) S3StorageConfig() terra.ListValue[S3StorageConfigAttributes] {
-	return terra.ReferenceList[S3StorageConfigAttributes](osc.ref.Append("s3_storage_config"))
+	return terra.ReferenceAsList[S3StorageConfigAttributes](osc.ref.Append("s3_storage_config"))
 }
 
 type DataCatalogConfigAttributes struct {
@@ -120,15 +120,15 @@ func (dcc DataCatalogConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dcc DataCatalogConfigAttributes) Catalog() terra.StringValue {
-	return terra.ReferenceString(dcc.ref.Append("catalog"))
+	return terra.ReferenceAsString(dcc.ref.Append("catalog"))
 }
 
 func (dcc DataCatalogConfigAttributes) Database() terra.StringValue {
-	return terra.ReferenceString(dcc.ref.Append("database"))
+	return terra.ReferenceAsString(dcc.ref.Append("database"))
 }
 
 func (dcc DataCatalogConfigAttributes) TableName() terra.StringValue {
-	return terra.ReferenceString(dcc.ref.Append("table_name"))
+	return terra.ReferenceAsString(dcc.ref.Append("table_name"))
 }
 
 type S3StorageConfigAttributes struct {
@@ -148,11 +148,11 @@ func (ssc S3StorageConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ssc S3StorageConfigAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(ssc.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(ssc.ref.Append("kms_key_id"))
 }
 
 func (ssc S3StorageConfigAttributes) S3Uri() terra.StringValue {
-	return terra.ReferenceString(ssc.ref.Append("s3_uri"))
+	return terra.ReferenceAsString(ssc.ref.Append("s3_uri"))
 }
 
 type OnlineStoreConfigAttributes struct {
@@ -172,11 +172,11 @@ func (osc OnlineStoreConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (osc OnlineStoreConfigAttributes) EnableOnlineStore() terra.BoolValue {
-	return terra.ReferenceBool(osc.ref.Append("enable_online_store"))
+	return terra.ReferenceAsBool(osc.ref.Append("enable_online_store"))
 }
 
 func (osc OnlineStoreConfigAttributes) SecurityConfig() terra.ListValue[SecurityConfigAttributes] {
-	return terra.ReferenceList[SecurityConfigAttributes](osc.ref.Append("security_config"))
+	return terra.ReferenceAsList[SecurityConfigAttributes](osc.ref.Append("security_config"))
 }
 
 type SecurityConfigAttributes struct {
@@ -196,7 +196,7 @@ func (sc SecurityConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc SecurityConfigAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(sc.ref.Append("kms_key_id"))
 }
 
 type FeatureDefinitionState struct {

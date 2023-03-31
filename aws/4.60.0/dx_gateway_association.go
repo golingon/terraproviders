@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDxGatewayAssociation creates a new instance of [DxGatewayAssociation].
 func NewDxGatewayAssociation(name string, args DxGatewayAssociationArgs) *DxGatewayAssociation {
 	return &DxGatewayAssociation{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDxGatewayAssociation(name string, args DxGatewayAssociationArgs) *DxGate
 
 var _ terra.Resource = (*DxGatewayAssociation)(nil)
 
+// DxGatewayAssociation represents the Terraform resource aws_dx_gateway_association.
 type DxGatewayAssociation struct {
-	Name  string
-	Args  DxGatewayAssociationArgs
-	state *dxGatewayAssociationState
+	Name      string
+	Args      DxGatewayAssociationArgs
+	state     *dxGatewayAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DxGatewayAssociation].
 func (dga *DxGatewayAssociation) Type() string {
 	return "aws_dx_gateway_association"
 }
 
+// LocalName returns the local name for [DxGatewayAssociation].
 func (dga *DxGatewayAssociation) LocalName() string {
 	return dga.Name
 }
 
+// Configuration returns the configuration (args) for [DxGatewayAssociation].
 func (dga *DxGatewayAssociation) Configuration() interface{} {
 	return dga.Args
 }
 
+// DependOn is used for other resources to depend on [DxGatewayAssociation].
+func (dga *DxGatewayAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(dga)
+}
+
+// Dependencies returns the list of resources [DxGatewayAssociation] depends_on.
+func (dga *DxGatewayAssociation) Dependencies() terra.Dependencies {
+	return dga.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DxGatewayAssociation].
+func (dga *DxGatewayAssociation) LifecycleManagement() *terra.Lifecycle {
+	return dga.Lifecycle
+}
+
+// Attributes returns the attributes for [DxGatewayAssociation].
 func (dga *DxGatewayAssociation) Attributes() dxGatewayAssociationAttributes {
 	return dxGatewayAssociationAttributes{ref: terra.ReferenceResource(dga)}
 }
 
+// ImportState imports the given attribute values into [DxGatewayAssociation]'s state.
 func (dga *DxGatewayAssociation) ImportState(av io.Reader) error {
 	dga.state = &dxGatewayAssociationState{}
 	if err := json.NewDecoder(av).Decode(dga.state); err != nil {
@@ -49,10 +73,12 @@ func (dga *DxGatewayAssociation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DxGatewayAssociation] has state.
 func (dga *DxGatewayAssociation) State() (*dxGatewayAssociationState, bool) {
 	return dga.state, dga.state != nil
 }
 
+// StateMust returns the state for [DxGatewayAssociation]. Panics if the state is nil.
 func (dga *DxGatewayAssociation) StateMust() *dxGatewayAssociationState {
 	if dga.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dga.Type(), dga.LocalName()))
@@ -60,10 +86,7 @@ func (dga *DxGatewayAssociation) StateMust() *dxGatewayAssociationState {
 	return dga.state
 }
 
-func (dga *DxGatewayAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(dga)
-}
-
+// DxGatewayAssociationArgs contains the configurations for aws_dx_gateway_association.
 type DxGatewayAssociationArgs struct {
 	// AllowedPrefixes: set of string, optional
 	AllowedPrefixes terra.SetValue[terra.StringValue] `hcl:"allowed_prefixes,attr"`
@@ -81,55 +104,63 @@ type DxGatewayAssociationArgs struct {
 	VpnGatewayId terra.StringValue `hcl:"vpn_gateway_id,attr"`
 	// Timeouts: optional
 	Timeouts *dxgatewayassociation.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DxGatewayAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dxGatewayAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// AllowedPrefixes returns a reference to field allowed_prefixes of aws_dx_gateway_association.
 func (dga dxGatewayAssociationAttributes) AllowedPrefixes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dga.ref.Append("allowed_prefixes"))
+	return terra.ReferenceAsSet[terra.StringValue](dga.ref.Append("allowed_prefixes"))
 }
 
+// AssociatedGatewayId returns a reference to field associated_gateway_id of aws_dx_gateway_association.
 func (dga dxGatewayAssociationAttributes) AssociatedGatewayId() terra.StringValue {
-	return terra.ReferenceString(dga.ref.Append("associated_gateway_id"))
+	return terra.ReferenceAsString(dga.ref.Append("associated_gateway_id"))
 }
 
+// AssociatedGatewayOwnerAccountId returns a reference to field associated_gateway_owner_account_id of aws_dx_gateway_association.
 func (dga dxGatewayAssociationAttributes) AssociatedGatewayOwnerAccountId() terra.StringValue {
-	return terra.ReferenceString(dga.ref.Append("associated_gateway_owner_account_id"))
+	return terra.ReferenceAsString(dga.ref.Append("associated_gateway_owner_account_id"))
 }
 
+// AssociatedGatewayType returns a reference to field associated_gateway_type of aws_dx_gateway_association.
 func (dga dxGatewayAssociationAttributes) AssociatedGatewayType() terra.StringValue {
-	return terra.ReferenceString(dga.ref.Append("associated_gateway_type"))
+	return terra.ReferenceAsString(dga.ref.Append("associated_gateway_type"))
 }
 
+// DxGatewayAssociationId returns a reference to field dx_gateway_association_id of aws_dx_gateway_association.
 func (dga dxGatewayAssociationAttributes) DxGatewayAssociationId() terra.StringValue {
-	return terra.ReferenceString(dga.ref.Append("dx_gateway_association_id"))
+	return terra.ReferenceAsString(dga.ref.Append("dx_gateway_association_id"))
 }
 
+// DxGatewayId returns a reference to field dx_gateway_id of aws_dx_gateway_association.
 func (dga dxGatewayAssociationAttributes) DxGatewayId() terra.StringValue {
-	return terra.ReferenceString(dga.ref.Append("dx_gateway_id"))
+	return terra.ReferenceAsString(dga.ref.Append("dx_gateway_id"))
 }
 
+// DxGatewayOwnerAccountId returns a reference to field dx_gateway_owner_account_id of aws_dx_gateway_association.
 func (dga dxGatewayAssociationAttributes) DxGatewayOwnerAccountId() terra.StringValue {
-	return terra.ReferenceString(dga.ref.Append("dx_gateway_owner_account_id"))
+	return terra.ReferenceAsString(dga.ref.Append("dx_gateway_owner_account_id"))
 }
 
+// Id returns a reference to field id of aws_dx_gateway_association.
 func (dga dxGatewayAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dga.ref.Append("id"))
+	return terra.ReferenceAsString(dga.ref.Append("id"))
 }
 
+// ProposalId returns a reference to field proposal_id of aws_dx_gateway_association.
 func (dga dxGatewayAssociationAttributes) ProposalId() terra.StringValue {
-	return terra.ReferenceString(dga.ref.Append("proposal_id"))
+	return terra.ReferenceAsString(dga.ref.Append("proposal_id"))
 }
 
+// VpnGatewayId returns a reference to field vpn_gateway_id of aws_dx_gateway_association.
 func (dga dxGatewayAssociationAttributes) VpnGatewayId() terra.StringValue {
-	return terra.ReferenceString(dga.ref.Append("vpn_gateway_id"))
+	return terra.ReferenceAsString(dga.ref.Append("vpn_gateway_id"))
 }
 
 func (dga dxGatewayAssociationAttributes) Timeouts() dxgatewayassociation.TimeoutsAttributes {
-	return terra.ReferenceSingle[dxgatewayassociation.TimeoutsAttributes](dga.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dxgatewayassociation.TimeoutsAttributes](dga.ref.Append("timeouts"))
 }
 
 type dxGatewayAssociationState struct {

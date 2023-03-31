@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDynamodbTableReplica creates a new instance of [DynamodbTableReplica].
 func NewDynamodbTableReplica(name string, args DynamodbTableReplicaArgs) *DynamodbTableReplica {
 	return &DynamodbTableReplica{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDynamodbTableReplica(name string, args DynamodbTableReplicaArgs) *Dynamo
 
 var _ terra.Resource = (*DynamodbTableReplica)(nil)
 
+// DynamodbTableReplica represents the Terraform resource aws_dynamodb_table_replica.
 type DynamodbTableReplica struct {
-	Name  string
-	Args  DynamodbTableReplicaArgs
-	state *dynamodbTableReplicaState
+	Name      string
+	Args      DynamodbTableReplicaArgs
+	state     *dynamodbTableReplicaState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DynamodbTableReplica].
 func (dtr *DynamodbTableReplica) Type() string {
 	return "aws_dynamodb_table_replica"
 }
 
+// LocalName returns the local name for [DynamodbTableReplica].
 func (dtr *DynamodbTableReplica) LocalName() string {
 	return dtr.Name
 }
 
+// Configuration returns the configuration (args) for [DynamodbTableReplica].
 func (dtr *DynamodbTableReplica) Configuration() interface{} {
 	return dtr.Args
 }
 
+// DependOn is used for other resources to depend on [DynamodbTableReplica].
+func (dtr *DynamodbTableReplica) DependOn() terra.Reference {
+	return terra.ReferenceResource(dtr)
+}
+
+// Dependencies returns the list of resources [DynamodbTableReplica] depends_on.
+func (dtr *DynamodbTableReplica) Dependencies() terra.Dependencies {
+	return dtr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DynamodbTableReplica].
+func (dtr *DynamodbTableReplica) LifecycleManagement() *terra.Lifecycle {
+	return dtr.Lifecycle
+}
+
+// Attributes returns the attributes for [DynamodbTableReplica].
 func (dtr *DynamodbTableReplica) Attributes() dynamodbTableReplicaAttributes {
 	return dynamodbTableReplicaAttributes{ref: terra.ReferenceResource(dtr)}
 }
 
+// ImportState imports the given attribute values into [DynamodbTableReplica]'s state.
 func (dtr *DynamodbTableReplica) ImportState(av io.Reader) error {
 	dtr.state = &dynamodbTableReplicaState{}
 	if err := json.NewDecoder(av).Decode(dtr.state); err != nil {
@@ -49,10 +73,12 @@ func (dtr *DynamodbTableReplica) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DynamodbTableReplica] has state.
 func (dtr *DynamodbTableReplica) State() (*dynamodbTableReplicaState, bool) {
 	return dtr.state, dtr.state != nil
 }
 
+// StateMust returns the state for [DynamodbTableReplica]. Panics if the state is nil.
 func (dtr *DynamodbTableReplica) StateMust() *dynamodbTableReplicaState {
 	if dtr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dtr.Type(), dtr.LocalName()))
@@ -60,10 +86,7 @@ func (dtr *DynamodbTableReplica) StateMust() *dynamodbTableReplicaState {
 	return dtr.state
 }
 
-func (dtr *DynamodbTableReplica) DependOn() terra.Reference {
-	return terra.ReferenceResource(dtr)
-}
-
+// DynamodbTableReplicaArgs contains the configurations for aws_dynamodb_table_replica.
 type DynamodbTableReplicaArgs struct {
 	// GlobalTableArn: string, required
 	GlobalTableArn terra.StringValue `hcl:"global_table_arn,attr" validate:"required"`
@@ -81,47 +104,53 @@ type DynamodbTableReplicaArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Timeouts: optional
 	Timeouts *dynamodbtablereplica.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that DynamodbTableReplica depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dynamodbTableReplicaAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_dynamodb_table_replica.
 func (dtr dynamodbTableReplicaAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dtr.ref.Append("arn"))
+	return terra.ReferenceAsString(dtr.ref.Append("arn"))
 }
 
+// GlobalTableArn returns a reference to field global_table_arn of aws_dynamodb_table_replica.
 func (dtr dynamodbTableReplicaAttributes) GlobalTableArn() terra.StringValue {
-	return terra.ReferenceString(dtr.ref.Append("global_table_arn"))
+	return terra.ReferenceAsString(dtr.ref.Append("global_table_arn"))
 }
 
+// Id returns a reference to field id of aws_dynamodb_table_replica.
 func (dtr dynamodbTableReplicaAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dtr.ref.Append("id"))
+	return terra.ReferenceAsString(dtr.ref.Append("id"))
 }
 
+// KmsKeyArn returns a reference to field kms_key_arn of aws_dynamodb_table_replica.
 func (dtr dynamodbTableReplicaAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(dtr.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(dtr.ref.Append("kms_key_arn"))
 }
 
+// PointInTimeRecovery returns a reference to field point_in_time_recovery of aws_dynamodb_table_replica.
 func (dtr dynamodbTableReplicaAttributes) PointInTimeRecovery() terra.BoolValue {
-	return terra.ReferenceBool(dtr.ref.Append("point_in_time_recovery"))
+	return terra.ReferenceAsBool(dtr.ref.Append("point_in_time_recovery"))
 }
 
+// TableClassOverride returns a reference to field table_class_override of aws_dynamodb_table_replica.
 func (dtr dynamodbTableReplicaAttributes) TableClassOverride() terra.StringValue {
-	return terra.ReferenceString(dtr.ref.Append("table_class_override"))
+	return terra.ReferenceAsString(dtr.ref.Append("table_class_override"))
 }
 
+// Tags returns a reference to field tags of aws_dynamodb_table_replica.
 func (dtr dynamodbTableReplicaAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dtr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dtr.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_dynamodb_table_replica.
 func (dtr dynamodbTableReplicaAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dtr.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dtr.ref.Append("tags_all"))
 }
 
 func (dtr dynamodbTableReplicaAttributes) Timeouts() dynamodbtablereplica.TimeoutsAttributes {
-	return terra.ReferenceSingle[dynamodbtablereplica.TimeoutsAttributes](dtr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dynamodbtablereplica.TimeoutsAttributes](dtr.ref.Append("timeouts"))
 }
 
 type dynamodbTableReplicaState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewWafRateBasedRule creates a new instance of [WafRateBasedRule].
 func NewWafRateBasedRule(name string, args WafRateBasedRuleArgs) *WafRateBasedRule {
 	return &WafRateBasedRule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewWafRateBasedRule(name string, args WafRateBasedRuleArgs) *WafRateBasedRu
 
 var _ terra.Resource = (*WafRateBasedRule)(nil)
 
+// WafRateBasedRule represents the Terraform resource aws_waf_rate_based_rule.
 type WafRateBasedRule struct {
-	Name  string
-	Args  WafRateBasedRuleArgs
-	state *wafRateBasedRuleState
+	Name      string
+	Args      WafRateBasedRuleArgs
+	state     *wafRateBasedRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [WafRateBasedRule].
 func (wrbr *WafRateBasedRule) Type() string {
 	return "aws_waf_rate_based_rule"
 }
 
+// LocalName returns the local name for [WafRateBasedRule].
 func (wrbr *WafRateBasedRule) LocalName() string {
 	return wrbr.Name
 }
 
+// Configuration returns the configuration (args) for [WafRateBasedRule].
 func (wrbr *WafRateBasedRule) Configuration() interface{} {
 	return wrbr.Args
 }
 
+// DependOn is used for other resources to depend on [WafRateBasedRule].
+func (wrbr *WafRateBasedRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(wrbr)
+}
+
+// Dependencies returns the list of resources [WafRateBasedRule] depends_on.
+func (wrbr *WafRateBasedRule) Dependencies() terra.Dependencies {
+	return wrbr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [WafRateBasedRule].
+func (wrbr *WafRateBasedRule) LifecycleManagement() *terra.Lifecycle {
+	return wrbr.Lifecycle
+}
+
+// Attributes returns the attributes for [WafRateBasedRule].
 func (wrbr *WafRateBasedRule) Attributes() wafRateBasedRuleAttributes {
 	return wafRateBasedRuleAttributes{ref: terra.ReferenceResource(wrbr)}
 }
 
+// ImportState imports the given attribute values into [WafRateBasedRule]'s state.
 func (wrbr *WafRateBasedRule) ImportState(av io.Reader) error {
 	wrbr.state = &wafRateBasedRuleState{}
 	if err := json.NewDecoder(av).Decode(wrbr.state); err != nil {
@@ -49,10 +73,12 @@ func (wrbr *WafRateBasedRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [WafRateBasedRule] has state.
 func (wrbr *WafRateBasedRule) State() (*wafRateBasedRuleState, bool) {
 	return wrbr.state, wrbr.state != nil
 }
 
+// StateMust returns the state for [WafRateBasedRule]. Panics if the state is nil.
 func (wrbr *WafRateBasedRule) StateMust() *wafRateBasedRuleState {
 	if wrbr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", wrbr.Type(), wrbr.LocalName()))
@@ -60,10 +86,7 @@ func (wrbr *WafRateBasedRule) StateMust() *wafRateBasedRuleState {
 	return wrbr.state
 }
 
-func (wrbr *WafRateBasedRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(wrbr)
-}
-
+// WafRateBasedRuleArgs contains the configurations for aws_waf_rate_based_rule.
 type WafRateBasedRuleArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -81,47 +104,53 @@ type WafRateBasedRuleArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Predicates: min=0
 	Predicates []wafratebasedrule.Predicates `hcl:"predicates,block" validate:"min=0"`
-	// DependsOn contains resources that WafRateBasedRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type wafRateBasedRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_waf_rate_based_rule.
 func (wrbr wafRateBasedRuleAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(wrbr.ref.Append("arn"))
+	return terra.ReferenceAsString(wrbr.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_waf_rate_based_rule.
 func (wrbr wafRateBasedRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(wrbr.ref.Append("id"))
+	return terra.ReferenceAsString(wrbr.ref.Append("id"))
 }
 
+// MetricName returns a reference to field metric_name of aws_waf_rate_based_rule.
 func (wrbr wafRateBasedRuleAttributes) MetricName() terra.StringValue {
-	return terra.ReferenceString(wrbr.ref.Append("metric_name"))
+	return terra.ReferenceAsString(wrbr.ref.Append("metric_name"))
 }
 
+// Name returns a reference to field name of aws_waf_rate_based_rule.
 func (wrbr wafRateBasedRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(wrbr.ref.Append("name"))
+	return terra.ReferenceAsString(wrbr.ref.Append("name"))
 }
 
+// RateKey returns a reference to field rate_key of aws_waf_rate_based_rule.
 func (wrbr wafRateBasedRuleAttributes) RateKey() terra.StringValue {
-	return terra.ReferenceString(wrbr.ref.Append("rate_key"))
+	return terra.ReferenceAsString(wrbr.ref.Append("rate_key"))
 }
 
+// RateLimit returns a reference to field rate_limit of aws_waf_rate_based_rule.
 func (wrbr wafRateBasedRuleAttributes) RateLimit() terra.NumberValue {
-	return terra.ReferenceNumber(wrbr.ref.Append("rate_limit"))
+	return terra.ReferenceAsNumber(wrbr.ref.Append("rate_limit"))
 }
 
+// Tags returns a reference to field tags of aws_waf_rate_based_rule.
 func (wrbr wafRateBasedRuleAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](wrbr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](wrbr.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_waf_rate_based_rule.
 func (wrbr wafRateBasedRuleAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](wrbr.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](wrbr.ref.Append("tags_all"))
 }
 
 func (wrbr wafRateBasedRuleAttributes) Predicates() terra.SetValue[wafratebasedrule.PredicatesAttributes] {
-	return terra.ReferenceSet[wafratebasedrule.PredicatesAttributes](wrbr.ref.Append("predicates"))
+	return terra.ReferenceAsSet[wafratebasedrule.PredicatesAttributes](wrbr.ref.Append("predicates"))
 }
 
 type wafRateBasedRuleState struct {

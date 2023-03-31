@@ -73,47 +73,47 @@ func (dra DataRepositoryAssociationAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (dra DataRepositoryAssociationAttributes) AssociationId() terra.StringValue {
-	return terra.ReferenceString(dra.ref.Append("association_id"))
+	return terra.ReferenceAsString(dra.ref.Append("association_id"))
 }
 
 func (dra DataRepositoryAssociationAttributes) DataRepositoryPath() terra.StringValue {
-	return terra.ReferenceString(dra.ref.Append("data_repository_path"))
+	return terra.ReferenceAsString(dra.ref.Append("data_repository_path"))
 }
 
 func (dra DataRepositoryAssociationAttributes) DataRepositorySubdirectories() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dra.ref.Append("data_repository_subdirectories"))
+	return terra.ReferenceAsSet[terra.StringValue](dra.ref.Append("data_repository_subdirectories"))
 }
 
 func (dra DataRepositoryAssociationAttributes) FileCacheId() terra.StringValue {
-	return terra.ReferenceString(dra.ref.Append("file_cache_id"))
+	return terra.ReferenceAsString(dra.ref.Append("file_cache_id"))
 }
 
 func (dra DataRepositoryAssociationAttributes) FileCachePath() terra.StringValue {
-	return terra.ReferenceString(dra.ref.Append("file_cache_path"))
+	return terra.ReferenceAsString(dra.ref.Append("file_cache_path"))
 }
 
 func (dra DataRepositoryAssociationAttributes) FileSystemId() terra.StringValue {
-	return terra.ReferenceString(dra.ref.Append("file_system_id"))
+	return terra.ReferenceAsString(dra.ref.Append("file_system_id"))
 }
 
 func (dra DataRepositoryAssociationAttributes) FileSystemPath() terra.StringValue {
-	return terra.ReferenceString(dra.ref.Append("file_system_path"))
+	return terra.ReferenceAsString(dra.ref.Append("file_system_path"))
 }
 
 func (dra DataRepositoryAssociationAttributes) ImportedFileChunkSize() terra.NumberValue {
-	return terra.ReferenceNumber(dra.ref.Append("imported_file_chunk_size"))
+	return terra.ReferenceAsNumber(dra.ref.Append("imported_file_chunk_size"))
 }
 
 func (dra DataRepositoryAssociationAttributes) ResourceArn() terra.StringValue {
-	return terra.ReferenceString(dra.ref.Append("resource_arn"))
+	return terra.ReferenceAsString(dra.ref.Append("resource_arn"))
 }
 
 func (dra DataRepositoryAssociationAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dra.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dra.ref.Append("tags"))
 }
 
 func (dra DataRepositoryAssociationAttributes) Nfs() terra.SetValue[NfsAttributes] {
-	return terra.ReferenceSet[NfsAttributes](dra.ref.Append("nfs"))
+	return terra.ReferenceAsSet[NfsAttributes](dra.ref.Append("nfs"))
 }
 
 type NfsAttributes struct {
@@ -133,11 +133,11 @@ func (n NfsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (n NfsAttributes) DnsIps() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](n.ref.Append("dns_ips"))
+	return terra.ReferenceAsSet[terra.StringValue](n.ref.Append("dns_ips"))
 }
 
 func (n NfsAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("version"))
+	return terra.ReferenceAsString(n.ref.Append("version"))
 }
 
 type LustreConfigurationAttributes struct {
@@ -157,27 +157,27 @@ func (lc LustreConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lc LustreConfigurationAttributes) DeploymentType() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("deployment_type"))
+	return terra.ReferenceAsString(lc.ref.Append("deployment_type"))
 }
 
 func (lc LustreConfigurationAttributes) MountName() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("mount_name"))
+	return terra.ReferenceAsString(lc.ref.Append("mount_name"))
 }
 
 func (lc LustreConfigurationAttributes) PerUnitStorageThroughput() terra.NumberValue {
-	return terra.ReferenceNumber(lc.ref.Append("per_unit_storage_throughput"))
+	return terra.ReferenceAsNumber(lc.ref.Append("per_unit_storage_throughput"))
 }
 
 func (lc LustreConfigurationAttributes) WeeklyMaintenanceStartTime() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("weekly_maintenance_start_time"))
+	return terra.ReferenceAsString(lc.ref.Append("weekly_maintenance_start_time"))
 }
 
 func (lc LustreConfigurationAttributes) LogConfiguration() terra.SetValue[LogConfigurationAttributes] {
-	return terra.ReferenceSet[LogConfigurationAttributes](lc.ref.Append("log_configuration"))
+	return terra.ReferenceAsSet[LogConfigurationAttributes](lc.ref.Append("log_configuration"))
 }
 
 func (lc LustreConfigurationAttributes) MetadataConfiguration() terra.SetValue[MetadataConfigurationAttributes] {
-	return terra.ReferenceSet[MetadataConfigurationAttributes](lc.ref.Append("metadata_configuration"))
+	return terra.ReferenceAsSet[MetadataConfigurationAttributes](lc.ref.Append("metadata_configuration"))
 }
 
 type LogConfigurationAttributes struct {
@@ -197,11 +197,11 @@ func (lc LogConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lc LogConfigurationAttributes) Destination() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("destination"))
+	return terra.ReferenceAsString(lc.ref.Append("destination"))
 }
 
 func (lc LogConfigurationAttributes) Level() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("level"))
+	return terra.ReferenceAsString(lc.ref.Append("level"))
 }
 
 type MetadataConfigurationAttributes struct {
@@ -221,7 +221,7 @@ func (mc MetadataConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mc MetadataConfigurationAttributes) StorageCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(mc.ref.Append("storage_capacity"))
+	return terra.ReferenceAsNumber(mc.ref.Append("storage_capacity"))
 }
 
 type TimeoutsAttributes struct {
@@ -241,15 +241,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DataRepositoryAssociationState struct {

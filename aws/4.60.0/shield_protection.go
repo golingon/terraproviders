@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewShieldProtection creates a new instance of [ShieldProtection].
 func NewShieldProtection(name string, args ShieldProtectionArgs) *ShieldProtection {
 	return &ShieldProtection{
 		Args: args,
@@ -18,28 +19,51 @@ func NewShieldProtection(name string, args ShieldProtectionArgs) *ShieldProtecti
 
 var _ terra.Resource = (*ShieldProtection)(nil)
 
+// ShieldProtection represents the Terraform resource aws_shield_protection.
 type ShieldProtection struct {
-	Name  string
-	Args  ShieldProtectionArgs
-	state *shieldProtectionState
+	Name      string
+	Args      ShieldProtectionArgs
+	state     *shieldProtectionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ShieldProtection].
 func (sp *ShieldProtection) Type() string {
 	return "aws_shield_protection"
 }
 
+// LocalName returns the local name for [ShieldProtection].
 func (sp *ShieldProtection) LocalName() string {
 	return sp.Name
 }
 
+// Configuration returns the configuration (args) for [ShieldProtection].
 func (sp *ShieldProtection) Configuration() interface{} {
 	return sp.Args
 }
 
+// DependOn is used for other resources to depend on [ShieldProtection].
+func (sp *ShieldProtection) DependOn() terra.Reference {
+	return terra.ReferenceResource(sp)
+}
+
+// Dependencies returns the list of resources [ShieldProtection] depends_on.
+func (sp *ShieldProtection) Dependencies() terra.Dependencies {
+	return sp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ShieldProtection].
+func (sp *ShieldProtection) LifecycleManagement() *terra.Lifecycle {
+	return sp.Lifecycle
+}
+
+// Attributes returns the attributes for [ShieldProtection].
 func (sp *ShieldProtection) Attributes() shieldProtectionAttributes {
 	return shieldProtectionAttributes{ref: terra.ReferenceResource(sp)}
 }
 
+// ImportState imports the given attribute values into [ShieldProtection]'s state.
 func (sp *ShieldProtection) ImportState(av io.Reader) error {
 	sp.state = &shieldProtectionState{}
 	if err := json.NewDecoder(av).Decode(sp.state); err != nil {
@@ -48,10 +72,12 @@ func (sp *ShieldProtection) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ShieldProtection] has state.
 func (sp *ShieldProtection) State() (*shieldProtectionState, bool) {
 	return sp.state, sp.state != nil
 }
 
+// StateMust returns the state for [ShieldProtection]. Panics if the state is nil.
 func (sp *ShieldProtection) StateMust() *shieldProtectionState {
 	if sp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sp.Type(), sp.LocalName()))
@@ -59,10 +85,7 @@ func (sp *ShieldProtection) StateMust() *shieldProtectionState {
 	return sp.state
 }
 
-func (sp *ShieldProtection) DependOn() terra.Reference {
-	return terra.ReferenceResource(sp)
-}
-
+// ShieldProtectionArgs contains the configurations for aws_shield_protection.
 type ShieldProtectionArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -74,35 +97,39 @@ type ShieldProtectionArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that ShieldProtection depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type shieldProtectionAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_shield_protection.
 func (sp shieldProtectionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("arn"))
+	return terra.ReferenceAsString(sp.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_shield_protection.
 func (sp shieldProtectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("id"))
+	return terra.ReferenceAsString(sp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_shield_protection.
 func (sp shieldProtectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("name"))
+	return terra.ReferenceAsString(sp.ref.Append("name"))
 }
 
+// ResourceArn returns a reference to field resource_arn of aws_shield_protection.
 func (sp shieldProtectionAttributes) ResourceArn() terra.StringValue {
-	return terra.ReferenceString(sp.ref.Append("resource_arn"))
+	return terra.ReferenceAsString(sp.ref.Append("resource_arn"))
 }
 
+// Tags returns a reference to field tags of aws_shield_protection.
 func (sp shieldProtectionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sp.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_shield_protection.
 func (sp shieldProtectionAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sp.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sp.ref.Append("tags_all"))
 }
 
 type shieldProtectionState struct {

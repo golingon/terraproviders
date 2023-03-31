@@ -37,23 +37,23 @@ func (t TriggerAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TriggerAttributes) Branches() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](t.ref.Append("branches"))
+	return terra.ReferenceAsList[terra.StringValue](t.ref.Append("branches"))
 }
 
 func (t TriggerAttributes) CustomData() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("custom_data"))
+	return terra.ReferenceAsString(t.ref.Append("custom_data"))
 }
 
 func (t TriggerAttributes) DestinationArn() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("destination_arn"))
+	return terra.ReferenceAsString(t.ref.Append("destination_arn"))
 }
 
 func (t TriggerAttributes) Events() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](t.ref.Append("events"))
+	return terra.ReferenceAsList[terra.StringValue](t.ref.Append("events"))
 }
 
 func (t TriggerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("name"))
+	return terra.ReferenceAsString(t.ref.Append("name"))
 }
 
 type TriggerState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewWafWebAcl creates a new instance of [WafWebAcl].
 func NewWafWebAcl(name string, args WafWebAclArgs) *WafWebAcl {
 	return &WafWebAcl{
 		Args: args,
@@ -19,28 +20,51 @@ func NewWafWebAcl(name string, args WafWebAclArgs) *WafWebAcl {
 
 var _ terra.Resource = (*WafWebAcl)(nil)
 
+// WafWebAcl represents the Terraform resource aws_waf_web_acl.
 type WafWebAcl struct {
-	Name  string
-	Args  WafWebAclArgs
-	state *wafWebAclState
+	Name      string
+	Args      WafWebAclArgs
+	state     *wafWebAclState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [WafWebAcl].
 func (wwa *WafWebAcl) Type() string {
 	return "aws_waf_web_acl"
 }
 
+// LocalName returns the local name for [WafWebAcl].
 func (wwa *WafWebAcl) LocalName() string {
 	return wwa.Name
 }
 
+// Configuration returns the configuration (args) for [WafWebAcl].
 func (wwa *WafWebAcl) Configuration() interface{} {
 	return wwa.Args
 }
 
+// DependOn is used for other resources to depend on [WafWebAcl].
+func (wwa *WafWebAcl) DependOn() terra.Reference {
+	return terra.ReferenceResource(wwa)
+}
+
+// Dependencies returns the list of resources [WafWebAcl] depends_on.
+func (wwa *WafWebAcl) Dependencies() terra.Dependencies {
+	return wwa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [WafWebAcl].
+func (wwa *WafWebAcl) LifecycleManagement() *terra.Lifecycle {
+	return wwa.Lifecycle
+}
+
+// Attributes returns the attributes for [WafWebAcl].
 func (wwa *WafWebAcl) Attributes() wafWebAclAttributes {
 	return wafWebAclAttributes{ref: terra.ReferenceResource(wwa)}
 }
 
+// ImportState imports the given attribute values into [WafWebAcl]'s state.
 func (wwa *WafWebAcl) ImportState(av io.Reader) error {
 	wwa.state = &wafWebAclState{}
 	if err := json.NewDecoder(av).Decode(wwa.state); err != nil {
@@ -49,10 +73,12 @@ func (wwa *WafWebAcl) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [WafWebAcl] has state.
 func (wwa *WafWebAcl) State() (*wafWebAclState, bool) {
 	return wwa.state, wwa.state != nil
 }
 
+// StateMust returns the state for [WafWebAcl]. Panics if the state is nil.
 func (wwa *WafWebAcl) StateMust() *wafWebAclState {
 	if wwa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", wwa.Type(), wwa.LocalName()))
@@ -60,10 +86,7 @@ func (wwa *WafWebAcl) StateMust() *wafWebAclState {
 	return wwa.state
 }
 
-func (wwa *WafWebAcl) DependOn() terra.Reference {
-	return terra.ReferenceResource(wwa)
-}
-
+// WafWebAclArgs contains the configurations for aws_waf_web_acl.
 type WafWebAclArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -81,47 +104,51 @@ type WafWebAclArgs struct {
 	LoggingConfiguration *wafwebacl.LoggingConfiguration `hcl:"logging_configuration,block"`
 	// Rules: min=0
 	Rules []wafwebacl.Rules `hcl:"rules,block" validate:"min=0"`
-	// DependsOn contains resources that WafWebAcl depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type wafWebAclAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_waf_web_acl.
 func (wwa wafWebAclAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("arn"))
+	return terra.ReferenceAsString(wwa.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_waf_web_acl.
 func (wwa wafWebAclAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("id"))
+	return terra.ReferenceAsString(wwa.ref.Append("id"))
 }
 
+// MetricName returns a reference to field metric_name of aws_waf_web_acl.
 func (wwa wafWebAclAttributes) MetricName() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("metric_name"))
+	return terra.ReferenceAsString(wwa.ref.Append("metric_name"))
 }
 
+// Name returns a reference to field name of aws_waf_web_acl.
 func (wwa wafWebAclAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(wwa.ref.Append("name"))
+	return terra.ReferenceAsString(wwa.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_waf_web_acl.
 func (wwa wafWebAclAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](wwa.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](wwa.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_waf_web_acl.
 func (wwa wafWebAclAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](wwa.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](wwa.ref.Append("tags_all"))
 }
 
 func (wwa wafWebAclAttributes) DefaultAction() terra.ListValue[wafwebacl.DefaultActionAttributes] {
-	return terra.ReferenceList[wafwebacl.DefaultActionAttributes](wwa.ref.Append("default_action"))
+	return terra.ReferenceAsList[wafwebacl.DefaultActionAttributes](wwa.ref.Append("default_action"))
 }
 
 func (wwa wafWebAclAttributes) LoggingConfiguration() terra.ListValue[wafwebacl.LoggingConfigurationAttributes] {
-	return terra.ReferenceList[wafwebacl.LoggingConfigurationAttributes](wwa.ref.Append("logging_configuration"))
+	return terra.ReferenceAsList[wafwebacl.LoggingConfigurationAttributes](wwa.ref.Append("logging_configuration"))
 }
 
 func (wwa wafWebAclAttributes) Rules() terra.SetValue[wafwebacl.RulesAttributes] {
-	return terra.ReferenceSet[wafwebacl.RulesAttributes](wwa.ref.Append("rules"))
+	return terra.ReferenceAsSet[wafwebacl.RulesAttributes](wwa.ref.Append("rules"))
 }
 
 type wafWebAclState struct {

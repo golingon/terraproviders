@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEvidentlyFeature creates a new instance of [EvidentlyFeature].
 func NewEvidentlyFeature(name string, args EvidentlyFeatureArgs) *EvidentlyFeature {
 	return &EvidentlyFeature{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEvidentlyFeature(name string, args EvidentlyFeatureArgs) *EvidentlyFeatu
 
 var _ terra.Resource = (*EvidentlyFeature)(nil)
 
+// EvidentlyFeature represents the Terraform resource aws_evidently_feature.
 type EvidentlyFeature struct {
-	Name  string
-	Args  EvidentlyFeatureArgs
-	state *evidentlyFeatureState
+	Name      string
+	Args      EvidentlyFeatureArgs
+	state     *evidentlyFeatureState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EvidentlyFeature].
 func (ef *EvidentlyFeature) Type() string {
 	return "aws_evidently_feature"
 }
 
+// LocalName returns the local name for [EvidentlyFeature].
 func (ef *EvidentlyFeature) LocalName() string {
 	return ef.Name
 }
 
+// Configuration returns the configuration (args) for [EvidentlyFeature].
 func (ef *EvidentlyFeature) Configuration() interface{} {
 	return ef.Args
 }
 
+// DependOn is used for other resources to depend on [EvidentlyFeature].
+func (ef *EvidentlyFeature) DependOn() terra.Reference {
+	return terra.ReferenceResource(ef)
+}
+
+// Dependencies returns the list of resources [EvidentlyFeature] depends_on.
+func (ef *EvidentlyFeature) Dependencies() terra.Dependencies {
+	return ef.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EvidentlyFeature].
+func (ef *EvidentlyFeature) LifecycleManagement() *terra.Lifecycle {
+	return ef.Lifecycle
+}
+
+// Attributes returns the attributes for [EvidentlyFeature].
 func (ef *EvidentlyFeature) Attributes() evidentlyFeatureAttributes {
 	return evidentlyFeatureAttributes{ref: terra.ReferenceResource(ef)}
 }
 
+// ImportState imports the given attribute values into [EvidentlyFeature]'s state.
 func (ef *EvidentlyFeature) ImportState(av io.Reader) error {
 	ef.state = &evidentlyFeatureState{}
 	if err := json.NewDecoder(av).Decode(ef.state); err != nil {
@@ -49,10 +73,12 @@ func (ef *EvidentlyFeature) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EvidentlyFeature] has state.
 func (ef *EvidentlyFeature) State() (*evidentlyFeatureState, bool) {
 	return ef.state, ef.state != nil
 }
 
+// StateMust returns the state for [EvidentlyFeature]. Panics if the state is nil.
 func (ef *EvidentlyFeature) StateMust() *evidentlyFeatureState {
 	if ef.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ef.Type(), ef.LocalName()))
@@ -60,10 +86,7 @@ func (ef *EvidentlyFeature) StateMust() *evidentlyFeatureState {
 	return ef.state
 }
 
-func (ef *EvidentlyFeature) DependOn() terra.Reference {
-	return terra.ReferenceResource(ef)
-}
-
+// EvidentlyFeatureArgs contains the configurations for aws_evidently_feature.
 type EvidentlyFeatureArgs struct {
 	// DefaultVariation: string, optional
 	DefaultVariation terra.StringValue `hcl:"default_variation,attr"`
@@ -89,79 +112,91 @@ type EvidentlyFeatureArgs struct {
 	Timeouts *evidentlyfeature.Timeouts `hcl:"timeouts,block"`
 	// Variations: min=1,max=5
 	Variations []evidentlyfeature.Variations `hcl:"variations,block" validate:"min=1,max=5"`
-	// DependsOn contains resources that EvidentlyFeature depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type evidentlyFeatureAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_evidently_feature.
 func (ef evidentlyFeatureAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("arn"))
+	return terra.ReferenceAsString(ef.ref.Append("arn"))
 }
 
+// CreatedTime returns a reference to field created_time of aws_evidently_feature.
 func (ef evidentlyFeatureAttributes) CreatedTime() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("created_time"))
+	return terra.ReferenceAsString(ef.ref.Append("created_time"))
 }
 
+// DefaultVariation returns a reference to field default_variation of aws_evidently_feature.
 func (ef evidentlyFeatureAttributes) DefaultVariation() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("default_variation"))
+	return terra.ReferenceAsString(ef.ref.Append("default_variation"))
 }
 
+// Description returns a reference to field description of aws_evidently_feature.
 func (ef evidentlyFeatureAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("description"))
+	return terra.ReferenceAsString(ef.ref.Append("description"))
 }
 
+// EntityOverrides returns a reference to field entity_overrides of aws_evidently_feature.
 func (ef evidentlyFeatureAttributes) EntityOverrides() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ef.ref.Append("entity_overrides"))
+	return terra.ReferenceAsMap[terra.StringValue](ef.ref.Append("entity_overrides"))
 }
 
+// EvaluationStrategy returns a reference to field evaluation_strategy of aws_evidently_feature.
 func (ef evidentlyFeatureAttributes) EvaluationStrategy() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("evaluation_strategy"))
+	return terra.ReferenceAsString(ef.ref.Append("evaluation_strategy"))
 }
 
+// Id returns a reference to field id of aws_evidently_feature.
 func (ef evidentlyFeatureAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("id"))
+	return terra.ReferenceAsString(ef.ref.Append("id"))
 }
 
+// LastUpdatedTime returns a reference to field last_updated_time of aws_evidently_feature.
 func (ef evidentlyFeatureAttributes) LastUpdatedTime() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("last_updated_time"))
+	return terra.ReferenceAsString(ef.ref.Append("last_updated_time"))
 }
 
+// Name returns a reference to field name of aws_evidently_feature.
 func (ef evidentlyFeatureAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("name"))
+	return terra.ReferenceAsString(ef.ref.Append("name"))
 }
 
+// Project returns a reference to field project of aws_evidently_feature.
 func (ef evidentlyFeatureAttributes) Project() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("project"))
+	return terra.ReferenceAsString(ef.ref.Append("project"))
 }
 
+// Status returns a reference to field status of aws_evidently_feature.
 func (ef evidentlyFeatureAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("status"))
+	return terra.ReferenceAsString(ef.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of aws_evidently_feature.
 func (ef evidentlyFeatureAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ef.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ef.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_evidently_feature.
 func (ef evidentlyFeatureAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ef.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ef.ref.Append("tags_all"))
 }
 
+// ValueType returns a reference to field value_type of aws_evidently_feature.
 func (ef evidentlyFeatureAttributes) ValueType() terra.StringValue {
-	return terra.ReferenceString(ef.ref.Append("value_type"))
+	return terra.ReferenceAsString(ef.ref.Append("value_type"))
 }
 
 func (ef evidentlyFeatureAttributes) EvaluationRules() terra.SetValue[evidentlyfeature.EvaluationRulesAttributes] {
-	return terra.ReferenceSet[evidentlyfeature.EvaluationRulesAttributes](ef.ref.Append("evaluation_rules"))
+	return terra.ReferenceAsSet[evidentlyfeature.EvaluationRulesAttributes](ef.ref.Append("evaluation_rules"))
 }
 
 func (ef evidentlyFeatureAttributes) Timeouts() evidentlyfeature.TimeoutsAttributes {
-	return terra.ReferenceSingle[evidentlyfeature.TimeoutsAttributes](ef.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[evidentlyfeature.TimeoutsAttributes](ef.ref.Append("timeouts"))
 }
 
 func (ef evidentlyFeatureAttributes) Variations() terra.SetValue[evidentlyfeature.VariationsAttributes] {
-	return terra.ReferenceSet[evidentlyfeature.VariationsAttributes](ef.ref.Append("variations"))
+	return terra.ReferenceAsSet[evidentlyfeature.VariationsAttributes](ef.ref.Append("variations"))
 }
 
 type evidentlyFeatureState struct {

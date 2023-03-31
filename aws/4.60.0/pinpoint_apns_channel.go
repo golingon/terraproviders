@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewPinpointApnsChannel creates a new instance of [PinpointApnsChannel].
 func NewPinpointApnsChannel(name string, args PinpointApnsChannelArgs) *PinpointApnsChannel {
 	return &PinpointApnsChannel{
 		Args: args,
@@ -18,28 +19,51 @@ func NewPinpointApnsChannel(name string, args PinpointApnsChannelArgs) *Pinpoint
 
 var _ terra.Resource = (*PinpointApnsChannel)(nil)
 
+// PinpointApnsChannel represents the Terraform resource aws_pinpoint_apns_channel.
 type PinpointApnsChannel struct {
-	Name  string
-	Args  PinpointApnsChannelArgs
-	state *pinpointApnsChannelState
+	Name      string
+	Args      PinpointApnsChannelArgs
+	state     *pinpointApnsChannelState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PinpointApnsChannel].
 func (pac *PinpointApnsChannel) Type() string {
 	return "aws_pinpoint_apns_channel"
 }
 
+// LocalName returns the local name for [PinpointApnsChannel].
 func (pac *PinpointApnsChannel) LocalName() string {
 	return pac.Name
 }
 
+// Configuration returns the configuration (args) for [PinpointApnsChannel].
 func (pac *PinpointApnsChannel) Configuration() interface{} {
 	return pac.Args
 }
 
+// DependOn is used for other resources to depend on [PinpointApnsChannel].
+func (pac *PinpointApnsChannel) DependOn() terra.Reference {
+	return terra.ReferenceResource(pac)
+}
+
+// Dependencies returns the list of resources [PinpointApnsChannel] depends_on.
+func (pac *PinpointApnsChannel) Dependencies() terra.Dependencies {
+	return pac.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PinpointApnsChannel].
+func (pac *PinpointApnsChannel) LifecycleManagement() *terra.Lifecycle {
+	return pac.Lifecycle
+}
+
+// Attributes returns the attributes for [PinpointApnsChannel].
 func (pac *PinpointApnsChannel) Attributes() pinpointApnsChannelAttributes {
 	return pinpointApnsChannelAttributes{ref: terra.ReferenceResource(pac)}
 }
 
+// ImportState imports the given attribute values into [PinpointApnsChannel]'s state.
 func (pac *PinpointApnsChannel) ImportState(av io.Reader) error {
 	pac.state = &pinpointApnsChannelState{}
 	if err := json.NewDecoder(av).Decode(pac.state); err != nil {
@@ -48,10 +72,12 @@ func (pac *PinpointApnsChannel) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PinpointApnsChannel] has state.
 func (pac *PinpointApnsChannel) State() (*pinpointApnsChannelState, bool) {
 	return pac.state, pac.state != nil
 }
 
+// StateMust returns the state for [PinpointApnsChannel]. Panics if the state is nil.
 func (pac *PinpointApnsChannel) StateMust() *pinpointApnsChannelState {
 	if pac.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pac.Type(), pac.LocalName()))
@@ -59,10 +85,7 @@ func (pac *PinpointApnsChannel) StateMust() *pinpointApnsChannelState {
 	return pac.state
 }
 
-func (pac *PinpointApnsChannel) DependOn() terra.Reference {
-	return terra.ReferenceResource(pac)
-}
-
+// PinpointApnsChannelArgs contains the configurations for aws_pinpoint_apns_channel.
 type PinpointApnsChannelArgs struct {
 	// ApplicationId: string, required
 	ApplicationId terra.StringValue `hcl:"application_id,attr" validate:"required"`
@@ -84,51 +107,59 @@ type PinpointApnsChannelArgs struct {
 	TokenKey terra.StringValue `hcl:"token_key,attr"`
 	// TokenKeyId: string, optional
 	TokenKeyId terra.StringValue `hcl:"token_key_id,attr"`
-	// DependsOn contains resources that PinpointApnsChannel depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type pinpointApnsChannelAttributes struct {
 	ref terra.Reference
 }
 
+// ApplicationId returns a reference to field application_id of aws_pinpoint_apns_channel.
 func (pac pinpointApnsChannelAttributes) ApplicationId() terra.StringValue {
-	return terra.ReferenceString(pac.ref.Append("application_id"))
+	return terra.ReferenceAsString(pac.ref.Append("application_id"))
 }
 
+// BundleId returns a reference to field bundle_id of aws_pinpoint_apns_channel.
 func (pac pinpointApnsChannelAttributes) BundleId() terra.StringValue {
-	return terra.ReferenceString(pac.ref.Append("bundle_id"))
+	return terra.ReferenceAsString(pac.ref.Append("bundle_id"))
 }
 
+// Certificate returns a reference to field certificate of aws_pinpoint_apns_channel.
 func (pac pinpointApnsChannelAttributes) Certificate() terra.StringValue {
-	return terra.ReferenceString(pac.ref.Append("certificate"))
+	return terra.ReferenceAsString(pac.ref.Append("certificate"))
 }
 
+// DefaultAuthenticationMethod returns a reference to field default_authentication_method of aws_pinpoint_apns_channel.
 func (pac pinpointApnsChannelAttributes) DefaultAuthenticationMethod() terra.StringValue {
-	return terra.ReferenceString(pac.ref.Append("default_authentication_method"))
+	return terra.ReferenceAsString(pac.ref.Append("default_authentication_method"))
 }
 
+// Enabled returns a reference to field enabled of aws_pinpoint_apns_channel.
 func (pac pinpointApnsChannelAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(pac.ref.Append("enabled"))
+	return terra.ReferenceAsBool(pac.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of aws_pinpoint_apns_channel.
 func (pac pinpointApnsChannelAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pac.ref.Append("id"))
+	return terra.ReferenceAsString(pac.ref.Append("id"))
 }
 
+// PrivateKey returns a reference to field private_key of aws_pinpoint_apns_channel.
 func (pac pinpointApnsChannelAttributes) PrivateKey() terra.StringValue {
-	return terra.ReferenceString(pac.ref.Append("private_key"))
+	return terra.ReferenceAsString(pac.ref.Append("private_key"))
 }
 
+// TeamId returns a reference to field team_id of aws_pinpoint_apns_channel.
 func (pac pinpointApnsChannelAttributes) TeamId() terra.StringValue {
-	return terra.ReferenceString(pac.ref.Append("team_id"))
+	return terra.ReferenceAsString(pac.ref.Append("team_id"))
 }
 
+// TokenKey returns a reference to field token_key of aws_pinpoint_apns_channel.
 func (pac pinpointApnsChannelAttributes) TokenKey() terra.StringValue {
-	return terra.ReferenceString(pac.ref.Append("token_key"))
+	return terra.ReferenceAsString(pac.ref.Append("token_key"))
 }
 
+// TokenKeyId returns a reference to field token_key_id of aws_pinpoint_apns_channel.
 func (pac pinpointApnsChannelAttributes) TokenKeyId() terra.StringValue {
-	return terra.ReferenceString(pac.ref.Append("token_key_id"))
+	return terra.ReferenceAsString(pac.ref.Append("token_key_id"))
 }
 
 type pinpointApnsChannelState struct {

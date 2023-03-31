@@ -43,11 +43,11 @@ func (ctdp CreateTableDefaultPermissionAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (ctdp CreateTableDefaultPermissionAttributes) Permissions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ctdp.ref.Append("permissions"))
+	return terra.ReferenceAsSet[terra.StringValue](ctdp.ref.Append("permissions"))
 }
 
 func (ctdp CreateTableDefaultPermissionAttributes) Principal() terra.ListValue[PrincipalAttributes] {
-	return terra.ReferenceList[PrincipalAttributes](ctdp.ref.Append("principal"))
+	return terra.ReferenceAsList[PrincipalAttributes](ctdp.ref.Append("principal"))
 }
 
 type PrincipalAttributes struct {
@@ -67,7 +67,7 @@ func (p PrincipalAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p PrincipalAttributes) DataLakePrincipalIdentifier() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("data_lake_principal_identifier"))
+	return terra.ReferenceAsString(p.ref.Append("data_lake_principal_identifier"))
 }
 
 type TargetDatabaseAttributes struct {
@@ -87,11 +87,11 @@ func (td TargetDatabaseAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (td TargetDatabaseAttributes) CatalogId() terra.StringValue {
-	return terra.ReferenceString(td.ref.Append("catalog_id"))
+	return terra.ReferenceAsString(td.ref.Append("catalog_id"))
 }
 
 func (td TargetDatabaseAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(td.ref.Append("database_name"))
+	return terra.ReferenceAsString(td.ref.Append("database_name"))
 }
 
 type CreateTableDefaultPermissionState struct {

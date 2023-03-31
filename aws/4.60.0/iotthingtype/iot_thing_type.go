@@ -31,11 +31,11 @@ func (p PropertiesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p PropertiesAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("description"))
+	return terra.ReferenceAsString(p.ref.Append("description"))
 }
 
 func (p PropertiesAttributes) SearchableAttributes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](p.ref.Append("searchable_attributes"))
+	return terra.ReferenceAsSet[terra.StringValue](p.ref.Append("searchable_attributes"))
 }
 
 type PropertiesState struct {

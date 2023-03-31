@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSchemasRegistryPolicy creates a new instance of [SchemasRegistryPolicy].
 func NewSchemasRegistryPolicy(name string, args SchemasRegistryPolicyArgs) *SchemasRegistryPolicy {
 	return &SchemasRegistryPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSchemasRegistryPolicy(name string, args SchemasRegistryPolicyArgs) *Sche
 
 var _ terra.Resource = (*SchemasRegistryPolicy)(nil)
 
+// SchemasRegistryPolicy represents the Terraform resource aws_schemas_registry_policy.
 type SchemasRegistryPolicy struct {
-	Name  string
-	Args  SchemasRegistryPolicyArgs
-	state *schemasRegistryPolicyState
+	Name      string
+	Args      SchemasRegistryPolicyArgs
+	state     *schemasRegistryPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SchemasRegistryPolicy].
 func (srp *SchemasRegistryPolicy) Type() string {
 	return "aws_schemas_registry_policy"
 }
 
+// LocalName returns the local name for [SchemasRegistryPolicy].
 func (srp *SchemasRegistryPolicy) LocalName() string {
 	return srp.Name
 }
 
+// Configuration returns the configuration (args) for [SchemasRegistryPolicy].
 func (srp *SchemasRegistryPolicy) Configuration() interface{} {
 	return srp.Args
 }
 
+// DependOn is used for other resources to depend on [SchemasRegistryPolicy].
+func (srp *SchemasRegistryPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(srp)
+}
+
+// Dependencies returns the list of resources [SchemasRegistryPolicy] depends_on.
+func (srp *SchemasRegistryPolicy) Dependencies() terra.Dependencies {
+	return srp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SchemasRegistryPolicy].
+func (srp *SchemasRegistryPolicy) LifecycleManagement() *terra.Lifecycle {
+	return srp.Lifecycle
+}
+
+// Attributes returns the attributes for [SchemasRegistryPolicy].
 func (srp *SchemasRegistryPolicy) Attributes() schemasRegistryPolicyAttributes {
 	return schemasRegistryPolicyAttributes{ref: terra.ReferenceResource(srp)}
 }
 
+// ImportState imports the given attribute values into [SchemasRegistryPolicy]'s state.
 func (srp *SchemasRegistryPolicy) ImportState(av io.Reader) error {
 	srp.state = &schemasRegistryPolicyState{}
 	if err := json.NewDecoder(av).Decode(srp.state); err != nil {
@@ -48,10 +72,12 @@ func (srp *SchemasRegistryPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SchemasRegistryPolicy] has state.
 func (srp *SchemasRegistryPolicy) State() (*schemasRegistryPolicyState, bool) {
 	return srp.state, srp.state != nil
 }
 
+// StateMust returns the state for [SchemasRegistryPolicy]. Panics if the state is nil.
 func (srp *SchemasRegistryPolicy) StateMust() *schemasRegistryPolicyState {
 	if srp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", srp.Type(), srp.LocalName()))
@@ -59,10 +85,7 @@ func (srp *SchemasRegistryPolicy) StateMust() *schemasRegistryPolicyState {
 	return srp.state
 }
 
-func (srp *SchemasRegistryPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(srp)
-}
-
+// SchemasRegistryPolicyArgs contains the configurations for aws_schemas_registry_policy.
 type SchemasRegistryPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,23 +93,24 @@ type SchemasRegistryPolicyArgs struct {
 	Policy terra.StringValue `hcl:"policy,attr" validate:"required"`
 	// RegistryName: string, required
 	RegistryName terra.StringValue `hcl:"registry_name,attr" validate:"required"`
-	// DependsOn contains resources that SchemasRegistryPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type schemasRegistryPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_schemas_registry_policy.
 func (srp schemasRegistryPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(srp.ref.Append("id"))
+	return terra.ReferenceAsString(srp.ref.Append("id"))
 }
 
+// Policy returns a reference to field policy of aws_schemas_registry_policy.
 func (srp schemasRegistryPolicyAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(srp.ref.Append("policy"))
+	return terra.ReferenceAsString(srp.ref.Append("policy"))
 }
 
+// RegistryName returns a reference to field registry_name of aws_schemas_registry_policy.
 func (srp schemasRegistryPolicyAttributes) RegistryName() terra.StringValue {
-	return terra.ReferenceString(srp.ref.Append("registry_name"))
+	return terra.ReferenceAsString(srp.ref.Append("registry_name"))
 }
 
 type schemasRegistryPolicyState struct {

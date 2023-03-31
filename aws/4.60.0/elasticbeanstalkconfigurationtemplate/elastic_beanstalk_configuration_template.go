@@ -35,19 +35,19 @@ func (s SettingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SettingAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s SettingAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("namespace"))
+	return terra.ReferenceAsString(s.ref.Append("namespace"))
 }
 
 func (s SettingAttributes) Resource() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("resource"))
+	return terra.ReferenceAsString(s.ref.Append("resource"))
 }
 
 func (s SettingAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("value"))
+	return terra.ReferenceAsString(s.ref.Append("value"))
 }
 
 type SettingState struct {

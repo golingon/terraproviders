@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewIotIndexingConfiguration creates a new instance of [IotIndexingConfiguration].
 func NewIotIndexingConfiguration(name string, args IotIndexingConfigurationArgs) *IotIndexingConfiguration {
 	return &IotIndexingConfiguration{
 		Args: args,
@@ -19,28 +20,51 @@ func NewIotIndexingConfiguration(name string, args IotIndexingConfigurationArgs)
 
 var _ terra.Resource = (*IotIndexingConfiguration)(nil)
 
+// IotIndexingConfiguration represents the Terraform resource aws_iot_indexing_configuration.
 type IotIndexingConfiguration struct {
-	Name  string
-	Args  IotIndexingConfigurationArgs
-	state *iotIndexingConfigurationState
+	Name      string
+	Args      IotIndexingConfigurationArgs
+	state     *iotIndexingConfigurationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IotIndexingConfiguration].
 func (iic *IotIndexingConfiguration) Type() string {
 	return "aws_iot_indexing_configuration"
 }
 
+// LocalName returns the local name for [IotIndexingConfiguration].
 func (iic *IotIndexingConfiguration) LocalName() string {
 	return iic.Name
 }
 
+// Configuration returns the configuration (args) for [IotIndexingConfiguration].
 func (iic *IotIndexingConfiguration) Configuration() interface{} {
 	return iic.Args
 }
 
+// DependOn is used for other resources to depend on [IotIndexingConfiguration].
+func (iic *IotIndexingConfiguration) DependOn() terra.Reference {
+	return terra.ReferenceResource(iic)
+}
+
+// Dependencies returns the list of resources [IotIndexingConfiguration] depends_on.
+func (iic *IotIndexingConfiguration) Dependencies() terra.Dependencies {
+	return iic.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IotIndexingConfiguration].
+func (iic *IotIndexingConfiguration) LifecycleManagement() *terra.Lifecycle {
+	return iic.Lifecycle
+}
+
+// Attributes returns the attributes for [IotIndexingConfiguration].
 func (iic *IotIndexingConfiguration) Attributes() iotIndexingConfigurationAttributes {
 	return iotIndexingConfigurationAttributes{ref: terra.ReferenceResource(iic)}
 }
 
+// ImportState imports the given attribute values into [IotIndexingConfiguration]'s state.
 func (iic *IotIndexingConfiguration) ImportState(av io.Reader) error {
 	iic.state = &iotIndexingConfigurationState{}
 	if err := json.NewDecoder(av).Decode(iic.state); err != nil {
@@ -49,10 +73,12 @@ func (iic *IotIndexingConfiguration) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IotIndexingConfiguration] has state.
 func (iic *IotIndexingConfiguration) State() (*iotIndexingConfigurationState, bool) {
 	return iic.state, iic.state != nil
 }
 
+// StateMust returns the state for [IotIndexingConfiguration]. Panics if the state is nil.
 func (iic *IotIndexingConfiguration) StateMust() *iotIndexingConfigurationState {
 	if iic.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", iic.Type(), iic.LocalName()))
@@ -60,10 +86,7 @@ func (iic *IotIndexingConfiguration) StateMust() *iotIndexingConfigurationState 
 	return iic.state
 }
 
-func (iic *IotIndexingConfiguration) DependOn() terra.Reference {
-	return terra.ReferenceResource(iic)
-}
-
+// IotIndexingConfigurationArgs contains the configurations for aws_iot_indexing_configuration.
 type IotIndexingConfigurationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -71,23 +94,22 @@ type IotIndexingConfigurationArgs struct {
 	ThingGroupIndexingConfiguration *iotindexingconfiguration.ThingGroupIndexingConfiguration `hcl:"thing_group_indexing_configuration,block"`
 	// ThingIndexingConfiguration: optional
 	ThingIndexingConfiguration *iotindexingconfiguration.ThingIndexingConfiguration `hcl:"thing_indexing_configuration,block"`
-	// DependsOn contains resources that IotIndexingConfiguration depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iotIndexingConfigurationAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_iot_indexing_configuration.
 func (iic iotIndexingConfigurationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(iic.ref.Append("id"))
+	return terra.ReferenceAsString(iic.ref.Append("id"))
 }
 
 func (iic iotIndexingConfigurationAttributes) ThingGroupIndexingConfiguration() terra.ListValue[iotindexingconfiguration.ThingGroupIndexingConfigurationAttributes] {
-	return terra.ReferenceList[iotindexingconfiguration.ThingGroupIndexingConfigurationAttributes](iic.ref.Append("thing_group_indexing_configuration"))
+	return terra.ReferenceAsList[iotindexingconfiguration.ThingGroupIndexingConfigurationAttributes](iic.ref.Append("thing_group_indexing_configuration"))
 }
 
 func (iic iotIndexingConfigurationAttributes) ThingIndexingConfiguration() terra.ListValue[iotindexingconfiguration.ThingIndexingConfigurationAttributes] {
-	return terra.ReferenceList[iotindexingconfiguration.ThingIndexingConfigurationAttributes](iic.ref.Append("thing_indexing_configuration"))
+	return terra.ReferenceAsList[iotindexingconfiguration.ThingIndexingConfigurationAttributes](iic.ref.Append("thing_indexing_configuration"))
 }
 
 type iotIndexingConfigurationState struct {

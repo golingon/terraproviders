@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewApigatewayv2Api creates a new instance of [Apigatewayv2Api].
 func NewApigatewayv2Api(name string, args Apigatewayv2ApiArgs) *Apigatewayv2Api {
 	return &Apigatewayv2Api{
 		Args: args,
@@ -19,28 +20,51 @@ func NewApigatewayv2Api(name string, args Apigatewayv2ApiArgs) *Apigatewayv2Api 
 
 var _ terra.Resource = (*Apigatewayv2Api)(nil)
 
+// Apigatewayv2Api represents the Terraform resource aws_apigatewayv2_api.
 type Apigatewayv2Api struct {
-	Name  string
-	Args  Apigatewayv2ApiArgs
-	state *apigatewayv2ApiState
+	Name      string
+	Args      Apigatewayv2ApiArgs
+	state     *apigatewayv2ApiState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Apigatewayv2Api].
 func (aa *Apigatewayv2Api) Type() string {
 	return "aws_apigatewayv2_api"
 }
 
+// LocalName returns the local name for [Apigatewayv2Api].
 func (aa *Apigatewayv2Api) LocalName() string {
 	return aa.Name
 }
 
+// Configuration returns the configuration (args) for [Apigatewayv2Api].
 func (aa *Apigatewayv2Api) Configuration() interface{} {
 	return aa.Args
 }
 
+// DependOn is used for other resources to depend on [Apigatewayv2Api].
+func (aa *Apigatewayv2Api) DependOn() terra.Reference {
+	return terra.ReferenceResource(aa)
+}
+
+// Dependencies returns the list of resources [Apigatewayv2Api] depends_on.
+func (aa *Apigatewayv2Api) Dependencies() terra.Dependencies {
+	return aa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Apigatewayv2Api].
+func (aa *Apigatewayv2Api) LifecycleManagement() *terra.Lifecycle {
+	return aa.Lifecycle
+}
+
+// Attributes returns the attributes for [Apigatewayv2Api].
 func (aa *Apigatewayv2Api) Attributes() apigatewayv2ApiAttributes {
 	return apigatewayv2ApiAttributes{ref: terra.ReferenceResource(aa)}
 }
 
+// ImportState imports the given attribute values into [Apigatewayv2Api]'s state.
 func (aa *Apigatewayv2Api) ImportState(av io.Reader) error {
 	aa.state = &apigatewayv2ApiState{}
 	if err := json.NewDecoder(av).Decode(aa.state); err != nil {
@@ -49,10 +73,12 @@ func (aa *Apigatewayv2Api) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Apigatewayv2Api] has state.
 func (aa *Apigatewayv2Api) State() (*apigatewayv2ApiState, bool) {
 	return aa.state, aa.state != nil
 }
 
+// StateMust returns the state for [Apigatewayv2Api]. Panics if the state is nil.
 func (aa *Apigatewayv2Api) StateMust() *apigatewayv2ApiState {
 	if aa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", aa.Type(), aa.LocalName()))
@@ -60,10 +86,7 @@ func (aa *Apigatewayv2Api) StateMust() *apigatewayv2ApiState {
 	return aa.state
 }
 
-func (aa *Apigatewayv2Api) DependOn() terra.Reference {
-	return terra.ReferenceResource(aa)
-}
-
+// Apigatewayv2ApiArgs contains the configurations for aws_apigatewayv2_api.
 type Apigatewayv2ApiArgs struct {
 	// ApiKeySelectionExpression: string, optional
 	ApiKeySelectionExpression terra.StringValue `hcl:"api_key_selection_expression,attr"`
@@ -97,87 +120,103 @@ type Apigatewayv2ApiArgs struct {
 	Version terra.StringValue `hcl:"version,attr"`
 	// CorsConfiguration: optional
 	CorsConfiguration *apigatewayv2api.CorsConfiguration `hcl:"cors_configuration,block"`
-	// DependsOn contains resources that Apigatewayv2Api depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apigatewayv2ApiAttributes struct {
 	ref terra.Reference
 }
 
+// ApiEndpoint returns a reference to field api_endpoint of aws_apigatewayv2_api.
 func (aa apigatewayv2ApiAttributes) ApiEndpoint() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("api_endpoint"))
+	return terra.ReferenceAsString(aa.ref.Append("api_endpoint"))
 }
 
+// ApiKeySelectionExpression returns a reference to field api_key_selection_expression of aws_apigatewayv2_api.
 func (aa apigatewayv2ApiAttributes) ApiKeySelectionExpression() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("api_key_selection_expression"))
+	return terra.ReferenceAsString(aa.ref.Append("api_key_selection_expression"))
 }
 
+// Arn returns a reference to field arn of aws_apigatewayv2_api.
 func (aa apigatewayv2ApiAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("arn"))
+	return terra.ReferenceAsString(aa.ref.Append("arn"))
 }
 
+// Body returns a reference to field body of aws_apigatewayv2_api.
 func (aa apigatewayv2ApiAttributes) Body() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("body"))
+	return terra.ReferenceAsString(aa.ref.Append("body"))
 }
 
+// CredentialsArn returns a reference to field credentials_arn of aws_apigatewayv2_api.
 func (aa apigatewayv2ApiAttributes) CredentialsArn() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("credentials_arn"))
+	return terra.ReferenceAsString(aa.ref.Append("credentials_arn"))
 }
 
+// Description returns a reference to field description of aws_apigatewayv2_api.
 func (aa apigatewayv2ApiAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("description"))
+	return terra.ReferenceAsString(aa.ref.Append("description"))
 }
 
+// DisableExecuteApiEndpoint returns a reference to field disable_execute_api_endpoint of aws_apigatewayv2_api.
 func (aa apigatewayv2ApiAttributes) DisableExecuteApiEndpoint() terra.BoolValue {
-	return terra.ReferenceBool(aa.ref.Append("disable_execute_api_endpoint"))
+	return terra.ReferenceAsBool(aa.ref.Append("disable_execute_api_endpoint"))
 }
 
+// ExecutionArn returns a reference to field execution_arn of aws_apigatewayv2_api.
 func (aa apigatewayv2ApiAttributes) ExecutionArn() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("execution_arn"))
+	return terra.ReferenceAsString(aa.ref.Append("execution_arn"))
 }
 
+// FailOnWarnings returns a reference to field fail_on_warnings of aws_apigatewayv2_api.
 func (aa apigatewayv2ApiAttributes) FailOnWarnings() terra.BoolValue {
-	return terra.ReferenceBool(aa.ref.Append("fail_on_warnings"))
+	return terra.ReferenceAsBool(aa.ref.Append("fail_on_warnings"))
 }
 
+// Id returns a reference to field id of aws_apigatewayv2_api.
 func (aa apigatewayv2ApiAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("id"))
+	return terra.ReferenceAsString(aa.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_apigatewayv2_api.
 func (aa apigatewayv2ApiAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("name"))
+	return terra.ReferenceAsString(aa.ref.Append("name"))
 }
 
+// ProtocolType returns a reference to field protocol_type of aws_apigatewayv2_api.
 func (aa apigatewayv2ApiAttributes) ProtocolType() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("protocol_type"))
+	return terra.ReferenceAsString(aa.ref.Append("protocol_type"))
 }
 
+// RouteKey returns a reference to field route_key of aws_apigatewayv2_api.
 func (aa apigatewayv2ApiAttributes) RouteKey() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("route_key"))
+	return terra.ReferenceAsString(aa.ref.Append("route_key"))
 }
 
+// RouteSelectionExpression returns a reference to field route_selection_expression of aws_apigatewayv2_api.
 func (aa apigatewayv2ApiAttributes) RouteSelectionExpression() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("route_selection_expression"))
+	return terra.ReferenceAsString(aa.ref.Append("route_selection_expression"))
 }
 
+// Tags returns a reference to field tags of aws_apigatewayv2_api.
 func (aa apigatewayv2ApiAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](aa.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](aa.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_apigatewayv2_api.
 func (aa apigatewayv2ApiAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](aa.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](aa.ref.Append("tags_all"))
 }
 
+// Target returns a reference to field target of aws_apigatewayv2_api.
 func (aa apigatewayv2ApiAttributes) Target() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("target"))
+	return terra.ReferenceAsString(aa.ref.Append("target"))
 }
 
+// Version returns a reference to field version of aws_apigatewayv2_api.
 func (aa apigatewayv2ApiAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("version"))
+	return terra.ReferenceAsString(aa.ref.Append("version"))
 }
 
 func (aa apigatewayv2ApiAttributes) CorsConfiguration() terra.ListValue[apigatewayv2api.CorsConfigurationAttributes] {
-	return terra.ReferenceList[apigatewayv2api.CorsConfigurationAttributes](aa.ref.Append("cors_configuration"))
+	return terra.ReferenceAsList[apigatewayv2api.CorsConfigurationAttributes](aa.ref.Append("cors_configuration"))
 }
 
 type apigatewayv2ApiState struct {

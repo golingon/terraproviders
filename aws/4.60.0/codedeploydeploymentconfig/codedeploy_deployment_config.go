@@ -54,11 +54,11 @@ func (mhh MinimumHealthyHostsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mhh MinimumHealthyHostsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(mhh.ref.Append("type"))
+	return terra.ReferenceAsString(mhh.ref.Append("type"))
 }
 
 func (mhh MinimumHealthyHostsAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(mhh.ref.Append("value"))
+	return terra.ReferenceAsNumber(mhh.ref.Append("value"))
 }
 
 type TrafficRoutingConfigAttributes struct {
@@ -78,15 +78,15 @@ func (trc TrafficRoutingConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (trc TrafficRoutingConfigAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(trc.ref.Append("type"))
+	return terra.ReferenceAsString(trc.ref.Append("type"))
 }
 
 func (trc TrafficRoutingConfigAttributes) TimeBasedCanary() terra.ListValue[TimeBasedCanaryAttributes] {
-	return terra.ReferenceList[TimeBasedCanaryAttributes](trc.ref.Append("time_based_canary"))
+	return terra.ReferenceAsList[TimeBasedCanaryAttributes](trc.ref.Append("time_based_canary"))
 }
 
 func (trc TrafficRoutingConfigAttributes) TimeBasedLinear() terra.ListValue[TimeBasedLinearAttributes] {
-	return terra.ReferenceList[TimeBasedLinearAttributes](trc.ref.Append("time_based_linear"))
+	return terra.ReferenceAsList[TimeBasedLinearAttributes](trc.ref.Append("time_based_linear"))
 }
 
 type TimeBasedCanaryAttributes struct {
@@ -106,11 +106,11 @@ func (tbc TimeBasedCanaryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tbc TimeBasedCanaryAttributes) Interval() terra.NumberValue {
-	return terra.ReferenceNumber(tbc.ref.Append("interval"))
+	return terra.ReferenceAsNumber(tbc.ref.Append("interval"))
 }
 
 func (tbc TimeBasedCanaryAttributes) Percentage() terra.NumberValue {
-	return terra.ReferenceNumber(tbc.ref.Append("percentage"))
+	return terra.ReferenceAsNumber(tbc.ref.Append("percentage"))
 }
 
 type TimeBasedLinearAttributes struct {
@@ -130,11 +130,11 @@ func (tbl TimeBasedLinearAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tbl TimeBasedLinearAttributes) Interval() terra.NumberValue {
-	return terra.ReferenceNumber(tbl.ref.Append("interval"))
+	return terra.ReferenceAsNumber(tbl.ref.Append("interval"))
 }
 
 func (tbl TimeBasedLinearAttributes) Percentage() terra.NumberValue {
-	return terra.ReferenceNumber(tbl.ref.Append("percentage"))
+	return terra.ReferenceAsNumber(tbl.ref.Append("percentage"))
 }
 
 type MinimumHealthyHostsState struct {

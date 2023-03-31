@@ -31,11 +31,11 @@ func (pph PreProvisioningHookAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pph PreProvisioningHookAttributes) PayloadVersion() terra.StringValue {
-	return terra.ReferenceString(pph.ref.Append("payload_version"))
+	return terra.ReferenceAsString(pph.ref.Append("payload_version"))
 }
 
 func (pph PreProvisioningHookAttributes) TargetArn() terra.StringValue {
-	return terra.ReferenceString(pph.ref.Append("target_arn"))
+	return terra.ReferenceAsString(pph.ref.Append("target_arn"))
 }
 
 type PreProvisioningHookState struct {

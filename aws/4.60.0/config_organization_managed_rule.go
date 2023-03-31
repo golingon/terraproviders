@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewConfigOrganizationManagedRule creates a new instance of [ConfigOrganizationManagedRule].
 func NewConfigOrganizationManagedRule(name string, args ConfigOrganizationManagedRuleArgs) *ConfigOrganizationManagedRule {
 	return &ConfigOrganizationManagedRule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewConfigOrganizationManagedRule(name string, args ConfigOrganizationManage
 
 var _ terra.Resource = (*ConfigOrganizationManagedRule)(nil)
 
+// ConfigOrganizationManagedRule represents the Terraform resource aws_config_organization_managed_rule.
 type ConfigOrganizationManagedRule struct {
-	Name  string
-	Args  ConfigOrganizationManagedRuleArgs
-	state *configOrganizationManagedRuleState
+	Name      string
+	Args      ConfigOrganizationManagedRuleArgs
+	state     *configOrganizationManagedRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ConfigOrganizationManagedRule].
 func (comr *ConfigOrganizationManagedRule) Type() string {
 	return "aws_config_organization_managed_rule"
 }
 
+// LocalName returns the local name for [ConfigOrganizationManagedRule].
 func (comr *ConfigOrganizationManagedRule) LocalName() string {
 	return comr.Name
 }
 
+// Configuration returns the configuration (args) for [ConfigOrganizationManagedRule].
 func (comr *ConfigOrganizationManagedRule) Configuration() interface{} {
 	return comr.Args
 }
 
+// DependOn is used for other resources to depend on [ConfigOrganizationManagedRule].
+func (comr *ConfigOrganizationManagedRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(comr)
+}
+
+// Dependencies returns the list of resources [ConfigOrganizationManagedRule] depends_on.
+func (comr *ConfigOrganizationManagedRule) Dependencies() terra.Dependencies {
+	return comr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ConfigOrganizationManagedRule].
+func (comr *ConfigOrganizationManagedRule) LifecycleManagement() *terra.Lifecycle {
+	return comr.Lifecycle
+}
+
+// Attributes returns the attributes for [ConfigOrganizationManagedRule].
 func (comr *ConfigOrganizationManagedRule) Attributes() configOrganizationManagedRuleAttributes {
 	return configOrganizationManagedRuleAttributes{ref: terra.ReferenceResource(comr)}
 }
 
+// ImportState imports the given attribute values into [ConfigOrganizationManagedRule]'s state.
 func (comr *ConfigOrganizationManagedRule) ImportState(av io.Reader) error {
 	comr.state = &configOrganizationManagedRuleState{}
 	if err := json.NewDecoder(av).Decode(comr.state); err != nil {
@@ -49,10 +73,12 @@ func (comr *ConfigOrganizationManagedRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ConfigOrganizationManagedRule] has state.
 func (comr *ConfigOrganizationManagedRule) State() (*configOrganizationManagedRuleState, bool) {
 	return comr.state, comr.state != nil
 }
 
+// StateMust returns the state for [ConfigOrganizationManagedRule]. Panics if the state is nil.
 func (comr *ConfigOrganizationManagedRule) StateMust() *configOrganizationManagedRuleState {
 	if comr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", comr.Type(), comr.LocalName()))
@@ -60,10 +86,7 @@ func (comr *ConfigOrganizationManagedRule) StateMust() *configOrganizationManage
 	return comr.state
 }
 
-func (comr *ConfigOrganizationManagedRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(comr)
-}
-
+// ConfigOrganizationManagedRuleArgs contains the configurations for aws_config_organization_managed_rule.
 type ConfigOrganizationManagedRuleArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -89,63 +112,73 @@ type ConfigOrganizationManagedRuleArgs struct {
 	TagValueScope terra.StringValue `hcl:"tag_value_scope,attr"`
 	// Timeouts: optional
 	Timeouts *configorganizationmanagedrule.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ConfigOrganizationManagedRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type configOrganizationManagedRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_config_organization_managed_rule.
 func (comr configOrganizationManagedRuleAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(comr.ref.Append("arn"))
+	return terra.ReferenceAsString(comr.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_config_organization_managed_rule.
 func (comr configOrganizationManagedRuleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(comr.ref.Append("description"))
+	return terra.ReferenceAsString(comr.ref.Append("description"))
 }
 
+// ExcludedAccounts returns a reference to field excluded_accounts of aws_config_organization_managed_rule.
 func (comr configOrganizationManagedRuleAttributes) ExcludedAccounts() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](comr.ref.Append("excluded_accounts"))
+	return terra.ReferenceAsSet[terra.StringValue](comr.ref.Append("excluded_accounts"))
 }
 
+// Id returns a reference to field id of aws_config_organization_managed_rule.
 func (comr configOrganizationManagedRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(comr.ref.Append("id"))
+	return terra.ReferenceAsString(comr.ref.Append("id"))
 }
 
+// InputParameters returns a reference to field input_parameters of aws_config_organization_managed_rule.
 func (comr configOrganizationManagedRuleAttributes) InputParameters() terra.StringValue {
-	return terra.ReferenceString(comr.ref.Append("input_parameters"))
+	return terra.ReferenceAsString(comr.ref.Append("input_parameters"))
 }
 
+// MaximumExecutionFrequency returns a reference to field maximum_execution_frequency of aws_config_organization_managed_rule.
 func (comr configOrganizationManagedRuleAttributes) MaximumExecutionFrequency() terra.StringValue {
-	return terra.ReferenceString(comr.ref.Append("maximum_execution_frequency"))
+	return terra.ReferenceAsString(comr.ref.Append("maximum_execution_frequency"))
 }
 
+// Name returns a reference to field name of aws_config_organization_managed_rule.
 func (comr configOrganizationManagedRuleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(comr.ref.Append("name"))
+	return terra.ReferenceAsString(comr.ref.Append("name"))
 }
 
+// ResourceIdScope returns a reference to field resource_id_scope of aws_config_organization_managed_rule.
 func (comr configOrganizationManagedRuleAttributes) ResourceIdScope() terra.StringValue {
-	return terra.ReferenceString(comr.ref.Append("resource_id_scope"))
+	return terra.ReferenceAsString(comr.ref.Append("resource_id_scope"))
 }
 
+// ResourceTypesScope returns a reference to field resource_types_scope of aws_config_organization_managed_rule.
 func (comr configOrganizationManagedRuleAttributes) ResourceTypesScope() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](comr.ref.Append("resource_types_scope"))
+	return terra.ReferenceAsSet[terra.StringValue](comr.ref.Append("resource_types_scope"))
 }
 
+// RuleIdentifier returns a reference to field rule_identifier of aws_config_organization_managed_rule.
 func (comr configOrganizationManagedRuleAttributes) RuleIdentifier() terra.StringValue {
-	return terra.ReferenceString(comr.ref.Append("rule_identifier"))
+	return terra.ReferenceAsString(comr.ref.Append("rule_identifier"))
 }
 
+// TagKeyScope returns a reference to field tag_key_scope of aws_config_organization_managed_rule.
 func (comr configOrganizationManagedRuleAttributes) TagKeyScope() terra.StringValue {
-	return terra.ReferenceString(comr.ref.Append("tag_key_scope"))
+	return terra.ReferenceAsString(comr.ref.Append("tag_key_scope"))
 }
 
+// TagValueScope returns a reference to field tag_value_scope of aws_config_organization_managed_rule.
 func (comr configOrganizationManagedRuleAttributes) TagValueScope() terra.StringValue {
-	return terra.ReferenceString(comr.ref.Append("tag_value_scope"))
+	return terra.ReferenceAsString(comr.ref.Append("tag_value_scope"))
 }
 
 func (comr configOrganizationManagedRuleAttributes) Timeouts() configorganizationmanagedrule.TimeoutsAttributes {
-	return terra.ReferenceSingle[configorganizationmanagedrule.TimeoutsAttributes](comr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[configorganizationmanagedrule.TimeoutsAttributes](comr.ref.Append("timeouts"))
 }
 
 type configOrganizationManagedRuleState struct {

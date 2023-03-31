@@ -31,11 +31,11 @@ func (ip InlinePolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ip InlinePolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("name"))
+	return terra.ReferenceAsString(ip.ref.Append("name"))
 }
 
 func (ip InlinePolicyAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(ip.ref.Append("policy"))
+	return terra.ReferenceAsString(ip.ref.Append("policy"))
 }
 
 type InlinePolicyState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSesReceiptFilter creates a new instance of [SesReceiptFilter].
 func NewSesReceiptFilter(name string, args SesReceiptFilterArgs) *SesReceiptFilter {
 	return &SesReceiptFilter{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSesReceiptFilter(name string, args SesReceiptFilterArgs) *SesReceiptFilt
 
 var _ terra.Resource = (*SesReceiptFilter)(nil)
 
+// SesReceiptFilter represents the Terraform resource aws_ses_receipt_filter.
 type SesReceiptFilter struct {
-	Name  string
-	Args  SesReceiptFilterArgs
-	state *sesReceiptFilterState
+	Name      string
+	Args      SesReceiptFilterArgs
+	state     *sesReceiptFilterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SesReceiptFilter].
 func (srf *SesReceiptFilter) Type() string {
 	return "aws_ses_receipt_filter"
 }
 
+// LocalName returns the local name for [SesReceiptFilter].
 func (srf *SesReceiptFilter) LocalName() string {
 	return srf.Name
 }
 
+// Configuration returns the configuration (args) for [SesReceiptFilter].
 func (srf *SesReceiptFilter) Configuration() interface{} {
 	return srf.Args
 }
 
+// DependOn is used for other resources to depend on [SesReceiptFilter].
+func (srf *SesReceiptFilter) DependOn() terra.Reference {
+	return terra.ReferenceResource(srf)
+}
+
+// Dependencies returns the list of resources [SesReceiptFilter] depends_on.
+func (srf *SesReceiptFilter) Dependencies() terra.Dependencies {
+	return srf.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SesReceiptFilter].
+func (srf *SesReceiptFilter) LifecycleManagement() *terra.Lifecycle {
+	return srf.Lifecycle
+}
+
+// Attributes returns the attributes for [SesReceiptFilter].
 func (srf *SesReceiptFilter) Attributes() sesReceiptFilterAttributes {
 	return sesReceiptFilterAttributes{ref: terra.ReferenceResource(srf)}
 }
 
+// ImportState imports the given attribute values into [SesReceiptFilter]'s state.
 func (srf *SesReceiptFilter) ImportState(av io.Reader) error {
 	srf.state = &sesReceiptFilterState{}
 	if err := json.NewDecoder(av).Decode(srf.state); err != nil {
@@ -48,10 +72,12 @@ func (srf *SesReceiptFilter) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SesReceiptFilter] has state.
 func (srf *SesReceiptFilter) State() (*sesReceiptFilterState, bool) {
 	return srf.state, srf.state != nil
 }
 
+// StateMust returns the state for [SesReceiptFilter]. Panics if the state is nil.
 func (srf *SesReceiptFilter) StateMust() *sesReceiptFilterState {
 	if srf.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", srf.Type(), srf.LocalName()))
@@ -59,10 +85,7 @@ func (srf *SesReceiptFilter) StateMust() *sesReceiptFilterState {
 	return srf.state
 }
 
-func (srf *SesReceiptFilter) DependOn() terra.Reference {
-	return terra.ReferenceResource(srf)
-}
-
+// SesReceiptFilterArgs contains the configurations for aws_ses_receipt_filter.
 type SesReceiptFilterArgs struct {
 	// Cidr: string, required
 	Cidr terra.StringValue `hcl:"cidr,attr" validate:"required"`
@@ -72,31 +95,34 @@ type SesReceiptFilterArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// Policy: string, required
 	Policy terra.StringValue `hcl:"policy,attr" validate:"required"`
-	// DependsOn contains resources that SesReceiptFilter depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sesReceiptFilterAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ses_receipt_filter.
 func (srf sesReceiptFilterAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(srf.ref.Append("arn"))
+	return terra.ReferenceAsString(srf.ref.Append("arn"))
 }
 
+// Cidr returns a reference to field cidr of aws_ses_receipt_filter.
 func (srf sesReceiptFilterAttributes) Cidr() terra.StringValue {
-	return terra.ReferenceString(srf.ref.Append("cidr"))
+	return terra.ReferenceAsString(srf.ref.Append("cidr"))
 }
 
+// Id returns a reference to field id of aws_ses_receipt_filter.
 func (srf sesReceiptFilterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(srf.ref.Append("id"))
+	return terra.ReferenceAsString(srf.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_ses_receipt_filter.
 func (srf sesReceiptFilterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(srf.ref.Append("name"))
+	return terra.ReferenceAsString(srf.ref.Append("name"))
 }
 
+// Policy returns a reference to field policy of aws_ses_receipt_filter.
 func (srf sesReceiptFilterAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(srf.ref.Append("policy"))
+	return terra.ReferenceAsString(srf.ref.Append("policy"))
 }
 
 type sesReceiptFilterState struct {

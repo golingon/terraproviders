@@ -33,39 +33,39 @@ func (hc HealthCheckAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hc HealthCheckAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(hc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(hc.ref.Append("enabled"))
 }
 
 func (hc HealthCheckAttributes) HealthyThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(hc.ref.Append("healthy_threshold"))
+	return terra.ReferenceAsNumber(hc.ref.Append("healthy_threshold"))
 }
 
 func (hc HealthCheckAttributes) Interval() terra.NumberValue {
-	return terra.ReferenceNumber(hc.ref.Append("interval"))
+	return terra.ReferenceAsNumber(hc.ref.Append("interval"))
 }
 
 func (hc HealthCheckAttributes) Matcher() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("matcher"))
+	return terra.ReferenceAsString(hc.ref.Append("matcher"))
 }
 
 func (hc HealthCheckAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("path"))
+	return terra.ReferenceAsString(hc.ref.Append("path"))
 }
 
 func (hc HealthCheckAttributes) Port() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("port"))
+	return terra.ReferenceAsString(hc.ref.Append("port"))
 }
 
 func (hc HealthCheckAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(hc.ref.Append("protocol"))
+	return terra.ReferenceAsString(hc.ref.Append("protocol"))
 }
 
 func (hc HealthCheckAttributes) Timeout() terra.NumberValue {
-	return terra.ReferenceNumber(hc.ref.Append("timeout"))
+	return terra.ReferenceAsNumber(hc.ref.Append("timeout"))
 }
 
 func (hc HealthCheckAttributes) UnhealthyThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(hc.ref.Append("unhealthy_threshold"))
+	return terra.ReferenceAsNumber(hc.ref.Append("unhealthy_threshold"))
 }
 
 type StickinessAttributes struct {
@@ -85,19 +85,19 @@ func (s StickinessAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s StickinessAttributes) CookieDuration() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("cookie_duration"))
+	return terra.ReferenceAsNumber(s.ref.Append("cookie_duration"))
 }
 
 func (s StickinessAttributes) CookieName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("cookie_name"))
+	return terra.ReferenceAsString(s.ref.Append("cookie_name"))
 }
 
 func (s StickinessAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("enabled"))
+	return terra.ReferenceAsBool(s.ref.Append("enabled"))
 }
 
 func (s StickinessAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("type"))
+	return terra.ReferenceAsString(s.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
@@ -117,7 +117,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type HealthCheckState struct {

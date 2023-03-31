@@ -186,27 +186,27 @@ func (slc StorageLensConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (slc StorageLensConfigurationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(slc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(slc.ref.Append("enabled"))
 }
 
 func (slc StorageLensConfigurationAttributes) AccountLevel() terra.ListValue[AccountLevelAttributes] {
-	return terra.ReferenceList[AccountLevelAttributes](slc.ref.Append("account_level"))
+	return terra.ReferenceAsList[AccountLevelAttributes](slc.ref.Append("account_level"))
 }
 
 func (slc StorageLensConfigurationAttributes) AwsOrg() terra.ListValue[AwsOrgAttributes] {
-	return terra.ReferenceList[AwsOrgAttributes](slc.ref.Append("aws_org"))
+	return terra.ReferenceAsList[AwsOrgAttributes](slc.ref.Append("aws_org"))
 }
 
 func (slc StorageLensConfigurationAttributes) DataExport() terra.ListValue[DataExportAttributes] {
-	return terra.ReferenceList[DataExportAttributes](slc.ref.Append("data_export"))
+	return terra.ReferenceAsList[DataExportAttributes](slc.ref.Append("data_export"))
 }
 
 func (slc StorageLensConfigurationAttributes) Exclude() terra.ListValue[ExcludeAttributes] {
-	return terra.ReferenceList[ExcludeAttributes](slc.ref.Append("exclude"))
+	return terra.ReferenceAsList[ExcludeAttributes](slc.ref.Append("exclude"))
 }
 
 func (slc StorageLensConfigurationAttributes) Include() terra.ListValue[IncludeAttributes] {
-	return terra.ReferenceList[IncludeAttributes](slc.ref.Append("include"))
+	return terra.ReferenceAsList[IncludeAttributes](slc.ref.Append("include"))
 }
 
 type AccountLevelAttributes struct {
@@ -226,23 +226,23 @@ func (al AccountLevelAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (al AccountLevelAttributes) ActivityMetrics() terra.ListValue[AccountLevelActivityMetricsAttributes] {
-	return terra.ReferenceList[AccountLevelActivityMetricsAttributes](al.ref.Append("activity_metrics"))
+	return terra.ReferenceAsList[AccountLevelActivityMetricsAttributes](al.ref.Append("activity_metrics"))
 }
 
 func (al AccountLevelAttributes) AdvancedCostOptimizationMetrics() terra.ListValue[AccountLevelAdvancedCostOptimizationMetricsAttributes] {
-	return terra.ReferenceList[AccountLevelAdvancedCostOptimizationMetricsAttributes](al.ref.Append("advanced_cost_optimization_metrics"))
+	return terra.ReferenceAsList[AccountLevelAdvancedCostOptimizationMetricsAttributes](al.ref.Append("advanced_cost_optimization_metrics"))
 }
 
 func (al AccountLevelAttributes) AdvancedDataProtectionMetrics() terra.ListValue[AccountLevelAdvancedDataProtectionMetricsAttributes] {
-	return terra.ReferenceList[AccountLevelAdvancedDataProtectionMetricsAttributes](al.ref.Append("advanced_data_protection_metrics"))
+	return terra.ReferenceAsList[AccountLevelAdvancedDataProtectionMetricsAttributes](al.ref.Append("advanced_data_protection_metrics"))
 }
 
 func (al AccountLevelAttributes) BucketLevel() terra.ListValue[BucketLevelAttributes] {
-	return terra.ReferenceList[BucketLevelAttributes](al.ref.Append("bucket_level"))
+	return terra.ReferenceAsList[BucketLevelAttributes](al.ref.Append("bucket_level"))
 }
 
 func (al AccountLevelAttributes) DetailedStatusCodeMetrics() terra.ListValue[AccountLevelDetailedStatusCodeMetricsAttributes] {
-	return terra.ReferenceList[AccountLevelDetailedStatusCodeMetricsAttributes](al.ref.Append("detailed_status_code_metrics"))
+	return terra.ReferenceAsList[AccountLevelDetailedStatusCodeMetricsAttributes](al.ref.Append("detailed_status_code_metrics"))
 }
 
 type AccountLevelActivityMetricsAttributes struct {
@@ -262,7 +262,7 @@ func (am AccountLevelActivityMetricsAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (am AccountLevelActivityMetricsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(am.ref.Append("enabled"))
+	return terra.ReferenceAsBool(am.ref.Append("enabled"))
 }
 
 type AccountLevelAdvancedCostOptimizationMetricsAttributes struct {
@@ -282,7 +282,7 @@ func (acom AccountLevelAdvancedCostOptimizationMetricsAttributes) InternalTokens
 }
 
 func (acom AccountLevelAdvancedCostOptimizationMetricsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(acom.ref.Append("enabled"))
+	return terra.ReferenceAsBool(acom.ref.Append("enabled"))
 }
 
 type AccountLevelAdvancedDataProtectionMetricsAttributes struct {
@@ -302,7 +302,7 @@ func (adpm AccountLevelAdvancedDataProtectionMetricsAttributes) InternalTokens()
 }
 
 func (adpm AccountLevelAdvancedDataProtectionMetricsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(adpm.ref.Append("enabled"))
+	return terra.ReferenceAsBool(adpm.ref.Append("enabled"))
 }
 
 type BucketLevelAttributes struct {
@@ -322,23 +322,23 @@ func (bl BucketLevelAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (bl BucketLevelAttributes) ActivityMetrics() terra.ListValue[BucketLevelActivityMetricsAttributes] {
-	return terra.ReferenceList[BucketLevelActivityMetricsAttributes](bl.ref.Append("activity_metrics"))
+	return terra.ReferenceAsList[BucketLevelActivityMetricsAttributes](bl.ref.Append("activity_metrics"))
 }
 
 func (bl BucketLevelAttributes) AdvancedCostOptimizationMetrics() terra.ListValue[BucketLevelAdvancedCostOptimizationMetricsAttributes] {
-	return terra.ReferenceList[BucketLevelAdvancedCostOptimizationMetricsAttributes](bl.ref.Append("advanced_cost_optimization_metrics"))
+	return terra.ReferenceAsList[BucketLevelAdvancedCostOptimizationMetricsAttributes](bl.ref.Append("advanced_cost_optimization_metrics"))
 }
 
 func (bl BucketLevelAttributes) AdvancedDataProtectionMetrics() terra.ListValue[BucketLevelAdvancedDataProtectionMetricsAttributes] {
-	return terra.ReferenceList[BucketLevelAdvancedDataProtectionMetricsAttributes](bl.ref.Append("advanced_data_protection_metrics"))
+	return terra.ReferenceAsList[BucketLevelAdvancedDataProtectionMetricsAttributes](bl.ref.Append("advanced_data_protection_metrics"))
 }
 
 func (bl BucketLevelAttributes) DetailedStatusCodeMetrics() terra.ListValue[BucketLevelDetailedStatusCodeMetricsAttributes] {
-	return terra.ReferenceList[BucketLevelDetailedStatusCodeMetricsAttributes](bl.ref.Append("detailed_status_code_metrics"))
+	return terra.ReferenceAsList[BucketLevelDetailedStatusCodeMetricsAttributes](bl.ref.Append("detailed_status_code_metrics"))
 }
 
 func (bl BucketLevelAttributes) PrefixLevel() terra.ListValue[PrefixLevelAttributes] {
-	return terra.ReferenceList[PrefixLevelAttributes](bl.ref.Append("prefix_level"))
+	return terra.ReferenceAsList[PrefixLevelAttributes](bl.ref.Append("prefix_level"))
 }
 
 type BucketLevelActivityMetricsAttributes struct {
@@ -358,7 +358,7 @@ func (am BucketLevelActivityMetricsAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (am BucketLevelActivityMetricsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(am.ref.Append("enabled"))
+	return terra.ReferenceAsBool(am.ref.Append("enabled"))
 }
 
 type BucketLevelAdvancedCostOptimizationMetricsAttributes struct {
@@ -378,7 +378,7 @@ func (acom BucketLevelAdvancedCostOptimizationMetricsAttributes) InternalTokens(
 }
 
 func (acom BucketLevelAdvancedCostOptimizationMetricsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(acom.ref.Append("enabled"))
+	return terra.ReferenceAsBool(acom.ref.Append("enabled"))
 }
 
 type BucketLevelAdvancedDataProtectionMetricsAttributes struct {
@@ -398,7 +398,7 @@ func (adpm BucketLevelAdvancedDataProtectionMetricsAttributes) InternalTokens() 
 }
 
 func (adpm BucketLevelAdvancedDataProtectionMetricsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(adpm.ref.Append("enabled"))
+	return terra.ReferenceAsBool(adpm.ref.Append("enabled"))
 }
 
 type BucketLevelDetailedStatusCodeMetricsAttributes struct {
@@ -418,7 +418,7 @@ func (dscm BucketLevelDetailedStatusCodeMetricsAttributes) InternalTokens() hclw
 }
 
 func (dscm BucketLevelDetailedStatusCodeMetricsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(dscm.ref.Append("enabled"))
+	return terra.ReferenceAsBool(dscm.ref.Append("enabled"))
 }
 
 type PrefixLevelAttributes struct {
@@ -438,7 +438,7 @@ func (pl PrefixLevelAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pl PrefixLevelAttributes) StorageMetrics() terra.ListValue[StorageMetricsAttributes] {
-	return terra.ReferenceList[StorageMetricsAttributes](pl.ref.Append("storage_metrics"))
+	return terra.ReferenceAsList[StorageMetricsAttributes](pl.ref.Append("storage_metrics"))
 }
 
 type StorageMetricsAttributes struct {
@@ -458,11 +458,11 @@ func (sm StorageMetricsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sm StorageMetricsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(sm.ref.Append("enabled"))
+	return terra.ReferenceAsBool(sm.ref.Append("enabled"))
 }
 
 func (sm StorageMetricsAttributes) SelectionCriteria() terra.ListValue[SelectionCriteriaAttributes] {
-	return terra.ReferenceList[SelectionCriteriaAttributes](sm.ref.Append("selection_criteria"))
+	return terra.ReferenceAsList[SelectionCriteriaAttributes](sm.ref.Append("selection_criteria"))
 }
 
 type SelectionCriteriaAttributes struct {
@@ -482,15 +482,15 @@ func (sc SelectionCriteriaAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc SelectionCriteriaAttributes) Delimiter() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("delimiter"))
+	return terra.ReferenceAsString(sc.ref.Append("delimiter"))
 }
 
 func (sc SelectionCriteriaAttributes) MaxDepth() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("max_depth"))
+	return terra.ReferenceAsNumber(sc.ref.Append("max_depth"))
 }
 
 func (sc SelectionCriteriaAttributes) MinStorageBytesPercentage() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("min_storage_bytes_percentage"))
+	return terra.ReferenceAsNumber(sc.ref.Append("min_storage_bytes_percentage"))
 }
 
 type AccountLevelDetailedStatusCodeMetricsAttributes struct {
@@ -510,7 +510,7 @@ func (dscm AccountLevelDetailedStatusCodeMetricsAttributes) InternalTokens() hcl
 }
 
 func (dscm AccountLevelDetailedStatusCodeMetricsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(dscm.ref.Append("enabled"))
+	return terra.ReferenceAsBool(dscm.ref.Append("enabled"))
 }
 
 type AwsOrgAttributes struct {
@@ -530,7 +530,7 @@ func (ao AwsOrgAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ao AwsOrgAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ao.ref.Append("arn"))
+	return terra.ReferenceAsString(ao.ref.Append("arn"))
 }
 
 type DataExportAttributes struct {
@@ -550,11 +550,11 @@ func (de DataExportAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (de DataExportAttributes) CloudWatchMetrics() terra.ListValue[CloudWatchMetricsAttributes] {
-	return terra.ReferenceList[CloudWatchMetricsAttributes](de.ref.Append("cloud_watch_metrics"))
+	return terra.ReferenceAsList[CloudWatchMetricsAttributes](de.ref.Append("cloud_watch_metrics"))
 }
 
 func (de DataExportAttributes) S3BucketDestination() terra.ListValue[S3BucketDestinationAttributes] {
-	return terra.ReferenceList[S3BucketDestinationAttributes](de.ref.Append("s3_bucket_destination"))
+	return terra.ReferenceAsList[S3BucketDestinationAttributes](de.ref.Append("s3_bucket_destination"))
 }
 
 type CloudWatchMetricsAttributes struct {
@@ -574,7 +574,7 @@ func (cwm CloudWatchMetricsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cwm CloudWatchMetricsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(cwm.ref.Append("enabled"))
+	return terra.ReferenceAsBool(cwm.ref.Append("enabled"))
 }
 
 type S3BucketDestinationAttributes struct {
@@ -594,27 +594,27 @@ func (sbd S3BucketDestinationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sbd S3BucketDestinationAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(sbd.ref.Append("account_id"))
+	return terra.ReferenceAsString(sbd.ref.Append("account_id"))
 }
 
 func (sbd S3BucketDestinationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sbd.ref.Append("arn"))
+	return terra.ReferenceAsString(sbd.ref.Append("arn"))
 }
 
 func (sbd S3BucketDestinationAttributes) Format() terra.StringValue {
-	return terra.ReferenceString(sbd.ref.Append("format"))
+	return terra.ReferenceAsString(sbd.ref.Append("format"))
 }
 
 func (sbd S3BucketDestinationAttributes) OutputSchemaVersion() terra.StringValue {
-	return terra.ReferenceString(sbd.ref.Append("output_schema_version"))
+	return terra.ReferenceAsString(sbd.ref.Append("output_schema_version"))
 }
 
 func (sbd S3BucketDestinationAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(sbd.ref.Append("prefix"))
+	return terra.ReferenceAsString(sbd.ref.Append("prefix"))
 }
 
 func (sbd S3BucketDestinationAttributes) Encryption() terra.ListValue[EncryptionAttributes] {
-	return terra.ReferenceList[EncryptionAttributes](sbd.ref.Append("encryption"))
+	return terra.ReferenceAsList[EncryptionAttributes](sbd.ref.Append("encryption"))
 }
 
 type EncryptionAttributes struct {
@@ -634,11 +634,11 @@ func (e EncryptionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e EncryptionAttributes) SseKms() terra.ListValue[SseKmsAttributes] {
-	return terra.ReferenceList[SseKmsAttributes](e.ref.Append("sse_kms"))
+	return terra.ReferenceAsList[SseKmsAttributes](e.ref.Append("sse_kms"))
 }
 
 func (e EncryptionAttributes) SseS3() terra.ListValue[SseS3Attributes] {
-	return terra.ReferenceList[SseS3Attributes](e.ref.Append("sse_s3"))
+	return terra.ReferenceAsList[SseS3Attributes](e.ref.Append("sse_s3"))
 }
 
 type SseKmsAttributes struct {
@@ -658,7 +658,7 @@ func (sk SseKmsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sk SseKmsAttributes) KeyId() terra.StringValue {
-	return terra.ReferenceString(sk.ref.Append("key_id"))
+	return terra.ReferenceAsString(sk.ref.Append("key_id"))
 }
 
 type SseS3Attributes struct {
@@ -694,11 +694,11 @@ func (e ExcludeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e ExcludeAttributes) Buckets() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](e.ref.Append("buckets"))
+	return terra.ReferenceAsSet[terra.StringValue](e.ref.Append("buckets"))
 }
 
 func (e ExcludeAttributes) Regions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](e.ref.Append("regions"))
+	return terra.ReferenceAsSet[terra.StringValue](e.ref.Append("regions"))
 }
 
 type IncludeAttributes struct {
@@ -718,11 +718,11 @@ func (i IncludeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i IncludeAttributes) Buckets() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("buckets"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("buckets"))
 }
 
 func (i IncludeAttributes) Regions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("regions"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("regions"))
 }
 
 type StorageLensConfigurationState struct {

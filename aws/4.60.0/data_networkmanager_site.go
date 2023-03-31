@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataNetworkmanagerSite creates a new instance of [DataNetworkmanagerSite].
 func NewDataNetworkmanagerSite(name string, args DataNetworkmanagerSiteArgs) *DataNetworkmanagerSite {
 	return &DataNetworkmanagerSite{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataNetworkmanagerSite(name string, args DataNetworkmanagerSiteArgs) *Da
 
 var _ terra.DataResource = (*DataNetworkmanagerSite)(nil)
 
+// DataNetworkmanagerSite represents the Terraform data resource aws_networkmanager_site.
 type DataNetworkmanagerSite struct {
 	Name string
 	Args DataNetworkmanagerSiteArgs
 }
 
+// DataSource returns the Terraform object type for [DataNetworkmanagerSite].
 func (ns *DataNetworkmanagerSite) DataSource() string {
 	return "aws_networkmanager_site"
 }
 
+// LocalName returns the local name for [DataNetworkmanagerSite].
 func (ns *DataNetworkmanagerSite) LocalName() string {
 	return ns.Name
 }
 
+// Configuration returns the configuration (args) for [DataNetworkmanagerSite].
 func (ns *DataNetworkmanagerSite) Configuration() interface{} {
 	return ns.Args
 }
 
+// Attributes returns the attributes for [DataNetworkmanagerSite].
 func (ns *DataNetworkmanagerSite) Attributes() dataNetworkmanagerSiteAttributes {
 	return dataNetworkmanagerSiteAttributes{ref: terra.ReferenceDataResource(ns)}
 }
 
+// DataNetworkmanagerSiteArgs contains the configurations for aws_networkmanager_site.
 type DataNetworkmanagerSiteArgs struct {
 	// GlobalNetworkId: string, required
 	GlobalNetworkId terra.StringValue `hcl:"global_network_id,attr" validate:"required"`
@@ -53,30 +60,36 @@ type dataNetworkmanagerSiteAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_networkmanager_site.
 func (ns dataNetworkmanagerSiteAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ns.ref.Append("arn"))
+	return terra.ReferenceAsString(ns.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_networkmanager_site.
 func (ns dataNetworkmanagerSiteAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ns.ref.Append("description"))
+	return terra.ReferenceAsString(ns.ref.Append("description"))
 }
 
+// GlobalNetworkId returns a reference to field global_network_id of aws_networkmanager_site.
 func (ns dataNetworkmanagerSiteAttributes) GlobalNetworkId() terra.StringValue {
-	return terra.ReferenceString(ns.ref.Append("global_network_id"))
+	return terra.ReferenceAsString(ns.ref.Append("global_network_id"))
 }
 
+// Id returns a reference to field id of aws_networkmanager_site.
 func (ns dataNetworkmanagerSiteAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ns.ref.Append("id"))
+	return terra.ReferenceAsString(ns.ref.Append("id"))
 }
 
+// SiteId returns a reference to field site_id of aws_networkmanager_site.
 func (ns dataNetworkmanagerSiteAttributes) SiteId() terra.StringValue {
-	return terra.ReferenceString(ns.ref.Append("site_id"))
+	return terra.ReferenceAsString(ns.ref.Append("site_id"))
 }
 
+// Tags returns a reference to field tags of aws_networkmanager_site.
 func (ns dataNetworkmanagerSiteAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ns.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ns.ref.Append("tags"))
 }
 
 func (ns dataNetworkmanagerSiteAttributes) Location() terra.ListValue[datanetworkmanagersite.LocationAttributes] {
-	return terra.ReferenceList[datanetworkmanagersite.LocationAttributes](ns.ref.Append("location"))
+	return terra.ReferenceAsList[datanetworkmanagersite.LocationAttributes](ns.ref.Append("location"))
 }

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRedshiftHsmClientCertificate creates a new instance of [RedshiftHsmClientCertificate].
 func NewRedshiftHsmClientCertificate(name string, args RedshiftHsmClientCertificateArgs) *RedshiftHsmClientCertificate {
 	return &RedshiftHsmClientCertificate{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRedshiftHsmClientCertificate(name string, args RedshiftHsmClientCertific
 
 var _ terra.Resource = (*RedshiftHsmClientCertificate)(nil)
 
+// RedshiftHsmClientCertificate represents the Terraform resource aws_redshift_hsm_client_certificate.
 type RedshiftHsmClientCertificate struct {
-	Name  string
-	Args  RedshiftHsmClientCertificateArgs
-	state *redshiftHsmClientCertificateState
+	Name      string
+	Args      RedshiftHsmClientCertificateArgs
+	state     *redshiftHsmClientCertificateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RedshiftHsmClientCertificate].
 func (rhcc *RedshiftHsmClientCertificate) Type() string {
 	return "aws_redshift_hsm_client_certificate"
 }
 
+// LocalName returns the local name for [RedshiftHsmClientCertificate].
 func (rhcc *RedshiftHsmClientCertificate) LocalName() string {
 	return rhcc.Name
 }
 
+// Configuration returns the configuration (args) for [RedshiftHsmClientCertificate].
 func (rhcc *RedshiftHsmClientCertificate) Configuration() interface{} {
 	return rhcc.Args
 }
 
+// DependOn is used for other resources to depend on [RedshiftHsmClientCertificate].
+func (rhcc *RedshiftHsmClientCertificate) DependOn() terra.Reference {
+	return terra.ReferenceResource(rhcc)
+}
+
+// Dependencies returns the list of resources [RedshiftHsmClientCertificate] depends_on.
+func (rhcc *RedshiftHsmClientCertificate) Dependencies() terra.Dependencies {
+	return rhcc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RedshiftHsmClientCertificate].
+func (rhcc *RedshiftHsmClientCertificate) LifecycleManagement() *terra.Lifecycle {
+	return rhcc.Lifecycle
+}
+
+// Attributes returns the attributes for [RedshiftHsmClientCertificate].
 func (rhcc *RedshiftHsmClientCertificate) Attributes() redshiftHsmClientCertificateAttributes {
 	return redshiftHsmClientCertificateAttributes{ref: terra.ReferenceResource(rhcc)}
 }
 
+// ImportState imports the given attribute values into [RedshiftHsmClientCertificate]'s state.
 func (rhcc *RedshiftHsmClientCertificate) ImportState(av io.Reader) error {
 	rhcc.state = &redshiftHsmClientCertificateState{}
 	if err := json.NewDecoder(av).Decode(rhcc.state); err != nil {
@@ -48,10 +72,12 @@ func (rhcc *RedshiftHsmClientCertificate) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RedshiftHsmClientCertificate] has state.
 func (rhcc *RedshiftHsmClientCertificate) State() (*redshiftHsmClientCertificateState, bool) {
 	return rhcc.state, rhcc.state != nil
 }
 
+// StateMust returns the state for [RedshiftHsmClientCertificate]. Panics if the state is nil.
 func (rhcc *RedshiftHsmClientCertificate) StateMust() *redshiftHsmClientCertificateState {
 	if rhcc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rhcc.Type(), rhcc.LocalName()))
@@ -59,10 +85,7 @@ func (rhcc *RedshiftHsmClientCertificate) StateMust() *redshiftHsmClientCertific
 	return rhcc.state
 }
 
-func (rhcc *RedshiftHsmClientCertificate) DependOn() terra.Reference {
-	return terra.ReferenceResource(rhcc)
-}
-
+// RedshiftHsmClientCertificateArgs contains the configurations for aws_redshift_hsm_client_certificate.
 type RedshiftHsmClientCertificateArgs struct {
 	// HsmClientCertificateIdentifier: string, required
 	HsmClientCertificateIdentifier terra.StringValue `hcl:"hsm_client_certificate_identifier,attr" validate:"required"`
@@ -72,35 +95,39 @@ type RedshiftHsmClientCertificateArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that RedshiftHsmClientCertificate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type redshiftHsmClientCertificateAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_redshift_hsm_client_certificate.
 func (rhcc redshiftHsmClientCertificateAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rhcc.ref.Append("arn"))
+	return terra.ReferenceAsString(rhcc.ref.Append("arn"))
 }
 
+// HsmClientCertificateIdentifier returns a reference to field hsm_client_certificate_identifier of aws_redshift_hsm_client_certificate.
 func (rhcc redshiftHsmClientCertificateAttributes) HsmClientCertificateIdentifier() terra.StringValue {
-	return terra.ReferenceString(rhcc.ref.Append("hsm_client_certificate_identifier"))
+	return terra.ReferenceAsString(rhcc.ref.Append("hsm_client_certificate_identifier"))
 }
 
+// HsmClientCertificatePublicKey returns a reference to field hsm_client_certificate_public_key of aws_redshift_hsm_client_certificate.
 func (rhcc redshiftHsmClientCertificateAttributes) HsmClientCertificatePublicKey() terra.StringValue {
-	return terra.ReferenceString(rhcc.ref.Append("hsm_client_certificate_public_key"))
+	return terra.ReferenceAsString(rhcc.ref.Append("hsm_client_certificate_public_key"))
 }
 
+// Id returns a reference to field id of aws_redshift_hsm_client_certificate.
 func (rhcc redshiftHsmClientCertificateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rhcc.ref.Append("id"))
+	return terra.ReferenceAsString(rhcc.ref.Append("id"))
 }
 
+// Tags returns a reference to field tags of aws_redshift_hsm_client_certificate.
 func (rhcc redshiftHsmClientCertificateAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rhcc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rhcc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_redshift_hsm_client_certificate.
 func (rhcc redshiftHsmClientCertificateAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rhcc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](rhcc.ref.Append("tags_all"))
 }
 
 type redshiftHsmClientCertificateState struct {

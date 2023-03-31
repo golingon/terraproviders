@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewPinpointApnsSandboxChannel creates a new instance of [PinpointApnsSandboxChannel].
 func NewPinpointApnsSandboxChannel(name string, args PinpointApnsSandboxChannelArgs) *PinpointApnsSandboxChannel {
 	return &PinpointApnsSandboxChannel{
 		Args: args,
@@ -18,28 +19,51 @@ func NewPinpointApnsSandboxChannel(name string, args PinpointApnsSandboxChannelA
 
 var _ terra.Resource = (*PinpointApnsSandboxChannel)(nil)
 
+// PinpointApnsSandboxChannel represents the Terraform resource aws_pinpoint_apns_sandbox_channel.
 type PinpointApnsSandboxChannel struct {
-	Name  string
-	Args  PinpointApnsSandboxChannelArgs
-	state *pinpointApnsSandboxChannelState
+	Name      string
+	Args      PinpointApnsSandboxChannelArgs
+	state     *pinpointApnsSandboxChannelState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [PinpointApnsSandboxChannel].
 func (pasc *PinpointApnsSandboxChannel) Type() string {
 	return "aws_pinpoint_apns_sandbox_channel"
 }
 
+// LocalName returns the local name for [PinpointApnsSandboxChannel].
 func (pasc *PinpointApnsSandboxChannel) LocalName() string {
 	return pasc.Name
 }
 
+// Configuration returns the configuration (args) for [PinpointApnsSandboxChannel].
 func (pasc *PinpointApnsSandboxChannel) Configuration() interface{} {
 	return pasc.Args
 }
 
+// DependOn is used for other resources to depend on [PinpointApnsSandboxChannel].
+func (pasc *PinpointApnsSandboxChannel) DependOn() terra.Reference {
+	return terra.ReferenceResource(pasc)
+}
+
+// Dependencies returns the list of resources [PinpointApnsSandboxChannel] depends_on.
+func (pasc *PinpointApnsSandboxChannel) Dependencies() terra.Dependencies {
+	return pasc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [PinpointApnsSandboxChannel].
+func (pasc *PinpointApnsSandboxChannel) LifecycleManagement() *terra.Lifecycle {
+	return pasc.Lifecycle
+}
+
+// Attributes returns the attributes for [PinpointApnsSandboxChannel].
 func (pasc *PinpointApnsSandboxChannel) Attributes() pinpointApnsSandboxChannelAttributes {
 	return pinpointApnsSandboxChannelAttributes{ref: terra.ReferenceResource(pasc)}
 }
 
+// ImportState imports the given attribute values into [PinpointApnsSandboxChannel]'s state.
 func (pasc *PinpointApnsSandboxChannel) ImportState(av io.Reader) error {
 	pasc.state = &pinpointApnsSandboxChannelState{}
 	if err := json.NewDecoder(av).Decode(pasc.state); err != nil {
@@ -48,10 +72,12 @@ func (pasc *PinpointApnsSandboxChannel) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [PinpointApnsSandboxChannel] has state.
 func (pasc *PinpointApnsSandboxChannel) State() (*pinpointApnsSandboxChannelState, bool) {
 	return pasc.state, pasc.state != nil
 }
 
+// StateMust returns the state for [PinpointApnsSandboxChannel]. Panics if the state is nil.
 func (pasc *PinpointApnsSandboxChannel) StateMust() *pinpointApnsSandboxChannelState {
 	if pasc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", pasc.Type(), pasc.LocalName()))
@@ -59,10 +85,7 @@ func (pasc *PinpointApnsSandboxChannel) StateMust() *pinpointApnsSandboxChannelS
 	return pasc.state
 }
 
-func (pasc *PinpointApnsSandboxChannel) DependOn() terra.Reference {
-	return terra.ReferenceResource(pasc)
-}
-
+// PinpointApnsSandboxChannelArgs contains the configurations for aws_pinpoint_apns_sandbox_channel.
 type PinpointApnsSandboxChannelArgs struct {
 	// ApplicationId: string, required
 	ApplicationId terra.StringValue `hcl:"application_id,attr" validate:"required"`
@@ -84,51 +107,59 @@ type PinpointApnsSandboxChannelArgs struct {
 	TokenKey terra.StringValue `hcl:"token_key,attr"`
 	// TokenKeyId: string, optional
 	TokenKeyId terra.StringValue `hcl:"token_key_id,attr"`
-	// DependsOn contains resources that PinpointApnsSandboxChannel depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type pinpointApnsSandboxChannelAttributes struct {
 	ref terra.Reference
 }
 
+// ApplicationId returns a reference to field application_id of aws_pinpoint_apns_sandbox_channel.
 func (pasc pinpointApnsSandboxChannelAttributes) ApplicationId() terra.StringValue {
-	return terra.ReferenceString(pasc.ref.Append("application_id"))
+	return terra.ReferenceAsString(pasc.ref.Append("application_id"))
 }
 
+// BundleId returns a reference to field bundle_id of aws_pinpoint_apns_sandbox_channel.
 func (pasc pinpointApnsSandboxChannelAttributes) BundleId() terra.StringValue {
-	return terra.ReferenceString(pasc.ref.Append("bundle_id"))
+	return terra.ReferenceAsString(pasc.ref.Append("bundle_id"))
 }
 
+// Certificate returns a reference to field certificate of aws_pinpoint_apns_sandbox_channel.
 func (pasc pinpointApnsSandboxChannelAttributes) Certificate() terra.StringValue {
-	return terra.ReferenceString(pasc.ref.Append("certificate"))
+	return terra.ReferenceAsString(pasc.ref.Append("certificate"))
 }
 
+// DefaultAuthenticationMethod returns a reference to field default_authentication_method of aws_pinpoint_apns_sandbox_channel.
 func (pasc pinpointApnsSandboxChannelAttributes) DefaultAuthenticationMethod() terra.StringValue {
-	return terra.ReferenceString(pasc.ref.Append("default_authentication_method"))
+	return terra.ReferenceAsString(pasc.ref.Append("default_authentication_method"))
 }
 
+// Enabled returns a reference to field enabled of aws_pinpoint_apns_sandbox_channel.
 func (pasc pinpointApnsSandboxChannelAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(pasc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(pasc.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of aws_pinpoint_apns_sandbox_channel.
 func (pasc pinpointApnsSandboxChannelAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(pasc.ref.Append("id"))
+	return terra.ReferenceAsString(pasc.ref.Append("id"))
 }
 
+// PrivateKey returns a reference to field private_key of aws_pinpoint_apns_sandbox_channel.
 func (pasc pinpointApnsSandboxChannelAttributes) PrivateKey() terra.StringValue {
-	return terra.ReferenceString(pasc.ref.Append("private_key"))
+	return terra.ReferenceAsString(pasc.ref.Append("private_key"))
 }
 
+// TeamId returns a reference to field team_id of aws_pinpoint_apns_sandbox_channel.
 func (pasc pinpointApnsSandboxChannelAttributes) TeamId() terra.StringValue {
-	return terra.ReferenceString(pasc.ref.Append("team_id"))
+	return terra.ReferenceAsString(pasc.ref.Append("team_id"))
 }
 
+// TokenKey returns a reference to field token_key of aws_pinpoint_apns_sandbox_channel.
 func (pasc pinpointApnsSandboxChannelAttributes) TokenKey() terra.StringValue {
-	return terra.ReferenceString(pasc.ref.Append("token_key"))
+	return terra.ReferenceAsString(pasc.ref.Append("token_key"))
 }
 
+// TokenKeyId returns a reference to field token_key_id of aws_pinpoint_apns_sandbox_channel.
 func (pasc pinpointApnsSandboxChannelAttributes) TokenKeyId() terra.StringValue {
-	return terra.ReferenceString(pasc.ref.Append("token_key_id"))
+	return terra.ReferenceAsString(pasc.ref.Append("token_key_id"))
 }
 
 type pinpointApnsSandboxChannelState struct {

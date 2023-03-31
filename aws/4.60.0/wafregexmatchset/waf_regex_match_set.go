@@ -40,15 +40,15 @@ func (rmt RegexMatchTupleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rmt RegexMatchTupleAttributes) RegexPatternSetId() terra.StringValue {
-	return terra.ReferenceString(rmt.ref.Append("regex_pattern_set_id"))
+	return terra.ReferenceAsString(rmt.ref.Append("regex_pattern_set_id"))
 }
 
 func (rmt RegexMatchTupleAttributes) TextTransformation() terra.StringValue {
-	return terra.ReferenceString(rmt.ref.Append("text_transformation"))
+	return terra.ReferenceAsString(rmt.ref.Append("text_transformation"))
 }
 
 func (rmt RegexMatchTupleAttributes) FieldToMatch() terra.ListValue[FieldToMatchAttributes] {
-	return terra.ReferenceList[FieldToMatchAttributes](rmt.ref.Append("field_to_match"))
+	return terra.ReferenceAsList[FieldToMatchAttributes](rmt.ref.Append("field_to_match"))
 }
 
 type FieldToMatchAttributes struct {
@@ -68,11 +68,11 @@ func (ftm FieldToMatchAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ftm FieldToMatchAttributes) Data() terra.StringValue {
-	return terra.ReferenceString(ftm.ref.Append("data"))
+	return terra.ReferenceAsString(ftm.ref.Append("data"))
 }
 
 func (ftm FieldToMatchAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ftm.ref.Append("type"))
+	return terra.ReferenceAsString(ftm.ref.Append("type"))
 }
 
 type RegexMatchTupleState struct {

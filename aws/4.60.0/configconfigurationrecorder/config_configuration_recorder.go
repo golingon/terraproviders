@@ -33,15 +33,15 @@ func (rg RecordingGroupAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rg RecordingGroupAttributes) AllSupported() terra.BoolValue {
-	return terra.ReferenceBool(rg.ref.Append("all_supported"))
+	return terra.ReferenceAsBool(rg.ref.Append("all_supported"))
 }
 
 func (rg RecordingGroupAttributes) IncludeGlobalResourceTypes() terra.BoolValue {
-	return terra.ReferenceBool(rg.ref.Append("include_global_resource_types"))
+	return terra.ReferenceAsBool(rg.ref.Append("include_global_resource_types"))
 }
 
 func (rg RecordingGroupAttributes) ResourceTypes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rg.ref.Append("resource_types"))
+	return terra.ReferenceAsSet[terra.StringValue](rg.ref.Append("resource_types"))
 }
 
 type RecordingGroupState struct {

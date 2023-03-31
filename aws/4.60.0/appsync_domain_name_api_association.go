@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAppsyncDomainNameApiAssociation creates a new instance of [AppsyncDomainNameApiAssociation].
 func NewAppsyncDomainNameApiAssociation(name string, args AppsyncDomainNameApiAssociationArgs) *AppsyncDomainNameApiAssociation {
 	return &AppsyncDomainNameApiAssociation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAppsyncDomainNameApiAssociation(name string, args AppsyncDomainNameApiAs
 
 var _ terra.Resource = (*AppsyncDomainNameApiAssociation)(nil)
 
+// AppsyncDomainNameApiAssociation represents the Terraform resource aws_appsync_domain_name_api_association.
 type AppsyncDomainNameApiAssociation struct {
-	Name  string
-	Args  AppsyncDomainNameApiAssociationArgs
-	state *appsyncDomainNameApiAssociationState
+	Name      string
+	Args      AppsyncDomainNameApiAssociationArgs
+	state     *appsyncDomainNameApiAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppsyncDomainNameApiAssociation].
 func (adnaa *AppsyncDomainNameApiAssociation) Type() string {
 	return "aws_appsync_domain_name_api_association"
 }
 
+// LocalName returns the local name for [AppsyncDomainNameApiAssociation].
 func (adnaa *AppsyncDomainNameApiAssociation) LocalName() string {
 	return adnaa.Name
 }
 
+// Configuration returns the configuration (args) for [AppsyncDomainNameApiAssociation].
 func (adnaa *AppsyncDomainNameApiAssociation) Configuration() interface{} {
 	return adnaa.Args
 }
 
+// DependOn is used for other resources to depend on [AppsyncDomainNameApiAssociation].
+func (adnaa *AppsyncDomainNameApiAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(adnaa)
+}
+
+// Dependencies returns the list of resources [AppsyncDomainNameApiAssociation] depends_on.
+func (adnaa *AppsyncDomainNameApiAssociation) Dependencies() terra.Dependencies {
+	return adnaa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppsyncDomainNameApiAssociation].
+func (adnaa *AppsyncDomainNameApiAssociation) LifecycleManagement() *terra.Lifecycle {
+	return adnaa.Lifecycle
+}
+
+// Attributes returns the attributes for [AppsyncDomainNameApiAssociation].
 func (adnaa *AppsyncDomainNameApiAssociation) Attributes() appsyncDomainNameApiAssociationAttributes {
 	return appsyncDomainNameApiAssociationAttributes{ref: terra.ReferenceResource(adnaa)}
 }
 
+// ImportState imports the given attribute values into [AppsyncDomainNameApiAssociation]'s state.
 func (adnaa *AppsyncDomainNameApiAssociation) ImportState(av io.Reader) error {
 	adnaa.state = &appsyncDomainNameApiAssociationState{}
 	if err := json.NewDecoder(av).Decode(adnaa.state); err != nil {
@@ -48,10 +72,12 @@ func (adnaa *AppsyncDomainNameApiAssociation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppsyncDomainNameApiAssociation] has state.
 func (adnaa *AppsyncDomainNameApiAssociation) State() (*appsyncDomainNameApiAssociationState, bool) {
 	return adnaa.state, adnaa.state != nil
 }
 
+// StateMust returns the state for [AppsyncDomainNameApiAssociation]. Panics if the state is nil.
 func (adnaa *AppsyncDomainNameApiAssociation) StateMust() *appsyncDomainNameApiAssociationState {
 	if adnaa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", adnaa.Type(), adnaa.LocalName()))
@@ -59,10 +85,7 @@ func (adnaa *AppsyncDomainNameApiAssociation) StateMust() *appsyncDomainNameApiA
 	return adnaa.state
 }
 
-func (adnaa *AppsyncDomainNameApiAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(adnaa)
-}
-
+// AppsyncDomainNameApiAssociationArgs contains the configurations for aws_appsync_domain_name_api_association.
 type AppsyncDomainNameApiAssociationArgs struct {
 	// ApiId: string, required
 	ApiId terra.StringValue `hcl:"api_id,attr" validate:"required"`
@@ -70,23 +93,24 @@ type AppsyncDomainNameApiAssociationArgs struct {
 	DomainName terra.StringValue `hcl:"domain_name,attr" validate:"required"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that AppsyncDomainNameApiAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appsyncDomainNameApiAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// ApiId returns a reference to field api_id of aws_appsync_domain_name_api_association.
 func (adnaa appsyncDomainNameApiAssociationAttributes) ApiId() terra.StringValue {
-	return terra.ReferenceString(adnaa.ref.Append("api_id"))
+	return terra.ReferenceAsString(adnaa.ref.Append("api_id"))
 }
 
+// DomainName returns a reference to field domain_name of aws_appsync_domain_name_api_association.
 func (adnaa appsyncDomainNameApiAssociationAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(adnaa.ref.Append("domain_name"))
+	return terra.ReferenceAsString(adnaa.ref.Append("domain_name"))
 }
 
+// Id returns a reference to field id of aws_appsync_domain_name_api_association.
 func (adnaa appsyncDomainNameApiAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(adnaa.ref.Append("id"))
+	return terra.ReferenceAsString(adnaa.ref.Append("id"))
 }
 
 type appsyncDomainNameApiAssociationState struct {

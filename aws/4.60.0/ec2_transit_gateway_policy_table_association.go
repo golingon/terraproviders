@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewEc2TransitGatewayPolicyTableAssociation creates a new instance of [Ec2TransitGatewayPolicyTableAssociation].
 func NewEc2TransitGatewayPolicyTableAssociation(name string, args Ec2TransitGatewayPolicyTableAssociationArgs) *Ec2TransitGatewayPolicyTableAssociation {
 	return &Ec2TransitGatewayPolicyTableAssociation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewEc2TransitGatewayPolicyTableAssociation(name string, args Ec2TransitGate
 
 var _ terra.Resource = (*Ec2TransitGatewayPolicyTableAssociation)(nil)
 
+// Ec2TransitGatewayPolicyTableAssociation represents the Terraform resource aws_ec2_transit_gateway_policy_table_association.
 type Ec2TransitGatewayPolicyTableAssociation struct {
-	Name  string
-	Args  Ec2TransitGatewayPolicyTableAssociationArgs
-	state *ec2TransitGatewayPolicyTableAssociationState
+	Name      string
+	Args      Ec2TransitGatewayPolicyTableAssociationArgs
+	state     *ec2TransitGatewayPolicyTableAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Ec2TransitGatewayPolicyTableAssociation].
 func (etgpta *Ec2TransitGatewayPolicyTableAssociation) Type() string {
 	return "aws_ec2_transit_gateway_policy_table_association"
 }
 
+// LocalName returns the local name for [Ec2TransitGatewayPolicyTableAssociation].
 func (etgpta *Ec2TransitGatewayPolicyTableAssociation) LocalName() string {
 	return etgpta.Name
 }
 
+// Configuration returns the configuration (args) for [Ec2TransitGatewayPolicyTableAssociation].
 func (etgpta *Ec2TransitGatewayPolicyTableAssociation) Configuration() interface{} {
 	return etgpta.Args
 }
 
+// DependOn is used for other resources to depend on [Ec2TransitGatewayPolicyTableAssociation].
+func (etgpta *Ec2TransitGatewayPolicyTableAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(etgpta)
+}
+
+// Dependencies returns the list of resources [Ec2TransitGatewayPolicyTableAssociation] depends_on.
+func (etgpta *Ec2TransitGatewayPolicyTableAssociation) Dependencies() terra.Dependencies {
+	return etgpta.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Ec2TransitGatewayPolicyTableAssociation].
+func (etgpta *Ec2TransitGatewayPolicyTableAssociation) LifecycleManagement() *terra.Lifecycle {
+	return etgpta.Lifecycle
+}
+
+// Attributes returns the attributes for [Ec2TransitGatewayPolicyTableAssociation].
 func (etgpta *Ec2TransitGatewayPolicyTableAssociation) Attributes() ec2TransitGatewayPolicyTableAssociationAttributes {
 	return ec2TransitGatewayPolicyTableAssociationAttributes{ref: terra.ReferenceResource(etgpta)}
 }
 
+// ImportState imports the given attribute values into [Ec2TransitGatewayPolicyTableAssociation]'s state.
 func (etgpta *Ec2TransitGatewayPolicyTableAssociation) ImportState(av io.Reader) error {
 	etgpta.state = &ec2TransitGatewayPolicyTableAssociationState{}
 	if err := json.NewDecoder(av).Decode(etgpta.state); err != nil {
@@ -48,10 +72,12 @@ func (etgpta *Ec2TransitGatewayPolicyTableAssociation) ImportState(av io.Reader)
 	return nil
 }
 
+// State returns the state and a bool indicating if [Ec2TransitGatewayPolicyTableAssociation] has state.
 func (etgpta *Ec2TransitGatewayPolicyTableAssociation) State() (*ec2TransitGatewayPolicyTableAssociationState, bool) {
 	return etgpta.state, etgpta.state != nil
 }
 
+// StateMust returns the state for [Ec2TransitGatewayPolicyTableAssociation]. Panics if the state is nil.
 func (etgpta *Ec2TransitGatewayPolicyTableAssociation) StateMust() *ec2TransitGatewayPolicyTableAssociationState {
 	if etgpta.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", etgpta.Type(), etgpta.LocalName()))
@@ -59,10 +85,7 @@ func (etgpta *Ec2TransitGatewayPolicyTableAssociation) StateMust() *ec2TransitGa
 	return etgpta.state
 }
 
-func (etgpta *Ec2TransitGatewayPolicyTableAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(etgpta)
-}
-
+// Ec2TransitGatewayPolicyTableAssociationArgs contains the configurations for aws_ec2_transit_gateway_policy_table_association.
 type Ec2TransitGatewayPolicyTableAssociationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,31 +93,34 @@ type Ec2TransitGatewayPolicyTableAssociationArgs struct {
 	TransitGatewayAttachmentId terra.StringValue `hcl:"transit_gateway_attachment_id,attr" validate:"required"`
 	// TransitGatewayPolicyTableId: string, required
 	TransitGatewayPolicyTableId terra.StringValue `hcl:"transit_gateway_policy_table_id,attr" validate:"required"`
-	// DependsOn contains resources that Ec2TransitGatewayPolicyTableAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ec2TransitGatewayPolicyTableAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_ec2_transit_gateway_policy_table_association.
 func (etgpta ec2TransitGatewayPolicyTableAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(etgpta.ref.Append("id"))
+	return terra.ReferenceAsString(etgpta.ref.Append("id"))
 }
 
+// ResourceId returns a reference to field resource_id of aws_ec2_transit_gateway_policy_table_association.
 func (etgpta ec2TransitGatewayPolicyTableAssociationAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(etgpta.ref.Append("resource_id"))
+	return terra.ReferenceAsString(etgpta.ref.Append("resource_id"))
 }
 
+// ResourceType returns a reference to field resource_type of aws_ec2_transit_gateway_policy_table_association.
 func (etgpta ec2TransitGatewayPolicyTableAssociationAttributes) ResourceType() terra.StringValue {
-	return terra.ReferenceString(etgpta.ref.Append("resource_type"))
+	return terra.ReferenceAsString(etgpta.ref.Append("resource_type"))
 }
 
+// TransitGatewayAttachmentId returns a reference to field transit_gateway_attachment_id of aws_ec2_transit_gateway_policy_table_association.
 func (etgpta ec2TransitGatewayPolicyTableAssociationAttributes) TransitGatewayAttachmentId() terra.StringValue {
-	return terra.ReferenceString(etgpta.ref.Append("transit_gateway_attachment_id"))
+	return terra.ReferenceAsString(etgpta.ref.Append("transit_gateway_attachment_id"))
 }
 
+// TransitGatewayPolicyTableId returns a reference to field transit_gateway_policy_table_id of aws_ec2_transit_gateway_policy_table_association.
 func (etgpta ec2TransitGatewayPolicyTableAssociationAttributes) TransitGatewayPolicyTableId() terra.StringValue {
-	return terra.ReferenceString(etgpta.ref.Append("transit_gateway_policy_table_id"))
+	return terra.ReferenceAsString(etgpta.ref.Append("transit_gateway_policy_table_id"))
 }
 
 type ec2TransitGatewayPolicyTableAssociationState struct {

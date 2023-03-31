@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataEbsVolumes creates a new instance of [DataEbsVolumes].
 func NewDataEbsVolumes(name string, args DataEbsVolumesArgs) *DataEbsVolumes {
 	return &DataEbsVolumes{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataEbsVolumes(name string, args DataEbsVolumesArgs) *DataEbsVolumes {
 
 var _ terra.DataResource = (*DataEbsVolumes)(nil)
 
+// DataEbsVolumes represents the Terraform data resource aws_ebs_volumes.
 type DataEbsVolumes struct {
 	Name string
 	Args DataEbsVolumesArgs
 }
 
+// DataSource returns the Terraform object type for [DataEbsVolumes].
 func (ev *DataEbsVolumes) DataSource() string {
 	return "aws_ebs_volumes"
 }
 
+// LocalName returns the local name for [DataEbsVolumes].
 func (ev *DataEbsVolumes) LocalName() string {
 	return ev.Name
 }
 
+// Configuration returns the configuration (args) for [DataEbsVolumes].
 func (ev *DataEbsVolumes) Configuration() interface{} {
 	return ev.Args
 }
 
+// Attributes returns the attributes for [DataEbsVolumes].
 func (ev *DataEbsVolumes) Attributes() dataEbsVolumesAttributes {
 	return dataEbsVolumesAttributes{ref: terra.ReferenceDataResource(ev)}
 }
 
+// DataEbsVolumesArgs contains the configurations for aws_ebs_volumes.
 type DataEbsVolumesArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -51,22 +58,25 @@ type dataEbsVolumesAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_ebs_volumes.
 func (ev dataEbsVolumesAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ev.ref.Append("id"))
+	return terra.ReferenceAsString(ev.ref.Append("id"))
 }
 
+// Ids returns a reference to field ids of aws_ebs_volumes.
 func (ev dataEbsVolumesAttributes) Ids() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ev.ref.Append("ids"))
+	return terra.ReferenceAsList[terra.StringValue](ev.ref.Append("ids"))
 }
 
+// Tags returns a reference to field tags of aws_ebs_volumes.
 func (ev dataEbsVolumesAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ev.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ev.ref.Append("tags"))
 }
 
 func (ev dataEbsVolumesAttributes) Filter() terra.SetValue[dataebsvolumes.FilterAttributes] {
-	return terra.ReferenceSet[dataebsvolumes.FilterAttributes](ev.ref.Append("filter"))
+	return terra.ReferenceAsSet[dataebsvolumes.FilterAttributes](ev.ref.Append("filter"))
 }
 
 func (ev dataEbsVolumesAttributes) Timeouts() dataebsvolumes.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataebsvolumes.TimeoutsAttributes](ev.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataebsvolumes.TimeoutsAttributes](ev.ref.Append("timeouts"))
 }

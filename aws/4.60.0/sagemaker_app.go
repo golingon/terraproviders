@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSagemakerApp creates a new instance of [SagemakerApp].
 func NewSagemakerApp(name string, args SagemakerAppArgs) *SagemakerApp {
 	return &SagemakerApp{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSagemakerApp(name string, args SagemakerAppArgs) *SagemakerApp {
 
 var _ terra.Resource = (*SagemakerApp)(nil)
 
+// SagemakerApp represents the Terraform resource aws_sagemaker_app.
 type SagemakerApp struct {
-	Name  string
-	Args  SagemakerAppArgs
-	state *sagemakerAppState
+	Name      string
+	Args      SagemakerAppArgs
+	state     *sagemakerAppState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SagemakerApp].
 func (sa *SagemakerApp) Type() string {
 	return "aws_sagemaker_app"
 }
 
+// LocalName returns the local name for [SagemakerApp].
 func (sa *SagemakerApp) LocalName() string {
 	return sa.Name
 }
 
+// Configuration returns the configuration (args) for [SagemakerApp].
 func (sa *SagemakerApp) Configuration() interface{} {
 	return sa.Args
 }
 
+// DependOn is used for other resources to depend on [SagemakerApp].
+func (sa *SagemakerApp) DependOn() terra.Reference {
+	return terra.ReferenceResource(sa)
+}
+
+// Dependencies returns the list of resources [SagemakerApp] depends_on.
+func (sa *SagemakerApp) Dependencies() terra.Dependencies {
+	return sa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SagemakerApp].
+func (sa *SagemakerApp) LifecycleManagement() *terra.Lifecycle {
+	return sa.Lifecycle
+}
+
+// Attributes returns the attributes for [SagemakerApp].
 func (sa *SagemakerApp) Attributes() sagemakerAppAttributes {
 	return sagemakerAppAttributes{ref: terra.ReferenceResource(sa)}
 }
 
+// ImportState imports the given attribute values into [SagemakerApp]'s state.
 func (sa *SagemakerApp) ImportState(av io.Reader) error {
 	sa.state = &sagemakerAppState{}
 	if err := json.NewDecoder(av).Decode(sa.state); err != nil {
@@ -49,10 +73,12 @@ func (sa *SagemakerApp) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SagemakerApp] has state.
 func (sa *SagemakerApp) State() (*sagemakerAppState, bool) {
 	return sa.state, sa.state != nil
 }
 
+// StateMust returns the state for [SagemakerApp]. Panics if the state is nil.
 func (sa *SagemakerApp) StateMust() *sagemakerAppState {
 	if sa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sa.Type(), sa.LocalName()))
@@ -60,10 +86,7 @@ func (sa *SagemakerApp) StateMust() *sagemakerAppState {
 	return sa.state
 }
 
-func (sa *SagemakerApp) DependOn() terra.Reference {
-	return terra.ReferenceResource(sa)
-}
-
+// SagemakerAppArgs contains the configurations for aws_sagemaker_app.
 type SagemakerAppArgs struct {
 	// AppName: string, required
 	AppName terra.StringValue `hcl:"app_name,attr" validate:"required"`
@@ -83,51 +106,58 @@ type SagemakerAppArgs struct {
 	UserProfileName terra.StringValue `hcl:"user_profile_name,attr"`
 	// ResourceSpec: optional
 	ResourceSpec *sagemakerapp.ResourceSpec `hcl:"resource_spec,block"`
-	// DependsOn contains resources that SagemakerApp depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sagemakerAppAttributes struct {
 	ref terra.Reference
 }
 
+// AppName returns a reference to field app_name of aws_sagemaker_app.
 func (sa sagemakerAppAttributes) AppName() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("app_name"))
+	return terra.ReferenceAsString(sa.ref.Append("app_name"))
 }
 
+// AppType returns a reference to field app_type of aws_sagemaker_app.
 func (sa sagemakerAppAttributes) AppType() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("app_type"))
+	return terra.ReferenceAsString(sa.ref.Append("app_type"))
 }
 
+// Arn returns a reference to field arn of aws_sagemaker_app.
 func (sa sagemakerAppAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("arn"))
+	return terra.ReferenceAsString(sa.ref.Append("arn"))
 }
 
+// DomainId returns a reference to field domain_id of aws_sagemaker_app.
 func (sa sagemakerAppAttributes) DomainId() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("domain_id"))
+	return terra.ReferenceAsString(sa.ref.Append("domain_id"))
 }
 
+// Id returns a reference to field id of aws_sagemaker_app.
 func (sa sagemakerAppAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("id"))
+	return terra.ReferenceAsString(sa.ref.Append("id"))
 }
 
+// SpaceName returns a reference to field space_name of aws_sagemaker_app.
 func (sa sagemakerAppAttributes) SpaceName() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("space_name"))
+	return terra.ReferenceAsString(sa.ref.Append("space_name"))
 }
 
+// Tags returns a reference to field tags of aws_sagemaker_app.
 func (sa sagemakerAppAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sa.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sa.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_sagemaker_app.
 func (sa sagemakerAppAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sa.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sa.ref.Append("tags_all"))
 }
 
+// UserProfileName returns a reference to field user_profile_name of aws_sagemaker_app.
 func (sa sagemakerAppAttributes) UserProfileName() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("user_profile_name"))
+	return terra.ReferenceAsString(sa.ref.Append("user_profile_name"))
 }
 
 func (sa sagemakerAppAttributes) ResourceSpec() terra.ListValue[sagemakerapp.ResourceSpecAttributes] {
-	return terra.ReferenceList[sagemakerapp.ResourceSpecAttributes](sa.ref.Append("resource_spec"))
+	return terra.ReferenceAsList[sagemakerapp.ResourceSpecAttributes](sa.ref.Append("resource_spec"))
 }
 
 type sagemakerAppState struct {

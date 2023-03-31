@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSsoadminManagedPolicyAttachment creates a new instance of [SsoadminManagedPolicyAttachment].
 func NewSsoadminManagedPolicyAttachment(name string, args SsoadminManagedPolicyAttachmentArgs) *SsoadminManagedPolicyAttachment {
 	return &SsoadminManagedPolicyAttachment{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSsoadminManagedPolicyAttachment(name string, args SsoadminManagedPolicyA
 
 var _ terra.Resource = (*SsoadminManagedPolicyAttachment)(nil)
 
+// SsoadminManagedPolicyAttachment represents the Terraform resource aws_ssoadmin_managed_policy_attachment.
 type SsoadminManagedPolicyAttachment struct {
-	Name  string
-	Args  SsoadminManagedPolicyAttachmentArgs
-	state *ssoadminManagedPolicyAttachmentState
+	Name      string
+	Args      SsoadminManagedPolicyAttachmentArgs
+	state     *ssoadminManagedPolicyAttachmentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SsoadminManagedPolicyAttachment].
 func (smpa *SsoadminManagedPolicyAttachment) Type() string {
 	return "aws_ssoadmin_managed_policy_attachment"
 }
 
+// LocalName returns the local name for [SsoadminManagedPolicyAttachment].
 func (smpa *SsoadminManagedPolicyAttachment) LocalName() string {
 	return smpa.Name
 }
 
+// Configuration returns the configuration (args) for [SsoadminManagedPolicyAttachment].
 func (smpa *SsoadminManagedPolicyAttachment) Configuration() interface{} {
 	return smpa.Args
 }
 
+// DependOn is used for other resources to depend on [SsoadminManagedPolicyAttachment].
+func (smpa *SsoadminManagedPolicyAttachment) DependOn() terra.Reference {
+	return terra.ReferenceResource(smpa)
+}
+
+// Dependencies returns the list of resources [SsoadminManagedPolicyAttachment] depends_on.
+func (smpa *SsoadminManagedPolicyAttachment) Dependencies() terra.Dependencies {
+	return smpa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SsoadminManagedPolicyAttachment].
+func (smpa *SsoadminManagedPolicyAttachment) LifecycleManagement() *terra.Lifecycle {
+	return smpa.Lifecycle
+}
+
+// Attributes returns the attributes for [SsoadminManagedPolicyAttachment].
 func (smpa *SsoadminManagedPolicyAttachment) Attributes() ssoadminManagedPolicyAttachmentAttributes {
 	return ssoadminManagedPolicyAttachmentAttributes{ref: terra.ReferenceResource(smpa)}
 }
 
+// ImportState imports the given attribute values into [SsoadminManagedPolicyAttachment]'s state.
 func (smpa *SsoadminManagedPolicyAttachment) ImportState(av io.Reader) error {
 	smpa.state = &ssoadminManagedPolicyAttachmentState{}
 	if err := json.NewDecoder(av).Decode(smpa.state); err != nil {
@@ -48,10 +72,12 @@ func (smpa *SsoadminManagedPolicyAttachment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SsoadminManagedPolicyAttachment] has state.
 func (smpa *SsoadminManagedPolicyAttachment) State() (*ssoadminManagedPolicyAttachmentState, bool) {
 	return smpa.state, smpa.state != nil
 }
 
+// StateMust returns the state for [SsoadminManagedPolicyAttachment]. Panics if the state is nil.
 func (smpa *SsoadminManagedPolicyAttachment) StateMust() *ssoadminManagedPolicyAttachmentState {
 	if smpa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", smpa.Type(), smpa.LocalName()))
@@ -59,10 +85,7 @@ func (smpa *SsoadminManagedPolicyAttachment) StateMust() *ssoadminManagedPolicyA
 	return smpa.state
 }
 
-func (smpa *SsoadminManagedPolicyAttachment) DependOn() terra.Reference {
-	return terra.ReferenceResource(smpa)
-}
-
+// SsoadminManagedPolicyAttachmentArgs contains the configurations for aws_ssoadmin_managed_policy_attachment.
 type SsoadminManagedPolicyAttachmentArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -72,31 +95,34 @@ type SsoadminManagedPolicyAttachmentArgs struct {
 	ManagedPolicyArn terra.StringValue `hcl:"managed_policy_arn,attr" validate:"required"`
 	// PermissionSetArn: string, required
 	PermissionSetArn terra.StringValue `hcl:"permission_set_arn,attr" validate:"required"`
-	// DependsOn contains resources that SsoadminManagedPolicyAttachment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ssoadminManagedPolicyAttachmentAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_ssoadmin_managed_policy_attachment.
 func (smpa ssoadminManagedPolicyAttachmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(smpa.ref.Append("id"))
+	return terra.ReferenceAsString(smpa.ref.Append("id"))
 }
 
+// InstanceArn returns a reference to field instance_arn of aws_ssoadmin_managed_policy_attachment.
 func (smpa ssoadminManagedPolicyAttachmentAttributes) InstanceArn() terra.StringValue {
-	return terra.ReferenceString(smpa.ref.Append("instance_arn"))
+	return terra.ReferenceAsString(smpa.ref.Append("instance_arn"))
 }
 
+// ManagedPolicyArn returns a reference to field managed_policy_arn of aws_ssoadmin_managed_policy_attachment.
 func (smpa ssoadminManagedPolicyAttachmentAttributes) ManagedPolicyArn() terra.StringValue {
-	return terra.ReferenceString(smpa.ref.Append("managed_policy_arn"))
+	return terra.ReferenceAsString(smpa.ref.Append("managed_policy_arn"))
 }
 
+// ManagedPolicyName returns a reference to field managed_policy_name of aws_ssoadmin_managed_policy_attachment.
 func (smpa ssoadminManagedPolicyAttachmentAttributes) ManagedPolicyName() terra.StringValue {
-	return terra.ReferenceString(smpa.ref.Append("managed_policy_name"))
+	return terra.ReferenceAsString(smpa.ref.Append("managed_policy_name"))
 }
 
+// PermissionSetArn returns a reference to field permission_set_arn of aws_ssoadmin_managed_policy_attachment.
 func (smpa ssoadminManagedPolicyAttachmentAttributes) PermissionSetArn() terra.StringValue {
-	return terra.ReferenceString(smpa.ref.Append("permission_set_arn"))
+	return terra.ReferenceAsString(smpa.ref.Append("permission_set_arn"))
 }
 
 type ssoadminManagedPolicyAttachmentState struct {

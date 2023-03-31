@@ -57,11 +57,11 @@ func (r RolesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RolesAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("role_arn"))
+	return terra.ReferenceAsString(r.ref.Append("role_arn"))
 }
 
 func (r RolesAttributes) RoleType() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("role_type"))
+	return terra.ReferenceAsString(r.ref.Append("role_type"))
 }
 
 type RolesAllAttributes struct {
@@ -81,11 +81,11 @@ func (ra RolesAllAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ra RolesAllAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(ra.ref.Append("role_arn"))
+	return terra.ReferenceAsString(ra.ref.Append("role_arn"))
 }
 
 func (ra RolesAllAttributes) RoleType() terra.StringValue {
-	return terra.ReferenceString(ra.ref.Append("role_type"))
+	return terra.ReferenceAsString(ra.ref.Append("role_type"))
 }
 
 type AssessmentReportsDestinationAttributes struct {
@@ -105,11 +105,11 @@ func (ard AssessmentReportsDestinationAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (ard AssessmentReportsDestinationAttributes) Destination() terra.StringValue {
-	return terra.ReferenceString(ard.ref.Append("destination"))
+	return terra.ReferenceAsString(ard.ref.Append("destination"))
 }
 
 func (ard AssessmentReportsDestinationAttributes) DestinationType() terra.StringValue {
-	return terra.ReferenceString(ard.ref.Append("destination_type"))
+	return terra.ReferenceAsString(ard.ref.Append("destination_type"))
 }
 
 type ScopeAttributes struct {
@@ -129,11 +129,11 @@ func (s ScopeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s ScopeAttributes) AwsAccounts() terra.SetValue[AwsAccountsAttributes] {
-	return terra.ReferenceSet[AwsAccountsAttributes](s.ref.Append("aws_accounts"))
+	return terra.ReferenceAsSet[AwsAccountsAttributes](s.ref.Append("aws_accounts"))
 }
 
 func (s ScopeAttributes) AwsServices() terra.SetValue[AwsServicesAttributes] {
-	return terra.ReferenceSet[AwsServicesAttributes](s.ref.Append("aws_services"))
+	return terra.ReferenceAsSet[AwsServicesAttributes](s.ref.Append("aws_services"))
 }
 
 type AwsAccountsAttributes struct {
@@ -153,7 +153,7 @@ func (aa AwsAccountsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (aa AwsAccountsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(aa.ref.Append("id"))
+	return terra.ReferenceAsString(aa.ref.Append("id"))
 }
 
 type AwsServicesAttributes struct {
@@ -173,7 +173,7 @@ func (as AwsServicesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (as AwsServicesAttributes) ServiceName() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("service_name"))
+	return terra.ReferenceAsString(as.ref.Append("service_name"))
 }
 
 type RolesState struct {

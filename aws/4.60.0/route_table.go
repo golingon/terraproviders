@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewRouteTable creates a new instance of [RouteTable].
 func NewRouteTable(name string, args RouteTableArgs) *RouteTable {
 	return &RouteTable{
 		Args: args,
@@ -19,28 +20,51 @@ func NewRouteTable(name string, args RouteTableArgs) *RouteTable {
 
 var _ terra.Resource = (*RouteTable)(nil)
 
+// RouteTable represents the Terraform resource aws_route_table.
 type RouteTable struct {
-	Name  string
-	Args  RouteTableArgs
-	state *routeTableState
+	Name      string
+	Args      RouteTableArgs
+	state     *routeTableState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RouteTable].
 func (rt *RouteTable) Type() string {
 	return "aws_route_table"
 }
 
+// LocalName returns the local name for [RouteTable].
 func (rt *RouteTable) LocalName() string {
 	return rt.Name
 }
 
+// Configuration returns the configuration (args) for [RouteTable].
 func (rt *RouteTable) Configuration() interface{} {
 	return rt.Args
 }
 
+// DependOn is used for other resources to depend on [RouteTable].
+func (rt *RouteTable) DependOn() terra.Reference {
+	return terra.ReferenceResource(rt)
+}
+
+// Dependencies returns the list of resources [RouteTable] depends_on.
+func (rt *RouteTable) Dependencies() terra.Dependencies {
+	return rt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RouteTable].
+func (rt *RouteTable) LifecycleManagement() *terra.Lifecycle {
+	return rt.Lifecycle
+}
+
+// Attributes returns the attributes for [RouteTable].
 func (rt *RouteTable) Attributes() routeTableAttributes {
 	return routeTableAttributes{ref: terra.ReferenceResource(rt)}
 }
 
+// ImportState imports the given attribute values into [RouteTable]'s state.
 func (rt *RouteTable) ImportState(av io.Reader) error {
 	rt.state = &routeTableState{}
 	if err := json.NewDecoder(av).Decode(rt.state); err != nil {
@@ -49,10 +73,12 @@ func (rt *RouteTable) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RouteTable] has state.
 func (rt *RouteTable) State() (*routeTableState, bool) {
 	return rt.state, rt.state != nil
 }
 
+// StateMust returns the state for [RouteTable]. Panics if the state is nil.
 func (rt *RouteTable) StateMust() *routeTableState {
 	if rt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rt.Type(), rt.LocalName()))
@@ -60,10 +86,7 @@ func (rt *RouteTable) StateMust() *routeTableState {
 	return rt.state
 }
 
-func (rt *RouteTable) DependOn() terra.Reference {
-	return terra.ReferenceResource(rt)
-}
-
+// RouteTableArgs contains the configurations for aws_route_table.
 type RouteTableArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,47 +102,52 @@ type RouteTableArgs struct {
 	Route []routetable.Route `hcl:"route,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *routetable.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that RouteTable depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type routeTableAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_route_table.
 func (rt routeTableAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("arn"))
+	return terra.ReferenceAsString(rt.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_route_table.
 func (rt routeTableAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("id"))
+	return terra.ReferenceAsString(rt.ref.Append("id"))
 }
 
+// OwnerId returns a reference to field owner_id of aws_route_table.
 func (rt routeTableAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("owner_id"))
+	return terra.ReferenceAsString(rt.ref.Append("owner_id"))
 }
 
+// PropagatingVgws returns a reference to field propagating_vgws of aws_route_table.
 func (rt routeTableAttributes) PropagatingVgws() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rt.ref.Append("propagating_vgws"))
+	return terra.ReferenceAsSet[terra.StringValue](rt.ref.Append("propagating_vgws"))
 }
 
+// Tags returns a reference to field tags of aws_route_table.
 func (rt routeTableAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rt.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rt.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_route_table.
 func (rt routeTableAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rt.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](rt.ref.Append("tags_all"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_route_table.
 func (rt routeTableAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(rt.ref.Append("vpc_id"))
 }
 
 func (rt routeTableAttributes) Route() terra.SetValue[routetable.RouteAttributes] {
-	return terra.ReferenceSet[routetable.RouteAttributes](rt.ref.Append("route"))
+	return terra.ReferenceAsSet[routetable.RouteAttributes](rt.ref.Append("route"))
 }
 
 func (rt routeTableAttributes) Timeouts() routetable.TimeoutsAttributes {
-	return terra.ReferenceSingle[routetable.TimeoutsAttributes](rt.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[routetable.TimeoutsAttributes](rt.ref.Append("timeouts"))
 }
 
 type routeTableState struct {

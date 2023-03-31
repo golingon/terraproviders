@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataSqsQueue creates a new instance of [DataSqsQueue].
 func NewDataSqsQueue(name string, args DataSqsQueueArgs) *DataSqsQueue {
 	return &DataSqsQueue{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataSqsQueue(name string, args DataSqsQueueArgs) *DataSqsQueue {
 
 var _ terra.DataResource = (*DataSqsQueue)(nil)
 
+// DataSqsQueue represents the Terraform data resource aws_sqs_queue.
 type DataSqsQueue struct {
 	Name string
 	Args DataSqsQueueArgs
 }
 
+// DataSource returns the Terraform object type for [DataSqsQueue].
 func (sq *DataSqsQueue) DataSource() string {
 	return "aws_sqs_queue"
 }
 
+// LocalName returns the local name for [DataSqsQueue].
 func (sq *DataSqsQueue) LocalName() string {
 	return sq.Name
 }
 
+// Configuration returns the configuration (args) for [DataSqsQueue].
 func (sq *DataSqsQueue) Configuration() interface{} {
 	return sq.Args
 }
 
+// Attributes returns the attributes for [DataSqsQueue].
 func (sq *DataSqsQueue) Attributes() dataSqsQueueAttributes {
 	return dataSqsQueueAttributes{ref: terra.ReferenceDataResource(sq)}
 }
 
+// DataSqsQueueArgs contains the configurations for aws_sqs_queue.
 type DataSqsQueueArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -46,22 +53,27 @@ type dataSqsQueueAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_sqs_queue.
 func (sq dataSqsQueueAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("arn"))
+	return terra.ReferenceAsString(sq.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_sqs_queue.
 func (sq dataSqsQueueAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("id"))
+	return terra.ReferenceAsString(sq.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_sqs_queue.
 func (sq dataSqsQueueAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("name"))
+	return terra.ReferenceAsString(sq.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_sqs_queue.
 func (sq dataSqsQueueAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sq.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sq.ref.Append("tags"))
 }
 
+// Url returns a reference to field url of aws_sqs_queue.
 func (sq dataSqsQueueAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(sq.ref.Append("url"))
+	return terra.ReferenceAsString(sq.ref.Append("url"))
 }

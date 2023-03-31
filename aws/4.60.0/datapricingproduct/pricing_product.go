@@ -31,11 +31,11 @@ func (f FiltersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FiltersAttributes) Field() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("field"))
+	return terra.ReferenceAsString(f.ref.Append("field"))
 }
 
 func (f FiltersAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("value"))
+	return terra.ReferenceAsString(f.ref.Append("value"))
 }
 
 type FiltersState struct {

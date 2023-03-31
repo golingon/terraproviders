@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEmrserverlessApplication creates a new instance of [EmrserverlessApplication].
 func NewEmrserverlessApplication(name string, args EmrserverlessApplicationArgs) *EmrserverlessApplication {
 	return &EmrserverlessApplication{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEmrserverlessApplication(name string, args EmrserverlessApplicationArgs)
 
 var _ terra.Resource = (*EmrserverlessApplication)(nil)
 
+// EmrserverlessApplication represents the Terraform resource aws_emrserverless_application.
 type EmrserverlessApplication struct {
-	Name  string
-	Args  EmrserverlessApplicationArgs
-	state *emrserverlessApplicationState
+	Name      string
+	Args      EmrserverlessApplicationArgs
+	state     *emrserverlessApplicationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EmrserverlessApplication].
 func (ea *EmrserverlessApplication) Type() string {
 	return "aws_emrserverless_application"
 }
 
+// LocalName returns the local name for [EmrserverlessApplication].
 func (ea *EmrserverlessApplication) LocalName() string {
 	return ea.Name
 }
 
+// Configuration returns the configuration (args) for [EmrserverlessApplication].
 func (ea *EmrserverlessApplication) Configuration() interface{} {
 	return ea.Args
 }
 
+// DependOn is used for other resources to depend on [EmrserverlessApplication].
+func (ea *EmrserverlessApplication) DependOn() terra.Reference {
+	return terra.ReferenceResource(ea)
+}
+
+// Dependencies returns the list of resources [EmrserverlessApplication] depends_on.
+func (ea *EmrserverlessApplication) Dependencies() terra.Dependencies {
+	return ea.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EmrserverlessApplication].
+func (ea *EmrserverlessApplication) LifecycleManagement() *terra.Lifecycle {
+	return ea.Lifecycle
+}
+
+// Attributes returns the attributes for [EmrserverlessApplication].
 func (ea *EmrserverlessApplication) Attributes() emrserverlessApplicationAttributes {
 	return emrserverlessApplicationAttributes{ref: terra.ReferenceResource(ea)}
 }
 
+// ImportState imports the given attribute values into [EmrserverlessApplication]'s state.
 func (ea *EmrserverlessApplication) ImportState(av io.Reader) error {
 	ea.state = &emrserverlessApplicationState{}
 	if err := json.NewDecoder(av).Decode(ea.state); err != nil {
@@ -49,10 +73,12 @@ func (ea *EmrserverlessApplication) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EmrserverlessApplication] has state.
 func (ea *EmrserverlessApplication) State() (*emrserverlessApplicationState, bool) {
 	return ea.state, ea.state != nil
 }
 
+// StateMust returns the state for [EmrserverlessApplication]. Panics if the state is nil.
 func (ea *EmrserverlessApplication) StateMust() *emrserverlessApplicationState {
 	if ea.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ea.Type(), ea.LocalName()))
@@ -60,10 +86,7 @@ func (ea *EmrserverlessApplication) StateMust() *emrserverlessApplicationState {
 	return ea.state
 }
 
-func (ea *EmrserverlessApplication) DependOn() terra.Reference {
-	return terra.ReferenceResource(ea)
-}
-
+// EmrserverlessApplicationArgs contains the configurations for aws_emrserverless_application.
 type EmrserverlessApplicationArgs struct {
 	// Architecture: string, optional
 	Architecture terra.StringValue `hcl:"architecture,attr"`
@@ -89,63 +112,69 @@ type EmrserverlessApplicationArgs struct {
 	MaximumCapacity *emrserverlessapplication.MaximumCapacity `hcl:"maximum_capacity,block"`
 	// NetworkConfiguration: optional
 	NetworkConfiguration *emrserverlessapplication.NetworkConfiguration `hcl:"network_configuration,block"`
-	// DependsOn contains resources that EmrserverlessApplication depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type emrserverlessApplicationAttributes struct {
 	ref terra.Reference
 }
 
+// Architecture returns a reference to field architecture of aws_emrserverless_application.
 func (ea emrserverlessApplicationAttributes) Architecture() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("architecture"))
+	return terra.ReferenceAsString(ea.ref.Append("architecture"))
 }
 
+// Arn returns a reference to field arn of aws_emrserverless_application.
 func (ea emrserverlessApplicationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("arn"))
+	return terra.ReferenceAsString(ea.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_emrserverless_application.
 func (ea emrserverlessApplicationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("id"))
+	return terra.ReferenceAsString(ea.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_emrserverless_application.
 func (ea emrserverlessApplicationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("name"))
+	return terra.ReferenceAsString(ea.ref.Append("name"))
 }
 
+// ReleaseLabel returns a reference to field release_label of aws_emrserverless_application.
 func (ea emrserverlessApplicationAttributes) ReleaseLabel() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("release_label"))
+	return terra.ReferenceAsString(ea.ref.Append("release_label"))
 }
 
+// Tags returns a reference to field tags of aws_emrserverless_application.
 func (ea emrserverlessApplicationAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ea.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ea.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_emrserverless_application.
 func (ea emrserverlessApplicationAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ea.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ea.ref.Append("tags_all"))
 }
 
+// Type returns a reference to field type of aws_emrserverless_application.
 func (ea emrserverlessApplicationAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("type"))
+	return terra.ReferenceAsString(ea.ref.Append("type"))
 }
 
 func (ea emrserverlessApplicationAttributes) AutoStartConfiguration() terra.ListValue[emrserverlessapplication.AutoStartConfigurationAttributes] {
-	return terra.ReferenceList[emrserverlessapplication.AutoStartConfigurationAttributes](ea.ref.Append("auto_start_configuration"))
+	return terra.ReferenceAsList[emrserverlessapplication.AutoStartConfigurationAttributes](ea.ref.Append("auto_start_configuration"))
 }
 
 func (ea emrserverlessApplicationAttributes) AutoStopConfiguration() terra.ListValue[emrserverlessapplication.AutoStopConfigurationAttributes] {
-	return terra.ReferenceList[emrserverlessapplication.AutoStopConfigurationAttributes](ea.ref.Append("auto_stop_configuration"))
+	return terra.ReferenceAsList[emrserverlessapplication.AutoStopConfigurationAttributes](ea.ref.Append("auto_stop_configuration"))
 }
 
 func (ea emrserverlessApplicationAttributes) InitialCapacity() terra.SetValue[emrserverlessapplication.InitialCapacityAttributes] {
-	return terra.ReferenceSet[emrserverlessapplication.InitialCapacityAttributes](ea.ref.Append("initial_capacity"))
+	return terra.ReferenceAsSet[emrserverlessapplication.InitialCapacityAttributes](ea.ref.Append("initial_capacity"))
 }
 
 func (ea emrserverlessApplicationAttributes) MaximumCapacity() terra.ListValue[emrserverlessapplication.MaximumCapacityAttributes] {
-	return terra.ReferenceList[emrserverlessapplication.MaximumCapacityAttributes](ea.ref.Append("maximum_capacity"))
+	return terra.ReferenceAsList[emrserverlessapplication.MaximumCapacityAttributes](ea.ref.Append("maximum_capacity"))
 }
 
 func (ea emrserverlessApplicationAttributes) NetworkConfiguration() terra.ListValue[emrserverlessapplication.NetworkConfigurationAttributes] {
-	return terra.ReferenceList[emrserverlessapplication.NetworkConfigurationAttributes](ea.ref.Append("network_configuration"))
+	return terra.ReferenceAsList[emrserverlessapplication.NetworkConfigurationAttributes](ea.ref.Append("network_configuration"))
 }
 
 type emrserverlessApplicationState struct {

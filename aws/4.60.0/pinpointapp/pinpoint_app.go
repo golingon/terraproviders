@@ -51,15 +51,15 @@ func (ch CampaignHookAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ch CampaignHookAttributes) LambdaFunctionName() terra.StringValue {
-	return terra.ReferenceString(ch.ref.Append("lambda_function_name"))
+	return terra.ReferenceAsString(ch.ref.Append("lambda_function_name"))
 }
 
 func (ch CampaignHookAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(ch.ref.Append("mode"))
+	return terra.ReferenceAsString(ch.ref.Append("mode"))
 }
 
 func (ch CampaignHookAttributes) WebUrl() terra.StringValue {
-	return terra.ReferenceString(ch.ref.Append("web_url"))
+	return terra.ReferenceAsString(ch.ref.Append("web_url"))
 }
 
 type LimitsAttributes struct {
@@ -79,19 +79,19 @@ func (l LimitsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (l LimitsAttributes) Daily() terra.NumberValue {
-	return terra.ReferenceNumber(l.ref.Append("daily"))
+	return terra.ReferenceAsNumber(l.ref.Append("daily"))
 }
 
 func (l LimitsAttributes) MaximumDuration() terra.NumberValue {
-	return terra.ReferenceNumber(l.ref.Append("maximum_duration"))
+	return terra.ReferenceAsNumber(l.ref.Append("maximum_duration"))
 }
 
 func (l LimitsAttributes) MessagesPerSecond() terra.NumberValue {
-	return terra.ReferenceNumber(l.ref.Append("messages_per_second"))
+	return terra.ReferenceAsNumber(l.ref.Append("messages_per_second"))
 }
 
 func (l LimitsAttributes) Total() terra.NumberValue {
-	return terra.ReferenceNumber(l.ref.Append("total"))
+	return terra.ReferenceAsNumber(l.ref.Append("total"))
 }
 
 type QuietTimeAttributes struct {
@@ -111,11 +111,11 @@ func (qt QuietTimeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (qt QuietTimeAttributes) End() terra.StringValue {
-	return terra.ReferenceString(qt.ref.Append("end"))
+	return terra.ReferenceAsString(qt.ref.Append("end"))
 }
 
 func (qt QuietTimeAttributes) Start() terra.StringValue {
-	return terra.ReferenceString(qt.ref.Append("start"))
+	return terra.ReferenceAsString(qt.ref.Append("start"))
 }
 
 type CampaignHookState struct {

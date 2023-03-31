@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewQldbLedger creates a new instance of [QldbLedger].
 func NewQldbLedger(name string, args QldbLedgerArgs) *QldbLedger {
 	return &QldbLedger{
 		Args: args,
@@ -19,28 +20,51 @@ func NewQldbLedger(name string, args QldbLedgerArgs) *QldbLedger {
 
 var _ terra.Resource = (*QldbLedger)(nil)
 
+// QldbLedger represents the Terraform resource aws_qldb_ledger.
 type QldbLedger struct {
-	Name  string
-	Args  QldbLedgerArgs
-	state *qldbLedgerState
+	Name      string
+	Args      QldbLedgerArgs
+	state     *qldbLedgerState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [QldbLedger].
 func (ql *QldbLedger) Type() string {
 	return "aws_qldb_ledger"
 }
 
+// LocalName returns the local name for [QldbLedger].
 func (ql *QldbLedger) LocalName() string {
 	return ql.Name
 }
 
+// Configuration returns the configuration (args) for [QldbLedger].
 func (ql *QldbLedger) Configuration() interface{} {
 	return ql.Args
 }
 
+// DependOn is used for other resources to depend on [QldbLedger].
+func (ql *QldbLedger) DependOn() terra.Reference {
+	return terra.ReferenceResource(ql)
+}
+
+// Dependencies returns the list of resources [QldbLedger] depends_on.
+func (ql *QldbLedger) Dependencies() terra.Dependencies {
+	return ql.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [QldbLedger].
+func (ql *QldbLedger) LifecycleManagement() *terra.Lifecycle {
+	return ql.Lifecycle
+}
+
+// Attributes returns the attributes for [QldbLedger].
 func (ql *QldbLedger) Attributes() qldbLedgerAttributes {
 	return qldbLedgerAttributes{ref: terra.ReferenceResource(ql)}
 }
 
+// ImportState imports the given attribute values into [QldbLedger]'s state.
 func (ql *QldbLedger) ImportState(av io.Reader) error {
 	ql.state = &qldbLedgerState{}
 	if err := json.NewDecoder(av).Decode(ql.state); err != nil {
@@ -49,10 +73,12 @@ func (ql *QldbLedger) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [QldbLedger] has state.
 func (ql *QldbLedger) State() (*qldbLedgerState, bool) {
 	return ql.state, ql.state != nil
 }
 
+// StateMust returns the state for [QldbLedger]. Panics if the state is nil.
 func (ql *QldbLedger) StateMust() *qldbLedgerState {
 	if ql.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ql.Type(), ql.LocalName()))
@@ -60,10 +86,7 @@ func (ql *QldbLedger) StateMust() *qldbLedgerState {
 	return ql.state
 }
 
-func (ql *QldbLedger) DependOn() terra.Reference {
-	return terra.ReferenceResource(ql)
-}
-
+// QldbLedgerArgs contains the configurations for aws_qldb_ledger.
 type QldbLedgerArgs struct {
 	// DeletionProtection: bool, optional
 	DeletionProtection terra.BoolValue `hcl:"deletion_protection,attr"`
@@ -81,47 +104,53 @@ type QldbLedgerArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Timeouts: optional
 	Timeouts *qldbledger.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that QldbLedger depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type qldbLedgerAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_qldb_ledger.
 func (ql qldbLedgerAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ql.ref.Append("arn"))
+	return terra.ReferenceAsString(ql.ref.Append("arn"))
 }
 
+// DeletionProtection returns a reference to field deletion_protection of aws_qldb_ledger.
 func (ql qldbLedgerAttributes) DeletionProtection() terra.BoolValue {
-	return terra.ReferenceBool(ql.ref.Append("deletion_protection"))
+	return terra.ReferenceAsBool(ql.ref.Append("deletion_protection"))
 }
 
+// Id returns a reference to field id of aws_qldb_ledger.
 func (ql qldbLedgerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ql.ref.Append("id"))
+	return terra.ReferenceAsString(ql.ref.Append("id"))
 }
 
+// KmsKey returns a reference to field kms_key of aws_qldb_ledger.
 func (ql qldbLedgerAttributes) KmsKey() terra.StringValue {
-	return terra.ReferenceString(ql.ref.Append("kms_key"))
+	return terra.ReferenceAsString(ql.ref.Append("kms_key"))
 }
 
+// Name returns a reference to field name of aws_qldb_ledger.
 func (ql qldbLedgerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ql.ref.Append("name"))
+	return terra.ReferenceAsString(ql.ref.Append("name"))
 }
 
+// PermissionsMode returns a reference to field permissions_mode of aws_qldb_ledger.
 func (ql qldbLedgerAttributes) PermissionsMode() terra.StringValue {
-	return terra.ReferenceString(ql.ref.Append("permissions_mode"))
+	return terra.ReferenceAsString(ql.ref.Append("permissions_mode"))
 }
 
+// Tags returns a reference to field tags of aws_qldb_ledger.
 func (ql qldbLedgerAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ql.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ql.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_qldb_ledger.
 func (ql qldbLedgerAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ql.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ql.ref.Append("tags_all"))
 }
 
 func (ql qldbLedgerAttributes) Timeouts() qldbledger.TimeoutsAttributes {
-	return terra.ReferenceSingle[qldbledger.TimeoutsAttributes](ql.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[qldbledger.TimeoutsAttributes](ql.ref.Append("timeouts"))
 }
 
 type qldbLedgerState struct {

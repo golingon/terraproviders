@@ -71,11 +71,11 @@ func (aes AdvancedEventSelectorAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (aes AdvancedEventSelectorAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(aes.ref.Append("name"))
+	return terra.ReferenceAsString(aes.ref.Append("name"))
 }
 
 func (aes AdvancedEventSelectorAttributes) FieldSelector() terra.SetValue[FieldSelectorAttributes] {
-	return terra.ReferenceSet[FieldSelectorAttributes](aes.ref.Append("field_selector"))
+	return terra.ReferenceAsSet[FieldSelectorAttributes](aes.ref.Append("field_selector"))
 }
 
 type FieldSelectorAttributes struct {
@@ -95,31 +95,31 @@ func (fs FieldSelectorAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fs FieldSelectorAttributes) EndsWith() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](fs.ref.Append("ends_with"))
+	return terra.ReferenceAsList[terra.StringValue](fs.ref.Append("ends_with"))
 }
 
 func (fs FieldSelectorAttributes) Equals() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](fs.ref.Append("equals"))
+	return terra.ReferenceAsList[terra.StringValue](fs.ref.Append("equals"))
 }
 
 func (fs FieldSelectorAttributes) Field() terra.StringValue {
-	return terra.ReferenceString(fs.ref.Append("field"))
+	return terra.ReferenceAsString(fs.ref.Append("field"))
 }
 
 func (fs FieldSelectorAttributes) NotEndsWith() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](fs.ref.Append("not_ends_with"))
+	return terra.ReferenceAsList[terra.StringValue](fs.ref.Append("not_ends_with"))
 }
 
 func (fs FieldSelectorAttributes) NotEquals() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](fs.ref.Append("not_equals"))
+	return terra.ReferenceAsList[terra.StringValue](fs.ref.Append("not_equals"))
 }
 
 func (fs FieldSelectorAttributes) NotStartsWith() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](fs.ref.Append("not_starts_with"))
+	return terra.ReferenceAsList[terra.StringValue](fs.ref.Append("not_starts_with"))
 }
 
 func (fs FieldSelectorAttributes) StartsWith() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](fs.ref.Append("starts_with"))
+	return terra.ReferenceAsList[terra.StringValue](fs.ref.Append("starts_with"))
 }
 
 type EventSelectorAttributes struct {
@@ -139,19 +139,19 @@ func (es EventSelectorAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (es EventSelectorAttributes) ExcludeManagementEventSources() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](es.ref.Append("exclude_management_event_sources"))
+	return terra.ReferenceAsSet[terra.StringValue](es.ref.Append("exclude_management_event_sources"))
 }
 
 func (es EventSelectorAttributes) IncludeManagementEvents() terra.BoolValue {
-	return terra.ReferenceBool(es.ref.Append("include_management_events"))
+	return terra.ReferenceAsBool(es.ref.Append("include_management_events"))
 }
 
 func (es EventSelectorAttributes) ReadWriteType() terra.StringValue {
-	return terra.ReferenceString(es.ref.Append("read_write_type"))
+	return terra.ReferenceAsString(es.ref.Append("read_write_type"))
 }
 
 func (es EventSelectorAttributes) DataResource() terra.ListValue[DataResourceAttributes] {
-	return terra.ReferenceList[DataResourceAttributes](es.ref.Append("data_resource"))
+	return terra.ReferenceAsList[DataResourceAttributes](es.ref.Append("data_resource"))
 }
 
 type DataResourceAttributes struct {
@@ -171,11 +171,11 @@ func (dr DataResourceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dr DataResourceAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("type"))
+	return terra.ReferenceAsString(dr.ref.Append("type"))
 }
 
 func (dr DataResourceAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](dr.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](dr.ref.Append("values"))
 }
 
 type InsightSelectorAttributes struct {
@@ -195,7 +195,7 @@ func (is InsightSelectorAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (is InsightSelectorAttributes) InsightType() terra.StringValue {
-	return terra.ReferenceString(is.ref.Append("insight_type"))
+	return terra.ReferenceAsString(is.ref.Append("insight_type"))
 }
 
 type AdvancedEventSelectorState struct {

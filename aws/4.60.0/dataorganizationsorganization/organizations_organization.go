@@ -35,23 +35,23 @@ func (a AccountsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AccountsAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("arn"))
+	return terra.ReferenceAsString(a.ref.Append("arn"))
 }
 
 func (a AccountsAttributes) Email() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("email"))
+	return terra.ReferenceAsString(a.ref.Append("email"))
 }
 
 func (a AccountsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("id"))
+	return terra.ReferenceAsString(a.ref.Append("id"))
 }
 
 func (a AccountsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("name"))
+	return terra.ReferenceAsString(a.ref.Append("name"))
 }
 
 func (a AccountsAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("status"))
+	return terra.ReferenceAsString(a.ref.Append("status"))
 }
 
 type NonMasterAccountsAttributes struct {
@@ -71,23 +71,23 @@ func (nma NonMasterAccountsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nma NonMasterAccountsAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(nma.ref.Append("arn"))
+	return terra.ReferenceAsString(nma.ref.Append("arn"))
 }
 
 func (nma NonMasterAccountsAttributes) Email() terra.StringValue {
-	return terra.ReferenceString(nma.ref.Append("email"))
+	return terra.ReferenceAsString(nma.ref.Append("email"))
 }
 
 func (nma NonMasterAccountsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nma.ref.Append("id"))
+	return terra.ReferenceAsString(nma.ref.Append("id"))
 }
 
 func (nma NonMasterAccountsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(nma.ref.Append("name"))
+	return terra.ReferenceAsString(nma.ref.Append("name"))
 }
 
 func (nma NonMasterAccountsAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(nma.ref.Append("status"))
+	return terra.ReferenceAsString(nma.ref.Append("status"))
 }
 
 type RootsAttributes struct {
@@ -107,19 +107,19 @@ func (r RootsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RootsAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("arn"))
+	return terra.ReferenceAsString(r.ref.Append("arn"))
 }
 
 func (r RootsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("id"))
+	return terra.ReferenceAsString(r.ref.Append("id"))
 }
 
 func (r RootsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("name"))
+	return terra.ReferenceAsString(r.ref.Append("name"))
 }
 
 func (r RootsAttributes) PolicyTypes() terra.ListValue[PolicyTypesAttributes] {
-	return terra.ReferenceList[PolicyTypesAttributes](r.ref.Append("policy_types"))
+	return terra.ReferenceAsList[PolicyTypesAttributes](r.ref.Append("policy_types"))
 }
 
 type PolicyTypesAttributes struct {
@@ -139,11 +139,11 @@ func (pt PolicyTypesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pt PolicyTypesAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(pt.ref.Append("status"))
+	return terra.ReferenceAsString(pt.ref.Append("status"))
 }
 
 func (pt PolicyTypesAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(pt.ref.Append("type"))
+	return terra.ReferenceAsString(pt.ref.Append("type"))
 }
 
 type AccountsState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewNetworkfirewallFirewall creates a new instance of [NetworkfirewallFirewall].
 func NewNetworkfirewallFirewall(name string, args NetworkfirewallFirewallArgs) *NetworkfirewallFirewall {
 	return &NetworkfirewallFirewall{
 		Args: args,
@@ -19,28 +20,51 @@ func NewNetworkfirewallFirewall(name string, args NetworkfirewallFirewallArgs) *
 
 var _ terra.Resource = (*NetworkfirewallFirewall)(nil)
 
+// NetworkfirewallFirewall represents the Terraform resource aws_networkfirewall_firewall.
 type NetworkfirewallFirewall struct {
-	Name  string
-	Args  NetworkfirewallFirewallArgs
-	state *networkfirewallFirewallState
+	Name      string
+	Args      NetworkfirewallFirewallArgs
+	state     *networkfirewallFirewallState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [NetworkfirewallFirewall].
 func (nf *NetworkfirewallFirewall) Type() string {
 	return "aws_networkfirewall_firewall"
 }
 
+// LocalName returns the local name for [NetworkfirewallFirewall].
 func (nf *NetworkfirewallFirewall) LocalName() string {
 	return nf.Name
 }
 
+// Configuration returns the configuration (args) for [NetworkfirewallFirewall].
 func (nf *NetworkfirewallFirewall) Configuration() interface{} {
 	return nf.Args
 }
 
+// DependOn is used for other resources to depend on [NetworkfirewallFirewall].
+func (nf *NetworkfirewallFirewall) DependOn() terra.Reference {
+	return terra.ReferenceResource(nf)
+}
+
+// Dependencies returns the list of resources [NetworkfirewallFirewall] depends_on.
+func (nf *NetworkfirewallFirewall) Dependencies() terra.Dependencies {
+	return nf.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [NetworkfirewallFirewall].
+func (nf *NetworkfirewallFirewall) LifecycleManagement() *terra.Lifecycle {
+	return nf.Lifecycle
+}
+
+// Attributes returns the attributes for [NetworkfirewallFirewall].
 func (nf *NetworkfirewallFirewall) Attributes() networkfirewallFirewallAttributes {
 	return networkfirewallFirewallAttributes{ref: terra.ReferenceResource(nf)}
 }
 
+// ImportState imports the given attribute values into [NetworkfirewallFirewall]'s state.
 func (nf *NetworkfirewallFirewall) ImportState(av io.Reader) error {
 	nf.state = &networkfirewallFirewallState{}
 	if err := json.NewDecoder(av).Decode(nf.state); err != nil {
@@ -49,10 +73,12 @@ func (nf *NetworkfirewallFirewall) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [NetworkfirewallFirewall] has state.
 func (nf *NetworkfirewallFirewall) State() (*networkfirewallFirewallState, bool) {
 	return nf.state, nf.state != nil
 }
 
+// StateMust returns the state for [NetworkfirewallFirewall]. Panics if the state is nil.
 func (nf *NetworkfirewallFirewall) StateMust() *networkfirewallFirewallState {
 	if nf.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", nf.Type(), nf.LocalName()))
@@ -60,10 +86,7 @@ func (nf *NetworkfirewallFirewall) StateMust() *networkfirewallFirewallState {
 	return nf.state
 }
 
-func (nf *NetworkfirewallFirewall) DependOn() terra.Reference {
-	return terra.ReferenceResource(nf)
-}
-
+// NetworkfirewallFirewallArgs contains the configurations for aws_networkfirewall_firewall.
 type NetworkfirewallFirewallArgs struct {
 	// DeleteProtection: bool, optional
 	DeleteProtection terra.BoolValue `hcl:"delete_protection,attr"`
@@ -91,71 +114,81 @@ type NetworkfirewallFirewallArgs struct {
 	EncryptionConfiguration *networkfirewallfirewall.EncryptionConfiguration `hcl:"encryption_configuration,block"`
 	// SubnetMapping: min=1
 	SubnetMapping []networkfirewallfirewall.SubnetMapping `hcl:"subnet_mapping,block" validate:"min=1"`
-	// DependsOn contains resources that NetworkfirewallFirewall depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type networkfirewallFirewallAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_networkfirewall_firewall.
 func (nf networkfirewallFirewallAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(nf.ref.Append("arn"))
+	return terra.ReferenceAsString(nf.ref.Append("arn"))
 }
 
+// DeleteProtection returns a reference to field delete_protection of aws_networkfirewall_firewall.
 func (nf networkfirewallFirewallAttributes) DeleteProtection() terra.BoolValue {
-	return terra.ReferenceBool(nf.ref.Append("delete_protection"))
+	return terra.ReferenceAsBool(nf.ref.Append("delete_protection"))
 }
 
+// Description returns a reference to field description of aws_networkfirewall_firewall.
 func (nf networkfirewallFirewallAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(nf.ref.Append("description"))
+	return terra.ReferenceAsString(nf.ref.Append("description"))
 }
 
+// FirewallPolicyArn returns a reference to field firewall_policy_arn of aws_networkfirewall_firewall.
 func (nf networkfirewallFirewallAttributes) FirewallPolicyArn() terra.StringValue {
-	return terra.ReferenceString(nf.ref.Append("firewall_policy_arn"))
+	return terra.ReferenceAsString(nf.ref.Append("firewall_policy_arn"))
 }
 
+// FirewallPolicyChangeProtection returns a reference to field firewall_policy_change_protection of aws_networkfirewall_firewall.
 func (nf networkfirewallFirewallAttributes) FirewallPolicyChangeProtection() terra.BoolValue {
-	return terra.ReferenceBool(nf.ref.Append("firewall_policy_change_protection"))
+	return terra.ReferenceAsBool(nf.ref.Append("firewall_policy_change_protection"))
 }
 
+// Id returns a reference to field id of aws_networkfirewall_firewall.
 func (nf networkfirewallFirewallAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nf.ref.Append("id"))
+	return terra.ReferenceAsString(nf.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_networkfirewall_firewall.
 func (nf networkfirewallFirewallAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(nf.ref.Append("name"))
+	return terra.ReferenceAsString(nf.ref.Append("name"))
 }
 
+// SubnetChangeProtection returns a reference to field subnet_change_protection of aws_networkfirewall_firewall.
 func (nf networkfirewallFirewallAttributes) SubnetChangeProtection() terra.BoolValue {
-	return terra.ReferenceBool(nf.ref.Append("subnet_change_protection"))
+	return terra.ReferenceAsBool(nf.ref.Append("subnet_change_protection"))
 }
 
+// Tags returns a reference to field tags of aws_networkfirewall_firewall.
 func (nf networkfirewallFirewallAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](nf.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](nf.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_networkfirewall_firewall.
 func (nf networkfirewallFirewallAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](nf.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](nf.ref.Append("tags_all"))
 }
 
+// UpdateToken returns a reference to field update_token of aws_networkfirewall_firewall.
 func (nf networkfirewallFirewallAttributes) UpdateToken() terra.StringValue {
-	return terra.ReferenceString(nf.ref.Append("update_token"))
+	return terra.ReferenceAsString(nf.ref.Append("update_token"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_networkfirewall_firewall.
 func (nf networkfirewallFirewallAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(nf.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(nf.ref.Append("vpc_id"))
 }
 
 func (nf networkfirewallFirewallAttributes) FirewallStatus() terra.ListValue[networkfirewallfirewall.FirewallStatusAttributes] {
-	return terra.ReferenceList[networkfirewallfirewall.FirewallStatusAttributes](nf.ref.Append("firewall_status"))
+	return terra.ReferenceAsList[networkfirewallfirewall.FirewallStatusAttributes](nf.ref.Append("firewall_status"))
 }
 
 func (nf networkfirewallFirewallAttributes) EncryptionConfiguration() terra.ListValue[networkfirewallfirewall.EncryptionConfigurationAttributes] {
-	return terra.ReferenceList[networkfirewallfirewall.EncryptionConfigurationAttributes](nf.ref.Append("encryption_configuration"))
+	return terra.ReferenceAsList[networkfirewallfirewall.EncryptionConfigurationAttributes](nf.ref.Append("encryption_configuration"))
 }
 
 func (nf networkfirewallFirewallAttributes) SubnetMapping() terra.SetValue[networkfirewallfirewall.SubnetMappingAttributes] {
-	return terra.ReferenceSet[networkfirewallfirewall.SubnetMappingAttributes](nf.ref.Append("subnet_mapping"))
+	return terra.ReferenceAsSet[networkfirewallfirewall.SubnetMappingAttributes](nf.ref.Append("subnet_mapping"))
 }
 
 type networkfirewallFirewallState struct {

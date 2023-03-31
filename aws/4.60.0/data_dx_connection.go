@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataDxConnection creates a new instance of [DataDxConnection].
 func NewDataDxConnection(name string, args DataDxConnectionArgs) *DataDxConnection {
 	return &DataDxConnection{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataDxConnection(name string, args DataDxConnectionArgs) *DataDxConnecti
 
 var _ terra.DataResource = (*DataDxConnection)(nil)
 
+// DataDxConnection represents the Terraform data resource aws_dx_connection.
 type DataDxConnection struct {
 	Name string
 	Args DataDxConnectionArgs
 }
 
+// DataSource returns the Terraform object type for [DataDxConnection].
 func (dc *DataDxConnection) DataSource() string {
 	return "aws_dx_connection"
 }
 
+// LocalName returns the local name for [DataDxConnection].
 func (dc *DataDxConnection) LocalName() string {
 	return dc.Name
 }
 
+// Configuration returns the configuration (args) for [DataDxConnection].
 func (dc *DataDxConnection) Configuration() interface{} {
 	return dc.Args
 }
 
+// Attributes returns the attributes for [DataDxConnection].
 func (dc *DataDxConnection) Attributes() dataDxConnectionAttributes {
 	return dataDxConnectionAttributes{ref: terra.ReferenceDataResource(dc)}
 }
 
+// DataDxConnectionArgs contains the configurations for aws_dx_connection.
 type DataDxConnectionArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -46,42 +53,52 @@ type dataDxConnectionAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_dx_connection.
 func (dc dataDxConnectionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("arn"))
+	return terra.ReferenceAsString(dc.ref.Append("arn"))
 }
 
+// AwsDevice returns a reference to field aws_device of aws_dx_connection.
 func (dc dataDxConnectionAttributes) AwsDevice() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("aws_device"))
+	return terra.ReferenceAsString(dc.ref.Append("aws_device"))
 }
 
+// Bandwidth returns a reference to field bandwidth of aws_dx_connection.
 func (dc dataDxConnectionAttributes) Bandwidth() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("bandwidth"))
+	return terra.ReferenceAsString(dc.ref.Append("bandwidth"))
 }
 
+// Id returns a reference to field id of aws_dx_connection.
 func (dc dataDxConnectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("id"))
+	return terra.ReferenceAsString(dc.ref.Append("id"))
 }
 
+// Location returns a reference to field location of aws_dx_connection.
 func (dc dataDxConnectionAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("location"))
+	return terra.ReferenceAsString(dc.ref.Append("location"))
 }
 
+// Name returns a reference to field name of aws_dx_connection.
 func (dc dataDxConnectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("name"))
+	return terra.ReferenceAsString(dc.ref.Append("name"))
 }
 
+// OwnerAccountId returns a reference to field owner_account_id of aws_dx_connection.
 func (dc dataDxConnectionAttributes) OwnerAccountId() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("owner_account_id"))
+	return terra.ReferenceAsString(dc.ref.Append("owner_account_id"))
 }
 
+// ProviderName returns a reference to field provider_name of aws_dx_connection.
 func (dc dataDxConnectionAttributes) ProviderName() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("provider_name"))
+	return terra.ReferenceAsString(dc.ref.Append("provider_name"))
 }
 
+// Tags returns a reference to field tags of aws_dx_connection.
 func (dc dataDxConnectionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dc.ref.Append("tags"))
 }
 
+// VlanId returns a reference to field vlan_id of aws_dx_connection.
 func (dc dataDxConnectionAttributes) VlanId() terra.StringValue {
-	return terra.ReferenceString(dc.ref.Append("vlan_id"))
+	return terra.ReferenceAsString(dc.ref.Append("vlan_id"))
 }

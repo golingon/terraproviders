@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAppmeshGatewayRoute creates a new instance of [AppmeshGatewayRoute].
 func NewAppmeshGatewayRoute(name string, args AppmeshGatewayRouteArgs) *AppmeshGatewayRoute {
 	return &AppmeshGatewayRoute{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAppmeshGatewayRoute(name string, args AppmeshGatewayRouteArgs) *AppmeshG
 
 var _ terra.Resource = (*AppmeshGatewayRoute)(nil)
 
+// AppmeshGatewayRoute represents the Terraform resource aws_appmesh_gateway_route.
 type AppmeshGatewayRoute struct {
-	Name  string
-	Args  AppmeshGatewayRouteArgs
-	state *appmeshGatewayRouteState
+	Name      string
+	Args      AppmeshGatewayRouteArgs
+	state     *appmeshGatewayRouteState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppmeshGatewayRoute].
 func (agr *AppmeshGatewayRoute) Type() string {
 	return "aws_appmesh_gateway_route"
 }
 
+// LocalName returns the local name for [AppmeshGatewayRoute].
 func (agr *AppmeshGatewayRoute) LocalName() string {
 	return agr.Name
 }
 
+// Configuration returns the configuration (args) for [AppmeshGatewayRoute].
 func (agr *AppmeshGatewayRoute) Configuration() interface{} {
 	return agr.Args
 }
 
+// DependOn is used for other resources to depend on [AppmeshGatewayRoute].
+func (agr *AppmeshGatewayRoute) DependOn() terra.Reference {
+	return terra.ReferenceResource(agr)
+}
+
+// Dependencies returns the list of resources [AppmeshGatewayRoute] depends_on.
+func (agr *AppmeshGatewayRoute) Dependencies() terra.Dependencies {
+	return agr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppmeshGatewayRoute].
+func (agr *AppmeshGatewayRoute) LifecycleManagement() *terra.Lifecycle {
+	return agr.Lifecycle
+}
+
+// Attributes returns the attributes for [AppmeshGatewayRoute].
 func (agr *AppmeshGatewayRoute) Attributes() appmeshGatewayRouteAttributes {
 	return appmeshGatewayRouteAttributes{ref: terra.ReferenceResource(agr)}
 }
 
+// ImportState imports the given attribute values into [AppmeshGatewayRoute]'s state.
 func (agr *AppmeshGatewayRoute) ImportState(av io.Reader) error {
 	agr.state = &appmeshGatewayRouteState{}
 	if err := json.NewDecoder(av).Decode(agr.state); err != nil {
@@ -49,10 +73,12 @@ func (agr *AppmeshGatewayRoute) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppmeshGatewayRoute] has state.
 func (agr *AppmeshGatewayRoute) State() (*appmeshGatewayRouteState, bool) {
 	return agr.state, agr.state != nil
 }
 
+// StateMust returns the state for [AppmeshGatewayRoute]. Panics if the state is nil.
 func (agr *AppmeshGatewayRoute) StateMust() *appmeshGatewayRouteState {
 	if agr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", agr.Type(), agr.LocalName()))
@@ -60,10 +86,7 @@ func (agr *AppmeshGatewayRoute) StateMust() *appmeshGatewayRouteState {
 	return agr.state
 }
 
-func (agr *AppmeshGatewayRoute) DependOn() terra.Reference {
-	return terra.ReferenceResource(agr)
-}
-
+// AppmeshGatewayRouteArgs contains the configurations for aws_appmesh_gateway_route.
 type AppmeshGatewayRouteArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -81,59 +104,68 @@ type AppmeshGatewayRouteArgs struct {
 	VirtualGatewayName terra.StringValue `hcl:"virtual_gateway_name,attr" validate:"required"`
 	// Spec: required
 	Spec *appmeshgatewayroute.Spec `hcl:"spec,block" validate:"required"`
-	// DependsOn contains resources that AppmeshGatewayRoute depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appmeshGatewayRouteAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_appmesh_gateway_route.
 func (agr appmeshGatewayRouteAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(agr.ref.Append("arn"))
+	return terra.ReferenceAsString(agr.ref.Append("arn"))
 }
 
+// CreatedDate returns a reference to field created_date of aws_appmesh_gateway_route.
 func (agr appmeshGatewayRouteAttributes) CreatedDate() terra.StringValue {
-	return terra.ReferenceString(agr.ref.Append("created_date"))
+	return terra.ReferenceAsString(agr.ref.Append("created_date"))
 }
 
+// Id returns a reference to field id of aws_appmesh_gateway_route.
 func (agr appmeshGatewayRouteAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(agr.ref.Append("id"))
+	return terra.ReferenceAsString(agr.ref.Append("id"))
 }
 
+// LastUpdatedDate returns a reference to field last_updated_date of aws_appmesh_gateway_route.
 func (agr appmeshGatewayRouteAttributes) LastUpdatedDate() terra.StringValue {
-	return terra.ReferenceString(agr.ref.Append("last_updated_date"))
+	return terra.ReferenceAsString(agr.ref.Append("last_updated_date"))
 }
 
+// MeshName returns a reference to field mesh_name of aws_appmesh_gateway_route.
 func (agr appmeshGatewayRouteAttributes) MeshName() terra.StringValue {
-	return terra.ReferenceString(agr.ref.Append("mesh_name"))
+	return terra.ReferenceAsString(agr.ref.Append("mesh_name"))
 }
 
+// MeshOwner returns a reference to field mesh_owner of aws_appmesh_gateway_route.
 func (agr appmeshGatewayRouteAttributes) MeshOwner() terra.StringValue {
-	return terra.ReferenceString(agr.ref.Append("mesh_owner"))
+	return terra.ReferenceAsString(agr.ref.Append("mesh_owner"))
 }
 
+// Name returns a reference to field name of aws_appmesh_gateway_route.
 func (agr appmeshGatewayRouteAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(agr.ref.Append("name"))
+	return terra.ReferenceAsString(agr.ref.Append("name"))
 }
 
+// ResourceOwner returns a reference to field resource_owner of aws_appmesh_gateway_route.
 func (agr appmeshGatewayRouteAttributes) ResourceOwner() terra.StringValue {
-	return terra.ReferenceString(agr.ref.Append("resource_owner"))
+	return terra.ReferenceAsString(agr.ref.Append("resource_owner"))
 }
 
+// Tags returns a reference to field tags of aws_appmesh_gateway_route.
 func (agr appmeshGatewayRouteAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](agr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](agr.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_appmesh_gateway_route.
 func (agr appmeshGatewayRouteAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](agr.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](agr.ref.Append("tags_all"))
 }
 
+// VirtualGatewayName returns a reference to field virtual_gateway_name of aws_appmesh_gateway_route.
 func (agr appmeshGatewayRouteAttributes) VirtualGatewayName() terra.StringValue {
-	return terra.ReferenceString(agr.ref.Append("virtual_gateway_name"))
+	return terra.ReferenceAsString(agr.ref.Append("virtual_gateway_name"))
 }
 
 func (agr appmeshGatewayRouteAttributes) Spec() terra.ListValue[appmeshgatewayroute.SpecAttributes] {
-	return terra.ReferenceList[appmeshgatewayroute.SpecAttributes](agr.ref.Append("spec"))
+	return terra.ReferenceAsList[appmeshgatewayroute.SpecAttributes](agr.ref.Append("spec"))
 }
 
 type appmeshGatewayRouteState struct {

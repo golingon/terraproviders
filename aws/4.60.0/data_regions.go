@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataRegions creates a new instance of [DataRegions].
 func NewDataRegions(name string, args DataRegionsArgs) *DataRegions {
 	return &DataRegions{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataRegions(name string, args DataRegionsArgs) *DataRegions {
 
 var _ terra.DataResource = (*DataRegions)(nil)
 
+// DataRegions represents the Terraform data resource aws_regions.
 type DataRegions struct {
 	Name string
 	Args DataRegionsArgs
 }
 
+// DataSource returns the Terraform object type for [DataRegions].
 func (r *DataRegions) DataSource() string {
 	return "aws_regions"
 }
 
+// LocalName returns the local name for [DataRegions].
 func (r *DataRegions) LocalName() string {
 	return r.Name
 }
 
+// Configuration returns the configuration (args) for [DataRegions].
 func (r *DataRegions) Configuration() interface{} {
 	return r.Args
 }
 
+// Attributes returns the attributes for [DataRegions].
 func (r *DataRegions) Attributes() dataRegionsAttributes {
 	return dataRegionsAttributes{ref: terra.ReferenceDataResource(r)}
 }
 
+// DataRegionsArgs contains the configurations for aws_regions.
 type DataRegionsArgs struct {
 	// AllRegions: bool, optional
 	AllRegions terra.BoolValue `hcl:"all_regions,attr"`
@@ -49,18 +56,21 @@ type dataRegionsAttributes struct {
 	ref terra.Reference
 }
 
+// AllRegions returns a reference to field all_regions of aws_regions.
 func (r dataRegionsAttributes) AllRegions() terra.BoolValue {
-	return terra.ReferenceBool(r.ref.Append("all_regions"))
+	return terra.ReferenceAsBool(r.ref.Append("all_regions"))
 }
 
+// Id returns a reference to field id of aws_regions.
 func (r dataRegionsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("id"))
+	return terra.ReferenceAsString(r.ref.Append("id"))
 }
 
+// Names returns a reference to field names of aws_regions.
 func (r dataRegionsAttributes) Names() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](r.ref.Append("names"))
+	return terra.ReferenceAsSet[terra.StringValue](r.ref.Append("names"))
 }
 
 func (r dataRegionsAttributes) Filter() terra.SetValue[dataregions.FilterAttributes] {
-	return terra.ReferenceSet[dataregions.FilterAttributes](r.ref.Append("filter"))
+	return terra.ReferenceAsSet[dataregions.FilterAttributes](r.ref.Append("filter"))
 }

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDynamodbTableItem creates a new instance of [DynamodbTableItem].
 func NewDynamodbTableItem(name string, args DynamodbTableItemArgs) *DynamodbTableItem {
 	return &DynamodbTableItem{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDynamodbTableItem(name string, args DynamodbTableItemArgs) *DynamodbTabl
 
 var _ terra.Resource = (*DynamodbTableItem)(nil)
 
+// DynamodbTableItem represents the Terraform resource aws_dynamodb_table_item.
 type DynamodbTableItem struct {
-	Name  string
-	Args  DynamodbTableItemArgs
-	state *dynamodbTableItemState
+	Name      string
+	Args      DynamodbTableItemArgs
+	state     *dynamodbTableItemState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DynamodbTableItem].
 func (dti *DynamodbTableItem) Type() string {
 	return "aws_dynamodb_table_item"
 }
 
+// LocalName returns the local name for [DynamodbTableItem].
 func (dti *DynamodbTableItem) LocalName() string {
 	return dti.Name
 }
 
+// Configuration returns the configuration (args) for [DynamodbTableItem].
 func (dti *DynamodbTableItem) Configuration() interface{} {
 	return dti.Args
 }
 
+// DependOn is used for other resources to depend on [DynamodbTableItem].
+func (dti *DynamodbTableItem) DependOn() terra.Reference {
+	return terra.ReferenceResource(dti)
+}
+
+// Dependencies returns the list of resources [DynamodbTableItem] depends_on.
+func (dti *DynamodbTableItem) Dependencies() terra.Dependencies {
+	return dti.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DynamodbTableItem].
+func (dti *DynamodbTableItem) LifecycleManagement() *terra.Lifecycle {
+	return dti.Lifecycle
+}
+
+// Attributes returns the attributes for [DynamodbTableItem].
 func (dti *DynamodbTableItem) Attributes() dynamodbTableItemAttributes {
 	return dynamodbTableItemAttributes{ref: terra.ReferenceResource(dti)}
 }
 
+// ImportState imports the given attribute values into [DynamodbTableItem]'s state.
 func (dti *DynamodbTableItem) ImportState(av io.Reader) error {
 	dti.state = &dynamodbTableItemState{}
 	if err := json.NewDecoder(av).Decode(dti.state); err != nil {
@@ -48,10 +72,12 @@ func (dti *DynamodbTableItem) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DynamodbTableItem] has state.
 func (dti *DynamodbTableItem) State() (*dynamodbTableItemState, bool) {
 	return dti.state, dti.state != nil
 }
 
+// StateMust returns the state for [DynamodbTableItem]. Panics if the state is nil.
 func (dti *DynamodbTableItem) StateMust() *dynamodbTableItemState {
 	if dti.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dti.Type(), dti.LocalName()))
@@ -59,10 +85,7 @@ func (dti *DynamodbTableItem) StateMust() *dynamodbTableItemState {
 	return dti.state
 }
 
-func (dti *DynamodbTableItem) DependOn() terra.Reference {
-	return terra.ReferenceResource(dti)
-}
-
+// DynamodbTableItemArgs contains the configurations for aws_dynamodb_table_item.
 type DynamodbTableItemArgs struct {
 	// HashKey: string, required
 	HashKey terra.StringValue `hcl:"hash_key,attr" validate:"required"`
@@ -74,31 +97,34 @@ type DynamodbTableItemArgs struct {
 	RangeKey terra.StringValue `hcl:"range_key,attr"`
 	// TableName: string, required
 	TableName terra.StringValue `hcl:"table_name,attr" validate:"required"`
-	// DependsOn contains resources that DynamodbTableItem depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dynamodbTableItemAttributes struct {
 	ref terra.Reference
 }
 
+// HashKey returns a reference to field hash_key of aws_dynamodb_table_item.
 func (dti dynamodbTableItemAttributes) HashKey() terra.StringValue {
-	return terra.ReferenceString(dti.ref.Append("hash_key"))
+	return terra.ReferenceAsString(dti.ref.Append("hash_key"))
 }
 
+// Id returns a reference to field id of aws_dynamodb_table_item.
 func (dti dynamodbTableItemAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dti.ref.Append("id"))
+	return terra.ReferenceAsString(dti.ref.Append("id"))
 }
 
+// Item returns a reference to field item of aws_dynamodb_table_item.
 func (dti dynamodbTableItemAttributes) Item() terra.StringValue {
-	return terra.ReferenceString(dti.ref.Append("item"))
+	return terra.ReferenceAsString(dti.ref.Append("item"))
 }
 
+// RangeKey returns a reference to field range_key of aws_dynamodb_table_item.
 func (dti dynamodbTableItemAttributes) RangeKey() terra.StringValue {
-	return terra.ReferenceString(dti.ref.Append("range_key"))
+	return terra.ReferenceAsString(dti.ref.Append("range_key"))
 }
 
+// TableName returns a reference to field table_name of aws_dynamodb_table_item.
 func (dti dynamodbTableItemAttributes) TableName() terra.StringValue {
-	return terra.ReferenceString(dti.ref.Append("table_name"))
+	return terra.ReferenceAsString(dti.ref.Append("table_name"))
 }
 
 type dynamodbTableItemState struct {

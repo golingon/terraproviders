@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAppautoscalingPolicy creates a new instance of [AppautoscalingPolicy].
 func NewAppautoscalingPolicy(name string, args AppautoscalingPolicyArgs) *AppautoscalingPolicy {
 	return &AppautoscalingPolicy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAppautoscalingPolicy(name string, args AppautoscalingPolicyArgs) *Appaut
 
 var _ terra.Resource = (*AppautoscalingPolicy)(nil)
 
+// AppautoscalingPolicy represents the Terraform resource aws_appautoscaling_policy.
 type AppautoscalingPolicy struct {
-	Name  string
-	Args  AppautoscalingPolicyArgs
-	state *appautoscalingPolicyState
+	Name      string
+	Args      AppautoscalingPolicyArgs
+	state     *appautoscalingPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AppautoscalingPolicy].
 func (ap *AppautoscalingPolicy) Type() string {
 	return "aws_appautoscaling_policy"
 }
 
+// LocalName returns the local name for [AppautoscalingPolicy].
 func (ap *AppautoscalingPolicy) LocalName() string {
 	return ap.Name
 }
 
+// Configuration returns the configuration (args) for [AppautoscalingPolicy].
 func (ap *AppautoscalingPolicy) Configuration() interface{} {
 	return ap.Args
 }
 
+// DependOn is used for other resources to depend on [AppautoscalingPolicy].
+func (ap *AppautoscalingPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(ap)
+}
+
+// Dependencies returns the list of resources [AppautoscalingPolicy] depends_on.
+func (ap *AppautoscalingPolicy) Dependencies() terra.Dependencies {
+	return ap.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AppautoscalingPolicy].
+func (ap *AppautoscalingPolicy) LifecycleManagement() *terra.Lifecycle {
+	return ap.Lifecycle
+}
+
+// Attributes returns the attributes for [AppautoscalingPolicy].
 func (ap *AppautoscalingPolicy) Attributes() appautoscalingPolicyAttributes {
 	return appautoscalingPolicyAttributes{ref: terra.ReferenceResource(ap)}
 }
 
+// ImportState imports the given attribute values into [AppautoscalingPolicy]'s state.
 func (ap *AppautoscalingPolicy) ImportState(av io.Reader) error {
 	ap.state = &appautoscalingPolicyState{}
 	if err := json.NewDecoder(av).Decode(ap.state); err != nil {
@@ -49,10 +73,12 @@ func (ap *AppautoscalingPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AppautoscalingPolicy] has state.
 func (ap *AppautoscalingPolicy) State() (*appautoscalingPolicyState, bool) {
 	return ap.state, ap.state != nil
 }
 
+// StateMust returns the state for [AppautoscalingPolicy]. Panics if the state is nil.
 func (ap *AppautoscalingPolicy) StateMust() *appautoscalingPolicyState {
 	if ap.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ap.Type(), ap.LocalName()))
@@ -60,10 +86,7 @@ func (ap *AppautoscalingPolicy) StateMust() *appautoscalingPolicyState {
 	return ap.state
 }
 
-func (ap *AppautoscalingPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(ap)
-}
-
+// AppautoscalingPolicyArgs contains the configurations for aws_appautoscaling_policy.
 type AppautoscalingPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -81,51 +104,57 @@ type AppautoscalingPolicyArgs struct {
 	StepScalingPolicyConfiguration *appautoscalingpolicy.StepScalingPolicyConfiguration `hcl:"step_scaling_policy_configuration,block"`
 	// TargetTrackingScalingPolicyConfiguration: optional
 	TargetTrackingScalingPolicyConfiguration *appautoscalingpolicy.TargetTrackingScalingPolicyConfiguration `hcl:"target_tracking_scaling_policy_configuration,block"`
-	// DependsOn contains resources that AppautoscalingPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type appautoscalingPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// AlarmArns returns a reference to field alarm_arns of aws_appautoscaling_policy.
 func (ap appautoscalingPolicyAttributes) AlarmArns() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ap.ref.Append("alarm_arns"))
+	return terra.ReferenceAsList[terra.StringValue](ap.ref.Append("alarm_arns"))
 }
 
+// Arn returns a reference to field arn of aws_appautoscaling_policy.
 func (ap appautoscalingPolicyAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("arn"))
+	return terra.ReferenceAsString(ap.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_appautoscaling_policy.
 func (ap appautoscalingPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("id"))
+	return terra.ReferenceAsString(ap.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_appautoscaling_policy.
 func (ap appautoscalingPolicyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("name"))
+	return terra.ReferenceAsString(ap.ref.Append("name"))
 }
 
+// PolicyType returns a reference to field policy_type of aws_appautoscaling_policy.
 func (ap appautoscalingPolicyAttributes) PolicyType() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("policy_type"))
+	return terra.ReferenceAsString(ap.ref.Append("policy_type"))
 }
 
+// ResourceId returns a reference to field resource_id of aws_appautoscaling_policy.
 func (ap appautoscalingPolicyAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("resource_id"))
+	return terra.ReferenceAsString(ap.ref.Append("resource_id"))
 }
 
+// ScalableDimension returns a reference to field scalable_dimension of aws_appautoscaling_policy.
 func (ap appautoscalingPolicyAttributes) ScalableDimension() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("scalable_dimension"))
+	return terra.ReferenceAsString(ap.ref.Append("scalable_dimension"))
 }
 
+// ServiceNamespace returns a reference to field service_namespace of aws_appautoscaling_policy.
 func (ap appautoscalingPolicyAttributes) ServiceNamespace() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("service_namespace"))
+	return terra.ReferenceAsString(ap.ref.Append("service_namespace"))
 }
 
 func (ap appautoscalingPolicyAttributes) StepScalingPolicyConfiguration() terra.ListValue[appautoscalingpolicy.StepScalingPolicyConfigurationAttributes] {
-	return terra.ReferenceList[appautoscalingpolicy.StepScalingPolicyConfigurationAttributes](ap.ref.Append("step_scaling_policy_configuration"))
+	return terra.ReferenceAsList[appautoscalingpolicy.StepScalingPolicyConfigurationAttributes](ap.ref.Append("step_scaling_policy_configuration"))
 }
 
 func (ap appautoscalingPolicyAttributes) TargetTrackingScalingPolicyConfiguration() terra.ListValue[appautoscalingpolicy.TargetTrackingScalingPolicyConfigurationAttributes] {
-	return terra.ReferenceList[appautoscalingpolicy.TargetTrackingScalingPolicyConfigurationAttributes](ap.ref.Append("target_tracking_scaling_policy_configuration"))
+	return terra.ReferenceAsList[appautoscalingpolicy.TargetTrackingScalingPolicyConfigurationAttributes](ap.ref.Append("target_tracking_scaling_policy_configuration"))
 }
 
 type appautoscalingPolicyState struct {

@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataConnectPrompt creates a new instance of [DataConnectPrompt].
 func NewDataConnectPrompt(name string, args DataConnectPromptArgs) *DataConnectPrompt {
 	return &DataConnectPrompt{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataConnectPrompt(name string, args DataConnectPromptArgs) *DataConnectP
 
 var _ terra.DataResource = (*DataConnectPrompt)(nil)
 
+// DataConnectPrompt represents the Terraform data resource aws_connect_prompt.
 type DataConnectPrompt struct {
 	Name string
 	Args DataConnectPromptArgs
 }
 
+// DataSource returns the Terraform object type for [DataConnectPrompt].
 func (cp *DataConnectPrompt) DataSource() string {
 	return "aws_connect_prompt"
 }
 
+// LocalName returns the local name for [DataConnectPrompt].
 func (cp *DataConnectPrompt) LocalName() string {
 	return cp.Name
 }
 
+// Configuration returns the configuration (args) for [DataConnectPrompt].
 func (cp *DataConnectPrompt) Configuration() interface{} {
 	return cp.Args
 }
 
+// Attributes returns the attributes for [DataConnectPrompt].
 func (cp *DataConnectPrompt) Attributes() dataConnectPromptAttributes {
 	return dataConnectPromptAttributes{ref: terra.ReferenceDataResource(cp)}
 }
 
+// DataConnectPromptArgs contains the configurations for aws_connect_prompt.
 type DataConnectPromptArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -46,22 +53,27 @@ type dataConnectPromptAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_connect_prompt.
 func (cp dataConnectPromptAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("arn"))
+	return terra.ReferenceAsString(cp.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_connect_prompt.
 func (cp dataConnectPromptAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("id"))
+	return terra.ReferenceAsString(cp.ref.Append("id"))
 }
 
+// InstanceId returns a reference to field instance_id of aws_connect_prompt.
 func (cp dataConnectPromptAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("instance_id"))
+	return terra.ReferenceAsString(cp.ref.Append("instance_id"))
 }
 
+// Name returns a reference to field name of aws_connect_prompt.
 func (cp dataConnectPromptAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("name"))
+	return terra.ReferenceAsString(cp.ref.Append("name"))
 }
 
+// PromptId returns a reference to field prompt_id of aws_connect_prompt.
 func (cp dataConnectPromptAttributes) PromptId() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("prompt_id"))
+	return terra.ReferenceAsString(cp.ref.Append("prompt_id"))
 }

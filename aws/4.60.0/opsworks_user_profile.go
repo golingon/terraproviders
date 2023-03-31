@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewOpsworksUserProfile creates a new instance of [OpsworksUserProfile].
 func NewOpsworksUserProfile(name string, args OpsworksUserProfileArgs) *OpsworksUserProfile {
 	return &OpsworksUserProfile{
 		Args: args,
@@ -18,28 +19,51 @@ func NewOpsworksUserProfile(name string, args OpsworksUserProfileArgs) *Opsworks
 
 var _ terra.Resource = (*OpsworksUserProfile)(nil)
 
+// OpsworksUserProfile represents the Terraform resource aws_opsworks_user_profile.
 type OpsworksUserProfile struct {
-	Name  string
-	Args  OpsworksUserProfileArgs
-	state *opsworksUserProfileState
+	Name      string
+	Args      OpsworksUserProfileArgs
+	state     *opsworksUserProfileState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [OpsworksUserProfile].
 func (oup *OpsworksUserProfile) Type() string {
 	return "aws_opsworks_user_profile"
 }
 
+// LocalName returns the local name for [OpsworksUserProfile].
 func (oup *OpsworksUserProfile) LocalName() string {
 	return oup.Name
 }
 
+// Configuration returns the configuration (args) for [OpsworksUserProfile].
 func (oup *OpsworksUserProfile) Configuration() interface{} {
 	return oup.Args
 }
 
+// DependOn is used for other resources to depend on [OpsworksUserProfile].
+func (oup *OpsworksUserProfile) DependOn() terra.Reference {
+	return terra.ReferenceResource(oup)
+}
+
+// Dependencies returns the list of resources [OpsworksUserProfile] depends_on.
+func (oup *OpsworksUserProfile) Dependencies() terra.Dependencies {
+	return oup.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [OpsworksUserProfile].
+func (oup *OpsworksUserProfile) LifecycleManagement() *terra.Lifecycle {
+	return oup.Lifecycle
+}
+
+// Attributes returns the attributes for [OpsworksUserProfile].
 func (oup *OpsworksUserProfile) Attributes() opsworksUserProfileAttributes {
 	return opsworksUserProfileAttributes{ref: terra.ReferenceResource(oup)}
 }
 
+// ImportState imports the given attribute values into [OpsworksUserProfile]'s state.
 func (oup *OpsworksUserProfile) ImportState(av io.Reader) error {
 	oup.state = &opsworksUserProfileState{}
 	if err := json.NewDecoder(av).Decode(oup.state); err != nil {
@@ -48,10 +72,12 @@ func (oup *OpsworksUserProfile) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [OpsworksUserProfile] has state.
 func (oup *OpsworksUserProfile) State() (*opsworksUserProfileState, bool) {
 	return oup.state, oup.state != nil
 }
 
+// StateMust returns the state for [OpsworksUserProfile]. Panics if the state is nil.
 func (oup *OpsworksUserProfile) StateMust() *opsworksUserProfileState {
 	if oup.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", oup.Type(), oup.LocalName()))
@@ -59,10 +85,7 @@ func (oup *OpsworksUserProfile) StateMust() *opsworksUserProfileState {
 	return oup.state
 }
 
-func (oup *OpsworksUserProfile) DependOn() terra.Reference {
-	return terra.ReferenceResource(oup)
-}
-
+// OpsworksUserProfileArgs contains the configurations for aws_opsworks_user_profile.
 type OpsworksUserProfileArgs struct {
 	// AllowSelfManagement: bool, optional
 	AllowSelfManagement terra.BoolValue `hcl:"allow_self_management,attr"`
@@ -74,31 +97,34 @@ type OpsworksUserProfileArgs struct {
 	SshUsername terra.StringValue `hcl:"ssh_username,attr" validate:"required"`
 	// UserArn: string, required
 	UserArn terra.StringValue `hcl:"user_arn,attr" validate:"required"`
-	// DependsOn contains resources that OpsworksUserProfile depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type opsworksUserProfileAttributes struct {
 	ref terra.Reference
 }
 
+// AllowSelfManagement returns a reference to field allow_self_management of aws_opsworks_user_profile.
 func (oup opsworksUserProfileAttributes) AllowSelfManagement() terra.BoolValue {
-	return terra.ReferenceBool(oup.ref.Append("allow_self_management"))
+	return terra.ReferenceAsBool(oup.ref.Append("allow_self_management"))
 }
 
+// Id returns a reference to field id of aws_opsworks_user_profile.
 func (oup opsworksUserProfileAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(oup.ref.Append("id"))
+	return terra.ReferenceAsString(oup.ref.Append("id"))
 }
 
+// SshPublicKey returns a reference to field ssh_public_key of aws_opsworks_user_profile.
 func (oup opsworksUserProfileAttributes) SshPublicKey() terra.StringValue {
-	return terra.ReferenceString(oup.ref.Append("ssh_public_key"))
+	return terra.ReferenceAsString(oup.ref.Append("ssh_public_key"))
 }
 
+// SshUsername returns a reference to field ssh_username of aws_opsworks_user_profile.
 func (oup opsworksUserProfileAttributes) SshUsername() terra.StringValue {
-	return terra.ReferenceString(oup.ref.Append("ssh_username"))
+	return terra.ReferenceAsString(oup.ref.Append("ssh_username"))
 }
 
+// UserArn returns a reference to field user_arn of aws_opsworks_user_profile.
 func (oup opsworksUserProfileAttributes) UserArn() terra.StringValue {
-	return terra.ReferenceString(oup.ref.Append("user_arn"))
+	return terra.ReferenceAsString(oup.ref.Append("user_arn"))
 }
 
 type opsworksUserProfileState struct {

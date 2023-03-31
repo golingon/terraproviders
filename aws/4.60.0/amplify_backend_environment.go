@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewAmplifyBackendEnvironment creates a new instance of [AmplifyBackendEnvironment].
 func NewAmplifyBackendEnvironment(name string, args AmplifyBackendEnvironmentArgs) *AmplifyBackendEnvironment {
 	return &AmplifyBackendEnvironment{
 		Args: args,
@@ -18,28 +19,51 @@ func NewAmplifyBackendEnvironment(name string, args AmplifyBackendEnvironmentArg
 
 var _ terra.Resource = (*AmplifyBackendEnvironment)(nil)
 
+// AmplifyBackendEnvironment represents the Terraform resource aws_amplify_backend_environment.
 type AmplifyBackendEnvironment struct {
-	Name  string
-	Args  AmplifyBackendEnvironmentArgs
-	state *amplifyBackendEnvironmentState
+	Name      string
+	Args      AmplifyBackendEnvironmentArgs
+	state     *amplifyBackendEnvironmentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AmplifyBackendEnvironment].
 func (abe *AmplifyBackendEnvironment) Type() string {
 	return "aws_amplify_backend_environment"
 }
 
+// LocalName returns the local name for [AmplifyBackendEnvironment].
 func (abe *AmplifyBackendEnvironment) LocalName() string {
 	return abe.Name
 }
 
+// Configuration returns the configuration (args) for [AmplifyBackendEnvironment].
 func (abe *AmplifyBackendEnvironment) Configuration() interface{} {
 	return abe.Args
 }
 
+// DependOn is used for other resources to depend on [AmplifyBackendEnvironment].
+func (abe *AmplifyBackendEnvironment) DependOn() terra.Reference {
+	return terra.ReferenceResource(abe)
+}
+
+// Dependencies returns the list of resources [AmplifyBackendEnvironment] depends_on.
+func (abe *AmplifyBackendEnvironment) Dependencies() terra.Dependencies {
+	return abe.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AmplifyBackendEnvironment].
+func (abe *AmplifyBackendEnvironment) LifecycleManagement() *terra.Lifecycle {
+	return abe.Lifecycle
+}
+
+// Attributes returns the attributes for [AmplifyBackendEnvironment].
 func (abe *AmplifyBackendEnvironment) Attributes() amplifyBackendEnvironmentAttributes {
 	return amplifyBackendEnvironmentAttributes{ref: terra.ReferenceResource(abe)}
 }
 
+// ImportState imports the given attribute values into [AmplifyBackendEnvironment]'s state.
 func (abe *AmplifyBackendEnvironment) ImportState(av io.Reader) error {
 	abe.state = &amplifyBackendEnvironmentState{}
 	if err := json.NewDecoder(av).Decode(abe.state); err != nil {
@@ -48,10 +72,12 @@ func (abe *AmplifyBackendEnvironment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AmplifyBackendEnvironment] has state.
 func (abe *AmplifyBackendEnvironment) State() (*amplifyBackendEnvironmentState, bool) {
 	return abe.state, abe.state != nil
 }
 
+// StateMust returns the state for [AmplifyBackendEnvironment]. Panics if the state is nil.
 func (abe *AmplifyBackendEnvironment) StateMust() *amplifyBackendEnvironmentState {
 	if abe.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", abe.Type(), abe.LocalName()))
@@ -59,10 +85,7 @@ func (abe *AmplifyBackendEnvironment) StateMust() *amplifyBackendEnvironmentStat
 	return abe.state
 }
 
-func (abe *AmplifyBackendEnvironment) DependOn() terra.Reference {
-	return terra.ReferenceResource(abe)
-}
-
+// AmplifyBackendEnvironmentArgs contains the configurations for aws_amplify_backend_environment.
 type AmplifyBackendEnvironmentArgs struct {
 	// AppId: string, required
 	AppId terra.StringValue `hcl:"app_id,attr" validate:"required"`
@@ -74,35 +97,39 @@ type AmplifyBackendEnvironmentArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// StackName: string, optional
 	StackName terra.StringValue `hcl:"stack_name,attr"`
-	// DependsOn contains resources that AmplifyBackendEnvironment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type amplifyBackendEnvironmentAttributes struct {
 	ref terra.Reference
 }
 
+// AppId returns a reference to field app_id of aws_amplify_backend_environment.
 func (abe amplifyBackendEnvironmentAttributes) AppId() terra.StringValue {
-	return terra.ReferenceString(abe.ref.Append("app_id"))
+	return terra.ReferenceAsString(abe.ref.Append("app_id"))
 }
 
+// Arn returns a reference to field arn of aws_amplify_backend_environment.
 func (abe amplifyBackendEnvironmentAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(abe.ref.Append("arn"))
+	return terra.ReferenceAsString(abe.ref.Append("arn"))
 }
 
+// DeploymentArtifacts returns a reference to field deployment_artifacts of aws_amplify_backend_environment.
 func (abe amplifyBackendEnvironmentAttributes) DeploymentArtifacts() terra.StringValue {
-	return terra.ReferenceString(abe.ref.Append("deployment_artifacts"))
+	return terra.ReferenceAsString(abe.ref.Append("deployment_artifacts"))
 }
 
+// EnvironmentName returns a reference to field environment_name of aws_amplify_backend_environment.
 func (abe amplifyBackendEnvironmentAttributes) EnvironmentName() terra.StringValue {
-	return terra.ReferenceString(abe.ref.Append("environment_name"))
+	return terra.ReferenceAsString(abe.ref.Append("environment_name"))
 }
 
+// Id returns a reference to field id of aws_amplify_backend_environment.
 func (abe amplifyBackendEnvironmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(abe.ref.Append("id"))
+	return terra.ReferenceAsString(abe.ref.Append("id"))
 }
 
+// StackName returns a reference to field stack_name of aws_amplify_backend_environment.
 func (abe amplifyBackendEnvironmentAttributes) StackName() terra.StringValue {
-	return terra.ReferenceString(abe.ref.Append("stack_name"))
+	return terra.ReferenceAsString(abe.ref.Append("stack_name"))
 }
 
 type amplifyBackendEnvironmentState struct {

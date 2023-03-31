@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewStoragegatewaySmbFileShare creates a new instance of [StoragegatewaySmbFileShare].
 func NewStoragegatewaySmbFileShare(name string, args StoragegatewaySmbFileShareArgs) *StoragegatewaySmbFileShare {
 	return &StoragegatewaySmbFileShare{
 		Args: args,
@@ -19,28 +20,51 @@ func NewStoragegatewaySmbFileShare(name string, args StoragegatewaySmbFileShareA
 
 var _ terra.Resource = (*StoragegatewaySmbFileShare)(nil)
 
+// StoragegatewaySmbFileShare represents the Terraform resource aws_storagegateway_smb_file_share.
 type StoragegatewaySmbFileShare struct {
-	Name  string
-	Args  StoragegatewaySmbFileShareArgs
-	state *storagegatewaySmbFileShareState
+	Name      string
+	Args      StoragegatewaySmbFileShareArgs
+	state     *storagegatewaySmbFileShareState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StoragegatewaySmbFileShare].
 func (ssfs *StoragegatewaySmbFileShare) Type() string {
 	return "aws_storagegateway_smb_file_share"
 }
 
+// LocalName returns the local name for [StoragegatewaySmbFileShare].
 func (ssfs *StoragegatewaySmbFileShare) LocalName() string {
 	return ssfs.Name
 }
 
+// Configuration returns the configuration (args) for [StoragegatewaySmbFileShare].
 func (ssfs *StoragegatewaySmbFileShare) Configuration() interface{} {
 	return ssfs.Args
 }
 
+// DependOn is used for other resources to depend on [StoragegatewaySmbFileShare].
+func (ssfs *StoragegatewaySmbFileShare) DependOn() terra.Reference {
+	return terra.ReferenceResource(ssfs)
+}
+
+// Dependencies returns the list of resources [StoragegatewaySmbFileShare] depends_on.
+func (ssfs *StoragegatewaySmbFileShare) Dependencies() terra.Dependencies {
+	return ssfs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StoragegatewaySmbFileShare].
+func (ssfs *StoragegatewaySmbFileShare) LifecycleManagement() *terra.Lifecycle {
+	return ssfs.Lifecycle
+}
+
+// Attributes returns the attributes for [StoragegatewaySmbFileShare].
 func (ssfs *StoragegatewaySmbFileShare) Attributes() storagegatewaySmbFileShareAttributes {
 	return storagegatewaySmbFileShareAttributes{ref: terra.ReferenceResource(ssfs)}
 }
 
+// ImportState imports the given attribute values into [StoragegatewaySmbFileShare]'s state.
 func (ssfs *StoragegatewaySmbFileShare) ImportState(av io.Reader) error {
 	ssfs.state = &storagegatewaySmbFileShareState{}
 	if err := json.NewDecoder(av).Decode(ssfs.state); err != nil {
@@ -49,10 +73,12 @@ func (ssfs *StoragegatewaySmbFileShare) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [StoragegatewaySmbFileShare] has state.
 func (ssfs *StoragegatewaySmbFileShare) State() (*storagegatewaySmbFileShareState, bool) {
 	return ssfs.state, ssfs.state != nil
 }
 
+// StateMust returns the state for [StoragegatewaySmbFileShare]. Panics if the state is nil.
 func (ssfs *StoragegatewaySmbFileShare) StateMust() *storagegatewaySmbFileShareState {
 	if ssfs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ssfs.Type(), ssfs.LocalName()))
@@ -60,10 +86,7 @@ func (ssfs *StoragegatewaySmbFileShare) StateMust() *storagegatewaySmbFileShareS
 	return ssfs.state
 }
 
-func (ssfs *StoragegatewaySmbFileShare) DependOn() terra.Reference {
-	return terra.ReferenceResource(ssfs)
-}
-
+// StoragegatewaySmbFileShareArgs contains the configurations for aws_storagegateway_smb_file_share.
 type StoragegatewaySmbFileShareArgs struct {
 	// AccessBasedEnumeration: bool, optional
 	AccessBasedEnumeration terra.BoolValue `hcl:"access_based_enumeration,attr"`
@@ -121,135 +144,162 @@ type StoragegatewaySmbFileShareArgs struct {
 	CacheAttributes *storagegatewaysmbfileshare.CacheAttributes `hcl:"cache_attributes,block"`
 	// Timeouts: optional
 	Timeouts *storagegatewaysmbfileshare.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that StoragegatewaySmbFileShare depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type storagegatewaySmbFileShareAttributes struct {
 	ref terra.Reference
 }
 
+// AccessBasedEnumeration returns a reference to field access_based_enumeration of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) AccessBasedEnumeration() terra.BoolValue {
-	return terra.ReferenceBool(ssfs.ref.Append("access_based_enumeration"))
+	return terra.ReferenceAsBool(ssfs.ref.Append("access_based_enumeration"))
 }
 
+// AdminUserList returns a reference to field admin_user_list of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) AdminUserList() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ssfs.ref.Append("admin_user_list"))
+	return terra.ReferenceAsSet[terra.StringValue](ssfs.ref.Append("admin_user_list"))
 }
 
+// Arn returns a reference to field arn of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ssfs.ref.Append("arn"))
+	return terra.ReferenceAsString(ssfs.ref.Append("arn"))
 }
 
+// AuditDestinationArn returns a reference to field audit_destination_arn of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) AuditDestinationArn() terra.StringValue {
-	return terra.ReferenceString(ssfs.ref.Append("audit_destination_arn"))
+	return terra.ReferenceAsString(ssfs.ref.Append("audit_destination_arn"))
 }
 
+// Authentication returns a reference to field authentication of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) Authentication() terra.StringValue {
-	return terra.ReferenceString(ssfs.ref.Append("authentication"))
+	return terra.ReferenceAsString(ssfs.ref.Append("authentication"))
 }
 
+// BucketRegion returns a reference to field bucket_region of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) BucketRegion() terra.StringValue {
-	return terra.ReferenceString(ssfs.ref.Append("bucket_region"))
+	return terra.ReferenceAsString(ssfs.ref.Append("bucket_region"))
 }
 
+// CaseSensitivity returns a reference to field case_sensitivity of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) CaseSensitivity() terra.StringValue {
-	return terra.ReferenceString(ssfs.ref.Append("case_sensitivity"))
+	return terra.ReferenceAsString(ssfs.ref.Append("case_sensitivity"))
 }
 
+// DefaultStorageClass returns a reference to field default_storage_class of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) DefaultStorageClass() terra.StringValue {
-	return terra.ReferenceString(ssfs.ref.Append("default_storage_class"))
+	return terra.ReferenceAsString(ssfs.ref.Append("default_storage_class"))
 }
 
+// FileShareName returns a reference to field file_share_name of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) FileShareName() terra.StringValue {
-	return terra.ReferenceString(ssfs.ref.Append("file_share_name"))
+	return terra.ReferenceAsString(ssfs.ref.Append("file_share_name"))
 }
 
+// FileshareId returns a reference to field fileshare_id of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) FileshareId() terra.StringValue {
-	return terra.ReferenceString(ssfs.ref.Append("fileshare_id"))
+	return terra.ReferenceAsString(ssfs.ref.Append("fileshare_id"))
 }
 
+// GatewayArn returns a reference to field gateway_arn of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) GatewayArn() terra.StringValue {
-	return terra.ReferenceString(ssfs.ref.Append("gateway_arn"))
+	return terra.ReferenceAsString(ssfs.ref.Append("gateway_arn"))
 }
 
+// GuessMimeTypeEnabled returns a reference to field guess_mime_type_enabled of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) GuessMimeTypeEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ssfs.ref.Append("guess_mime_type_enabled"))
+	return terra.ReferenceAsBool(ssfs.ref.Append("guess_mime_type_enabled"))
 }
 
+// Id returns a reference to field id of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ssfs.ref.Append("id"))
+	return terra.ReferenceAsString(ssfs.ref.Append("id"))
 }
 
+// InvalidUserList returns a reference to field invalid_user_list of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) InvalidUserList() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ssfs.ref.Append("invalid_user_list"))
+	return terra.ReferenceAsSet[terra.StringValue](ssfs.ref.Append("invalid_user_list"))
 }
 
+// KmsEncrypted returns a reference to field kms_encrypted of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) KmsEncrypted() terra.BoolValue {
-	return terra.ReferenceBool(ssfs.ref.Append("kms_encrypted"))
+	return terra.ReferenceAsBool(ssfs.ref.Append("kms_encrypted"))
 }
 
+// KmsKeyArn returns a reference to field kms_key_arn of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(ssfs.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(ssfs.ref.Append("kms_key_arn"))
 }
 
+// LocationArn returns a reference to field location_arn of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) LocationArn() terra.StringValue {
-	return terra.ReferenceString(ssfs.ref.Append("location_arn"))
+	return terra.ReferenceAsString(ssfs.ref.Append("location_arn"))
 }
 
+// NotificationPolicy returns a reference to field notification_policy of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) NotificationPolicy() terra.StringValue {
-	return terra.ReferenceString(ssfs.ref.Append("notification_policy"))
+	return terra.ReferenceAsString(ssfs.ref.Append("notification_policy"))
 }
 
+// ObjectAcl returns a reference to field object_acl of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) ObjectAcl() terra.StringValue {
-	return terra.ReferenceString(ssfs.ref.Append("object_acl"))
+	return terra.ReferenceAsString(ssfs.ref.Append("object_acl"))
 }
 
+// OplocksEnabled returns a reference to field oplocks_enabled of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) OplocksEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ssfs.ref.Append("oplocks_enabled"))
+	return terra.ReferenceAsBool(ssfs.ref.Append("oplocks_enabled"))
 }
 
+// Path returns a reference to field path of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(ssfs.ref.Append("path"))
+	return terra.ReferenceAsString(ssfs.ref.Append("path"))
 }
 
+// ReadOnly returns a reference to field read_only of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) ReadOnly() terra.BoolValue {
-	return terra.ReferenceBool(ssfs.ref.Append("read_only"))
+	return terra.ReferenceAsBool(ssfs.ref.Append("read_only"))
 }
 
+// RequesterPays returns a reference to field requester_pays of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) RequesterPays() terra.BoolValue {
-	return terra.ReferenceBool(ssfs.ref.Append("requester_pays"))
+	return terra.ReferenceAsBool(ssfs.ref.Append("requester_pays"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(ssfs.ref.Append("role_arn"))
+	return terra.ReferenceAsString(ssfs.ref.Append("role_arn"))
 }
 
+// SmbAclEnabled returns a reference to field smb_acl_enabled of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) SmbAclEnabled() terra.BoolValue {
-	return terra.ReferenceBool(ssfs.ref.Append("smb_acl_enabled"))
+	return terra.ReferenceAsBool(ssfs.ref.Append("smb_acl_enabled"))
 }
 
+// Tags returns a reference to field tags of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ssfs.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ssfs.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ssfs.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ssfs.ref.Append("tags_all"))
 }
 
+// ValidUserList returns a reference to field valid_user_list of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) ValidUserList() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ssfs.ref.Append("valid_user_list"))
+	return terra.ReferenceAsSet[terra.StringValue](ssfs.ref.Append("valid_user_list"))
 }
 
+// VpcEndpointDnsName returns a reference to field vpc_endpoint_dns_name of aws_storagegateway_smb_file_share.
 func (ssfs storagegatewaySmbFileShareAttributes) VpcEndpointDnsName() terra.StringValue {
-	return terra.ReferenceString(ssfs.ref.Append("vpc_endpoint_dns_name"))
+	return terra.ReferenceAsString(ssfs.ref.Append("vpc_endpoint_dns_name"))
 }
 
 func (ssfs storagegatewaySmbFileShareAttributes) CacheAttributes() terra.ListValue[storagegatewaysmbfileshare.CacheAttributesAttributes] {
-	return terra.ReferenceList[storagegatewaysmbfileshare.CacheAttributesAttributes](ssfs.ref.Append("cache_attributes"))
+	return terra.ReferenceAsList[storagegatewaysmbfileshare.CacheAttributesAttributes](ssfs.ref.Append("cache_attributes"))
 }
 
 func (ssfs storagegatewaySmbFileShareAttributes) Timeouts() storagegatewaysmbfileshare.TimeoutsAttributes {
-	return terra.ReferenceSingle[storagegatewaysmbfileshare.TimeoutsAttributes](ssfs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[storagegatewaysmbfileshare.TimeoutsAttributes](ssfs.ref.Append("timeouts"))
 }
 
 type storagegatewaySmbFileShareState struct {

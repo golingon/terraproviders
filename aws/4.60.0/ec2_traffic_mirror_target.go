@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewEc2TrafficMirrorTarget creates a new instance of [Ec2TrafficMirrorTarget].
 func NewEc2TrafficMirrorTarget(name string, args Ec2TrafficMirrorTargetArgs) *Ec2TrafficMirrorTarget {
 	return &Ec2TrafficMirrorTarget{
 		Args: args,
@@ -18,28 +19,51 @@ func NewEc2TrafficMirrorTarget(name string, args Ec2TrafficMirrorTargetArgs) *Ec
 
 var _ terra.Resource = (*Ec2TrafficMirrorTarget)(nil)
 
+// Ec2TrafficMirrorTarget represents the Terraform resource aws_ec2_traffic_mirror_target.
 type Ec2TrafficMirrorTarget struct {
-	Name  string
-	Args  Ec2TrafficMirrorTargetArgs
-	state *ec2TrafficMirrorTargetState
+	Name      string
+	Args      Ec2TrafficMirrorTargetArgs
+	state     *ec2TrafficMirrorTargetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Ec2TrafficMirrorTarget].
 func (etmt *Ec2TrafficMirrorTarget) Type() string {
 	return "aws_ec2_traffic_mirror_target"
 }
 
+// LocalName returns the local name for [Ec2TrafficMirrorTarget].
 func (etmt *Ec2TrafficMirrorTarget) LocalName() string {
 	return etmt.Name
 }
 
+// Configuration returns the configuration (args) for [Ec2TrafficMirrorTarget].
 func (etmt *Ec2TrafficMirrorTarget) Configuration() interface{} {
 	return etmt.Args
 }
 
+// DependOn is used for other resources to depend on [Ec2TrafficMirrorTarget].
+func (etmt *Ec2TrafficMirrorTarget) DependOn() terra.Reference {
+	return terra.ReferenceResource(etmt)
+}
+
+// Dependencies returns the list of resources [Ec2TrafficMirrorTarget] depends_on.
+func (etmt *Ec2TrafficMirrorTarget) Dependencies() terra.Dependencies {
+	return etmt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Ec2TrafficMirrorTarget].
+func (etmt *Ec2TrafficMirrorTarget) LifecycleManagement() *terra.Lifecycle {
+	return etmt.Lifecycle
+}
+
+// Attributes returns the attributes for [Ec2TrafficMirrorTarget].
 func (etmt *Ec2TrafficMirrorTarget) Attributes() ec2TrafficMirrorTargetAttributes {
 	return ec2TrafficMirrorTargetAttributes{ref: terra.ReferenceResource(etmt)}
 }
 
+// ImportState imports the given attribute values into [Ec2TrafficMirrorTarget]'s state.
 func (etmt *Ec2TrafficMirrorTarget) ImportState(av io.Reader) error {
 	etmt.state = &ec2TrafficMirrorTargetState{}
 	if err := json.NewDecoder(av).Decode(etmt.state); err != nil {
@@ -48,10 +72,12 @@ func (etmt *Ec2TrafficMirrorTarget) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Ec2TrafficMirrorTarget] has state.
 func (etmt *Ec2TrafficMirrorTarget) State() (*ec2TrafficMirrorTargetState, bool) {
 	return etmt.state, etmt.state != nil
 }
 
+// StateMust returns the state for [Ec2TrafficMirrorTarget]. Panics if the state is nil.
 func (etmt *Ec2TrafficMirrorTarget) StateMust() *ec2TrafficMirrorTargetState {
 	if etmt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", etmt.Type(), etmt.LocalName()))
@@ -59,10 +85,7 @@ func (etmt *Ec2TrafficMirrorTarget) StateMust() *ec2TrafficMirrorTargetState {
 	return etmt.state
 }
 
-func (etmt *Ec2TrafficMirrorTarget) DependOn() terra.Reference {
-	return terra.ReferenceResource(etmt)
-}
-
+// Ec2TrafficMirrorTargetArgs contains the configurations for aws_ec2_traffic_mirror_target.
 type Ec2TrafficMirrorTargetArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -78,47 +101,54 @@ type Ec2TrafficMirrorTargetArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that Ec2TrafficMirrorTarget depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ec2TrafficMirrorTargetAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ec2_traffic_mirror_target.
 func (etmt ec2TrafficMirrorTargetAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(etmt.ref.Append("arn"))
+	return terra.ReferenceAsString(etmt.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_ec2_traffic_mirror_target.
 func (etmt ec2TrafficMirrorTargetAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(etmt.ref.Append("description"))
+	return terra.ReferenceAsString(etmt.ref.Append("description"))
 }
 
+// GatewayLoadBalancerEndpointId returns a reference to field gateway_load_balancer_endpoint_id of aws_ec2_traffic_mirror_target.
 func (etmt ec2TrafficMirrorTargetAttributes) GatewayLoadBalancerEndpointId() terra.StringValue {
-	return terra.ReferenceString(etmt.ref.Append("gateway_load_balancer_endpoint_id"))
+	return terra.ReferenceAsString(etmt.ref.Append("gateway_load_balancer_endpoint_id"))
 }
 
+// Id returns a reference to field id of aws_ec2_traffic_mirror_target.
 func (etmt ec2TrafficMirrorTargetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(etmt.ref.Append("id"))
+	return terra.ReferenceAsString(etmt.ref.Append("id"))
 }
 
+// NetworkInterfaceId returns a reference to field network_interface_id of aws_ec2_traffic_mirror_target.
 func (etmt ec2TrafficMirrorTargetAttributes) NetworkInterfaceId() terra.StringValue {
-	return terra.ReferenceString(etmt.ref.Append("network_interface_id"))
+	return terra.ReferenceAsString(etmt.ref.Append("network_interface_id"))
 }
 
+// NetworkLoadBalancerArn returns a reference to field network_load_balancer_arn of aws_ec2_traffic_mirror_target.
 func (etmt ec2TrafficMirrorTargetAttributes) NetworkLoadBalancerArn() terra.StringValue {
-	return terra.ReferenceString(etmt.ref.Append("network_load_balancer_arn"))
+	return terra.ReferenceAsString(etmt.ref.Append("network_load_balancer_arn"))
 }
 
+// OwnerId returns a reference to field owner_id of aws_ec2_traffic_mirror_target.
 func (etmt ec2TrafficMirrorTargetAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(etmt.ref.Append("owner_id"))
+	return terra.ReferenceAsString(etmt.ref.Append("owner_id"))
 }
 
+// Tags returns a reference to field tags of aws_ec2_traffic_mirror_target.
 func (etmt ec2TrafficMirrorTargetAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](etmt.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](etmt.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_ec2_traffic_mirror_target.
 func (etmt ec2TrafficMirrorTargetAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](etmt.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](etmt.ref.Append("tags_all"))
 }
 
 type ec2TrafficMirrorTargetState struct {

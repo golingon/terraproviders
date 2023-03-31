@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRedshiftSubnetGroup creates a new instance of [RedshiftSubnetGroup].
 func NewRedshiftSubnetGroup(name string, args RedshiftSubnetGroupArgs) *RedshiftSubnetGroup {
 	return &RedshiftSubnetGroup{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRedshiftSubnetGroup(name string, args RedshiftSubnetGroupArgs) *Redshift
 
 var _ terra.Resource = (*RedshiftSubnetGroup)(nil)
 
+// RedshiftSubnetGroup represents the Terraform resource aws_redshift_subnet_group.
 type RedshiftSubnetGroup struct {
-	Name  string
-	Args  RedshiftSubnetGroupArgs
-	state *redshiftSubnetGroupState
+	Name      string
+	Args      RedshiftSubnetGroupArgs
+	state     *redshiftSubnetGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RedshiftSubnetGroup].
 func (rsg *RedshiftSubnetGroup) Type() string {
 	return "aws_redshift_subnet_group"
 }
 
+// LocalName returns the local name for [RedshiftSubnetGroup].
 func (rsg *RedshiftSubnetGroup) LocalName() string {
 	return rsg.Name
 }
 
+// Configuration returns the configuration (args) for [RedshiftSubnetGroup].
 func (rsg *RedshiftSubnetGroup) Configuration() interface{} {
 	return rsg.Args
 }
 
+// DependOn is used for other resources to depend on [RedshiftSubnetGroup].
+func (rsg *RedshiftSubnetGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(rsg)
+}
+
+// Dependencies returns the list of resources [RedshiftSubnetGroup] depends_on.
+func (rsg *RedshiftSubnetGroup) Dependencies() terra.Dependencies {
+	return rsg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RedshiftSubnetGroup].
+func (rsg *RedshiftSubnetGroup) LifecycleManagement() *terra.Lifecycle {
+	return rsg.Lifecycle
+}
+
+// Attributes returns the attributes for [RedshiftSubnetGroup].
 func (rsg *RedshiftSubnetGroup) Attributes() redshiftSubnetGroupAttributes {
 	return redshiftSubnetGroupAttributes{ref: terra.ReferenceResource(rsg)}
 }
 
+// ImportState imports the given attribute values into [RedshiftSubnetGroup]'s state.
 func (rsg *RedshiftSubnetGroup) ImportState(av io.Reader) error {
 	rsg.state = &redshiftSubnetGroupState{}
 	if err := json.NewDecoder(av).Decode(rsg.state); err != nil {
@@ -48,10 +72,12 @@ func (rsg *RedshiftSubnetGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RedshiftSubnetGroup] has state.
 func (rsg *RedshiftSubnetGroup) State() (*redshiftSubnetGroupState, bool) {
 	return rsg.state, rsg.state != nil
 }
 
+// StateMust returns the state for [RedshiftSubnetGroup]. Panics if the state is nil.
 func (rsg *RedshiftSubnetGroup) StateMust() *redshiftSubnetGroupState {
 	if rsg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rsg.Type(), rsg.LocalName()))
@@ -59,10 +85,7 @@ func (rsg *RedshiftSubnetGroup) StateMust() *redshiftSubnetGroupState {
 	return rsg.state
 }
 
-func (rsg *RedshiftSubnetGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(rsg)
-}
-
+// RedshiftSubnetGroupArgs contains the configurations for aws_redshift_subnet_group.
 type RedshiftSubnetGroupArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -76,39 +99,44 @@ type RedshiftSubnetGroupArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that RedshiftSubnetGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type redshiftSubnetGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_redshift_subnet_group.
 func (rsg redshiftSubnetGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rsg.ref.Append("arn"))
+	return terra.ReferenceAsString(rsg.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_redshift_subnet_group.
 func (rsg redshiftSubnetGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(rsg.ref.Append("description"))
+	return terra.ReferenceAsString(rsg.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_redshift_subnet_group.
 func (rsg redshiftSubnetGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rsg.ref.Append("id"))
+	return terra.ReferenceAsString(rsg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_redshift_subnet_group.
 func (rsg redshiftSubnetGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rsg.ref.Append("name"))
+	return terra.ReferenceAsString(rsg.ref.Append("name"))
 }
 
+// SubnetIds returns a reference to field subnet_ids of aws_redshift_subnet_group.
 func (rsg redshiftSubnetGroupAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rsg.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](rsg.ref.Append("subnet_ids"))
 }
 
+// Tags returns a reference to field tags of aws_redshift_subnet_group.
 func (rsg redshiftSubnetGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rsg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rsg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_redshift_subnet_group.
 func (rsg redshiftSubnetGroupAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rsg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](rsg.ref.Append("tags_all"))
 }
 
 type redshiftSubnetGroupState struct {

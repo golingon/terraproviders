@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewConnectQueue creates a new instance of [ConnectQueue].
 func NewConnectQueue(name string, args ConnectQueueArgs) *ConnectQueue {
 	return &ConnectQueue{
 		Args: args,
@@ -19,28 +20,51 @@ func NewConnectQueue(name string, args ConnectQueueArgs) *ConnectQueue {
 
 var _ terra.Resource = (*ConnectQueue)(nil)
 
+// ConnectQueue represents the Terraform resource aws_connect_queue.
 type ConnectQueue struct {
-	Name  string
-	Args  ConnectQueueArgs
-	state *connectQueueState
+	Name      string
+	Args      ConnectQueueArgs
+	state     *connectQueueState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ConnectQueue].
 func (cq *ConnectQueue) Type() string {
 	return "aws_connect_queue"
 }
 
+// LocalName returns the local name for [ConnectQueue].
 func (cq *ConnectQueue) LocalName() string {
 	return cq.Name
 }
 
+// Configuration returns the configuration (args) for [ConnectQueue].
 func (cq *ConnectQueue) Configuration() interface{} {
 	return cq.Args
 }
 
+// DependOn is used for other resources to depend on [ConnectQueue].
+func (cq *ConnectQueue) DependOn() terra.Reference {
+	return terra.ReferenceResource(cq)
+}
+
+// Dependencies returns the list of resources [ConnectQueue] depends_on.
+func (cq *ConnectQueue) Dependencies() terra.Dependencies {
+	return cq.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ConnectQueue].
+func (cq *ConnectQueue) LifecycleManagement() *terra.Lifecycle {
+	return cq.Lifecycle
+}
+
+// Attributes returns the attributes for [ConnectQueue].
 func (cq *ConnectQueue) Attributes() connectQueueAttributes {
 	return connectQueueAttributes{ref: terra.ReferenceResource(cq)}
 }
 
+// ImportState imports the given attribute values into [ConnectQueue]'s state.
 func (cq *ConnectQueue) ImportState(av io.Reader) error {
 	cq.state = &connectQueueState{}
 	if err := json.NewDecoder(av).Decode(cq.state); err != nil {
@@ -49,10 +73,12 @@ func (cq *ConnectQueue) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ConnectQueue] has state.
 func (cq *ConnectQueue) State() (*connectQueueState, bool) {
 	return cq.state, cq.state != nil
 }
 
+// StateMust returns the state for [ConnectQueue]. Panics if the state is nil.
 func (cq *ConnectQueue) StateMust() *connectQueueState {
 	if cq.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cq.Type(), cq.LocalName()))
@@ -60,10 +86,7 @@ func (cq *ConnectQueue) StateMust() *connectQueueState {
 	return cq.state
 }
 
-func (cq *ConnectQueue) DependOn() terra.Reference {
-	return terra.ReferenceResource(cq)
-}
-
+// ConnectQueueArgs contains the configurations for aws_connect_queue.
 type ConnectQueueArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -87,67 +110,78 @@ type ConnectQueueArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// OutboundCallerConfig: optional
 	OutboundCallerConfig *connectqueue.OutboundCallerConfig `hcl:"outbound_caller_config,block"`
-	// DependsOn contains resources that ConnectQueue depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type connectQueueAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_connect_queue.
 func (cq connectQueueAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(cq.ref.Append("arn"))
+	return terra.ReferenceAsString(cq.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_connect_queue.
 func (cq connectQueueAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cq.ref.Append("description"))
+	return terra.ReferenceAsString(cq.ref.Append("description"))
 }
 
+// HoursOfOperationId returns a reference to field hours_of_operation_id of aws_connect_queue.
 func (cq connectQueueAttributes) HoursOfOperationId() terra.StringValue {
-	return terra.ReferenceString(cq.ref.Append("hours_of_operation_id"))
+	return terra.ReferenceAsString(cq.ref.Append("hours_of_operation_id"))
 }
 
+// Id returns a reference to field id of aws_connect_queue.
 func (cq connectQueueAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cq.ref.Append("id"))
+	return terra.ReferenceAsString(cq.ref.Append("id"))
 }
 
+// InstanceId returns a reference to field instance_id of aws_connect_queue.
 func (cq connectQueueAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(cq.ref.Append("instance_id"))
+	return terra.ReferenceAsString(cq.ref.Append("instance_id"))
 }
 
+// MaxContacts returns a reference to field max_contacts of aws_connect_queue.
 func (cq connectQueueAttributes) MaxContacts() terra.NumberValue {
-	return terra.ReferenceNumber(cq.ref.Append("max_contacts"))
+	return terra.ReferenceAsNumber(cq.ref.Append("max_contacts"))
 }
 
+// Name returns a reference to field name of aws_connect_queue.
 func (cq connectQueueAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cq.ref.Append("name"))
+	return terra.ReferenceAsString(cq.ref.Append("name"))
 }
 
+// QueueId returns a reference to field queue_id of aws_connect_queue.
 func (cq connectQueueAttributes) QueueId() terra.StringValue {
-	return terra.ReferenceString(cq.ref.Append("queue_id"))
+	return terra.ReferenceAsString(cq.ref.Append("queue_id"))
 }
 
+// QuickConnectIds returns a reference to field quick_connect_ids of aws_connect_queue.
 func (cq connectQueueAttributes) QuickConnectIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cq.ref.Append("quick_connect_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](cq.ref.Append("quick_connect_ids"))
 }
 
+// QuickConnectIdsAssociated returns a reference to field quick_connect_ids_associated of aws_connect_queue.
 func (cq connectQueueAttributes) QuickConnectIdsAssociated() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cq.ref.Append("quick_connect_ids_associated"))
+	return terra.ReferenceAsSet[terra.StringValue](cq.ref.Append("quick_connect_ids_associated"))
 }
 
+// Status returns a reference to field status of aws_connect_queue.
 func (cq connectQueueAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(cq.ref.Append("status"))
+	return terra.ReferenceAsString(cq.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of aws_connect_queue.
 func (cq connectQueueAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cq.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cq.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_connect_queue.
 func (cq connectQueueAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cq.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](cq.ref.Append("tags_all"))
 }
 
 func (cq connectQueueAttributes) OutboundCallerConfig() terra.ListValue[connectqueue.OutboundCallerConfigAttributes] {
-	return terra.ReferenceList[connectqueue.OutboundCallerConfigAttributes](cq.ref.Append("outbound_caller_config"))
+	return terra.ReferenceAsList[connectqueue.OutboundCallerConfigAttributes](cq.ref.Append("outbound_caller_config"))
 }
 
 type connectQueueState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDaxSubnetGroup creates a new instance of [DaxSubnetGroup].
 func NewDaxSubnetGroup(name string, args DaxSubnetGroupArgs) *DaxSubnetGroup {
 	return &DaxSubnetGroup{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDaxSubnetGroup(name string, args DaxSubnetGroupArgs) *DaxSubnetGroup {
 
 var _ terra.Resource = (*DaxSubnetGroup)(nil)
 
+// DaxSubnetGroup represents the Terraform resource aws_dax_subnet_group.
 type DaxSubnetGroup struct {
-	Name  string
-	Args  DaxSubnetGroupArgs
-	state *daxSubnetGroupState
+	Name      string
+	Args      DaxSubnetGroupArgs
+	state     *daxSubnetGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DaxSubnetGroup].
 func (dsg *DaxSubnetGroup) Type() string {
 	return "aws_dax_subnet_group"
 }
 
+// LocalName returns the local name for [DaxSubnetGroup].
 func (dsg *DaxSubnetGroup) LocalName() string {
 	return dsg.Name
 }
 
+// Configuration returns the configuration (args) for [DaxSubnetGroup].
 func (dsg *DaxSubnetGroup) Configuration() interface{} {
 	return dsg.Args
 }
 
+// DependOn is used for other resources to depend on [DaxSubnetGroup].
+func (dsg *DaxSubnetGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(dsg)
+}
+
+// Dependencies returns the list of resources [DaxSubnetGroup] depends_on.
+func (dsg *DaxSubnetGroup) Dependencies() terra.Dependencies {
+	return dsg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DaxSubnetGroup].
+func (dsg *DaxSubnetGroup) LifecycleManagement() *terra.Lifecycle {
+	return dsg.Lifecycle
+}
+
+// Attributes returns the attributes for [DaxSubnetGroup].
 func (dsg *DaxSubnetGroup) Attributes() daxSubnetGroupAttributes {
 	return daxSubnetGroupAttributes{ref: terra.ReferenceResource(dsg)}
 }
 
+// ImportState imports the given attribute values into [DaxSubnetGroup]'s state.
 func (dsg *DaxSubnetGroup) ImportState(av io.Reader) error {
 	dsg.state = &daxSubnetGroupState{}
 	if err := json.NewDecoder(av).Decode(dsg.state); err != nil {
@@ -48,10 +72,12 @@ func (dsg *DaxSubnetGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DaxSubnetGroup] has state.
 func (dsg *DaxSubnetGroup) State() (*daxSubnetGroupState, bool) {
 	return dsg.state, dsg.state != nil
 }
 
+// StateMust returns the state for [DaxSubnetGroup]. Panics if the state is nil.
 func (dsg *DaxSubnetGroup) StateMust() *daxSubnetGroupState {
 	if dsg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dsg.Type(), dsg.LocalName()))
@@ -59,10 +85,7 @@ func (dsg *DaxSubnetGroup) StateMust() *daxSubnetGroupState {
 	return dsg.state
 }
 
-func (dsg *DaxSubnetGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(dsg)
-}
-
+// DaxSubnetGroupArgs contains the configurations for aws_dax_subnet_group.
 type DaxSubnetGroupArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -72,31 +95,34 @@ type DaxSubnetGroupArgs struct {
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
 	// SubnetIds: set of string, required
 	SubnetIds terra.SetValue[terra.StringValue] `hcl:"subnet_ids,attr" validate:"required"`
-	// DependsOn contains resources that DaxSubnetGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type daxSubnetGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of aws_dax_subnet_group.
 func (dsg daxSubnetGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dsg.ref.Append("description"))
+	return terra.ReferenceAsString(dsg.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_dax_subnet_group.
 func (dsg daxSubnetGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dsg.ref.Append("id"))
+	return terra.ReferenceAsString(dsg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_dax_subnet_group.
 func (dsg daxSubnetGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dsg.ref.Append("name"))
+	return terra.ReferenceAsString(dsg.ref.Append("name"))
 }
 
+// SubnetIds returns a reference to field subnet_ids of aws_dax_subnet_group.
 func (dsg daxSubnetGroupAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dsg.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](dsg.ref.Append("subnet_ids"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_dax_subnet_group.
 func (dsg daxSubnetGroupAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(dsg.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(dsg.ref.Append("vpc_id"))
 }
 
 type daxSubnetGroupState struct {

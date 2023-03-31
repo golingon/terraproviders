@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCloudwatchLogGroup creates a new instance of [CloudwatchLogGroup].
 func NewCloudwatchLogGroup(name string, args CloudwatchLogGroupArgs) *CloudwatchLogGroup {
 	return &CloudwatchLogGroup{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCloudwatchLogGroup(name string, args CloudwatchLogGroupArgs) *Cloudwatch
 
 var _ terra.Resource = (*CloudwatchLogGroup)(nil)
 
+// CloudwatchLogGroup represents the Terraform resource aws_cloudwatch_log_group.
 type CloudwatchLogGroup struct {
-	Name  string
-	Args  CloudwatchLogGroupArgs
-	state *cloudwatchLogGroupState
+	Name      string
+	Args      CloudwatchLogGroupArgs
+	state     *cloudwatchLogGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudwatchLogGroup].
 func (clg *CloudwatchLogGroup) Type() string {
 	return "aws_cloudwatch_log_group"
 }
 
+// LocalName returns the local name for [CloudwatchLogGroup].
 func (clg *CloudwatchLogGroup) LocalName() string {
 	return clg.Name
 }
 
+// Configuration returns the configuration (args) for [CloudwatchLogGroup].
 func (clg *CloudwatchLogGroup) Configuration() interface{} {
 	return clg.Args
 }
 
+// DependOn is used for other resources to depend on [CloudwatchLogGroup].
+func (clg *CloudwatchLogGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(clg)
+}
+
+// Dependencies returns the list of resources [CloudwatchLogGroup] depends_on.
+func (clg *CloudwatchLogGroup) Dependencies() terra.Dependencies {
+	return clg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudwatchLogGroup].
+func (clg *CloudwatchLogGroup) LifecycleManagement() *terra.Lifecycle {
+	return clg.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudwatchLogGroup].
 func (clg *CloudwatchLogGroup) Attributes() cloudwatchLogGroupAttributes {
 	return cloudwatchLogGroupAttributes{ref: terra.ReferenceResource(clg)}
 }
 
+// ImportState imports the given attribute values into [CloudwatchLogGroup]'s state.
 func (clg *CloudwatchLogGroup) ImportState(av io.Reader) error {
 	clg.state = &cloudwatchLogGroupState{}
 	if err := json.NewDecoder(av).Decode(clg.state); err != nil {
@@ -48,10 +72,12 @@ func (clg *CloudwatchLogGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudwatchLogGroup] has state.
 func (clg *CloudwatchLogGroup) State() (*cloudwatchLogGroupState, bool) {
 	return clg.state, clg.state != nil
 }
 
+// StateMust returns the state for [CloudwatchLogGroup]. Panics if the state is nil.
 func (clg *CloudwatchLogGroup) StateMust() *cloudwatchLogGroupState {
 	if clg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", clg.Type(), clg.LocalName()))
@@ -59,10 +85,7 @@ func (clg *CloudwatchLogGroup) StateMust() *cloudwatchLogGroupState {
 	return clg.state
 }
 
-func (clg *CloudwatchLogGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(clg)
-}
-
+// CloudwatchLogGroupArgs contains the configurations for aws_cloudwatch_log_group.
 type CloudwatchLogGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -80,47 +103,54 @@ type CloudwatchLogGroupArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that CloudwatchLogGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudwatchLogGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_cloudwatch_log_group.
 func (clg cloudwatchLogGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(clg.ref.Append("arn"))
+	return terra.ReferenceAsString(clg.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_cloudwatch_log_group.
 func (clg cloudwatchLogGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(clg.ref.Append("id"))
+	return terra.ReferenceAsString(clg.ref.Append("id"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_cloudwatch_log_group.
 func (clg cloudwatchLogGroupAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(clg.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(clg.ref.Append("kms_key_id"))
 }
 
+// Name returns a reference to field name of aws_cloudwatch_log_group.
 func (clg cloudwatchLogGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(clg.ref.Append("name"))
+	return terra.ReferenceAsString(clg.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_cloudwatch_log_group.
 func (clg cloudwatchLogGroupAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(clg.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(clg.ref.Append("name_prefix"))
 }
 
+// RetentionInDays returns a reference to field retention_in_days of aws_cloudwatch_log_group.
 func (clg cloudwatchLogGroupAttributes) RetentionInDays() terra.NumberValue {
-	return terra.ReferenceNumber(clg.ref.Append("retention_in_days"))
+	return terra.ReferenceAsNumber(clg.ref.Append("retention_in_days"))
 }
 
+// SkipDestroy returns a reference to field skip_destroy of aws_cloudwatch_log_group.
 func (clg cloudwatchLogGroupAttributes) SkipDestroy() terra.BoolValue {
-	return terra.ReferenceBool(clg.ref.Append("skip_destroy"))
+	return terra.ReferenceAsBool(clg.ref.Append("skip_destroy"))
 }
 
+// Tags returns a reference to field tags of aws_cloudwatch_log_group.
 func (clg cloudwatchLogGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](clg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](clg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_cloudwatch_log_group.
 func (clg cloudwatchLogGroupAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](clg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](clg.ref.Append("tags_all"))
 }
 
 type cloudwatchLogGroupState struct {

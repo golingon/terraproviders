@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCloudcontrolapiResource creates a new instance of [CloudcontrolapiResource].
 func NewCloudcontrolapiResource(name string, args CloudcontrolapiResourceArgs) *CloudcontrolapiResource {
 	return &CloudcontrolapiResource{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCloudcontrolapiResource(name string, args CloudcontrolapiResourceArgs) *
 
 var _ terra.Resource = (*CloudcontrolapiResource)(nil)
 
+// CloudcontrolapiResource represents the Terraform resource aws_cloudcontrolapi_resource.
 type CloudcontrolapiResource struct {
-	Name  string
-	Args  CloudcontrolapiResourceArgs
-	state *cloudcontrolapiResourceState
+	Name      string
+	Args      CloudcontrolapiResourceArgs
+	state     *cloudcontrolapiResourceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudcontrolapiResource].
 func (cr *CloudcontrolapiResource) Type() string {
 	return "aws_cloudcontrolapi_resource"
 }
 
+// LocalName returns the local name for [CloudcontrolapiResource].
 func (cr *CloudcontrolapiResource) LocalName() string {
 	return cr.Name
 }
 
+// Configuration returns the configuration (args) for [CloudcontrolapiResource].
 func (cr *CloudcontrolapiResource) Configuration() interface{} {
 	return cr.Args
 }
 
+// DependOn is used for other resources to depend on [CloudcontrolapiResource].
+func (cr *CloudcontrolapiResource) DependOn() terra.Reference {
+	return terra.ReferenceResource(cr)
+}
+
+// Dependencies returns the list of resources [CloudcontrolapiResource] depends_on.
+func (cr *CloudcontrolapiResource) Dependencies() terra.Dependencies {
+	return cr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudcontrolapiResource].
+func (cr *CloudcontrolapiResource) LifecycleManagement() *terra.Lifecycle {
+	return cr.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudcontrolapiResource].
 func (cr *CloudcontrolapiResource) Attributes() cloudcontrolapiResourceAttributes {
 	return cloudcontrolapiResourceAttributes{ref: terra.ReferenceResource(cr)}
 }
 
+// ImportState imports the given attribute values into [CloudcontrolapiResource]'s state.
 func (cr *CloudcontrolapiResource) ImportState(av io.Reader) error {
 	cr.state = &cloudcontrolapiResourceState{}
 	if err := json.NewDecoder(av).Decode(cr.state); err != nil {
@@ -49,10 +73,12 @@ func (cr *CloudcontrolapiResource) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudcontrolapiResource] has state.
 func (cr *CloudcontrolapiResource) State() (*cloudcontrolapiResourceState, bool) {
 	return cr.state, cr.state != nil
 }
 
+// StateMust returns the state for [CloudcontrolapiResource]. Panics if the state is nil.
 func (cr *CloudcontrolapiResource) StateMust() *cloudcontrolapiResourceState {
 	if cr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cr.Type(), cr.LocalName()))
@@ -60,10 +86,7 @@ func (cr *CloudcontrolapiResource) StateMust() *cloudcontrolapiResourceState {
 	return cr.state
 }
 
-func (cr *CloudcontrolapiResource) DependOn() terra.Reference {
-	return terra.ReferenceResource(cr)
-}
-
+// CloudcontrolapiResourceArgs contains the configurations for aws_cloudcontrolapi_resource.
 type CloudcontrolapiResourceArgs struct {
 	// DesiredState: string, required
 	DesiredState terra.StringValue `hcl:"desired_state,attr" validate:"required"`
@@ -79,43 +102,48 @@ type CloudcontrolapiResourceArgs struct {
 	TypeVersionId terra.StringValue `hcl:"type_version_id,attr"`
 	// Timeouts: optional
 	Timeouts *cloudcontrolapiresource.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that CloudcontrolapiResource depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudcontrolapiResourceAttributes struct {
 	ref terra.Reference
 }
 
+// DesiredState returns a reference to field desired_state of aws_cloudcontrolapi_resource.
 func (cr cloudcontrolapiResourceAttributes) DesiredState() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("desired_state"))
+	return terra.ReferenceAsString(cr.ref.Append("desired_state"))
 }
 
+// Id returns a reference to field id of aws_cloudcontrolapi_resource.
 func (cr cloudcontrolapiResourceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("id"))
+	return terra.ReferenceAsString(cr.ref.Append("id"))
 }
 
+// Properties returns a reference to field properties of aws_cloudcontrolapi_resource.
 func (cr cloudcontrolapiResourceAttributes) Properties() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("properties"))
+	return terra.ReferenceAsString(cr.ref.Append("properties"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_cloudcontrolapi_resource.
 func (cr cloudcontrolapiResourceAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("role_arn"))
+	return terra.ReferenceAsString(cr.ref.Append("role_arn"))
 }
 
+// Schema returns a reference to field schema of aws_cloudcontrolapi_resource.
 func (cr cloudcontrolapiResourceAttributes) Schema() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("schema"))
+	return terra.ReferenceAsString(cr.ref.Append("schema"))
 }
 
+// TypeName returns a reference to field type_name of aws_cloudcontrolapi_resource.
 func (cr cloudcontrolapiResourceAttributes) TypeName() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("type_name"))
+	return terra.ReferenceAsString(cr.ref.Append("type_name"))
 }
 
+// TypeVersionId returns a reference to field type_version_id of aws_cloudcontrolapi_resource.
 func (cr cloudcontrolapiResourceAttributes) TypeVersionId() terra.StringValue {
-	return terra.ReferenceString(cr.ref.Append("type_version_id"))
+	return terra.ReferenceAsString(cr.ref.Append("type_version_id"))
 }
 
 func (cr cloudcontrolapiResourceAttributes) Timeouts() cloudcontrolapiresource.TimeoutsAttributes {
-	return terra.ReferenceSingle[cloudcontrolapiresource.TimeoutsAttributes](cr.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[cloudcontrolapiresource.TimeoutsAttributes](cr.ref.Append("timeouts"))
 }
 
 type cloudcontrolapiResourceState struct {

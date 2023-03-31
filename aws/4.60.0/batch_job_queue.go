@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewBatchJobQueue creates a new instance of [BatchJobQueue].
 func NewBatchJobQueue(name string, args BatchJobQueueArgs) *BatchJobQueue {
 	return &BatchJobQueue{
 		Args: args,
@@ -18,28 +19,51 @@ func NewBatchJobQueue(name string, args BatchJobQueueArgs) *BatchJobQueue {
 
 var _ terra.Resource = (*BatchJobQueue)(nil)
 
+// BatchJobQueue represents the Terraform resource aws_batch_job_queue.
 type BatchJobQueue struct {
-	Name  string
-	Args  BatchJobQueueArgs
-	state *batchJobQueueState
+	Name      string
+	Args      BatchJobQueueArgs
+	state     *batchJobQueueState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BatchJobQueue].
 func (bjq *BatchJobQueue) Type() string {
 	return "aws_batch_job_queue"
 }
 
+// LocalName returns the local name for [BatchJobQueue].
 func (bjq *BatchJobQueue) LocalName() string {
 	return bjq.Name
 }
 
+// Configuration returns the configuration (args) for [BatchJobQueue].
 func (bjq *BatchJobQueue) Configuration() interface{} {
 	return bjq.Args
 }
 
+// DependOn is used for other resources to depend on [BatchJobQueue].
+func (bjq *BatchJobQueue) DependOn() terra.Reference {
+	return terra.ReferenceResource(bjq)
+}
+
+// Dependencies returns the list of resources [BatchJobQueue] depends_on.
+func (bjq *BatchJobQueue) Dependencies() terra.Dependencies {
+	return bjq.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BatchJobQueue].
+func (bjq *BatchJobQueue) LifecycleManagement() *terra.Lifecycle {
+	return bjq.Lifecycle
+}
+
+// Attributes returns the attributes for [BatchJobQueue].
 func (bjq *BatchJobQueue) Attributes() batchJobQueueAttributes {
 	return batchJobQueueAttributes{ref: terra.ReferenceResource(bjq)}
 }
 
+// ImportState imports the given attribute values into [BatchJobQueue]'s state.
 func (bjq *BatchJobQueue) ImportState(av io.Reader) error {
 	bjq.state = &batchJobQueueState{}
 	if err := json.NewDecoder(av).Decode(bjq.state); err != nil {
@@ -48,10 +72,12 @@ func (bjq *BatchJobQueue) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BatchJobQueue] has state.
 func (bjq *BatchJobQueue) State() (*batchJobQueueState, bool) {
 	return bjq.state, bjq.state != nil
 }
 
+// StateMust returns the state for [BatchJobQueue]. Panics if the state is nil.
 func (bjq *BatchJobQueue) StateMust() *batchJobQueueState {
 	if bjq.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bjq.Type(), bjq.LocalName()))
@@ -59,10 +85,7 @@ func (bjq *BatchJobQueue) StateMust() *batchJobQueueState {
 	return bjq.state
 }
 
-func (bjq *BatchJobQueue) DependOn() terra.Reference {
-	return terra.ReferenceResource(bjq)
-}
-
+// BatchJobQueueArgs contains the configurations for aws_batch_job_queue.
 type BatchJobQueueArgs struct {
 	// ComputeEnvironments: list of string, required
 	ComputeEnvironments terra.ListValue[terra.StringValue] `hcl:"compute_environments,attr" validate:"required"`
@@ -80,47 +103,54 @@ type BatchJobQueueArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that BatchJobQueue depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type batchJobQueueAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_batch_job_queue.
 func (bjq batchJobQueueAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(bjq.ref.Append("arn"))
+	return terra.ReferenceAsString(bjq.ref.Append("arn"))
 }
 
+// ComputeEnvironments returns a reference to field compute_environments of aws_batch_job_queue.
 func (bjq batchJobQueueAttributes) ComputeEnvironments() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](bjq.ref.Append("compute_environments"))
+	return terra.ReferenceAsList[terra.StringValue](bjq.ref.Append("compute_environments"))
 }
 
+// Id returns a reference to field id of aws_batch_job_queue.
 func (bjq batchJobQueueAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bjq.ref.Append("id"))
+	return terra.ReferenceAsString(bjq.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_batch_job_queue.
 func (bjq batchJobQueueAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bjq.ref.Append("name"))
+	return terra.ReferenceAsString(bjq.ref.Append("name"))
 }
 
+// Priority returns a reference to field priority of aws_batch_job_queue.
 func (bjq batchJobQueueAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(bjq.ref.Append("priority"))
+	return terra.ReferenceAsNumber(bjq.ref.Append("priority"))
 }
 
+// SchedulingPolicyArn returns a reference to field scheduling_policy_arn of aws_batch_job_queue.
 func (bjq batchJobQueueAttributes) SchedulingPolicyArn() terra.StringValue {
-	return terra.ReferenceString(bjq.ref.Append("scheduling_policy_arn"))
+	return terra.ReferenceAsString(bjq.ref.Append("scheduling_policy_arn"))
 }
 
+// State returns a reference to field state of aws_batch_job_queue.
 func (bjq batchJobQueueAttributes) State() terra.StringValue {
-	return terra.ReferenceString(bjq.ref.Append("state"))
+	return terra.ReferenceAsString(bjq.ref.Append("state"))
 }
 
+// Tags returns a reference to field tags of aws_batch_job_queue.
 func (bjq batchJobQueueAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bjq.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](bjq.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_batch_job_queue.
 func (bjq batchJobQueueAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bjq.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](bjq.ref.Append("tags_all"))
 }
 
 type batchJobQueueState struct {

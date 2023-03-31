@@ -116,23 +116,23 @@ func (ct CatalogTargetAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ct CatalogTargetAttributes) ConnectionName() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("connection_name"))
+	return terra.ReferenceAsString(ct.ref.Append("connection_name"))
 }
 
 func (ct CatalogTargetAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("database_name"))
+	return terra.ReferenceAsString(ct.ref.Append("database_name"))
 }
 
 func (ct CatalogTargetAttributes) DlqEventQueueArn() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("dlq_event_queue_arn"))
+	return terra.ReferenceAsString(ct.ref.Append("dlq_event_queue_arn"))
 }
 
 func (ct CatalogTargetAttributes) EventQueueArn() terra.StringValue {
-	return terra.ReferenceString(ct.ref.Append("event_queue_arn"))
+	return terra.ReferenceAsString(ct.ref.Append("event_queue_arn"))
 }
 
 func (ct CatalogTargetAttributes) Tables() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ct.ref.Append("tables"))
+	return terra.ReferenceAsList[terra.StringValue](ct.ref.Append("tables"))
 }
 
 type DeltaTargetAttributes struct {
@@ -152,19 +152,19 @@ func (dt DeltaTargetAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dt DeltaTargetAttributes) ConnectionName() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("connection_name"))
+	return terra.ReferenceAsString(dt.ref.Append("connection_name"))
 }
 
 func (dt DeltaTargetAttributes) CreateNativeDeltaTable() terra.BoolValue {
-	return terra.ReferenceBool(dt.ref.Append("create_native_delta_table"))
+	return terra.ReferenceAsBool(dt.ref.Append("create_native_delta_table"))
 }
 
 func (dt DeltaTargetAttributes) DeltaTables() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dt.ref.Append("delta_tables"))
+	return terra.ReferenceAsSet[terra.StringValue](dt.ref.Append("delta_tables"))
 }
 
 func (dt DeltaTargetAttributes) WriteManifest() terra.BoolValue {
-	return terra.ReferenceBool(dt.ref.Append("write_manifest"))
+	return terra.ReferenceAsBool(dt.ref.Append("write_manifest"))
 }
 
 type DynamodbTargetAttributes struct {
@@ -184,15 +184,15 @@ func (dt DynamodbTargetAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dt DynamodbTargetAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(dt.ref.Append("path"))
+	return terra.ReferenceAsString(dt.ref.Append("path"))
 }
 
 func (dt DynamodbTargetAttributes) ScanAll() terra.BoolValue {
-	return terra.ReferenceBool(dt.ref.Append("scan_all"))
+	return terra.ReferenceAsBool(dt.ref.Append("scan_all"))
 }
 
 func (dt DynamodbTargetAttributes) ScanRate() terra.NumberValue {
-	return terra.ReferenceNumber(dt.ref.Append("scan_rate"))
+	return terra.ReferenceAsNumber(dt.ref.Append("scan_rate"))
 }
 
 type JdbcTargetAttributes struct {
@@ -212,19 +212,19 @@ func (jt JdbcTargetAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (jt JdbcTargetAttributes) ConnectionName() terra.StringValue {
-	return terra.ReferenceString(jt.ref.Append("connection_name"))
+	return terra.ReferenceAsString(jt.ref.Append("connection_name"))
 }
 
 func (jt JdbcTargetAttributes) EnableAdditionalMetadata() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](jt.ref.Append("enable_additional_metadata"))
+	return terra.ReferenceAsList[terra.StringValue](jt.ref.Append("enable_additional_metadata"))
 }
 
 func (jt JdbcTargetAttributes) Exclusions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](jt.ref.Append("exclusions"))
+	return terra.ReferenceAsList[terra.StringValue](jt.ref.Append("exclusions"))
 }
 
 func (jt JdbcTargetAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(jt.ref.Append("path"))
+	return terra.ReferenceAsString(jt.ref.Append("path"))
 }
 
 type LakeFormationConfigurationAttributes struct {
@@ -244,11 +244,11 @@ func (lfc LakeFormationConfigurationAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (lfc LakeFormationConfigurationAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(lfc.ref.Append("account_id"))
+	return terra.ReferenceAsString(lfc.ref.Append("account_id"))
 }
 
 func (lfc LakeFormationConfigurationAttributes) UseLakeFormationCredentials() terra.BoolValue {
-	return terra.ReferenceBool(lfc.ref.Append("use_lake_formation_credentials"))
+	return terra.ReferenceAsBool(lfc.ref.Append("use_lake_formation_credentials"))
 }
 
 type LineageConfigurationAttributes struct {
@@ -268,7 +268,7 @@ func (lc LineageConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lc LineageConfigurationAttributes) CrawlerLineageSettings() terra.StringValue {
-	return terra.ReferenceString(lc.ref.Append("crawler_lineage_settings"))
+	return terra.ReferenceAsString(lc.ref.Append("crawler_lineage_settings"))
 }
 
 type MongodbTargetAttributes struct {
@@ -288,15 +288,15 @@ func (mt MongodbTargetAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mt MongodbTargetAttributes) ConnectionName() terra.StringValue {
-	return terra.ReferenceString(mt.ref.Append("connection_name"))
+	return terra.ReferenceAsString(mt.ref.Append("connection_name"))
 }
 
 func (mt MongodbTargetAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(mt.ref.Append("path"))
+	return terra.ReferenceAsString(mt.ref.Append("path"))
 }
 
 func (mt MongodbTargetAttributes) ScanAll() terra.BoolValue {
-	return terra.ReferenceBool(mt.ref.Append("scan_all"))
+	return terra.ReferenceAsBool(mt.ref.Append("scan_all"))
 }
 
 type RecrawlPolicyAttributes struct {
@@ -316,7 +316,7 @@ func (rp RecrawlPolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rp RecrawlPolicyAttributes) RecrawlBehavior() terra.StringValue {
-	return terra.ReferenceString(rp.ref.Append("recrawl_behavior"))
+	return terra.ReferenceAsString(rp.ref.Append("recrawl_behavior"))
 }
 
 type S3TargetAttributes struct {
@@ -336,27 +336,27 @@ func (st S3TargetAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (st S3TargetAttributes) ConnectionName() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("connection_name"))
+	return terra.ReferenceAsString(st.ref.Append("connection_name"))
 }
 
 func (st S3TargetAttributes) DlqEventQueueArn() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("dlq_event_queue_arn"))
+	return terra.ReferenceAsString(st.ref.Append("dlq_event_queue_arn"))
 }
 
 func (st S3TargetAttributes) EventQueueArn() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("event_queue_arn"))
+	return terra.ReferenceAsString(st.ref.Append("event_queue_arn"))
 }
 
 func (st S3TargetAttributes) Exclusions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](st.ref.Append("exclusions"))
+	return terra.ReferenceAsList[terra.StringValue](st.ref.Append("exclusions"))
 }
 
 func (st S3TargetAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(st.ref.Append("path"))
+	return terra.ReferenceAsString(st.ref.Append("path"))
 }
 
 func (st S3TargetAttributes) SampleSize() terra.NumberValue {
-	return terra.ReferenceNumber(st.ref.Append("sample_size"))
+	return terra.ReferenceAsNumber(st.ref.Append("sample_size"))
 }
 
 type SchemaChangePolicyAttributes struct {
@@ -376,11 +376,11 @@ func (scp SchemaChangePolicyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (scp SchemaChangePolicyAttributes) DeleteBehavior() terra.StringValue {
-	return terra.ReferenceString(scp.ref.Append("delete_behavior"))
+	return terra.ReferenceAsString(scp.ref.Append("delete_behavior"))
 }
 
 func (scp SchemaChangePolicyAttributes) UpdateBehavior() terra.StringValue {
-	return terra.ReferenceString(scp.ref.Append("update_behavior"))
+	return terra.ReferenceAsString(scp.ref.Append("update_behavior"))
 }
 
 type CatalogTargetState struct {

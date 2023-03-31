@@ -44,15 +44,15 @@ func (ii IdentityInfoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ii IdentityInfoAttributes) Email() terra.StringValue {
-	return terra.ReferenceString(ii.ref.Append("email"))
+	return terra.ReferenceAsString(ii.ref.Append("email"))
 }
 
 func (ii IdentityInfoAttributes) FirstName() terra.StringValue {
-	return terra.ReferenceString(ii.ref.Append("first_name"))
+	return terra.ReferenceAsString(ii.ref.Append("first_name"))
 }
 
 func (ii IdentityInfoAttributes) LastName() terra.StringValue {
-	return terra.ReferenceString(ii.ref.Append("last_name"))
+	return terra.ReferenceAsString(ii.ref.Append("last_name"))
 }
 
 type PhoneConfigAttributes struct {
@@ -72,19 +72,19 @@ func (pc PhoneConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pc PhoneConfigAttributes) AfterContactWorkTimeLimit() terra.NumberValue {
-	return terra.ReferenceNumber(pc.ref.Append("after_contact_work_time_limit"))
+	return terra.ReferenceAsNumber(pc.ref.Append("after_contact_work_time_limit"))
 }
 
 func (pc PhoneConfigAttributes) AutoAccept() terra.BoolValue {
-	return terra.ReferenceBool(pc.ref.Append("auto_accept"))
+	return terra.ReferenceAsBool(pc.ref.Append("auto_accept"))
 }
 
 func (pc PhoneConfigAttributes) DeskPhoneNumber() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("desk_phone_number"))
+	return terra.ReferenceAsString(pc.ref.Append("desk_phone_number"))
 }
 
 func (pc PhoneConfigAttributes) PhoneType() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("phone_type"))
+	return terra.ReferenceAsString(pc.ref.Append("phone_type"))
 }
 
 type IdentityInfoState struct {

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataNatGateway creates a new instance of [DataNatGateway].
 func NewDataNatGateway(name string, args DataNatGatewayArgs) *DataNatGateway {
 	return &DataNatGateway{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataNatGateway(name string, args DataNatGatewayArgs) *DataNatGateway {
 
 var _ terra.DataResource = (*DataNatGateway)(nil)
 
+// DataNatGateway represents the Terraform data resource aws_nat_gateway.
 type DataNatGateway struct {
 	Name string
 	Args DataNatGatewayArgs
 }
 
+// DataSource returns the Terraform object type for [DataNatGateway].
 func (ng *DataNatGateway) DataSource() string {
 	return "aws_nat_gateway"
 }
 
+// LocalName returns the local name for [DataNatGateway].
 func (ng *DataNatGateway) LocalName() string {
 	return ng.Name
 }
 
+// Configuration returns the configuration (args) for [DataNatGateway].
 func (ng *DataNatGateway) Configuration() interface{} {
 	return ng.Args
 }
 
+// Attributes returns the attributes for [DataNatGateway].
 func (ng *DataNatGateway) Attributes() dataNatGatewayAttributes {
 	return dataNatGatewayAttributes{ref: terra.ReferenceDataResource(ng)}
 }
 
+// DataNatGatewayArgs contains the configurations for aws_nat_gateway.
 type DataNatGatewayArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -57,50 +64,60 @@ type dataNatGatewayAttributes struct {
 	ref terra.Reference
 }
 
+// AllocationId returns a reference to field allocation_id of aws_nat_gateway.
 func (ng dataNatGatewayAttributes) AllocationId() terra.StringValue {
-	return terra.ReferenceString(ng.ref.Append("allocation_id"))
+	return terra.ReferenceAsString(ng.ref.Append("allocation_id"))
 }
 
+// ConnectivityType returns a reference to field connectivity_type of aws_nat_gateway.
 func (ng dataNatGatewayAttributes) ConnectivityType() terra.StringValue {
-	return terra.ReferenceString(ng.ref.Append("connectivity_type"))
+	return terra.ReferenceAsString(ng.ref.Append("connectivity_type"))
 }
 
+// Id returns a reference to field id of aws_nat_gateway.
 func (ng dataNatGatewayAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ng.ref.Append("id"))
+	return terra.ReferenceAsString(ng.ref.Append("id"))
 }
 
+// NetworkInterfaceId returns a reference to field network_interface_id of aws_nat_gateway.
 func (ng dataNatGatewayAttributes) NetworkInterfaceId() terra.StringValue {
-	return terra.ReferenceString(ng.ref.Append("network_interface_id"))
+	return terra.ReferenceAsString(ng.ref.Append("network_interface_id"))
 }
 
+// PrivateIp returns a reference to field private_ip of aws_nat_gateway.
 func (ng dataNatGatewayAttributes) PrivateIp() terra.StringValue {
-	return terra.ReferenceString(ng.ref.Append("private_ip"))
+	return terra.ReferenceAsString(ng.ref.Append("private_ip"))
 }
 
+// PublicIp returns a reference to field public_ip of aws_nat_gateway.
 func (ng dataNatGatewayAttributes) PublicIp() terra.StringValue {
-	return terra.ReferenceString(ng.ref.Append("public_ip"))
+	return terra.ReferenceAsString(ng.ref.Append("public_ip"))
 }
 
+// State returns a reference to field state of aws_nat_gateway.
 func (ng dataNatGatewayAttributes) State() terra.StringValue {
-	return terra.ReferenceString(ng.ref.Append("state"))
+	return terra.ReferenceAsString(ng.ref.Append("state"))
 }
 
+// SubnetId returns a reference to field subnet_id of aws_nat_gateway.
 func (ng dataNatGatewayAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(ng.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(ng.ref.Append("subnet_id"))
 }
 
+// Tags returns a reference to field tags of aws_nat_gateway.
 func (ng dataNatGatewayAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ng.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ng.ref.Append("tags"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_nat_gateway.
 func (ng dataNatGatewayAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(ng.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(ng.ref.Append("vpc_id"))
 }
 
 func (ng dataNatGatewayAttributes) Filter() terra.SetValue[datanatgateway.FilterAttributes] {
-	return terra.ReferenceSet[datanatgateway.FilterAttributes](ng.ref.Append("filter"))
+	return terra.ReferenceAsSet[datanatgateway.FilterAttributes](ng.ref.Append("filter"))
 }
 
 func (ng dataNatGatewayAttributes) Timeouts() datanatgateway.TimeoutsAttributes {
-	return terra.ReferenceSingle[datanatgateway.TimeoutsAttributes](ng.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datanatgateway.TimeoutsAttributes](ng.ref.Append("timeouts"))
 }

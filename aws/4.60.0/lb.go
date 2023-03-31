@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLb creates a new instance of [Lb].
 func NewLb(name string, args LbArgs) *Lb {
 	return &Lb{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLb(name string, args LbArgs) *Lb {
 
 var _ terra.Resource = (*Lb)(nil)
 
+// Lb represents the Terraform resource aws_lb.
 type Lb struct {
-	Name  string
-	Args  LbArgs
-	state *lbState
+	Name      string
+	Args      LbArgs
+	state     *lbState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Lb].
 func (l *Lb) Type() string {
 	return "aws_lb"
 }
 
+// LocalName returns the local name for [Lb].
 func (l *Lb) LocalName() string {
 	return l.Name
 }
 
+// Configuration returns the configuration (args) for [Lb].
 func (l *Lb) Configuration() interface{} {
 	return l.Args
 }
 
+// DependOn is used for other resources to depend on [Lb].
+func (l *Lb) DependOn() terra.Reference {
+	return terra.ReferenceResource(l)
+}
+
+// Dependencies returns the list of resources [Lb] depends_on.
+func (l *Lb) Dependencies() terra.Dependencies {
+	return l.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Lb].
+func (l *Lb) LifecycleManagement() *terra.Lifecycle {
+	return l.Lifecycle
+}
+
+// Attributes returns the attributes for [Lb].
 func (l *Lb) Attributes() lbAttributes {
 	return lbAttributes{ref: terra.ReferenceResource(l)}
 }
 
+// ImportState imports the given attribute values into [Lb]'s state.
 func (l *Lb) ImportState(av io.Reader) error {
 	l.state = &lbState{}
 	if err := json.NewDecoder(av).Decode(l.state); err != nil {
@@ -49,10 +73,12 @@ func (l *Lb) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Lb] has state.
 func (l *Lb) State() (*lbState, bool) {
 	return l.state, l.state != nil
 }
 
+// StateMust returns the state for [Lb]. Panics if the state is nil.
 func (l *Lb) StateMust() *lbState {
 	if l.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", l.Type(), l.LocalName()))
@@ -60,10 +86,7 @@ func (l *Lb) StateMust() *lbState {
 	return l.state
 }
 
-func (l *Lb) DependOn() terra.Reference {
-	return terra.ReferenceResource(l)
-}
-
+// LbArgs contains the configurations for aws_lb.
 type LbArgs struct {
 	// CustomerOwnedIpv4Pool: string, optional
 	CustomerOwnedIpv4Pool terra.StringValue `hcl:"customer_owned_ipv4_pool,attr"`
@@ -115,131 +138,156 @@ type LbArgs struct {
 	SubnetMapping []lb.SubnetMapping `hcl:"subnet_mapping,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *lb.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Lb depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lbAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_lb.
 func (l lbAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("arn"))
+	return terra.ReferenceAsString(l.ref.Append("arn"))
 }
 
+// ArnSuffix returns a reference to field arn_suffix of aws_lb.
 func (l lbAttributes) ArnSuffix() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("arn_suffix"))
+	return terra.ReferenceAsString(l.ref.Append("arn_suffix"))
 }
 
+// CustomerOwnedIpv4Pool returns a reference to field customer_owned_ipv4_pool of aws_lb.
 func (l lbAttributes) CustomerOwnedIpv4Pool() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("customer_owned_ipv4_pool"))
+	return terra.ReferenceAsString(l.ref.Append("customer_owned_ipv4_pool"))
 }
 
+// DesyncMitigationMode returns a reference to field desync_mitigation_mode of aws_lb.
 func (l lbAttributes) DesyncMitigationMode() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("desync_mitigation_mode"))
+	return terra.ReferenceAsString(l.ref.Append("desync_mitigation_mode"))
 }
 
+// DnsName returns a reference to field dns_name of aws_lb.
 func (l lbAttributes) DnsName() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("dns_name"))
+	return terra.ReferenceAsString(l.ref.Append("dns_name"))
 }
 
+// DropInvalidHeaderFields returns a reference to field drop_invalid_header_fields of aws_lb.
 func (l lbAttributes) DropInvalidHeaderFields() terra.BoolValue {
-	return terra.ReferenceBool(l.ref.Append("drop_invalid_header_fields"))
+	return terra.ReferenceAsBool(l.ref.Append("drop_invalid_header_fields"))
 }
 
+// EnableCrossZoneLoadBalancing returns a reference to field enable_cross_zone_load_balancing of aws_lb.
 func (l lbAttributes) EnableCrossZoneLoadBalancing() terra.BoolValue {
-	return terra.ReferenceBool(l.ref.Append("enable_cross_zone_load_balancing"))
+	return terra.ReferenceAsBool(l.ref.Append("enable_cross_zone_load_balancing"))
 }
 
+// EnableDeletionProtection returns a reference to field enable_deletion_protection of aws_lb.
 func (l lbAttributes) EnableDeletionProtection() terra.BoolValue {
-	return terra.ReferenceBool(l.ref.Append("enable_deletion_protection"))
+	return terra.ReferenceAsBool(l.ref.Append("enable_deletion_protection"))
 }
 
+// EnableHttp2 returns a reference to field enable_http2 of aws_lb.
 func (l lbAttributes) EnableHttp2() terra.BoolValue {
-	return terra.ReferenceBool(l.ref.Append("enable_http2"))
+	return terra.ReferenceAsBool(l.ref.Append("enable_http2"))
 }
 
+// EnableTlsVersionAndCipherSuiteHeaders returns a reference to field enable_tls_version_and_cipher_suite_headers of aws_lb.
 func (l lbAttributes) EnableTlsVersionAndCipherSuiteHeaders() terra.BoolValue {
-	return terra.ReferenceBool(l.ref.Append("enable_tls_version_and_cipher_suite_headers"))
+	return terra.ReferenceAsBool(l.ref.Append("enable_tls_version_and_cipher_suite_headers"))
 }
 
+// EnableWafFailOpen returns a reference to field enable_waf_fail_open of aws_lb.
 func (l lbAttributes) EnableWafFailOpen() terra.BoolValue {
-	return terra.ReferenceBool(l.ref.Append("enable_waf_fail_open"))
+	return terra.ReferenceAsBool(l.ref.Append("enable_waf_fail_open"))
 }
 
+// EnableXffClientPort returns a reference to field enable_xff_client_port of aws_lb.
 func (l lbAttributes) EnableXffClientPort() terra.BoolValue {
-	return terra.ReferenceBool(l.ref.Append("enable_xff_client_port"))
+	return terra.ReferenceAsBool(l.ref.Append("enable_xff_client_port"))
 }
 
+// Id returns a reference to field id of aws_lb.
 func (l lbAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("id"))
+	return terra.ReferenceAsString(l.ref.Append("id"))
 }
 
+// IdleTimeout returns a reference to field idle_timeout of aws_lb.
 func (l lbAttributes) IdleTimeout() terra.NumberValue {
-	return terra.ReferenceNumber(l.ref.Append("idle_timeout"))
+	return terra.ReferenceAsNumber(l.ref.Append("idle_timeout"))
 }
 
+// Internal returns a reference to field internal of aws_lb.
 func (l lbAttributes) Internal() terra.BoolValue {
-	return terra.ReferenceBool(l.ref.Append("internal"))
+	return terra.ReferenceAsBool(l.ref.Append("internal"))
 }
 
+// IpAddressType returns a reference to field ip_address_type of aws_lb.
 func (l lbAttributes) IpAddressType() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("ip_address_type"))
+	return terra.ReferenceAsString(l.ref.Append("ip_address_type"))
 }
 
+// LoadBalancerType returns a reference to field load_balancer_type of aws_lb.
 func (l lbAttributes) LoadBalancerType() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("load_balancer_type"))
+	return terra.ReferenceAsString(l.ref.Append("load_balancer_type"))
 }
 
+// Name returns a reference to field name of aws_lb.
 func (l lbAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("name"))
+	return terra.ReferenceAsString(l.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_lb.
 func (l lbAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(l.ref.Append("name_prefix"))
 }
 
+// PreserveHostHeader returns a reference to field preserve_host_header of aws_lb.
 func (l lbAttributes) PreserveHostHeader() terra.BoolValue {
-	return terra.ReferenceBool(l.ref.Append("preserve_host_header"))
+	return terra.ReferenceAsBool(l.ref.Append("preserve_host_header"))
 }
 
+// SecurityGroups returns a reference to field security_groups of aws_lb.
 func (l lbAttributes) SecurityGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](l.ref.Append("security_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](l.ref.Append("security_groups"))
 }
 
+// Subnets returns a reference to field subnets of aws_lb.
 func (l lbAttributes) Subnets() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](l.ref.Append("subnets"))
+	return terra.ReferenceAsSet[terra.StringValue](l.ref.Append("subnets"))
 }
 
+// Tags returns a reference to field tags of aws_lb.
 func (l lbAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](l.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](l.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_lb.
 func (l lbAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](l.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](l.ref.Append("tags_all"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_lb.
 func (l lbAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(l.ref.Append("vpc_id"))
 }
 
+// XffHeaderProcessingMode returns a reference to field xff_header_processing_mode of aws_lb.
 func (l lbAttributes) XffHeaderProcessingMode() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("xff_header_processing_mode"))
+	return terra.ReferenceAsString(l.ref.Append("xff_header_processing_mode"))
 }
 
+// ZoneId returns a reference to field zone_id of aws_lb.
 func (l lbAttributes) ZoneId() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("zone_id"))
+	return terra.ReferenceAsString(l.ref.Append("zone_id"))
 }
 
 func (l lbAttributes) AccessLogs() terra.ListValue[lb.AccessLogsAttributes] {
-	return terra.ReferenceList[lb.AccessLogsAttributes](l.ref.Append("access_logs"))
+	return terra.ReferenceAsList[lb.AccessLogsAttributes](l.ref.Append("access_logs"))
 }
 
 func (l lbAttributes) SubnetMapping() terra.SetValue[lb.SubnetMappingAttributes] {
-	return terra.ReferenceSet[lb.SubnetMappingAttributes](l.ref.Append("subnet_mapping"))
+	return terra.ReferenceAsSet[lb.SubnetMappingAttributes](l.ref.Append("subnet_mapping"))
 }
 
 func (l lbAttributes) Timeouts() lb.TimeoutsAttributes {
-	return terra.ReferenceSingle[lb.TimeoutsAttributes](l.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[lb.TimeoutsAttributes](l.ref.Append("timeouts"))
 }
 
 type lbState struct {

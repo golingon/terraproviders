@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataSubnetIds creates a new instance of [DataSubnetIds].
 func NewDataSubnetIds(name string, args DataSubnetIdsArgs) *DataSubnetIds {
 	return &DataSubnetIds{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataSubnetIds(name string, args DataSubnetIdsArgs) *DataSubnetIds {
 
 var _ terra.DataResource = (*DataSubnetIds)(nil)
 
+// DataSubnetIds represents the Terraform data resource aws_subnet_ids.
 type DataSubnetIds struct {
 	Name string
 	Args DataSubnetIdsArgs
 }
 
+// DataSource returns the Terraform object type for [DataSubnetIds].
 func (si *DataSubnetIds) DataSource() string {
 	return "aws_subnet_ids"
 }
 
+// LocalName returns the local name for [DataSubnetIds].
 func (si *DataSubnetIds) LocalName() string {
 	return si.Name
 }
 
+// Configuration returns the configuration (args) for [DataSubnetIds].
 func (si *DataSubnetIds) Configuration() interface{} {
 	return si.Args
 }
 
+// Attributes returns the attributes for [DataSubnetIds].
 func (si *DataSubnetIds) Attributes() dataSubnetIdsAttributes {
 	return dataSubnetIdsAttributes{ref: terra.ReferenceDataResource(si)}
 }
 
+// DataSubnetIdsArgs contains the configurations for aws_subnet_ids.
 type DataSubnetIdsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -53,26 +60,30 @@ type dataSubnetIdsAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_subnet_ids.
 func (si dataSubnetIdsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("id"))
+	return terra.ReferenceAsString(si.ref.Append("id"))
 }
 
+// Ids returns a reference to field ids of aws_subnet_ids.
 func (si dataSubnetIdsAttributes) Ids() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](si.ref.Append("ids"))
+	return terra.ReferenceAsSet[terra.StringValue](si.ref.Append("ids"))
 }
 
+// Tags returns a reference to field tags of aws_subnet_ids.
 func (si dataSubnetIdsAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](si.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](si.ref.Append("tags"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_subnet_ids.
 func (si dataSubnetIdsAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(si.ref.Append("vpc_id"))
 }
 
 func (si dataSubnetIdsAttributes) Filter() terra.SetValue[datasubnetids.FilterAttributes] {
-	return terra.ReferenceSet[datasubnetids.FilterAttributes](si.ref.Append("filter"))
+	return terra.ReferenceAsSet[datasubnetids.FilterAttributes](si.ref.Append("filter"))
 }
 
 func (si dataSubnetIdsAttributes) Timeouts() datasubnetids.TimeoutsAttributes {
-	return terra.ReferenceSingle[datasubnetids.TimeoutsAttributes](si.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[datasubnetids.TimeoutsAttributes](si.ref.Append("timeouts"))
 }

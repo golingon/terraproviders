@@ -54,11 +54,11 @@ func (ec EncryptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec EncryptionConfigurationAttributes) KeyId() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("key_id"))
+	return terra.ReferenceAsString(ec.ref.Append("key_id"))
 }
 
 func (ec EncryptionConfigurationAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("type"))
+	return terra.ReferenceAsString(ec.ref.Append("type"))
 }
 
 type FirewallStatusAttributes struct {
@@ -78,19 +78,19 @@ func (fs FirewallStatusAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fs FirewallStatusAttributes) ConfigurationSyncStateSummary() terra.StringValue {
-	return terra.ReferenceString(fs.ref.Append("configuration_sync_state_summary"))
+	return terra.ReferenceAsString(fs.ref.Append("configuration_sync_state_summary"))
 }
 
 func (fs FirewallStatusAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(fs.ref.Append("status"))
+	return terra.ReferenceAsString(fs.ref.Append("status"))
 }
 
 func (fs FirewallStatusAttributes) CapacityUsageSummary() terra.SetValue[CapacityUsageSummaryAttributes] {
-	return terra.ReferenceSet[CapacityUsageSummaryAttributes](fs.ref.Append("capacity_usage_summary"))
+	return terra.ReferenceAsSet[CapacityUsageSummaryAttributes](fs.ref.Append("capacity_usage_summary"))
 }
 
 func (fs FirewallStatusAttributes) SyncStates() terra.SetValue[SyncStatesAttributes] {
-	return terra.ReferenceSet[SyncStatesAttributes](fs.ref.Append("sync_states"))
+	return terra.ReferenceAsSet[SyncStatesAttributes](fs.ref.Append("sync_states"))
 }
 
 type CapacityUsageSummaryAttributes struct {
@@ -110,7 +110,7 @@ func (cus CapacityUsageSummaryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cus CapacityUsageSummaryAttributes) Cidrs() terra.SetValue[CidrsAttributes] {
-	return terra.ReferenceSet[CidrsAttributes](cus.ref.Append("cidrs"))
+	return terra.ReferenceAsSet[CidrsAttributes](cus.ref.Append("cidrs"))
 }
 
 type CidrsAttributes struct {
@@ -130,15 +130,15 @@ func (c CidrsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c CidrsAttributes) AvailableCidrCount() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("available_cidr_count"))
+	return terra.ReferenceAsNumber(c.ref.Append("available_cidr_count"))
 }
 
 func (c CidrsAttributes) UtilizedCidrCount() terra.NumberValue {
-	return terra.ReferenceNumber(c.ref.Append("utilized_cidr_count"))
+	return terra.ReferenceAsNumber(c.ref.Append("utilized_cidr_count"))
 }
 
 func (c CidrsAttributes) IpSetReferences() terra.SetValue[IpSetReferencesAttributes] {
-	return terra.ReferenceSet[IpSetReferencesAttributes](c.ref.Append("ip_set_references"))
+	return terra.ReferenceAsSet[IpSetReferencesAttributes](c.ref.Append("ip_set_references"))
 }
 
 type IpSetReferencesAttributes struct {
@@ -158,7 +158,7 @@ func (isr IpSetReferencesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (isr IpSetReferencesAttributes) ResolvedCidrCount() terra.NumberValue {
-	return terra.ReferenceNumber(isr.ref.Append("resolved_cidr_count"))
+	return terra.ReferenceAsNumber(isr.ref.Append("resolved_cidr_count"))
 }
 
 type SyncStatesAttributes struct {
@@ -178,11 +178,11 @@ func (ss SyncStatesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ss SyncStatesAttributes) AvailabilityZone() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("availability_zone"))
+	return terra.ReferenceAsString(ss.ref.Append("availability_zone"))
 }
 
 func (ss SyncStatesAttributes) Attachment() terra.ListValue[AttachmentAttributes] {
-	return terra.ReferenceList[AttachmentAttributes](ss.ref.Append("attachment"))
+	return terra.ReferenceAsList[AttachmentAttributes](ss.ref.Append("attachment"))
 }
 
 type AttachmentAttributes struct {
@@ -202,15 +202,15 @@ func (a AttachmentAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AttachmentAttributes) EndpointId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("endpoint_id"))
+	return terra.ReferenceAsString(a.ref.Append("endpoint_id"))
 }
 
 func (a AttachmentAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("status"))
+	return terra.ReferenceAsString(a.ref.Append("status"))
 }
 
 func (a AttachmentAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(a.ref.Append("subnet_id"))
 }
 
 type SubnetMappingAttributes struct {
@@ -230,7 +230,7 @@ func (sm SubnetMappingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sm SubnetMappingAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(sm.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(sm.ref.Append("subnet_id"))
 }
 
 type EncryptionConfigurationState struct {

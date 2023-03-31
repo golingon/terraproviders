@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataElbHostedZoneId creates a new instance of [DataElbHostedZoneId].
 func NewDataElbHostedZoneId(name string, args DataElbHostedZoneIdArgs) *DataElbHostedZoneId {
 	return &DataElbHostedZoneId{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataElbHostedZoneId(name string, args DataElbHostedZoneIdArgs) *DataElbH
 
 var _ terra.DataResource = (*DataElbHostedZoneId)(nil)
 
+// DataElbHostedZoneId represents the Terraform data resource aws_elb_hosted_zone_id.
 type DataElbHostedZoneId struct {
 	Name string
 	Args DataElbHostedZoneIdArgs
 }
 
+// DataSource returns the Terraform object type for [DataElbHostedZoneId].
 func (ehzi *DataElbHostedZoneId) DataSource() string {
 	return "aws_elb_hosted_zone_id"
 }
 
+// LocalName returns the local name for [DataElbHostedZoneId].
 func (ehzi *DataElbHostedZoneId) LocalName() string {
 	return ehzi.Name
 }
 
+// Configuration returns the configuration (args) for [DataElbHostedZoneId].
 func (ehzi *DataElbHostedZoneId) Configuration() interface{} {
 	return ehzi.Args
 }
 
+// Attributes returns the attributes for [DataElbHostedZoneId].
 func (ehzi *DataElbHostedZoneId) Attributes() dataElbHostedZoneIdAttributes {
 	return dataElbHostedZoneIdAttributes{ref: terra.ReferenceDataResource(ehzi)}
 }
 
+// DataElbHostedZoneIdArgs contains the configurations for aws_elb_hosted_zone_id.
 type DataElbHostedZoneIdArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -44,10 +51,12 @@ type dataElbHostedZoneIdAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_elb_hosted_zone_id.
 func (ehzi dataElbHostedZoneIdAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ehzi.ref.Append("id"))
+	return terra.ReferenceAsString(ehzi.ref.Append("id"))
 }
 
+// Region returns a reference to field region of aws_elb_hosted_zone_id.
 func (ehzi dataElbHostedZoneIdAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(ehzi.ref.Append("region"))
+	return terra.ReferenceAsString(ehzi.ref.Append("region"))
 }

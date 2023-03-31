@@ -77,19 +77,19 @@ func (rtpit RestoreToPointInTimeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rtpit RestoreToPointInTimeAttributes) RestoreToTime() terra.StringValue {
-	return terra.ReferenceString(rtpit.ref.Append("restore_to_time"))
+	return terra.ReferenceAsString(rtpit.ref.Append("restore_to_time"))
 }
 
 func (rtpit RestoreToPointInTimeAttributes) RestoreType() terra.StringValue {
-	return terra.ReferenceString(rtpit.ref.Append("restore_type"))
+	return terra.ReferenceAsString(rtpit.ref.Append("restore_type"))
 }
 
 func (rtpit RestoreToPointInTimeAttributes) SourceClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(rtpit.ref.Append("source_cluster_identifier"))
+	return terra.ReferenceAsString(rtpit.ref.Append("source_cluster_identifier"))
 }
 
 func (rtpit RestoreToPointInTimeAttributes) UseLatestRestorableTime() terra.BoolValue {
-	return terra.ReferenceBool(rtpit.ref.Append("use_latest_restorable_time"))
+	return terra.ReferenceAsBool(rtpit.ref.Append("use_latest_restorable_time"))
 }
 
 type S3ImportAttributes struct {
@@ -109,23 +109,23 @@ func (si S3ImportAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (si S3ImportAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(si.ref.Append("bucket_name"))
 }
 
 func (si S3ImportAttributes) BucketPrefix() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("bucket_prefix"))
+	return terra.ReferenceAsString(si.ref.Append("bucket_prefix"))
 }
 
 func (si S3ImportAttributes) IngestionRole() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("ingestion_role"))
+	return terra.ReferenceAsString(si.ref.Append("ingestion_role"))
 }
 
 func (si S3ImportAttributes) SourceEngine() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("source_engine"))
+	return terra.ReferenceAsString(si.ref.Append("source_engine"))
 }
 
 func (si S3ImportAttributes) SourceEngineVersion() terra.StringValue {
-	return terra.ReferenceString(si.ref.Append("source_engine_version"))
+	return terra.ReferenceAsString(si.ref.Append("source_engine_version"))
 }
 
 type ScalingConfigurationAttributes struct {
@@ -145,23 +145,23 @@ func (sc ScalingConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc ScalingConfigurationAttributes) AutoPause() terra.BoolValue {
-	return terra.ReferenceBool(sc.ref.Append("auto_pause"))
+	return terra.ReferenceAsBool(sc.ref.Append("auto_pause"))
 }
 
 func (sc ScalingConfigurationAttributes) MaxCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("max_capacity"))
+	return terra.ReferenceAsNumber(sc.ref.Append("max_capacity"))
 }
 
 func (sc ScalingConfigurationAttributes) MinCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("min_capacity"))
+	return terra.ReferenceAsNumber(sc.ref.Append("min_capacity"))
 }
 
 func (sc ScalingConfigurationAttributes) SecondsUntilAutoPause() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("seconds_until_auto_pause"))
+	return terra.ReferenceAsNumber(sc.ref.Append("seconds_until_auto_pause"))
 }
 
 func (sc ScalingConfigurationAttributes) TimeoutAction() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("timeout_action"))
+	return terra.ReferenceAsString(sc.ref.Append("timeout_action"))
 }
 
 type Serverlessv2ScalingConfigurationAttributes struct {
@@ -181,11 +181,11 @@ func (ssc Serverlessv2ScalingConfigurationAttributes) InternalTokens() hclwrite.
 }
 
 func (ssc Serverlessv2ScalingConfigurationAttributes) MaxCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(ssc.ref.Append("max_capacity"))
+	return terra.ReferenceAsNumber(ssc.ref.Append("max_capacity"))
 }
 
 func (ssc Serverlessv2ScalingConfigurationAttributes) MinCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(ssc.ref.Append("min_capacity"))
+	return terra.ReferenceAsNumber(ssc.ref.Append("min_capacity"))
 }
 
 type TimeoutsAttributes struct {
@@ -205,15 +205,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type RestoreToPointInTimeState struct {

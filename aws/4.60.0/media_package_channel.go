@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMediaPackageChannel creates a new instance of [MediaPackageChannel].
 func NewMediaPackageChannel(name string, args MediaPackageChannelArgs) *MediaPackageChannel {
 	return &MediaPackageChannel{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMediaPackageChannel(name string, args MediaPackageChannelArgs) *MediaPac
 
 var _ terra.Resource = (*MediaPackageChannel)(nil)
 
+// MediaPackageChannel represents the Terraform resource aws_media_package_channel.
 type MediaPackageChannel struct {
-	Name  string
-	Args  MediaPackageChannelArgs
-	state *mediaPackageChannelState
+	Name      string
+	Args      MediaPackageChannelArgs
+	state     *mediaPackageChannelState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MediaPackageChannel].
 func (mpc *MediaPackageChannel) Type() string {
 	return "aws_media_package_channel"
 }
 
+// LocalName returns the local name for [MediaPackageChannel].
 func (mpc *MediaPackageChannel) LocalName() string {
 	return mpc.Name
 }
 
+// Configuration returns the configuration (args) for [MediaPackageChannel].
 func (mpc *MediaPackageChannel) Configuration() interface{} {
 	return mpc.Args
 }
 
+// DependOn is used for other resources to depend on [MediaPackageChannel].
+func (mpc *MediaPackageChannel) DependOn() terra.Reference {
+	return terra.ReferenceResource(mpc)
+}
+
+// Dependencies returns the list of resources [MediaPackageChannel] depends_on.
+func (mpc *MediaPackageChannel) Dependencies() terra.Dependencies {
+	return mpc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MediaPackageChannel].
+func (mpc *MediaPackageChannel) LifecycleManagement() *terra.Lifecycle {
+	return mpc.Lifecycle
+}
+
+// Attributes returns the attributes for [MediaPackageChannel].
 func (mpc *MediaPackageChannel) Attributes() mediaPackageChannelAttributes {
 	return mediaPackageChannelAttributes{ref: terra.ReferenceResource(mpc)}
 }
 
+// ImportState imports the given attribute values into [MediaPackageChannel]'s state.
 func (mpc *MediaPackageChannel) ImportState(av io.Reader) error {
 	mpc.state = &mediaPackageChannelState{}
 	if err := json.NewDecoder(av).Decode(mpc.state); err != nil {
@@ -49,10 +73,12 @@ func (mpc *MediaPackageChannel) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MediaPackageChannel] has state.
 func (mpc *MediaPackageChannel) State() (*mediaPackageChannelState, bool) {
 	return mpc.state, mpc.state != nil
 }
 
+// StateMust returns the state for [MediaPackageChannel]. Panics if the state is nil.
 func (mpc *MediaPackageChannel) StateMust() *mediaPackageChannelState {
 	if mpc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mpc.Type(), mpc.LocalName()))
@@ -60,10 +86,7 @@ func (mpc *MediaPackageChannel) StateMust() *mediaPackageChannelState {
 	return mpc.state
 }
 
-func (mpc *MediaPackageChannel) DependOn() terra.Reference {
-	return terra.ReferenceResource(mpc)
-}
-
+// MediaPackageChannelArgs contains the configurations for aws_media_package_channel.
 type MediaPackageChannelArgs struct {
 	// ChannelId: string, required
 	ChannelId terra.StringValue `hcl:"channel_id,attr" validate:"required"`
@@ -77,39 +100,43 @@ type MediaPackageChannelArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// HlsIngest: min=0
 	HlsIngest []mediapackagechannel.HlsIngest `hcl:"hls_ingest,block" validate:"min=0"`
-	// DependsOn contains resources that MediaPackageChannel depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mediaPackageChannelAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_media_package_channel.
 func (mpc mediaPackageChannelAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(mpc.ref.Append("arn"))
+	return terra.ReferenceAsString(mpc.ref.Append("arn"))
 }
 
+// ChannelId returns a reference to field channel_id of aws_media_package_channel.
 func (mpc mediaPackageChannelAttributes) ChannelId() terra.StringValue {
-	return terra.ReferenceString(mpc.ref.Append("channel_id"))
+	return terra.ReferenceAsString(mpc.ref.Append("channel_id"))
 }
 
+// Description returns a reference to field description of aws_media_package_channel.
 func (mpc mediaPackageChannelAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(mpc.ref.Append("description"))
+	return terra.ReferenceAsString(mpc.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_media_package_channel.
 func (mpc mediaPackageChannelAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mpc.ref.Append("id"))
+	return terra.ReferenceAsString(mpc.ref.Append("id"))
 }
 
+// Tags returns a reference to field tags of aws_media_package_channel.
 func (mpc mediaPackageChannelAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mpc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mpc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_media_package_channel.
 func (mpc mediaPackageChannelAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mpc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](mpc.ref.Append("tags_all"))
 }
 
 func (mpc mediaPackageChannelAttributes) HlsIngest() terra.ListValue[mediapackagechannel.HlsIngestAttributes] {
-	return terra.ReferenceList[mediapackagechannel.HlsIngestAttributes](mpc.ref.Append("hls_ingest"))
+	return terra.ReferenceAsList[mediapackagechannel.HlsIngestAttributes](mpc.ref.Append("hls_ingest"))
 }
 
 type mediaPackageChannelState struct {

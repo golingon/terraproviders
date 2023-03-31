@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewRdsReservedInstance creates a new instance of [RdsReservedInstance].
 func NewRdsReservedInstance(name string, args RdsReservedInstanceArgs) *RdsReservedInstance {
 	return &RdsReservedInstance{
 		Args: args,
@@ -19,28 +20,51 @@ func NewRdsReservedInstance(name string, args RdsReservedInstanceArgs) *RdsReser
 
 var _ terra.Resource = (*RdsReservedInstance)(nil)
 
+// RdsReservedInstance represents the Terraform resource aws_rds_reserved_instance.
 type RdsReservedInstance struct {
-	Name  string
-	Args  RdsReservedInstanceArgs
-	state *rdsReservedInstanceState
+	Name      string
+	Args      RdsReservedInstanceArgs
+	state     *rdsReservedInstanceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RdsReservedInstance].
 func (rri *RdsReservedInstance) Type() string {
 	return "aws_rds_reserved_instance"
 }
 
+// LocalName returns the local name for [RdsReservedInstance].
 func (rri *RdsReservedInstance) LocalName() string {
 	return rri.Name
 }
 
+// Configuration returns the configuration (args) for [RdsReservedInstance].
 func (rri *RdsReservedInstance) Configuration() interface{} {
 	return rri.Args
 }
 
+// DependOn is used for other resources to depend on [RdsReservedInstance].
+func (rri *RdsReservedInstance) DependOn() terra.Reference {
+	return terra.ReferenceResource(rri)
+}
+
+// Dependencies returns the list of resources [RdsReservedInstance] depends_on.
+func (rri *RdsReservedInstance) Dependencies() terra.Dependencies {
+	return rri.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RdsReservedInstance].
+func (rri *RdsReservedInstance) LifecycleManagement() *terra.Lifecycle {
+	return rri.Lifecycle
+}
+
+// Attributes returns the attributes for [RdsReservedInstance].
 func (rri *RdsReservedInstance) Attributes() rdsReservedInstanceAttributes {
 	return rdsReservedInstanceAttributes{ref: terra.ReferenceResource(rri)}
 }
 
+// ImportState imports the given attribute values into [RdsReservedInstance]'s state.
 func (rri *RdsReservedInstance) ImportState(av io.Reader) error {
 	rri.state = &rdsReservedInstanceState{}
 	if err := json.NewDecoder(av).Decode(rri.state); err != nil {
@@ -49,10 +73,12 @@ func (rri *RdsReservedInstance) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RdsReservedInstance] has state.
 func (rri *RdsReservedInstance) State() (*rdsReservedInstanceState, bool) {
 	return rri.state, rri.state != nil
 }
 
+// StateMust returns the state for [RdsReservedInstance]. Panics if the state is nil.
 func (rri *RdsReservedInstance) StateMust() *rdsReservedInstanceState {
 	if rri.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rri.Type(), rri.LocalName()))
@@ -60,10 +86,7 @@ func (rri *RdsReservedInstance) StateMust() *rdsReservedInstanceState {
 	return rri.state
 }
 
-func (rri *RdsReservedInstance) DependOn() terra.Reference {
-	return terra.ReferenceResource(rri)
-}
-
+// RdsReservedInstanceArgs contains the configurations for aws_rds_reserved_instance.
 type RdsReservedInstanceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -81,91 +104,107 @@ type RdsReservedInstanceArgs struct {
 	RecurringCharges []rdsreservedinstance.RecurringCharges `hcl:"recurring_charges,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *rdsreservedinstance.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that RdsReservedInstance depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type rdsReservedInstanceAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_rds_reserved_instance.
 func (rri rdsReservedInstanceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rri.ref.Append("arn"))
+	return terra.ReferenceAsString(rri.ref.Append("arn"))
 }
 
+// CurrencyCode returns a reference to field currency_code of aws_rds_reserved_instance.
 func (rri rdsReservedInstanceAttributes) CurrencyCode() terra.StringValue {
-	return terra.ReferenceString(rri.ref.Append("currency_code"))
+	return terra.ReferenceAsString(rri.ref.Append("currency_code"))
 }
 
+// DbInstanceClass returns a reference to field db_instance_class of aws_rds_reserved_instance.
 func (rri rdsReservedInstanceAttributes) DbInstanceClass() terra.StringValue {
-	return terra.ReferenceString(rri.ref.Append("db_instance_class"))
+	return terra.ReferenceAsString(rri.ref.Append("db_instance_class"))
 }
 
+// Duration returns a reference to field duration of aws_rds_reserved_instance.
 func (rri rdsReservedInstanceAttributes) Duration() terra.NumberValue {
-	return terra.ReferenceNumber(rri.ref.Append("duration"))
+	return terra.ReferenceAsNumber(rri.ref.Append("duration"))
 }
 
+// FixedPrice returns a reference to field fixed_price of aws_rds_reserved_instance.
 func (rri rdsReservedInstanceAttributes) FixedPrice() terra.NumberValue {
-	return terra.ReferenceNumber(rri.ref.Append("fixed_price"))
+	return terra.ReferenceAsNumber(rri.ref.Append("fixed_price"))
 }
 
+// Id returns a reference to field id of aws_rds_reserved_instance.
 func (rri rdsReservedInstanceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rri.ref.Append("id"))
+	return terra.ReferenceAsString(rri.ref.Append("id"))
 }
 
+// InstanceCount returns a reference to field instance_count of aws_rds_reserved_instance.
 func (rri rdsReservedInstanceAttributes) InstanceCount() terra.NumberValue {
-	return terra.ReferenceNumber(rri.ref.Append("instance_count"))
+	return terra.ReferenceAsNumber(rri.ref.Append("instance_count"))
 }
 
+// LeaseId returns a reference to field lease_id of aws_rds_reserved_instance.
 func (rri rdsReservedInstanceAttributes) LeaseId() terra.StringValue {
-	return terra.ReferenceString(rri.ref.Append("lease_id"))
+	return terra.ReferenceAsString(rri.ref.Append("lease_id"))
 }
 
+// MultiAz returns a reference to field multi_az of aws_rds_reserved_instance.
 func (rri rdsReservedInstanceAttributes) MultiAz() terra.BoolValue {
-	return terra.ReferenceBool(rri.ref.Append("multi_az"))
+	return terra.ReferenceAsBool(rri.ref.Append("multi_az"))
 }
 
+// OfferingId returns a reference to field offering_id of aws_rds_reserved_instance.
 func (rri rdsReservedInstanceAttributes) OfferingId() terra.StringValue {
-	return terra.ReferenceString(rri.ref.Append("offering_id"))
+	return terra.ReferenceAsString(rri.ref.Append("offering_id"))
 }
 
+// OfferingType returns a reference to field offering_type of aws_rds_reserved_instance.
 func (rri rdsReservedInstanceAttributes) OfferingType() terra.StringValue {
-	return terra.ReferenceString(rri.ref.Append("offering_type"))
+	return terra.ReferenceAsString(rri.ref.Append("offering_type"))
 }
 
+// ProductDescription returns a reference to field product_description of aws_rds_reserved_instance.
 func (rri rdsReservedInstanceAttributes) ProductDescription() terra.StringValue {
-	return terra.ReferenceString(rri.ref.Append("product_description"))
+	return terra.ReferenceAsString(rri.ref.Append("product_description"))
 }
 
+// ReservationId returns a reference to field reservation_id of aws_rds_reserved_instance.
 func (rri rdsReservedInstanceAttributes) ReservationId() terra.StringValue {
-	return terra.ReferenceString(rri.ref.Append("reservation_id"))
+	return terra.ReferenceAsString(rri.ref.Append("reservation_id"))
 }
 
+// StartTime returns a reference to field start_time of aws_rds_reserved_instance.
 func (rri rdsReservedInstanceAttributes) StartTime() terra.StringValue {
-	return terra.ReferenceString(rri.ref.Append("start_time"))
+	return terra.ReferenceAsString(rri.ref.Append("start_time"))
 }
 
+// State returns a reference to field state of aws_rds_reserved_instance.
 func (rri rdsReservedInstanceAttributes) State() terra.StringValue {
-	return terra.ReferenceString(rri.ref.Append("state"))
+	return terra.ReferenceAsString(rri.ref.Append("state"))
 }
 
+// Tags returns a reference to field tags of aws_rds_reserved_instance.
 func (rri rdsReservedInstanceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rri.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rri.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_rds_reserved_instance.
 func (rri rdsReservedInstanceAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rri.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](rri.ref.Append("tags_all"))
 }
 
+// UsagePrice returns a reference to field usage_price of aws_rds_reserved_instance.
 func (rri rdsReservedInstanceAttributes) UsagePrice() terra.NumberValue {
-	return terra.ReferenceNumber(rri.ref.Append("usage_price"))
+	return terra.ReferenceAsNumber(rri.ref.Append("usage_price"))
 }
 
 func (rri rdsReservedInstanceAttributes) RecurringCharges() terra.ListValue[rdsreservedinstance.RecurringChargesAttributes] {
-	return terra.ReferenceList[rdsreservedinstance.RecurringChargesAttributes](rri.ref.Append("recurring_charges"))
+	return terra.ReferenceAsList[rdsreservedinstance.RecurringChargesAttributes](rri.ref.Append("recurring_charges"))
 }
 
 func (rri rdsReservedInstanceAttributes) Timeouts() rdsreservedinstance.TimeoutsAttributes {
-	return terra.ReferenceSingle[rdsreservedinstance.TimeoutsAttributes](rri.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[rdsreservedinstance.TimeoutsAttributes](rri.ref.Append("timeouts"))
 }
 
 type rdsReservedInstanceState struct {

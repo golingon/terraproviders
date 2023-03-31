@@ -26,15 +26,15 @@ func (occ OutboundCallerConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (occ OutboundCallerConfigAttributes) OutboundCallerIdName() terra.StringValue {
-	return terra.ReferenceString(occ.ref.Append("outbound_caller_id_name"))
+	return terra.ReferenceAsString(occ.ref.Append("outbound_caller_id_name"))
 }
 
 func (occ OutboundCallerConfigAttributes) OutboundCallerIdNumberId() terra.StringValue {
-	return terra.ReferenceString(occ.ref.Append("outbound_caller_id_number_id"))
+	return terra.ReferenceAsString(occ.ref.Append("outbound_caller_id_number_id"))
 }
 
 func (occ OutboundCallerConfigAttributes) OutboundFlowId() terra.StringValue {
-	return terra.ReferenceString(occ.ref.Append("outbound_flow_id"))
+	return terra.ReferenceAsString(occ.ref.Append("outbound_flow_id"))
 }
 
 type OutboundCallerConfigState struct {

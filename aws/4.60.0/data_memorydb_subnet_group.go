@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataMemorydbSubnetGroup creates a new instance of [DataMemorydbSubnetGroup].
 func NewDataMemorydbSubnetGroup(name string, args DataMemorydbSubnetGroupArgs) *DataMemorydbSubnetGroup {
 	return &DataMemorydbSubnetGroup{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataMemorydbSubnetGroup(name string, args DataMemorydbSubnetGroupArgs) *
 
 var _ terra.DataResource = (*DataMemorydbSubnetGroup)(nil)
 
+// DataMemorydbSubnetGroup represents the Terraform data resource aws_memorydb_subnet_group.
 type DataMemorydbSubnetGroup struct {
 	Name string
 	Args DataMemorydbSubnetGroupArgs
 }
 
+// DataSource returns the Terraform object type for [DataMemorydbSubnetGroup].
 func (msg *DataMemorydbSubnetGroup) DataSource() string {
 	return "aws_memorydb_subnet_group"
 }
 
+// LocalName returns the local name for [DataMemorydbSubnetGroup].
 func (msg *DataMemorydbSubnetGroup) LocalName() string {
 	return msg.Name
 }
 
+// Configuration returns the configuration (args) for [DataMemorydbSubnetGroup].
 func (msg *DataMemorydbSubnetGroup) Configuration() interface{} {
 	return msg.Args
 }
 
+// Attributes returns the attributes for [DataMemorydbSubnetGroup].
 func (msg *DataMemorydbSubnetGroup) Attributes() dataMemorydbSubnetGroupAttributes {
 	return dataMemorydbSubnetGroupAttributes{ref: terra.ReferenceDataResource(msg)}
 }
 
+// DataMemorydbSubnetGroupArgs contains the configurations for aws_memorydb_subnet_group.
 type DataMemorydbSubnetGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -46,30 +53,37 @@ type dataMemorydbSubnetGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_memorydb_subnet_group.
 func (msg dataMemorydbSubnetGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(msg.ref.Append("arn"))
+	return terra.ReferenceAsString(msg.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_memorydb_subnet_group.
 func (msg dataMemorydbSubnetGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(msg.ref.Append("description"))
+	return terra.ReferenceAsString(msg.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_memorydb_subnet_group.
 func (msg dataMemorydbSubnetGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(msg.ref.Append("id"))
+	return terra.ReferenceAsString(msg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_memorydb_subnet_group.
 func (msg dataMemorydbSubnetGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(msg.ref.Append("name"))
+	return terra.ReferenceAsString(msg.ref.Append("name"))
 }
 
+// SubnetIds returns a reference to field subnet_ids of aws_memorydb_subnet_group.
 func (msg dataMemorydbSubnetGroupAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](msg.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](msg.ref.Append("subnet_ids"))
 }
 
+// Tags returns a reference to field tags of aws_memorydb_subnet_group.
 func (msg dataMemorydbSubnetGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](msg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](msg.ref.Append("tags"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_memorydb_subnet_group.
 func (msg dataMemorydbSubnetGroupAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(msg.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(msg.ref.Append("vpc_id"))
 }

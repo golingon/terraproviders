@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewStoragegatewayCachedIscsiVolume creates a new instance of [StoragegatewayCachedIscsiVolume].
 func NewStoragegatewayCachedIscsiVolume(name string, args StoragegatewayCachedIscsiVolumeArgs) *StoragegatewayCachedIscsiVolume {
 	return &StoragegatewayCachedIscsiVolume{
 		Args: args,
@@ -18,28 +19,51 @@ func NewStoragegatewayCachedIscsiVolume(name string, args StoragegatewayCachedIs
 
 var _ terra.Resource = (*StoragegatewayCachedIscsiVolume)(nil)
 
+// StoragegatewayCachedIscsiVolume represents the Terraform resource aws_storagegateway_cached_iscsi_volume.
 type StoragegatewayCachedIscsiVolume struct {
-	Name  string
-	Args  StoragegatewayCachedIscsiVolumeArgs
-	state *storagegatewayCachedIscsiVolumeState
+	Name      string
+	Args      StoragegatewayCachedIscsiVolumeArgs
+	state     *storagegatewayCachedIscsiVolumeState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [StoragegatewayCachedIscsiVolume].
 func (sciv *StoragegatewayCachedIscsiVolume) Type() string {
 	return "aws_storagegateway_cached_iscsi_volume"
 }
 
+// LocalName returns the local name for [StoragegatewayCachedIscsiVolume].
 func (sciv *StoragegatewayCachedIscsiVolume) LocalName() string {
 	return sciv.Name
 }
 
+// Configuration returns the configuration (args) for [StoragegatewayCachedIscsiVolume].
 func (sciv *StoragegatewayCachedIscsiVolume) Configuration() interface{} {
 	return sciv.Args
 }
 
+// DependOn is used for other resources to depend on [StoragegatewayCachedIscsiVolume].
+func (sciv *StoragegatewayCachedIscsiVolume) DependOn() terra.Reference {
+	return terra.ReferenceResource(sciv)
+}
+
+// Dependencies returns the list of resources [StoragegatewayCachedIscsiVolume] depends_on.
+func (sciv *StoragegatewayCachedIscsiVolume) Dependencies() terra.Dependencies {
+	return sciv.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [StoragegatewayCachedIscsiVolume].
+func (sciv *StoragegatewayCachedIscsiVolume) LifecycleManagement() *terra.Lifecycle {
+	return sciv.Lifecycle
+}
+
+// Attributes returns the attributes for [StoragegatewayCachedIscsiVolume].
 func (sciv *StoragegatewayCachedIscsiVolume) Attributes() storagegatewayCachedIscsiVolumeAttributes {
 	return storagegatewayCachedIscsiVolumeAttributes{ref: terra.ReferenceResource(sciv)}
 }
 
+// ImportState imports the given attribute values into [StoragegatewayCachedIscsiVolume]'s state.
 func (sciv *StoragegatewayCachedIscsiVolume) ImportState(av io.Reader) error {
 	sciv.state = &storagegatewayCachedIscsiVolumeState{}
 	if err := json.NewDecoder(av).Decode(sciv.state); err != nil {
@@ -48,10 +72,12 @@ func (sciv *StoragegatewayCachedIscsiVolume) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [StoragegatewayCachedIscsiVolume] has state.
 func (sciv *StoragegatewayCachedIscsiVolume) State() (*storagegatewayCachedIscsiVolumeState, bool) {
 	return sciv.state, sciv.state != nil
 }
 
+// StateMust returns the state for [StoragegatewayCachedIscsiVolume]. Panics if the state is nil.
 func (sciv *StoragegatewayCachedIscsiVolume) StateMust() *storagegatewayCachedIscsiVolumeState {
 	if sciv.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sciv.Type(), sciv.LocalName()))
@@ -59,10 +85,7 @@ func (sciv *StoragegatewayCachedIscsiVolume) StateMust() *storagegatewayCachedIs
 	return sciv.state
 }
 
-func (sciv *StoragegatewayCachedIscsiVolume) DependOn() terra.Reference {
-	return terra.ReferenceResource(sciv)
-}
-
+// StoragegatewayCachedIscsiVolumeArgs contains the configurations for aws_storagegateway_cached_iscsi_volume.
 type StoragegatewayCachedIscsiVolumeArgs struct {
 	// GatewayArn: string, required
 	GatewayArn terra.StringValue `hcl:"gateway_arn,attr" validate:"required"`
@@ -86,83 +109,99 @@ type StoragegatewayCachedIscsiVolumeArgs struct {
 	TargetName terra.StringValue `hcl:"target_name,attr" validate:"required"`
 	// VolumeSizeInBytes: number, required
 	VolumeSizeInBytes terra.NumberValue `hcl:"volume_size_in_bytes,attr" validate:"required"`
-	// DependsOn contains resources that StoragegatewayCachedIscsiVolume depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type storagegatewayCachedIscsiVolumeAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_storagegateway_cached_iscsi_volume.
 func (sciv storagegatewayCachedIscsiVolumeAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sciv.ref.Append("arn"))
+	return terra.ReferenceAsString(sciv.ref.Append("arn"))
 }
 
+// ChapEnabled returns a reference to field chap_enabled of aws_storagegateway_cached_iscsi_volume.
 func (sciv storagegatewayCachedIscsiVolumeAttributes) ChapEnabled() terra.BoolValue {
-	return terra.ReferenceBool(sciv.ref.Append("chap_enabled"))
+	return terra.ReferenceAsBool(sciv.ref.Append("chap_enabled"))
 }
 
+// GatewayArn returns a reference to field gateway_arn of aws_storagegateway_cached_iscsi_volume.
 func (sciv storagegatewayCachedIscsiVolumeAttributes) GatewayArn() terra.StringValue {
-	return terra.ReferenceString(sciv.ref.Append("gateway_arn"))
+	return terra.ReferenceAsString(sciv.ref.Append("gateway_arn"))
 }
 
+// Id returns a reference to field id of aws_storagegateway_cached_iscsi_volume.
 func (sciv storagegatewayCachedIscsiVolumeAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sciv.ref.Append("id"))
+	return terra.ReferenceAsString(sciv.ref.Append("id"))
 }
 
+// KmsEncrypted returns a reference to field kms_encrypted of aws_storagegateway_cached_iscsi_volume.
 func (sciv storagegatewayCachedIscsiVolumeAttributes) KmsEncrypted() terra.BoolValue {
-	return terra.ReferenceBool(sciv.ref.Append("kms_encrypted"))
+	return terra.ReferenceAsBool(sciv.ref.Append("kms_encrypted"))
 }
 
+// KmsKey returns a reference to field kms_key of aws_storagegateway_cached_iscsi_volume.
 func (sciv storagegatewayCachedIscsiVolumeAttributes) KmsKey() terra.StringValue {
-	return terra.ReferenceString(sciv.ref.Append("kms_key"))
+	return terra.ReferenceAsString(sciv.ref.Append("kms_key"))
 }
 
+// LunNumber returns a reference to field lun_number of aws_storagegateway_cached_iscsi_volume.
 func (sciv storagegatewayCachedIscsiVolumeAttributes) LunNumber() terra.NumberValue {
-	return terra.ReferenceNumber(sciv.ref.Append("lun_number"))
+	return terra.ReferenceAsNumber(sciv.ref.Append("lun_number"))
 }
 
+// NetworkInterfaceId returns a reference to field network_interface_id of aws_storagegateway_cached_iscsi_volume.
 func (sciv storagegatewayCachedIscsiVolumeAttributes) NetworkInterfaceId() terra.StringValue {
-	return terra.ReferenceString(sciv.ref.Append("network_interface_id"))
+	return terra.ReferenceAsString(sciv.ref.Append("network_interface_id"))
 }
 
+// NetworkInterfacePort returns a reference to field network_interface_port of aws_storagegateway_cached_iscsi_volume.
 func (sciv storagegatewayCachedIscsiVolumeAttributes) NetworkInterfacePort() terra.NumberValue {
-	return terra.ReferenceNumber(sciv.ref.Append("network_interface_port"))
+	return terra.ReferenceAsNumber(sciv.ref.Append("network_interface_port"))
 }
 
+// SnapshotId returns a reference to field snapshot_id of aws_storagegateway_cached_iscsi_volume.
 func (sciv storagegatewayCachedIscsiVolumeAttributes) SnapshotId() terra.StringValue {
-	return terra.ReferenceString(sciv.ref.Append("snapshot_id"))
+	return terra.ReferenceAsString(sciv.ref.Append("snapshot_id"))
 }
 
+// SourceVolumeArn returns a reference to field source_volume_arn of aws_storagegateway_cached_iscsi_volume.
 func (sciv storagegatewayCachedIscsiVolumeAttributes) SourceVolumeArn() terra.StringValue {
-	return terra.ReferenceString(sciv.ref.Append("source_volume_arn"))
+	return terra.ReferenceAsString(sciv.ref.Append("source_volume_arn"))
 }
 
+// Tags returns a reference to field tags of aws_storagegateway_cached_iscsi_volume.
 func (sciv storagegatewayCachedIscsiVolumeAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sciv.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sciv.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_storagegateway_cached_iscsi_volume.
 func (sciv storagegatewayCachedIscsiVolumeAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sciv.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sciv.ref.Append("tags_all"))
 }
 
+// TargetArn returns a reference to field target_arn of aws_storagegateway_cached_iscsi_volume.
 func (sciv storagegatewayCachedIscsiVolumeAttributes) TargetArn() terra.StringValue {
-	return terra.ReferenceString(sciv.ref.Append("target_arn"))
+	return terra.ReferenceAsString(sciv.ref.Append("target_arn"))
 }
 
+// TargetName returns a reference to field target_name of aws_storagegateway_cached_iscsi_volume.
 func (sciv storagegatewayCachedIscsiVolumeAttributes) TargetName() terra.StringValue {
-	return terra.ReferenceString(sciv.ref.Append("target_name"))
+	return terra.ReferenceAsString(sciv.ref.Append("target_name"))
 }
 
+// VolumeArn returns a reference to field volume_arn of aws_storagegateway_cached_iscsi_volume.
 func (sciv storagegatewayCachedIscsiVolumeAttributes) VolumeArn() terra.StringValue {
-	return terra.ReferenceString(sciv.ref.Append("volume_arn"))
+	return terra.ReferenceAsString(sciv.ref.Append("volume_arn"))
 }
 
+// VolumeId returns a reference to field volume_id of aws_storagegateway_cached_iscsi_volume.
 func (sciv storagegatewayCachedIscsiVolumeAttributes) VolumeId() terra.StringValue {
-	return terra.ReferenceString(sciv.ref.Append("volume_id"))
+	return terra.ReferenceAsString(sciv.ref.Append("volume_id"))
 }
 
+// VolumeSizeInBytes returns a reference to field volume_size_in_bytes of aws_storagegateway_cached_iscsi_volume.
 func (sciv storagegatewayCachedIscsiVolumeAttributes) VolumeSizeInBytes() terra.NumberValue {
-	return terra.ReferenceNumber(sciv.ref.Append("volume_size_in_bytes"))
+	return terra.ReferenceAsNumber(sciv.ref.Append("volume_size_in_bytes"))
 }
 
 type storagegatewayCachedIscsiVolumeState struct {

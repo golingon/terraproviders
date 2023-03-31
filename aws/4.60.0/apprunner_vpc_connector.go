@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewApprunnerVpcConnector creates a new instance of [ApprunnerVpcConnector].
 func NewApprunnerVpcConnector(name string, args ApprunnerVpcConnectorArgs) *ApprunnerVpcConnector {
 	return &ApprunnerVpcConnector{
 		Args: args,
@@ -18,28 +19,51 @@ func NewApprunnerVpcConnector(name string, args ApprunnerVpcConnectorArgs) *Appr
 
 var _ terra.Resource = (*ApprunnerVpcConnector)(nil)
 
+// ApprunnerVpcConnector represents the Terraform resource aws_apprunner_vpc_connector.
 type ApprunnerVpcConnector struct {
-	Name  string
-	Args  ApprunnerVpcConnectorArgs
-	state *apprunnerVpcConnectorState
+	Name      string
+	Args      ApprunnerVpcConnectorArgs
+	state     *apprunnerVpcConnectorState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApprunnerVpcConnector].
 func (avc *ApprunnerVpcConnector) Type() string {
 	return "aws_apprunner_vpc_connector"
 }
 
+// LocalName returns the local name for [ApprunnerVpcConnector].
 func (avc *ApprunnerVpcConnector) LocalName() string {
 	return avc.Name
 }
 
+// Configuration returns the configuration (args) for [ApprunnerVpcConnector].
 func (avc *ApprunnerVpcConnector) Configuration() interface{} {
 	return avc.Args
 }
 
+// DependOn is used for other resources to depend on [ApprunnerVpcConnector].
+func (avc *ApprunnerVpcConnector) DependOn() terra.Reference {
+	return terra.ReferenceResource(avc)
+}
+
+// Dependencies returns the list of resources [ApprunnerVpcConnector] depends_on.
+func (avc *ApprunnerVpcConnector) Dependencies() terra.Dependencies {
+	return avc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApprunnerVpcConnector].
+func (avc *ApprunnerVpcConnector) LifecycleManagement() *terra.Lifecycle {
+	return avc.Lifecycle
+}
+
+// Attributes returns the attributes for [ApprunnerVpcConnector].
 func (avc *ApprunnerVpcConnector) Attributes() apprunnerVpcConnectorAttributes {
 	return apprunnerVpcConnectorAttributes{ref: terra.ReferenceResource(avc)}
 }
 
+// ImportState imports the given attribute values into [ApprunnerVpcConnector]'s state.
 func (avc *ApprunnerVpcConnector) ImportState(av io.Reader) error {
 	avc.state = &apprunnerVpcConnectorState{}
 	if err := json.NewDecoder(av).Decode(avc.state); err != nil {
@@ -48,10 +72,12 @@ func (avc *ApprunnerVpcConnector) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApprunnerVpcConnector] has state.
 func (avc *ApprunnerVpcConnector) State() (*apprunnerVpcConnectorState, bool) {
 	return avc.state, avc.state != nil
 }
 
+// StateMust returns the state for [ApprunnerVpcConnector]. Panics if the state is nil.
 func (avc *ApprunnerVpcConnector) StateMust() *apprunnerVpcConnectorState {
 	if avc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", avc.Type(), avc.LocalName()))
@@ -59,10 +85,7 @@ func (avc *ApprunnerVpcConnector) StateMust() *apprunnerVpcConnectorState {
 	return avc.state
 }
 
-func (avc *ApprunnerVpcConnector) DependOn() terra.Reference {
-	return terra.ReferenceResource(avc)
-}
-
+// ApprunnerVpcConnectorArgs contains the configurations for aws_apprunner_vpc_connector.
 type ApprunnerVpcConnectorArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -76,47 +99,54 @@ type ApprunnerVpcConnectorArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// VpcConnectorName: string, required
 	VpcConnectorName terra.StringValue `hcl:"vpc_connector_name,attr" validate:"required"`
-	// DependsOn contains resources that ApprunnerVpcConnector depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apprunnerVpcConnectorAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_apprunner_vpc_connector.
 func (avc apprunnerVpcConnectorAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(avc.ref.Append("arn"))
+	return terra.ReferenceAsString(avc.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_apprunner_vpc_connector.
 func (avc apprunnerVpcConnectorAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(avc.ref.Append("id"))
+	return terra.ReferenceAsString(avc.ref.Append("id"))
 }
 
+// SecurityGroups returns a reference to field security_groups of aws_apprunner_vpc_connector.
 func (avc apprunnerVpcConnectorAttributes) SecurityGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](avc.ref.Append("security_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](avc.ref.Append("security_groups"))
 }
 
+// Status returns a reference to field status of aws_apprunner_vpc_connector.
 func (avc apprunnerVpcConnectorAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(avc.ref.Append("status"))
+	return terra.ReferenceAsString(avc.ref.Append("status"))
 }
 
+// Subnets returns a reference to field subnets of aws_apprunner_vpc_connector.
 func (avc apprunnerVpcConnectorAttributes) Subnets() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](avc.ref.Append("subnets"))
+	return terra.ReferenceAsSet[terra.StringValue](avc.ref.Append("subnets"))
 }
 
+// Tags returns a reference to field tags of aws_apprunner_vpc_connector.
 func (avc apprunnerVpcConnectorAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](avc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](avc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_apprunner_vpc_connector.
 func (avc apprunnerVpcConnectorAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](avc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](avc.ref.Append("tags_all"))
 }
 
+// VpcConnectorName returns a reference to field vpc_connector_name of aws_apprunner_vpc_connector.
 func (avc apprunnerVpcConnectorAttributes) VpcConnectorName() terra.StringValue {
-	return terra.ReferenceString(avc.ref.Append("vpc_connector_name"))
+	return terra.ReferenceAsString(avc.ref.Append("vpc_connector_name"))
 }
 
+// VpcConnectorRevision returns a reference to field vpc_connector_revision of aws_apprunner_vpc_connector.
 func (avc apprunnerVpcConnectorAttributes) VpcConnectorRevision() terra.NumberValue {
-	return terra.ReferenceNumber(avc.ref.Append("vpc_connector_revision"))
+	return terra.ReferenceAsNumber(avc.ref.Append("vpc_connector_revision"))
 }
 
 type apprunnerVpcConnectorState struct {

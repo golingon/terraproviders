@@ -257,11 +257,11 @@ func (c CredentialsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c CredentialsAttributes) CopySourceArn() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("copy_source_arn"))
+	return terra.ReferenceAsString(c.ref.Append("copy_source_arn"))
 }
 
 func (c CredentialsAttributes) CredentialPair() terra.ListValue[CredentialPairAttributes] {
-	return terra.ReferenceList[CredentialPairAttributes](c.ref.Append("credential_pair"))
+	return terra.ReferenceAsList[CredentialPairAttributes](c.ref.Append("credential_pair"))
 }
 
 type CredentialPairAttributes struct {
@@ -281,11 +281,11 @@ func (cp CredentialPairAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cp CredentialPairAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("password"))
+	return terra.ReferenceAsString(cp.ref.Append("password"))
 }
 
 func (cp CredentialPairAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("username"))
+	return terra.ReferenceAsString(cp.ref.Append("username"))
 }
 
 type ParametersAttributes struct {
@@ -305,83 +305,83 @@ func (p ParametersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p ParametersAttributes) AmazonElasticsearch() terra.ListValue[AmazonElasticsearchAttributes] {
-	return terra.ReferenceList[AmazonElasticsearchAttributes](p.ref.Append("amazon_elasticsearch"))
+	return terra.ReferenceAsList[AmazonElasticsearchAttributes](p.ref.Append("amazon_elasticsearch"))
 }
 
 func (p ParametersAttributes) Athena() terra.ListValue[AthenaAttributes] {
-	return terra.ReferenceList[AthenaAttributes](p.ref.Append("athena"))
+	return terra.ReferenceAsList[AthenaAttributes](p.ref.Append("athena"))
 }
 
 func (p ParametersAttributes) Aurora() terra.ListValue[AuroraAttributes] {
-	return terra.ReferenceList[AuroraAttributes](p.ref.Append("aurora"))
+	return terra.ReferenceAsList[AuroraAttributes](p.ref.Append("aurora"))
 }
 
 func (p ParametersAttributes) AuroraPostgresql() terra.ListValue[AuroraPostgresqlAttributes] {
-	return terra.ReferenceList[AuroraPostgresqlAttributes](p.ref.Append("aurora_postgresql"))
+	return terra.ReferenceAsList[AuroraPostgresqlAttributes](p.ref.Append("aurora_postgresql"))
 }
 
 func (p ParametersAttributes) AwsIotAnalytics() terra.ListValue[AwsIotAnalyticsAttributes] {
-	return terra.ReferenceList[AwsIotAnalyticsAttributes](p.ref.Append("aws_iot_analytics"))
+	return terra.ReferenceAsList[AwsIotAnalyticsAttributes](p.ref.Append("aws_iot_analytics"))
 }
 
 func (p ParametersAttributes) Jira() terra.ListValue[JiraAttributes] {
-	return terra.ReferenceList[JiraAttributes](p.ref.Append("jira"))
+	return terra.ReferenceAsList[JiraAttributes](p.ref.Append("jira"))
 }
 
 func (p ParametersAttributes) MariaDb() terra.ListValue[MariaDbAttributes] {
-	return terra.ReferenceList[MariaDbAttributes](p.ref.Append("maria_db"))
+	return terra.ReferenceAsList[MariaDbAttributes](p.ref.Append("maria_db"))
 }
 
 func (p ParametersAttributes) Mysql() terra.ListValue[MysqlAttributes] {
-	return terra.ReferenceList[MysqlAttributes](p.ref.Append("mysql"))
+	return terra.ReferenceAsList[MysqlAttributes](p.ref.Append("mysql"))
 }
 
 func (p ParametersAttributes) Oracle() terra.ListValue[OracleAttributes] {
-	return terra.ReferenceList[OracleAttributes](p.ref.Append("oracle"))
+	return terra.ReferenceAsList[OracleAttributes](p.ref.Append("oracle"))
 }
 
 func (p ParametersAttributes) Postgresql() terra.ListValue[PostgresqlAttributes] {
-	return terra.ReferenceList[PostgresqlAttributes](p.ref.Append("postgresql"))
+	return terra.ReferenceAsList[PostgresqlAttributes](p.ref.Append("postgresql"))
 }
 
 func (p ParametersAttributes) Presto() terra.ListValue[PrestoAttributes] {
-	return terra.ReferenceList[PrestoAttributes](p.ref.Append("presto"))
+	return terra.ReferenceAsList[PrestoAttributes](p.ref.Append("presto"))
 }
 
 func (p ParametersAttributes) Rds() terra.ListValue[RdsAttributes] {
-	return terra.ReferenceList[RdsAttributes](p.ref.Append("rds"))
+	return terra.ReferenceAsList[RdsAttributes](p.ref.Append("rds"))
 }
 
 func (p ParametersAttributes) Redshift() terra.ListValue[RedshiftAttributes] {
-	return terra.ReferenceList[RedshiftAttributes](p.ref.Append("redshift"))
+	return terra.ReferenceAsList[RedshiftAttributes](p.ref.Append("redshift"))
 }
 
 func (p ParametersAttributes) S3() terra.ListValue[S3Attributes] {
-	return terra.ReferenceList[S3Attributes](p.ref.Append("s3"))
+	return terra.ReferenceAsList[S3Attributes](p.ref.Append("s3"))
 }
 
 func (p ParametersAttributes) ServiceNow() terra.ListValue[ServiceNowAttributes] {
-	return terra.ReferenceList[ServiceNowAttributes](p.ref.Append("service_now"))
+	return terra.ReferenceAsList[ServiceNowAttributes](p.ref.Append("service_now"))
 }
 
 func (p ParametersAttributes) Snowflake() terra.ListValue[SnowflakeAttributes] {
-	return terra.ReferenceList[SnowflakeAttributes](p.ref.Append("snowflake"))
+	return terra.ReferenceAsList[SnowflakeAttributes](p.ref.Append("snowflake"))
 }
 
 func (p ParametersAttributes) Spark() terra.ListValue[SparkAttributes] {
-	return terra.ReferenceList[SparkAttributes](p.ref.Append("spark"))
+	return terra.ReferenceAsList[SparkAttributes](p.ref.Append("spark"))
 }
 
 func (p ParametersAttributes) SqlServer() terra.ListValue[SqlServerAttributes] {
-	return terra.ReferenceList[SqlServerAttributes](p.ref.Append("sql_server"))
+	return terra.ReferenceAsList[SqlServerAttributes](p.ref.Append("sql_server"))
 }
 
 func (p ParametersAttributes) Teradata() terra.ListValue[TeradataAttributes] {
-	return terra.ReferenceList[TeradataAttributes](p.ref.Append("teradata"))
+	return terra.ReferenceAsList[TeradataAttributes](p.ref.Append("teradata"))
 }
 
 func (p ParametersAttributes) Twitter() terra.ListValue[TwitterAttributes] {
-	return terra.ReferenceList[TwitterAttributes](p.ref.Append("twitter"))
+	return terra.ReferenceAsList[TwitterAttributes](p.ref.Append("twitter"))
 }
 
 type AmazonElasticsearchAttributes struct {
@@ -401,7 +401,7 @@ func (ae AmazonElasticsearchAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ae AmazonElasticsearchAttributes) Domain() terra.StringValue {
-	return terra.ReferenceString(ae.ref.Append("domain"))
+	return terra.ReferenceAsString(ae.ref.Append("domain"))
 }
 
 type AthenaAttributes struct {
@@ -421,7 +421,7 @@ func (a AthenaAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AthenaAttributes) WorkGroup() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("work_group"))
+	return terra.ReferenceAsString(a.ref.Append("work_group"))
 }
 
 type AuroraAttributes struct {
@@ -441,15 +441,15 @@ func (a AuroraAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AuroraAttributes) Database() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("database"))
+	return terra.ReferenceAsString(a.ref.Append("database"))
 }
 
 func (a AuroraAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("host"))
+	return terra.ReferenceAsString(a.ref.Append("host"))
 }
 
 func (a AuroraAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(a.ref.Append("port"))
+	return terra.ReferenceAsNumber(a.ref.Append("port"))
 }
 
 type AuroraPostgresqlAttributes struct {
@@ -469,15 +469,15 @@ func (ap AuroraPostgresqlAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ap AuroraPostgresqlAttributes) Database() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("database"))
+	return terra.ReferenceAsString(ap.ref.Append("database"))
 }
 
 func (ap AuroraPostgresqlAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(ap.ref.Append("host"))
+	return terra.ReferenceAsString(ap.ref.Append("host"))
 }
 
 func (ap AuroraPostgresqlAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(ap.ref.Append("port"))
+	return terra.ReferenceAsNumber(ap.ref.Append("port"))
 }
 
 type AwsIotAnalyticsAttributes struct {
@@ -497,7 +497,7 @@ func (aia AwsIotAnalyticsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (aia AwsIotAnalyticsAttributes) DataSetName() terra.StringValue {
-	return terra.ReferenceString(aia.ref.Append("data_set_name"))
+	return terra.ReferenceAsString(aia.ref.Append("data_set_name"))
 }
 
 type JiraAttributes struct {
@@ -517,7 +517,7 @@ func (j JiraAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (j JiraAttributes) SiteBaseUrl() terra.StringValue {
-	return terra.ReferenceString(j.ref.Append("site_base_url"))
+	return terra.ReferenceAsString(j.ref.Append("site_base_url"))
 }
 
 type MariaDbAttributes struct {
@@ -537,15 +537,15 @@ func (md MariaDbAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (md MariaDbAttributes) Database() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("database"))
+	return terra.ReferenceAsString(md.ref.Append("database"))
 }
 
 func (md MariaDbAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(md.ref.Append("host"))
+	return terra.ReferenceAsString(md.ref.Append("host"))
 }
 
 func (md MariaDbAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(md.ref.Append("port"))
+	return terra.ReferenceAsNumber(md.ref.Append("port"))
 }
 
 type MysqlAttributes struct {
@@ -565,15 +565,15 @@ func (m MysqlAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m MysqlAttributes) Database() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("database"))
+	return terra.ReferenceAsString(m.ref.Append("database"))
 }
 
 func (m MysqlAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("host"))
+	return terra.ReferenceAsString(m.ref.Append("host"))
 }
 
 func (m MysqlAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(m.ref.Append("port"))
+	return terra.ReferenceAsNumber(m.ref.Append("port"))
 }
 
 type OracleAttributes struct {
@@ -593,15 +593,15 @@ func (o OracleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (o OracleAttributes) Database() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("database"))
+	return terra.ReferenceAsString(o.ref.Append("database"))
 }
 
 func (o OracleAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("host"))
+	return terra.ReferenceAsString(o.ref.Append("host"))
 }
 
 func (o OracleAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(o.ref.Append("port"))
+	return terra.ReferenceAsNumber(o.ref.Append("port"))
 }
 
 type PostgresqlAttributes struct {
@@ -621,15 +621,15 @@ func (p PostgresqlAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p PostgresqlAttributes) Database() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("database"))
+	return terra.ReferenceAsString(p.ref.Append("database"))
 }
 
 func (p PostgresqlAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("host"))
+	return terra.ReferenceAsString(p.ref.Append("host"))
 }
 
 func (p PostgresqlAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(p.ref.Append("port"))
+	return terra.ReferenceAsNumber(p.ref.Append("port"))
 }
 
 type PrestoAttributes struct {
@@ -649,15 +649,15 @@ func (p PrestoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p PrestoAttributes) Catalog() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("catalog"))
+	return terra.ReferenceAsString(p.ref.Append("catalog"))
 }
 
 func (p PrestoAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("host"))
+	return terra.ReferenceAsString(p.ref.Append("host"))
 }
 
 func (p PrestoAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(p.ref.Append("port"))
+	return terra.ReferenceAsNumber(p.ref.Append("port"))
 }
 
 type RdsAttributes struct {
@@ -677,11 +677,11 @@ func (r RdsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RdsAttributes) Database() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("database"))
+	return terra.ReferenceAsString(r.ref.Append("database"))
 }
 
 func (r RdsAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("instance_id"))
+	return terra.ReferenceAsString(r.ref.Append("instance_id"))
 }
 
 type RedshiftAttributes struct {
@@ -701,19 +701,19 @@ func (r RedshiftAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RedshiftAttributes) ClusterId() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("cluster_id"))
+	return terra.ReferenceAsString(r.ref.Append("cluster_id"))
 }
 
 func (r RedshiftAttributes) Database() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("database"))
+	return terra.ReferenceAsString(r.ref.Append("database"))
 }
 
 func (r RedshiftAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("host"))
+	return terra.ReferenceAsString(r.ref.Append("host"))
 }
 
 func (r RedshiftAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("port"))
+	return terra.ReferenceAsNumber(r.ref.Append("port"))
 }
 
 type S3Attributes struct {
@@ -733,7 +733,7 @@ func (s S3Attributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s S3Attributes) ManifestFileLocation() terra.ListValue[ManifestFileLocationAttributes] {
-	return terra.ReferenceList[ManifestFileLocationAttributes](s.ref.Append("manifest_file_location"))
+	return terra.ReferenceAsList[ManifestFileLocationAttributes](s.ref.Append("manifest_file_location"))
 }
 
 type ManifestFileLocationAttributes struct {
@@ -753,11 +753,11 @@ func (mfl ManifestFileLocationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mfl ManifestFileLocationAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(mfl.ref.Append("bucket"))
+	return terra.ReferenceAsString(mfl.ref.Append("bucket"))
 }
 
 func (mfl ManifestFileLocationAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(mfl.ref.Append("key"))
+	return terra.ReferenceAsString(mfl.ref.Append("key"))
 }
 
 type ServiceNowAttributes struct {
@@ -777,7 +777,7 @@ func (sn ServiceNowAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sn ServiceNowAttributes) SiteBaseUrl() terra.StringValue {
-	return terra.ReferenceString(sn.ref.Append("site_base_url"))
+	return terra.ReferenceAsString(sn.ref.Append("site_base_url"))
 }
 
 type SnowflakeAttributes struct {
@@ -797,15 +797,15 @@ func (s SnowflakeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SnowflakeAttributes) Database() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("database"))
+	return terra.ReferenceAsString(s.ref.Append("database"))
 }
 
 func (s SnowflakeAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("host"))
+	return terra.ReferenceAsString(s.ref.Append("host"))
 }
 
 func (s SnowflakeAttributes) Warehouse() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("warehouse"))
+	return terra.ReferenceAsString(s.ref.Append("warehouse"))
 }
 
 type SparkAttributes struct {
@@ -825,11 +825,11 @@ func (s SparkAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SparkAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("host"))
+	return terra.ReferenceAsString(s.ref.Append("host"))
 }
 
 func (s SparkAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("port"))
+	return terra.ReferenceAsNumber(s.ref.Append("port"))
 }
 
 type SqlServerAttributes struct {
@@ -849,15 +849,15 @@ func (ss SqlServerAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ss SqlServerAttributes) Database() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("database"))
+	return terra.ReferenceAsString(ss.ref.Append("database"))
 }
 
 func (ss SqlServerAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("host"))
+	return terra.ReferenceAsString(ss.ref.Append("host"))
 }
 
 func (ss SqlServerAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("port"))
+	return terra.ReferenceAsNumber(ss.ref.Append("port"))
 }
 
 type TeradataAttributes struct {
@@ -877,15 +877,15 @@ func (t TeradataAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TeradataAttributes) Database() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("database"))
+	return terra.ReferenceAsString(t.ref.Append("database"))
 }
 
 func (t TeradataAttributes) Host() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("host"))
+	return terra.ReferenceAsString(t.ref.Append("host"))
 }
 
 func (t TeradataAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(t.ref.Append("port"))
+	return terra.ReferenceAsNumber(t.ref.Append("port"))
 }
 
 type TwitterAttributes struct {
@@ -905,11 +905,11 @@ func (t TwitterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TwitterAttributes) MaxRows() terra.NumberValue {
-	return terra.ReferenceNumber(t.ref.Append("max_rows"))
+	return terra.ReferenceAsNumber(t.ref.Append("max_rows"))
 }
 
 func (t TwitterAttributes) Query() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("query"))
+	return terra.ReferenceAsString(t.ref.Append("query"))
 }
 
 type PermissionAttributes struct {
@@ -929,11 +929,11 @@ func (p PermissionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p PermissionAttributes) Actions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](p.ref.Append("actions"))
+	return terra.ReferenceAsSet[terra.StringValue](p.ref.Append("actions"))
 }
 
 func (p PermissionAttributes) Principal() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("principal"))
+	return terra.ReferenceAsString(p.ref.Append("principal"))
 }
 
 type SslPropertiesAttributes struct {
@@ -953,7 +953,7 @@ func (sp SslPropertiesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sp SslPropertiesAttributes) DisableSsl() terra.BoolValue {
-	return terra.ReferenceBool(sp.ref.Append("disable_ssl"))
+	return terra.ReferenceAsBool(sp.ref.Append("disable_ssl"))
 }
 
 type VpcConnectionPropertiesAttributes struct {
@@ -973,7 +973,7 @@ func (vcp VpcConnectionPropertiesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vcp VpcConnectionPropertiesAttributes) VpcConnectionArn() terra.StringValue {
-	return terra.ReferenceString(vcp.ref.Append("vpc_connection_arn"))
+	return terra.ReferenceAsString(vcp.ref.Append("vpc_connection_arn"))
 }
 
 type CredentialsState struct {

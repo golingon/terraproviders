@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewBackupGlobalSettings creates a new instance of [BackupGlobalSettings].
 func NewBackupGlobalSettings(name string, args BackupGlobalSettingsArgs) *BackupGlobalSettings {
 	return &BackupGlobalSettings{
 		Args: args,
@@ -18,28 +19,51 @@ func NewBackupGlobalSettings(name string, args BackupGlobalSettingsArgs) *Backup
 
 var _ terra.Resource = (*BackupGlobalSettings)(nil)
 
+// BackupGlobalSettings represents the Terraform resource aws_backup_global_settings.
 type BackupGlobalSettings struct {
-	Name  string
-	Args  BackupGlobalSettingsArgs
-	state *backupGlobalSettingsState
+	Name      string
+	Args      BackupGlobalSettingsArgs
+	state     *backupGlobalSettingsState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BackupGlobalSettings].
 func (bgs *BackupGlobalSettings) Type() string {
 	return "aws_backup_global_settings"
 }
 
+// LocalName returns the local name for [BackupGlobalSettings].
 func (bgs *BackupGlobalSettings) LocalName() string {
 	return bgs.Name
 }
 
+// Configuration returns the configuration (args) for [BackupGlobalSettings].
 func (bgs *BackupGlobalSettings) Configuration() interface{} {
 	return bgs.Args
 }
 
+// DependOn is used for other resources to depend on [BackupGlobalSettings].
+func (bgs *BackupGlobalSettings) DependOn() terra.Reference {
+	return terra.ReferenceResource(bgs)
+}
+
+// Dependencies returns the list of resources [BackupGlobalSettings] depends_on.
+func (bgs *BackupGlobalSettings) Dependencies() terra.Dependencies {
+	return bgs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BackupGlobalSettings].
+func (bgs *BackupGlobalSettings) LifecycleManagement() *terra.Lifecycle {
+	return bgs.Lifecycle
+}
+
+// Attributes returns the attributes for [BackupGlobalSettings].
 func (bgs *BackupGlobalSettings) Attributes() backupGlobalSettingsAttributes {
 	return backupGlobalSettingsAttributes{ref: terra.ReferenceResource(bgs)}
 }
 
+// ImportState imports the given attribute values into [BackupGlobalSettings]'s state.
 func (bgs *BackupGlobalSettings) ImportState(av io.Reader) error {
 	bgs.state = &backupGlobalSettingsState{}
 	if err := json.NewDecoder(av).Decode(bgs.state); err != nil {
@@ -48,10 +72,12 @@ func (bgs *BackupGlobalSettings) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BackupGlobalSettings] has state.
 func (bgs *BackupGlobalSettings) State() (*backupGlobalSettingsState, bool) {
 	return bgs.state, bgs.state != nil
 }
 
+// StateMust returns the state for [BackupGlobalSettings]. Panics if the state is nil.
 func (bgs *BackupGlobalSettings) StateMust() *backupGlobalSettingsState {
 	if bgs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bgs.Type(), bgs.LocalName()))
@@ -59,28 +85,25 @@ func (bgs *BackupGlobalSettings) StateMust() *backupGlobalSettingsState {
 	return bgs.state
 }
 
-func (bgs *BackupGlobalSettings) DependOn() terra.Reference {
-	return terra.ReferenceResource(bgs)
-}
-
+// BackupGlobalSettingsArgs contains the configurations for aws_backup_global_settings.
 type BackupGlobalSettingsArgs struct {
 	// GlobalSettings: map of string, required
 	GlobalSettings terra.MapValue[terra.StringValue] `hcl:"global_settings,attr" validate:"required"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that BackupGlobalSettings depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type backupGlobalSettingsAttributes struct {
 	ref terra.Reference
 }
 
+// GlobalSettings returns a reference to field global_settings of aws_backup_global_settings.
 func (bgs backupGlobalSettingsAttributes) GlobalSettings() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bgs.ref.Append("global_settings"))
+	return terra.ReferenceAsMap[terra.StringValue](bgs.ref.Append("global_settings"))
 }
 
+// Id returns a reference to field id of aws_backup_global_settings.
 func (bgs backupGlobalSettingsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bgs.ref.Append("id"))
+	return terra.ReferenceAsString(bgs.ref.Append("id"))
 }
 
 type backupGlobalSettingsState struct {

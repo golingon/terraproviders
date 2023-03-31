@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewBackupVaultNotifications creates a new instance of [BackupVaultNotifications].
 func NewBackupVaultNotifications(name string, args BackupVaultNotificationsArgs) *BackupVaultNotifications {
 	return &BackupVaultNotifications{
 		Args: args,
@@ -18,28 +19,51 @@ func NewBackupVaultNotifications(name string, args BackupVaultNotificationsArgs)
 
 var _ terra.Resource = (*BackupVaultNotifications)(nil)
 
+// BackupVaultNotifications represents the Terraform resource aws_backup_vault_notifications.
 type BackupVaultNotifications struct {
-	Name  string
-	Args  BackupVaultNotificationsArgs
-	state *backupVaultNotificationsState
+	Name      string
+	Args      BackupVaultNotificationsArgs
+	state     *backupVaultNotificationsState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BackupVaultNotifications].
 func (bvn *BackupVaultNotifications) Type() string {
 	return "aws_backup_vault_notifications"
 }
 
+// LocalName returns the local name for [BackupVaultNotifications].
 func (bvn *BackupVaultNotifications) LocalName() string {
 	return bvn.Name
 }
 
+// Configuration returns the configuration (args) for [BackupVaultNotifications].
 func (bvn *BackupVaultNotifications) Configuration() interface{} {
 	return bvn.Args
 }
 
+// DependOn is used for other resources to depend on [BackupVaultNotifications].
+func (bvn *BackupVaultNotifications) DependOn() terra.Reference {
+	return terra.ReferenceResource(bvn)
+}
+
+// Dependencies returns the list of resources [BackupVaultNotifications] depends_on.
+func (bvn *BackupVaultNotifications) Dependencies() terra.Dependencies {
+	return bvn.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BackupVaultNotifications].
+func (bvn *BackupVaultNotifications) LifecycleManagement() *terra.Lifecycle {
+	return bvn.Lifecycle
+}
+
+// Attributes returns the attributes for [BackupVaultNotifications].
 func (bvn *BackupVaultNotifications) Attributes() backupVaultNotificationsAttributes {
 	return backupVaultNotificationsAttributes{ref: terra.ReferenceResource(bvn)}
 }
 
+// ImportState imports the given attribute values into [BackupVaultNotifications]'s state.
 func (bvn *BackupVaultNotifications) ImportState(av io.Reader) error {
 	bvn.state = &backupVaultNotificationsState{}
 	if err := json.NewDecoder(av).Decode(bvn.state); err != nil {
@@ -48,10 +72,12 @@ func (bvn *BackupVaultNotifications) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BackupVaultNotifications] has state.
 func (bvn *BackupVaultNotifications) State() (*backupVaultNotificationsState, bool) {
 	return bvn.state, bvn.state != nil
 }
 
+// StateMust returns the state for [BackupVaultNotifications]. Panics if the state is nil.
 func (bvn *BackupVaultNotifications) StateMust() *backupVaultNotificationsState {
 	if bvn.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bvn.Type(), bvn.LocalName()))
@@ -59,10 +85,7 @@ func (bvn *BackupVaultNotifications) StateMust() *backupVaultNotificationsState 
 	return bvn.state
 }
 
-func (bvn *BackupVaultNotifications) DependOn() terra.Reference {
-	return terra.ReferenceResource(bvn)
-}
-
+// BackupVaultNotificationsArgs contains the configurations for aws_backup_vault_notifications.
 type BackupVaultNotificationsArgs struct {
 	// BackupVaultEvents: set of string, required
 	BackupVaultEvents terra.SetValue[terra.StringValue] `hcl:"backup_vault_events,attr" validate:"required"`
@@ -72,31 +95,34 @@ type BackupVaultNotificationsArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// SnsTopicArn: string, required
 	SnsTopicArn terra.StringValue `hcl:"sns_topic_arn,attr" validate:"required"`
-	// DependsOn contains resources that BackupVaultNotifications depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type backupVaultNotificationsAttributes struct {
 	ref terra.Reference
 }
 
+// BackupVaultArn returns a reference to field backup_vault_arn of aws_backup_vault_notifications.
 func (bvn backupVaultNotificationsAttributes) BackupVaultArn() terra.StringValue {
-	return terra.ReferenceString(bvn.ref.Append("backup_vault_arn"))
+	return terra.ReferenceAsString(bvn.ref.Append("backup_vault_arn"))
 }
 
+// BackupVaultEvents returns a reference to field backup_vault_events of aws_backup_vault_notifications.
 func (bvn backupVaultNotificationsAttributes) BackupVaultEvents() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](bvn.ref.Append("backup_vault_events"))
+	return terra.ReferenceAsSet[terra.StringValue](bvn.ref.Append("backup_vault_events"))
 }
 
+// BackupVaultName returns a reference to field backup_vault_name of aws_backup_vault_notifications.
 func (bvn backupVaultNotificationsAttributes) BackupVaultName() terra.StringValue {
-	return terra.ReferenceString(bvn.ref.Append("backup_vault_name"))
+	return terra.ReferenceAsString(bvn.ref.Append("backup_vault_name"))
 }
 
+// Id returns a reference to field id of aws_backup_vault_notifications.
 func (bvn backupVaultNotificationsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bvn.ref.Append("id"))
+	return terra.ReferenceAsString(bvn.ref.Append("id"))
 }
 
+// SnsTopicArn returns a reference to field sns_topic_arn of aws_backup_vault_notifications.
 func (bvn backupVaultNotificationsAttributes) SnsTopicArn() terra.StringValue {
-	return terra.ReferenceString(bvn.ref.Append("sns_topic_arn"))
+	return terra.ReferenceAsString(bvn.ref.Append("sns_topic_arn"))
 }
 
 type backupVaultNotificationsState struct {

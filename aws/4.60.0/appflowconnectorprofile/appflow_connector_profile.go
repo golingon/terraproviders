@@ -506,11 +506,11 @@ func (cpc ConnectorProfileConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cpc ConnectorProfileConfigAttributes) ConnectorProfileCredentials() terra.ListValue[ConnectorProfileCredentialsAttributes] {
-	return terra.ReferenceList[ConnectorProfileCredentialsAttributes](cpc.ref.Append("connector_profile_credentials"))
+	return terra.ReferenceAsList[ConnectorProfileCredentialsAttributes](cpc.ref.Append("connector_profile_credentials"))
 }
 
 func (cpc ConnectorProfileConfigAttributes) ConnectorProfileProperties() terra.ListValue[ConnectorProfilePropertiesAttributes] {
-	return terra.ReferenceList[ConnectorProfilePropertiesAttributes](cpc.ref.Append("connector_profile_properties"))
+	return terra.ReferenceAsList[ConnectorProfilePropertiesAttributes](cpc.ref.Append("connector_profile_properties"))
 }
 
 type ConnectorProfileCredentialsAttributes struct {
@@ -530,75 +530,75 @@ func (cpc ConnectorProfileCredentialsAttributes) InternalTokens() hclwrite.Token
 }
 
 func (cpc ConnectorProfileCredentialsAttributes) Amplitude() terra.ListValue[ConnectorProfileCredentialsAmplitudeAttributes] {
-	return terra.ReferenceList[ConnectorProfileCredentialsAmplitudeAttributes](cpc.ref.Append("amplitude"))
+	return terra.ReferenceAsList[ConnectorProfileCredentialsAmplitudeAttributes](cpc.ref.Append("amplitude"))
 }
 
 func (cpc ConnectorProfileCredentialsAttributes) CustomConnector() terra.ListValue[ConnectorProfileCredentialsCustomConnectorAttributes] {
-	return terra.ReferenceList[ConnectorProfileCredentialsCustomConnectorAttributes](cpc.ref.Append("custom_connector"))
+	return terra.ReferenceAsList[ConnectorProfileCredentialsCustomConnectorAttributes](cpc.ref.Append("custom_connector"))
 }
 
 func (cpc ConnectorProfileCredentialsAttributes) Datadog() terra.ListValue[ConnectorProfileCredentialsDatadogAttributes] {
-	return terra.ReferenceList[ConnectorProfileCredentialsDatadogAttributes](cpc.ref.Append("datadog"))
+	return terra.ReferenceAsList[ConnectorProfileCredentialsDatadogAttributes](cpc.ref.Append("datadog"))
 }
 
 func (cpc ConnectorProfileCredentialsAttributes) Dynatrace() terra.ListValue[ConnectorProfileCredentialsDynatraceAttributes] {
-	return terra.ReferenceList[ConnectorProfileCredentialsDynatraceAttributes](cpc.ref.Append("dynatrace"))
+	return terra.ReferenceAsList[ConnectorProfileCredentialsDynatraceAttributes](cpc.ref.Append("dynatrace"))
 }
 
 func (cpc ConnectorProfileCredentialsAttributes) GoogleAnalytics() terra.ListValue[ConnectorProfileCredentialsGoogleAnalyticsAttributes] {
-	return terra.ReferenceList[ConnectorProfileCredentialsGoogleAnalyticsAttributes](cpc.ref.Append("google_analytics"))
+	return terra.ReferenceAsList[ConnectorProfileCredentialsGoogleAnalyticsAttributes](cpc.ref.Append("google_analytics"))
 }
 
 func (cpc ConnectorProfileCredentialsAttributes) Honeycode() terra.ListValue[ConnectorProfileCredentialsHoneycodeAttributes] {
-	return terra.ReferenceList[ConnectorProfileCredentialsHoneycodeAttributes](cpc.ref.Append("honeycode"))
+	return terra.ReferenceAsList[ConnectorProfileCredentialsHoneycodeAttributes](cpc.ref.Append("honeycode"))
 }
 
 func (cpc ConnectorProfileCredentialsAttributes) InforNexus() terra.ListValue[ConnectorProfileCredentialsInforNexusAttributes] {
-	return terra.ReferenceList[ConnectorProfileCredentialsInforNexusAttributes](cpc.ref.Append("infor_nexus"))
+	return terra.ReferenceAsList[ConnectorProfileCredentialsInforNexusAttributes](cpc.ref.Append("infor_nexus"))
 }
 
 func (cpc ConnectorProfileCredentialsAttributes) Marketo() terra.ListValue[ConnectorProfileCredentialsMarketoAttributes] {
-	return terra.ReferenceList[ConnectorProfileCredentialsMarketoAttributes](cpc.ref.Append("marketo"))
+	return terra.ReferenceAsList[ConnectorProfileCredentialsMarketoAttributes](cpc.ref.Append("marketo"))
 }
 
 func (cpc ConnectorProfileCredentialsAttributes) Redshift() terra.ListValue[ConnectorProfileCredentialsRedshiftAttributes] {
-	return terra.ReferenceList[ConnectorProfileCredentialsRedshiftAttributes](cpc.ref.Append("redshift"))
+	return terra.ReferenceAsList[ConnectorProfileCredentialsRedshiftAttributes](cpc.ref.Append("redshift"))
 }
 
 func (cpc ConnectorProfileCredentialsAttributes) Salesforce() terra.ListValue[ConnectorProfileCredentialsSalesforceAttributes] {
-	return terra.ReferenceList[ConnectorProfileCredentialsSalesforceAttributes](cpc.ref.Append("salesforce"))
+	return terra.ReferenceAsList[ConnectorProfileCredentialsSalesforceAttributes](cpc.ref.Append("salesforce"))
 }
 
 func (cpc ConnectorProfileCredentialsAttributes) SapoData() terra.ListValue[ConnectorProfileCredentialsSapoDataAttributes] {
-	return terra.ReferenceList[ConnectorProfileCredentialsSapoDataAttributes](cpc.ref.Append("sapo_data"))
+	return terra.ReferenceAsList[ConnectorProfileCredentialsSapoDataAttributes](cpc.ref.Append("sapo_data"))
 }
 
 func (cpc ConnectorProfileCredentialsAttributes) ServiceNow() terra.ListValue[ConnectorProfileCredentialsServiceNowAttributes] {
-	return terra.ReferenceList[ConnectorProfileCredentialsServiceNowAttributes](cpc.ref.Append("service_now"))
+	return terra.ReferenceAsList[ConnectorProfileCredentialsServiceNowAttributes](cpc.ref.Append("service_now"))
 }
 
 func (cpc ConnectorProfileCredentialsAttributes) Singular() terra.ListValue[ConnectorProfileCredentialsSingularAttributes] {
-	return terra.ReferenceList[ConnectorProfileCredentialsSingularAttributes](cpc.ref.Append("singular"))
+	return terra.ReferenceAsList[ConnectorProfileCredentialsSingularAttributes](cpc.ref.Append("singular"))
 }
 
 func (cpc ConnectorProfileCredentialsAttributes) Slack() terra.ListValue[ConnectorProfileCredentialsSlackAttributes] {
-	return terra.ReferenceList[ConnectorProfileCredentialsSlackAttributes](cpc.ref.Append("slack"))
+	return terra.ReferenceAsList[ConnectorProfileCredentialsSlackAttributes](cpc.ref.Append("slack"))
 }
 
 func (cpc ConnectorProfileCredentialsAttributes) Snowflake() terra.ListValue[ConnectorProfileCredentialsSnowflakeAttributes] {
-	return terra.ReferenceList[ConnectorProfileCredentialsSnowflakeAttributes](cpc.ref.Append("snowflake"))
+	return terra.ReferenceAsList[ConnectorProfileCredentialsSnowflakeAttributes](cpc.ref.Append("snowflake"))
 }
 
 func (cpc ConnectorProfileCredentialsAttributes) Trendmicro() terra.ListValue[ConnectorProfileCredentialsTrendmicroAttributes] {
-	return terra.ReferenceList[ConnectorProfileCredentialsTrendmicroAttributes](cpc.ref.Append("trendmicro"))
+	return terra.ReferenceAsList[ConnectorProfileCredentialsTrendmicroAttributes](cpc.ref.Append("trendmicro"))
 }
 
 func (cpc ConnectorProfileCredentialsAttributes) Veeva() terra.ListValue[ConnectorProfileCredentialsVeevaAttributes] {
-	return terra.ReferenceList[ConnectorProfileCredentialsVeevaAttributes](cpc.ref.Append("veeva"))
+	return terra.ReferenceAsList[ConnectorProfileCredentialsVeevaAttributes](cpc.ref.Append("veeva"))
 }
 
 func (cpc ConnectorProfileCredentialsAttributes) Zendesk() terra.ListValue[ConnectorProfileCredentialsZendeskAttributes] {
-	return terra.ReferenceList[ConnectorProfileCredentialsZendeskAttributes](cpc.ref.Append("zendesk"))
+	return terra.ReferenceAsList[ConnectorProfileCredentialsZendeskAttributes](cpc.ref.Append("zendesk"))
 }
 
 type ConnectorProfileCredentialsAmplitudeAttributes struct {
@@ -618,11 +618,11 @@ func (a ConnectorProfileCredentialsAmplitudeAttributes) InternalTokens() hclwrit
 }
 
 func (a ConnectorProfileCredentialsAmplitudeAttributes) ApiKey() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("api_key"))
+	return terra.ReferenceAsString(a.ref.Append("api_key"))
 }
 
 func (a ConnectorProfileCredentialsAmplitudeAttributes) SecretKey() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("secret_key"))
+	return terra.ReferenceAsString(a.ref.Append("secret_key"))
 }
 
 type ConnectorProfileCredentialsCustomConnectorAttributes struct {
@@ -642,23 +642,23 @@ func (cc ConnectorProfileCredentialsCustomConnectorAttributes) InternalTokens() 
 }
 
 func (cc ConnectorProfileCredentialsCustomConnectorAttributes) AuthenticationType() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("authentication_type"))
+	return terra.ReferenceAsString(cc.ref.Append("authentication_type"))
 }
 
 func (cc ConnectorProfileCredentialsCustomConnectorAttributes) ApiKey() terra.ListValue[ApiKeyAttributes] {
-	return terra.ReferenceList[ApiKeyAttributes](cc.ref.Append("api_key"))
+	return terra.ReferenceAsList[ApiKeyAttributes](cc.ref.Append("api_key"))
 }
 
 func (cc ConnectorProfileCredentialsCustomConnectorAttributes) Basic() terra.ListValue[BasicAttributes] {
-	return terra.ReferenceList[BasicAttributes](cc.ref.Append("basic"))
+	return terra.ReferenceAsList[BasicAttributes](cc.ref.Append("basic"))
 }
 
 func (cc ConnectorProfileCredentialsCustomConnectorAttributes) Custom() terra.ListValue[CustomAttributes] {
-	return terra.ReferenceList[CustomAttributes](cc.ref.Append("custom"))
+	return terra.ReferenceAsList[CustomAttributes](cc.ref.Append("custom"))
 }
 
 func (cc ConnectorProfileCredentialsCustomConnectorAttributes) Oauth2() terra.ListValue[Oauth2Attributes] {
-	return terra.ReferenceList[Oauth2Attributes](cc.ref.Append("oauth2"))
+	return terra.ReferenceAsList[Oauth2Attributes](cc.ref.Append("oauth2"))
 }
 
 type ApiKeyAttributes struct {
@@ -678,11 +678,11 @@ func (ak ApiKeyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ak ApiKeyAttributes) ApiKey() terra.StringValue {
-	return terra.ReferenceString(ak.ref.Append("api_key"))
+	return terra.ReferenceAsString(ak.ref.Append("api_key"))
 }
 
 func (ak ApiKeyAttributes) ApiSecretKey() terra.StringValue {
-	return terra.ReferenceString(ak.ref.Append("api_secret_key"))
+	return terra.ReferenceAsString(ak.ref.Append("api_secret_key"))
 }
 
 type BasicAttributes struct {
@@ -702,11 +702,11 @@ func (b BasicAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (b BasicAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("password"))
+	return terra.ReferenceAsString(b.ref.Append("password"))
 }
 
 func (b BasicAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(b.ref.Append("username"))
+	return terra.ReferenceAsString(b.ref.Append("username"))
 }
 
 type CustomAttributes struct {
@@ -726,11 +726,11 @@ func (c CustomAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c CustomAttributes) CredentialsMap() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](c.ref.Append("credentials_map"))
+	return terra.ReferenceAsMap[terra.StringValue](c.ref.Append("credentials_map"))
 }
 
 func (c CustomAttributes) CustomAuthenticationType() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("custom_authentication_type"))
+	return terra.ReferenceAsString(c.ref.Append("custom_authentication_type"))
 }
 
 type Oauth2Attributes struct {
@@ -750,23 +750,23 @@ func (o Oauth2Attributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (o Oauth2Attributes) AccessToken() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("access_token"))
+	return terra.ReferenceAsString(o.ref.Append("access_token"))
 }
 
 func (o Oauth2Attributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("client_id"))
+	return terra.ReferenceAsString(o.ref.Append("client_id"))
 }
 
 func (o Oauth2Attributes) ClientSecret() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("client_secret"))
+	return terra.ReferenceAsString(o.ref.Append("client_secret"))
 }
 
 func (o Oauth2Attributes) RefreshToken() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("refresh_token"))
+	return terra.ReferenceAsString(o.ref.Append("refresh_token"))
 }
 
 func (o Oauth2Attributes) OauthRequest() terra.ListValue[Oauth2OauthRequestAttributes] {
-	return terra.ReferenceList[Oauth2OauthRequestAttributes](o.ref.Append("oauth_request"))
+	return terra.ReferenceAsList[Oauth2OauthRequestAttributes](o.ref.Append("oauth_request"))
 }
 
 type Oauth2OauthRequestAttributes struct {
@@ -786,11 +786,11 @@ func (or Oauth2OauthRequestAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (or Oauth2OauthRequestAttributes) AuthCode() terra.StringValue {
-	return terra.ReferenceString(or.ref.Append("auth_code"))
+	return terra.ReferenceAsString(or.ref.Append("auth_code"))
 }
 
 func (or Oauth2OauthRequestAttributes) RedirectUri() terra.StringValue {
-	return terra.ReferenceString(or.ref.Append("redirect_uri"))
+	return terra.ReferenceAsString(or.ref.Append("redirect_uri"))
 }
 
 type ConnectorProfileCredentialsDatadogAttributes struct {
@@ -810,11 +810,11 @@ func (d ConnectorProfileCredentialsDatadogAttributes) InternalTokens() hclwrite.
 }
 
 func (d ConnectorProfileCredentialsDatadogAttributes) ApiKey() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("api_key"))
+	return terra.ReferenceAsString(d.ref.Append("api_key"))
 }
 
 func (d ConnectorProfileCredentialsDatadogAttributes) ApplicationKey() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("application_key"))
+	return terra.ReferenceAsString(d.ref.Append("application_key"))
 }
 
 type ConnectorProfileCredentialsDynatraceAttributes struct {
@@ -834,7 +834,7 @@ func (d ConnectorProfileCredentialsDynatraceAttributes) InternalTokens() hclwrit
 }
 
 func (d ConnectorProfileCredentialsDynatraceAttributes) ApiToken() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("api_token"))
+	return terra.ReferenceAsString(d.ref.Append("api_token"))
 }
 
 type ConnectorProfileCredentialsGoogleAnalyticsAttributes struct {
@@ -854,23 +854,23 @@ func (ga ConnectorProfileCredentialsGoogleAnalyticsAttributes) InternalTokens() 
 }
 
 func (ga ConnectorProfileCredentialsGoogleAnalyticsAttributes) AccessToken() terra.StringValue {
-	return terra.ReferenceString(ga.ref.Append("access_token"))
+	return terra.ReferenceAsString(ga.ref.Append("access_token"))
 }
 
 func (ga ConnectorProfileCredentialsGoogleAnalyticsAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(ga.ref.Append("client_id"))
+	return terra.ReferenceAsString(ga.ref.Append("client_id"))
 }
 
 func (ga ConnectorProfileCredentialsGoogleAnalyticsAttributes) ClientSecret() terra.StringValue {
-	return terra.ReferenceString(ga.ref.Append("client_secret"))
+	return terra.ReferenceAsString(ga.ref.Append("client_secret"))
 }
 
 func (ga ConnectorProfileCredentialsGoogleAnalyticsAttributes) RefreshToken() terra.StringValue {
-	return terra.ReferenceString(ga.ref.Append("refresh_token"))
+	return terra.ReferenceAsString(ga.ref.Append("refresh_token"))
 }
 
 func (ga ConnectorProfileCredentialsGoogleAnalyticsAttributes) OauthRequest() terra.ListValue[GoogleAnalyticsOauthRequestAttributes] {
-	return terra.ReferenceList[GoogleAnalyticsOauthRequestAttributes](ga.ref.Append("oauth_request"))
+	return terra.ReferenceAsList[GoogleAnalyticsOauthRequestAttributes](ga.ref.Append("oauth_request"))
 }
 
 type GoogleAnalyticsOauthRequestAttributes struct {
@@ -890,11 +890,11 @@ func (or GoogleAnalyticsOauthRequestAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (or GoogleAnalyticsOauthRequestAttributes) AuthCode() terra.StringValue {
-	return terra.ReferenceString(or.ref.Append("auth_code"))
+	return terra.ReferenceAsString(or.ref.Append("auth_code"))
 }
 
 func (or GoogleAnalyticsOauthRequestAttributes) RedirectUri() terra.StringValue {
-	return terra.ReferenceString(or.ref.Append("redirect_uri"))
+	return terra.ReferenceAsString(or.ref.Append("redirect_uri"))
 }
 
 type ConnectorProfileCredentialsHoneycodeAttributes struct {
@@ -914,15 +914,15 @@ func (h ConnectorProfileCredentialsHoneycodeAttributes) InternalTokens() hclwrit
 }
 
 func (h ConnectorProfileCredentialsHoneycodeAttributes) AccessToken() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("access_token"))
+	return terra.ReferenceAsString(h.ref.Append("access_token"))
 }
 
 func (h ConnectorProfileCredentialsHoneycodeAttributes) RefreshToken() terra.StringValue {
-	return terra.ReferenceString(h.ref.Append("refresh_token"))
+	return terra.ReferenceAsString(h.ref.Append("refresh_token"))
 }
 
 func (h ConnectorProfileCredentialsHoneycodeAttributes) OauthRequest() terra.ListValue[HoneycodeOauthRequestAttributes] {
-	return terra.ReferenceList[HoneycodeOauthRequestAttributes](h.ref.Append("oauth_request"))
+	return terra.ReferenceAsList[HoneycodeOauthRequestAttributes](h.ref.Append("oauth_request"))
 }
 
 type HoneycodeOauthRequestAttributes struct {
@@ -942,11 +942,11 @@ func (or HoneycodeOauthRequestAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (or HoneycodeOauthRequestAttributes) AuthCode() terra.StringValue {
-	return terra.ReferenceString(or.ref.Append("auth_code"))
+	return terra.ReferenceAsString(or.ref.Append("auth_code"))
 }
 
 func (or HoneycodeOauthRequestAttributes) RedirectUri() terra.StringValue {
-	return terra.ReferenceString(or.ref.Append("redirect_uri"))
+	return terra.ReferenceAsString(or.ref.Append("redirect_uri"))
 }
 
 type ConnectorProfileCredentialsInforNexusAttributes struct {
@@ -966,19 +966,19 @@ func (in ConnectorProfileCredentialsInforNexusAttributes) InternalTokens() hclwr
 }
 
 func (in ConnectorProfileCredentialsInforNexusAttributes) AccessKeyId() terra.StringValue {
-	return terra.ReferenceString(in.ref.Append("access_key_id"))
+	return terra.ReferenceAsString(in.ref.Append("access_key_id"))
 }
 
 func (in ConnectorProfileCredentialsInforNexusAttributes) Datakey() terra.StringValue {
-	return terra.ReferenceString(in.ref.Append("datakey"))
+	return terra.ReferenceAsString(in.ref.Append("datakey"))
 }
 
 func (in ConnectorProfileCredentialsInforNexusAttributes) SecretAccessKey() terra.StringValue {
-	return terra.ReferenceString(in.ref.Append("secret_access_key"))
+	return terra.ReferenceAsString(in.ref.Append("secret_access_key"))
 }
 
 func (in ConnectorProfileCredentialsInforNexusAttributes) UserId() terra.StringValue {
-	return terra.ReferenceString(in.ref.Append("user_id"))
+	return terra.ReferenceAsString(in.ref.Append("user_id"))
 }
 
 type ConnectorProfileCredentialsMarketoAttributes struct {
@@ -998,19 +998,19 @@ func (m ConnectorProfileCredentialsMarketoAttributes) InternalTokens() hclwrite.
 }
 
 func (m ConnectorProfileCredentialsMarketoAttributes) AccessToken() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("access_token"))
+	return terra.ReferenceAsString(m.ref.Append("access_token"))
 }
 
 func (m ConnectorProfileCredentialsMarketoAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("client_id"))
+	return terra.ReferenceAsString(m.ref.Append("client_id"))
 }
 
 func (m ConnectorProfileCredentialsMarketoAttributes) ClientSecret() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("client_secret"))
+	return terra.ReferenceAsString(m.ref.Append("client_secret"))
 }
 
 func (m ConnectorProfileCredentialsMarketoAttributes) OauthRequest() terra.ListValue[MarketoOauthRequestAttributes] {
-	return terra.ReferenceList[MarketoOauthRequestAttributes](m.ref.Append("oauth_request"))
+	return terra.ReferenceAsList[MarketoOauthRequestAttributes](m.ref.Append("oauth_request"))
 }
 
 type MarketoOauthRequestAttributes struct {
@@ -1030,11 +1030,11 @@ func (or MarketoOauthRequestAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (or MarketoOauthRequestAttributes) AuthCode() terra.StringValue {
-	return terra.ReferenceString(or.ref.Append("auth_code"))
+	return terra.ReferenceAsString(or.ref.Append("auth_code"))
 }
 
 func (or MarketoOauthRequestAttributes) RedirectUri() terra.StringValue {
-	return terra.ReferenceString(or.ref.Append("redirect_uri"))
+	return terra.ReferenceAsString(or.ref.Append("redirect_uri"))
 }
 
 type ConnectorProfileCredentialsRedshiftAttributes struct {
@@ -1054,11 +1054,11 @@ func (r ConnectorProfileCredentialsRedshiftAttributes) InternalTokens() hclwrite
 }
 
 func (r ConnectorProfileCredentialsRedshiftAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("password"))
+	return terra.ReferenceAsString(r.ref.Append("password"))
 }
 
 func (r ConnectorProfileCredentialsRedshiftAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("username"))
+	return terra.ReferenceAsString(r.ref.Append("username"))
 }
 
 type ConnectorProfileCredentialsSalesforceAttributes struct {
@@ -1078,19 +1078,19 @@ func (s ConnectorProfileCredentialsSalesforceAttributes) InternalTokens() hclwri
 }
 
 func (s ConnectorProfileCredentialsSalesforceAttributes) AccessToken() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("access_token"))
+	return terra.ReferenceAsString(s.ref.Append("access_token"))
 }
 
 func (s ConnectorProfileCredentialsSalesforceAttributes) ClientCredentialsArn() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("client_credentials_arn"))
+	return terra.ReferenceAsString(s.ref.Append("client_credentials_arn"))
 }
 
 func (s ConnectorProfileCredentialsSalesforceAttributes) RefreshToken() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("refresh_token"))
+	return terra.ReferenceAsString(s.ref.Append("refresh_token"))
 }
 
 func (s ConnectorProfileCredentialsSalesforceAttributes) OauthRequest() terra.ListValue[SalesforceOauthRequestAttributes] {
-	return terra.ReferenceList[SalesforceOauthRequestAttributes](s.ref.Append("oauth_request"))
+	return terra.ReferenceAsList[SalesforceOauthRequestAttributes](s.ref.Append("oauth_request"))
 }
 
 type SalesforceOauthRequestAttributes struct {
@@ -1110,11 +1110,11 @@ func (or SalesforceOauthRequestAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (or SalesforceOauthRequestAttributes) AuthCode() terra.StringValue {
-	return terra.ReferenceString(or.ref.Append("auth_code"))
+	return terra.ReferenceAsString(or.ref.Append("auth_code"))
 }
 
 func (or SalesforceOauthRequestAttributes) RedirectUri() terra.StringValue {
-	return terra.ReferenceString(or.ref.Append("redirect_uri"))
+	return terra.ReferenceAsString(or.ref.Append("redirect_uri"))
 }
 
 type ConnectorProfileCredentialsSapoDataAttributes struct {
@@ -1134,11 +1134,11 @@ func (sd ConnectorProfileCredentialsSapoDataAttributes) InternalTokens() hclwrit
 }
 
 func (sd ConnectorProfileCredentialsSapoDataAttributes) BasicAuthCredentials() terra.ListValue[BasicAuthCredentialsAttributes] {
-	return terra.ReferenceList[BasicAuthCredentialsAttributes](sd.ref.Append("basic_auth_credentials"))
+	return terra.ReferenceAsList[BasicAuthCredentialsAttributes](sd.ref.Append("basic_auth_credentials"))
 }
 
 func (sd ConnectorProfileCredentialsSapoDataAttributes) OauthCredentials() terra.ListValue[OauthCredentialsAttributes] {
-	return terra.ReferenceList[OauthCredentialsAttributes](sd.ref.Append("oauth_credentials"))
+	return terra.ReferenceAsList[OauthCredentialsAttributes](sd.ref.Append("oauth_credentials"))
 }
 
 type BasicAuthCredentialsAttributes struct {
@@ -1158,11 +1158,11 @@ func (bac BasicAuthCredentialsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (bac BasicAuthCredentialsAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(bac.ref.Append("password"))
+	return terra.ReferenceAsString(bac.ref.Append("password"))
 }
 
 func (bac BasicAuthCredentialsAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(bac.ref.Append("username"))
+	return terra.ReferenceAsString(bac.ref.Append("username"))
 }
 
 type OauthCredentialsAttributes struct {
@@ -1182,23 +1182,23 @@ func (oc OauthCredentialsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (oc OauthCredentialsAttributes) AccessToken() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("access_token"))
+	return terra.ReferenceAsString(oc.ref.Append("access_token"))
 }
 
 func (oc OauthCredentialsAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("client_id"))
+	return terra.ReferenceAsString(oc.ref.Append("client_id"))
 }
 
 func (oc OauthCredentialsAttributes) ClientSecret() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("client_secret"))
+	return terra.ReferenceAsString(oc.ref.Append("client_secret"))
 }
 
 func (oc OauthCredentialsAttributes) RefreshToken() terra.StringValue {
-	return terra.ReferenceString(oc.ref.Append("refresh_token"))
+	return terra.ReferenceAsString(oc.ref.Append("refresh_token"))
 }
 
 func (oc OauthCredentialsAttributes) OauthRequest() terra.ListValue[OauthCredentialsOauthRequestAttributes] {
-	return terra.ReferenceList[OauthCredentialsOauthRequestAttributes](oc.ref.Append("oauth_request"))
+	return terra.ReferenceAsList[OauthCredentialsOauthRequestAttributes](oc.ref.Append("oauth_request"))
 }
 
 type OauthCredentialsOauthRequestAttributes struct {
@@ -1218,11 +1218,11 @@ func (or OauthCredentialsOauthRequestAttributes) InternalTokens() hclwrite.Token
 }
 
 func (or OauthCredentialsOauthRequestAttributes) AuthCode() terra.StringValue {
-	return terra.ReferenceString(or.ref.Append("auth_code"))
+	return terra.ReferenceAsString(or.ref.Append("auth_code"))
 }
 
 func (or OauthCredentialsOauthRequestAttributes) RedirectUri() terra.StringValue {
-	return terra.ReferenceString(or.ref.Append("redirect_uri"))
+	return terra.ReferenceAsString(or.ref.Append("redirect_uri"))
 }
 
 type ConnectorProfileCredentialsServiceNowAttributes struct {
@@ -1242,11 +1242,11 @@ func (sn ConnectorProfileCredentialsServiceNowAttributes) InternalTokens() hclwr
 }
 
 func (sn ConnectorProfileCredentialsServiceNowAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(sn.ref.Append("password"))
+	return terra.ReferenceAsString(sn.ref.Append("password"))
 }
 
 func (sn ConnectorProfileCredentialsServiceNowAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(sn.ref.Append("username"))
+	return terra.ReferenceAsString(sn.ref.Append("username"))
 }
 
 type ConnectorProfileCredentialsSingularAttributes struct {
@@ -1266,7 +1266,7 @@ func (s ConnectorProfileCredentialsSingularAttributes) InternalTokens() hclwrite
 }
 
 func (s ConnectorProfileCredentialsSingularAttributes) ApiKey() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("api_key"))
+	return terra.ReferenceAsString(s.ref.Append("api_key"))
 }
 
 type ConnectorProfileCredentialsSlackAttributes struct {
@@ -1286,19 +1286,19 @@ func (s ConnectorProfileCredentialsSlackAttributes) InternalTokens() hclwrite.To
 }
 
 func (s ConnectorProfileCredentialsSlackAttributes) AccessToken() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("access_token"))
+	return terra.ReferenceAsString(s.ref.Append("access_token"))
 }
 
 func (s ConnectorProfileCredentialsSlackAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("client_id"))
+	return terra.ReferenceAsString(s.ref.Append("client_id"))
 }
 
 func (s ConnectorProfileCredentialsSlackAttributes) ClientSecret() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("client_secret"))
+	return terra.ReferenceAsString(s.ref.Append("client_secret"))
 }
 
 func (s ConnectorProfileCredentialsSlackAttributes) OauthRequest() terra.ListValue[SlackOauthRequestAttributes] {
-	return terra.ReferenceList[SlackOauthRequestAttributes](s.ref.Append("oauth_request"))
+	return terra.ReferenceAsList[SlackOauthRequestAttributes](s.ref.Append("oauth_request"))
 }
 
 type SlackOauthRequestAttributes struct {
@@ -1318,11 +1318,11 @@ func (or SlackOauthRequestAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (or SlackOauthRequestAttributes) AuthCode() terra.StringValue {
-	return terra.ReferenceString(or.ref.Append("auth_code"))
+	return terra.ReferenceAsString(or.ref.Append("auth_code"))
 }
 
 func (or SlackOauthRequestAttributes) RedirectUri() terra.StringValue {
-	return terra.ReferenceString(or.ref.Append("redirect_uri"))
+	return terra.ReferenceAsString(or.ref.Append("redirect_uri"))
 }
 
 type ConnectorProfileCredentialsSnowflakeAttributes struct {
@@ -1342,11 +1342,11 @@ func (s ConnectorProfileCredentialsSnowflakeAttributes) InternalTokens() hclwrit
 }
 
 func (s ConnectorProfileCredentialsSnowflakeAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("password"))
+	return terra.ReferenceAsString(s.ref.Append("password"))
 }
 
 func (s ConnectorProfileCredentialsSnowflakeAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("username"))
+	return terra.ReferenceAsString(s.ref.Append("username"))
 }
 
 type ConnectorProfileCredentialsTrendmicroAttributes struct {
@@ -1366,7 +1366,7 @@ func (t ConnectorProfileCredentialsTrendmicroAttributes) InternalTokens() hclwri
 }
 
 func (t ConnectorProfileCredentialsTrendmicroAttributes) ApiSecretKey() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("api_secret_key"))
+	return terra.ReferenceAsString(t.ref.Append("api_secret_key"))
 }
 
 type ConnectorProfileCredentialsVeevaAttributes struct {
@@ -1386,11 +1386,11 @@ func (v ConnectorProfileCredentialsVeevaAttributes) InternalTokens() hclwrite.To
 }
 
 func (v ConnectorProfileCredentialsVeevaAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("password"))
+	return terra.ReferenceAsString(v.ref.Append("password"))
 }
 
 func (v ConnectorProfileCredentialsVeevaAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("username"))
+	return terra.ReferenceAsString(v.ref.Append("username"))
 }
 
 type ConnectorProfileCredentialsZendeskAttributes struct {
@@ -1410,19 +1410,19 @@ func (z ConnectorProfileCredentialsZendeskAttributes) InternalTokens() hclwrite.
 }
 
 func (z ConnectorProfileCredentialsZendeskAttributes) AccessToken() terra.StringValue {
-	return terra.ReferenceString(z.ref.Append("access_token"))
+	return terra.ReferenceAsString(z.ref.Append("access_token"))
 }
 
 func (z ConnectorProfileCredentialsZendeskAttributes) ClientId() terra.StringValue {
-	return terra.ReferenceString(z.ref.Append("client_id"))
+	return terra.ReferenceAsString(z.ref.Append("client_id"))
 }
 
 func (z ConnectorProfileCredentialsZendeskAttributes) ClientSecret() terra.StringValue {
-	return terra.ReferenceString(z.ref.Append("client_secret"))
+	return terra.ReferenceAsString(z.ref.Append("client_secret"))
 }
 
 func (z ConnectorProfileCredentialsZendeskAttributes) OauthRequest() terra.ListValue[ZendeskOauthRequestAttributes] {
-	return terra.ReferenceList[ZendeskOauthRequestAttributes](z.ref.Append("oauth_request"))
+	return terra.ReferenceAsList[ZendeskOauthRequestAttributes](z.ref.Append("oauth_request"))
 }
 
 type ZendeskOauthRequestAttributes struct {
@@ -1442,11 +1442,11 @@ func (or ZendeskOauthRequestAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (or ZendeskOauthRequestAttributes) AuthCode() terra.StringValue {
-	return terra.ReferenceString(or.ref.Append("auth_code"))
+	return terra.ReferenceAsString(or.ref.Append("auth_code"))
 }
 
 func (or ZendeskOauthRequestAttributes) RedirectUri() terra.StringValue {
-	return terra.ReferenceString(or.ref.Append("redirect_uri"))
+	return terra.ReferenceAsString(or.ref.Append("redirect_uri"))
 }
 
 type ConnectorProfilePropertiesAttributes struct {
@@ -1466,75 +1466,75 @@ func (cpp ConnectorProfilePropertiesAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (cpp ConnectorProfilePropertiesAttributes) Amplitude() terra.ListValue[ConnectorProfilePropertiesAmplitudeAttributes] {
-	return terra.ReferenceList[ConnectorProfilePropertiesAmplitudeAttributes](cpp.ref.Append("amplitude"))
+	return terra.ReferenceAsList[ConnectorProfilePropertiesAmplitudeAttributes](cpp.ref.Append("amplitude"))
 }
 
 func (cpp ConnectorProfilePropertiesAttributes) CustomConnector() terra.ListValue[ConnectorProfilePropertiesCustomConnectorAttributes] {
-	return terra.ReferenceList[ConnectorProfilePropertiesCustomConnectorAttributes](cpp.ref.Append("custom_connector"))
+	return terra.ReferenceAsList[ConnectorProfilePropertiesCustomConnectorAttributes](cpp.ref.Append("custom_connector"))
 }
 
 func (cpp ConnectorProfilePropertiesAttributes) Datadog() terra.ListValue[ConnectorProfilePropertiesDatadogAttributes] {
-	return terra.ReferenceList[ConnectorProfilePropertiesDatadogAttributes](cpp.ref.Append("datadog"))
+	return terra.ReferenceAsList[ConnectorProfilePropertiesDatadogAttributes](cpp.ref.Append("datadog"))
 }
 
 func (cpp ConnectorProfilePropertiesAttributes) Dynatrace() terra.ListValue[ConnectorProfilePropertiesDynatraceAttributes] {
-	return terra.ReferenceList[ConnectorProfilePropertiesDynatraceAttributes](cpp.ref.Append("dynatrace"))
+	return terra.ReferenceAsList[ConnectorProfilePropertiesDynatraceAttributes](cpp.ref.Append("dynatrace"))
 }
 
 func (cpp ConnectorProfilePropertiesAttributes) GoogleAnalytics() terra.ListValue[ConnectorProfilePropertiesGoogleAnalyticsAttributes] {
-	return terra.ReferenceList[ConnectorProfilePropertiesGoogleAnalyticsAttributes](cpp.ref.Append("google_analytics"))
+	return terra.ReferenceAsList[ConnectorProfilePropertiesGoogleAnalyticsAttributes](cpp.ref.Append("google_analytics"))
 }
 
 func (cpp ConnectorProfilePropertiesAttributes) Honeycode() terra.ListValue[ConnectorProfilePropertiesHoneycodeAttributes] {
-	return terra.ReferenceList[ConnectorProfilePropertiesHoneycodeAttributes](cpp.ref.Append("honeycode"))
+	return terra.ReferenceAsList[ConnectorProfilePropertiesHoneycodeAttributes](cpp.ref.Append("honeycode"))
 }
 
 func (cpp ConnectorProfilePropertiesAttributes) InforNexus() terra.ListValue[ConnectorProfilePropertiesInforNexusAttributes] {
-	return terra.ReferenceList[ConnectorProfilePropertiesInforNexusAttributes](cpp.ref.Append("infor_nexus"))
+	return terra.ReferenceAsList[ConnectorProfilePropertiesInforNexusAttributes](cpp.ref.Append("infor_nexus"))
 }
 
 func (cpp ConnectorProfilePropertiesAttributes) Marketo() terra.ListValue[ConnectorProfilePropertiesMarketoAttributes] {
-	return terra.ReferenceList[ConnectorProfilePropertiesMarketoAttributes](cpp.ref.Append("marketo"))
+	return terra.ReferenceAsList[ConnectorProfilePropertiesMarketoAttributes](cpp.ref.Append("marketo"))
 }
 
 func (cpp ConnectorProfilePropertiesAttributes) Redshift() terra.ListValue[ConnectorProfilePropertiesRedshiftAttributes] {
-	return terra.ReferenceList[ConnectorProfilePropertiesRedshiftAttributes](cpp.ref.Append("redshift"))
+	return terra.ReferenceAsList[ConnectorProfilePropertiesRedshiftAttributes](cpp.ref.Append("redshift"))
 }
 
 func (cpp ConnectorProfilePropertiesAttributes) Salesforce() terra.ListValue[ConnectorProfilePropertiesSalesforceAttributes] {
-	return terra.ReferenceList[ConnectorProfilePropertiesSalesforceAttributes](cpp.ref.Append("salesforce"))
+	return terra.ReferenceAsList[ConnectorProfilePropertiesSalesforceAttributes](cpp.ref.Append("salesforce"))
 }
 
 func (cpp ConnectorProfilePropertiesAttributes) SapoData() terra.ListValue[ConnectorProfilePropertiesSapoDataAttributes] {
-	return terra.ReferenceList[ConnectorProfilePropertiesSapoDataAttributes](cpp.ref.Append("sapo_data"))
+	return terra.ReferenceAsList[ConnectorProfilePropertiesSapoDataAttributes](cpp.ref.Append("sapo_data"))
 }
 
 func (cpp ConnectorProfilePropertiesAttributes) ServiceNow() terra.ListValue[ConnectorProfilePropertiesServiceNowAttributes] {
-	return terra.ReferenceList[ConnectorProfilePropertiesServiceNowAttributes](cpp.ref.Append("service_now"))
+	return terra.ReferenceAsList[ConnectorProfilePropertiesServiceNowAttributes](cpp.ref.Append("service_now"))
 }
 
 func (cpp ConnectorProfilePropertiesAttributes) Singular() terra.ListValue[ConnectorProfilePropertiesSingularAttributes] {
-	return terra.ReferenceList[ConnectorProfilePropertiesSingularAttributes](cpp.ref.Append("singular"))
+	return terra.ReferenceAsList[ConnectorProfilePropertiesSingularAttributes](cpp.ref.Append("singular"))
 }
 
 func (cpp ConnectorProfilePropertiesAttributes) Slack() terra.ListValue[ConnectorProfilePropertiesSlackAttributes] {
-	return terra.ReferenceList[ConnectorProfilePropertiesSlackAttributes](cpp.ref.Append("slack"))
+	return terra.ReferenceAsList[ConnectorProfilePropertiesSlackAttributes](cpp.ref.Append("slack"))
 }
 
 func (cpp ConnectorProfilePropertiesAttributes) Snowflake() terra.ListValue[ConnectorProfilePropertiesSnowflakeAttributes] {
-	return terra.ReferenceList[ConnectorProfilePropertiesSnowflakeAttributes](cpp.ref.Append("snowflake"))
+	return terra.ReferenceAsList[ConnectorProfilePropertiesSnowflakeAttributes](cpp.ref.Append("snowflake"))
 }
 
 func (cpp ConnectorProfilePropertiesAttributes) Trendmicro() terra.ListValue[ConnectorProfilePropertiesTrendmicroAttributes] {
-	return terra.ReferenceList[ConnectorProfilePropertiesTrendmicroAttributes](cpp.ref.Append("trendmicro"))
+	return terra.ReferenceAsList[ConnectorProfilePropertiesTrendmicroAttributes](cpp.ref.Append("trendmicro"))
 }
 
 func (cpp ConnectorProfilePropertiesAttributes) Veeva() terra.ListValue[ConnectorProfilePropertiesVeevaAttributes] {
-	return terra.ReferenceList[ConnectorProfilePropertiesVeevaAttributes](cpp.ref.Append("veeva"))
+	return terra.ReferenceAsList[ConnectorProfilePropertiesVeevaAttributes](cpp.ref.Append("veeva"))
 }
 
 func (cpp ConnectorProfilePropertiesAttributes) Zendesk() terra.ListValue[ConnectorProfilePropertiesZendeskAttributes] {
-	return terra.ReferenceList[ConnectorProfilePropertiesZendeskAttributes](cpp.ref.Append("zendesk"))
+	return terra.ReferenceAsList[ConnectorProfilePropertiesZendeskAttributes](cpp.ref.Append("zendesk"))
 }
 
 type ConnectorProfilePropertiesAmplitudeAttributes struct {
@@ -1570,11 +1570,11 @@ func (cc ConnectorProfilePropertiesCustomConnectorAttributes) InternalTokens() h
 }
 
 func (cc ConnectorProfilePropertiesCustomConnectorAttributes) ProfileProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cc.ref.Append("profile_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](cc.ref.Append("profile_properties"))
 }
 
 func (cc ConnectorProfilePropertiesCustomConnectorAttributes) Oauth2Properties() terra.ListValue[Oauth2PropertiesAttributes] {
-	return terra.ReferenceList[Oauth2PropertiesAttributes](cc.ref.Append("oauth2_properties"))
+	return terra.ReferenceAsList[Oauth2PropertiesAttributes](cc.ref.Append("oauth2_properties"))
 }
 
 type Oauth2PropertiesAttributes struct {
@@ -1594,15 +1594,15 @@ func (op Oauth2PropertiesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (op Oauth2PropertiesAttributes) Oauth2GrantType() terra.StringValue {
-	return terra.ReferenceString(op.ref.Append("oauth2_grant_type"))
+	return terra.ReferenceAsString(op.ref.Append("oauth2_grant_type"))
 }
 
 func (op Oauth2PropertiesAttributes) TokenUrl() terra.StringValue {
-	return terra.ReferenceString(op.ref.Append("token_url"))
+	return terra.ReferenceAsString(op.ref.Append("token_url"))
 }
 
 func (op Oauth2PropertiesAttributes) TokenUrlCustomProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](op.ref.Append("token_url_custom_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](op.ref.Append("token_url_custom_properties"))
 }
 
 type ConnectorProfilePropertiesDatadogAttributes struct {
@@ -1622,7 +1622,7 @@ func (d ConnectorProfilePropertiesDatadogAttributes) InternalTokens() hclwrite.T
 }
 
 func (d ConnectorProfilePropertiesDatadogAttributes) InstanceUrl() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("instance_url"))
+	return terra.ReferenceAsString(d.ref.Append("instance_url"))
 }
 
 type ConnectorProfilePropertiesDynatraceAttributes struct {
@@ -1642,7 +1642,7 @@ func (d ConnectorProfilePropertiesDynatraceAttributes) InternalTokens() hclwrite
 }
 
 func (d ConnectorProfilePropertiesDynatraceAttributes) InstanceUrl() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("instance_url"))
+	return terra.ReferenceAsString(d.ref.Append("instance_url"))
 }
 
 type ConnectorProfilePropertiesGoogleAnalyticsAttributes struct {
@@ -1694,7 +1694,7 @@ func (in ConnectorProfilePropertiesInforNexusAttributes) InternalTokens() hclwri
 }
 
 func (in ConnectorProfilePropertiesInforNexusAttributes) InstanceUrl() terra.StringValue {
-	return terra.ReferenceString(in.ref.Append("instance_url"))
+	return terra.ReferenceAsString(in.ref.Append("instance_url"))
 }
 
 type ConnectorProfilePropertiesMarketoAttributes struct {
@@ -1714,7 +1714,7 @@ func (m ConnectorProfilePropertiesMarketoAttributes) InternalTokens() hclwrite.T
 }
 
 func (m ConnectorProfilePropertiesMarketoAttributes) InstanceUrl() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("instance_url"))
+	return terra.ReferenceAsString(m.ref.Append("instance_url"))
 }
 
 type ConnectorProfilePropertiesRedshiftAttributes struct {
@@ -1734,31 +1734,31 @@ func (r ConnectorProfilePropertiesRedshiftAttributes) InternalTokens() hclwrite.
 }
 
 func (r ConnectorProfilePropertiesRedshiftAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(r.ref.Append("bucket_name"))
 }
 
 func (r ConnectorProfilePropertiesRedshiftAttributes) BucketPrefix() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("bucket_prefix"))
+	return terra.ReferenceAsString(r.ref.Append("bucket_prefix"))
 }
 
 func (r ConnectorProfilePropertiesRedshiftAttributes) ClusterIdentifier() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("cluster_identifier"))
+	return terra.ReferenceAsString(r.ref.Append("cluster_identifier"))
 }
 
 func (r ConnectorProfilePropertiesRedshiftAttributes) DataApiRoleArn() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("data_api_role_arn"))
+	return terra.ReferenceAsString(r.ref.Append("data_api_role_arn"))
 }
 
 func (r ConnectorProfilePropertiesRedshiftAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("database_name"))
+	return terra.ReferenceAsString(r.ref.Append("database_name"))
 }
 
 func (r ConnectorProfilePropertiesRedshiftAttributes) DatabaseUrl() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("database_url"))
+	return terra.ReferenceAsString(r.ref.Append("database_url"))
 }
 
 func (r ConnectorProfilePropertiesRedshiftAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("role_arn"))
+	return terra.ReferenceAsString(r.ref.Append("role_arn"))
 }
 
 type ConnectorProfilePropertiesSalesforceAttributes struct {
@@ -1778,11 +1778,11 @@ func (s ConnectorProfilePropertiesSalesforceAttributes) InternalTokens() hclwrit
 }
 
 func (s ConnectorProfilePropertiesSalesforceAttributes) InstanceUrl() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("instance_url"))
+	return terra.ReferenceAsString(s.ref.Append("instance_url"))
 }
 
 func (s ConnectorProfilePropertiesSalesforceAttributes) IsSandboxEnvironment() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("is_sandbox_environment"))
+	return terra.ReferenceAsBool(s.ref.Append("is_sandbox_environment"))
 }
 
 type ConnectorProfilePropertiesSapoDataAttributes struct {
@@ -1802,31 +1802,31 @@ func (sd ConnectorProfilePropertiesSapoDataAttributes) InternalTokens() hclwrite
 }
 
 func (sd ConnectorProfilePropertiesSapoDataAttributes) ApplicationHostUrl() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("application_host_url"))
+	return terra.ReferenceAsString(sd.ref.Append("application_host_url"))
 }
 
 func (sd ConnectorProfilePropertiesSapoDataAttributes) ApplicationServicePath() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("application_service_path"))
+	return terra.ReferenceAsString(sd.ref.Append("application_service_path"))
 }
 
 func (sd ConnectorProfilePropertiesSapoDataAttributes) ClientNumber() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("client_number"))
+	return terra.ReferenceAsString(sd.ref.Append("client_number"))
 }
 
 func (sd ConnectorProfilePropertiesSapoDataAttributes) LogonLanguage() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("logon_language"))
+	return terra.ReferenceAsString(sd.ref.Append("logon_language"))
 }
 
 func (sd ConnectorProfilePropertiesSapoDataAttributes) PortNumber() terra.NumberValue {
-	return terra.ReferenceNumber(sd.ref.Append("port_number"))
+	return terra.ReferenceAsNumber(sd.ref.Append("port_number"))
 }
 
 func (sd ConnectorProfilePropertiesSapoDataAttributes) PrivateLinkServiceName() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("private_link_service_name"))
+	return terra.ReferenceAsString(sd.ref.Append("private_link_service_name"))
 }
 
 func (sd ConnectorProfilePropertiesSapoDataAttributes) OauthProperties() terra.ListValue[OauthPropertiesAttributes] {
-	return terra.ReferenceList[OauthPropertiesAttributes](sd.ref.Append("oauth_properties"))
+	return terra.ReferenceAsList[OauthPropertiesAttributes](sd.ref.Append("oauth_properties"))
 }
 
 type OauthPropertiesAttributes struct {
@@ -1846,15 +1846,15 @@ func (op OauthPropertiesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (op OauthPropertiesAttributes) AuthCodeUrl() terra.StringValue {
-	return terra.ReferenceString(op.ref.Append("auth_code_url"))
+	return terra.ReferenceAsString(op.ref.Append("auth_code_url"))
 }
 
 func (op OauthPropertiesAttributes) OauthScopes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](op.ref.Append("oauth_scopes"))
+	return terra.ReferenceAsList[terra.StringValue](op.ref.Append("oauth_scopes"))
 }
 
 func (op OauthPropertiesAttributes) TokenUrl() terra.StringValue {
-	return terra.ReferenceString(op.ref.Append("token_url"))
+	return terra.ReferenceAsString(op.ref.Append("token_url"))
 }
 
 type ConnectorProfilePropertiesServiceNowAttributes struct {
@@ -1874,7 +1874,7 @@ func (sn ConnectorProfilePropertiesServiceNowAttributes) InternalTokens() hclwri
 }
 
 func (sn ConnectorProfilePropertiesServiceNowAttributes) InstanceUrl() terra.StringValue {
-	return terra.ReferenceString(sn.ref.Append("instance_url"))
+	return terra.ReferenceAsString(sn.ref.Append("instance_url"))
 }
 
 type ConnectorProfilePropertiesSingularAttributes struct {
@@ -1910,7 +1910,7 @@ func (s ConnectorProfilePropertiesSlackAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (s ConnectorProfilePropertiesSlackAttributes) InstanceUrl() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("instance_url"))
+	return terra.ReferenceAsString(s.ref.Append("instance_url"))
 }
 
 type ConnectorProfilePropertiesSnowflakeAttributes struct {
@@ -1930,31 +1930,31 @@ func (s ConnectorProfilePropertiesSnowflakeAttributes) InternalTokens() hclwrite
 }
 
 func (s ConnectorProfilePropertiesSnowflakeAttributes) AccountName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("account_name"))
+	return terra.ReferenceAsString(s.ref.Append("account_name"))
 }
 
 func (s ConnectorProfilePropertiesSnowflakeAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(s.ref.Append("bucket_name"))
 }
 
 func (s ConnectorProfilePropertiesSnowflakeAttributes) BucketPrefix() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("bucket_prefix"))
+	return terra.ReferenceAsString(s.ref.Append("bucket_prefix"))
 }
 
 func (s ConnectorProfilePropertiesSnowflakeAttributes) PrivateLinkServiceName() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("private_link_service_name"))
+	return terra.ReferenceAsString(s.ref.Append("private_link_service_name"))
 }
 
 func (s ConnectorProfilePropertiesSnowflakeAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("region"))
+	return terra.ReferenceAsString(s.ref.Append("region"))
 }
 
 func (s ConnectorProfilePropertiesSnowflakeAttributes) Stage() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("stage"))
+	return terra.ReferenceAsString(s.ref.Append("stage"))
 }
 
 func (s ConnectorProfilePropertiesSnowflakeAttributes) Warehouse() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("warehouse"))
+	return terra.ReferenceAsString(s.ref.Append("warehouse"))
 }
 
 type ConnectorProfilePropertiesTrendmicroAttributes struct {
@@ -1990,7 +1990,7 @@ func (v ConnectorProfilePropertiesVeevaAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (v ConnectorProfilePropertiesVeevaAttributes) InstanceUrl() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("instance_url"))
+	return terra.ReferenceAsString(v.ref.Append("instance_url"))
 }
 
 type ConnectorProfilePropertiesZendeskAttributes struct {
@@ -2010,7 +2010,7 @@ func (z ConnectorProfilePropertiesZendeskAttributes) InternalTokens() hclwrite.T
 }
 
 func (z ConnectorProfilePropertiesZendeskAttributes) InstanceUrl() terra.StringValue {
-	return terra.ReferenceString(z.ref.Append("instance_url"))
+	return terra.ReferenceAsString(z.ref.Append("instance_url"))
 }
 
 type ConnectorProfileConfigState struct {

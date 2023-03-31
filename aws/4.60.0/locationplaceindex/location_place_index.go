@@ -29,7 +29,7 @@ func (dsc DataSourceConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dsc DataSourceConfigurationAttributes) IntendedUse() terra.StringValue {
-	return terra.ReferenceString(dsc.ref.Append("intended_use"))
+	return terra.ReferenceAsString(dsc.ref.Append("intended_use"))
 }
 
 type DataSourceConfigurationState struct {

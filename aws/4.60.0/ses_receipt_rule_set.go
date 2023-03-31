@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSesReceiptRuleSet creates a new instance of [SesReceiptRuleSet].
 func NewSesReceiptRuleSet(name string, args SesReceiptRuleSetArgs) *SesReceiptRuleSet {
 	return &SesReceiptRuleSet{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSesReceiptRuleSet(name string, args SesReceiptRuleSetArgs) *SesReceiptRu
 
 var _ terra.Resource = (*SesReceiptRuleSet)(nil)
 
+// SesReceiptRuleSet represents the Terraform resource aws_ses_receipt_rule_set.
 type SesReceiptRuleSet struct {
-	Name  string
-	Args  SesReceiptRuleSetArgs
-	state *sesReceiptRuleSetState
+	Name      string
+	Args      SesReceiptRuleSetArgs
+	state     *sesReceiptRuleSetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SesReceiptRuleSet].
 func (srrs *SesReceiptRuleSet) Type() string {
 	return "aws_ses_receipt_rule_set"
 }
 
+// LocalName returns the local name for [SesReceiptRuleSet].
 func (srrs *SesReceiptRuleSet) LocalName() string {
 	return srrs.Name
 }
 
+// Configuration returns the configuration (args) for [SesReceiptRuleSet].
 func (srrs *SesReceiptRuleSet) Configuration() interface{} {
 	return srrs.Args
 }
 
+// DependOn is used for other resources to depend on [SesReceiptRuleSet].
+func (srrs *SesReceiptRuleSet) DependOn() terra.Reference {
+	return terra.ReferenceResource(srrs)
+}
+
+// Dependencies returns the list of resources [SesReceiptRuleSet] depends_on.
+func (srrs *SesReceiptRuleSet) Dependencies() terra.Dependencies {
+	return srrs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SesReceiptRuleSet].
+func (srrs *SesReceiptRuleSet) LifecycleManagement() *terra.Lifecycle {
+	return srrs.Lifecycle
+}
+
+// Attributes returns the attributes for [SesReceiptRuleSet].
 func (srrs *SesReceiptRuleSet) Attributes() sesReceiptRuleSetAttributes {
 	return sesReceiptRuleSetAttributes{ref: terra.ReferenceResource(srrs)}
 }
 
+// ImportState imports the given attribute values into [SesReceiptRuleSet]'s state.
 func (srrs *SesReceiptRuleSet) ImportState(av io.Reader) error {
 	srrs.state = &sesReceiptRuleSetState{}
 	if err := json.NewDecoder(av).Decode(srrs.state); err != nil {
@@ -48,10 +72,12 @@ func (srrs *SesReceiptRuleSet) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SesReceiptRuleSet] has state.
 func (srrs *SesReceiptRuleSet) State() (*sesReceiptRuleSetState, bool) {
 	return srrs.state, srrs.state != nil
 }
 
+// StateMust returns the state for [SesReceiptRuleSet]. Panics if the state is nil.
 func (srrs *SesReceiptRuleSet) StateMust() *sesReceiptRuleSetState {
 	if srrs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", srrs.Type(), srrs.LocalName()))
@@ -59,32 +85,30 @@ func (srrs *SesReceiptRuleSet) StateMust() *sesReceiptRuleSetState {
 	return srrs.state
 }
 
-func (srrs *SesReceiptRuleSet) DependOn() terra.Reference {
-	return terra.ReferenceResource(srrs)
-}
-
+// SesReceiptRuleSetArgs contains the configurations for aws_ses_receipt_rule_set.
 type SesReceiptRuleSetArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
 	// RuleSetName: string, required
 	RuleSetName terra.StringValue `hcl:"rule_set_name,attr" validate:"required"`
-	// DependsOn contains resources that SesReceiptRuleSet depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sesReceiptRuleSetAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ses_receipt_rule_set.
 func (srrs sesReceiptRuleSetAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(srrs.ref.Append("arn"))
+	return terra.ReferenceAsString(srrs.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_ses_receipt_rule_set.
 func (srrs sesReceiptRuleSetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(srrs.ref.Append("id"))
+	return terra.ReferenceAsString(srrs.ref.Append("id"))
 }
 
+// RuleSetName returns a reference to field rule_set_name of aws_ses_receipt_rule_set.
 func (srrs sesReceiptRuleSetAttributes) RuleSetName() terra.StringValue {
-	return terra.ReferenceString(srrs.ref.Append("rule_set_name"))
+	return terra.ReferenceAsString(srrs.ref.Append("rule_set_name"))
 }
 
 type sesReceiptRuleSetState struct {

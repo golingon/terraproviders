@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewApiGatewayRequestValidator creates a new instance of [ApiGatewayRequestValidator].
 func NewApiGatewayRequestValidator(name string, args ApiGatewayRequestValidatorArgs) *ApiGatewayRequestValidator {
 	return &ApiGatewayRequestValidator{
 		Args: args,
@@ -18,28 +19,51 @@ func NewApiGatewayRequestValidator(name string, args ApiGatewayRequestValidatorA
 
 var _ terra.Resource = (*ApiGatewayRequestValidator)(nil)
 
+// ApiGatewayRequestValidator represents the Terraform resource aws_api_gateway_request_validator.
 type ApiGatewayRequestValidator struct {
-	Name  string
-	Args  ApiGatewayRequestValidatorArgs
-	state *apiGatewayRequestValidatorState
+	Name      string
+	Args      ApiGatewayRequestValidatorArgs
+	state     *apiGatewayRequestValidatorState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiGatewayRequestValidator].
 func (agrv *ApiGatewayRequestValidator) Type() string {
 	return "aws_api_gateway_request_validator"
 }
 
+// LocalName returns the local name for [ApiGatewayRequestValidator].
 func (agrv *ApiGatewayRequestValidator) LocalName() string {
 	return agrv.Name
 }
 
+// Configuration returns the configuration (args) for [ApiGatewayRequestValidator].
 func (agrv *ApiGatewayRequestValidator) Configuration() interface{} {
 	return agrv.Args
 }
 
+// DependOn is used for other resources to depend on [ApiGatewayRequestValidator].
+func (agrv *ApiGatewayRequestValidator) DependOn() terra.Reference {
+	return terra.ReferenceResource(agrv)
+}
+
+// Dependencies returns the list of resources [ApiGatewayRequestValidator] depends_on.
+func (agrv *ApiGatewayRequestValidator) Dependencies() terra.Dependencies {
+	return agrv.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiGatewayRequestValidator].
+func (agrv *ApiGatewayRequestValidator) LifecycleManagement() *terra.Lifecycle {
+	return agrv.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiGatewayRequestValidator].
 func (agrv *ApiGatewayRequestValidator) Attributes() apiGatewayRequestValidatorAttributes {
 	return apiGatewayRequestValidatorAttributes{ref: terra.ReferenceResource(agrv)}
 }
 
+// ImportState imports the given attribute values into [ApiGatewayRequestValidator]'s state.
 func (agrv *ApiGatewayRequestValidator) ImportState(av io.Reader) error {
 	agrv.state = &apiGatewayRequestValidatorState{}
 	if err := json.NewDecoder(av).Decode(agrv.state); err != nil {
@@ -48,10 +72,12 @@ func (agrv *ApiGatewayRequestValidator) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiGatewayRequestValidator] has state.
 func (agrv *ApiGatewayRequestValidator) State() (*apiGatewayRequestValidatorState, bool) {
 	return agrv.state, agrv.state != nil
 }
 
+// StateMust returns the state for [ApiGatewayRequestValidator]. Panics if the state is nil.
 func (agrv *ApiGatewayRequestValidator) StateMust() *apiGatewayRequestValidatorState {
 	if agrv.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", agrv.Type(), agrv.LocalName()))
@@ -59,10 +85,7 @@ func (agrv *ApiGatewayRequestValidator) StateMust() *apiGatewayRequestValidatorS
 	return agrv.state
 }
 
-func (agrv *ApiGatewayRequestValidator) DependOn() terra.Reference {
-	return terra.ReferenceResource(agrv)
-}
-
+// ApiGatewayRequestValidatorArgs contains the configurations for aws_api_gateway_request_validator.
 type ApiGatewayRequestValidatorArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -74,31 +97,34 @@ type ApiGatewayRequestValidatorArgs struct {
 	ValidateRequestBody terra.BoolValue `hcl:"validate_request_body,attr"`
 	// ValidateRequestParameters: bool, optional
 	ValidateRequestParameters terra.BoolValue `hcl:"validate_request_parameters,attr"`
-	// DependsOn contains resources that ApiGatewayRequestValidator depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiGatewayRequestValidatorAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_api_gateway_request_validator.
 func (agrv apiGatewayRequestValidatorAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(agrv.ref.Append("id"))
+	return terra.ReferenceAsString(agrv.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_api_gateway_request_validator.
 func (agrv apiGatewayRequestValidatorAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(agrv.ref.Append("name"))
+	return terra.ReferenceAsString(agrv.ref.Append("name"))
 }
 
+// RestApiId returns a reference to field rest_api_id of aws_api_gateway_request_validator.
 func (agrv apiGatewayRequestValidatorAttributes) RestApiId() terra.StringValue {
-	return terra.ReferenceString(agrv.ref.Append("rest_api_id"))
+	return terra.ReferenceAsString(agrv.ref.Append("rest_api_id"))
 }
 
+// ValidateRequestBody returns a reference to field validate_request_body of aws_api_gateway_request_validator.
 func (agrv apiGatewayRequestValidatorAttributes) ValidateRequestBody() terra.BoolValue {
-	return terra.ReferenceBool(agrv.ref.Append("validate_request_body"))
+	return terra.ReferenceAsBool(agrv.ref.Append("validate_request_body"))
 }
 
+// ValidateRequestParameters returns a reference to field validate_request_parameters of aws_api_gateway_request_validator.
 func (agrv apiGatewayRequestValidatorAttributes) ValidateRequestParameters() terra.BoolValue {
-	return terra.ReferenceBool(agrv.ref.Append("validate_request_parameters"))
+	return terra.ReferenceAsBool(agrv.ref.Append("validate_request_parameters"))
 }
 
 type apiGatewayRequestValidatorState struct {

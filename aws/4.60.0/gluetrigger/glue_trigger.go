@@ -78,27 +78,27 @@ func (a ActionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a ActionsAttributes) Arguments() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](a.ref.Append("arguments"))
+	return terra.ReferenceAsMap[terra.StringValue](a.ref.Append("arguments"))
 }
 
 func (a ActionsAttributes) CrawlerName() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("crawler_name"))
+	return terra.ReferenceAsString(a.ref.Append("crawler_name"))
 }
 
 func (a ActionsAttributes) JobName() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("job_name"))
+	return terra.ReferenceAsString(a.ref.Append("job_name"))
 }
 
 func (a ActionsAttributes) SecurityConfiguration() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("security_configuration"))
+	return terra.ReferenceAsString(a.ref.Append("security_configuration"))
 }
 
 func (a ActionsAttributes) Timeout() terra.NumberValue {
-	return terra.ReferenceNumber(a.ref.Append("timeout"))
+	return terra.ReferenceAsNumber(a.ref.Append("timeout"))
 }
 
 func (a ActionsAttributes) NotificationProperty() terra.ListValue[NotificationPropertyAttributes] {
-	return terra.ReferenceList[NotificationPropertyAttributes](a.ref.Append("notification_property"))
+	return terra.ReferenceAsList[NotificationPropertyAttributes](a.ref.Append("notification_property"))
 }
 
 type NotificationPropertyAttributes struct {
@@ -118,7 +118,7 @@ func (np NotificationPropertyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (np NotificationPropertyAttributes) NotifyDelayAfter() terra.NumberValue {
-	return terra.ReferenceNumber(np.ref.Append("notify_delay_after"))
+	return terra.ReferenceAsNumber(np.ref.Append("notify_delay_after"))
 }
 
 type EventBatchingConditionAttributes struct {
@@ -138,11 +138,11 @@ func (ebc EventBatchingConditionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ebc EventBatchingConditionAttributes) BatchSize() terra.NumberValue {
-	return terra.ReferenceNumber(ebc.ref.Append("batch_size"))
+	return terra.ReferenceAsNumber(ebc.ref.Append("batch_size"))
 }
 
 func (ebc EventBatchingConditionAttributes) BatchWindow() terra.NumberValue {
-	return terra.ReferenceNumber(ebc.ref.Append("batch_window"))
+	return terra.ReferenceAsNumber(ebc.ref.Append("batch_window"))
 }
 
 type PredicateAttributes struct {
@@ -162,11 +162,11 @@ func (p PredicateAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p PredicateAttributes) Logical() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("logical"))
+	return terra.ReferenceAsString(p.ref.Append("logical"))
 }
 
 func (p PredicateAttributes) Conditions() terra.ListValue[ConditionsAttributes] {
-	return terra.ReferenceList[ConditionsAttributes](p.ref.Append("conditions"))
+	return terra.ReferenceAsList[ConditionsAttributes](p.ref.Append("conditions"))
 }
 
 type ConditionsAttributes struct {
@@ -186,23 +186,23 @@ func (c ConditionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ConditionsAttributes) CrawlState() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("crawl_state"))
+	return terra.ReferenceAsString(c.ref.Append("crawl_state"))
 }
 
 func (c ConditionsAttributes) CrawlerName() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("crawler_name"))
+	return terra.ReferenceAsString(c.ref.Append("crawler_name"))
 }
 
 func (c ConditionsAttributes) JobName() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("job_name"))
+	return terra.ReferenceAsString(c.ref.Append("job_name"))
 }
 
 func (c ConditionsAttributes) LogicalOperator() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("logical_operator"))
+	return terra.ReferenceAsString(c.ref.Append("logical_operator"))
 }
 
 func (c ConditionsAttributes) State() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("state"))
+	return terra.ReferenceAsString(c.ref.Append("state"))
 }
 
 type TimeoutsAttributes struct {
@@ -222,11 +222,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type ActionsState struct {

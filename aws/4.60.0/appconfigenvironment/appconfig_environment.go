@@ -31,11 +31,11 @@ func (m MonitorAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m MonitorAttributes) AlarmArn() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("alarm_arn"))
+	return terra.ReferenceAsString(m.ref.Append("alarm_arn"))
 }
 
 func (m MonitorAttributes) AlarmRoleArn() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("alarm_role_arn"))
+	return terra.ReferenceAsString(m.ref.Append("alarm_role_arn"))
 }
 
 type MonitorState struct {

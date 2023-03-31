@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEc2TrafficMirrorFilterRule creates a new instance of [Ec2TrafficMirrorFilterRule].
 func NewEc2TrafficMirrorFilterRule(name string, args Ec2TrafficMirrorFilterRuleArgs) *Ec2TrafficMirrorFilterRule {
 	return &Ec2TrafficMirrorFilterRule{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEc2TrafficMirrorFilterRule(name string, args Ec2TrafficMirrorFilterRuleA
 
 var _ terra.Resource = (*Ec2TrafficMirrorFilterRule)(nil)
 
+// Ec2TrafficMirrorFilterRule represents the Terraform resource aws_ec2_traffic_mirror_filter_rule.
 type Ec2TrafficMirrorFilterRule struct {
-	Name  string
-	Args  Ec2TrafficMirrorFilterRuleArgs
-	state *ec2TrafficMirrorFilterRuleState
+	Name      string
+	Args      Ec2TrafficMirrorFilterRuleArgs
+	state     *ec2TrafficMirrorFilterRuleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Ec2TrafficMirrorFilterRule].
 func (etmfr *Ec2TrafficMirrorFilterRule) Type() string {
 	return "aws_ec2_traffic_mirror_filter_rule"
 }
 
+// LocalName returns the local name for [Ec2TrafficMirrorFilterRule].
 func (etmfr *Ec2TrafficMirrorFilterRule) LocalName() string {
 	return etmfr.Name
 }
 
+// Configuration returns the configuration (args) for [Ec2TrafficMirrorFilterRule].
 func (etmfr *Ec2TrafficMirrorFilterRule) Configuration() interface{} {
 	return etmfr.Args
 }
 
+// DependOn is used for other resources to depend on [Ec2TrafficMirrorFilterRule].
+func (etmfr *Ec2TrafficMirrorFilterRule) DependOn() terra.Reference {
+	return terra.ReferenceResource(etmfr)
+}
+
+// Dependencies returns the list of resources [Ec2TrafficMirrorFilterRule] depends_on.
+func (etmfr *Ec2TrafficMirrorFilterRule) Dependencies() terra.Dependencies {
+	return etmfr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Ec2TrafficMirrorFilterRule].
+func (etmfr *Ec2TrafficMirrorFilterRule) LifecycleManagement() *terra.Lifecycle {
+	return etmfr.Lifecycle
+}
+
+// Attributes returns the attributes for [Ec2TrafficMirrorFilterRule].
 func (etmfr *Ec2TrafficMirrorFilterRule) Attributes() ec2TrafficMirrorFilterRuleAttributes {
 	return ec2TrafficMirrorFilterRuleAttributes{ref: terra.ReferenceResource(etmfr)}
 }
 
+// ImportState imports the given attribute values into [Ec2TrafficMirrorFilterRule]'s state.
 func (etmfr *Ec2TrafficMirrorFilterRule) ImportState(av io.Reader) error {
 	etmfr.state = &ec2TrafficMirrorFilterRuleState{}
 	if err := json.NewDecoder(av).Decode(etmfr.state); err != nil {
@@ -49,10 +73,12 @@ func (etmfr *Ec2TrafficMirrorFilterRule) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Ec2TrafficMirrorFilterRule] has state.
 func (etmfr *Ec2TrafficMirrorFilterRule) State() (*ec2TrafficMirrorFilterRuleState, bool) {
 	return etmfr.state, etmfr.state != nil
 }
 
+// StateMust returns the state for [Ec2TrafficMirrorFilterRule]. Panics if the state is nil.
 func (etmfr *Ec2TrafficMirrorFilterRule) StateMust() *ec2TrafficMirrorFilterRuleState {
 	if etmfr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", etmfr.Type(), etmfr.LocalName()))
@@ -60,10 +86,7 @@ func (etmfr *Ec2TrafficMirrorFilterRule) StateMust() *ec2TrafficMirrorFilterRule
 	return etmfr.state
 }
 
-func (etmfr *Ec2TrafficMirrorFilterRule) DependOn() terra.Reference {
-	return terra.ReferenceResource(etmfr)
-}
-
+// Ec2TrafficMirrorFilterRuleArgs contains the configurations for aws_ec2_traffic_mirror_filter_rule.
 type Ec2TrafficMirrorFilterRuleArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -87,59 +110,67 @@ type Ec2TrafficMirrorFilterRuleArgs struct {
 	DestinationPortRange *ec2trafficmirrorfilterrule.DestinationPortRange `hcl:"destination_port_range,block"`
 	// SourcePortRange: optional
 	SourcePortRange *ec2trafficmirrorfilterrule.SourcePortRange `hcl:"source_port_range,block"`
-	// DependsOn contains resources that Ec2TrafficMirrorFilterRule depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ec2TrafficMirrorFilterRuleAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ec2_traffic_mirror_filter_rule.
 func (etmfr ec2TrafficMirrorFilterRuleAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(etmfr.ref.Append("arn"))
+	return terra.ReferenceAsString(etmfr.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_ec2_traffic_mirror_filter_rule.
 func (etmfr ec2TrafficMirrorFilterRuleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(etmfr.ref.Append("description"))
+	return terra.ReferenceAsString(etmfr.ref.Append("description"))
 }
 
+// DestinationCidrBlock returns a reference to field destination_cidr_block of aws_ec2_traffic_mirror_filter_rule.
 func (etmfr ec2TrafficMirrorFilterRuleAttributes) DestinationCidrBlock() terra.StringValue {
-	return terra.ReferenceString(etmfr.ref.Append("destination_cidr_block"))
+	return terra.ReferenceAsString(etmfr.ref.Append("destination_cidr_block"))
 }
 
+// Id returns a reference to field id of aws_ec2_traffic_mirror_filter_rule.
 func (etmfr ec2TrafficMirrorFilterRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(etmfr.ref.Append("id"))
+	return terra.ReferenceAsString(etmfr.ref.Append("id"))
 }
 
+// Protocol returns a reference to field protocol of aws_ec2_traffic_mirror_filter_rule.
 func (etmfr ec2TrafficMirrorFilterRuleAttributes) Protocol() terra.NumberValue {
-	return terra.ReferenceNumber(etmfr.ref.Append("protocol"))
+	return terra.ReferenceAsNumber(etmfr.ref.Append("protocol"))
 }
 
+// RuleAction returns a reference to field rule_action of aws_ec2_traffic_mirror_filter_rule.
 func (etmfr ec2TrafficMirrorFilterRuleAttributes) RuleAction() terra.StringValue {
-	return terra.ReferenceString(etmfr.ref.Append("rule_action"))
+	return terra.ReferenceAsString(etmfr.ref.Append("rule_action"))
 }
 
+// RuleNumber returns a reference to field rule_number of aws_ec2_traffic_mirror_filter_rule.
 func (etmfr ec2TrafficMirrorFilterRuleAttributes) RuleNumber() terra.NumberValue {
-	return terra.ReferenceNumber(etmfr.ref.Append("rule_number"))
+	return terra.ReferenceAsNumber(etmfr.ref.Append("rule_number"))
 }
 
+// SourceCidrBlock returns a reference to field source_cidr_block of aws_ec2_traffic_mirror_filter_rule.
 func (etmfr ec2TrafficMirrorFilterRuleAttributes) SourceCidrBlock() terra.StringValue {
-	return terra.ReferenceString(etmfr.ref.Append("source_cidr_block"))
+	return terra.ReferenceAsString(etmfr.ref.Append("source_cidr_block"))
 }
 
+// TrafficDirection returns a reference to field traffic_direction of aws_ec2_traffic_mirror_filter_rule.
 func (etmfr ec2TrafficMirrorFilterRuleAttributes) TrafficDirection() terra.StringValue {
-	return terra.ReferenceString(etmfr.ref.Append("traffic_direction"))
+	return terra.ReferenceAsString(etmfr.ref.Append("traffic_direction"))
 }
 
+// TrafficMirrorFilterId returns a reference to field traffic_mirror_filter_id of aws_ec2_traffic_mirror_filter_rule.
 func (etmfr ec2TrafficMirrorFilterRuleAttributes) TrafficMirrorFilterId() terra.StringValue {
-	return terra.ReferenceString(etmfr.ref.Append("traffic_mirror_filter_id"))
+	return terra.ReferenceAsString(etmfr.ref.Append("traffic_mirror_filter_id"))
 }
 
 func (etmfr ec2TrafficMirrorFilterRuleAttributes) DestinationPortRange() terra.ListValue[ec2trafficmirrorfilterrule.DestinationPortRangeAttributes] {
-	return terra.ReferenceList[ec2trafficmirrorfilterrule.DestinationPortRangeAttributes](etmfr.ref.Append("destination_port_range"))
+	return terra.ReferenceAsList[ec2trafficmirrorfilterrule.DestinationPortRangeAttributes](etmfr.ref.Append("destination_port_range"))
 }
 
 func (etmfr ec2TrafficMirrorFilterRuleAttributes) SourcePortRange() terra.ListValue[ec2trafficmirrorfilterrule.SourcePortRangeAttributes] {
-	return terra.ReferenceList[ec2trafficmirrorfilterrule.SourcePortRangeAttributes](etmfr.ref.Append("source_port_range"))
+	return terra.ReferenceAsList[ec2trafficmirrorfilterrule.SourcePortRangeAttributes](etmfr.ref.Append("source_port_range"))
 }
 
 type ec2TrafficMirrorFilterRuleState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSecretsmanagerSecretPolicy creates a new instance of [SecretsmanagerSecretPolicy].
 func NewSecretsmanagerSecretPolicy(name string, args SecretsmanagerSecretPolicyArgs) *SecretsmanagerSecretPolicy {
 	return &SecretsmanagerSecretPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSecretsmanagerSecretPolicy(name string, args SecretsmanagerSecretPolicyA
 
 var _ terra.Resource = (*SecretsmanagerSecretPolicy)(nil)
 
+// SecretsmanagerSecretPolicy represents the Terraform resource aws_secretsmanager_secret_policy.
 type SecretsmanagerSecretPolicy struct {
-	Name  string
-	Args  SecretsmanagerSecretPolicyArgs
-	state *secretsmanagerSecretPolicyState
+	Name      string
+	Args      SecretsmanagerSecretPolicyArgs
+	state     *secretsmanagerSecretPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SecretsmanagerSecretPolicy].
 func (ssp *SecretsmanagerSecretPolicy) Type() string {
 	return "aws_secretsmanager_secret_policy"
 }
 
+// LocalName returns the local name for [SecretsmanagerSecretPolicy].
 func (ssp *SecretsmanagerSecretPolicy) LocalName() string {
 	return ssp.Name
 }
 
+// Configuration returns the configuration (args) for [SecretsmanagerSecretPolicy].
 func (ssp *SecretsmanagerSecretPolicy) Configuration() interface{} {
 	return ssp.Args
 }
 
+// DependOn is used for other resources to depend on [SecretsmanagerSecretPolicy].
+func (ssp *SecretsmanagerSecretPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(ssp)
+}
+
+// Dependencies returns the list of resources [SecretsmanagerSecretPolicy] depends_on.
+func (ssp *SecretsmanagerSecretPolicy) Dependencies() terra.Dependencies {
+	return ssp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SecretsmanagerSecretPolicy].
+func (ssp *SecretsmanagerSecretPolicy) LifecycleManagement() *terra.Lifecycle {
+	return ssp.Lifecycle
+}
+
+// Attributes returns the attributes for [SecretsmanagerSecretPolicy].
 func (ssp *SecretsmanagerSecretPolicy) Attributes() secretsmanagerSecretPolicyAttributes {
 	return secretsmanagerSecretPolicyAttributes{ref: terra.ReferenceResource(ssp)}
 }
 
+// ImportState imports the given attribute values into [SecretsmanagerSecretPolicy]'s state.
 func (ssp *SecretsmanagerSecretPolicy) ImportState(av io.Reader) error {
 	ssp.state = &secretsmanagerSecretPolicyState{}
 	if err := json.NewDecoder(av).Decode(ssp.state); err != nil {
@@ -48,10 +72,12 @@ func (ssp *SecretsmanagerSecretPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SecretsmanagerSecretPolicy] has state.
 func (ssp *SecretsmanagerSecretPolicy) State() (*secretsmanagerSecretPolicyState, bool) {
 	return ssp.state, ssp.state != nil
 }
 
+// StateMust returns the state for [SecretsmanagerSecretPolicy]. Panics if the state is nil.
 func (ssp *SecretsmanagerSecretPolicy) StateMust() *secretsmanagerSecretPolicyState {
 	if ssp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ssp.Type(), ssp.LocalName()))
@@ -59,10 +85,7 @@ func (ssp *SecretsmanagerSecretPolicy) StateMust() *secretsmanagerSecretPolicySt
 	return ssp.state
 }
 
-func (ssp *SecretsmanagerSecretPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(ssp)
-}
-
+// SecretsmanagerSecretPolicyArgs contains the configurations for aws_secretsmanager_secret_policy.
 type SecretsmanagerSecretPolicyArgs struct {
 	// BlockPublicPolicy: bool, optional
 	BlockPublicPolicy terra.BoolValue `hcl:"block_public_policy,attr"`
@@ -72,27 +95,29 @@ type SecretsmanagerSecretPolicyArgs struct {
 	Policy terra.StringValue `hcl:"policy,attr" validate:"required"`
 	// SecretArn: string, required
 	SecretArn terra.StringValue `hcl:"secret_arn,attr" validate:"required"`
-	// DependsOn contains resources that SecretsmanagerSecretPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type secretsmanagerSecretPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// BlockPublicPolicy returns a reference to field block_public_policy of aws_secretsmanager_secret_policy.
 func (ssp secretsmanagerSecretPolicyAttributes) BlockPublicPolicy() terra.BoolValue {
-	return terra.ReferenceBool(ssp.ref.Append("block_public_policy"))
+	return terra.ReferenceAsBool(ssp.ref.Append("block_public_policy"))
 }
 
+// Id returns a reference to field id of aws_secretsmanager_secret_policy.
 func (ssp secretsmanagerSecretPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("id"))
+	return terra.ReferenceAsString(ssp.ref.Append("id"))
 }
 
+// Policy returns a reference to field policy of aws_secretsmanager_secret_policy.
 func (ssp secretsmanagerSecretPolicyAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("policy"))
+	return terra.ReferenceAsString(ssp.ref.Append("policy"))
 }
 
+// SecretArn returns a reference to field secret_arn of aws_secretsmanager_secret_policy.
 func (ssp secretsmanagerSecretPolicyAttributes) SecretArn() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("secret_arn"))
+	return terra.ReferenceAsString(ssp.ref.Append("secret_arn"))
 }
 
 type secretsmanagerSecretPolicyState struct {

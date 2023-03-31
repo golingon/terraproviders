@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataEc2TransitGatewayVpnAttachment creates a new instance of [DataEc2TransitGatewayVpnAttachment].
 func NewDataEc2TransitGatewayVpnAttachment(name string, args DataEc2TransitGatewayVpnAttachmentArgs) *DataEc2TransitGatewayVpnAttachment {
 	return &DataEc2TransitGatewayVpnAttachment{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataEc2TransitGatewayVpnAttachment(name string, args DataEc2TransitGatew
 
 var _ terra.DataResource = (*DataEc2TransitGatewayVpnAttachment)(nil)
 
+// DataEc2TransitGatewayVpnAttachment represents the Terraform data resource aws_ec2_transit_gateway_vpn_attachment.
 type DataEc2TransitGatewayVpnAttachment struct {
 	Name string
 	Args DataEc2TransitGatewayVpnAttachmentArgs
 }
 
+// DataSource returns the Terraform object type for [DataEc2TransitGatewayVpnAttachment].
 func (etgva *DataEc2TransitGatewayVpnAttachment) DataSource() string {
 	return "aws_ec2_transit_gateway_vpn_attachment"
 }
 
+// LocalName returns the local name for [DataEc2TransitGatewayVpnAttachment].
 func (etgva *DataEc2TransitGatewayVpnAttachment) LocalName() string {
 	return etgva.Name
 }
 
+// Configuration returns the configuration (args) for [DataEc2TransitGatewayVpnAttachment].
 func (etgva *DataEc2TransitGatewayVpnAttachment) Configuration() interface{} {
 	return etgva.Args
 }
 
+// Attributes returns the attributes for [DataEc2TransitGatewayVpnAttachment].
 func (etgva *DataEc2TransitGatewayVpnAttachment) Attributes() dataEc2TransitGatewayVpnAttachmentAttributes {
 	return dataEc2TransitGatewayVpnAttachmentAttributes{ref: terra.ReferenceDataResource(etgva)}
 }
 
+// DataEc2TransitGatewayVpnAttachmentArgs contains the configurations for aws_ec2_transit_gateway_vpn_attachment.
 type DataEc2TransitGatewayVpnAttachmentArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -55,26 +62,30 @@ type dataEc2TransitGatewayVpnAttachmentAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_ec2_transit_gateway_vpn_attachment.
 func (etgva dataEc2TransitGatewayVpnAttachmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(etgva.ref.Append("id"))
+	return terra.ReferenceAsString(etgva.ref.Append("id"))
 }
 
+// Tags returns a reference to field tags of aws_ec2_transit_gateway_vpn_attachment.
 func (etgva dataEc2TransitGatewayVpnAttachmentAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](etgva.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](etgva.ref.Append("tags"))
 }
 
+// TransitGatewayId returns a reference to field transit_gateway_id of aws_ec2_transit_gateway_vpn_attachment.
 func (etgva dataEc2TransitGatewayVpnAttachmentAttributes) TransitGatewayId() terra.StringValue {
-	return terra.ReferenceString(etgva.ref.Append("transit_gateway_id"))
+	return terra.ReferenceAsString(etgva.ref.Append("transit_gateway_id"))
 }
 
+// VpnConnectionId returns a reference to field vpn_connection_id of aws_ec2_transit_gateway_vpn_attachment.
 func (etgva dataEc2TransitGatewayVpnAttachmentAttributes) VpnConnectionId() terra.StringValue {
-	return terra.ReferenceString(etgva.ref.Append("vpn_connection_id"))
+	return terra.ReferenceAsString(etgva.ref.Append("vpn_connection_id"))
 }
 
 func (etgva dataEc2TransitGatewayVpnAttachmentAttributes) Filter() terra.SetValue[dataec2transitgatewayvpnattachment.FilterAttributes] {
-	return terra.ReferenceSet[dataec2transitgatewayvpnattachment.FilterAttributes](etgva.ref.Append("filter"))
+	return terra.ReferenceAsSet[dataec2transitgatewayvpnattachment.FilterAttributes](etgva.ref.Append("filter"))
 }
 
 func (etgva dataEc2TransitGatewayVpnAttachmentAttributes) Timeouts() dataec2transitgatewayvpnattachment.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataec2transitgatewayvpnattachment.TimeoutsAttributes](etgva.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataec2transitgatewayvpnattachment.TimeoutsAttributes](etgva.ref.Append("timeouts"))
 }

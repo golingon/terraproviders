@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDevicefarmNetworkProfile creates a new instance of [DevicefarmNetworkProfile].
 func NewDevicefarmNetworkProfile(name string, args DevicefarmNetworkProfileArgs) *DevicefarmNetworkProfile {
 	return &DevicefarmNetworkProfile{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDevicefarmNetworkProfile(name string, args DevicefarmNetworkProfileArgs)
 
 var _ terra.Resource = (*DevicefarmNetworkProfile)(nil)
 
+// DevicefarmNetworkProfile represents the Terraform resource aws_devicefarm_network_profile.
 type DevicefarmNetworkProfile struct {
-	Name  string
-	Args  DevicefarmNetworkProfileArgs
-	state *devicefarmNetworkProfileState
+	Name      string
+	Args      DevicefarmNetworkProfileArgs
+	state     *devicefarmNetworkProfileState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DevicefarmNetworkProfile].
 func (dnp *DevicefarmNetworkProfile) Type() string {
 	return "aws_devicefarm_network_profile"
 }
 
+// LocalName returns the local name for [DevicefarmNetworkProfile].
 func (dnp *DevicefarmNetworkProfile) LocalName() string {
 	return dnp.Name
 }
 
+// Configuration returns the configuration (args) for [DevicefarmNetworkProfile].
 func (dnp *DevicefarmNetworkProfile) Configuration() interface{} {
 	return dnp.Args
 }
 
+// DependOn is used for other resources to depend on [DevicefarmNetworkProfile].
+func (dnp *DevicefarmNetworkProfile) DependOn() terra.Reference {
+	return terra.ReferenceResource(dnp)
+}
+
+// Dependencies returns the list of resources [DevicefarmNetworkProfile] depends_on.
+func (dnp *DevicefarmNetworkProfile) Dependencies() terra.Dependencies {
+	return dnp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DevicefarmNetworkProfile].
+func (dnp *DevicefarmNetworkProfile) LifecycleManagement() *terra.Lifecycle {
+	return dnp.Lifecycle
+}
+
+// Attributes returns the attributes for [DevicefarmNetworkProfile].
 func (dnp *DevicefarmNetworkProfile) Attributes() devicefarmNetworkProfileAttributes {
 	return devicefarmNetworkProfileAttributes{ref: terra.ReferenceResource(dnp)}
 }
 
+// ImportState imports the given attribute values into [DevicefarmNetworkProfile]'s state.
 func (dnp *DevicefarmNetworkProfile) ImportState(av io.Reader) error {
 	dnp.state = &devicefarmNetworkProfileState{}
 	if err := json.NewDecoder(av).Decode(dnp.state); err != nil {
@@ -48,10 +72,12 @@ func (dnp *DevicefarmNetworkProfile) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DevicefarmNetworkProfile] has state.
 func (dnp *DevicefarmNetworkProfile) State() (*devicefarmNetworkProfileState, bool) {
 	return dnp.state, dnp.state != nil
 }
 
+// StateMust returns the state for [DevicefarmNetworkProfile]. Panics if the state is nil.
 func (dnp *DevicefarmNetworkProfile) StateMust() *devicefarmNetworkProfileState {
 	if dnp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dnp.Type(), dnp.LocalName()))
@@ -59,10 +85,7 @@ func (dnp *DevicefarmNetworkProfile) StateMust() *devicefarmNetworkProfileState 
 	return dnp.state
 }
 
-func (dnp *DevicefarmNetworkProfile) DependOn() terra.Reference {
-	return terra.ReferenceResource(dnp)
-}
-
+// DevicefarmNetworkProfileArgs contains the configurations for aws_devicefarm_network_profile.
 type DevicefarmNetworkProfileArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -94,75 +117,89 @@ type DevicefarmNetworkProfileArgs struct {
 	UplinkJitterMs terra.NumberValue `hcl:"uplink_jitter_ms,attr"`
 	// UplinkLossPercent: number, optional
 	UplinkLossPercent terra.NumberValue `hcl:"uplink_loss_percent,attr"`
-	// DependsOn contains resources that DevicefarmNetworkProfile depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type devicefarmNetworkProfileAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_devicefarm_network_profile.
 func (dnp devicefarmNetworkProfileAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dnp.ref.Append("arn"))
+	return terra.ReferenceAsString(dnp.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_devicefarm_network_profile.
 func (dnp devicefarmNetworkProfileAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dnp.ref.Append("description"))
+	return terra.ReferenceAsString(dnp.ref.Append("description"))
 }
 
+// DownlinkBandwidthBits returns a reference to field downlink_bandwidth_bits of aws_devicefarm_network_profile.
 func (dnp devicefarmNetworkProfileAttributes) DownlinkBandwidthBits() terra.NumberValue {
-	return terra.ReferenceNumber(dnp.ref.Append("downlink_bandwidth_bits"))
+	return terra.ReferenceAsNumber(dnp.ref.Append("downlink_bandwidth_bits"))
 }
 
+// DownlinkDelayMs returns a reference to field downlink_delay_ms of aws_devicefarm_network_profile.
 func (dnp devicefarmNetworkProfileAttributes) DownlinkDelayMs() terra.NumberValue {
-	return terra.ReferenceNumber(dnp.ref.Append("downlink_delay_ms"))
+	return terra.ReferenceAsNumber(dnp.ref.Append("downlink_delay_ms"))
 }
 
+// DownlinkJitterMs returns a reference to field downlink_jitter_ms of aws_devicefarm_network_profile.
 func (dnp devicefarmNetworkProfileAttributes) DownlinkJitterMs() terra.NumberValue {
-	return terra.ReferenceNumber(dnp.ref.Append("downlink_jitter_ms"))
+	return terra.ReferenceAsNumber(dnp.ref.Append("downlink_jitter_ms"))
 }
 
+// DownlinkLossPercent returns a reference to field downlink_loss_percent of aws_devicefarm_network_profile.
 func (dnp devicefarmNetworkProfileAttributes) DownlinkLossPercent() terra.NumberValue {
-	return terra.ReferenceNumber(dnp.ref.Append("downlink_loss_percent"))
+	return terra.ReferenceAsNumber(dnp.ref.Append("downlink_loss_percent"))
 }
 
+// Id returns a reference to field id of aws_devicefarm_network_profile.
 func (dnp devicefarmNetworkProfileAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dnp.ref.Append("id"))
+	return terra.ReferenceAsString(dnp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_devicefarm_network_profile.
 func (dnp devicefarmNetworkProfileAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dnp.ref.Append("name"))
+	return terra.ReferenceAsString(dnp.ref.Append("name"))
 }
 
+// ProjectArn returns a reference to field project_arn of aws_devicefarm_network_profile.
 func (dnp devicefarmNetworkProfileAttributes) ProjectArn() terra.StringValue {
-	return terra.ReferenceString(dnp.ref.Append("project_arn"))
+	return terra.ReferenceAsString(dnp.ref.Append("project_arn"))
 }
 
+// Tags returns a reference to field tags of aws_devicefarm_network_profile.
 func (dnp devicefarmNetworkProfileAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dnp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dnp.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_devicefarm_network_profile.
 func (dnp devicefarmNetworkProfileAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dnp.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dnp.ref.Append("tags_all"))
 }
 
+// Type returns a reference to field type of aws_devicefarm_network_profile.
 func (dnp devicefarmNetworkProfileAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(dnp.ref.Append("type"))
+	return terra.ReferenceAsString(dnp.ref.Append("type"))
 }
 
+// UplinkBandwidthBits returns a reference to field uplink_bandwidth_bits of aws_devicefarm_network_profile.
 func (dnp devicefarmNetworkProfileAttributes) UplinkBandwidthBits() terra.NumberValue {
-	return terra.ReferenceNumber(dnp.ref.Append("uplink_bandwidth_bits"))
+	return terra.ReferenceAsNumber(dnp.ref.Append("uplink_bandwidth_bits"))
 }
 
+// UplinkDelayMs returns a reference to field uplink_delay_ms of aws_devicefarm_network_profile.
 func (dnp devicefarmNetworkProfileAttributes) UplinkDelayMs() terra.NumberValue {
-	return terra.ReferenceNumber(dnp.ref.Append("uplink_delay_ms"))
+	return terra.ReferenceAsNumber(dnp.ref.Append("uplink_delay_ms"))
 }
 
+// UplinkJitterMs returns a reference to field uplink_jitter_ms of aws_devicefarm_network_profile.
 func (dnp devicefarmNetworkProfileAttributes) UplinkJitterMs() terra.NumberValue {
-	return terra.ReferenceNumber(dnp.ref.Append("uplink_jitter_ms"))
+	return terra.ReferenceAsNumber(dnp.ref.Append("uplink_jitter_ms"))
 }
 
+// UplinkLossPercent returns a reference to field uplink_loss_percent of aws_devicefarm_network_profile.
 func (dnp devicefarmNetworkProfileAttributes) UplinkLossPercent() terra.NumberValue {
-	return terra.ReferenceNumber(dnp.ref.Append("uplink_loss_percent"))
+	return terra.ReferenceAsNumber(dnp.ref.Append("uplink_loss_percent"))
 }
 
 type devicefarmNetworkProfileState struct {

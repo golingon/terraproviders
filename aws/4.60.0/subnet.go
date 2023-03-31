@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSubnet creates a new instance of [Subnet].
 func NewSubnet(name string, args SubnetArgs) *Subnet {
 	return &Subnet{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSubnet(name string, args SubnetArgs) *Subnet {
 
 var _ terra.Resource = (*Subnet)(nil)
 
+// Subnet represents the Terraform resource aws_subnet.
 type Subnet struct {
-	Name  string
-	Args  SubnetArgs
-	state *subnetState
+	Name      string
+	Args      SubnetArgs
+	state     *subnetState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Subnet].
 func (s *Subnet) Type() string {
 	return "aws_subnet"
 }
 
+// LocalName returns the local name for [Subnet].
 func (s *Subnet) LocalName() string {
 	return s.Name
 }
 
+// Configuration returns the configuration (args) for [Subnet].
 func (s *Subnet) Configuration() interface{} {
 	return s.Args
 }
 
+// DependOn is used for other resources to depend on [Subnet].
+func (s *Subnet) DependOn() terra.Reference {
+	return terra.ReferenceResource(s)
+}
+
+// Dependencies returns the list of resources [Subnet] depends_on.
+func (s *Subnet) Dependencies() terra.Dependencies {
+	return s.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Subnet].
+func (s *Subnet) LifecycleManagement() *terra.Lifecycle {
+	return s.Lifecycle
+}
+
+// Attributes returns the attributes for [Subnet].
 func (s *Subnet) Attributes() subnetAttributes {
 	return subnetAttributes{ref: terra.ReferenceResource(s)}
 }
 
+// ImportState imports the given attribute values into [Subnet]'s state.
 func (s *Subnet) ImportState(av io.Reader) error {
 	s.state = &subnetState{}
 	if err := json.NewDecoder(av).Decode(s.state); err != nil {
@@ -49,10 +73,12 @@ func (s *Subnet) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Subnet] has state.
 func (s *Subnet) State() (*subnetState, bool) {
 	return s.state, s.state != nil
 }
 
+// StateMust returns the state for [Subnet]. Panics if the state is nil.
 func (s *Subnet) StateMust() *subnetState {
 	if s.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", s.Type(), s.LocalName()))
@@ -60,10 +86,7 @@ func (s *Subnet) StateMust() *subnetState {
 	return s.state
 }
 
-func (s *Subnet) DependOn() terra.Reference {
-	return terra.ReferenceResource(s)
-}
-
+// SubnetArgs contains the configurations for aws_subnet.
 type SubnetArgs struct {
 	// AssignIpv6AddressOnCreation: bool, optional
 	AssignIpv6AddressOnCreation terra.BoolValue `hcl:"assign_ipv6_address_on_creation,attr"`
@@ -103,99 +126,118 @@ type SubnetArgs struct {
 	VpcId terra.StringValue `hcl:"vpc_id,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *subnet.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Subnet depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type subnetAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_subnet.
 func (s subnetAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("arn"))
+	return terra.ReferenceAsString(s.ref.Append("arn"))
 }
 
+// AssignIpv6AddressOnCreation returns a reference to field assign_ipv6_address_on_creation of aws_subnet.
 func (s subnetAttributes) AssignIpv6AddressOnCreation() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("assign_ipv6_address_on_creation"))
+	return terra.ReferenceAsBool(s.ref.Append("assign_ipv6_address_on_creation"))
 }
 
+// AvailabilityZone returns a reference to field availability_zone of aws_subnet.
 func (s subnetAttributes) AvailabilityZone() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("availability_zone"))
+	return terra.ReferenceAsString(s.ref.Append("availability_zone"))
 }
 
+// AvailabilityZoneId returns a reference to field availability_zone_id of aws_subnet.
 func (s subnetAttributes) AvailabilityZoneId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("availability_zone_id"))
+	return terra.ReferenceAsString(s.ref.Append("availability_zone_id"))
 }
 
+// CidrBlock returns a reference to field cidr_block of aws_subnet.
 func (s subnetAttributes) CidrBlock() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("cidr_block"))
+	return terra.ReferenceAsString(s.ref.Append("cidr_block"))
 }
 
+// CustomerOwnedIpv4Pool returns a reference to field customer_owned_ipv4_pool of aws_subnet.
 func (s subnetAttributes) CustomerOwnedIpv4Pool() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("customer_owned_ipv4_pool"))
+	return terra.ReferenceAsString(s.ref.Append("customer_owned_ipv4_pool"))
 }
 
+// EnableDns64 returns a reference to field enable_dns64 of aws_subnet.
 func (s subnetAttributes) EnableDns64() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("enable_dns64"))
+	return terra.ReferenceAsBool(s.ref.Append("enable_dns64"))
 }
 
+// EnableResourceNameDnsARecordOnLaunch returns a reference to field enable_resource_name_dns_a_record_on_launch of aws_subnet.
 func (s subnetAttributes) EnableResourceNameDnsARecordOnLaunch() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("enable_resource_name_dns_a_record_on_launch"))
+	return terra.ReferenceAsBool(s.ref.Append("enable_resource_name_dns_a_record_on_launch"))
 }
 
+// EnableResourceNameDnsAaaaRecordOnLaunch returns a reference to field enable_resource_name_dns_aaaa_record_on_launch of aws_subnet.
 func (s subnetAttributes) EnableResourceNameDnsAaaaRecordOnLaunch() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("enable_resource_name_dns_aaaa_record_on_launch"))
+	return terra.ReferenceAsBool(s.ref.Append("enable_resource_name_dns_aaaa_record_on_launch"))
 }
 
+// Id returns a reference to field id of aws_subnet.
 func (s subnetAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("id"))
+	return terra.ReferenceAsString(s.ref.Append("id"))
 }
 
+// Ipv6CidrBlock returns a reference to field ipv6_cidr_block of aws_subnet.
 func (s subnetAttributes) Ipv6CidrBlock() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("ipv6_cidr_block"))
+	return terra.ReferenceAsString(s.ref.Append("ipv6_cidr_block"))
 }
 
+// Ipv6CidrBlockAssociationId returns a reference to field ipv6_cidr_block_association_id of aws_subnet.
 func (s subnetAttributes) Ipv6CidrBlockAssociationId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("ipv6_cidr_block_association_id"))
+	return terra.ReferenceAsString(s.ref.Append("ipv6_cidr_block_association_id"))
 }
 
+// Ipv6Native returns a reference to field ipv6_native of aws_subnet.
 func (s subnetAttributes) Ipv6Native() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("ipv6_native"))
+	return terra.ReferenceAsBool(s.ref.Append("ipv6_native"))
 }
 
+// MapCustomerOwnedIpOnLaunch returns a reference to field map_customer_owned_ip_on_launch of aws_subnet.
 func (s subnetAttributes) MapCustomerOwnedIpOnLaunch() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("map_customer_owned_ip_on_launch"))
+	return terra.ReferenceAsBool(s.ref.Append("map_customer_owned_ip_on_launch"))
 }
 
+// MapPublicIpOnLaunch returns a reference to field map_public_ip_on_launch of aws_subnet.
 func (s subnetAttributes) MapPublicIpOnLaunch() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("map_public_ip_on_launch"))
+	return terra.ReferenceAsBool(s.ref.Append("map_public_ip_on_launch"))
 }
 
+// OutpostArn returns a reference to field outpost_arn of aws_subnet.
 func (s subnetAttributes) OutpostArn() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("outpost_arn"))
+	return terra.ReferenceAsString(s.ref.Append("outpost_arn"))
 }
 
+// OwnerId returns a reference to field owner_id of aws_subnet.
 func (s subnetAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("owner_id"))
+	return terra.ReferenceAsString(s.ref.Append("owner_id"))
 }
 
+// PrivateDnsHostnameTypeOnLaunch returns a reference to field private_dns_hostname_type_on_launch of aws_subnet.
 func (s subnetAttributes) PrivateDnsHostnameTypeOnLaunch() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("private_dns_hostname_type_on_launch"))
+	return terra.ReferenceAsString(s.ref.Append("private_dns_hostname_type_on_launch"))
 }
 
+// Tags returns a reference to field tags of aws_subnet.
 func (s subnetAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](s.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](s.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_subnet.
 func (s subnetAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](s.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](s.ref.Append("tags_all"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_subnet.
 func (s subnetAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(s.ref.Append("vpc_id"))
 }
 
 func (s subnetAttributes) Timeouts() subnet.TimeoutsAttributes {
-	return terra.ReferenceSingle[subnet.TimeoutsAttributes](s.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[subnet.TimeoutsAttributes](s.ref.Append("timeouts"))
 }
 
 type subnetState struct {

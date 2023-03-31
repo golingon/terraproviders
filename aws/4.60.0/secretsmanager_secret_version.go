@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSecretsmanagerSecretVersion creates a new instance of [SecretsmanagerSecretVersion].
 func NewSecretsmanagerSecretVersion(name string, args SecretsmanagerSecretVersionArgs) *SecretsmanagerSecretVersion {
 	return &SecretsmanagerSecretVersion{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSecretsmanagerSecretVersion(name string, args SecretsmanagerSecretVersio
 
 var _ terra.Resource = (*SecretsmanagerSecretVersion)(nil)
 
+// SecretsmanagerSecretVersion represents the Terraform resource aws_secretsmanager_secret_version.
 type SecretsmanagerSecretVersion struct {
-	Name  string
-	Args  SecretsmanagerSecretVersionArgs
-	state *secretsmanagerSecretVersionState
+	Name      string
+	Args      SecretsmanagerSecretVersionArgs
+	state     *secretsmanagerSecretVersionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SecretsmanagerSecretVersion].
 func (ssv *SecretsmanagerSecretVersion) Type() string {
 	return "aws_secretsmanager_secret_version"
 }
 
+// LocalName returns the local name for [SecretsmanagerSecretVersion].
 func (ssv *SecretsmanagerSecretVersion) LocalName() string {
 	return ssv.Name
 }
 
+// Configuration returns the configuration (args) for [SecretsmanagerSecretVersion].
 func (ssv *SecretsmanagerSecretVersion) Configuration() interface{} {
 	return ssv.Args
 }
 
+// DependOn is used for other resources to depend on [SecretsmanagerSecretVersion].
+func (ssv *SecretsmanagerSecretVersion) DependOn() terra.Reference {
+	return terra.ReferenceResource(ssv)
+}
+
+// Dependencies returns the list of resources [SecretsmanagerSecretVersion] depends_on.
+func (ssv *SecretsmanagerSecretVersion) Dependencies() terra.Dependencies {
+	return ssv.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SecretsmanagerSecretVersion].
+func (ssv *SecretsmanagerSecretVersion) LifecycleManagement() *terra.Lifecycle {
+	return ssv.Lifecycle
+}
+
+// Attributes returns the attributes for [SecretsmanagerSecretVersion].
 func (ssv *SecretsmanagerSecretVersion) Attributes() secretsmanagerSecretVersionAttributes {
 	return secretsmanagerSecretVersionAttributes{ref: terra.ReferenceResource(ssv)}
 }
 
+// ImportState imports the given attribute values into [SecretsmanagerSecretVersion]'s state.
 func (ssv *SecretsmanagerSecretVersion) ImportState(av io.Reader) error {
 	ssv.state = &secretsmanagerSecretVersionState{}
 	if err := json.NewDecoder(av).Decode(ssv.state); err != nil {
@@ -48,10 +72,12 @@ func (ssv *SecretsmanagerSecretVersion) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SecretsmanagerSecretVersion] has state.
 func (ssv *SecretsmanagerSecretVersion) State() (*secretsmanagerSecretVersionState, bool) {
 	return ssv.state, ssv.state != nil
 }
 
+// StateMust returns the state for [SecretsmanagerSecretVersion]. Panics if the state is nil.
 func (ssv *SecretsmanagerSecretVersion) StateMust() *secretsmanagerSecretVersionState {
 	if ssv.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ssv.Type(), ssv.LocalName()))
@@ -59,10 +85,7 @@ func (ssv *SecretsmanagerSecretVersion) StateMust() *secretsmanagerSecretVersion
 	return ssv.state
 }
 
-func (ssv *SecretsmanagerSecretVersion) DependOn() terra.Reference {
-	return terra.ReferenceResource(ssv)
-}
-
+// SecretsmanagerSecretVersionArgs contains the configurations for aws_secretsmanager_secret_version.
 type SecretsmanagerSecretVersionArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -74,39 +97,44 @@ type SecretsmanagerSecretVersionArgs struct {
 	SecretString terra.StringValue `hcl:"secret_string,attr"`
 	// VersionStages: set of string, optional
 	VersionStages terra.SetValue[terra.StringValue] `hcl:"version_stages,attr"`
-	// DependsOn contains resources that SecretsmanagerSecretVersion depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type secretsmanagerSecretVersionAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_secretsmanager_secret_version.
 func (ssv secretsmanagerSecretVersionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ssv.ref.Append("arn"))
+	return terra.ReferenceAsString(ssv.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_secretsmanager_secret_version.
 func (ssv secretsmanagerSecretVersionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ssv.ref.Append("id"))
+	return terra.ReferenceAsString(ssv.ref.Append("id"))
 }
 
+// SecretBinary returns a reference to field secret_binary of aws_secretsmanager_secret_version.
 func (ssv secretsmanagerSecretVersionAttributes) SecretBinary() terra.StringValue {
-	return terra.ReferenceString(ssv.ref.Append("secret_binary"))
+	return terra.ReferenceAsString(ssv.ref.Append("secret_binary"))
 }
 
+// SecretId returns a reference to field secret_id of aws_secretsmanager_secret_version.
 func (ssv secretsmanagerSecretVersionAttributes) SecretId() terra.StringValue {
-	return terra.ReferenceString(ssv.ref.Append("secret_id"))
+	return terra.ReferenceAsString(ssv.ref.Append("secret_id"))
 }
 
+// SecretString returns a reference to field secret_string of aws_secretsmanager_secret_version.
 func (ssv secretsmanagerSecretVersionAttributes) SecretString() terra.StringValue {
-	return terra.ReferenceString(ssv.ref.Append("secret_string"))
+	return terra.ReferenceAsString(ssv.ref.Append("secret_string"))
 }
 
+// VersionId returns a reference to field version_id of aws_secretsmanager_secret_version.
 func (ssv secretsmanagerSecretVersionAttributes) VersionId() terra.StringValue {
-	return terra.ReferenceString(ssv.ref.Append("version_id"))
+	return terra.ReferenceAsString(ssv.ref.Append("version_id"))
 }
 
+// VersionStages returns a reference to field version_stages of aws_secretsmanager_secret_version.
 func (ssv secretsmanagerSecretVersionAttributes) VersionStages() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ssv.ref.Append("version_stages"))
+	return terra.ReferenceAsSet[terra.StringValue](ssv.ref.Append("version_stages"))
 }
 
 type secretsmanagerSecretVersionState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCustomerGateway creates a new instance of [CustomerGateway].
 func NewCustomerGateway(name string, args CustomerGatewayArgs) *CustomerGateway {
 	return &CustomerGateway{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCustomerGateway(name string, args CustomerGatewayArgs) *CustomerGateway 
 
 var _ terra.Resource = (*CustomerGateway)(nil)
 
+// CustomerGateway represents the Terraform resource aws_customer_gateway.
 type CustomerGateway struct {
-	Name  string
-	Args  CustomerGatewayArgs
-	state *customerGatewayState
+	Name      string
+	Args      CustomerGatewayArgs
+	state     *customerGatewayState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CustomerGateway].
 func (cg *CustomerGateway) Type() string {
 	return "aws_customer_gateway"
 }
 
+// LocalName returns the local name for [CustomerGateway].
 func (cg *CustomerGateway) LocalName() string {
 	return cg.Name
 }
 
+// Configuration returns the configuration (args) for [CustomerGateway].
 func (cg *CustomerGateway) Configuration() interface{} {
 	return cg.Args
 }
 
+// DependOn is used for other resources to depend on [CustomerGateway].
+func (cg *CustomerGateway) DependOn() terra.Reference {
+	return terra.ReferenceResource(cg)
+}
+
+// Dependencies returns the list of resources [CustomerGateway] depends_on.
+func (cg *CustomerGateway) Dependencies() terra.Dependencies {
+	return cg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CustomerGateway].
+func (cg *CustomerGateway) LifecycleManagement() *terra.Lifecycle {
+	return cg.Lifecycle
+}
+
+// Attributes returns the attributes for [CustomerGateway].
 func (cg *CustomerGateway) Attributes() customerGatewayAttributes {
 	return customerGatewayAttributes{ref: terra.ReferenceResource(cg)}
 }
 
+// ImportState imports the given attribute values into [CustomerGateway]'s state.
 func (cg *CustomerGateway) ImportState(av io.Reader) error {
 	cg.state = &customerGatewayState{}
 	if err := json.NewDecoder(av).Decode(cg.state); err != nil {
@@ -48,10 +72,12 @@ func (cg *CustomerGateway) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CustomerGateway] has state.
 func (cg *CustomerGateway) State() (*customerGatewayState, bool) {
 	return cg.state, cg.state != nil
 }
 
+// StateMust returns the state for [CustomerGateway]. Panics if the state is nil.
 func (cg *CustomerGateway) StateMust() *customerGatewayState {
 	if cg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cg.Type(), cg.LocalName()))
@@ -59,10 +85,7 @@ func (cg *CustomerGateway) StateMust() *customerGatewayState {
 	return cg.state
 }
 
-func (cg *CustomerGateway) DependOn() terra.Reference {
-	return terra.ReferenceResource(cg)
-}
-
+// CustomerGatewayArgs contains the configurations for aws_customer_gateway.
 type CustomerGatewayArgs struct {
 	// BgpAsn: string, required
 	BgpAsn terra.StringValue `hcl:"bgp_asn,attr" validate:"required"`
@@ -80,47 +103,54 @@ type CustomerGatewayArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Type: string, required
 	Type terra.StringValue `hcl:"type,attr" validate:"required"`
-	// DependsOn contains resources that CustomerGateway depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type customerGatewayAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_customer_gateway.
 func (cg customerGatewayAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(cg.ref.Append("arn"))
+	return terra.ReferenceAsString(cg.ref.Append("arn"))
 }
 
+// BgpAsn returns a reference to field bgp_asn of aws_customer_gateway.
 func (cg customerGatewayAttributes) BgpAsn() terra.StringValue {
-	return terra.ReferenceString(cg.ref.Append("bgp_asn"))
+	return terra.ReferenceAsString(cg.ref.Append("bgp_asn"))
 }
 
+// CertificateArn returns a reference to field certificate_arn of aws_customer_gateway.
 func (cg customerGatewayAttributes) CertificateArn() terra.StringValue {
-	return terra.ReferenceString(cg.ref.Append("certificate_arn"))
+	return terra.ReferenceAsString(cg.ref.Append("certificate_arn"))
 }
 
+// DeviceName returns a reference to field device_name of aws_customer_gateway.
 func (cg customerGatewayAttributes) DeviceName() terra.StringValue {
-	return terra.ReferenceString(cg.ref.Append("device_name"))
+	return terra.ReferenceAsString(cg.ref.Append("device_name"))
 }
 
+// Id returns a reference to field id of aws_customer_gateway.
 func (cg customerGatewayAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cg.ref.Append("id"))
+	return terra.ReferenceAsString(cg.ref.Append("id"))
 }
 
+// IpAddress returns a reference to field ip_address of aws_customer_gateway.
 func (cg customerGatewayAttributes) IpAddress() terra.StringValue {
-	return terra.ReferenceString(cg.ref.Append("ip_address"))
+	return terra.ReferenceAsString(cg.ref.Append("ip_address"))
 }
 
+// Tags returns a reference to field tags of aws_customer_gateway.
 func (cg customerGatewayAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_customer_gateway.
 func (cg customerGatewayAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](cg.ref.Append("tags_all"))
 }
 
+// Type returns a reference to field type of aws_customer_gateway.
 func (cg customerGatewayAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(cg.ref.Append("type"))
+	return terra.ReferenceAsString(cg.ref.Append("type"))
 }
 
 type customerGatewayState struct {

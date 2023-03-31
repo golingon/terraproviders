@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataKinesisStreamConsumer creates a new instance of [DataKinesisStreamConsumer].
 func NewDataKinesisStreamConsumer(name string, args DataKinesisStreamConsumerArgs) *DataKinesisStreamConsumer {
 	return &DataKinesisStreamConsumer{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataKinesisStreamConsumer(name string, args DataKinesisStreamConsumerArg
 
 var _ terra.DataResource = (*DataKinesisStreamConsumer)(nil)
 
+// DataKinesisStreamConsumer represents the Terraform data resource aws_kinesis_stream_consumer.
 type DataKinesisStreamConsumer struct {
 	Name string
 	Args DataKinesisStreamConsumerArgs
 }
 
+// DataSource returns the Terraform object type for [DataKinesisStreamConsumer].
 func (ksc *DataKinesisStreamConsumer) DataSource() string {
 	return "aws_kinesis_stream_consumer"
 }
 
+// LocalName returns the local name for [DataKinesisStreamConsumer].
 func (ksc *DataKinesisStreamConsumer) LocalName() string {
 	return ksc.Name
 }
 
+// Configuration returns the configuration (args) for [DataKinesisStreamConsumer].
 func (ksc *DataKinesisStreamConsumer) Configuration() interface{} {
 	return ksc.Args
 }
 
+// Attributes returns the attributes for [DataKinesisStreamConsumer].
 func (ksc *DataKinesisStreamConsumer) Attributes() dataKinesisStreamConsumerAttributes {
 	return dataKinesisStreamConsumerAttributes{ref: terra.ReferenceDataResource(ksc)}
 }
 
+// DataKinesisStreamConsumerArgs contains the configurations for aws_kinesis_stream_consumer.
 type DataKinesisStreamConsumerArgs struct {
 	// Arn: string, optional
 	Arn terra.StringValue `hcl:"arn,attr"`
@@ -48,26 +55,32 @@ type dataKinesisStreamConsumerAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_kinesis_stream_consumer.
 func (ksc dataKinesisStreamConsumerAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ksc.ref.Append("arn"))
+	return terra.ReferenceAsString(ksc.ref.Append("arn"))
 }
 
+// CreationTimestamp returns a reference to field creation_timestamp of aws_kinesis_stream_consumer.
 func (ksc dataKinesisStreamConsumerAttributes) CreationTimestamp() terra.StringValue {
-	return terra.ReferenceString(ksc.ref.Append("creation_timestamp"))
+	return terra.ReferenceAsString(ksc.ref.Append("creation_timestamp"))
 }
 
+// Id returns a reference to field id of aws_kinesis_stream_consumer.
 func (ksc dataKinesisStreamConsumerAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ksc.ref.Append("id"))
+	return terra.ReferenceAsString(ksc.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_kinesis_stream_consumer.
 func (ksc dataKinesisStreamConsumerAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ksc.ref.Append("name"))
+	return terra.ReferenceAsString(ksc.ref.Append("name"))
 }
 
+// Status returns a reference to field status of aws_kinesis_stream_consumer.
 func (ksc dataKinesisStreamConsumerAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ksc.ref.Append("status"))
+	return terra.ReferenceAsString(ksc.ref.Append("status"))
 }
 
+// StreamArn returns a reference to field stream_arn of aws_kinesis_stream_consumer.
 func (ksc dataKinesisStreamConsumerAttributes) StreamArn() terra.StringValue {
-	return terra.ReferenceString(ksc.ref.Append("stream_arn"))
+	return terra.ReferenceAsString(ksc.ref.Append("stream_arn"))
 }

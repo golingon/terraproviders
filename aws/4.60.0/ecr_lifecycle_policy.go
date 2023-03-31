@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewEcrLifecyclePolicy creates a new instance of [EcrLifecyclePolicy].
 func NewEcrLifecyclePolicy(name string, args EcrLifecyclePolicyArgs) *EcrLifecyclePolicy {
 	return &EcrLifecyclePolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewEcrLifecyclePolicy(name string, args EcrLifecyclePolicyArgs) *EcrLifecyc
 
 var _ terra.Resource = (*EcrLifecyclePolicy)(nil)
 
+// EcrLifecyclePolicy represents the Terraform resource aws_ecr_lifecycle_policy.
 type EcrLifecyclePolicy struct {
-	Name  string
-	Args  EcrLifecyclePolicyArgs
-	state *ecrLifecyclePolicyState
+	Name      string
+	Args      EcrLifecyclePolicyArgs
+	state     *ecrLifecyclePolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EcrLifecyclePolicy].
 func (elp *EcrLifecyclePolicy) Type() string {
 	return "aws_ecr_lifecycle_policy"
 }
 
+// LocalName returns the local name for [EcrLifecyclePolicy].
 func (elp *EcrLifecyclePolicy) LocalName() string {
 	return elp.Name
 }
 
+// Configuration returns the configuration (args) for [EcrLifecyclePolicy].
 func (elp *EcrLifecyclePolicy) Configuration() interface{} {
 	return elp.Args
 }
 
+// DependOn is used for other resources to depend on [EcrLifecyclePolicy].
+func (elp *EcrLifecyclePolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(elp)
+}
+
+// Dependencies returns the list of resources [EcrLifecyclePolicy] depends_on.
+func (elp *EcrLifecyclePolicy) Dependencies() terra.Dependencies {
+	return elp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EcrLifecyclePolicy].
+func (elp *EcrLifecyclePolicy) LifecycleManagement() *terra.Lifecycle {
+	return elp.Lifecycle
+}
+
+// Attributes returns the attributes for [EcrLifecyclePolicy].
 func (elp *EcrLifecyclePolicy) Attributes() ecrLifecyclePolicyAttributes {
 	return ecrLifecyclePolicyAttributes{ref: terra.ReferenceResource(elp)}
 }
 
+// ImportState imports the given attribute values into [EcrLifecyclePolicy]'s state.
 func (elp *EcrLifecyclePolicy) ImportState(av io.Reader) error {
 	elp.state = &ecrLifecyclePolicyState{}
 	if err := json.NewDecoder(av).Decode(elp.state); err != nil {
@@ -48,10 +72,12 @@ func (elp *EcrLifecyclePolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EcrLifecyclePolicy] has state.
 func (elp *EcrLifecyclePolicy) State() (*ecrLifecyclePolicyState, bool) {
 	return elp.state, elp.state != nil
 }
 
+// StateMust returns the state for [EcrLifecyclePolicy]. Panics if the state is nil.
 func (elp *EcrLifecyclePolicy) StateMust() *ecrLifecyclePolicyState {
 	if elp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", elp.Type(), elp.LocalName()))
@@ -59,10 +85,7 @@ func (elp *EcrLifecyclePolicy) StateMust() *ecrLifecyclePolicyState {
 	return elp.state
 }
 
-func (elp *EcrLifecyclePolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(elp)
-}
-
+// EcrLifecyclePolicyArgs contains the configurations for aws_ecr_lifecycle_policy.
 type EcrLifecyclePolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,27 +93,29 @@ type EcrLifecyclePolicyArgs struct {
 	Policy terra.StringValue `hcl:"policy,attr" validate:"required"`
 	// Repository: string, required
 	Repository terra.StringValue `hcl:"repository,attr" validate:"required"`
-	// DependsOn contains resources that EcrLifecyclePolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ecrLifecyclePolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_ecr_lifecycle_policy.
 func (elp ecrLifecyclePolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(elp.ref.Append("id"))
+	return terra.ReferenceAsString(elp.ref.Append("id"))
 }
 
+// Policy returns a reference to field policy of aws_ecr_lifecycle_policy.
 func (elp ecrLifecyclePolicyAttributes) Policy() terra.StringValue {
-	return terra.ReferenceString(elp.ref.Append("policy"))
+	return terra.ReferenceAsString(elp.ref.Append("policy"))
 }
 
+// RegistryId returns a reference to field registry_id of aws_ecr_lifecycle_policy.
 func (elp ecrLifecyclePolicyAttributes) RegistryId() terra.StringValue {
-	return terra.ReferenceString(elp.ref.Append("registry_id"))
+	return terra.ReferenceAsString(elp.ref.Append("registry_id"))
 }
 
+// Repository returns a reference to field repository of aws_ecr_lifecycle_policy.
 func (elp ecrLifecyclePolicyAttributes) Repository() terra.StringValue {
-	return terra.ReferenceString(elp.ref.Append("repository"))
+	return terra.ReferenceAsString(elp.ref.Append("repository"))
 }
 
 type ecrLifecyclePolicyState struct {

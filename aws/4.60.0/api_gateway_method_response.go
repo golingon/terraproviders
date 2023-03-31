@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewApiGatewayMethodResponse creates a new instance of [ApiGatewayMethodResponse].
 func NewApiGatewayMethodResponse(name string, args ApiGatewayMethodResponseArgs) *ApiGatewayMethodResponse {
 	return &ApiGatewayMethodResponse{
 		Args: args,
@@ -18,28 +19,51 @@ func NewApiGatewayMethodResponse(name string, args ApiGatewayMethodResponseArgs)
 
 var _ terra.Resource = (*ApiGatewayMethodResponse)(nil)
 
+// ApiGatewayMethodResponse represents the Terraform resource aws_api_gateway_method_response.
 type ApiGatewayMethodResponse struct {
-	Name  string
-	Args  ApiGatewayMethodResponseArgs
-	state *apiGatewayMethodResponseState
+	Name      string
+	Args      ApiGatewayMethodResponseArgs
+	state     *apiGatewayMethodResponseState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiGatewayMethodResponse].
 func (agmr *ApiGatewayMethodResponse) Type() string {
 	return "aws_api_gateway_method_response"
 }
 
+// LocalName returns the local name for [ApiGatewayMethodResponse].
 func (agmr *ApiGatewayMethodResponse) LocalName() string {
 	return agmr.Name
 }
 
+// Configuration returns the configuration (args) for [ApiGatewayMethodResponse].
 func (agmr *ApiGatewayMethodResponse) Configuration() interface{} {
 	return agmr.Args
 }
 
+// DependOn is used for other resources to depend on [ApiGatewayMethodResponse].
+func (agmr *ApiGatewayMethodResponse) DependOn() terra.Reference {
+	return terra.ReferenceResource(agmr)
+}
+
+// Dependencies returns the list of resources [ApiGatewayMethodResponse] depends_on.
+func (agmr *ApiGatewayMethodResponse) Dependencies() terra.Dependencies {
+	return agmr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiGatewayMethodResponse].
+func (agmr *ApiGatewayMethodResponse) LifecycleManagement() *terra.Lifecycle {
+	return agmr.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiGatewayMethodResponse].
 func (agmr *ApiGatewayMethodResponse) Attributes() apiGatewayMethodResponseAttributes {
 	return apiGatewayMethodResponseAttributes{ref: terra.ReferenceResource(agmr)}
 }
 
+// ImportState imports the given attribute values into [ApiGatewayMethodResponse]'s state.
 func (agmr *ApiGatewayMethodResponse) ImportState(av io.Reader) error {
 	agmr.state = &apiGatewayMethodResponseState{}
 	if err := json.NewDecoder(av).Decode(agmr.state); err != nil {
@@ -48,10 +72,12 @@ func (agmr *ApiGatewayMethodResponse) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiGatewayMethodResponse] has state.
 func (agmr *ApiGatewayMethodResponse) State() (*apiGatewayMethodResponseState, bool) {
 	return agmr.state, agmr.state != nil
 }
 
+// StateMust returns the state for [ApiGatewayMethodResponse]. Panics if the state is nil.
 func (agmr *ApiGatewayMethodResponse) StateMust() *apiGatewayMethodResponseState {
 	if agmr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", agmr.Type(), agmr.LocalName()))
@@ -59,10 +85,7 @@ func (agmr *ApiGatewayMethodResponse) StateMust() *apiGatewayMethodResponseState
 	return agmr.state
 }
 
-func (agmr *ApiGatewayMethodResponse) DependOn() terra.Reference {
-	return terra.ReferenceResource(agmr)
-}
-
+// ApiGatewayMethodResponseArgs contains the configurations for aws_api_gateway_method_response.
 type ApiGatewayMethodResponseArgs struct {
 	// HttpMethod: string, required
 	HttpMethod terra.StringValue `hcl:"http_method,attr" validate:"required"`
@@ -78,39 +101,44 @@ type ApiGatewayMethodResponseArgs struct {
 	RestApiId terra.StringValue `hcl:"rest_api_id,attr" validate:"required"`
 	// StatusCode: string, required
 	StatusCode terra.StringValue `hcl:"status_code,attr" validate:"required"`
-	// DependsOn contains resources that ApiGatewayMethodResponse depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiGatewayMethodResponseAttributes struct {
 	ref terra.Reference
 }
 
+// HttpMethod returns a reference to field http_method of aws_api_gateway_method_response.
 func (agmr apiGatewayMethodResponseAttributes) HttpMethod() terra.StringValue {
-	return terra.ReferenceString(agmr.ref.Append("http_method"))
+	return terra.ReferenceAsString(agmr.ref.Append("http_method"))
 }
 
+// Id returns a reference to field id of aws_api_gateway_method_response.
 func (agmr apiGatewayMethodResponseAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(agmr.ref.Append("id"))
+	return terra.ReferenceAsString(agmr.ref.Append("id"))
 }
 
+// ResourceId returns a reference to field resource_id of aws_api_gateway_method_response.
 func (agmr apiGatewayMethodResponseAttributes) ResourceId() terra.StringValue {
-	return terra.ReferenceString(agmr.ref.Append("resource_id"))
+	return terra.ReferenceAsString(agmr.ref.Append("resource_id"))
 }
 
+// ResponseModels returns a reference to field response_models of aws_api_gateway_method_response.
 func (agmr apiGatewayMethodResponseAttributes) ResponseModels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](agmr.ref.Append("response_models"))
+	return terra.ReferenceAsMap[terra.StringValue](agmr.ref.Append("response_models"))
 }
 
+// ResponseParameters returns a reference to field response_parameters of aws_api_gateway_method_response.
 func (agmr apiGatewayMethodResponseAttributes) ResponseParameters() terra.MapValue[terra.BoolValue] {
-	return terra.ReferenceMap[terra.BoolValue](agmr.ref.Append("response_parameters"))
+	return terra.ReferenceAsMap[terra.BoolValue](agmr.ref.Append("response_parameters"))
 }
 
+// RestApiId returns a reference to field rest_api_id of aws_api_gateway_method_response.
 func (agmr apiGatewayMethodResponseAttributes) RestApiId() terra.StringValue {
-	return terra.ReferenceString(agmr.ref.Append("rest_api_id"))
+	return terra.ReferenceAsString(agmr.ref.Append("rest_api_id"))
 }
 
+// StatusCode returns a reference to field status_code of aws_api_gateway_method_response.
 func (agmr apiGatewayMethodResponseAttributes) StatusCode() terra.StringValue {
-	return terra.ReferenceString(agmr.ref.Append("status_code"))
+	return terra.ReferenceAsString(agmr.ref.Append("status_code"))
 }
 
 type apiGatewayMethodResponseState struct {

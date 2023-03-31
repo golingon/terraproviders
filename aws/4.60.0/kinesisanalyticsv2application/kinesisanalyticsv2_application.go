@@ -354,31 +354,31 @@ func (ac ApplicationConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ac ApplicationConfigurationAttributes) ApplicationCodeConfiguration() terra.ListValue[ApplicationCodeConfigurationAttributes] {
-	return terra.ReferenceList[ApplicationCodeConfigurationAttributes](ac.ref.Append("application_code_configuration"))
+	return terra.ReferenceAsList[ApplicationCodeConfigurationAttributes](ac.ref.Append("application_code_configuration"))
 }
 
 func (ac ApplicationConfigurationAttributes) ApplicationSnapshotConfiguration() terra.ListValue[ApplicationSnapshotConfigurationAttributes] {
-	return terra.ReferenceList[ApplicationSnapshotConfigurationAttributes](ac.ref.Append("application_snapshot_configuration"))
+	return terra.ReferenceAsList[ApplicationSnapshotConfigurationAttributes](ac.ref.Append("application_snapshot_configuration"))
 }
 
 func (ac ApplicationConfigurationAttributes) EnvironmentProperties() terra.ListValue[EnvironmentPropertiesAttributes] {
-	return terra.ReferenceList[EnvironmentPropertiesAttributes](ac.ref.Append("environment_properties"))
+	return terra.ReferenceAsList[EnvironmentPropertiesAttributes](ac.ref.Append("environment_properties"))
 }
 
 func (ac ApplicationConfigurationAttributes) FlinkApplicationConfiguration() terra.ListValue[FlinkApplicationConfigurationAttributes] {
-	return terra.ReferenceList[FlinkApplicationConfigurationAttributes](ac.ref.Append("flink_application_configuration"))
+	return terra.ReferenceAsList[FlinkApplicationConfigurationAttributes](ac.ref.Append("flink_application_configuration"))
 }
 
 func (ac ApplicationConfigurationAttributes) RunConfiguration() terra.ListValue[RunConfigurationAttributes] {
-	return terra.ReferenceList[RunConfigurationAttributes](ac.ref.Append("run_configuration"))
+	return terra.ReferenceAsList[RunConfigurationAttributes](ac.ref.Append("run_configuration"))
 }
 
 func (ac ApplicationConfigurationAttributes) SqlApplicationConfiguration() terra.ListValue[SqlApplicationConfigurationAttributes] {
-	return terra.ReferenceList[SqlApplicationConfigurationAttributes](ac.ref.Append("sql_application_configuration"))
+	return terra.ReferenceAsList[SqlApplicationConfigurationAttributes](ac.ref.Append("sql_application_configuration"))
 }
 
 func (ac ApplicationConfigurationAttributes) VpcConfiguration() terra.ListValue[VpcConfigurationAttributes] {
-	return terra.ReferenceList[VpcConfigurationAttributes](ac.ref.Append("vpc_configuration"))
+	return terra.ReferenceAsList[VpcConfigurationAttributes](ac.ref.Append("vpc_configuration"))
 }
 
 type ApplicationCodeConfigurationAttributes struct {
@@ -398,11 +398,11 @@ func (acc ApplicationCodeConfigurationAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (acc ApplicationCodeConfigurationAttributes) CodeContentType() terra.StringValue {
-	return terra.ReferenceString(acc.ref.Append("code_content_type"))
+	return terra.ReferenceAsString(acc.ref.Append("code_content_type"))
 }
 
 func (acc ApplicationCodeConfigurationAttributes) CodeContent() terra.ListValue[CodeContentAttributes] {
-	return terra.ReferenceList[CodeContentAttributes](acc.ref.Append("code_content"))
+	return terra.ReferenceAsList[CodeContentAttributes](acc.ref.Append("code_content"))
 }
 
 type CodeContentAttributes struct {
@@ -422,11 +422,11 @@ func (cc CodeContentAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc CodeContentAttributes) TextContent() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("text_content"))
+	return terra.ReferenceAsString(cc.ref.Append("text_content"))
 }
 
 func (cc CodeContentAttributes) S3ContentLocation() terra.ListValue[S3ContentLocationAttributes] {
-	return terra.ReferenceList[S3ContentLocationAttributes](cc.ref.Append("s3_content_location"))
+	return terra.ReferenceAsList[S3ContentLocationAttributes](cc.ref.Append("s3_content_location"))
 }
 
 type S3ContentLocationAttributes struct {
@@ -446,15 +446,15 @@ func (scl S3ContentLocationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (scl S3ContentLocationAttributes) BucketArn() terra.StringValue {
-	return terra.ReferenceString(scl.ref.Append("bucket_arn"))
+	return terra.ReferenceAsString(scl.ref.Append("bucket_arn"))
 }
 
 func (scl S3ContentLocationAttributes) FileKey() terra.StringValue {
-	return terra.ReferenceString(scl.ref.Append("file_key"))
+	return terra.ReferenceAsString(scl.ref.Append("file_key"))
 }
 
 func (scl S3ContentLocationAttributes) ObjectVersion() terra.StringValue {
-	return terra.ReferenceString(scl.ref.Append("object_version"))
+	return terra.ReferenceAsString(scl.ref.Append("object_version"))
 }
 
 type ApplicationSnapshotConfigurationAttributes struct {
@@ -474,7 +474,7 @@ func (asc ApplicationSnapshotConfigurationAttributes) InternalTokens() hclwrite.
 }
 
 func (asc ApplicationSnapshotConfigurationAttributes) SnapshotsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(asc.ref.Append("snapshots_enabled"))
+	return terra.ReferenceAsBool(asc.ref.Append("snapshots_enabled"))
 }
 
 type EnvironmentPropertiesAttributes struct {
@@ -494,7 +494,7 @@ func (ep EnvironmentPropertiesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ep EnvironmentPropertiesAttributes) PropertyGroup() terra.SetValue[PropertyGroupAttributes] {
-	return terra.ReferenceSet[PropertyGroupAttributes](ep.ref.Append("property_group"))
+	return terra.ReferenceAsSet[PropertyGroupAttributes](ep.ref.Append("property_group"))
 }
 
 type PropertyGroupAttributes struct {
@@ -514,11 +514,11 @@ func (pg PropertyGroupAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pg PropertyGroupAttributes) PropertyGroupId() terra.StringValue {
-	return terra.ReferenceString(pg.ref.Append("property_group_id"))
+	return terra.ReferenceAsString(pg.ref.Append("property_group_id"))
 }
 
 func (pg PropertyGroupAttributes) PropertyMap() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](pg.ref.Append("property_map"))
+	return terra.ReferenceAsMap[terra.StringValue](pg.ref.Append("property_map"))
 }
 
 type FlinkApplicationConfigurationAttributes struct {
@@ -538,15 +538,15 @@ func (fac FlinkApplicationConfigurationAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (fac FlinkApplicationConfigurationAttributes) CheckpointConfiguration() terra.ListValue[CheckpointConfigurationAttributes] {
-	return terra.ReferenceList[CheckpointConfigurationAttributes](fac.ref.Append("checkpoint_configuration"))
+	return terra.ReferenceAsList[CheckpointConfigurationAttributes](fac.ref.Append("checkpoint_configuration"))
 }
 
 func (fac FlinkApplicationConfigurationAttributes) MonitoringConfiguration() terra.ListValue[MonitoringConfigurationAttributes] {
-	return terra.ReferenceList[MonitoringConfigurationAttributes](fac.ref.Append("monitoring_configuration"))
+	return terra.ReferenceAsList[MonitoringConfigurationAttributes](fac.ref.Append("monitoring_configuration"))
 }
 
 func (fac FlinkApplicationConfigurationAttributes) ParallelismConfiguration() terra.ListValue[ParallelismConfigurationAttributes] {
-	return terra.ReferenceList[ParallelismConfigurationAttributes](fac.ref.Append("parallelism_configuration"))
+	return terra.ReferenceAsList[ParallelismConfigurationAttributes](fac.ref.Append("parallelism_configuration"))
 }
 
 type CheckpointConfigurationAttributes struct {
@@ -566,19 +566,19 @@ func (cc CheckpointConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc CheckpointConfigurationAttributes) CheckpointInterval() terra.NumberValue {
-	return terra.ReferenceNumber(cc.ref.Append("checkpoint_interval"))
+	return terra.ReferenceAsNumber(cc.ref.Append("checkpoint_interval"))
 }
 
 func (cc CheckpointConfigurationAttributes) CheckpointingEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("checkpointing_enabled"))
+	return terra.ReferenceAsBool(cc.ref.Append("checkpointing_enabled"))
 }
 
 func (cc CheckpointConfigurationAttributes) ConfigurationType() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("configuration_type"))
+	return terra.ReferenceAsString(cc.ref.Append("configuration_type"))
 }
 
 func (cc CheckpointConfigurationAttributes) MinPauseBetweenCheckpoints() terra.NumberValue {
-	return terra.ReferenceNumber(cc.ref.Append("min_pause_between_checkpoints"))
+	return terra.ReferenceAsNumber(cc.ref.Append("min_pause_between_checkpoints"))
 }
 
 type MonitoringConfigurationAttributes struct {
@@ -598,15 +598,15 @@ func (mc MonitoringConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mc MonitoringConfigurationAttributes) ConfigurationType() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("configuration_type"))
+	return terra.ReferenceAsString(mc.ref.Append("configuration_type"))
 }
 
 func (mc MonitoringConfigurationAttributes) LogLevel() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("log_level"))
+	return terra.ReferenceAsString(mc.ref.Append("log_level"))
 }
 
 func (mc MonitoringConfigurationAttributes) MetricsLevel() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("metrics_level"))
+	return terra.ReferenceAsString(mc.ref.Append("metrics_level"))
 }
 
 type ParallelismConfigurationAttributes struct {
@@ -626,19 +626,19 @@ func (pc ParallelismConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pc ParallelismConfigurationAttributes) AutoScalingEnabled() terra.BoolValue {
-	return terra.ReferenceBool(pc.ref.Append("auto_scaling_enabled"))
+	return terra.ReferenceAsBool(pc.ref.Append("auto_scaling_enabled"))
 }
 
 func (pc ParallelismConfigurationAttributes) ConfigurationType() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("configuration_type"))
+	return terra.ReferenceAsString(pc.ref.Append("configuration_type"))
 }
 
 func (pc ParallelismConfigurationAttributes) Parallelism() terra.NumberValue {
-	return terra.ReferenceNumber(pc.ref.Append("parallelism"))
+	return terra.ReferenceAsNumber(pc.ref.Append("parallelism"))
 }
 
 func (pc ParallelismConfigurationAttributes) ParallelismPerKpu() terra.NumberValue {
-	return terra.ReferenceNumber(pc.ref.Append("parallelism_per_kpu"))
+	return terra.ReferenceAsNumber(pc.ref.Append("parallelism_per_kpu"))
 }
 
 type RunConfigurationAttributes struct {
@@ -658,11 +658,11 @@ func (rc RunConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rc RunConfigurationAttributes) ApplicationRestoreConfiguration() terra.ListValue[ApplicationRestoreConfigurationAttributes] {
-	return terra.ReferenceList[ApplicationRestoreConfigurationAttributes](rc.ref.Append("application_restore_configuration"))
+	return terra.ReferenceAsList[ApplicationRestoreConfigurationAttributes](rc.ref.Append("application_restore_configuration"))
 }
 
 func (rc RunConfigurationAttributes) FlinkRunConfiguration() terra.ListValue[FlinkRunConfigurationAttributes] {
-	return terra.ReferenceList[FlinkRunConfigurationAttributes](rc.ref.Append("flink_run_configuration"))
+	return terra.ReferenceAsList[FlinkRunConfigurationAttributes](rc.ref.Append("flink_run_configuration"))
 }
 
 type ApplicationRestoreConfigurationAttributes struct {
@@ -682,11 +682,11 @@ func (arc ApplicationRestoreConfigurationAttributes) InternalTokens() hclwrite.T
 }
 
 func (arc ApplicationRestoreConfigurationAttributes) ApplicationRestoreType() terra.StringValue {
-	return terra.ReferenceString(arc.ref.Append("application_restore_type"))
+	return terra.ReferenceAsString(arc.ref.Append("application_restore_type"))
 }
 
 func (arc ApplicationRestoreConfigurationAttributes) SnapshotName() terra.StringValue {
-	return terra.ReferenceString(arc.ref.Append("snapshot_name"))
+	return terra.ReferenceAsString(arc.ref.Append("snapshot_name"))
 }
 
 type FlinkRunConfigurationAttributes struct {
@@ -706,7 +706,7 @@ func (frc FlinkRunConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (frc FlinkRunConfigurationAttributes) AllowNonRestoredState() terra.BoolValue {
-	return terra.ReferenceBool(frc.ref.Append("allow_non_restored_state"))
+	return terra.ReferenceAsBool(frc.ref.Append("allow_non_restored_state"))
 }
 
 type SqlApplicationConfigurationAttributes struct {
@@ -726,15 +726,15 @@ func (sac SqlApplicationConfigurationAttributes) InternalTokens() hclwrite.Token
 }
 
 func (sac SqlApplicationConfigurationAttributes) Input() terra.ListValue[InputAttributes] {
-	return terra.ReferenceList[InputAttributes](sac.ref.Append("input"))
+	return terra.ReferenceAsList[InputAttributes](sac.ref.Append("input"))
 }
 
 func (sac SqlApplicationConfigurationAttributes) Output() terra.SetValue[OutputAttributes] {
-	return terra.ReferenceSet[OutputAttributes](sac.ref.Append("output"))
+	return terra.ReferenceAsSet[OutputAttributes](sac.ref.Append("output"))
 }
 
 func (sac SqlApplicationConfigurationAttributes) ReferenceDataSource() terra.ListValue[ReferenceDataSourceAttributes] {
-	return terra.ReferenceList[ReferenceDataSourceAttributes](sac.ref.Append("reference_data_source"))
+	return terra.ReferenceAsList[ReferenceDataSourceAttributes](sac.ref.Append("reference_data_source"))
 }
 
 type InputAttributes struct {
@@ -754,39 +754,39 @@ func (i InputAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i InputAttributes) InAppStreamNames() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](i.ref.Append("in_app_stream_names"))
+	return terra.ReferenceAsList[terra.StringValue](i.ref.Append("in_app_stream_names"))
 }
 
 func (i InputAttributes) InputId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("input_id"))
+	return terra.ReferenceAsString(i.ref.Append("input_id"))
 }
 
 func (i InputAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(i.ref.Append("name_prefix"))
 }
 
 func (i InputAttributes) InputParallelism() terra.ListValue[InputParallelismAttributes] {
-	return terra.ReferenceList[InputParallelismAttributes](i.ref.Append("input_parallelism"))
+	return terra.ReferenceAsList[InputParallelismAttributes](i.ref.Append("input_parallelism"))
 }
 
 func (i InputAttributes) InputProcessingConfiguration() terra.ListValue[InputProcessingConfigurationAttributes] {
-	return terra.ReferenceList[InputProcessingConfigurationAttributes](i.ref.Append("input_processing_configuration"))
+	return terra.ReferenceAsList[InputProcessingConfigurationAttributes](i.ref.Append("input_processing_configuration"))
 }
 
 func (i InputAttributes) InputSchema() terra.ListValue[InputSchemaAttributes] {
-	return terra.ReferenceList[InputSchemaAttributes](i.ref.Append("input_schema"))
+	return terra.ReferenceAsList[InputSchemaAttributes](i.ref.Append("input_schema"))
 }
 
 func (i InputAttributes) InputStartingPositionConfiguration() terra.ListValue[InputStartingPositionConfigurationAttributes] {
-	return terra.ReferenceList[InputStartingPositionConfigurationAttributes](i.ref.Append("input_starting_position_configuration"))
+	return terra.ReferenceAsList[InputStartingPositionConfigurationAttributes](i.ref.Append("input_starting_position_configuration"))
 }
 
 func (i InputAttributes) KinesisFirehoseInput() terra.ListValue[KinesisFirehoseInputAttributes] {
-	return terra.ReferenceList[KinesisFirehoseInputAttributes](i.ref.Append("kinesis_firehose_input"))
+	return terra.ReferenceAsList[KinesisFirehoseInputAttributes](i.ref.Append("kinesis_firehose_input"))
 }
 
 func (i InputAttributes) KinesisStreamsInput() terra.ListValue[KinesisStreamsInputAttributes] {
-	return terra.ReferenceList[KinesisStreamsInputAttributes](i.ref.Append("kinesis_streams_input"))
+	return terra.ReferenceAsList[KinesisStreamsInputAttributes](i.ref.Append("kinesis_streams_input"))
 }
 
 type InputParallelismAttributes struct {
@@ -806,7 +806,7 @@ func (ip InputParallelismAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ip InputParallelismAttributes) Count() terra.NumberValue {
-	return terra.ReferenceNumber(ip.ref.Append("count"))
+	return terra.ReferenceAsNumber(ip.ref.Append("count"))
 }
 
 type InputProcessingConfigurationAttributes struct {
@@ -826,7 +826,7 @@ func (ipc InputProcessingConfigurationAttributes) InternalTokens() hclwrite.Toke
 }
 
 func (ipc InputProcessingConfigurationAttributes) InputLambdaProcessor() terra.ListValue[InputLambdaProcessorAttributes] {
-	return terra.ReferenceList[InputLambdaProcessorAttributes](ipc.ref.Append("input_lambda_processor"))
+	return terra.ReferenceAsList[InputLambdaProcessorAttributes](ipc.ref.Append("input_lambda_processor"))
 }
 
 type InputLambdaProcessorAttributes struct {
@@ -846,7 +846,7 @@ func (ilp InputLambdaProcessorAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ilp InputLambdaProcessorAttributes) ResourceArn() terra.StringValue {
-	return terra.ReferenceString(ilp.ref.Append("resource_arn"))
+	return terra.ReferenceAsString(ilp.ref.Append("resource_arn"))
 }
 
 type InputSchemaAttributes struct {
@@ -866,15 +866,15 @@ func (is InputSchemaAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (is InputSchemaAttributes) RecordEncoding() terra.StringValue {
-	return terra.ReferenceString(is.ref.Append("record_encoding"))
+	return terra.ReferenceAsString(is.ref.Append("record_encoding"))
 }
 
 func (is InputSchemaAttributes) RecordColumn() terra.ListValue[InputSchemaRecordColumnAttributes] {
-	return terra.ReferenceList[InputSchemaRecordColumnAttributes](is.ref.Append("record_column"))
+	return terra.ReferenceAsList[InputSchemaRecordColumnAttributes](is.ref.Append("record_column"))
 }
 
 func (is InputSchemaAttributes) RecordFormat() terra.ListValue[InputSchemaRecordFormatAttributes] {
-	return terra.ReferenceList[InputSchemaRecordFormatAttributes](is.ref.Append("record_format"))
+	return terra.ReferenceAsList[InputSchemaRecordFormatAttributes](is.ref.Append("record_format"))
 }
 
 type InputSchemaRecordColumnAttributes struct {
@@ -894,15 +894,15 @@ func (rc InputSchemaRecordColumnAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rc InputSchemaRecordColumnAttributes) Mapping() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("mapping"))
+	return terra.ReferenceAsString(rc.ref.Append("mapping"))
 }
 
 func (rc InputSchemaRecordColumnAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("name"))
+	return terra.ReferenceAsString(rc.ref.Append("name"))
 }
 
 func (rc InputSchemaRecordColumnAttributes) SqlType() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("sql_type"))
+	return terra.ReferenceAsString(rc.ref.Append("sql_type"))
 }
 
 type InputSchemaRecordFormatAttributes struct {
@@ -922,11 +922,11 @@ func (rf InputSchemaRecordFormatAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rf InputSchemaRecordFormatAttributes) RecordFormatType() terra.StringValue {
-	return terra.ReferenceString(rf.ref.Append("record_format_type"))
+	return terra.ReferenceAsString(rf.ref.Append("record_format_type"))
 }
 
 func (rf InputSchemaRecordFormatAttributes) MappingParameters() terra.ListValue[InputSchemaRecordFormatMappingParametersAttributes] {
-	return terra.ReferenceList[InputSchemaRecordFormatMappingParametersAttributes](rf.ref.Append("mapping_parameters"))
+	return terra.ReferenceAsList[InputSchemaRecordFormatMappingParametersAttributes](rf.ref.Append("mapping_parameters"))
 }
 
 type InputSchemaRecordFormatMappingParametersAttributes struct {
@@ -946,11 +946,11 @@ func (mp InputSchemaRecordFormatMappingParametersAttributes) InternalTokens() hc
 }
 
 func (mp InputSchemaRecordFormatMappingParametersAttributes) CsvMappingParameters() terra.ListValue[InputSchemaRecordFormatMappingParametersCsvMappingParametersAttributes] {
-	return terra.ReferenceList[InputSchemaRecordFormatMappingParametersCsvMappingParametersAttributes](mp.ref.Append("csv_mapping_parameters"))
+	return terra.ReferenceAsList[InputSchemaRecordFormatMappingParametersCsvMappingParametersAttributes](mp.ref.Append("csv_mapping_parameters"))
 }
 
 func (mp InputSchemaRecordFormatMappingParametersAttributes) JsonMappingParameters() terra.ListValue[InputSchemaRecordFormatMappingParametersJsonMappingParametersAttributes] {
-	return terra.ReferenceList[InputSchemaRecordFormatMappingParametersJsonMappingParametersAttributes](mp.ref.Append("json_mapping_parameters"))
+	return terra.ReferenceAsList[InputSchemaRecordFormatMappingParametersJsonMappingParametersAttributes](mp.ref.Append("json_mapping_parameters"))
 }
 
 type InputSchemaRecordFormatMappingParametersCsvMappingParametersAttributes struct {
@@ -970,11 +970,11 @@ func (cmp InputSchemaRecordFormatMappingParametersCsvMappingParametersAttributes
 }
 
 func (cmp InputSchemaRecordFormatMappingParametersCsvMappingParametersAttributes) RecordColumnDelimiter() terra.StringValue {
-	return terra.ReferenceString(cmp.ref.Append("record_column_delimiter"))
+	return terra.ReferenceAsString(cmp.ref.Append("record_column_delimiter"))
 }
 
 func (cmp InputSchemaRecordFormatMappingParametersCsvMappingParametersAttributes) RecordRowDelimiter() terra.StringValue {
-	return terra.ReferenceString(cmp.ref.Append("record_row_delimiter"))
+	return terra.ReferenceAsString(cmp.ref.Append("record_row_delimiter"))
 }
 
 type InputSchemaRecordFormatMappingParametersJsonMappingParametersAttributes struct {
@@ -994,7 +994,7 @@ func (jmp InputSchemaRecordFormatMappingParametersJsonMappingParametersAttribute
 }
 
 func (jmp InputSchemaRecordFormatMappingParametersJsonMappingParametersAttributes) RecordRowPath() terra.StringValue {
-	return terra.ReferenceString(jmp.ref.Append("record_row_path"))
+	return terra.ReferenceAsString(jmp.ref.Append("record_row_path"))
 }
 
 type InputStartingPositionConfigurationAttributes struct {
@@ -1014,7 +1014,7 @@ func (ispc InputStartingPositionConfigurationAttributes) InternalTokens() hclwri
 }
 
 func (ispc InputStartingPositionConfigurationAttributes) InputStartingPosition() terra.StringValue {
-	return terra.ReferenceString(ispc.ref.Append("input_starting_position"))
+	return terra.ReferenceAsString(ispc.ref.Append("input_starting_position"))
 }
 
 type KinesisFirehoseInputAttributes struct {
@@ -1034,7 +1034,7 @@ func (kfi KinesisFirehoseInputAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (kfi KinesisFirehoseInputAttributes) ResourceArn() terra.StringValue {
-	return terra.ReferenceString(kfi.ref.Append("resource_arn"))
+	return terra.ReferenceAsString(kfi.ref.Append("resource_arn"))
 }
 
 type KinesisStreamsInputAttributes struct {
@@ -1054,7 +1054,7 @@ func (ksi KinesisStreamsInputAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ksi KinesisStreamsInputAttributes) ResourceArn() terra.StringValue {
-	return terra.ReferenceString(ksi.ref.Append("resource_arn"))
+	return terra.ReferenceAsString(ksi.ref.Append("resource_arn"))
 }
 
 type OutputAttributes struct {
@@ -1074,27 +1074,27 @@ func (o OutputAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (o OutputAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("name"))
+	return terra.ReferenceAsString(o.ref.Append("name"))
 }
 
 func (o OutputAttributes) OutputId() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("output_id"))
+	return terra.ReferenceAsString(o.ref.Append("output_id"))
 }
 
 func (o OutputAttributes) DestinationSchema() terra.ListValue[DestinationSchemaAttributes] {
-	return terra.ReferenceList[DestinationSchemaAttributes](o.ref.Append("destination_schema"))
+	return terra.ReferenceAsList[DestinationSchemaAttributes](o.ref.Append("destination_schema"))
 }
 
 func (o OutputAttributes) KinesisFirehoseOutput() terra.ListValue[KinesisFirehoseOutputAttributes] {
-	return terra.ReferenceList[KinesisFirehoseOutputAttributes](o.ref.Append("kinesis_firehose_output"))
+	return terra.ReferenceAsList[KinesisFirehoseOutputAttributes](o.ref.Append("kinesis_firehose_output"))
 }
 
 func (o OutputAttributes) KinesisStreamsOutput() terra.ListValue[KinesisStreamsOutputAttributes] {
-	return terra.ReferenceList[KinesisStreamsOutputAttributes](o.ref.Append("kinesis_streams_output"))
+	return terra.ReferenceAsList[KinesisStreamsOutputAttributes](o.ref.Append("kinesis_streams_output"))
 }
 
 func (o OutputAttributes) LambdaOutput() terra.ListValue[LambdaOutputAttributes] {
-	return terra.ReferenceList[LambdaOutputAttributes](o.ref.Append("lambda_output"))
+	return terra.ReferenceAsList[LambdaOutputAttributes](o.ref.Append("lambda_output"))
 }
 
 type DestinationSchemaAttributes struct {
@@ -1114,7 +1114,7 @@ func (ds DestinationSchemaAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ds DestinationSchemaAttributes) RecordFormatType() terra.StringValue {
-	return terra.ReferenceString(ds.ref.Append("record_format_type"))
+	return terra.ReferenceAsString(ds.ref.Append("record_format_type"))
 }
 
 type KinesisFirehoseOutputAttributes struct {
@@ -1134,7 +1134,7 @@ func (kfo KinesisFirehoseOutputAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (kfo KinesisFirehoseOutputAttributes) ResourceArn() terra.StringValue {
-	return terra.ReferenceString(kfo.ref.Append("resource_arn"))
+	return terra.ReferenceAsString(kfo.ref.Append("resource_arn"))
 }
 
 type KinesisStreamsOutputAttributes struct {
@@ -1154,7 +1154,7 @@ func (kso KinesisStreamsOutputAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (kso KinesisStreamsOutputAttributes) ResourceArn() terra.StringValue {
-	return terra.ReferenceString(kso.ref.Append("resource_arn"))
+	return terra.ReferenceAsString(kso.ref.Append("resource_arn"))
 }
 
 type LambdaOutputAttributes struct {
@@ -1174,7 +1174,7 @@ func (lo LambdaOutputAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lo LambdaOutputAttributes) ResourceArn() terra.StringValue {
-	return terra.ReferenceString(lo.ref.Append("resource_arn"))
+	return terra.ReferenceAsString(lo.ref.Append("resource_arn"))
 }
 
 type ReferenceDataSourceAttributes struct {
@@ -1194,19 +1194,19 @@ func (rds ReferenceDataSourceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rds ReferenceDataSourceAttributes) ReferenceId() terra.StringValue {
-	return terra.ReferenceString(rds.ref.Append("reference_id"))
+	return terra.ReferenceAsString(rds.ref.Append("reference_id"))
 }
 
 func (rds ReferenceDataSourceAttributes) TableName() terra.StringValue {
-	return terra.ReferenceString(rds.ref.Append("table_name"))
+	return terra.ReferenceAsString(rds.ref.Append("table_name"))
 }
 
 func (rds ReferenceDataSourceAttributes) ReferenceSchema() terra.ListValue[ReferenceSchemaAttributes] {
-	return terra.ReferenceList[ReferenceSchemaAttributes](rds.ref.Append("reference_schema"))
+	return terra.ReferenceAsList[ReferenceSchemaAttributes](rds.ref.Append("reference_schema"))
 }
 
 func (rds ReferenceDataSourceAttributes) S3ReferenceDataSource() terra.ListValue[S3ReferenceDataSourceAttributes] {
-	return terra.ReferenceList[S3ReferenceDataSourceAttributes](rds.ref.Append("s3_reference_data_source"))
+	return terra.ReferenceAsList[S3ReferenceDataSourceAttributes](rds.ref.Append("s3_reference_data_source"))
 }
 
 type ReferenceSchemaAttributes struct {
@@ -1226,15 +1226,15 @@ func (rs ReferenceSchemaAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rs ReferenceSchemaAttributes) RecordEncoding() terra.StringValue {
-	return terra.ReferenceString(rs.ref.Append("record_encoding"))
+	return terra.ReferenceAsString(rs.ref.Append("record_encoding"))
 }
 
 func (rs ReferenceSchemaAttributes) RecordColumn() terra.ListValue[ReferenceSchemaRecordColumnAttributes] {
-	return terra.ReferenceList[ReferenceSchemaRecordColumnAttributes](rs.ref.Append("record_column"))
+	return terra.ReferenceAsList[ReferenceSchemaRecordColumnAttributes](rs.ref.Append("record_column"))
 }
 
 func (rs ReferenceSchemaAttributes) RecordFormat() terra.ListValue[ReferenceSchemaRecordFormatAttributes] {
-	return terra.ReferenceList[ReferenceSchemaRecordFormatAttributes](rs.ref.Append("record_format"))
+	return terra.ReferenceAsList[ReferenceSchemaRecordFormatAttributes](rs.ref.Append("record_format"))
 }
 
 type ReferenceSchemaRecordColumnAttributes struct {
@@ -1254,15 +1254,15 @@ func (rc ReferenceSchemaRecordColumnAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (rc ReferenceSchemaRecordColumnAttributes) Mapping() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("mapping"))
+	return terra.ReferenceAsString(rc.ref.Append("mapping"))
 }
 
 func (rc ReferenceSchemaRecordColumnAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("name"))
+	return terra.ReferenceAsString(rc.ref.Append("name"))
 }
 
 func (rc ReferenceSchemaRecordColumnAttributes) SqlType() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("sql_type"))
+	return terra.ReferenceAsString(rc.ref.Append("sql_type"))
 }
 
 type ReferenceSchemaRecordFormatAttributes struct {
@@ -1282,11 +1282,11 @@ func (rf ReferenceSchemaRecordFormatAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (rf ReferenceSchemaRecordFormatAttributes) RecordFormatType() terra.StringValue {
-	return terra.ReferenceString(rf.ref.Append("record_format_type"))
+	return terra.ReferenceAsString(rf.ref.Append("record_format_type"))
 }
 
 func (rf ReferenceSchemaRecordFormatAttributes) MappingParameters() terra.ListValue[ReferenceSchemaRecordFormatMappingParametersAttributes] {
-	return terra.ReferenceList[ReferenceSchemaRecordFormatMappingParametersAttributes](rf.ref.Append("mapping_parameters"))
+	return terra.ReferenceAsList[ReferenceSchemaRecordFormatMappingParametersAttributes](rf.ref.Append("mapping_parameters"))
 }
 
 type ReferenceSchemaRecordFormatMappingParametersAttributes struct {
@@ -1306,11 +1306,11 @@ func (mp ReferenceSchemaRecordFormatMappingParametersAttributes) InternalTokens(
 }
 
 func (mp ReferenceSchemaRecordFormatMappingParametersAttributes) CsvMappingParameters() terra.ListValue[ReferenceSchemaRecordFormatMappingParametersCsvMappingParametersAttributes] {
-	return terra.ReferenceList[ReferenceSchemaRecordFormatMappingParametersCsvMappingParametersAttributes](mp.ref.Append("csv_mapping_parameters"))
+	return terra.ReferenceAsList[ReferenceSchemaRecordFormatMappingParametersCsvMappingParametersAttributes](mp.ref.Append("csv_mapping_parameters"))
 }
 
 func (mp ReferenceSchemaRecordFormatMappingParametersAttributes) JsonMappingParameters() terra.ListValue[ReferenceSchemaRecordFormatMappingParametersJsonMappingParametersAttributes] {
-	return terra.ReferenceList[ReferenceSchemaRecordFormatMappingParametersJsonMappingParametersAttributes](mp.ref.Append("json_mapping_parameters"))
+	return terra.ReferenceAsList[ReferenceSchemaRecordFormatMappingParametersJsonMappingParametersAttributes](mp.ref.Append("json_mapping_parameters"))
 }
 
 type ReferenceSchemaRecordFormatMappingParametersCsvMappingParametersAttributes struct {
@@ -1330,11 +1330,11 @@ func (cmp ReferenceSchemaRecordFormatMappingParametersCsvMappingParametersAttrib
 }
 
 func (cmp ReferenceSchemaRecordFormatMappingParametersCsvMappingParametersAttributes) RecordColumnDelimiter() terra.StringValue {
-	return terra.ReferenceString(cmp.ref.Append("record_column_delimiter"))
+	return terra.ReferenceAsString(cmp.ref.Append("record_column_delimiter"))
 }
 
 func (cmp ReferenceSchemaRecordFormatMappingParametersCsvMappingParametersAttributes) RecordRowDelimiter() terra.StringValue {
-	return terra.ReferenceString(cmp.ref.Append("record_row_delimiter"))
+	return terra.ReferenceAsString(cmp.ref.Append("record_row_delimiter"))
 }
 
 type ReferenceSchemaRecordFormatMappingParametersJsonMappingParametersAttributes struct {
@@ -1354,7 +1354,7 @@ func (jmp ReferenceSchemaRecordFormatMappingParametersJsonMappingParametersAttri
 }
 
 func (jmp ReferenceSchemaRecordFormatMappingParametersJsonMappingParametersAttributes) RecordRowPath() terra.StringValue {
-	return terra.ReferenceString(jmp.ref.Append("record_row_path"))
+	return terra.ReferenceAsString(jmp.ref.Append("record_row_path"))
 }
 
 type S3ReferenceDataSourceAttributes struct {
@@ -1374,11 +1374,11 @@ func (srds S3ReferenceDataSourceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (srds S3ReferenceDataSourceAttributes) BucketArn() terra.StringValue {
-	return terra.ReferenceString(srds.ref.Append("bucket_arn"))
+	return terra.ReferenceAsString(srds.ref.Append("bucket_arn"))
 }
 
 func (srds S3ReferenceDataSourceAttributes) FileKey() terra.StringValue {
-	return terra.ReferenceString(srds.ref.Append("file_key"))
+	return terra.ReferenceAsString(srds.ref.Append("file_key"))
 }
 
 type VpcConfigurationAttributes struct {
@@ -1398,19 +1398,19 @@ func (vc VpcConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vc VpcConfigurationAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("security_group_ids"))
 }
 
 func (vc VpcConfigurationAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("subnet_ids"))
 }
 
 func (vc VpcConfigurationAttributes) VpcConfigurationId() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("vpc_configuration_id"))
+	return terra.ReferenceAsString(vc.ref.Append("vpc_configuration_id"))
 }
 
 func (vc VpcConfigurationAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(vc.ref.Append("vpc_id"))
 }
 
 type CloudwatchLoggingOptionsAttributes struct {
@@ -1430,11 +1430,11 @@ func (clo CloudwatchLoggingOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (clo CloudwatchLoggingOptionsAttributes) CloudwatchLoggingOptionId() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("cloudwatch_logging_option_id"))
+	return terra.ReferenceAsString(clo.ref.Append("cloudwatch_logging_option_id"))
 }
 
 func (clo CloudwatchLoggingOptionsAttributes) LogStreamArn() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("log_stream_arn"))
+	return terra.ReferenceAsString(clo.ref.Append("log_stream_arn"))
 }
 
 type TimeoutsAttributes struct {
@@ -1454,15 +1454,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ApplicationConfigurationState struct {

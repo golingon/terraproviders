@@ -26,23 +26,23 @@ func (cc ClusterCertificatesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc ClusterCertificatesAttributes) AwsHardwareCertificate() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("aws_hardware_certificate"))
+	return terra.ReferenceAsString(cc.ref.Append("aws_hardware_certificate"))
 }
 
 func (cc ClusterCertificatesAttributes) ClusterCertificate() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("cluster_certificate"))
+	return terra.ReferenceAsString(cc.ref.Append("cluster_certificate"))
 }
 
 func (cc ClusterCertificatesAttributes) ClusterCsr() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("cluster_csr"))
+	return terra.ReferenceAsString(cc.ref.Append("cluster_csr"))
 }
 
 func (cc ClusterCertificatesAttributes) HsmCertificate() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("hsm_certificate"))
+	return terra.ReferenceAsString(cc.ref.Append("hsm_certificate"))
 }
 
 func (cc ClusterCertificatesAttributes) ManufacturerHardwareCertificate() terra.StringValue {
-	return terra.ReferenceString(cc.ref.Append("manufacturer_hardware_certificate"))
+	return terra.ReferenceAsString(cc.ref.Append("manufacturer_hardware_certificate"))
 }
 
 type ClusterCertificatesState struct {

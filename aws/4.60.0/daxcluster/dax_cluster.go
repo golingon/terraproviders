@@ -40,19 +40,19 @@ func (n NodesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (n NodesAttributes) Address() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("address"))
+	return terra.ReferenceAsString(n.ref.Append("address"))
 }
 
 func (n NodesAttributes) AvailabilityZone() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("availability_zone"))
+	return terra.ReferenceAsString(n.ref.Append("availability_zone"))
 }
 
 func (n NodesAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(n.ref.Append("id"))
+	return terra.ReferenceAsString(n.ref.Append("id"))
 }
 
 func (n NodesAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(n.ref.Append("port"))
+	return terra.ReferenceAsNumber(n.ref.Append("port"))
 }
 
 type ServerSideEncryptionAttributes struct {
@@ -72,7 +72,7 @@ func (sse ServerSideEncryptionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sse ServerSideEncryptionAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(sse.ref.Append("enabled"))
+	return terra.ReferenceAsBool(sse.ref.Append("enabled"))
 }
 
 type TimeoutsAttributes struct {
@@ -92,15 +92,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type NodesState struct {

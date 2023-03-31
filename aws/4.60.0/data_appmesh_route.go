@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataAppmeshRoute creates a new instance of [DataAppmeshRoute].
 func NewDataAppmeshRoute(name string, args DataAppmeshRouteArgs) *DataAppmeshRoute {
 	return &DataAppmeshRoute{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataAppmeshRoute(name string, args DataAppmeshRouteArgs) *DataAppmeshRou
 
 var _ terra.DataResource = (*DataAppmeshRoute)(nil)
 
+// DataAppmeshRoute represents the Terraform data resource aws_appmesh_route.
 type DataAppmeshRoute struct {
 	Name string
 	Args DataAppmeshRouteArgs
 }
 
+// DataSource returns the Terraform object type for [DataAppmeshRoute].
 func (ar *DataAppmeshRoute) DataSource() string {
 	return "aws_appmesh_route"
 }
 
+// LocalName returns the local name for [DataAppmeshRoute].
 func (ar *DataAppmeshRoute) LocalName() string {
 	return ar.Name
 }
 
+// Configuration returns the configuration (args) for [DataAppmeshRoute].
 func (ar *DataAppmeshRoute) Configuration() interface{} {
 	return ar.Args
 }
 
+// Attributes returns the attributes for [DataAppmeshRoute].
 func (ar *DataAppmeshRoute) Attributes() dataAppmeshRouteAttributes {
 	return dataAppmeshRouteAttributes{ref: terra.ReferenceDataResource(ar)}
 }
 
+// DataAppmeshRouteArgs contains the configurations for aws_appmesh_route.
 type DataAppmeshRouteArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -57,46 +64,56 @@ type dataAppmeshRouteAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_appmesh_route.
 func (ar dataAppmeshRouteAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("arn"))
+	return terra.ReferenceAsString(ar.ref.Append("arn"))
 }
 
+// CreatedDate returns a reference to field created_date of aws_appmesh_route.
 func (ar dataAppmeshRouteAttributes) CreatedDate() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("created_date"))
+	return terra.ReferenceAsString(ar.ref.Append("created_date"))
 }
 
+// Id returns a reference to field id of aws_appmesh_route.
 func (ar dataAppmeshRouteAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("id"))
+	return terra.ReferenceAsString(ar.ref.Append("id"))
 }
 
+// LastUpdatedDate returns a reference to field last_updated_date of aws_appmesh_route.
 func (ar dataAppmeshRouteAttributes) LastUpdatedDate() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("last_updated_date"))
+	return terra.ReferenceAsString(ar.ref.Append("last_updated_date"))
 }
 
+// MeshName returns a reference to field mesh_name of aws_appmesh_route.
 func (ar dataAppmeshRouteAttributes) MeshName() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("mesh_name"))
+	return terra.ReferenceAsString(ar.ref.Append("mesh_name"))
 }
 
+// MeshOwner returns a reference to field mesh_owner of aws_appmesh_route.
 func (ar dataAppmeshRouteAttributes) MeshOwner() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("mesh_owner"))
+	return terra.ReferenceAsString(ar.ref.Append("mesh_owner"))
 }
 
+// Name returns a reference to field name of aws_appmesh_route.
 func (ar dataAppmeshRouteAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("name"))
+	return terra.ReferenceAsString(ar.ref.Append("name"))
 }
 
+// ResourceOwner returns a reference to field resource_owner of aws_appmesh_route.
 func (ar dataAppmeshRouteAttributes) ResourceOwner() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("resource_owner"))
+	return terra.ReferenceAsString(ar.ref.Append("resource_owner"))
 }
 
+// Tags returns a reference to field tags of aws_appmesh_route.
 func (ar dataAppmeshRouteAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ar.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ar.ref.Append("tags"))
 }
 
+// VirtualRouterName returns a reference to field virtual_router_name of aws_appmesh_route.
 func (ar dataAppmeshRouteAttributes) VirtualRouterName() terra.StringValue {
-	return terra.ReferenceString(ar.ref.Append("virtual_router_name"))
+	return terra.ReferenceAsString(ar.ref.Append("virtual_router_name"))
 }
 
 func (ar dataAppmeshRouteAttributes) Spec() terra.ListValue[dataappmeshroute.SpecAttributes] {
-	return terra.ReferenceList[dataappmeshroute.SpecAttributes](ar.ref.Append("spec"))
+	return terra.ReferenceAsList[dataappmeshroute.SpecAttributes](ar.ref.Append("spec"))
 }

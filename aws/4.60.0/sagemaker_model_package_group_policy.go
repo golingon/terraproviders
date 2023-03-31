@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSagemakerModelPackageGroupPolicy creates a new instance of [SagemakerModelPackageGroupPolicy].
 func NewSagemakerModelPackageGroupPolicy(name string, args SagemakerModelPackageGroupPolicyArgs) *SagemakerModelPackageGroupPolicy {
 	return &SagemakerModelPackageGroupPolicy{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSagemakerModelPackageGroupPolicy(name string, args SagemakerModelPackage
 
 var _ terra.Resource = (*SagemakerModelPackageGroupPolicy)(nil)
 
+// SagemakerModelPackageGroupPolicy represents the Terraform resource aws_sagemaker_model_package_group_policy.
 type SagemakerModelPackageGroupPolicy struct {
-	Name  string
-	Args  SagemakerModelPackageGroupPolicyArgs
-	state *sagemakerModelPackageGroupPolicyState
+	Name      string
+	Args      SagemakerModelPackageGroupPolicyArgs
+	state     *sagemakerModelPackageGroupPolicyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SagemakerModelPackageGroupPolicy].
 func (smpgp *SagemakerModelPackageGroupPolicy) Type() string {
 	return "aws_sagemaker_model_package_group_policy"
 }
 
+// LocalName returns the local name for [SagemakerModelPackageGroupPolicy].
 func (smpgp *SagemakerModelPackageGroupPolicy) LocalName() string {
 	return smpgp.Name
 }
 
+// Configuration returns the configuration (args) for [SagemakerModelPackageGroupPolicy].
 func (smpgp *SagemakerModelPackageGroupPolicy) Configuration() interface{} {
 	return smpgp.Args
 }
 
+// DependOn is used for other resources to depend on [SagemakerModelPackageGroupPolicy].
+func (smpgp *SagemakerModelPackageGroupPolicy) DependOn() terra.Reference {
+	return terra.ReferenceResource(smpgp)
+}
+
+// Dependencies returns the list of resources [SagemakerModelPackageGroupPolicy] depends_on.
+func (smpgp *SagemakerModelPackageGroupPolicy) Dependencies() terra.Dependencies {
+	return smpgp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SagemakerModelPackageGroupPolicy].
+func (smpgp *SagemakerModelPackageGroupPolicy) LifecycleManagement() *terra.Lifecycle {
+	return smpgp.Lifecycle
+}
+
+// Attributes returns the attributes for [SagemakerModelPackageGroupPolicy].
 func (smpgp *SagemakerModelPackageGroupPolicy) Attributes() sagemakerModelPackageGroupPolicyAttributes {
 	return sagemakerModelPackageGroupPolicyAttributes{ref: terra.ReferenceResource(smpgp)}
 }
 
+// ImportState imports the given attribute values into [SagemakerModelPackageGroupPolicy]'s state.
 func (smpgp *SagemakerModelPackageGroupPolicy) ImportState(av io.Reader) error {
 	smpgp.state = &sagemakerModelPackageGroupPolicyState{}
 	if err := json.NewDecoder(av).Decode(smpgp.state); err != nil {
@@ -48,10 +72,12 @@ func (smpgp *SagemakerModelPackageGroupPolicy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SagemakerModelPackageGroupPolicy] has state.
 func (smpgp *SagemakerModelPackageGroupPolicy) State() (*sagemakerModelPackageGroupPolicyState, bool) {
 	return smpgp.state, smpgp.state != nil
 }
 
+// StateMust returns the state for [SagemakerModelPackageGroupPolicy]. Panics if the state is nil.
 func (smpgp *SagemakerModelPackageGroupPolicy) StateMust() *sagemakerModelPackageGroupPolicyState {
 	if smpgp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", smpgp.Type(), smpgp.LocalName()))
@@ -59,10 +85,7 @@ func (smpgp *SagemakerModelPackageGroupPolicy) StateMust() *sagemakerModelPackag
 	return smpgp.state
 }
 
-func (smpgp *SagemakerModelPackageGroupPolicy) DependOn() terra.Reference {
-	return terra.ReferenceResource(smpgp)
-}
-
+// SagemakerModelPackageGroupPolicyArgs contains the configurations for aws_sagemaker_model_package_group_policy.
 type SagemakerModelPackageGroupPolicyArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,23 +93,24 @@ type SagemakerModelPackageGroupPolicyArgs struct {
 	ModelPackageGroupName terra.StringValue `hcl:"model_package_group_name,attr" validate:"required"`
 	// ResourcePolicy: string, required
 	ResourcePolicy terra.StringValue `hcl:"resource_policy,attr" validate:"required"`
-	// DependsOn contains resources that SagemakerModelPackageGroupPolicy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sagemakerModelPackageGroupPolicyAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_sagemaker_model_package_group_policy.
 func (smpgp sagemakerModelPackageGroupPolicyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(smpgp.ref.Append("id"))
+	return terra.ReferenceAsString(smpgp.ref.Append("id"))
 }
 
+// ModelPackageGroupName returns a reference to field model_package_group_name of aws_sagemaker_model_package_group_policy.
 func (smpgp sagemakerModelPackageGroupPolicyAttributes) ModelPackageGroupName() terra.StringValue {
-	return terra.ReferenceString(smpgp.ref.Append("model_package_group_name"))
+	return terra.ReferenceAsString(smpgp.ref.Append("model_package_group_name"))
 }
 
+// ResourcePolicy returns a reference to field resource_policy of aws_sagemaker_model_package_group_policy.
 func (smpgp sagemakerModelPackageGroupPolicyAttributes) ResourcePolicy() terra.StringValue {
-	return terra.ReferenceString(smpgp.ref.Append("resource_policy"))
+	return terra.ReferenceAsString(smpgp.ref.Append("resource_policy"))
 }
 
 type sagemakerModelPackageGroupPolicyState struct {

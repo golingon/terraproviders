@@ -54,11 +54,11 @@ func (mswp MagneticStoreWritePropertiesAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (mswp MagneticStoreWritePropertiesAttributes) EnableMagneticStoreWrites() terra.BoolValue {
-	return terra.ReferenceBool(mswp.ref.Append("enable_magnetic_store_writes"))
+	return terra.ReferenceAsBool(mswp.ref.Append("enable_magnetic_store_writes"))
 }
 
 func (mswp MagneticStoreWritePropertiesAttributes) MagneticStoreRejectedDataLocation() terra.ListValue[MagneticStoreRejectedDataLocationAttributes] {
-	return terra.ReferenceList[MagneticStoreRejectedDataLocationAttributes](mswp.ref.Append("magnetic_store_rejected_data_location"))
+	return terra.ReferenceAsList[MagneticStoreRejectedDataLocationAttributes](mswp.ref.Append("magnetic_store_rejected_data_location"))
 }
 
 type MagneticStoreRejectedDataLocationAttributes struct {
@@ -78,7 +78,7 @@ func (msrdl MagneticStoreRejectedDataLocationAttributes) InternalTokens() hclwri
 }
 
 func (msrdl MagneticStoreRejectedDataLocationAttributes) S3Configuration() terra.ListValue[S3ConfigurationAttributes] {
-	return terra.ReferenceList[S3ConfigurationAttributes](msrdl.ref.Append("s3_configuration"))
+	return terra.ReferenceAsList[S3ConfigurationAttributes](msrdl.ref.Append("s3_configuration"))
 }
 
 type S3ConfigurationAttributes struct {
@@ -98,19 +98,19 @@ func (sc S3ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc S3ConfigurationAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(sc.ref.Append("bucket_name"))
 }
 
 func (sc S3ConfigurationAttributes) EncryptionOption() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("encryption_option"))
+	return terra.ReferenceAsString(sc.ref.Append("encryption_option"))
 }
 
 func (sc S3ConfigurationAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(sc.ref.Append("kms_key_id"))
 }
 
 func (sc S3ConfigurationAttributes) ObjectKeyPrefix() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("object_key_prefix"))
+	return terra.ReferenceAsString(sc.ref.Append("object_key_prefix"))
 }
 
 type RetentionPropertiesAttributes struct {
@@ -130,11 +130,11 @@ func (rp RetentionPropertiesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rp RetentionPropertiesAttributes) MagneticStoreRetentionPeriodInDays() terra.NumberValue {
-	return terra.ReferenceNumber(rp.ref.Append("magnetic_store_retention_period_in_days"))
+	return terra.ReferenceAsNumber(rp.ref.Append("magnetic_store_retention_period_in_days"))
 }
 
 func (rp RetentionPropertiesAttributes) MemoryStoreRetentionPeriodInHours() terra.NumberValue {
-	return terra.ReferenceNumber(rp.ref.Append("memory_store_retention_period_in_hours"))
+	return terra.ReferenceAsNumber(rp.ref.Append("memory_store_retention_period_in_hours"))
 }
 
 type MagneticStoreWritePropertiesState struct {

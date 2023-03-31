@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewEcsTag creates a new instance of [EcsTag].
 func NewEcsTag(name string, args EcsTagArgs) *EcsTag {
 	return &EcsTag{
 		Args: args,
@@ -18,28 +19,51 @@ func NewEcsTag(name string, args EcsTagArgs) *EcsTag {
 
 var _ terra.Resource = (*EcsTag)(nil)
 
+// EcsTag represents the Terraform resource aws_ecs_tag.
 type EcsTag struct {
-	Name  string
-	Args  EcsTagArgs
-	state *ecsTagState
+	Name      string
+	Args      EcsTagArgs
+	state     *ecsTagState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EcsTag].
 func (et *EcsTag) Type() string {
 	return "aws_ecs_tag"
 }
 
+// LocalName returns the local name for [EcsTag].
 func (et *EcsTag) LocalName() string {
 	return et.Name
 }
 
+// Configuration returns the configuration (args) for [EcsTag].
 func (et *EcsTag) Configuration() interface{} {
 	return et.Args
 }
 
+// DependOn is used for other resources to depend on [EcsTag].
+func (et *EcsTag) DependOn() terra.Reference {
+	return terra.ReferenceResource(et)
+}
+
+// Dependencies returns the list of resources [EcsTag] depends_on.
+func (et *EcsTag) Dependencies() terra.Dependencies {
+	return et.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EcsTag].
+func (et *EcsTag) LifecycleManagement() *terra.Lifecycle {
+	return et.Lifecycle
+}
+
+// Attributes returns the attributes for [EcsTag].
 func (et *EcsTag) Attributes() ecsTagAttributes {
 	return ecsTagAttributes{ref: terra.ReferenceResource(et)}
 }
 
+// ImportState imports the given attribute values into [EcsTag]'s state.
 func (et *EcsTag) ImportState(av io.Reader) error {
 	et.state = &ecsTagState{}
 	if err := json.NewDecoder(av).Decode(et.state); err != nil {
@@ -48,10 +72,12 @@ func (et *EcsTag) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EcsTag] has state.
 func (et *EcsTag) State() (*ecsTagState, bool) {
 	return et.state, et.state != nil
 }
 
+// StateMust returns the state for [EcsTag]. Panics if the state is nil.
 func (et *EcsTag) StateMust() *ecsTagState {
 	if et.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", et.Type(), et.LocalName()))
@@ -59,10 +85,7 @@ func (et *EcsTag) StateMust() *ecsTagState {
 	return et.state
 }
 
-func (et *EcsTag) DependOn() terra.Reference {
-	return terra.ReferenceResource(et)
-}
-
+// EcsTagArgs contains the configurations for aws_ecs_tag.
 type EcsTagArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -72,27 +95,29 @@ type EcsTagArgs struct {
 	ResourceArn terra.StringValue `hcl:"resource_arn,attr" validate:"required"`
 	// Value: string, required
 	Value terra.StringValue `hcl:"value,attr" validate:"required"`
-	// DependsOn contains resources that EcsTag depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ecsTagAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_ecs_tag.
 func (et ecsTagAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(et.ref.Append("id"))
+	return terra.ReferenceAsString(et.ref.Append("id"))
 }
 
+// Key returns a reference to field key of aws_ecs_tag.
 func (et ecsTagAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(et.ref.Append("key"))
+	return terra.ReferenceAsString(et.ref.Append("key"))
 }
 
+// ResourceArn returns a reference to field resource_arn of aws_ecs_tag.
 func (et ecsTagAttributes) ResourceArn() terra.StringValue {
-	return terra.ReferenceString(et.ref.Append("resource_arn"))
+	return terra.ReferenceAsString(et.ref.Append("resource_arn"))
 }
 
+// Value returns a reference to field value of aws_ecs_tag.
 func (et ecsTagAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(et.ref.Append("value"))
+	return terra.ReferenceAsString(et.ref.Append("value"))
 }
 
 type ecsTagState struct {

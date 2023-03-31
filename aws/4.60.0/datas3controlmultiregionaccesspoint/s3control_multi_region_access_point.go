@@ -28,19 +28,19 @@ func (pab PublicAccessBlockAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pab PublicAccessBlockAttributes) BlockPublicAcls() terra.BoolValue {
-	return terra.ReferenceBool(pab.ref.Append("block_public_acls"))
+	return terra.ReferenceAsBool(pab.ref.Append("block_public_acls"))
 }
 
 func (pab PublicAccessBlockAttributes) BlockPublicPolicy() terra.BoolValue {
-	return terra.ReferenceBool(pab.ref.Append("block_public_policy"))
+	return terra.ReferenceAsBool(pab.ref.Append("block_public_policy"))
 }
 
 func (pab PublicAccessBlockAttributes) IgnorePublicAcls() terra.BoolValue {
-	return terra.ReferenceBool(pab.ref.Append("ignore_public_acls"))
+	return terra.ReferenceAsBool(pab.ref.Append("ignore_public_acls"))
 }
 
 func (pab PublicAccessBlockAttributes) RestrictPublicBuckets() terra.BoolValue {
-	return terra.ReferenceBool(pab.ref.Append("restrict_public_buckets"))
+	return terra.ReferenceAsBool(pab.ref.Append("restrict_public_buckets"))
 }
 
 type RegionsAttributes struct {
@@ -60,11 +60,11 @@ func (r RegionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RegionsAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("bucket"))
+	return terra.ReferenceAsString(r.ref.Append("bucket"))
 }
 
 func (r RegionsAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("region"))
+	return terra.ReferenceAsString(r.ref.Append("region"))
 }
 
 type PublicAccessBlockState struct {

@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataElasticacheUser creates a new instance of [DataElasticacheUser].
 func NewDataElasticacheUser(name string, args DataElasticacheUserArgs) *DataElasticacheUser {
 	return &DataElasticacheUser{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataElasticacheUser(name string, args DataElasticacheUserArgs) *DataElas
 
 var _ terra.DataResource = (*DataElasticacheUser)(nil)
 
+// DataElasticacheUser represents the Terraform data resource aws_elasticache_user.
 type DataElasticacheUser struct {
 	Name string
 	Args DataElasticacheUserArgs
 }
 
+// DataSource returns the Terraform object type for [DataElasticacheUser].
 func (eu *DataElasticacheUser) DataSource() string {
 	return "aws_elasticache_user"
 }
 
+// LocalName returns the local name for [DataElasticacheUser].
 func (eu *DataElasticacheUser) LocalName() string {
 	return eu.Name
 }
 
+// Configuration returns the configuration (args) for [DataElasticacheUser].
 func (eu *DataElasticacheUser) Configuration() interface{} {
 	return eu.Args
 }
 
+// Attributes returns the attributes for [DataElasticacheUser].
 func (eu *DataElasticacheUser) Attributes() dataElasticacheUserAttributes {
 	return dataElasticacheUserAttributes{ref: terra.ReferenceDataResource(eu)}
 }
 
+// DataElasticacheUserArgs contains the configurations for aws_elasticache_user.
 type DataElasticacheUserArgs struct {
 	// AccessString: string, optional
 	AccessString terra.StringValue `hcl:"access_string,attr"`
@@ -59,34 +66,41 @@ type dataElasticacheUserAttributes struct {
 	ref terra.Reference
 }
 
+// AccessString returns a reference to field access_string of aws_elasticache_user.
 func (eu dataElasticacheUserAttributes) AccessString() terra.StringValue {
-	return terra.ReferenceString(eu.ref.Append("access_string"))
+	return terra.ReferenceAsString(eu.ref.Append("access_string"))
 }
 
+// Engine returns a reference to field engine of aws_elasticache_user.
 func (eu dataElasticacheUserAttributes) Engine() terra.StringValue {
-	return terra.ReferenceString(eu.ref.Append("engine"))
+	return terra.ReferenceAsString(eu.ref.Append("engine"))
 }
 
+// Id returns a reference to field id of aws_elasticache_user.
 func (eu dataElasticacheUserAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(eu.ref.Append("id"))
+	return terra.ReferenceAsString(eu.ref.Append("id"))
 }
 
+// NoPasswordRequired returns a reference to field no_password_required of aws_elasticache_user.
 func (eu dataElasticacheUserAttributes) NoPasswordRequired() terra.BoolValue {
-	return terra.ReferenceBool(eu.ref.Append("no_password_required"))
+	return terra.ReferenceAsBool(eu.ref.Append("no_password_required"))
 }
 
+// Passwords returns a reference to field passwords of aws_elasticache_user.
 func (eu dataElasticacheUserAttributes) Passwords() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](eu.ref.Append("passwords"))
+	return terra.ReferenceAsSet[terra.StringValue](eu.ref.Append("passwords"))
 }
 
+// UserId returns a reference to field user_id of aws_elasticache_user.
 func (eu dataElasticacheUserAttributes) UserId() terra.StringValue {
-	return terra.ReferenceString(eu.ref.Append("user_id"))
+	return terra.ReferenceAsString(eu.ref.Append("user_id"))
 }
 
+// UserName returns a reference to field user_name of aws_elasticache_user.
 func (eu dataElasticacheUserAttributes) UserName() terra.StringValue {
-	return terra.ReferenceString(eu.ref.Append("user_name"))
+	return terra.ReferenceAsString(eu.ref.Append("user_name"))
 }
 
 func (eu dataElasticacheUserAttributes) AuthenticationMode() terra.ListValue[dataelasticacheuser.AuthenticationModeAttributes] {
-	return terra.ReferenceList[dataelasticacheuser.AuthenticationModeAttributes](eu.ref.Append("authentication_mode"))
+	return terra.ReferenceAsList[dataelasticacheuser.AuthenticationModeAttributes](eu.ref.Append("authentication_mode"))
 }

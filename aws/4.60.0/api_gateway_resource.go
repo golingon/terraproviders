@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewApiGatewayResource creates a new instance of [ApiGatewayResource].
 func NewApiGatewayResource(name string, args ApiGatewayResourceArgs) *ApiGatewayResource {
 	return &ApiGatewayResource{
 		Args: args,
@@ -18,28 +19,51 @@ func NewApiGatewayResource(name string, args ApiGatewayResourceArgs) *ApiGateway
 
 var _ terra.Resource = (*ApiGatewayResource)(nil)
 
+// ApiGatewayResource represents the Terraform resource aws_api_gateway_resource.
 type ApiGatewayResource struct {
-	Name  string
-	Args  ApiGatewayResourceArgs
-	state *apiGatewayResourceState
+	Name      string
+	Args      ApiGatewayResourceArgs
+	state     *apiGatewayResourceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiGatewayResource].
 func (agr *ApiGatewayResource) Type() string {
 	return "aws_api_gateway_resource"
 }
 
+// LocalName returns the local name for [ApiGatewayResource].
 func (agr *ApiGatewayResource) LocalName() string {
 	return agr.Name
 }
 
+// Configuration returns the configuration (args) for [ApiGatewayResource].
 func (agr *ApiGatewayResource) Configuration() interface{} {
 	return agr.Args
 }
 
+// DependOn is used for other resources to depend on [ApiGatewayResource].
+func (agr *ApiGatewayResource) DependOn() terra.Reference {
+	return terra.ReferenceResource(agr)
+}
+
+// Dependencies returns the list of resources [ApiGatewayResource] depends_on.
+func (agr *ApiGatewayResource) Dependencies() terra.Dependencies {
+	return agr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiGatewayResource].
+func (agr *ApiGatewayResource) LifecycleManagement() *terra.Lifecycle {
+	return agr.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiGatewayResource].
 func (agr *ApiGatewayResource) Attributes() apiGatewayResourceAttributes {
 	return apiGatewayResourceAttributes{ref: terra.ReferenceResource(agr)}
 }
 
+// ImportState imports the given attribute values into [ApiGatewayResource]'s state.
 func (agr *ApiGatewayResource) ImportState(av io.Reader) error {
 	agr.state = &apiGatewayResourceState{}
 	if err := json.NewDecoder(av).Decode(agr.state); err != nil {
@@ -48,10 +72,12 @@ func (agr *ApiGatewayResource) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiGatewayResource] has state.
 func (agr *ApiGatewayResource) State() (*apiGatewayResourceState, bool) {
 	return agr.state, agr.state != nil
 }
 
+// StateMust returns the state for [ApiGatewayResource]. Panics if the state is nil.
 func (agr *ApiGatewayResource) StateMust() *apiGatewayResourceState {
 	if agr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", agr.Type(), agr.LocalName()))
@@ -59,10 +85,7 @@ func (agr *ApiGatewayResource) StateMust() *apiGatewayResourceState {
 	return agr.state
 }
 
-func (agr *ApiGatewayResource) DependOn() terra.Reference {
-	return terra.ReferenceResource(agr)
-}
-
+// ApiGatewayResourceArgs contains the configurations for aws_api_gateway_resource.
 type ApiGatewayResourceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -72,31 +95,34 @@ type ApiGatewayResourceArgs struct {
 	PathPart terra.StringValue `hcl:"path_part,attr" validate:"required"`
 	// RestApiId: string, required
 	RestApiId terra.StringValue `hcl:"rest_api_id,attr" validate:"required"`
-	// DependsOn contains resources that ApiGatewayResource depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiGatewayResourceAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_api_gateway_resource.
 func (agr apiGatewayResourceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(agr.ref.Append("id"))
+	return terra.ReferenceAsString(agr.ref.Append("id"))
 }
 
+// ParentId returns a reference to field parent_id of aws_api_gateway_resource.
 func (agr apiGatewayResourceAttributes) ParentId() terra.StringValue {
-	return terra.ReferenceString(agr.ref.Append("parent_id"))
+	return terra.ReferenceAsString(agr.ref.Append("parent_id"))
 }
 
+// Path returns a reference to field path of aws_api_gateway_resource.
 func (agr apiGatewayResourceAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(agr.ref.Append("path"))
+	return terra.ReferenceAsString(agr.ref.Append("path"))
 }
 
+// PathPart returns a reference to field path_part of aws_api_gateway_resource.
 func (agr apiGatewayResourceAttributes) PathPart() terra.StringValue {
-	return terra.ReferenceString(agr.ref.Append("path_part"))
+	return terra.ReferenceAsString(agr.ref.Append("path_part"))
 }
 
+// RestApiId returns a reference to field rest_api_id of aws_api_gateway_resource.
 func (agr apiGatewayResourceAttributes) RestApiId() terra.StringValue {
-	return terra.ReferenceString(agr.ref.Append("rest_api_id"))
+	return terra.ReferenceAsString(agr.ref.Append("rest_api_id"))
 }
 
 type apiGatewayResourceState struct {

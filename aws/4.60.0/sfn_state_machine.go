@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSfnStateMachine creates a new instance of [SfnStateMachine].
 func NewSfnStateMachine(name string, args SfnStateMachineArgs) *SfnStateMachine {
 	return &SfnStateMachine{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSfnStateMachine(name string, args SfnStateMachineArgs) *SfnStateMachine 
 
 var _ terra.Resource = (*SfnStateMachine)(nil)
 
+// SfnStateMachine represents the Terraform resource aws_sfn_state_machine.
 type SfnStateMachine struct {
-	Name  string
-	Args  SfnStateMachineArgs
-	state *sfnStateMachineState
+	Name      string
+	Args      SfnStateMachineArgs
+	state     *sfnStateMachineState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SfnStateMachine].
 func (ssm *SfnStateMachine) Type() string {
 	return "aws_sfn_state_machine"
 }
 
+// LocalName returns the local name for [SfnStateMachine].
 func (ssm *SfnStateMachine) LocalName() string {
 	return ssm.Name
 }
 
+// Configuration returns the configuration (args) for [SfnStateMachine].
 func (ssm *SfnStateMachine) Configuration() interface{} {
 	return ssm.Args
 }
 
+// DependOn is used for other resources to depend on [SfnStateMachine].
+func (ssm *SfnStateMachine) DependOn() terra.Reference {
+	return terra.ReferenceResource(ssm)
+}
+
+// Dependencies returns the list of resources [SfnStateMachine] depends_on.
+func (ssm *SfnStateMachine) Dependencies() terra.Dependencies {
+	return ssm.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SfnStateMachine].
+func (ssm *SfnStateMachine) LifecycleManagement() *terra.Lifecycle {
+	return ssm.Lifecycle
+}
+
+// Attributes returns the attributes for [SfnStateMachine].
 func (ssm *SfnStateMachine) Attributes() sfnStateMachineAttributes {
 	return sfnStateMachineAttributes{ref: terra.ReferenceResource(ssm)}
 }
 
+// ImportState imports the given attribute values into [SfnStateMachine]'s state.
 func (ssm *SfnStateMachine) ImportState(av io.Reader) error {
 	ssm.state = &sfnStateMachineState{}
 	if err := json.NewDecoder(av).Decode(ssm.state); err != nil {
@@ -49,10 +73,12 @@ func (ssm *SfnStateMachine) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SfnStateMachine] has state.
 func (ssm *SfnStateMachine) State() (*sfnStateMachineState, bool) {
 	return ssm.state, ssm.state != nil
 }
 
+// StateMust returns the state for [SfnStateMachine]. Panics if the state is nil.
 func (ssm *SfnStateMachine) StateMust() *sfnStateMachineState {
 	if ssm.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ssm.Type(), ssm.LocalName()))
@@ -60,10 +86,7 @@ func (ssm *SfnStateMachine) StateMust() *sfnStateMachineState {
 	return ssm.state
 }
 
-func (ssm *SfnStateMachine) DependOn() terra.Reference {
-	return terra.ReferenceResource(ssm)
-}
-
+// SfnStateMachineArgs contains the configurations for aws_sfn_state_machine.
 type SfnStateMachineArgs struct {
 	// Definition: string, required
 	Definition terra.StringValue `hcl:"definition,attr" validate:"required"`
@@ -85,63 +108,72 @@ type SfnStateMachineArgs struct {
 	LoggingConfiguration *sfnstatemachine.LoggingConfiguration `hcl:"logging_configuration,block"`
 	// TracingConfiguration: optional
 	TracingConfiguration *sfnstatemachine.TracingConfiguration `hcl:"tracing_configuration,block"`
-	// DependsOn contains resources that SfnStateMachine depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sfnStateMachineAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_sfn_state_machine.
 func (ssm sfnStateMachineAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ssm.ref.Append("arn"))
+	return terra.ReferenceAsString(ssm.ref.Append("arn"))
 }
 
+// CreationDate returns a reference to field creation_date of aws_sfn_state_machine.
 func (ssm sfnStateMachineAttributes) CreationDate() terra.StringValue {
-	return terra.ReferenceString(ssm.ref.Append("creation_date"))
+	return terra.ReferenceAsString(ssm.ref.Append("creation_date"))
 }
 
+// Definition returns a reference to field definition of aws_sfn_state_machine.
 func (ssm sfnStateMachineAttributes) Definition() terra.StringValue {
-	return terra.ReferenceString(ssm.ref.Append("definition"))
+	return terra.ReferenceAsString(ssm.ref.Append("definition"))
 }
 
+// Id returns a reference to field id of aws_sfn_state_machine.
 func (ssm sfnStateMachineAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ssm.ref.Append("id"))
+	return terra.ReferenceAsString(ssm.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_sfn_state_machine.
 func (ssm sfnStateMachineAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ssm.ref.Append("name"))
+	return terra.ReferenceAsString(ssm.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_sfn_state_machine.
 func (ssm sfnStateMachineAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(ssm.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(ssm.ref.Append("name_prefix"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_sfn_state_machine.
 func (ssm sfnStateMachineAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(ssm.ref.Append("role_arn"))
+	return terra.ReferenceAsString(ssm.ref.Append("role_arn"))
 }
 
+// Status returns a reference to field status of aws_sfn_state_machine.
 func (ssm sfnStateMachineAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ssm.ref.Append("status"))
+	return terra.ReferenceAsString(ssm.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of aws_sfn_state_machine.
 func (ssm sfnStateMachineAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ssm.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ssm.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_sfn_state_machine.
 func (ssm sfnStateMachineAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ssm.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ssm.ref.Append("tags_all"))
 }
 
+// Type returns a reference to field type of aws_sfn_state_machine.
 func (ssm sfnStateMachineAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ssm.ref.Append("type"))
+	return terra.ReferenceAsString(ssm.ref.Append("type"))
 }
 
 func (ssm sfnStateMachineAttributes) LoggingConfiguration() terra.ListValue[sfnstatemachine.LoggingConfigurationAttributes] {
-	return terra.ReferenceList[sfnstatemachine.LoggingConfigurationAttributes](ssm.ref.Append("logging_configuration"))
+	return terra.ReferenceAsList[sfnstatemachine.LoggingConfigurationAttributes](ssm.ref.Append("logging_configuration"))
 }
 
 func (ssm sfnStateMachineAttributes) TracingConfiguration() terra.ListValue[sfnstatemachine.TracingConfigurationAttributes] {
-	return terra.ReferenceList[sfnstatemachine.TracingConfigurationAttributes](ssm.ref.Append("tracing_configuration"))
+	return terra.ReferenceAsList[sfnstatemachine.TracingConfigurationAttributes](ssm.ref.Append("tracing_configuration"))
 }
 
 type sfnStateMachineState struct {

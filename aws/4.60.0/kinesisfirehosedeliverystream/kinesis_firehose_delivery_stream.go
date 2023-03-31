@@ -552,55 +552,55 @@ func (ec ElasticsearchConfigurationAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (ec ElasticsearchConfigurationAttributes) BufferingInterval() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("buffering_interval"))
+	return terra.ReferenceAsNumber(ec.ref.Append("buffering_interval"))
 }
 
 func (ec ElasticsearchConfigurationAttributes) BufferingSize() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("buffering_size"))
+	return terra.ReferenceAsNumber(ec.ref.Append("buffering_size"))
 }
 
 func (ec ElasticsearchConfigurationAttributes) ClusterEndpoint() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("cluster_endpoint"))
+	return terra.ReferenceAsString(ec.ref.Append("cluster_endpoint"))
 }
 
 func (ec ElasticsearchConfigurationAttributes) DomainArn() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("domain_arn"))
+	return terra.ReferenceAsString(ec.ref.Append("domain_arn"))
 }
 
 func (ec ElasticsearchConfigurationAttributes) IndexName() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("index_name"))
+	return terra.ReferenceAsString(ec.ref.Append("index_name"))
 }
 
 func (ec ElasticsearchConfigurationAttributes) IndexRotationPeriod() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("index_rotation_period"))
+	return terra.ReferenceAsString(ec.ref.Append("index_rotation_period"))
 }
 
 func (ec ElasticsearchConfigurationAttributes) RetryDuration() terra.NumberValue {
-	return terra.ReferenceNumber(ec.ref.Append("retry_duration"))
+	return terra.ReferenceAsNumber(ec.ref.Append("retry_duration"))
 }
 
 func (ec ElasticsearchConfigurationAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("role_arn"))
+	return terra.ReferenceAsString(ec.ref.Append("role_arn"))
 }
 
 func (ec ElasticsearchConfigurationAttributes) S3BackupMode() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("s3_backup_mode"))
+	return terra.ReferenceAsString(ec.ref.Append("s3_backup_mode"))
 }
 
 func (ec ElasticsearchConfigurationAttributes) TypeName() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("type_name"))
+	return terra.ReferenceAsString(ec.ref.Append("type_name"))
 }
 
 func (ec ElasticsearchConfigurationAttributes) CloudwatchLoggingOptions() terra.ListValue[ElasticsearchConfigurationCloudwatchLoggingOptionsAttributes] {
-	return terra.ReferenceList[ElasticsearchConfigurationCloudwatchLoggingOptionsAttributes](ec.ref.Append("cloudwatch_logging_options"))
+	return terra.ReferenceAsList[ElasticsearchConfigurationCloudwatchLoggingOptionsAttributes](ec.ref.Append("cloudwatch_logging_options"))
 }
 
 func (ec ElasticsearchConfigurationAttributes) ProcessingConfiguration() terra.ListValue[ElasticsearchConfigurationProcessingConfigurationAttributes] {
-	return terra.ReferenceList[ElasticsearchConfigurationProcessingConfigurationAttributes](ec.ref.Append("processing_configuration"))
+	return terra.ReferenceAsList[ElasticsearchConfigurationProcessingConfigurationAttributes](ec.ref.Append("processing_configuration"))
 }
 
 func (ec ElasticsearchConfigurationAttributes) VpcConfig() terra.ListValue[VpcConfigAttributes] {
-	return terra.ReferenceList[VpcConfigAttributes](ec.ref.Append("vpc_config"))
+	return terra.ReferenceAsList[VpcConfigAttributes](ec.ref.Append("vpc_config"))
 }
 
 type ElasticsearchConfigurationCloudwatchLoggingOptionsAttributes struct {
@@ -620,15 +620,15 @@ func (clo ElasticsearchConfigurationCloudwatchLoggingOptionsAttributes) Internal
 }
 
 func (clo ElasticsearchConfigurationCloudwatchLoggingOptionsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(clo.ref.Append("enabled"))
+	return terra.ReferenceAsBool(clo.ref.Append("enabled"))
 }
 
 func (clo ElasticsearchConfigurationCloudwatchLoggingOptionsAttributes) LogGroupName() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("log_group_name"))
+	return terra.ReferenceAsString(clo.ref.Append("log_group_name"))
 }
 
 func (clo ElasticsearchConfigurationCloudwatchLoggingOptionsAttributes) LogStreamName() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("log_stream_name"))
+	return terra.ReferenceAsString(clo.ref.Append("log_stream_name"))
 }
 
 type ElasticsearchConfigurationProcessingConfigurationAttributes struct {
@@ -648,11 +648,11 @@ func (pc ElasticsearchConfigurationProcessingConfigurationAttributes) InternalTo
 }
 
 func (pc ElasticsearchConfigurationProcessingConfigurationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(pc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(pc.ref.Append("enabled"))
 }
 
 func (pc ElasticsearchConfigurationProcessingConfigurationAttributes) Processors() terra.ListValue[ElasticsearchConfigurationProcessingConfigurationProcessorsAttributes] {
-	return terra.ReferenceList[ElasticsearchConfigurationProcessingConfigurationProcessorsAttributes](pc.ref.Append("processors"))
+	return terra.ReferenceAsList[ElasticsearchConfigurationProcessingConfigurationProcessorsAttributes](pc.ref.Append("processors"))
 }
 
 type ElasticsearchConfigurationProcessingConfigurationProcessorsAttributes struct {
@@ -672,11 +672,11 @@ func (p ElasticsearchConfigurationProcessingConfigurationProcessorsAttributes) I
 }
 
 func (p ElasticsearchConfigurationProcessingConfigurationProcessorsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("type"))
+	return terra.ReferenceAsString(p.ref.Append("type"))
 }
 
 func (p ElasticsearchConfigurationProcessingConfigurationProcessorsAttributes) Parameters() terra.ListValue[ElasticsearchConfigurationProcessingConfigurationProcessorsParametersAttributes] {
-	return terra.ReferenceList[ElasticsearchConfigurationProcessingConfigurationProcessorsParametersAttributes](p.ref.Append("parameters"))
+	return terra.ReferenceAsList[ElasticsearchConfigurationProcessingConfigurationProcessorsParametersAttributes](p.ref.Append("parameters"))
 }
 
 type ElasticsearchConfigurationProcessingConfigurationProcessorsParametersAttributes struct {
@@ -696,11 +696,11 @@ func (p ElasticsearchConfigurationProcessingConfigurationProcessorsParametersAtt
 }
 
 func (p ElasticsearchConfigurationProcessingConfigurationProcessorsParametersAttributes) ParameterName() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("parameter_name"))
+	return terra.ReferenceAsString(p.ref.Append("parameter_name"))
 }
 
 func (p ElasticsearchConfigurationProcessingConfigurationProcessorsParametersAttributes) ParameterValue() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("parameter_value"))
+	return terra.ReferenceAsString(p.ref.Append("parameter_value"))
 }
 
 type VpcConfigAttributes struct {
@@ -720,19 +720,19 @@ func (vc VpcConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vc VpcConfigAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("role_arn"))
+	return terra.ReferenceAsString(vc.ref.Append("role_arn"))
 }
 
 func (vc VpcConfigAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("security_group_ids"))
 }
 
 func (vc VpcConfigAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("subnet_ids"))
 }
 
 func (vc VpcConfigAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(vc.ref.Append("vpc_id"))
 }
 
 type ExtendedS3ConfigurationAttributes struct {
@@ -752,59 +752,59 @@ func (esc ExtendedS3ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (esc ExtendedS3ConfigurationAttributes) BucketArn() terra.StringValue {
-	return terra.ReferenceString(esc.ref.Append("bucket_arn"))
+	return terra.ReferenceAsString(esc.ref.Append("bucket_arn"))
 }
 
 func (esc ExtendedS3ConfigurationAttributes) BufferInterval() terra.NumberValue {
-	return terra.ReferenceNumber(esc.ref.Append("buffer_interval"))
+	return terra.ReferenceAsNumber(esc.ref.Append("buffer_interval"))
 }
 
 func (esc ExtendedS3ConfigurationAttributes) BufferSize() terra.NumberValue {
-	return terra.ReferenceNumber(esc.ref.Append("buffer_size"))
+	return terra.ReferenceAsNumber(esc.ref.Append("buffer_size"))
 }
 
 func (esc ExtendedS3ConfigurationAttributes) CompressionFormat() terra.StringValue {
-	return terra.ReferenceString(esc.ref.Append("compression_format"))
+	return terra.ReferenceAsString(esc.ref.Append("compression_format"))
 }
 
 func (esc ExtendedS3ConfigurationAttributes) ErrorOutputPrefix() terra.StringValue {
-	return terra.ReferenceString(esc.ref.Append("error_output_prefix"))
+	return terra.ReferenceAsString(esc.ref.Append("error_output_prefix"))
 }
 
 func (esc ExtendedS3ConfigurationAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(esc.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(esc.ref.Append("kms_key_arn"))
 }
 
 func (esc ExtendedS3ConfigurationAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(esc.ref.Append("prefix"))
+	return terra.ReferenceAsString(esc.ref.Append("prefix"))
 }
 
 func (esc ExtendedS3ConfigurationAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(esc.ref.Append("role_arn"))
+	return terra.ReferenceAsString(esc.ref.Append("role_arn"))
 }
 
 func (esc ExtendedS3ConfigurationAttributes) S3BackupMode() terra.StringValue {
-	return terra.ReferenceString(esc.ref.Append("s3_backup_mode"))
+	return terra.ReferenceAsString(esc.ref.Append("s3_backup_mode"))
 }
 
 func (esc ExtendedS3ConfigurationAttributes) CloudwatchLoggingOptions() terra.ListValue[ExtendedS3ConfigurationCloudwatchLoggingOptionsAttributes] {
-	return terra.ReferenceList[ExtendedS3ConfigurationCloudwatchLoggingOptionsAttributes](esc.ref.Append("cloudwatch_logging_options"))
+	return terra.ReferenceAsList[ExtendedS3ConfigurationCloudwatchLoggingOptionsAttributes](esc.ref.Append("cloudwatch_logging_options"))
 }
 
 func (esc ExtendedS3ConfigurationAttributes) DataFormatConversionConfiguration() terra.ListValue[DataFormatConversionConfigurationAttributes] {
-	return terra.ReferenceList[DataFormatConversionConfigurationAttributes](esc.ref.Append("data_format_conversion_configuration"))
+	return terra.ReferenceAsList[DataFormatConversionConfigurationAttributes](esc.ref.Append("data_format_conversion_configuration"))
 }
 
 func (esc ExtendedS3ConfigurationAttributes) DynamicPartitioningConfiguration() terra.ListValue[DynamicPartitioningConfigurationAttributes] {
-	return terra.ReferenceList[DynamicPartitioningConfigurationAttributes](esc.ref.Append("dynamic_partitioning_configuration"))
+	return terra.ReferenceAsList[DynamicPartitioningConfigurationAttributes](esc.ref.Append("dynamic_partitioning_configuration"))
 }
 
 func (esc ExtendedS3ConfigurationAttributes) ProcessingConfiguration() terra.ListValue[ExtendedS3ConfigurationProcessingConfigurationAttributes] {
-	return terra.ReferenceList[ExtendedS3ConfigurationProcessingConfigurationAttributes](esc.ref.Append("processing_configuration"))
+	return terra.ReferenceAsList[ExtendedS3ConfigurationProcessingConfigurationAttributes](esc.ref.Append("processing_configuration"))
 }
 
 func (esc ExtendedS3ConfigurationAttributes) S3BackupConfiguration() terra.ListValue[ExtendedS3ConfigurationS3BackupConfigurationAttributes] {
-	return terra.ReferenceList[ExtendedS3ConfigurationS3BackupConfigurationAttributes](esc.ref.Append("s3_backup_configuration"))
+	return terra.ReferenceAsList[ExtendedS3ConfigurationS3BackupConfigurationAttributes](esc.ref.Append("s3_backup_configuration"))
 }
 
 type ExtendedS3ConfigurationCloudwatchLoggingOptionsAttributes struct {
@@ -824,15 +824,15 @@ func (clo ExtendedS3ConfigurationCloudwatchLoggingOptionsAttributes) InternalTok
 }
 
 func (clo ExtendedS3ConfigurationCloudwatchLoggingOptionsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(clo.ref.Append("enabled"))
+	return terra.ReferenceAsBool(clo.ref.Append("enabled"))
 }
 
 func (clo ExtendedS3ConfigurationCloudwatchLoggingOptionsAttributes) LogGroupName() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("log_group_name"))
+	return terra.ReferenceAsString(clo.ref.Append("log_group_name"))
 }
 
 func (clo ExtendedS3ConfigurationCloudwatchLoggingOptionsAttributes) LogStreamName() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("log_stream_name"))
+	return terra.ReferenceAsString(clo.ref.Append("log_stream_name"))
 }
 
 type DataFormatConversionConfigurationAttributes struct {
@@ -852,19 +852,19 @@ func (dfcc DataFormatConversionConfigurationAttributes) InternalTokens() hclwrit
 }
 
 func (dfcc DataFormatConversionConfigurationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(dfcc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(dfcc.ref.Append("enabled"))
 }
 
 func (dfcc DataFormatConversionConfigurationAttributes) InputFormatConfiguration() terra.ListValue[InputFormatConfigurationAttributes] {
-	return terra.ReferenceList[InputFormatConfigurationAttributes](dfcc.ref.Append("input_format_configuration"))
+	return terra.ReferenceAsList[InputFormatConfigurationAttributes](dfcc.ref.Append("input_format_configuration"))
 }
 
 func (dfcc DataFormatConversionConfigurationAttributes) OutputFormatConfiguration() terra.ListValue[OutputFormatConfigurationAttributes] {
-	return terra.ReferenceList[OutputFormatConfigurationAttributes](dfcc.ref.Append("output_format_configuration"))
+	return terra.ReferenceAsList[OutputFormatConfigurationAttributes](dfcc.ref.Append("output_format_configuration"))
 }
 
 func (dfcc DataFormatConversionConfigurationAttributes) SchemaConfiguration() terra.ListValue[SchemaConfigurationAttributes] {
-	return terra.ReferenceList[SchemaConfigurationAttributes](dfcc.ref.Append("schema_configuration"))
+	return terra.ReferenceAsList[SchemaConfigurationAttributes](dfcc.ref.Append("schema_configuration"))
 }
 
 type InputFormatConfigurationAttributes struct {
@@ -884,7 +884,7 @@ func (ifc InputFormatConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ifc InputFormatConfigurationAttributes) Deserializer() terra.ListValue[DeserializerAttributes] {
-	return terra.ReferenceList[DeserializerAttributes](ifc.ref.Append("deserializer"))
+	return terra.ReferenceAsList[DeserializerAttributes](ifc.ref.Append("deserializer"))
 }
 
 type DeserializerAttributes struct {
@@ -904,11 +904,11 @@ func (d DeserializerAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DeserializerAttributes) HiveJsonSerDe() terra.ListValue[HiveJsonSerDeAttributes] {
-	return terra.ReferenceList[HiveJsonSerDeAttributes](d.ref.Append("hive_json_ser_de"))
+	return terra.ReferenceAsList[HiveJsonSerDeAttributes](d.ref.Append("hive_json_ser_de"))
 }
 
 func (d DeserializerAttributes) OpenXJsonSerDe() terra.ListValue[OpenXJsonSerDeAttributes] {
-	return terra.ReferenceList[OpenXJsonSerDeAttributes](d.ref.Append("open_x_json_ser_de"))
+	return terra.ReferenceAsList[OpenXJsonSerDeAttributes](d.ref.Append("open_x_json_ser_de"))
 }
 
 type HiveJsonSerDeAttributes struct {
@@ -928,7 +928,7 @@ func (hjsd HiveJsonSerDeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (hjsd HiveJsonSerDeAttributes) TimestampFormats() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](hjsd.ref.Append("timestamp_formats"))
+	return terra.ReferenceAsList[terra.StringValue](hjsd.ref.Append("timestamp_formats"))
 }
 
 type OpenXJsonSerDeAttributes struct {
@@ -948,15 +948,15 @@ func (oxjsd OpenXJsonSerDeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (oxjsd OpenXJsonSerDeAttributes) CaseInsensitive() terra.BoolValue {
-	return terra.ReferenceBool(oxjsd.ref.Append("case_insensitive"))
+	return terra.ReferenceAsBool(oxjsd.ref.Append("case_insensitive"))
 }
 
 func (oxjsd OpenXJsonSerDeAttributes) ColumnToJsonKeyMappings() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](oxjsd.ref.Append("column_to_json_key_mappings"))
+	return terra.ReferenceAsMap[terra.StringValue](oxjsd.ref.Append("column_to_json_key_mappings"))
 }
 
 func (oxjsd OpenXJsonSerDeAttributes) ConvertDotsInJsonKeysToUnderscores() terra.BoolValue {
-	return terra.ReferenceBool(oxjsd.ref.Append("convert_dots_in_json_keys_to_underscores"))
+	return terra.ReferenceAsBool(oxjsd.ref.Append("convert_dots_in_json_keys_to_underscores"))
 }
 
 type OutputFormatConfigurationAttributes struct {
@@ -976,7 +976,7 @@ func (ofc OutputFormatConfigurationAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (ofc OutputFormatConfigurationAttributes) Serializer() terra.ListValue[SerializerAttributes] {
-	return terra.ReferenceList[SerializerAttributes](ofc.ref.Append("serializer"))
+	return terra.ReferenceAsList[SerializerAttributes](ofc.ref.Append("serializer"))
 }
 
 type SerializerAttributes struct {
@@ -996,11 +996,11 @@ func (s SerializerAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SerializerAttributes) OrcSerDe() terra.ListValue[OrcSerDeAttributes] {
-	return terra.ReferenceList[OrcSerDeAttributes](s.ref.Append("orc_ser_de"))
+	return terra.ReferenceAsList[OrcSerDeAttributes](s.ref.Append("orc_ser_de"))
 }
 
 func (s SerializerAttributes) ParquetSerDe() terra.ListValue[ParquetSerDeAttributes] {
-	return terra.ReferenceList[ParquetSerDeAttributes](s.ref.Append("parquet_ser_de"))
+	return terra.ReferenceAsList[ParquetSerDeAttributes](s.ref.Append("parquet_ser_de"))
 }
 
 type OrcSerDeAttributes struct {
@@ -1020,43 +1020,43 @@ func (osd OrcSerDeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (osd OrcSerDeAttributes) BlockSizeBytes() terra.NumberValue {
-	return terra.ReferenceNumber(osd.ref.Append("block_size_bytes"))
+	return terra.ReferenceAsNumber(osd.ref.Append("block_size_bytes"))
 }
 
 func (osd OrcSerDeAttributes) BloomFilterColumns() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](osd.ref.Append("bloom_filter_columns"))
+	return terra.ReferenceAsList[terra.StringValue](osd.ref.Append("bloom_filter_columns"))
 }
 
 func (osd OrcSerDeAttributes) BloomFilterFalsePositiveProbability() terra.NumberValue {
-	return terra.ReferenceNumber(osd.ref.Append("bloom_filter_false_positive_probability"))
+	return terra.ReferenceAsNumber(osd.ref.Append("bloom_filter_false_positive_probability"))
 }
 
 func (osd OrcSerDeAttributes) Compression() terra.StringValue {
-	return terra.ReferenceString(osd.ref.Append("compression"))
+	return terra.ReferenceAsString(osd.ref.Append("compression"))
 }
 
 func (osd OrcSerDeAttributes) DictionaryKeyThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(osd.ref.Append("dictionary_key_threshold"))
+	return terra.ReferenceAsNumber(osd.ref.Append("dictionary_key_threshold"))
 }
 
 func (osd OrcSerDeAttributes) EnablePadding() terra.BoolValue {
-	return terra.ReferenceBool(osd.ref.Append("enable_padding"))
+	return terra.ReferenceAsBool(osd.ref.Append("enable_padding"))
 }
 
 func (osd OrcSerDeAttributes) FormatVersion() terra.StringValue {
-	return terra.ReferenceString(osd.ref.Append("format_version"))
+	return terra.ReferenceAsString(osd.ref.Append("format_version"))
 }
 
 func (osd OrcSerDeAttributes) PaddingTolerance() terra.NumberValue {
-	return terra.ReferenceNumber(osd.ref.Append("padding_tolerance"))
+	return terra.ReferenceAsNumber(osd.ref.Append("padding_tolerance"))
 }
 
 func (osd OrcSerDeAttributes) RowIndexStride() terra.NumberValue {
-	return terra.ReferenceNumber(osd.ref.Append("row_index_stride"))
+	return terra.ReferenceAsNumber(osd.ref.Append("row_index_stride"))
 }
 
 func (osd OrcSerDeAttributes) StripeSizeBytes() terra.NumberValue {
-	return terra.ReferenceNumber(osd.ref.Append("stripe_size_bytes"))
+	return terra.ReferenceAsNumber(osd.ref.Append("stripe_size_bytes"))
 }
 
 type ParquetSerDeAttributes struct {
@@ -1076,27 +1076,27 @@ func (psd ParquetSerDeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (psd ParquetSerDeAttributes) BlockSizeBytes() terra.NumberValue {
-	return terra.ReferenceNumber(psd.ref.Append("block_size_bytes"))
+	return terra.ReferenceAsNumber(psd.ref.Append("block_size_bytes"))
 }
 
 func (psd ParquetSerDeAttributes) Compression() terra.StringValue {
-	return terra.ReferenceString(psd.ref.Append("compression"))
+	return terra.ReferenceAsString(psd.ref.Append("compression"))
 }
 
 func (psd ParquetSerDeAttributes) EnableDictionaryCompression() terra.BoolValue {
-	return terra.ReferenceBool(psd.ref.Append("enable_dictionary_compression"))
+	return terra.ReferenceAsBool(psd.ref.Append("enable_dictionary_compression"))
 }
 
 func (psd ParquetSerDeAttributes) MaxPaddingBytes() terra.NumberValue {
-	return terra.ReferenceNumber(psd.ref.Append("max_padding_bytes"))
+	return terra.ReferenceAsNumber(psd.ref.Append("max_padding_bytes"))
 }
 
 func (psd ParquetSerDeAttributes) PageSizeBytes() terra.NumberValue {
-	return terra.ReferenceNumber(psd.ref.Append("page_size_bytes"))
+	return terra.ReferenceAsNumber(psd.ref.Append("page_size_bytes"))
 }
 
 func (psd ParquetSerDeAttributes) WriterVersion() terra.StringValue {
-	return terra.ReferenceString(psd.ref.Append("writer_version"))
+	return terra.ReferenceAsString(psd.ref.Append("writer_version"))
 }
 
 type SchemaConfigurationAttributes struct {
@@ -1116,27 +1116,27 @@ func (sc SchemaConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc SchemaConfigurationAttributes) CatalogId() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("catalog_id"))
+	return terra.ReferenceAsString(sc.ref.Append("catalog_id"))
 }
 
 func (sc SchemaConfigurationAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("database_name"))
+	return terra.ReferenceAsString(sc.ref.Append("database_name"))
 }
 
 func (sc SchemaConfigurationAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("region"))
+	return terra.ReferenceAsString(sc.ref.Append("region"))
 }
 
 func (sc SchemaConfigurationAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("role_arn"))
+	return terra.ReferenceAsString(sc.ref.Append("role_arn"))
 }
 
 func (sc SchemaConfigurationAttributes) TableName() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("table_name"))
+	return terra.ReferenceAsString(sc.ref.Append("table_name"))
 }
 
 func (sc SchemaConfigurationAttributes) VersionId() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("version_id"))
+	return terra.ReferenceAsString(sc.ref.Append("version_id"))
 }
 
 type DynamicPartitioningConfigurationAttributes struct {
@@ -1156,11 +1156,11 @@ func (dpc DynamicPartitioningConfigurationAttributes) InternalTokens() hclwrite.
 }
 
 func (dpc DynamicPartitioningConfigurationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(dpc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(dpc.ref.Append("enabled"))
 }
 
 func (dpc DynamicPartitioningConfigurationAttributes) RetryDuration() terra.NumberValue {
-	return terra.ReferenceNumber(dpc.ref.Append("retry_duration"))
+	return terra.ReferenceAsNumber(dpc.ref.Append("retry_duration"))
 }
 
 type ExtendedS3ConfigurationProcessingConfigurationAttributes struct {
@@ -1180,11 +1180,11 @@ func (pc ExtendedS3ConfigurationProcessingConfigurationAttributes) InternalToken
 }
 
 func (pc ExtendedS3ConfigurationProcessingConfigurationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(pc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(pc.ref.Append("enabled"))
 }
 
 func (pc ExtendedS3ConfigurationProcessingConfigurationAttributes) Processors() terra.ListValue[ExtendedS3ConfigurationProcessingConfigurationProcessorsAttributes] {
-	return terra.ReferenceList[ExtendedS3ConfigurationProcessingConfigurationProcessorsAttributes](pc.ref.Append("processors"))
+	return terra.ReferenceAsList[ExtendedS3ConfigurationProcessingConfigurationProcessorsAttributes](pc.ref.Append("processors"))
 }
 
 type ExtendedS3ConfigurationProcessingConfigurationProcessorsAttributes struct {
@@ -1204,11 +1204,11 @@ func (p ExtendedS3ConfigurationProcessingConfigurationProcessorsAttributes) Inte
 }
 
 func (p ExtendedS3ConfigurationProcessingConfigurationProcessorsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("type"))
+	return terra.ReferenceAsString(p.ref.Append("type"))
 }
 
 func (p ExtendedS3ConfigurationProcessingConfigurationProcessorsAttributes) Parameters() terra.ListValue[ExtendedS3ConfigurationProcessingConfigurationProcessorsParametersAttributes] {
-	return terra.ReferenceList[ExtendedS3ConfigurationProcessingConfigurationProcessorsParametersAttributes](p.ref.Append("parameters"))
+	return terra.ReferenceAsList[ExtendedS3ConfigurationProcessingConfigurationProcessorsParametersAttributes](p.ref.Append("parameters"))
 }
 
 type ExtendedS3ConfigurationProcessingConfigurationProcessorsParametersAttributes struct {
@@ -1228,11 +1228,11 @@ func (p ExtendedS3ConfigurationProcessingConfigurationProcessorsParametersAttrib
 }
 
 func (p ExtendedS3ConfigurationProcessingConfigurationProcessorsParametersAttributes) ParameterName() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("parameter_name"))
+	return terra.ReferenceAsString(p.ref.Append("parameter_name"))
 }
 
 func (p ExtendedS3ConfigurationProcessingConfigurationProcessorsParametersAttributes) ParameterValue() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("parameter_value"))
+	return terra.ReferenceAsString(p.ref.Append("parameter_value"))
 }
 
 type ExtendedS3ConfigurationS3BackupConfigurationAttributes struct {
@@ -1252,39 +1252,39 @@ func (sbc ExtendedS3ConfigurationS3BackupConfigurationAttributes) InternalTokens
 }
 
 func (sbc ExtendedS3ConfigurationS3BackupConfigurationAttributes) BucketArn() terra.StringValue {
-	return terra.ReferenceString(sbc.ref.Append("bucket_arn"))
+	return terra.ReferenceAsString(sbc.ref.Append("bucket_arn"))
 }
 
 func (sbc ExtendedS3ConfigurationS3BackupConfigurationAttributes) BufferInterval() terra.NumberValue {
-	return terra.ReferenceNumber(sbc.ref.Append("buffer_interval"))
+	return terra.ReferenceAsNumber(sbc.ref.Append("buffer_interval"))
 }
 
 func (sbc ExtendedS3ConfigurationS3BackupConfigurationAttributes) BufferSize() terra.NumberValue {
-	return terra.ReferenceNumber(sbc.ref.Append("buffer_size"))
+	return terra.ReferenceAsNumber(sbc.ref.Append("buffer_size"))
 }
 
 func (sbc ExtendedS3ConfigurationS3BackupConfigurationAttributes) CompressionFormat() terra.StringValue {
-	return terra.ReferenceString(sbc.ref.Append("compression_format"))
+	return terra.ReferenceAsString(sbc.ref.Append("compression_format"))
 }
 
 func (sbc ExtendedS3ConfigurationS3BackupConfigurationAttributes) ErrorOutputPrefix() terra.StringValue {
-	return terra.ReferenceString(sbc.ref.Append("error_output_prefix"))
+	return terra.ReferenceAsString(sbc.ref.Append("error_output_prefix"))
 }
 
 func (sbc ExtendedS3ConfigurationS3BackupConfigurationAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(sbc.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(sbc.ref.Append("kms_key_arn"))
 }
 
 func (sbc ExtendedS3ConfigurationS3BackupConfigurationAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(sbc.ref.Append("prefix"))
+	return terra.ReferenceAsString(sbc.ref.Append("prefix"))
 }
 
 func (sbc ExtendedS3ConfigurationS3BackupConfigurationAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(sbc.ref.Append("role_arn"))
+	return terra.ReferenceAsString(sbc.ref.Append("role_arn"))
 }
 
 func (sbc ExtendedS3ConfigurationS3BackupConfigurationAttributes) CloudwatchLoggingOptions() terra.ListValue[ExtendedS3ConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes] {
-	return terra.ReferenceList[ExtendedS3ConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes](sbc.ref.Append("cloudwatch_logging_options"))
+	return terra.ReferenceAsList[ExtendedS3ConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes](sbc.ref.Append("cloudwatch_logging_options"))
 }
 
 type ExtendedS3ConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes struct {
@@ -1304,15 +1304,15 @@ func (clo ExtendedS3ConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAt
 }
 
 func (clo ExtendedS3ConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(clo.ref.Append("enabled"))
+	return terra.ReferenceAsBool(clo.ref.Append("enabled"))
 }
 
 func (clo ExtendedS3ConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes) LogGroupName() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("log_group_name"))
+	return terra.ReferenceAsString(clo.ref.Append("log_group_name"))
 }
 
 func (clo ExtendedS3ConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes) LogStreamName() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("log_stream_name"))
+	return terra.ReferenceAsString(clo.ref.Append("log_stream_name"))
 }
 
 type HttpEndpointConfigurationAttributes struct {
@@ -1332,47 +1332,47 @@ func (hec HttpEndpointConfigurationAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (hec HttpEndpointConfigurationAttributes) AccessKey() terra.StringValue {
-	return terra.ReferenceString(hec.ref.Append("access_key"))
+	return terra.ReferenceAsString(hec.ref.Append("access_key"))
 }
 
 func (hec HttpEndpointConfigurationAttributes) BufferingInterval() terra.NumberValue {
-	return terra.ReferenceNumber(hec.ref.Append("buffering_interval"))
+	return terra.ReferenceAsNumber(hec.ref.Append("buffering_interval"))
 }
 
 func (hec HttpEndpointConfigurationAttributes) BufferingSize() terra.NumberValue {
-	return terra.ReferenceNumber(hec.ref.Append("buffering_size"))
+	return terra.ReferenceAsNumber(hec.ref.Append("buffering_size"))
 }
 
 func (hec HttpEndpointConfigurationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(hec.ref.Append("name"))
+	return terra.ReferenceAsString(hec.ref.Append("name"))
 }
 
 func (hec HttpEndpointConfigurationAttributes) RetryDuration() terra.NumberValue {
-	return terra.ReferenceNumber(hec.ref.Append("retry_duration"))
+	return terra.ReferenceAsNumber(hec.ref.Append("retry_duration"))
 }
 
 func (hec HttpEndpointConfigurationAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(hec.ref.Append("role_arn"))
+	return terra.ReferenceAsString(hec.ref.Append("role_arn"))
 }
 
 func (hec HttpEndpointConfigurationAttributes) S3BackupMode() terra.StringValue {
-	return terra.ReferenceString(hec.ref.Append("s3_backup_mode"))
+	return terra.ReferenceAsString(hec.ref.Append("s3_backup_mode"))
 }
 
 func (hec HttpEndpointConfigurationAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(hec.ref.Append("url"))
+	return terra.ReferenceAsString(hec.ref.Append("url"))
 }
 
 func (hec HttpEndpointConfigurationAttributes) CloudwatchLoggingOptions() terra.ListValue[HttpEndpointConfigurationCloudwatchLoggingOptionsAttributes] {
-	return terra.ReferenceList[HttpEndpointConfigurationCloudwatchLoggingOptionsAttributes](hec.ref.Append("cloudwatch_logging_options"))
+	return terra.ReferenceAsList[HttpEndpointConfigurationCloudwatchLoggingOptionsAttributes](hec.ref.Append("cloudwatch_logging_options"))
 }
 
 func (hec HttpEndpointConfigurationAttributes) ProcessingConfiguration() terra.ListValue[HttpEndpointConfigurationProcessingConfigurationAttributes] {
-	return terra.ReferenceList[HttpEndpointConfigurationProcessingConfigurationAttributes](hec.ref.Append("processing_configuration"))
+	return terra.ReferenceAsList[HttpEndpointConfigurationProcessingConfigurationAttributes](hec.ref.Append("processing_configuration"))
 }
 
 func (hec HttpEndpointConfigurationAttributes) RequestConfiguration() terra.ListValue[RequestConfigurationAttributes] {
-	return terra.ReferenceList[RequestConfigurationAttributes](hec.ref.Append("request_configuration"))
+	return terra.ReferenceAsList[RequestConfigurationAttributes](hec.ref.Append("request_configuration"))
 }
 
 type HttpEndpointConfigurationCloudwatchLoggingOptionsAttributes struct {
@@ -1392,15 +1392,15 @@ func (clo HttpEndpointConfigurationCloudwatchLoggingOptionsAttributes) InternalT
 }
 
 func (clo HttpEndpointConfigurationCloudwatchLoggingOptionsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(clo.ref.Append("enabled"))
+	return terra.ReferenceAsBool(clo.ref.Append("enabled"))
 }
 
 func (clo HttpEndpointConfigurationCloudwatchLoggingOptionsAttributes) LogGroupName() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("log_group_name"))
+	return terra.ReferenceAsString(clo.ref.Append("log_group_name"))
 }
 
 func (clo HttpEndpointConfigurationCloudwatchLoggingOptionsAttributes) LogStreamName() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("log_stream_name"))
+	return terra.ReferenceAsString(clo.ref.Append("log_stream_name"))
 }
 
 type HttpEndpointConfigurationProcessingConfigurationAttributes struct {
@@ -1420,11 +1420,11 @@ func (pc HttpEndpointConfigurationProcessingConfigurationAttributes) InternalTok
 }
 
 func (pc HttpEndpointConfigurationProcessingConfigurationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(pc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(pc.ref.Append("enabled"))
 }
 
 func (pc HttpEndpointConfigurationProcessingConfigurationAttributes) Processors() terra.ListValue[HttpEndpointConfigurationProcessingConfigurationProcessorsAttributes] {
-	return terra.ReferenceList[HttpEndpointConfigurationProcessingConfigurationProcessorsAttributes](pc.ref.Append("processors"))
+	return terra.ReferenceAsList[HttpEndpointConfigurationProcessingConfigurationProcessorsAttributes](pc.ref.Append("processors"))
 }
 
 type HttpEndpointConfigurationProcessingConfigurationProcessorsAttributes struct {
@@ -1444,11 +1444,11 @@ func (p HttpEndpointConfigurationProcessingConfigurationProcessorsAttributes) In
 }
 
 func (p HttpEndpointConfigurationProcessingConfigurationProcessorsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("type"))
+	return terra.ReferenceAsString(p.ref.Append("type"))
 }
 
 func (p HttpEndpointConfigurationProcessingConfigurationProcessorsAttributes) Parameters() terra.ListValue[HttpEndpointConfigurationProcessingConfigurationProcessorsParametersAttributes] {
-	return terra.ReferenceList[HttpEndpointConfigurationProcessingConfigurationProcessorsParametersAttributes](p.ref.Append("parameters"))
+	return terra.ReferenceAsList[HttpEndpointConfigurationProcessingConfigurationProcessorsParametersAttributes](p.ref.Append("parameters"))
 }
 
 type HttpEndpointConfigurationProcessingConfigurationProcessorsParametersAttributes struct {
@@ -1468,11 +1468,11 @@ func (p HttpEndpointConfigurationProcessingConfigurationProcessorsParametersAttr
 }
 
 func (p HttpEndpointConfigurationProcessingConfigurationProcessorsParametersAttributes) ParameterName() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("parameter_name"))
+	return terra.ReferenceAsString(p.ref.Append("parameter_name"))
 }
 
 func (p HttpEndpointConfigurationProcessingConfigurationProcessorsParametersAttributes) ParameterValue() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("parameter_value"))
+	return terra.ReferenceAsString(p.ref.Append("parameter_value"))
 }
 
 type RequestConfigurationAttributes struct {
@@ -1492,11 +1492,11 @@ func (rc RequestConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rc RequestConfigurationAttributes) ContentEncoding() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("content_encoding"))
+	return terra.ReferenceAsString(rc.ref.Append("content_encoding"))
 }
 
 func (rc RequestConfigurationAttributes) CommonAttributes() terra.ListValue[CommonAttributesAttributes] {
-	return terra.ReferenceList[CommonAttributesAttributes](rc.ref.Append("common_attributes"))
+	return terra.ReferenceAsList[CommonAttributesAttributes](rc.ref.Append("common_attributes"))
 }
 
 type CommonAttributesAttributes struct {
@@ -1516,11 +1516,11 @@ func (ca CommonAttributesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ca CommonAttributesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("name"))
+	return terra.ReferenceAsString(ca.ref.Append("name"))
 }
 
 func (ca CommonAttributesAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(ca.ref.Append("value"))
+	return terra.ReferenceAsString(ca.ref.Append("value"))
 }
 
 type KinesisSourceConfigurationAttributes struct {
@@ -1540,11 +1540,11 @@ func (ksc KinesisSourceConfigurationAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (ksc KinesisSourceConfigurationAttributes) KinesisStreamArn() terra.StringValue {
-	return terra.ReferenceString(ksc.ref.Append("kinesis_stream_arn"))
+	return terra.ReferenceAsString(ksc.ref.Append("kinesis_stream_arn"))
 }
 
 func (ksc KinesisSourceConfigurationAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(ksc.ref.Append("role_arn"))
+	return terra.ReferenceAsString(ksc.ref.Append("role_arn"))
 }
 
 type RedshiftConfigurationAttributes struct {
@@ -1564,51 +1564,51 @@ func (rc RedshiftConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rc RedshiftConfigurationAttributes) ClusterJdbcurl() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("cluster_jdbcurl"))
+	return terra.ReferenceAsString(rc.ref.Append("cluster_jdbcurl"))
 }
 
 func (rc RedshiftConfigurationAttributes) CopyOptions() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("copy_options"))
+	return terra.ReferenceAsString(rc.ref.Append("copy_options"))
 }
 
 func (rc RedshiftConfigurationAttributes) DataTableColumns() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("data_table_columns"))
+	return terra.ReferenceAsString(rc.ref.Append("data_table_columns"))
 }
 
 func (rc RedshiftConfigurationAttributes) DataTableName() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("data_table_name"))
+	return terra.ReferenceAsString(rc.ref.Append("data_table_name"))
 }
 
 func (rc RedshiftConfigurationAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("password"))
+	return terra.ReferenceAsString(rc.ref.Append("password"))
 }
 
 func (rc RedshiftConfigurationAttributes) RetryDuration() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("retry_duration"))
+	return terra.ReferenceAsNumber(rc.ref.Append("retry_duration"))
 }
 
 func (rc RedshiftConfigurationAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("role_arn"))
+	return terra.ReferenceAsString(rc.ref.Append("role_arn"))
 }
 
 func (rc RedshiftConfigurationAttributes) S3BackupMode() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("s3_backup_mode"))
+	return terra.ReferenceAsString(rc.ref.Append("s3_backup_mode"))
 }
 
 func (rc RedshiftConfigurationAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("username"))
+	return terra.ReferenceAsString(rc.ref.Append("username"))
 }
 
 func (rc RedshiftConfigurationAttributes) CloudwatchLoggingOptions() terra.ListValue[RedshiftConfigurationCloudwatchLoggingOptionsAttributes] {
-	return terra.ReferenceList[RedshiftConfigurationCloudwatchLoggingOptionsAttributes](rc.ref.Append("cloudwatch_logging_options"))
+	return terra.ReferenceAsList[RedshiftConfigurationCloudwatchLoggingOptionsAttributes](rc.ref.Append("cloudwatch_logging_options"))
 }
 
 func (rc RedshiftConfigurationAttributes) ProcessingConfiguration() terra.ListValue[RedshiftConfigurationProcessingConfigurationAttributes] {
-	return terra.ReferenceList[RedshiftConfigurationProcessingConfigurationAttributes](rc.ref.Append("processing_configuration"))
+	return terra.ReferenceAsList[RedshiftConfigurationProcessingConfigurationAttributes](rc.ref.Append("processing_configuration"))
 }
 
 func (rc RedshiftConfigurationAttributes) S3BackupConfiguration() terra.ListValue[RedshiftConfigurationS3BackupConfigurationAttributes] {
-	return terra.ReferenceList[RedshiftConfigurationS3BackupConfigurationAttributes](rc.ref.Append("s3_backup_configuration"))
+	return terra.ReferenceAsList[RedshiftConfigurationS3BackupConfigurationAttributes](rc.ref.Append("s3_backup_configuration"))
 }
 
 type RedshiftConfigurationCloudwatchLoggingOptionsAttributes struct {
@@ -1628,15 +1628,15 @@ func (clo RedshiftConfigurationCloudwatchLoggingOptionsAttributes) InternalToken
 }
 
 func (clo RedshiftConfigurationCloudwatchLoggingOptionsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(clo.ref.Append("enabled"))
+	return terra.ReferenceAsBool(clo.ref.Append("enabled"))
 }
 
 func (clo RedshiftConfigurationCloudwatchLoggingOptionsAttributes) LogGroupName() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("log_group_name"))
+	return terra.ReferenceAsString(clo.ref.Append("log_group_name"))
 }
 
 func (clo RedshiftConfigurationCloudwatchLoggingOptionsAttributes) LogStreamName() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("log_stream_name"))
+	return terra.ReferenceAsString(clo.ref.Append("log_stream_name"))
 }
 
 type RedshiftConfigurationProcessingConfigurationAttributes struct {
@@ -1656,11 +1656,11 @@ func (pc RedshiftConfigurationProcessingConfigurationAttributes) InternalTokens(
 }
 
 func (pc RedshiftConfigurationProcessingConfigurationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(pc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(pc.ref.Append("enabled"))
 }
 
 func (pc RedshiftConfigurationProcessingConfigurationAttributes) Processors() terra.ListValue[RedshiftConfigurationProcessingConfigurationProcessorsAttributes] {
-	return terra.ReferenceList[RedshiftConfigurationProcessingConfigurationProcessorsAttributes](pc.ref.Append("processors"))
+	return terra.ReferenceAsList[RedshiftConfigurationProcessingConfigurationProcessorsAttributes](pc.ref.Append("processors"))
 }
 
 type RedshiftConfigurationProcessingConfigurationProcessorsAttributes struct {
@@ -1680,11 +1680,11 @@ func (p RedshiftConfigurationProcessingConfigurationProcessorsAttributes) Intern
 }
 
 func (p RedshiftConfigurationProcessingConfigurationProcessorsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("type"))
+	return terra.ReferenceAsString(p.ref.Append("type"))
 }
 
 func (p RedshiftConfigurationProcessingConfigurationProcessorsAttributes) Parameters() terra.ListValue[RedshiftConfigurationProcessingConfigurationProcessorsParametersAttributes] {
-	return terra.ReferenceList[RedshiftConfigurationProcessingConfigurationProcessorsParametersAttributes](p.ref.Append("parameters"))
+	return terra.ReferenceAsList[RedshiftConfigurationProcessingConfigurationProcessorsParametersAttributes](p.ref.Append("parameters"))
 }
 
 type RedshiftConfigurationProcessingConfigurationProcessorsParametersAttributes struct {
@@ -1704,11 +1704,11 @@ func (p RedshiftConfigurationProcessingConfigurationProcessorsParametersAttribut
 }
 
 func (p RedshiftConfigurationProcessingConfigurationProcessorsParametersAttributes) ParameterName() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("parameter_name"))
+	return terra.ReferenceAsString(p.ref.Append("parameter_name"))
 }
 
 func (p RedshiftConfigurationProcessingConfigurationProcessorsParametersAttributes) ParameterValue() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("parameter_value"))
+	return terra.ReferenceAsString(p.ref.Append("parameter_value"))
 }
 
 type RedshiftConfigurationS3BackupConfigurationAttributes struct {
@@ -1728,39 +1728,39 @@ func (sbc RedshiftConfigurationS3BackupConfigurationAttributes) InternalTokens()
 }
 
 func (sbc RedshiftConfigurationS3BackupConfigurationAttributes) BucketArn() terra.StringValue {
-	return terra.ReferenceString(sbc.ref.Append("bucket_arn"))
+	return terra.ReferenceAsString(sbc.ref.Append("bucket_arn"))
 }
 
 func (sbc RedshiftConfigurationS3BackupConfigurationAttributes) BufferInterval() terra.NumberValue {
-	return terra.ReferenceNumber(sbc.ref.Append("buffer_interval"))
+	return terra.ReferenceAsNumber(sbc.ref.Append("buffer_interval"))
 }
 
 func (sbc RedshiftConfigurationS3BackupConfigurationAttributes) BufferSize() terra.NumberValue {
-	return terra.ReferenceNumber(sbc.ref.Append("buffer_size"))
+	return terra.ReferenceAsNumber(sbc.ref.Append("buffer_size"))
 }
 
 func (sbc RedshiftConfigurationS3BackupConfigurationAttributes) CompressionFormat() terra.StringValue {
-	return terra.ReferenceString(sbc.ref.Append("compression_format"))
+	return terra.ReferenceAsString(sbc.ref.Append("compression_format"))
 }
 
 func (sbc RedshiftConfigurationS3BackupConfigurationAttributes) ErrorOutputPrefix() terra.StringValue {
-	return terra.ReferenceString(sbc.ref.Append("error_output_prefix"))
+	return terra.ReferenceAsString(sbc.ref.Append("error_output_prefix"))
 }
 
 func (sbc RedshiftConfigurationS3BackupConfigurationAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(sbc.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(sbc.ref.Append("kms_key_arn"))
 }
 
 func (sbc RedshiftConfigurationS3BackupConfigurationAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(sbc.ref.Append("prefix"))
+	return terra.ReferenceAsString(sbc.ref.Append("prefix"))
 }
 
 func (sbc RedshiftConfigurationS3BackupConfigurationAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(sbc.ref.Append("role_arn"))
+	return terra.ReferenceAsString(sbc.ref.Append("role_arn"))
 }
 
 func (sbc RedshiftConfigurationS3BackupConfigurationAttributes) CloudwatchLoggingOptions() terra.ListValue[RedshiftConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes] {
-	return terra.ReferenceList[RedshiftConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes](sbc.ref.Append("cloudwatch_logging_options"))
+	return terra.ReferenceAsList[RedshiftConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes](sbc.ref.Append("cloudwatch_logging_options"))
 }
 
 type RedshiftConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes struct {
@@ -1780,15 +1780,15 @@ func (clo RedshiftConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttr
 }
 
 func (clo RedshiftConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(clo.ref.Append("enabled"))
+	return terra.ReferenceAsBool(clo.ref.Append("enabled"))
 }
 
 func (clo RedshiftConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes) LogGroupName() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("log_group_name"))
+	return terra.ReferenceAsString(clo.ref.Append("log_group_name"))
 }
 
 func (clo RedshiftConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes) LogStreamName() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("log_stream_name"))
+	return terra.ReferenceAsString(clo.ref.Append("log_stream_name"))
 }
 
 type S3ConfigurationAttributes struct {
@@ -1808,39 +1808,39 @@ func (sc S3ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc S3ConfigurationAttributes) BucketArn() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("bucket_arn"))
+	return terra.ReferenceAsString(sc.ref.Append("bucket_arn"))
 }
 
 func (sc S3ConfigurationAttributes) BufferInterval() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("buffer_interval"))
+	return terra.ReferenceAsNumber(sc.ref.Append("buffer_interval"))
 }
 
 func (sc S3ConfigurationAttributes) BufferSize() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("buffer_size"))
+	return terra.ReferenceAsNumber(sc.ref.Append("buffer_size"))
 }
 
 func (sc S3ConfigurationAttributes) CompressionFormat() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("compression_format"))
+	return terra.ReferenceAsString(sc.ref.Append("compression_format"))
 }
 
 func (sc S3ConfigurationAttributes) ErrorOutputPrefix() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("error_output_prefix"))
+	return terra.ReferenceAsString(sc.ref.Append("error_output_prefix"))
 }
 
 func (sc S3ConfigurationAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(sc.ref.Append("kms_key_arn"))
 }
 
 func (sc S3ConfigurationAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("prefix"))
+	return terra.ReferenceAsString(sc.ref.Append("prefix"))
 }
 
 func (sc S3ConfigurationAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("role_arn"))
+	return terra.ReferenceAsString(sc.ref.Append("role_arn"))
 }
 
 func (sc S3ConfigurationAttributes) CloudwatchLoggingOptions() terra.ListValue[S3ConfigurationCloudwatchLoggingOptionsAttributes] {
-	return terra.ReferenceList[S3ConfigurationCloudwatchLoggingOptionsAttributes](sc.ref.Append("cloudwatch_logging_options"))
+	return terra.ReferenceAsList[S3ConfigurationCloudwatchLoggingOptionsAttributes](sc.ref.Append("cloudwatch_logging_options"))
 }
 
 type S3ConfigurationCloudwatchLoggingOptionsAttributes struct {
@@ -1860,15 +1860,15 @@ func (clo S3ConfigurationCloudwatchLoggingOptionsAttributes) InternalTokens() hc
 }
 
 func (clo S3ConfigurationCloudwatchLoggingOptionsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(clo.ref.Append("enabled"))
+	return terra.ReferenceAsBool(clo.ref.Append("enabled"))
 }
 
 func (clo S3ConfigurationCloudwatchLoggingOptionsAttributes) LogGroupName() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("log_group_name"))
+	return terra.ReferenceAsString(clo.ref.Append("log_group_name"))
 }
 
 func (clo S3ConfigurationCloudwatchLoggingOptionsAttributes) LogStreamName() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("log_stream_name"))
+	return terra.ReferenceAsString(clo.ref.Append("log_stream_name"))
 }
 
 type ServerSideEncryptionAttributes struct {
@@ -1888,15 +1888,15 @@ func (sse ServerSideEncryptionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sse ServerSideEncryptionAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(sse.ref.Append("enabled"))
+	return terra.ReferenceAsBool(sse.ref.Append("enabled"))
 }
 
 func (sse ServerSideEncryptionAttributes) KeyArn() terra.StringValue {
-	return terra.ReferenceString(sse.ref.Append("key_arn"))
+	return terra.ReferenceAsString(sse.ref.Append("key_arn"))
 }
 
 func (sse ServerSideEncryptionAttributes) KeyType() terra.StringValue {
-	return terra.ReferenceString(sse.ref.Append("key_type"))
+	return terra.ReferenceAsString(sse.ref.Append("key_type"))
 }
 
 type SplunkConfigurationAttributes struct {
@@ -1916,35 +1916,35 @@ func (sc SplunkConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc SplunkConfigurationAttributes) HecAcknowledgmentTimeout() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("hec_acknowledgment_timeout"))
+	return terra.ReferenceAsNumber(sc.ref.Append("hec_acknowledgment_timeout"))
 }
 
 func (sc SplunkConfigurationAttributes) HecEndpoint() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("hec_endpoint"))
+	return terra.ReferenceAsString(sc.ref.Append("hec_endpoint"))
 }
 
 func (sc SplunkConfigurationAttributes) HecEndpointType() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("hec_endpoint_type"))
+	return terra.ReferenceAsString(sc.ref.Append("hec_endpoint_type"))
 }
 
 func (sc SplunkConfigurationAttributes) HecToken() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("hec_token"))
+	return terra.ReferenceAsString(sc.ref.Append("hec_token"))
 }
 
 func (sc SplunkConfigurationAttributes) RetryDuration() terra.NumberValue {
-	return terra.ReferenceNumber(sc.ref.Append("retry_duration"))
+	return terra.ReferenceAsNumber(sc.ref.Append("retry_duration"))
 }
 
 func (sc SplunkConfigurationAttributes) S3BackupMode() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("s3_backup_mode"))
+	return terra.ReferenceAsString(sc.ref.Append("s3_backup_mode"))
 }
 
 func (sc SplunkConfigurationAttributes) CloudwatchLoggingOptions() terra.ListValue[SplunkConfigurationCloudwatchLoggingOptionsAttributes] {
-	return terra.ReferenceList[SplunkConfigurationCloudwatchLoggingOptionsAttributes](sc.ref.Append("cloudwatch_logging_options"))
+	return terra.ReferenceAsList[SplunkConfigurationCloudwatchLoggingOptionsAttributes](sc.ref.Append("cloudwatch_logging_options"))
 }
 
 func (sc SplunkConfigurationAttributes) ProcessingConfiguration() terra.ListValue[SplunkConfigurationProcessingConfigurationAttributes] {
-	return terra.ReferenceList[SplunkConfigurationProcessingConfigurationAttributes](sc.ref.Append("processing_configuration"))
+	return terra.ReferenceAsList[SplunkConfigurationProcessingConfigurationAttributes](sc.ref.Append("processing_configuration"))
 }
 
 type SplunkConfigurationCloudwatchLoggingOptionsAttributes struct {
@@ -1964,15 +1964,15 @@ func (clo SplunkConfigurationCloudwatchLoggingOptionsAttributes) InternalTokens(
 }
 
 func (clo SplunkConfigurationCloudwatchLoggingOptionsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(clo.ref.Append("enabled"))
+	return terra.ReferenceAsBool(clo.ref.Append("enabled"))
 }
 
 func (clo SplunkConfigurationCloudwatchLoggingOptionsAttributes) LogGroupName() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("log_group_name"))
+	return terra.ReferenceAsString(clo.ref.Append("log_group_name"))
 }
 
 func (clo SplunkConfigurationCloudwatchLoggingOptionsAttributes) LogStreamName() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("log_stream_name"))
+	return terra.ReferenceAsString(clo.ref.Append("log_stream_name"))
 }
 
 type SplunkConfigurationProcessingConfigurationAttributes struct {
@@ -1992,11 +1992,11 @@ func (pc SplunkConfigurationProcessingConfigurationAttributes) InternalTokens() 
 }
 
 func (pc SplunkConfigurationProcessingConfigurationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(pc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(pc.ref.Append("enabled"))
 }
 
 func (pc SplunkConfigurationProcessingConfigurationAttributes) Processors() terra.ListValue[SplunkConfigurationProcessingConfigurationProcessorsAttributes] {
-	return terra.ReferenceList[SplunkConfigurationProcessingConfigurationProcessorsAttributes](pc.ref.Append("processors"))
+	return terra.ReferenceAsList[SplunkConfigurationProcessingConfigurationProcessorsAttributes](pc.ref.Append("processors"))
 }
 
 type SplunkConfigurationProcessingConfigurationProcessorsAttributes struct {
@@ -2016,11 +2016,11 @@ func (p SplunkConfigurationProcessingConfigurationProcessorsAttributes) Internal
 }
 
 func (p SplunkConfigurationProcessingConfigurationProcessorsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("type"))
+	return terra.ReferenceAsString(p.ref.Append("type"))
 }
 
 func (p SplunkConfigurationProcessingConfigurationProcessorsAttributes) Parameters() terra.ListValue[SplunkConfigurationProcessingConfigurationProcessorsParametersAttributes] {
-	return terra.ReferenceList[SplunkConfigurationProcessingConfigurationProcessorsParametersAttributes](p.ref.Append("parameters"))
+	return terra.ReferenceAsList[SplunkConfigurationProcessingConfigurationProcessorsParametersAttributes](p.ref.Append("parameters"))
 }
 
 type SplunkConfigurationProcessingConfigurationProcessorsParametersAttributes struct {
@@ -2040,11 +2040,11 @@ func (p SplunkConfigurationProcessingConfigurationProcessorsParametersAttributes
 }
 
 func (p SplunkConfigurationProcessingConfigurationProcessorsParametersAttributes) ParameterName() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("parameter_name"))
+	return terra.ReferenceAsString(p.ref.Append("parameter_name"))
 }
 
 func (p SplunkConfigurationProcessingConfigurationProcessorsParametersAttributes) ParameterValue() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("parameter_value"))
+	return terra.ReferenceAsString(p.ref.Append("parameter_value"))
 }
 
 type TimeoutsAttributes struct {
@@ -2064,15 +2064,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ElasticsearchConfigurationState struct {

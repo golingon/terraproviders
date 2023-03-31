@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataCloudfrontOriginAccessIdentity creates a new instance of [DataCloudfrontOriginAccessIdentity].
 func NewDataCloudfrontOriginAccessIdentity(name string, args DataCloudfrontOriginAccessIdentityArgs) *DataCloudfrontOriginAccessIdentity {
 	return &DataCloudfrontOriginAccessIdentity{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataCloudfrontOriginAccessIdentity(name string, args DataCloudfrontOrigi
 
 var _ terra.DataResource = (*DataCloudfrontOriginAccessIdentity)(nil)
 
+// DataCloudfrontOriginAccessIdentity represents the Terraform data resource aws_cloudfront_origin_access_identity.
 type DataCloudfrontOriginAccessIdentity struct {
 	Name string
 	Args DataCloudfrontOriginAccessIdentityArgs
 }
 
+// DataSource returns the Terraform object type for [DataCloudfrontOriginAccessIdentity].
 func (coai *DataCloudfrontOriginAccessIdentity) DataSource() string {
 	return "aws_cloudfront_origin_access_identity"
 }
 
+// LocalName returns the local name for [DataCloudfrontOriginAccessIdentity].
 func (coai *DataCloudfrontOriginAccessIdentity) LocalName() string {
 	return coai.Name
 }
 
+// Configuration returns the configuration (args) for [DataCloudfrontOriginAccessIdentity].
 func (coai *DataCloudfrontOriginAccessIdentity) Configuration() interface{} {
 	return coai.Args
 }
 
+// Attributes returns the attributes for [DataCloudfrontOriginAccessIdentity].
 func (coai *DataCloudfrontOriginAccessIdentity) Attributes() dataCloudfrontOriginAccessIdentityAttributes {
 	return dataCloudfrontOriginAccessIdentityAttributes{ref: terra.ReferenceDataResource(coai)}
 }
 
+// DataCloudfrontOriginAccessIdentityArgs contains the configurations for aws_cloudfront_origin_access_identity.
 type DataCloudfrontOriginAccessIdentityArgs struct {
 	// Id: string, required
 	Id terra.StringValue `hcl:"id,attr" validate:"required"`
@@ -42,30 +49,37 @@ type dataCloudfrontOriginAccessIdentityAttributes struct {
 	ref terra.Reference
 }
 
+// CallerReference returns a reference to field caller_reference of aws_cloudfront_origin_access_identity.
 func (coai dataCloudfrontOriginAccessIdentityAttributes) CallerReference() terra.StringValue {
-	return terra.ReferenceString(coai.ref.Append("caller_reference"))
+	return terra.ReferenceAsString(coai.ref.Append("caller_reference"))
 }
 
+// CloudfrontAccessIdentityPath returns a reference to field cloudfront_access_identity_path of aws_cloudfront_origin_access_identity.
 func (coai dataCloudfrontOriginAccessIdentityAttributes) CloudfrontAccessIdentityPath() terra.StringValue {
-	return terra.ReferenceString(coai.ref.Append("cloudfront_access_identity_path"))
+	return terra.ReferenceAsString(coai.ref.Append("cloudfront_access_identity_path"))
 }
 
+// Comment returns a reference to field comment of aws_cloudfront_origin_access_identity.
 func (coai dataCloudfrontOriginAccessIdentityAttributes) Comment() terra.StringValue {
-	return terra.ReferenceString(coai.ref.Append("comment"))
+	return terra.ReferenceAsString(coai.ref.Append("comment"))
 }
 
+// Etag returns a reference to field etag of aws_cloudfront_origin_access_identity.
 func (coai dataCloudfrontOriginAccessIdentityAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(coai.ref.Append("etag"))
+	return terra.ReferenceAsString(coai.ref.Append("etag"))
 }
 
+// IamArn returns a reference to field iam_arn of aws_cloudfront_origin_access_identity.
 func (coai dataCloudfrontOriginAccessIdentityAttributes) IamArn() terra.StringValue {
-	return terra.ReferenceString(coai.ref.Append("iam_arn"))
+	return terra.ReferenceAsString(coai.ref.Append("iam_arn"))
 }
 
+// Id returns a reference to field id of aws_cloudfront_origin_access_identity.
 func (coai dataCloudfrontOriginAccessIdentityAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(coai.ref.Append("id"))
+	return terra.ReferenceAsString(coai.ref.Append("id"))
 }
 
+// S3CanonicalUserId returns a reference to field s3_canonical_user_id of aws_cloudfront_origin_access_identity.
 func (coai dataCloudfrontOriginAccessIdentityAttributes) S3CanonicalUserId() terra.StringValue {
-	return terra.ReferenceString(coai.ref.Append("s3_canonical_user_id"))
+	return terra.ReferenceAsString(coai.ref.Append("s3_canonical_user_id"))
 }

@@ -42,15 +42,15 @@ func (aas AccountAggregationSourceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (aas AccountAggregationSourceAttributes) AccountIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](aas.ref.Append("account_ids"))
+	return terra.ReferenceAsList[terra.StringValue](aas.ref.Append("account_ids"))
 }
 
 func (aas AccountAggregationSourceAttributes) AllRegions() terra.BoolValue {
-	return terra.ReferenceBool(aas.ref.Append("all_regions"))
+	return terra.ReferenceAsBool(aas.ref.Append("all_regions"))
 }
 
 func (aas AccountAggregationSourceAttributes) Regions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](aas.ref.Append("regions"))
+	return terra.ReferenceAsList[terra.StringValue](aas.ref.Append("regions"))
 }
 
 type OrganizationAggregationSourceAttributes struct {
@@ -70,15 +70,15 @@ func (oas OrganizationAggregationSourceAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (oas OrganizationAggregationSourceAttributes) AllRegions() terra.BoolValue {
-	return terra.ReferenceBool(oas.ref.Append("all_regions"))
+	return terra.ReferenceAsBool(oas.ref.Append("all_regions"))
 }
 
 func (oas OrganizationAggregationSourceAttributes) Regions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](oas.ref.Append("regions"))
+	return terra.ReferenceAsList[terra.StringValue](oas.ref.Append("regions"))
 }
 
 func (oas OrganizationAggregationSourceAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(oas.ref.Append("role_arn"))
+	return terra.ReferenceAsString(oas.ref.Append("role_arn"))
 }
 
 type AccountAggregationSourceState struct {

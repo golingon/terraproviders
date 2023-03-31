@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSesv2DedicatedIpPool creates a new instance of [Sesv2DedicatedIpPool].
 func NewSesv2DedicatedIpPool(name string, args Sesv2DedicatedIpPoolArgs) *Sesv2DedicatedIpPool {
 	return &Sesv2DedicatedIpPool{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSesv2DedicatedIpPool(name string, args Sesv2DedicatedIpPoolArgs) *Sesv2D
 
 var _ terra.Resource = (*Sesv2DedicatedIpPool)(nil)
 
+// Sesv2DedicatedIpPool represents the Terraform resource aws_sesv2_dedicated_ip_pool.
 type Sesv2DedicatedIpPool struct {
-	Name  string
-	Args  Sesv2DedicatedIpPoolArgs
-	state *sesv2DedicatedIpPoolState
+	Name      string
+	Args      Sesv2DedicatedIpPoolArgs
+	state     *sesv2DedicatedIpPoolState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Sesv2DedicatedIpPool].
 func (sdip *Sesv2DedicatedIpPool) Type() string {
 	return "aws_sesv2_dedicated_ip_pool"
 }
 
+// LocalName returns the local name for [Sesv2DedicatedIpPool].
 func (sdip *Sesv2DedicatedIpPool) LocalName() string {
 	return sdip.Name
 }
 
+// Configuration returns the configuration (args) for [Sesv2DedicatedIpPool].
 func (sdip *Sesv2DedicatedIpPool) Configuration() interface{} {
 	return sdip.Args
 }
 
+// DependOn is used for other resources to depend on [Sesv2DedicatedIpPool].
+func (sdip *Sesv2DedicatedIpPool) DependOn() terra.Reference {
+	return terra.ReferenceResource(sdip)
+}
+
+// Dependencies returns the list of resources [Sesv2DedicatedIpPool] depends_on.
+func (sdip *Sesv2DedicatedIpPool) Dependencies() terra.Dependencies {
+	return sdip.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Sesv2DedicatedIpPool].
+func (sdip *Sesv2DedicatedIpPool) LifecycleManagement() *terra.Lifecycle {
+	return sdip.Lifecycle
+}
+
+// Attributes returns the attributes for [Sesv2DedicatedIpPool].
 func (sdip *Sesv2DedicatedIpPool) Attributes() sesv2DedicatedIpPoolAttributes {
 	return sesv2DedicatedIpPoolAttributes{ref: terra.ReferenceResource(sdip)}
 }
 
+// ImportState imports the given attribute values into [Sesv2DedicatedIpPool]'s state.
 func (sdip *Sesv2DedicatedIpPool) ImportState(av io.Reader) error {
 	sdip.state = &sesv2DedicatedIpPoolState{}
 	if err := json.NewDecoder(av).Decode(sdip.state); err != nil {
@@ -49,10 +73,12 @@ func (sdip *Sesv2DedicatedIpPool) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Sesv2DedicatedIpPool] has state.
 func (sdip *Sesv2DedicatedIpPool) State() (*sesv2DedicatedIpPoolState, bool) {
 	return sdip.state, sdip.state != nil
 }
 
+// StateMust returns the state for [Sesv2DedicatedIpPool]. Panics if the state is nil.
 func (sdip *Sesv2DedicatedIpPool) StateMust() *sesv2DedicatedIpPoolState {
 	if sdip.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sdip.Type(), sdip.LocalName()))
@@ -60,10 +86,7 @@ func (sdip *Sesv2DedicatedIpPool) StateMust() *sesv2DedicatedIpPoolState {
 	return sdip.state
 }
 
-func (sdip *Sesv2DedicatedIpPool) DependOn() terra.Reference {
-	return terra.ReferenceResource(sdip)
-}
-
+// Sesv2DedicatedIpPoolArgs contains the configurations for aws_sesv2_dedicated_ip_pool.
 type Sesv2DedicatedIpPoolArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -77,39 +100,43 @@ type Sesv2DedicatedIpPoolArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Timeouts: optional
 	Timeouts *sesv2dedicatedippool.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Sesv2DedicatedIpPool depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sesv2DedicatedIpPoolAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_sesv2_dedicated_ip_pool.
 func (sdip sesv2DedicatedIpPoolAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sdip.ref.Append("arn"))
+	return terra.ReferenceAsString(sdip.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_sesv2_dedicated_ip_pool.
 func (sdip sesv2DedicatedIpPoolAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sdip.ref.Append("id"))
+	return terra.ReferenceAsString(sdip.ref.Append("id"))
 }
 
+// PoolName returns a reference to field pool_name of aws_sesv2_dedicated_ip_pool.
 func (sdip sesv2DedicatedIpPoolAttributes) PoolName() terra.StringValue {
-	return terra.ReferenceString(sdip.ref.Append("pool_name"))
+	return terra.ReferenceAsString(sdip.ref.Append("pool_name"))
 }
 
+// ScalingMode returns a reference to field scaling_mode of aws_sesv2_dedicated_ip_pool.
 func (sdip sesv2DedicatedIpPoolAttributes) ScalingMode() terra.StringValue {
-	return terra.ReferenceString(sdip.ref.Append("scaling_mode"))
+	return terra.ReferenceAsString(sdip.ref.Append("scaling_mode"))
 }
 
+// Tags returns a reference to field tags of aws_sesv2_dedicated_ip_pool.
 func (sdip sesv2DedicatedIpPoolAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sdip.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sdip.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_sesv2_dedicated_ip_pool.
 func (sdip sesv2DedicatedIpPoolAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sdip.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sdip.ref.Append("tags_all"))
 }
 
 func (sdip sesv2DedicatedIpPoolAttributes) Timeouts() sesv2dedicatedippool.TimeoutsAttributes {
-	return terra.ReferenceSingle[sesv2dedicatedippool.TimeoutsAttributes](sdip.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[sesv2dedicatedippool.TimeoutsAttributes](sdip.ref.Append("timeouts"))
 }
 
 type sesv2DedicatedIpPoolState struct {

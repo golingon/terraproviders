@@ -44,23 +44,23 @@ func (ao AuthenticationOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ao AuthenticationOptionsAttributes) ActiveDirectoryId() terra.StringValue {
-	return terra.ReferenceString(ao.ref.Append("active_directory_id"))
+	return terra.ReferenceAsString(ao.ref.Append("active_directory_id"))
 }
 
 func (ao AuthenticationOptionsAttributes) RootCertificateChainArn() terra.StringValue {
-	return terra.ReferenceString(ao.ref.Append("root_certificate_chain_arn"))
+	return terra.ReferenceAsString(ao.ref.Append("root_certificate_chain_arn"))
 }
 
 func (ao AuthenticationOptionsAttributes) SamlProviderArn() terra.StringValue {
-	return terra.ReferenceString(ao.ref.Append("saml_provider_arn"))
+	return terra.ReferenceAsString(ao.ref.Append("saml_provider_arn"))
 }
 
 func (ao AuthenticationOptionsAttributes) SelfServiceSamlProviderArn() terra.StringValue {
-	return terra.ReferenceString(ao.ref.Append("self_service_saml_provider_arn"))
+	return terra.ReferenceAsString(ao.ref.Append("self_service_saml_provider_arn"))
 }
 
 func (ao AuthenticationOptionsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ao.ref.Append("type"))
+	return terra.ReferenceAsString(ao.ref.Append("type"))
 }
 
 type ClientConnectOptionsAttributes struct {
@@ -80,11 +80,11 @@ func (cco ClientConnectOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cco ClientConnectOptionsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(cco.ref.Append("enabled"))
+	return terra.ReferenceAsBool(cco.ref.Append("enabled"))
 }
 
 func (cco ClientConnectOptionsAttributes) LambdaFunctionArn() terra.StringValue {
-	return terra.ReferenceString(cco.ref.Append("lambda_function_arn"))
+	return terra.ReferenceAsString(cco.ref.Append("lambda_function_arn"))
 }
 
 type ClientLoginBannerOptionsAttributes struct {
@@ -104,11 +104,11 @@ func (clbo ClientLoginBannerOptionsAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (clbo ClientLoginBannerOptionsAttributes) BannerText() terra.StringValue {
-	return terra.ReferenceString(clbo.ref.Append("banner_text"))
+	return terra.ReferenceAsString(clbo.ref.Append("banner_text"))
 }
 
 func (clbo ClientLoginBannerOptionsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(clbo.ref.Append("enabled"))
+	return terra.ReferenceAsBool(clbo.ref.Append("enabled"))
 }
 
 type ConnectionLogOptionsAttributes struct {
@@ -128,15 +128,15 @@ func (clo ConnectionLogOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (clo ConnectionLogOptionsAttributes) CloudwatchLogGroup() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("cloudwatch_log_group"))
+	return terra.ReferenceAsString(clo.ref.Append("cloudwatch_log_group"))
 }
 
 func (clo ConnectionLogOptionsAttributes) CloudwatchLogStream() terra.StringValue {
-	return terra.ReferenceString(clo.ref.Append("cloudwatch_log_stream"))
+	return terra.ReferenceAsString(clo.ref.Append("cloudwatch_log_stream"))
 }
 
 func (clo ConnectionLogOptionsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(clo.ref.Append("enabled"))
+	return terra.ReferenceAsBool(clo.ref.Append("enabled"))
 }
 
 type FilterAttributes struct {
@@ -156,11 +156,11 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("name"))
+	return terra.ReferenceAsString(f.ref.Append("name"))
 }
 
 func (f FilterAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](f.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](f.ref.Append("values"))
 }
 
 type TimeoutsAttributes struct {
@@ -180,7 +180,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type AuthenticationOptionsState struct {

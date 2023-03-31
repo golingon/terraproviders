@@ -79,11 +79,11 @@ func (e ExcludesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e ExcludesAttributes) FilterType() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("filter_type"))
+	return terra.ReferenceAsString(e.ref.Append("filter_type"))
 }
 
 func (e ExcludesAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("value"))
+	return terra.ReferenceAsString(e.ref.Append("value"))
 }
 
 type IncludesAttributes struct {
@@ -103,11 +103,11 @@ func (i IncludesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i IncludesAttributes) FilterType() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("filter_type"))
+	return terra.ReferenceAsString(i.ref.Append("filter_type"))
 }
 
 func (i IncludesAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("value"))
+	return terra.ReferenceAsString(i.ref.Append("value"))
 }
 
 type OptionsAttributes struct {
@@ -127,59 +127,59 @@ func (o OptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (o OptionsAttributes) Atime() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("atime"))
+	return terra.ReferenceAsString(o.ref.Append("atime"))
 }
 
 func (o OptionsAttributes) BytesPerSecond() terra.NumberValue {
-	return terra.ReferenceNumber(o.ref.Append("bytes_per_second"))
+	return terra.ReferenceAsNumber(o.ref.Append("bytes_per_second"))
 }
 
 func (o OptionsAttributes) Gid() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("gid"))
+	return terra.ReferenceAsString(o.ref.Append("gid"))
 }
 
 func (o OptionsAttributes) LogLevel() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("log_level"))
+	return terra.ReferenceAsString(o.ref.Append("log_level"))
 }
 
 func (o OptionsAttributes) Mtime() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("mtime"))
+	return terra.ReferenceAsString(o.ref.Append("mtime"))
 }
 
 func (o OptionsAttributes) OverwriteMode() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("overwrite_mode"))
+	return terra.ReferenceAsString(o.ref.Append("overwrite_mode"))
 }
 
 func (o OptionsAttributes) PosixPermissions() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("posix_permissions"))
+	return terra.ReferenceAsString(o.ref.Append("posix_permissions"))
 }
 
 func (o OptionsAttributes) PreserveDeletedFiles() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("preserve_deleted_files"))
+	return terra.ReferenceAsString(o.ref.Append("preserve_deleted_files"))
 }
 
 func (o OptionsAttributes) PreserveDevices() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("preserve_devices"))
+	return terra.ReferenceAsString(o.ref.Append("preserve_devices"))
 }
 
 func (o OptionsAttributes) SecurityDescriptorCopyFlags() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("security_descriptor_copy_flags"))
+	return terra.ReferenceAsString(o.ref.Append("security_descriptor_copy_flags"))
 }
 
 func (o OptionsAttributes) TaskQueueing() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("task_queueing"))
+	return terra.ReferenceAsString(o.ref.Append("task_queueing"))
 }
 
 func (o OptionsAttributes) TransferMode() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("transfer_mode"))
+	return terra.ReferenceAsString(o.ref.Append("transfer_mode"))
 }
 
 func (o OptionsAttributes) Uid() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("uid"))
+	return terra.ReferenceAsString(o.ref.Append("uid"))
 }
 
 func (o OptionsAttributes) VerifyMode() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("verify_mode"))
+	return terra.ReferenceAsString(o.ref.Append("verify_mode"))
 }
 
 type ScheduleAttributes struct {
@@ -199,7 +199,7 @@ func (s ScheduleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s ScheduleAttributes) ScheduleExpression() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("schedule_expression"))
+	return terra.ReferenceAsString(s.ref.Append("schedule_expression"))
 }
 
 type TimeoutsAttributes struct {
@@ -219,7 +219,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 type ExcludesState struct {

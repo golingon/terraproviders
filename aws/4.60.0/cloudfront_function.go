@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCloudfrontFunction creates a new instance of [CloudfrontFunction].
 func NewCloudfrontFunction(name string, args CloudfrontFunctionArgs) *CloudfrontFunction {
 	return &CloudfrontFunction{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCloudfrontFunction(name string, args CloudfrontFunctionArgs) *Cloudfront
 
 var _ terra.Resource = (*CloudfrontFunction)(nil)
 
+// CloudfrontFunction represents the Terraform resource aws_cloudfront_function.
 type CloudfrontFunction struct {
-	Name  string
-	Args  CloudfrontFunctionArgs
-	state *cloudfrontFunctionState
+	Name      string
+	Args      CloudfrontFunctionArgs
+	state     *cloudfrontFunctionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudfrontFunction].
 func (cf *CloudfrontFunction) Type() string {
 	return "aws_cloudfront_function"
 }
 
+// LocalName returns the local name for [CloudfrontFunction].
 func (cf *CloudfrontFunction) LocalName() string {
 	return cf.Name
 }
 
+// Configuration returns the configuration (args) for [CloudfrontFunction].
 func (cf *CloudfrontFunction) Configuration() interface{} {
 	return cf.Args
 }
 
+// DependOn is used for other resources to depend on [CloudfrontFunction].
+func (cf *CloudfrontFunction) DependOn() terra.Reference {
+	return terra.ReferenceResource(cf)
+}
+
+// Dependencies returns the list of resources [CloudfrontFunction] depends_on.
+func (cf *CloudfrontFunction) Dependencies() terra.Dependencies {
+	return cf.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudfrontFunction].
+func (cf *CloudfrontFunction) LifecycleManagement() *terra.Lifecycle {
+	return cf.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudfrontFunction].
 func (cf *CloudfrontFunction) Attributes() cloudfrontFunctionAttributes {
 	return cloudfrontFunctionAttributes{ref: terra.ReferenceResource(cf)}
 }
 
+// ImportState imports the given attribute values into [CloudfrontFunction]'s state.
 func (cf *CloudfrontFunction) ImportState(av io.Reader) error {
 	cf.state = &cloudfrontFunctionState{}
 	if err := json.NewDecoder(av).Decode(cf.state); err != nil {
@@ -48,10 +72,12 @@ func (cf *CloudfrontFunction) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudfrontFunction] has state.
 func (cf *CloudfrontFunction) State() (*cloudfrontFunctionState, bool) {
 	return cf.state, cf.state != nil
 }
 
+// StateMust returns the state for [CloudfrontFunction]. Panics if the state is nil.
 func (cf *CloudfrontFunction) StateMust() *cloudfrontFunctionState {
 	if cf.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cf.Type(), cf.LocalName()))
@@ -59,10 +85,7 @@ func (cf *CloudfrontFunction) StateMust() *cloudfrontFunctionState {
 	return cf.state
 }
 
-func (cf *CloudfrontFunction) DependOn() terra.Reference {
-	return terra.ReferenceResource(cf)
-}
-
+// CloudfrontFunctionArgs contains the configurations for aws_cloudfront_function.
 type CloudfrontFunctionArgs struct {
 	// Code: string, required
 	Code terra.StringValue `hcl:"code,attr" validate:"required"`
@@ -76,51 +99,59 @@ type CloudfrontFunctionArgs struct {
 	Publish terra.BoolValue `hcl:"publish,attr"`
 	// Runtime: string, required
 	Runtime terra.StringValue `hcl:"runtime,attr" validate:"required"`
-	// DependsOn contains resources that CloudfrontFunction depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudfrontFunctionAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_cloudfront_function.
 func (cf cloudfrontFunctionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("arn"))
+	return terra.ReferenceAsString(cf.ref.Append("arn"))
 }
 
+// Code returns a reference to field code of aws_cloudfront_function.
 func (cf cloudfrontFunctionAttributes) Code() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("code"))
+	return terra.ReferenceAsString(cf.ref.Append("code"))
 }
 
+// Comment returns a reference to field comment of aws_cloudfront_function.
 func (cf cloudfrontFunctionAttributes) Comment() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("comment"))
+	return terra.ReferenceAsString(cf.ref.Append("comment"))
 }
 
+// Etag returns a reference to field etag of aws_cloudfront_function.
 func (cf cloudfrontFunctionAttributes) Etag() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("etag"))
+	return terra.ReferenceAsString(cf.ref.Append("etag"))
 }
 
+// Id returns a reference to field id of aws_cloudfront_function.
 func (cf cloudfrontFunctionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("id"))
+	return terra.ReferenceAsString(cf.ref.Append("id"))
 }
 
+// LiveStageEtag returns a reference to field live_stage_etag of aws_cloudfront_function.
 func (cf cloudfrontFunctionAttributes) LiveStageEtag() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("live_stage_etag"))
+	return terra.ReferenceAsString(cf.ref.Append("live_stage_etag"))
 }
 
+// Name returns a reference to field name of aws_cloudfront_function.
 func (cf cloudfrontFunctionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("name"))
+	return terra.ReferenceAsString(cf.ref.Append("name"))
 }
 
+// Publish returns a reference to field publish of aws_cloudfront_function.
 func (cf cloudfrontFunctionAttributes) Publish() terra.BoolValue {
-	return terra.ReferenceBool(cf.ref.Append("publish"))
+	return terra.ReferenceAsBool(cf.ref.Append("publish"))
 }
 
+// Runtime returns a reference to field runtime of aws_cloudfront_function.
 func (cf cloudfrontFunctionAttributes) Runtime() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("runtime"))
+	return terra.ReferenceAsString(cf.ref.Append("runtime"))
 }
 
+// Status returns a reference to field status of aws_cloudfront_function.
 func (cf cloudfrontFunctionAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(cf.ref.Append("status"))
+	return terra.ReferenceAsString(cf.ref.Append("status"))
 }
 
 type cloudfrontFunctionState struct {

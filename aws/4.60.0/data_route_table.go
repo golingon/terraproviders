@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataRouteTable creates a new instance of [DataRouteTable].
 func NewDataRouteTable(name string, args DataRouteTableArgs) *DataRouteTable {
 	return &DataRouteTable{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataRouteTable(name string, args DataRouteTableArgs) *DataRouteTable {
 
 var _ terra.DataResource = (*DataRouteTable)(nil)
 
+// DataRouteTable represents the Terraform data resource aws_route_table.
 type DataRouteTable struct {
 	Name string
 	Args DataRouteTableArgs
 }
 
+// DataSource returns the Terraform object type for [DataRouteTable].
 func (rt *DataRouteTable) DataSource() string {
 	return "aws_route_table"
 }
 
+// LocalName returns the local name for [DataRouteTable].
 func (rt *DataRouteTable) LocalName() string {
 	return rt.Name
 }
 
+// Configuration returns the configuration (args) for [DataRouteTable].
 func (rt *DataRouteTable) Configuration() interface{} {
 	return rt.Args
 }
 
+// Attributes returns the attributes for [DataRouteTable].
 func (rt *DataRouteTable) Attributes() dataRouteTableAttributes {
 	return dataRouteTableAttributes{ref: terra.ReferenceDataResource(rt)}
 }
 
+// DataRouteTableArgs contains the configurations for aws_route_table.
 type DataRouteTableArgs struct {
 	// GatewayId: string, optional
 	GatewayId terra.StringValue `hcl:"gateway_id,attr"`
@@ -63,50 +70,58 @@ type dataRouteTableAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_route_table.
 func (rt dataRouteTableAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("arn"))
+	return terra.ReferenceAsString(rt.ref.Append("arn"))
 }
 
+// GatewayId returns a reference to field gateway_id of aws_route_table.
 func (rt dataRouteTableAttributes) GatewayId() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("gateway_id"))
+	return terra.ReferenceAsString(rt.ref.Append("gateway_id"))
 }
 
+// Id returns a reference to field id of aws_route_table.
 func (rt dataRouteTableAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("id"))
+	return terra.ReferenceAsString(rt.ref.Append("id"))
 }
 
+// OwnerId returns a reference to field owner_id of aws_route_table.
 func (rt dataRouteTableAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("owner_id"))
+	return terra.ReferenceAsString(rt.ref.Append("owner_id"))
 }
 
+// RouteTableId returns a reference to field route_table_id of aws_route_table.
 func (rt dataRouteTableAttributes) RouteTableId() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("route_table_id"))
+	return terra.ReferenceAsString(rt.ref.Append("route_table_id"))
 }
 
+// SubnetId returns a reference to field subnet_id of aws_route_table.
 func (rt dataRouteTableAttributes) SubnetId() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("subnet_id"))
+	return terra.ReferenceAsString(rt.ref.Append("subnet_id"))
 }
 
+// Tags returns a reference to field tags of aws_route_table.
 func (rt dataRouteTableAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rt.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rt.ref.Append("tags"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_route_table.
 func (rt dataRouteTableAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(rt.ref.Append("vpc_id"))
 }
 
 func (rt dataRouteTableAttributes) Associations() terra.ListValue[dataroutetable.AssociationsAttributes] {
-	return terra.ReferenceList[dataroutetable.AssociationsAttributes](rt.ref.Append("associations"))
+	return terra.ReferenceAsList[dataroutetable.AssociationsAttributes](rt.ref.Append("associations"))
 }
 
 func (rt dataRouteTableAttributes) Routes() terra.ListValue[dataroutetable.RoutesAttributes] {
-	return terra.ReferenceList[dataroutetable.RoutesAttributes](rt.ref.Append("routes"))
+	return terra.ReferenceAsList[dataroutetable.RoutesAttributes](rt.ref.Append("routes"))
 }
 
 func (rt dataRouteTableAttributes) Filter() terra.SetValue[dataroutetable.FilterAttributes] {
-	return terra.ReferenceSet[dataroutetable.FilterAttributes](rt.ref.Append("filter"))
+	return terra.ReferenceAsSet[dataroutetable.FilterAttributes](rt.ref.Append("filter"))
 }
 
 func (rt dataRouteTableAttributes) Timeouts() dataroutetable.TimeoutsAttributes {
-	return terra.ReferenceSingle[dataroutetable.TimeoutsAttributes](rt.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[dataroutetable.TimeoutsAttributes](rt.ref.Append("timeouts"))
 }

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSesv2EmailIdentityFeedbackAttributes creates a new instance of [Sesv2EmailIdentityFeedbackAttributes].
 func NewSesv2EmailIdentityFeedbackAttributes(name string, args Sesv2EmailIdentityFeedbackAttributesArgs) *Sesv2EmailIdentityFeedbackAttributes {
 	return &Sesv2EmailIdentityFeedbackAttributes{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSesv2EmailIdentityFeedbackAttributes(name string, args Sesv2EmailIdentit
 
 var _ terra.Resource = (*Sesv2EmailIdentityFeedbackAttributes)(nil)
 
+// Sesv2EmailIdentityFeedbackAttributes represents the Terraform resource aws_sesv2_email_identity_feedback_attributes.
 type Sesv2EmailIdentityFeedbackAttributes struct {
-	Name  string
-	Args  Sesv2EmailIdentityFeedbackAttributesArgs
-	state *sesv2EmailIdentityFeedbackAttributesState
+	Name      string
+	Args      Sesv2EmailIdentityFeedbackAttributesArgs
+	state     *sesv2EmailIdentityFeedbackAttributesState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Sesv2EmailIdentityFeedbackAttributes].
 func (seifa *Sesv2EmailIdentityFeedbackAttributes) Type() string {
 	return "aws_sesv2_email_identity_feedback_attributes"
 }
 
+// LocalName returns the local name for [Sesv2EmailIdentityFeedbackAttributes].
 func (seifa *Sesv2EmailIdentityFeedbackAttributes) LocalName() string {
 	return seifa.Name
 }
 
+// Configuration returns the configuration (args) for [Sesv2EmailIdentityFeedbackAttributes].
 func (seifa *Sesv2EmailIdentityFeedbackAttributes) Configuration() interface{} {
 	return seifa.Args
 }
 
+// DependOn is used for other resources to depend on [Sesv2EmailIdentityFeedbackAttributes].
+func (seifa *Sesv2EmailIdentityFeedbackAttributes) DependOn() terra.Reference {
+	return terra.ReferenceResource(seifa)
+}
+
+// Dependencies returns the list of resources [Sesv2EmailIdentityFeedbackAttributes] depends_on.
+func (seifa *Sesv2EmailIdentityFeedbackAttributes) Dependencies() terra.Dependencies {
+	return seifa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Sesv2EmailIdentityFeedbackAttributes].
+func (seifa *Sesv2EmailIdentityFeedbackAttributes) LifecycleManagement() *terra.Lifecycle {
+	return seifa.Lifecycle
+}
+
+// Attributes returns the attributes for [Sesv2EmailIdentityFeedbackAttributes].
 func (seifa *Sesv2EmailIdentityFeedbackAttributes) Attributes() sesv2EmailIdentityFeedbackAttributesAttributes {
 	return sesv2EmailIdentityFeedbackAttributesAttributes{ref: terra.ReferenceResource(seifa)}
 }
 
+// ImportState imports the given attribute values into [Sesv2EmailIdentityFeedbackAttributes]'s state.
 func (seifa *Sesv2EmailIdentityFeedbackAttributes) ImportState(av io.Reader) error {
 	seifa.state = &sesv2EmailIdentityFeedbackAttributesState{}
 	if err := json.NewDecoder(av).Decode(seifa.state); err != nil {
@@ -48,10 +72,12 @@ func (seifa *Sesv2EmailIdentityFeedbackAttributes) ImportState(av io.Reader) err
 	return nil
 }
 
+// State returns the state and a bool indicating if [Sesv2EmailIdentityFeedbackAttributes] has state.
 func (seifa *Sesv2EmailIdentityFeedbackAttributes) State() (*sesv2EmailIdentityFeedbackAttributesState, bool) {
 	return seifa.state, seifa.state != nil
 }
 
+// StateMust returns the state for [Sesv2EmailIdentityFeedbackAttributes]. Panics if the state is nil.
 func (seifa *Sesv2EmailIdentityFeedbackAttributes) StateMust() *sesv2EmailIdentityFeedbackAttributesState {
 	if seifa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", seifa.Type(), seifa.LocalName()))
@@ -59,10 +85,7 @@ func (seifa *Sesv2EmailIdentityFeedbackAttributes) StateMust() *sesv2EmailIdenti
 	return seifa.state
 }
 
-func (seifa *Sesv2EmailIdentityFeedbackAttributes) DependOn() terra.Reference {
-	return terra.ReferenceResource(seifa)
-}
-
+// Sesv2EmailIdentityFeedbackAttributesArgs contains the configurations for aws_sesv2_email_identity_feedback_attributes.
 type Sesv2EmailIdentityFeedbackAttributesArgs struct {
 	// EmailForwardingEnabled: bool, optional
 	EmailForwardingEnabled terra.BoolValue `hcl:"email_forwarding_enabled,attr"`
@@ -70,23 +93,24 @@ type Sesv2EmailIdentityFeedbackAttributesArgs struct {
 	EmailIdentity terra.StringValue `hcl:"email_identity,attr" validate:"required"`
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
-	// DependsOn contains resources that Sesv2EmailIdentityFeedbackAttributes depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type sesv2EmailIdentityFeedbackAttributesAttributes struct {
 	ref terra.Reference
 }
 
+// EmailForwardingEnabled returns a reference to field email_forwarding_enabled of aws_sesv2_email_identity_feedback_attributes.
 func (seifa sesv2EmailIdentityFeedbackAttributesAttributes) EmailForwardingEnabled() terra.BoolValue {
-	return terra.ReferenceBool(seifa.ref.Append("email_forwarding_enabled"))
+	return terra.ReferenceAsBool(seifa.ref.Append("email_forwarding_enabled"))
 }
 
+// EmailIdentity returns a reference to field email_identity of aws_sesv2_email_identity_feedback_attributes.
 func (seifa sesv2EmailIdentityFeedbackAttributesAttributes) EmailIdentity() terra.StringValue {
-	return terra.ReferenceString(seifa.ref.Append("email_identity"))
+	return terra.ReferenceAsString(seifa.ref.Append("email_identity"))
 }
 
+// Id returns a reference to field id of aws_sesv2_email_identity_feedback_attributes.
 func (seifa sesv2EmailIdentityFeedbackAttributesAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(seifa.ref.Append("id"))
+	return terra.ReferenceAsString(seifa.ref.Append("id"))
 }
 
 type sesv2EmailIdentityFeedbackAttributesState struct {

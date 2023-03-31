@@ -34,15 +34,15 @@ func (ec ExternalConnectionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec ExternalConnectionsAttributes) ExternalConnectionName() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("external_connection_name"))
+	return terra.ReferenceAsString(ec.ref.Append("external_connection_name"))
 }
 
 func (ec ExternalConnectionsAttributes) PackageFormat() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("package_format"))
+	return terra.ReferenceAsString(ec.ref.Append("package_format"))
 }
 
 func (ec ExternalConnectionsAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("status"))
+	return terra.ReferenceAsString(ec.ref.Append("status"))
 }
 
 type UpstreamAttributes struct {
@@ -62,7 +62,7 @@ func (u UpstreamAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (u UpstreamAttributes) RepositoryName() terra.StringValue {
-	return terra.ReferenceString(u.ref.Append("repository_name"))
+	return terra.ReferenceAsString(u.ref.Append("repository_name"))
 }
 
 type ExternalConnectionsState struct {

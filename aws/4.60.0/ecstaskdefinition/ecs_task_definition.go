@@ -121,7 +121,7 @@ func (es EphemeralStorageAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (es EphemeralStorageAttributes) SizeInGib() terra.NumberValue {
-	return terra.ReferenceNumber(es.ref.Append("size_in_gib"))
+	return terra.ReferenceAsNumber(es.ref.Append("size_in_gib"))
 }
 
 type InferenceAcceleratorAttributes struct {
@@ -141,11 +141,11 @@ func (ia InferenceAcceleratorAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ia InferenceAcceleratorAttributes) DeviceName() terra.StringValue {
-	return terra.ReferenceString(ia.ref.Append("device_name"))
+	return terra.ReferenceAsString(ia.ref.Append("device_name"))
 }
 
 func (ia InferenceAcceleratorAttributes) DeviceType() terra.StringValue {
-	return terra.ReferenceString(ia.ref.Append("device_type"))
+	return terra.ReferenceAsString(ia.ref.Append("device_type"))
 }
 
 type PlacementConstraintsAttributes struct {
@@ -165,11 +165,11 @@ func (pc PlacementConstraintsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pc PlacementConstraintsAttributes) Expression() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("expression"))
+	return terra.ReferenceAsString(pc.ref.Append("expression"))
 }
 
 func (pc PlacementConstraintsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("type"))
+	return terra.ReferenceAsString(pc.ref.Append("type"))
 }
 
 type ProxyConfigurationAttributes struct {
@@ -189,15 +189,15 @@ func (pc ProxyConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pc ProxyConfigurationAttributes) ContainerName() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("container_name"))
+	return terra.ReferenceAsString(pc.ref.Append("container_name"))
 }
 
 func (pc ProxyConfigurationAttributes) Properties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](pc.ref.Append("properties"))
+	return terra.ReferenceAsMap[terra.StringValue](pc.ref.Append("properties"))
 }
 
 func (pc ProxyConfigurationAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("type"))
+	return terra.ReferenceAsString(pc.ref.Append("type"))
 }
 
 type RuntimePlatformAttributes struct {
@@ -217,11 +217,11 @@ func (rp RuntimePlatformAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rp RuntimePlatformAttributes) CpuArchitecture() terra.StringValue {
-	return terra.ReferenceString(rp.ref.Append("cpu_architecture"))
+	return terra.ReferenceAsString(rp.ref.Append("cpu_architecture"))
 }
 
 func (rp RuntimePlatformAttributes) OperatingSystemFamily() terra.StringValue {
-	return terra.ReferenceString(rp.ref.Append("operating_system_family"))
+	return terra.ReferenceAsString(rp.ref.Append("operating_system_family"))
 }
 
 type VolumeAttributes struct {
@@ -241,23 +241,23 @@ func (v VolumeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (v VolumeAttributes) HostPath() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("host_path"))
+	return terra.ReferenceAsString(v.ref.Append("host_path"))
 }
 
 func (v VolumeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("name"))
+	return terra.ReferenceAsString(v.ref.Append("name"))
 }
 
 func (v VolumeAttributes) DockerVolumeConfiguration() terra.ListValue[DockerVolumeConfigurationAttributes] {
-	return terra.ReferenceList[DockerVolumeConfigurationAttributes](v.ref.Append("docker_volume_configuration"))
+	return terra.ReferenceAsList[DockerVolumeConfigurationAttributes](v.ref.Append("docker_volume_configuration"))
 }
 
 func (v VolumeAttributes) EfsVolumeConfiguration() terra.ListValue[EfsVolumeConfigurationAttributes] {
-	return terra.ReferenceList[EfsVolumeConfigurationAttributes](v.ref.Append("efs_volume_configuration"))
+	return terra.ReferenceAsList[EfsVolumeConfigurationAttributes](v.ref.Append("efs_volume_configuration"))
 }
 
 func (v VolumeAttributes) FsxWindowsFileServerVolumeConfiguration() terra.ListValue[FsxWindowsFileServerVolumeConfigurationAttributes] {
-	return terra.ReferenceList[FsxWindowsFileServerVolumeConfigurationAttributes](v.ref.Append("fsx_windows_file_server_volume_configuration"))
+	return terra.ReferenceAsList[FsxWindowsFileServerVolumeConfigurationAttributes](v.ref.Append("fsx_windows_file_server_volume_configuration"))
 }
 
 type DockerVolumeConfigurationAttributes struct {
@@ -277,23 +277,23 @@ func (dvc DockerVolumeConfigurationAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (dvc DockerVolumeConfigurationAttributes) Autoprovision() terra.BoolValue {
-	return terra.ReferenceBool(dvc.ref.Append("autoprovision"))
+	return terra.ReferenceAsBool(dvc.ref.Append("autoprovision"))
 }
 
 func (dvc DockerVolumeConfigurationAttributes) Driver() terra.StringValue {
-	return terra.ReferenceString(dvc.ref.Append("driver"))
+	return terra.ReferenceAsString(dvc.ref.Append("driver"))
 }
 
 func (dvc DockerVolumeConfigurationAttributes) DriverOpts() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dvc.ref.Append("driver_opts"))
+	return terra.ReferenceAsMap[terra.StringValue](dvc.ref.Append("driver_opts"))
 }
 
 func (dvc DockerVolumeConfigurationAttributes) Labels() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dvc.ref.Append("labels"))
+	return terra.ReferenceAsMap[terra.StringValue](dvc.ref.Append("labels"))
 }
 
 func (dvc DockerVolumeConfigurationAttributes) Scope() terra.StringValue {
-	return terra.ReferenceString(dvc.ref.Append("scope"))
+	return terra.ReferenceAsString(dvc.ref.Append("scope"))
 }
 
 type EfsVolumeConfigurationAttributes struct {
@@ -313,23 +313,23 @@ func (evc EfsVolumeConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (evc EfsVolumeConfigurationAttributes) FileSystemId() terra.StringValue {
-	return terra.ReferenceString(evc.ref.Append("file_system_id"))
+	return terra.ReferenceAsString(evc.ref.Append("file_system_id"))
 }
 
 func (evc EfsVolumeConfigurationAttributes) RootDirectory() terra.StringValue {
-	return terra.ReferenceString(evc.ref.Append("root_directory"))
+	return terra.ReferenceAsString(evc.ref.Append("root_directory"))
 }
 
 func (evc EfsVolumeConfigurationAttributes) TransitEncryption() terra.StringValue {
-	return terra.ReferenceString(evc.ref.Append("transit_encryption"))
+	return terra.ReferenceAsString(evc.ref.Append("transit_encryption"))
 }
 
 func (evc EfsVolumeConfigurationAttributes) TransitEncryptionPort() terra.NumberValue {
-	return terra.ReferenceNumber(evc.ref.Append("transit_encryption_port"))
+	return terra.ReferenceAsNumber(evc.ref.Append("transit_encryption_port"))
 }
 
 func (evc EfsVolumeConfigurationAttributes) AuthorizationConfig() terra.ListValue[EfsVolumeConfigurationAuthorizationConfigAttributes] {
-	return terra.ReferenceList[EfsVolumeConfigurationAuthorizationConfigAttributes](evc.ref.Append("authorization_config"))
+	return terra.ReferenceAsList[EfsVolumeConfigurationAuthorizationConfigAttributes](evc.ref.Append("authorization_config"))
 }
 
 type EfsVolumeConfigurationAuthorizationConfigAttributes struct {
@@ -349,11 +349,11 @@ func (ac EfsVolumeConfigurationAuthorizationConfigAttributes) InternalTokens() h
 }
 
 func (ac EfsVolumeConfigurationAuthorizationConfigAttributes) AccessPointId() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("access_point_id"))
+	return terra.ReferenceAsString(ac.ref.Append("access_point_id"))
 }
 
 func (ac EfsVolumeConfigurationAuthorizationConfigAttributes) Iam() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("iam"))
+	return terra.ReferenceAsString(ac.ref.Append("iam"))
 }
 
 type FsxWindowsFileServerVolumeConfigurationAttributes struct {
@@ -373,15 +373,15 @@ func (fwfsvc FsxWindowsFileServerVolumeConfigurationAttributes) InternalTokens()
 }
 
 func (fwfsvc FsxWindowsFileServerVolumeConfigurationAttributes) FileSystemId() terra.StringValue {
-	return terra.ReferenceString(fwfsvc.ref.Append("file_system_id"))
+	return terra.ReferenceAsString(fwfsvc.ref.Append("file_system_id"))
 }
 
 func (fwfsvc FsxWindowsFileServerVolumeConfigurationAttributes) RootDirectory() terra.StringValue {
-	return terra.ReferenceString(fwfsvc.ref.Append("root_directory"))
+	return terra.ReferenceAsString(fwfsvc.ref.Append("root_directory"))
 }
 
 func (fwfsvc FsxWindowsFileServerVolumeConfigurationAttributes) AuthorizationConfig() terra.ListValue[FsxWindowsFileServerVolumeConfigurationAuthorizationConfigAttributes] {
-	return terra.ReferenceList[FsxWindowsFileServerVolumeConfigurationAuthorizationConfigAttributes](fwfsvc.ref.Append("authorization_config"))
+	return terra.ReferenceAsList[FsxWindowsFileServerVolumeConfigurationAuthorizationConfigAttributes](fwfsvc.ref.Append("authorization_config"))
 }
 
 type FsxWindowsFileServerVolumeConfigurationAuthorizationConfigAttributes struct {
@@ -401,11 +401,11 @@ func (ac FsxWindowsFileServerVolumeConfigurationAuthorizationConfigAttributes) I
 }
 
 func (ac FsxWindowsFileServerVolumeConfigurationAuthorizationConfigAttributes) CredentialsParameter() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("credentials_parameter"))
+	return terra.ReferenceAsString(ac.ref.Append("credentials_parameter"))
 }
 
 func (ac FsxWindowsFileServerVolumeConfigurationAuthorizationConfigAttributes) Domain() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("domain"))
+	return terra.ReferenceAsString(ac.ref.Append("domain"))
 }
 
 type EphemeralStorageState struct {

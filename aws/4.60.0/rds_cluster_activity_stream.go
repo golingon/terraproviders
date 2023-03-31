@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRdsClusterActivityStream creates a new instance of [RdsClusterActivityStream].
 func NewRdsClusterActivityStream(name string, args RdsClusterActivityStreamArgs) *RdsClusterActivityStream {
 	return &RdsClusterActivityStream{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRdsClusterActivityStream(name string, args RdsClusterActivityStreamArgs)
 
 var _ terra.Resource = (*RdsClusterActivityStream)(nil)
 
+// RdsClusterActivityStream represents the Terraform resource aws_rds_cluster_activity_stream.
 type RdsClusterActivityStream struct {
-	Name  string
-	Args  RdsClusterActivityStreamArgs
-	state *rdsClusterActivityStreamState
+	Name      string
+	Args      RdsClusterActivityStreamArgs
+	state     *rdsClusterActivityStreamState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RdsClusterActivityStream].
 func (rcas *RdsClusterActivityStream) Type() string {
 	return "aws_rds_cluster_activity_stream"
 }
 
+// LocalName returns the local name for [RdsClusterActivityStream].
 func (rcas *RdsClusterActivityStream) LocalName() string {
 	return rcas.Name
 }
 
+// Configuration returns the configuration (args) for [RdsClusterActivityStream].
 func (rcas *RdsClusterActivityStream) Configuration() interface{} {
 	return rcas.Args
 }
 
+// DependOn is used for other resources to depend on [RdsClusterActivityStream].
+func (rcas *RdsClusterActivityStream) DependOn() terra.Reference {
+	return terra.ReferenceResource(rcas)
+}
+
+// Dependencies returns the list of resources [RdsClusterActivityStream] depends_on.
+func (rcas *RdsClusterActivityStream) Dependencies() terra.Dependencies {
+	return rcas.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RdsClusterActivityStream].
+func (rcas *RdsClusterActivityStream) LifecycleManagement() *terra.Lifecycle {
+	return rcas.Lifecycle
+}
+
+// Attributes returns the attributes for [RdsClusterActivityStream].
 func (rcas *RdsClusterActivityStream) Attributes() rdsClusterActivityStreamAttributes {
 	return rdsClusterActivityStreamAttributes{ref: terra.ReferenceResource(rcas)}
 }
 
+// ImportState imports the given attribute values into [RdsClusterActivityStream]'s state.
 func (rcas *RdsClusterActivityStream) ImportState(av io.Reader) error {
 	rcas.state = &rdsClusterActivityStreamState{}
 	if err := json.NewDecoder(av).Decode(rcas.state); err != nil {
@@ -48,10 +72,12 @@ func (rcas *RdsClusterActivityStream) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RdsClusterActivityStream] has state.
 func (rcas *RdsClusterActivityStream) State() (*rdsClusterActivityStreamState, bool) {
 	return rcas.state, rcas.state != nil
 }
 
+// StateMust returns the state for [RdsClusterActivityStream]. Panics if the state is nil.
 func (rcas *RdsClusterActivityStream) StateMust() *rdsClusterActivityStreamState {
 	if rcas.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rcas.Type(), rcas.LocalName()))
@@ -59,10 +85,7 @@ func (rcas *RdsClusterActivityStream) StateMust() *rdsClusterActivityStreamState
 	return rcas.state
 }
 
-func (rcas *RdsClusterActivityStream) DependOn() terra.Reference {
-	return terra.ReferenceResource(rcas)
-}
-
+// RdsClusterActivityStreamArgs contains the configurations for aws_rds_cluster_activity_stream.
 type RdsClusterActivityStreamArgs struct {
 	// EngineNativeAuditFieldsIncluded: bool, optional
 	EngineNativeAuditFieldsIncluded terra.BoolValue `hcl:"engine_native_audit_fields_included,attr"`
@@ -74,35 +97,39 @@ type RdsClusterActivityStreamArgs struct {
 	Mode terra.StringValue `hcl:"mode,attr" validate:"required"`
 	// ResourceArn: string, required
 	ResourceArn terra.StringValue `hcl:"resource_arn,attr" validate:"required"`
-	// DependsOn contains resources that RdsClusterActivityStream depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type rdsClusterActivityStreamAttributes struct {
 	ref terra.Reference
 }
 
+// EngineNativeAuditFieldsIncluded returns a reference to field engine_native_audit_fields_included of aws_rds_cluster_activity_stream.
 func (rcas rdsClusterActivityStreamAttributes) EngineNativeAuditFieldsIncluded() terra.BoolValue {
-	return terra.ReferenceBool(rcas.ref.Append("engine_native_audit_fields_included"))
+	return terra.ReferenceAsBool(rcas.ref.Append("engine_native_audit_fields_included"))
 }
 
+// Id returns a reference to field id of aws_rds_cluster_activity_stream.
 func (rcas rdsClusterActivityStreamAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rcas.ref.Append("id"))
+	return terra.ReferenceAsString(rcas.ref.Append("id"))
 }
 
+// KinesisStreamName returns a reference to field kinesis_stream_name of aws_rds_cluster_activity_stream.
 func (rcas rdsClusterActivityStreamAttributes) KinesisStreamName() terra.StringValue {
-	return terra.ReferenceString(rcas.ref.Append("kinesis_stream_name"))
+	return terra.ReferenceAsString(rcas.ref.Append("kinesis_stream_name"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_rds_cluster_activity_stream.
 func (rcas rdsClusterActivityStreamAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(rcas.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(rcas.ref.Append("kms_key_id"))
 }
 
+// Mode returns a reference to field mode of aws_rds_cluster_activity_stream.
 func (rcas rdsClusterActivityStreamAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(rcas.ref.Append("mode"))
+	return terra.ReferenceAsString(rcas.ref.Append("mode"))
 }
 
+// ResourceArn returns a reference to field resource_arn of aws_rds_cluster_activity_stream.
 func (rcas rdsClusterActivityStreamAttributes) ResourceArn() terra.StringValue {
-	return terra.ReferenceString(rcas.ref.Append("resource_arn"))
+	return terra.ReferenceAsString(rcas.ref.Append("resource_arn"))
 }
 
 type rdsClusterActivityStreamState struct {

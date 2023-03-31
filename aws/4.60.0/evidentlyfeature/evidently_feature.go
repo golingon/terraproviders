@@ -53,11 +53,11 @@ func (er EvaluationRulesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (er EvaluationRulesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(er.ref.Append("name"))
+	return terra.ReferenceAsString(er.ref.Append("name"))
 }
 
 func (er EvaluationRulesAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(er.ref.Append("type"))
+	return terra.ReferenceAsString(er.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
@@ -77,15 +77,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type VariationsAttributes struct {
@@ -105,11 +105,11 @@ func (v VariationsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (v VariationsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("name"))
+	return terra.ReferenceAsString(v.ref.Append("name"))
 }
 
 func (v VariationsAttributes) Value() terra.ListValue[ValueAttributes] {
-	return terra.ReferenceList[ValueAttributes](v.ref.Append("value"))
+	return terra.ReferenceAsList[ValueAttributes](v.ref.Append("value"))
 }
 
 type ValueAttributes struct {
@@ -129,19 +129,19 @@ func (v ValueAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (v ValueAttributes) BoolValue() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("bool_value"))
+	return terra.ReferenceAsString(v.ref.Append("bool_value"))
 }
 
 func (v ValueAttributes) DoubleValue() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("double_value"))
+	return terra.ReferenceAsString(v.ref.Append("double_value"))
 }
 
 func (v ValueAttributes) LongValue() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("long_value"))
+	return terra.ReferenceAsString(v.ref.Append("long_value"))
 }
 
 func (v ValueAttributes) StringValue() terra.StringValue {
-	return terra.ReferenceString(v.ref.Append("string_value"))
+	return terra.ReferenceAsString(v.ref.Append("string_value"))
 }
 
 type EvaluationRulesState struct {

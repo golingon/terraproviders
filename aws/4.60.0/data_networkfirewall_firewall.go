@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataNetworkfirewallFirewall creates a new instance of [DataNetworkfirewallFirewall].
 func NewDataNetworkfirewallFirewall(name string, args DataNetworkfirewallFirewallArgs) *DataNetworkfirewallFirewall {
 	return &DataNetworkfirewallFirewall{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataNetworkfirewallFirewall(name string, args DataNetworkfirewallFirewal
 
 var _ terra.DataResource = (*DataNetworkfirewallFirewall)(nil)
 
+// DataNetworkfirewallFirewall represents the Terraform data resource aws_networkfirewall_firewall.
 type DataNetworkfirewallFirewall struct {
 	Name string
 	Args DataNetworkfirewallFirewallArgs
 }
 
+// DataSource returns the Terraform object type for [DataNetworkfirewallFirewall].
 func (nf *DataNetworkfirewallFirewall) DataSource() string {
 	return "aws_networkfirewall_firewall"
 }
 
+// LocalName returns the local name for [DataNetworkfirewallFirewall].
 func (nf *DataNetworkfirewallFirewall) LocalName() string {
 	return nf.Name
 }
 
+// Configuration returns the configuration (args) for [DataNetworkfirewallFirewall].
 func (nf *DataNetworkfirewallFirewall) Configuration() interface{} {
 	return nf.Args
 }
 
+// Attributes returns the attributes for [DataNetworkfirewallFirewall].
 func (nf *DataNetworkfirewallFirewall) Attributes() dataNetworkfirewallFirewallAttributes {
 	return dataNetworkfirewallFirewallAttributes{ref: terra.ReferenceDataResource(nf)}
 }
 
+// DataNetworkfirewallFirewallArgs contains the configurations for aws_networkfirewall_firewall.
 type DataNetworkfirewallFirewallArgs struct {
 	// Arn: string, optional
 	Arn terra.StringValue `hcl:"arn,attr"`
@@ -57,58 +64,69 @@ type dataNetworkfirewallFirewallAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_networkfirewall_firewall.
 func (nf dataNetworkfirewallFirewallAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(nf.ref.Append("arn"))
+	return terra.ReferenceAsString(nf.ref.Append("arn"))
 }
 
+// DeleteProtection returns a reference to field delete_protection of aws_networkfirewall_firewall.
 func (nf dataNetworkfirewallFirewallAttributes) DeleteProtection() terra.BoolValue {
-	return terra.ReferenceBool(nf.ref.Append("delete_protection"))
+	return terra.ReferenceAsBool(nf.ref.Append("delete_protection"))
 }
 
+// Description returns a reference to field description of aws_networkfirewall_firewall.
 func (nf dataNetworkfirewallFirewallAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(nf.ref.Append("description"))
+	return terra.ReferenceAsString(nf.ref.Append("description"))
 }
 
+// FirewallPolicyArn returns a reference to field firewall_policy_arn of aws_networkfirewall_firewall.
 func (nf dataNetworkfirewallFirewallAttributes) FirewallPolicyArn() terra.StringValue {
-	return terra.ReferenceString(nf.ref.Append("firewall_policy_arn"))
+	return terra.ReferenceAsString(nf.ref.Append("firewall_policy_arn"))
 }
 
+// FirewallPolicyChangeProtection returns a reference to field firewall_policy_change_protection of aws_networkfirewall_firewall.
 func (nf dataNetworkfirewallFirewallAttributes) FirewallPolicyChangeProtection() terra.BoolValue {
-	return terra.ReferenceBool(nf.ref.Append("firewall_policy_change_protection"))
+	return terra.ReferenceAsBool(nf.ref.Append("firewall_policy_change_protection"))
 }
 
+// Id returns a reference to field id of aws_networkfirewall_firewall.
 func (nf dataNetworkfirewallFirewallAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(nf.ref.Append("id"))
+	return terra.ReferenceAsString(nf.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_networkfirewall_firewall.
 func (nf dataNetworkfirewallFirewallAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(nf.ref.Append("name"))
+	return terra.ReferenceAsString(nf.ref.Append("name"))
 }
 
+// SubnetChangeProtection returns a reference to field subnet_change_protection of aws_networkfirewall_firewall.
 func (nf dataNetworkfirewallFirewallAttributes) SubnetChangeProtection() terra.BoolValue {
-	return terra.ReferenceBool(nf.ref.Append("subnet_change_protection"))
+	return terra.ReferenceAsBool(nf.ref.Append("subnet_change_protection"))
 }
 
+// Tags returns a reference to field tags of aws_networkfirewall_firewall.
 func (nf dataNetworkfirewallFirewallAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](nf.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](nf.ref.Append("tags"))
 }
 
+// UpdateToken returns a reference to field update_token of aws_networkfirewall_firewall.
 func (nf dataNetworkfirewallFirewallAttributes) UpdateToken() terra.StringValue {
-	return terra.ReferenceString(nf.ref.Append("update_token"))
+	return terra.ReferenceAsString(nf.ref.Append("update_token"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_networkfirewall_firewall.
 func (nf dataNetworkfirewallFirewallAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(nf.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(nf.ref.Append("vpc_id"))
 }
 
 func (nf dataNetworkfirewallFirewallAttributes) EncryptionConfiguration() terra.SetValue[datanetworkfirewallfirewall.EncryptionConfigurationAttributes] {
-	return terra.ReferenceSet[datanetworkfirewallfirewall.EncryptionConfigurationAttributes](nf.ref.Append("encryption_configuration"))
+	return terra.ReferenceAsSet[datanetworkfirewallfirewall.EncryptionConfigurationAttributes](nf.ref.Append("encryption_configuration"))
 }
 
 func (nf dataNetworkfirewallFirewallAttributes) FirewallStatus() terra.ListValue[datanetworkfirewallfirewall.FirewallStatusAttributes] {
-	return terra.ReferenceList[datanetworkfirewallfirewall.FirewallStatusAttributes](nf.ref.Append("firewall_status"))
+	return terra.ReferenceAsList[datanetworkfirewallfirewall.FirewallStatusAttributes](nf.ref.Append("firewall_status"))
 }
 
 func (nf dataNetworkfirewallFirewallAttributes) SubnetMapping() terra.SetValue[datanetworkfirewallfirewall.SubnetMappingAttributes] {
-	return terra.ReferenceSet[datanetworkfirewallfirewall.SubnetMappingAttributes](nf.ref.Append("subnet_mapping"))
+	return terra.ReferenceAsSet[datanetworkfirewallfirewall.SubnetMappingAttributes](nf.ref.Append("subnet_mapping"))
 }

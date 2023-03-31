@@ -71,15 +71,15 @@ func (cps CapacityProviderStrategyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cps CapacityProviderStrategyAttributes) Base() terra.NumberValue {
-	return terra.ReferenceNumber(cps.ref.Append("base"))
+	return terra.ReferenceAsNumber(cps.ref.Append("base"))
 }
 
 func (cps CapacityProviderStrategyAttributes) CapacityProvider() terra.StringValue {
-	return terra.ReferenceString(cps.ref.Append("capacity_provider"))
+	return terra.ReferenceAsString(cps.ref.Append("capacity_provider"))
 }
 
 func (cps CapacityProviderStrategyAttributes) Weight() terra.NumberValue {
-	return terra.ReferenceNumber(cps.ref.Append("weight"))
+	return terra.ReferenceAsNumber(cps.ref.Append("weight"))
 }
 
 type LoadBalancerAttributes struct {
@@ -99,19 +99,19 @@ func (lb LoadBalancerAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lb LoadBalancerAttributes) ContainerName() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("container_name"))
+	return terra.ReferenceAsString(lb.ref.Append("container_name"))
 }
 
 func (lb LoadBalancerAttributes) ContainerPort() terra.NumberValue {
-	return terra.ReferenceNumber(lb.ref.Append("container_port"))
+	return terra.ReferenceAsNumber(lb.ref.Append("container_port"))
 }
 
 func (lb LoadBalancerAttributes) LoadBalancerName() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("load_balancer_name"))
+	return terra.ReferenceAsString(lb.ref.Append("load_balancer_name"))
 }
 
 func (lb LoadBalancerAttributes) TargetGroupArn() terra.StringValue {
-	return terra.ReferenceString(lb.ref.Append("target_group_arn"))
+	return terra.ReferenceAsString(lb.ref.Append("target_group_arn"))
 }
 
 type NetworkConfigurationAttributes struct {
@@ -131,15 +131,15 @@ func (nc NetworkConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nc NetworkConfigurationAttributes) AssignPublicIp() terra.BoolValue {
-	return terra.ReferenceBool(nc.ref.Append("assign_public_ip"))
+	return terra.ReferenceAsBool(nc.ref.Append("assign_public_ip"))
 }
 
 func (nc NetworkConfigurationAttributes) SecurityGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](nc.ref.Append("security_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](nc.ref.Append("security_groups"))
 }
 
 func (nc NetworkConfigurationAttributes) Subnets() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](nc.ref.Append("subnets"))
+	return terra.ReferenceAsSet[terra.StringValue](nc.ref.Append("subnets"))
 }
 
 type ScaleAttributes struct {
@@ -159,11 +159,11 @@ func (s ScaleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s ScaleAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("unit"))
+	return terra.ReferenceAsString(s.ref.Append("unit"))
 }
 
 func (s ScaleAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("value"))
+	return terra.ReferenceAsNumber(s.ref.Append("value"))
 }
 
 type ServiceRegistriesAttributes struct {
@@ -183,19 +183,19 @@ func (sr ServiceRegistriesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sr ServiceRegistriesAttributes) ContainerName() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("container_name"))
+	return terra.ReferenceAsString(sr.ref.Append("container_name"))
 }
 
 func (sr ServiceRegistriesAttributes) ContainerPort() terra.NumberValue {
-	return terra.ReferenceNumber(sr.ref.Append("container_port"))
+	return terra.ReferenceAsNumber(sr.ref.Append("container_port"))
 }
 
 func (sr ServiceRegistriesAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(sr.ref.Append("port"))
+	return terra.ReferenceAsNumber(sr.ref.Append("port"))
 }
 
 func (sr ServiceRegistriesAttributes) RegistryArn() terra.StringValue {
-	return terra.ReferenceString(sr.ref.Append("registry_arn"))
+	return terra.ReferenceAsString(sr.ref.Append("registry_arn"))
 }
 
 type CapacityProviderStrategyState struct {

@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataCallerIdentity creates a new instance of [DataCallerIdentity].
 func NewDataCallerIdentity(name string, args DataCallerIdentityArgs) *DataCallerIdentity {
 	return &DataCallerIdentity{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataCallerIdentity(name string, args DataCallerIdentityArgs) *DataCaller
 
 var _ terra.DataResource = (*DataCallerIdentity)(nil)
 
+// DataCallerIdentity represents the Terraform data resource aws_caller_identity.
 type DataCallerIdentity struct {
 	Name string
 	Args DataCallerIdentityArgs
 }
 
+// DataSource returns the Terraform object type for [DataCallerIdentity].
 func (ci *DataCallerIdentity) DataSource() string {
 	return "aws_caller_identity"
 }
 
+// LocalName returns the local name for [DataCallerIdentity].
 func (ci *DataCallerIdentity) LocalName() string {
 	return ci.Name
 }
 
+// Configuration returns the configuration (args) for [DataCallerIdentity].
 func (ci *DataCallerIdentity) Configuration() interface{} {
 	return ci.Args
 }
 
+// Attributes returns the attributes for [DataCallerIdentity].
 func (ci *DataCallerIdentity) Attributes() dataCallerIdentityAttributes {
 	return dataCallerIdentityAttributes{ref: terra.ReferenceDataResource(ci)}
 }
 
+// DataCallerIdentityArgs contains the configurations for aws_caller_identity.
 type DataCallerIdentityArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -42,18 +49,22 @@ type dataCallerIdentityAttributes struct {
 	ref terra.Reference
 }
 
+// AccountId returns a reference to field account_id of aws_caller_identity.
 func (ci dataCallerIdentityAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("account_id"))
+	return terra.ReferenceAsString(ci.ref.Append("account_id"))
 }
 
+// Arn returns a reference to field arn of aws_caller_identity.
 func (ci dataCallerIdentityAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("arn"))
+	return terra.ReferenceAsString(ci.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_caller_identity.
 func (ci dataCallerIdentityAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("id"))
+	return terra.ReferenceAsString(ci.ref.Append("id"))
 }
 
+// UserId returns a reference to field user_id of aws_caller_identity.
 func (ci dataCallerIdentityAttributes) UserId() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("user_id"))
+	return terra.ReferenceAsString(ci.ref.Append("user_id"))
 }

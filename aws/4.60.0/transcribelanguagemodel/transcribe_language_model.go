@@ -38,15 +38,15 @@ func (idc InputDataConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (idc InputDataConfigAttributes) DataAccessRoleArn() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("data_access_role_arn"))
+	return terra.ReferenceAsString(idc.ref.Append("data_access_role_arn"))
 }
 
 func (idc InputDataConfigAttributes) S3Uri() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("s3_uri"))
+	return terra.ReferenceAsString(idc.ref.Append("s3_uri"))
 }
 
 func (idc InputDataConfigAttributes) TuningDataS3Uri() terra.StringValue {
-	return terra.ReferenceString(idc.ref.Append("tuning_data_s3_uri"))
+	return terra.ReferenceAsString(idc.ref.Append("tuning_data_s3_uri"))
 }
 
 type TimeoutsAttributes struct {
@@ -66,7 +66,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 type InputDataConfigState struct {

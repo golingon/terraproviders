@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMwaaEnvironment creates a new instance of [MwaaEnvironment].
 func NewMwaaEnvironment(name string, args MwaaEnvironmentArgs) *MwaaEnvironment {
 	return &MwaaEnvironment{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMwaaEnvironment(name string, args MwaaEnvironmentArgs) *MwaaEnvironment 
 
 var _ terra.Resource = (*MwaaEnvironment)(nil)
 
+// MwaaEnvironment represents the Terraform resource aws_mwaa_environment.
 type MwaaEnvironment struct {
-	Name  string
-	Args  MwaaEnvironmentArgs
-	state *mwaaEnvironmentState
+	Name      string
+	Args      MwaaEnvironmentArgs
+	state     *mwaaEnvironmentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MwaaEnvironment].
 func (me *MwaaEnvironment) Type() string {
 	return "aws_mwaa_environment"
 }
 
+// LocalName returns the local name for [MwaaEnvironment].
 func (me *MwaaEnvironment) LocalName() string {
 	return me.Name
 }
 
+// Configuration returns the configuration (args) for [MwaaEnvironment].
 func (me *MwaaEnvironment) Configuration() interface{} {
 	return me.Args
 }
 
+// DependOn is used for other resources to depend on [MwaaEnvironment].
+func (me *MwaaEnvironment) DependOn() terra.Reference {
+	return terra.ReferenceResource(me)
+}
+
+// Dependencies returns the list of resources [MwaaEnvironment] depends_on.
+func (me *MwaaEnvironment) Dependencies() terra.Dependencies {
+	return me.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MwaaEnvironment].
+func (me *MwaaEnvironment) LifecycleManagement() *terra.Lifecycle {
+	return me.Lifecycle
+}
+
+// Attributes returns the attributes for [MwaaEnvironment].
 func (me *MwaaEnvironment) Attributes() mwaaEnvironmentAttributes {
 	return mwaaEnvironmentAttributes{ref: terra.ReferenceResource(me)}
 }
 
+// ImportState imports the given attribute values into [MwaaEnvironment]'s state.
 func (me *MwaaEnvironment) ImportState(av io.Reader) error {
 	me.state = &mwaaEnvironmentState{}
 	if err := json.NewDecoder(av).Decode(me.state); err != nil {
@@ -49,10 +73,12 @@ func (me *MwaaEnvironment) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MwaaEnvironment] has state.
 func (me *MwaaEnvironment) State() (*mwaaEnvironmentState, bool) {
 	return me.state, me.state != nil
 }
 
+// StateMust returns the state for [MwaaEnvironment]. Panics if the state is nil.
 func (me *MwaaEnvironment) StateMust() *mwaaEnvironmentState {
 	if me.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", me.Type(), me.LocalName()))
@@ -60,10 +86,7 @@ func (me *MwaaEnvironment) StateMust() *mwaaEnvironmentState {
 	return me.state
 }
 
-func (me *MwaaEnvironment) DependOn() terra.Reference {
-	return terra.ReferenceResource(me)
-}
-
+// MwaaEnvironmentArgs contains the configurations for aws_mwaa_environment.
 type MwaaEnvironmentArgs struct {
 	// AirflowConfigurationOptions: map of string, optional
 	AirflowConfigurationOptions terra.MapValue[terra.StringValue] `hcl:"airflow_configuration_options,attr"`
@@ -113,127 +136,150 @@ type MwaaEnvironmentArgs struct {
 	NetworkConfiguration *mwaaenvironment.NetworkConfiguration `hcl:"network_configuration,block" validate:"required"`
 	// Timeouts: optional
 	Timeouts *mwaaenvironment.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MwaaEnvironment depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mwaaEnvironmentAttributes struct {
 	ref terra.Reference
 }
 
+// AirflowConfigurationOptions returns a reference to field airflow_configuration_options of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) AirflowConfigurationOptions() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](me.ref.Append("airflow_configuration_options"))
+	return terra.ReferenceAsMap[terra.StringValue](me.ref.Append("airflow_configuration_options"))
 }
 
+// AirflowVersion returns a reference to field airflow_version of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) AirflowVersion() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("airflow_version"))
+	return terra.ReferenceAsString(me.ref.Append("airflow_version"))
 }
 
+// Arn returns a reference to field arn of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("arn"))
+	return terra.ReferenceAsString(me.ref.Append("arn"))
 }
 
+// CreatedAt returns a reference to field created_at of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) CreatedAt() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("created_at"))
+	return terra.ReferenceAsString(me.ref.Append("created_at"))
 }
 
+// DagS3Path returns a reference to field dag_s3_path of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) DagS3Path() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("dag_s3_path"))
+	return terra.ReferenceAsString(me.ref.Append("dag_s3_path"))
 }
 
+// EnvironmentClass returns a reference to field environment_class of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) EnvironmentClass() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("environment_class"))
+	return terra.ReferenceAsString(me.ref.Append("environment_class"))
 }
 
+// ExecutionRoleArn returns a reference to field execution_role_arn of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) ExecutionRoleArn() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("execution_role_arn"))
+	return terra.ReferenceAsString(me.ref.Append("execution_role_arn"))
 }
 
+// Id returns a reference to field id of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("id"))
+	return terra.ReferenceAsString(me.ref.Append("id"))
 }
 
+// KmsKey returns a reference to field kms_key of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) KmsKey() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("kms_key"))
+	return terra.ReferenceAsString(me.ref.Append("kms_key"))
 }
 
+// MaxWorkers returns a reference to field max_workers of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) MaxWorkers() terra.NumberValue {
-	return terra.ReferenceNumber(me.ref.Append("max_workers"))
+	return terra.ReferenceAsNumber(me.ref.Append("max_workers"))
 }
 
+// MinWorkers returns a reference to field min_workers of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) MinWorkers() terra.NumberValue {
-	return terra.ReferenceNumber(me.ref.Append("min_workers"))
+	return terra.ReferenceAsNumber(me.ref.Append("min_workers"))
 }
 
+// Name returns a reference to field name of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("name"))
+	return terra.ReferenceAsString(me.ref.Append("name"))
 }
 
+// PluginsS3ObjectVersion returns a reference to field plugins_s3_object_version of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) PluginsS3ObjectVersion() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("plugins_s3_object_version"))
+	return terra.ReferenceAsString(me.ref.Append("plugins_s3_object_version"))
 }
 
+// PluginsS3Path returns a reference to field plugins_s3_path of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) PluginsS3Path() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("plugins_s3_path"))
+	return terra.ReferenceAsString(me.ref.Append("plugins_s3_path"))
 }
 
+// RequirementsS3ObjectVersion returns a reference to field requirements_s3_object_version of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) RequirementsS3ObjectVersion() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("requirements_s3_object_version"))
+	return terra.ReferenceAsString(me.ref.Append("requirements_s3_object_version"))
 }
 
+// RequirementsS3Path returns a reference to field requirements_s3_path of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) RequirementsS3Path() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("requirements_s3_path"))
+	return terra.ReferenceAsString(me.ref.Append("requirements_s3_path"))
 }
 
+// Schedulers returns a reference to field schedulers of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) Schedulers() terra.NumberValue {
-	return terra.ReferenceNumber(me.ref.Append("schedulers"))
+	return terra.ReferenceAsNumber(me.ref.Append("schedulers"))
 }
 
+// ServiceRoleArn returns a reference to field service_role_arn of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) ServiceRoleArn() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("service_role_arn"))
+	return terra.ReferenceAsString(me.ref.Append("service_role_arn"))
 }
 
+// SourceBucketArn returns a reference to field source_bucket_arn of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) SourceBucketArn() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("source_bucket_arn"))
+	return terra.ReferenceAsString(me.ref.Append("source_bucket_arn"))
 }
 
+// Status returns a reference to field status of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("status"))
+	return terra.ReferenceAsString(me.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](me.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](me.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](me.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](me.ref.Append("tags_all"))
 }
 
+// WebserverAccessMode returns a reference to field webserver_access_mode of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) WebserverAccessMode() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("webserver_access_mode"))
+	return terra.ReferenceAsString(me.ref.Append("webserver_access_mode"))
 }
 
+// WebserverUrl returns a reference to field webserver_url of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) WebserverUrl() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("webserver_url"))
+	return terra.ReferenceAsString(me.ref.Append("webserver_url"))
 }
 
+// WeeklyMaintenanceWindowStart returns a reference to field weekly_maintenance_window_start of aws_mwaa_environment.
 func (me mwaaEnvironmentAttributes) WeeklyMaintenanceWindowStart() terra.StringValue {
-	return terra.ReferenceString(me.ref.Append("weekly_maintenance_window_start"))
+	return terra.ReferenceAsString(me.ref.Append("weekly_maintenance_window_start"))
 }
 
 func (me mwaaEnvironmentAttributes) LastUpdated() terra.ListValue[mwaaenvironment.LastUpdatedAttributes] {
-	return terra.ReferenceList[mwaaenvironment.LastUpdatedAttributes](me.ref.Append("last_updated"))
+	return terra.ReferenceAsList[mwaaenvironment.LastUpdatedAttributes](me.ref.Append("last_updated"))
 }
 
 func (me mwaaEnvironmentAttributes) LoggingConfiguration() terra.ListValue[mwaaenvironment.LoggingConfigurationAttributes] {
-	return terra.ReferenceList[mwaaenvironment.LoggingConfigurationAttributes](me.ref.Append("logging_configuration"))
+	return terra.ReferenceAsList[mwaaenvironment.LoggingConfigurationAttributes](me.ref.Append("logging_configuration"))
 }
 
 func (me mwaaEnvironmentAttributes) NetworkConfiguration() terra.ListValue[mwaaenvironment.NetworkConfigurationAttributes] {
-	return terra.ReferenceList[mwaaenvironment.NetworkConfigurationAttributes](me.ref.Append("network_configuration"))
+	return terra.ReferenceAsList[mwaaenvironment.NetworkConfigurationAttributes](me.ref.Append("network_configuration"))
 }
 
 func (me mwaaEnvironmentAttributes) Timeouts() mwaaenvironment.TimeoutsAttributes {
-	return terra.ReferenceSingle[mwaaenvironment.TimeoutsAttributes](me.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mwaaenvironment.TimeoutsAttributes](me.ref.Append("timeouts"))
 }
 
 type mwaaEnvironmentState struct {

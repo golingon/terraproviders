@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewApiGatewayModel creates a new instance of [ApiGatewayModel].
 func NewApiGatewayModel(name string, args ApiGatewayModelArgs) *ApiGatewayModel {
 	return &ApiGatewayModel{
 		Args: args,
@@ -18,28 +19,51 @@ func NewApiGatewayModel(name string, args ApiGatewayModelArgs) *ApiGatewayModel 
 
 var _ terra.Resource = (*ApiGatewayModel)(nil)
 
+// ApiGatewayModel represents the Terraform resource aws_api_gateway_model.
 type ApiGatewayModel struct {
-	Name  string
-	Args  ApiGatewayModelArgs
-	state *apiGatewayModelState
+	Name      string
+	Args      ApiGatewayModelArgs
+	state     *apiGatewayModelState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiGatewayModel].
 func (agm *ApiGatewayModel) Type() string {
 	return "aws_api_gateway_model"
 }
 
+// LocalName returns the local name for [ApiGatewayModel].
 func (agm *ApiGatewayModel) LocalName() string {
 	return agm.Name
 }
 
+// Configuration returns the configuration (args) for [ApiGatewayModel].
 func (agm *ApiGatewayModel) Configuration() interface{} {
 	return agm.Args
 }
 
+// DependOn is used for other resources to depend on [ApiGatewayModel].
+func (agm *ApiGatewayModel) DependOn() terra.Reference {
+	return terra.ReferenceResource(agm)
+}
+
+// Dependencies returns the list of resources [ApiGatewayModel] depends_on.
+func (agm *ApiGatewayModel) Dependencies() terra.Dependencies {
+	return agm.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiGatewayModel].
+func (agm *ApiGatewayModel) LifecycleManagement() *terra.Lifecycle {
+	return agm.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiGatewayModel].
 func (agm *ApiGatewayModel) Attributes() apiGatewayModelAttributes {
 	return apiGatewayModelAttributes{ref: terra.ReferenceResource(agm)}
 }
 
+// ImportState imports the given attribute values into [ApiGatewayModel]'s state.
 func (agm *ApiGatewayModel) ImportState(av io.Reader) error {
 	agm.state = &apiGatewayModelState{}
 	if err := json.NewDecoder(av).Decode(agm.state); err != nil {
@@ -48,10 +72,12 @@ func (agm *ApiGatewayModel) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiGatewayModel] has state.
 func (agm *ApiGatewayModel) State() (*apiGatewayModelState, bool) {
 	return agm.state, agm.state != nil
 }
 
+// StateMust returns the state for [ApiGatewayModel]. Panics if the state is nil.
 func (agm *ApiGatewayModel) StateMust() *apiGatewayModelState {
 	if agm.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", agm.Type(), agm.LocalName()))
@@ -59,10 +85,7 @@ func (agm *ApiGatewayModel) StateMust() *apiGatewayModelState {
 	return agm.state
 }
 
-func (agm *ApiGatewayModel) DependOn() terra.Reference {
-	return terra.ReferenceResource(agm)
-}
-
+// ApiGatewayModelArgs contains the configurations for aws_api_gateway_model.
 type ApiGatewayModelArgs struct {
 	// ContentType: string, required
 	ContentType terra.StringValue `hcl:"content_type,attr" validate:"required"`
@@ -76,35 +99,39 @@ type ApiGatewayModelArgs struct {
 	RestApiId terra.StringValue `hcl:"rest_api_id,attr" validate:"required"`
 	// Schema: string, optional
 	Schema terra.StringValue `hcl:"schema,attr"`
-	// DependsOn contains resources that ApiGatewayModel depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiGatewayModelAttributes struct {
 	ref terra.Reference
 }
 
+// ContentType returns a reference to field content_type of aws_api_gateway_model.
 func (agm apiGatewayModelAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(agm.ref.Append("content_type"))
+	return terra.ReferenceAsString(agm.ref.Append("content_type"))
 }
 
+// Description returns a reference to field description of aws_api_gateway_model.
 func (agm apiGatewayModelAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(agm.ref.Append("description"))
+	return terra.ReferenceAsString(agm.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_api_gateway_model.
 func (agm apiGatewayModelAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(agm.ref.Append("id"))
+	return terra.ReferenceAsString(agm.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_api_gateway_model.
 func (agm apiGatewayModelAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(agm.ref.Append("name"))
+	return terra.ReferenceAsString(agm.ref.Append("name"))
 }
 
+// RestApiId returns a reference to field rest_api_id of aws_api_gateway_model.
 func (agm apiGatewayModelAttributes) RestApiId() terra.StringValue {
-	return terra.ReferenceString(agm.ref.Append("rest_api_id"))
+	return terra.ReferenceAsString(agm.ref.Append("rest_api_id"))
 }
 
+// Schema returns a reference to field schema of aws_api_gateway_model.
 func (agm apiGatewayModelAttributes) Schema() terra.StringValue {
-	return terra.ReferenceString(agm.ref.Append("schema"))
+	return terra.ReferenceAsString(agm.ref.Append("schema"))
 }
 
 type apiGatewayModelState struct {

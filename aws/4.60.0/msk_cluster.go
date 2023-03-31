@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMskCluster creates a new instance of [MskCluster].
 func NewMskCluster(name string, args MskClusterArgs) *MskCluster {
 	return &MskCluster{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMskCluster(name string, args MskClusterArgs) *MskCluster {
 
 var _ terra.Resource = (*MskCluster)(nil)
 
+// MskCluster represents the Terraform resource aws_msk_cluster.
 type MskCluster struct {
-	Name  string
-	Args  MskClusterArgs
-	state *mskClusterState
+	Name      string
+	Args      MskClusterArgs
+	state     *mskClusterState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MskCluster].
 func (mc *MskCluster) Type() string {
 	return "aws_msk_cluster"
 }
 
+// LocalName returns the local name for [MskCluster].
 func (mc *MskCluster) LocalName() string {
 	return mc.Name
 }
 
+// Configuration returns the configuration (args) for [MskCluster].
 func (mc *MskCluster) Configuration() interface{} {
 	return mc.Args
 }
 
+// DependOn is used for other resources to depend on [MskCluster].
+func (mc *MskCluster) DependOn() terra.Reference {
+	return terra.ReferenceResource(mc)
+}
+
+// Dependencies returns the list of resources [MskCluster] depends_on.
+func (mc *MskCluster) Dependencies() terra.Dependencies {
+	return mc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MskCluster].
+func (mc *MskCluster) LifecycleManagement() *terra.Lifecycle {
+	return mc.Lifecycle
+}
+
+// Attributes returns the attributes for [MskCluster].
 func (mc *MskCluster) Attributes() mskClusterAttributes {
 	return mskClusterAttributes{ref: terra.ReferenceResource(mc)}
 }
 
+// ImportState imports the given attribute values into [MskCluster]'s state.
 func (mc *MskCluster) ImportState(av io.Reader) error {
 	mc.state = &mskClusterState{}
 	if err := json.NewDecoder(av).Decode(mc.state); err != nil {
@@ -49,10 +73,12 @@ func (mc *MskCluster) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MskCluster] has state.
 func (mc *MskCluster) State() (*mskClusterState, bool) {
 	return mc.state, mc.state != nil
 }
 
+// StateMust returns the state for [MskCluster]. Panics if the state is nil.
 func (mc *MskCluster) StateMust() *mskClusterState {
 	if mc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mc.Type(), mc.LocalName()))
@@ -60,10 +86,7 @@ func (mc *MskCluster) StateMust() *mskClusterState {
 	return mc.state
 }
 
-func (mc *MskCluster) DependOn() terra.Reference {
-	return terra.ReferenceResource(mc)
-}
-
+// MskClusterArgs contains the configurations for aws_msk_cluster.
 type MskClusterArgs struct {
 	// ClusterName: string, required
 	ClusterName terra.StringValue `hcl:"cluster_name,attr" validate:"required"`
@@ -95,115 +118,132 @@ type MskClusterArgs struct {
 	OpenMonitoring *mskcluster.OpenMonitoring `hcl:"open_monitoring,block"`
 	// Timeouts: optional
 	Timeouts *mskcluster.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that MskCluster depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type mskClusterAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_msk_cluster.
 func (mc mskClusterAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("arn"))
+	return terra.ReferenceAsString(mc.ref.Append("arn"))
 }
 
+// BootstrapBrokers returns a reference to field bootstrap_brokers of aws_msk_cluster.
 func (mc mskClusterAttributes) BootstrapBrokers() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("bootstrap_brokers"))
+	return terra.ReferenceAsString(mc.ref.Append("bootstrap_brokers"))
 }
 
+// BootstrapBrokersPublicSaslIam returns a reference to field bootstrap_brokers_public_sasl_iam of aws_msk_cluster.
 func (mc mskClusterAttributes) BootstrapBrokersPublicSaslIam() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("bootstrap_brokers_public_sasl_iam"))
+	return terra.ReferenceAsString(mc.ref.Append("bootstrap_brokers_public_sasl_iam"))
 }
 
+// BootstrapBrokersPublicSaslScram returns a reference to field bootstrap_brokers_public_sasl_scram of aws_msk_cluster.
 func (mc mskClusterAttributes) BootstrapBrokersPublicSaslScram() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("bootstrap_brokers_public_sasl_scram"))
+	return terra.ReferenceAsString(mc.ref.Append("bootstrap_brokers_public_sasl_scram"))
 }
 
+// BootstrapBrokersPublicTls returns a reference to field bootstrap_brokers_public_tls of aws_msk_cluster.
 func (mc mskClusterAttributes) BootstrapBrokersPublicTls() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("bootstrap_brokers_public_tls"))
+	return terra.ReferenceAsString(mc.ref.Append("bootstrap_brokers_public_tls"))
 }
 
+// BootstrapBrokersSaslIam returns a reference to field bootstrap_brokers_sasl_iam of aws_msk_cluster.
 func (mc mskClusterAttributes) BootstrapBrokersSaslIam() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("bootstrap_brokers_sasl_iam"))
+	return terra.ReferenceAsString(mc.ref.Append("bootstrap_brokers_sasl_iam"))
 }
 
+// BootstrapBrokersSaslScram returns a reference to field bootstrap_brokers_sasl_scram of aws_msk_cluster.
 func (mc mskClusterAttributes) BootstrapBrokersSaslScram() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("bootstrap_brokers_sasl_scram"))
+	return terra.ReferenceAsString(mc.ref.Append("bootstrap_brokers_sasl_scram"))
 }
 
+// BootstrapBrokersTls returns a reference to field bootstrap_brokers_tls of aws_msk_cluster.
 func (mc mskClusterAttributes) BootstrapBrokersTls() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("bootstrap_brokers_tls"))
+	return terra.ReferenceAsString(mc.ref.Append("bootstrap_brokers_tls"))
 }
 
+// ClusterName returns a reference to field cluster_name of aws_msk_cluster.
 func (mc mskClusterAttributes) ClusterName() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("cluster_name"))
+	return terra.ReferenceAsString(mc.ref.Append("cluster_name"))
 }
 
+// CurrentVersion returns a reference to field current_version of aws_msk_cluster.
 func (mc mskClusterAttributes) CurrentVersion() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("current_version"))
+	return terra.ReferenceAsString(mc.ref.Append("current_version"))
 }
 
+// EnhancedMonitoring returns a reference to field enhanced_monitoring of aws_msk_cluster.
 func (mc mskClusterAttributes) EnhancedMonitoring() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("enhanced_monitoring"))
+	return terra.ReferenceAsString(mc.ref.Append("enhanced_monitoring"))
 }
 
+// Id returns a reference to field id of aws_msk_cluster.
 func (mc mskClusterAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("id"))
+	return terra.ReferenceAsString(mc.ref.Append("id"))
 }
 
+// KafkaVersion returns a reference to field kafka_version of aws_msk_cluster.
 func (mc mskClusterAttributes) KafkaVersion() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("kafka_version"))
+	return terra.ReferenceAsString(mc.ref.Append("kafka_version"))
 }
 
+// NumberOfBrokerNodes returns a reference to field number_of_broker_nodes of aws_msk_cluster.
 func (mc mskClusterAttributes) NumberOfBrokerNodes() terra.NumberValue {
-	return terra.ReferenceNumber(mc.ref.Append("number_of_broker_nodes"))
+	return terra.ReferenceAsNumber(mc.ref.Append("number_of_broker_nodes"))
 }
 
+// StorageMode returns a reference to field storage_mode of aws_msk_cluster.
 func (mc mskClusterAttributes) StorageMode() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("storage_mode"))
+	return terra.ReferenceAsString(mc.ref.Append("storage_mode"))
 }
 
+// Tags returns a reference to field tags of aws_msk_cluster.
 func (mc mskClusterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_msk_cluster.
 func (mc mskClusterAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](mc.ref.Append("tags_all"))
 }
 
+// ZookeeperConnectString returns a reference to field zookeeper_connect_string of aws_msk_cluster.
 func (mc mskClusterAttributes) ZookeeperConnectString() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("zookeeper_connect_string"))
+	return terra.ReferenceAsString(mc.ref.Append("zookeeper_connect_string"))
 }
 
+// ZookeeperConnectStringTls returns a reference to field zookeeper_connect_string_tls of aws_msk_cluster.
 func (mc mskClusterAttributes) ZookeeperConnectStringTls() terra.StringValue {
-	return terra.ReferenceString(mc.ref.Append("zookeeper_connect_string_tls"))
+	return terra.ReferenceAsString(mc.ref.Append("zookeeper_connect_string_tls"))
 }
 
 func (mc mskClusterAttributes) BrokerNodeGroupInfo() terra.ListValue[mskcluster.BrokerNodeGroupInfoAttributes] {
-	return terra.ReferenceList[mskcluster.BrokerNodeGroupInfoAttributes](mc.ref.Append("broker_node_group_info"))
+	return terra.ReferenceAsList[mskcluster.BrokerNodeGroupInfoAttributes](mc.ref.Append("broker_node_group_info"))
 }
 
 func (mc mskClusterAttributes) ClientAuthentication() terra.ListValue[mskcluster.ClientAuthenticationAttributes] {
-	return terra.ReferenceList[mskcluster.ClientAuthenticationAttributes](mc.ref.Append("client_authentication"))
+	return terra.ReferenceAsList[mskcluster.ClientAuthenticationAttributes](mc.ref.Append("client_authentication"))
 }
 
 func (mc mskClusterAttributes) ConfigurationInfo() terra.ListValue[mskcluster.ConfigurationInfoAttributes] {
-	return terra.ReferenceList[mskcluster.ConfigurationInfoAttributes](mc.ref.Append("configuration_info"))
+	return terra.ReferenceAsList[mskcluster.ConfigurationInfoAttributes](mc.ref.Append("configuration_info"))
 }
 
 func (mc mskClusterAttributes) EncryptionInfo() terra.ListValue[mskcluster.EncryptionInfoAttributes] {
-	return terra.ReferenceList[mskcluster.EncryptionInfoAttributes](mc.ref.Append("encryption_info"))
+	return terra.ReferenceAsList[mskcluster.EncryptionInfoAttributes](mc.ref.Append("encryption_info"))
 }
 
 func (mc mskClusterAttributes) LoggingInfo() terra.ListValue[mskcluster.LoggingInfoAttributes] {
-	return terra.ReferenceList[mskcluster.LoggingInfoAttributes](mc.ref.Append("logging_info"))
+	return terra.ReferenceAsList[mskcluster.LoggingInfoAttributes](mc.ref.Append("logging_info"))
 }
 
 func (mc mskClusterAttributes) OpenMonitoring() terra.ListValue[mskcluster.OpenMonitoringAttributes] {
-	return terra.ReferenceList[mskcluster.OpenMonitoringAttributes](mc.ref.Append("open_monitoring"))
+	return terra.ReferenceAsList[mskcluster.OpenMonitoringAttributes](mc.ref.Append("open_monitoring"))
 }
 
 func (mc mskClusterAttributes) Timeouts() mskcluster.TimeoutsAttributes {
-	return terra.ReferenceSingle[mskcluster.TimeoutsAttributes](mc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[mskcluster.TimeoutsAttributes](mc.ref.Append("timeouts"))
 }
 
 type mskClusterState struct {

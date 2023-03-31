@@ -39,27 +39,27 @@ func (cc CorsConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc CorsConfigurationAttributes) AllowCredentials() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("allow_credentials"))
+	return terra.ReferenceAsBool(cc.ref.Append("allow_credentials"))
 }
 
 func (cc CorsConfigurationAttributes) AllowHeaders() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cc.ref.Append("allow_headers"))
+	return terra.ReferenceAsSet[terra.StringValue](cc.ref.Append("allow_headers"))
 }
 
 func (cc CorsConfigurationAttributes) AllowMethods() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cc.ref.Append("allow_methods"))
+	return terra.ReferenceAsSet[terra.StringValue](cc.ref.Append("allow_methods"))
 }
 
 func (cc CorsConfigurationAttributes) AllowOrigins() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cc.ref.Append("allow_origins"))
+	return terra.ReferenceAsSet[terra.StringValue](cc.ref.Append("allow_origins"))
 }
 
 func (cc CorsConfigurationAttributes) ExposeHeaders() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cc.ref.Append("expose_headers"))
+	return terra.ReferenceAsSet[terra.StringValue](cc.ref.Append("expose_headers"))
 }
 
 func (cc CorsConfigurationAttributes) MaxAge() terra.NumberValue {
-	return terra.ReferenceNumber(cc.ref.Append("max_age"))
+	return terra.ReferenceAsNumber(cc.ref.Append("max_age"))
 }
 
 type CorsConfigurationState struct {

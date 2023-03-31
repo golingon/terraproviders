@@ -37,23 +37,23 @@ func (sd S3DestinationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sd S3DestinationAttributes) BucketName() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("bucket_name"))
+	return terra.ReferenceAsString(sd.ref.Append("bucket_name"))
 }
 
 func (sd S3DestinationAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(sd.ref.Append("kms_key_arn"))
 }
 
 func (sd S3DestinationAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("prefix"))
+	return terra.ReferenceAsString(sd.ref.Append("prefix"))
 }
 
 func (sd S3DestinationAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("region"))
+	return terra.ReferenceAsString(sd.ref.Append("region"))
 }
 
 func (sd S3DestinationAttributes) SyncFormat() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("sync_format"))
+	return terra.ReferenceAsString(sd.ref.Append("sync_format"))
 }
 
 type S3DestinationState struct {

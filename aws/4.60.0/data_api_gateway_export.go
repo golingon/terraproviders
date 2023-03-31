@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataApiGatewayExport creates a new instance of [DataApiGatewayExport].
 func NewDataApiGatewayExport(name string, args DataApiGatewayExportArgs) *DataApiGatewayExport {
 	return &DataApiGatewayExport{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataApiGatewayExport(name string, args DataApiGatewayExportArgs) *DataAp
 
 var _ terra.DataResource = (*DataApiGatewayExport)(nil)
 
+// DataApiGatewayExport represents the Terraform data resource aws_api_gateway_export.
 type DataApiGatewayExport struct {
 	Name string
 	Args DataApiGatewayExportArgs
 }
 
+// DataSource returns the Terraform object type for [DataApiGatewayExport].
 func (age *DataApiGatewayExport) DataSource() string {
 	return "aws_api_gateway_export"
 }
 
+// LocalName returns the local name for [DataApiGatewayExport].
 func (age *DataApiGatewayExport) LocalName() string {
 	return age.Name
 }
 
+// Configuration returns the configuration (args) for [DataApiGatewayExport].
 func (age *DataApiGatewayExport) Configuration() interface{} {
 	return age.Args
 }
 
+// Attributes returns the attributes for [DataApiGatewayExport].
 func (age *DataApiGatewayExport) Attributes() dataApiGatewayExportAttributes {
 	return dataApiGatewayExportAttributes{ref: terra.ReferenceDataResource(age)}
 }
 
+// DataApiGatewayExportArgs contains the configurations for aws_api_gateway_export.
 type DataApiGatewayExportArgs struct {
 	// Accepts: string, optional
 	Accepts terra.StringValue `hcl:"accepts,attr"`
@@ -52,38 +59,47 @@ type dataApiGatewayExportAttributes struct {
 	ref terra.Reference
 }
 
+// Accepts returns a reference to field accepts of aws_api_gateway_export.
 func (age dataApiGatewayExportAttributes) Accepts() terra.StringValue {
-	return terra.ReferenceString(age.ref.Append("accepts"))
+	return terra.ReferenceAsString(age.ref.Append("accepts"))
 }
 
+// Body returns a reference to field body of aws_api_gateway_export.
 func (age dataApiGatewayExportAttributes) Body() terra.StringValue {
-	return terra.ReferenceString(age.ref.Append("body"))
+	return terra.ReferenceAsString(age.ref.Append("body"))
 }
 
+// ContentDisposition returns a reference to field content_disposition of aws_api_gateway_export.
 func (age dataApiGatewayExportAttributes) ContentDisposition() terra.StringValue {
-	return terra.ReferenceString(age.ref.Append("content_disposition"))
+	return terra.ReferenceAsString(age.ref.Append("content_disposition"))
 }
 
+// ContentType returns a reference to field content_type of aws_api_gateway_export.
 func (age dataApiGatewayExportAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(age.ref.Append("content_type"))
+	return terra.ReferenceAsString(age.ref.Append("content_type"))
 }
 
+// ExportType returns a reference to field export_type of aws_api_gateway_export.
 func (age dataApiGatewayExportAttributes) ExportType() terra.StringValue {
-	return terra.ReferenceString(age.ref.Append("export_type"))
+	return terra.ReferenceAsString(age.ref.Append("export_type"))
 }
 
+// Id returns a reference to field id of aws_api_gateway_export.
 func (age dataApiGatewayExportAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(age.ref.Append("id"))
+	return terra.ReferenceAsString(age.ref.Append("id"))
 }
 
+// Parameters returns a reference to field parameters of aws_api_gateway_export.
 func (age dataApiGatewayExportAttributes) Parameters() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](age.ref.Append("parameters"))
+	return terra.ReferenceAsMap[terra.StringValue](age.ref.Append("parameters"))
 }
 
+// RestApiId returns a reference to field rest_api_id of aws_api_gateway_export.
 func (age dataApiGatewayExportAttributes) RestApiId() terra.StringValue {
-	return terra.ReferenceString(age.ref.Append("rest_api_id"))
+	return terra.ReferenceAsString(age.ref.Append("rest_api_id"))
 }
 
+// StageName returns a reference to field stage_name of aws_api_gateway_export.
 func (age dataApiGatewayExportAttributes) StageName() terra.StringValue {
-	return terra.ReferenceString(age.ref.Append("stage_name"))
+	return terra.ReferenceAsString(age.ref.Append("stage_name"))
 }

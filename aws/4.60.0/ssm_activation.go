@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSsmActivation creates a new instance of [SsmActivation].
 func NewSsmActivation(name string, args SsmActivationArgs) *SsmActivation {
 	return &SsmActivation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSsmActivation(name string, args SsmActivationArgs) *SsmActivation {
 
 var _ terra.Resource = (*SsmActivation)(nil)
 
+// SsmActivation represents the Terraform resource aws_ssm_activation.
 type SsmActivation struct {
-	Name  string
-	Args  SsmActivationArgs
-	state *ssmActivationState
+	Name      string
+	Args      SsmActivationArgs
+	state     *ssmActivationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SsmActivation].
 func (sa *SsmActivation) Type() string {
 	return "aws_ssm_activation"
 }
 
+// LocalName returns the local name for [SsmActivation].
 func (sa *SsmActivation) LocalName() string {
 	return sa.Name
 }
 
+// Configuration returns the configuration (args) for [SsmActivation].
 func (sa *SsmActivation) Configuration() interface{} {
 	return sa.Args
 }
 
+// DependOn is used for other resources to depend on [SsmActivation].
+func (sa *SsmActivation) DependOn() terra.Reference {
+	return terra.ReferenceResource(sa)
+}
+
+// Dependencies returns the list of resources [SsmActivation] depends_on.
+func (sa *SsmActivation) Dependencies() terra.Dependencies {
+	return sa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SsmActivation].
+func (sa *SsmActivation) LifecycleManagement() *terra.Lifecycle {
+	return sa.Lifecycle
+}
+
+// Attributes returns the attributes for [SsmActivation].
 func (sa *SsmActivation) Attributes() ssmActivationAttributes {
 	return ssmActivationAttributes{ref: terra.ReferenceResource(sa)}
 }
 
+// ImportState imports the given attribute values into [SsmActivation]'s state.
 func (sa *SsmActivation) ImportState(av io.Reader) error {
 	sa.state = &ssmActivationState{}
 	if err := json.NewDecoder(av).Decode(sa.state); err != nil {
@@ -48,10 +72,12 @@ func (sa *SsmActivation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SsmActivation] has state.
 func (sa *SsmActivation) State() (*ssmActivationState, bool) {
 	return sa.state, sa.state != nil
 }
 
+// StateMust returns the state for [SsmActivation]. Panics if the state is nil.
 func (sa *SsmActivation) StateMust() *ssmActivationState {
 	if sa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sa.Type(), sa.LocalName()))
@@ -59,10 +85,7 @@ func (sa *SsmActivation) StateMust() *ssmActivationState {
 	return sa.state
 }
 
-func (sa *SsmActivation) DependOn() terra.Reference {
-	return terra.ReferenceResource(sa)
-}
-
+// SsmActivationArgs contains the configurations for aws_ssm_activation.
 type SsmActivationArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -80,55 +103,64 @@ type SsmActivationArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that SsmActivation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ssmActivationAttributes struct {
 	ref terra.Reference
 }
 
+// ActivationCode returns a reference to field activation_code of aws_ssm_activation.
 func (sa ssmActivationAttributes) ActivationCode() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("activation_code"))
+	return terra.ReferenceAsString(sa.ref.Append("activation_code"))
 }
 
+// Description returns a reference to field description of aws_ssm_activation.
 func (sa ssmActivationAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("description"))
+	return terra.ReferenceAsString(sa.ref.Append("description"))
 }
 
+// ExpirationDate returns a reference to field expiration_date of aws_ssm_activation.
 func (sa ssmActivationAttributes) ExpirationDate() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("expiration_date"))
+	return terra.ReferenceAsString(sa.ref.Append("expiration_date"))
 }
 
+// Expired returns a reference to field expired of aws_ssm_activation.
 func (sa ssmActivationAttributes) Expired() terra.BoolValue {
-	return terra.ReferenceBool(sa.ref.Append("expired"))
+	return terra.ReferenceAsBool(sa.ref.Append("expired"))
 }
 
+// IamRole returns a reference to field iam_role of aws_ssm_activation.
 func (sa ssmActivationAttributes) IamRole() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("iam_role"))
+	return terra.ReferenceAsString(sa.ref.Append("iam_role"))
 }
 
+// Id returns a reference to field id of aws_ssm_activation.
 func (sa ssmActivationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("id"))
+	return terra.ReferenceAsString(sa.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_ssm_activation.
 func (sa ssmActivationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("name"))
+	return terra.ReferenceAsString(sa.ref.Append("name"))
 }
 
+// RegistrationCount returns a reference to field registration_count of aws_ssm_activation.
 func (sa ssmActivationAttributes) RegistrationCount() terra.NumberValue {
-	return terra.ReferenceNumber(sa.ref.Append("registration_count"))
+	return terra.ReferenceAsNumber(sa.ref.Append("registration_count"))
 }
 
+// RegistrationLimit returns a reference to field registration_limit of aws_ssm_activation.
 func (sa ssmActivationAttributes) RegistrationLimit() terra.NumberValue {
-	return terra.ReferenceNumber(sa.ref.Append("registration_limit"))
+	return terra.ReferenceAsNumber(sa.ref.Append("registration_limit"))
 }
 
+// Tags returns a reference to field tags of aws_ssm_activation.
 func (sa ssmActivationAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sa.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sa.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_ssm_activation.
 func (sa ssmActivationAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sa.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sa.ref.Append("tags_all"))
 }
 
 type ssmActivationState struct {

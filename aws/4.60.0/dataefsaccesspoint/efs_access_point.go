@@ -33,15 +33,15 @@ func (pu PosixUserAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pu PosixUserAttributes) Gid() terra.NumberValue {
-	return terra.ReferenceNumber(pu.ref.Append("gid"))
+	return terra.ReferenceAsNumber(pu.ref.Append("gid"))
 }
 
 func (pu PosixUserAttributes) SecondaryGids() terra.SetValue[terra.NumberValue] {
-	return terra.ReferenceSet[terra.NumberValue](pu.ref.Append("secondary_gids"))
+	return terra.ReferenceAsSet[terra.NumberValue](pu.ref.Append("secondary_gids"))
 }
 
 func (pu PosixUserAttributes) Uid() terra.NumberValue {
-	return terra.ReferenceNumber(pu.ref.Append("uid"))
+	return terra.ReferenceAsNumber(pu.ref.Append("uid"))
 }
 
 type RootDirectoryAttributes struct {
@@ -61,11 +61,11 @@ func (rd RootDirectoryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rd RootDirectoryAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(rd.ref.Append("path"))
+	return terra.ReferenceAsString(rd.ref.Append("path"))
 }
 
 func (rd RootDirectoryAttributes) CreationInfo() terra.ListValue[CreationInfoAttributes] {
-	return terra.ReferenceList[CreationInfoAttributes](rd.ref.Append("creation_info"))
+	return terra.ReferenceAsList[CreationInfoAttributes](rd.ref.Append("creation_info"))
 }
 
 type CreationInfoAttributes struct {
@@ -85,15 +85,15 @@ func (ci CreationInfoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ci CreationInfoAttributes) OwnerGid() terra.NumberValue {
-	return terra.ReferenceNumber(ci.ref.Append("owner_gid"))
+	return terra.ReferenceAsNumber(ci.ref.Append("owner_gid"))
 }
 
 func (ci CreationInfoAttributes) OwnerUid() terra.NumberValue {
-	return terra.ReferenceNumber(ci.ref.Append("owner_uid"))
+	return terra.ReferenceAsNumber(ci.ref.Append("owner_uid"))
 }
 
 func (ci CreationInfoAttributes) Permissions() terra.StringValue {
-	return terra.ReferenceString(ci.ref.Append("permissions"))
+	return terra.ReferenceAsString(ci.ref.Append("permissions"))
 }
 
 type PosixUserState struct {

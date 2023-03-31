@@ -26,11 +26,11 @@ func (ev EnumerationValueAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ev EnumerationValueAttributes) Synonyms() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ev.ref.Append("synonyms"))
+	return terra.ReferenceAsList[terra.StringValue](ev.ref.Append("synonyms"))
 }
 
 func (ev EnumerationValueAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(ev.ref.Append("value"))
+	return terra.ReferenceAsString(ev.ref.Append("value"))
 }
 
 type EnumerationValueState struct {

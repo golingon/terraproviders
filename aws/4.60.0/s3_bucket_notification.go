@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewS3BucketNotification creates a new instance of [S3BucketNotification].
 func NewS3BucketNotification(name string, args S3BucketNotificationArgs) *S3BucketNotification {
 	return &S3BucketNotification{
 		Args: args,
@@ -19,28 +20,51 @@ func NewS3BucketNotification(name string, args S3BucketNotificationArgs) *S3Buck
 
 var _ terra.Resource = (*S3BucketNotification)(nil)
 
+// S3BucketNotification represents the Terraform resource aws_s3_bucket_notification.
 type S3BucketNotification struct {
-	Name  string
-	Args  S3BucketNotificationArgs
-	state *s3BucketNotificationState
+	Name      string
+	Args      S3BucketNotificationArgs
+	state     *s3BucketNotificationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [S3BucketNotification].
 func (sbn *S3BucketNotification) Type() string {
 	return "aws_s3_bucket_notification"
 }
 
+// LocalName returns the local name for [S3BucketNotification].
 func (sbn *S3BucketNotification) LocalName() string {
 	return sbn.Name
 }
 
+// Configuration returns the configuration (args) for [S3BucketNotification].
 func (sbn *S3BucketNotification) Configuration() interface{} {
 	return sbn.Args
 }
 
+// DependOn is used for other resources to depend on [S3BucketNotification].
+func (sbn *S3BucketNotification) DependOn() terra.Reference {
+	return terra.ReferenceResource(sbn)
+}
+
+// Dependencies returns the list of resources [S3BucketNotification] depends_on.
+func (sbn *S3BucketNotification) Dependencies() terra.Dependencies {
+	return sbn.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [S3BucketNotification].
+func (sbn *S3BucketNotification) LifecycleManagement() *terra.Lifecycle {
+	return sbn.Lifecycle
+}
+
+// Attributes returns the attributes for [S3BucketNotification].
 func (sbn *S3BucketNotification) Attributes() s3BucketNotificationAttributes {
 	return s3BucketNotificationAttributes{ref: terra.ReferenceResource(sbn)}
 }
 
+// ImportState imports the given attribute values into [S3BucketNotification]'s state.
 func (sbn *S3BucketNotification) ImportState(av io.Reader) error {
 	sbn.state = &s3BucketNotificationState{}
 	if err := json.NewDecoder(av).Decode(sbn.state); err != nil {
@@ -49,10 +73,12 @@ func (sbn *S3BucketNotification) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [S3BucketNotification] has state.
 func (sbn *S3BucketNotification) State() (*s3BucketNotificationState, bool) {
 	return sbn.state, sbn.state != nil
 }
 
+// StateMust returns the state for [S3BucketNotification]. Panics if the state is nil.
 func (sbn *S3BucketNotification) StateMust() *s3BucketNotificationState {
 	if sbn.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sbn.Type(), sbn.LocalName()))
@@ -60,10 +86,7 @@ func (sbn *S3BucketNotification) StateMust() *s3BucketNotificationState {
 	return sbn.state
 }
 
-func (sbn *S3BucketNotification) DependOn() terra.Reference {
-	return terra.ReferenceResource(sbn)
-}
-
+// S3BucketNotificationArgs contains the configurations for aws_s3_bucket_notification.
 type S3BucketNotificationArgs struct {
 	// Bucket: string, required
 	Bucket terra.StringValue `hcl:"bucket,attr" validate:"required"`
@@ -77,35 +100,36 @@ type S3BucketNotificationArgs struct {
 	Queue []s3bucketnotification.Queue `hcl:"queue,block" validate:"min=0"`
 	// Topic: min=0
 	Topic []s3bucketnotification.Topic `hcl:"topic,block" validate:"min=0"`
-	// DependsOn contains resources that S3BucketNotification depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type s3BucketNotificationAttributes struct {
 	ref terra.Reference
 }
 
+// Bucket returns a reference to field bucket of aws_s3_bucket_notification.
 func (sbn s3BucketNotificationAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(sbn.ref.Append("bucket"))
+	return terra.ReferenceAsString(sbn.ref.Append("bucket"))
 }
 
+// Eventbridge returns a reference to field eventbridge of aws_s3_bucket_notification.
 func (sbn s3BucketNotificationAttributes) Eventbridge() terra.BoolValue {
-	return terra.ReferenceBool(sbn.ref.Append("eventbridge"))
+	return terra.ReferenceAsBool(sbn.ref.Append("eventbridge"))
 }
 
+// Id returns a reference to field id of aws_s3_bucket_notification.
 func (sbn s3BucketNotificationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sbn.ref.Append("id"))
+	return terra.ReferenceAsString(sbn.ref.Append("id"))
 }
 
 func (sbn s3BucketNotificationAttributes) LambdaFunction() terra.ListValue[s3bucketnotification.LambdaFunctionAttributes] {
-	return terra.ReferenceList[s3bucketnotification.LambdaFunctionAttributes](sbn.ref.Append("lambda_function"))
+	return terra.ReferenceAsList[s3bucketnotification.LambdaFunctionAttributes](sbn.ref.Append("lambda_function"))
 }
 
 func (sbn s3BucketNotificationAttributes) Queue() terra.ListValue[s3bucketnotification.QueueAttributes] {
-	return terra.ReferenceList[s3bucketnotification.QueueAttributes](sbn.ref.Append("queue"))
+	return terra.ReferenceAsList[s3bucketnotification.QueueAttributes](sbn.ref.Append("queue"))
 }
 
 func (sbn s3BucketNotificationAttributes) Topic() terra.ListValue[s3bucketnotification.TopicAttributes] {
-	return terra.ReferenceList[s3bucketnotification.TopicAttributes](sbn.ref.Append("topic"))
+	return terra.ReferenceAsList[s3bucketnotification.TopicAttributes](sbn.ref.Append("topic"))
 }
 
 type s3BucketNotificationState struct {

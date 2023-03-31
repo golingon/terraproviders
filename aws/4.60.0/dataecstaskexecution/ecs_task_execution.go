@@ -109,15 +109,15 @@ func (cps CapacityProviderStrategyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cps CapacityProviderStrategyAttributes) Base() terra.NumberValue {
-	return terra.ReferenceNumber(cps.ref.Append("base"))
+	return terra.ReferenceAsNumber(cps.ref.Append("base"))
 }
 
 func (cps CapacityProviderStrategyAttributes) CapacityProvider() terra.StringValue {
-	return terra.ReferenceString(cps.ref.Append("capacity_provider"))
+	return terra.ReferenceAsString(cps.ref.Append("capacity_provider"))
 }
 
 func (cps CapacityProviderStrategyAttributes) Weight() terra.NumberValue {
-	return terra.ReferenceNumber(cps.ref.Append("weight"))
+	return terra.ReferenceAsNumber(cps.ref.Append("weight"))
 }
 
 type NetworkConfigurationAttributes struct {
@@ -137,15 +137,15 @@ func (nc NetworkConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (nc NetworkConfigurationAttributes) AssignPublicIp() terra.BoolValue {
-	return terra.ReferenceBool(nc.ref.Append("assign_public_ip"))
+	return terra.ReferenceAsBool(nc.ref.Append("assign_public_ip"))
 }
 
 func (nc NetworkConfigurationAttributes) SecurityGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](nc.ref.Append("security_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](nc.ref.Append("security_groups"))
 }
 
 func (nc NetworkConfigurationAttributes) Subnets() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](nc.ref.Append("subnets"))
+	return terra.ReferenceAsSet[terra.StringValue](nc.ref.Append("subnets"))
 }
 
 type OverridesAttributes struct {
@@ -165,27 +165,27 @@ func (o OverridesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (o OverridesAttributes) Cpu() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("cpu"))
+	return terra.ReferenceAsString(o.ref.Append("cpu"))
 }
 
 func (o OverridesAttributes) ExecutionRoleArn() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("execution_role_arn"))
+	return terra.ReferenceAsString(o.ref.Append("execution_role_arn"))
 }
 
 func (o OverridesAttributes) Memory() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("memory"))
+	return terra.ReferenceAsString(o.ref.Append("memory"))
 }
 
 func (o OverridesAttributes) TaskRoleArn() terra.StringValue {
-	return terra.ReferenceString(o.ref.Append("task_role_arn"))
+	return terra.ReferenceAsString(o.ref.Append("task_role_arn"))
 }
 
 func (o OverridesAttributes) ContainerOverrides() terra.ListValue[ContainerOverridesAttributes] {
-	return terra.ReferenceList[ContainerOverridesAttributes](o.ref.Append("container_overrides"))
+	return terra.ReferenceAsList[ContainerOverridesAttributes](o.ref.Append("container_overrides"))
 }
 
 func (o OverridesAttributes) InferenceAcceleratorOverrides() terra.SetValue[InferenceAcceleratorOverridesAttributes] {
-	return terra.ReferenceSet[InferenceAcceleratorOverridesAttributes](o.ref.Append("inference_accelerator_overrides"))
+	return terra.ReferenceAsSet[InferenceAcceleratorOverridesAttributes](o.ref.Append("inference_accelerator_overrides"))
 }
 
 type ContainerOverridesAttributes struct {
@@ -205,31 +205,31 @@ func (co ContainerOverridesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (co ContainerOverridesAttributes) Command() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](co.ref.Append("command"))
+	return terra.ReferenceAsList[terra.StringValue](co.ref.Append("command"))
 }
 
 func (co ContainerOverridesAttributes) Cpu() terra.NumberValue {
-	return terra.ReferenceNumber(co.ref.Append("cpu"))
+	return terra.ReferenceAsNumber(co.ref.Append("cpu"))
 }
 
 func (co ContainerOverridesAttributes) Memory() terra.NumberValue {
-	return terra.ReferenceNumber(co.ref.Append("memory"))
+	return terra.ReferenceAsNumber(co.ref.Append("memory"))
 }
 
 func (co ContainerOverridesAttributes) MemoryReservation() terra.NumberValue {
-	return terra.ReferenceNumber(co.ref.Append("memory_reservation"))
+	return terra.ReferenceAsNumber(co.ref.Append("memory_reservation"))
 }
 
 func (co ContainerOverridesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(co.ref.Append("name"))
+	return terra.ReferenceAsString(co.ref.Append("name"))
 }
 
 func (co ContainerOverridesAttributes) Environment() terra.SetValue[EnvironmentAttributes] {
-	return terra.ReferenceSet[EnvironmentAttributes](co.ref.Append("environment"))
+	return terra.ReferenceAsSet[EnvironmentAttributes](co.ref.Append("environment"))
 }
 
 func (co ContainerOverridesAttributes) ResourceRequirements() terra.SetValue[ResourceRequirementsAttributes] {
-	return terra.ReferenceSet[ResourceRequirementsAttributes](co.ref.Append("resource_requirements"))
+	return terra.ReferenceAsSet[ResourceRequirementsAttributes](co.ref.Append("resource_requirements"))
 }
 
 type EnvironmentAttributes struct {
@@ -249,11 +249,11 @@ func (e EnvironmentAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e EnvironmentAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("key"))
+	return terra.ReferenceAsString(e.ref.Append("key"))
 }
 
 func (e EnvironmentAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("value"))
+	return terra.ReferenceAsString(e.ref.Append("value"))
 }
 
 type ResourceRequirementsAttributes struct {
@@ -273,11 +273,11 @@ func (rr ResourceRequirementsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rr ResourceRequirementsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("type"))
+	return terra.ReferenceAsString(rr.ref.Append("type"))
 }
 
 func (rr ResourceRequirementsAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("value"))
+	return terra.ReferenceAsString(rr.ref.Append("value"))
 }
 
 type InferenceAcceleratorOverridesAttributes struct {
@@ -297,11 +297,11 @@ func (iao InferenceAcceleratorOverridesAttributes) InternalTokens() hclwrite.Tok
 }
 
 func (iao InferenceAcceleratorOverridesAttributes) DeviceName() terra.StringValue {
-	return terra.ReferenceString(iao.ref.Append("device_name"))
+	return terra.ReferenceAsString(iao.ref.Append("device_name"))
 }
 
 func (iao InferenceAcceleratorOverridesAttributes) DeviceType() terra.StringValue {
-	return terra.ReferenceString(iao.ref.Append("device_type"))
+	return terra.ReferenceAsString(iao.ref.Append("device_type"))
 }
 
 type PlacementConstraintsAttributes struct {
@@ -321,11 +321,11 @@ func (pc PlacementConstraintsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (pc PlacementConstraintsAttributes) Expression() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("expression"))
+	return terra.ReferenceAsString(pc.ref.Append("expression"))
 }
 
 func (pc PlacementConstraintsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(pc.ref.Append("type"))
+	return terra.ReferenceAsString(pc.ref.Append("type"))
 }
 
 type PlacementStrategyAttributes struct {
@@ -345,11 +345,11 @@ func (ps PlacementStrategyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ps PlacementStrategyAttributes) Field() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("field"))
+	return terra.ReferenceAsString(ps.ref.Append("field"))
 }
 
 func (ps PlacementStrategyAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ps.ref.Append("type"))
+	return terra.ReferenceAsString(ps.ref.Append("type"))
 }
 
 type CapacityProviderStrategyState struct {

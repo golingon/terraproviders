@@ -66,31 +66,31 @@ func (cp ConfigurationPropertyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cp ConfigurationPropertyAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("description"))
+	return terra.ReferenceAsString(cp.ref.Append("description"))
 }
 
 func (cp ConfigurationPropertyAttributes) Key() terra.BoolValue {
-	return terra.ReferenceBool(cp.ref.Append("key"))
+	return terra.ReferenceAsBool(cp.ref.Append("key"))
 }
 
 func (cp ConfigurationPropertyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("name"))
+	return terra.ReferenceAsString(cp.ref.Append("name"))
 }
 
 func (cp ConfigurationPropertyAttributes) Queryable() terra.BoolValue {
-	return terra.ReferenceBool(cp.ref.Append("queryable"))
+	return terra.ReferenceAsBool(cp.ref.Append("queryable"))
 }
 
 func (cp ConfigurationPropertyAttributes) Required() terra.BoolValue {
-	return terra.ReferenceBool(cp.ref.Append("required"))
+	return terra.ReferenceAsBool(cp.ref.Append("required"))
 }
 
 func (cp ConfigurationPropertyAttributes) Secret() terra.BoolValue {
-	return terra.ReferenceBool(cp.ref.Append("secret"))
+	return terra.ReferenceAsBool(cp.ref.Append("secret"))
 }
 
 func (cp ConfigurationPropertyAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("type"))
+	return terra.ReferenceAsString(cp.ref.Append("type"))
 }
 
 type InputArtifactDetailsAttributes struct {
@@ -110,11 +110,11 @@ func (iad InputArtifactDetailsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (iad InputArtifactDetailsAttributes) MaximumCount() terra.NumberValue {
-	return terra.ReferenceNumber(iad.ref.Append("maximum_count"))
+	return terra.ReferenceAsNumber(iad.ref.Append("maximum_count"))
 }
 
 func (iad InputArtifactDetailsAttributes) MinimumCount() terra.NumberValue {
-	return terra.ReferenceNumber(iad.ref.Append("minimum_count"))
+	return terra.ReferenceAsNumber(iad.ref.Append("minimum_count"))
 }
 
 type OutputArtifactDetailsAttributes struct {
@@ -134,11 +134,11 @@ func (oad OutputArtifactDetailsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (oad OutputArtifactDetailsAttributes) MaximumCount() terra.NumberValue {
-	return terra.ReferenceNumber(oad.ref.Append("maximum_count"))
+	return terra.ReferenceAsNumber(oad.ref.Append("maximum_count"))
 }
 
 func (oad OutputArtifactDetailsAttributes) MinimumCount() terra.NumberValue {
-	return terra.ReferenceNumber(oad.ref.Append("minimum_count"))
+	return terra.ReferenceAsNumber(oad.ref.Append("minimum_count"))
 }
 
 type SettingsAttributes struct {
@@ -158,19 +158,19 @@ func (s SettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SettingsAttributes) EntityUrlTemplate() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("entity_url_template"))
+	return terra.ReferenceAsString(s.ref.Append("entity_url_template"))
 }
 
 func (s SettingsAttributes) ExecutionUrlTemplate() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("execution_url_template"))
+	return terra.ReferenceAsString(s.ref.Append("execution_url_template"))
 }
 
 func (s SettingsAttributes) RevisionUrlTemplate() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("revision_url_template"))
+	return terra.ReferenceAsString(s.ref.Append("revision_url_template"))
 }
 
 func (s SettingsAttributes) ThirdPartyConfigurationUrl() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("third_party_configuration_url"))
+	return terra.ReferenceAsString(s.ref.Append("third_party_configuration_url"))
 }
 
 type ConfigurationPropertyState struct {

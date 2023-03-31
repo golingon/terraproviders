@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewConfigOrganizationConformancePack creates a new instance of [ConfigOrganizationConformancePack].
 func NewConfigOrganizationConformancePack(name string, args ConfigOrganizationConformancePackArgs) *ConfigOrganizationConformancePack {
 	return &ConfigOrganizationConformancePack{
 		Args: args,
@@ -19,28 +20,51 @@ func NewConfigOrganizationConformancePack(name string, args ConfigOrganizationCo
 
 var _ terra.Resource = (*ConfigOrganizationConformancePack)(nil)
 
+// ConfigOrganizationConformancePack represents the Terraform resource aws_config_organization_conformance_pack.
 type ConfigOrganizationConformancePack struct {
-	Name  string
-	Args  ConfigOrganizationConformancePackArgs
-	state *configOrganizationConformancePackState
+	Name      string
+	Args      ConfigOrganizationConformancePackArgs
+	state     *configOrganizationConformancePackState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ConfigOrganizationConformancePack].
 func (cocp *ConfigOrganizationConformancePack) Type() string {
 	return "aws_config_organization_conformance_pack"
 }
 
+// LocalName returns the local name for [ConfigOrganizationConformancePack].
 func (cocp *ConfigOrganizationConformancePack) LocalName() string {
 	return cocp.Name
 }
 
+// Configuration returns the configuration (args) for [ConfigOrganizationConformancePack].
 func (cocp *ConfigOrganizationConformancePack) Configuration() interface{} {
 	return cocp.Args
 }
 
+// DependOn is used for other resources to depend on [ConfigOrganizationConformancePack].
+func (cocp *ConfigOrganizationConformancePack) DependOn() terra.Reference {
+	return terra.ReferenceResource(cocp)
+}
+
+// Dependencies returns the list of resources [ConfigOrganizationConformancePack] depends_on.
+func (cocp *ConfigOrganizationConformancePack) Dependencies() terra.Dependencies {
+	return cocp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ConfigOrganizationConformancePack].
+func (cocp *ConfigOrganizationConformancePack) LifecycleManagement() *terra.Lifecycle {
+	return cocp.Lifecycle
+}
+
+// Attributes returns the attributes for [ConfigOrganizationConformancePack].
 func (cocp *ConfigOrganizationConformancePack) Attributes() configOrganizationConformancePackAttributes {
 	return configOrganizationConformancePackAttributes{ref: terra.ReferenceResource(cocp)}
 }
 
+// ImportState imports the given attribute values into [ConfigOrganizationConformancePack]'s state.
 func (cocp *ConfigOrganizationConformancePack) ImportState(av io.Reader) error {
 	cocp.state = &configOrganizationConformancePackState{}
 	if err := json.NewDecoder(av).Decode(cocp.state); err != nil {
@@ -49,10 +73,12 @@ func (cocp *ConfigOrganizationConformancePack) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ConfigOrganizationConformancePack] has state.
 func (cocp *ConfigOrganizationConformancePack) State() (*configOrganizationConformancePackState, bool) {
 	return cocp.state, cocp.state != nil
 }
 
+// StateMust returns the state for [ConfigOrganizationConformancePack]. Panics if the state is nil.
 func (cocp *ConfigOrganizationConformancePack) StateMust() *configOrganizationConformancePackState {
 	if cocp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cocp.Type(), cocp.LocalName()))
@@ -60,10 +86,7 @@ func (cocp *ConfigOrganizationConformancePack) StateMust() *configOrganizationCo
 	return cocp.state
 }
 
-func (cocp *ConfigOrganizationConformancePack) DependOn() terra.Reference {
-	return terra.ReferenceResource(cocp)
-}
-
+// ConfigOrganizationConformancePackArgs contains the configurations for aws_config_organization_conformance_pack.
 type ConfigOrganizationConformancePackArgs struct {
 	// DeliveryS3Bucket: string, optional
 	DeliveryS3Bucket terra.StringValue `hcl:"delivery_s3_bucket,attr"`
@@ -83,51 +106,57 @@ type ConfigOrganizationConformancePackArgs struct {
 	InputParameter []configorganizationconformancepack.InputParameter `hcl:"input_parameter,block" validate:"min=0,max=60"`
 	// Timeouts: optional
 	Timeouts *configorganizationconformancepack.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that ConfigOrganizationConformancePack depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type configOrganizationConformancePackAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_config_organization_conformance_pack.
 func (cocp configOrganizationConformancePackAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(cocp.ref.Append("arn"))
+	return terra.ReferenceAsString(cocp.ref.Append("arn"))
 }
 
+// DeliveryS3Bucket returns a reference to field delivery_s3_bucket of aws_config_organization_conformance_pack.
 func (cocp configOrganizationConformancePackAttributes) DeliveryS3Bucket() terra.StringValue {
-	return terra.ReferenceString(cocp.ref.Append("delivery_s3_bucket"))
+	return terra.ReferenceAsString(cocp.ref.Append("delivery_s3_bucket"))
 }
 
+// DeliveryS3KeyPrefix returns a reference to field delivery_s3_key_prefix of aws_config_organization_conformance_pack.
 func (cocp configOrganizationConformancePackAttributes) DeliveryS3KeyPrefix() terra.StringValue {
-	return terra.ReferenceString(cocp.ref.Append("delivery_s3_key_prefix"))
+	return terra.ReferenceAsString(cocp.ref.Append("delivery_s3_key_prefix"))
 }
 
+// ExcludedAccounts returns a reference to field excluded_accounts of aws_config_organization_conformance_pack.
 func (cocp configOrganizationConformancePackAttributes) ExcludedAccounts() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](cocp.ref.Append("excluded_accounts"))
+	return terra.ReferenceAsSet[terra.StringValue](cocp.ref.Append("excluded_accounts"))
 }
 
+// Id returns a reference to field id of aws_config_organization_conformance_pack.
 func (cocp configOrganizationConformancePackAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cocp.ref.Append("id"))
+	return terra.ReferenceAsString(cocp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_config_organization_conformance_pack.
 func (cocp configOrganizationConformancePackAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cocp.ref.Append("name"))
+	return terra.ReferenceAsString(cocp.ref.Append("name"))
 }
 
+// TemplateBody returns a reference to field template_body of aws_config_organization_conformance_pack.
 func (cocp configOrganizationConformancePackAttributes) TemplateBody() terra.StringValue {
-	return terra.ReferenceString(cocp.ref.Append("template_body"))
+	return terra.ReferenceAsString(cocp.ref.Append("template_body"))
 }
 
+// TemplateS3Uri returns a reference to field template_s3_uri of aws_config_organization_conformance_pack.
 func (cocp configOrganizationConformancePackAttributes) TemplateS3Uri() terra.StringValue {
-	return terra.ReferenceString(cocp.ref.Append("template_s3_uri"))
+	return terra.ReferenceAsString(cocp.ref.Append("template_s3_uri"))
 }
 
 func (cocp configOrganizationConformancePackAttributes) InputParameter() terra.SetValue[configorganizationconformancepack.InputParameterAttributes] {
-	return terra.ReferenceSet[configorganizationconformancepack.InputParameterAttributes](cocp.ref.Append("input_parameter"))
+	return terra.ReferenceAsSet[configorganizationconformancepack.InputParameterAttributes](cocp.ref.Append("input_parameter"))
 }
 
 func (cocp configOrganizationConformancePackAttributes) Timeouts() configorganizationconformancepack.TimeoutsAttributes {
-	return terra.ReferenceSingle[configorganizationconformancepack.TimeoutsAttributes](cocp.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[configorganizationconformancepack.TimeoutsAttributes](cocp.ref.Append("timeouts"))
 }
 
 type configOrganizationConformancePackState struct {

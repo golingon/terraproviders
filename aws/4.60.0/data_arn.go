@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataArn creates a new instance of [DataArn].
 func NewDataArn(name string, args DataArnArgs) *DataArn {
 	return &DataArn{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataArn(name string, args DataArnArgs) *DataArn {
 
 var _ terra.DataResource = (*DataArn)(nil)
 
+// DataArn represents the Terraform data resource aws_arn.
 type DataArn struct {
 	Name string
 	Args DataArnArgs
 }
 
+// DataSource returns the Terraform object type for [DataArn].
 func (a *DataArn) DataSource() string {
 	return "aws_arn"
 }
 
+// LocalName returns the local name for [DataArn].
 func (a *DataArn) LocalName() string {
 	return a.Name
 }
 
+// Configuration returns the configuration (args) for [DataArn].
 func (a *DataArn) Configuration() interface{} {
 	return a.Args
 }
 
+// Attributes returns the attributes for [DataArn].
 func (a *DataArn) Attributes() dataArnAttributes {
 	return dataArnAttributes{ref: terra.ReferenceDataResource(a)}
 }
 
+// DataArnArgs contains the configurations for aws_arn.
 type DataArnArgs struct {
 	// Arn: string, required
 	Arn terra.StringValue `hcl:"arn,attr" validate:"required"`
@@ -44,30 +51,37 @@ type dataArnAttributes struct {
 	ref terra.Reference
 }
 
+// Account returns a reference to field account of aws_arn.
 func (a dataArnAttributes) Account() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("account"))
+	return terra.ReferenceAsString(a.ref.Append("account"))
 }
 
+// Arn returns a reference to field arn of aws_arn.
 func (a dataArnAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("arn"))
+	return terra.ReferenceAsString(a.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_arn.
 func (a dataArnAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("id"))
+	return terra.ReferenceAsString(a.ref.Append("id"))
 }
 
+// Partition returns a reference to field partition of aws_arn.
 func (a dataArnAttributes) Partition() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("partition"))
+	return terra.ReferenceAsString(a.ref.Append("partition"))
 }
 
+// Region returns a reference to field region of aws_arn.
 func (a dataArnAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("region"))
+	return terra.ReferenceAsString(a.ref.Append("region"))
 }
 
+// Resource returns a reference to field resource of aws_arn.
 func (a dataArnAttributes) Resource() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("resource"))
+	return terra.ReferenceAsString(a.ref.Append("resource"))
 }
 
+// Service returns a reference to field service of aws_arn.
 func (a dataArnAttributes) Service() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("service"))
+	return terra.ReferenceAsString(a.ref.Append("service"))
 }

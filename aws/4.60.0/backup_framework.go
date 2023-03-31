@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewBackupFramework creates a new instance of [BackupFramework].
 func NewBackupFramework(name string, args BackupFrameworkArgs) *BackupFramework {
 	return &BackupFramework{
 		Args: args,
@@ -19,28 +20,51 @@ func NewBackupFramework(name string, args BackupFrameworkArgs) *BackupFramework 
 
 var _ terra.Resource = (*BackupFramework)(nil)
 
+// BackupFramework represents the Terraform resource aws_backup_framework.
 type BackupFramework struct {
-	Name  string
-	Args  BackupFrameworkArgs
-	state *backupFrameworkState
+	Name      string
+	Args      BackupFrameworkArgs
+	state     *backupFrameworkState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [BackupFramework].
 func (bf *BackupFramework) Type() string {
 	return "aws_backup_framework"
 }
 
+// LocalName returns the local name for [BackupFramework].
 func (bf *BackupFramework) LocalName() string {
 	return bf.Name
 }
 
+// Configuration returns the configuration (args) for [BackupFramework].
 func (bf *BackupFramework) Configuration() interface{} {
 	return bf.Args
 }
 
+// DependOn is used for other resources to depend on [BackupFramework].
+func (bf *BackupFramework) DependOn() terra.Reference {
+	return terra.ReferenceResource(bf)
+}
+
+// Dependencies returns the list of resources [BackupFramework] depends_on.
+func (bf *BackupFramework) Dependencies() terra.Dependencies {
+	return bf.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [BackupFramework].
+func (bf *BackupFramework) LifecycleManagement() *terra.Lifecycle {
+	return bf.Lifecycle
+}
+
+// Attributes returns the attributes for [BackupFramework].
 func (bf *BackupFramework) Attributes() backupFrameworkAttributes {
 	return backupFrameworkAttributes{ref: terra.ReferenceResource(bf)}
 }
 
+// ImportState imports the given attribute values into [BackupFramework]'s state.
 func (bf *BackupFramework) ImportState(av io.Reader) error {
 	bf.state = &backupFrameworkState{}
 	if err := json.NewDecoder(av).Decode(bf.state); err != nil {
@@ -49,10 +73,12 @@ func (bf *BackupFramework) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [BackupFramework] has state.
 func (bf *BackupFramework) State() (*backupFrameworkState, bool) {
 	return bf.state, bf.state != nil
 }
 
+// StateMust returns the state for [BackupFramework]. Panics if the state is nil.
 func (bf *BackupFramework) StateMust() *backupFrameworkState {
 	if bf.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", bf.Type(), bf.LocalName()))
@@ -60,10 +86,7 @@ func (bf *BackupFramework) StateMust() *backupFrameworkState {
 	return bf.state
 }
 
-func (bf *BackupFramework) DependOn() terra.Reference {
-	return terra.ReferenceResource(bf)
-}
-
+// BackupFrameworkArgs contains the configurations for aws_backup_framework.
 type BackupFrameworkArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -79,55 +102,62 @@ type BackupFrameworkArgs struct {
 	Control []backupframework.Control `hcl:"control,block" validate:"min=1"`
 	// Timeouts: optional
 	Timeouts *backupframework.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that BackupFramework depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type backupFrameworkAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_backup_framework.
 func (bf backupFrameworkAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(bf.ref.Append("arn"))
+	return terra.ReferenceAsString(bf.ref.Append("arn"))
 }
 
+// CreationTime returns a reference to field creation_time of aws_backup_framework.
 func (bf backupFrameworkAttributes) CreationTime() terra.StringValue {
-	return terra.ReferenceString(bf.ref.Append("creation_time"))
+	return terra.ReferenceAsString(bf.ref.Append("creation_time"))
 }
 
+// DeploymentStatus returns a reference to field deployment_status of aws_backup_framework.
 func (bf backupFrameworkAttributes) DeploymentStatus() terra.StringValue {
-	return terra.ReferenceString(bf.ref.Append("deployment_status"))
+	return terra.ReferenceAsString(bf.ref.Append("deployment_status"))
 }
 
+// Description returns a reference to field description of aws_backup_framework.
 func (bf backupFrameworkAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(bf.ref.Append("description"))
+	return terra.ReferenceAsString(bf.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_backup_framework.
 func (bf backupFrameworkAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(bf.ref.Append("id"))
+	return terra.ReferenceAsString(bf.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_backup_framework.
 func (bf backupFrameworkAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(bf.ref.Append("name"))
+	return terra.ReferenceAsString(bf.ref.Append("name"))
 }
 
+// Status returns a reference to field status of aws_backup_framework.
 func (bf backupFrameworkAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(bf.ref.Append("status"))
+	return terra.ReferenceAsString(bf.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of aws_backup_framework.
 func (bf backupFrameworkAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bf.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](bf.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_backup_framework.
 func (bf backupFrameworkAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](bf.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](bf.ref.Append("tags_all"))
 }
 
 func (bf backupFrameworkAttributes) Control() terra.SetValue[backupframework.ControlAttributes] {
-	return terra.ReferenceSet[backupframework.ControlAttributes](bf.ref.Append("control"))
+	return terra.ReferenceAsSet[backupframework.ControlAttributes](bf.ref.Append("control"))
 }
 
 func (bf backupFrameworkAttributes) Timeouts() backupframework.TimeoutsAttributes {
-	return terra.ReferenceSingle[backupframework.TimeoutsAttributes](bf.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[backupframework.TimeoutsAttributes](bf.ref.Append("timeouts"))
 }
 
 type backupFrameworkState struct {

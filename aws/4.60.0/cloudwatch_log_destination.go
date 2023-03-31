@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCloudwatchLogDestination creates a new instance of [CloudwatchLogDestination].
 func NewCloudwatchLogDestination(name string, args CloudwatchLogDestinationArgs) *CloudwatchLogDestination {
 	return &CloudwatchLogDestination{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCloudwatchLogDestination(name string, args CloudwatchLogDestinationArgs)
 
 var _ terra.Resource = (*CloudwatchLogDestination)(nil)
 
+// CloudwatchLogDestination represents the Terraform resource aws_cloudwatch_log_destination.
 type CloudwatchLogDestination struct {
-	Name  string
-	Args  CloudwatchLogDestinationArgs
-	state *cloudwatchLogDestinationState
+	Name      string
+	Args      CloudwatchLogDestinationArgs
+	state     *cloudwatchLogDestinationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CloudwatchLogDestination].
 func (cld *CloudwatchLogDestination) Type() string {
 	return "aws_cloudwatch_log_destination"
 }
 
+// LocalName returns the local name for [CloudwatchLogDestination].
 func (cld *CloudwatchLogDestination) LocalName() string {
 	return cld.Name
 }
 
+// Configuration returns the configuration (args) for [CloudwatchLogDestination].
 func (cld *CloudwatchLogDestination) Configuration() interface{} {
 	return cld.Args
 }
 
+// DependOn is used for other resources to depend on [CloudwatchLogDestination].
+func (cld *CloudwatchLogDestination) DependOn() terra.Reference {
+	return terra.ReferenceResource(cld)
+}
+
+// Dependencies returns the list of resources [CloudwatchLogDestination] depends_on.
+func (cld *CloudwatchLogDestination) Dependencies() terra.Dependencies {
+	return cld.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CloudwatchLogDestination].
+func (cld *CloudwatchLogDestination) LifecycleManagement() *terra.Lifecycle {
+	return cld.Lifecycle
+}
+
+// Attributes returns the attributes for [CloudwatchLogDestination].
 func (cld *CloudwatchLogDestination) Attributes() cloudwatchLogDestinationAttributes {
 	return cloudwatchLogDestinationAttributes{ref: terra.ReferenceResource(cld)}
 }
 
+// ImportState imports the given attribute values into [CloudwatchLogDestination]'s state.
 func (cld *CloudwatchLogDestination) ImportState(av io.Reader) error {
 	cld.state = &cloudwatchLogDestinationState{}
 	if err := json.NewDecoder(av).Decode(cld.state); err != nil {
@@ -48,10 +72,12 @@ func (cld *CloudwatchLogDestination) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CloudwatchLogDestination] has state.
 func (cld *CloudwatchLogDestination) State() (*cloudwatchLogDestinationState, bool) {
 	return cld.state, cld.state != nil
 }
 
+// StateMust returns the state for [CloudwatchLogDestination]. Panics if the state is nil.
 func (cld *CloudwatchLogDestination) StateMust() *cloudwatchLogDestinationState {
 	if cld.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cld.Type(), cld.LocalName()))
@@ -59,10 +85,7 @@ func (cld *CloudwatchLogDestination) StateMust() *cloudwatchLogDestinationState 
 	return cld.state
 }
 
-func (cld *CloudwatchLogDestination) DependOn() terra.Reference {
-	return terra.ReferenceResource(cld)
-}
-
+// CloudwatchLogDestinationArgs contains the configurations for aws_cloudwatch_log_destination.
 type CloudwatchLogDestinationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -76,39 +99,44 @@ type CloudwatchLogDestinationArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// TargetArn: string, required
 	TargetArn terra.StringValue `hcl:"target_arn,attr" validate:"required"`
-	// DependsOn contains resources that CloudwatchLogDestination depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cloudwatchLogDestinationAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_cloudwatch_log_destination.
 func (cld cloudwatchLogDestinationAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(cld.ref.Append("arn"))
+	return terra.ReferenceAsString(cld.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_cloudwatch_log_destination.
 func (cld cloudwatchLogDestinationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cld.ref.Append("id"))
+	return terra.ReferenceAsString(cld.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_cloudwatch_log_destination.
 func (cld cloudwatchLogDestinationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cld.ref.Append("name"))
+	return terra.ReferenceAsString(cld.ref.Append("name"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_cloudwatch_log_destination.
 func (cld cloudwatchLogDestinationAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(cld.ref.Append("role_arn"))
+	return terra.ReferenceAsString(cld.ref.Append("role_arn"))
 }
 
+// Tags returns a reference to field tags of aws_cloudwatch_log_destination.
 func (cld cloudwatchLogDestinationAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cld.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cld.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_cloudwatch_log_destination.
 func (cld cloudwatchLogDestinationAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cld.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](cld.ref.Append("tags_all"))
 }
 
+// TargetArn returns a reference to field target_arn of aws_cloudwatch_log_destination.
 func (cld cloudwatchLogDestinationAttributes) TargetArn() terra.StringValue {
-	return terra.ReferenceString(cld.ref.Append("target_arn"))
+	return terra.ReferenceAsString(cld.ref.Append("target_arn"))
 }
 
 type cloudwatchLogDestinationState struct {

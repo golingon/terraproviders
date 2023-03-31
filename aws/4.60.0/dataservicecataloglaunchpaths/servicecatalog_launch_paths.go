@@ -36,19 +36,19 @@ func (s SummariesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SummariesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 func (s SummariesAttributes) PathId() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("path_id"))
+	return terra.ReferenceAsString(s.ref.Append("path_id"))
 }
 
 func (s SummariesAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](s.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](s.ref.Append("tags"))
 }
 
 func (s SummariesAttributes) ConstraintSummaries() terra.ListValue[ConstraintSummariesAttributes] {
-	return terra.ReferenceList[ConstraintSummariesAttributes](s.ref.Append("constraint_summaries"))
+	return terra.ReferenceAsList[ConstraintSummariesAttributes](s.ref.Append("constraint_summaries"))
 }
 
 type ConstraintSummariesAttributes struct {
@@ -68,11 +68,11 @@ func (cs ConstraintSummariesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cs ConstraintSummariesAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("description"))
+	return terra.ReferenceAsString(cs.ref.Append("description"))
 }
 
 func (cs ConstraintSummariesAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(cs.ref.Append("type"))
+	return terra.ReferenceAsString(cs.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
@@ -92,7 +92,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 type SummariesState struct {

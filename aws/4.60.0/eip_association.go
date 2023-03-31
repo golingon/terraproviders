@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewEipAssociation creates a new instance of [EipAssociation].
 func NewEipAssociation(name string, args EipAssociationArgs) *EipAssociation {
 	return &EipAssociation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewEipAssociation(name string, args EipAssociationArgs) *EipAssociation {
 
 var _ terra.Resource = (*EipAssociation)(nil)
 
+// EipAssociation represents the Terraform resource aws_eip_association.
 type EipAssociation struct {
-	Name  string
-	Args  EipAssociationArgs
-	state *eipAssociationState
+	Name      string
+	Args      EipAssociationArgs
+	state     *eipAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [EipAssociation].
 func (ea *EipAssociation) Type() string {
 	return "aws_eip_association"
 }
 
+// LocalName returns the local name for [EipAssociation].
 func (ea *EipAssociation) LocalName() string {
 	return ea.Name
 }
 
+// Configuration returns the configuration (args) for [EipAssociation].
 func (ea *EipAssociation) Configuration() interface{} {
 	return ea.Args
 }
 
+// DependOn is used for other resources to depend on [EipAssociation].
+func (ea *EipAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(ea)
+}
+
+// Dependencies returns the list of resources [EipAssociation] depends_on.
+func (ea *EipAssociation) Dependencies() terra.Dependencies {
+	return ea.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [EipAssociation].
+func (ea *EipAssociation) LifecycleManagement() *terra.Lifecycle {
+	return ea.Lifecycle
+}
+
+// Attributes returns the attributes for [EipAssociation].
 func (ea *EipAssociation) Attributes() eipAssociationAttributes {
 	return eipAssociationAttributes{ref: terra.ReferenceResource(ea)}
 }
 
+// ImportState imports the given attribute values into [EipAssociation]'s state.
 func (ea *EipAssociation) ImportState(av io.Reader) error {
 	ea.state = &eipAssociationState{}
 	if err := json.NewDecoder(av).Decode(ea.state); err != nil {
@@ -48,10 +72,12 @@ func (ea *EipAssociation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [EipAssociation] has state.
 func (ea *EipAssociation) State() (*eipAssociationState, bool) {
 	return ea.state, ea.state != nil
 }
 
+// StateMust returns the state for [EipAssociation]. Panics if the state is nil.
 func (ea *EipAssociation) StateMust() *eipAssociationState {
 	if ea.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ea.Type(), ea.LocalName()))
@@ -59,10 +85,7 @@ func (ea *EipAssociation) StateMust() *eipAssociationState {
 	return ea.state
 }
 
-func (ea *EipAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(ea)
-}
-
+// EipAssociationArgs contains the configurations for aws_eip_association.
 type EipAssociationArgs struct {
 	// AllocationId: string, optional
 	AllocationId terra.StringValue `hcl:"allocation_id,attr"`
@@ -78,39 +101,44 @@ type EipAssociationArgs struct {
 	PrivateIpAddress terra.StringValue `hcl:"private_ip_address,attr"`
 	// PublicIp: string, optional
 	PublicIp terra.StringValue `hcl:"public_ip,attr"`
-	// DependsOn contains resources that EipAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type eipAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// AllocationId returns a reference to field allocation_id of aws_eip_association.
 func (ea eipAssociationAttributes) AllocationId() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("allocation_id"))
+	return terra.ReferenceAsString(ea.ref.Append("allocation_id"))
 }
 
+// AllowReassociation returns a reference to field allow_reassociation of aws_eip_association.
 func (ea eipAssociationAttributes) AllowReassociation() terra.BoolValue {
-	return terra.ReferenceBool(ea.ref.Append("allow_reassociation"))
+	return terra.ReferenceAsBool(ea.ref.Append("allow_reassociation"))
 }
 
+// Id returns a reference to field id of aws_eip_association.
 func (ea eipAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("id"))
+	return terra.ReferenceAsString(ea.ref.Append("id"))
 }
 
+// InstanceId returns a reference to field instance_id of aws_eip_association.
 func (ea eipAssociationAttributes) InstanceId() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("instance_id"))
+	return terra.ReferenceAsString(ea.ref.Append("instance_id"))
 }
 
+// NetworkInterfaceId returns a reference to field network_interface_id of aws_eip_association.
 func (ea eipAssociationAttributes) NetworkInterfaceId() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("network_interface_id"))
+	return terra.ReferenceAsString(ea.ref.Append("network_interface_id"))
 }
 
+// PrivateIpAddress returns a reference to field private_ip_address of aws_eip_association.
 func (ea eipAssociationAttributes) PrivateIpAddress() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("private_ip_address"))
+	return terra.ReferenceAsString(ea.ref.Append("private_ip_address"))
 }
 
+// PublicIp returns a reference to field public_ip of aws_eip_association.
 func (ea eipAssociationAttributes) PublicIp() terra.StringValue {
-	return terra.ReferenceString(ea.ref.Append("public_ip"))
+	return terra.ReferenceAsString(ea.ref.Append("public_ip"))
 }
 
 type eipAssociationState struct {

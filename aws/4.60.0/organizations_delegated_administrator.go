@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewOrganizationsDelegatedAdministrator creates a new instance of [OrganizationsDelegatedAdministrator].
 func NewOrganizationsDelegatedAdministrator(name string, args OrganizationsDelegatedAdministratorArgs) *OrganizationsDelegatedAdministrator {
 	return &OrganizationsDelegatedAdministrator{
 		Args: args,
@@ -18,28 +19,51 @@ func NewOrganizationsDelegatedAdministrator(name string, args OrganizationsDeleg
 
 var _ terra.Resource = (*OrganizationsDelegatedAdministrator)(nil)
 
+// OrganizationsDelegatedAdministrator represents the Terraform resource aws_organizations_delegated_administrator.
 type OrganizationsDelegatedAdministrator struct {
-	Name  string
-	Args  OrganizationsDelegatedAdministratorArgs
-	state *organizationsDelegatedAdministratorState
+	Name      string
+	Args      OrganizationsDelegatedAdministratorArgs
+	state     *organizationsDelegatedAdministratorState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [OrganizationsDelegatedAdministrator].
 func (oda *OrganizationsDelegatedAdministrator) Type() string {
 	return "aws_organizations_delegated_administrator"
 }
 
+// LocalName returns the local name for [OrganizationsDelegatedAdministrator].
 func (oda *OrganizationsDelegatedAdministrator) LocalName() string {
 	return oda.Name
 }
 
+// Configuration returns the configuration (args) for [OrganizationsDelegatedAdministrator].
 func (oda *OrganizationsDelegatedAdministrator) Configuration() interface{} {
 	return oda.Args
 }
 
+// DependOn is used for other resources to depend on [OrganizationsDelegatedAdministrator].
+func (oda *OrganizationsDelegatedAdministrator) DependOn() terra.Reference {
+	return terra.ReferenceResource(oda)
+}
+
+// Dependencies returns the list of resources [OrganizationsDelegatedAdministrator] depends_on.
+func (oda *OrganizationsDelegatedAdministrator) Dependencies() terra.Dependencies {
+	return oda.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [OrganizationsDelegatedAdministrator].
+func (oda *OrganizationsDelegatedAdministrator) LifecycleManagement() *terra.Lifecycle {
+	return oda.Lifecycle
+}
+
+// Attributes returns the attributes for [OrganizationsDelegatedAdministrator].
 func (oda *OrganizationsDelegatedAdministrator) Attributes() organizationsDelegatedAdministratorAttributes {
 	return organizationsDelegatedAdministratorAttributes{ref: terra.ReferenceResource(oda)}
 }
 
+// ImportState imports the given attribute values into [OrganizationsDelegatedAdministrator]'s state.
 func (oda *OrganizationsDelegatedAdministrator) ImportState(av io.Reader) error {
 	oda.state = &organizationsDelegatedAdministratorState{}
 	if err := json.NewDecoder(av).Decode(oda.state); err != nil {
@@ -48,10 +72,12 @@ func (oda *OrganizationsDelegatedAdministrator) ImportState(av io.Reader) error 
 	return nil
 }
 
+// State returns the state and a bool indicating if [OrganizationsDelegatedAdministrator] has state.
 func (oda *OrganizationsDelegatedAdministrator) State() (*organizationsDelegatedAdministratorState, bool) {
 	return oda.state, oda.state != nil
 }
 
+// StateMust returns the state for [OrganizationsDelegatedAdministrator]. Panics if the state is nil.
 func (oda *OrganizationsDelegatedAdministrator) StateMust() *organizationsDelegatedAdministratorState {
 	if oda.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", oda.Type(), oda.LocalName()))
@@ -59,10 +85,7 @@ func (oda *OrganizationsDelegatedAdministrator) StateMust() *organizationsDelega
 	return oda.state
 }
 
-func (oda *OrganizationsDelegatedAdministrator) DependOn() terra.Reference {
-	return terra.ReferenceResource(oda)
-}
-
+// OrganizationsDelegatedAdministratorArgs contains the configurations for aws_organizations_delegated_administrator.
 type OrganizationsDelegatedAdministratorArgs struct {
 	// AccountId: string, required
 	AccountId terra.StringValue `hcl:"account_id,attr" validate:"required"`
@@ -70,51 +93,59 @@ type OrganizationsDelegatedAdministratorArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// ServicePrincipal: string, required
 	ServicePrincipal terra.StringValue `hcl:"service_principal,attr" validate:"required"`
-	// DependsOn contains resources that OrganizationsDelegatedAdministrator depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type organizationsDelegatedAdministratorAttributes struct {
 	ref terra.Reference
 }
 
+// AccountId returns a reference to field account_id of aws_organizations_delegated_administrator.
 func (oda organizationsDelegatedAdministratorAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(oda.ref.Append("account_id"))
+	return terra.ReferenceAsString(oda.ref.Append("account_id"))
 }
 
+// Arn returns a reference to field arn of aws_organizations_delegated_administrator.
 func (oda organizationsDelegatedAdministratorAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(oda.ref.Append("arn"))
+	return terra.ReferenceAsString(oda.ref.Append("arn"))
 }
 
+// DelegationEnabledDate returns a reference to field delegation_enabled_date of aws_organizations_delegated_administrator.
 func (oda organizationsDelegatedAdministratorAttributes) DelegationEnabledDate() terra.StringValue {
-	return terra.ReferenceString(oda.ref.Append("delegation_enabled_date"))
+	return terra.ReferenceAsString(oda.ref.Append("delegation_enabled_date"))
 }
 
+// Email returns a reference to field email of aws_organizations_delegated_administrator.
 func (oda organizationsDelegatedAdministratorAttributes) Email() terra.StringValue {
-	return terra.ReferenceString(oda.ref.Append("email"))
+	return terra.ReferenceAsString(oda.ref.Append("email"))
 }
 
+// Id returns a reference to field id of aws_organizations_delegated_administrator.
 func (oda organizationsDelegatedAdministratorAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(oda.ref.Append("id"))
+	return terra.ReferenceAsString(oda.ref.Append("id"))
 }
 
+// JoinedMethod returns a reference to field joined_method of aws_organizations_delegated_administrator.
 func (oda organizationsDelegatedAdministratorAttributes) JoinedMethod() terra.StringValue {
-	return terra.ReferenceString(oda.ref.Append("joined_method"))
+	return terra.ReferenceAsString(oda.ref.Append("joined_method"))
 }
 
+// JoinedTimestamp returns a reference to field joined_timestamp of aws_organizations_delegated_administrator.
 func (oda organizationsDelegatedAdministratorAttributes) JoinedTimestamp() terra.StringValue {
-	return terra.ReferenceString(oda.ref.Append("joined_timestamp"))
+	return terra.ReferenceAsString(oda.ref.Append("joined_timestamp"))
 }
 
+// Name returns a reference to field name of aws_organizations_delegated_administrator.
 func (oda organizationsDelegatedAdministratorAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(oda.ref.Append("name"))
+	return terra.ReferenceAsString(oda.ref.Append("name"))
 }
 
+// ServicePrincipal returns a reference to field service_principal of aws_organizations_delegated_administrator.
 func (oda organizationsDelegatedAdministratorAttributes) ServicePrincipal() terra.StringValue {
-	return terra.ReferenceString(oda.ref.Append("service_principal"))
+	return terra.ReferenceAsString(oda.ref.Append("service_principal"))
 }
 
+// Status returns a reference to field status of aws_organizations_delegated_administrator.
 func (oda organizationsDelegatedAdministratorAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(oda.ref.Append("status"))
+	return terra.ReferenceAsString(oda.ref.Append("status"))
 }
 
 type organizationsDelegatedAdministratorState struct {

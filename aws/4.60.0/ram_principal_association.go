@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewRamPrincipalAssociation creates a new instance of [RamPrincipalAssociation].
 func NewRamPrincipalAssociation(name string, args RamPrincipalAssociationArgs) *RamPrincipalAssociation {
 	return &RamPrincipalAssociation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewRamPrincipalAssociation(name string, args RamPrincipalAssociationArgs) *
 
 var _ terra.Resource = (*RamPrincipalAssociation)(nil)
 
+// RamPrincipalAssociation represents the Terraform resource aws_ram_principal_association.
 type RamPrincipalAssociation struct {
-	Name  string
-	Args  RamPrincipalAssociationArgs
-	state *ramPrincipalAssociationState
+	Name      string
+	Args      RamPrincipalAssociationArgs
+	state     *ramPrincipalAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [RamPrincipalAssociation].
 func (rpa *RamPrincipalAssociation) Type() string {
 	return "aws_ram_principal_association"
 }
 
+// LocalName returns the local name for [RamPrincipalAssociation].
 func (rpa *RamPrincipalAssociation) LocalName() string {
 	return rpa.Name
 }
 
+// Configuration returns the configuration (args) for [RamPrincipalAssociation].
 func (rpa *RamPrincipalAssociation) Configuration() interface{} {
 	return rpa.Args
 }
 
+// DependOn is used for other resources to depend on [RamPrincipalAssociation].
+func (rpa *RamPrincipalAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(rpa)
+}
+
+// Dependencies returns the list of resources [RamPrincipalAssociation] depends_on.
+func (rpa *RamPrincipalAssociation) Dependencies() terra.Dependencies {
+	return rpa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [RamPrincipalAssociation].
+func (rpa *RamPrincipalAssociation) LifecycleManagement() *terra.Lifecycle {
+	return rpa.Lifecycle
+}
+
+// Attributes returns the attributes for [RamPrincipalAssociation].
 func (rpa *RamPrincipalAssociation) Attributes() ramPrincipalAssociationAttributes {
 	return ramPrincipalAssociationAttributes{ref: terra.ReferenceResource(rpa)}
 }
 
+// ImportState imports the given attribute values into [RamPrincipalAssociation]'s state.
 func (rpa *RamPrincipalAssociation) ImportState(av io.Reader) error {
 	rpa.state = &ramPrincipalAssociationState{}
 	if err := json.NewDecoder(av).Decode(rpa.state); err != nil {
@@ -48,10 +72,12 @@ func (rpa *RamPrincipalAssociation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [RamPrincipalAssociation] has state.
 func (rpa *RamPrincipalAssociation) State() (*ramPrincipalAssociationState, bool) {
 	return rpa.state, rpa.state != nil
 }
 
+// StateMust returns the state for [RamPrincipalAssociation]. Panics if the state is nil.
 func (rpa *RamPrincipalAssociation) StateMust() *ramPrincipalAssociationState {
 	if rpa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", rpa.Type(), rpa.LocalName()))
@@ -59,10 +85,7 @@ func (rpa *RamPrincipalAssociation) StateMust() *ramPrincipalAssociationState {
 	return rpa.state
 }
 
-func (rpa *RamPrincipalAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(rpa)
-}
-
+// RamPrincipalAssociationArgs contains the configurations for aws_ram_principal_association.
 type RamPrincipalAssociationArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,23 +93,24 @@ type RamPrincipalAssociationArgs struct {
 	Principal terra.StringValue `hcl:"principal,attr" validate:"required"`
 	// ResourceShareArn: string, required
 	ResourceShareArn terra.StringValue `hcl:"resource_share_arn,attr" validate:"required"`
-	// DependsOn contains resources that RamPrincipalAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ramPrincipalAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_ram_principal_association.
 func (rpa ramPrincipalAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rpa.ref.Append("id"))
+	return terra.ReferenceAsString(rpa.ref.Append("id"))
 }
 
+// Principal returns a reference to field principal of aws_ram_principal_association.
 func (rpa ramPrincipalAssociationAttributes) Principal() terra.StringValue {
-	return terra.ReferenceString(rpa.ref.Append("principal"))
+	return terra.ReferenceAsString(rpa.ref.Append("principal"))
 }
 
+// ResourceShareArn returns a reference to field resource_share_arn of aws_ram_principal_association.
 func (rpa ramPrincipalAssociationAttributes) ResourceShareArn() terra.StringValue {
-	return terra.ReferenceString(rpa.ref.Append("resource_share_arn"))
+	return terra.ReferenceAsString(rpa.ref.Append("resource_share_arn"))
 }
 
 type ramPrincipalAssociationState struct {

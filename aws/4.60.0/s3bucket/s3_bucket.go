@@ -254,23 +254,23 @@ func (cr CorsRuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cr CorsRuleAttributes) AllowedHeaders() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cr.ref.Append("allowed_headers"))
+	return terra.ReferenceAsList[terra.StringValue](cr.ref.Append("allowed_headers"))
 }
 
 func (cr CorsRuleAttributes) AllowedMethods() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cr.ref.Append("allowed_methods"))
+	return terra.ReferenceAsList[terra.StringValue](cr.ref.Append("allowed_methods"))
 }
 
 func (cr CorsRuleAttributes) AllowedOrigins() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cr.ref.Append("allowed_origins"))
+	return terra.ReferenceAsList[terra.StringValue](cr.ref.Append("allowed_origins"))
 }
 
 func (cr CorsRuleAttributes) ExposeHeaders() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](cr.ref.Append("expose_headers"))
+	return terra.ReferenceAsList[terra.StringValue](cr.ref.Append("expose_headers"))
 }
 
 func (cr CorsRuleAttributes) MaxAgeSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(cr.ref.Append("max_age_seconds"))
+	return terra.ReferenceAsNumber(cr.ref.Append("max_age_seconds"))
 }
 
 type GrantAttributes struct {
@@ -290,19 +290,19 @@ func (g GrantAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (g GrantAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("id"))
+	return terra.ReferenceAsString(g.ref.Append("id"))
 }
 
 func (g GrantAttributes) Permissions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](g.ref.Append("permissions"))
+	return terra.ReferenceAsSet[terra.StringValue](g.ref.Append("permissions"))
 }
 
 func (g GrantAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("type"))
+	return terra.ReferenceAsString(g.ref.Append("type"))
 }
 
 func (g GrantAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("uri"))
+	return terra.ReferenceAsString(g.ref.Append("uri"))
 }
 
 type LifecycleRuleAttributes struct {
@@ -322,39 +322,39 @@ func (lr LifecycleRuleAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lr LifecycleRuleAttributes) AbortIncompleteMultipartUploadDays() terra.NumberValue {
-	return terra.ReferenceNumber(lr.ref.Append("abort_incomplete_multipart_upload_days"))
+	return terra.ReferenceAsNumber(lr.ref.Append("abort_incomplete_multipart_upload_days"))
 }
 
 func (lr LifecycleRuleAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(lr.ref.Append("enabled"))
+	return terra.ReferenceAsBool(lr.ref.Append("enabled"))
 }
 
 func (lr LifecycleRuleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lr.ref.Append("id"))
+	return terra.ReferenceAsString(lr.ref.Append("id"))
 }
 
 func (lr LifecycleRuleAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(lr.ref.Append("prefix"))
+	return terra.ReferenceAsString(lr.ref.Append("prefix"))
 }
 
 func (lr LifecycleRuleAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](lr.ref.Append("tags"))
 }
 
 func (lr LifecycleRuleAttributes) Expiration() terra.ListValue[ExpirationAttributes] {
-	return terra.ReferenceList[ExpirationAttributes](lr.ref.Append("expiration"))
+	return terra.ReferenceAsList[ExpirationAttributes](lr.ref.Append("expiration"))
 }
 
 func (lr LifecycleRuleAttributes) NoncurrentVersionExpiration() terra.ListValue[NoncurrentVersionExpirationAttributes] {
-	return terra.ReferenceList[NoncurrentVersionExpirationAttributes](lr.ref.Append("noncurrent_version_expiration"))
+	return terra.ReferenceAsList[NoncurrentVersionExpirationAttributes](lr.ref.Append("noncurrent_version_expiration"))
 }
 
 func (lr LifecycleRuleAttributes) NoncurrentVersionTransition() terra.SetValue[NoncurrentVersionTransitionAttributes] {
-	return terra.ReferenceSet[NoncurrentVersionTransitionAttributes](lr.ref.Append("noncurrent_version_transition"))
+	return terra.ReferenceAsSet[NoncurrentVersionTransitionAttributes](lr.ref.Append("noncurrent_version_transition"))
 }
 
 func (lr LifecycleRuleAttributes) Transition() terra.SetValue[TransitionAttributes] {
-	return terra.ReferenceSet[TransitionAttributes](lr.ref.Append("transition"))
+	return terra.ReferenceAsSet[TransitionAttributes](lr.ref.Append("transition"))
 }
 
 type ExpirationAttributes struct {
@@ -374,15 +374,15 @@ func (e ExpirationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e ExpirationAttributes) Date() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("date"))
+	return terra.ReferenceAsString(e.ref.Append("date"))
 }
 
 func (e ExpirationAttributes) Days() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("days"))
+	return terra.ReferenceAsNumber(e.ref.Append("days"))
 }
 
 func (e ExpirationAttributes) ExpiredObjectDeleteMarker() terra.BoolValue {
-	return terra.ReferenceBool(e.ref.Append("expired_object_delete_marker"))
+	return terra.ReferenceAsBool(e.ref.Append("expired_object_delete_marker"))
 }
 
 type NoncurrentVersionExpirationAttributes struct {
@@ -402,7 +402,7 @@ func (nve NoncurrentVersionExpirationAttributes) InternalTokens() hclwrite.Token
 }
 
 func (nve NoncurrentVersionExpirationAttributes) Days() terra.NumberValue {
-	return terra.ReferenceNumber(nve.ref.Append("days"))
+	return terra.ReferenceAsNumber(nve.ref.Append("days"))
 }
 
 type NoncurrentVersionTransitionAttributes struct {
@@ -422,11 +422,11 @@ func (nvt NoncurrentVersionTransitionAttributes) InternalTokens() hclwrite.Token
 }
 
 func (nvt NoncurrentVersionTransitionAttributes) Days() terra.NumberValue {
-	return terra.ReferenceNumber(nvt.ref.Append("days"))
+	return terra.ReferenceAsNumber(nvt.ref.Append("days"))
 }
 
 func (nvt NoncurrentVersionTransitionAttributes) StorageClass() terra.StringValue {
-	return terra.ReferenceString(nvt.ref.Append("storage_class"))
+	return terra.ReferenceAsString(nvt.ref.Append("storage_class"))
 }
 
 type TransitionAttributes struct {
@@ -446,15 +446,15 @@ func (t TransitionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TransitionAttributes) Date() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("date"))
+	return terra.ReferenceAsString(t.ref.Append("date"))
 }
 
 func (t TransitionAttributes) Days() terra.NumberValue {
-	return terra.ReferenceNumber(t.ref.Append("days"))
+	return terra.ReferenceAsNumber(t.ref.Append("days"))
 }
 
 func (t TransitionAttributes) StorageClass() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("storage_class"))
+	return terra.ReferenceAsString(t.ref.Append("storage_class"))
 }
 
 type LoggingAttributes struct {
@@ -474,11 +474,11 @@ func (l LoggingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (l LoggingAttributes) TargetBucket() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("target_bucket"))
+	return terra.ReferenceAsString(l.ref.Append("target_bucket"))
 }
 
 func (l LoggingAttributes) TargetPrefix() terra.StringValue {
-	return terra.ReferenceString(l.ref.Append("target_prefix"))
+	return terra.ReferenceAsString(l.ref.Append("target_prefix"))
 }
 
 type ObjectLockConfigurationAttributes struct {
@@ -498,11 +498,11 @@ func (olc ObjectLockConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (olc ObjectLockConfigurationAttributes) ObjectLockEnabled() terra.StringValue {
-	return terra.ReferenceString(olc.ref.Append("object_lock_enabled"))
+	return terra.ReferenceAsString(olc.ref.Append("object_lock_enabled"))
 }
 
 func (olc ObjectLockConfigurationAttributes) Rule() terra.ListValue[ObjectLockConfigurationRuleAttributes] {
-	return terra.ReferenceList[ObjectLockConfigurationRuleAttributes](olc.ref.Append("rule"))
+	return terra.ReferenceAsList[ObjectLockConfigurationRuleAttributes](olc.ref.Append("rule"))
 }
 
 type ObjectLockConfigurationRuleAttributes struct {
@@ -522,7 +522,7 @@ func (r ObjectLockConfigurationRuleAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (r ObjectLockConfigurationRuleAttributes) DefaultRetention() terra.ListValue[DefaultRetentionAttributes] {
-	return terra.ReferenceList[DefaultRetentionAttributes](r.ref.Append("default_retention"))
+	return terra.ReferenceAsList[DefaultRetentionAttributes](r.ref.Append("default_retention"))
 }
 
 type DefaultRetentionAttributes struct {
@@ -542,15 +542,15 @@ func (dr DefaultRetentionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dr DefaultRetentionAttributes) Days() terra.NumberValue {
-	return terra.ReferenceNumber(dr.ref.Append("days"))
+	return terra.ReferenceAsNumber(dr.ref.Append("days"))
 }
 
 func (dr DefaultRetentionAttributes) Mode() terra.StringValue {
-	return terra.ReferenceString(dr.ref.Append("mode"))
+	return terra.ReferenceAsString(dr.ref.Append("mode"))
 }
 
 func (dr DefaultRetentionAttributes) Years() terra.NumberValue {
-	return terra.ReferenceNumber(dr.ref.Append("years"))
+	return terra.ReferenceAsNumber(dr.ref.Append("years"))
 }
 
 type ReplicationConfigurationAttributes struct {
@@ -570,11 +570,11 @@ func (rc ReplicationConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rc ReplicationConfigurationAttributes) Role() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("role"))
+	return terra.ReferenceAsString(rc.ref.Append("role"))
 }
 
 func (rc ReplicationConfigurationAttributes) Rules() terra.SetValue[RulesAttributes] {
-	return terra.ReferenceSet[RulesAttributes](rc.ref.Append("rules"))
+	return terra.ReferenceAsSet[RulesAttributes](rc.ref.Append("rules"))
 }
 
 type RulesAttributes struct {
@@ -594,35 +594,35 @@ func (r RulesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RulesAttributes) DeleteMarkerReplicationStatus() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("delete_marker_replication_status"))
+	return terra.ReferenceAsString(r.ref.Append("delete_marker_replication_status"))
 }
 
 func (r RulesAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("id"))
+	return terra.ReferenceAsString(r.ref.Append("id"))
 }
 
 func (r RulesAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("prefix"))
+	return terra.ReferenceAsString(r.ref.Append("prefix"))
 }
 
 func (r RulesAttributes) Priority() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("priority"))
+	return terra.ReferenceAsNumber(r.ref.Append("priority"))
 }
 
 func (r RulesAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(r.ref.Append("status"))
+	return terra.ReferenceAsString(r.ref.Append("status"))
 }
 
 func (r RulesAttributes) Destination() terra.ListValue[DestinationAttributes] {
-	return terra.ReferenceList[DestinationAttributes](r.ref.Append("destination"))
+	return terra.ReferenceAsList[DestinationAttributes](r.ref.Append("destination"))
 }
 
 func (r RulesAttributes) Filter() terra.ListValue[FilterAttributes] {
-	return terra.ReferenceList[FilterAttributes](r.ref.Append("filter"))
+	return terra.ReferenceAsList[FilterAttributes](r.ref.Append("filter"))
 }
 
 func (r RulesAttributes) SourceSelectionCriteria() terra.ListValue[SourceSelectionCriteriaAttributes] {
-	return terra.ReferenceList[SourceSelectionCriteriaAttributes](r.ref.Append("source_selection_criteria"))
+	return terra.ReferenceAsList[SourceSelectionCriteriaAttributes](r.ref.Append("source_selection_criteria"))
 }
 
 type DestinationAttributes struct {
@@ -642,31 +642,31 @@ func (d DestinationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DestinationAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("account_id"))
+	return terra.ReferenceAsString(d.ref.Append("account_id"))
 }
 
 func (d DestinationAttributes) Bucket() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("bucket"))
+	return terra.ReferenceAsString(d.ref.Append("bucket"))
 }
 
 func (d DestinationAttributes) ReplicaKmsKeyId() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("replica_kms_key_id"))
+	return terra.ReferenceAsString(d.ref.Append("replica_kms_key_id"))
 }
 
 func (d DestinationAttributes) StorageClass() terra.StringValue {
-	return terra.ReferenceString(d.ref.Append("storage_class"))
+	return terra.ReferenceAsString(d.ref.Append("storage_class"))
 }
 
 func (d DestinationAttributes) AccessControlTranslation() terra.ListValue[AccessControlTranslationAttributes] {
-	return terra.ReferenceList[AccessControlTranslationAttributes](d.ref.Append("access_control_translation"))
+	return terra.ReferenceAsList[AccessControlTranslationAttributes](d.ref.Append("access_control_translation"))
 }
 
 func (d DestinationAttributes) Metrics() terra.ListValue[MetricsAttributes] {
-	return terra.ReferenceList[MetricsAttributes](d.ref.Append("metrics"))
+	return terra.ReferenceAsList[MetricsAttributes](d.ref.Append("metrics"))
 }
 
 func (d DestinationAttributes) ReplicationTime() terra.ListValue[ReplicationTimeAttributes] {
-	return terra.ReferenceList[ReplicationTimeAttributes](d.ref.Append("replication_time"))
+	return terra.ReferenceAsList[ReplicationTimeAttributes](d.ref.Append("replication_time"))
 }
 
 type AccessControlTranslationAttributes struct {
@@ -686,7 +686,7 @@ func (act AccessControlTranslationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (act AccessControlTranslationAttributes) Owner() terra.StringValue {
-	return terra.ReferenceString(act.ref.Append("owner"))
+	return terra.ReferenceAsString(act.ref.Append("owner"))
 }
 
 type MetricsAttributes struct {
@@ -706,11 +706,11 @@ func (m MetricsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m MetricsAttributes) Minutes() terra.NumberValue {
-	return terra.ReferenceNumber(m.ref.Append("minutes"))
+	return terra.ReferenceAsNumber(m.ref.Append("minutes"))
 }
 
 func (m MetricsAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("status"))
+	return terra.ReferenceAsString(m.ref.Append("status"))
 }
 
 type ReplicationTimeAttributes struct {
@@ -730,11 +730,11 @@ func (rt ReplicationTimeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rt ReplicationTimeAttributes) Minutes() terra.NumberValue {
-	return terra.ReferenceNumber(rt.ref.Append("minutes"))
+	return terra.ReferenceAsNumber(rt.ref.Append("minutes"))
 }
 
 func (rt ReplicationTimeAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("status"))
+	return terra.ReferenceAsString(rt.ref.Append("status"))
 }
 
 type FilterAttributes struct {
@@ -754,11 +754,11 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) Prefix() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("prefix"))
+	return terra.ReferenceAsString(f.ref.Append("prefix"))
 }
 
 func (f FilterAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](f.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](f.ref.Append("tags"))
 }
 
 type SourceSelectionCriteriaAttributes struct {
@@ -778,7 +778,7 @@ func (ssc SourceSelectionCriteriaAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ssc SourceSelectionCriteriaAttributes) SseKmsEncryptedObjects() terra.ListValue[SseKmsEncryptedObjectsAttributes] {
-	return terra.ReferenceList[SseKmsEncryptedObjectsAttributes](ssc.ref.Append("sse_kms_encrypted_objects"))
+	return terra.ReferenceAsList[SseKmsEncryptedObjectsAttributes](ssc.ref.Append("sse_kms_encrypted_objects"))
 }
 
 type SseKmsEncryptedObjectsAttributes struct {
@@ -798,7 +798,7 @@ func (skeo SseKmsEncryptedObjectsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (skeo SseKmsEncryptedObjectsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(skeo.ref.Append("enabled"))
+	return terra.ReferenceAsBool(skeo.ref.Append("enabled"))
 }
 
 type ServerSideEncryptionConfigurationAttributes struct {
@@ -818,7 +818,7 @@ func (ssec ServerSideEncryptionConfigurationAttributes) InternalTokens() hclwrit
 }
 
 func (ssec ServerSideEncryptionConfigurationAttributes) Rule() terra.ListValue[ServerSideEncryptionConfigurationRuleAttributes] {
-	return terra.ReferenceList[ServerSideEncryptionConfigurationRuleAttributes](ssec.ref.Append("rule"))
+	return terra.ReferenceAsList[ServerSideEncryptionConfigurationRuleAttributes](ssec.ref.Append("rule"))
 }
 
 type ServerSideEncryptionConfigurationRuleAttributes struct {
@@ -838,11 +838,11 @@ func (r ServerSideEncryptionConfigurationRuleAttributes) InternalTokens() hclwri
 }
 
 func (r ServerSideEncryptionConfigurationRuleAttributes) BucketKeyEnabled() terra.BoolValue {
-	return terra.ReferenceBool(r.ref.Append("bucket_key_enabled"))
+	return terra.ReferenceAsBool(r.ref.Append("bucket_key_enabled"))
 }
 
 func (r ServerSideEncryptionConfigurationRuleAttributes) ApplyServerSideEncryptionByDefault() terra.ListValue[ApplyServerSideEncryptionByDefaultAttributes] {
-	return terra.ReferenceList[ApplyServerSideEncryptionByDefaultAttributes](r.ref.Append("apply_server_side_encryption_by_default"))
+	return terra.ReferenceAsList[ApplyServerSideEncryptionByDefaultAttributes](r.ref.Append("apply_server_side_encryption_by_default"))
 }
 
 type ApplyServerSideEncryptionByDefaultAttributes struct {
@@ -862,11 +862,11 @@ func (assebd ApplyServerSideEncryptionByDefaultAttributes) InternalTokens() hclw
 }
 
 func (assebd ApplyServerSideEncryptionByDefaultAttributes) KmsMasterKeyId() terra.StringValue {
-	return terra.ReferenceString(assebd.ref.Append("kms_master_key_id"))
+	return terra.ReferenceAsString(assebd.ref.Append("kms_master_key_id"))
 }
 
 func (assebd ApplyServerSideEncryptionByDefaultAttributes) SseAlgorithm() terra.StringValue {
-	return terra.ReferenceString(assebd.ref.Append("sse_algorithm"))
+	return terra.ReferenceAsString(assebd.ref.Append("sse_algorithm"))
 }
 
 type TimeoutsAttributes struct {
@@ -886,19 +886,19 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Read() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("read"))
+	return terra.ReferenceAsString(t.ref.Append("read"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type VersioningAttributes struct {
@@ -918,11 +918,11 @@ func (v VersioningAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (v VersioningAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(v.ref.Append("enabled"))
+	return terra.ReferenceAsBool(v.ref.Append("enabled"))
 }
 
 func (v VersioningAttributes) MfaDelete() terra.BoolValue {
-	return terra.ReferenceBool(v.ref.Append("mfa_delete"))
+	return terra.ReferenceAsBool(v.ref.Append("mfa_delete"))
 }
 
 type WebsiteAttributes struct {
@@ -942,19 +942,19 @@ func (w WebsiteAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (w WebsiteAttributes) ErrorDocument() terra.StringValue {
-	return terra.ReferenceString(w.ref.Append("error_document"))
+	return terra.ReferenceAsString(w.ref.Append("error_document"))
 }
 
 func (w WebsiteAttributes) IndexDocument() terra.StringValue {
-	return terra.ReferenceString(w.ref.Append("index_document"))
+	return terra.ReferenceAsString(w.ref.Append("index_document"))
 }
 
 func (w WebsiteAttributes) RedirectAllRequestsTo() terra.StringValue {
-	return terra.ReferenceString(w.ref.Append("redirect_all_requests_to"))
+	return terra.ReferenceAsString(w.ref.Append("redirect_all_requests_to"))
 }
 
 func (w WebsiteAttributes) RoutingRules() terra.StringValue {
-	return terra.ReferenceString(w.ref.Append("routing_rules"))
+	return terra.ReferenceAsString(w.ref.Append("routing_rules"))
 }
 
 type CorsRuleState struct {

@@ -29,7 +29,7 @@ func (tc TraceConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tc TraceConfigurationAttributes) Vendor() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("vendor"))
+	return terra.ReferenceAsString(tc.ref.Append("vendor"))
 }
 
 type TraceConfigurationState struct {

@@ -31,11 +31,11 @@ func (isd IpSetDescriptorAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (isd IpSetDescriptorAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(isd.ref.Append("type"))
+	return terra.ReferenceAsString(isd.ref.Append("type"))
 }
 
 func (isd IpSetDescriptorAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(isd.ref.Append("value"))
+	return terra.ReferenceAsString(isd.ref.Append("value"))
 }
 
 type IpSetDescriptorState struct {

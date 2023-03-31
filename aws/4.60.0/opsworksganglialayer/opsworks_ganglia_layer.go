@@ -116,11 +116,11 @@ func (cc CloudwatchConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc CloudwatchConfigurationAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(cc.ref.Append("enabled"))
+	return terra.ReferenceAsBool(cc.ref.Append("enabled"))
 }
 
 func (cc CloudwatchConfigurationAttributes) LogStreams() terra.ListValue[LogStreamsAttributes] {
-	return terra.ReferenceList[LogStreamsAttributes](cc.ref.Append("log_streams"))
+	return terra.ReferenceAsList[LogStreamsAttributes](cc.ref.Append("log_streams"))
 }
 
 type LogStreamsAttributes struct {
@@ -140,47 +140,47 @@ func (ls LogStreamsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ls LogStreamsAttributes) BatchCount() terra.NumberValue {
-	return terra.ReferenceNumber(ls.ref.Append("batch_count"))
+	return terra.ReferenceAsNumber(ls.ref.Append("batch_count"))
 }
 
 func (ls LogStreamsAttributes) BatchSize() terra.NumberValue {
-	return terra.ReferenceNumber(ls.ref.Append("batch_size"))
+	return terra.ReferenceAsNumber(ls.ref.Append("batch_size"))
 }
 
 func (ls LogStreamsAttributes) BufferDuration() terra.NumberValue {
-	return terra.ReferenceNumber(ls.ref.Append("buffer_duration"))
+	return terra.ReferenceAsNumber(ls.ref.Append("buffer_duration"))
 }
 
 func (ls LogStreamsAttributes) DatetimeFormat() terra.StringValue {
-	return terra.ReferenceString(ls.ref.Append("datetime_format"))
+	return terra.ReferenceAsString(ls.ref.Append("datetime_format"))
 }
 
 func (ls LogStreamsAttributes) Encoding() terra.StringValue {
-	return terra.ReferenceString(ls.ref.Append("encoding"))
+	return terra.ReferenceAsString(ls.ref.Append("encoding"))
 }
 
 func (ls LogStreamsAttributes) File() terra.StringValue {
-	return terra.ReferenceString(ls.ref.Append("file"))
+	return terra.ReferenceAsString(ls.ref.Append("file"))
 }
 
 func (ls LogStreamsAttributes) FileFingerprintLines() terra.StringValue {
-	return terra.ReferenceString(ls.ref.Append("file_fingerprint_lines"))
+	return terra.ReferenceAsString(ls.ref.Append("file_fingerprint_lines"))
 }
 
 func (ls LogStreamsAttributes) InitialPosition() terra.StringValue {
-	return terra.ReferenceString(ls.ref.Append("initial_position"))
+	return terra.ReferenceAsString(ls.ref.Append("initial_position"))
 }
 
 func (ls LogStreamsAttributes) LogGroupName() terra.StringValue {
-	return terra.ReferenceString(ls.ref.Append("log_group_name"))
+	return terra.ReferenceAsString(ls.ref.Append("log_group_name"))
 }
 
 func (ls LogStreamsAttributes) MultilineStartPattern() terra.StringValue {
-	return terra.ReferenceString(ls.ref.Append("multiline_start_pattern"))
+	return terra.ReferenceAsString(ls.ref.Append("multiline_start_pattern"))
 }
 
 func (ls LogStreamsAttributes) TimeZone() terra.StringValue {
-	return terra.ReferenceString(ls.ref.Append("time_zone"))
+	return terra.ReferenceAsString(ls.ref.Append("time_zone"))
 }
 
 type EbsVolumeAttributes struct {
@@ -200,31 +200,31 @@ func (ev EbsVolumeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ev EbsVolumeAttributes) Encrypted() terra.BoolValue {
-	return terra.ReferenceBool(ev.ref.Append("encrypted"))
+	return terra.ReferenceAsBool(ev.ref.Append("encrypted"))
 }
 
 func (ev EbsVolumeAttributes) Iops() terra.NumberValue {
-	return terra.ReferenceNumber(ev.ref.Append("iops"))
+	return terra.ReferenceAsNumber(ev.ref.Append("iops"))
 }
 
 func (ev EbsVolumeAttributes) MountPoint() terra.StringValue {
-	return terra.ReferenceString(ev.ref.Append("mount_point"))
+	return terra.ReferenceAsString(ev.ref.Append("mount_point"))
 }
 
 func (ev EbsVolumeAttributes) NumberOfDisks() terra.NumberValue {
-	return terra.ReferenceNumber(ev.ref.Append("number_of_disks"))
+	return terra.ReferenceAsNumber(ev.ref.Append("number_of_disks"))
 }
 
 func (ev EbsVolumeAttributes) RaidLevel() terra.StringValue {
-	return terra.ReferenceString(ev.ref.Append("raid_level"))
+	return terra.ReferenceAsString(ev.ref.Append("raid_level"))
 }
 
 func (ev EbsVolumeAttributes) Size() terra.NumberValue {
-	return terra.ReferenceNumber(ev.ref.Append("size"))
+	return terra.ReferenceAsNumber(ev.ref.Append("size"))
 }
 
 func (ev EbsVolumeAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ev.ref.Append("type"))
+	return terra.ReferenceAsString(ev.ref.Append("type"))
 }
 
 type LoadBasedAutoScalingAttributes struct {
@@ -244,15 +244,15 @@ func (lbas LoadBasedAutoScalingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lbas LoadBasedAutoScalingAttributes) Enable() terra.BoolValue {
-	return terra.ReferenceBool(lbas.ref.Append("enable"))
+	return terra.ReferenceAsBool(lbas.ref.Append("enable"))
 }
 
 func (lbas LoadBasedAutoScalingAttributes) Downscaling() terra.ListValue[DownscalingAttributes] {
-	return terra.ReferenceList[DownscalingAttributes](lbas.ref.Append("downscaling"))
+	return terra.ReferenceAsList[DownscalingAttributes](lbas.ref.Append("downscaling"))
 }
 
 func (lbas LoadBasedAutoScalingAttributes) Upscaling() terra.ListValue[UpscalingAttributes] {
-	return terra.ReferenceList[UpscalingAttributes](lbas.ref.Append("upscaling"))
+	return terra.ReferenceAsList[UpscalingAttributes](lbas.ref.Append("upscaling"))
 }
 
 type DownscalingAttributes struct {
@@ -272,31 +272,31 @@ func (d DownscalingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (d DownscalingAttributes) Alarms() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](d.ref.Append("alarms"))
+	return terra.ReferenceAsList[terra.StringValue](d.ref.Append("alarms"))
 }
 
 func (d DownscalingAttributes) CpuThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(d.ref.Append("cpu_threshold"))
+	return terra.ReferenceAsNumber(d.ref.Append("cpu_threshold"))
 }
 
 func (d DownscalingAttributes) IgnoreMetricsTime() terra.NumberValue {
-	return terra.ReferenceNumber(d.ref.Append("ignore_metrics_time"))
+	return terra.ReferenceAsNumber(d.ref.Append("ignore_metrics_time"))
 }
 
 func (d DownscalingAttributes) InstanceCount() terra.NumberValue {
-	return terra.ReferenceNumber(d.ref.Append("instance_count"))
+	return terra.ReferenceAsNumber(d.ref.Append("instance_count"))
 }
 
 func (d DownscalingAttributes) LoadThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(d.ref.Append("load_threshold"))
+	return terra.ReferenceAsNumber(d.ref.Append("load_threshold"))
 }
 
 func (d DownscalingAttributes) MemoryThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(d.ref.Append("memory_threshold"))
+	return terra.ReferenceAsNumber(d.ref.Append("memory_threshold"))
 }
 
 func (d DownscalingAttributes) ThresholdsWaitTime() terra.NumberValue {
-	return terra.ReferenceNumber(d.ref.Append("thresholds_wait_time"))
+	return terra.ReferenceAsNumber(d.ref.Append("thresholds_wait_time"))
 }
 
 type UpscalingAttributes struct {
@@ -316,31 +316,31 @@ func (u UpscalingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (u UpscalingAttributes) Alarms() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](u.ref.Append("alarms"))
+	return terra.ReferenceAsList[terra.StringValue](u.ref.Append("alarms"))
 }
 
 func (u UpscalingAttributes) CpuThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(u.ref.Append("cpu_threshold"))
+	return terra.ReferenceAsNumber(u.ref.Append("cpu_threshold"))
 }
 
 func (u UpscalingAttributes) IgnoreMetricsTime() terra.NumberValue {
-	return terra.ReferenceNumber(u.ref.Append("ignore_metrics_time"))
+	return terra.ReferenceAsNumber(u.ref.Append("ignore_metrics_time"))
 }
 
 func (u UpscalingAttributes) InstanceCount() terra.NumberValue {
-	return terra.ReferenceNumber(u.ref.Append("instance_count"))
+	return terra.ReferenceAsNumber(u.ref.Append("instance_count"))
 }
 
 func (u UpscalingAttributes) LoadThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(u.ref.Append("load_threshold"))
+	return terra.ReferenceAsNumber(u.ref.Append("load_threshold"))
 }
 
 func (u UpscalingAttributes) MemoryThreshold() terra.NumberValue {
-	return terra.ReferenceNumber(u.ref.Append("memory_threshold"))
+	return terra.ReferenceAsNumber(u.ref.Append("memory_threshold"))
 }
 
 func (u UpscalingAttributes) ThresholdsWaitTime() terra.NumberValue {
-	return terra.ReferenceNumber(u.ref.Append("thresholds_wait_time"))
+	return terra.ReferenceAsNumber(u.ref.Append("thresholds_wait_time"))
 }
 
 type CloudwatchConfigurationState struct {

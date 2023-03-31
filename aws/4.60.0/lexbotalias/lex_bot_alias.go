@@ -51,11 +51,11 @@ func (cl ConversationLogsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cl ConversationLogsAttributes) IamRoleArn() terra.StringValue {
-	return terra.ReferenceString(cl.ref.Append("iam_role_arn"))
+	return terra.ReferenceAsString(cl.ref.Append("iam_role_arn"))
 }
 
 func (cl ConversationLogsAttributes) LogSettings() terra.SetValue[LogSettingsAttributes] {
-	return terra.ReferenceSet[LogSettingsAttributes](cl.ref.Append("log_settings"))
+	return terra.ReferenceAsSet[LogSettingsAttributes](cl.ref.Append("log_settings"))
 }
 
 type LogSettingsAttributes struct {
@@ -75,23 +75,23 @@ func (ls LogSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ls LogSettingsAttributes) Destination() terra.StringValue {
-	return terra.ReferenceString(ls.ref.Append("destination"))
+	return terra.ReferenceAsString(ls.ref.Append("destination"))
 }
 
 func (ls LogSettingsAttributes) KmsKeyArn() terra.StringValue {
-	return terra.ReferenceString(ls.ref.Append("kms_key_arn"))
+	return terra.ReferenceAsString(ls.ref.Append("kms_key_arn"))
 }
 
 func (ls LogSettingsAttributes) LogType() terra.StringValue {
-	return terra.ReferenceString(ls.ref.Append("log_type"))
+	return terra.ReferenceAsString(ls.ref.Append("log_type"))
 }
 
 func (ls LogSettingsAttributes) ResourceArn() terra.StringValue {
-	return terra.ReferenceString(ls.ref.Append("resource_arn"))
+	return terra.ReferenceAsString(ls.ref.Append("resource_arn"))
 }
 
 func (ls LogSettingsAttributes) ResourcePrefix() terra.StringValue {
-	return terra.ReferenceString(ls.ref.Append("resource_prefix"))
+	return terra.ReferenceAsString(ls.ref.Append("resource_prefix"))
 }
 
 type TimeoutsAttributes struct {
@@ -111,15 +111,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ConversationLogsState struct {

@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataKmsPublicKey creates a new instance of [DataKmsPublicKey].
 func NewDataKmsPublicKey(name string, args DataKmsPublicKeyArgs) *DataKmsPublicKey {
 	return &DataKmsPublicKey{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataKmsPublicKey(name string, args DataKmsPublicKeyArgs) *DataKmsPublicK
 
 var _ terra.DataResource = (*DataKmsPublicKey)(nil)
 
+// DataKmsPublicKey represents the Terraform data resource aws_kms_public_key.
 type DataKmsPublicKey struct {
 	Name string
 	Args DataKmsPublicKeyArgs
 }
 
+// DataSource returns the Terraform object type for [DataKmsPublicKey].
 func (kpk *DataKmsPublicKey) DataSource() string {
 	return "aws_kms_public_key"
 }
 
+// LocalName returns the local name for [DataKmsPublicKey].
 func (kpk *DataKmsPublicKey) LocalName() string {
 	return kpk.Name
 }
 
+// Configuration returns the configuration (args) for [DataKmsPublicKey].
 func (kpk *DataKmsPublicKey) Configuration() interface{} {
 	return kpk.Args
 }
 
+// Attributes returns the attributes for [DataKmsPublicKey].
 func (kpk *DataKmsPublicKey) Attributes() dataKmsPublicKeyAttributes {
 	return dataKmsPublicKeyAttributes{ref: terra.ReferenceDataResource(kpk)}
 }
 
+// DataKmsPublicKeyArgs contains the configurations for aws_kms_public_key.
 type DataKmsPublicKeyArgs struct {
 	// GrantTokens: list of string, optional
 	GrantTokens terra.ListValue[terra.StringValue] `hcl:"grant_tokens,attr"`
@@ -46,42 +53,52 @@ type dataKmsPublicKeyAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_kms_public_key.
 func (kpk dataKmsPublicKeyAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(kpk.ref.Append("arn"))
+	return terra.ReferenceAsString(kpk.ref.Append("arn"))
 }
 
+// CustomerMasterKeySpec returns a reference to field customer_master_key_spec of aws_kms_public_key.
 func (kpk dataKmsPublicKeyAttributes) CustomerMasterKeySpec() terra.StringValue {
-	return terra.ReferenceString(kpk.ref.Append("customer_master_key_spec"))
+	return terra.ReferenceAsString(kpk.ref.Append("customer_master_key_spec"))
 }
 
+// EncryptionAlgorithms returns a reference to field encryption_algorithms of aws_kms_public_key.
 func (kpk dataKmsPublicKeyAttributes) EncryptionAlgorithms() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](kpk.ref.Append("encryption_algorithms"))
+	return terra.ReferenceAsList[terra.StringValue](kpk.ref.Append("encryption_algorithms"))
 }
 
+// GrantTokens returns a reference to field grant_tokens of aws_kms_public_key.
 func (kpk dataKmsPublicKeyAttributes) GrantTokens() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](kpk.ref.Append("grant_tokens"))
+	return terra.ReferenceAsList[terra.StringValue](kpk.ref.Append("grant_tokens"))
 }
 
+// Id returns a reference to field id of aws_kms_public_key.
 func (kpk dataKmsPublicKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kpk.ref.Append("id"))
+	return terra.ReferenceAsString(kpk.ref.Append("id"))
 }
 
+// KeyId returns a reference to field key_id of aws_kms_public_key.
 func (kpk dataKmsPublicKeyAttributes) KeyId() terra.StringValue {
-	return terra.ReferenceString(kpk.ref.Append("key_id"))
+	return terra.ReferenceAsString(kpk.ref.Append("key_id"))
 }
 
+// KeyUsage returns a reference to field key_usage of aws_kms_public_key.
 func (kpk dataKmsPublicKeyAttributes) KeyUsage() terra.StringValue {
-	return terra.ReferenceString(kpk.ref.Append("key_usage"))
+	return terra.ReferenceAsString(kpk.ref.Append("key_usage"))
 }
 
+// PublicKey returns a reference to field public_key of aws_kms_public_key.
 func (kpk dataKmsPublicKeyAttributes) PublicKey() terra.StringValue {
-	return terra.ReferenceString(kpk.ref.Append("public_key"))
+	return terra.ReferenceAsString(kpk.ref.Append("public_key"))
 }
 
+// PublicKeyPem returns a reference to field public_key_pem of aws_kms_public_key.
 func (kpk dataKmsPublicKeyAttributes) PublicKeyPem() terra.StringValue {
-	return terra.ReferenceString(kpk.ref.Append("public_key_pem"))
+	return terra.ReferenceAsString(kpk.ref.Append("public_key_pem"))
 }
 
+// SigningAlgorithms returns a reference to field signing_algorithms of aws_kms_public_key.
 func (kpk dataKmsPublicKeyAttributes) SigningAlgorithms() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](kpk.ref.Append("signing_algorithms"))
+	return terra.ReferenceAsList[terra.StringValue](kpk.ref.Append("signing_algorithms"))
 }

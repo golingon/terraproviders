@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDatasyncLocationFsxWindowsFileSystem creates a new instance of [DatasyncLocationFsxWindowsFileSystem].
 func NewDatasyncLocationFsxWindowsFileSystem(name string, args DatasyncLocationFsxWindowsFileSystemArgs) *DatasyncLocationFsxWindowsFileSystem {
 	return &DatasyncLocationFsxWindowsFileSystem{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDatasyncLocationFsxWindowsFileSystem(name string, args DatasyncLocationF
 
 var _ terra.Resource = (*DatasyncLocationFsxWindowsFileSystem)(nil)
 
+// DatasyncLocationFsxWindowsFileSystem represents the Terraform resource aws_datasync_location_fsx_windows_file_system.
 type DatasyncLocationFsxWindowsFileSystem struct {
-	Name  string
-	Args  DatasyncLocationFsxWindowsFileSystemArgs
-	state *datasyncLocationFsxWindowsFileSystemState
+	Name      string
+	Args      DatasyncLocationFsxWindowsFileSystemArgs
+	state     *datasyncLocationFsxWindowsFileSystemState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DatasyncLocationFsxWindowsFileSystem].
 func (dlfwfs *DatasyncLocationFsxWindowsFileSystem) Type() string {
 	return "aws_datasync_location_fsx_windows_file_system"
 }
 
+// LocalName returns the local name for [DatasyncLocationFsxWindowsFileSystem].
 func (dlfwfs *DatasyncLocationFsxWindowsFileSystem) LocalName() string {
 	return dlfwfs.Name
 }
 
+// Configuration returns the configuration (args) for [DatasyncLocationFsxWindowsFileSystem].
 func (dlfwfs *DatasyncLocationFsxWindowsFileSystem) Configuration() interface{} {
 	return dlfwfs.Args
 }
 
+// DependOn is used for other resources to depend on [DatasyncLocationFsxWindowsFileSystem].
+func (dlfwfs *DatasyncLocationFsxWindowsFileSystem) DependOn() terra.Reference {
+	return terra.ReferenceResource(dlfwfs)
+}
+
+// Dependencies returns the list of resources [DatasyncLocationFsxWindowsFileSystem] depends_on.
+func (dlfwfs *DatasyncLocationFsxWindowsFileSystem) Dependencies() terra.Dependencies {
+	return dlfwfs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DatasyncLocationFsxWindowsFileSystem].
+func (dlfwfs *DatasyncLocationFsxWindowsFileSystem) LifecycleManagement() *terra.Lifecycle {
+	return dlfwfs.Lifecycle
+}
+
+// Attributes returns the attributes for [DatasyncLocationFsxWindowsFileSystem].
 func (dlfwfs *DatasyncLocationFsxWindowsFileSystem) Attributes() datasyncLocationFsxWindowsFileSystemAttributes {
 	return datasyncLocationFsxWindowsFileSystemAttributes{ref: terra.ReferenceResource(dlfwfs)}
 }
 
+// ImportState imports the given attribute values into [DatasyncLocationFsxWindowsFileSystem]'s state.
 func (dlfwfs *DatasyncLocationFsxWindowsFileSystem) ImportState(av io.Reader) error {
 	dlfwfs.state = &datasyncLocationFsxWindowsFileSystemState{}
 	if err := json.NewDecoder(av).Decode(dlfwfs.state); err != nil {
@@ -48,10 +72,12 @@ func (dlfwfs *DatasyncLocationFsxWindowsFileSystem) ImportState(av io.Reader) er
 	return nil
 }
 
+// State returns the state and a bool indicating if [DatasyncLocationFsxWindowsFileSystem] has state.
 func (dlfwfs *DatasyncLocationFsxWindowsFileSystem) State() (*datasyncLocationFsxWindowsFileSystemState, bool) {
 	return dlfwfs.state, dlfwfs.state != nil
 }
 
+// StateMust returns the state for [DatasyncLocationFsxWindowsFileSystem]. Panics if the state is nil.
 func (dlfwfs *DatasyncLocationFsxWindowsFileSystem) StateMust() *datasyncLocationFsxWindowsFileSystemState {
 	if dlfwfs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dlfwfs.Type(), dlfwfs.LocalName()))
@@ -59,10 +85,7 @@ func (dlfwfs *DatasyncLocationFsxWindowsFileSystem) StateMust() *datasyncLocatio
 	return dlfwfs.state
 }
 
-func (dlfwfs *DatasyncLocationFsxWindowsFileSystem) DependOn() terra.Reference {
-	return terra.ReferenceResource(dlfwfs)
-}
-
+// DatasyncLocationFsxWindowsFileSystemArgs contains the configurations for aws_datasync_location_fsx_windows_file_system.
 type DatasyncLocationFsxWindowsFileSystemArgs struct {
 	// Domain: string, optional
 	Domain terra.StringValue `hcl:"domain,attr"`
@@ -82,59 +105,69 @@ type DatasyncLocationFsxWindowsFileSystemArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// User: string, required
 	User terra.StringValue `hcl:"user,attr" validate:"required"`
-	// DependsOn contains resources that DatasyncLocationFsxWindowsFileSystem depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type datasyncLocationFsxWindowsFileSystemAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_datasync_location_fsx_windows_file_system.
 func (dlfwfs datasyncLocationFsxWindowsFileSystemAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dlfwfs.ref.Append("arn"))
+	return terra.ReferenceAsString(dlfwfs.ref.Append("arn"))
 }
 
+// CreationTime returns a reference to field creation_time of aws_datasync_location_fsx_windows_file_system.
 func (dlfwfs datasyncLocationFsxWindowsFileSystemAttributes) CreationTime() terra.StringValue {
-	return terra.ReferenceString(dlfwfs.ref.Append("creation_time"))
+	return terra.ReferenceAsString(dlfwfs.ref.Append("creation_time"))
 }
 
+// Domain returns a reference to field domain of aws_datasync_location_fsx_windows_file_system.
 func (dlfwfs datasyncLocationFsxWindowsFileSystemAttributes) Domain() terra.StringValue {
-	return terra.ReferenceString(dlfwfs.ref.Append("domain"))
+	return terra.ReferenceAsString(dlfwfs.ref.Append("domain"))
 }
 
+// FsxFilesystemArn returns a reference to field fsx_filesystem_arn of aws_datasync_location_fsx_windows_file_system.
 func (dlfwfs datasyncLocationFsxWindowsFileSystemAttributes) FsxFilesystemArn() terra.StringValue {
-	return terra.ReferenceString(dlfwfs.ref.Append("fsx_filesystem_arn"))
+	return terra.ReferenceAsString(dlfwfs.ref.Append("fsx_filesystem_arn"))
 }
 
+// Id returns a reference to field id of aws_datasync_location_fsx_windows_file_system.
 func (dlfwfs datasyncLocationFsxWindowsFileSystemAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dlfwfs.ref.Append("id"))
+	return terra.ReferenceAsString(dlfwfs.ref.Append("id"))
 }
 
+// Password returns a reference to field password of aws_datasync_location_fsx_windows_file_system.
 func (dlfwfs datasyncLocationFsxWindowsFileSystemAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(dlfwfs.ref.Append("password"))
+	return terra.ReferenceAsString(dlfwfs.ref.Append("password"))
 }
 
+// SecurityGroupArns returns a reference to field security_group_arns of aws_datasync_location_fsx_windows_file_system.
 func (dlfwfs datasyncLocationFsxWindowsFileSystemAttributes) SecurityGroupArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](dlfwfs.ref.Append("security_group_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](dlfwfs.ref.Append("security_group_arns"))
 }
 
+// Subdirectory returns a reference to field subdirectory of aws_datasync_location_fsx_windows_file_system.
 func (dlfwfs datasyncLocationFsxWindowsFileSystemAttributes) Subdirectory() terra.StringValue {
-	return terra.ReferenceString(dlfwfs.ref.Append("subdirectory"))
+	return terra.ReferenceAsString(dlfwfs.ref.Append("subdirectory"))
 }
 
+// Tags returns a reference to field tags of aws_datasync_location_fsx_windows_file_system.
 func (dlfwfs datasyncLocationFsxWindowsFileSystemAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dlfwfs.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dlfwfs.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_datasync_location_fsx_windows_file_system.
 func (dlfwfs datasyncLocationFsxWindowsFileSystemAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dlfwfs.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dlfwfs.ref.Append("tags_all"))
 }
 
+// Uri returns a reference to field uri of aws_datasync_location_fsx_windows_file_system.
 func (dlfwfs datasyncLocationFsxWindowsFileSystemAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(dlfwfs.ref.Append("uri"))
+	return terra.ReferenceAsString(dlfwfs.ref.Append("uri"))
 }
 
+// User returns a reference to field user of aws_datasync_location_fsx_windows_file_system.
 func (dlfwfs datasyncLocationFsxWindowsFileSystemAttributes) User() terra.StringValue {
-	return terra.ReferenceString(dlfwfs.ref.Append("user"))
+	return terra.ReferenceAsString(dlfwfs.ref.Append("user"))
 }
 
 type datasyncLocationFsxWindowsFileSystemState struct {

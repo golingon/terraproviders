@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewIamServiceLinkedRole creates a new instance of [IamServiceLinkedRole].
 func NewIamServiceLinkedRole(name string, args IamServiceLinkedRoleArgs) *IamServiceLinkedRole {
 	return &IamServiceLinkedRole{
 		Args: args,
@@ -18,28 +19,51 @@ func NewIamServiceLinkedRole(name string, args IamServiceLinkedRoleArgs) *IamSer
 
 var _ terra.Resource = (*IamServiceLinkedRole)(nil)
 
+// IamServiceLinkedRole represents the Terraform resource aws_iam_service_linked_role.
 type IamServiceLinkedRole struct {
-	Name  string
-	Args  IamServiceLinkedRoleArgs
-	state *iamServiceLinkedRoleState
+	Name      string
+	Args      IamServiceLinkedRoleArgs
+	state     *iamServiceLinkedRoleState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [IamServiceLinkedRole].
 func (islr *IamServiceLinkedRole) Type() string {
 	return "aws_iam_service_linked_role"
 }
 
+// LocalName returns the local name for [IamServiceLinkedRole].
 func (islr *IamServiceLinkedRole) LocalName() string {
 	return islr.Name
 }
 
+// Configuration returns the configuration (args) for [IamServiceLinkedRole].
 func (islr *IamServiceLinkedRole) Configuration() interface{} {
 	return islr.Args
 }
 
+// DependOn is used for other resources to depend on [IamServiceLinkedRole].
+func (islr *IamServiceLinkedRole) DependOn() terra.Reference {
+	return terra.ReferenceResource(islr)
+}
+
+// Dependencies returns the list of resources [IamServiceLinkedRole] depends_on.
+func (islr *IamServiceLinkedRole) Dependencies() terra.Dependencies {
+	return islr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [IamServiceLinkedRole].
+func (islr *IamServiceLinkedRole) LifecycleManagement() *terra.Lifecycle {
+	return islr.Lifecycle
+}
+
+// Attributes returns the attributes for [IamServiceLinkedRole].
 func (islr *IamServiceLinkedRole) Attributes() iamServiceLinkedRoleAttributes {
 	return iamServiceLinkedRoleAttributes{ref: terra.ReferenceResource(islr)}
 }
 
+// ImportState imports the given attribute values into [IamServiceLinkedRole]'s state.
 func (islr *IamServiceLinkedRole) ImportState(av io.Reader) error {
 	islr.state = &iamServiceLinkedRoleState{}
 	if err := json.NewDecoder(av).Decode(islr.state); err != nil {
@@ -48,10 +72,12 @@ func (islr *IamServiceLinkedRole) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [IamServiceLinkedRole] has state.
 func (islr *IamServiceLinkedRole) State() (*iamServiceLinkedRoleState, bool) {
 	return islr.state, islr.state != nil
 }
 
+// StateMust returns the state for [IamServiceLinkedRole]. Panics if the state is nil.
 func (islr *IamServiceLinkedRole) StateMust() *iamServiceLinkedRoleState {
 	if islr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", islr.Type(), islr.LocalName()))
@@ -59,10 +85,7 @@ func (islr *IamServiceLinkedRole) StateMust() *iamServiceLinkedRoleState {
 	return islr.state
 }
 
-func (islr *IamServiceLinkedRole) DependOn() terra.Reference {
-	return terra.ReferenceResource(islr)
-}
-
+// IamServiceLinkedRoleArgs contains the configurations for aws_iam_service_linked_role.
 type IamServiceLinkedRoleArgs struct {
 	// AwsServiceName: string, required
 	AwsServiceName terra.StringValue `hcl:"aws_service_name,attr" validate:"required"`
@@ -76,55 +99,64 @@ type IamServiceLinkedRoleArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that IamServiceLinkedRole depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type iamServiceLinkedRoleAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_iam_service_linked_role.
 func (islr iamServiceLinkedRoleAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(islr.ref.Append("arn"))
+	return terra.ReferenceAsString(islr.ref.Append("arn"))
 }
 
+// AwsServiceName returns a reference to field aws_service_name of aws_iam_service_linked_role.
 func (islr iamServiceLinkedRoleAttributes) AwsServiceName() terra.StringValue {
-	return terra.ReferenceString(islr.ref.Append("aws_service_name"))
+	return terra.ReferenceAsString(islr.ref.Append("aws_service_name"))
 }
 
+// CreateDate returns a reference to field create_date of aws_iam_service_linked_role.
 func (islr iamServiceLinkedRoleAttributes) CreateDate() terra.StringValue {
-	return terra.ReferenceString(islr.ref.Append("create_date"))
+	return terra.ReferenceAsString(islr.ref.Append("create_date"))
 }
 
+// CustomSuffix returns a reference to field custom_suffix of aws_iam_service_linked_role.
 func (islr iamServiceLinkedRoleAttributes) CustomSuffix() terra.StringValue {
-	return terra.ReferenceString(islr.ref.Append("custom_suffix"))
+	return terra.ReferenceAsString(islr.ref.Append("custom_suffix"))
 }
 
+// Description returns a reference to field description of aws_iam_service_linked_role.
 func (islr iamServiceLinkedRoleAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(islr.ref.Append("description"))
+	return terra.ReferenceAsString(islr.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_iam_service_linked_role.
 func (islr iamServiceLinkedRoleAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(islr.ref.Append("id"))
+	return terra.ReferenceAsString(islr.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_iam_service_linked_role.
 func (islr iamServiceLinkedRoleAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(islr.ref.Append("name"))
+	return terra.ReferenceAsString(islr.ref.Append("name"))
 }
 
+// Path returns a reference to field path of aws_iam_service_linked_role.
 func (islr iamServiceLinkedRoleAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(islr.ref.Append("path"))
+	return terra.ReferenceAsString(islr.ref.Append("path"))
 }
 
+// Tags returns a reference to field tags of aws_iam_service_linked_role.
 func (islr iamServiceLinkedRoleAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](islr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](islr.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_iam_service_linked_role.
 func (islr iamServiceLinkedRoleAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](islr.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](islr.ref.Append("tags_all"))
 }
 
+// UniqueId returns a reference to field unique_id of aws_iam_service_linked_role.
 func (islr iamServiceLinkedRoleAttributes) UniqueId() terra.StringValue {
-	return terra.ReferenceString(islr.ref.Append("unique_id"))
+	return terra.ReferenceAsString(islr.ref.Append("unique_id"))
 }
 
 type iamServiceLinkedRoleState struct {

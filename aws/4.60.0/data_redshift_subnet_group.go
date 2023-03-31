@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataRedshiftSubnetGroup creates a new instance of [DataRedshiftSubnetGroup].
 func NewDataRedshiftSubnetGroup(name string, args DataRedshiftSubnetGroupArgs) *DataRedshiftSubnetGroup {
 	return &DataRedshiftSubnetGroup{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataRedshiftSubnetGroup(name string, args DataRedshiftSubnetGroupArgs) *
 
 var _ terra.DataResource = (*DataRedshiftSubnetGroup)(nil)
 
+// DataRedshiftSubnetGroup represents the Terraform data resource aws_redshift_subnet_group.
 type DataRedshiftSubnetGroup struct {
 	Name string
 	Args DataRedshiftSubnetGroupArgs
 }
 
+// DataSource returns the Terraform object type for [DataRedshiftSubnetGroup].
 func (rsg *DataRedshiftSubnetGroup) DataSource() string {
 	return "aws_redshift_subnet_group"
 }
 
+// LocalName returns the local name for [DataRedshiftSubnetGroup].
 func (rsg *DataRedshiftSubnetGroup) LocalName() string {
 	return rsg.Name
 }
 
+// Configuration returns the configuration (args) for [DataRedshiftSubnetGroup].
 func (rsg *DataRedshiftSubnetGroup) Configuration() interface{} {
 	return rsg.Args
 }
 
+// Attributes returns the attributes for [DataRedshiftSubnetGroup].
 func (rsg *DataRedshiftSubnetGroup) Attributes() dataRedshiftSubnetGroupAttributes {
 	return dataRedshiftSubnetGroupAttributes{ref: terra.ReferenceDataResource(rsg)}
 }
 
+// DataRedshiftSubnetGroupArgs contains the configurations for aws_redshift_subnet_group.
 type DataRedshiftSubnetGroupArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -46,26 +53,32 @@ type dataRedshiftSubnetGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_redshift_subnet_group.
 func (rsg dataRedshiftSubnetGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(rsg.ref.Append("arn"))
+	return terra.ReferenceAsString(rsg.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_redshift_subnet_group.
 func (rsg dataRedshiftSubnetGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(rsg.ref.Append("description"))
+	return terra.ReferenceAsString(rsg.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_redshift_subnet_group.
 func (rsg dataRedshiftSubnetGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rsg.ref.Append("id"))
+	return terra.ReferenceAsString(rsg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_redshift_subnet_group.
 func (rsg dataRedshiftSubnetGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(rsg.ref.Append("name"))
+	return terra.ReferenceAsString(rsg.ref.Append("name"))
 }
 
+// SubnetIds returns a reference to field subnet_ids of aws_redshift_subnet_group.
 func (rsg dataRedshiftSubnetGroupAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](rsg.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](rsg.ref.Append("subnet_ids"))
 }
 
+// Tags returns a reference to field tags of aws_redshift_subnet_group.
 func (rsg dataRedshiftSubnetGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](rsg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](rsg.ref.Append("tags"))
 }

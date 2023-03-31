@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSignerSigningProfilePermission creates a new instance of [SignerSigningProfilePermission].
 func NewSignerSigningProfilePermission(name string, args SignerSigningProfilePermissionArgs) *SignerSigningProfilePermission {
 	return &SignerSigningProfilePermission{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSignerSigningProfilePermission(name string, args SignerSigningProfilePer
 
 var _ terra.Resource = (*SignerSigningProfilePermission)(nil)
 
+// SignerSigningProfilePermission represents the Terraform resource aws_signer_signing_profile_permission.
 type SignerSigningProfilePermission struct {
-	Name  string
-	Args  SignerSigningProfilePermissionArgs
-	state *signerSigningProfilePermissionState
+	Name      string
+	Args      SignerSigningProfilePermissionArgs
+	state     *signerSigningProfilePermissionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SignerSigningProfilePermission].
 func (sspp *SignerSigningProfilePermission) Type() string {
 	return "aws_signer_signing_profile_permission"
 }
 
+// LocalName returns the local name for [SignerSigningProfilePermission].
 func (sspp *SignerSigningProfilePermission) LocalName() string {
 	return sspp.Name
 }
 
+// Configuration returns the configuration (args) for [SignerSigningProfilePermission].
 func (sspp *SignerSigningProfilePermission) Configuration() interface{} {
 	return sspp.Args
 }
 
+// DependOn is used for other resources to depend on [SignerSigningProfilePermission].
+func (sspp *SignerSigningProfilePermission) DependOn() terra.Reference {
+	return terra.ReferenceResource(sspp)
+}
+
+// Dependencies returns the list of resources [SignerSigningProfilePermission] depends_on.
+func (sspp *SignerSigningProfilePermission) Dependencies() terra.Dependencies {
+	return sspp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SignerSigningProfilePermission].
+func (sspp *SignerSigningProfilePermission) LifecycleManagement() *terra.Lifecycle {
+	return sspp.Lifecycle
+}
+
+// Attributes returns the attributes for [SignerSigningProfilePermission].
 func (sspp *SignerSigningProfilePermission) Attributes() signerSigningProfilePermissionAttributes {
 	return signerSigningProfilePermissionAttributes{ref: terra.ReferenceResource(sspp)}
 }
 
+// ImportState imports the given attribute values into [SignerSigningProfilePermission]'s state.
 func (sspp *SignerSigningProfilePermission) ImportState(av io.Reader) error {
 	sspp.state = &signerSigningProfilePermissionState{}
 	if err := json.NewDecoder(av).Decode(sspp.state); err != nil {
@@ -48,10 +72,12 @@ func (sspp *SignerSigningProfilePermission) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SignerSigningProfilePermission] has state.
 func (sspp *SignerSigningProfilePermission) State() (*signerSigningProfilePermissionState, bool) {
 	return sspp.state, sspp.state != nil
 }
 
+// StateMust returns the state for [SignerSigningProfilePermission]. Panics if the state is nil.
 func (sspp *SignerSigningProfilePermission) StateMust() *signerSigningProfilePermissionState {
 	if sspp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sspp.Type(), sspp.LocalName()))
@@ -59,10 +85,7 @@ func (sspp *SignerSigningProfilePermission) StateMust() *signerSigningProfilePer
 	return sspp.state
 }
 
-func (sspp *SignerSigningProfilePermission) DependOn() terra.Reference {
-	return terra.ReferenceResource(sspp)
-}
-
+// SignerSigningProfilePermissionArgs contains the configurations for aws_signer_signing_profile_permission.
 type SignerSigningProfilePermissionArgs struct {
 	// Action: string, required
 	Action terra.StringValue `hcl:"action,attr" validate:"required"`
@@ -78,39 +101,44 @@ type SignerSigningProfilePermissionArgs struct {
 	StatementId terra.StringValue `hcl:"statement_id,attr"`
 	// StatementIdPrefix: string, optional
 	StatementIdPrefix terra.StringValue `hcl:"statement_id_prefix,attr"`
-	// DependsOn contains resources that SignerSigningProfilePermission depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type signerSigningProfilePermissionAttributes struct {
 	ref terra.Reference
 }
 
+// Action returns a reference to field action of aws_signer_signing_profile_permission.
 func (sspp signerSigningProfilePermissionAttributes) Action() terra.StringValue {
-	return terra.ReferenceString(sspp.ref.Append("action"))
+	return terra.ReferenceAsString(sspp.ref.Append("action"))
 }
 
+// Id returns a reference to field id of aws_signer_signing_profile_permission.
 func (sspp signerSigningProfilePermissionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sspp.ref.Append("id"))
+	return terra.ReferenceAsString(sspp.ref.Append("id"))
 }
 
+// Principal returns a reference to field principal of aws_signer_signing_profile_permission.
 func (sspp signerSigningProfilePermissionAttributes) Principal() terra.StringValue {
-	return terra.ReferenceString(sspp.ref.Append("principal"))
+	return terra.ReferenceAsString(sspp.ref.Append("principal"))
 }
 
+// ProfileName returns a reference to field profile_name of aws_signer_signing_profile_permission.
 func (sspp signerSigningProfilePermissionAttributes) ProfileName() terra.StringValue {
-	return terra.ReferenceString(sspp.ref.Append("profile_name"))
+	return terra.ReferenceAsString(sspp.ref.Append("profile_name"))
 }
 
+// ProfileVersion returns a reference to field profile_version of aws_signer_signing_profile_permission.
 func (sspp signerSigningProfilePermissionAttributes) ProfileVersion() terra.StringValue {
-	return terra.ReferenceString(sspp.ref.Append("profile_version"))
+	return terra.ReferenceAsString(sspp.ref.Append("profile_version"))
 }
 
+// StatementId returns a reference to field statement_id of aws_signer_signing_profile_permission.
 func (sspp signerSigningProfilePermissionAttributes) StatementId() terra.StringValue {
-	return terra.ReferenceString(sspp.ref.Append("statement_id"))
+	return terra.ReferenceAsString(sspp.ref.Append("statement_id"))
 }
 
+// StatementIdPrefix returns a reference to field statement_id_prefix of aws_signer_signing_profile_permission.
 func (sspp signerSigningProfilePermissionAttributes) StatementIdPrefix() terra.StringValue {
-	return terra.ReferenceString(sspp.ref.Append("statement_id_prefix"))
+	return terra.ReferenceAsString(sspp.ref.Append("statement_id_prefix"))
 }
 
 type signerSigningProfilePermissionState struct {

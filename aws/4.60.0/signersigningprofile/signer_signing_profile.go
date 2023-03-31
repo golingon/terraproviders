@@ -33,15 +33,15 @@ func (rr RevocationRecordAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rr RevocationRecordAttributes) RevocationEffectiveFrom() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("revocation_effective_from"))
+	return terra.ReferenceAsString(rr.ref.Append("revocation_effective_from"))
 }
 
 func (rr RevocationRecordAttributes) RevokedAt() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("revoked_at"))
+	return terra.ReferenceAsString(rr.ref.Append("revoked_at"))
 }
 
 func (rr RevocationRecordAttributes) RevokedBy() terra.StringValue {
-	return terra.ReferenceString(rr.ref.Append("revoked_by"))
+	return terra.ReferenceAsString(rr.ref.Append("revoked_by"))
 }
 
 type SignatureValidityPeriodAttributes struct {
@@ -61,11 +61,11 @@ func (svp SignatureValidityPeriodAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (svp SignatureValidityPeriodAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(svp.ref.Append("type"))
+	return terra.ReferenceAsString(svp.ref.Append("type"))
 }
 
 func (svp SignatureValidityPeriodAttributes) Value() terra.NumberValue {
-	return terra.ReferenceNumber(svp.ref.Append("value"))
+	return terra.ReferenceAsNumber(svp.ref.Append("value"))
 }
 
 type RevocationRecordState struct {

@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataApiGatewayVpcLink creates a new instance of [DataApiGatewayVpcLink].
 func NewDataApiGatewayVpcLink(name string, args DataApiGatewayVpcLinkArgs) *DataApiGatewayVpcLink {
 	return &DataApiGatewayVpcLink{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataApiGatewayVpcLink(name string, args DataApiGatewayVpcLinkArgs) *Data
 
 var _ terra.DataResource = (*DataApiGatewayVpcLink)(nil)
 
+// DataApiGatewayVpcLink represents the Terraform data resource aws_api_gateway_vpc_link.
 type DataApiGatewayVpcLink struct {
 	Name string
 	Args DataApiGatewayVpcLinkArgs
 }
 
+// DataSource returns the Terraform object type for [DataApiGatewayVpcLink].
 func (agvl *DataApiGatewayVpcLink) DataSource() string {
 	return "aws_api_gateway_vpc_link"
 }
 
+// LocalName returns the local name for [DataApiGatewayVpcLink].
 func (agvl *DataApiGatewayVpcLink) LocalName() string {
 	return agvl.Name
 }
 
+// Configuration returns the configuration (args) for [DataApiGatewayVpcLink].
 func (agvl *DataApiGatewayVpcLink) Configuration() interface{} {
 	return agvl.Args
 }
 
+// Attributes returns the attributes for [DataApiGatewayVpcLink].
 func (agvl *DataApiGatewayVpcLink) Attributes() dataApiGatewayVpcLinkAttributes {
 	return dataApiGatewayVpcLinkAttributes{ref: terra.ReferenceDataResource(agvl)}
 }
 
+// DataApiGatewayVpcLinkArgs contains the configurations for aws_api_gateway_vpc_link.
 type DataApiGatewayVpcLinkArgs struct {
 	// Name: string, required
 	Name terra.StringValue `hcl:"name,attr" validate:"required"`
@@ -44,30 +51,37 @@ type dataApiGatewayVpcLinkAttributes struct {
 	ref terra.Reference
 }
 
+// Description returns a reference to field description of aws_api_gateway_vpc_link.
 func (agvl dataApiGatewayVpcLinkAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(agvl.ref.Append("description"))
+	return terra.ReferenceAsString(agvl.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_api_gateway_vpc_link.
 func (agvl dataApiGatewayVpcLinkAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(agvl.ref.Append("id"))
+	return terra.ReferenceAsString(agvl.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_api_gateway_vpc_link.
 func (agvl dataApiGatewayVpcLinkAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(agvl.ref.Append("name"))
+	return terra.ReferenceAsString(agvl.ref.Append("name"))
 }
 
+// Status returns a reference to field status of aws_api_gateway_vpc_link.
 func (agvl dataApiGatewayVpcLinkAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(agvl.ref.Append("status"))
+	return terra.ReferenceAsString(agvl.ref.Append("status"))
 }
 
+// StatusMessage returns a reference to field status_message of aws_api_gateway_vpc_link.
 func (agvl dataApiGatewayVpcLinkAttributes) StatusMessage() terra.StringValue {
-	return terra.ReferenceString(agvl.ref.Append("status_message"))
+	return terra.ReferenceAsString(agvl.ref.Append("status_message"))
 }
 
+// Tags returns a reference to field tags of aws_api_gateway_vpc_link.
 func (agvl dataApiGatewayVpcLinkAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](agvl.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](agvl.ref.Append("tags"))
 }
 
+// TargetArns returns a reference to field target_arns of aws_api_gateway_vpc_link.
 func (agvl dataApiGatewayVpcLinkAttributes) TargetArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](agvl.ref.Append("target_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](agvl.ref.Append("target_arns"))
 }

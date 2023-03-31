@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSecurityhubStandardsSubscription creates a new instance of [SecurityhubStandardsSubscription].
 func NewSecurityhubStandardsSubscription(name string, args SecurityhubStandardsSubscriptionArgs) *SecurityhubStandardsSubscription {
 	return &SecurityhubStandardsSubscription{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSecurityhubStandardsSubscription(name string, args SecurityhubStandardsS
 
 var _ terra.Resource = (*SecurityhubStandardsSubscription)(nil)
 
+// SecurityhubStandardsSubscription represents the Terraform resource aws_securityhub_standards_subscription.
 type SecurityhubStandardsSubscription struct {
-	Name  string
-	Args  SecurityhubStandardsSubscriptionArgs
-	state *securityhubStandardsSubscriptionState
+	Name      string
+	Args      SecurityhubStandardsSubscriptionArgs
+	state     *securityhubStandardsSubscriptionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SecurityhubStandardsSubscription].
 func (sss *SecurityhubStandardsSubscription) Type() string {
 	return "aws_securityhub_standards_subscription"
 }
 
+// LocalName returns the local name for [SecurityhubStandardsSubscription].
 func (sss *SecurityhubStandardsSubscription) LocalName() string {
 	return sss.Name
 }
 
+// Configuration returns the configuration (args) for [SecurityhubStandardsSubscription].
 func (sss *SecurityhubStandardsSubscription) Configuration() interface{} {
 	return sss.Args
 }
 
+// DependOn is used for other resources to depend on [SecurityhubStandardsSubscription].
+func (sss *SecurityhubStandardsSubscription) DependOn() terra.Reference {
+	return terra.ReferenceResource(sss)
+}
+
+// Dependencies returns the list of resources [SecurityhubStandardsSubscription] depends_on.
+func (sss *SecurityhubStandardsSubscription) Dependencies() terra.Dependencies {
+	return sss.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SecurityhubStandardsSubscription].
+func (sss *SecurityhubStandardsSubscription) LifecycleManagement() *terra.Lifecycle {
+	return sss.Lifecycle
+}
+
+// Attributes returns the attributes for [SecurityhubStandardsSubscription].
 func (sss *SecurityhubStandardsSubscription) Attributes() securityhubStandardsSubscriptionAttributes {
 	return securityhubStandardsSubscriptionAttributes{ref: terra.ReferenceResource(sss)}
 }
 
+// ImportState imports the given attribute values into [SecurityhubStandardsSubscription]'s state.
 func (sss *SecurityhubStandardsSubscription) ImportState(av io.Reader) error {
 	sss.state = &securityhubStandardsSubscriptionState{}
 	if err := json.NewDecoder(av).Decode(sss.state); err != nil {
@@ -48,10 +72,12 @@ func (sss *SecurityhubStandardsSubscription) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SecurityhubStandardsSubscription] has state.
 func (sss *SecurityhubStandardsSubscription) State() (*securityhubStandardsSubscriptionState, bool) {
 	return sss.state, sss.state != nil
 }
 
+// StateMust returns the state for [SecurityhubStandardsSubscription]. Panics if the state is nil.
 func (sss *SecurityhubStandardsSubscription) StateMust() *securityhubStandardsSubscriptionState {
 	if sss.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sss.Type(), sss.LocalName()))
@@ -59,28 +85,25 @@ func (sss *SecurityhubStandardsSubscription) StateMust() *securityhubStandardsSu
 	return sss.state
 }
 
-func (sss *SecurityhubStandardsSubscription) DependOn() terra.Reference {
-	return terra.ReferenceResource(sss)
-}
-
+// SecurityhubStandardsSubscriptionArgs contains the configurations for aws_securityhub_standards_subscription.
 type SecurityhubStandardsSubscriptionArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
 	// StandardsArn: string, required
 	StandardsArn terra.StringValue `hcl:"standards_arn,attr" validate:"required"`
-	// DependsOn contains resources that SecurityhubStandardsSubscription depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type securityhubStandardsSubscriptionAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_securityhub_standards_subscription.
 func (sss securityhubStandardsSubscriptionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sss.ref.Append("id"))
+	return terra.ReferenceAsString(sss.ref.Append("id"))
 }
 
+// StandardsArn returns a reference to field standards_arn of aws_securityhub_standards_subscription.
 func (sss securityhubStandardsSubscriptionAttributes) StandardsArn() terra.StringValue {
-	return terra.ReferenceString(sss.ref.Append("standards_arn"))
+	return terra.ReferenceAsString(sss.ref.Append("standards_arn"))
 }
 
 type securityhubStandardsSubscriptionState struct {

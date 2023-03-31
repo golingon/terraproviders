@@ -98,27 +98,27 @@ func (a ActionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a ActionAttributes) ActionId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("action_id"))
+	return terra.ReferenceAsString(a.ref.Append("action_id"))
 }
 
 func (a ActionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("description"))
+	return terra.ReferenceAsString(a.ref.Append("description"))
 }
 
 func (a ActionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("name"))
+	return terra.ReferenceAsString(a.ref.Append("name"))
 }
 
 func (a ActionAttributes) StartAfter() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](a.ref.Append("start_after"))
+	return terra.ReferenceAsSet[terra.StringValue](a.ref.Append("start_after"))
 }
 
 func (a ActionAttributes) Parameter() terra.SetValue[ParameterAttributes] {
-	return terra.ReferenceSet[ParameterAttributes](a.ref.Append("parameter"))
+	return terra.ReferenceAsSet[ParameterAttributes](a.ref.Append("parameter"))
 }
 
 func (a ActionAttributes) Target() terra.ListValue[ActionTargetAttributes] {
-	return terra.ReferenceList[ActionTargetAttributes](a.ref.Append("target"))
+	return terra.ReferenceAsList[ActionTargetAttributes](a.ref.Append("target"))
 }
 
 type ParameterAttributes struct {
@@ -138,11 +138,11 @@ func (p ParameterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p ParameterAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("key"))
+	return terra.ReferenceAsString(p.ref.Append("key"))
 }
 
 func (p ParameterAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("value"))
+	return terra.ReferenceAsString(p.ref.Append("value"))
 }
 
 type ActionTargetAttributes struct {
@@ -162,11 +162,11 @@ func (t ActionTargetAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t ActionTargetAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("key"))
+	return terra.ReferenceAsString(t.ref.Append("key"))
 }
 
 func (t ActionTargetAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("value"))
+	return terra.ReferenceAsString(t.ref.Append("value"))
 }
 
 type StopConditionAttributes struct {
@@ -186,11 +186,11 @@ func (sc StopConditionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sc StopConditionAttributes) Source() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("source"))
+	return terra.ReferenceAsString(sc.ref.Append("source"))
 }
 
 func (sc StopConditionAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("value"))
+	return terra.ReferenceAsString(sc.ref.Append("value"))
 }
 
 type TargetAttributes struct {
@@ -210,27 +210,27 @@ func (t TargetAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TargetAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("name"))
+	return terra.ReferenceAsString(t.ref.Append("name"))
 }
 
 func (t TargetAttributes) ResourceArns() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](t.ref.Append("resource_arns"))
+	return terra.ReferenceAsSet[terra.StringValue](t.ref.Append("resource_arns"))
 }
 
 func (t TargetAttributes) ResourceType() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("resource_type"))
+	return terra.ReferenceAsString(t.ref.Append("resource_type"))
 }
 
 func (t TargetAttributes) SelectionMode() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("selection_mode"))
+	return terra.ReferenceAsString(t.ref.Append("selection_mode"))
 }
 
 func (t TargetAttributes) Filter() terra.ListValue[FilterAttributes] {
-	return terra.ReferenceList[FilterAttributes](t.ref.Append("filter"))
+	return terra.ReferenceAsList[FilterAttributes](t.ref.Append("filter"))
 }
 
 func (t TargetAttributes) ResourceTag() terra.SetValue[ResourceTagAttributes] {
-	return terra.ReferenceSet[ResourceTagAttributes](t.ref.Append("resource_tag"))
+	return terra.ReferenceAsSet[ResourceTagAttributes](t.ref.Append("resource_tag"))
 }
 
 type FilterAttributes struct {
@@ -250,11 +250,11 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("path"))
+	return terra.ReferenceAsString(f.ref.Append("path"))
 }
 
 func (f FilterAttributes) Values() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](f.ref.Append("values"))
+	return terra.ReferenceAsSet[terra.StringValue](f.ref.Append("values"))
 }
 
 type ResourceTagAttributes struct {
@@ -274,11 +274,11 @@ func (rt ResourceTagAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rt ResourceTagAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("key"))
+	return terra.ReferenceAsString(rt.ref.Append("key"))
 }
 
 func (rt ResourceTagAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(rt.ref.Append("value"))
+	return terra.ReferenceAsString(rt.ref.Append("value"))
 }
 
 type TimeoutsAttributes struct {
@@ -298,15 +298,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ActionState struct {

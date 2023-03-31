@@ -37,39 +37,39 @@ func (ebd EbsBlockDeviceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ebd EbsBlockDeviceAttributes) DeleteOnTermination() terra.BoolValue {
-	return terra.ReferenceBool(ebd.ref.Append("delete_on_termination"))
+	return terra.ReferenceAsBool(ebd.ref.Append("delete_on_termination"))
 }
 
 func (ebd EbsBlockDeviceAttributes) DeviceName() terra.StringValue {
-	return terra.ReferenceString(ebd.ref.Append("device_name"))
+	return terra.ReferenceAsString(ebd.ref.Append("device_name"))
 }
 
 func (ebd EbsBlockDeviceAttributes) Encrypted() terra.BoolValue {
-	return terra.ReferenceBool(ebd.ref.Append("encrypted"))
+	return terra.ReferenceAsBool(ebd.ref.Append("encrypted"))
 }
 
 func (ebd EbsBlockDeviceAttributes) Iops() terra.NumberValue {
-	return terra.ReferenceNumber(ebd.ref.Append("iops"))
+	return terra.ReferenceAsNumber(ebd.ref.Append("iops"))
 }
 
 func (ebd EbsBlockDeviceAttributes) OutpostArn() terra.StringValue {
-	return terra.ReferenceString(ebd.ref.Append("outpost_arn"))
+	return terra.ReferenceAsString(ebd.ref.Append("outpost_arn"))
 }
 
 func (ebd EbsBlockDeviceAttributes) SnapshotId() terra.StringValue {
-	return terra.ReferenceString(ebd.ref.Append("snapshot_id"))
+	return terra.ReferenceAsString(ebd.ref.Append("snapshot_id"))
 }
 
 func (ebd EbsBlockDeviceAttributes) Throughput() terra.NumberValue {
-	return terra.ReferenceNumber(ebd.ref.Append("throughput"))
+	return terra.ReferenceAsNumber(ebd.ref.Append("throughput"))
 }
 
 func (ebd EbsBlockDeviceAttributes) VolumeSize() terra.NumberValue {
-	return terra.ReferenceNumber(ebd.ref.Append("volume_size"))
+	return terra.ReferenceAsNumber(ebd.ref.Append("volume_size"))
 }
 
 func (ebd EbsBlockDeviceAttributes) VolumeType() terra.StringValue {
-	return terra.ReferenceString(ebd.ref.Append("volume_type"))
+	return terra.ReferenceAsString(ebd.ref.Append("volume_type"))
 }
 
 type EphemeralBlockDeviceAttributes struct {
@@ -89,11 +89,11 @@ func (ebd EphemeralBlockDeviceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ebd EphemeralBlockDeviceAttributes) DeviceName() terra.StringValue {
-	return terra.ReferenceString(ebd.ref.Append("device_name"))
+	return terra.ReferenceAsString(ebd.ref.Append("device_name"))
 }
 
 func (ebd EphemeralBlockDeviceAttributes) VirtualName() terra.StringValue {
-	return terra.ReferenceString(ebd.ref.Append("virtual_name"))
+	return terra.ReferenceAsString(ebd.ref.Append("virtual_name"))
 }
 
 type TimeoutsAttributes struct {
@@ -113,15 +113,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type EbsBlockDeviceState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewApiGatewayApiKey creates a new instance of [ApiGatewayApiKey].
 func NewApiGatewayApiKey(name string, args ApiGatewayApiKeyArgs) *ApiGatewayApiKey {
 	return &ApiGatewayApiKey{
 		Args: args,
@@ -18,28 +19,51 @@ func NewApiGatewayApiKey(name string, args ApiGatewayApiKeyArgs) *ApiGatewayApiK
 
 var _ terra.Resource = (*ApiGatewayApiKey)(nil)
 
+// ApiGatewayApiKey represents the Terraform resource aws_api_gateway_api_key.
 type ApiGatewayApiKey struct {
-	Name  string
-	Args  ApiGatewayApiKeyArgs
-	state *apiGatewayApiKeyState
+	Name      string
+	Args      ApiGatewayApiKeyArgs
+	state     *apiGatewayApiKeyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ApiGatewayApiKey].
 func (agak *ApiGatewayApiKey) Type() string {
 	return "aws_api_gateway_api_key"
 }
 
+// LocalName returns the local name for [ApiGatewayApiKey].
 func (agak *ApiGatewayApiKey) LocalName() string {
 	return agak.Name
 }
 
+// Configuration returns the configuration (args) for [ApiGatewayApiKey].
 func (agak *ApiGatewayApiKey) Configuration() interface{} {
 	return agak.Args
 }
 
+// DependOn is used for other resources to depend on [ApiGatewayApiKey].
+func (agak *ApiGatewayApiKey) DependOn() terra.Reference {
+	return terra.ReferenceResource(agak)
+}
+
+// Dependencies returns the list of resources [ApiGatewayApiKey] depends_on.
+func (agak *ApiGatewayApiKey) Dependencies() terra.Dependencies {
+	return agak.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ApiGatewayApiKey].
+func (agak *ApiGatewayApiKey) LifecycleManagement() *terra.Lifecycle {
+	return agak.Lifecycle
+}
+
+// Attributes returns the attributes for [ApiGatewayApiKey].
 func (agak *ApiGatewayApiKey) Attributes() apiGatewayApiKeyAttributes {
 	return apiGatewayApiKeyAttributes{ref: terra.ReferenceResource(agak)}
 }
 
+// ImportState imports the given attribute values into [ApiGatewayApiKey]'s state.
 func (agak *ApiGatewayApiKey) ImportState(av io.Reader) error {
 	agak.state = &apiGatewayApiKeyState{}
 	if err := json.NewDecoder(av).Decode(agak.state); err != nil {
@@ -48,10 +72,12 @@ func (agak *ApiGatewayApiKey) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ApiGatewayApiKey] has state.
 func (agak *ApiGatewayApiKey) State() (*apiGatewayApiKeyState, bool) {
 	return agak.state, agak.state != nil
 }
 
+// StateMust returns the state for [ApiGatewayApiKey]. Panics if the state is nil.
 func (agak *ApiGatewayApiKey) StateMust() *apiGatewayApiKeyState {
 	if agak.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", agak.Type(), agak.LocalName()))
@@ -59,10 +85,7 @@ func (agak *ApiGatewayApiKey) StateMust() *apiGatewayApiKeyState {
 	return agak.state
 }
 
-func (agak *ApiGatewayApiKey) DependOn() terra.Reference {
-	return terra.ReferenceResource(agak)
-}
-
+// ApiGatewayApiKeyArgs contains the configurations for aws_api_gateway_api_key.
 type ApiGatewayApiKeyArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -78,51 +101,59 @@ type ApiGatewayApiKeyArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Value: string, optional
 	Value terra.StringValue `hcl:"value,attr"`
-	// DependsOn contains resources that ApiGatewayApiKey depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apiGatewayApiKeyAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_api_gateway_api_key.
 func (agak apiGatewayApiKeyAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(agak.ref.Append("arn"))
+	return terra.ReferenceAsString(agak.ref.Append("arn"))
 }
 
+// CreatedDate returns a reference to field created_date of aws_api_gateway_api_key.
 func (agak apiGatewayApiKeyAttributes) CreatedDate() terra.StringValue {
-	return terra.ReferenceString(agak.ref.Append("created_date"))
+	return terra.ReferenceAsString(agak.ref.Append("created_date"))
 }
 
+// Description returns a reference to field description of aws_api_gateway_api_key.
 func (agak apiGatewayApiKeyAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(agak.ref.Append("description"))
+	return terra.ReferenceAsString(agak.ref.Append("description"))
 }
 
+// Enabled returns a reference to field enabled of aws_api_gateway_api_key.
 func (agak apiGatewayApiKeyAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(agak.ref.Append("enabled"))
+	return terra.ReferenceAsBool(agak.ref.Append("enabled"))
 }
 
+// Id returns a reference to field id of aws_api_gateway_api_key.
 func (agak apiGatewayApiKeyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(agak.ref.Append("id"))
+	return terra.ReferenceAsString(agak.ref.Append("id"))
 }
 
+// LastUpdatedDate returns a reference to field last_updated_date of aws_api_gateway_api_key.
 func (agak apiGatewayApiKeyAttributes) LastUpdatedDate() terra.StringValue {
-	return terra.ReferenceString(agak.ref.Append("last_updated_date"))
+	return terra.ReferenceAsString(agak.ref.Append("last_updated_date"))
 }
 
+// Name returns a reference to field name of aws_api_gateway_api_key.
 func (agak apiGatewayApiKeyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(agak.ref.Append("name"))
+	return terra.ReferenceAsString(agak.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_api_gateway_api_key.
 func (agak apiGatewayApiKeyAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](agak.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](agak.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_api_gateway_api_key.
 func (agak apiGatewayApiKeyAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](agak.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](agak.ref.Append("tags_all"))
 }
 
+// Value returns a reference to field value of aws_api_gateway_api_key.
 func (agak apiGatewayApiKeyAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(agak.ref.Append("value"))
+	return terra.ReferenceAsString(agak.ref.Append("value"))
 }
 
 type apiGatewayApiKeyState struct {

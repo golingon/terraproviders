@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAcmCertificate creates a new instance of [AcmCertificate].
 func NewAcmCertificate(name string, args AcmCertificateArgs) *AcmCertificate {
 	return &AcmCertificate{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAcmCertificate(name string, args AcmCertificateArgs) *AcmCertificate {
 
 var _ terra.Resource = (*AcmCertificate)(nil)
 
+// AcmCertificate represents the Terraform resource aws_acm_certificate.
 type AcmCertificate struct {
-	Name  string
-	Args  AcmCertificateArgs
-	state *acmCertificateState
+	Name      string
+	Args      AcmCertificateArgs
+	state     *acmCertificateState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AcmCertificate].
 func (ac *AcmCertificate) Type() string {
 	return "aws_acm_certificate"
 }
 
+// LocalName returns the local name for [AcmCertificate].
 func (ac *AcmCertificate) LocalName() string {
 	return ac.Name
 }
 
+// Configuration returns the configuration (args) for [AcmCertificate].
 func (ac *AcmCertificate) Configuration() interface{} {
 	return ac.Args
 }
 
+// DependOn is used for other resources to depend on [AcmCertificate].
+func (ac *AcmCertificate) DependOn() terra.Reference {
+	return terra.ReferenceResource(ac)
+}
+
+// Dependencies returns the list of resources [AcmCertificate] depends_on.
+func (ac *AcmCertificate) Dependencies() terra.Dependencies {
+	return ac.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AcmCertificate].
+func (ac *AcmCertificate) LifecycleManagement() *terra.Lifecycle {
+	return ac.Lifecycle
+}
+
+// Attributes returns the attributes for [AcmCertificate].
 func (ac *AcmCertificate) Attributes() acmCertificateAttributes {
 	return acmCertificateAttributes{ref: terra.ReferenceResource(ac)}
 }
 
+// ImportState imports the given attribute values into [AcmCertificate]'s state.
 func (ac *AcmCertificate) ImportState(av io.Reader) error {
 	ac.state = &acmCertificateState{}
 	if err := json.NewDecoder(av).Decode(ac.state); err != nil {
@@ -49,10 +73,12 @@ func (ac *AcmCertificate) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AcmCertificate] has state.
 func (ac *AcmCertificate) State() (*acmCertificateState, bool) {
 	return ac.state, ac.state != nil
 }
 
+// StateMust returns the state for [AcmCertificate]. Panics if the state is nil.
 func (ac *AcmCertificate) StateMust() *acmCertificateState {
 	if ac.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ac.Type(), ac.LocalName()))
@@ -60,10 +86,7 @@ func (ac *AcmCertificate) StateMust() *acmCertificateState {
 	return ac.state
 }
 
-func (ac *AcmCertificate) DependOn() terra.Reference {
-	return terra.ReferenceResource(ac)
-}
-
+// AcmCertificateArgs contains the configurations for aws_acm_certificate.
 type AcmCertificateArgs struct {
 	// CertificateAuthorityArn: string, optional
 	CertificateAuthorityArn terra.StringValue `hcl:"certificate_authority_arn,attr"`
@@ -97,107 +120,125 @@ type AcmCertificateArgs struct {
 	Options *acmcertificate.Options `hcl:"options,block"`
 	// ValidationOption: min=0
 	ValidationOption []acmcertificate.ValidationOption `hcl:"validation_option,block" validate:"min=0"`
-	// DependsOn contains resources that AcmCertificate depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type acmCertificateAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_acm_certificate.
 func (ac acmCertificateAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("arn"))
+	return terra.ReferenceAsString(ac.ref.Append("arn"))
 }
 
+// CertificateAuthorityArn returns a reference to field certificate_authority_arn of aws_acm_certificate.
 func (ac acmCertificateAttributes) CertificateAuthorityArn() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("certificate_authority_arn"))
+	return terra.ReferenceAsString(ac.ref.Append("certificate_authority_arn"))
 }
 
+// CertificateBody returns a reference to field certificate_body of aws_acm_certificate.
 func (ac acmCertificateAttributes) CertificateBody() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("certificate_body"))
+	return terra.ReferenceAsString(ac.ref.Append("certificate_body"))
 }
 
+// CertificateChain returns a reference to field certificate_chain of aws_acm_certificate.
 func (ac acmCertificateAttributes) CertificateChain() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("certificate_chain"))
+	return terra.ReferenceAsString(ac.ref.Append("certificate_chain"))
 }
 
+// DomainName returns a reference to field domain_name of aws_acm_certificate.
 func (ac acmCertificateAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("domain_name"))
+	return terra.ReferenceAsString(ac.ref.Append("domain_name"))
 }
 
+// EarlyRenewalDuration returns a reference to field early_renewal_duration of aws_acm_certificate.
 func (ac acmCertificateAttributes) EarlyRenewalDuration() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("early_renewal_duration"))
+	return terra.ReferenceAsString(ac.ref.Append("early_renewal_duration"))
 }
 
+// Id returns a reference to field id of aws_acm_certificate.
 func (ac acmCertificateAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("id"))
+	return terra.ReferenceAsString(ac.ref.Append("id"))
 }
 
+// KeyAlgorithm returns a reference to field key_algorithm of aws_acm_certificate.
 func (ac acmCertificateAttributes) KeyAlgorithm() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("key_algorithm"))
+	return terra.ReferenceAsString(ac.ref.Append("key_algorithm"))
 }
 
+// NotAfter returns a reference to field not_after of aws_acm_certificate.
 func (ac acmCertificateAttributes) NotAfter() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("not_after"))
+	return terra.ReferenceAsString(ac.ref.Append("not_after"))
 }
 
+// NotBefore returns a reference to field not_before of aws_acm_certificate.
 func (ac acmCertificateAttributes) NotBefore() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("not_before"))
+	return terra.ReferenceAsString(ac.ref.Append("not_before"))
 }
 
+// PendingRenewal returns a reference to field pending_renewal of aws_acm_certificate.
 func (ac acmCertificateAttributes) PendingRenewal() terra.BoolValue {
-	return terra.ReferenceBool(ac.ref.Append("pending_renewal"))
+	return terra.ReferenceAsBool(ac.ref.Append("pending_renewal"))
 }
 
+// PrivateKey returns a reference to field private_key of aws_acm_certificate.
 func (ac acmCertificateAttributes) PrivateKey() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("private_key"))
+	return terra.ReferenceAsString(ac.ref.Append("private_key"))
 }
 
+// RenewalEligibility returns a reference to field renewal_eligibility of aws_acm_certificate.
 func (ac acmCertificateAttributes) RenewalEligibility() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("renewal_eligibility"))
+	return terra.ReferenceAsString(ac.ref.Append("renewal_eligibility"))
 }
 
+// Status returns a reference to field status of aws_acm_certificate.
 func (ac acmCertificateAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("status"))
+	return terra.ReferenceAsString(ac.ref.Append("status"))
 }
 
+// SubjectAlternativeNames returns a reference to field subject_alternative_names of aws_acm_certificate.
 func (ac acmCertificateAttributes) SubjectAlternativeNames() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](ac.ref.Append("subject_alternative_names"))
+	return terra.ReferenceAsSet[terra.StringValue](ac.ref.Append("subject_alternative_names"))
 }
 
+// Tags returns a reference to field tags of aws_acm_certificate.
 func (ac acmCertificateAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ac.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ac.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_acm_certificate.
 func (ac acmCertificateAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ac.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ac.ref.Append("tags_all"))
 }
 
+// Type returns a reference to field type of aws_acm_certificate.
 func (ac acmCertificateAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("type"))
+	return terra.ReferenceAsString(ac.ref.Append("type"))
 }
 
+// ValidationEmails returns a reference to field validation_emails of aws_acm_certificate.
 func (ac acmCertificateAttributes) ValidationEmails() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](ac.ref.Append("validation_emails"))
+	return terra.ReferenceAsList[terra.StringValue](ac.ref.Append("validation_emails"))
 }
 
+// ValidationMethod returns a reference to field validation_method of aws_acm_certificate.
 func (ac acmCertificateAttributes) ValidationMethod() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("validation_method"))
+	return terra.ReferenceAsString(ac.ref.Append("validation_method"))
 }
 
 func (ac acmCertificateAttributes) DomainValidationOptions() terra.SetValue[acmcertificate.DomainValidationOptionsAttributes] {
-	return terra.ReferenceSet[acmcertificate.DomainValidationOptionsAttributes](ac.ref.Append("domain_validation_options"))
+	return terra.ReferenceAsSet[acmcertificate.DomainValidationOptionsAttributes](ac.ref.Append("domain_validation_options"))
 }
 
 func (ac acmCertificateAttributes) RenewalSummary() terra.ListValue[acmcertificate.RenewalSummaryAttributes] {
-	return terra.ReferenceList[acmcertificate.RenewalSummaryAttributes](ac.ref.Append("renewal_summary"))
+	return terra.ReferenceAsList[acmcertificate.RenewalSummaryAttributes](ac.ref.Append("renewal_summary"))
 }
 
 func (ac acmCertificateAttributes) Options() terra.ListValue[acmcertificate.OptionsAttributes] {
-	return terra.ReferenceList[acmcertificate.OptionsAttributes](ac.ref.Append("options"))
+	return terra.ReferenceAsList[acmcertificate.OptionsAttributes](ac.ref.Append("options"))
 }
 
 func (ac acmCertificateAttributes) ValidationOption() terra.SetValue[acmcertificate.ValidationOptionAttributes] {
-	return terra.ReferenceSet[acmcertificate.ValidationOptionAttributes](ac.ref.Append("validation_option"))
+	return terra.ReferenceAsSet[acmcertificate.ValidationOptionAttributes](ac.ref.Append("validation_option"))
 }
 
 type acmCertificateState struct {

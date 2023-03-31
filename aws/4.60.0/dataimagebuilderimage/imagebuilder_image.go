@@ -33,11 +33,11 @@ func (itc ImageTestsConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (itc ImageTestsConfigurationAttributes) ImageTestsEnabled() terra.BoolValue {
-	return terra.ReferenceBool(itc.ref.Append("image_tests_enabled"))
+	return terra.ReferenceAsBool(itc.ref.Append("image_tests_enabled"))
 }
 
 func (itc ImageTestsConfigurationAttributes) TimeoutMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(itc.ref.Append("timeout_minutes"))
+	return terra.ReferenceAsNumber(itc.ref.Append("timeout_minutes"))
 }
 
 type OutputResourcesAttributes struct {
@@ -57,7 +57,7 @@ func (or OutputResourcesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (or OutputResourcesAttributes) Amis() terra.SetValue[AmisAttributes] {
-	return terra.ReferenceSet[AmisAttributes](or.ref.Append("amis"))
+	return terra.ReferenceAsSet[AmisAttributes](or.ref.Append("amis"))
 }
 
 type AmisAttributes struct {
@@ -77,23 +77,23 @@ func (a AmisAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AmisAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("account_id"))
+	return terra.ReferenceAsString(a.ref.Append("account_id"))
 }
 
 func (a AmisAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("description"))
+	return terra.ReferenceAsString(a.ref.Append("description"))
 }
 
 func (a AmisAttributes) Image() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("image"))
+	return terra.ReferenceAsString(a.ref.Append("image"))
 }
 
 func (a AmisAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("name"))
+	return terra.ReferenceAsString(a.ref.Append("name"))
 }
 
 func (a AmisAttributes) Region() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("region"))
+	return terra.ReferenceAsString(a.ref.Append("region"))
 }
 
 type ImageTestsConfigurationState struct {

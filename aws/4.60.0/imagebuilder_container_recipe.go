@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewImagebuilderContainerRecipe creates a new instance of [ImagebuilderContainerRecipe].
 func NewImagebuilderContainerRecipe(name string, args ImagebuilderContainerRecipeArgs) *ImagebuilderContainerRecipe {
 	return &ImagebuilderContainerRecipe{
 		Args: args,
@@ -19,28 +20,51 @@ func NewImagebuilderContainerRecipe(name string, args ImagebuilderContainerRecip
 
 var _ terra.Resource = (*ImagebuilderContainerRecipe)(nil)
 
+// ImagebuilderContainerRecipe represents the Terraform resource aws_imagebuilder_container_recipe.
 type ImagebuilderContainerRecipe struct {
-	Name  string
-	Args  ImagebuilderContainerRecipeArgs
-	state *imagebuilderContainerRecipeState
+	Name      string
+	Args      ImagebuilderContainerRecipeArgs
+	state     *imagebuilderContainerRecipeState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [ImagebuilderContainerRecipe].
 func (icr *ImagebuilderContainerRecipe) Type() string {
 	return "aws_imagebuilder_container_recipe"
 }
 
+// LocalName returns the local name for [ImagebuilderContainerRecipe].
 func (icr *ImagebuilderContainerRecipe) LocalName() string {
 	return icr.Name
 }
 
+// Configuration returns the configuration (args) for [ImagebuilderContainerRecipe].
 func (icr *ImagebuilderContainerRecipe) Configuration() interface{} {
 	return icr.Args
 }
 
+// DependOn is used for other resources to depend on [ImagebuilderContainerRecipe].
+func (icr *ImagebuilderContainerRecipe) DependOn() terra.Reference {
+	return terra.ReferenceResource(icr)
+}
+
+// Dependencies returns the list of resources [ImagebuilderContainerRecipe] depends_on.
+func (icr *ImagebuilderContainerRecipe) Dependencies() terra.Dependencies {
+	return icr.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [ImagebuilderContainerRecipe].
+func (icr *ImagebuilderContainerRecipe) LifecycleManagement() *terra.Lifecycle {
+	return icr.Lifecycle
+}
+
+// Attributes returns the attributes for [ImagebuilderContainerRecipe].
 func (icr *ImagebuilderContainerRecipe) Attributes() imagebuilderContainerRecipeAttributes {
 	return imagebuilderContainerRecipeAttributes{ref: terra.ReferenceResource(icr)}
 }
 
+// ImportState imports the given attribute values into [ImagebuilderContainerRecipe]'s state.
 func (icr *ImagebuilderContainerRecipe) ImportState(av io.Reader) error {
 	icr.state = &imagebuilderContainerRecipeState{}
 	if err := json.NewDecoder(av).Decode(icr.state); err != nil {
@@ -49,10 +73,12 @@ func (icr *ImagebuilderContainerRecipe) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [ImagebuilderContainerRecipe] has state.
 func (icr *ImagebuilderContainerRecipe) State() (*imagebuilderContainerRecipeState, bool) {
 	return icr.state, icr.state != nil
 }
 
+// StateMust returns the state for [ImagebuilderContainerRecipe]. Panics if the state is nil.
 func (icr *ImagebuilderContainerRecipe) StateMust() *imagebuilderContainerRecipeState {
 	if icr.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", icr.Type(), icr.LocalName()))
@@ -60,10 +86,7 @@ func (icr *ImagebuilderContainerRecipe) StateMust() *imagebuilderContainerRecipe
 	return icr.state
 }
 
-func (icr *ImagebuilderContainerRecipe) DependOn() terra.Reference {
-	return terra.ReferenceResource(icr)
-}
-
+// ImagebuilderContainerRecipeArgs contains the configurations for aws_imagebuilder_container_recipe.
 type ImagebuilderContainerRecipeArgs struct {
 	// ContainerType: string, required
 	ContainerType terra.StringValue `hcl:"container_type,attr" validate:"required"`
@@ -95,91 +118,106 @@ type ImagebuilderContainerRecipeArgs struct {
 	InstanceConfiguration *imagebuildercontainerrecipe.InstanceConfiguration `hcl:"instance_configuration,block"`
 	// TargetRepository: required
 	TargetRepository *imagebuildercontainerrecipe.TargetRepository `hcl:"target_repository,block" validate:"required"`
-	// DependsOn contains resources that ImagebuilderContainerRecipe depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type imagebuilderContainerRecipeAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_imagebuilder_container_recipe.
 func (icr imagebuilderContainerRecipeAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(icr.ref.Append("arn"))
+	return terra.ReferenceAsString(icr.ref.Append("arn"))
 }
 
+// ContainerType returns a reference to field container_type of aws_imagebuilder_container_recipe.
 func (icr imagebuilderContainerRecipeAttributes) ContainerType() terra.StringValue {
-	return terra.ReferenceString(icr.ref.Append("container_type"))
+	return terra.ReferenceAsString(icr.ref.Append("container_type"))
 }
 
+// DateCreated returns a reference to field date_created of aws_imagebuilder_container_recipe.
 func (icr imagebuilderContainerRecipeAttributes) DateCreated() terra.StringValue {
-	return terra.ReferenceString(icr.ref.Append("date_created"))
+	return terra.ReferenceAsString(icr.ref.Append("date_created"))
 }
 
+// Description returns a reference to field description of aws_imagebuilder_container_recipe.
 func (icr imagebuilderContainerRecipeAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(icr.ref.Append("description"))
+	return terra.ReferenceAsString(icr.ref.Append("description"))
 }
 
+// DockerfileTemplateData returns a reference to field dockerfile_template_data of aws_imagebuilder_container_recipe.
 func (icr imagebuilderContainerRecipeAttributes) DockerfileTemplateData() terra.StringValue {
-	return terra.ReferenceString(icr.ref.Append("dockerfile_template_data"))
+	return terra.ReferenceAsString(icr.ref.Append("dockerfile_template_data"))
 }
 
+// DockerfileTemplateUri returns a reference to field dockerfile_template_uri of aws_imagebuilder_container_recipe.
 func (icr imagebuilderContainerRecipeAttributes) DockerfileTemplateUri() terra.StringValue {
-	return terra.ReferenceString(icr.ref.Append("dockerfile_template_uri"))
+	return terra.ReferenceAsString(icr.ref.Append("dockerfile_template_uri"))
 }
 
+// Encrypted returns a reference to field encrypted of aws_imagebuilder_container_recipe.
 func (icr imagebuilderContainerRecipeAttributes) Encrypted() terra.BoolValue {
-	return terra.ReferenceBool(icr.ref.Append("encrypted"))
+	return terra.ReferenceAsBool(icr.ref.Append("encrypted"))
 }
 
+// Id returns a reference to field id of aws_imagebuilder_container_recipe.
 func (icr imagebuilderContainerRecipeAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(icr.ref.Append("id"))
+	return terra.ReferenceAsString(icr.ref.Append("id"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_imagebuilder_container_recipe.
 func (icr imagebuilderContainerRecipeAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(icr.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(icr.ref.Append("kms_key_id"))
 }
 
+// Name returns a reference to field name of aws_imagebuilder_container_recipe.
 func (icr imagebuilderContainerRecipeAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(icr.ref.Append("name"))
+	return terra.ReferenceAsString(icr.ref.Append("name"))
 }
 
+// Owner returns a reference to field owner of aws_imagebuilder_container_recipe.
 func (icr imagebuilderContainerRecipeAttributes) Owner() terra.StringValue {
-	return terra.ReferenceString(icr.ref.Append("owner"))
+	return terra.ReferenceAsString(icr.ref.Append("owner"))
 }
 
+// ParentImage returns a reference to field parent_image of aws_imagebuilder_container_recipe.
 func (icr imagebuilderContainerRecipeAttributes) ParentImage() terra.StringValue {
-	return terra.ReferenceString(icr.ref.Append("parent_image"))
+	return terra.ReferenceAsString(icr.ref.Append("parent_image"))
 }
 
+// Platform returns a reference to field platform of aws_imagebuilder_container_recipe.
 func (icr imagebuilderContainerRecipeAttributes) Platform() terra.StringValue {
-	return terra.ReferenceString(icr.ref.Append("platform"))
+	return terra.ReferenceAsString(icr.ref.Append("platform"))
 }
 
+// Tags returns a reference to field tags of aws_imagebuilder_container_recipe.
 func (icr imagebuilderContainerRecipeAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](icr.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](icr.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_imagebuilder_container_recipe.
 func (icr imagebuilderContainerRecipeAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](icr.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](icr.ref.Append("tags_all"))
 }
 
+// Version returns a reference to field version of aws_imagebuilder_container_recipe.
 func (icr imagebuilderContainerRecipeAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(icr.ref.Append("version"))
+	return terra.ReferenceAsString(icr.ref.Append("version"))
 }
 
+// WorkingDirectory returns a reference to field working_directory of aws_imagebuilder_container_recipe.
 func (icr imagebuilderContainerRecipeAttributes) WorkingDirectory() terra.StringValue {
-	return terra.ReferenceString(icr.ref.Append("working_directory"))
+	return terra.ReferenceAsString(icr.ref.Append("working_directory"))
 }
 
 func (icr imagebuilderContainerRecipeAttributes) Component() terra.ListValue[imagebuildercontainerrecipe.ComponentAttributes] {
-	return terra.ReferenceList[imagebuildercontainerrecipe.ComponentAttributes](icr.ref.Append("component"))
+	return terra.ReferenceAsList[imagebuildercontainerrecipe.ComponentAttributes](icr.ref.Append("component"))
 }
 
 func (icr imagebuilderContainerRecipeAttributes) InstanceConfiguration() terra.ListValue[imagebuildercontainerrecipe.InstanceConfigurationAttributes] {
-	return terra.ReferenceList[imagebuildercontainerrecipe.InstanceConfigurationAttributes](icr.ref.Append("instance_configuration"))
+	return terra.ReferenceAsList[imagebuildercontainerrecipe.InstanceConfigurationAttributes](icr.ref.Append("instance_configuration"))
 }
 
 func (icr imagebuilderContainerRecipeAttributes) TargetRepository() terra.ListValue[imagebuildercontainerrecipe.TargetRepositoryAttributes] {
-	return terra.ReferenceList[imagebuildercontainerrecipe.TargetRepositoryAttributes](icr.ref.Append("target_repository"))
+	return terra.ReferenceAsList[imagebuildercontainerrecipe.TargetRepositoryAttributes](icr.ref.Append("target_repository"))
 }
 
 type imagebuilderContainerRecipeState struct {

@@ -40,19 +40,19 @@ func (pabc PublicAccessBlockConfigurationAttributes) InternalTokens() hclwrite.T
 }
 
 func (pabc PublicAccessBlockConfigurationAttributes) BlockPublicAcls() terra.BoolValue {
-	return terra.ReferenceBool(pabc.ref.Append("block_public_acls"))
+	return terra.ReferenceAsBool(pabc.ref.Append("block_public_acls"))
 }
 
 func (pabc PublicAccessBlockConfigurationAttributes) BlockPublicPolicy() terra.BoolValue {
-	return terra.ReferenceBool(pabc.ref.Append("block_public_policy"))
+	return terra.ReferenceAsBool(pabc.ref.Append("block_public_policy"))
 }
 
 func (pabc PublicAccessBlockConfigurationAttributes) IgnorePublicAcls() terra.BoolValue {
-	return terra.ReferenceBool(pabc.ref.Append("ignore_public_acls"))
+	return terra.ReferenceAsBool(pabc.ref.Append("ignore_public_acls"))
 }
 
 func (pabc PublicAccessBlockConfigurationAttributes) RestrictPublicBuckets() terra.BoolValue {
-	return terra.ReferenceBool(pabc.ref.Append("restrict_public_buckets"))
+	return terra.ReferenceAsBool(pabc.ref.Append("restrict_public_buckets"))
 }
 
 type VpcConfigurationAttributes struct {
@@ -72,7 +72,7 @@ func (vc VpcConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vc VpcConfigurationAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(vc.ref.Append("vpc_id"))
 }
 
 type PublicAccessBlockConfigurationState struct {

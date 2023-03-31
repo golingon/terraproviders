@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataRedshiftserverlessCredentials creates a new instance of [DataRedshiftserverlessCredentials].
 func NewDataRedshiftserverlessCredentials(name string, args DataRedshiftserverlessCredentialsArgs) *DataRedshiftserverlessCredentials {
 	return &DataRedshiftserverlessCredentials{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataRedshiftserverlessCredentials(name string, args DataRedshiftserverle
 
 var _ terra.DataResource = (*DataRedshiftserverlessCredentials)(nil)
 
+// DataRedshiftserverlessCredentials represents the Terraform data resource aws_redshiftserverless_credentials.
 type DataRedshiftserverlessCredentials struct {
 	Name string
 	Args DataRedshiftserverlessCredentialsArgs
 }
 
+// DataSource returns the Terraform object type for [DataRedshiftserverlessCredentials].
 func (rc *DataRedshiftserverlessCredentials) DataSource() string {
 	return "aws_redshiftserverless_credentials"
 }
 
+// LocalName returns the local name for [DataRedshiftserverlessCredentials].
 func (rc *DataRedshiftserverlessCredentials) LocalName() string {
 	return rc.Name
 }
 
+// Configuration returns the configuration (args) for [DataRedshiftserverlessCredentials].
 func (rc *DataRedshiftserverlessCredentials) Configuration() interface{} {
 	return rc.Args
 }
 
+// Attributes returns the attributes for [DataRedshiftserverlessCredentials].
 func (rc *DataRedshiftserverlessCredentials) Attributes() dataRedshiftserverlessCredentialsAttributes {
 	return dataRedshiftserverlessCredentialsAttributes{ref: terra.ReferenceDataResource(rc)}
 }
 
+// DataRedshiftserverlessCredentialsArgs contains the configurations for aws_redshiftserverless_credentials.
 type DataRedshiftserverlessCredentialsArgs struct {
 	// DbName: string, optional
 	DbName terra.StringValue `hcl:"db_name,attr"`
@@ -48,30 +55,37 @@ type dataRedshiftserverlessCredentialsAttributes struct {
 	ref terra.Reference
 }
 
+// DbName returns a reference to field db_name of aws_redshiftserverless_credentials.
 func (rc dataRedshiftserverlessCredentialsAttributes) DbName() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("db_name"))
+	return terra.ReferenceAsString(rc.ref.Append("db_name"))
 }
 
+// DbPassword returns a reference to field db_password of aws_redshiftserverless_credentials.
 func (rc dataRedshiftserverlessCredentialsAttributes) DbPassword() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("db_password"))
+	return terra.ReferenceAsString(rc.ref.Append("db_password"))
 }
 
+// DbUser returns a reference to field db_user of aws_redshiftserverless_credentials.
 func (rc dataRedshiftserverlessCredentialsAttributes) DbUser() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("db_user"))
+	return terra.ReferenceAsString(rc.ref.Append("db_user"))
 }
 
+// DurationSeconds returns a reference to field duration_seconds of aws_redshiftserverless_credentials.
 func (rc dataRedshiftserverlessCredentialsAttributes) DurationSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(rc.ref.Append("duration_seconds"))
+	return terra.ReferenceAsNumber(rc.ref.Append("duration_seconds"))
 }
 
+// Expiration returns a reference to field expiration of aws_redshiftserverless_credentials.
 func (rc dataRedshiftserverlessCredentialsAttributes) Expiration() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("expiration"))
+	return terra.ReferenceAsString(rc.ref.Append("expiration"))
 }
 
+// Id returns a reference to field id of aws_redshiftserverless_credentials.
 func (rc dataRedshiftserverlessCredentialsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("id"))
+	return terra.ReferenceAsString(rc.ref.Append("id"))
 }
 
+// WorkgroupName returns a reference to field workgroup_name of aws_redshiftserverless_credentials.
 func (rc dataRedshiftserverlessCredentialsAttributes) WorkgroupName() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("workgroup_name"))
+	return terra.ReferenceAsString(rc.ref.Append("workgroup_name"))
 }

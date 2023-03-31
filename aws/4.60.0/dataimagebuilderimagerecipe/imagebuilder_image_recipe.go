@@ -38,19 +38,19 @@ func (bdm BlockDeviceMappingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (bdm BlockDeviceMappingAttributes) DeviceName() terra.StringValue {
-	return terra.ReferenceString(bdm.ref.Append("device_name"))
+	return terra.ReferenceAsString(bdm.ref.Append("device_name"))
 }
 
 func (bdm BlockDeviceMappingAttributes) NoDevice() terra.StringValue {
-	return terra.ReferenceString(bdm.ref.Append("no_device"))
+	return terra.ReferenceAsString(bdm.ref.Append("no_device"))
 }
 
 func (bdm BlockDeviceMappingAttributes) VirtualName() terra.StringValue {
-	return terra.ReferenceString(bdm.ref.Append("virtual_name"))
+	return terra.ReferenceAsString(bdm.ref.Append("virtual_name"))
 }
 
 func (bdm BlockDeviceMappingAttributes) Ebs() terra.ListValue[EbsAttributes] {
-	return terra.ReferenceList[EbsAttributes](bdm.ref.Append("ebs"))
+	return terra.ReferenceAsList[EbsAttributes](bdm.ref.Append("ebs"))
 }
 
 type EbsAttributes struct {
@@ -70,35 +70,35 @@ func (e EbsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e EbsAttributes) DeleteOnTermination() terra.BoolValue {
-	return terra.ReferenceBool(e.ref.Append("delete_on_termination"))
+	return terra.ReferenceAsBool(e.ref.Append("delete_on_termination"))
 }
 
 func (e EbsAttributes) Encrypted() terra.BoolValue {
-	return terra.ReferenceBool(e.ref.Append("encrypted"))
+	return terra.ReferenceAsBool(e.ref.Append("encrypted"))
 }
 
 func (e EbsAttributes) Iops() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("iops"))
+	return terra.ReferenceAsNumber(e.ref.Append("iops"))
 }
 
 func (e EbsAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(e.ref.Append("kms_key_id"))
 }
 
 func (e EbsAttributes) SnapshotId() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("snapshot_id"))
+	return terra.ReferenceAsString(e.ref.Append("snapshot_id"))
 }
 
 func (e EbsAttributes) Throughput() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("throughput"))
+	return terra.ReferenceAsNumber(e.ref.Append("throughput"))
 }
 
 func (e EbsAttributes) VolumeSize() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("volume_size"))
+	return terra.ReferenceAsNumber(e.ref.Append("volume_size"))
 }
 
 func (e EbsAttributes) VolumeType() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("volume_type"))
+	return terra.ReferenceAsString(e.ref.Append("volume_type"))
 }
 
 type ComponentAttributes struct {
@@ -118,11 +118,11 @@ func (c ComponentAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ComponentAttributes) ComponentArn() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("component_arn"))
+	return terra.ReferenceAsString(c.ref.Append("component_arn"))
 }
 
 func (c ComponentAttributes) Parameter() terra.SetValue[ParameterAttributes] {
-	return terra.ReferenceSet[ParameterAttributes](c.ref.Append("parameter"))
+	return terra.ReferenceAsSet[ParameterAttributes](c.ref.Append("parameter"))
 }
 
 type ParameterAttributes struct {
@@ -142,11 +142,11 @@ func (p ParameterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p ParameterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("name"))
+	return terra.ReferenceAsString(p.ref.Append("name"))
 }
 
 func (p ParameterAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("value"))
+	return terra.ReferenceAsString(p.ref.Append("value"))
 }
 
 type BlockDeviceMappingState struct {

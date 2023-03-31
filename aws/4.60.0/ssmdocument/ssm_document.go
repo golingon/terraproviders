@@ -35,19 +35,19 @@ func (p ParameterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p ParameterAttributes) DefaultValue() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("default_value"))
+	return terra.ReferenceAsString(p.ref.Append("default_value"))
 }
 
 func (p ParameterAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("description"))
+	return terra.ReferenceAsString(p.ref.Append("description"))
 }
 
 func (p ParameterAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("name"))
+	return terra.ReferenceAsString(p.ref.Append("name"))
 }
 
 func (p ParameterAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("type"))
+	return terra.ReferenceAsString(p.ref.Append("type"))
 }
 
 type AttachmentsSourceAttributes struct {
@@ -67,15 +67,15 @@ func (as AttachmentsSourceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (as AttachmentsSourceAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("key"))
+	return terra.ReferenceAsString(as.ref.Append("key"))
 }
 
 func (as AttachmentsSourceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(as.ref.Append("name"))
+	return terra.ReferenceAsString(as.ref.Append("name"))
 }
 
 func (as AttachmentsSourceAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](as.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](as.ref.Append("values"))
 }
 
 type ParameterState struct {

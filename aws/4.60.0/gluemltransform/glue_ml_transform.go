@@ -55,11 +55,11 @@ func (s SchemaAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SchemaAttributes) DataType() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("data_type"))
+	return terra.ReferenceAsString(s.ref.Append("data_type"))
 }
 
 func (s SchemaAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("name"))
+	return terra.ReferenceAsString(s.ref.Append("name"))
 }
 
 type InputRecordTablesAttributes struct {
@@ -79,19 +79,19 @@ func (irt InputRecordTablesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (irt InputRecordTablesAttributes) CatalogId() terra.StringValue {
-	return terra.ReferenceString(irt.ref.Append("catalog_id"))
+	return terra.ReferenceAsString(irt.ref.Append("catalog_id"))
 }
 
 func (irt InputRecordTablesAttributes) ConnectionName() terra.StringValue {
-	return terra.ReferenceString(irt.ref.Append("connection_name"))
+	return terra.ReferenceAsString(irt.ref.Append("connection_name"))
 }
 
 func (irt InputRecordTablesAttributes) DatabaseName() terra.StringValue {
-	return terra.ReferenceString(irt.ref.Append("database_name"))
+	return terra.ReferenceAsString(irt.ref.Append("database_name"))
 }
 
 func (irt InputRecordTablesAttributes) TableName() terra.StringValue {
-	return terra.ReferenceString(irt.ref.Append("table_name"))
+	return terra.ReferenceAsString(irt.ref.Append("table_name"))
 }
 
 type ParametersAttributes struct {
@@ -111,11 +111,11 @@ func (p ParametersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p ParametersAttributes) TransformType() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("transform_type"))
+	return terra.ReferenceAsString(p.ref.Append("transform_type"))
 }
 
 func (p ParametersAttributes) FindMatchesParameters() terra.ListValue[FindMatchesParametersAttributes] {
-	return terra.ReferenceList[FindMatchesParametersAttributes](p.ref.Append("find_matches_parameters"))
+	return terra.ReferenceAsList[FindMatchesParametersAttributes](p.ref.Append("find_matches_parameters"))
 }
 
 type FindMatchesParametersAttributes struct {
@@ -135,19 +135,19 @@ func (fmp FindMatchesParametersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fmp FindMatchesParametersAttributes) AccuracyCostTradeOff() terra.NumberValue {
-	return terra.ReferenceNumber(fmp.ref.Append("accuracy_cost_trade_off"))
+	return terra.ReferenceAsNumber(fmp.ref.Append("accuracy_cost_trade_off"))
 }
 
 func (fmp FindMatchesParametersAttributes) EnforceProvidedLabels() terra.BoolValue {
-	return terra.ReferenceBool(fmp.ref.Append("enforce_provided_labels"))
+	return terra.ReferenceAsBool(fmp.ref.Append("enforce_provided_labels"))
 }
 
 func (fmp FindMatchesParametersAttributes) PrecisionRecallTradeOff() terra.NumberValue {
-	return terra.ReferenceNumber(fmp.ref.Append("precision_recall_trade_off"))
+	return terra.ReferenceAsNumber(fmp.ref.Append("precision_recall_trade_off"))
 }
 
 func (fmp FindMatchesParametersAttributes) PrimaryKeyColumnName() terra.StringValue {
-	return terra.ReferenceString(fmp.ref.Append("primary_key_column_name"))
+	return terra.ReferenceAsString(fmp.ref.Append("primary_key_column_name"))
 }
 
 type SchemaState struct {

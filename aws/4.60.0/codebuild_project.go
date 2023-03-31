@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCodebuildProject creates a new instance of [CodebuildProject].
 func NewCodebuildProject(name string, args CodebuildProjectArgs) *CodebuildProject {
 	return &CodebuildProject{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCodebuildProject(name string, args CodebuildProjectArgs) *CodebuildProje
 
 var _ terra.Resource = (*CodebuildProject)(nil)
 
+// CodebuildProject represents the Terraform resource aws_codebuild_project.
 type CodebuildProject struct {
-	Name  string
-	Args  CodebuildProjectArgs
-	state *codebuildProjectState
+	Name      string
+	Args      CodebuildProjectArgs
+	state     *codebuildProjectState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CodebuildProject].
 func (cp *CodebuildProject) Type() string {
 	return "aws_codebuild_project"
 }
 
+// LocalName returns the local name for [CodebuildProject].
 func (cp *CodebuildProject) LocalName() string {
 	return cp.Name
 }
 
+// Configuration returns the configuration (args) for [CodebuildProject].
 func (cp *CodebuildProject) Configuration() interface{} {
 	return cp.Args
 }
 
+// DependOn is used for other resources to depend on [CodebuildProject].
+func (cp *CodebuildProject) DependOn() terra.Reference {
+	return terra.ReferenceResource(cp)
+}
+
+// Dependencies returns the list of resources [CodebuildProject] depends_on.
+func (cp *CodebuildProject) Dependencies() terra.Dependencies {
+	return cp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CodebuildProject].
+func (cp *CodebuildProject) LifecycleManagement() *terra.Lifecycle {
+	return cp.Lifecycle
+}
+
+// Attributes returns the attributes for [CodebuildProject].
 func (cp *CodebuildProject) Attributes() codebuildProjectAttributes {
 	return codebuildProjectAttributes{ref: terra.ReferenceResource(cp)}
 }
 
+// ImportState imports the given attribute values into [CodebuildProject]'s state.
 func (cp *CodebuildProject) ImportState(av io.Reader) error {
 	cp.state = &codebuildProjectState{}
 	if err := json.NewDecoder(av).Decode(cp.state); err != nil {
@@ -49,10 +73,12 @@ func (cp *CodebuildProject) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CodebuildProject] has state.
 func (cp *CodebuildProject) State() (*codebuildProjectState, bool) {
 	return cp.state, cp.state != nil
 }
 
+// StateMust returns the state for [CodebuildProject]. Panics if the state is nil.
 func (cp *CodebuildProject) StateMust() *codebuildProjectState {
 	if cp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cp.Type(), cp.LocalName()))
@@ -60,10 +86,7 @@ func (cp *CodebuildProject) StateMust() *codebuildProjectState {
 	return cp.state
 }
 
-func (cp *CodebuildProject) DependOn() terra.Reference {
-	return terra.ReferenceResource(cp)
-}
-
+// CodebuildProjectArgs contains the configurations for aws_codebuild_project.
 type CodebuildProjectArgs struct {
 	// BadgeEnabled: bool, optional
 	BadgeEnabled terra.BoolValue `hcl:"badge_enabled,attr"`
@@ -115,123 +138,138 @@ type CodebuildProjectArgs struct {
 	Source *codebuildproject.Source `hcl:"source,block" validate:"required"`
 	// VpcConfig: optional
 	VpcConfig *codebuildproject.VpcConfig `hcl:"vpc_config,block"`
-	// DependsOn contains resources that CodebuildProject depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type codebuildProjectAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_codebuild_project.
 func (cp codebuildProjectAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("arn"))
+	return terra.ReferenceAsString(cp.ref.Append("arn"))
 }
 
+// BadgeEnabled returns a reference to field badge_enabled of aws_codebuild_project.
 func (cp codebuildProjectAttributes) BadgeEnabled() terra.BoolValue {
-	return terra.ReferenceBool(cp.ref.Append("badge_enabled"))
+	return terra.ReferenceAsBool(cp.ref.Append("badge_enabled"))
 }
 
+// BadgeUrl returns a reference to field badge_url of aws_codebuild_project.
 func (cp codebuildProjectAttributes) BadgeUrl() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("badge_url"))
+	return terra.ReferenceAsString(cp.ref.Append("badge_url"))
 }
 
+// BuildTimeout returns a reference to field build_timeout of aws_codebuild_project.
 func (cp codebuildProjectAttributes) BuildTimeout() terra.NumberValue {
-	return terra.ReferenceNumber(cp.ref.Append("build_timeout"))
+	return terra.ReferenceAsNumber(cp.ref.Append("build_timeout"))
 }
 
+// ConcurrentBuildLimit returns a reference to field concurrent_build_limit of aws_codebuild_project.
 func (cp codebuildProjectAttributes) ConcurrentBuildLimit() terra.NumberValue {
-	return terra.ReferenceNumber(cp.ref.Append("concurrent_build_limit"))
+	return terra.ReferenceAsNumber(cp.ref.Append("concurrent_build_limit"))
 }
 
+// Description returns a reference to field description of aws_codebuild_project.
 func (cp codebuildProjectAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("description"))
+	return terra.ReferenceAsString(cp.ref.Append("description"))
 }
 
+// EncryptionKey returns a reference to field encryption_key of aws_codebuild_project.
 func (cp codebuildProjectAttributes) EncryptionKey() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("encryption_key"))
+	return terra.ReferenceAsString(cp.ref.Append("encryption_key"))
 }
 
+// Id returns a reference to field id of aws_codebuild_project.
 func (cp codebuildProjectAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("id"))
+	return terra.ReferenceAsString(cp.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_codebuild_project.
 func (cp codebuildProjectAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("name"))
+	return terra.ReferenceAsString(cp.ref.Append("name"))
 }
 
+// ProjectVisibility returns a reference to field project_visibility of aws_codebuild_project.
 func (cp codebuildProjectAttributes) ProjectVisibility() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("project_visibility"))
+	return terra.ReferenceAsString(cp.ref.Append("project_visibility"))
 }
 
+// PublicProjectAlias returns a reference to field public_project_alias of aws_codebuild_project.
 func (cp codebuildProjectAttributes) PublicProjectAlias() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("public_project_alias"))
+	return terra.ReferenceAsString(cp.ref.Append("public_project_alias"))
 }
 
+// QueuedTimeout returns a reference to field queued_timeout of aws_codebuild_project.
 func (cp codebuildProjectAttributes) QueuedTimeout() terra.NumberValue {
-	return terra.ReferenceNumber(cp.ref.Append("queued_timeout"))
+	return terra.ReferenceAsNumber(cp.ref.Append("queued_timeout"))
 }
 
+// ResourceAccessRole returns a reference to field resource_access_role of aws_codebuild_project.
 func (cp codebuildProjectAttributes) ResourceAccessRole() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("resource_access_role"))
+	return terra.ReferenceAsString(cp.ref.Append("resource_access_role"))
 }
 
+// ServiceRole returns a reference to field service_role of aws_codebuild_project.
 func (cp codebuildProjectAttributes) ServiceRole() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("service_role"))
+	return terra.ReferenceAsString(cp.ref.Append("service_role"))
 }
 
+// SourceVersion returns a reference to field source_version of aws_codebuild_project.
 func (cp codebuildProjectAttributes) SourceVersion() terra.StringValue {
-	return terra.ReferenceString(cp.ref.Append("source_version"))
+	return terra.ReferenceAsString(cp.ref.Append("source_version"))
 }
 
+// Tags returns a reference to field tags of aws_codebuild_project.
 func (cp codebuildProjectAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cp.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](cp.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_codebuild_project.
 func (cp codebuildProjectAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](cp.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](cp.ref.Append("tags_all"))
 }
 
 func (cp codebuildProjectAttributes) Artifacts() terra.ListValue[codebuildproject.ArtifactsAttributes] {
-	return terra.ReferenceList[codebuildproject.ArtifactsAttributes](cp.ref.Append("artifacts"))
+	return terra.ReferenceAsList[codebuildproject.ArtifactsAttributes](cp.ref.Append("artifacts"))
 }
 
 func (cp codebuildProjectAttributes) BuildBatchConfig() terra.ListValue[codebuildproject.BuildBatchConfigAttributes] {
-	return terra.ReferenceList[codebuildproject.BuildBatchConfigAttributes](cp.ref.Append("build_batch_config"))
+	return terra.ReferenceAsList[codebuildproject.BuildBatchConfigAttributes](cp.ref.Append("build_batch_config"))
 }
 
 func (cp codebuildProjectAttributes) Cache() terra.ListValue[codebuildproject.CacheAttributes] {
-	return terra.ReferenceList[codebuildproject.CacheAttributes](cp.ref.Append("cache"))
+	return terra.ReferenceAsList[codebuildproject.CacheAttributes](cp.ref.Append("cache"))
 }
 
 func (cp codebuildProjectAttributes) Environment() terra.ListValue[codebuildproject.EnvironmentAttributes] {
-	return terra.ReferenceList[codebuildproject.EnvironmentAttributes](cp.ref.Append("environment"))
+	return terra.ReferenceAsList[codebuildproject.EnvironmentAttributes](cp.ref.Append("environment"))
 }
 
 func (cp codebuildProjectAttributes) FileSystemLocations() terra.SetValue[codebuildproject.FileSystemLocationsAttributes] {
-	return terra.ReferenceSet[codebuildproject.FileSystemLocationsAttributes](cp.ref.Append("file_system_locations"))
+	return terra.ReferenceAsSet[codebuildproject.FileSystemLocationsAttributes](cp.ref.Append("file_system_locations"))
 }
 
 func (cp codebuildProjectAttributes) LogsConfig() terra.ListValue[codebuildproject.LogsConfigAttributes] {
-	return terra.ReferenceList[codebuildproject.LogsConfigAttributes](cp.ref.Append("logs_config"))
+	return terra.ReferenceAsList[codebuildproject.LogsConfigAttributes](cp.ref.Append("logs_config"))
 }
 
 func (cp codebuildProjectAttributes) SecondaryArtifacts() terra.SetValue[codebuildproject.SecondaryArtifactsAttributes] {
-	return terra.ReferenceSet[codebuildproject.SecondaryArtifactsAttributes](cp.ref.Append("secondary_artifacts"))
+	return terra.ReferenceAsSet[codebuildproject.SecondaryArtifactsAttributes](cp.ref.Append("secondary_artifacts"))
 }
 
 func (cp codebuildProjectAttributes) SecondarySourceVersion() terra.SetValue[codebuildproject.SecondarySourceVersionAttributes] {
-	return terra.ReferenceSet[codebuildproject.SecondarySourceVersionAttributes](cp.ref.Append("secondary_source_version"))
+	return terra.ReferenceAsSet[codebuildproject.SecondarySourceVersionAttributes](cp.ref.Append("secondary_source_version"))
 }
 
 func (cp codebuildProjectAttributes) SecondarySources() terra.SetValue[codebuildproject.SecondarySourcesAttributes] {
-	return terra.ReferenceSet[codebuildproject.SecondarySourcesAttributes](cp.ref.Append("secondary_sources"))
+	return terra.ReferenceAsSet[codebuildproject.SecondarySourcesAttributes](cp.ref.Append("secondary_sources"))
 }
 
 func (cp codebuildProjectAttributes) Source() terra.ListValue[codebuildproject.SourceAttributes] {
-	return terra.ReferenceList[codebuildproject.SourceAttributes](cp.ref.Append("source"))
+	return terra.ReferenceAsList[codebuildproject.SourceAttributes](cp.ref.Append("source"))
 }
 
 func (cp codebuildProjectAttributes) VpcConfig() terra.ListValue[codebuildproject.VpcConfigAttributes] {
-	return terra.ReferenceList[codebuildproject.VpcConfigAttributes](cp.ref.Append("vpc_config"))
+	return terra.ReferenceAsList[codebuildproject.VpcConfigAttributes](cp.ref.Append("vpc_config"))
 }
 
 type codebuildProjectState struct {

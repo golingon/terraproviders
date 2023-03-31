@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewAmiCopy creates a new instance of [AmiCopy].
 func NewAmiCopy(name string, args AmiCopyArgs) *AmiCopy {
 	return &AmiCopy{
 		Args: args,
@@ -19,28 +20,51 @@ func NewAmiCopy(name string, args AmiCopyArgs) *AmiCopy {
 
 var _ terra.Resource = (*AmiCopy)(nil)
 
+// AmiCopy represents the Terraform resource aws_ami_copy.
 type AmiCopy struct {
-	Name  string
-	Args  AmiCopyArgs
-	state *amiCopyState
+	Name      string
+	Args      AmiCopyArgs
+	state     *amiCopyState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [AmiCopy].
 func (ac *AmiCopy) Type() string {
 	return "aws_ami_copy"
 }
 
+// LocalName returns the local name for [AmiCopy].
 func (ac *AmiCopy) LocalName() string {
 	return ac.Name
 }
 
+// Configuration returns the configuration (args) for [AmiCopy].
 func (ac *AmiCopy) Configuration() interface{} {
 	return ac.Args
 }
 
+// DependOn is used for other resources to depend on [AmiCopy].
+func (ac *AmiCopy) DependOn() terra.Reference {
+	return terra.ReferenceResource(ac)
+}
+
+// Dependencies returns the list of resources [AmiCopy] depends_on.
+func (ac *AmiCopy) Dependencies() terra.Dependencies {
+	return ac.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [AmiCopy].
+func (ac *AmiCopy) LifecycleManagement() *terra.Lifecycle {
+	return ac.Lifecycle
+}
+
+// Attributes returns the attributes for [AmiCopy].
 func (ac *AmiCopy) Attributes() amiCopyAttributes {
 	return amiCopyAttributes{ref: terra.ReferenceResource(ac)}
 }
 
+// ImportState imports the given attribute values into [AmiCopy]'s state.
 func (ac *AmiCopy) ImportState(av io.Reader) error {
 	ac.state = &amiCopyState{}
 	if err := json.NewDecoder(av).Decode(ac.state); err != nil {
@@ -49,10 +73,12 @@ func (ac *AmiCopy) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [AmiCopy] has state.
 func (ac *AmiCopy) State() (*amiCopyState, bool) {
 	return ac.state, ac.state != nil
 }
 
+// StateMust returns the state for [AmiCopy]. Panics if the state is nil.
 func (ac *AmiCopy) StateMust() *amiCopyState {
 	if ac.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ac.Type(), ac.LocalName()))
@@ -60,10 +86,7 @@ func (ac *AmiCopy) StateMust() *amiCopyState {
 	return ac.state
 }
 
-func (ac *AmiCopy) DependOn() terra.Reference {
-	return terra.ReferenceResource(ac)
-}
-
+// AmiCopyArgs contains the configurations for aws_ami_copy.
 type AmiCopyArgs struct {
 	// DeprecationTime: string, optional
 	DeprecationTime terra.StringValue `hcl:"deprecation_time,attr"`
@@ -93,155 +116,186 @@ type AmiCopyArgs struct {
 	EphemeralBlockDevice []amicopy.EphemeralBlockDevice `hcl:"ephemeral_block_device,block" validate:"min=0"`
 	// Timeouts: optional
 	Timeouts *amicopy.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that AmiCopy depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type amiCopyAttributes struct {
 	ref terra.Reference
 }
 
+// Architecture returns a reference to field architecture of aws_ami_copy.
 func (ac amiCopyAttributes) Architecture() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("architecture"))
+	return terra.ReferenceAsString(ac.ref.Append("architecture"))
 }
 
+// Arn returns a reference to field arn of aws_ami_copy.
 func (ac amiCopyAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("arn"))
+	return terra.ReferenceAsString(ac.ref.Append("arn"))
 }
 
+// BootMode returns a reference to field boot_mode of aws_ami_copy.
 func (ac amiCopyAttributes) BootMode() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("boot_mode"))
+	return terra.ReferenceAsString(ac.ref.Append("boot_mode"))
 }
 
+// DeprecationTime returns a reference to field deprecation_time of aws_ami_copy.
 func (ac amiCopyAttributes) DeprecationTime() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("deprecation_time"))
+	return terra.ReferenceAsString(ac.ref.Append("deprecation_time"))
 }
 
+// Description returns a reference to field description of aws_ami_copy.
 func (ac amiCopyAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("description"))
+	return terra.ReferenceAsString(ac.ref.Append("description"))
 }
 
+// DestinationOutpostArn returns a reference to field destination_outpost_arn of aws_ami_copy.
 func (ac amiCopyAttributes) DestinationOutpostArn() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("destination_outpost_arn"))
+	return terra.ReferenceAsString(ac.ref.Append("destination_outpost_arn"))
 }
 
+// EnaSupport returns a reference to field ena_support of aws_ami_copy.
 func (ac amiCopyAttributes) EnaSupport() terra.BoolValue {
-	return terra.ReferenceBool(ac.ref.Append("ena_support"))
+	return terra.ReferenceAsBool(ac.ref.Append("ena_support"))
 }
 
+// Encrypted returns a reference to field encrypted of aws_ami_copy.
 func (ac amiCopyAttributes) Encrypted() terra.BoolValue {
-	return terra.ReferenceBool(ac.ref.Append("encrypted"))
+	return terra.ReferenceAsBool(ac.ref.Append("encrypted"))
 }
 
+// Hypervisor returns a reference to field hypervisor of aws_ami_copy.
 func (ac amiCopyAttributes) Hypervisor() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("hypervisor"))
+	return terra.ReferenceAsString(ac.ref.Append("hypervisor"))
 }
 
+// Id returns a reference to field id of aws_ami_copy.
 func (ac amiCopyAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("id"))
+	return terra.ReferenceAsString(ac.ref.Append("id"))
 }
 
+// ImageLocation returns a reference to field image_location of aws_ami_copy.
 func (ac amiCopyAttributes) ImageLocation() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("image_location"))
+	return terra.ReferenceAsString(ac.ref.Append("image_location"))
 }
 
+// ImageOwnerAlias returns a reference to field image_owner_alias of aws_ami_copy.
 func (ac amiCopyAttributes) ImageOwnerAlias() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("image_owner_alias"))
+	return terra.ReferenceAsString(ac.ref.Append("image_owner_alias"))
 }
 
+// ImageType returns a reference to field image_type of aws_ami_copy.
 func (ac amiCopyAttributes) ImageType() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("image_type"))
+	return terra.ReferenceAsString(ac.ref.Append("image_type"))
 }
 
+// ImdsSupport returns a reference to field imds_support of aws_ami_copy.
 func (ac amiCopyAttributes) ImdsSupport() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("imds_support"))
+	return terra.ReferenceAsString(ac.ref.Append("imds_support"))
 }
 
+// KernelId returns a reference to field kernel_id of aws_ami_copy.
 func (ac amiCopyAttributes) KernelId() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("kernel_id"))
+	return terra.ReferenceAsString(ac.ref.Append("kernel_id"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_ami_copy.
 func (ac amiCopyAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(ac.ref.Append("kms_key_id"))
 }
 
+// ManageEbsSnapshots returns a reference to field manage_ebs_snapshots of aws_ami_copy.
 func (ac amiCopyAttributes) ManageEbsSnapshots() terra.BoolValue {
-	return terra.ReferenceBool(ac.ref.Append("manage_ebs_snapshots"))
+	return terra.ReferenceAsBool(ac.ref.Append("manage_ebs_snapshots"))
 }
 
+// Name returns a reference to field name of aws_ami_copy.
 func (ac amiCopyAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("name"))
+	return terra.ReferenceAsString(ac.ref.Append("name"))
 }
 
+// OwnerId returns a reference to field owner_id of aws_ami_copy.
 func (ac amiCopyAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("owner_id"))
+	return terra.ReferenceAsString(ac.ref.Append("owner_id"))
 }
 
+// Platform returns a reference to field platform of aws_ami_copy.
 func (ac amiCopyAttributes) Platform() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("platform"))
+	return terra.ReferenceAsString(ac.ref.Append("platform"))
 }
 
+// PlatformDetails returns a reference to field platform_details of aws_ami_copy.
 func (ac amiCopyAttributes) PlatformDetails() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("platform_details"))
+	return terra.ReferenceAsString(ac.ref.Append("platform_details"))
 }
 
+// Public returns a reference to field public of aws_ami_copy.
 func (ac amiCopyAttributes) Public() terra.BoolValue {
-	return terra.ReferenceBool(ac.ref.Append("public"))
+	return terra.ReferenceAsBool(ac.ref.Append("public"))
 }
 
+// RamdiskId returns a reference to field ramdisk_id of aws_ami_copy.
 func (ac amiCopyAttributes) RamdiskId() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("ramdisk_id"))
+	return terra.ReferenceAsString(ac.ref.Append("ramdisk_id"))
 }
 
+// RootDeviceName returns a reference to field root_device_name of aws_ami_copy.
 func (ac amiCopyAttributes) RootDeviceName() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("root_device_name"))
+	return terra.ReferenceAsString(ac.ref.Append("root_device_name"))
 }
 
+// RootSnapshotId returns a reference to field root_snapshot_id of aws_ami_copy.
 func (ac amiCopyAttributes) RootSnapshotId() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("root_snapshot_id"))
+	return terra.ReferenceAsString(ac.ref.Append("root_snapshot_id"))
 }
 
+// SourceAmiId returns a reference to field source_ami_id of aws_ami_copy.
 func (ac amiCopyAttributes) SourceAmiId() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("source_ami_id"))
+	return terra.ReferenceAsString(ac.ref.Append("source_ami_id"))
 }
 
+// SourceAmiRegion returns a reference to field source_ami_region of aws_ami_copy.
 func (ac amiCopyAttributes) SourceAmiRegion() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("source_ami_region"))
+	return terra.ReferenceAsString(ac.ref.Append("source_ami_region"))
 }
 
+// SriovNetSupport returns a reference to field sriov_net_support of aws_ami_copy.
 func (ac amiCopyAttributes) SriovNetSupport() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("sriov_net_support"))
+	return terra.ReferenceAsString(ac.ref.Append("sriov_net_support"))
 }
 
+// Tags returns a reference to field tags of aws_ami_copy.
 func (ac amiCopyAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ac.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](ac.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_ami_copy.
 func (ac amiCopyAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](ac.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](ac.ref.Append("tags_all"))
 }
 
+// TpmSupport returns a reference to field tpm_support of aws_ami_copy.
 func (ac amiCopyAttributes) TpmSupport() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("tpm_support"))
+	return terra.ReferenceAsString(ac.ref.Append("tpm_support"))
 }
 
+// UsageOperation returns a reference to field usage_operation of aws_ami_copy.
 func (ac amiCopyAttributes) UsageOperation() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("usage_operation"))
+	return terra.ReferenceAsString(ac.ref.Append("usage_operation"))
 }
 
+// VirtualizationType returns a reference to field virtualization_type of aws_ami_copy.
 func (ac amiCopyAttributes) VirtualizationType() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("virtualization_type"))
+	return terra.ReferenceAsString(ac.ref.Append("virtualization_type"))
 }
 
 func (ac amiCopyAttributes) EbsBlockDevice() terra.SetValue[amicopy.EbsBlockDeviceAttributes] {
-	return terra.ReferenceSet[amicopy.EbsBlockDeviceAttributes](ac.ref.Append("ebs_block_device"))
+	return terra.ReferenceAsSet[amicopy.EbsBlockDeviceAttributes](ac.ref.Append("ebs_block_device"))
 }
 
 func (ac amiCopyAttributes) EphemeralBlockDevice() terra.SetValue[amicopy.EphemeralBlockDeviceAttributes] {
-	return terra.ReferenceSet[amicopy.EphemeralBlockDeviceAttributes](ac.ref.Append("ephemeral_block_device"))
+	return terra.ReferenceAsSet[amicopy.EphemeralBlockDeviceAttributes](ac.ref.Append("ephemeral_block_device"))
 }
 
 func (ac amiCopyAttributes) Timeouts() amicopy.TimeoutsAttributes {
-	return terra.ReferenceSingle[amicopy.TimeoutsAttributes](ac.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[amicopy.TimeoutsAttributes](ac.ref.Append("timeouts"))
 }
 
 type amiCopyState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewVpcDhcpOptionsAssociation creates a new instance of [VpcDhcpOptionsAssociation].
 func NewVpcDhcpOptionsAssociation(name string, args VpcDhcpOptionsAssociationArgs) *VpcDhcpOptionsAssociation {
 	return &VpcDhcpOptionsAssociation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewVpcDhcpOptionsAssociation(name string, args VpcDhcpOptionsAssociationArg
 
 var _ terra.Resource = (*VpcDhcpOptionsAssociation)(nil)
 
+// VpcDhcpOptionsAssociation represents the Terraform resource aws_vpc_dhcp_options_association.
 type VpcDhcpOptionsAssociation struct {
-	Name  string
-	Args  VpcDhcpOptionsAssociationArgs
-	state *vpcDhcpOptionsAssociationState
+	Name      string
+	Args      VpcDhcpOptionsAssociationArgs
+	state     *vpcDhcpOptionsAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VpcDhcpOptionsAssociation].
 func (vdoa *VpcDhcpOptionsAssociation) Type() string {
 	return "aws_vpc_dhcp_options_association"
 }
 
+// LocalName returns the local name for [VpcDhcpOptionsAssociation].
 func (vdoa *VpcDhcpOptionsAssociation) LocalName() string {
 	return vdoa.Name
 }
 
+// Configuration returns the configuration (args) for [VpcDhcpOptionsAssociation].
 func (vdoa *VpcDhcpOptionsAssociation) Configuration() interface{} {
 	return vdoa.Args
 }
 
+// DependOn is used for other resources to depend on [VpcDhcpOptionsAssociation].
+func (vdoa *VpcDhcpOptionsAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(vdoa)
+}
+
+// Dependencies returns the list of resources [VpcDhcpOptionsAssociation] depends_on.
+func (vdoa *VpcDhcpOptionsAssociation) Dependencies() terra.Dependencies {
+	return vdoa.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VpcDhcpOptionsAssociation].
+func (vdoa *VpcDhcpOptionsAssociation) LifecycleManagement() *terra.Lifecycle {
+	return vdoa.Lifecycle
+}
+
+// Attributes returns the attributes for [VpcDhcpOptionsAssociation].
 func (vdoa *VpcDhcpOptionsAssociation) Attributes() vpcDhcpOptionsAssociationAttributes {
 	return vpcDhcpOptionsAssociationAttributes{ref: terra.ReferenceResource(vdoa)}
 }
 
+// ImportState imports the given attribute values into [VpcDhcpOptionsAssociation]'s state.
 func (vdoa *VpcDhcpOptionsAssociation) ImportState(av io.Reader) error {
 	vdoa.state = &vpcDhcpOptionsAssociationState{}
 	if err := json.NewDecoder(av).Decode(vdoa.state); err != nil {
@@ -48,10 +72,12 @@ func (vdoa *VpcDhcpOptionsAssociation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VpcDhcpOptionsAssociation] has state.
 func (vdoa *VpcDhcpOptionsAssociation) State() (*vpcDhcpOptionsAssociationState, bool) {
 	return vdoa.state, vdoa.state != nil
 }
 
+// StateMust returns the state for [VpcDhcpOptionsAssociation]. Panics if the state is nil.
 func (vdoa *VpcDhcpOptionsAssociation) StateMust() *vpcDhcpOptionsAssociationState {
 	if vdoa.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vdoa.Type(), vdoa.LocalName()))
@@ -59,10 +85,7 @@ func (vdoa *VpcDhcpOptionsAssociation) StateMust() *vpcDhcpOptionsAssociationSta
 	return vdoa.state
 }
 
-func (vdoa *VpcDhcpOptionsAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(vdoa)
-}
-
+// VpcDhcpOptionsAssociationArgs contains the configurations for aws_vpc_dhcp_options_association.
 type VpcDhcpOptionsAssociationArgs struct {
 	// DhcpOptionsId: string, required
 	DhcpOptionsId terra.StringValue `hcl:"dhcp_options_id,attr" validate:"required"`
@@ -70,23 +93,24 @@ type VpcDhcpOptionsAssociationArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// VpcId: string, required
 	VpcId terra.StringValue `hcl:"vpc_id,attr" validate:"required"`
-	// DependsOn contains resources that VpcDhcpOptionsAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type vpcDhcpOptionsAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// DhcpOptionsId returns a reference to field dhcp_options_id of aws_vpc_dhcp_options_association.
 func (vdoa vpcDhcpOptionsAssociationAttributes) DhcpOptionsId() terra.StringValue {
-	return terra.ReferenceString(vdoa.ref.Append("dhcp_options_id"))
+	return terra.ReferenceAsString(vdoa.ref.Append("dhcp_options_id"))
 }
 
+// Id returns a reference to field id of aws_vpc_dhcp_options_association.
 func (vdoa vpcDhcpOptionsAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vdoa.ref.Append("id"))
+	return terra.ReferenceAsString(vdoa.ref.Append("id"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_vpc_dhcp_options_association.
 func (vdoa vpcDhcpOptionsAssociationAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(vdoa.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(vdoa.ref.Append("vpc_id"))
 }
 
 type vpcDhcpOptionsAssociationState struct {

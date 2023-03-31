@@ -73,39 +73,39 @@ func (e EgressAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e EgressAttributes) CidrBlocks() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](e.ref.Append("cidr_blocks"))
+	return terra.ReferenceAsList[terra.StringValue](e.ref.Append("cidr_blocks"))
 }
 
 func (e EgressAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("description"))
+	return terra.ReferenceAsString(e.ref.Append("description"))
 }
 
 func (e EgressAttributes) FromPort() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("from_port"))
+	return terra.ReferenceAsNumber(e.ref.Append("from_port"))
 }
 
 func (e EgressAttributes) Ipv6CidrBlocks() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](e.ref.Append("ipv6_cidr_blocks"))
+	return terra.ReferenceAsList[terra.StringValue](e.ref.Append("ipv6_cidr_blocks"))
 }
 
 func (e EgressAttributes) PrefixListIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](e.ref.Append("prefix_list_ids"))
+	return terra.ReferenceAsList[terra.StringValue](e.ref.Append("prefix_list_ids"))
 }
 
 func (e EgressAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("protocol"))
+	return terra.ReferenceAsString(e.ref.Append("protocol"))
 }
 
 func (e EgressAttributes) SecurityGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](e.ref.Append("security_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](e.ref.Append("security_groups"))
 }
 
 func (e EgressAttributes) Self() terra.BoolValue {
-	return terra.ReferenceBool(e.ref.Append("self"))
+	return terra.ReferenceAsBool(e.ref.Append("self"))
 }
 
 func (e EgressAttributes) ToPort() terra.NumberValue {
-	return terra.ReferenceNumber(e.ref.Append("to_port"))
+	return terra.ReferenceAsNumber(e.ref.Append("to_port"))
 }
 
 type IngressAttributes struct {
@@ -125,39 +125,39 @@ func (i IngressAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i IngressAttributes) CidrBlocks() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](i.ref.Append("cidr_blocks"))
+	return terra.ReferenceAsList[terra.StringValue](i.ref.Append("cidr_blocks"))
 }
 
 func (i IngressAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("description"))
+	return terra.ReferenceAsString(i.ref.Append("description"))
 }
 
 func (i IngressAttributes) FromPort() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("from_port"))
+	return terra.ReferenceAsNumber(i.ref.Append("from_port"))
 }
 
 func (i IngressAttributes) Ipv6CidrBlocks() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](i.ref.Append("ipv6_cidr_blocks"))
+	return terra.ReferenceAsList[terra.StringValue](i.ref.Append("ipv6_cidr_blocks"))
 }
 
 func (i IngressAttributes) PrefixListIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](i.ref.Append("prefix_list_ids"))
+	return terra.ReferenceAsList[terra.StringValue](i.ref.Append("prefix_list_ids"))
 }
 
 func (i IngressAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("protocol"))
+	return terra.ReferenceAsString(i.ref.Append("protocol"))
 }
 
 func (i IngressAttributes) SecurityGroups() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](i.ref.Append("security_groups"))
+	return terra.ReferenceAsSet[terra.StringValue](i.ref.Append("security_groups"))
 }
 
 func (i IngressAttributes) Self() terra.BoolValue {
-	return terra.ReferenceBool(i.ref.Append("self"))
+	return terra.ReferenceAsBool(i.ref.Append("self"))
 }
 
 func (i IngressAttributes) ToPort() terra.NumberValue {
-	return terra.ReferenceNumber(i.ref.Append("to_port"))
+	return terra.ReferenceAsNumber(i.ref.Append("to_port"))
 }
 
 type TimeoutsAttributes struct {
@@ -177,11 +177,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type EgressState struct {

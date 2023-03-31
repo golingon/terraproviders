@@ -54,11 +54,11 @@ func (ei ExternalIdsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ei ExternalIdsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ei.ref.Append("id"))
+	return terra.ReferenceAsString(ei.ref.Append("id"))
 }
 
 func (ei ExternalIdsAttributes) Issuer() terra.StringValue {
-	return terra.ReferenceString(ei.ref.Append("issuer"))
+	return terra.ReferenceAsString(ei.ref.Append("issuer"))
 }
 
 type AlternateIdentifierAttributes struct {
@@ -78,11 +78,11 @@ func (ai AlternateIdentifierAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ai AlternateIdentifierAttributes) ExternalId() terra.ListValue[ExternalIdAttributes] {
-	return terra.ReferenceList[ExternalIdAttributes](ai.ref.Append("external_id"))
+	return terra.ReferenceAsList[ExternalIdAttributes](ai.ref.Append("external_id"))
 }
 
 func (ai AlternateIdentifierAttributes) UniqueAttribute() terra.ListValue[UniqueAttributeAttributes] {
-	return terra.ReferenceList[UniqueAttributeAttributes](ai.ref.Append("unique_attribute"))
+	return terra.ReferenceAsList[UniqueAttributeAttributes](ai.ref.Append("unique_attribute"))
 }
 
 type ExternalIdAttributes struct {
@@ -102,11 +102,11 @@ func (ei ExternalIdAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ei ExternalIdAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ei.ref.Append("id"))
+	return terra.ReferenceAsString(ei.ref.Append("id"))
 }
 
 func (ei ExternalIdAttributes) Issuer() terra.StringValue {
-	return terra.ReferenceString(ei.ref.Append("issuer"))
+	return terra.ReferenceAsString(ei.ref.Append("issuer"))
 }
 
 type UniqueAttributeAttributes struct {
@@ -126,11 +126,11 @@ func (ua UniqueAttributeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ua UniqueAttributeAttributes) AttributePath() terra.StringValue {
-	return terra.ReferenceString(ua.ref.Append("attribute_path"))
+	return terra.ReferenceAsString(ua.ref.Append("attribute_path"))
 }
 
 func (ua UniqueAttributeAttributes) AttributeValue() terra.StringValue {
-	return terra.ReferenceString(ua.ref.Append("attribute_value"))
+	return terra.ReferenceAsString(ua.ref.Append("attribute_value"))
 }
 
 type FilterAttributes struct {
@@ -150,11 +150,11 @@ func (f FilterAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (f FilterAttributes) AttributePath() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("attribute_path"))
+	return terra.ReferenceAsString(f.ref.Append("attribute_path"))
 }
 
 func (f FilterAttributes) AttributeValue() terra.StringValue {
-	return terra.ReferenceString(f.ref.Append("attribute_value"))
+	return terra.ReferenceAsString(f.ref.Append("attribute_value"))
 }
 
 type ExternalIdsState struct {

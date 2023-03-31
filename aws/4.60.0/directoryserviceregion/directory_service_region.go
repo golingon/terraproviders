@@ -40,15 +40,15 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type VpcSettingsAttributes struct {
@@ -68,11 +68,11 @@ func (vs VpcSettingsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vs VpcSettingsAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vs.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vs.ref.Append("subnet_ids"))
 }
 
 func (vs VpcSettingsAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(vs.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(vs.ref.Append("vpc_id"))
 }
 
 type TimeoutsState struct {

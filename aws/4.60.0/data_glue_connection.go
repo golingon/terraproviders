@@ -7,6 +7,7 @@ import (
 	"github.com/volvo-cars/lingon/pkg/terra"
 )
 
+// NewDataGlueConnection creates a new instance of [DataGlueConnection].
 func NewDataGlueConnection(name string, args DataGlueConnectionArgs) *DataGlueConnection {
 	return &DataGlueConnection{
 		Args: args,
@@ -16,27 +17,33 @@ func NewDataGlueConnection(name string, args DataGlueConnectionArgs) *DataGlueCo
 
 var _ terra.DataResource = (*DataGlueConnection)(nil)
 
+// DataGlueConnection represents the Terraform data resource aws_glue_connection.
 type DataGlueConnection struct {
 	Name string
 	Args DataGlueConnectionArgs
 }
 
+// DataSource returns the Terraform object type for [DataGlueConnection].
 func (gc *DataGlueConnection) DataSource() string {
 	return "aws_glue_connection"
 }
 
+// LocalName returns the local name for [DataGlueConnection].
 func (gc *DataGlueConnection) LocalName() string {
 	return gc.Name
 }
 
+// Configuration returns the configuration (args) for [DataGlueConnection].
 func (gc *DataGlueConnection) Configuration() interface{} {
 	return gc.Args
 }
 
+// Attributes returns the attributes for [DataGlueConnection].
 func (gc *DataGlueConnection) Attributes() dataGlueConnectionAttributes {
 	return dataGlueConnectionAttributes{ref: terra.ReferenceDataResource(gc)}
 }
 
+// DataGlueConnectionArgs contains the configurations for aws_glue_connection.
 type DataGlueConnectionArgs struct {
 	// Id: string, required
 	Id terra.StringValue `hcl:"id,attr" validate:"required"`
@@ -49,42 +56,51 @@ type dataGlueConnectionAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_glue_connection.
 func (gc dataGlueConnectionAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("arn"))
+	return terra.ReferenceAsString(gc.ref.Append("arn"))
 }
 
+// CatalogId returns a reference to field catalog_id of aws_glue_connection.
 func (gc dataGlueConnectionAttributes) CatalogId() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("catalog_id"))
+	return terra.ReferenceAsString(gc.ref.Append("catalog_id"))
 }
 
+// ConnectionProperties returns a reference to field connection_properties of aws_glue_connection.
 func (gc dataGlueConnectionAttributes) ConnectionProperties() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gc.ref.Append("connection_properties"))
+	return terra.ReferenceAsMap[terra.StringValue](gc.ref.Append("connection_properties"))
 }
 
+// ConnectionType returns a reference to field connection_type of aws_glue_connection.
 func (gc dataGlueConnectionAttributes) ConnectionType() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("connection_type"))
+	return terra.ReferenceAsString(gc.ref.Append("connection_type"))
 }
 
+// Description returns a reference to field description of aws_glue_connection.
 func (gc dataGlueConnectionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("description"))
+	return terra.ReferenceAsString(gc.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_glue_connection.
 func (gc dataGlueConnectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("id"))
+	return terra.ReferenceAsString(gc.ref.Append("id"))
 }
 
+// MatchCriteria returns a reference to field match_criteria of aws_glue_connection.
 func (gc dataGlueConnectionAttributes) MatchCriteria() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](gc.ref.Append("match_criteria"))
+	return terra.ReferenceAsList[terra.StringValue](gc.ref.Append("match_criteria"))
 }
 
+// Name returns a reference to field name of aws_glue_connection.
 func (gc dataGlueConnectionAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(gc.ref.Append("name"))
+	return terra.ReferenceAsString(gc.ref.Append("name"))
 }
 
+// Tags returns a reference to field tags of aws_glue_connection.
 func (gc dataGlueConnectionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](gc.ref.Append("tags"))
 }
 
 func (gc dataGlueConnectionAttributes) PhysicalConnectionRequirements() terra.ListValue[dataglueconnection.PhysicalConnectionRequirementsAttributes] {
-	return terra.ReferenceList[dataglueconnection.PhysicalConnectionRequirementsAttributes](gc.ref.Append("physical_connection_requirements"))
+	return terra.ReferenceAsList[dataglueconnection.PhysicalConnectionRequirementsAttributes](gc.ref.Append("physical_connection_requirements"))
 }

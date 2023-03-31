@@ -49,27 +49,27 @@ func (dnc DomainNameConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dnc DomainNameConfigurationAttributes) CertificateArn() terra.StringValue {
-	return terra.ReferenceString(dnc.ref.Append("certificate_arn"))
+	return terra.ReferenceAsString(dnc.ref.Append("certificate_arn"))
 }
 
 func (dnc DomainNameConfigurationAttributes) EndpointType() terra.StringValue {
-	return terra.ReferenceString(dnc.ref.Append("endpoint_type"))
+	return terra.ReferenceAsString(dnc.ref.Append("endpoint_type"))
 }
 
 func (dnc DomainNameConfigurationAttributes) HostedZoneId() terra.StringValue {
-	return terra.ReferenceString(dnc.ref.Append("hosted_zone_id"))
+	return terra.ReferenceAsString(dnc.ref.Append("hosted_zone_id"))
 }
 
 func (dnc DomainNameConfigurationAttributes) OwnershipVerificationCertificateArn() terra.StringValue {
-	return terra.ReferenceString(dnc.ref.Append("ownership_verification_certificate_arn"))
+	return terra.ReferenceAsString(dnc.ref.Append("ownership_verification_certificate_arn"))
 }
 
 func (dnc DomainNameConfigurationAttributes) SecurityPolicy() terra.StringValue {
-	return terra.ReferenceString(dnc.ref.Append("security_policy"))
+	return terra.ReferenceAsString(dnc.ref.Append("security_policy"))
 }
 
 func (dnc DomainNameConfigurationAttributes) TargetDomainName() terra.StringValue {
-	return terra.ReferenceString(dnc.ref.Append("target_domain_name"))
+	return terra.ReferenceAsString(dnc.ref.Append("target_domain_name"))
 }
 
 type MutualTlsAuthenticationAttributes struct {
@@ -89,11 +89,11 @@ func (mta MutualTlsAuthenticationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mta MutualTlsAuthenticationAttributes) TruststoreUri() terra.StringValue {
-	return terra.ReferenceString(mta.ref.Append("truststore_uri"))
+	return terra.ReferenceAsString(mta.ref.Append("truststore_uri"))
 }
 
 func (mta MutualTlsAuthenticationAttributes) TruststoreVersion() terra.StringValue {
-	return terra.ReferenceString(mta.ref.Append("truststore_version"))
+	return terra.ReferenceAsString(mta.ref.Append("truststore_version"))
 }
 
 type TimeoutsAttributes struct {
@@ -113,11 +113,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type DomainNameConfigurationState struct {

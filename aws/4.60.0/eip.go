@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewEip creates a new instance of [Eip].
 func NewEip(name string, args EipArgs) *Eip {
 	return &Eip{
 		Args: args,
@@ -19,28 +20,51 @@ func NewEip(name string, args EipArgs) *Eip {
 
 var _ terra.Resource = (*Eip)(nil)
 
+// Eip represents the Terraform resource aws_eip.
 type Eip struct {
-	Name  string
-	Args  EipArgs
-	state *eipState
+	Name      string
+	Args      EipArgs
+	state     *eipState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Eip].
 func (e *Eip) Type() string {
 	return "aws_eip"
 }
 
+// LocalName returns the local name for [Eip].
 func (e *Eip) LocalName() string {
 	return e.Name
 }
 
+// Configuration returns the configuration (args) for [Eip].
 func (e *Eip) Configuration() interface{} {
 	return e.Args
 }
 
+// DependOn is used for other resources to depend on [Eip].
+func (e *Eip) DependOn() terra.Reference {
+	return terra.ReferenceResource(e)
+}
+
+// Dependencies returns the list of resources [Eip] depends_on.
+func (e *Eip) Dependencies() terra.Dependencies {
+	return e.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Eip].
+func (e *Eip) LifecycleManagement() *terra.Lifecycle {
+	return e.Lifecycle
+}
+
+// Attributes returns the attributes for [Eip].
 func (e *Eip) Attributes() eipAttributes {
 	return eipAttributes{ref: terra.ReferenceResource(e)}
 }
 
+// ImportState imports the given attribute values into [Eip]'s state.
 func (e *Eip) ImportState(av io.Reader) error {
 	e.state = &eipState{}
 	if err := json.NewDecoder(av).Decode(e.state); err != nil {
@@ -49,10 +73,12 @@ func (e *Eip) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Eip] has state.
 func (e *Eip) State() (*eipState, bool) {
 	return e.state, e.state != nil
 }
 
+// StateMust returns the state for [Eip]. Panics if the state is nil.
 func (e *Eip) StateMust() *eipState {
 	if e.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", e.Type(), e.LocalName()))
@@ -60,10 +86,7 @@ func (e *Eip) StateMust() *eipState {
 	return e.state
 }
 
-func (e *Eip) DependOn() terra.Reference {
-	return terra.ReferenceResource(e)
-}
-
+// EipArgs contains the configurations for aws_eip.
 type EipArgs struct {
 	// Address: string, optional
 	Address terra.StringValue `hcl:"address,attr"`
@@ -89,95 +112,113 @@ type EipArgs struct {
 	Vpc terra.BoolValue `hcl:"vpc,attr"`
 	// Timeouts: optional
 	Timeouts *eip.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that Eip depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type eipAttributes struct {
 	ref terra.Reference
 }
 
+// Address returns a reference to field address of aws_eip.
 func (e eipAttributes) Address() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("address"))
+	return terra.ReferenceAsString(e.ref.Append("address"))
 }
 
+// AllocationId returns a reference to field allocation_id of aws_eip.
 func (e eipAttributes) AllocationId() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("allocation_id"))
+	return terra.ReferenceAsString(e.ref.Append("allocation_id"))
 }
 
+// AssociateWithPrivateIp returns a reference to field associate_with_private_ip of aws_eip.
 func (e eipAttributes) AssociateWithPrivateIp() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("associate_with_private_ip"))
+	return terra.ReferenceAsString(e.ref.Append("associate_with_private_ip"))
 }
 
+// AssociationId returns a reference to field association_id of aws_eip.
 func (e eipAttributes) AssociationId() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("association_id"))
+	return terra.ReferenceAsString(e.ref.Append("association_id"))
 }
 
+// CarrierIp returns a reference to field carrier_ip of aws_eip.
 func (e eipAttributes) CarrierIp() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("carrier_ip"))
+	return terra.ReferenceAsString(e.ref.Append("carrier_ip"))
 }
 
+// CustomerOwnedIp returns a reference to field customer_owned_ip of aws_eip.
 func (e eipAttributes) CustomerOwnedIp() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("customer_owned_ip"))
+	return terra.ReferenceAsString(e.ref.Append("customer_owned_ip"))
 }
 
+// CustomerOwnedIpv4Pool returns a reference to field customer_owned_ipv4_pool of aws_eip.
 func (e eipAttributes) CustomerOwnedIpv4Pool() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("customer_owned_ipv4_pool"))
+	return terra.ReferenceAsString(e.ref.Append("customer_owned_ipv4_pool"))
 }
 
+// Domain returns a reference to field domain of aws_eip.
 func (e eipAttributes) Domain() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("domain"))
+	return terra.ReferenceAsString(e.ref.Append("domain"))
 }
 
+// Id returns a reference to field id of aws_eip.
 func (e eipAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("id"))
+	return terra.ReferenceAsString(e.ref.Append("id"))
 }
 
+// Instance returns a reference to field instance of aws_eip.
 func (e eipAttributes) Instance() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("instance"))
+	return terra.ReferenceAsString(e.ref.Append("instance"))
 }
 
+// NetworkBorderGroup returns a reference to field network_border_group of aws_eip.
 func (e eipAttributes) NetworkBorderGroup() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("network_border_group"))
+	return terra.ReferenceAsString(e.ref.Append("network_border_group"))
 }
 
+// NetworkInterface returns a reference to field network_interface of aws_eip.
 func (e eipAttributes) NetworkInterface() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("network_interface"))
+	return terra.ReferenceAsString(e.ref.Append("network_interface"))
 }
 
+// PrivateDns returns a reference to field private_dns of aws_eip.
 func (e eipAttributes) PrivateDns() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("private_dns"))
+	return terra.ReferenceAsString(e.ref.Append("private_dns"))
 }
 
+// PrivateIp returns a reference to field private_ip of aws_eip.
 func (e eipAttributes) PrivateIp() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("private_ip"))
+	return terra.ReferenceAsString(e.ref.Append("private_ip"))
 }
 
+// PublicDns returns a reference to field public_dns of aws_eip.
 func (e eipAttributes) PublicDns() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("public_dns"))
+	return terra.ReferenceAsString(e.ref.Append("public_dns"))
 }
 
+// PublicIp returns a reference to field public_ip of aws_eip.
 func (e eipAttributes) PublicIp() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("public_ip"))
+	return terra.ReferenceAsString(e.ref.Append("public_ip"))
 }
 
+// PublicIpv4Pool returns a reference to field public_ipv4_pool of aws_eip.
 func (e eipAttributes) PublicIpv4Pool() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("public_ipv4_pool"))
+	return terra.ReferenceAsString(e.ref.Append("public_ipv4_pool"))
 }
 
+// Tags returns a reference to field tags of aws_eip.
 func (e eipAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](e.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](e.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_eip.
 func (e eipAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](e.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](e.ref.Append("tags_all"))
 }
 
+// Vpc returns a reference to field vpc of aws_eip.
 func (e eipAttributes) Vpc() terra.BoolValue {
-	return terra.ReferenceBool(e.ref.Append("vpc"))
+	return terra.ReferenceAsBool(e.ref.Append("vpc"))
 }
 
 func (e eipAttributes) Timeouts() eip.TimeoutsAttributes {
-	return terra.ReferenceSingle[eip.TimeoutsAttributes](e.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[eip.TimeoutsAttributes](e.ref.Append("timeouts"))
 }
 
 type eipState struct {

@@ -37,23 +37,23 @@ func (g GrantAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (g GrantAttributes) Email() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("email"))
+	return terra.ReferenceAsString(g.ref.Append("email"))
 }
 
 func (g GrantAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("id"))
+	return terra.ReferenceAsString(g.ref.Append("id"))
 }
 
 func (g GrantAttributes) Permissions() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](g.ref.Append("permissions"))
+	return terra.ReferenceAsSet[terra.StringValue](g.ref.Append("permissions"))
 }
 
 func (g GrantAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("type"))
+	return terra.ReferenceAsString(g.ref.Append("type"))
 }
 
 func (g GrantAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(g.ref.Append("uri"))
+	return terra.ReferenceAsString(g.ref.Append("uri"))
 }
 
 type GrantState struct {

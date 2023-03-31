@@ -28,23 +28,23 @@ func (cn CacheNodesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cn CacheNodesAttributes) Address() terra.StringValue {
-	return terra.ReferenceString(cn.ref.Append("address"))
+	return terra.ReferenceAsString(cn.ref.Append("address"))
 }
 
 func (cn CacheNodesAttributes) AvailabilityZone() terra.StringValue {
-	return terra.ReferenceString(cn.ref.Append("availability_zone"))
+	return terra.ReferenceAsString(cn.ref.Append("availability_zone"))
 }
 
 func (cn CacheNodesAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cn.ref.Append("id"))
+	return terra.ReferenceAsString(cn.ref.Append("id"))
 }
 
 func (cn CacheNodesAttributes) OutpostArn() terra.StringValue {
-	return terra.ReferenceString(cn.ref.Append("outpost_arn"))
+	return terra.ReferenceAsString(cn.ref.Append("outpost_arn"))
 }
 
 func (cn CacheNodesAttributes) Port() terra.NumberValue {
-	return terra.ReferenceNumber(cn.ref.Append("port"))
+	return terra.ReferenceAsNumber(cn.ref.Append("port"))
 }
 
 type LogDeliveryConfigurationAttributes struct {
@@ -64,19 +64,19 @@ func (ldc LogDeliveryConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ldc LogDeliveryConfigurationAttributes) Destination() terra.StringValue {
-	return terra.ReferenceString(ldc.ref.Append("destination"))
+	return terra.ReferenceAsString(ldc.ref.Append("destination"))
 }
 
 func (ldc LogDeliveryConfigurationAttributes) DestinationType() terra.StringValue {
-	return terra.ReferenceString(ldc.ref.Append("destination_type"))
+	return terra.ReferenceAsString(ldc.ref.Append("destination_type"))
 }
 
 func (ldc LogDeliveryConfigurationAttributes) LogFormat() terra.StringValue {
-	return terra.ReferenceString(ldc.ref.Append("log_format"))
+	return terra.ReferenceAsString(ldc.ref.Append("log_format"))
 }
 
 func (ldc LogDeliveryConfigurationAttributes) LogType() terra.StringValue {
-	return terra.ReferenceString(ldc.ref.Append("log_type"))
+	return terra.ReferenceAsString(ldc.ref.Append("log_type"))
 }
 
 type CacheNodesState struct {

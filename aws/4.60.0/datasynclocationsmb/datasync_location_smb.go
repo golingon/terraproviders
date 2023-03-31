@@ -29,7 +29,7 @@ func (mo MountOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mo MountOptionsAttributes) Version() terra.StringValue {
-	return terra.ReferenceString(mo.ref.Append("version"))
+	return terra.ReferenceAsString(mo.ref.Append("version"))
 }
 
 type MountOptionsState struct {

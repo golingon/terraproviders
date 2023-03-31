@@ -33,15 +33,15 @@ func (do DestinationOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (do DestinationOptionsAttributes) FileFormat() terra.StringValue {
-	return terra.ReferenceString(do.ref.Append("file_format"))
+	return terra.ReferenceAsString(do.ref.Append("file_format"))
 }
 
 func (do DestinationOptionsAttributes) HiveCompatiblePartitions() terra.BoolValue {
-	return terra.ReferenceBool(do.ref.Append("hive_compatible_partitions"))
+	return terra.ReferenceAsBool(do.ref.Append("hive_compatible_partitions"))
 }
 
 func (do DestinationOptionsAttributes) PerHourPartition() terra.BoolValue {
-	return terra.ReferenceBool(do.ref.Append("per_hour_partition"))
+	return terra.ReferenceAsBool(do.ref.Append("per_hour_partition"))
 }
 
 type DestinationOptionsState struct {

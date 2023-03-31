@@ -31,27 +31,27 @@ func (bio BrokerInstanceOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (bio BrokerInstanceOptionsAttributes) EngineType() terra.StringValue {
-	return terra.ReferenceString(bio.ref.Append("engine_type"))
+	return terra.ReferenceAsString(bio.ref.Append("engine_type"))
 }
 
 func (bio BrokerInstanceOptionsAttributes) HostInstanceType() terra.StringValue {
-	return terra.ReferenceString(bio.ref.Append("host_instance_type"))
+	return terra.ReferenceAsString(bio.ref.Append("host_instance_type"))
 }
 
 func (bio BrokerInstanceOptionsAttributes) StorageType() terra.StringValue {
-	return terra.ReferenceString(bio.ref.Append("storage_type"))
+	return terra.ReferenceAsString(bio.ref.Append("storage_type"))
 }
 
 func (bio BrokerInstanceOptionsAttributes) SupportedDeploymentModes() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](bio.ref.Append("supported_deployment_modes"))
+	return terra.ReferenceAsSet[terra.StringValue](bio.ref.Append("supported_deployment_modes"))
 }
 
 func (bio BrokerInstanceOptionsAttributes) SupportedEngineVersions() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](bio.ref.Append("supported_engine_versions"))
+	return terra.ReferenceAsList[terra.StringValue](bio.ref.Append("supported_engine_versions"))
 }
 
 func (bio BrokerInstanceOptionsAttributes) AvailabilityZones() terra.SetValue[AvailabilityZonesAttributes] {
-	return terra.ReferenceSet[AvailabilityZonesAttributes](bio.ref.Append("availability_zones"))
+	return terra.ReferenceAsSet[AvailabilityZonesAttributes](bio.ref.Append("availability_zones"))
 }
 
 type AvailabilityZonesAttributes struct {
@@ -71,7 +71,7 @@ func (az AvailabilityZonesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (az AvailabilityZonesAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(az.ref.Append("name"))
+	return terra.ReferenceAsString(az.ref.Append("name"))
 }
 
 type BrokerInstanceOptionsState struct {

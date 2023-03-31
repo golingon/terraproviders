@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewCognitoUserInGroup creates a new instance of [CognitoUserInGroup].
 func NewCognitoUserInGroup(name string, args CognitoUserInGroupArgs) *CognitoUserInGroup {
 	return &CognitoUserInGroup{
 		Args: args,
@@ -18,28 +19,51 @@ func NewCognitoUserInGroup(name string, args CognitoUserInGroupArgs) *CognitoUse
 
 var _ terra.Resource = (*CognitoUserInGroup)(nil)
 
+// CognitoUserInGroup represents the Terraform resource aws_cognito_user_in_group.
 type CognitoUserInGroup struct {
-	Name  string
-	Args  CognitoUserInGroupArgs
-	state *cognitoUserInGroupState
+	Name      string
+	Args      CognitoUserInGroupArgs
+	state     *cognitoUserInGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CognitoUserInGroup].
 func (cuig *CognitoUserInGroup) Type() string {
 	return "aws_cognito_user_in_group"
 }
 
+// LocalName returns the local name for [CognitoUserInGroup].
 func (cuig *CognitoUserInGroup) LocalName() string {
 	return cuig.Name
 }
 
+// Configuration returns the configuration (args) for [CognitoUserInGroup].
 func (cuig *CognitoUserInGroup) Configuration() interface{} {
 	return cuig.Args
 }
 
+// DependOn is used for other resources to depend on [CognitoUserInGroup].
+func (cuig *CognitoUserInGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(cuig)
+}
+
+// Dependencies returns the list of resources [CognitoUserInGroup] depends_on.
+func (cuig *CognitoUserInGroup) Dependencies() terra.Dependencies {
+	return cuig.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CognitoUserInGroup].
+func (cuig *CognitoUserInGroup) LifecycleManagement() *terra.Lifecycle {
+	return cuig.Lifecycle
+}
+
+// Attributes returns the attributes for [CognitoUserInGroup].
 func (cuig *CognitoUserInGroup) Attributes() cognitoUserInGroupAttributes {
 	return cognitoUserInGroupAttributes{ref: terra.ReferenceResource(cuig)}
 }
 
+// ImportState imports the given attribute values into [CognitoUserInGroup]'s state.
 func (cuig *CognitoUserInGroup) ImportState(av io.Reader) error {
 	cuig.state = &cognitoUserInGroupState{}
 	if err := json.NewDecoder(av).Decode(cuig.state); err != nil {
@@ -48,10 +72,12 @@ func (cuig *CognitoUserInGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CognitoUserInGroup] has state.
 func (cuig *CognitoUserInGroup) State() (*cognitoUserInGroupState, bool) {
 	return cuig.state, cuig.state != nil
 }
 
+// StateMust returns the state for [CognitoUserInGroup]. Panics if the state is nil.
 func (cuig *CognitoUserInGroup) StateMust() *cognitoUserInGroupState {
 	if cuig.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cuig.Type(), cuig.LocalName()))
@@ -59,10 +85,7 @@ func (cuig *CognitoUserInGroup) StateMust() *cognitoUserInGroupState {
 	return cuig.state
 }
 
-func (cuig *CognitoUserInGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(cuig)
-}
-
+// CognitoUserInGroupArgs contains the configurations for aws_cognito_user_in_group.
 type CognitoUserInGroupArgs struct {
 	// GroupName: string, required
 	GroupName terra.StringValue `hcl:"group_name,attr" validate:"required"`
@@ -72,27 +95,29 @@ type CognitoUserInGroupArgs struct {
 	UserPoolId terra.StringValue `hcl:"user_pool_id,attr" validate:"required"`
 	// Username: string, required
 	Username terra.StringValue `hcl:"username,attr" validate:"required"`
-	// DependsOn contains resources that CognitoUserInGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type cognitoUserInGroupAttributes struct {
 	ref terra.Reference
 }
 
+// GroupName returns a reference to field group_name of aws_cognito_user_in_group.
 func (cuig cognitoUserInGroupAttributes) GroupName() terra.StringValue {
-	return terra.ReferenceString(cuig.ref.Append("group_name"))
+	return terra.ReferenceAsString(cuig.ref.Append("group_name"))
 }
 
+// Id returns a reference to field id of aws_cognito_user_in_group.
 func (cuig cognitoUserInGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cuig.ref.Append("id"))
+	return terra.ReferenceAsString(cuig.ref.Append("id"))
 }
 
+// UserPoolId returns a reference to field user_pool_id of aws_cognito_user_in_group.
 func (cuig cognitoUserInGroupAttributes) UserPoolId() terra.StringValue {
-	return terra.ReferenceString(cuig.ref.Append("user_pool_id"))
+	return terra.ReferenceAsString(cuig.ref.Append("user_pool_id"))
 }
 
+// Username returns a reference to field username of aws_cognito_user_in_group.
 func (cuig cognitoUserInGroupAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(cuig.ref.Append("username"))
+	return terra.ReferenceAsString(cuig.ref.Append("username"))
 }
 
 type cognitoUserInGroupState struct {

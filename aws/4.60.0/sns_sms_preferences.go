@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSnsSmsPreferences creates a new instance of [SnsSmsPreferences].
 func NewSnsSmsPreferences(name string, args SnsSmsPreferencesArgs) *SnsSmsPreferences {
 	return &SnsSmsPreferences{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSnsSmsPreferences(name string, args SnsSmsPreferencesArgs) *SnsSmsPrefer
 
 var _ terra.Resource = (*SnsSmsPreferences)(nil)
 
+// SnsSmsPreferences represents the Terraform resource aws_sns_sms_preferences.
 type SnsSmsPreferences struct {
-	Name  string
-	Args  SnsSmsPreferencesArgs
-	state *snsSmsPreferencesState
+	Name      string
+	Args      SnsSmsPreferencesArgs
+	state     *snsSmsPreferencesState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SnsSmsPreferences].
 func (ssp *SnsSmsPreferences) Type() string {
 	return "aws_sns_sms_preferences"
 }
 
+// LocalName returns the local name for [SnsSmsPreferences].
 func (ssp *SnsSmsPreferences) LocalName() string {
 	return ssp.Name
 }
 
+// Configuration returns the configuration (args) for [SnsSmsPreferences].
 func (ssp *SnsSmsPreferences) Configuration() interface{} {
 	return ssp.Args
 }
 
+// DependOn is used for other resources to depend on [SnsSmsPreferences].
+func (ssp *SnsSmsPreferences) DependOn() terra.Reference {
+	return terra.ReferenceResource(ssp)
+}
+
+// Dependencies returns the list of resources [SnsSmsPreferences] depends_on.
+func (ssp *SnsSmsPreferences) Dependencies() terra.Dependencies {
+	return ssp.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SnsSmsPreferences].
+func (ssp *SnsSmsPreferences) LifecycleManagement() *terra.Lifecycle {
+	return ssp.Lifecycle
+}
+
+// Attributes returns the attributes for [SnsSmsPreferences].
 func (ssp *SnsSmsPreferences) Attributes() snsSmsPreferencesAttributes {
 	return snsSmsPreferencesAttributes{ref: terra.ReferenceResource(ssp)}
 }
 
+// ImportState imports the given attribute values into [SnsSmsPreferences]'s state.
 func (ssp *SnsSmsPreferences) ImportState(av io.Reader) error {
 	ssp.state = &snsSmsPreferencesState{}
 	if err := json.NewDecoder(av).Decode(ssp.state); err != nil {
@@ -48,10 +72,12 @@ func (ssp *SnsSmsPreferences) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SnsSmsPreferences] has state.
 func (ssp *SnsSmsPreferences) State() (*snsSmsPreferencesState, bool) {
 	return ssp.state, ssp.state != nil
 }
 
+// StateMust returns the state for [SnsSmsPreferences]. Panics if the state is nil.
 func (ssp *SnsSmsPreferences) StateMust() *snsSmsPreferencesState {
 	if ssp.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", ssp.Type(), ssp.LocalName()))
@@ -59,10 +85,7 @@ func (ssp *SnsSmsPreferences) StateMust() *snsSmsPreferencesState {
 	return ssp.state
 }
 
-func (ssp *SnsSmsPreferences) DependOn() terra.Reference {
-	return terra.ReferenceResource(ssp)
-}
-
+// SnsSmsPreferencesArgs contains the configurations for aws_sns_sms_preferences.
 type SnsSmsPreferencesArgs struct {
 	// DefaultSenderId: string, optional
 	DefaultSenderId terra.StringValue `hcl:"default_sender_id,attr"`
@@ -78,39 +101,44 @@ type SnsSmsPreferencesArgs struct {
 	MonthlySpendLimit terra.NumberValue `hcl:"monthly_spend_limit,attr"`
 	// UsageReportS3Bucket: string, optional
 	UsageReportS3Bucket terra.StringValue `hcl:"usage_report_s3_bucket,attr"`
-	// DependsOn contains resources that SnsSmsPreferences depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type snsSmsPreferencesAttributes struct {
 	ref terra.Reference
 }
 
+// DefaultSenderId returns a reference to field default_sender_id of aws_sns_sms_preferences.
 func (ssp snsSmsPreferencesAttributes) DefaultSenderId() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("default_sender_id"))
+	return terra.ReferenceAsString(ssp.ref.Append("default_sender_id"))
 }
 
+// DefaultSmsType returns a reference to field default_sms_type of aws_sns_sms_preferences.
 func (ssp snsSmsPreferencesAttributes) DefaultSmsType() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("default_sms_type"))
+	return terra.ReferenceAsString(ssp.ref.Append("default_sms_type"))
 }
 
+// DeliveryStatusIamRoleArn returns a reference to field delivery_status_iam_role_arn of aws_sns_sms_preferences.
 func (ssp snsSmsPreferencesAttributes) DeliveryStatusIamRoleArn() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("delivery_status_iam_role_arn"))
+	return terra.ReferenceAsString(ssp.ref.Append("delivery_status_iam_role_arn"))
 }
 
+// DeliveryStatusSuccessSamplingRate returns a reference to field delivery_status_success_sampling_rate of aws_sns_sms_preferences.
 func (ssp snsSmsPreferencesAttributes) DeliveryStatusSuccessSamplingRate() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("delivery_status_success_sampling_rate"))
+	return terra.ReferenceAsString(ssp.ref.Append("delivery_status_success_sampling_rate"))
 }
 
+// Id returns a reference to field id of aws_sns_sms_preferences.
 func (ssp snsSmsPreferencesAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("id"))
+	return terra.ReferenceAsString(ssp.ref.Append("id"))
 }
 
+// MonthlySpendLimit returns a reference to field monthly_spend_limit of aws_sns_sms_preferences.
 func (ssp snsSmsPreferencesAttributes) MonthlySpendLimit() terra.NumberValue {
-	return terra.ReferenceNumber(ssp.ref.Append("monthly_spend_limit"))
+	return terra.ReferenceAsNumber(ssp.ref.Append("monthly_spend_limit"))
 }
 
+// UsageReportS3Bucket returns a reference to field usage_report_s3_bucket of aws_sns_sms_preferences.
 func (ssp snsSmsPreferencesAttributes) UsageReportS3Bucket() terra.StringValue {
-	return terra.ReferenceString(ssp.ref.Append("usage_report_s3_bucket"))
+	return terra.ReferenceAsString(ssp.ref.Append("usage_report_s3_bucket"))
 }
 
 type snsSmsPreferencesState struct {

@@ -36,7 +36,7 @@ func (ac AclConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ac AclConfigurationAttributes) S3AclOption() terra.StringValue {
-	return terra.ReferenceString(ac.ref.Append("s3_acl_option"))
+	return terra.ReferenceAsString(ac.ref.Append("s3_acl_option"))
 }
 
 type EncryptionConfigurationAttributes struct {
@@ -56,11 +56,11 @@ func (ec EncryptionConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ec EncryptionConfigurationAttributes) EncryptionOption() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("encryption_option"))
+	return terra.ReferenceAsString(ec.ref.Append("encryption_option"))
 }
 
 func (ec EncryptionConfigurationAttributes) KmsKey() terra.StringValue {
-	return terra.ReferenceString(ec.ref.Append("kms_key"))
+	return terra.ReferenceAsString(ec.ref.Append("kms_key"))
 }
 
 type AclConfigurationState struct {

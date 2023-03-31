@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDatasyncLocationNfs creates a new instance of [DatasyncLocationNfs].
 func NewDatasyncLocationNfs(name string, args DatasyncLocationNfsArgs) *DatasyncLocationNfs {
 	return &DatasyncLocationNfs{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDatasyncLocationNfs(name string, args DatasyncLocationNfsArgs) *Datasync
 
 var _ terra.Resource = (*DatasyncLocationNfs)(nil)
 
+// DatasyncLocationNfs represents the Terraform resource aws_datasync_location_nfs.
 type DatasyncLocationNfs struct {
-	Name  string
-	Args  DatasyncLocationNfsArgs
-	state *datasyncLocationNfsState
+	Name      string
+	Args      DatasyncLocationNfsArgs
+	state     *datasyncLocationNfsState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DatasyncLocationNfs].
 func (dln *DatasyncLocationNfs) Type() string {
 	return "aws_datasync_location_nfs"
 }
 
+// LocalName returns the local name for [DatasyncLocationNfs].
 func (dln *DatasyncLocationNfs) LocalName() string {
 	return dln.Name
 }
 
+// Configuration returns the configuration (args) for [DatasyncLocationNfs].
 func (dln *DatasyncLocationNfs) Configuration() interface{} {
 	return dln.Args
 }
 
+// DependOn is used for other resources to depend on [DatasyncLocationNfs].
+func (dln *DatasyncLocationNfs) DependOn() terra.Reference {
+	return terra.ReferenceResource(dln)
+}
+
+// Dependencies returns the list of resources [DatasyncLocationNfs] depends_on.
+func (dln *DatasyncLocationNfs) Dependencies() terra.Dependencies {
+	return dln.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DatasyncLocationNfs].
+func (dln *DatasyncLocationNfs) LifecycleManagement() *terra.Lifecycle {
+	return dln.Lifecycle
+}
+
+// Attributes returns the attributes for [DatasyncLocationNfs].
 func (dln *DatasyncLocationNfs) Attributes() datasyncLocationNfsAttributes {
 	return datasyncLocationNfsAttributes{ref: terra.ReferenceResource(dln)}
 }
 
+// ImportState imports the given attribute values into [DatasyncLocationNfs]'s state.
 func (dln *DatasyncLocationNfs) ImportState(av io.Reader) error {
 	dln.state = &datasyncLocationNfsState{}
 	if err := json.NewDecoder(av).Decode(dln.state); err != nil {
@@ -49,10 +73,12 @@ func (dln *DatasyncLocationNfs) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DatasyncLocationNfs] has state.
 func (dln *DatasyncLocationNfs) State() (*datasyncLocationNfsState, bool) {
 	return dln.state, dln.state != nil
 }
 
+// StateMust returns the state for [DatasyncLocationNfs]. Panics if the state is nil.
 func (dln *DatasyncLocationNfs) StateMust() *datasyncLocationNfsState {
 	if dln.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dln.Type(), dln.LocalName()))
@@ -60,10 +86,7 @@ func (dln *DatasyncLocationNfs) StateMust() *datasyncLocationNfsState {
 	return dln.state
 }
 
-func (dln *DatasyncLocationNfs) DependOn() terra.Reference {
-	return terra.ReferenceResource(dln)
-}
-
+// DatasyncLocationNfsArgs contains the configurations for aws_datasync_location_nfs.
 type DatasyncLocationNfsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -79,47 +102,52 @@ type DatasyncLocationNfsArgs struct {
 	MountOptions *datasynclocationnfs.MountOptions `hcl:"mount_options,block"`
 	// OnPremConfig: required
 	OnPremConfig *datasynclocationnfs.OnPremConfig `hcl:"on_prem_config,block" validate:"required"`
-	// DependsOn contains resources that DatasyncLocationNfs depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type datasyncLocationNfsAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_datasync_location_nfs.
 func (dln datasyncLocationNfsAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dln.ref.Append("arn"))
+	return terra.ReferenceAsString(dln.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_datasync_location_nfs.
 func (dln datasyncLocationNfsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dln.ref.Append("id"))
+	return terra.ReferenceAsString(dln.ref.Append("id"))
 }
 
+// ServerHostname returns a reference to field server_hostname of aws_datasync_location_nfs.
 func (dln datasyncLocationNfsAttributes) ServerHostname() terra.StringValue {
-	return terra.ReferenceString(dln.ref.Append("server_hostname"))
+	return terra.ReferenceAsString(dln.ref.Append("server_hostname"))
 }
 
+// Subdirectory returns a reference to field subdirectory of aws_datasync_location_nfs.
 func (dln datasyncLocationNfsAttributes) Subdirectory() terra.StringValue {
-	return terra.ReferenceString(dln.ref.Append("subdirectory"))
+	return terra.ReferenceAsString(dln.ref.Append("subdirectory"))
 }
 
+// Tags returns a reference to field tags of aws_datasync_location_nfs.
 func (dln datasyncLocationNfsAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dln.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dln.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_datasync_location_nfs.
 func (dln datasyncLocationNfsAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dln.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dln.ref.Append("tags_all"))
 }
 
+// Uri returns a reference to field uri of aws_datasync_location_nfs.
 func (dln datasyncLocationNfsAttributes) Uri() terra.StringValue {
-	return terra.ReferenceString(dln.ref.Append("uri"))
+	return terra.ReferenceAsString(dln.ref.Append("uri"))
 }
 
 func (dln datasyncLocationNfsAttributes) MountOptions() terra.ListValue[datasynclocationnfs.MountOptionsAttributes] {
-	return terra.ReferenceList[datasynclocationnfs.MountOptionsAttributes](dln.ref.Append("mount_options"))
+	return terra.ReferenceAsList[datasynclocationnfs.MountOptionsAttributes](dln.ref.Append("mount_options"))
 }
 
 func (dln datasyncLocationNfsAttributes) OnPremConfig() terra.ListValue[datasynclocationnfs.OnPremConfigAttributes] {
-	return terra.ReferenceList[datasynclocationnfs.OnPremConfigAttributes](dln.ref.Append("on_prem_config"))
+	return terra.ReferenceAsList[datasynclocationnfs.OnPremConfigAttributes](dln.ref.Append("on_prem_config"))
 }
 
 type datasyncLocationNfsState struct {

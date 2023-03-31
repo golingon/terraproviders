@@ -4,6 +4,7 @@ package aws
 
 import "github.com/volvo-cars/lingon/pkg/terra"
 
+// NewDataServerlessapplicationrepositoryApplication creates a new instance of [DataServerlessapplicationrepositoryApplication].
 func NewDataServerlessapplicationrepositoryApplication(name string, args DataServerlessapplicationrepositoryApplicationArgs) *DataServerlessapplicationrepositoryApplication {
 	return &DataServerlessapplicationrepositoryApplication{
 		Args: args,
@@ -13,27 +14,33 @@ func NewDataServerlessapplicationrepositoryApplication(name string, args DataSer
 
 var _ terra.DataResource = (*DataServerlessapplicationrepositoryApplication)(nil)
 
+// DataServerlessapplicationrepositoryApplication represents the Terraform data resource aws_serverlessapplicationrepository_application.
 type DataServerlessapplicationrepositoryApplication struct {
 	Name string
 	Args DataServerlessapplicationrepositoryApplicationArgs
 }
 
+// DataSource returns the Terraform object type for [DataServerlessapplicationrepositoryApplication].
 func (sa *DataServerlessapplicationrepositoryApplication) DataSource() string {
 	return "aws_serverlessapplicationrepository_application"
 }
 
+// LocalName returns the local name for [DataServerlessapplicationrepositoryApplication].
 func (sa *DataServerlessapplicationrepositoryApplication) LocalName() string {
 	return sa.Name
 }
 
+// Configuration returns the configuration (args) for [DataServerlessapplicationrepositoryApplication].
 func (sa *DataServerlessapplicationrepositoryApplication) Configuration() interface{} {
 	return sa.Args
 }
 
+// Attributes returns the attributes for [DataServerlessapplicationrepositoryApplication].
 func (sa *DataServerlessapplicationrepositoryApplication) Attributes() dataServerlessapplicationrepositoryApplicationAttributes {
 	return dataServerlessapplicationrepositoryApplicationAttributes{ref: terra.ReferenceDataResource(sa)}
 }
 
+// DataServerlessapplicationrepositoryApplicationArgs contains the configurations for aws_serverlessapplicationrepository_application.
 type DataServerlessapplicationrepositoryApplicationArgs struct {
 	// ApplicationId: string, required
 	ApplicationId terra.StringValue `hcl:"application_id,attr" validate:"required"`
@@ -46,30 +53,37 @@ type dataServerlessapplicationrepositoryApplicationAttributes struct {
 	ref terra.Reference
 }
 
+// ApplicationId returns a reference to field application_id of aws_serverlessapplicationrepository_application.
 func (sa dataServerlessapplicationrepositoryApplicationAttributes) ApplicationId() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("application_id"))
+	return terra.ReferenceAsString(sa.ref.Append("application_id"))
 }
 
+// Id returns a reference to field id of aws_serverlessapplicationrepository_application.
 func (sa dataServerlessapplicationrepositoryApplicationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("id"))
+	return terra.ReferenceAsString(sa.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_serverlessapplicationrepository_application.
 func (sa dataServerlessapplicationrepositoryApplicationAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("name"))
+	return terra.ReferenceAsString(sa.ref.Append("name"))
 }
 
+// RequiredCapabilities returns a reference to field required_capabilities of aws_serverlessapplicationrepository_application.
 func (sa dataServerlessapplicationrepositoryApplicationAttributes) RequiredCapabilities() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sa.ref.Append("required_capabilities"))
+	return terra.ReferenceAsSet[terra.StringValue](sa.ref.Append("required_capabilities"))
 }
 
+// SemanticVersion returns a reference to field semantic_version of aws_serverlessapplicationrepository_application.
 func (sa dataServerlessapplicationrepositoryApplicationAttributes) SemanticVersion() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("semantic_version"))
+	return terra.ReferenceAsString(sa.ref.Append("semantic_version"))
 }
 
+// SourceCodeUrl returns a reference to field source_code_url of aws_serverlessapplicationrepository_application.
 func (sa dataServerlessapplicationrepositoryApplicationAttributes) SourceCodeUrl() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("source_code_url"))
+	return terra.ReferenceAsString(sa.ref.Append("source_code_url"))
 }
 
+// TemplateUrl returns a reference to field template_url of aws_serverlessapplicationrepository_application.
 func (sa dataServerlessapplicationrepositoryApplicationAttributes) TemplateUrl() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("template_url"))
+	return terra.ReferenceAsString(sa.ref.Append("template_url"))
 }

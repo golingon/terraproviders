@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewSsmDocument creates a new instance of [SsmDocument].
 func NewSsmDocument(name string, args SsmDocumentArgs) *SsmDocument {
 	return &SsmDocument{
 		Args: args,
@@ -19,28 +20,51 @@ func NewSsmDocument(name string, args SsmDocumentArgs) *SsmDocument {
 
 var _ terra.Resource = (*SsmDocument)(nil)
 
+// SsmDocument represents the Terraform resource aws_ssm_document.
 type SsmDocument struct {
-	Name  string
-	Args  SsmDocumentArgs
-	state *ssmDocumentState
+	Name      string
+	Args      SsmDocumentArgs
+	state     *ssmDocumentState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SsmDocument].
 func (sd *SsmDocument) Type() string {
 	return "aws_ssm_document"
 }
 
+// LocalName returns the local name for [SsmDocument].
 func (sd *SsmDocument) LocalName() string {
 	return sd.Name
 }
 
+// Configuration returns the configuration (args) for [SsmDocument].
 func (sd *SsmDocument) Configuration() interface{} {
 	return sd.Args
 }
 
+// DependOn is used for other resources to depend on [SsmDocument].
+func (sd *SsmDocument) DependOn() terra.Reference {
+	return terra.ReferenceResource(sd)
+}
+
+// Dependencies returns the list of resources [SsmDocument] depends_on.
+func (sd *SsmDocument) Dependencies() terra.Dependencies {
+	return sd.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SsmDocument].
+func (sd *SsmDocument) LifecycleManagement() *terra.Lifecycle {
+	return sd.Lifecycle
+}
+
+// Attributes returns the attributes for [SsmDocument].
 func (sd *SsmDocument) Attributes() ssmDocumentAttributes {
 	return ssmDocumentAttributes{ref: terra.ReferenceResource(sd)}
 }
 
+// ImportState imports the given attribute values into [SsmDocument]'s state.
 func (sd *SsmDocument) ImportState(av io.Reader) error {
 	sd.state = &ssmDocumentState{}
 	if err := json.NewDecoder(av).Decode(sd.state); err != nil {
@@ -49,10 +73,12 @@ func (sd *SsmDocument) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SsmDocument] has state.
 func (sd *SsmDocument) State() (*ssmDocumentState, bool) {
 	return sd.state, sd.state != nil
 }
 
+// StateMust returns the state for [SsmDocument]. Panics if the state is nil.
 func (sd *SsmDocument) StateMust() *ssmDocumentState {
 	if sd.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", sd.Type(), sd.LocalName()))
@@ -60,10 +86,7 @@ func (sd *SsmDocument) StateMust() *ssmDocumentState {
 	return sd.state
 }
 
-func (sd *SsmDocument) DependOn() terra.Reference {
-	return terra.ReferenceResource(sd)
-}
-
+// SsmDocumentArgs contains the configurations for aws_ssm_document.
 type SsmDocumentArgs struct {
 	// Content: string, required
 	Content terra.StringValue `hcl:"content,attr" validate:"required"`
@@ -89,107 +112,127 @@ type SsmDocumentArgs struct {
 	Parameter []ssmdocument.Parameter `hcl:"parameter,block" validate:"min=0"`
 	// AttachmentsSource: min=0,max=20
 	AttachmentsSource []ssmdocument.AttachmentsSource `hcl:"attachments_source,block" validate:"min=0,max=20"`
-	// DependsOn contains resources that SsmDocument depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ssmDocumentAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_ssm_document.
 func (sd ssmDocumentAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("arn"))
+	return terra.ReferenceAsString(sd.ref.Append("arn"))
 }
 
+// Content returns a reference to field content of aws_ssm_document.
 func (sd ssmDocumentAttributes) Content() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("content"))
+	return terra.ReferenceAsString(sd.ref.Append("content"))
 }
 
+// CreatedDate returns a reference to field created_date of aws_ssm_document.
 func (sd ssmDocumentAttributes) CreatedDate() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("created_date"))
+	return terra.ReferenceAsString(sd.ref.Append("created_date"))
 }
 
+// DefaultVersion returns a reference to field default_version of aws_ssm_document.
 func (sd ssmDocumentAttributes) DefaultVersion() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("default_version"))
+	return terra.ReferenceAsString(sd.ref.Append("default_version"))
 }
 
+// Description returns a reference to field description of aws_ssm_document.
 func (sd ssmDocumentAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("description"))
+	return terra.ReferenceAsString(sd.ref.Append("description"))
 }
 
+// DocumentFormat returns a reference to field document_format of aws_ssm_document.
 func (sd ssmDocumentAttributes) DocumentFormat() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("document_format"))
+	return terra.ReferenceAsString(sd.ref.Append("document_format"))
 }
 
+// DocumentType returns a reference to field document_type of aws_ssm_document.
 func (sd ssmDocumentAttributes) DocumentType() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("document_type"))
+	return terra.ReferenceAsString(sd.ref.Append("document_type"))
 }
 
+// DocumentVersion returns a reference to field document_version of aws_ssm_document.
 func (sd ssmDocumentAttributes) DocumentVersion() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("document_version"))
+	return terra.ReferenceAsString(sd.ref.Append("document_version"))
 }
 
+// Hash returns a reference to field hash of aws_ssm_document.
 func (sd ssmDocumentAttributes) Hash() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("hash"))
+	return terra.ReferenceAsString(sd.ref.Append("hash"))
 }
 
+// HashType returns a reference to field hash_type of aws_ssm_document.
 func (sd ssmDocumentAttributes) HashType() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("hash_type"))
+	return terra.ReferenceAsString(sd.ref.Append("hash_type"))
 }
 
+// Id returns a reference to field id of aws_ssm_document.
 func (sd ssmDocumentAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("id"))
+	return terra.ReferenceAsString(sd.ref.Append("id"))
 }
 
+// LatestVersion returns a reference to field latest_version of aws_ssm_document.
 func (sd ssmDocumentAttributes) LatestVersion() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("latest_version"))
+	return terra.ReferenceAsString(sd.ref.Append("latest_version"))
 }
 
+// Name returns a reference to field name of aws_ssm_document.
 func (sd ssmDocumentAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("name"))
+	return terra.ReferenceAsString(sd.ref.Append("name"))
 }
 
+// Owner returns a reference to field owner of aws_ssm_document.
 func (sd ssmDocumentAttributes) Owner() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("owner"))
+	return terra.ReferenceAsString(sd.ref.Append("owner"))
 }
 
+// Permissions returns a reference to field permissions of aws_ssm_document.
 func (sd ssmDocumentAttributes) Permissions() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sd.ref.Append("permissions"))
+	return terra.ReferenceAsMap[terra.StringValue](sd.ref.Append("permissions"))
 }
 
+// PlatformTypes returns a reference to field platform_types of aws_ssm_document.
 func (sd ssmDocumentAttributes) PlatformTypes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sd.ref.Append("platform_types"))
+	return terra.ReferenceAsList[terra.StringValue](sd.ref.Append("platform_types"))
 }
 
+// SchemaVersion returns a reference to field schema_version of aws_ssm_document.
 func (sd ssmDocumentAttributes) SchemaVersion() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("schema_version"))
+	return terra.ReferenceAsString(sd.ref.Append("schema_version"))
 }
 
+// Status returns a reference to field status of aws_ssm_document.
 func (sd ssmDocumentAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("status"))
+	return terra.ReferenceAsString(sd.ref.Append("status"))
 }
 
+// Tags returns a reference to field tags of aws_ssm_document.
 func (sd ssmDocumentAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sd.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](sd.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_ssm_document.
 func (sd ssmDocumentAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](sd.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](sd.ref.Append("tags_all"))
 }
 
+// TargetType returns a reference to field target_type of aws_ssm_document.
 func (sd ssmDocumentAttributes) TargetType() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("target_type"))
+	return terra.ReferenceAsString(sd.ref.Append("target_type"))
 }
 
+// VersionName returns a reference to field version_name of aws_ssm_document.
 func (sd ssmDocumentAttributes) VersionName() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("version_name"))
+	return terra.ReferenceAsString(sd.ref.Append("version_name"))
 }
 
 func (sd ssmDocumentAttributes) Parameter() terra.ListValue[ssmdocument.ParameterAttributes] {
-	return terra.ReferenceList[ssmdocument.ParameterAttributes](sd.ref.Append("parameter"))
+	return terra.ReferenceAsList[ssmdocument.ParameterAttributes](sd.ref.Append("parameter"))
 }
 
 func (sd ssmDocumentAttributes) AttachmentsSource() terra.ListValue[ssmdocument.AttachmentsSourceAttributes] {
-	return terra.ReferenceList[ssmdocument.AttachmentsSourceAttributes](sd.ref.Append("attachments_source"))
+	return terra.ReferenceAsList[ssmdocument.AttachmentsSourceAttributes](sd.ref.Append("attachments_source"))
 }
 
 type ssmDocumentState struct {

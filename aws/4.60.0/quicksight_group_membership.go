@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewQuicksightGroupMembership creates a new instance of [QuicksightGroupMembership].
 func NewQuicksightGroupMembership(name string, args QuicksightGroupMembershipArgs) *QuicksightGroupMembership {
 	return &QuicksightGroupMembership{
 		Args: args,
@@ -18,28 +19,51 @@ func NewQuicksightGroupMembership(name string, args QuicksightGroupMembershipArg
 
 var _ terra.Resource = (*QuicksightGroupMembership)(nil)
 
+// QuicksightGroupMembership represents the Terraform resource aws_quicksight_group_membership.
 type QuicksightGroupMembership struct {
-	Name  string
-	Args  QuicksightGroupMembershipArgs
-	state *quicksightGroupMembershipState
+	Name      string
+	Args      QuicksightGroupMembershipArgs
+	state     *quicksightGroupMembershipState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [QuicksightGroupMembership].
 func (qgm *QuicksightGroupMembership) Type() string {
 	return "aws_quicksight_group_membership"
 }
 
+// LocalName returns the local name for [QuicksightGroupMembership].
 func (qgm *QuicksightGroupMembership) LocalName() string {
 	return qgm.Name
 }
 
+// Configuration returns the configuration (args) for [QuicksightGroupMembership].
 func (qgm *QuicksightGroupMembership) Configuration() interface{} {
 	return qgm.Args
 }
 
+// DependOn is used for other resources to depend on [QuicksightGroupMembership].
+func (qgm *QuicksightGroupMembership) DependOn() terra.Reference {
+	return terra.ReferenceResource(qgm)
+}
+
+// Dependencies returns the list of resources [QuicksightGroupMembership] depends_on.
+func (qgm *QuicksightGroupMembership) Dependencies() terra.Dependencies {
+	return qgm.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [QuicksightGroupMembership].
+func (qgm *QuicksightGroupMembership) LifecycleManagement() *terra.Lifecycle {
+	return qgm.Lifecycle
+}
+
+// Attributes returns the attributes for [QuicksightGroupMembership].
 func (qgm *QuicksightGroupMembership) Attributes() quicksightGroupMembershipAttributes {
 	return quicksightGroupMembershipAttributes{ref: terra.ReferenceResource(qgm)}
 }
 
+// ImportState imports the given attribute values into [QuicksightGroupMembership]'s state.
 func (qgm *QuicksightGroupMembership) ImportState(av io.Reader) error {
 	qgm.state = &quicksightGroupMembershipState{}
 	if err := json.NewDecoder(av).Decode(qgm.state); err != nil {
@@ -48,10 +72,12 @@ func (qgm *QuicksightGroupMembership) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [QuicksightGroupMembership] has state.
 func (qgm *QuicksightGroupMembership) State() (*quicksightGroupMembershipState, bool) {
 	return qgm.state, qgm.state != nil
 }
 
+// StateMust returns the state for [QuicksightGroupMembership]. Panics if the state is nil.
 func (qgm *QuicksightGroupMembership) StateMust() *quicksightGroupMembershipState {
 	if qgm.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", qgm.Type(), qgm.LocalName()))
@@ -59,10 +85,7 @@ func (qgm *QuicksightGroupMembership) StateMust() *quicksightGroupMembershipStat
 	return qgm.state
 }
 
-func (qgm *QuicksightGroupMembership) DependOn() terra.Reference {
-	return terra.ReferenceResource(qgm)
-}
-
+// QuicksightGroupMembershipArgs contains the configurations for aws_quicksight_group_membership.
 type QuicksightGroupMembershipArgs struct {
 	// AwsAccountId: string, optional
 	AwsAccountId terra.StringValue `hcl:"aws_account_id,attr"`
@@ -74,35 +97,39 @@ type QuicksightGroupMembershipArgs struct {
 	MemberName terra.StringValue `hcl:"member_name,attr" validate:"required"`
 	// Namespace: string, optional
 	Namespace terra.StringValue `hcl:"namespace,attr"`
-	// DependsOn contains resources that QuicksightGroupMembership depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type quicksightGroupMembershipAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_quicksight_group_membership.
 func (qgm quicksightGroupMembershipAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(qgm.ref.Append("arn"))
+	return terra.ReferenceAsString(qgm.ref.Append("arn"))
 }
 
+// AwsAccountId returns a reference to field aws_account_id of aws_quicksight_group_membership.
 func (qgm quicksightGroupMembershipAttributes) AwsAccountId() terra.StringValue {
-	return terra.ReferenceString(qgm.ref.Append("aws_account_id"))
+	return terra.ReferenceAsString(qgm.ref.Append("aws_account_id"))
 }
 
+// GroupName returns a reference to field group_name of aws_quicksight_group_membership.
 func (qgm quicksightGroupMembershipAttributes) GroupName() terra.StringValue {
-	return terra.ReferenceString(qgm.ref.Append("group_name"))
+	return terra.ReferenceAsString(qgm.ref.Append("group_name"))
 }
 
+// Id returns a reference to field id of aws_quicksight_group_membership.
 func (qgm quicksightGroupMembershipAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(qgm.ref.Append("id"))
+	return terra.ReferenceAsString(qgm.ref.Append("id"))
 }
 
+// MemberName returns a reference to field member_name of aws_quicksight_group_membership.
 func (qgm quicksightGroupMembershipAttributes) MemberName() terra.StringValue {
-	return terra.ReferenceString(qgm.ref.Append("member_name"))
+	return terra.ReferenceAsString(qgm.ref.Append("member_name"))
 }
 
+// Namespace returns a reference to field namespace of aws_quicksight_group_membership.
 func (qgm quicksightGroupMembershipAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(qgm.ref.Append("namespace"))
+	return terra.ReferenceAsString(qgm.ref.Append("namespace"))
 }
 
 type quicksightGroupMembershipState struct {

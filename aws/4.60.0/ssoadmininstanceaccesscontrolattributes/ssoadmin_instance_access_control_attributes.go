@@ -36,11 +36,11 @@ func (a AttributeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a AttributeAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("key"))
+	return terra.ReferenceAsString(a.ref.Append("key"))
 }
 
 func (a AttributeAttributes) Value() terra.SetValue[ValueAttributes] {
-	return terra.ReferenceSet[ValueAttributes](a.ref.Append("value"))
+	return terra.ReferenceAsSet[ValueAttributes](a.ref.Append("value"))
 }
 
 type ValueAttributes struct {
@@ -60,7 +60,7 @@ func (v ValueAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (v ValueAttributes) Source() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](v.ref.Append("source"))
+	return terra.ReferenceAsSet[terra.StringValue](v.ref.Append("source"))
 }
 
 type AttributeState struct {

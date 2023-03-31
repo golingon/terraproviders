@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewFsxOntapFileSystem creates a new instance of [FsxOntapFileSystem].
 func NewFsxOntapFileSystem(name string, args FsxOntapFileSystemArgs) *FsxOntapFileSystem {
 	return &FsxOntapFileSystem{
 		Args: args,
@@ -19,28 +20,51 @@ func NewFsxOntapFileSystem(name string, args FsxOntapFileSystemArgs) *FsxOntapFi
 
 var _ terra.Resource = (*FsxOntapFileSystem)(nil)
 
+// FsxOntapFileSystem represents the Terraform resource aws_fsx_ontap_file_system.
 type FsxOntapFileSystem struct {
-	Name  string
-	Args  FsxOntapFileSystemArgs
-	state *fsxOntapFileSystemState
+	Name      string
+	Args      FsxOntapFileSystemArgs
+	state     *fsxOntapFileSystemState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [FsxOntapFileSystem].
 func (fofs *FsxOntapFileSystem) Type() string {
 	return "aws_fsx_ontap_file_system"
 }
 
+// LocalName returns the local name for [FsxOntapFileSystem].
 func (fofs *FsxOntapFileSystem) LocalName() string {
 	return fofs.Name
 }
 
+// Configuration returns the configuration (args) for [FsxOntapFileSystem].
 func (fofs *FsxOntapFileSystem) Configuration() interface{} {
 	return fofs.Args
 }
 
+// DependOn is used for other resources to depend on [FsxOntapFileSystem].
+func (fofs *FsxOntapFileSystem) DependOn() terra.Reference {
+	return terra.ReferenceResource(fofs)
+}
+
+// Dependencies returns the list of resources [FsxOntapFileSystem] depends_on.
+func (fofs *FsxOntapFileSystem) Dependencies() terra.Dependencies {
+	return fofs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [FsxOntapFileSystem].
+func (fofs *FsxOntapFileSystem) LifecycleManagement() *terra.Lifecycle {
+	return fofs.Lifecycle
+}
+
+// Attributes returns the attributes for [FsxOntapFileSystem].
 func (fofs *FsxOntapFileSystem) Attributes() fsxOntapFileSystemAttributes {
 	return fsxOntapFileSystemAttributes{ref: terra.ReferenceResource(fofs)}
 }
 
+// ImportState imports the given attribute values into [FsxOntapFileSystem]'s state.
 func (fofs *FsxOntapFileSystem) ImportState(av io.Reader) error {
 	fofs.state = &fsxOntapFileSystemState{}
 	if err := json.NewDecoder(av).Decode(fofs.state); err != nil {
@@ -49,10 +73,12 @@ func (fofs *FsxOntapFileSystem) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [FsxOntapFileSystem] has state.
 func (fofs *FsxOntapFileSystem) State() (*fsxOntapFileSystemState, bool) {
 	return fofs.state, fofs.state != nil
 }
 
+// StateMust returns the state for [FsxOntapFileSystem]. Panics if the state is nil.
 func (fofs *FsxOntapFileSystem) StateMust() *fsxOntapFileSystemState {
 	if fofs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", fofs.Type(), fofs.LocalName()))
@@ -60,10 +86,7 @@ func (fofs *FsxOntapFileSystem) StateMust() *fsxOntapFileSystemState {
 	return fofs.state
 }
 
-func (fofs *FsxOntapFileSystem) DependOn() terra.Reference {
-	return terra.ReferenceResource(fofs)
-}
-
+// FsxOntapFileSystemArgs contains the configurations for aws_fsx_ontap_file_system.
 type FsxOntapFileSystemArgs struct {
 	// AutomaticBackupRetentionDays: number, optional
 	AutomaticBackupRetentionDays terra.NumberValue `hcl:"automatic_backup_retention_days,attr"`
@@ -105,111 +128,131 @@ type FsxOntapFileSystemArgs struct {
 	DiskIopsConfiguration *fsxontapfilesystem.DiskIopsConfiguration `hcl:"disk_iops_configuration,block"`
 	// Timeouts: optional
 	Timeouts *fsxontapfilesystem.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that FsxOntapFileSystem depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type fsxOntapFileSystemAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_fsx_ontap_file_system.
 func (fofs fsxOntapFileSystemAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(fofs.ref.Append("arn"))
+	return terra.ReferenceAsString(fofs.ref.Append("arn"))
 }
 
+// AutomaticBackupRetentionDays returns a reference to field automatic_backup_retention_days of aws_fsx_ontap_file_system.
 func (fofs fsxOntapFileSystemAttributes) AutomaticBackupRetentionDays() terra.NumberValue {
-	return terra.ReferenceNumber(fofs.ref.Append("automatic_backup_retention_days"))
+	return terra.ReferenceAsNumber(fofs.ref.Append("automatic_backup_retention_days"))
 }
 
+// DailyAutomaticBackupStartTime returns a reference to field daily_automatic_backup_start_time of aws_fsx_ontap_file_system.
 func (fofs fsxOntapFileSystemAttributes) DailyAutomaticBackupStartTime() terra.StringValue {
-	return terra.ReferenceString(fofs.ref.Append("daily_automatic_backup_start_time"))
+	return terra.ReferenceAsString(fofs.ref.Append("daily_automatic_backup_start_time"))
 }
 
+// DeploymentType returns a reference to field deployment_type of aws_fsx_ontap_file_system.
 func (fofs fsxOntapFileSystemAttributes) DeploymentType() terra.StringValue {
-	return terra.ReferenceString(fofs.ref.Append("deployment_type"))
+	return terra.ReferenceAsString(fofs.ref.Append("deployment_type"))
 }
 
+// DnsName returns a reference to field dns_name of aws_fsx_ontap_file_system.
 func (fofs fsxOntapFileSystemAttributes) DnsName() terra.StringValue {
-	return terra.ReferenceString(fofs.ref.Append("dns_name"))
+	return terra.ReferenceAsString(fofs.ref.Append("dns_name"))
 }
 
+// EndpointIpAddressRange returns a reference to field endpoint_ip_address_range of aws_fsx_ontap_file_system.
 func (fofs fsxOntapFileSystemAttributes) EndpointIpAddressRange() terra.StringValue {
-	return terra.ReferenceString(fofs.ref.Append("endpoint_ip_address_range"))
+	return terra.ReferenceAsString(fofs.ref.Append("endpoint_ip_address_range"))
 }
 
+// FsxAdminPassword returns a reference to field fsx_admin_password of aws_fsx_ontap_file_system.
 func (fofs fsxOntapFileSystemAttributes) FsxAdminPassword() terra.StringValue {
-	return terra.ReferenceString(fofs.ref.Append("fsx_admin_password"))
+	return terra.ReferenceAsString(fofs.ref.Append("fsx_admin_password"))
 }
 
+// Id returns a reference to field id of aws_fsx_ontap_file_system.
 func (fofs fsxOntapFileSystemAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(fofs.ref.Append("id"))
+	return terra.ReferenceAsString(fofs.ref.Append("id"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_fsx_ontap_file_system.
 func (fofs fsxOntapFileSystemAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(fofs.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(fofs.ref.Append("kms_key_id"))
 }
 
+// NetworkInterfaceIds returns a reference to field network_interface_ids of aws_fsx_ontap_file_system.
 func (fofs fsxOntapFileSystemAttributes) NetworkInterfaceIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](fofs.ref.Append("network_interface_ids"))
+	return terra.ReferenceAsList[terra.StringValue](fofs.ref.Append("network_interface_ids"))
 }
 
+// OwnerId returns a reference to field owner_id of aws_fsx_ontap_file_system.
 func (fofs fsxOntapFileSystemAttributes) OwnerId() terra.StringValue {
-	return terra.ReferenceString(fofs.ref.Append("owner_id"))
+	return terra.ReferenceAsString(fofs.ref.Append("owner_id"))
 }
 
+// PreferredSubnetId returns a reference to field preferred_subnet_id of aws_fsx_ontap_file_system.
 func (fofs fsxOntapFileSystemAttributes) PreferredSubnetId() terra.StringValue {
-	return terra.ReferenceString(fofs.ref.Append("preferred_subnet_id"))
+	return terra.ReferenceAsString(fofs.ref.Append("preferred_subnet_id"))
 }
 
+// RouteTableIds returns a reference to field route_table_ids of aws_fsx_ontap_file_system.
 func (fofs fsxOntapFileSystemAttributes) RouteTableIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](fofs.ref.Append("route_table_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](fofs.ref.Append("route_table_ids"))
 }
 
+// SecurityGroupIds returns a reference to field security_group_ids of aws_fsx_ontap_file_system.
 func (fofs fsxOntapFileSystemAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](fofs.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](fofs.ref.Append("security_group_ids"))
 }
 
+// StorageCapacity returns a reference to field storage_capacity of aws_fsx_ontap_file_system.
 func (fofs fsxOntapFileSystemAttributes) StorageCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(fofs.ref.Append("storage_capacity"))
+	return terra.ReferenceAsNumber(fofs.ref.Append("storage_capacity"))
 }
 
+// StorageType returns a reference to field storage_type of aws_fsx_ontap_file_system.
 func (fofs fsxOntapFileSystemAttributes) StorageType() terra.StringValue {
-	return terra.ReferenceString(fofs.ref.Append("storage_type"))
+	return terra.ReferenceAsString(fofs.ref.Append("storage_type"))
 }
 
+// SubnetIds returns a reference to field subnet_ids of aws_fsx_ontap_file_system.
 func (fofs fsxOntapFileSystemAttributes) SubnetIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](fofs.ref.Append("subnet_ids"))
+	return terra.ReferenceAsList[terra.StringValue](fofs.ref.Append("subnet_ids"))
 }
 
+// Tags returns a reference to field tags of aws_fsx_ontap_file_system.
 func (fofs fsxOntapFileSystemAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](fofs.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](fofs.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_fsx_ontap_file_system.
 func (fofs fsxOntapFileSystemAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](fofs.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](fofs.ref.Append("tags_all"))
 }
 
+// ThroughputCapacity returns a reference to field throughput_capacity of aws_fsx_ontap_file_system.
 func (fofs fsxOntapFileSystemAttributes) ThroughputCapacity() terra.NumberValue {
-	return terra.ReferenceNumber(fofs.ref.Append("throughput_capacity"))
+	return terra.ReferenceAsNumber(fofs.ref.Append("throughput_capacity"))
 }
 
+// VpcId returns a reference to field vpc_id of aws_fsx_ontap_file_system.
 func (fofs fsxOntapFileSystemAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(fofs.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(fofs.ref.Append("vpc_id"))
 }
 
+// WeeklyMaintenanceStartTime returns a reference to field weekly_maintenance_start_time of aws_fsx_ontap_file_system.
 func (fofs fsxOntapFileSystemAttributes) WeeklyMaintenanceStartTime() terra.StringValue {
-	return terra.ReferenceString(fofs.ref.Append("weekly_maintenance_start_time"))
+	return terra.ReferenceAsString(fofs.ref.Append("weekly_maintenance_start_time"))
 }
 
 func (fofs fsxOntapFileSystemAttributes) Endpoints() terra.ListValue[fsxontapfilesystem.EndpointsAttributes] {
-	return terra.ReferenceList[fsxontapfilesystem.EndpointsAttributes](fofs.ref.Append("endpoints"))
+	return terra.ReferenceAsList[fsxontapfilesystem.EndpointsAttributes](fofs.ref.Append("endpoints"))
 }
 
 func (fofs fsxOntapFileSystemAttributes) DiskIopsConfiguration() terra.ListValue[fsxontapfilesystem.DiskIopsConfigurationAttributes] {
-	return terra.ReferenceList[fsxontapfilesystem.DiskIopsConfigurationAttributes](fofs.ref.Append("disk_iops_configuration"))
+	return terra.ReferenceAsList[fsxontapfilesystem.DiskIopsConfigurationAttributes](fofs.ref.Append("disk_iops_configuration"))
 }
 
 func (fofs fsxOntapFileSystemAttributes) Timeouts() fsxontapfilesystem.TimeoutsAttributes {
-	return terra.ReferenceSingle[fsxontapfilesystem.TimeoutsAttributes](fofs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[fsxontapfilesystem.TimeoutsAttributes](fofs.ref.Append("timeouts"))
 }
 
 type fsxOntapFileSystemState struct {

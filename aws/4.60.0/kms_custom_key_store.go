@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewKmsCustomKeyStore creates a new instance of [KmsCustomKeyStore].
 func NewKmsCustomKeyStore(name string, args KmsCustomKeyStoreArgs) *KmsCustomKeyStore {
 	return &KmsCustomKeyStore{
 		Args: args,
@@ -19,28 +20,51 @@ func NewKmsCustomKeyStore(name string, args KmsCustomKeyStoreArgs) *KmsCustomKey
 
 var _ terra.Resource = (*KmsCustomKeyStore)(nil)
 
+// KmsCustomKeyStore represents the Terraform resource aws_kms_custom_key_store.
 type KmsCustomKeyStore struct {
-	Name  string
-	Args  KmsCustomKeyStoreArgs
-	state *kmsCustomKeyStoreState
+	Name      string
+	Args      KmsCustomKeyStoreArgs
+	state     *kmsCustomKeyStoreState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [KmsCustomKeyStore].
 func (kcks *KmsCustomKeyStore) Type() string {
 	return "aws_kms_custom_key_store"
 }
 
+// LocalName returns the local name for [KmsCustomKeyStore].
 func (kcks *KmsCustomKeyStore) LocalName() string {
 	return kcks.Name
 }
 
+// Configuration returns the configuration (args) for [KmsCustomKeyStore].
 func (kcks *KmsCustomKeyStore) Configuration() interface{} {
 	return kcks.Args
 }
 
+// DependOn is used for other resources to depend on [KmsCustomKeyStore].
+func (kcks *KmsCustomKeyStore) DependOn() terra.Reference {
+	return terra.ReferenceResource(kcks)
+}
+
+// Dependencies returns the list of resources [KmsCustomKeyStore] depends_on.
+func (kcks *KmsCustomKeyStore) Dependencies() terra.Dependencies {
+	return kcks.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [KmsCustomKeyStore].
+func (kcks *KmsCustomKeyStore) LifecycleManagement() *terra.Lifecycle {
+	return kcks.Lifecycle
+}
+
+// Attributes returns the attributes for [KmsCustomKeyStore].
 func (kcks *KmsCustomKeyStore) Attributes() kmsCustomKeyStoreAttributes {
 	return kmsCustomKeyStoreAttributes{ref: terra.ReferenceResource(kcks)}
 }
 
+// ImportState imports the given attribute values into [KmsCustomKeyStore]'s state.
 func (kcks *KmsCustomKeyStore) ImportState(av io.Reader) error {
 	kcks.state = &kmsCustomKeyStoreState{}
 	if err := json.NewDecoder(av).Decode(kcks.state); err != nil {
@@ -49,10 +73,12 @@ func (kcks *KmsCustomKeyStore) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [KmsCustomKeyStore] has state.
 func (kcks *KmsCustomKeyStore) State() (*kmsCustomKeyStoreState, bool) {
 	return kcks.state, kcks.state != nil
 }
 
+// StateMust returns the state for [KmsCustomKeyStore]. Panics if the state is nil.
 func (kcks *KmsCustomKeyStore) StateMust() *kmsCustomKeyStoreState {
 	if kcks.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", kcks.Type(), kcks.LocalName()))
@@ -60,10 +86,7 @@ func (kcks *KmsCustomKeyStore) StateMust() *kmsCustomKeyStoreState {
 	return kcks.state
 }
 
-func (kcks *KmsCustomKeyStore) DependOn() terra.Reference {
-	return terra.ReferenceResource(kcks)
-}
-
+// KmsCustomKeyStoreArgs contains the configurations for aws_kms_custom_key_store.
 type KmsCustomKeyStoreArgs struct {
 	// CloudHsmClusterId: string, required
 	CloudHsmClusterId terra.StringValue `hcl:"cloud_hsm_cluster_id,attr" validate:"required"`
@@ -77,35 +100,38 @@ type KmsCustomKeyStoreArgs struct {
 	TrustAnchorCertificate terra.StringValue `hcl:"trust_anchor_certificate,attr" validate:"required"`
 	// Timeouts: optional
 	Timeouts *kmscustomkeystore.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that KmsCustomKeyStore depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type kmsCustomKeyStoreAttributes struct {
 	ref terra.Reference
 }
 
+// CloudHsmClusterId returns a reference to field cloud_hsm_cluster_id of aws_kms_custom_key_store.
 func (kcks kmsCustomKeyStoreAttributes) CloudHsmClusterId() terra.StringValue {
-	return terra.ReferenceString(kcks.ref.Append("cloud_hsm_cluster_id"))
+	return terra.ReferenceAsString(kcks.ref.Append("cloud_hsm_cluster_id"))
 }
 
+// CustomKeyStoreName returns a reference to field custom_key_store_name of aws_kms_custom_key_store.
 func (kcks kmsCustomKeyStoreAttributes) CustomKeyStoreName() terra.StringValue {
-	return terra.ReferenceString(kcks.ref.Append("custom_key_store_name"))
+	return terra.ReferenceAsString(kcks.ref.Append("custom_key_store_name"))
 }
 
+// Id returns a reference to field id of aws_kms_custom_key_store.
 func (kcks kmsCustomKeyStoreAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(kcks.ref.Append("id"))
+	return terra.ReferenceAsString(kcks.ref.Append("id"))
 }
 
+// KeyStorePassword returns a reference to field key_store_password of aws_kms_custom_key_store.
 func (kcks kmsCustomKeyStoreAttributes) KeyStorePassword() terra.StringValue {
-	return terra.ReferenceString(kcks.ref.Append("key_store_password"))
+	return terra.ReferenceAsString(kcks.ref.Append("key_store_password"))
 }
 
+// TrustAnchorCertificate returns a reference to field trust_anchor_certificate of aws_kms_custom_key_store.
 func (kcks kmsCustomKeyStoreAttributes) TrustAnchorCertificate() terra.StringValue {
-	return terra.ReferenceString(kcks.ref.Append("trust_anchor_certificate"))
+	return terra.ReferenceAsString(kcks.ref.Append("trust_anchor_certificate"))
 }
 
 func (kcks kmsCustomKeyStoreAttributes) Timeouts() kmscustomkeystore.TimeoutsAttributes {
-	return terra.ReferenceSingle[kmscustomkeystore.TimeoutsAttributes](kcks.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[kmscustomkeystore.TimeoutsAttributes](kcks.ref.Append("timeouts"))
 }
 
 type kmsCustomKeyStoreState struct {

@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewVpcPeeringConnectionOptions creates a new instance of [VpcPeeringConnectionOptions].
 func NewVpcPeeringConnectionOptions(name string, args VpcPeeringConnectionOptionsArgs) *VpcPeeringConnectionOptions {
 	return &VpcPeeringConnectionOptions{
 		Args: args,
@@ -19,28 +20,51 @@ func NewVpcPeeringConnectionOptions(name string, args VpcPeeringConnectionOption
 
 var _ terra.Resource = (*VpcPeeringConnectionOptions)(nil)
 
+// VpcPeeringConnectionOptions represents the Terraform resource aws_vpc_peering_connection_options.
 type VpcPeeringConnectionOptions struct {
-	Name  string
-	Args  VpcPeeringConnectionOptionsArgs
-	state *vpcPeeringConnectionOptionsState
+	Name      string
+	Args      VpcPeeringConnectionOptionsArgs
+	state     *vpcPeeringConnectionOptionsState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [VpcPeeringConnectionOptions].
 func (vpco *VpcPeeringConnectionOptions) Type() string {
 	return "aws_vpc_peering_connection_options"
 }
 
+// LocalName returns the local name for [VpcPeeringConnectionOptions].
 func (vpco *VpcPeeringConnectionOptions) LocalName() string {
 	return vpco.Name
 }
 
+// Configuration returns the configuration (args) for [VpcPeeringConnectionOptions].
 func (vpco *VpcPeeringConnectionOptions) Configuration() interface{} {
 	return vpco.Args
 }
 
+// DependOn is used for other resources to depend on [VpcPeeringConnectionOptions].
+func (vpco *VpcPeeringConnectionOptions) DependOn() terra.Reference {
+	return terra.ReferenceResource(vpco)
+}
+
+// Dependencies returns the list of resources [VpcPeeringConnectionOptions] depends_on.
+func (vpco *VpcPeeringConnectionOptions) Dependencies() terra.Dependencies {
+	return vpco.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [VpcPeeringConnectionOptions].
+func (vpco *VpcPeeringConnectionOptions) LifecycleManagement() *terra.Lifecycle {
+	return vpco.Lifecycle
+}
+
+// Attributes returns the attributes for [VpcPeeringConnectionOptions].
 func (vpco *VpcPeeringConnectionOptions) Attributes() vpcPeeringConnectionOptionsAttributes {
 	return vpcPeeringConnectionOptionsAttributes{ref: terra.ReferenceResource(vpco)}
 }
 
+// ImportState imports the given attribute values into [VpcPeeringConnectionOptions]'s state.
 func (vpco *VpcPeeringConnectionOptions) ImportState(av io.Reader) error {
 	vpco.state = &vpcPeeringConnectionOptionsState{}
 	if err := json.NewDecoder(av).Decode(vpco.state); err != nil {
@@ -49,10 +73,12 @@ func (vpco *VpcPeeringConnectionOptions) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [VpcPeeringConnectionOptions] has state.
 func (vpco *VpcPeeringConnectionOptions) State() (*vpcPeeringConnectionOptionsState, bool) {
 	return vpco.state, vpco.state != nil
 }
 
+// StateMust returns the state for [VpcPeeringConnectionOptions]. Panics if the state is nil.
 func (vpco *VpcPeeringConnectionOptions) StateMust() *vpcPeeringConnectionOptionsState {
 	if vpco.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", vpco.Type(), vpco.LocalName()))
@@ -60,10 +86,7 @@ func (vpco *VpcPeeringConnectionOptions) StateMust() *vpcPeeringConnectionOption
 	return vpco.state
 }
 
-func (vpco *VpcPeeringConnectionOptions) DependOn() terra.Reference {
-	return terra.ReferenceResource(vpco)
-}
-
+// VpcPeeringConnectionOptionsArgs contains the configurations for aws_vpc_peering_connection_options.
 type VpcPeeringConnectionOptionsArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -73,27 +96,27 @@ type VpcPeeringConnectionOptionsArgs struct {
 	Accepter *vpcpeeringconnectionoptions.Accepter `hcl:"accepter,block"`
 	// Requester: optional
 	Requester *vpcpeeringconnectionoptions.Requester `hcl:"requester,block"`
-	// DependsOn contains resources that VpcPeeringConnectionOptions depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type vpcPeeringConnectionOptionsAttributes struct {
 	ref terra.Reference
 }
 
+// Id returns a reference to field id of aws_vpc_peering_connection_options.
 func (vpco vpcPeeringConnectionOptionsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(vpco.ref.Append("id"))
+	return terra.ReferenceAsString(vpco.ref.Append("id"))
 }
 
+// VpcPeeringConnectionId returns a reference to field vpc_peering_connection_id of aws_vpc_peering_connection_options.
 func (vpco vpcPeeringConnectionOptionsAttributes) VpcPeeringConnectionId() terra.StringValue {
-	return terra.ReferenceString(vpco.ref.Append("vpc_peering_connection_id"))
+	return terra.ReferenceAsString(vpco.ref.Append("vpc_peering_connection_id"))
 }
 
 func (vpco vpcPeeringConnectionOptionsAttributes) Accepter() terra.ListValue[vpcpeeringconnectionoptions.AccepterAttributes] {
-	return terra.ReferenceList[vpcpeeringconnectionoptions.AccepterAttributes](vpco.ref.Append("accepter"))
+	return terra.ReferenceAsList[vpcpeeringconnectionoptions.AccepterAttributes](vpco.ref.Append("accepter"))
 }
 
 func (vpco vpcPeeringConnectionOptionsAttributes) Requester() terra.ListValue[vpcpeeringconnectionoptions.RequesterAttributes] {
-	return terra.ReferenceList[vpcpeeringconnectionoptions.RequesterAttributes](vpco.ref.Append("requester"))
+	return terra.ReferenceAsList[vpcpeeringconnectionoptions.RequesterAttributes](vpco.ref.Append("requester"))
 }
 
 type vpcPeeringConnectionOptionsState struct {

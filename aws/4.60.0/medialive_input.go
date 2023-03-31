@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewMedialiveInput creates a new instance of [MedialiveInput].
 func NewMedialiveInput(name string, args MedialiveInputArgs) *MedialiveInput {
 	return &MedialiveInput{
 		Args: args,
@@ -19,28 +20,51 @@ func NewMedialiveInput(name string, args MedialiveInputArgs) *MedialiveInput {
 
 var _ terra.Resource = (*MedialiveInput)(nil)
 
+// MedialiveInput represents the Terraform resource aws_medialive_input.
 type MedialiveInput struct {
-	Name  string
-	Args  MedialiveInputArgs
-	state *medialiveInputState
+	Name      string
+	Args      MedialiveInputArgs
+	state     *medialiveInputState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [MedialiveInput].
 func (mi *MedialiveInput) Type() string {
 	return "aws_medialive_input"
 }
 
+// LocalName returns the local name for [MedialiveInput].
 func (mi *MedialiveInput) LocalName() string {
 	return mi.Name
 }
 
+// Configuration returns the configuration (args) for [MedialiveInput].
 func (mi *MedialiveInput) Configuration() interface{} {
 	return mi.Args
 }
 
+// DependOn is used for other resources to depend on [MedialiveInput].
+func (mi *MedialiveInput) DependOn() terra.Reference {
+	return terra.ReferenceResource(mi)
+}
+
+// Dependencies returns the list of resources [MedialiveInput] depends_on.
+func (mi *MedialiveInput) Dependencies() terra.Dependencies {
+	return mi.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [MedialiveInput].
+func (mi *MedialiveInput) LifecycleManagement() *terra.Lifecycle {
+	return mi.Lifecycle
+}
+
+// Attributes returns the attributes for [MedialiveInput].
 func (mi *MedialiveInput) Attributes() medialiveInputAttributes {
 	return medialiveInputAttributes{ref: terra.ReferenceResource(mi)}
 }
 
+// ImportState imports the given attribute values into [MedialiveInput]'s state.
 func (mi *MedialiveInput) ImportState(av io.Reader) error {
 	mi.state = &medialiveInputState{}
 	if err := json.NewDecoder(av).Decode(mi.state); err != nil {
@@ -49,10 +73,12 @@ func (mi *MedialiveInput) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [MedialiveInput] has state.
 func (mi *MedialiveInput) State() (*medialiveInputState, bool) {
 	return mi.state, mi.state != nil
 }
 
+// StateMust returns the state for [MedialiveInput]. Panics if the state is nil.
 func (mi *MedialiveInput) StateMust() *medialiveInputState {
 	if mi.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", mi.Type(), mi.LocalName()))
@@ -60,10 +86,7 @@ func (mi *MedialiveInput) StateMust() *medialiveInputState {
 	return mi.state
 }
 
-func (mi *MedialiveInput) DependOn() terra.Reference {
-	return terra.ReferenceResource(mi)
-}
-
+// MedialiveInputArgs contains the configurations for aws_medialive_input.
 type MedialiveInputArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -91,83 +114,93 @@ type MedialiveInputArgs struct {
 	Timeouts *medialiveinput.Timeouts `hcl:"timeouts,block"`
 	// Vpc: optional
 	Vpc *medialiveinput.Vpc `hcl:"vpc,block"`
-	// DependsOn contains resources that MedialiveInput depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type medialiveInputAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_medialive_input.
 func (mi medialiveInputAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(mi.ref.Append("arn"))
+	return terra.ReferenceAsString(mi.ref.Append("arn"))
 }
 
+// AttachedChannels returns a reference to field attached_channels of aws_medialive_input.
 func (mi medialiveInputAttributes) AttachedChannels() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](mi.ref.Append("attached_channels"))
+	return terra.ReferenceAsList[terra.StringValue](mi.ref.Append("attached_channels"))
 }
 
+// Id returns a reference to field id of aws_medialive_input.
 func (mi medialiveInputAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mi.ref.Append("id"))
+	return terra.ReferenceAsString(mi.ref.Append("id"))
 }
 
+// InputClass returns a reference to field input_class of aws_medialive_input.
 func (mi medialiveInputAttributes) InputClass() terra.StringValue {
-	return terra.ReferenceString(mi.ref.Append("input_class"))
+	return terra.ReferenceAsString(mi.ref.Append("input_class"))
 }
 
+// InputPartnerIds returns a reference to field input_partner_ids of aws_medialive_input.
 func (mi medialiveInputAttributes) InputPartnerIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](mi.ref.Append("input_partner_ids"))
+	return terra.ReferenceAsList[terra.StringValue](mi.ref.Append("input_partner_ids"))
 }
 
+// InputSecurityGroups returns a reference to field input_security_groups of aws_medialive_input.
 func (mi medialiveInputAttributes) InputSecurityGroups() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](mi.ref.Append("input_security_groups"))
+	return terra.ReferenceAsList[terra.StringValue](mi.ref.Append("input_security_groups"))
 }
 
+// InputSourceType returns a reference to field input_source_type of aws_medialive_input.
 func (mi medialiveInputAttributes) InputSourceType() terra.StringValue {
-	return terra.ReferenceString(mi.ref.Append("input_source_type"))
+	return terra.ReferenceAsString(mi.ref.Append("input_source_type"))
 }
 
+// Name returns a reference to field name of aws_medialive_input.
 func (mi medialiveInputAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(mi.ref.Append("name"))
+	return terra.ReferenceAsString(mi.ref.Append("name"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_medialive_input.
 func (mi medialiveInputAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(mi.ref.Append("role_arn"))
+	return terra.ReferenceAsString(mi.ref.Append("role_arn"))
 }
 
+// Tags returns a reference to field tags of aws_medialive_input.
 func (mi medialiveInputAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mi.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](mi.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_medialive_input.
 func (mi medialiveInputAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](mi.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](mi.ref.Append("tags_all"))
 }
 
+// Type returns a reference to field type of aws_medialive_input.
 func (mi medialiveInputAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(mi.ref.Append("type"))
+	return terra.ReferenceAsString(mi.ref.Append("type"))
 }
 
 func (mi medialiveInputAttributes) Destinations() terra.SetValue[medialiveinput.DestinationsAttributes] {
-	return terra.ReferenceSet[medialiveinput.DestinationsAttributes](mi.ref.Append("destinations"))
+	return terra.ReferenceAsSet[medialiveinput.DestinationsAttributes](mi.ref.Append("destinations"))
 }
 
 func (mi medialiveInputAttributes) InputDevices() terra.SetValue[medialiveinput.InputDevicesAttributes] {
-	return terra.ReferenceSet[medialiveinput.InputDevicesAttributes](mi.ref.Append("input_devices"))
+	return terra.ReferenceAsSet[medialiveinput.InputDevicesAttributes](mi.ref.Append("input_devices"))
 }
 
 func (mi medialiveInputAttributes) MediaConnectFlows() terra.SetValue[medialiveinput.MediaConnectFlowsAttributes] {
-	return terra.ReferenceSet[medialiveinput.MediaConnectFlowsAttributes](mi.ref.Append("media_connect_flows"))
+	return terra.ReferenceAsSet[medialiveinput.MediaConnectFlowsAttributes](mi.ref.Append("media_connect_flows"))
 }
 
 func (mi medialiveInputAttributes) Sources() terra.SetValue[medialiveinput.SourcesAttributes] {
-	return terra.ReferenceSet[medialiveinput.SourcesAttributes](mi.ref.Append("sources"))
+	return terra.ReferenceAsSet[medialiveinput.SourcesAttributes](mi.ref.Append("sources"))
 }
 
 func (mi medialiveInputAttributes) Timeouts() medialiveinput.TimeoutsAttributes {
-	return terra.ReferenceSingle[medialiveinput.TimeoutsAttributes](mi.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[medialiveinput.TimeoutsAttributes](mi.ref.Append("timeouts"))
 }
 
 func (mi medialiveInputAttributes) Vpc() terra.ListValue[medialiveinput.VpcAttributes] {
-	return terra.ReferenceList[medialiveinput.VpcAttributes](mi.ref.Append("vpc"))
+	return terra.ReferenceAsList[medialiveinput.VpcAttributes](mi.ref.Append("vpc"))
 }
 
 type medialiveInputState struct {

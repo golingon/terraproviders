@@ -270,43 +270,43 @@ func (a ArtifactsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a ArtifactsAttributes) ArtifactIdentifier() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("artifact_identifier"))
+	return terra.ReferenceAsString(a.ref.Append("artifact_identifier"))
 }
 
 func (a ArtifactsAttributes) BucketOwnerAccess() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("bucket_owner_access"))
+	return terra.ReferenceAsString(a.ref.Append("bucket_owner_access"))
 }
 
 func (a ArtifactsAttributes) EncryptionDisabled() terra.BoolValue {
-	return terra.ReferenceBool(a.ref.Append("encryption_disabled"))
+	return terra.ReferenceAsBool(a.ref.Append("encryption_disabled"))
 }
 
 func (a ArtifactsAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("location"))
+	return terra.ReferenceAsString(a.ref.Append("location"))
 }
 
 func (a ArtifactsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("name"))
+	return terra.ReferenceAsString(a.ref.Append("name"))
 }
 
 func (a ArtifactsAttributes) NamespaceType() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("namespace_type"))
+	return terra.ReferenceAsString(a.ref.Append("namespace_type"))
 }
 
 func (a ArtifactsAttributes) OverrideArtifactName() terra.BoolValue {
-	return terra.ReferenceBool(a.ref.Append("override_artifact_name"))
+	return terra.ReferenceAsBool(a.ref.Append("override_artifact_name"))
 }
 
 func (a ArtifactsAttributes) Packaging() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("packaging"))
+	return terra.ReferenceAsString(a.ref.Append("packaging"))
 }
 
 func (a ArtifactsAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("path"))
+	return terra.ReferenceAsString(a.ref.Append("path"))
 }
 
 func (a ArtifactsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("type"))
+	return terra.ReferenceAsString(a.ref.Append("type"))
 }
 
 type BuildBatchConfigAttributes struct {
@@ -326,19 +326,19 @@ func (bbc BuildBatchConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (bbc BuildBatchConfigAttributes) CombineArtifacts() terra.BoolValue {
-	return terra.ReferenceBool(bbc.ref.Append("combine_artifacts"))
+	return terra.ReferenceAsBool(bbc.ref.Append("combine_artifacts"))
 }
 
 func (bbc BuildBatchConfigAttributes) ServiceRole() terra.StringValue {
-	return terra.ReferenceString(bbc.ref.Append("service_role"))
+	return terra.ReferenceAsString(bbc.ref.Append("service_role"))
 }
 
 func (bbc BuildBatchConfigAttributes) TimeoutInMins() terra.NumberValue {
-	return terra.ReferenceNumber(bbc.ref.Append("timeout_in_mins"))
+	return terra.ReferenceAsNumber(bbc.ref.Append("timeout_in_mins"))
 }
 
 func (bbc BuildBatchConfigAttributes) Restrictions() terra.ListValue[RestrictionsAttributes] {
-	return terra.ReferenceList[RestrictionsAttributes](bbc.ref.Append("restrictions"))
+	return terra.ReferenceAsList[RestrictionsAttributes](bbc.ref.Append("restrictions"))
 }
 
 type RestrictionsAttributes struct {
@@ -358,11 +358,11 @@ func (r RestrictionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (r RestrictionsAttributes) ComputeTypesAllowed() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](r.ref.Append("compute_types_allowed"))
+	return terra.ReferenceAsList[terra.StringValue](r.ref.Append("compute_types_allowed"))
 }
 
 func (r RestrictionsAttributes) MaximumBuildsAllowed() terra.NumberValue {
-	return terra.ReferenceNumber(r.ref.Append("maximum_builds_allowed"))
+	return terra.ReferenceAsNumber(r.ref.Append("maximum_builds_allowed"))
 }
 
 type CacheAttributes struct {
@@ -382,15 +382,15 @@ func (c CacheAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c CacheAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("location"))
+	return terra.ReferenceAsString(c.ref.Append("location"))
 }
 
 func (c CacheAttributes) Modes() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](c.ref.Append("modes"))
+	return terra.ReferenceAsList[terra.StringValue](c.ref.Append("modes"))
 }
 
 func (c CacheAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("type"))
+	return terra.ReferenceAsString(c.ref.Append("type"))
 }
 
 type EnvironmentAttributes struct {
@@ -410,35 +410,35 @@ func (e EnvironmentAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e EnvironmentAttributes) Certificate() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("certificate"))
+	return terra.ReferenceAsString(e.ref.Append("certificate"))
 }
 
 func (e EnvironmentAttributes) ComputeType() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("compute_type"))
+	return terra.ReferenceAsString(e.ref.Append("compute_type"))
 }
 
 func (e EnvironmentAttributes) Image() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("image"))
+	return terra.ReferenceAsString(e.ref.Append("image"))
 }
 
 func (e EnvironmentAttributes) ImagePullCredentialsType() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("image_pull_credentials_type"))
+	return terra.ReferenceAsString(e.ref.Append("image_pull_credentials_type"))
 }
 
 func (e EnvironmentAttributes) PrivilegedMode() terra.BoolValue {
-	return terra.ReferenceBool(e.ref.Append("privileged_mode"))
+	return terra.ReferenceAsBool(e.ref.Append("privileged_mode"))
 }
 
 func (e EnvironmentAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(e.ref.Append("type"))
+	return terra.ReferenceAsString(e.ref.Append("type"))
 }
 
 func (e EnvironmentAttributes) EnvironmentVariable() terra.ListValue[EnvironmentVariableAttributes] {
-	return terra.ReferenceList[EnvironmentVariableAttributes](e.ref.Append("environment_variable"))
+	return terra.ReferenceAsList[EnvironmentVariableAttributes](e.ref.Append("environment_variable"))
 }
 
 func (e EnvironmentAttributes) RegistryCredential() terra.ListValue[RegistryCredentialAttributes] {
-	return terra.ReferenceList[RegistryCredentialAttributes](e.ref.Append("registry_credential"))
+	return terra.ReferenceAsList[RegistryCredentialAttributes](e.ref.Append("registry_credential"))
 }
 
 type EnvironmentVariableAttributes struct {
@@ -458,15 +458,15 @@ func (ev EnvironmentVariableAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ev EnvironmentVariableAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(ev.ref.Append("name"))
+	return terra.ReferenceAsString(ev.ref.Append("name"))
 }
 
 func (ev EnvironmentVariableAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ev.ref.Append("type"))
+	return terra.ReferenceAsString(ev.ref.Append("type"))
 }
 
 func (ev EnvironmentVariableAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(ev.ref.Append("value"))
+	return terra.ReferenceAsString(ev.ref.Append("value"))
 }
 
 type RegistryCredentialAttributes struct {
@@ -486,11 +486,11 @@ func (rc RegistryCredentialAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rc RegistryCredentialAttributes) Credential() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("credential"))
+	return terra.ReferenceAsString(rc.ref.Append("credential"))
 }
 
 func (rc RegistryCredentialAttributes) CredentialProvider() terra.StringValue {
-	return terra.ReferenceString(rc.ref.Append("credential_provider"))
+	return terra.ReferenceAsString(rc.ref.Append("credential_provider"))
 }
 
 type FileSystemLocationsAttributes struct {
@@ -510,23 +510,23 @@ func (fsl FileSystemLocationsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (fsl FileSystemLocationsAttributes) Identifier() terra.StringValue {
-	return terra.ReferenceString(fsl.ref.Append("identifier"))
+	return terra.ReferenceAsString(fsl.ref.Append("identifier"))
 }
 
 func (fsl FileSystemLocationsAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(fsl.ref.Append("location"))
+	return terra.ReferenceAsString(fsl.ref.Append("location"))
 }
 
 func (fsl FileSystemLocationsAttributes) MountOptions() terra.StringValue {
-	return terra.ReferenceString(fsl.ref.Append("mount_options"))
+	return terra.ReferenceAsString(fsl.ref.Append("mount_options"))
 }
 
 func (fsl FileSystemLocationsAttributes) MountPoint() terra.StringValue {
-	return terra.ReferenceString(fsl.ref.Append("mount_point"))
+	return terra.ReferenceAsString(fsl.ref.Append("mount_point"))
 }
 
 func (fsl FileSystemLocationsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(fsl.ref.Append("type"))
+	return terra.ReferenceAsString(fsl.ref.Append("type"))
 }
 
 type LogsConfigAttributes struct {
@@ -546,11 +546,11 @@ func (lc LogsConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (lc LogsConfigAttributes) CloudwatchLogs() terra.ListValue[CloudwatchLogsAttributes] {
-	return terra.ReferenceList[CloudwatchLogsAttributes](lc.ref.Append("cloudwatch_logs"))
+	return terra.ReferenceAsList[CloudwatchLogsAttributes](lc.ref.Append("cloudwatch_logs"))
 }
 
 func (lc LogsConfigAttributes) S3Logs() terra.ListValue[S3LogsAttributes] {
-	return terra.ReferenceList[S3LogsAttributes](lc.ref.Append("s3_logs"))
+	return terra.ReferenceAsList[S3LogsAttributes](lc.ref.Append("s3_logs"))
 }
 
 type CloudwatchLogsAttributes struct {
@@ -570,15 +570,15 @@ func (cl CloudwatchLogsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cl CloudwatchLogsAttributes) GroupName() terra.StringValue {
-	return terra.ReferenceString(cl.ref.Append("group_name"))
+	return terra.ReferenceAsString(cl.ref.Append("group_name"))
 }
 
 func (cl CloudwatchLogsAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(cl.ref.Append("status"))
+	return terra.ReferenceAsString(cl.ref.Append("status"))
 }
 
 func (cl CloudwatchLogsAttributes) StreamName() terra.StringValue {
-	return terra.ReferenceString(cl.ref.Append("stream_name"))
+	return terra.ReferenceAsString(cl.ref.Append("stream_name"))
 }
 
 type S3LogsAttributes struct {
@@ -598,19 +598,19 @@ func (sl S3LogsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sl S3LogsAttributes) BucketOwnerAccess() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("bucket_owner_access"))
+	return terra.ReferenceAsString(sl.ref.Append("bucket_owner_access"))
 }
 
 func (sl S3LogsAttributes) EncryptionDisabled() terra.BoolValue {
-	return terra.ReferenceBool(sl.ref.Append("encryption_disabled"))
+	return terra.ReferenceAsBool(sl.ref.Append("encryption_disabled"))
 }
 
 func (sl S3LogsAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("location"))
+	return terra.ReferenceAsString(sl.ref.Append("location"))
 }
 
 func (sl S3LogsAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(sl.ref.Append("status"))
+	return terra.ReferenceAsString(sl.ref.Append("status"))
 }
 
 type SecondaryArtifactsAttributes struct {
@@ -630,43 +630,43 @@ func (sa SecondaryArtifactsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sa SecondaryArtifactsAttributes) ArtifactIdentifier() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("artifact_identifier"))
+	return terra.ReferenceAsString(sa.ref.Append("artifact_identifier"))
 }
 
 func (sa SecondaryArtifactsAttributes) BucketOwnerAccess() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("bucket_owner_access"))
+	return terra.ReferenceAsString(sa.ref.Append("bucket_owner_access"))
 }
 
 func (sa SecondaryArtifactsAttributes) EncryptionDisabled() terra.BoolValue {
-	return terra.ReferenceBool(sa.ref.Append("encryption_disabled"))
+	return terra.ReferenceAsBool(sa.ref.Append("encryption_disabled"))
 }
 
 func (sa SecondaryArtifactsAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("location"))
+	return terra.ReferenceAsString(sa.ref.Append("location"))
 }
 
 func (sa SecondaryArtifactsAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("name"))
+	return terra.ReferenceAsString(sa.ref.Append("name"))
 }
 
 func (sa SecondaryArtifactsAttributes) NamespaceType() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("namespace_type"))
+	return terra.ReferenceAsString(sa.ref.Append("namespace_type"))
 }
 
 func (sa SecondaryArtifactsAttributes) OverrideArtifactName() terra.BoolValue {
-	return terra.ReferenceBool(sa.ref.Append("override_artifact_name"))
+	return terra.ReferenceAsBool(sa.ref.Append("override_artifact_name"))
 }
 
 func (sa SecondaryArtifactsAttributes) Packaging() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("packaging"))
+	return terra.ReferenceAsString(sa.ref.Append("packaging"))
 }
 
 func (sa SecondaryArtifactsAttributes) Path() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("path"))
+	return terra.ReferenceAsString(sa.ref.Append("path"))
 }
 
 func (sa SecondaryArtifactsAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(sa.ref.Append("type"))
+	return terra.ReferenceAsString(sa.ref.Append("type"))
 }
 
 type SecondarySourceVersionAttributes struct {
@@ -686,11 +686,11 @@ func (ssv SecondarySourceVersionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ssv SecondarySourceVersionAttributes) SourceIdentifier() terra.StringValue {
-	return terra.ReferenceString(ssv.ref.Append("source_identifier"))
+	return terra.ReferenceAsString(ssv.ref.Append("source_identifier"))
 }
 
 func (ssv SecondarySourceVersionAttributes) SourceVersion() terra.StringValue {
-	return terra.ReferenceString(ssv.ref.Append("source_version"))
+	return terra.ReferenceAsString(ssv.ref.Append("source_version"))
 }
 
 type SecondarySourcesAttributes struct {
@@ -710,43 +710,43 @@ func (ss SecondarySourcesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ss SecondarySourcesAttributes) Buildspec() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("buildspec"))
+	return terra.ReferenceAsString(ss.ref.Append("buildspec"))
 }
 
 func (ss SecondarySourcesAttributes) GitCloneDepth() terra.NumberValue {
-	return terra.ReferenceNumber(ss.ref.Append("git_clone_depth"))
+	return terra.ReferenceAsNumber(ss.ref.Append("git_clone_depth"))
 }
 
 func (ss SecondarySourcesAttributes) InsecureSsl() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("insecure_ssl"))
+	return terra.ReferenceAsBool(ss.ref.Append("insecure_ssl"))
 }
 
 func (ss SecondarySourcesAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("location"))
+	return terra.ReferenceAsString(ss.ref.Append("location"))
 }
 
 func (ss SecondarySourcesAttributes) ReportBuildStatus() terra.BoolValue {
-	return terra.ReferenceBool(ss.ref.Append("report_build_status"))
+	return terra.ReferenceAsBool(ss.ref.Append("report_build_status"))
 }
 
 func (ss SecondarySourcesAttributes) SourceIdentifier() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("source_identifier"))
+	return terra.ReferenceAsString(ss.ref.Append("source_identifier"))
 }
 
 func (ss SecondarySourcesAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(ss.ref.Append("type"))
+	return terra.ReferenceAsString(ss.ref.Append("type"))
 }
 
 func (ss SecondarySourcesAttributes) Auth() terra.ListValue[SecondarySourcesAuthAttributes] {
-	return terra.ReferenceList[SecondarySourcesAuthAttributes](ss.ref.Append("auth"))
+	return terra.ReferenceAsList[SecondarySourcesAuthAttributes](ss.ref.Append("auth"))
 }
 
 func (ss SecondarySourcesAttributes) BuildStatusConfig() terra.ListValue[SecondarySourcesBuildStatusConfigAttributes] {
-	return terra.ReferenceList[SecondarySourcesBuildStatusConfigAttributes](ss.ref.Append("build_status_config"))
+	return terra.ReferenceAsList[SecondarySourcesBuildStatusConfigAttributes](ss.ref.Append("build_status_config"))
 }
 
 func (ss SecondarySourcesAttributes) GitSubmodulesConfig() terra.ListValue[SecondarySourcesGitSubmodulesConfigAttributes] {
-	return terra.ReferenceList[SecondarySourcesGitSubmodulesConfigAttributes](ss.ref.Append("git_submodules_config"))
+	return terra.ReferenceAsList[SecondarySourcesGitSubmodulesConfigAttributes](ss.ref.Append("git_submodules_config"))
 }
 
 type SecondarySourcesAuthAttributes struct {
@@ -766,11 +766,11 @@ func (a SecondarySourcesAuthAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a SecondarySourcesAuthAttributes) Resource() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("resource"))
+	return terra.ReferenceAsString(a.ref.Append("resource"))
 }
 
 func (a SecondarySourcesAuthAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("type"))
+	return terra.ReferenceAsString(a.ref.Append("type"))
 }
 
 type SecondarySourcesBuildStatusConfigAttributes struct {
@@ -790,11 +790,11 @@ func (bsc SecondarySourcesBuildStatusConfigAttributes) InternalTokens() hclwrite
 }
 
 func (bsc SecondarySourcesBuildStatusConfigAttributes) Context() terra.StringValue {
-	return terra.ReferenceString(bsc.ref.Append("context"))
+	return terra.ReferenceAsString(bsc.ref.Append("context"))
 }
 
 func (bsc SecondarySourcesBuildStatusConfigAttributes) TargetUrl() terra.StringValue {
-	return terra.ReferenceString(bsc.ref.Append("target_url"))
+	return terra.ReferenceAsString(bsc.ref.Append("target_url"))
 }
 
 type SecondarySourcesGitSubmodulesConfigAttributes struct {
@@ -814,7 +814,7 @@ func (gsc SecondarySourcesGitSubmodulesConfigAttributes) InternalTokens() hclwri
 }
 
 func (gsc SecondarySourcesGitSubmodulesConfigAttributes) FetchSubmodules() terra.BoolValue {
-	return terra.ReferenceBool(gsc.ref.Append("fetch_submodules"))
+	return terra.ReferenceAsBool(gsc.ref.Append("fetch_submodules"))
 }
 
 type SourceAttributes struct {
@@ -834,39 +834,39 @@ func (s SourceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s SourceAttributes) Buildspec() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("buildspec"))
+	return terra.ReferenceAsString(s.ref.Append("buildspec"))
 }
 
 func (s SourceAttributes) GitCloneDepth() terra.NumberValue {
-	return terra.ReferenceNumber(s.ref.Append("git_clone_depth"))
+	return terra.ReferenceAsNumber(s.ref.Append("git_clone_depth"))
 }
 
 func (s SourceAttributes) InsecureSsl() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("insecure_ssl"))
+	return terra.ReferenceAsBool(s.ref.Append("insecure_ssl"))
 }
 
 func (s SourceAttributes) Location() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("location"))
+	return terra.ReferenceAsString(s.ref.Append("location"))
 }
 
 func (s SourceAttributes) ReportBuildStatus() terra.BoolValue {
-	return terra.ReferenceBool(s.ref.Append("report_build_status"))
+	return terra.ReferenceAsBool(s.ref.Append("report_build_status"))
 }
 
 func (s SourceAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(s.ref.Append("type"))
+	return terra.ReferenceAsString(s.ref.Append("type"))
 }
 
 func (s SourceAttributes) Auth() terra.ListValue[SourceAuthAttributes] {
-	return terra.ReferenceList[SourceAuthAttributes](s.ref.Append("auth"))
+	return terra.ReferenceAsList[SourceAuthAttributes](s.ref.Append("auth"))
 }
 
 func (s SourceAttributes) BuildStatusConfig() terra.ListValue[SourceBuildStatusConfigAttributes] {
-	return terra.ReferenceList[SourceBuildStatusConfigAttributes](s.ref.Append("build_status_config"))
+	return terra.ReferenceAsList[SourceBuildStatusConfigAttributes](s.ref.Append("build_status_config"))
 }
 
 func (s SourceAttributes) GitSubmodulesConfig() terra.ListValue[SourceGitSubmodulesConfigAttributes] {
-	return terra.ReferenceList[SourceGitSubmodulesConfigAttributes](s.ref.Append("git_submodules_config"))
+	return terra.ReferenceAsList[SourceGitSubmodulesConfigAttributes](s.ref.Append("git_submodules_config"))
 }
 
 type SourceAuthAttributes struct {
@@ -886,11 +886,11 @@ func (a SourceAuthAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a SourceAuthAttributes) Resource() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("resource"))
+	return terra.ReferenceAsString(a.ref.Append("resource"))
 }
 
 func (a SourceAuthAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(a.ref.Append("type"))
+	return terra.ReferenceAsString(a.ref.Append("type"))
 }
 
 type SourceBuildStatusConfigAttributes struct {
@@ -910,11 +910,11 @@ func (bsc SourceBuildStatusConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (bsc SourceBuildStatusConfigAttributes) Context() terra.StringValue {
-	return terra.ReferenceString(bsc.ref.Append("context"))
+	return terra.ReferenceAsString(bsc.ref.Append("context"))
 }
 
 func (bsc SourceBuildStatusConfigAttributes) TargetUrl() terra.StringValue {
-	return terra.ReferenceString(bsc.ref.Append("target_url"))
+	return terra.ReferenceAsString(bsc.ref.Append("target_url"))
 }
 
 type SourceGitSubmodulesConfigAttributes struct {
@@ -934,7 +934,7 @@ func (gsc SourceGitSubmodulesConfigAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (gsc SourceGitSubmodulesConfigAttributes) FetchSubmodules() terra.BoolValue {
-	return terra.ReferenceBool(gsc.ref.Append("fetch_submodules"))
+	return terra.ReferenceAsBool(gsc.ref.Append("fetch_submodules"))
 }
 
 type VpcConfigAttributes struct {
@@ -954,15 +954,15 @@ func (vc VpcConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vc VpcConfigAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("security_group_ids"))
 }
 
 func (vc VpcConfigAttributes) Subnets() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](vc.ref.Append("subnets"))
+	return terra.ReferenceAsSet[terra.StringValue](vc.ref.Append("subnets"))
 }
 
 func (vc VpcConfigAttributes) VpcId() terra.StringValue {
-	return terra.ReferenceString(vc.ref.Append("vpc_id"))
+	return terra.ReferenceAsString(vc.ref.Append("vpc_id"))
 }
 
 type ArtifactsState struct {

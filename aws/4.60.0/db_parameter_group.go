@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewDbParameterGroup creates a new instance of [DbParameterGroup].
 func NewDbParameterGroup(name string, args DbParameterGroupArgs) *DbParameterGroup {
 	return &DbParameterGroup{
 		Args: args,
@@ -19,28 +20,51 @@ func NewDbParameterGroup(name string, args DbParameterGroupArgs) *DbParameterGro
 
 var _ terra.Resource = (*DbParameterGroup)(nil)
 
+// DbParameterGroup represents the Terraform resource aws_db_parameter_group.
 type DbParameterGroup struct {
-	Name  string
-	Args  DbParameterGroupArgs
-	state *dbParameterGroupState
+	Name      string
+	Args      DbParameterGroupArgs
+	state     *dbParameterGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DbParameterGroup].
 func (dpg *DbParameterGroup) Type() string {
 	return "aws_db_parameter_group"
 }
 
+// LocalName returns the local name for [DbParameterGroup].
 func (dpg *DbParameterGroup) LocalName() string {
 	return dpg.Name
 }
 
+// Configuration returns the configuration (args) for [DbParameterGroup].
 func (dpg *DbParameterGroup) Configuration() interface{} {
 	return dpg.Args
 }
 
+// DependOn is used for other resources to depend on [DbParameterGroup].
+func (dpg *DbParameterGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(dpg)
+}
+
+// Dependencies returns the list of resources [DbParameterGroup] depends_on.
+func (dpg *DbParameterGroup) Dependencies() terra.Dependencies {
+	return dpg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DbParameterGroup].
+func (dpg *DbParameterGroup) LifecycleManagement() *terra.Lifecycle {
+	return dpg.Lifecycle
+}
+
+// Attributes returns the attributes for [DbParameterGroup].
 func (dpg *DbParameterGroup) Attributes() dbParameterGroupAttributes {
 	return dbParameterGroupAttributes{ref: terra.ReferenceResource(dpg)}
 }
 
+// ImportState imports the given attribute values into [DbParameterGroup]'s state.
 func (dpg *DbParameterGroup) ImportState(av io.Reader) error {
 	dpg.state = &dbParameterGroupState{}
 	if err := json.NewDecoder(av).Decode(dpg.state); err != nil {
@@ -49,10 +73,12 @@ func (dpg *DbParameterGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DbParameterGroup] has state.
 func (dpg *DbParameterGroup) State() (*dbParameterGroupState, bool) {
 	return dpg.state, dpg.state != nil
 }
 
+// StateMust returns the state for [DbParameterGroup]. Panics if the state is nil.
 func (dpg *DbParameterGroup) StateMust() *dbParameterGroupState {
 	if dpg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dpg.Type(), dpg.LocalName()))
@@ -60,10 +86,7 @@ func (dpg *DbParameterGroup) StateMust() *dbParameterGroupState {
 	return dpg.state
 }
 
-func (dpg *DbParameterGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(dpg)
-}
-
+// DbParameterGroupArgs contains the configurations for aws_db_parameter_group.
 type DbParameterGroupArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -81,47 +104,53 @@ type DbParameterGroupArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Parameter: min=0
 	Parameter []dbparametergroup.Parameter `hcl:"parameter,block" validate:"min=0"`
-	// DependsOn contains resources that DbParameterGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dbParameterGroupAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_db_parameter_group.
 func (dpg dbParameterGroupAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(dpg.ref.Append("arn"))
+	return terra.ReferenceAsString(dpg.ref.Append("arn"))
 }
 
+// Description returns a reference to field description of aws_db_parameter_group.
 func (dpg dbParameterGroupAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(dpg.ref.Append("description"))
+	return terra.ReferenceAsString(dpg.ref.Append("description"))
 }
 
+// Family returns a reference to field family of aws_db_parameter_group.
 func (dpg dbParameterGroupAttributes) Family() terra.StringValue {
-	return terra.ReferenceString(dpg.ref.Append("family"))
+	return terra.ReferenceAsString(dpg.ref.Append("family"))
 }
 
+// Id returns a reference to field id of aws_db_parameter_group.
 func (dpg dbParameterGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dpg.ref.Append("id"))
+	return terra.ReferenceAsString(dpg.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_db_parameter_group.
 func (dpg dbParameterGroupAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(dpg.ref.Append("name"))
+	return terra.ReferenceAsString(dpg.ref.Append("name"))
 }
 
+// NamePrefix returns a reference to field name_prefix of aws_db_parameter_group.
 func (dpg dbParameterGroupAttributes) NamePrefix() terra.StringValue {
-	return terra.ReferenceString(dpg.ref.Append("name_prefix"))
+	return terra.ReferenceAsString(dpg.ref.Append("name_prefix"))
 }
 
+// Tags returns a reference to field tags of aws_db_parameter_group.
 func (dpg dbParameterGroupAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dpg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dpg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_db_parameter_group.
 func (dpg dbParameterGroupAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dpg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dpg.ref.Append("tags_all"))
 }
 
 func (dpg dbParameterGroupAttributes) Parameter() terra.SetValue[dbparametergroup.ParameterAttributes] {
-	return terra.ReferenceSet[dbparametergroup.ParameterAttributes](dpg.ref.Append("parameter"))
+	return terra.ReferenceAsSet[dbparametergroup.ParameterAttributes](dpg.ref.Append("parameter"))
 }
 
 type dbParameterGroupState struct {

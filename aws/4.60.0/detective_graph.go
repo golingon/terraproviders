@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDetectiveGraph creates a new instance of [DetectiveGraph].
 func NewDetectiveGraph(name string, args DetectiveGraphArgs) *DetectiveGraph {
 	return &DetectiveGraph{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDetectiveGraph(name string, args DetectiveGraphArgs) *DetectiveGraph {
 
 var _ terra.Resource = (*DetectiveGraph)(nil)
 
+// DetectiveGraph represents the Terraform resource aws_detective_graph.
 type DetectiveGraph struct {
-	Name  string
-	Args  DetectiveGraphArgs
-	state *detectiveGraphState
+	Name      string
+	Args      DetectiveGraphArgs
+	state     *detectiveGraphState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DetectiveGraph].
 func (dg *DetectiveGraph) Type() string {
 	return "aws_detective_graph"
 }
 
+// LocalName returns the local name for [DetectiveGraph].
 func (dg *DetectiveGraph) LocalName() string {
 	return dg.Name
 }
 
+// Configuration returns the configuration (args) for [DetectiveGraph].
 func (dg *DetectiveGraph) Configuration() interface{} {
 	return dg.Args
 }
 
+// DependOn is used for other resources to depend on [DetectiveGraph].
+func (dg *DetectiveGraph) DependOn() terra.Reference {
+	return terra.ReferenceResource(dg)
+}
+
+// Dependencies returns the list of resources [DetectiveGraph] depends_on.
+func (dg *DetectiveGraph) Dependencies() terra.Dependencies {
+	return dg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DetectiveGraph].
+func (dg *DetectiveGraph) LifecycleManagement() *terra.Lifecycle {
+	return dg.Lifecycle
+}
+
+// Attributes returns the attributes for [DetectiveGraph].
 func (dg *DetectiveGraph) Attributes() detectiveGraphAttributes {
 	return detectiveGraphAttributes{ref: terra.ReferenceResource(dg)}
 }
 
+// ImportState imports the given attribute values into [DetectiveGraph]'s state.
 func (dg *DetectiveGraph) ImportState(av io.Reader) error {
 	dg.state = &detectiveGraphState{}
 	if err := json.NewDecoder(av).Decode(dg.state); err != nil {
@@ -48,10 +72,12 @@ func (dg *DetectiveGraph) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DetectiveGraph] has state.
 func (dg *DetectiveGraph) State() (*detectiveGraphState, bool) {
 	return dg.state, dg.state != nil
 }
 
+// StateMust returns the state for [DetectiveGraph]. Panics if the state is nil.
 func (dg *DetectiveGraph) StateMust() *detectiveGraphState {
 	if dg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dg.Type(), dg.LocalName()))
@@ -59,10 +85,7 @@ func (dg *DetectiveGraph) StateMust() *detectiveGraphState {
 	return dg.state
 }
 
-func (dg *DetectiveGraph) DependOn() terra.Reference {
-	return terra.ReferenceResource(dg)
-}
-
+// DetectiveGraphArgs contains the configurations for aws_detective_graph.
 type DetectiveGraphArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -70,31 +93,34 @@ type DetectiveGraphArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that DetectiveGraph depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type detectiveGraphAttributes struct {
 	ref terra.Reference
 }
 
+// CreatedTime returns a reference to field created_time of aws_detective_graph.
 func (dg detectiveGraphAttributes) CreatedTime() terra.StringValue {
-	return terra.ReferenceString(dg.ref.Append("created_time"))
+	return terra.ReferenceAsString(dg.ref.Append("created_time"))
 }
 
+// GraphArn returns a reference to field graph_arn of aws_detective_graph.
 func (dg detectiveGraphAttributes) GraphArn() terra.StringValue {
-	return terra.ReferenceString(dg.ref.Append("graph_arn"))
+	return terra.ReferenceAsString(dg.ref.Append("graph_arn"))
 }
 
+// Id returns a reference to field id of aws_detective_graph.
 func (dg detectiveGraphAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dg.ref.Append("id"))
+	return terra.ReferenceAsString(dg.ref.Append("id"))
 }
 
+// Tags returns a reference to field tags of aws_detective_graph.
 func (dg detectiveGraphAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dg.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](dg.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_detective_graph.
 func (dg detectiveGraphAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](dg.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](dg.ref.Append("tags_all"))
 }
 
 type detectiveGraphState struct {

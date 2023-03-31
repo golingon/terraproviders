@@ -26,11 +26,11 @@ func (ei ExternalIdsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (ei ExternalIdsAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(ei.ref.Append("id"))
+	return terra.ReferenceAsString(ei.ref.Append("id"))
 }
 
 func (ei ExternalIdsAttributes) Issuer() terra.StringValue {
-	return terra.ReferenceString(ei.ref.Append("issuer"))
+	return terra.ReferenceAsString(ei.ref.Append("issuer"))
 }
 
 type ExternalIdsState struct {

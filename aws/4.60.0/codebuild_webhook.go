@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewCodebuildWebhook creates a new instance of [CodebuildWebhook].
 func NewCodebuildWebhook(name string, args CodebuildWebhookArgs) *CodebuildWebhook {
 	return &CodebuildWebhook{
 		Args: args,
@@ -19,28 +20,51 @@ func NewCodebuildWebhook(name string, args CodebuildWebhookArgs) *CodebuildWebho
 
 var _ terra.Resource = (*CodebuildWebhook)(nil)
 
+// CodebuildWebhook represents the Terraform resource aws_codebuild_webhook.
 type CodebuildWebhook struct {
-	Name  string
-	Args  CodebuildWebhookArgs
-	state *codebuildWebhookState
+	Name      string
+	Args      CodebuildWebhookArgs
+	state     *codebuildWebhookState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [CodebuildWebhook].
 func (cw *CodebuildWebhook) Type() string {
 	return "aws_codebuild_webhook"
 }
 
+// LocalName returns the local name for [CodebuildWebhook].
 func (cw *CodebuildWebhook) LocalName() string {
 	return cw.Name
 }
 
+// Configuration returns the configuration (args) for [CodebuildWebhook].
 func (cw *CodebuildWebhook) Configuration() interface{} {
 	return cw.Args
 }
 
+// DependOn is used for other resources to depend on [CodebuildWebhook].
+func (cw *CodebuildWebhook) DependOn() terra.Reference {
+	return terra.ReferenceResource(cw)
+}
+
+// Dependencies returns the list of resources [CodebuildWebhook] depends_on.
+func (cw *CodebuildWebhook) Dependencies() terra.Dependencies {
+	return cw.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [CodebuildWebhook].
+func (cw *CodebuildWebhook) LifecycleManagement() *terra.Lifecycle {
+	return cw.Lifecycle
+}
+
+// Attributes returns the attributes for [CodebuildWebhook].
 func (cw *CodebuildWebhook) Attributes() codebuildWebhookAttributes {
 	return codebuildWebhookAttributes{ref: terra.ReferenceResource(cw)}
 }
 
+// ImportState imports the given attribute values into [CodebuildWebhook]'s state.
 func (cw *CodebuildWebhook) ImportState(av io.Reader) error {
 	cw.state = &codebuildWebhookState{}
 	if err := json.NewDecoder(av).Decode(cw.state); err != nil {
@@ -49,10 +73,12 @@ func (cw *CodebuildWebhook) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [CodebuildWebhook] has state.
 func (cw *CodebuildWebhook) State() (*codebuildWebhookState, bool) {
 	return cw.state, cw.state != nil
 }
 
+// StateMust returns the state for [CodebuildWebhook]. Panics if the state is nil.
 func (cw *CodebuildWebhook) StateMust() *codebuildWebhookState {
 	if cw.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", cw.Type(), cw.LocalName()))
@@ -60,10 +86,7 @@ func (cw *CodebuildWebhook) StateMust() *codebuildWebhookState {
 	return cw.state
 }
 
-func (cw *CodebuildWebhook) DependOn() terra.Reference {
-	return terra.ReferenceResource(cw)
-}
-
+// CodebuildWebhookArgs contains the configurations for aws_codebuild_webhook.
 type CodebuildWebhookArgs struct {
 	// BranchFilter: string, optional
 	BranchFilter terra.StringValue `hcl:"branch_filter,attr"`
@@ -75,43 +98,48 @@ type CodebuildWebhookArgs struct {
 	ProjectName terra.StringValue `hcl:"project_name,attr" validate:"required"`
 	// FilterGroup: min=0
 	FilterGroup []codebuildwebhook.FilterGroup `hcl:"filter_group,block" validate:"min=0"`
-	// DependsOn contains resources that CodebuildWebhook depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type codebuildWebhookAttributes struct {
 	ref terra.Reference
 }
 
+// BranchFilter returns a reference to field branch_filter of aws_codebuild_webhook.
 func (cw codebuildWebhookAttributes) BranchFilter() terra.StringValue {
-	return terra.ReferenceString(cw.ref.Append("branch_filter"))
+	return terra.ReferenceAsString(cw.ref.Append("branch_filter"))
 }
 
+// BuildType returns a reference to field build_type of aws_codebuild_webhook.
 func (cw codebuildWebhookAttributes) BuildType() terra.StringValue {
-	return terra.ReferenceString(cw.ref.Append("build_type"))
+	return terra.ReferenceAsString(cw.ref.Append("build_type"))
 }
 
+// Id returns a reference to field id of aws_codebuild_webhook.
 func (cw codebuildWebhookAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(cw.ref.Append("id"))
+	return terra.ReferenceAsString(cw.ref.Append("id"))
 }
 
+// PayloadUrl returns a reference to field payload_url of aws_codebuild_webhook.
 func (cw codebuildWebhookAttributes) PayloadUrl() terra.StringValue {
-	return terra.ReferenceString(cw.ref.Append("payload_url"))
+	return terra.ReferenceAsString(cw.ref.Append("payload_url"))
 }
 
+// ProjectName returns a reference to field project_name of aws_codebuild_webhook.
 func (cw codebuildWebhookAttributes) ProjectName() terra.StringValue {
-	return terra.ReferenceString(cw.ref.Append("project_name"))
+	return terra.ReferenceAsString(cw.ref.Append("project_name"))
 }
 
+// Secret returns a reference to field secret of aws_codebuild_webhook.
 func (cw codebuildWebhookAttributes) Secret() terra.StringValue {
-	return terra.ReferenceString(cw.ref.Append("secret"))
+	return terra.ReferenceAsString(cw.ref.Append("secret"))
 }
 
+// Url returns a reference to field url of aws_codebuild_webhook.
 func (cw codebuildWebhookAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(cw.ref.Append("url"))
+	return terra.ReferenceAsString(cw.ref.Append("url"))
 }
 
 func (cw codebuildWebhookAttributes) FilterGroup() terra.SetValue[codebuildwebhook.FilterGroupAttributes] {
-	return terra.ReferenceSet[codebuildwebhook.FilterGroupAttributes](cw.ref.Append("filter_group"))
+	return terra.ReferenceAsSet[codebuildwebhook.FilterGroupAttributes](cw.ref.Append("filter_group"))
 }
 
 type codebuildWebhookState struct {

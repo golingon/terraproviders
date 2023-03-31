@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewGrafanaWorkspace creates a new instance of [GrafanaWorkspace].
 func NewGrafanaWorkspace(name string, args GrafanaWorkspaceArgs) *GrafanaWorkspace {
 	return &GrafanaWorkspace{
 		Args: args,
@@ -19,28 +20,51 @@ func NewGrafanaWorkspace(name string, args GrafanaWorkspaceArgs) *GrafanaWorkspa
 
 var _ terra.Resource = (*GrafanaWorkspace)(nil)
 
+// GrafanaWorkspace represents the Terraform resource aws_grafana_workspace.
 type GrafanaWorkspace struct {
-	Name  string
-	Args  GrafanaWorkspaceArgs
-	state *grafanaWorkspaceState
+	Name      string
+	Args      GrafanaWorkspaceArgs
+	state     *grafanaWorkspaceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [GrafanaWorkspace].
 func (gw *GrafanaWorkspace) Type() string {
 	return "aws_grafana_workspace"
 }
 
+// LocalName returns the local name for [GrafanaWorkspace].
 func (gw *GrafanaWorkspace) LocalName() string {
 	return gw.Name
 }
 
+// Configuration returns the configuration (args) for [GrafanaWorkspace].
 func (gw *GrafanaWorkspace) Configuration() interface{} {
 	return gw.Args
 }
 
+// DependOn is used for other resources to depend on [GrafanaWorkspace].
+func (gw *GrafanaWorkspace) DependOn() terra.Reference {
+	return terra.ReferenceResource(gw)
+}
+
+// Dependencies returns the list of resources [GrafanaWorkspace] depends_on.
+func (gw *GrafanaWorkspace) Dependencies() terra.Dependencies {
+	return gw.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [GrafanaWorkspace].
+func (gw *GrafanaWorkspace) LifecycleManagement() *terra.Lifecycle {
+	return gw.Lifecycle
+}
+
+// Attributes returns the attributes for [GrafanaWorkspace].
 func (gw *GrafanaWorkspace) Attributes() grafanaWorkspaceAttributes {
 	return grafanaWorkspaceAttributes{ref: terra.ReferenceResource(gw)}
 }
 
+// ImportState imports the given attribute values into [GrafanaWorkspace]'s state.
 func (gw *GrafanaWorkspace) ImportState(av io.Reader) error {
 	gw.state = &grafanaWorkspaceState{}
 	if err := json.NewDecoder(av).Decode(gw.state); err != nil {
@@ -49,10 +73,12 @@ func (gw *GrafanaWorkspace) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [GrafanaWorkspace] has state.
 func (gw *GrafanaWorkspace) State() (*grafanaWorkspaceState, bool) {
 	return gw.state, gw.state != nil
 }
 
+// StateMust returns the state for [GrafanaWorkspace]. Panics if the state is nil.
 func (gw *GrafanaWorkspace) StateMust() *grafanaWorkspaceState {
 	if gw.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", gw.Type(), gw.LocalName()))
@@ -60,10 +86,7 @@ func (gw *GrafanaWorkspace) StateMust() *grafanaWorkspaceState {
 	return gw.state
 }
 
-func (gw *GrafanaWorkspace) DependOn() terra.Reference {
-	return terra.ReferenceResource(gw)
-}
-
+// GrafanaWorkspaceArgs contains the configurations for aws_grafana_workspace.
 type GrafanaWorkspaceArgs struct {
 	// AccountAccessType: string, required
 	AccountAccessType terra.StringValue `hcl:"account_access_type,attr" validate:"required"`
@@ -101,99 +124,116 @@ type GrafanaWorkspaceArgs struct {
 	Timeouts *grafanaworkspace.Timeouts `hcl:"timeouts,block"`
 	// VpcConfiguration: optional
 	VpcConfiguration *grafanaworkspace.VpcConfiguration `hcl:"vpc_configuration,block"`
-	// DependsOn contains resources that GrafanaWorkspace depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type grafanaWorkspaceAttributes struct {
 	ref terra.Reference
 }
 
+// AccountAccessType returns a reference to field account_access_type of aws_grafana_workspace.
 func (gw grafanaWorkspaceAttributes) AccountAccessType() terra.StringValue {
-	return terra.ReferenceString(gw.ref.Append("account_access_type"))
+	return terra.ReferenceAsString(gw.ref.Append("account_access_type"))
 }
 
+// Arn returns a reference to field arn of aws_grafana_workspace.
 func (gw grafanaWorkspaceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(gw.ref.Append("arn"))
+	return terra.ReferenceAsString(gw.ref.Append("arn"))
 }
 
+// AuthenticationProviders returns a reference to field authentication_providers of aws_grafana_workspace.
 func (gw grafanaWorkspaceAttributes) AuthenticationProviders() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](gw.ref.Append("authentication_providers"))
+	return terra.ReferenceAsList[terra.StringValue](gw.ref.Append("authentication_providers"))
 }
 
+// Configuration returns a reference to field configuration of aws_grafana_workspace.
 func (gw grafanaWorkspaceAttributes) Configuration() terra.StringValue {
-	return terra.ReferenceString(gw.ref.Append("configuration"))
+	return terra.ReferenceAsString(gw.ref.Append("configuration"))
 }
 
+// DataSources returns a reference to field data_sources of aws_grafana_workspace.
 func (gw grafanaWorkspaceAttributes) DataSources() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](gw.ref.Append("data_sources"))
+	return terra.ReferenceAsList[terra.StringValue](gw.ref.Append("data_sources"))
 }
 
+// Description returns a reference to field description of aws_grafana_workspace.
 func (gw grafanaWorkspaceAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(gw.ref.Append("description"))
+	return terra.ReferenceAsString(gw.ref.Append("description"))
 }
 
+// Endpoint returns a reference to field endpoint of aws_grafana_workspace.
 func (gw grafanaWorkspaceAttributes) Endpoint() terra.StringValue {
-	return terra.ReferenceString(gw.ref.Append("endpoint"))
+	return terra.ReferenceAsString(gw.ref.Append("endpoint"))
 }
 
+// GrafanaVersion returns a reference to field grafana_version of aws_grafana_workspace.
 func (gw grafanaWorkspaceAttributes) GrafanaVersion() terra.StringValue {
-	return terra.ReferenceString(gw.ref.Append("grafana_version"))
+	return terra.ReferenceAsString(gw.ref.Append("grafana_version"))
 }
 
+// Id returns a reference to field id of aws_grafana_workspace.
 func (gw grafanaWorkspaceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(gw.ref.Append("id"))
+	return terra.ReferenceAsString(gw.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_grafana_workspace.
 func (gw grafanaWorkspaceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(gw.ref.Append("name"))
+	return terra.ReferenceAsString(gw.ref.Append("name"))
 }
 
+// NotificationDestinations returns a reference to field notification_destinations of aws_grafana_workspace.
 func (gw grafanaWorkspaceAttributes) NotificationDestinations() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](gw.ref.Append("notification_destinations"))
+	return terra.ReferenceAsList[terra.StringValue](gw.ref.Append("notification_destinations"))
 }
 
+// OrganizationRoleName returns a reference to field organization_role_name of aws_grafana_workspace.
 func (gw grafanaWorkspaceAttributes) OrganizationRoleName() terra.StringValue {
-	return terra.ReferenceString(gw.ref.Append("organization_role_name"))
+	return terra.ReferenceAsString(gw.ref.Append("organization_role_name"))
 }
 
+// OrganizationalUnits returns a reference to field organizational_units of aws_grafana_workspace.
 func (gw grafanaWorkspaceAttributes) OrganizationalUnits() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](gw.ref.Append("organizational_units"))
+	return terra.ReferenceAsList[terra.StringValue](gw.ref.Append("organizational_units"))
 }
 
+// PermissionType returns a reference to field permission_type of aws_grafana_workspace.
 func (gw grafanaWorkspaceAttributes) PermissionType() terra.StringValue {
-	return terra.ReferenceString(gw.ref.Append("permission_type"))
+	return terra.ReferenceAsString(gw.ref.Append("permission_type"))
 }
 
+// RoleArn returns a reference to field role_arn of aws_grafana_workspace.
 func (gw grafanaWorkspaceAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(gw.ref.Append("role_arn"))
+	return terra.ReferenceAsString(gw.ref.Append("role_arn"))
 }
 
+// SamlConfigurationStatus returns a reference to field saml_configuration_status of aws_grafana_workspace.
 func (gw grafanaWorkspaceAttributes) SamlConfigurationStatus() terra.StringValue {
-	return terra.ReferenceString(gw.ref.Append("saml_configuration_status"))
+	return terra.ReferenceAsString(gw.ref.Append("saml_configuration_status"))
 }
 
+// StackSetName returns a reference to field stack_set_name of aws_grafana_workspace.
 func (gw grafanaWorkspaceAttributes) StackSetName() terra.StringValue {
-	return terra.ReferenceString(gw.ref.Append("stack_set_name"))
+	return terra.ReferenceAsString(gw.ref.Append("stack_set_name"))
 }
 
+// Tags returns a reference to field tags of aws_grafana_workspace.
 func (gw grafanaWorkspaceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gw.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](gw.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_grafana_workspace.
 func (gw grafanaWorkspaceAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](gw.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](gw.ref.Append("tags_all"))
 }
 
 func (gw grafanaWorkspaceAttributes) NetworkAccessControl() terra.ListValue[grafanaworkspace.NetworkAccessControlAttributes] {
-	return terra.ReferenceList[grafanaworkspace.NetworkAccessControlAttributes](gw.ref.Append("network_access_control"))
+	return terra.ReferenceAsList[grafanaworkspace.NetworkAccessControlAttributes](gw.ref.Append("network_access_control"))
 }
 
 func (gw grafanaWorkspaceAttributes) Timeouts() grafanaworkspace.TimeoutsAttributes {
-	return terra.ReferenceSingle[grafanaworkspace.TimeoutsAttributes](gw.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[grafanaworkspace.TimeoutsAttributes](gw.ref.Append("timeouts"))
 }
 
 func (gw grafanaWorkspaceAttributes) VpcConfiguration() terra.ListValue[grafanaworkspace.VpcConfigurationAttributes] {
-	return terra.ReferenceList[grafanaworkspace.VpcConfigurationAttributes](gw.ref.Append("vpc_configuration"))
+	return terra.ReferenceAsList[grafanaworkspace.VpcConfigurationAttributes](gw.ref.Append("vpc_configuration"))
 }
 
 type grafanaWorkspaceState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDxMacsecKeyAssociation creates a new instance of [DxMacsecKeyAssociation].
 func NewDxMacsecKeyAssociation(name string, args DxMacsecKeyAssociationArgs) *DxMacsecKeyAssociation {
 	return &DxMacsecKeyAssociation{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDxMacsecKeyAssociation(name string, args DxMacsecKeyAssociationArgs) *Dx
 
 var _ terra.Resource = (*DxMacsecKeyAssociation)(nil)
 
+// DxMacsecKeyAssociation represents the Terraform resource aws_dx_macsec_key_association.
 type DxMacsecKeyAssociation struct {
-	Name  string
-	Args  DxMacsecKeyAssociationArgs
-	state *dxMacsecKeyAssociationState
+	Name      string
+	Args      DxMacsecKeyAssociationArgs
+	state     *dxMacsecKeyAssociationState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DxMacsecKeyAssociation].
 func (dmka *DxMacsecKeyAssociation) Type() string {
 	return "aws_dx_macsec_key_association"
 }
 
+// LocalName returns the local name for [DxMacsecKeyAssociation].
 func (dmka *DxMacsecKeyAssociation) LocalName() string {
 	return dmka.Name
 }
 
+// Configuration returns the configuration (args) for [DxMacsecKeyAssociation].
 func (dmka *DxMacsecKeyAssociation) Configuration() interface{} {
 	return dmka.Args
 }
 
+// DependOn is used for other resources to depend on [DxMacsecKeyAssociation].
+func (dmka *DxMacsecKeyAssociation) DependOn() terra.Reference {
+	return terra.ReferenceResource(dmka)
+}
+
+// Dependencies returns the list of resources [DxMacsecKeyAssociation] depends_on.
+func (dmka *DxMacsecKeyAssociation) Dependencies() terra.Dependencies {
+	return dmka.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DxMacsecKeyAssociation].
+func (dmka *DxMacsecKeyAssociation) LifecycleManagement() *terra.Lifecycle {
+	return dmka.Lifecycle
+}
+
+// Attributes returns the attributes for [DxMacsecKeyAssociation].
 func (dmka *DxMacsecKeyAssociation) Attributes() dxMacsecKeyAssociationAttributes {
 	return dxMacsecKeyAssociationAttributes{ref: terra.ReferenceResource(dmka)}
 }
 
+// ImportState imports the given attribute values into [DxMacsecKeyAssociation]'s state.
 func (dmka *DxMacsecKeyAssociation) ImportState(av io.Reader) error {
 	dmka.state = &dxMacsecKeyAssociationState{}
 	if err := json.NewDecoder(av).Decode(dmka.state); err != nil {
@@ -48,10 +72,12 @@ func (dmka *DxMacsecKeyAssociation) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DxMacsecKeyAssociation] has state.
 func (dmka *DxMacsecKeyAssociation) State() (*dxMacsecKeyAssociationState, bool) {
 	return dmka.state, dmka.state != nil
 }
 
+// StateMust returns the state for [DxMacsecKeyAssociation]. Panics if the state is nil.
 func (dmka *DxMacsecKeyAssociation) StateMust() *dxMacsecKeyAssociationState {
 	if dmka.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", dmka.Type(), dmka.LocalName()))
@@ -59,10 +85,7 @@ func (dmka *DxMacsecKeyAssociation) StateMust() *dxMacsecKeyAssociationState {
 	return dmka.state
 }
 
-func (dmka *DxMacsecKeyAssociation) DependOn() terra.Reference {
-	return terra.ReferenceResource(dmka)
-}
-
+// DxMacsecKeyAssociationArgs contains the configurations for aws_dx_macsec_key_association.
 type DxMacsecKeyAssociationArgs struct {
 	// Cak: string, optional
 	Cak terra.StringValue `hcl:"cak,attr"`
@@ -74,39 +97,44 @@ type DxMacsecKeyAssociationArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// SecretArn: string, optional
 	SecretArn terra.StringValue `hcl:"secret_arn,attr"`
-	// DependsOn contains resources that DxMacsecKeyAssociation depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dxMacsecKeyAssociationAttributes struct {
 	ref terra.Reference
 }
 
+// Cak returns a reference to field cak of aws_dx_macsec_key_association.
 func (dmka dxMacsecKeyAssociationAttributes) Cak() terra.StringValue {
-	return terra.ReferenceString(dmka.ref.Append("cak"))
+	return terra.ReferenceAsString(dmka.ref.Append("cak"))
 }
 
+// Ckn returns a reference to field ckn of aws_dx_macsec_key_association.
 func (dmka dxMacsecKeyAssociationAttributes) Ckn() terra.StringValue {
-	return terra.ReferenceString(dmka.ref.Append("ckn"))
+	return terra.ReferenceAsString(dmka.ref.Append("ckn"))
 }
 
+// ConnectionId returns a reference to field connection_id of aws_dx_macsec_key_association.
 func (dmka dxMacsecKeyAssociationAttributes) ConnectionId() terra.StringValue {
-	return terra.ReferenceString(dmka.ref.Append("connection_id"))
+	return terra.ReferenceAsString(dmka.ref.Append("connection_id"))
 }
 
+// Id returns a reference to field id of aws_dx_macsec_key_association.
 func (dmka dxMacsecKeyAssociationAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(dmka.ref.Append("id"))
+	return terra.ReferenceAsString(dmka.ref.Append("id"))
 }
 
+// SecretArn returns a reference to field secret_arn of aws_dx_macsec_key_association.
 func (dmka dxMacsecKeyAssociationAttributes) SecretArn() terra.StringValue {
-	return terra.ReferenceString(dmka.ref.Append("secret_arn"))
+	return terra.ReferenceAsString(dmka.ref.Append("secret_arn"))
 }
 
+// StartOn returns a reference to field start_on of aws_dx_macsec_key_association.
 func (dmka dxMacsecKeyAssociationAttributes) StartOn() terra.StringValue {
-	return terra.ReferenceString(dmka.ref.Append("start_on"))
+	return terra.ReferenceAsString(dmka.ref.Append("start_on"))
 }
 
+// State returns a reference to field state of aws_dx_macsec_key_association.
 func (dmka dxMacsecKeyAssociationAttributes) State() terra.StringValue {
-	return terra.ReferenceString(dmka.ref.Append("state"))
+	return terra.ReferenceAsString(dmka.ref.Append("state"))
 }
 
 type dxMacsecKeyAssociationState struct {

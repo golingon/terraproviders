@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLocationGeofenceCollection creates a new instance of [LocationGeofenceCollection].
 func NewLocationGeofenceCollection(name string, args LocationGeofenceCollectionArgs) *LocationGeofenceCollection {
 	return &LocationGeofenceCollection{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLocationGeofenceCollection(name string, args LocationGeofenceCollectionA
 
 var _ terra.Resource = (*LocationGeofenceCollection)(nil)
 
+// LocationGeofenceCollection represents the Terraform resource aws_location_geofence_collection.
 type LocationGeofenceCollection struct {
-	Name  string
-	Args  LocationGeofenceCollectionArgs
-	state *locationGeofenceCollectionState
+	Name      string
+	Args      LocationGeofenceCollectionArgs
+	state     *locationGeofenceCollectionState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LocationGeofenceCollection].
 func (lgc *LocationGeofenceCollection) Type() string {
 	return "aws_location_geofence_collection"
 }
 
+// LocalName returns the local name for [LocationGeofenceCollection].
 func (lgc *LocationGeofenceCollection) LocalName() string {
 	return lgc.Name
 }
 
+// Configuration returns the configuration (args) for [LocationGeofenceCollection].
 func (lgc *LocationGeofenceCollection) Configuration() interface{} {
 	return lgc.Args
 }
 
+// DependOn is used for other resources to depend on [LocationGeofenceCollection].
+func (lgc *LocationGeofenceCollection) DependOn() terra.Reference {
+	return terra.ReferenceResource(lgc)
+}
+
+// Dependencies returns the list of resources [LocationGeofenceCollection] depends_on.
+func (lgc *LocationGeofenceCollection) Dependencies() terra.Dependencies {
+	return lgc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LocationGeofenceCollection].
+func (lgc *LocationGeofenceCollection) LifecycleManagement() *terra.Lifecycle {
+	return lgc.Lifecycle
+}
+
+// Attributes returns the attributes for [LocationGeofenceCollection].
 func (lgc *LocationGeofenceCollection) Attributes() locationGeofenceCollectionAttributes {
 	return locationGeofenceCollectionAttributes{ref: terra.ReferenceResource(lgc)}
 }
 
+// ImportState imports the given attribute values into [LocationGeofenceCollection]'s state.
 func (lgc *LocationGeofenceCollection) ImportState(av io.Reader) error {
 	lgc.state = &locationGeofenceCollectionState{}
 	if err := json.NewDecoder(av).Decode(lgc.state); err != nil {
@@ -49,10 +73,12 @@ func (lgc *LocationGeofenceCollection) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LocationGeofenceCollection] has state.
 func (lgc *LocationGeofenceCollection) State() (*locationGeofenceCollectionState, bool) {
 	return lgc.state, lgc.state != nil
 }
 
+// StateMust returns the state for [LocationGeofenceCollection]. Panics if the state is nil.
 func (lgc *LocationGeofenceCollection) StateMust() *locationGeofenceCollectionState {
 	if lgc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lgc.Type(), lgc.LocalName()))
@@ -60,10 +86,7 @@ func (lgc *LocationGeofenceCollection) StateMust() *locationGeofenceCollectionSt
 	return lgc.state
 }
 
-func (lgc *LocationGeofenceCollection) DependOn() terra.Reference {
-	return terra.ReferenceResource(lgc)
-}
-
+// LocationGeofenceCollectionArgs contains the configurations for aws_location_geofence_collection.
 type LocationGeofenceCollectionArgs struct {
 	// CollectionName: string, required
 	CollectionName terra.StringValue `hcl:"collection_name,attr" validate:"required"`
@@ -79,51 +102,58 @@ type LocationGeofenceCollectionArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// Timeouts: optional
 	Timeouts *locationgeofencecollection.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LocationGeofenceCollection depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type locationGeofenceCollectionAttributes struct {
 	ref terra.Reference
 }
 
+// CollectionArn returns a reference to field collection_arn of aws_location_geofence_collection.
 func (lgc locationGeofenceCollectionAttributes) CollectionArn() terra.StringValue {
-	return terra.ReferenceString(lgc.ref.Append("collection_arn"))
+	return terra.ReferenceAsString(lgc.ref.Append("collection_arn"))
 }
 
+// CollectionName returns a reference to field collection_name of aws_location_geofence_collection.
 func (lgc locationGeofenceCollectionAttributes) CollectionName() terra.StringValue {
-	return terra.ReferenceString(lgc.ref.Append("collection_name"))
+	return terra.ReferenceAsString(lgc.ref.Append("collection_name"))
 }
 
+// CreateTime returns a reference to field create_time of aws_location_geofence_collection.
 func (lgc locationGeofenceCollectionAttributes) CreateTime() terra.StringValue {
-	return terra.ReferenceString(lgc.ref.Append("create_time"))
+	return terra.ReferenceAsString(lgc.ref.Append("create_time"))
 }
 
+// Description returns a reference to field description of aws_location_geofence_collection.
 func (lgc locationGeofenceCollectionAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(lgc.ref.Append("description"))
+	return terra.ReferenceAsString(lgc.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_location_geofence_collection.
 func (lgc locationGeofenceCollectionAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lgc.ref.Append("id"))
+	return terra.ReferenceAsString(lgc.ref.Append("id"))
 }
 
+// KmsKeyId returns a reference to field kms_key_id of aws_location_geofence_collection.
 func (lgc locationGeofenceCollectionAttributes) KmsKeyId() terra.StringValue {
-	return terra.ReferenceString(lgc.ref.Append("kms_key_id"))
+	return terra.ReferenceAsString(lgc.ref.Append("kms_key_id"))
 }
 
+// Tags returns a reference to field tags of aws_location_geofence_collection.
 func (lgc locationGeofenceCollectionAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lgc.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](lgc.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_location_geofence_collection.
 func (lgc locationGeofenceCollectionAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lgc.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](lgc.ref.Append("tags_all"))
 }
 
+// UpdateTime returns a reference to field update_time of aws_location_geofence_collection.
 func (lgc locationGeofenceCollectionAttributes) UpdateTime() terra.StringValue {
-	return terra.ReferenceString(lgc.ref.Append("update_time"))
+	return terra.ReferenceAsString(lgc.ref.Append("update_time"))
 }
 
 func (lgc locationGeofenceCollectionAttributes) Timeouts() locationgeofencecollection.TimeoutsAttributes {
-	return terra.ReferenceSingle[locationgeofencecollection.TimeoutsAttributes](lgc.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[locationgeofencecollection.TimeoutsAttributes](lgc.ref.Append("timeouts"))
 }
 
 type locationGeofenceCollectionState struct {

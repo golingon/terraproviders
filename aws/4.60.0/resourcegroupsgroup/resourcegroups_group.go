@@ -52,11 +52,11 @@ func (c ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ConfigurationAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("type"))
+	return terra.ReferenceAsString(c.ref.Append("type"))
 }
 
 func (c ConfigurationAttributes) Parameters() terra.SetValue[ParametersAttributes] {
-	return terra.ReferenceSet[ParametersAttributes](c.ref.Append("parameters"))
+	return terra.ReferenceAsSet[ParametersAttributes](c.ref.Append("parameters"))
 }
 
 type ParametersAttributes struct {
@@ -76,11 +76,11 @@ func (p ParametersAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (p ParametersAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(p.ref.Append("name"))
+	return terra.ReferenceAsString(p.ref.Append("name"))
 }
 
 func (p ParametersAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](p.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](p.ref.Append("values"))
 }
 
 type ResourceQueryAttributes struct {
@@ -100,11 +100,11 @@ func (rq ResourceQueryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (rq ResourceQueryAttributes) Query() terra.StringValue {
-	return terra.ReferenceString(rq.ref.Append("query"))
+	return terra.ReferenceAsString(rq.ref.Append("query"))
 }
 
 func (rq ResourceQueryAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(rq.ref.Append("type"))
+	return terra.ReferenceAsString(rq.ref.Append("type"))
 }
 
 type TimeoutsAttributes struct {
@@ -124,11 +124,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type ConfigurationState struct {

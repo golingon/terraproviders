@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDmsReplicationTask creates a new instance of [DmsReplicationTask].
 func NewDmsReplicationTask(name string, args DmsReplicationTaskArgs) *DmsReplicationTask {
 	return &DmsReplicationTask{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDmsReplicationTask(name string, args DmsReplicationTaskArgs) *DmsReplica
 
 var _ terra.Resource = (*DmsReplicationTask)(nil)
 
+// DmsReplicationTask represents the Terraform resource aws_dms_replication_task.
 type DmsReplicationTask struct {
-	Name  string
-	Args  DmsReplicationTaskArgs
-	state *dmsReplicationTaskState
+	Name      string
+	Args      DmsReplicationTaskArgs
+	state     *dmsReplicationTaskState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DmsReplicationTask].
 func (drt *DmsReplicationTask) Type() string {
 	return "aws_dms_replication_task"
 }
 
+// LocalName returns the local name for [DmsReplicationTask].
 func (drt *DmsReplicationTask) LocalName() string {
 	return drt.Name
 }
 
+// Configuration returns the configuration (args) for [DmsReplicationTask].
 func (drt *DmsReplicationTask) Configuration() interface{} {
 	return drt.Args
 }
 
+// DependOn is used for other resources to depend on [DmsReplicationTask].
+func (drt *DmsReplicationTask) DependOn() terra.Reference {
+	return terra.ReferenceResource(drt)
+}
+
+// Dependencies returns the list of resources [DmsReplicationTask] depends_on.
+func (drt *DmsReplicationTask) Dependencies() terra.Dependencies {
+	return drt.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DmsReplicationTask].
+func (drt *DmsReplicationTask) LifecycleManagement() *terra.Lifecycle {
+	return drt.Lifecycle
+}
+
+// Attributes returns the attributes for [DmsReplicationTask].
 func (drt *DmsReplicationTask) Attributes() dmsReplicationTaskAttributes {
 	return dmsReplicationTaskAttributes{ref: terra.ReferenceResource(drt)}
 }
 
+// ImportState imports the given attribute values into [DmsReplicationTask]'s state.
 func (drt *DmsReplicationTask) ImportState(av io.Reader) error {
 	drt.state = &dmsReplicationTaskState{}
 	if err := json.NewDecoder(av).Decode(drt.state); err != nil {
@@ -48,10 +72,12 @@ func (drt *DmsReplicationTask) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DmsReplicationTask] has state.
 func (drt *DmsReplicationTask) State() (*dmsReplicationTaskState, bool) {
 	return drt.state, drt.state != nil
 }
 
+// StateMust returns the state for [DmsReplicationTask]. Panics if the state is nil.
 func (drt *DmsReplicationTask) StateMust() *dmsReplicationTaskState {
 	if drt.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", drt.Type(), drt.LocalName()))
@@ -59,10 +85,7 @@ func (drt *DmsReplicationTask) StateMust() *dmsReplicationTaskState {
 	return drt.state
 }
 
-func (drt *DmsReplicationTask) DependOn() terra.Reference {
-	return terra.ReferenceResource(drt)
-}
-
+// DmsReplicationTaskArgs contains the configurations for aws_dms_replication_task.
 type DmsReplicationTaskArgs struct {
 	// CdcStartPosition: string, optional
 	CdcStartPosition terra.StringValue `hcl:"cdc_start_position,attr"`
@@ -90,71 +113,84 @@ type DmsReplicationTaskArgs struct {
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
 	// TargetEndpointArn: string, required
 	TargetEndpointArn terra.StringValue `hcl:"target_endpoint_arn,attr" validate:"required"`
-	// DependsOn contains resources that DmsReplicationTask depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type dmsReplicationTaskAttributes struct {
 	ref terra.Reference
 }
 
+// CdcStartPosition returns a reference to field cdc_start_position of aws_dms_replication_task.
 func (drt dmsReplicationTaskAttributes) CdcStartPosition() terra.StringValue {
-	return terra.ReferenceString(drt.ref.Append("cdc_start_position"))
+	return terra.ReferenceAsString(drt.ref.Append("cdc_start_position"))
 }
 
+// CdcStartTime returns a reference to field cdc_start_time of aws_dms_replication_task.
 func (drt dmsReplicationTaskAttributes) CdcStartTime() terra.StringValue {
-	return terra.ReferenceString(drt.ref.Append("cdc_start_time"))
+	return terra.ReferenceAsString(drt.ref.Append("cdc_start_time"))
 }
 
+// Id returns a reference to field id of aws_dms_replication_task.
 func (drt dmsReplicationTaskAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(drt.ref.Append("id"))
+	return terra.ReferenceAsString(drt.ref.Append("id"))
 }
 
+// MigrationType returns a reference to field migration_type of aws_dms_replication_task.
 func (drt dmsReplicationTaskAttributes) MigrationType() terra.StringValue {
-	return terra.ReferenceString(drt.ref.Append("migration_type"))
+	return terra.ReferenceAsString(drt.ref.Append("migration_type"))
 }
 
+// ReplicationInstanceArn returns a reference to field replication_instance_arn of aws_dms_replication_task.
 func (drt dmsReplicationTaskAttributes) ReplicationInstanceArn() terra.StringValue {
-	return terra.ReferenceString(drt.ref.Append("replication_instance_arn"))
+	return terra.ReferenceAsString(drt.ref.Append("replication_instance_arn"))
 }
 
+// ReplicationTaskArn returns a reference to field replication_task_arn of aws_dms_replication_task.
 func (drt dmsReplicationTaskAttributes) ReplicationTaskArn() terra.StringValue {
-	return terra.ReferenceString(drt.ref.Append("replication_task_arn"))
+	return terra.ReferenceAsString(drt.ref.Append("replication_task_arn"))
 }
 
+// ReplicationTaskId returns a reference to field replication_task_id of aws_dms_replication_task.
 func (drt dmsReplicationTaskAttributes) ReplicationTaskId() terra.StringValue {
-	return terra.ReferenceString(drt.ref.Append("replication_task_id"))
+	return terra.ReferenceAsString(drt.ref.Append("replication_task_id"))
 }
 
+// ReplicationTaskSettings returns a reference to field replication_task_settings of aws_dms_replication_task.
 func (drt dmsReplicationTaskAttributes) ReplicationTaskSettings() terra.StringValue {
-	return terra.ReferenceString(drt.ref.Append("replication_task_settings"))
+	return terra.ReferenceAsString(drt.ref.Append("replication_task_settings"))
 }
 
+// SourceEndpointArn returns a reference to field source_endpoint_arn of aws_dms_replication_task.
 func (drt dmsReplicationTaskAttributes) SourceEndpointArn() terra.StringValue {
-	return terra.ReferenceString(drt.ref.Append("source_endpoint_arn"))
+	return terra.ReferenceAsString(drt.ref.Append("source_endpoint_arn"))
 }
 
+// StartReplicationTask returns a reference to field start_replication_task of aws_dms_replication_task.
 func (drt dmsReplicationTaskAttributes) StartReplicationTask() terra.BoolValue {
-	return terra.ReferenceBool(drt.ref.Append("start_replication_task"))
+	return terra.ReferenceAsBool(drt.ref.Append("start_replication_task"))
 }
 
+// Status returns a reference to field status of aws_dms_replication_task.
 func (drt dmsReplicationTaskAttributes) Status() terra.StringValue {
-	return terra.ReferenceString(drt.ref.Append("status"))
+	return terra.ReferenceAsString(drt.ref.Append("status"))
 }
 
+// TableMappings returns a reference to field table_mappings of aws_dms_replication_task.
 func (drt dmsReplicationTaskAttributes) TableMappings() terra.StringValue {
-	return terra.ReferenceString(drt.ref.Append("table_mappings"))
+	return terra.ReferenceAsString(drt.ref.Append("table_mappings"))
 }
 
+// Tags returns a reference to field tags of aws_dms_replication_task.
 func (drt dmsReplicationTaskAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](drt.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](drt.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_dms_replication_task.
 func (drt dmsReplicationTaskAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](drt.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](drt.ref.Append("tags_all"))
 }
 
+// TargetEndpointArn returns a reference to field target_endpoint_arn of aws_dms_replication_task.
 func (drt dmsReplicationTaskAttributes) TargetEndpointArn() terra.StringValue {
-	return terra.ReferenceString(drt.ref.Append("target_endpoint_arn"))
+	return terra.ReferenceAsString(drt.ref.Append("target_endpoint_arn"))
 }
 
 type dmsReplicationTaskState struct {

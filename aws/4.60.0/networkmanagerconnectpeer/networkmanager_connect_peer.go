@@ -43,23 +43,23 @@ func (c ConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (c ConfigurationAttributes) CoreNetworkAddress() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("core_network_address"))
+	return terra.ReferenceAsString(c.ref.Append("core_network_address"))
 }
 
 func (c ConfigurationAttributes) InsideCidrBlocks() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](c.ref.Append("inside_cidr_blocks"))
+	return terra.ReferenceAsSet[terra.StringValue](c.ref.Append("inside_cidr_blocks"))
 }
 
 func (c ConfigurationAttributes) PeerAddress() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("peer_address"))
+	return terra.ReferenceAsString(c.ref.Append("peer_address"))
 }
 
 func (c ConfigurationAttributes) Protocol() terra.StringValue {
-	return terra.ReferenceString(c.ref.Append("protocol"))
+	return terra.ReferenceAsString(c.ref.Append("protocol"))
 }
 
 func (c ConfigurationAttributes) BgpConfigurations() terra.ListValue[BgpConfigurationsAttributes] {
-	return terra.ReferenceList[BgpConfigurationsAttributes](c.ref.Append("bgp_configurations"))
+	return terra.ReferenceAsList[BgpConfigurationsAttributes](c.ref.Append("bgp_configurations"))
 }
 
 type BgpConfigurationsAttributes struct {
@@ -79,19 +79,19 @@ func (bc BgpConfigurationsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (bc BgpConfigurationsAttributes) CoreNetworkAddress() terra.StringValue {
-	return terra.ReferenceString(bc.ref.Append("core_network_address"))
+	return terra.ReferenceAsString(bc.ref.Append("core_network_address"))
 }
 
 func (bc BgpConfigurationsAttributes) CoreNetworkAsn() terra.NumberValue {
-	return terra.ReferenceNumber(bc.ref.Append("core_network_asn"))
+	return terra.ReferenceAsNumber(bc.ref.Append("core_network_asn"))
 }
 
 func (bc BgpConfigurationsAttributes) PeerAddress() terra.StringValue {
-	return terra.ReferenceString(bc.ref.Append("peer_address"))
+	return terra.ReferenceAsString(bc.ref.Append("peer_address"))
 }
 
 func (bc BgpConfigurationsAttributes) PeerAsn() terra.NumberValue {
-	return terra.ReferenceNumber(bc.ref.Append("peer_asn"))
+	return terra.ReferenceAsNumber(bc.ref.Append("peer_asn"))
 }
 
 type BgpOptionsAttributes struct {
@@ -111,7 +111,7 @@ func (bo BgpOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (bo BgpOptionsAttributes) PeerAsn() terra.NumberValue {
-	return terra.ReferenceNumber(bo.ref.Append("peer_asn"))
+	return terra.ReferenceAsNumber(bo.ref.Append("peer_asn"))
 }
 
 type TimeoutsAttributes struct {
@@ -131,11 +131,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 type ConfigurationState struct {

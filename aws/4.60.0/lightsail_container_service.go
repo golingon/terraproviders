@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLightsailContainerService creates a new instance of [LightsailContainerService].
 func NewLightsailContainerService(name string, args LightsailContainerServiceArgs) *LightsailContainerService {
 	return &LightsailContainerService{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLightsailContainerService(name string, args LightsailContainerServiceArg
 
 var _ terra.Resource = (*LightsailContainerService)(nil)
 
+// LightsailContainerService represents the Terraform resource aws_lightsail_container_service.
 type LightsailContainerService struct {
-	Name  string
-	Args  LightsailContainerServiceArgs
-	state *lightsailContainerServiceState
+	Name      string
+	Args      LightsailContainerServiceArgs
+	state     *lightsailContainerServiceState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LightsailContainerService].
 func (lcs *LightsailContainerService) Type() string {
 	return "aws_lightsail_container_service"
 }
 
+// LocalName returns the local name for [LightsailContainerService].
 func (lcs *LightsailContainerService) LocalName() string {
 	return lcs.Name
 }
 
+// Configuration returns the configuration (args) for [LightsailContainerService].
 func (lcs *LightsailContainerService) Configuration() interface{} {
 	return lcs.Args
 }
 
+// DependOn is used for other resources to depend on [LightsailContainerService].
+func (lcs *LightsailContainerService) DependOn() terra.Reference {
+	return terra.ReferenceResource(lcs)
+}
+
+// Dependencies returns the list of resources [LightsailContainerService] depends_on.
+func (lcs *LightsailContainerService) Dependencies() terra.Dependencies {
+	return lcs.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LightsailContainerService].
+func (lcs *LightsailContainerService) LifecycleManagement() *terra.Lifecycle {
+	return lcs.Lifecycle
+}
+
+// Attributes returns the attributes for [LightsailContainerService].
 func (lcs *LightsailContainerService) Attributes() lightsailContainerServiceAttributes {
 	return lightsailContainerServiceAttributes{ref: terra.ReferenceResource(lcs)}
 }
 
+// ImportState imports the given attribute values into [LightsailContainerService]'s state.
 func (lcs *LightsailContainerService) ImportState(av io.Reader) error {
 	lcs.state = &lightsailContainerServiceState{}
 	if err := json.NewDecoder(av).Decode(lcs.state); err != nil {
@@ -49,10 +73,12 @@ func (lcs *LightsailContainerService) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LightsailContainerService] has state.
 func (lcs *LightsailContainerService) State() (*lightsailContainerServiceState, bool) {
 	return lcs.state, lcs.state != nil
 }
 
+// StateMust returns the state for [LightsailContainerService]. Panics if the state is nil.
 func (lcs *LightsailContainerService) StateMust() *lightsailContainerServiceState {
 	if lcs.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lcs.Type(), lcs.LocalName()))
@@ -60,10 +86,7 @@ func (lcs *LightsailContainerService) StateMust() *lightsailContainerServiceStat
 	return lcs.state
 }
 
-func (lcs *LightsailContainerService) DependOn() terra.Reference {
-	return terra.ReferenceResource(lcs)
-}
-
+// LightsailContainerServiceArgs contains the configurations for aws_lightsail_container_service.
 type LightsailContainerServiceArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -85,87 +108,101 @@ type LightsailContainerServiceArgs struct {
 	PublicDomainNames *lightsailcontainerservice.PublicDomainNames `hcl:"public_domain_names,block"`
 	// Timeouts: optional
 	Timeouts *lightsailcontainerservice.Timeouts `hcl:"timeouts,block"`
-	// DependsOn contains resources that LightsailContainerService depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lightsailContainerServiceAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_lightsail_container_service.
 func (lcs lightsailContainerServiceAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(lcs.ref.Append("arn"))
+	return terra.ReferenceAsString(lcs.ref.Append("arn"))
 }
 
+// AvailabilityZone returns a reference to field availability_zone of aws_lightsail_container_service.
 func (lcs lightsailContainerServiceAttributes) AvailabilityZone() terra.StringValue {
-	return terra.ReferenceString(lcs.ref.Append("availability_zone"))
+	return terra.ReferenceAsString(lcs.ref.Append("availability_zone"))
 }
 
+// CreatedAt returns a reference to field created_at of aws_lightsail_container_service.
 func (lcs lightsailContainerServiceAttributes) CreatedAt() terra.StringValue {
-	return terra.ReferenceString(lcs.ref.Append("created_at"))
+	return terra.ReferenceAsString(lcs.ref.Append("created_at"))
 }
 
+// Id returns a reference to field id of aws_lightsail_container_service.
 func (lcs lightsailContainerServiceAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lcs.ref.Append("id"))
+	return terra.ReferenceAsString(lcs.ref.Append("id"))
 }
 
+// IsDisabled returns a reference to field is_disabled of aws_lightsail_container_service.
 func (lcs lightsailContainerServiceAttributes) IsDisabled() terra.BoolValue {
-	return terra.ReferenceBool(lcs.ref.Append("is_disabled"))
+	return terra.ReferenceAsBool(lcs.ref.Append("is_disabled"))
 }
 
+// Name returns a reference to field name of aws_lightsail_container_service.
 func (lcs lightsailContainerServiceAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(lcs.ref.Append("name"))
+	return terra.ReferenceAsString(lcs.ref.Append("name"))
 }
 
+// Power returns a reference to field power of aws_lightsail_container_service.
 func (lcs lightsailContainerServiceAttributes) Power() terra.StringValue {
-	return terra.ReferenceString(lcs.ref.Append("power"))
+	return terra.ReferenceAsString(lcs.ref.Append("power"))
 }
 
+// PowerId returns a reference to field power_id of aws_lightsail_container_service.
 func (lcs lightsailContainerServiceAttributes) PowerId() terra.StringValue {
-	return terra.ReferenceString(lcs.ref.Append("power_id"))
+	return terra.ReferenceAsString(lcs.ref.Append("power_id"))
 }
 
+// PrincipalArn returns a reference to field principal_arn of aws_lightsail_container_service.
 func (lcs lightsailContainerServiceAttributes) PrincipalArn() terra.StringValue {
-	return terra.ReferenceString(lcs.ref.Append("principal_arn"))
+	return terra.ReferenceAsString(lcs.ref.Append("principal_arn"))
 }
 
+// PrivateDomainName returns a reference to field private_domain_name of aws_lightsail_container_service.
 func (lcs lightsailContainerServiceAttributes) PrivateDomainName() terra.StringValue {
-	return terra.ReferenceString(lcs.ref.Append("private_domain_name"))
+	return terra.ReferenceAsString(lcs.ref.Append("private_domain_name"))
 }
 
+// ResourceType returns a reference to field resource_type of aws_lightsail_container_service.
 func (lcs lightsailContainerServiceAttributes) ResourceType() terra.StringValue {
-	return terra.ReferenceString(lcs.ref.Append("resource_type"))
+	return terra.ReferenceAsString(lcs.ref.Append("resource_type"))
 }
 
+// Scale returns a reference to field scale of aws_lightsail_container_service.
 func (lcs lightsailContainerServiceAttributes) Scale() terra.NumberValue {
-	return terra.ReferenceNumber(lcs.ref.Append("scale"))
+	return terra.ReferenceAsNumber(lcs.ref.Append("scale"))
 }
 
+// State returns a reference to field state of aws_lightsail_container_service.
 func (lcs lightsailContainerServiceAttributes) State() terra.StringValue {
-	return terra.ReferenceString(lcs.ref.Append("state"))
+	return terra.ReferenceAsString(lcs.ref.Append("state"))
 }
 
+// Tags returns a reference to field tags of aws_lightsail_container_service.
 func (lcs lightsailContainerServiceAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lcs.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](lcs.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_lightsail_container_service.
 func (lcs lightsailContainerServiceAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](lcs.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](lcs.ref.Append("tags_all"))
 }
 
+// Url returns a reference to field url of aws_lightsail_container_service.
 func (lcs lightsailContainerServiceAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(lcs.ref.Append("url"))
+	return terra.ReferenceAsString(lcs.ref.Append("url"))
 }
 
 func (lcs lightsailContainerServiceAttributes) PrivateRegistryAccess() terra.ListValue[lightsailcontainerservice.PrivateRegistryAccessAttributes] {
-	return terra.ReferenceList[lightsailcontainerservice.PrivateRegistryAccessAttributes](lcs.ref.Append("private_registry_access"))
+	return terra.ReferenceAsList[lightsailcontainerservice.PrivateRegistryAccessAttributes](lcs.ref.Append("private_registry_access"))
 }
 
 func (lcs lightsailContainerServiceAttributes) PublicDomainNames() terra.ListValue[lightsailcontainerservice.PublicDomainNamesAttributes] {
-	return terra.ReferenceList[lightsailcontainerservice.PublicDomainNamesAttributes](lcs.ref.Append("public_domain_names"))
+	return terra.ReferenceAsList[lightsailcontainerservice.PublicDomainNamesAttributes](lcs.ref.Append("public_domain_names"))
 }
 
 func (lcs lightsailContainerServiceAttributes) Timeouts() lightsailcontainerservice.TimeoutsAttributes {
-	return terra.ReferenceSingle[lightsailcontainerservice.TimeoutsAttributes](lcs.ref.Append("timeouts"))
+	return terra.ReferenceAsSingle[lightsailcontainerservice.TimeoutsAttributes](lcs.ref.Append("timeouts"))
 }
 
 type lightsailContainerServiceState struct {

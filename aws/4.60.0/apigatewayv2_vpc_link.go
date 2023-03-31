@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewApigatewayv2VpcLink creates a new instance of [Apigatewayv2VpcLink].
 func NewApigatewayv2VpcLink(name string, args Apigatewayv2VpcLinkArgs) *Apigatewayv2VpcLink {
 	return &Apigatewayv2VpcLink{
 		Args: args,
@@ -18,28 +19,51 @@ func NewApigatewayv2VpcLink(name string, args Apigatewayv2VpcLinkArgs) *Apigatew
 
 var _ terra.Resource = (*Apigatewayv2VpcLink)(nil)
 
+// Apigatewayv2VpcLink represents the Terraform resource aws_apigatewayv2_vpc_link.
 type Apigatewayv2VpcLink struct {
-	Name  string
-	Args  Apigatewayv2VpcLinkArgs
-	state *apigatewayv2VpcLinkState
+	Name      string
+	Args      Apigatewayv2VpcLinkArgs
+	state     *apigatewayv2VpcLinkState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [Apigatewayv2VpcLink].
 func (avl *Apigatewayv2VpcLink) Type() string {
 	return "aws_apigatewayv2_vpc_link"
 }
 
+// LocalName returns the local name for [Apigatewayv2VpcLink].
 func (avl *Apigatewayv2VpcLink) LocalName() string {
 	return avl.Name
 }
 
+// Configuration returns the configuration (args) for [Apigatewayv2VpcLink].
 func (avl *Apigatewayv2VpcLink) Configuration() interface{} {
 	return avl.Args
 }
 
+// DependOn is used for other resources to depend on [Apigatewayv2VpcLink].
+func (avl *Apigatewayv2VpcLink) DependOn() terra.Reference {
+	return terra.ReferenceResource(avl)
+}
+
+// Dependencies returns the list of resources [Apigatewayv2VpcLink] depends_on.
+func (avl *Apigatewayv2VpcLink) Dependencies() terra.Dependencies {
+	return avl.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [Apigatewayv2VpcLink].
+func (avl *Apigatewayv2VpcLink) LifecycleManagement() *terra.Lifecycle {
+	return avl.Lifecycle
+}
+
+// Attributes returns the attributes for [Apigatewayv2VpcLink].
 func (avl *Apigatewayv2VpcLink) Attributes() apigatewayv2VpcLinkAttributes {
 	return apigatewayv2VpcLinkAttributes{ref: terra.ReferenceResource(avl)}
 }
 
+// ImportState imports the given attribute values into [Apigatewayv2VpcLink]'s state.
 func (avl *Apigatewayv2VpcLink) ImportState(av io.Reader) error {
 	avl.state = &apigatewayv2VpcLinkState{}
 	if err := json.NewDecoder(av).Decode(avl.state); err != nil {
@@ -48,10 +72,12 @@ func (avl *Apigatewayv2VpcLink) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [Apigatewayv2VpcLink] has state.
 func (avl *Apigatewayv2VpcLink) State() (*apigatewayv2VpcLinkState, bool) {
 	return avl.state, avl.state != nil
 }
 
+// StateMust returns the state for [Apigatewayv2VpcLink]. Panics if the state is nil.
 func (avl *Apigatewayv2VpcLink) StateMust() *apigatewayv2VpcLinkState {
 	if avl.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", avl.Type(), avl.LocalName()))
@@ -59,10 +85,7 @@ func (avl *Apigatewayv2VpcLink) StateMust() *apigatewayv2VpcLinkState {
 	return avl.state
 }
 
-func (avl *Apigatewayv2VpcLink) DependOn() terra.Reference {
-	return terra.ReferenceResource(avl)
-}
-
+// Apigatewayv2VpcLinkArgs contains the configurations for aws_apigatewayv2_vpc_link.
 type Apigatewayv2VpcLinkArgs struct {
 	// Id: string, optional
 	Id terra.StringValue `hcl:"id,attr"`
@@ -76,39 +99,44 @@ type Apigatewayv2VpcLinkArgs struct {
 	Tags terra.MapValue[terra.StringValue] `hcl:"tags,attr"`
 	// TagsAll: map of string, optional
 	TagsAll terra.MapValue[terra.StringValue] `hcl:"tags_all,attr"`
-	// DependsOn contains resources that Apigatewayv2VpcLink depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type apigatewayv2VpcLinkAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_apigatewayv2_vpc_link.
 func (avl apigatewayv2VpcLinkAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(avl.ref.Append("arn"))
+	return terra.ReferenceAsString(avl.ref.Append("arn"))
 }
 
+// Id returns a reference to field id of aws_apigatewayv2_vpc_link.
 func (avl apigatewayv2VpcLinkAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(avl.ref.Append("id"))
+	return terra.ReferenceAsString(avl.ref.Append("id"))
 }
 
+// Name returns a reference to field name of aws_apigatewayv2_vpc_link.
 func (avl apigatewayv2VpcLinkAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(avl.ref.Append("name"))
+	return terra.ReferenceAsString(avl.ref.Append("name"))
 }
 
+// SecurityGroupIds returns a reference to field security_group_ids of aws_apigatewayv2_vpc_link.
 func (avl apigatewayv2VpcLinkAttributes) SecurityGroupIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](avl.ref.Append("security_group_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](avl.ref.Append("security_group_ids"))
 }
 
+// SubnetIds returns a reference to field subnet_ids of aws_apigatewayv2_vpc_link.
 func (avl apigatewayv2VpcLinkAttributes) SubnetIds() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](avl.ref.Append("subnet_ids"))
+	return terra.ReferenceAsSet[terra.StringValue](avl.ref.Append("subnet_ids"))
 }
 
+// Tags returns a reference to field tags of aws_apigatewayv2_vpc_link.
 func (avl apigatewayv2VpcLinkAttributes) Tags() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](avl.ref.Append("tags"))
+	return terra.ReferenceAsMap[terra.StringValue](avl.ref.Append("tags"))
 }
 
+// TagsAll returns a reference to field tags_all of aws_apigatewayv2_vpc_link.
 func (avl apigatewayv2VpcLinkAttributes) TagsAll() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](avl.ref.Append("tags_all"))
+	return terra.ReferenceAsMap[terra.StringValue](avl.ref.Append("tags_all"))
 }
 
 type apigatewayv2VpcLinkState struct {

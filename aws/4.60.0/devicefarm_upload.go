@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewDevicefarmUpload creates a new instance of [DevicefarmUpload].
 func NewDevicefarmUpload(name string, args DevicefarmUploadArgs) *DevicefarmUpload {
 	return &DevicefarmUpload{
 		Args: args,
@@ -18,28 +19,51 @@ func NewDevicefarmUpload(name string, args DevicefarmUploadArgs) *DevicefarmUplo
 
 var _ terra.Resource = (*DevicefarmUpload)(nil)
 
+// DevicefarmUpload represents the Terraform resource aws_devicefarm_upload.
 type DevicefarmUpload struct {
-	Name  string
-	Args  DevicefarmUploadArgs
-	state *devicefarmUploadState
+	Name      string
+	Args      DevicefarmUploadArgs
+	state     *devicefarmUploadState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [DevicefarmUpload].
 func (du *DevicefarmUpload) Type() string {
 	return "aws_devicefarm_upload"
 }
 
+// LocalName returns the local name for [DevicefarmUpload].
 func (du *DevicefarmUpload) LocalName() string {
 	return du.Name
 }
 
+// Configuration returns the configuration (args) for [DevicefarmUpload].
 func (du *DevicefarmUpload) Configuration() interface{} {
 	return du.Args
 }
 
+// DependOn is used for other resources to depend on [DevicefarmUpload].
+func (du *DevicefarmUpload) DependOn() terra.Reference {
+	return terra.ReferenceResource(du)
+}
+
+// Dependencies returns the list of resources [DevicefarmUpload] depends_on.
+func (du *DevicefarmUpload) Dependencies() terra.Dependencies {
+	return du.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [DevicefarmUpload].
+func (du *DevicefarmUpload) LifecycleManagement() *terra.Lifecycle {
+	return du.Lifecycle
+}
+
+// Attributes returns the attributes for [DevicefarmUpload].
 func (du *DevicefarmUpload) Attributes() devicefarmUploadAttributes {
 	return devicefarmUploadAttributes{ref: terra.ReferenceResource(du)}
 }
 
+// ImportState imports the given attribute values into [DevicefarmUpload]'s state.
 func (du *DevicefarmUpload) ImportState(av io.Reader) error {
 	du.state = &devicefarmUploadState{}
 	if err := json.NewDecoder(av).Decode(du.state); err != nil {
@@ -48,10 +72,12 @@ func (du *DevicefarmUpload) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [DevicefarmUpload] has state.
 func (du *DevicefarmUpload) State() (*devicefarmUploadState, bool) {
 	return du.state, du.state != nil
 }
 
+// StateMust returns the state for [DevicefarmUpload]. Panics if the state is nil.
 func (du *DevicefarmUpload) StateMust() *devicefarmUploadState {
 	if du.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", du.Type(), du.LocalName()))
@@ -59,10 +85,7 @@ func (du *DevicefarmUpload) StateMust() *devicefarmUploadState {
 	return du.state
 }
 
-func (du *DevicefarmUpload) DependOn() terra.Reference {
-	return terra.ReferenceResource(du)
-}
-
+// DevicefarmUploadArgs contains the configurations for aws_devicefarm_upload.
 type DevicefarmUploadArgs struct {
 	// ContentType: string, optional
 	ContentType terra.StringValue `hcl:"content_type,attr"`
@@ -74,47 +97,54 @@ type DevicefarmUploadArgs struct {
 	ProjectArn terra.StringValue `hcl:"project_arn,attr" validate:"required"`
 	// Type: string, required
 	Type terra.StringValue `hcl:"type,attr" validate:"required"`
-	// DependsOn contains resources that DevicefarmUpload depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type devicefarmUploadAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_devicefarm_upload.
 func (du devicefarmUploadAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(du.ref.Append("arn"))
+	return terra.ReferenceAsString(du.ref.Append("arn"))
 }
 
+// Category returns a reference to field category of aws_devicefarm_upload.
 func (du devicefarmUploadAttributes) Category() terra.StringValue {
-	return terra.ReferenceString(du.ref.Append("category"))
+	return terra.ReferenceAsString(du.ref.Append("category"))
 }
 
+// ContentType returns a reference to field content_type of aws_devicefarm_upload.
 func (du devicefarmUploadAttributes) ContentType() terra.StringValue {
-	return terra.ReferenceString(du.ref.Append("content_type"))
+	return terra.ReferenceAsString(du.ref.Append("content_type"))
 }
 
+// Id returns a reference to field id of aws_devicefarm_upload.
 func (du devicefarmUploadAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(du.ref.Append("id"))
+	return terra.ReferenceAsString(du.ref.Append("id"))
 }
 
+// Metadata returns a reference to field metadata of aws_devicefarm_upload.
 func (du devicefarmUploadAttributes) Metadata() terra.StringValue {
-	return terra.ReferenceString(du.ref.Append("metadata"))
+	return terra.ReferenceAsString(du.ref.Append("metadata"))
 }
 
+// Name returns a reference to field name of aws_devicefarm_upload.
 func (du devicefarmUploadAttributes) Name() terra.StringValue {
-	return terra.ReferenceString(du.ref.Append("name"))
+	return terra.ReferenceAsString(du.ref.Append("name"))
 }
 
+// ProjectArn returns a reference to field project_arn of aws_devicefarm_upload.
 func (du devicefarmUploadAttributes) ProjectArn() terra.StringValue {
-	return terra.ReferenceString(du.ref.Append("project_arn"))
+	return terra.ReferenceAsString(du.ref.Append("project_arn"))
 }
 
+// Type returns a reference to field type of aws_devicefarm_upload.
 func (du devicefarmUploadAttributes) Type() terra.StringValue {
-	return terra.ReferenceString(du.ref.Append("type"))
+	return terra.ReferenceAsString(du.ref.Append("type"))
 }
 
+// Url returns a reference to field url of aws_devicefarm_upload.
 func (du devicefarmUploadAttributes) Url() terra.StringValue {
-	return terra.ReferenceString(du.ref.Append("url"))
+	return terra.ReferenceAsString(du.ref.Append("url"))
 }
 
 type devicefarmUploadState struct {

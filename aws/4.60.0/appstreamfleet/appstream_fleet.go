@@ -43,19 +43,19 @@ func (cc ComputeCapacityAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cc ComputeCapacityAttributes) Available() terra.NumberValue {
-	return terra.ReferenceNumber(cc.ref.Append("available"))
+	return terra.ReferenceAsNumber(cc.ref.Append("available"))
 }
 
 func (cc ComputeCapacityAttributes) DesiredInstances() terra.NumberValue {
-	return terra.ReferenceNumber(cc.ref.Append("desired_instances"))
+	return terra.ReferenceAsNumber(cc.ref.Append("desired_instances"))
 }
 
 func (cc ComputeCapacityAttributes) InUse() terra.NumberValue {
-	return terra.ReferenceNumber(cc.ref.Append("in_use"))
+	return terra.ReferenceAsNumber(cc.ref.Append("in_use"))
 }
 
 func (cc ComputeCapacityAttributes) Running() terra.NumberValue {
-	return terra.ReferenceNumber(cc.ref.Append("running"))
+	return terra.ReferenceAsNumber(cc.ref.Append("running"))
 }
 
 type DomainJoinInfoAttributes struct {
@@ -75,11 +75,11 @@ func (dji DomainJoinInfoAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (dji DomainJoinInfoAttributes) DirectoryName() terra.StringValue {
-	return terra.ReferenceString(dji.ref.Append("directory_name"))
+	return terra.ReferenceAsString(dji.ref.Append("directory_name"))
 }
 
 func (dji DomainJoinInfoAttributes) OrganizationalUnitDistinguishedName() terra.StringValue {
-	return terra.ReferenceString(dji.ref.Append("organizational_unit_distinguished_name"))
+	return terra.ReferenceAsString(dji.ref.Append("organizational_unit_distinguished_name"))
 }
 
 type VpcConfigAttributes struct {
@@ -99,11 +99,11 @@ func (vc VpcConfigAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (vc VpcConfigAttributes) SecurityGroupIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](vc.ref.Append("security_group_ids"))
+	return terra.ReferenceAsList[terra.StringValue](vc.ref.Append("security_group_ids"))
 }
 
 func (vc VpcConfigAttributes) SubnetIds() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](vc.ref.Append("subnet_ids"))
+	return terra.ReferenceAsList[terra.StringValue](vc.ref.Append("subnet_ids"))
 }
 
 type ComputeCapacityState struct {

@@ -57,7 +57,7 @@ func (gni GatewayNetworkInterfaceAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (gni GatewayNetworkInterfaceAttributes) Ipv4Address() terra.StringValue {
-	return terra.ReferenceString(gni.ref.Append("ipv4_address"))
+	return terra.ReferenceAsString(gni.ref.Append("ipv4_address"))
 }
 
 type MaintenanceStartTimeAttributes struct {
@@ -77,19 +77,19 @@ func (mst MaintenanceStartTimeAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mst MaintenanceStartTimeAttributes) DayOfMonth() terra.StringValue {
-	return terra.ReferenceString(mst.ref.Append("day_of_month"))
+	return terra.ReferenceAsString(mst.ref.Append("day_of_month"))
 }
 
 func (mst MaintenanceStartTimeAttributes) DayOfWeek() terra.StringValue {
-	return terra.ReferenceString(mst.ref.Append("day_of_week"))
+	return terra.ReferenceAsString(mst.ref.Append("day_of_week"))
 }
 
 func (mst MaintenanceStartTimeAttributes) HourOfDay() terra.NumberValue {
-	return terra.ReferenceNumber(mst.ref.Append("hour_of_day"))
+	return terra.ReferenceAsNumber(mst.ref.Append("hour_of_day"))
 }
 
 func (mst MaintenanceStartTimeAttributes) MinuteOfHour() terra.NumberValue {
-	return terra.ReferenceNumber(mst.ref.Append("minute_of_hour"))
+	return terra.ReferenceAsNumber(mst.ref.Append("minute_of_hour"))
 }
 
 type SmbActiveDirectorySettingsAttributes struct {
@@ -109,31 +109,31 @@ func (sads SmbActiveDirectorySettingsAttributes) InternalTokens() hclwrite.Token
 }
 
 func (sads SmbActiveDirectorySettingsAttributes) ActiveDirectoryStatus() terra.StringValue {
-	return terra.ReferenceString(sads.ref.Append("active_directory_status"))
+	return terra.ReferenceAsString(sads.ref.Append("active_directory_status"))
 }
 
 func (sads SmbActiveDirectorySettingsAttributes) DomainControllers() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](sads.ref.Append("domain_controllers"))
+	return terra.ReferenceAsSet[terra.StringValue](sads.ref.Append("domain_controllers"))
 }
 
 func (sads SmbActiveDirectorySettingsAttributes) DomainName() terra.StringValue {
-	return terra.ReferenceString(sads.ref.Append("domain_name"))
+	return terra.ReferenceAsString(sads.ref.Append("domain_name"))
 }
 
 func (sads SmbActiveDirectorySettingsAttributes) OrganizationalUnit() terra.StringValue {
-	return terra.ReferenceString(sads.ref.Append("organizational_unit"))
+	return terra.ReferenceAsString(sads.ref.Append("organizational_unit"))
 }
 
 func (sads SmbActiveDirectorySettingsAttributes) Password() terra.StringValue {
-	return terra.ReferenceString(sads.ref.Append("password"))
+	return terra.ReferenceAsString(sads.ref.Append("password"))
 }
 
 func (sads SmbActiveDirectorySettingsAttributes) TimeoutInSeconds() terra.NumberValue {
-	return terra.ReferenceNumber(sads.ref.Append("timeout_in_seconds"))
+	return terra.ReferenceAsNumber(sads.ref.Append("timeout_in_seconds"))
 }
 
 func (sads SmbActiveDirectorySettingsAttributes) Username() terra.StringValue {
-	return terra.ReferenceString(sads.ref.Append("username"))
+	return terra.ReferenceAsString(sads.ref.Append("username"))
 }
 
 type TimeoutsAttributes struct {
@@ -153,7 +153,7 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Create() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("create"))
+	return terra.ReferenceAsString(t.ref.Append("create"))
 }
 
 type GatewayNetworkInterfaceState struct {

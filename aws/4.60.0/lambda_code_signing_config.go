@@ -10,6 +10,7 @@ import (
 	"io"
 )
 
+// NewLambdaCodeSigningConfig creates a new instance of [LambdaCodeSigningConfig].
 func NewLambdaCodeSigningConfig(name string, args LambdaCodeSigningConfigArgs) *LambdaCodeSigningConfig {
 	return &LambdaCodeSigningConfig{
 		Args: args,
@@ -19,28 +20,51 @@ func NewLambdaCodeSigningConfig(name string, args LambdaCodeSigningConfigArgs) *
 
 var _ terra.Resource = (*LambdaCodeSigningConfig)(nil)
 
+// LambdaCodeSigningConfig represents the Terraform resource aws_lambda_code_signing_config.
 type LambdaCodeSigningConfig struct {
-	Name  string
-	Args  LambdaCodeSigningConfigArgs
-	state *lambdaCodeSigningConfigState
+	Name      string
+	Args      LambdaCodeSigningConfigArgs
+	state     *lambdaCodeSigningConfigState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [LambdaCodeSigningConfig].
 func (lcsc *LambdaCodeSigningConfig) Type() string {
 	return "aws_lambda_code_signing_config"
 }
 
+// LocalName returns the local name for [LambdaCodeSigningConfig].
 func (lcsc *LambdaCodeSigningConfig) LocalName() string {
 	return lcsc.Name
 }
 
+// Configuration returns the configuration (args) for [LambdaCodeSigningConfig].
 func (lcsc *LambdaCodeSigningConfig) Configuration() interface{} {
 	return lcsc.Args
 }
 
+// DependOn is used for other resources to depend on [LambdaCodeSigningConfig].
+func (lcsc *LambdaCodeSigningConfig) DependOn() terra.Reference {
+	return terra.ReferenceResource(lcsc)
+}
+
+// Dependencies returns the list of resources [LambdaCodeSigningConfig] depends_on.
+func (lcsc *LambdaCodeSigningConfig) Dependencies() terra.Dependencies {
+	return lcsc.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [LambdaCodeSigningConfig].
+func (lcsc *LambdaCodeSigningConfig) LifecycleManagement() *terra.Lifecycle {
+	return lcsc.Lifecycle
+}
+
+// Attributes returns the attributes for [LambdaCodeSigningConfig].
 func (lcsc *LambdaCodeSigningConfig) Attributes() lambdaCodeSigningConfigAttributes {
 	return lambdaCodeSigningConfigAttributes{ref: terra.ReferenceResource(lcsc)}
 }
 
+// ImportState imports the given attribute values into [LambdaCodeSigningConfig]'s state.
 func (lcsc *LambdaCodeSigningConfig) ImportState(av io.Reader) error {
 	lcsc.state = &lambdaCodeSigningConfigState{}
 	if err := json.NewDecoder(av).Decode(lcsc.state); err != nil {
@@ -49,10 +73,12 @@ func (lcsc *LambdaCodeSigningConfig) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [LambdaCodeSigningConfig] has state.
 func (lcsc *LambdaCodeSigningConfig) State() (*lambdaCodeSigningConfigState, bool) {
 	return lcsc.state, lcsc.state != nil
 }
 
+// StateMust returns the state for [LambdaCodeSigningConfig]. Panics if the state is nil.
 func (lcsc *LambdaCodeSigningConfig) StateMust() *lambdaCodeSigningConfigState {
 	if lcsc.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", lcsc.Type(), lcsc.LocalName()))
@@ -60,10 +86,7 @@ func (lcsc *LambdaCodeSigningConfig) StateMust() *lambdaCodeSigningConfigState {
 	return lcsc.state
 }
 
-func (lcsc *LambdaCodeSigningConfig) DependOn() terra.Reference {
-	return terra.ReferenceResource(lcsc)
-}
-
+// LambdaCodeSigningConfigArgs contains the configurations for aws_lambda_code_signing_config.
 type LambdaCodeSigningConfigArgs struct {
 	// Description: string, optional
 	Description terra.StringValue `hcl:"description,attr"`
@@ -73,39 +96,42 @@ type LambdaCodeSigningConfigArgs struct {
 	AllowedPublishers *lambdacodesigningconfig.AllowedPublishers `hcl:"allowed_publishers,block" validate:"required"`
 	// Policies: optional
 	Policies *lambdacodesigningconfig.Policies `hcl:"policies,block"`
-	// DependsOn contains resources that LambdaCodeSigningConfig depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type lambdaCodeSigningConfigAttributes struct {
 	ref terra.Reference
 }
 
+// Arn returns a reference to field arn of aws_lambda_code_signing_config.
 func (lcsc lambdaCodeSigningConfigAttributes) Arn() terra.StringValue {
-	return terra.ReferenceString(lcsc.ref.Append("arn"))
+	return terra.ReferenceAsString(lcsc.ref.Append("arn"))
 }
 
+// ConfigId returns a reference to field config_id of aws_lambda_code_signing_config.
 func (lcsc lambdaCodeSigningConfigAttributes) ConfigId() terra.StringValue {
-	return terra.ReferenceString(lcsc.ref.Append("config_id"))
+	return terra.ReferenceAsString(lcsc.ref.Append("config_id"))
 }
 
+// Description returns a reference to field description of aws_lambda_code_signing_config.
 func (lcsc lambdaCodeSigningConfigAttributes) Description() terra.StringValue {
-	return terra.ReferenceString(lcsc.ref.Append("description"))
+	return terra.ReferenceAsString(lcsc.ref.Append("description"))
 }
 
+// Id returns a reference to field id of aws_lambda_code_signing_config.
 func (lcsc lambdaCodeSigningConfigAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(lcsc.ref.Append("id"))
+	return terra.ReferenceAsString(lcsc.ref.Append("id"))
 }
 
+// LastModified returns a reference to field last_modified of aws_lambda_code_signing_config.
 func (lcsc lambdaCodeSigningConfigAttributes) LastModified() terra.StringValue {
-	return terra.ReferenceString(lcsc.ref.Append("last_modified"))
+	return terra.ReferenceAsString(lcsc.ref.Append("last_modified"))
 }
 
 func (lcsc lambdaCodeSigningConfigAttributes) AllowedPublishers() terra.ListValue[lambdacodesigningconfig.AllowedPublishersAttributes] {
-	return terra.ReferenceList[lambdacodesigningconfig.AllowedPublishersAttributes](lcsc.ref.Append("allowed_publishers"))
+	return terra.ReferenceAsList[lambdacodesigningconfig.AllowedPublishersAttributes](lcsc.ref.Append("allowed_publishers"))
 }
 
 func (lcsc lambdaCodeSigningConfigAttributes) Policies() terra.ListValue[lambdacodesigningconfig.PoliciesAttributes] {
-	return terra.ReferenceList[lambdacodesigningconfig.PoliciesAttributes](lcsc.ref.Append("policies"))
+	return terra.ReferenceAsList[lambdacodesigningconfig.PoliciesAttributes](lcsc.ref.Append("policies"))
 }
 
 type lambdaCodeSigningConfigState struct {

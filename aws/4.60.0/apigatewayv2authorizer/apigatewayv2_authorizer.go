@@ -31,11 +31,11 @@ func (jc JwtConfigurationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (jc JwtConfigurationAttributes) Audience() terra.SetValue[terra.StringValue] {
-	return terra.ReferenceSet[terra.StringValue](jc.ref.Append("audience"))
+	return terra.ReferenceAsSet[terra.StringValue](jc.ref.Append("audience"))
 }
 
 func (jc JwtConfigurationAttributes) Issuer() terra.StringValue {
-	return terra.ReferenceString(jc.ref.Append("issuer"))
+	return terra.ReferenceAsString(jc.ref.Append("issuer"))
 }
 
 type JwtConfigurationState struct {

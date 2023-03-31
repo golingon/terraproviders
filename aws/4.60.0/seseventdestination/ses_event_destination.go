@@ -45,15 +45,15 @@ func (cd CloudwatchDestinationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (cd CloudwatchDestinationAttributes) DefaultValue() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("default_value"))
+	return terra.ReferenceAsString(cd.ref.Append("default_value"))
 }
 
 func (cd CloudwatchDestinationAttributes) DimensionName() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("dimension_name"))
+	return terra.ReferenceAsString(cd.ref.Append("dimension_name"))
 }
 
 func (cd CloudwatchDestinationAttributes) ValueSource() terra.StringValue {
-	return terra.ReferenceString(cd.ref.Append("value_source"))
+	return terra.ReferenceAsString(cd.ref.Append("value_source"))
 }
 
 type KinesisDestinationAttributes struct {
@@ -73,11 +73,11 @@ func (kd KinesisDestinationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (kd KinesisDestinationAttributes) RoleArn() terra.StringValue {
-	return terra.ReferenceString(kd.ref.Append("role_arn"))
+	return terra.ReferenceAsString(kd.ref.Append("role_arn"))
 }
 
 func (kd KinesisDestinationAttributes) StreamArn() terra.StringValue {
-	return terra.ReferenceString(kd.ref.Append("stream_arn"))
+	return terra.ReferenceAsString(kd.ref.Append("stream_arn"))
 }
 
 type SnsDestinationAttributes struct {
@@ -97,7 +97,7 @@ func (sd SnsDestinationAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sd SnsDestinationAttributes) TopicArn() terra.StringValue {
-	return terra.ReferenceString(sd.ref.Append("topic_arn"))
+	return terra.ReferenceAsString(sd.ref.Append("topic_arn"))
 }
 
 type CloudwatchDestinationState struct {

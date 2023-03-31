@@ -56,31 +56,31 @@ func (mq MetricQueryAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (mq MetricQueryAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(mq.ref.Append("account_id"))
+	return terra.ReferenceAsString(mq.ref.Append("account_id"))
 }
 
 func (mq MetricQueryAttributes) Expression() terra.StringValue {
-	return terra.ReferenceString(mq.ref.Append("expression"))
+	return terra.ReferenceAsString(mq.ref.Append("expression"))
 }
 
 func (mq MetricQueryAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(mq.ref.Append("id"))
+	return terra.ReferenceAsString(mq.ref.Append("id"))
 }
 
 func (mq MetricQueryAttributes) Label() terra.StringValue {
-	return terra.ReferenceString(mq.ref.Append("label"))
+	return terra.ReferenceAsString(mq.ref.Append("label"))
 }
 
 func (mq MetricQueryAttributes) Period() terra.NumberValue {
-	return terra.ReferenceNumber(mq.ref.Append("period"))
+	return terra.ReferenceAsNumber(mq.ref.Append("period"))
 }
 
 func (mq MetricQueryAttributes) ReturnData() terra.BoolValue {
-	return terra.ReferenceBool(mq.ref.Append("return_data"))
+	return terra.ReferenceAsBool(mq.ref.Append("return_data"))
 }
 
 func (mq MetricQueryAttributes) Metric() terra.ListValue[MetricAttributes] {
-	return terra.ReferenceList[MetricAttributes](mq.ref.Append("metric"))
+	return terra.ReferenceAsList[MetricAttributes](mq.ref.Append("metric"))
 }
 
 type MetricAttributes struct {
@@ -100,27 +100,27 @@ func (m MetricAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (m MetricAttributes) Dimensions() terra.MapValue[terra.StringValue] {
-	return terra.ReferenceMap[terra.StringValue](m.ref.Append("dimensions"))
+	return terra.ReferenceAsMap[terra.StringValue](m.ref.Append("dimensions"))
 }
 
 func (m MetricAttributes) MetricName() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("metric_name"))
+	return terra.ReferenceAsString(m.ref.Append("metric_name"))
 }
 
 func (m MetricAttributes) Namespace() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("namespace"))
+	return terra.ReferenceAsString(m.ref.Append("namespace"))
 }
 
 func (m MetricAttributes) Period() terra.NumberValue {
-	return terra.ReferenceNumber(m.ref.Append("period"))
+	return terra.ReferenceAsNumber(m.ref.Append("period"))
 }
 
 func (m MetricAttributes) Stat() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("stat"))
+	return terra.ReferenceAsString(m.ref.Append("stat"))
 }
 
 func (m MetricAttributes) Unit() terra.StringValue {
-	return terra.ReferenceString(m.ref.Append("unit"))
+	return terra.ReferenceAsString(m.ref.Append("unit"))
 }
 
 type MetricQueryState struct {

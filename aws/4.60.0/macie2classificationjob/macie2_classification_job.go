@@ -213,15 +213,15 @@ func (upd UserPausedDetailsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (upd UserPausedDetailsAttributes) JobExpiresAt() terra.StringValue {
-	return terra.ReferenceString(upd.ref.Append("job_expires_at"))
+	return terra.ReferenceAsString(upd.ref.Append("job_expires_at"))
 }
 
 func (upd UserPausedDetailsAttributes) JobImminentExpirationHealthEventArn() terra.StringValue {
-	return terra.ReferenceString(upd.ref.Append("job_imminent_expiration_health_event_arn"))
+	return terra.ReferenceAsString(upd.ref.Append("job_imminent_expiration_health_event_arn"))
 }
 
 func (upd UserPausedDetailsAttributes) JobPausedAt() terra.StringValue {
-	return terra.ReferenceString(upd.ref.Append("job_paused_at"))
+	return terra.ReferenceAsString(upd.ref.Append("job_paused_at"))
 }
 
 type S3JobDefinitionAttributes struct {
@@ -241,15 +241,15 @@ func (sjd S3JobDefinitionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sjd S3JobDefinitionAttributes) BucketCriteria() terra.ListValue[BucketCriteriaAttributes] {
-	return terra.ReferenceList[BucketCriteriaAttributes](sjd.ref.Append("bucket_criteria"))
+	return terra.ReferenceAsList[BucketCriteriaAttributes](sjd.ref.Append("bucket_criteria"))
 }
 
 func (sjd S3JobDefinitionAttributes) BucketDefinitions() terra.ListValue[BucketDefinitionsAttributes] {
-	return terra.ReferenceList[BucketDefinitionsAttributes](sjd.ref.Append("bucket_definitions"))
+	return terra.ReferenceAsList[BucketDefinitionsAttributes](sjd.ref.Append("bucket_definitions"))
 }
 
 func (sjd S3JobDefinitionAttributes) Scoping() terra.ListValue[ScopingAttributes] {
-	return terra.ReferenceList[ScopingAttributes](sjd.ref.Append("scoping"))
+	return terra.ReferenceAsList[ScopingAttributes](sjd.ref.Append("scoping"))
 }
 
 type BucketCriteriaAttributes struct {
@@ -269,11 +269,11 @@ func (bc BucketCriteriaAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (bc BucketCriteriaAttributes) Excludes() terra.ListValue[BucketCriteriaExcludesAttributes] {
-	return terra.ReferenceList[BucketCriteriaExcludesAttributes](bc.ref.Append("excludes"))
+	return terra.ReferenceAsList[BucketCriteriaExcludesAttributes](bc.ref.Append("excludes"))
 }
 
 func (bc BucketCriteriaAttributes) Includes() terra.ListValue[BucketCriteriaIncludesAttributes] {
-	return terra.ReferenceList[BucketCriteriaIncludesAttributes](bc.ref.Append("includes"))
+	return terra.ReferenceAsList[BucketCriteriaIncludesAttributes](bc.ref.Append("includes"))
 }
 
 type BucketCriteriaExcludesAttributes struct {
@@ -293,7 +293,7 @@ func (e BucketCriteriaExcludesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e BucketCriteriaExcludesAttributes) And() terra.ListValue[BucketCriteriaExcludesAndAttributes] {
-	return terra.ReferenceList[BucketCriteriaExcludesAndAttributes](e.ref.Append("and"))
+	return terra.ReferenceAsList[BucketCriteriaExcludesAndAttributes](e.ref.Append("and"))
 }
 
 type BucketCriteriaExcludesAndAttributes struct {
@@ -313,11 +313,11 @@ func (a BucketCriteriaExcludesAndAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a BucketCriteriaExcludesAndAttributes) SimpleCriterion() terra.ListValue[ExcludesAndSimpleCriterionAttributes] {
-	return terra.ReferenceList[ExcludesAndSimpleCriterionAttributes](a.ref.Append("simple_criterion"))
+	return terra.ReferenceAsList[ExcludesAndSimpleCriterionAttributes](a.ref.Append("simple_criterion"))
 }
 
 func (a BucketCriteriaExcludesAndAttributes) TagCriterion() terra.ListValue[ExcludesAndTagCriterionAttributes] {
-	return terra.ReferenceList[ExcludesAndTagCriterionAttributes](a.ref.Append("tag_criterion"))
+	return terra.ReferenceAsList[ExcludesAndTagCriterionAttributes](a.ref.Append("tag_criterion"))
 }
 
 type ExcludesAndSimpleCriterionAttributes struct {
@@ -337,15 +337,15 @@ func (sc ExcludesAndSimpleCriterionAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (sc ExcludesAndSimpleCriterionAttributes) Comparator() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("comparator"))
+	return terra.ReferenceAsString(sc.ref.Append("comparator"))
 }
 
 func (sc ExcludesAndSimpleCriterionAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("key"))
+	return terra.ReferenceAsString(sc.ref.Append("key"))
 }
 
 func (sc ExcludesAndSimpleCriterionAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sc.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](sc.ref.Append("values"))
 }
 
 type ExcludesAndTagCriterionAttributes struct {
@@ -365,11 +365,11 @@ func (tc ExcludesAndTagCriterionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tc ExcludesAndTagCriterionAttributes) Comparator() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("comparator"))
+	return terra.ReferenceAsString(tc.ref.Append("comparator"))
 }
 
 func (tc ExcludesAndTagCriterionAttributes) TagValues() terra.ListValue[ExcludesAndTagCriterionTagValuesAttributes] {
-	return terra.ReferenceList[ExcludesAndTagCriterionTagValuesAttributes](tc.ref.Append("tag_values"))
+	return terra.ReferenceAsList[ExcludesAndTagCriterionTagValuesAttributes](tc.ref.Append("tag_values"))
 }
 
 type ExcludesAndTagCriterionTagValuesAttributes struct {
@@ -389,11 +389,11 @@ func (tv ExcludesAndTagCriterionTagValuesAttributes) InternalTokens() hclwrite.T
 }
 
 func (tv ExcludesAndTagCriterionTagValuesAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(tv.ref.Append("key"))
+	return terra.ReferenceAsString(tv.ref.Append("key"))
 }
 
 func (tv ExcludesAndTagCriterionTagValuesAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(tv.ref.Append("value"))
+	return terra.ReferenceAsString(tv.ref.Append("value"))
 }
 
 type BucketCriteriaIncludesAttributes struct {
@@ -413,7 +413,7 @@ func (i BucketCriteriaIncludesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i BucketCriteriaIncludesAttributes) And() terra.ListValue[BucketCriteriaIncludesAndAttributes] {
-	return terra.ReferenceList[BucketCriteriaIncludesAndAttributes](i.ref.Append("and"))
+	return terra.ReferenceAsList[BucketCriteriaIncludesAndAttributes](i.ref.Append("and"))
 }
 
 type BucketCriteriaIncludesAndAttributes struct {
@@ -433,11 +433,11 @@ func (a BucketCriteriaIncludesAndAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a BucketCriteriaIncludesAndAttributes) SimpleCriterion() terra.ListValue[IncludesAndSimpleCriterionAttributes] {
-	return terra.ReferenceList[IncludesAndSimpleCriterionAttributes](a.ref.Append("simple_criterion"))
+	return terra.ReferenceAsList[IncludesAndSimpleCriterionAttributes](a.ref.Append("simple_criterion"))
 }
 
 func (a BucketCriteriaIncludesAndAttributes) TagCriterion() terra.ListValue[IncludesAndTagCriterionAttributes] {
-	return terra.ReferenceList[IncludesAndTagCriterionAttributes](a.ref.Append("tag_criterion"))
+	return terra.ReferenceAsList[IncludesAndTagCriterionAttributes](a.ref.Append("tag_criterion"))
 }
 
 type IncludesAndSimpleCriterionAttributes struct {
@@ -457,15 +457,15 @@ func (sc IncludesAndSimpleCriterionAttributes) InternalTokens() hclwrite.Tokens 
 }
 
 func (sc IncludesAndSimpleCriterionAttributes) Comparator() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("comparator"))
+	return terra.ReferenceAsString(sc.ref.Append("comparator"))
 }
 
 func (sc IncludesAndSimpleCriterionAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(sc.ref.Append("key"))
+	return terra.ReferenceAsString(sc.ref.Append("key"))
 }
 
 func (sc IncludesAndSimpleCriterionAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sc.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](sc.ref.Append("values"))
 }
 
 type IncludesAndTagCriterionAttributes struct {
@@ -485,11 +485,11 @@ func (tc IncludesAndTagCriterionAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tc IncludesAndTagCriterionAttributes) Comparator() terra.StringValue {
-	return terra.ReferenceString(tc.ref.Append("comparator"))
+	return terra.ReferenceAsString(tc.ref.Append("comparator"))
 }
 
 func (tc IncludesAndTagCriterionAttributes) TagValues() terra.ListValue[IncludesAndTagCriterionTagValuesAttributes] {
-	return terra.ReferenceList[IncludesAndTagCriterionTagValuesAttributes](tc.ref.Append("tag_values"))
+	return terra.ReferenceAsList[IncludesAndTagCriterionTagValuesAttributes](tc.ref.Append("tag_values"))
 }
 
 type IncludesAndTagCriterionTagValuesAttributes struct {
@@ -509,11 +509,11 @@ func (tv IncludesAndTagCriterionTagValuesAttributes) InternalTokens() hclwrite.T
 }
 
 func (tv IncludesAndTagCriterionTagValuesAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(tv.ref.Append("key"))
+	return terra.ReferenceAsString(tv.ref.Append("key"))
 }
 
 func (tv IncludesAndTagCriterionTagValuesAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(tv.ref.Append("value"))
+	return terra.ReferenceAsString(tv.ref.Append("value"))
 }
 
 type BucketDefinitionsAttributes struct {
@@ -533,11 +533,11 @@ func (bd BucketDefinitionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (bd BucketDefinitionsAttributes) AccountId() terra.StringValue {
-	return terra.ReferenceString(bd.ref.Append("account_id"))
+	return terra.ReferenceAsString(bd.ref.Append("account_id"))
 }
 
 func (bd BucketDefinitionsAttributes) Buckets() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](bd.ref.Append("buckets"))
+	return terra.ReferenceAsList[terra.StringValue](bd.ref.Append("buckets"))
 }
 
 type ScopingAttributes struct {
@@ -557,11 +557,11 @@ func (s ScopingAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (s ScopingAttributes) Excludes() terra.ListValue[ScopingExcludesAttributes] {
-	return terra.ReferenceList[ScopingExcludesAttributes](s.ref.Append("excludes"))
+	return terra.ReferenceAsList[ScopingExcludesAttributes](s.ref.Append("excludes"))
 }
 
 func (s ScopingAttributes) Includes() terra.ListValue[ScopingIncludesAttributes] {
-	return terra.ReferenceList[ScopingIncludesAttributes](s.ref.Append("includes"))
+	return terra.ReferenceAsList[ScopingIncludesAttributes](s.ref.Append("includes"))
 }
 
 type ScopingExcludesAttributes struct {
@@ -581,7 +581,7 @@ func (e ScopingExcludesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (e ScopingExcludesAttributes) And() terra.ListValue[ScopingExcludesAndAttributes] {
-	return terra.ReferenceList[ScopingExcludesAndAttributes](e.ref.Append("and"))
+	return terra.ReferenceAsList[ScopingExcludesAndAttributes](e.ref.Append("and"))
 }
 
 type ScopingExcludesAndAttributes struct {
@@ -601,11 +601,11 @@ func (a ScopingExcludesAndAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a ScopingExcludesAndAttributes) SimpleScopeTerm() terra.ListValue[ExcludesAndSimpleScopeTermAttributes] {
-	return terra.ReferenceList[ExcludesAndSimpleScopeTermAttributes](a.ref.Append("simple_scope_term"))
+	return terra.ReferenceAsList[ExcludesAndSimpleScopeTermAttributes](a.ref.Append("simple_scope_term"))
 }
 
 func (a ScopingExcludesAndAttributes) TagScopeTerm() terra.ListValue[ExcludesAndTagScopeTermAttributes] {
-	return terra.ReferenceList[ExcludesAndTagScopeTermAttributes](a.ref.Append("tag_scope_term"))
+	return terra.ReferenceAsList[ExcludesAndTagScopeTermAttributes](a.ref.Append("tag_scope_term"))
 }
 
 type ExcludesAndSimpleScopeTermAttributes struct {
@@ -625,15 +625,15 @@ func (sst ExcludesAndSimpleScopeTermAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (sst ExcludesAndSimpleScopeTermAttributes) Comparator() terra.StringValue {
-	return terra.ReferenceString(sst.ref.Append("comparator"))
+	return terra.ReferenceAsString(sst.ref.Append("comparator"))
 }
 
 func (sst ExcludesAndSimpleScopeTermAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(sst.ref.Append("key"))
+	return terra.ReferenceAsString(sst.ref.Append("key"))
 }
 
 func (sst ExcludesAndSimpleScopeTermAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sst.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](sst.ref.Append("values"))
 }
 
 type ExcludesAndTagScopeTermAttributes struct {
@@ -653,19 +653,19 @@ func (tst ExcludesAndTagScopeTermAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tst ExcludesAndTagScopeTermAttributes) Comparator() terra.StringValue {
-	return terra.ReferenceString(tst.ref.Append("comparator"))
+	return terra.ReferenceAsString(tst.ref.Append("comparator"))
 }
 
 func (tst ExcludesAndTagScopeTermAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(tst.ref.Append("key"))
+	return terra.ReferenceAsString(tst.ref.Append("key"))
 }
 
 func (tst ExcludesAndTagScopeTermAttributes) Target() terra.StringValue {
-	return terra.ReferenceString(tst.ref.Append("target"))
+	return terra.ReferenceAsString(tst.ref.Append("target"))
 }
 
 func (tst ExcludesAndTagScopeTermAttributes) TagValues() terra.ListValue[ExcludesAndTagScopeTermTagValuesAttributes] {
-	return terra.ReferenceList[ExcludesAndTagScopeTermTagValuesAttributes](tst.ref.Append("tag_values"))
+	return terra.ReferenceAsList[ExcludesAndTagScopeTermTagValuesAttributes](tst.ref.Append("tag_values"))
 }
 
 type ExcludesAndTagScopeTermTagValuesAttributes struct {
@@ -685,11 +685,11 @@ func (tv ExcludesAndTagScopeTermTagValuesAttributes) InternalTokens() hclwrite.T
 }
 
 func (tv ExcludesAndTagScopeTermTagValuesAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(tv.ref.Append("key"))
+	return terra.ReferenceAsString(tv.ref.Append("key"))
 }
 
 func (tv ExcludesAndTagScopeTermTagValuesAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(tv.ref.Append("value"))
+	return terra.ReferenceAsString(tv.ref.Append("value"))
 }
 
 type ScopingIncludesAttributes struct {
@@ -709,7 +709,7 @@ func (i ScopingIncludesAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i ScopingIncludesAttributes) And() terra.ListValue[ScopingIncludesAndAttributes] {
-	return terra.ReferenceList[ScopingIncludesAndAttributes](i.ref.Append("and"))
+	return terra.ReferenceAsList[ScopingIncludesAndAttributes](i.ref.Append("and"))
 }
 
 type ScopingIncludesAndAttributes struct {
@@ -729,11 +729,11 @@ func (a ScopingIncludesAndAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (a ScopingIncludesAndAttributes) SimpleScopeTerm() terra.ListValue[IncludesAndSimpleScopeTermAttributes] {
-	return terra.ReferenceList[IncludesAndSimpleScopeTermAttributes](a.ref.Append("simple_scope_term"))
+	return terra.ReferenceAsList[IncludesAndSimpleScopeTermAttributes](a.ref.Append("simple_scope_term"))
 }
 
 func (a ScopingIncludesAndAttributes) TagScopeTerm() terra.ListValue[IncludesAndTagScopeTermAttributes] {
-	return terra.ReferenceList[IncludesAndTagScopeTermAttributes](a.ref.Append("tag_scope_term"))
+	return terra.ReferenceAsList[IncludesAndTagScopeTermAttributes](a.ref.Append("tag_scope_term"))
 }
 
 type IncludesAndSimpleScopeTermAttributes struct {
@@ -753,15 +753,15 @@ func (sst IncludesAndSimpleScopeTermAttributes) InternalTokens() hclwrite.Tokens
 }
 
 func (sst IncludesAndSimpleScopeTermAttributes) Comparator() terra.StringValue {
-	return terra.ReferenceString(sst.ref.Append("comparator"))
+	return terra.ReferenceAsString(sst.ref.Append("comparator"))
 }
 
 func (sst IncludesAndSimpleScopeTermAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(sst.ref.Append("key"))
+	return terra.ReferenceAsString(sst.ref.Append("key"))
 }
 
 func (sst IncludesAndSimpleScopeTermAttributes) Values() terra.ListValue[terra.StringValue] {
-	return terra.ReferenceList[terra.StringValue](sst.ref.Append("values"))
+	return terra.ReferenceAsList[terra.StringValue](sst.ref.Append("values"))
 }
 
 type IncludesAndTagScopeTermAttributes struct {
@@ -781,19 +781,19 @@ func (tst IncludesAndTagScopeTermAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (tst IncludesAndTagScopeTermAttributes) Comparator() terra.StringValue {
-	return terra.ReferenceString(tst.ref.Append("comparator"))
+	return terra.ReferenceAsString(tst.ref.Append("comparator"))
 }
 
 func (tst IncludesAndTagScopeTermAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(tst.ref.Append("key"))
+	return terra.ReferenceAsString(tst.ref.Append("key"))
 }
 
 func (tst IncludesAndTagScopeTermAttributes) Target() terra.StringValue {
-	return terra.ReferenceString(tst.ref.Append("target"))
+	return terra.ReferenceAsString(tst.ref.Append("target"))
 }
 
 func (tst IncludesAndTagScopeTermAttributes) TagValues() terra.ListValue[IncludesAndTagScopeTermTagValuesAttributes] {
-	return terra.ReferenceList[IncludesAndTagScopeTermTagValuesAttributes](tst.ref.Append("tag_values"))
+	return terra.ReferenceAsList[IncludesAndTagScopeTermTagValuesAttributes](tst.ref.Append("tag_values"))
 }
 
 type IncludesAndTagScopeTermTagValuesAttributes struct {
@@ -813,11 +813,11 @@ func (tv IncludesAndTagScopeTermTagValuesAttributes) InternalTokens() hclwrite.T
 }
 
 func (tv IncludesAndTagScopeTermTagValuesAttributes) Key() terra.StringValue {
-	return terra.ReferenceString(tv.ref.Append("key"))
+	return terra.ReferenceAsString(tv.ref.Append("key"))
 }
 
 func (tv IncludesAndTagScopeTermTagValuesAttributes) Value() terra.StringValue {
-	return terra.ReferenceString(tv.ref.Append("value"))
+	return terra.ReferenceAsString(tv.ref.Append("value"))
 }
 
 type ScheduleFrequencyAttributes struct {
@@ -837,15 +837,15 @@ func (sf ScheduleFrequencyAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (sf ScheduleFrequencyAttributes) DailySchedule() terra.BoolValue {
-	return terra.ReferenceBool(sf.ref.Append("daily_schedule"))
+	return terra.ReferenceAsBool(sf.ref.Append("daily_schedule"))
 }
 
 func (sf ScheduleFrequencyAttributes) MonthlySchedule() terra.NumberValue {
-	return terra.ReferenceNumber(sf.ref.Append("monthly_schedule"))
+	return terra.ReferenceAsNumber(sf.ref.Append("monthly_schedule"))
 }
 
 func (sf ScheduleFrequencyAttributes) WeeklySchedule() terra.StringValue {
-	return terra.ReferenceString(sf.ref.Append("weekly_schedule"))
+	return terra.ReferenceAsString(sf.ref.Append("weekly_schedule"))
 }
 
 type UserPausedDetailsState struct {

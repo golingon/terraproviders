@@ -55,31 +55,31 @@ func (so SamlOptionsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (so SamlOptionsAttributes) Enabled() terra.BoolValue {
-	return terra.ReferenceBool(so.ref.Append("enabled"))
+	return terra.ReferenceAsBool(so.ref.Append("enabled"))
 }
 
 func (so SamlOptionsAttributes) MasterBackendRole() terra.StringValue {
-	return terra.ReferenceString(so.ref.Append("master_backend_role"))
+	return terra.ReferenceAsString(so.ref.Append("master_backend_role"))
 }
 
 func (so SamlOptionsAttributes) MasterUserName() terra.StringValue {
-	return terra.ReferenceString(so.ref.Append("master_user_name"))
+	return terra.ReferenceAsString(so.ref.Append("master_user_name"))
 }
 
 func (so SamlOptionsAttributes) RolesKey() terra.StringValue {
-	return terra.ReferenceString(so.ref.Append("roles_key"))
+	return terra.ReferenceAsString(so.ref.Append("roles_key"))
 }
 
 func (so SamlOptionsAttributes) SessionTimeoutMinutes() terra.NumberValue {
-	return terra.ReferenceNumber(so.ref.Append("session_timeout_minutes"))
+	return terra.ReferenceAsNumber(so.ref.Append("session_timeout_minutes"))
 }
 
 func (so SamlOptionsAttributes) SubjectKey() terra.StringValue {
-	return terra.ReferenceString(so.ref.Append("subject_key"))
+	return terra.ReferenceAsString(so.ref.Append("subject_key"))
 }
 
 func (so SamlOptionsAttributes) Idp() terra.ListValue[IdpAttributes] {
-	return terra.ReferenceList[IdpAttributes](so.ref.Append("idp"))
+	return terra.ReferenceAsList[IdpAttributes](so.ref.Append("idp"))
 }
 
 type IdpAttributes struct {
@@ -99,11 +99,11 @@ func (i IdpAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (i IdpAttributes) EntityId() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("entity_id"))
+	return terra.ReferenceAsString(i.ref.Append("entity_id"))
 }
 
 func (i IdpAttributes) MetadataContent() terra.StringValue {
-	return terra.ReferenceString(i.ref.Append("metadata_content"))
+	return terra.ReferenceAsString(i.ref.Append("metadata_content"))
 }
 
 type TimeoutsAttributes struct {
@@ -123,11 +123,11 @@ func (t TimeoutsAttributes) InternalTokens() hclwrite.Tokens {
 }
 
 func (t TimeoutsAttributes) Delete() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("delete"))
+	return terra.ReferenceAsString(t.ref.Append("delete"))
 }
 
 func (t TimeoutsAttributes) Update() terra.StringValue {
-	return terra.ReferenceString(t.ref.Append("update"))
+	return terra.ReferenceAsString(t.ref.Append("update"))
 }
 
 type SamlOptionsState struct {

@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// NewSsmPatchGroup creates a new instance of [SsmPatchGroup].
 func NewSsmPatchGroup(name string, args SsmPatchGroupArgs) *SsmPatchGroup {
 	return &SsmPatchGroup{
 		Args: args,
@@ -18,28 +19,51 @@ func NewSsmPatchGroup(name string, args SsmPatchGroupArgs) *SsmPatchGroup {
 
 var _ terra.Resource = (*SsmPatchGroup)(nil)
 
+// SsmPatchGroup represents the Terraform resource aws_ssm_patch_group.
 type SsmPatchGroup struct {
-	Name  string
-	Args  SsmPatchGroupArgs
-	state *ssmPatchGroupState
+	Name      string
+	Args      SsmPatchGroupArgs
+	state     *ssmPatchGroupState
+	DependsOn terra.Dependencies
+	Lifecycle *terra.Lifecycle
 }
 
+// Type returns the Terraform object type for [SsmPatchGroup].
 func (spg *SsmPatchGroup) Type() string {
 	return "aws_ssm_patch_group"
 }
 
+// LocalName returns the local name for [SsmPatchGroup].
 func (spg *SsmPatchGroup) LocalName() string {
 	return spg.Name
 }
 
+// Configuration returns the configuration (args) for [SsmPatchGroup].
 func (spg *SsmPatchGroup) Configuration() interface{} {
 	return spg.Args
 }
 
+// DependOn is used for other resources to depend on [SsmPatchGroup].
+func (spg *SsmPatchGroup) DependOn() terra.Reference {
+	return terra.ReferenceResource(spg)
+}
+
+// Dependencies returns the list of resources [SsmPatchGroup] depends_on.
+func (spg *SsmPatchGroup) Dependencies() terra.Dependencies {
+	return spg.DependsOn
+}
+
+// LifecycleManagement returns the lifecycle block for [SsmPatchGroup].
+func (spg *SsmPatchGroup) LifecycleManagement() *terra.Lifecycle {
+	return spg.Lifecycle
+}
+
+// Attributes returns the attributes for [SsmPatchGroup].
 func (spg *SsmPatchGroup) Attributes() ssmPatchGroupAttributes {
 	return ssmPatchGroupAttributes{ref: terra.ReferenceResource(spg)}
 }
 
+// ImportState imports the given attribute values into [SsmPatchGroup]'s state.
 func (spg *SsmPatchGroup) ImportState(av io.Reader) error {
 	spg.state = &ssmPatchGroupState{}
 	if err := json.NewDecoder(av).Decode(spg.state); err != nil {
@@ -48,10 +72,12 @@ func (spg *SsmPatchGroup) ImportState(av io.Reader) error {
 	return nil
 }
 
+// State returns the state and a bool indicating if [SsmPatchGroup] has state.
 func (spg *SsmPatchGroup) State() (*ssmPatchGroupState, bool) {
 	return spg.state, spg.state != nil
 }
 
+// StateMust returns the state for [SsmPatchGroup]. Panics if the state is nil.
 func (spg *SsmPatchGroup) StateMust() *ssmPatchGroupState {
 	if spg.state == nil {
 		panic(fmt.Sprintf("state is nil for resource %s.%s", spg.Type(), spg.LocalName()))
@@ -59,10 +85,7 @@ func (spg *SsmPatchGroup) StateMust() *ssmPatchGroupState {
 	return spg.state
 }
 
-func (spg *SsmPatchGroup) DependOn() terra.Reference {
-	return terra.ReferenceResource(spg)
-}
-
+// SsmPatchGroupArgs contains the configurations for aws_ssm_patch_group.
 type SsmPatchGroupArgs struct {
 	// BaselineId: string, required
 	BaselineId terra.StringValue `hcl:"baseline_id,attr" validate:"required"`
@@ -70,23 +93,24 @@ type SsmPatchGroupArgs struct {
 	Id terra.StringValue `hcl:"id,attr"`
 	// PatchGroup: string, required
 	PatchGroup terra.StringValue `hcl:"patch_group,attr" validate:"required"`
-	// DependsOn contains resources that SsmPatchGroup depends on
-	DependsOn terra.Dependencies `hcl:"depends_on,attr"`
 }
 type ssmPatchGroupAttributes struct {
 	ref terra.Reference
 }
 
+// BaselineId returns a reference to field baseline_id of aws_ssm_patch_group.
 func (spg ssmPatchGroupAttributes) BaselineId() terra.StringValue {
-	return terra.ReferenceString(spg.ref.Append("baseline_id"))
+	return terra.ReferenceAsString(spg.ref.Append("baseline_id"))
 }
 
+// Id returns a reference to field id of aws_ssm_patch_group.
 func (spg ssmPatchGroupAttributes) Id() terra.StringValue {
-	return terra.ReferenceString(spg.ref.Append("id"))
+	return terra.ReferenceAsString(spg.ref.Append("id"))
 }
 
+// PatchGroup returns a reference to field patch_group of aws_ssm_patch_group.
 func (spg ssmPatchGroupAttributes) PatchGroup() terra.StringValue {
-	return terra.ReferenceString(spg.ref.Append("patch_group"))
+	return terra.ReferenceAsString(spg.ref.Append("patch_group"))
 }
 
 type ssmPatchGroupState struct {
