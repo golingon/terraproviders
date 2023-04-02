@@ -13,8 +13,8 @@ type CertificateValidationRecordsAttributes struct {
 	ref terra.Reference
 }
 
-func (cvr CertificateValidationRecordsAttributes) InternalRef() terra.Reference {
-	return cvr.ref
+func (cvr CertificateValidationRecordsAttributes) InternalRef() (terra.Reference, error) {
+	return cvr.ref, nil
 }
 
 func (cvr CertificateValidationRecordsAttributes) InternalWithRef(ref terra.Reference) CertificateValidationRecordsAttributes {

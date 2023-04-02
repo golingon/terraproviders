@@ -61,8 +61,8 @@ type EndpointsAttributes struct {
 	ref terra.Reference
 }
 
-func (e EndpointsAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EndpointsAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EndpointsAttributes) InternalWithRef(ref terra.Reference) EndpointsAttributes {
@@ -93,8 +93,8 @@ type IscsiAttributes struct {
 	ref terra.Reference
 }
 
-func (i IscsiAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IscsiAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IscsiAttributes) InternalWithRef(ref terra.Reference) IscsiAttributes {
@@ -117,8 +117,8 @@ type ManagementAttributes struct {
 	ref terra.Reference
 }
 
-func (m ManagementAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m ManagementAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m ManagementAttributes) InternalWithRef(ref terra.Reference) ManagementAttributes {
@@ -141,8 +141,8 @@ type NfsAttributes struct {
 	ref terra.Reference
 }
 
-func (n NfsAttributes) InternalRef() terra.Reference {
-	return n.ref
+func (n NfsAttributes) InternalRef() (terra.Reference, error) {
+	return n.ref, nil
 }
 
 func (n NfsAttributes) InternalWithRef(ref terra.Reference) NfsAttributes {
@@ -165,8 +165,8 @@ type SmbAttributes struct {
 	ref terra.Reference
 }
 
-func (s SmbAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SmbAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SmbAttributes) InternalWithRef(ref terra.Reference) SmbAttributes {
@@ -189,8 +189,8 @@ type ActiveDirectoryConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (adc ActiveDirectoryConfigurationAttributes) InternalRef() terra.Reference {
-	return adc.ref
+func (adc ActiveDirectoryConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return adc.ref, nil
 }
 
 func (adc ActiveDirectoryConfigurationAttributes) InternalWithRef(ref terra.Reference) ActiveDirectoryConfigurationAttributes {
@@ -213,8 +213,8 @@ type SelfManagedActiveDirectoryConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (smadc SelfManagedActiveDirectoryConfigurationAttributes) InternalRef() terra.Reference {
-	return smadc.ref
+func (smadc SelfManagedActiveDirectoryConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return smadc.ref, nil
 }
 
 func (smadc SelfManagedActiveDirectoryConfigurationAttributes) InternalWithRef(ref terra.Reference) SelfManagedActiveDirectoryConfigurationAttributes {
@@ -253,8 +253,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

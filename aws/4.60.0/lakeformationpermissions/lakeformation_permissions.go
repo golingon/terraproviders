@@ -76,8 +76,8 @@ type DataLocationAttributes struct {
 	ref terra.Reference
 }
 
-func (dl DataLocationAttributes) InternalRef() terra.Reference {
-	return dl.ref
+func (dl DataLocationAttributes) InternalRef() (terra.Reference, error) {
+	return dl.ref, nil
 }
 
 func (dl DataLocationAttributes) InternalWithRef(ref terra.Reference) DataLocationAttributes {
@@ -100,8 +100,8 @@ type DatabaseAttributes struct {
 	ref terra.Reference
 }
 
-func (d DatabaseAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DatabaseAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DatabaseAttributes) InternalWithRef(ref terra.Reference) DatabaseAttributes {
@@ -124,8 +124,8 @@ type LfTagAttributes struct {
 	ref terra.Reference
 }
 
-func (lt LfTagAttributes) InternalRef() terra.Reference {
-	return lt.ref
+func (lt LfTagAttributes) InternalRef() (terra.Reference, error) {
+	return lt.ref, nil
 }
 
 func (lt LfTagAttributes) InternalWithRef(ref terra.Reference) LfTagAttributes {
@@ -152,8 +152,8 @@ type LfTagPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (ltp LfTagPolicyAttributes) InternalRef() terra.Reference {
-	return ltp.ref
+func (ltp LfTagPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return ltp.ref, nil
 }
 
 func (ltp LfTagPolicyAttributes) InternalWithRef(ref terra.Reference) LfTagPolicyAttributes {
@@ -180,8 +180,8 @@ type ExpressionAttributes struct {
 	ref terra.Reference
 }
 
-func (e ExpressionAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e ExpressionAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e ExpressionAttributes) InternalWithRef(ref terra.Reference) ExpressionAttributes {
@@ -204,8 +204,8 @@ type TableAttributes struct {
 	ref terra.Reference
 }
 
-func (t TableAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TableAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TableAttributes) InternalWithRef(ref terra.Reference) TableAttributes {
@@ -236,8 +236,8 @@ type TableWithColumnsAttributes struct {
 	ref terra.Reference
 }
 
-func (twc TableWithColumnsAttributes) InternalRef() terra.Reference {
-	return twc.ref
+func (twc TableWithColumnsAttributes) InternalRef() (terra.Reference, error) {
+	return twc.ref, nil
 }
 
 func (twc TableWithColumnsAttributes) InternalWithRef(ref terra.Reference) TableWithColumnsAttributes {

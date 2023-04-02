@@ -54,8 +54,8 @@ type ContentConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (cc ContentConfigAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc ContentConfigAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc ContentConfigAttributes) InternalWithRef(ref terra.Reference) ContentConfigAttributes {
@@ -78,8 +78,8 @@ type ContentConfigPermissionsAttributes struct {
 	ref terra.Reference
 }
 
-func (ccp ContentConfigPermissionsAttributes) InternalRef() terra.Reference {
-	return ccp.ref
+func (ccp ContentConfigPermissionsAttributes) InternalRef() (terra.Reference, error) {
+	return ccp.ref, nil
 }
 
 func (ccp ContentConfigPermissionsAttributes) InternalWithRef(ref terra.Reference) ContentConfigPermissionsAttributes {
@@ -106,8 +106,8 @@ type NotificationsAttributes struct {
 	ref terra.Reference
 }
 
-func (n NotificationsAttributes) InternalRef() terra.Reference {
-	return n.ref
+func (n NotificationsAttributes) InternalRef() (terra.Reference, error) {
+	return n.ref, nil
 }
 
 func (n NotificationsAttributes) InternalWithRef(ref terra.Reference) NotificationsAttributes {
@@ -138,8 +138,8 @@ type ThumbnailConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (tc ThumbnailConfigAttributes) InternalRef() terra.Reference {
-	return tc.ref
+func (tc ThumbnailConfigAttributes) InternalRef() (terra.Reference, error) {
+	return tc.ref, nil
 }
 
 func (tc ThumbnailConfigAttributes) InternalWithRef(ref terra.Reference) ThumbnailConfigAttributes {
@@ -162,8 +162,8 @@ type ThumbnailConfigPermissionsAttributes struct {
 	ref terra.Reference
 }
 
-func (tcp ThumbnailConfigPermissionsAttributes) InternalRef() terra.Reference {
-	return tcp.ref
+func (tcp ThumbnailConfigPermissionsAttributes) InternalRef() (terra.Reference, error) {
+	return tcp.ref, nil
 }
 
 func (tcp ThumbnailConfigPermissionsAttributes) InternalWithRef(ref terra.Reference) ThumbnailConfigPermissionsAttributes {

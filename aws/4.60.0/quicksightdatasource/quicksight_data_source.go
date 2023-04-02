@@ -244,8 +244,8 @@ type CredentialsAttributes struct {
 	ref terra.Reference
 }
 
-func (c CredentialsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CredentialsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CredentialsAttributes) InternalWithRef(ref terra.Reference) CredentialsAttributes {
@@ -268,8 +268,8 @@ type CredentialPairAttributes struct {
 	ref terra.Reference
 }
 
-func (cp CredentialPairAttributes) InternalRef() terra.Reference {
-	return cp.ref
+func (cp CredentialPairAttributes) InternalRef() (terra.Reference, error) {
+	return cp.ref, nil
 }
 
 func (cp CredentialPairAttributes) InternalWithRef(ref terra.Reference) CredentialPairAttributes {
@@ -292,8 +292,8 @@ type ParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (p ParametersAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p ParametersAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p ParametersAttributes) InternalWithRef(ref terra.Reference) ParametersAttributes {
@@ -388,8 +388,8 @@ type AmazonElasticsearchAttributes struct {
 	ref terra.Reference
 }
 
-func (ae AmazonElasticsearchAttributes) InternalRef() terra.Reference {
-	return ae.ref
+func (ae AmazonElasticsearchAttributes) InternalRef() (terra.Reference, error) {
+	return ae.ref, nil
 }
 
 func (ae AmazonElasticsearchAttributes) InternalWithRef(ref terra.Reference) AmazonElasticsearchAttributes {
@@ -408,8 +408,8 @@ type AthenaAttributes struct {
 	ref terra.Reference
 }
 
-func (a AthenaAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AthenaAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AthenaAttributes) InternalWithRef(ref terra.Reference) AthenaAttributes {
@@ -428,8 +428,8 @@ type AuroraAttributes struct {
 	ref terra.Reference
 }
 
-func (a AuroraAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AuroraAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AuroraAttributes) InternalWithRef(ref terra.Reference) AuroraAttributes {
@@ -456,8 +456,8 @@ type AuroraPostgresqlAttributes struct {
 	ref terra.Reference
 }
 
-func (ap AuroraPostgresqlAttributes) InternalRef() terra.Reference {
-	return ap.ref
+func (ap AuroraPostgresqlAttributes) InternalRef() (terra.Reference, error) {
+	return ap.ref, nil
 }
 
 func (ap AuroraPostgresqlAttributes) InternalWithRef(ref terra.Reference) AuroraPostgresqlAttributes {
@@ -484,8 +484,8 @@ type AwsIotAnalyticsAttributes struct {
 	ref terra.Reference
 }
 
-func (aia AwsIotAnalyticsAttributes) InternalRef() terra.Reference {
-	return aia.ref
+func (aia AwsIotAnalyticsAttributes) InternalRef() (terra.Reference, error) {
+	return aia.ref, nil
 }
 
 func (aia AwsIotAnalyticsAttributes) InternalWithRef(ref terra.Reference) AwsIotAnalyticsAttributes {
@@ -504,8 +504,8 @@ type JiraAttributes struct {
 	ref terra.Reference
 }
 
-func (j JiraAttributes) InternalRef() terra.Reference {
-	return j.ref
+func (j JiraAttributes) InternalRef() (terra.Reference, error) {
+	return j.ref, nil
 }
 
 func (j JiraAttributes) InternalWithRef(ref terra.Reference) JiraAttributes {
@@ -524,8 +524,8 @@ type MariaDbAttributes struct {
 	ref terra.Reference
 }
 
-func (md MariaDbAttributes) InternalRef() terra.Reference {
-	return md.ref
+func (md MariaDbAttributes) InternalRef() (terra.Reference, error) {
+	return md.ref, nil
 }
 
 func (md MariaDbAttributes) InternalWithRef(ref terra.Reference) MariaDbAttributes {
@@ -552,8 +552,8 @@ type MysqlAttributes struct {
 	ref terra.Reference
 }
 
-func (m MysqlAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MysqlAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MysqlAttributes) InternalWithRef(ref terra.Reference) MysqlAttributes {
@@ -580,8 +580,8 @@ type OracleAttributes struct {
 	ref terra.Reference
 }
 
-func (o OracleAttributes) InternalRef() terra.Reference {
-	return o.ref
+func (o OracleAttributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o OracleAttributes) InternalWithRef(ref terra.Reference) OracleAttributes {
@@ -608,8 +608,8 @@ type PostgresqlAttributes struct {
 	ref terra.Reference
 }
 
-func (p PostgresqlAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PostgresqlAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PostgresqlAttributes) InternalWithRef(ref terra.Reference) PostgresqlAttributes {
@@ -636,8 +636,8 @@ type PrestoAttributes struct {
 	ref terra.Reference
 }
 
-func (p PrestoAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PrestoAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PrestoAttributes) InternalWithRef(ref terra.Reference) PrestoAttributes {
@@ -664,8 +664,8 @@ type RdsAttributes struct {
 	ref terra.Reference
 }
 
-func (r RdsAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RdsAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RdsAttributes) InternalWithRef(ref terra.Reference) RdsAttributes {
@@ -688,8 +688,8 @@ type RedshiftAttributes struct {
 	ref terra.Reference
 }
 
-func (r RedshiftAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RedshiftAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RedshiftAttributes) InternalWithRef(ref terra.Reference) RedshiftAttributes {
@@ -720,8 +720,8 @@ type S3Attributes struct {
 	ref terra.Reference
 }
 
-func (s S3Attributes) InternalRef() terra.Reference {
-	return s.ref
+func (s S3Attributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s S3Attributes) InternalWithRef(ref terra.Reference) S3Attributes {
@@ -740,8 +740,8 @@ type ManifestFileLocationAttributes struct {
 	ref terra.Reference
 }
 
-func (mfl ManifestFileLocationAttributes) InternalRef() terra.Reference {
-	return mfl.ref
+func (mfl ManifestFileLocationAttributes) InternalRef() (terra.Reference, error) {
+	return mfl.ref, nil
 }
 
 func (mfl ManifestFileLocationAttributes) InternalWithRef(ref terra.Reference) ManifestFileLocationAttributes {
@@ -764,8 +764,8 @@ type ServiceNowAttributes struct {
 	ref terra.Reference
 }
 
-func (sn ServiceNowAttributes) InternalRef() terra.Reference {
-	return sn.ref
+func (sn ServiceNowAttributes) InternalRef() (terra.Reference, error) {
+	return sn.ref, nil
 }
 
 func (sn ServiceNowAttributes) InternalWithRef(ref terra.Reference) ServiceNowAttributes {
@@ -784,8 +784,8 @@ type SnowflakeAttributes struct {
 	ref terra.Reference
 }
 
-func (s SnowflakeAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SnowflakeAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SnowflakeAttributes) InternalWithRef(ref terra.Reference) SnowflakeAttributes {
@@ -812,8 +812,8 @@ type SparkAttributes struct {
 	ref terra.Reference
 }
 
-func (s SparkAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SparkAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SparkAttributes) InternalWithRef(ref terra.Reference) SparkAttributes {
@@ -836,8 +836,8 @@ type SqlServerAttributes struct {
 	ref terra.Reference
 }
 
-func (ss SqlServerAttributes) InternalRef() terra.Reference {
-	return ss.ref
+func (ss SqlServerAttributes) InternalRef() (terra.Reference, error) {
+	return ss.ref, nil
 }
 
 func (ss SqlServerAttributes) InternalWithRef(ref terra.Reference) SqlServerAttributes {
@@ -864,8 +864,8 @@ type TeradataAttributes struct {
 	ref terra.Reference
 }
 
-func (t TeradataAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TeradataAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TeradataAttributes) InternalWithRef(ref terra.Reference) TeradataAttributes {
@@ -892,8 +892,8 @@ type TwitterAttributes struct {
 	ref terra.Reference
 }
 
-func (t TwitterAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TwitterAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TwitterAttributes) InternalWithRef(ref terra.Reference) TwitterAttributes {
@@ -916,8 +916,8 @@ type PermissionAttributes struct {
 	ref terra.Reference
 }
 
-func (p PermissionAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PermissionAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PermissionAttributes) InternalWithRef(ref terra.Reference) PermissionAttributes {
@@ -940,8 +940,8 @@ type SslPropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (sp SslPropertiesAttributes) InternalRef() terra.Reference {
-	return sp.ref
+func (sp SslPropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return sp.ref, nil
 }
 
 func (sp SslPropertiesAttributes) InternalWithRef(ref terra.Reference) SslPropertiesAttributes {
@@ -960,8 +960,8 @@ type VpcConnectionPropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (vcp VpcConnectionPropertiesAttributes) InternalRef() terra.Reference {
-	return vcp.ref
+func (vcp VpcConnectionPropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return vcp.ref, nil
 }
 
 func (vcp VpcConnectionPropertiesAttributes) InternalWithRef(ref terra.Reference) VpcConnectionPropertiesAttributes {

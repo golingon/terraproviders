@@ -27,8 +27,8 @@ type IpAddressAttributes struct {
 	ref terra.Reference
 }
 
-func (ia IpAddressAttributes) InternalRef() terra.Reference {
-	return ia.ref
+func (ia IpAddressAttributes) InternalRef() (terra.Reference, error) {
+	return ia.ref, nil
 }
 
 func (ia IpAddressAttributes) InternalWithRef(ref terra.Reference) IpAddressAttributes {
@@ -55,8 +55,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

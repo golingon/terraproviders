@@ -50,8 +50,8 @@ type TimelineAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimelineAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimelineAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimelineAttributes) InternalWithRef(ref terra.Reference) TimelineAttributes {
@@ -82,8 +82,8 @@ type ArtifactConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ac ArtifactConfigAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac ArtifactConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac ArtifactConfigAttributes) InternalWithRef(ref terra.Reference) ArtifactConfigAttributes {
@@ -102,8 +102,8 @@ type S3EncryptionAttributes struct {
 	ref terra.Reference
 }
 
-func (se S3EncryptionAttributes) InternalRef() terra.Reference {
-	return se.ref
+func (se S3EncryptionAttributes) InternalRef() (terra.Reference, error) {
+	return se.ref, nil
 }
 
 func (se S3EncryptionAttributes) InternalWithRef(ref terra.Reference) S3EncryptionAttributes {
@@ -126,8 +126,8 @@ type RunConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (rc RunConfigAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc RunConfigAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc RunConfigAttributes) InternalWithRef(ref terra.Reference) RunConfigAttributes {
@@ -158,8 +158,8 @@ type ScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (s ScheduleAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ScheduleAttributes) InternalWithRef(ref terra.Reference) ScheduleAttributes {
@@ -182,8 +182,8 @@ type VpcConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (vc VpcConfigAttributes) InternalRef() terra.Reference {
-	return vc.ref
+func (vc VpcConfigAttributes) InternalRef() (terra.Reference, error) {
+	return vc.ref, nil
 }
 
 func (vc VpcConfigAttributes) InternalWithRef(ref terra.Reference) VpcConfigAttributes {

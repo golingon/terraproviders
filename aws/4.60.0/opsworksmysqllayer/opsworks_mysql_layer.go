@@ -103,8 +103,8 @@ type CloudwatchConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (cc CloudwatchConfigurationAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc CloudwatchConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc CloudwatchConfigurationAttributes) InternalWithRef(ref terra.Reference) CloudwatchConfigurationAttributes {
@@ -127,8 +127,8 @@ type LogStreamsAttributes struct {
 	ref terra.Reference
 }
 
-func (ls LogStreamsAttributes) InternalRef() terra.Reference {
-	return ls.ref
+func (ls LogStreamsAttributes) InternalRef() (terra.Reference, error) {
+	return ls.ref, nil
 }
 
 func (ls LogStreamsAttributes) InternalWithRef(ref terra.Reference) LogStreamsAttributes {
@@ -187,8 +187,8 @@ type EbsVolumeAttributes struct {
 	ref terra.Reference
 }
 
-func (ev EbsVolumeAttributes) InternalRef() terra.Reference {
-	return ev.ref
+func (ev EbsVolumeAttributes) InternalRef() (terra.Reference, error) {
+	return ev.ref, nil
 }
 
 func (ev EbsVolumeAttributes) InternalWithRef(ref terra.Reference) EbsVolumeAttributes {
@@ -231,8 +231,8 @@ type LoadBasedAutoScalingAttributes struct {
 	ref terra.Reference
 }
 
-func (lbas LoadBasedAutoScalingAttributes) InternalRef() terra.Reference {
-	return lbas.ref
+func (lbas LoadBasedAutoScalingAttributes) InternalRef() (terra.Reference, error) {
+	return lbas.ref, nil
 }
 
 func (lbas LoadBasedAutoScalingAttributes) InternalWithRef(ref terra.Reference) LoadBasedAutoScalingAttributes {
@@ -259,8 +259,8 @@ type DownscalingAttributes struct {
 	ref terra.Reference
 }
 
-func (d DownscalingAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DownscalingAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DownscalingAttributes) InternalWithRef(ref terra.Reference) DownscalingAttributes {
@@ -303,8 +303,8 @@ type UpscalingAttributes struct {
 	ref terra.Reference
 }
 
-func (u UpscalingAttributes) InternalRef() terra.Reference {
-	return u.ref
+func (u UpscalingAttributes) InternalRef() (terra.Reference, error) {
+	return u.ref, nil
 }
 
 func (u UpscalingAttributes) InternalWithRef(ref terra.Reference) UpscalingAttributes {

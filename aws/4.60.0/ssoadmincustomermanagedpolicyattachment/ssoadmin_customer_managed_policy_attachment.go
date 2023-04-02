@@ -18,8 +18,8 @@ type CustomerManagedPolicyReferenceAttributes struct {
 	ref terra.Reference
 }
 
-func (cmpr CustomerManagedPolicyReferenceAttributes) InternalRef() terra.Reference {
-	return cmpr.ref
+func (cmpr CustomerManagedPolicyReferenceAttributes) InternalRef() (terra.Reference, error) {
+	return cmpr.ref, nil
 }
 
 func (cmpr CustomerManagedPolicyReferenceAttributes) InternalWithRef(ref terra.Reference) CustomerManagedPolicyReferenceAttributes {

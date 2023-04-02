@@ -16,8 +16,8 @@ type LoggingConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (lc LoggingConfigurationAttributes) InternalRef() terra.Reference {
-	return lc.ref
+func (lc LoggingConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return lc.ref, nil
 }
 
 func (lc LoggingConfigurationAttributes) InternalWithRef(ref terra.Reference) LoggingConfigurationAttributes {

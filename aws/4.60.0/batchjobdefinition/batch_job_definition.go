@@ -34,8 +34,8 @@ type RetryStrategyAttributes struct {
 	ref terra.Reference
 }
 
-func (rs RetryStrategyAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs RetryStrategyAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs RetryStrategyAttributes) InternalWithRef(ref terra.Reference) RetryStrategyAttributes {
@@ -58,8 +58,8 @@ type EvaluateOnExitAttributes struct {
 	ref terra.Reference
 }
 
-func (eoe EvaluateOnExitAttributes) InternalRef() terra.Reference {
-	return eoe.ref
+func (eoe EvaluateOnExitAttributes) InternalRef() (terra.Reference, error) {
+	return eoe.ref, nil
 }
 
 func (eoe EvaluateOnExitAttributes) InternalWithRef(ref terra.Reference) EvaluateOnExitAttributes {
@@ -90,8 +90,8 @@ type TimeoutAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutAttributes) InternalWithRef(ref terra.Reference) TimeoutAttributes {

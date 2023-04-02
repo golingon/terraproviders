@@ -30,8 +30,8 @@ type ConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConfigurationAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConfigurationAttributes) InternalWithRef(ref terra.Reference) ConfigurationAttributes {
@@ -66,8 +66,8 @@ type BgpConfigurationsAttributes struct {
 	ref terra.Reference
 }
 
-func (bc BgpConfigurationsAttributes) InternalRef() terra.Reference {
-	return bc.ref
+func (bc BgpConfigurationsAttributes) InternalRef() (terra.Reference, error) {
+	return bc.ref, nil
 }
 
 func (bc BgpConfigurationsAttributes) InternalWithRef(ref terra.Reference) BgpConfigurationsAttributes {
@@ -98,8 +98,8 @@ type BgpOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (bo BgpOptionsAttributes) InternalRef() terra.Reference {
-	return bo.ref
+func (bo BgpOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return bo.ref, nil
 }
 
 func (bo BgpOptionsAttributes) InternalWithRef(ref terra.Reference) BgpOptionsAttributes {
@@ -118,8 +118,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

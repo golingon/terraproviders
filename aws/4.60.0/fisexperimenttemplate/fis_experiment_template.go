@@ -85,8 +85,8 @@ type ActionAttributes struct {
 	ref terra.Reference
 }
 
-func (a ActionAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ActionAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ActionAttributes) InternalWithRef(ref terra.Reference) ActionAttributes {
@@ -125,8 +125,8 @@ type ParameterAttributes struct {
 	ref terra.Reference
 }
 
-func (p ParameterAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p ParameterAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p ParameterAttributes) InternalWithRef(ref terra.Reference) ParameterAttributes {
@@ -149,8 +149,8 @@ type ActionTargetAttributes struct {
 	ref terra.Reference
 }
 
-func (t ActionTargetAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t ActionTargetAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t ActionTargetAttributes) InternalWithRef(ref terra.Reference) ActionTargetAttributes {
@@ -173,8 +173,8 @@ type StopConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (sc StopConditionAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc StopConditionAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc StopConditionAttributes) InternalWithRef(ref terra.Reference) StopConditionAttributes {
@@ -197,8 +197,8 @@ type TargetAttributes struct {
 	ref terra.Reference
 }
 
-func (t TargetAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TargetAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TargetAttributes) InternalWithRef(ref terra.Reference) TargetAttributes {
@@ -237,8 +237,8 @@ type FilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes {
@@ -261,8 +261,8 @@ type ResourceTagAttributes struct {
 	ref terra.Reference
 }
 
-func (rt ResourceTagAttributes) InternalRef() terra.Reference {
-	return rt.ref
+func (rt ResourceTagAttributes) InternalRef() (terra.Reference, error) {
+	return rt.ref, nil
 }
 
 func (rt ResourceTagAttributes) InternalWithRef(ref terra.Reference) ResourceTagAttributes {
@@ -285,8 +285,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

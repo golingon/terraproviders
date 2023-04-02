@@ -29,8 +29,8 @@ type ByteMatchTuplesAttributes struct {
 	ref terra.Reference
 }
 
-func (bmt ByteMatchTuplesAttributes) InternalRef() terra.Reference {
-	return bmt.ref
+func (bmt ByteMatchTuplesAttributes) InternalRef() (terra.Reference, error) {
+	return bmt.ref, nil
 }
 
 func (bmt ByteMatchTuplesAttributes) InternalWithRef(ref terra.Reference) ByteMatchTuplesAttributes {
@@ -61,8 +61,8 @@ type FieldToMatchAttributes struct {
 	ref terra.Reference
 }
 
-func (ftm FieldToMatchAttributes) InternalRef() terra.Reference {
-	return ftm.ref
+func (ftm FieldToMatchAttributes) InternalRef() (terra.Reference, error) {
+	return ftm.ref, nil
 }
 
 func (ftm FieldToMatchAttributes) InternalWithRef(ref terra.Reference) FieldToMatchAttributes {

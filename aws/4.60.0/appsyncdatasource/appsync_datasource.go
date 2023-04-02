@@ -91,8 +91,8 @@ type DynamodbConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (dc DynamodbConfigAttributes) InternalRef() terra.Reference {
-	return dc.ref
+func (dc DynamodbConfigAttributes) InternalRef() (terra.Reference, error) {
+	return dc.ref, nil
 }
 
 func (dc DynamodbConfigAttributes) InternalWithRef(ref terra.Reference) DynamodbConfigAttributes {
@@ -127,8 +127,8 @@ type DeltaSyncConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (dsc DeltaSyncConfigAttributes) InternalRef() terra.Reference {
-	return dsc.ref
+func (dsc DeltaSyncConfigAttributes) InternalRef() (terra.Reference, error) {
+	return dsc.ref, nil
 }
 
 func (dsc DeltaSyncConfigAttributes) InternalWithRef(ref terra.Reference) DeltaSyncConfigAttributes {
@@ -155,8 +155,8 @@ type ElasticsearchConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ec ElasticsearchConfigAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec ElasticsearchConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec ElasticsearchConfigAttributes) InternalWithRef(ref terra.Reference) ElasticsearchConfigAttributes {
@@ -179,8 +179,8 @@ type EventBridgeConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ebc EventBridgeConfigAttributes) InternalRef() terra.Reference {
-	return ebc.ref
+func (ebc EventBridgeConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ebc.ref, nil
 }
 
 func (ebc EventBridgeConfigAttributes) InternalWithRef(ref terra.Reference) EventBridgeConfigAttributes {
@@ -199,8 +199,8 @@ type HttpConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (hc HttpConfigAttributes) InternalRef() terra.Reference {
-	return hc.ref
+func (hc HttpConfigAttributes) InternalRef() (terra.Reference, error) {
+	return hc.ref, nil
 }
 
 func (hc HttpConfigAttributes) InternalWithRef(ref terra.Reference) HttpConfigAttributes {
@@ -223,8 +223,8 @@ type AuthorizationConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AuthorizationConfigAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AuthorizationConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AuthorizationConfigAttributes) InternalWithRef(ref terra.Reference) AuthorizationConfigAttributes {
@@ -247,8 +247,8 @@ type AwsIamConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (aic AwsIamConfigAttributes) InternalRef() terra.Reference {
-	return aic.ref
+func (aic AwsIamConfigAttributes) InternalRef() (terra.Reference, error) {
+	return aic.ref, nil
 }
 
 func (aic AwsIamConfigAttributes) InternalWithRef(ref terra.Reference) AwsIamConfigAttributes {
@@ -271,8 +271,8 @@ type LambdaConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (lc LambdaConfigAttributes) InternalRef() terra.Reference {
-	return lc.ref
+func (lc LambdaConfigAttributes) InternalRef() (terra.Reference, error) {
+	return lc.ref, nil
 }
 
 func (lc LambdaConfigAttributes) InternalWithRef(ref terra.Reference) LambdaConfigAttributes {
@@ -291,8 +291,8 @@ type RelationalDatabaseConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (rdc RelationalDatabaseConfigAttributes) InternalRef() terra.Reference {
-	return rdc.ref
+func (rdc RelationalDatabaseConfigAttributes) InternalRef() (terra.Reference, error) {
+	return rdc.ref, nil
 }
 
 func (rdc RelationalDatabaseConfigAttributes) InternalWithRef(ref terra.Reference) RelationalDatabaseConfigAttributes {
@@ -315,8 +315,8 @@ type HttpEndpointConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (hec HttpEndpointConfigAttributes) InternalRef() terra.Reference {
-	return hec.ref
+func (hec HttpEndpointConfigAttributes) InternalRef() (terra.Reference, error) {
+	return hec.ref, nil
 }
 
 func (hec HttpEndpointConfigAttributes) InternalWithRef(ref terra.Reference) HttpEndpointConfigAttributes {

@@ -46,8 +46,8 @@ type AutoScalingPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (asp AutoScalingPolicyAttributes) InternalRef() terra.Reference {
-	return asp.ref
+func (asp AutoScalingPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return asp.ref, nil
 }
 
 func (asp AutoScalingPolicyAttributes) InternalWithRef(ref terra.Reference) AutoScalingPolicyAttributes {
@@ -70,8 +70,8 @@ type TargetTrackingConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ttc TargetTrackingConfigurationAttributes) InternalRef() terra.Reference {
-	return ttc.ref
+func (ttc TargetTrackingConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ttc.ref, nil
 }
 
 func (ttc TargetTrackingConfigurationAttributes) InternalWithRef(ref terra.Reference) TargetTrackingConfigurationAttributes {
@@ -90,8 +90,8 @@ type InstanceDefinitionAttributes struct {
 	ref terra.Reference
 }
 
-func (id InstanceDefinitionAttributes) InternalRef() terra.Reference {
-	return id.ref
+func (id InstanceDefinitionAttributes) InternalRef() (terra.Reference, error) {
+	return id.ref, nil
 }
 
 func (id InstanceDefinitionAttributes) InternalWithRef(ref terra.Reference) InstanceDefinitionAttributes {
@@ -114,8 +114,8 @@ type LaunchTemplateAttributes struct {
 	ref terra.Reference
 }
 
-func (lt LaunchTemplateAttributes) InternalRef() terra.Reference {
-	return lt.ref
+func (lt LaunchTemplateAttributes) InternalRef() (terra.Reference, error) {
+	return lt.ref, nil
 }
 
 func (lt LaunchTemplateAttributes) InternalWithRef(ref terra.Reference) LaunchTemplateAttributes {
@@ -142,8 +142,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

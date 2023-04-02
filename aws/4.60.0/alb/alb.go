@@ -40,8 +40,8 @@ type AccessLogsAttributes struct {
 	ref terra.Reference
 }
 
-func (al AccessLogsAttributes) InternalRef() terra.Reference {
-	return al.ref
+func (al AccessLogsAttributes) InternalRef() (terra.Reference, error) {
+	return al.ref, nil
 }
 
 func (al AccessLogsAttributes) InternalWithRef(ref terra.Reference) AccessLogsAttributes {
@@ -68,8 +68,8 @@ type SubnetMappingAttributes struct {
 	ref terra.Reference
 }
 
-func (sm SubnetMappingAttributes) InternalRef() terra.Reference {
-	return sm.ref
+func (sm SubnetMappingAttributes) InternalRef() (terra.Reference, error) {
+	return sm.ref, nil
 }
 
 func (sm SubnetMappingAttributes) InternalWithRef(ref terra.Reference) SubnetMappingAttributes {
@@ -104,8 +104,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

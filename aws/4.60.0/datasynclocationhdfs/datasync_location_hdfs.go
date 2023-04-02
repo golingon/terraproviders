@@ -25,8 +25,8 @@ type NameNodeAttributes struct {
 	ref terra.Reference
 }
 
-func (nn NameNodeAttributes) InternalRef() terra.Reference {
-	return nn.ref
+func (nn NameNodeAttributes) InternalRef() (terra.Reference, error) {
+	return nn.ref, nil
 }
 
 func (nn NameNodeAttributes) InternalWithRef(ref terra.Reference) NameNodeAttributes {
@@ -49,8 +49,8 @@ type QopConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (qc QopConfigurationAttributes) InternalRef() terra.Reference {
-	return qc.ref
+func (qc QopConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return qc.ref, nil
 }
 
 func (qc QopConfigurationAttributes) InternalWithRef(ref terra.Reference) QopConfigurationAttributes {

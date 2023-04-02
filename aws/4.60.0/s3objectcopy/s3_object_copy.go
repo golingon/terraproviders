@@ -24,8 +24,8 @@ type GrantAttributes struct {
 	ref terra.Reference
 }
 
-func (g GrantAttributes) InternalRef() terra.Reference {
-	return g.ref
+func (g GrantAttributes) InternalRef() (terra.Reference, error) {
+	return g.ref, nil
 }
 
 func (g GrantAttributes) InternalWithRef(ref terra.Reference) GrantAttributes {

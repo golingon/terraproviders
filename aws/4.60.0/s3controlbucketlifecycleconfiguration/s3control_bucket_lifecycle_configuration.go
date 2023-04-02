@@ -45,8 +45,8 @@ type RuleAttributes struct {
 	ref terra.Reference
 }
 
-func (r RuleAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RuleAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RuleAttributes) InternalWithRef(ref terra.Reference) RuleAttributes {
@@ -81,8 +81,8 @@ type AbortIncompleteMultipartUploadAttributes struct {
 	ref terra.Reference
 }
 
-func (aimu AbortIncompleteMultipartUploadAttributes) InternalRef() terra.Reference {
-	return aimu.ref
+func (aimu AbortIncompleteMultipartUploadAttributes) InternalRef() (terra.Reference, error) {
+	return aimu.ref, nil
 }
 
 func (aimu AbortIncompleteMultipartUploadAttributes) InternalWithRef(ref terra.Reference) AbortIncompleteMultipartUploadAttributes {
@@ -101,8 +101,8 @@ type ExpirationAttributes struct {
 	ref terra.Reference
 }
 
-func (e ExpirationAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e ExpirationAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e ExpirationAttributes) InternalWithRef(ref terra.Reference) ExpirationAttributes {
@@ -129,8 +129,8 @@ type FilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes {

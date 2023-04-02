@@ -18,8 +18,8 @@ type TargetsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TargetsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TargetsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TargetsAttributes) InternalWithRef(ref terra.Reference) TargetsAttributes {

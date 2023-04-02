@@ -40,8 +40,8 @@ type ClientAuthenticationAttributes struct {
 	ref terra.Reference
 }
 
-func (ca ClientAuthenticationAttributes) InternalRef() terra.Reference {
-	return ca.ref
+func (ca ClientAuthenticationAttributes) InternalRef() (terra.Reference, error) {
+	return ca.ref, nil
 }
 
 func (ca ClientAuthenticationAttributes) InternalWithRef(ref terra.Reference) ClientAuthenticationAttributes {
@@ -60,8 +60,8 @@ type SaslAttributes struct {
 	ref terra.Reference
 }
 
-func (s SaslAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SaslAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SaslAttributes) InternalWithRef(ref terra.Reference) SaslAttributes {
@@ -80,8 +80,8 @@ type IamAttributes struct {
 	ref terra.Reference
 }
 
-func (i IamAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IamAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IamAttributes) InternalWithRef(ref terra.Reference) IamAttributes {
@@ -100,8 +100,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
@@ -124,8 +124,8 @@ type VpcConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (vc VpcConfigAttributes) InternalRef() terra.Reference {
-	return vc.ref
+func (vc VpcConfigAttributes) InternalRef() (terra.Reference, error) {
+	return vc.ref, nil
 }
 
 func (vc VpcConfigAttributes) InternalWithRef(ref terra.Reference) VpcConfigAttributes {

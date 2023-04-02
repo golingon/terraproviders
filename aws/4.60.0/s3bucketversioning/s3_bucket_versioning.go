@@ -18,8 +18,8 @@ type VersioningConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (vc VersioningConfigurationAttributes) InternalRef() terra.Reference {
-	return vc.ref
+func (vc VersioningConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return vc.ref, nil
 }
 
 func (vc VersioningConfigurationAttributes) InternalWithRef(ref terra.Reference) VersioningConfigurationAttributes {

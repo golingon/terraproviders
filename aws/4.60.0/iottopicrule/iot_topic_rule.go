@@ -498,8 +498,8 @@ type CloudwatchAlarmAttributes struct {
 	ref terra.Reference
 }
 
-func (ca CloudwatchAlarmAttributes) InternalRef() terra.Reference {
-	return ca.ref
+func (ca CloudwatchAlarmAttributes) InternalRef() (terra.Reference, error) {
+	return ca.ref, nil
 }
 
 func (ca CloudwatchAlarmAttributes) InternalWithRef(ref terra.Reference) CloudwatchAlarmAttributes {
@@ -530,8 +530,8 @@ type CloudwatchLogsAttributes struct {
 	ref terra.Reference
 }
 
-func (cl CloudwatchLogsAttributes) InternalRef() terra.Reference {
-	return cl.ref
+func (cl CloudwatchLogsAttributes) InternalRef() (terra.Reference, error) {
+	return cl.ref, nil
 }
 
 func (cl CloudwatchLogsAttributes) InternalWithRef(ref terra.Reference) CloudwatchLogsAttributes {
@@ -554,8 +554,8 @@ type CloudwatchMetricAttributes struct {
 	ref terra.Reference
 }
 
-func (cm CloudwatchMetricAttributes) InternalRef() terra.Reference {
-	return cm.ref
+func (cm CloudwatchMetricAttributes) InternalRef() (terra.Reference, error) {
+	return cm.ref, nil
 }
 
 func (cm CloudwatchMetricAttributes) InternalWithRef(ref terra.Reference) CloudwatchMetricAttributes {
@@ -594,8 +594,8 @@ type DynamodbAttributes struct {
 	ref terra.Reference
 }
 
-func (d DynamodbAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DynamodbAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DynamodbAttributes) InternalWithRef(ref terra.Reference) DynamodbAttributes {
@@ -650,8 +650,8 @@ type Dynamodbv2Attributes struct {
 	ref terra.Reference
 }
 
-func (d Dynamodbv2Attributes) InternalRef() terra.Reference {
-	return d.ref
+func (d Dynamodbv2Attributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d Dynamodbv2Attributes) InternalWithRef(ref terra.Reference) Dynamodbv2Attributes {
@@ -674,8 +674,8 @@ type Dynamodbv2PutItemAttributes struct {
 	ref terra.Reference
 }
 
-func (pi Dynamodbv2PutItemAttributes) InternalRef() terra.Reference {
-	return pi.ref
+func (pi Dynamodbv2PutItemAttributes) InternalRef() (terra.Reference, error) {
+	return pi.ref, nil
 }
 
 func (pi Dynamodbv2PutItemAttributes) InternalWithRef(ref terra.Reference) Dynamodbv2PutItemAttributes {
@@ -694,8 +694,8 @@ type ElasticsearchAttributes struct {
 	ref terra.Reference
 }
 
-func (e ElasticsearchAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e ElasticsearchAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e ElasticsearchAttributes) InternalWithRef(ref terra.Reference) ElasticsearchAttributes {
@@ -730,8 +730,8 @@ type ErrorActionAttributes struct {
 	ref terra.Reference
 }
 
-func (ea ErrorActionAttributes) InternalRef() terra.Reference {
-	return ea.ref
+func (ea ErrorActionAttributes) InternalRef() (terra.Reference, error) {
+	return ea.ref, nil
 }
 
 func (ea ErrorActionAttributes) InternalWithRef(ref terra.Reference) ErrorActionAttributes {
@@ -822,8 +822,8 @@ type ErrorActionCloudwatchAlarmAttributes struct {
 	ref terra.Reference
 }
 
-func (ca ErrorActionCloudwatchAlarmAttributes) InternalRef() terra.Reference {
-	return ca.ref
+func (ca ErrorActionCloudwatchAlarmAttributes) InternalRef() (terra.Reference, error) {
+	return ca.ref, nil
 }
 
 func (ca ErrorActionCloudwatchAlarmAttributes) InternalWithRef(ref terra.Reference) ErrorActionCloudwatchAlarmAttributes {
@@ -854,8 +854,8 @@ type ErrorActionCloudwatchLogsAttributes struct {
 	ref terra.Reference
 }
 
-func (cl ErrorActionCloudwatchLogsAttributes) InternalRef() terra.Reference {
-	return cl.ref
+func (cl ErrorActionCloudwatchLogsAttributes) InternalRef() (terra.Reference, error) {
+	return cl.ref, nil
 }
 
 func (cl ErrorActionCloudwatchLogsAttributes) InternalWithRef(ref terra.Reference) ErrorActionCloudwatchLogsAttributes {
@@ -878,8 +878,8 @@ type ErrorActionCloudwatchMetricAttributes struct {
 	ref terra.Reference
 }
 
-func (cm ErrorActionCloudwatchMetricAttributes) InternalRef() terra.Reference {
-	return cm.ref
+func (cm ErrorActionCloudwatchMetricAttributes) InternalRef() (terra.Reference, error) {
+	return cm.ref, nil
 }
 
 func (cm ErrorActionCloudwatchMetricAttributes) InternalWithRef(ref terra.Reference) ErrorActionCloudwatchMetricAttributes {
@@ -918,8 +918,8 @@ type ErrorActionDynamodbAttributes struct {
 	ref terra.Reference
 }
 
-func (d ErrorActionDynamodbAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d ErrorActionDynamodbAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d ErrorActionDynamodbAttributes) InternalWithRef(ref terra.Reference) ErrorActionDynamodbAttributes {
@@ -974,8 +974,8 @@ type ErrorActionDynamodbv2Attributes struct {
 	ref terra.Reference
 }
 
-func (d ErrorActionDynamodbv2Attributes) InternalRef() terra.Reference {
-	return d.ref
+func (d ErrorActionDynamodbv2Attributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d ErrorActionDynamodbv2Attributes) InternalWithRef(ref terra.Reference) ErrorActionDynamodbv2Attributes {
@@ -998,8 +998,8 @@ type ErrorActionDynamodbv2PutItemAttributes struct {
 	ref terra.Reference
 }
 
-func (pi ErrorActionDynamodbv2PutItemAttributes) InternalRef() terra.Reference {
-	return pi.ref
+func (pi ErrorActionDynamodbv2PutItemAttributes) InternalRef() (terra.Reference, error) {
+	return pi.ref, nil
 }
 
 func (pi ErrorActionDynamodbv2PutItemAttributes) InternalWithRef(ref terra.Reference) ErrorActionDynamodbv2PutItemAttributes {
@@ -1018,8 +1018,8 @@ type ErrorActionElasticsearchAttributes struct {
 	ref terra.Reference
 }
 
-func (e ErrorActionElasticsearchAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e ErrorActionElasticsearchAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e ErrorActionElasticsearchAttributes) InternalWithRef(ref terra.Reference) ErrorActionElasticsearchAttributes {
@@ -1054,8 +1054,8 @@ type ErrorActionFirehoseAttributes struct {
 	ref terra.Reference
 }
 
-func (f ErrorActionFirehoseAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f ErrorActionFirehoseAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f ErrorActionFirehoseAttributes) InternalWithRef(ref terra.Reference) ErrorActionFirehoseAttributes {
@@ -1082,8 +1082,8 @@ type ErrorActionHttpAttributes struct {
 	ref terra.Reference
 }
 
-func (h ErrorActionHttpAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h ErrorActionHttpAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h ErrorActionHttpAttributes) InternalWithRef(ref terra.Reference) ErrorActionHttpAttributes {
@@ -1110,8 +1110,8 @@ type ErrorActionHttpHttpHeaderAttributes struct {
 	ref terra.Reference
 }
 
-func (hh ErrorActionHttpHttpHeaderAttributes) InternalRef() terra.Reference {
-	return hh.ref
+func (hh ErrorActionHttpHttpHeaderAttributes) InternalRef() (terra.Reference, error) {
+	return hh.ref, nil
 }
 
 func (hh ErrorActionHttpHttpHeaderAttributes) InternalWithRef(ref terra.Reference) ErrorActionHttpHttpHeaderAttributes {
@@ -1134,8 +1134,8 @@ type ErrorActionIotAnalyticsAttributes struct {
 	ref terra.Reference
 }
 
-func (ia ErrorActionIotAnalyticsAttributes) InternalRef() terra.Reference {
-	return ia.ref
+func (ia ErrorActionIotAnalyticsAttributes) InternalRef() (terra.Reference, error) {
+	return ia.ref, nil
 }
 
 func (ia ErrorActionIotAnalyticsAttributes) InternalWithRef(ref terra.Reference) ErrorActionIotAnalyticsAttributes {
@@ -1158,8 +1158,8 @@ type ErrorActionIotEventsAttributes struct {
 	ref terra.Reference
 }
 
-func (ie ErrorActionIotEventsAttributes) InternalRef() terra.Reference {
-	return ie.ref
+func (ie ErrorActionIotEventsAttributes) InternalRef() (terra.Reference, error) {
+	return ie.ref, nil
 }
 
 func (ie ErrorActionIotEventsAttributes) InternalWithRef(ref terra.Reference) ErrorActionIotEventsAttributes {
@@ -1186,8 +1186,8 @@ type ErrorActionKafkaAttributes struct {
 	ref terra.Reference
 }
 
-func (k ErrorActionKafkaAttributes) InternalRef() terra.Reference {
-	return k.ref
+func (k ErrorActionKafkaAttributes) InternalRef() (terra.Reference, error) {
+	return k.ref, nil
 }
 
 func (k ErrorActionKafkaAttributes) InternalWithRef(ref terra.Reference) ErrorActionKafkaAttributes {
@@ -1222,8 +1222,8 @@ type ErrorActionKinesisAttributes struct {
 	ref terra.Reference
 }
 
-func (k ErrorActionKinesisAttributes) InternalRef() terra.Reference {
-	return k.ref
+func (k ErrorActionKinesisAttributes) InternalRef() (terra.Reference, error) {
+	return k.ref, nil
 }
 
 func (k ErrorActionKinesisAttributes) InternalWithRef(ref terra.Reference) ErrorActionKinesisAttributes {
@@ -1250,8 +1250,8 @@ type ErrorActionLambdaAttributes struct {
 	ref terra.Reference
 }
 
-func (l ErrorActionLambdaAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l ErrorActionLambdaAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l ErrorActionLambdaAttributes) InternalWithRef(ref terra.Reference) ErrorActionLambdaAttributes {
@@ -1270,8 +1270,8 @@ type ErrorActionRepublishAttributes struct {
 	ref terra.Reference
 }
 
-func (r ErrorActionRepublishAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r ErrorActionRepublishAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r ErrorActionRepublishAttributes) InternalWithRef(ref terra.Reference) ErrorActionRepublishAttributes {
@@ -1298,8 +1298,8 @@ type ErrorActionS3Attributes struct {
 	ref terra.Reference
 }
 
-func (s ErrorActionS3Attributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ErrorActionS3Attributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ErrorActionS3Attributes) InternalWithRef(ref terra.Reference) ErrorActionS3Attributes {
@@ -1330,8 +1330,8 @@ type ErrorActionSnsAttributes struct {
 	ref terra.Reference
 }
 
-func (s ErrorActionSnsAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ErrorActionSnsAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ErrorActionSnsAttributes) InternalWithRef(ref terra.Reference) ErrorActionSnsAttributes {
@@ -1358,8 +1358,8 @@ type ErrorActionSqsAttributes struct {
 	ref terra.Reference
 }
 
-func (s ErrorActionSqsAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ErrorActionSqsAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ErrorActionSqsAttributes) InternalWithRef(ref terra.Reference) ErrorActionSqsAttributes {
@@ -1386,8 +1386,8 @@ type ErrorActionStepFunctionsAttributes struct {
 	ref terra.Reference
 }
 
-func (sf ErrorActionStepFunctionsAttributes) InternalRef() terra.Reference {
-	return sf.ref
+func (sf ErrorActionStepFunctionsAttributes) InternalRef() (terra.Reference, error) {
+	return sf.ref, nil
 }
 
 func (sf ErrorActionStepFunctionsAttributes) InternalWithRef(ref terra.Reference) ErrorActionStepFunctionsAttributes {
@@ -1414,8 +1414,8 @@ type ErrorActionTimestreamAttributes struct {
 	ref terra.Reference
 }
 
-func (t ErrorActionTimestreamAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t ErrorActionTimestreamAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t ErrorActionTimestreamAttributes) InternalWithRef(ref terra.Reference) ErrorActionTimestreamAttributes {
@@ -1450,8 +1450,8 @@ type ErrorActionTimestreamDimensionAttributes struct {
 	ref terra.Reference
 }
 
-func (d ErrorActionTimestreamDimensionAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d ErrorActionTimestreamDimensionAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d ErrorActionTimestreamDimensionAttributes) InternalWithRef(ref terra.Reference) ErrorActionTimestreamDimensionAttributes {
@@ -1474,8 +1474,8 @@ type ErrorActionTimestreamTimestampAttributes struct {
 	ref terra.Reference
 }
 
-func (t ErrorActionTimestreamTimestampAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t ErrorActionTimestreamTimestampAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t ErrorActionTimestreamTimestampAttributes) InternalWithRef(ref terra.Reference) ErrorActionTimestreamTimestampAttributes {
@@ -1498,8 +1498,8 @@ type FirehoseAttributes struct {
 	ref terra.Reference
 }
 
-func (f FirehoseAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FirehoseAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FirehoseAttributes) InternalWithRef(ref terra.Reference) FirehoseAttributes {
@@ -1526,8 +1526,8 @@ type HttpAttributes struct {
 	ref terra.Reference
 }
 
-func (h HttpAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h HttpAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h HttpAttributes) InternalWithRef(ref terra.Reference) HttpAttributes {
@@ -1554,8 +1554,8 @@ type HttpHttpHeaderAttributes struct {
 	ref terra.Reference
 }
 
-func (hh HttpHttpHeaderAttributes) InternalRef() terra.Reference {
-	return hh.ref
+func (hh HttpHttpHeaderAttributes) InternalRef() (terra.Reference, error) {
+	return hh.ref, nil
 }
 
 func (hh HttpHttpHeaderAttributes) InternalWithRef(ref terra.Reference) HttpHttpHeaderAttributes {
@@ -1578,8 +1578,8 @@ type IotAnalyticsAttributes struct {
 	ref terra.Reference
 }
 
-func (ia IotAnalyticsAttributes) InternalRef() terra.Reference {
-	return ia.ref
+func (ia IotAnalyticsAttributes) InternalRef() (terra.Reference, error) {
+	return ia.ref, nil
 }
 
 func (ia IotAnalyticsAttributes) InternalWithRef(ref terra.Reference) IotAnalyticsAttributes {
@@ -1602,8 +1602,8 @@ type IotEventsAttributes struct {
 	ref terra.Reference
 }
 
-func (ie IotEventsAttributes) InternalRef() terra.Reference {
-	return ie.ref
+func (ie IotEventsAttributes) InternalRef() (terra.Reference, error) {
+	return ie.ref, nil
 }
 
 func (ie IotEventsAttributes) InternalWithRef(ref terra.Reference) IotEventsAttributes {
@@ -1630,8 +1630,8 @@ type KafkaAttributes struct {
 	ref terra.Reference
 }
 
-func (k KafkaAttributes) InternalRef() terra.Reference {
-	return k.ref
+func (k KafkaAttributes) InternalRef() (terra.Reference, error) {
+	return k.ref, nil
 }
 
 func (k KafkaAttributes) InternalWithRef(ref terra.Reference) KafkaAttributes {
@@ -1666,8 +1666,8 @@ type KinesisAttributes struct {
 	ref terra.Reference
 }
 
-func (k KinesisAttributes) InternalRef() terra.Reference {
-	return k.ref
+func (k KinesisAttributes) InternalRef() (terra.Reference, error) {
+	return k.ref, nil
 }
 
 func (k KinesisAttributes) InternalWithRef(ref terra.Reference) KinesisAttributes {
@@ -1694,8 +1694,8 @@ type LambdaAttributes struct {
 	ref terra.Reference
 }
 
-func (l LambdaAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l LambdaAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l LambdaAttributes) InternalWithRef(ref terra.Reference) LambdaAttributes {
@@ -1714,8 +1714,8 @@ type RepublishAttributes struct {
 	ref terra.Reference
 }
 
-func (r RepublishAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RepublishAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RepublishAttributes) InternalWithRef(ref terra.Reference) RepublishAttributes {
@@ -1742,8 +1742,8 @@ type S3Attributes struct {
 	ref terra.Reference
 }
 
-func (s S3Attributes) InternalRef() terra.Reference {
-	return s.ref
+func (s S3Attributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s S3Attributes) InternalWithRef(ref terra.Reference) S3Attributes {
@@ -1774,8 +1774,8 @@ type SnsAttributes struct {
 	ref terra.Reference
 }
 
-func (s SnsAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SnsAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SnsAttributes) InternalWithRef(ref terra.Reference) SnsAttributes {
@@ -1802,8 +1802,8 @@ type SqsAttributes struct {
 	ref terra.Reference
 }
 
-func (s SqsAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SqsAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SqsAttributes) InternalWithRef(ref terra.Reference) SqsAttributes {
@@ -1830,8 +1830,8 @@ type StepFunctionsAttributes struct {
 	ref terra.Reference
 }
 
-func (sf StepFunctionsAttributes) InternalRef() terra.Reference {
-	return sf.ref
+func (sf StepFunctionsAttributes) InternalRef() (terra.Reference, error) {
+	return sf.ref, nil
 }
 
 func (sf StepFunctionsAttributes) InternalWithRef(ref terra.Reference) StepFunctionsAttributes {
@@ -1858,8 +1858,8 @@ type TimestreamAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimestreamAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimestreamAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimestreamAttributes) InternalWithRef(ref terra.Reference) TimestreamAttributes {
@@ -1894,8 +1894,8 @@ type TimestreamDimensionAttributes struct {
 	ref terra.Reference
 }
 
-func (d TimestreamDimensionAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d TimestreamDimensionAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d TimestreamDimensionAttributes) InternalWithRef(ref terra.Reference) TimestreamDimensionAttributes {
@@ -1918,8 +1918,8 @@ type TimestreamTimestampAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimestreamTimestampAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimestreamTimestampAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimestreamTimestampAttributes) InternalWithRef(ref terra.Reference) TimestreamTimestampAttributes {

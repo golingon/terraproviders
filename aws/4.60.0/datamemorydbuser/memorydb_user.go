@@ -13,8 +13,8 @@ type AuthenticationModeAttributes struct {
 	ref terra.Reference
 }
 
-func (am AuthenticationModeAttributes) InternalRef() terra.Reference {
-	return am.ref
+func (am AuthenticationModeAttributes) InternalRef() (terra.Reference, error) {
+	return am.ref, nil
 }
 
 func (am AuthenticationModeAttributes) InternalWithRef(ref terra.Reference) AuthenticationModeAttributes {

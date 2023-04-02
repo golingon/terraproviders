@@ -18,8 +18,8 @@ type FairSharePolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (fsp FairSharePolicyAttributes) InternalRef() terra.Reference {
-	return fsp.ref
+func (fsp FairSharePolicyAttributes) InternalRef() (terra.Reference, error) {
+	return fsp.ref, nil
 }
 
 func (fsp FairSharePolicyAttributes) InternalWithRef(ref terra.Reference) FairSharePolicyAttributes {
@@ -46,8 +46,8 @@ type ShareDistributionAttributes struct {
 	ref terra.Reference
 }
 
-func (sd ShareDistributionAttributes) InternalRef() terra.Reference {
-	return sd.ref
+func (sd ShareDistributionAttributes) InternalRef() (terra.Reference, error) {
+	return sd.ref, nil
 }
 
 func (sd ShareDistributionAttributes) InternalWithRef(ref terra.Reference) ShareDistributionAttributes {

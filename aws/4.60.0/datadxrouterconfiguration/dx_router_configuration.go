@@ -13,8 +13,8 @@ type RouterAttributes struct {
 	ref terra.Reference
 }
 
-func (r RouterAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RouterAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RouterAttributes) InternalWithRef(ref terra.Reference) RouterAttributes {

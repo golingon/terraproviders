@@ -13,8 +13,8 @@ type ClusterCertificatesAttributes struct {
 	ref terra.Reference
 }
 
-func (cc ClusterCertificatesAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc ClusterCertificatesAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc ClusterCertificatesAttributes) InternalWithRef(ref terra.Reference) ClusterCertificatesAttributes {

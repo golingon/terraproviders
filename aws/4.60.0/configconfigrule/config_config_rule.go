@@ -51,8 +51,8 @@ type ScopeAttributes struct {
 	ref terra.Reference
 }
 
-func (s ScopeAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ScopeAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ScopeAttributes) InternalWithRef(ref terra.Reference) ScopeAttributes {
@@ -83,8 +83,8 @@ type SourceAttributes struct {
 	ref terra.Reference
 }
 
-func (s SourceAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SourceAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SourceAttributes) InternalWithRef(ref terra.Reference) SourceAttributes {
@@ -115,8 +115,8 @@ type CustomPolicyDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (cpd CustomPolicyDetailsAttributes) InternalRef() terra.Reference {
-	return cpd.ref
+func (cpd CustomPolicyDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return cpd.ref, nil
 }
 
 func (cpd CustomPolicyDetailsAttributes) InternalWithRef(ref terra.Reference) CustomPolicyDetailsAttributes {
@@ -143,8 +143,8 @@ type SourceDetailAttributes struct {
 	ref terra.Reference
 }
 
-func (sd SourceDetailAttributes) InternalRef() terra.Reference {
-	return sd.ref
+func (sd SourceDetailAttributes) InternalRef() (terra.Reference, error) {
+	return sd.ref, nil
 }
 
 func (sd SourceDetailAttributes) InternalWithRef(ref terra.Reference) SourceDetailAttributes {

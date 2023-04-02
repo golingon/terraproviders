@@ -13,8 +13,8 @@ type FirewallRulesAttributes struct {
 	ref terra.Reference
 }
 
-func (fr FirewallRulesAttributes) InternalRef() terra.Reference {
-	return fr.ref
+func (fr FirewallRulesAttributes) InternalRef() (terra.Reference, error) {
+	return fr.ref, nil
 }
 
 func (fr FirewallRulesAttributes) InternalWithRef(ref terra.Reference) FirewallRulesAttributes {

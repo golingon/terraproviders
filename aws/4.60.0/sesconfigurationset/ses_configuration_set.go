@@ -21,8 +21,8 @@ type DeliveryOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (do DeliveryOptionsAttributes) InternalRef() terra.Reference {
-	return do.ref
+func (do DeliveryOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return do.ref, nil
 }
 
 func (do DeliveryOptionsAttributes) InternalWithRef(ref terra.Reference) DeliveryOptionsAttributes {
@@ -41,8 +41,8 @@ type TrackingOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (to TrackingOptionsAttributes) InternalRef() terra.Reference {
-	return to.ref
+func (to TrackingOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return to.ref, nil
 }
 
 func (to TrackingOptionsAttributes) InternalWithRef(ref terra.Reference) TrackingOptionsAttributes {

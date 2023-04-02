@@ -27,8 +27,8 @@ type ServerlessV2ScalingConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (svsc ServerlessV2ScalingConfigurationAttributes) InternalRef() terra.Reference {
-	return svsc.ref
+func (svsc ServerlessV2ScalingConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return svsc.ref, nil
 }
 
 func (svsc ServerlessV2ScalingConfigurationAttributes) InternalWithRef(ref terra.Reference) ServerlessV2ScalingConfigurationAttributes {
@@ -51,8 +51,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

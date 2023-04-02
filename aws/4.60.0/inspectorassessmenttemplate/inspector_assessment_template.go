@@ -18,8 +18,8 @@ type EventSubscriptionAttributes struct {
 	ref terra.Reference
 }
 
-func (es EventSubscriptionAttributes) InternalRef() terra.Reference {
-	return es.ref
+func (es EventSubscriptionAttributes) InternalRef() (terra.Reference, error) {
+	return es.ref, nil
 }
 
 func (es EventSubscriptionAttributes) InternalWithRef(ref terra.Reference) EventSubscriptionAttributes {

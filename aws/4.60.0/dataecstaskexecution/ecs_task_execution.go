@@ -96,8 +96,8 @@ type CapacityProviderStrategyAttributes struct {
 	ref terra.Reference
 }
 
-func (cps CapacityProviderStrategyAttributes) InternalRef() terra.Reference {
-	return cps.ref
+func (cps CapacityProviderStrategyAttributes) InternalRef() (terra.Reference, error) {
+	return cps.ref, nil
 }
 
 func (cps CapacityProviderStrategyAttributes) InternalWithRef(ref terra.Reference) CapacityProviderStrategyAttributes {
@@ -124,8 +124,8 @@ type NetworkConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (nc NetworkConfigurationAttributes) InternalRef() terra.Reference {
-	return nc.ref
+func (nc NetworkConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return nc.ref, nil
 }
 
 func (nc NetworkConfigurationAttributes) InternalWithRef(ref terra.Reference) NetworkConfigurationAttributes {
@@ -152,8 +152,8 @@ type OverridesAttributes struct {
 	ref terra.Reference
 }
 
-func (o OverridesAttributes) InternalRef() terra.Reference {
-	return o.ref
+func (o OverridesAttributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o OverridesAttributes) InternalWithRef(ref terra.Reference) OverridesAttributes {
@@ -192,8 +192,8 @@ type ContainerOverridesAttributes struct {
 	ref terra.Reference
 }
 
-func (co ContainerOverridesAttributes) InternalRef() terra.Reference {
-	return co.ref
+func (co ContainerOverridesAttributes) InternalRef() (terra.Reference, error) {
+	return co.ref, nil
 }
 
 func (co ContainerOverridesAttributes) InternalWithRef(ref terra.Reference) ContainerOverridesAttributes {
@@ -236,8 +236,8 @@ type EnvironmentAttributes struct {
 	ref terra.Reference
 }
 
-func (e EnvironmentAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EnvironmentAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EnvironmentAttributes) InternalWithRef(ref terra.Reference) EnvironmentAttributes {
@@ -260,8 +260,8 @@ type ResourceRequirementsAttributes struct {
 	ref terra.Reference
 }
 
-func (rr ResourceRequirementsAttributes) InternalRef() terra.Reference {
-	return rr.ref
+func (rr ResourceRequirementsAttributes) InternalRef() (terra.Reference, error) {
+	return rr.ref, nil
 }
 
 func (rr ResourceRequirementsAttributes) InternalWithRef(ref terra.Reference) ResourceRequirementsAttributes {
@@ -284,8 +284,8 @@ type InferenceAcceleratorOverridesAttributes struct {
 	ref terra.Reference
 }
 
-func (iao InferenceAcceleratorOverridesAttributes) InternalRef() terra.Reference {
-	return iao.ref
+func (iao InferenceAcceleratorOverridesAttributes) InternalRef() (terra.Reference, error) {
+	return iao.ref, nil
 }
 
 func (iao InferenceAcceleratorOverridesAttributes) InternalWithRef(ref terra.Reference) InferenceAcceleratorOverridesAttributes {
@@ -308,8 +308,8 @@ type PlacementConstraintsAttributes struct {
 	ref terra.Reference
 }
 
-func (pc PlacementConstraintsAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc PlacementConstraintsAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc PlacementConstraintsAttributes) InternalWithRef(ref terra.Reference) PlacementConstraintsAttributes {
@@ -332,8 +332,8 @@ type PlacementStrategyAttributes struct {
 	ref terra.Reference
 }
 
-func (ps PlacementStrategyAttributes) InternalRef() terra.Reference {
-	return ps.ref
+func (ps PlacementStrategyAttributes) InternalRef() (terra.Reference, error) {
+	return ps.ref, nil
 }
 
 func (ps PlacementStrategyAttributes) InternalWithRef(ref terra.Reference) PlacementStrategyAttributes {

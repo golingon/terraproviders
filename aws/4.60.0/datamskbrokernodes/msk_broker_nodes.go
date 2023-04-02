@@ -13,8 +13,8 @@ type NodeInfoListAttributes struct {
 	ref terra.Reference
 }
 
-func (nil NodeInfoListAttributes) InternalRef() terra.Reference {
-	return nil.ref
+func (nil NodeInfoListAttributes) InternalRef() (terra.Reference, error) {
+	return nil.ref, nil
 }
 
 func (nil NodeInfoListAttributes) InternalWithRef(ref terra.Reference) NodeInfoListAttributes {

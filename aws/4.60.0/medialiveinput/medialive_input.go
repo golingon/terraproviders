@@ -51,8 +51,8 @@ type DestinationsAttributes struct {
 	ref terra.Reference
 }
 
-func (d DestinationsAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DestinationsAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DestinationsAttributes) InternalWithRef(ref terra.Reference) DestinationsAttributes {
@@ -71,8 +71,8 @@ type InputDevicesAttributes struct {
 	ref terra.Reference
 }
 
-func (id InputDevicesAttributes) InternalRef() terra.Reference {
-	return id.ref
+func (id InputDevicesAttributes) InternalRef() (terra.Reference, error) {
+	return id.ref, nil
 }
 
 func (id InputDevicesAttributes) InternalWithRef(ref terra.Reference) InputDevicesAttributes {
@@ -91,8 +91,8 @@ type MediaConnectFlowsAttributes struct {
 	ref terra.Reference
 }
 
-func (mcf MediaConnectFlowsAttributes) InternalRef() terra.Reference {
-	return mcf.ref
+func (mcf MediaConnectFlowsAttributes) InternalRef() (terra.Reference, error) {
+	return mcf.ref, nil
 }
 
 func (mcf MediaConnectFlowsAttributes) InternalWithRef(ref terra.Reference) MediaConnectFlowsAttributes {
@@ -111,8 +111,8 @@ type SourcesAttributes struct {
 	ref terra.Reference
 }
 
-func (s SourcesAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SourcesAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SourcesAttributes) InternalWithRef(ref terra.Reference) SourcesAttributes {
@@ -139,8 +139,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
@@ -167,8 +167,8 @@ type VpcAttributes struct {
 	ref terra.Reference
 }
 
-func (v VpcAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v VpcAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v VpcAttributes) InternalWithRef(ref terra.Reference) VpcAttributes {

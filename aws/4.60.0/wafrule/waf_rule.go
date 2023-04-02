@@ -20,8 +20,8 @@ type PredicatesAttributes struct {
 	ref terra.Reference
 }
 
-func (p PredicatesAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PredicatesAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PredicatesAttributes) InternalWithRef(ref terra.Reference) PredicatesAttributes {

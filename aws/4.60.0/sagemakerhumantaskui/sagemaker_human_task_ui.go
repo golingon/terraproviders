@@ -16,8 +16,8 @@ type UiTemplateAttributes struct {
 	ref terra.Reference
 }
 
-func (ut UiTemplateAttributes) InternalRef() terra.Reference {
-	return ut.ref
+func (ut UiTemplateAttributes) InternalRef() (terra.Reference, error) {
+	return ut.ref, nil
 }
 
 func (ut UiTemplateAttributes) InternalWithRef(ref terra.Reference) UiTemplateAttributes {

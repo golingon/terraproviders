@@ -22,8 +22,8 @@ type SettingAttributes struct {
 	ref terra.Reference
 }
 
-func (s SettingAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SettingAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SettingAttributes) InternalWithRef(ref terra.Reference) SettingAttributes {

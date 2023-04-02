@@ -29,8 +29,8 @@ type ServiceCatalogProvisioningDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (scpd ServiceCatalogProvisioningDetailsAttributes) InternalRef() terra.Reference {
-	return scpd.ref
+func (scpd ServiceCatalogProvisioningDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return scpd.ref, nil
 }
 
 func (scpd ServiceCatalogProvisioningDetailsAttributes) InternalWithRef(ref terra.Reference) ServiceCatalogProvisioningDetailsAttributes {
@@ -61,8 +61,8 @@ type ProvisioningParameterAttributes struct {
 	ref terra.Reference
 }
 
-func (pp ProvisioningParameterAttributes) InternalRef() terra.Reference {
-	return pp.ref
+func (pp ProvisioningParameterAttributes) InternalRef() (terra.Reference, error) {
+	return pp.ref, nil
 }
 
 func (pp ProvisioningParameterAttributes) InternalWithRef(ref terra.Reference) ProvisioningParameterAttributes {

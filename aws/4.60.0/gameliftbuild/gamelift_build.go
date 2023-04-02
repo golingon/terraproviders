@@ -22,8 +22,8 @@ type StorageLocationAttributes struct {
 	ref terra.Reference
 }
 
-func (sl StorageLocationAttributes) InternalRef() terra.Reference {
-	return sl.ref
+func (sl StorageLocationAttributes) InternalRef() (terra.Reference, error) {
+	return sl.ref, nil
 }
 
 func (sl StorageLocationAttributes) InternalWithRef(ref terra.Reference) StorageLocationAttributes {

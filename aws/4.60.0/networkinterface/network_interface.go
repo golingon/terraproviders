@@ -18,8 +18,8 @@ type AttachmentAttributes struct {
 	ref terra.Reference
 }
 
-func (a AttachmentAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AttachmentAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AttachmentAttributes) InternalWithRef(ref terra.Reference) AttachmentAttributes {

@@ -20,8 +20,8 @@ type RecordingGroupAttributes struct {
 	ref terra.Reference
 }
 
-func (rg RecordingGroupAttributes) InternalRef() terra.Reference {
-	return rg.ref
+func (rg RecordingGroupAttributes) InternalRef() (terra.Reference, error) {
+	return rg.ref, nil
 }
 
 func (rg RecordingGroupAttributes) InternalWithRef(ref terra.Reference) RecordingGroupAttributes {

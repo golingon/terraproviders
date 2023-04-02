@@ -341,8 +341,8 @@ type ApplicationConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ac ApplicationConfigurationAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac ApplicationConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac ApplicationConfigurationAttributes) InternalWithRef(ref terra.Reference) ApplicationConfigurationAttributes {
@@ -385,8 +385,8 @@ type ApplicationCodeConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (acc ApplicationCodeConfigurationAttributes) InternalRef() terra.Reference {
-	return acc.ref
+func (acc ApplicationCodeConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return acc.ref, nil
 }
 
 func (acc ApplicationCodeConfigurationAttributes) InternalWithRef(ref terra.Reference) ApplicationCodeConfigurationAttributes {
@@ -409,8 +409,8 @@ type CodeContentAttributes struct {
 	ref terra.Reference
 }
 
-func (cc CodeContentAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc CodeContentAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc CodeContentAttributes) InternalWithRef(ref terra.Reference) CodeContentAttributes {
@@ -433,8 +433,8 @@ type S3ContentLocationAttributes struct {
 	ref terra.Reference
 }
 
-func (scl S3ContentLocationAttributes) InternalRef() terra.Reference {
-	return scl.ref
+func (scl S3ContentLocationAttributes) InternalRef() (terra.Reference, error) {
+	return scl.ref, nil
 }
 
 func (scl S3ContentLocationAttributes) InternalWithRef(ref terra.Reference) S3ContentLocationAttributes {
@@ -461,8 +461,8 @@ type ApplicationSnapshotConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (asc ApplicationSnapshotConfigurationAttributes) InternalRef() terra.Reference {
-	return asc.ref
+func (asc ApplicationSnapshotConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return asc.ref, nil
 }
 
 func (asc ApplicationSnapshotConfigurationAttributes) InternalWithRef(ref terra.Reference) ApplicationSnapshotConfigurationAttributes {
@@ -481,8 +481,8 @@ type EnvironmentPropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (ep EnvironmentPropertiesAttributes) InternalRef() terra.Reference {
-	return ep.ref
+func (ep EnvironmentPropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return ep.ref, nil
 }
 
 func (ep EnvironmentPropertiesAttributes) InternalWithRef(ref terra.Reference) EnvironmentPropertiesAttributes {
@@ -501,8 +501,8 @@ type PropertyGroupAttributes struct {
 	ref terra.Reference
 }
 
-func (pg PropertyGroupAttributes) InternalRef() terra.Reference {
-	return pg.ref
+func (pg PropertyGroupAttributes) InternalRef() (terra.Reference, error) {
+	return pg.ref, nil
 }
 
 func (pg PropertyGroupAttributes) InternalWithRef(ref terra.Reference) PropertyGroupAttributes {
@@ -525,8 +525,8 @@ type FlinkApplicationConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (fac FlinkApplicationConfigurationAttributes) InternalRef() terra.Reference {
-	return fac.ref
+func (fac FlinkApplicationConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return fac.ref, nil
 }
 
 func (fac FlinkApplicationConfigurationAttributes) InternalWithRef(ref terra.Reference) FlinkApplicationConfigurationAttributes {
@@ -553,8 +553,8 @@ type CheckpointConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (cc CheckpointConfigurationAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc CheckpointConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc CheckpointConfigurationAttributes) InternalWithRef(ref terra.Reference) CheckpointConfigurationAttributes {
@@ -585,8 +585,8 @@ type MonitoringConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (mc MonitoringConfigurationAttributes) InternalRef() terra.Reference {
-	return mc.ref
+func (mc MonitoringConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return mc.ref, nil
 }
 
 func (mc MonitoringConfigurationAttributes) InternalWithRef(ref terra.Reference) MonitoringConfigurationAttributes {
@@ -613,8 +613,8 @@ type ParallelismConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (pc ParallelismConfigurationAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc ParallelismConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc ParallelismConfigurationAttributes) InternalWithRef(ref terra.Reference) ParallelismConfigurationAttributes {
@@ -645,8 +645,8 @@ type RunConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (rc RunConfigurationAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc RunConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc RunConfigurationAttributes) InternalWithRef(ref terra.Reference) RunConfigurationAttributes {
@@ -669,8 +669,8 @@ type ApplicationRestoreConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (arc ApplicationRestoreConfigurationAttributes) InternalRef() terra.Reference {
-	return arc.ref
+func (arc ApplicationRestoreConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return arc.ref, nil
 }
 
 func (arc ApplicationRestoreConfigurationAttributes) InternalWithRef(ref terra.Reference) ApplicationRestoreConfigurationAttributes {
@@ -693,8 +693,8 @@ type FlinkRunConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (frc FlinkRunConfigurationAttributes) InternalRef() terra.Reference {
-	return frc.ref
+func (frc FlinkRunConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return frc.ref, nil
 }
 
 func (frc FlinkRunConfigurationAttributes) InternalWithRef(ref terra.Reference) FlinkRunConfigurationAttributes {
@@ -713,8 +713,8 @@ type SqlApplicationConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (sac SqlApplicationConfigurationAttributes) InternalRef() terra.Reference {
-	return sac.ref
+func (sac SqlApplicationConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return sac.ref, nil
 }
 
 func (sac SqlApplicationConfigurationAttributes) InternalWithRef(ref terra.Reference) SqlApplicationConfigurationAttributes {
@@ -741,8 +741,8 @@ type InputAttributes struct {
 	ref terra.Reference
 }
 
-func (i InputAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i InputAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i InputAttributes) InternalWithRef(ref terra.Reference) InputAttributes {
@@ -793,8 +793,8 @@ type InputParallelismAttributes struct {
 	ref terra.Reference
 }
 
-func (ip InputParallelismAttributes) InternalRef() terra.Reference {
-	return ip.ref
+func (ip InputParallelismAttributes) InternalRef() (terra.Reference, error) {
+	return ip.ref, nil
 }
 
 func (ip InputParallelismAttributes) InternalWithRef(ref terra.Reference) InputParallelismAttributes {
@@ -813,8 +813,8 @@ type InputProcessingConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ipc InputProcessingConfigurationAttributes) InternalRef() terra.Reference {
-	return ipc.ref
+func (ipc InputProcessingConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ipc.ref, nil
 }
 
 func (ipc InputProcessingConfigurationAttributes) InternalWithRef(ref terra.Reference) InputProcessingConfigurationAttributes {
@@ -833,8 +833,8 @@ type InputLambdaProcessorAttributes struct {
 	ref terra.Reference
 }
 
-func (ilp InputLambdaProcessorAttributes) InternalRef() terra.Reference {
-	return ilp.ref
+func (ilp InputLambdaProcessorAttributes) InternalRef() (terra.Reference, error) {
+	return ilp.ref, nil
 }
 
 func (ilp InputLambdaProcessorAttributes) InternalWithRef(ref terra.Reference) InputLambdaProcessorAttributes {
@@ -853,8 +853,8 @@ type InputSchemaAttributes struct {
 	ref terra.Reference
 }
 
-func (is InputSchemaAttributes) InternalRef() terra.Reference {
-	return is.ref
+func (is InputSchemaAttributes) InternalRef() (terra.Reference, error) {
+	return is.ref, nil
 }
 
 func (is InputSchemaAttributes) InternalWithRef(ref terra.Reference) InputSchemaAttributes {
@@ -881,8 +881,8 @@ type InputSchemaRecordColumnAttributes struct {
 	ref terra.Reference
 }
 
-func (rc InputSchemaRecordColumnAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc InputSchemaRecordColumnAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc InputSchemaRecordColumnAttributes) InternalWithRef(ref terra.Reference) InputSchemaRecordColumnAttributes {
@@ -909,8 +909,8 @@ type InputSchemaRecordFormatAttributes struct {
 	ref terra.Reference
 }
 
-func (rf InputSchemaRecordFormatAttributes) InternalRef() terra.Reference {
-	return rf.ref
+func (rf InputSchemaRecordFormatAttributes) InternalRef() (terra.Reference, error) {
+	return rf.ref, nil
 }
 
 func (rf InputSchemaRecordFormatAttributes) InternalWithRef(ref terra.Reference) InputSchemaRecordFormatAttributes {
@@ -933,8 +933,8 @@ type InputSchemaRecordFormatMappingParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (mp InputSchemaRecordFormatMappingParametersAttributes) InternalRef() terra.Reference {
-	return mp.ref
+func (mp InputSchemaRecordFormatMappingParametersAttributes) InternalRef() (terra.Reference, error) {
+	return mp.ref, nil
 }
 
 func (mp InputSchemaRecordFormatMappingParametersAttributes) InternalWithRef(ref terra.Reference) InputSchemaRecordFormatMappingParametersAttributes {
@@ -957,8 +957,8 @@ type InputSchemaRecordFormatMappingParametersCsvMappingParametersAttributes stru
 	ref terra.Reference
 }
 
-func (cmp InputSchemaRecordFormatMappingParametersCsvMappingParametersAttributes) InternalRef() terra.Reference {
-	return cmp.ref
+func (cmp InputSchemaRecordFormatMappingParametersCsvMappingParametersAttributes) InternalRef() (terra.Reference, error) {
+	return cmp.ref, nil
 }
 
 func (cmp InputSchemaRecordFormatMappingParametersCsvMappingParametersAttributes) InternalWithRef(ref terra.Reference) InputSchemaRecordFormatMappingParametersCsvMappingParametersAttributes {
@@ -981,8 +981,8 @@ type InputSchemaRecordFormatMappingParametersJsonMappingParametersAttributes str
 	ref terra.Reference
 }
 
-func (jmp InputSchemaRecordFormatMappingParametersJsonMappingParametersAttributes) InternalRef() terra.Reference {
-	return jmp.ref
+func (jmp InputSchemaRecordFormatMappingParametersJsonMappingParametersAttributes) InternalRef() (terra.Reference, error) {
+	return jmp.ref, nil
 }
 
 func (jmp InputSchemaRecordFormatMappingParametersJsonMappingParametersAttributes) InternalWithRef(ref terra.Reference) InputSchemaRecordFormatMappingParametersJsonMappingParametersAttributes {
@@ -1001,8 +1001,8 @@ type InputStartingPositionConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ispc InputStartingPositionConfigurationAttributes) InternalRef() terra.Reference {
-	return ispc.ref
+func (ispc InputStartingPositionConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ispc.ref, nil
 }
 
 func (ispc InputStartingPositionConfigurationAttributes) InternalWithRef(ref terra.Reference) InputStartingPositionConfigurationAttributes {
@@ -1021,8 +1021,8 @@ type KinesisFirehoseInputAttributes struct {
 	ref terra.Reference
 }
 
-func (kfi KinesisFirehoseInputAttributes) InternalRef() terra.Reference {
-	return kfi.ref
+func (kfi KinesisFirehoseInputAttributes) InternalRef() (terra.Reference, error) {
+	return kfi.ref, nil
 }
 
 func (kfi KinesisFirehoseInputAttributes) InternalWithRef(ref terra.Reference) KinesisFirehoseInputAttributes {
@@ -1041,8 +1041,8 @@ type KinesisStreamsInputAttributes struct {
 	ref terra.Reference
 }
 
-func (ksi KinesisStreamsInputAttributes) InternalRef() terra.Reference {
-	return ksi.ref
+func (ksi KinesisStreamsInputAttributes) InternalRef() (terra.Reference, error) {
+	return ksi.ref, nil
 }
 
 func (ksi KinesisStreamsInputAttributes) InternalWithRef(ref terra.Reference) KinesisStreamsInputAttributes {
@@ -1061,8 +1061,8 @@ type OutputAttributes struct {
 	ref terra.Reference
 }
 
-func (o OutputAttributes) InternalRef() terra.Reference {
-	return o.ref
+func (o OutputAttributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o OutputAttributes) InternalWithRef(ref terra.Reference) OutputAttributes {
@@ -1101,8 +1101,8 @@ type DestinationSchemaAttributes struct {
 	ref terra.Reference
 }
 
-func (ds DestinationSchemaAttributes) InternalRef() terra.Reference {
-	return ds.ref
+func (ds DestinationSchemaAttributes) InternalRef() (terra.Reference, error) {
+	return ds.ref, nil
 }
 
 func (ds DestinationSchemaAttributes) InternalWithRef(ref terra.Reference) DestinationSchemaAttributes {
@@ -1121,8 +1121,8 @@ type KinesisFirehoseOutputAttributes struct {
 	ref terra.Reference
 }
 
-func (kfo KinesisFirehoseOutputAttributes) InternalRef() terra.Reference {
-	return kfo.ref
+func (kfo KinesisFirehoseOutputAttributes) InternalRef() (terra.Reference, error) {
+	return kfo.ref, nil
 }
 
 func (kfo KinesisFirehoseOutputAttributes) InternalWithRef(ref terra.Reference) KinesisFirehoseOutputAttributes {
@@ -1141,8 +1141,8 @@ type KinesisStreamsOutputAttributes struct {
 	ref terra.Reference
 }
 
-func (kso KinesisStreamsOutputAttributes) InternalRef() terra.Reference {
-	return kso.ref
+func (kso KinesisStreamsOutputAttributes) InternalRef() (terra.Reference, error) {
+	return kso.ref, nil
 }
 
 func (kso KinesisStreamsOutputAttributes) InternalWithRef(ref terra.Reference) KinesisStreamsOutputAttributes {
@@ -1161,8 +1161,8 @@ type LambdaOutputAttributes struct {
 	ref terra.Reference
 }
 
-func (lo LambdaOutputAttributes) InternalRef() terra.Reference {
-	return lo.ref
+func (lo LambdaOutputAttributes) InternalRef() (terra.Reference, error) {
+	return lo.ref, nil
 }
 
 func (lo LambdaOutputAttributes) InternalWithRef(ref terra.Reference) LambdaOutputAttributes {
@@ -1181,8 +1181,8 @@ type ReferenceDataSourceAttributes struct {
 	ref terra.Reference
 }
 
-func (rds ReferenceDataSourceAttributes) InternalRef() terra.Reference {
-	return rds.ref
+func (rds ReferenceDataSourceAttributes) InternalRef() (terra.Reference, error) {
+	return rds.ref, nil
 }
 
 func (rds ReferenceDataSourceAttributes) InternalWithRef(ref terra.Reference) ReferenceDataSourceAttributes {
@@ -1213,8 +1213,8 @@ type ReferenceSchemaAttributes struct {
 	ref terra.Reference
 }
 
-func (rs ReferenceSchemaAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs ReferenceSchemaAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs ReferenceSchemaAttributes) InternalWithRef(ref terra.Reference) ReferenceSchemaAttributes {
@@ -1241,8 +1241,8 @@ type ReferenceSchemaRecordColumnAttributes struct {
 	ref terra.Reference
 }
 
-func (rc ReferenceSchemaRecordColumnAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc ReferenceSchemaRecordColumnAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc ReferenceSchemaRecordColumnAttributes) InternalWithRef(ref terra.Reference) ReferenceSchemaRecordColumnAttributes {
@@ -1269,8 +1269,8 @@ type ReferenceSchemaRecordFormatAttributes struct {
 	ref terra.Reference
 }
 
-func (rf ReferenceSchemaRecordFormatAttributes) InternalRef() terra.Reference {
-	return rf.ref
+func (rf ReferenceSchemaRecordFormatAttributes) InternalRef() (terra.Reference, error) {
+	return rf.ref, nil
 }
 
 func (rf ReferenceSchemaRecordFormatAttributes) InternalWithRef(ref terra.Reference) ReferenceSchemaRecordFormatAttributes {
@@ -1293,8 +1293,8 @@ type ReferenceSchemaRecordFormatMappingParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (mp ReferenceSchemaRecordFormatMappingParametersAttributes) InternalRef() terra.Reference {
-	return mp.ref
+func (mp ReferenceSchemaRecordFormatMappingParametersAttributes) InternalRef() (terra.Reference, error) {
+	return mp.ref, nil
 }
 
 func (mp ReferenceSchemaRecordFormatMappingParametersAttributes) InternalWithRef(ref terra.Reference) ReferenceSchemaRecordFormatMappingParametersAttributes {
@@ -1317,8 +1317,8 @@ type ReferenceSchemaRecordFormatMappingParametersCsvMappingParametersAttributes 
 	ref terra.Reference
 }
 
-func (cmp ReferenceSchemaRecordFormatMappingParametersCsvMappingParametersAttributes) InternalRef() terra.Reference {
-	return cmp.ref
+func (cmp ReferenceSchemaRecordFormatMappingParametersCsvMappingParametersAttributes) InternalRef() (terra.Reference, error) {
+	return cmp.ref, nil
 }
 
 func (cmp ReferenceSchemaRecordFormatMappingParametersCsvMappingParametersAttributes) InternalWithRef(ref terra.Reference) ReferenceSchemaRecordFormatMappingParametersCsvMappingParametersAttributes {
@@ -1341,8 +1341,8 @@ type ReferenceSchemaRecordFormatMappingParametersJsonMappingParametersAttributes
 	ref terra.Reference
 }
 
-func (jmp ReferenceSchemaRecordFormatMappingParametersJsonMappingParametersAttributes) InternalRef() terra.Reference {
-	return jmp.ref
+func (jmp ReferenceSchemaRecordFormatMappingParametersJsonMappingParametersAttributes) InternalRef() (terra.Reference, error) {
+	return jmp.ref, nil
 }
 
 func (jmp ReferenceSchemaRecordFormatMappingParametersJsonMappingParametersAttributes) InternalWithRef(ref terra.Reference) ReferenceSchemaRecordFormatMappingParametersJsonMappingParametersAttributes {
@@ -1361,8 +1361,8 @@ type S3ReferenceDataSourceAttributes struct {
 	ref terra.Reference
 }
 
-func (srds S3ReferenceDataSourceAttributes) InternalRef() terra.Reference {
-	return srds.ref
+func (srds S3ReferenceDataSourceAttributes) InternalRef() (terra.Reference, error) {
+	return srds.ref, nil
 }
 
 func (srds S3ReferenceDataSourceAttributes) InternalWithRef(ref terra.Reference) S3ReferenceDataSourceAttributes {
@@ -1385,8 +1385,8 @@ type VpcConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (vc VpcConfigurationAttributes) InternalRef() terra.Reference {
-	return vc.ref
+func (vc VpcConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return vc.ref, nil
 }
 
 func (vc VpcConfigurationAttributes) InternalWithRef(ref terra.Reference) VpcConfigurationAttributes {
@@ -1417,8 +1417,8 @@ type CloudwatchLoggingOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (clo CloudwatchLoggingOptionsAttributes) InternalRef() terra.Reference {
-	return clo.ref
+func (clo CloudwatchLoggingOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return clo.ref, nil
 }
 
 func (clo CloudwatchLoggingOptionsAttributes) InternalWithRef(ref terra.Reference) CloudwatchLoggingOptionsAttributes {
@@ -1441,8 +1441,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

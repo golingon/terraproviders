@@ -23,8 +23,8 @@ type EndpointConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ec EndpointConfigurationAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec EndpointConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec EndpointConfigurationAttributes) InternalWithRef(ref terra.Reference) EndpointConfigurationAttributes {
@@ -43,8 +43,8 @@ type MutualTlsAuthenticationAttributes struct {
 	ref terra.Reference
 }
 
-func (mta MutualTlsAuthenticationAttributes) InternalRef() terra.Reference {
-	return mta.ref
+func (mta MutualTlsAuthenticationAttributes) InternalRef() (terra.Reference, error) {
+	return mta.ref, nil
 }
 
 func (mta MutualTlsAuthenticationAttributes) InternalWithRef(ref terra.Reference) MutualTlsAuthenticationAttributes {

@@ -42,8 +42,8 @@ type SchemaAttributes struct {
 	ref terra.Reference
 }
 
-func (s SchemaAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SchemaAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SchemaAttributes) InternalWithRef(ref terra.Reference) SchemaAttributes {
@@ -66,8 +66,8 @@ type InputRecordTablesAttributes struct {
 	ref terra.Reference
 }
 
-func (irt InputRecordTablesAttributes) InternalRef() terra.Reference {
-	return irt.ref
+func (irt InputRecordTablesAttributes) InternalRef() (terra.Reference, error) {
+	return irt.ref, nil
 }
 
 func (irt InputRecordTablesAttributes) InternalWithRef(ref terra.Reference) InputRecordTablesAttributes {
@@ -98,8 +98,8 @@ type ParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (p ParametersAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p ParametersAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p ParametersAttributes) InternalWithRef(ref terra.Reference) ParametersAttributes {
@@ -122,8 +122,8 @@ type FindMatchesParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (fmp FindMatchesParametersAttributes) InternalRef() terra.Reference {
-	return fmp.ref
+func (fmp FindMatchesParametersAttributes) InternalRef() (terra.Reference, error) {
+	return fmp.ref, nil
 }
 
 func (fmp FindMatchesParametersAttributes) InternalWithRef(ref terra.Reference) FindMatchesParametersAttributes {

@@ -20,8 +20,8 @@ type SizeInBytesAttributes struct {
 	ref terra.Reference
 }
 
-func (sib SizeInBytesAttributes) InternalRef() terra.Reference {
-	return sib.ref
+func (sib SizeInBytesAttributes) InternalRef() (terra.Reference, error) {
+	return sib.ref, nil
 }
 
 func (sib SizeInBytesAttributes) InternalWithRef(ref terra.Reference) SizeInBytesAttributes {
@@ -48,8 +48,8 @@ type LifecyclePolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (lp LifecyclePolicyAttributes) InternalRef() terra.Reference {
-	return lp.ref
+func (lp LifecyclePolicyAttributes) InternalRef() (terra.Reference, error) {
+	return lp.ref, nil
 }
 
 func (lp LifecyclePolicyAttributes) InternalWithRef(ref terra.Reference) LifecyclePolicyAttributes {

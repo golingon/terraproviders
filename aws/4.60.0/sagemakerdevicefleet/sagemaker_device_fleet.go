@@ -18,8 +18,8 @@ type OutputConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (oc OutputConfigAttributes) InternalRef() terra.Reference {
-	return oc.ref
+func (oc OutputConfigAttributes) InternalRef() (terra.Reference, error) {
+	return oc.ref, nil
 }
 
 func (oc OutputConfigAttributes) InternalWithRef(ref terra.Reference) OutputConfigAttributes {

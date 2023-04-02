@@ -57,8 +57,8 @@ type ResourcesAttributes struct {
 	ref terra.Reference
 }
 
-func (r ResourcesAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r ResourcesAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r ResourcesAttributes) InternalWithRef(ref terra.Reference) ResourcesAttributes {
@@ -89,8 +89,8 @@ type DnsTargetResourceAttributes struct {
 	ref terra.Reference
 }
 
-func (dtr DnsTargetResourceAttributes) InternalRef() terra.Reference {
-	return dtr.ref
+func (dtr DnsTargetResourceAttributes) InternalRef() (terra.Reference, error) {
+	return dtr.ref, nil
 }
 
 func (dtr DnsTargetResourceAttributes) InternalWithRef(ref terra.Reference) DnsTargetResourceAttributes {
@@ -125,8 +125,8 @@ type TargetResourceAttributes struct {
 	ref terra.Reference
 }
 
-func (tr TargetResourceAttributes) InternalRef() terra.Reference {
-	return tr.ref
+func (tr TargetResourceAttributes) InternalRef() (terra.Reference, error) {
+	return tr.ref, nil
 }
 
 func (tr TargetResourceAttributes) InternalWithRef(ref terra.Reference) TargetResourceAttributes {
@@ -149,8 +149,8 @@ type NlbResourceAttributes struct {
 	ref terra.Reference
 }
 
-func (nr NlbResourceAttributes) InternalRef() terra.Reference {
-	return nr.ref
+func (nr NlbResourceAttributes) InternalRef() (terra.Reference, error) {
+	return nr.ref, nil
 }
 
 func (nr NlbResourceAttributes) InternalWithRef(ref terra.Reference) NlbResourceAttributes {
@@ -169,8 +169,8 @@ type R53ResourceAttributes struct {
 	ref terra.Reference
 }
 
-func (rr R53ResourceAttributes) InternalRef() terra.Reference {
-	return rr.ref
+func (rr R53ResourceAttributes) InternalRef() (terra.Reference, error) {
+	return rr.ref, nil
 }
 
 func (rr R53ResourceAttributes) InternalWithRef(ref terra.Reference) R53ResourceAttributes {
@@ -193,8 +193,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

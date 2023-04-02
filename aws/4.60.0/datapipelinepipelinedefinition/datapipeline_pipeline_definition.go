@@ -50,8 +50,8 @@ type ParameterObjectAttributes struct {
 	ref terra.Reference
 }
 
-func (po ParameterObjectAttributes) InternalRef() terra.Reference {
-	return po.ref
+func (po ParameterObjectAttributes) InternalRef() (terra.Reference, error) {
+	return po.ref, nil
 }
 
 func (po ParameterObjectAttributes) InternalWithRef(ref terra.Reference) ParameterObjectAttributes {
@@ -74,8 +74,8 @@ type AttributeAttributes struct {
 	ref terra.Reference
 }
 
-func (a AttributeAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AttributeAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AttributeAttributes) InternalWithRef(ref terra.Reference) AttributeAttributes {
@@ -98,8 +98,8 @@ type ParameterValueAttributes struct {
 	ref terra.Reference
 }
 
-func (pv ParameterValueAttributes) InternalRef() terra.Reference {
-	return pv.ref
+func (pv ParameterValueAttributes) InternalRef() (terra.Reference, error) {
+	return pv.ref, nil
 }
 
 func (pv ParameterValueAttributes) InternalWithRef(ref terra.Reference) ParameterValueAttributes {
@@ -122,8 +122,8 @@ type PipelineObjectAttributes struct {
 	ref terra.Reference
 }
 
-func (po PipelineObjectAttributes) InternalRef() terra.Reference {
-	return po.ref
+func (po PipelineObjectAttributes) InternalRef() (terra.Reference, error) {
+	return po.ref, nil
 }
 
 func (po PipelineObjectAttributes) InternalWithRef(ref terra.Reference) PipelineObjectAttributes {
@@ -150,8 +150,8 @@ type FieldAttributes struct {
 	ref terra.Reference
 }
 
-func (f FieldAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FieldAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FieldAttributes) InternalWithRef(ref terra.Reference) FieldAttributes {

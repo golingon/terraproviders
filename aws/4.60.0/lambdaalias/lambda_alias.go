@@ -16,8 +16,8 @@ type RoutingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (rc RoutingConfigAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc RoutingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc RoutingConfigAttributes) InternalWithRef(ref terra.Reference) RoutingConfigAttributes {

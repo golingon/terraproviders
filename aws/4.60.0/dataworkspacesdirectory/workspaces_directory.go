@@ -17,8 +17,8 @@ type SelfServicePermissionsAttributes struct {
 	ref terra.Reference
 }
 
-func (ssp SelfServicePermissionsAttributes) InternalRef() terra.Reference {
-	return ssp.ref
+func (ssp SelfServicePermissionsAttributes) InternalRef() (terra.Reference, error) {
+	return ssp.ref, nil
 }
 
 func (ssp SelfServicePermissionsAttributes) InternalWithRef(ref terra.Reference) SelfServicePermissionsAttributes {
@@ -53,8 +53,8 @@ type WorkspaceAccessPropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (wap WorkspaceAccessPropertiesAttributes) InternalRef() terra.Reference {
-	return wap.ref
+func (wap WorkspaceAccessPropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return wap.ref, nil
 }
 
 func (wap WorkspaceAccessPropertiesAttributes) InternalWithRef(ref terra.Reference) WorkspaceAccessPropertiesAttributes {
@@ -101,8 +101,8 @@ type WorkspaceCreationPropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (wcp WorkspaceCreationPropertiesAttributes) InternalRef() terra.Reference {
-	return wcp.ref
+func (wcp WorkspaceCreationPropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return wcp.ref, nil
 }
 
 func (wcp WorkspaceCreationPropertiesAttributes) InternalWithRef(ref terra.Reference) WorkspaceCreationPropertiesAttributes {

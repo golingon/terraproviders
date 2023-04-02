@@ -77,8 +77,8 @@ type ContainerAttributes struct {
 	ref terra.Reference
 }
 
-func (c ContainerAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ContainerAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ContainerAttributes) InternalWithRef(ref terra.Reference) ContainerAttributes {
@@ -117,8 +117,8 @@ type ContainerImageConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ic ContainerImageConfigAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic ContainerImageConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic ContainerImageConfigAttributes) InternalWithRef(ref terra.Reference) ContainerImageConfigAttributes {
@@ -141,8 +141,8 @@ type ContainerImageConfigRepositoryAuthConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (rac ContainerImageConfigRepositoryAuthConfigAttributes) InternalRef() terra.Reference {
-	return rac.ref
+func (rac ContainerImageConfigRepositoryAuthConfigAttributes) InternalRef() (terra.Reference, error) {
+	return rac.ref, nil
 }
 
 func (rac ContainerImageConfigRepositoryAuthConfigAttributes) InternalWithRef(ref terra.Reference) ContainerImageConfigRepositoryAuthConfigAttributes {
@@ -161,8 +161,8 @@ type InferenceExecutionConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (iec InferenceExecutionConfigAttributes) InternalRef() terra.Reference {
-	return iec.ref
+func (iec InferenceExecutionConfigAttributes) InternalRef() (terra.Reference, error) {
+	return iec.ref, nil
 }
 
 func (iec InferenceExecutionConfigAttributes) InternalWithRef(ref terra.Reference) InferenceExecutionConfigAttributes {
@@ -181,8 +181,8 @@ type PrimaryContainerAttributes struct {
 	ref terra.Reference
 }
 
-func (pc PrimaryContainerAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc PrimaryContainerAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc PrimaryContainerAttributes) InternalWithRef(ref terra.Reference) PrimaryContainerAttributes {
@@ -221,8 +221,8 @@ type PrimaryContainerImageConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ic PrimaryContainerImageConfigAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic PrimaryContainerImageConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic PrimaryContainerImageConfigAttributes) InternalWithRef(ref terra.Reference) PrimaryContainerImageConfigAttributes {
@@ -245,8 +245,8 @@ type PrimaryContainerImageConfigRepositoryAuthConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (rac PrimaryContainerImageConfigRepositoryAuthConfigAttributes) InternalRef() terra.Reference {
-	return rac.ref
+func (rac PrimaryContainerImageConfigRepositoryAuthConfigAttributes) InternalRef() (terra.Reference, error) {
+	return rac.ref, nil
 }
 
 func (rac PrimaryContainerImageConfigRepositoryAuthConfigAttributes) InternalWithRef(ref terra.Reference) PrimaryContainerImageConfigRepositoryAuthConfigAttributes {
@@ -265,8 +265,8 @@ type VpcConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (vc VpcConfigAttributes) InternalRef() terra.Reference {
-	return vc.ref
+func (vc VpcConfigAttributes) InternalRef() (terra.Reference, error) {
+	return vc.ref, nil
 }
 
 func (vc VpcConfigAttributes) InternalWithRef(ref terra.Reference) VpcConfigAttributes {

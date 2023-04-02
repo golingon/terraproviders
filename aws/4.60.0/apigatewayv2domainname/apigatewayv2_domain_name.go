@@ -36,8 +36,8 @@ type DomainNameConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (dnc DomainNameConfigurationAttributes) InternalRef() terra.Reference {
-	return dnc.ref
+func (dnc DomainNameConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return dnc.ref, nil
 }
 
 func (dnc DomainNameConfigurationAttributes) InternalWithRef(ref terra.Reference) DomainNameConfigurationAttributes {
@@ -76,8 +76,8 @@ type MutualTlsAuthenticationAttributes struct {
 	ref terra.Reference
 }
 
-func (mta MutualTlsAuthenticationAttributes) InternalRef() terra.Reference {
-	return mta.ref
+func (mta MutualTlsAuthenticationAttributes) InternalRef() (terra.Reference, error) {
+	return mta.ref, nil
 }
 
 func (mta MutualTlsAuthenticationAttributes) InternalWithRef(ref terra.Reference) MutualTlsAuthenticationAttributes {
@@ -100,8 +100,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

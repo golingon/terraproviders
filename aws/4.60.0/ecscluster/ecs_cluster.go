@@ -59,8 +59,8 @@ type ConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConfigurationAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConfigurationAttributes) InternalWithRef(ref terra.Reference) ConfigurationAttributes {
@@ -79,8 +79,8 @@ type ExecuteCommandConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ecc ExecuteCommandConfigurationAttributes) InternalRef() terra.Reference {
-	return ecc.ref
+func (ecc ExecuteCommandConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ecc.ref, nil
 }
 
 func (ecc ExecuteCommandConfigurationAttributes) InternalWithRef(ref terra.Reference) ExecuteCommandConfigurationAttributes {
@@ -107,8 +107,8 @@ type LogConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (lc LogConfigurationAttributes) InternalRef() terra.Reference {
-	return lc.ref
+func (lc LogConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return lc.ref, nil
 }
 
 func (lc LogConfigurationAttributes) InternalWithRef(ref terra.Reference) LogConfigurationAttributes {
@@ -143,8 +143,8 @@ type DefaultCapacityProviderStrategyAttributes struct {
 	ref terra.Reference
 }
 
-func (dcps DefaultCapacityProviderStrategyAttributes) InternalRef() terra.Reference {
-	return dcps.ref
+func (dcps DefaultCapacityProviderStrategyAttributes) InternalRef() (terra.Reference, error) {
+	return dcps.ref, nil
 }
 
 func (dcps DefaultCapacityProviderStrategyAttributes) InternalWithRef(ref terra.Reference) DefaultCapacityProviderStrategyAttributes {
@@ -171,8 +171,8 @@ type ServiceConnectDefaultsAttributes struct {
 	ref terra.Reference
 }
 
-func (scd ServiceConnectDefaultsAttributes) InternalRef() terra.Reference {
-	return scd.ref
+func (scd ServiceConnectDefaultsAttributes) InternalRef() (terra.Reference, error) {
+	return scd.ref, nil
 }
 
 func (scd ServiceConnectDefaultsAttributes) InternalWithRef(ref terra.Reference) ServiceConnectDefaultsAttributes {
@@ -191,8 +191,8 @@ type SettingAttributes struct {
 	ref terra.Reference
 }
 
-func (s SettingAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SettingAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SettingAttributes) InternalWithRef(ref terra.Reference) SettingAttributes {

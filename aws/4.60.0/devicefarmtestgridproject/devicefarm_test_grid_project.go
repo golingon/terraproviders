@@ -20,8 +20,8 @@ type VpcConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (vc VpcConfigAttributes) InternalRef() terra.Reference {
-	return vc.ref
+func (vc VpcConfigAttributes) InternalRef() (terra.Reference, error) {
+	return vc.ref, nil
 }
 
 func (vc VpcConfigAttributes) InternalWithRef(ref terra.Reference) VpcConfigAttributes {

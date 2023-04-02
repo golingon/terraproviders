@@ -30,8 +30,8 @@ type EncryptionEntitiesAttributes struct {
 	ref terra.Reference
 }
 
-func (ee EncryptionEntitiesAttributes) InternalRef() terra.Reference {
-	return ee.ref
+func (ee EncryptionEntitiesAttributes) InternalRef() (terra.Reference, error) {
+	return ee.ref, nil
 }
 
 func (ee EncryptionEntitiesAttributes) InternalWithRef(ref terra.Reference) EncryptionEntitiesAttributes {
@@ -50,8 +50,8 @@ type ItemsAttributes struct {
 	ref terra.Reference
 }
 
-func (i ItemsAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i ItemsAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i ItemsAttributes) InternalWithRef(ref terra.Reference) ItemsAttributes {
@@ -78,8 +78,8 @@ type FieldPatternsAttributes struct {
 	ref terra.Reference
 }
 
-func (fp FieldPatternsAttributes) InternalRef() terra.Reference {
-	return fp.ref
+func (fp FieldPatternsAttributes) InternalRef() (terra.Reference, error) {
+	return fp.ref, nil
 }
 
 func (fp FieldPatternsAttributes) InternalWithRef(ref terra.Reference) FieldPatternsAttributes {

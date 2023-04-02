@@ -68,8 +68,8 @@ type ActionThresholdAttributes struct {
 	ref terra.Reference
 }
 
-func (at ActionThresholdAttributes) InternalRef() terra.Reference {
-	return at.ref
+func (at ActionThresholdAttributes) InternalRef() (terra.Reference, error) {
+	return at.ref, nil
 }
 
 func (at ActionThresholdAttributes) InternalWithRef(ref terra.Reference) ActionThresholdAttributes {
@@ -92,8 +92,8 @@ type DefinitionAttributes struct {
 	ref terra.Reference
 }
 
-func (d DefinitionAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DefinitionAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DefinitionAttributes) InternalWithRef(ref terra.Reference) DefinitionAttributes {
@@ -120,8 +120,8 @@ type IamActionDefinitionAttributes struct {
 	ref terra.Reference
 }
 
-func (iad IamActionDefinitionAttributes) InternalRef() terra.Reference {
-	return iad.ref
+func (iad IamActionDefinitionAttributes) InternalRef() (terra.Reference, error) {
+	return iad.ref, nil
 }
 
 func (iad IamActionDefinitionAttributes) InternalWithRef(ref terra.Reference) IamActionDefinitionAttributes {
@@ -152,8 +152,8 @@ type ScpActionDefinitionAttributes struct {
 	ref terra.Reference
 }
 
-func (sad ScpActionDefinitionAttributes) InternalRef() terra.Reference {
-	return sad.ref
+func (sad ScpActionDefinitionAttributes) InternalRef() (terra.Reference, error) {
+	return sad.ref, nil
 }
 
 func (sad ScpActionDefinitionAttributes) InternalWithRef(ref terra.Reference) ScpActionDefinitionAttributes {
@@ -176,8 +176,8 @@ type SsmActionDefinitionAttributes struct {
 	ref terra.Reference
 }
 
-func (sad SsmActionDefinitionAttributes) InternalRef() terra.Reference {
-	return sad.ref
+func (sad SsmActionDefinitionAttributes) InternalRef() (terra.Reference, error) {
+	return sad.ref, nil
 }
 
 func (sad SsmActionDefinitionAttributes) InternalWithRef(ref terra.Reference) SsmActionDefinitionAttributes {
@@ -204,8 +204,8 @@ type SubscriberAttributes struct {
 	ref terra.Reference
 }
 
-func (s SubscriberAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SubscriberAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SubscriberAttributes) InternalWithRef(ref terra.Reference) SubscriberAttributes {
@@ -228,8 +228,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

@@ -13,8 +13,8 @@ type DomainValidationRecordsAttributes struct {
 	ref terra.Reference
 }
 
-func (dvr DomainValidationRecordsAttributes) InternalRef() terra.Reference {
-	return dvr.ref
+func (dvr DomainValidationRecordsAttributes) InternalRef() (terra.Reference, error) {
+	return dvr.ref, nil
 }
 
 func (dvr DomainValidationRecordsAttributes) InternalWithRef(ref terra.Reference) DomainValidationRecordsAttributes {

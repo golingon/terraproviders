@@ -27,8 +27,8 @@ type CidrBlockSetAttributes struct {
 	ref terra.Reference
 }
 
-func (cbs CidrBlockSetAttributes) InternalRef() terra.Reference {
-	return cbs.ref
+func (cbs CidrBlockSetAttributes) InternalRef() (terra.Reference, error) {
+	return cbs.ref, nil
 }
 
 func (cbs CidrBlockSetAttributes) InternalWithRef(ref terra.Reference) CidrBlockSetAttributes {
@@ -47,8 +47,8 @@ type PeerCidrBlockSetAttributes struct {
 	ref terra.Reference
 }
 
-func (pcbs PeerCidrBlockSetAttributes) InternalRef() terra.Reference {
-	return pcbs.ref
+func (pcbs PeerCidrBlockSetAttributes) InternalRef() (terra.Reference, error) {
+	return pcbs.ref, nil
 }
 
 func (pcbs PeerCidrBlockSetAttributes) InternalWithRef(ref terra.Reference) PeerCidrBlockSetAttributes {
@@ -67,8 +67,8 @@ type FilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes {
@@ -91,8 +91,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

@@ -213,8 +213,8 @@ type ElasticsearchSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (es ElasticsearchSettingsAttributes) InternalRef() terra.Reference {
-	return es.ref
+func (es ElasticsearchSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return es.ref, nil
 }
 
 func (es ElasticsearchSettingsAttributes) InternalWithRef(ref terra.Reference) ElasticsearchSettingsAttributes {
@@ -245,8 +245,8 @@ type KafkaSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ks KafkaSettingsAttributes) InternalRef() terra.Reference {
-	return ks.ref
+func (ks KafkaSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ks.ref, nil
 }
 
 func (ks KafkaSettingsAttributes) InternalWithRef(ref terra.Reference) KafkaSettingsAttributes {
@@ -333,8 +333,8 @@ type KinesisSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ks KinesisSettingsAttributes) InternalRef() terra.Reference {
-	return ks.ref
+func (ks KinesisSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ks.ref, nil
 }
 
 func (ks KinesisSettingsAttributes) InternalWithRef(ref terra.Reference) KinesisSettingsAttributes {
@@ -385,8 +385,8 @@ type MongodbSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ms MongodbSettingsAttributes) InternalRef() terra.Reference {
-	return ms.ref
+func (ms MongodbSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ms.ref, nil
 }
 
 func (ms MongodbSettingsAttributes) InternalWithRef(ref terra.Reference) MongodbSettingsAttributes {
@@ -425,8 +425,8 @@ type RedisSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (rs RedisSettingsAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs RedisSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs RedisSettingsAttributes) InternalWithRef(ref terra.Reference) RedisSettingsAttributes {
@@ -469,8 +469,8 @@ type RedshiftSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (rs RedshiftSettingsAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs RedshiftSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs RedshiftSettingsAttributes) InternalWithRef(ref terra.Reference) RedshiftSettingsAttributes {
@@ -505,8 +505,8 @@ type S3SettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ss S3SettingsAttributes) InternalRef() terra.Reference {
-	return ss.ref
+func (ss S3SettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ss.ref, nil
 }
 
 func (ss S3SettingsAttributes) InternalWithRef(ref terra.Reference) S3SettingsAttributes {
@@ -673,8 +673,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

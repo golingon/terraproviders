@@ -107,8 +107,8 @@ type TargetsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TargetsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TargetsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TargetsAttributes) InternalWithRef(ref terra.Reference) TargetsAttributes {
@@ -131,8 +131,8 @@ type TaskInvocationParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (tip TaskInvocationParametersAttributes) InternalRef() terra.Reference {
-	return tip.ref
+func (tip TaskInvocationParametersAttributes) InternalRef() (terra.Reference, error) {
+	return tip.ref, nil
 }
 
 func (tip TaskInvocationParametersAttributes) InternalWithRef(ref terra.Reference) TaskInvocationParametersAttributes {
@@ -163,8 +163,8 @@ type AutomationParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (ap AutomationParametersAttributes) InternalRef() terra.Reference {
-	return ap.ref
+func (ap AutomationParametersAttributes) InternalRef() (terra.Reference, error) {
+	return ap.ref, nil
 }
 
 func (ap AutomationParametersAttributes) InternalWithRef(ref terra.Reference) AutomationParametersAttributes {
@@ -187,8 +187,8 @@ type AutomationParametersParameterAttributes struct {
 	ref terra.Reference
 }
 
-func (p AutomationParametersParameterAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p AutomationParametersParameterAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p AutomationParametersParameterAttributes) InternalWithRef(ref terra.Reference) AutomationParametersParameterAttributes {
@@ -211,8 +211,8 @@ type LambdaParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (lp LambdaParametersAttributes) InternalRef() terra.Reference {
-	return lp.ref
+func (lp LambdaParametersAttributes) InternalRef() (terra.Reference, error) {
+	return lp.ref, nil
 }
 
 func (lp LambdaParametersAttributes) InternalWithRef(ref terra.Reference) LambdaParametersAttributes {
@@ -239,8 +239,8 @@ type RunCommandParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (rcp RunCommandParametersAttributes) InternalRef() terra.Reference {
-	return rcp.ref
+func (rcp RunCommandParametersAttributes) InternalRef() (terra.Reference, error) {
+	return rcp.ref, nil
 }
 
 func (rcp RunCommandParametersAttributes) InternalWithRef(ref terra.Reference) RunCommandParametersAttributes {
@@ -299,8 +299,8 @@ type CloudwatchConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (cc CloudwatchConfigAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc CloudwatchConfigAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc CloudwatchConfigAttributes) InternalWithRef(ref terra.Reference) CloudwatchConfigAttributes {
@@ -323,8 +323,8 @@ type NotificationConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (nc NotificationConfigAttributes) InternalRef() terra.Reference {
-	return nc.ref
+func (nc NotificationConfigAttributes) InternalRef() (terra.Reference, error) {
+	return nc.ref, nil
 }
 
 func (nc NotificationConfigAttributes) InternalWithRef(ref terra.Reference) NotificationConfigAttributes {
@@ -351,8 +351,8 @@ type RunCommandParametersParameterAttributes struct {
 	ref terra.Reference
 }
 
-func (p RunCommandParametersParameterAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p RunCommandParametersParameterAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p RunCommandParametersParameterAttributes) InternalWithRef(ref terra.Reference) RunCommandParametersParameterAttributes {
@@ -375,8 +375,8 @@ type StepFunctionsParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (sfp StepFunctionsParametersAttributes) InternalRef() terra.Reference {
-	return sfp.ref
+func (sfp StepFunctionsParametersAttributes) InternalRef() (terra.Reference, error) {
+	return sfp.ref, nil
 }
 
 func (sfp StepFunctionsParametersAttributes) InternalWithRef(ref terra.Reference) StepFunctionsParametersAttributes {

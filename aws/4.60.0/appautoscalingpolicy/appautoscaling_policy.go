@@ -75,8 +75,8 @@ type StepScalingPolicyConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (sspc StepScalingPolicyConfigurationAttributes) InternalRef() terra.Reference {
-	return sspc.ref
+func (sspc StepScalingPolicyConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return sspc.ref, nil
 }
 
 func (sspc StepScalingPolicyConfigurationAttributes) InternalWithRef(ref terra.Reference) StepScalingPolicyConfigurationAttributes {
@@ -111,8 +111,8 @@ type StepAdjustmentAttributes struct {
 	ref terra.Reference
 }
 
-func (sa StepAdjustmentAttributes) InternalRef() terra.Reference {
-	return sa.ref
+func (sa StepAdjustmentAttributes) InternalRef() (terra.Reference, error) {
+	return sa.ref, nil
 }
 
 func (sa StepAdjustmentAttributes) InternalWithRef(ref terra.Reference) StepAdjustmentAttributes {
@@ -139,8 +139,8 @@ type TargetTrackingScalingPolicyConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ttspc TargetTrackingScalingPolicyConfigurationAttributes) InternalRef() terra.Reference {
-	return ttspc.ref
+func (ttspc TargetTrackingScalingPolicyConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ttspc.ref, nil
 }
 
 func (ttspc TargetTrackingScalingPolicyConfigurationAttributes) InternalWithRef(ref terra.Reference) TargetTrackingScalingPolicyConfigurationAttributes {
@@ -179,8 +179,8 @@ type CustomizedMetricSpecificationAttributes struct {
 	ref terra.Reference
 }
 
-func (cms CustomizedMetricSpecificationAttributes) InternalRef() terra.Reference {
-	return cms.ref
+func (cms CustomizedMetricSpecificationAttributes) InternalRef() (terra.Reference, error) {
+	return cms.ref, nil
 }
 
 func (cms CustomizedMetricSpecificationAttributes) InternalWithRef(ref terra.Reference) CustomizedMetricSpecificationAttributes {
@@ -215,8 +215,8 @@ type DimensionsAttributes struct {
 	ref terra.Reference
 }
 
-func (d DimensionsAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DimensionsAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DimensionsAttributes) InternalWithRef(ref terra.Reference) DimensionsAttributes {
@@ -239,8 +239,8 @@ type PredefinedMetricSpecificationAttributes struct {
 	ref terra.Reference
 }
 
-func (pms PredefinedMetricSpecificationAttributes) InternalRef() terra.Reference {
-	return pms.ref
+func (pms PredefinedMetricSpecificationAttributes) InternalRef() (terra.Reference, error) {
+	return pms.ref, nil
 }
 
 func (pms PredefinedMetricSpecificationAttributes) InternalWithRef(ref terra.Reference) PredefinedMetricSpecificationAttributes {

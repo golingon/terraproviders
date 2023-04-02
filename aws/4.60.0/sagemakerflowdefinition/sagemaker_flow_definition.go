@@ -68,8 +68,8 @@ type HumanLoopActivationConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (hlac HumanLoopActivationConfigAttributes) InternalRef() terra.Reference {
-	return hlac.ref
+func (hlac HumanLoopActivationConfigAttributes) InternalRef() (terra.Reference, error) {
+	return hlac.ref, nil
 }
 
 func (hlac HumanLoopActivationConfigAttributes) InternalWithRef(ref terra.Reference) HumanLoopActivationConfigAttributes {
@@ -88,8 +88,8 @@ type HumanLoopActivationConditionsConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (hlacc HumanLoopActivationConditionsConfigAttributes) InternalRef() terra.Reference {
-	return hlacc.ref
+func (hlacc HumanLoopActivationConditionsConfigAttributes) InternalRef() (terra.Reference, error) {
+	return hlacc.ref, nil
 }
 
 func (hlacc HumanLoopActivationConditionsConfigAttributes) InternalWithRef(ref terra.Reference) HumanLoopActivationConditionsConfigAttributes {
@@ -108,8 +108,8 @@ type HumanLoopConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (hlc HumanLoopConfigAttributes) InternalRef() terra.Reference {
-	return hlc.ref
+func (hlc HumanLoopConfigAttributes) InternalRef() (terra.Reference, error) {
+	return hlc.ref, nil
 }
 
 func (hlc HumanLoopConfigAttributes) InternalWithRef(ref terra.Reference) HumanLoopConfigAttributes {
@@ -160,8 +160,8 @@ type PublicWorkforceTaskPriceAttributes struct {
 	ref terra.Reference
 }
 
-func (pwtp PublicWorkforceTaskPriceAttributes) InternalRef() terra.Reference {
-	return pwtp.ref
+func (pwtp PublicWorkforceTaskPriceAttributes) InternalRef() (terra.Reference, error) {
+	return pwtp.ref, nil
 }
 
 func (pwtp PublicWorkforceTaskPriceAttributes) InternalWithRef(ref terra.Reference) PublicWorkforceTaskPriceAttributes {
@@ -180,8 +180,8 @@ type AmountInUsdAttributes struct {
 	ref terra.Reference
 }
 
-func (aiu AmountInUsdAttributes) InternalRef() terra.Reference {
-	return aiu.ref
+func (aiu AmountInUsdAttributes) InternalRef() (terra.Reference, error) {
+	return aiu.ref, nil
 }
 
 func (aiu AmountInUsdAttributes) InternalWithRef(ref terra.Reference) AmountInUsdAttributes {
@@ -208,8 +208,8 @@ type HumanLoopRequestSourceAttributes struct {
 	ref terra.Reference
 }
 
-func (hlrs HumanLoopRequestSourceAttributes) InternalRef() terra.Reference {
-	return hlrs.ref
+func (hlrs HumanLoopRequestSourceAttributes) InternalRef() (terra.Reference, error) {
+	return hlrs.ref, nil
 }
 
 func (hlrs HumanLoopRequestSourceAttributes) InternalWithRef(ref terra.Reference) HumanLoopRequestSourceAttributes {
@@ -228,8 +228,8 @@ type OutputConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (oc OutputConfigAttributes) InternalRef() terra.Reference {
-	return oc.ref
+func (oc OutputConfigAttributes) InternalRef() (terra.Reference, error) {
+	return oc.ref, nil
 }
 
 func (oc OutputConfigAttributes) InternalWithRef(ref terra.Reference) OutputConfigAttributes {

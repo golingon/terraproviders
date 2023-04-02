@@ -33,8 +33,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
@@ -61,8 +61,8 @@ type WorkspacePropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (wp WorkspacePropertiesAttributes) InternalRef() terra.Reference {
-	return wp.ref
+func (wp WorkspacePropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return wp.ref, nil
 }
 
 func (wp WorkspacePropertiesAttributes) InternalWithRef(ref terra.Reference) WorkspacePropertiesAttributes {

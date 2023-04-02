@@ -13,8 +13,8 @@ type LoggingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (lc LoggingConfigAttributes) InternalRef() terra.Reference {
-	return lc.ref
+func (lc LoggingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return lc.ref, nil
 }
 
 func (lc LoggingConfigAttributes) InternalWithRef(ref terra.Reference) LoggingConfigAttributes {

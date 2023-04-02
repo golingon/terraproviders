@@ -134,8 +134,8 @@ type BatchTargetAttributes struct {
 	ref terra.Reference
 }
 
-func (bt BatchTargetAttributes) InternalRef() terra.Reference {
-	return bt.ref
+func (bt BatchTargetAttributes) InternalRef() (terra.Reference, error) {
+	return bt.ref, nil
 }
 
 func (bt BatchTargetAttributes) InternalWithRef(ref terra.Reference) BatchTargetAttributes {
@@ -166,8 +166,8 @@ type DeadLetterConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (dlc DeadLetterConfigAttributes) InternalRef() terra.Reference {
-	return dlc.ref
+func (dlc DeadLetterConfigAttributes) InternalRef() (terra.Reference, error) {
+	return dlc.ref, nil
 }
 
 func (dlc DeadLetterConfigAttributes) InternalWithRef(ref terra.Reference) DeadLetterConfigAttributes {
@@ -186,8 +186,8 @@ type EcsTargetAttributes struct {
 	ref terra.Reference
 }
 
-func (et EcsTargetAttributes) InternalRef() terra.Reference {
-	return et.ref
+func (et EcsTargetAttributes) InternalRef() (terra.Reference, error) {
+	return et.ref, nil
 }
 
 func (et EcsTargetAttributes) InternalWithRef(ref terra.Reference) EcsTargetAttributes {
@@ -250,8 +250,8 @@ type CapacityProviderStrategyAttributes struct {
 	ref terra.Reference
 }
 
-func (cps CapacityProviderStrategyAttributes) InternalRef() terra.Reference {
-	return cps.ref
+func (cps CapacityProviderStrategyAttributes) InternalRef() (terra.Reference, error) {
+	return cps.ref, nil
 }
 
 func (cps CapacityProviderStrategyAttributes) InternalWithRef(ref terra.Reference) CapacityProviderStrategyAttributes {
@@ -278,8 +278,8 @@ type NetworkConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (nc NetworkConfigurationAttributes) InternalRef() terra.Reference {
-	return nc.ref
+func (nc NetworkConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return nc.ref, nil
 }
 
 func (nc NetworkConfigurationAttributes) InternalWithRef(ref terra.Reference) NetworkConfigurationAttributes {
@@ -306,8 +306,8 @@ type PlacementConstraintAttributes struct {
 	ref terra.Reference
 }
 
-func (pc PlacementConstraintAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc PlacementConstraintAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc PlacementConstraintAttributes) InternalWithRef(ref terra.Reference) PlacementConstraintAttributes {
@@ -330,8 +330,8 @@ type HttpTargetAttributes struct {
 	ref terra.Reference
 }
 
-func (ht HttpTargetAttributes) InternalRef() terra.Reference {
-	return ht.ref
+func (ht HttpTargetAttributes) InternalRef() (terra.Reference, error) {
+	return ht.ref, nil
 }
 
 func (ht HttpTargetAttributes) InternalWithRef(ref terra.Reference) HttpTargetAttributes {
@@ -358,8 +358,8 @@ type InputTransformerAttributes struct {
 	ref terra.Reference
 }
 
-func (it InputTransformerAttributes) InternalRef() terra.Reference {
-	return it.ref
+func (it InputTransformerAttributes) InternalRef() (terra.Reference, error) {
+	return it.ref, nil
 }
 
 func (it InputTransformerAttributes) InternalWithRef(ref terra.Reference) InputTransformerAttributes {
@@ -382,8 +382,8 @@ type KinesisTargetAttributes struct {
 	ref terra.Reference
 }
 
-func (kt KinesisTargetAttributes) InternalRef() terra.Reference {
-	return kt.ref
+func (kt KinesisTargetAttributes) InternalRef() (terra.Reference, error) {
+	return kt.ref, nil
 }
 
 func (kt KinesisTargetAttributes) InternalWithRef(ref terra.Reference) KinesisTargetAttributes {
@@ -402,8 +402,8 @@ type RedshiftTargetAttributes struct {
 	ref terra.Reference
 }
 
-func (rt RedshiftTargetAttributes) InternalRef() terra.Reference {
-	return rt.ref
+func (rt RedshiftTargetAttributes) InternalRef() (terra.Reference, error) {
+	return rt.ref, nil
 }
 
 func (rt RedshiftTargetAttributes) InternalWithRef(ref terra.Reference) RedshiftTargetAttributes {
@@ -442,8 +442,8 @@ type RetryPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (rp RetryPolicyAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp RetryPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp RetryPolicyAttributes) InternalWithRef(ref terra.Reference) RetryPolicyAttributes {
@@ -466,8 +466,8 @@ type RunCommandTargetsAttributes struct {
 	ref terra.Reference
 }
 
-func (rct RunCommandTargetsAttributes) InternalRef() terra.Reference {
-	return rct.ref
+func (rct RunCommandTargetsAttributes) InternalRef() (terra.Reference, error) {
+	return rct.ref, nil
 }
 
 func (rct RunCommandTargetsAttributes) InternalWithRef(ref terra.Reference) RunCommandTargetsAttributes {
@@ -490,8 +490,8 @@ type SqsTargetAttributes struct {
 	ref terra.Reference
 }
 
-func (st SqsTargetAttributes) InternalRef() terra.Reference {
-	return st.ref
+func (st SqsTargetAttributes) InternalRef() (terra.Reference, error) {
+	return st.ref, nil
 }
 
 func (st SqsTargetAttributes) InternalWithRef(ref terra.Reference) SqsTargetAttributes {

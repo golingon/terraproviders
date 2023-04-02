@@ -346,8 +346,8 @@ type AlternatePathHintsAttributes struct {
 	ref terra.Reference
 }
 
-func (aph AlternatePathHintsAttributes) InternalRef() terra.Reference {
-	return aph.ref
+func (aph AlternatePathHintsAttributes) InternalRef() (terra.Reference, error) {
+	return aph.ref, nil
 }
 
 func (aph AlternatePathHintsAttributes) InternalWithRef(ref terra.Reference) AlternatePathHintsAttributes {
@@ -370,8 +370,8 @@ type ExplanationsAttributes struct {
 	ref terra.Reference
 }
 
-func (e ExplanationsAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e ExplanationsAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e ExplanationsAttributes) InternalWithRef(ref terra.Reference) ExplanationsAttributes {
@@ -578,8 +578,8 @@ type AclAttributes struct {
 	ref terra.Reference
 }
 
-func (a AclAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AclAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AclAttributes) InternalWithRef(ref terra.Reference) AclAttributes {
@@ -606,8 +606,8 @@ type ExplanationsAclRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (ar ExplanationsAclRuleAttributes) InternalRef() terra.Reference {
-	return ar.ref
+func (ar ExplanationsAclRuleAttributes) InternalRef() (terra.Reference, error) {
+	return ar.ref, nil
 }
 
 func (ar ExplanationsAclRuleAttributes) InternalWithRef(ref terra.Reference) ExplanationsAclRuleAttributes {
@@ -646,8 +646,8 @@ type ExplanationsAclRulePortRangeAttributes struct {
 	ref terra.Reference
 }
 
-func (pr ExplanationsAclRulePortRangeAttributes) InternalRef() terra.Reference {
-	return pr.ref
+func (pr ExplanationsAclRulePortRangeAttributes) InternalRef() (terra.Reference, error) {
+	return pr.ref, nil
 }
 
 func (pr ExplanationsAclRulePortRangeAttributes) InternalWithRef(ref terra.Reference) ExplanationsAclRulePortRangeAttributes {
@@ -670,8 +670,8 @@ type ExplanationsAttachedToAttributes struct {
 	ref terra.Reference
 }
 
-func (at ExplanationsAttachedToAttributes) InternalRef() terra.Reference {
-	return at.ref
+func (at ExplanationsAttachedToAttributes) InternalRef() (terra.Reference, error) {
+	return at.ref, nil
 }
 
 func (at ExplanationsAttachedToAttributes) InternalWithRef(ref terra.Reference) ExplanationsAttachedToAttributes {
@@ -698,8 +698,8 @@ type ClassicLoadBalancerListenerAttributes struct {
 	ref terra.Reference
 }
 
-func (clbl ClassicLoadBalancerListenerAttributes) InternalRef() terra.Reference {
-	return clbl.ref
+func (clbl ClassicLoadBalancerListenerAttributes) InternalRef() (terra.Reference, error) {
+	return clbl.ref, nil
 }
 
 func (clbl ClassicLoadBalancerListenerAttributes) InternalWithRef(ref terra.Reference) ClassicLoadBalancerListenerAttributes {
@@ -722,8 +722,8 @@ type ExplanationsComponentAttributes struct {
 	ref terra.Reference
 }
 
-func (c ExplanationsComponentAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ExplanationsComponentAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ExplanationsComponentAttributes) InternalWithRef(ref terra.Reference) ExplanationsComponentAttributes {
@@ -750,8 +750,8 @@ type CustomerGatewayAttributes struct {
 	ref terra.Reference
 }
 
-func (cg CustomerGatewayAttributes) InternalRef() terra.Reference {
-	return cg.ref
+func (cg CustomerGatewayAttributes) InternalRef() (terra.Reference, error) {
+	return cg.ref, nil
 }
 
 func (cg CustomerGatewayAttributes) InternalWithRef(ref terra.Reference) CustomerGatewayAttributes {
@@ -778,8 +778,8 @@ type DestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (d DestinationAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DestinationAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DestinationAttributes) InternalWithRef(ref terra.Reference) DestinationAttributes {
@@ -806,8 +806,8 @@ type ExplanationsDestinationVpcAttributes struct {
 	ref terra.Reference
 }
 
-func (dv ExplanationsDestinationVpcAttributes) InternalRef() terra.Reference {
-	return dv.ref
+func (dv ExplanationsDestinationVpcAttributes) InternalRef() (terra.Reference, error) {
+	return dv.ref, nil
 }
 
 func (dv ExplanationsDestinationVpcAttributes) InternalWithRef(ref terra.Reference) ExplanationsDestinationVpcAttributes {
@@ -834,8 +834,8 @@ type ElasticLoadBalancerListenerAttributes struct {
 	ref terra.Reference
 }
 
-func (elbl ElasticLoadBalancerListenerAttributes) InternalRef() terra.Reference {
-	return elbl.ref
+func (elbl ElasticLoadBalancerListenerAttributes) InternalRef() (terra.Reference, error) {
+	return elbl.ref, nil
 }
 
 func (elbl ElasticLoadBalancerListenerAttributes) InternalWithRef(ref terra.Reference) ElasticLoadBalancerListenerAttributes {
@@ -862,8 +862,8 @@ type IngressRouteTableAttributes struct {
 	ref terra.Reference
 }
 
-func (irt IngressRouteTableAttributes) InternalRef() terra.Reference {
-	return irt.ref
+func (irt IngressRouteTableAttributes) InternalRef() (terra.Reference, error) {
+	return irt.ref, nil
 }
 
 func (irt IngressRouteTableAttributes) InternalWithRef(ref terra.Reference) IngressRouteTableAttributes {
@@ -890,8 +890,8 @@ type InternetGatewayAttributes struct {
 	ref terra.Reference
 }
 
-func (ig InternetGatewayAttributes) InternalRef() terra.Reference {
-	return ig.ref
+func (ig InternetGatewayAttributes) InternalRef() (terra.Reference, error) {
+	return ig.ref, nil
 }
 
 func (ig InternetGatewayAttributes) InternalWithRef(ref terra.Reference) InternetGatewayAttributes {
@@ -918,8 +918,8 @@ type LoadBalancerTargetGroupAttributes struct {
 	ref terra.Reference
 }
 
-func (lbtg LoadBalancerTargetGroupAttributes) InternalRef() terra.Reference {
-	return lbtg.ref
+func (lbtg LoadBalancerTargetGroupAttributes) InternalRef() (terra.Reference, error) {
+	return lbtg.ref, nil
 }
 
 func (lbtg LoadBalancerTargetGroupAttributes) InternalWithRef(ref terra.Reference) LoadBalancerTargetGroupAttributes {
@@ -946,8 +946,8 @@ type LoadBalancerTargetGroupsAttributes struct {
 	ref terra.Reference
 }
 
-func (lbtg LoadBalancerTargetGroupsAttributes) InternalRef() terra.Reference {
-	return lbtg.ref
+func (lbtg LoadBalancerTargetGroupsAttributes) InternalRef() (terra.Reference, error) {
+	return lbtg.ref, nil
 }
 
 func (lbtg LoadBalancerTargetGroupsAttributes) InternalWithRef(ref terra.Reference) LoadBalancerTargetGroupsAttributes {
@@ -974,8 +974,8 @@ type NatGatewayAttributes struct {
 	ref terra.Reference
 }
 
-func (ng NatGatewayAttributes) InternalRef() terra.Reference {
-	return ng.ref
+func (ng NatGatewayAttributes) InternalRef() (terra.Reference, error) {
+	return ng.ref, nil
 }
 
 func (ng NatGatewayAttributes) InternalWithRef(ref terra.Reference) NatGatewayAttributes {
@@ -1002,8 +1002,8 @@ type NetworkInterfaceAttributes struct {
 	ref terra.Reference
 }
 
-func (ni NetworkInterfaceAttributes) InternalRef() terra.Reference {
-	return ni.ref
+func (ni NetworkInterfaceAttributes) InternalRef() (terra.Reference, error) {
+	return ni.ref, nil
 }
 
 func (ni NetworkInterfaceAttributes) InternalWithRef(ref terra.Reference) NetworkInterfaceAttributes {
@@ -1030,8 +1030,8 @@ type PortRangesAttributes struct {
 	ref terra.Reference
 }
 
-func (pr PortRangesAttributes) InternalRef() terra.Reference {
-	return pr.ref
+func (pr PortRangesAttributes) InternalRef() (terra.Reference, error) {
+	return pr.ref, nil
 }
 
 func (pr PortRangesAttributes) InternalWithRef(ref terra.Reference) PortRangesAttributes {
@@ -1054,8 +1054,8 @@ type PrefixListAttributes struct {
 	ref terra.Reference
 }
 
-func (pl PrefixListAttributes) InternalRef() terra.Reference {
-	return pl.ref
+func (pl PrefixListAttributes) InternalRef() (terra.Reference, error) {
+	return pl.ref, nil
 }
 
 func (pl PrefixListAttributes) InternalWithRef(ref terra.Reference) PrefixListAttributes {
@@ -1082,8 +1082,8 @@ type RouteTableAttributes struct {
 	ref terra.Reference
 }
 
-func (rt RouteTableAttributes) InternalRef() terra.Reference {
-	return rt.ref
+func (rt RouteTableAttributes) InternalRef() (terra.Reference, error) {
+	return rt.ref, nil
 }
 
 func (rt RouteTableAttributes) InternalWithRef(ref terra.Reference) RouteTableAttributes {
@@ -1110,8 +1110,8 @@ type ExplanationsRouteTableRouteAttributes struct {
 	ref terra.Reference
 }
 
-func (rtr ExplanationsRouteTableRouteAttributes) InternalRef() terra.Reference {
-	return rtr.ref
+func (rtr ExplanationsRouteTableRouteAttributes) InternalRef() (terra.Reference, error) {
+	return rtr.ref, nil
 }
 
 func (rtr ExplanationsRouteTableRouteAttributes) InternalWithRef(ref terra.Reference) ExplanationsRouteTableRouteAttributes {
@@ -1166,8 +1166,8 @@ type SecurityGroupAttributes struct {
 	ref terra.Reference
 }
 
-func (sg SecurityGroupAttributes) InternalRef() terra.Reference {
-	return sg.ref
+func (sg SecurityGroupAttributes) InternalRef() (terra.Reference, error) {
+	return sg.ref, nil
 }
 
 func (sg SecurityGroupAttributes) InternalWithRef(ref terra.Reference) SecurityGroupAttributes {
@@ -1194,8 +1194,8 @@ type ExplanationsSecurityGroupRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (sgr ExplanationsSecurityGroupRuleAttributes) InternalRef() terra.Reference {
-	return sgr.ref
+func (sgr ExplanationsSecurityGroupRuleAttributes) InternalRef() (terra.Reference, error) {
+	return sgr.ref, nil
 }
 
 func (sgr ExplanationsSecurityGroupRuleAttributes) InternalWithRef(ref terra.Reference) ExplanationsSecurityGroupRuleAttributes {
@@ -1234,8 +1234,8 @@ type ExplanationsSecurityGroupRulePortRangeAttributes struct {
 	ref terra.Reference
 }
 
-func (pr ExplanationsSecurityGroupRulePortRangeAttributes) InternalRef() terra.Reference {
-	return pr.ref
+func (pr ExplanationsSecurityGroupRulePortRangeAttributes) InternalRef() (terra.Reference, error) {
+	return pr.ref, nil
 }
 
 func (pr ExplanationsSecurityGroupRulePortRangeAttributes) InternalWithRef(ref terra.Reference) ExplanationsSecurityGroupRulePortRangeAttributes {
@@ -1258,8 +1258,8 @@ type SecurityGroupsAttributes struct {
 	ref terra.Reference
 }
 
-func (sg SecurityGroupsAttributes) InternalRef() terra.Reference {
-	return sg.ref
+func (sg SecurityGroupsAttributes) InternalRef() (terra.Reference, error) {
+	return sg.ref, nil
 }
 
 func (sg SecurityGroupsAttributes) InternalWithRef(ref terra.Reference) SecurityGroupsAttributes {
@@ -1286,8 +1286,8 @@ type ExplanationsSourceVpcAttributes struct {
 	ref terra.Reference
 }
 
-func (sv ExplanationsSourceVpcAttributes) InternalRef() terra.Reference {
-	return sv.ref
+func (sv ExplanationsSourceVpcAttributes) InternalRef() (terra.Reference, error) {
+	return sv.ref, nil
 }
 
 func (sv ExplanationsSourceVpcAttributes) InternalWithRef(ref terra.Reference) ExplanationsSourceVpcAttributes {
@@ -1314,8 +1314,8 @@ type ExplanationsSubnetAttributes struct {
 	ref terra.Reference
 }
 
-func (s ExplanationsSubnetAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ExplanationsSubnetAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ExplanationsSubnetAttributes) InternalWithRef(ref terra.Reference) ExplanationsSubnetAttributes {
@@ -1342,8 +1342,8 @@ type SubnetRouteTableAttributes struct {
 	ref terra.Reference
 }
 
-func (srt SubnetRouteTableAttributes) InternalRef() terra.Reference {
-	return srt.ref
+func (srt SubnetRouteTableAttributes) InternalRef() (terra.Reference, error) {
+	return srt.ref, nil
 }
 
 func (srt SubnetRouteTableAttributes) InternalWithRef(ref terra.Reference) SubnetRouteTableAttributes {
@@ -1370,8 +1370,8 @@ type ExplanationsTransitGatewayAttributes struct {
 	ref terra.Reference
 }
 
-func (tg ExplanationsTransitGatewayAttributes) InternalRef() terra.Reference {
-	return tg.ref
+func (tg ExplanationsTransitGatewayAttributes) InternalRef() (terra.Reference, error) {
+	return tg.ref, nil
 }
 
 func (tg ExplanationsTransitGatewayAttributes) InternalWithRef(ref terra.Reference) ExplanationsTransitGatewayAttributes {
@@ -1398,8 +1398,8 @@ type TransitGatewayAttachmentAttributes struct {
 	ref terra.Reference
 }
 
-func (tga TransitGatewayAttachmentAttributes) InternalRef() terra.Reference {
-	return tga.ref
+func (tga TransitGatewayAttachmentAttributes) InternalRef() (terra.Reference, error) {
+	return tga.ref, nil
 }
 
 func (tga TransitGatewayAttachmentAttributes) InternalWithRef(ref terra.Reference) TransitGatewayAttachmentAttributes {
@@ -1426,8 +1426,8 @@ type TransitGatewayRouteTableAttributes struct {
 	ref terra.Reference
 }
 
-func (tgrt TransitGatewayRouteTableAttributes) InternalRef() terra.Reference {
-	return tgrt.ref
+func (tgrt TransitGatewayRouteTableAttributes) InternalRef() (terra.Reference, error) {
+	return tgrt.ref, nil
 }
 
 func (tgrt TransitGatewayRouteTableAttributes) InternalWithRef(ref terra.Reference) TransitGatewayRouteTableAttributes {
@@ -1454,8 +1454,8 @@ type ExplanationsTransitGatewayRouteTableRouteAttributes struct {
 	ref terra.Reference
 }
 
-func (tgrtr ExplanationsTransitGatewayRouteTableRouteAttributes) InternalRef() terra.Reference {
-	return tgrtr.ref
+func (tgrtr ExplanationsTransitGatewayRouteTableRouteAttributes) InternalRef() (terra.Reference, error) {
+	return tgrtr.ref, nil
 }
 
 func (tgrtr ExplanationsTransitGatewayRouteTableRouteAttributes) InternalWithRef(ref terra.Reference) ExplanationsTransitGatewayRouteTableRouteAttributes {
@@ -1498,8 +1498,8 @@ type ExplanationsVpcAttributes struct {
 	ref terra.Reference
 }
 
-func (v ExplanationsVpcAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v ExplanationsVpcAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v ExplanationsVpcAttributes) InternalWithRef(ref terra.Reference) ExplanationsVpcAttributes {
@@ -1526,8 +1526,8 @@ type VpcEndpointAttributes struct {
 	ref terra.Reference
 }
 
-func (ve VpcEndpointAttributes) InternalRef() terra.Reference {
-	return ve.ref
+func (ve VpcEndpointAttributes) InternalRef() (terra.Reference, error) {
+	return ve.ref, nil
 }
 
 func (ve VpcEndpointAttributes) InternalWithRef(ref terra.Reference) VpcEndpointAttributes {
@@ -1554,8 +1554,8 @@ type VpcPeeringConnectionAttributes struct {
 	ref terra.Reference
 }
 
-func (vpc VpcPeeringConnectionAttributes) InternalRef() terra.Reference {
-	return vpc.ref
+func (vpc VpcPeeringConnectionAttributes) InternalRef() (terra.Reference, error) {
+	return vpc.ref, nil
 }
 
 func (vpc VpcPeeringConnectionAttributes) InternalWithRef(ref terra.Reference) VpcPeeringConnectionAttributes {
@@ -1582,8 +1582,8 @@ type VpnConnectionAttributes struct {
 	ref terra.Reference
 }
 
-func (vc VpnConnectionAttributes) InternalRef() terra.Reference {
-	return vc.ref
+func (vc VpnConnectionAttributes) InternalRef() (terra.Reference, error) {
+	return vc.ref, nil
 }
 
 func (vc VpnConnectionAttributes) InternalWithRef(ref terra.Reference) VpnConnectionAttributes {
@@ -1610,8 +1610,8 @@ type VpnGatewayAttributes struct {
 	ref terra.Reference
 }
 
-func (vg VpnGatewayAttributes) InternalRef() terra.Reference {
-	return vg.ref
+func (vg VpnGatewayAttributes) InternalRef() (terra.Reference, error) {
+	return vg.ref, nil
 }
 
 func (vg VpnGatewayAttributes) InternalWithRef(ref terra.Reference) VpnGatewayAttributes {
@@ -1638,8 +1638,8 @@ type ForwardPathComponentsAttributes struct {
 	ref terra.Reference
 }
 
-func (fpc ForwardPathComponentsAttributes) InternalRef() terra.Reference {
-	return fpc.ref
+func (fpc ForwardPathComponentsAttributes) InternalRef() (terra.Reference, error) {
+	return fpc.ref, nil
 }
 
 func (fpc ForwardPathComponentsAttributes) InternalWithRef(ref terra.Reference) ForwardPathComponentsAttributes {
@@ -1714,8 +1714,8 @@ type ForwardPathComponentsAclRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (ar ForwardPathComponentsAclRuleAttributes) InternalRef() terra.Reference {
-	return ar.ref
+func (ar ForwardPathComponentsAclRuleAttributes) InternalRef() (terra.Reference, error) {
+	return ar.ref, nil
 }
 
 func (ar ForwardPathComponentsAclRuleAttributes) InternalWithRef(ref terra.Reference) ForwardPathComponentsAclRuleAttributes {
@@ -1754,8 +1754,8 @@ type ForwardPathComponentsAclRulePortRangeAttributes struct {
 	ref terra.Reference
 }
 
-func (pr ForwardPathComponentsAclRulePortRangeAttributes) InternalRef() terra.Reference {
-	return pr.ref
+func (pr ForwardPathComponentsAclRulePortRangeAttributes) InternalRef() (terra.Reference, error) {
+	return pr.ref, nil
 }
 
 func (pr ForwardPathComponentsAclRulePortRangeAttributes) InternalWithRef(ref terra.Reference) ForwardPathComponentsAclRulePortRangeAttributes {
@@ -1778,8 +1778,8 @@ type ForwardPathComponentsAdditionalDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (ad ForwardPathComponentsAdditionalDetailsAttributes) InternalRef() terra.Reference {
-	return ad.ref
+func (ad ForwardPathComponentsAdditionalDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return ad.ref, nil
 }
 
 func (ad ForwardPathComponentsAdditionalDetailsAttributes) InternalWithRef(ref terra.Reference) ForwardPathComponentsAdditionalDetailsAttributes {
@@ -1802,8 +1802,8 @@ type ForwardPathComponentsAdditionalDetailsComponentAttributes struct {
 	ref terra.Reference
 }
 
-func (c ForwardPathComponentsAdditionalDetailsComponentAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ForwardPathComponentsAdditionalDetailsComponentAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ForwardPathComponentsAdditionalDetailsComponentAttributes) InternalWithRef(ref terra.Reference) ForwardPathComponentsAdditionalDetailsComponentAttributes {
@@ -1830,8 +1830,8 @@ type ForwardPathComponentsAttachedToAttributes struct {
 	ref terra.Reference
 }
 
-func (at ForwardPathComponentsAttachedToAttributes) InternalRef() terra.Reference {
-	return at.ref
+func (at ForwardPathComponentsAttachedToAttributes) InternalRef() (terra.Reference, error) {
+	return at.ref, nil
 }
 
 func (at ForwardPathComponentsAttachedToAttributes) InternalWithRef(ref terra.Reference) ForwardPathComponentsAttachedToAttributes {
@@ -1858,8 +1858,8 @@ type ForwardPathComponentsComponentAttributes struct {
 	ref terra.Reference
 }
 
-func (c ForwardPathComponentsComponentAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ForwardPathComponentsComponentAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ForwardPathComponentsComponentAttributes) InternalWithRef(ref terra.Reference) ForwardPathComponentsComponentAttributes {
@@ -1886,8 +1886,8 @@ type ForwardPathComponentsDestinationVpcAttributes struct {
 	ref terra.Reference
 }
 
-func (dv ForwardPathComponentsDestinationVpcAttributes) InternalRef() terra.Reference {
-	return dv.ref
+func (dv ForwardPathComponentsDestinationVpcAttributes) InternalRef() (terra.Reference, error) {
+	return dv.ref, nil
 }
 
 func (dv ForwardPathComponentsDestinationVpcAttributes) InternalWithRef(ref terra.Reference) ForwardPathComponentsDestinationVpcAttributes {
@@ -1914,8 +1914,8 @@ type ForwardPathComponentsInboundHeaderAttributes struct {
 	ref terra.Reference
 }
 
-func (ih ForwardPathComponentsInboundHeaderAttributes) InternalRef() terra.Reference {
-	return ih.ref
+func (ih ForwardPathComponentsInboundHeaderAttributes) InternalRef() (terra.Reference, error) {
+	return ih.ref, nil
 }
 
 func (ih ForwardPathComponentsInboundHeaderAttributes) InternalWithRef(ref terra.Reference) ForwardPathComponentsInboundHeaderAttributes {
@@ -1950,8 +1950,8 @@ type ForwardPathComponentsInboundHeaderDestinationPortRangesAttributes struct {
 	ref terra.Reference
 }
 
-func (dpr ForwardPathComponentsInboundHeaderDestinationPortRangesAttributes) InternalRef() terra.Reference {
-	return dpr.ref
+func (dpr ForwardPathComponentsInboundHeaderDestinationPortRangesAttributes) InternalRef() (terra.Reference, error) {
+	return dpr.ref, nil
 }
 
 func (dpr ForwardPathComponentsInboundHeaderDestinationPortRangesAttributes) InternalWithRef(ref terra.Reference) ForwardPathComponentsInboundHeaderDestinationPortRangesAttributes {
@@ -1974,8 +1974,8 @@ type ForwardPathComponentsInboundHeaderSourcePortRangesAttributes struct {
 	ref terra.Reference
 }
 
-func (spr ForwardPathComponentsInboundHeaderSourcePortRangesAttributes) InternalRef() terra.Reference {
-	return spr.ref
+func (spr ForwardPathComponentsInboundHeaderSourcePortRangesAttributes) InternalRef() (terra.Reference, error) {
+	return spr.ref, nil
 }
 
 func (spr ForwardPathComponentsInboundHeaderSourcePortRangesAttributes) InternalWithRef(ref terra.Reference) ForwardPathComponentsInboundHeaderSourcePortRangesAttributes {
@@ -1998,8 +1998,8 @@ type ForwardPathComponentsOutboundHeaderAttributes struct {
 	ref terra.Reference
 }
 
-func (oh ForwardPathComponentsOutboundHeaderAttributes) InternalRef() terra.Reference {
-	return oh.ref
+func (oh ForwardPathComponentsOutboundHeaderAttributes) InternalRef() (terra.Reference, error) {
+	return oh.ref, nil
 }
 
 func (oh ForwardPathComponentsOutboundHeaderAttributes) InternalWithRef(ref terra.Reference) ForwardPathComponentsOutboundHeaderAttributes {
@@ -2034,8 +2034,8 @@ type ForwardPathComponentsOutboundHeaderDestinationPortRangesAttributes struct {
 	ref terra.Reference
 }
 
-func (dpr ForwardPathComponentsOutboundHeaderDestinationPortRangesAttributes) InternalRef() terra.Reference {
-	return dpr.ref
+func (dpr ForwardPathComponentsOutboundHeaderDestinationPortRangesAttributes) InternalRef() (terra.Reference, error) {
+	return dpr.ref, nil
 }
 
 func (dpr ForwardPathComponentsOutboundHeaderDestinationPortRangesAttributes) InternalWithRef(ref terra.Reference) ForwardPathComponentsOutboundHeaderDestinationPortRangesAttributes {
@@ -2058,8 +2058,8 @@ type ForwardPathComponentsOutboundHeaderSourcePortRangesAttributes struct {
 	ref terra.Reference
 }
 
-func (spr ForwardPathComponentsOutboundHeaderSourcePortRangesAttributes) InternalRef() terra.Reference {
-	return spr.ref
+func (spr ForwardPathComponentsOutboundHeaderSourcePortRangesAttributes) InternalRef() (terra.Reference, error) {
+	return spr.ref, nil
 }
 
 func (spr ForwardPathComponentsOutboundHeaderSourcePortRangesAttributes) InternalWithRef(ref terra.Reference) ForwardPathComponentsOutboundHeaderSourcePortRangesAttributes {
@@ -2082,8 +2082,8 @@ type ForwardPathComponentsRouteTableRouteAttributes struct {
 	ref terra.Reference
 }
 
-func (rtr ForwardPathComponentsRouteTableRouteAttributes) InternalRef() terra.Reference {
-	return rtr.ref
+func (rtr ForwardPathComponentsRouteTableRouteAttributes) InternalRef() (terra.Reference, error) {
+	return rtr.ref, nil
 }
 
 func (rtr ForwardPathComponentsRouteTableRouteAttributes) InternalWithRef(ref terra.Reference) ForwardPathComponentsRouteTableRouteAttributes {
@@ -2138,8 +2138,8 @@ type ForwardPathComponentsSecurityGroupRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (sgr ForwardPathComponentsSecurityGroupRuleAttributes) InternalRef() terra.Reference {
-	return sgr.ref
+func (sgr ForwardPathComponentsSecurityGroupRuleAttributes) InternalRef() (terra.Reference, error) {
+	return sgr.ref, nil
 }
 
 func (sgr ForwardPathComponentsSecurityGroupRuleAttributes) InternalWithRef(ref terra.Reference) ForwardPathComponentsSecurityGroupRuleAttributes {
@@ -2178,8 +2178,8 @@ type ForwardPathComponentsSecurityGroupRulePortRangeAttributes struct {
 	ref terra.Reference
 }
 
-func (pr ForwardPathComponentsSecurityGroupRulePortRangeAttributes) InternalRef() terra.Reference {
-	return pr.ref
+func (pr ForwardPathComponentsSecurityGroupRulePortRangeAttributes) InternalRef() (terra.Reference, error) {
+	return pr.ref, nil
 }
 
 func (pr ForwardPathComponentsSecurityGroupRulePortRangeAttributes) InternalWithRef(ref terra.Reference) ForwardPathComponentsSecurityGroupRulePortRangeAttributes {
@@ -2202,8 +2202,8 @@ type ForwardPathComponentsSourceVpcAttributes struct {
 	ref terra.Reference
 }
 
-func (sv ForwardPathComponentsSourceVpcAttributes) InternalRef() terra.Reference {
-	return sv.ref
+func (sv ForwardPathComponentsSourceVpcAttributes) InternalRef() (terra.Reference, error) {
+	return sv.ref, nil
 }
 
 func (sv ForwardPathComponentsSourceVpcAttributes) InternalWithRef(ref terra.Reference) ForwardPathComponentsSourceVpcAttributes {
@@ -2230,8 +2230,8 @@ type ForwardPathComponentsSubnetAttributes struct {
 	ref terra.Reference
 }
 
-func (s ForwardPathComponentsSubnetAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ForwardPathComponentsSubnetAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ForwardPathComponentsSubnetAttributes) InternalWithRef(ref terra.Reference) ForwardPathComponentsSubnetAttributes {
@@ -2258,8 +2258,8 @@ type ForwardPathComponentsTransitGatewayAttributes struct {
 	ref terra.Reference
 }
 
-func (tg ForwardPathComponentsTransitGatewayAttributes) InternalRef() terra.Reference {
-	return tg.ref
+func (tg ForwardPathComponentsTransitGatewayAttributes) InternalRef() (terra.Reference, error) {
+	return tg.ref, nil
 }
 
 func (tg ForwardPathComponentsTransitGatewayAttributes) InternalWithRef(ref terra.Reference) ForwardPathComponentsTransitGatewayAttributes {
@@ -2286,8 +2286,8 @@ type ForwardPathComponentsTransitGatewayRouteTableRouteAttributes struct {
 	ref terra.Reference
 }
 
-func (tgrtr ForwardPathComponentsTransitGatewayRouteTableRouteAttributes) InternalRef() terra.Reference {
-	return tgrtr.ref
+func (tgrtr ForwardPathComponentsTransitGatewayRouteTableRouteAttributes) InternalRef() (terra.Reference, error) {
+	return tgrtr.ref, nil
 }
 
 func (tgrtr ForwardPathComponentsTransitGatewayRouteTableRouteAttributes) InternalWithRef(ref terra.Reference) ForwardPathComponentsTransitGatewayRouteTableRouteAttributes {
@@ -2330,8 +2330,8 @@ type ForwardPathComponentsVpcAttributes struct {
 	ref terra.Reference
 }
 
-func (v ForwardPathComponentsVpcAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v ForwardPathComponentsVpcAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v ForwardPathComponentsVpcAttributes) InternalWithRef(ref terra.Reference) ForwardPathComponentsVpcAttributes {
@@ -2358,8 +2358,8 @@ type ReturnPathComponentsAttributes struct {
 	ref terra.Reference
 }
 
-func (rpc ReturnPathComponentsAttributes) InternalRef() terra.Reference {
-	return rpc.ref
+func (rpc ReturnPathComponentsAttributes) InternalRef() (terra.Reference, error) {
+	return rpc.ref, nil
 }
 
 func (rpc ReturnPathComponentsAttributes) InternalWithRef(ref terra.Reference) ReturnPathComponentsAttributes {
@@ -2434,8 +2434,8 @@ type ReturnPathComponentsAclRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (ar ReturnPathComponentsAclRuleAttributes) InternalRef() terra.Reference {
-	return ar.ref
+func (ar ReturnPathComponentsAclRuleAttributes) InternalRef() (terra.Reference, error) {
+	return ar.ref, nil
 }
 
 func (ar ReturnPathComponentsAclRuleAttributes) InternalWithRef(ref terra.Reference) ReturnPathComponentsAclRuleAttributes {
@@ -2474,8 +2474,8 @@ type ReturnPathComponentsAclRulePortRangeAttributes struct {
 	ref terra.Reference
 }
 
-func (pr ReturnPathComponentsAclRulePortRangeAttributes) InternalRef() terra.Reference {
-	return pr.ref
+func (pr ReturnPathComponentsAclRulePortRangeAttributes) InternalRef() (terra.Reference, error) {
+	return pr.ref, nil
 }
 
 func (pr ReturnPathComponentsAclRulePortRangeAttributes) InternalWithRef(ref terra.Reference) ReturnPathComponentsAclRulePortRangeAttributes {
@@ -2498,8 +2498,8 @@ type ReturnPathComponentsAdditionalDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (ad ReturnPathComponentsAdditionalDetailsAttributes) InternalRef() terra.Reference {
-	return ad.ref
+func (ad ReturnPathComponentsAdditionalDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return ad.ref, nil
 }
 
 func (ad ReturnPathComponentsAdditionalDetailsAttributes) InternalWithRef(ref terra.Reference) ReturnPathComponentsAdditionalDetailsAttributes {
@@ -2522,8 +2522,8 @@ type ReturnPathComponentsAdditionalDetailsComponentAttributes struct {
 	ref terra.Reference
 }
 
-func (c ReturnPathComponentsAdditionalDetailsComponentAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ReturnPathComponentsAdditionalDetailsComponentAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ReturnPathComponentsAdditionalDetailsComponentAttributes) InternalWithRef(ref terra.Reference) ReturnPathComponentsAdditionalDetailsComponentAttributes {
@@ -2550,8 +2550,8 @@ type ReturnPathComponentsAttachedToAttributes struct {
 	ref terra.Reference
 }
 
-func (at ReturnPathComponentsAttachedToAttributes) InternalRef() terra.Reference {
-	return at.ref
+func (at ReturnPathComponentsAttachedToAttributes) InternalRef() (terra.Reference, error) {
+	return at.ref, nil
 }
 
 func (at ReturnPathComponentsAttachedToAttributes) InternalWithRef(ref terra.Reference) ReturnPathComponentsAttachedToAttributes {
@@ -2578,8 +2578,8 @@ type ReturnPathComponentsComponentAttributes struct {
 	ref terra.Reference
 }
 
-func (c ReturnPathComponentsComponentAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ReturnPathComponentsComponentAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ReturnPathComponentsComponentAttributes) InternalWithRef(ref terra.Reference) ReturnPathComponentsComponentAttributes {
@@ -2606,8 +2606,8 @@ type ReturnPathComponentsDestinationVpcAttributes struct {
 	ref terra.Reference
 }
 
-func (dv ReturnPathComponentsDestinationVpcAttributes) InternalRef() terra.Reference {
-	return dv.ref
+func (dv ReturnPathComponentsDestinationVpcAttributes) InternalRef() (terra.Reference, error) {
+	return dv.ref, nil
 }
 
 func (dv ReturnPathComponentsDestinationVpcAttributes) InternalWithRef(ref terra.Reference) ReturnPathComponentsDestinationVpcAttributes {
@@ -2634,8 +2634,8 @@ type ReturnPathComponentsInboundHeaderAttributes struct {
 	ref terra.Reference
 }
 
-func (ih ReturnPathComponentsInboundHeaderAttributes) InternalRef() terra.Reference {
-	return ih.ref
+func (ih ReturnPathComponentsInboundHeaderAttributes) InternalRef() (terra.Reference, error) {
+	return ih.ref, nil
 }
 
 func (ih ReturnPathComponentsInboundHeaderAttributes) InternalWithRef(ref terra.Reference) ReturnPathComponentsInboundHeaderAttributes {
@@ -2670,8 +2670,8 @@ type ReturnPathComponentsInboundHeaderDestinationPortRangesAttributes struct {
 	ref terra.Reference
 }
 
-func (dpr ReturnPathComponentsInboundHeaderDestinationPortRangesAttributes) InternalRef() terra.Reference {
-	return dpr.ref
+func (dpr ReturnPathComponentsInboundHeaderDestinationPortRangesAttributes) InternalRef() (terra.Reference, error) {
+	return dpr.ref, nil
 }
 
 func (dpr ReturnPathComponentsInboundHeaderDestinationPortRangesAttributes) InternalWithRef(ref terra.Reference) ReturnPathComponentsInboundHeaderDestinationPortRangesAttributes {
@@ -2694,8 +2694,8 @@ type ReturnPathComponentsInboundHeaderSourcePortRangesAttributes struct {
 	ref terra.Reference
 }
 
-func (spr ReturnPathComponentsInboundHeaderSourcePortRangesAttributes) InternalRef() terra.Reference {
-	return spr.ref
+func (spr ReturnPathComponentsInboundHeaderSourcePortRangesAttributes) InternalRef() (terra.Reference, error) {
+	return spr.ref, nil
 }
 
 func (spr ReturnPathComponentsInboundHeaderSourcePortRangesAttributes) InternalWithRef(ref terra.Reference) ReturnPathComponentsInboundHeaderSourcePortRangesAttributes {
@@ -2718,8 +2718,8 @@ type ReturnPathComponentsOutboundHeaderAttributes struct {
 	ref terra.Reference
 }
 
-func (oh ReturnPathComponentsOutboundHeaderAttributes) InternalRef() terra.Reference {
-	return oh.ref
+func (oh ReturnPathComponentsOutboundHeaderAttributes) InternalRef() (terra.Reference, error) {
+	return oh.ref, nil
 }
 
 func (oh ReturnPathComponentsOutboundHeaderAttributes) InternalWithRef(ref terra.Reference) ReturnPathComponentsOutboundHeaderAttributes {
@@ -2754,8 +2754,8 @@ type ReturnPathComponentsOutboundHeaderDestinationPortRangesAttributes struct {
 	ref terra.Reference
 }
 
-func (dpr ReturnPathComponentsOutboundHeaderDestinationPortRangesAttributes) InternalRef() terra.Reference {
-	return dpr.ref
+func (dpr ReturnPathComponentsOutboundHeaderDestinationPortRangesAttributes) InternalRef() (terra.Reference, error) {
+	return dpr.ref, nil
 }
 
 func (dpr ReturnPathComponentsOutboundHeaderDestinationPortRangesAttributes) InternalWithRef(ref terra.Reference) ReturnPathComponentsOutboundHeaderDestinationPortRangesAttributes {
@@ -2778,8 +2778,8 @@ type ReturnPathComponentsOutboundHeaderSourcePortRangesAttributes struct {
 	ref terra.Reference
 }
 
-func (spr ReturnPathComponentsOutboundHeaderSourcePortRangesAttributes) InternalRef() terra.Reference {
-	return spr.ref
+func (spr ReturnPathComponentsOutboundHeaderSourcePortRangesAttributes) InternalRef() (terra.Reference, error) {
+	return spr.ref, nil
 }
 
 func (spr ReturnPathComponentsOutboundHeaderSourcePortRangesAttributes) InternalWithRef(ref terra.Reference) ReturnPathComponentsOutboundHeaderSourcePortRangesAttributes {
@@ -2802,8 +2802,8 @@ type ReturnPathComponentsRouteTableRouteAttributes struct {
 	ref terra.Reference
 }
 
-func (rtr ReturnPathComponentsRouteTableRouteAttributes) InternalRef() terra.Reference {
-	return rtr.ref
+func (rtr ReturnPathComponentsRouteTableRouteAttributes) InternalRef() (terra.Reference, error) {
+	return rtr.ref, nil
 }
 
 func (rtr ReturnPathComponentsRouteTableRouteAttributes) InternalWithRef(ref terra.Reference) ReturnPathComponentsRouteTableRouteAttributes {
@@ -2858,8 +2858,8 @@ type ReturnPathComponentsSecurityGroupRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (sgr ReturnPathComponentsSecurityGroupRuleAttributes) InternalRef() terra.Reference {
-	return sgr.ref
+func (sgr ReturnPathComponentsSecurityGroupRuleAttributes) InternalRef() (terra.Reference, error) {
+	return sgr.ref, nil
 }
 
 func (sgr ReturnPathComponentsSecurityGroupRuleAttributes) InternalWithRef(ref terra.Reference) ReturnPathComponentsSecurityGroupRuleAttributes {
@@ -2898,8 +2898,8 @@ type ReturnPathComponentsSecurityGroupRulePortRangeAttributes struct {
 	ref terra.Reference
 }
 
-func (pr ReturnPathComponentsSecurityGroupRulePortRangeAttributes) InternalRef() terra.Reference {
-	return pr.ref
+func (pr ReturnPathComponentsSecurityGroupRulePortRangeAttributes) InternalRef() (terra.Reference, error) {
+	return pr.ref, nil
 }
 
 func (pr ReturnPathComponentsSecurityGroupRulePortRangeAttributes) InternalWithRef(ref terra.Reference) ReturnPathComponentsSecurityGroupRulePortRangeAttributes {
@@ -2922,8 +2922,8 @@ type ReturnPathComponentsSourceVpcAttributes struct {
 	ref terra.Reference
 }
 
-func (sv ReturnPathComponentsSourceVpcAttributes) InternalRef() terra.Reference {
-	return sv.ref
+func (sv ReturnPathComponentsSourceVpcAttributes) InternalRef() (terra.Reference, error) {
+	return sv.ref, nil
 }
 
 func (sv ReturnPathComponentsSourceVpcAttributes) InternalWithRef(ref terra.Reference) ReturnPathComponentsSourceVpcAttributes {
@@ -2950,8 +2950,8 @@ type ReturnPathComponentsSubnetAttributes struct {
 	ref terra.Reference
 }
 
-func (s ReturnPathComponentsSubnetAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ReturnPathComponentsSubnetAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ReturnPathComponentsSubnetAttributes) InternalWithRef(ref terra.Reference) ReturnPathComponentsSubnetAttributes {
@@ -2978,8 +2978,8 @@ type ReturnPathComponentsTransitGatewayAttributes struct {
 	ref terra.Reference
 }
 
-func (tg ReturnPathComponentsTransitGatewayAttributes) InternalRef() terra.Reference {
-	return tg.ref
+func (tg ReturnPathComponentsTransitGatewayAttributes) InternalRef() (terra.Reference, error) {
+	return tg.ref, nil
 }
 
 func (tg ReturnPathComponentsTransitGatewayAttributes) InternalWithRef(ref terra.Reference) ReturnPathComponentsTransitGatewayAttributes {
@@ -3006,8 +3006,8 @@ type ReturnPathComponentsTransitGatewayRouteTableRouteAttributes struct {
 	ref terra.Reference
 }
 
-func (tgrtr ReturnPathComponentsTransitGatewayRouteTableRouteAttributes) InternalRef() terra.Reference {
-	return tgrtr.ref
+func (tgrtr ReturnPathComponentsTransitGatewayRouteTableRouteAttributes) InternalRef() (terra.Reference, error) {
+	return tgrtr.ref, nil
 }
 
 func (tgrtr ReturnPathComponentsTransitGatewayRouteTableRouteAttributes) InternalWithRef(ref terra.Reference) ReturnPathComponentsTransitGatewayRouteTableRouteAttributes {
@@ -3050,8 +3050,8 @@ type ReturnPathComponentsVpcAttributes struct {
 	ref terra.Reference
 }
 
-func (v ReturnPathComponentsVpcAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v ReturnPathComponentsVpcAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v ReturnPathComponentsVpcAttributes) InternalWithRef(ref terra.Reference) ReturnPathComponentsVpcAttributes {

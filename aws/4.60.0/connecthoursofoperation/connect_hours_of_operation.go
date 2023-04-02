@@ -34,8 +34,8 @@ type ConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConfigAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConfigAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConfigAttributes) InternalWithRef(ref terra.Reference) ConfigAttributes {
@@ -62,8 +62,8 @@ type EndTimeAttributes struct {
 	ref terra.Reference
 }
 
-func (et EndTimeAttributes) InternalRef() terra.Reference {
-	return et.ref
+func (et EndTimeAttributes) InternalRef() (terra.Reference, error) {
+	return et.ref, nil
 }
 
 func (et EndTimeAttributes) InternalWithRef(ref terra.Reference) EndTimeAttributes {
@@ -86,8 +86,8 @@ type StartTimeAttributes struct {
 	ref terra.Reference
 }
 
-func (st StartTimeAttributes) InternalRef() terra.Reference {
-	return st.ref
+func (st StartTimeAttributes) InternalRef() (terra.Reference, error) {
+	return st.ref, nil
 }
 
 func (st StartTimeAttributes) InternalWithRef(ref terra.Reference) StartTimeAttributes {

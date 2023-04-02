@@ -497,8 +497,8 @@ type SpecAttributes struct {
 	ref terra.Reference
 }
 
-func (s SpecAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SpecAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SpecAttributes) InternalWithRef(ref terra.Reference) SpecAttributes {
@@ -533,8 +533,8 @@ type BackendAttributes struct {
 	ref terra.Reference
 }
 
-func (b BackendAttributes) InternalRef() terra.Reference {
-	return b.ref
+func (b BackendAttributes) InternalRef() (terra.Reference, error) {
+	return b.ref, nil
 }
 
 func (b BackendAttributes) InternalWithRef(ref terra.Reference) BackendAttributes {
@@ -553,8 +553,8 @@ type VirtualServiceAttributes struct {
 	ref terra.Reference
 }
 
-func (vs VirtualServiceAttributes) InternalRef() terra.Reference {
-	return vs.ref
+func (vs VirtualServiceAttributes) InternalRef() (terra.Reference, error) {
+	return vs.ref, nil
 }
 
 func (vs VirtualServiceAttributes) InternalWithRef(ref terra.Reference) VirtualServiceAttributes {
@@ -577,8 +577,8 @@ type VirtualServiceClientPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (cp VirtualServiceClientPolicyAttributes) InternalRef() terra.Reference {
-	return cp.ref
+func (cp VirtualServiceClientPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return cp.ref, nil
 }
 
 func (cp VirtualServiceClientPolicyAttributes) InternalWithRef(ref terra.Reference) VirtualServiceClientPolicyAttributes {
@@ -597,8 +597,8 @@ type VirtualServiceClientPolicyTlsAttributes struct {
 	ref terra.Reference
 }
 
-func (t VirtualServiceClientPolicyTlsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t VirtualServiceClientPolicyTlsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t VirtualServiceClientPolicyTlsAttributes) InternalWithRef(ref terra.Reference) VirtualServiceClientPolicyTlsAttributes {
@@ -629,8 +629,8 @@ type VirtualServiceClientPolicyTlsCertificateAttributes struct {
 	ref terra.Reference
 }
 
-func (c VirtualServiceClientPolicyTlsCertificateAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c VirtualServiceClientPolicyTlsCertificateAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c VirtualServiceClientPolicyTlsCertificateAttributes) InternalWithRef(ref terra.Reference) VirtualServiceClientPolicyTlsCertificateAttributes {
@@ -653,8 +653,8 @@ type VirtualServiceClientPolicyTlsCertificateFileAttributes struct {
 	ref terra.Reference
 }
 
-func (f VirtualServiceClientPolicyTlsCertificateFileAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f VirtualServiceClientPolicyTlsCertificateFileAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f VirtualServiceClientPolicyTlsCertificateFileAttributes) InternalWithRef(ref terra.Reference) VirtualServiceClientPolicyTlsCertificateFileAttributes {
@@ -677,8 +677,8 @@ type VirtualServiceClientPolicyTlsCertificateSdsAttributes struct {
 	ref terra.Reference
 }
 
-func (s VirtualServiceClientPolicyTlsCertificateSdsAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s VirtualServiceClientPolicyTlsCertificateSdsAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s VirtualServiceClientPolicyTlsCertificateSdsAttributes) InternalWithRef(ref terra.Reference) VirtualServiceClientPolicyTlsCertificateSdsAttributes {
@@ -697,8 +697,8 @@ type VirtualServiceClientPolicyTlsValidationAttributes struct {
 	ref terra.Reference
 }
 
-func (v VirtualServiceClientPolicyTlsValidationAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v VirtualServiceClientPolicyTlsValidationAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v VirtualServiceClientPolicyTlsValidationAttributes) InternalWithRef(ref terra.Reference) VirtualServiceClientPolicyTlsValidationAttributes {
@@ -721,8 +721,8 @@ type VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesAttributes st
 	ref terra.Reference
 }
 
-func (san VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesAttributes) InternalRef() terra.Reference {
-	return san.ref
+func (san VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesAttributes) InternalRef() (terra.Reference, error) {
+	return san.ref, nil
 }
 
 func (san VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesAttributes) InternalWithRef(ref terra.Reference) VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesAttributes {
@@ -741,8 +741,8 @@ type VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesMatchAttribut
 	ref terra.Reference
 }
 
-func (m VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes) InternalWithRef(ref terra.Reference) VirtualServiceClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes {
@@ -761,8 +761,8 @@ type VirtualServiceClientPolicyTlsValidationTrustAttributes struct {
 	ref terra.Reference
 }
 
-func (t VirtualServiceClientPolicyTlsValidationTrustAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t VirtualServiceClientPolicyTlsValidationTrustAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t VirtualServiceClientPolicyTlsValidationTrustAttributes) InternalWithRef(ref terra.Reference) VirtualServiceClientPolicyTlsValidationTrustAttributes {
@@ -789,8 +789,8 @@ type VirtualServiceClientPolicyTlsValidationTrustAcmAttributes struct {
 	ref terra.Reference
 }
 
-func (a VirtualServiceClientPolicyTlsValidationTrustAcmAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a VirtualServiceClientPolicyTlsValidationTrustAcmAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a VirtualServiceClientPolicyTlsValidationTrustAcmAttributes) InternalWithRef(ref terra.Reference) VirtualServiceClientPolicyTlsValidationTrustAcmAttributes {
@@ -809,8 +809,8 @@ type VirtualServiceClientPolicyTlsValidationTrustFileAttributes struct {
 	ref terra.Reference
 }
 
-func (f VirtualServiceClientPolicyTlsValidationTrustFileAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f VirtualServiceClientPolicyTlsValidationTrustFileAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f VirtualServiceClientPolicyTlsValidationTrustFileAttributes) InternalWithRef(ref terra.Reference) VirtualServiceClientPolicyTlsValidationTrustFileAttributes {
@@ -829,8 +829,8 @@ type VirtualServiceClientPolicyTlsValidationTrustSdsAttributes struct {
 	ref terra.Reference
 }
 
-func (s VirtualServiceClientPolicyTlsValidationTrustSdsAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s VirtualServiceClientPolicyTlsValidationTrustSdsAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s VirtualServiceClientPolicyTlsValidationTrustSdsAttributes) InternalWithRef(ref terra.Reference) VirtualServiceClientPolicyTlsValidationTrustSdsAttributes {
@@ -849,8 +849,8 @@ type BackendDefaultsAttributes struct {
 	ref terra.Reference
 }
 
-func (bd BackendDefaultsAttributes) InternalRef() terra.Reference {
-	return bd.ref
+func (bd BackendDefaultsAttributes) InternalRef() (terra.Reference, error) {
+	return bd.ref, nil
 }
 
 func (bd BackendDefaultsAttributes) InternalWithRef(ref terra.Reference) BackendDefaultsAttributes {
@@ -869,8 +869,8 @@ type BackendDefaultsClientPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (cp BackendDefaultsClientPolicyAttributes) InternalRef() terra.Reference {
-	return cp.ref
+func (cp BackendDefaultsClientPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return cp.ref, nil
 }
 
 func (cp BackendDefaultsClientPolicyAttributes) InternalWithRef(ref terra.Reference) BackendDefaultsClientPolicyAttributes {
@@ -889,8 +889,8 @@ type BackendDefaultsClientPolicyTlsAttributes struct {
 	ref terra.Reference
 }
 
-func (t BackendDefaultsClientPolicyTlsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t BackendDefaultsClientPolicyTlsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t BackendDefaultsClientPolicyTlsAttributes) InternalWithRef(ref terra.Reference) BackendDefaultsClientPolicyTlsAttributes {
@@ -921,8 +921,8 @@ type BackendDefaultsClientPolicyTlsCertificateAttributes struct {
 	ref terra.Reference
 }
 
-func (c BackendDefaultsClientPolicyTlsCertificateAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c BackendDefaultsClientPolicyTlsCertificateAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c BackendDefaultsClientPolicyTlsCertificateAttributes) InternalWithRef(ref terra.Reference) BackendDefaultsClientPolicyTlsCertificateAttributes {
@@ -945,8 +945,8 @@ type BackendDefaultsClientPolicyTlsCertificateFileAttributes struct {
 	ref terra.Reference
 }
 
-func (f BackendDefaultsClientPolicyTlsCertificateFileAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f BackendDefaultsClientPolicyTlsCertificateFileAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f BackendDefaultsClientPolicyTlsCertificateFileAttributes) InternalWithRef(ref terra.Reference) BackendDefaultsClientPolicyTlsCertificateFileAttributes {
@@ -969,8 +969,8 @@ type BackendDefaultsClientPolicyTlsCertificateSdsAttributes struct {
 	ref terra.Reference
 }
 
-func (s BackendDefaultsClientPolicyTlsCertificateSdsAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s BackendDefaultsClientPolicyTlsCertificateSdsAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s BackendDefaultsClientPolicyTlsCertificateSdsAttributes) InternalWithRef(ref terra.Reference) BackendDefaultsClientPolicyTlsCertificateSdsAttributes {
@@ -989,8 +989,8 @@ type BackendDefaultsClientPolicyTlsValidationAttributes struct {
 	ref terra.Reference
 }
 
-func (v BackendDefaultsClientPolicyTlsValidationAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v BackendDefaultsClientPolicyTlsValidationAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v BackendDefaultsClientPolicyTlsValidationAttributes) InternalWithRef(ref terra.Reference) BackendDefaultsClientPolicyTlsValidationAttributes {
@@ -1013,8 +1013,8 @@ type BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesAttributes s
 	ref terra.Reference
 }
 
-func (san BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesAttributes) InternalRef() terra.Reference {
-	return san.ref
+func (san BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesAttributes) InternalRef() (terra.Reference, error) {
+	return san.ref, nil
 }
 
 func (san BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesAttributes) InternalWithRef(ref terra.Reference) BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesAttributes {
@@ -1033,8 +1033,8 @@ type BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesMatchAttribu
 	ref terra.Reference
 }
 
-func (m BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes) InternalWithRef(ref terra.Reference) BackendDefaultsClientPolicyTlsValidationSubjectAlternativeNamesMatchAttributes {
@@ -1053,8 +1053,8 @@ type BackendDefaultsClientPolicyTlsValidationTrustAttributes struct {
 	ref terra.Reference
 }
 
-func (t BackendDefaultsClientPolicyTlsValidationTrustAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t BackendDefaultsClientPolicyTlsValidationTrustAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t BackendDefaultsClientPolicyTlsValidationTrustAttributes) InternalWithRef(ref terra.Reference) BackendDefaultsClientPolicyTlsValidationTrustAttributes {
@@ -1081,8 +1081,8 @@ type BackendDefaultsClientPolicyTlsValidationTrustAcmAttributes struct {
 	ref terra.Reference
 }
 
-func (a BackendDefaultsClientPolicyTlsValidationTrustAcmAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a BackendDefaultsClientPolicyTlsValidationTrustAcmAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a BackendDefaultsClientPolicyTlsValidationTrustAcmAttributes) InternalWithRef(ref terra.Reference) BackendDefaultsClientPolicyTlsValidationTrustAcmAttributes {
@@ -1101,8 +1101,8 @@ type BackendDefaultsClientPolicyTlsValidationTrustFileAttributes struct {
 	ref terra.Reference
 }
 
-func (f BackendDefaultsClientPolicyTlsValidationTrustFileAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f BackendDefaultsClientPolicyTlsValidationTrustFileAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f BackendDefaultsClientPolicyTlsValidationTrustFileAttributes) InternalWithRef(ref terra.Reference) BackendDefaultsClientPolicyTlsValidationTrustFileAttributes {
@@ -1121,8 +1121,8 @@ type BackendDefaultsClientPolicyTlsValidationTrustSdsAttributes struct {
 	ref terra.Reference
 }
 
-func (s BackendDefaultsClientPolicyTlsValidationTrustSdsAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s BackendDefaultsClientPolicyTlsValidationTrustSdsAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s BackendDefaultsClientPolicyTlsValidationTrustSdsAttributes) InternalWithRef(ref terra.Reference) BackendDefaultsClientPolicyTlsValidationTrustSdsAttributes {
@@ -1141,8 +1141,8 @@ type ListenerAttributes struct {
 	ref terra.Reference
 }
 
-func (l ListenerAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l ListenerAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l ListenerAttributes) InternalWithRef(ref terra.Reference) ListenerAttributes {
@@ -1181,8 +1181,8 @@ type ConnectionPoolAttributes struct {
 	ref terra.Reference
 }
 
-func (cp ConnectionPoolAttributes) InternalRef() terra.Reference {
-	return cp.ref
+func (cp ConnectionPoolAttributes) InternalRef() (terra.Reference, error) {
+	return cp.ref, nil
 }
 
 func (cp ConnectionPoolAttributes) InternalWithRef(ref terra.Reference) ConnectionPoolAttributes {
@@ -1213,8 +1213,8 @@ type ConnectionPoolGrpcAttributes struct {
 	ref terra.Reference
 }
 
-func (g ConnectionPoolGrpcAttributes) InternalRef() terra.Reference {
-	return g.ref
+func (g ConnectionPoolGrpcAttributes) InternalRef() (terra.Reference, error) {
+	return g.ref, nil
 }
 
 func (g ConnectionPoolGrpcAttributes) InternalWithRef(ref terra.Reference) ConnectionPoolGrpcAttributes {
@@ -1233,8 +1233,8 @@ type ConnectionPoolHttpAttributes struct {
 	ref terra.Reference
 }
 
-func (h ConnectionPoolHttpAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h ConnectionPoolHttpAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h ConnectionPoolHttpAttributes) InternalWithRef(ref terra.Reference) ConnectionPoolHttpAttributes {
@@ -1257,8 +1257,8 @@ type ConnectionPoolHttp2Attributes struct {
 	ref terra.Reference
 }
 
-func (h ConnectionPoolHttp2Attributes) InternalRef() terra.Reference {
-	return h.ref
+func (h ConnectionPoolHttp2Attributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h ConnectionPoolHttp2Attributes) InternalWithRef(ref terra.Reference) ConnectionPoolHttp2Attributes {
@@ -1277,8 +1277,8 @@ type ConnectionPoolTcpAttributes struct {
 	ref terra.Reference
 }
 
-func (t ConnectionPoolTcpAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t ConnectionPoolTcpAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t ConnectionPoolTcpAttributes) InternalWithRef(ref terra.Reference) ConnectionPoolTcpAttributes {
@@ -1297,8 +1297,8 @@ type HealthCheckAttributes struct {
 	ref terra.Reference
 }
 
-func (hc HealthCheckAttributes) InternalRef() terra.Reference {
-	return hc.ref
+func (hc HealthCheckAttributes) InternalRef() (terra.Reference, error) {
+	return hc.ref, nil
 }
 
 func (hc HealthCheckAttributes) InternalWithRef(ref terra.Reference) HealthCheckAttributes {
@@ -1341,8 +1341,8 @@ type OutlierDetectionAttributes struct {
 	ref terra.Reference
 }
 
-func (od OutlierDetectionAttributes) InternalRef() terra.Reference {
-	return od.ref
+func (od OutlierDetectionAttributes) InternalRef() (terra.Reference, error) {
+	return od.ref, nil
 }
 
 func (od OutlierDetectionAttributes) InternalWithRef(ref terra.Reference) OutlierDetectionAttributes {
@@ -1373,8 +1373,8 @@ type BaseEjectionDurationAttributes struct {
 	ref terra.Reference
 }
 
-func (bed BaseEjectionDurationAttributes) InternalRef() terra.Reference {
-	return bed.ref
+func (bed BaseEjectionDurationAttributes) InternalRef() (terra.Reference, error) {
+	return bed.ref, nil
 }
 
 func (bed BaseEjectionDurationAttributes) InternalWithRef(ref terra.Reference) BaseEjectionDurationAttributes {
@@ -1397,8 +1397,8 @@ type IntervalAttributes struct {
 	ref terra.Reference
 }
 
-func (i IntervalAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IntervalAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IntervalAttributes) InternalWithRef(ref terra.Reference) IntervalAttributes {
@@ -1421,8 +1421,8 @@ type PortMappingAttributes struct {
 	ref terra.Reference
 }
 
-func (pm PortMappingAttributes) InternalRef() terra.Reference {
-	return pm.ref
+func (pm PortMappingAttributes) InternalRef() (terra.Reference, error) {
+	return pm.ref, nil
 }
 
 func (pm PortMappingAttributes) InternalWithRef(ref terra.Reference) PortMappingAttributes {
@@ -1445,8 +1445,8 @@ type TimeoutAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutAttributes) InternalWithRef(ref terra.Reference) TimeoutAttributes {
@@ -1477,8 +1477,8 @@ type TimeoutGrpcAttributes struct {
 	ref terra.Reference
 }
 
-func (g TimeoutGrpcAttributes) InternalRef() terra.Reference {
-	return g.ref
+func (g TimeoutGrpcAttributes) InternalRef() (terra.Reference, error) {
+	return g.ref, nil
 }
 
 func (g TimeoutGrpcAttributes) InternalWithRef(ref terra.Reference) TimeoutGrpcAttributes {
@@ -1501,8 +1501,8 @@ type GrpcIdleAttributes struct {
 	ref terra.Reference
 }
 
-func (i GrpcIdleAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i GrpcIdleAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i GrpcIdleAttributes) InternalWithRef(ref terra.Reference) GrpcIdleAttributes {
@@ -1525,8 +1525,8 @@ type GrpcPerRequestAttributes struct {
 	ref terra.Reference
 }
 
-func (pr GrpcPerRequestAttributes) InternalRef() terra.Reference {
-	return pr.ref
+func (pr GrpcPerRequestAttributes) InternalRef() (terra.Reference, error) {
+	return pr.ref, nil
 }
 
 func (pr GrpcPerRequestAttributes) InternalWithRef(ref terra.Reference) GrpcPerRequestAttributes {
@@ -1549,8 +1549,8 @@ type TimeoutHttpAttributes struct {
 	ref terra.Reference
 }
 
-func (h TimeoutHttpAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h TimeoutHttpAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h TimeoutHttpAttributes) InternalWithRef(ref terra.Reference) TimeoutHttpAttributes {
@@ -1573,8 +1573,8 @@ type HttpIdleAttributes struct {
 	ref terra.Reference
 }
 
-func (i HttpIdleAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i HttpIdleAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i HttpIdleAttributes) InternalWithRef(ref terra.Reference) HttpIdleAttributes {
@@ -1597,8 +1597,8 @@ type HttpPerRequestAttributes struct {
 	ref terra.Reference
 }
 
-func (pr HttpPerRequestAttributes) InternalRef() terra.Reference {
-	return pr.ref
+func (pr HttpPerRequestAttributes) InternalRef() (terra.Reference, error) {
+	return pr.ref, nil
 }
 
 func (pr HttpPerRequestAttributes) InternalWithRef(ref terra.Reference) HttpPerRequestAttributes {
@@ -1621,8 +1621,8 @@ type TimeoutHttp2Attributes struct {
 	ref terra.Reference
 }
 
-func (h TimeoutHttp2Attributes) InternalRef() terra.Reference {
-	return h.ref
+func (h TimeoutHttp2Attributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h TimeoutHttp2Attributes) InternalWithRef(ref terra.Reference) TimeoutHttp2Attributes {
@@ -1645,8 +1645,8 @@ type Http2IdleAttributes struct {
 	ref terra.Reference
 }
 
-func (i Http2IdleAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i Http2IdleAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i Http2IdleAttributes) InternalWithRef(ref terra.Reference) Http2IdleAttributes {
@@ -1669,8 +1669,8 @@ type Http2PerRequestAttributes struct {
 	ref terra.Reference
 }
 
-func (pr Http2PerRequestAttributes) InternalRef() terra.Reference {
-	return pr.ref
+func (pr Http2PerRequestAttributes) InternalRef() (terra.Reference, error) {
+	return pr.ref, nil
 }
 
 func (pr Http2PerRequestAttributes) InternalWithRef(ref terra.Reference) Http2PerRequestAttributes {
@@ -1693,8 +1693,8 @@ type TimeoutTcpAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutTcpAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutTcpAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutTcpAttributes) InternalWithRef(ref terra.Reference) TimeoutTcpAttributes {
@@ -1713,8 +1713,8 @@ type TcpIdleAttributes struct {
 	ref terra.Reference
 }
 
-func (i TcpIdleAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i TcpIdleAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i TcpIdleAttributes) InternalWithRef(ref terra.Reference) TcpIdleAttributes {
@@ -1737,8 +1737,8 @@ type ListenerTlsAttributes struct {
 	ref terra.Reference
 }
 
-func (t ListenerTlsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t ListenerTlsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t ListenerTlsAttributes) InternalWithRef(ref terra.Reference) ListenerTlsAttributes {
@@ -1765,8 +1765,8 @@ type ListenerTlsCertificateAttributes struct {
 	ref terra.Reference
 }
 
-func (c ListenerTlsCertificateAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ListenerTlsCertificateAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ListenerTlsCertificateAttributes) InternalWithRef(ref terra.Reference) ListenerTlsCertificateAttributes {
@@ -1793,8 +1793,8 @@ type CertificateAcmAttributes struct {
 	ref terra.Reference
 }
 
-func (a CertificateAcmAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a CertificateAcmAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a CertificateAcmAttributes) InternalWithRef(ref terra.Reference) CertificateAcmAttributes {
@@ -1813,8 +1813,8 @@ type ListenerTlsCertificateFileAttributes struct {
 	ref terra.Reference
 }
 
-func (f ListenerTlsCertificateFileAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f ListenerTlsCertificateFileAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f ListenerTlsCertificateFileAttributes) InternalWithRef(ref terra.Reference) ListenerTlsCertificateFileAttributes {
@@ -1837,8 +1837,8 @@ type ListenerTlsCertificateSdsAttributes struct {
 	ref terra.Reference
 }
 
-func (s ListenerTlsCertificateSdsAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ListenerTlsCertificateSdsAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ListenerTlsCertificateSdsAttributes) InternalWithRef(ref terra.Reference) ListenerTlsCertificateSdsAttributes {
@@ -1857,8 +1857,8 @@ type ListenerTlsValidationAttributes struct {
 	ref terra.Reference
 }
 
-func (v ListenerTlsValidationAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v ListenerTlsValidationAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v ListenerTlsValidationAttributes) InternalWithRef(ref terra.Reference) ListenerTlsValidationAttributes {
@@ -1881,8 +1881,8 @@ type ListenerTlsValidationSubjectAlternativeNamesAttributes struct {
 	ref terra.Reference
 }
 
-func (san ListenerTlsValidationSubjectAlternativeNamesAttributes) InternalRef() terra.Reference {
-	return san.ref
+func (san ListenerTlsValidationSubjectAlternativeNamesAttributes) InternalRef() (terra.Reference, error) {
+	return san.ref, nil
 }
 
 func (san ListenerTlsValidationSubjectAlternativeNamesAttributes) InternalWithRef(ref terra.Reference) ListenerTlsValidationSubjectAlternativeNamesAttributes {
@@ -1901,8 +1901,8 @@ type ListenerTlsValidationSubjectAlternativeNamesMatchAttributes struct {
 	ref terra.Reference
 }
 
-func (m ListenerTlsValidationSubjectAlternativeNamesMatchAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m ListenerTlsValidationSubjectAlternativeNamesMatchAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m ListenerTlsValidationSubjectAlternativeNamesMatchAttributes) InternalWithRef(ref terra.Reference) ListenerTlsValidationSubjectAlternativeNamesMatchAttributes {
@@ -1921,8 +1921,8 @@ type ListenerTlsValidationTrustAttributes struct {
 	ref terra.Reference
 }
 
-func (t ListenerTlsValidationTrustAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t ListenerTlsValidationTrustAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t ListenerTlsValidationTrustAttributes) InternalWithRef(ref terra.Reference) ListenerTlsValidationTrustAttributes {
@@ -1945,8 +1945,8 @@ type ListenerTlsValidationTrustFileAttributes struct {
 	ref terra.Reference
 }
 
-func (f ListenerTlsValidationTrustFileAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f ListenerTlsValidationTrustFileAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f ListenerTlsValidationTrustFileAttributes) InternalWithRef(ref terra.Reference) ListenerTlsValidationTrustFileAttributes {
@@ -1965,8 +1965,8 @@ type ListenerTlsValidationTrustSdsAttributes struct {
 	ref terra.Reference
 }
 
-func (s ListenerTlsValidationTrustSdsAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ListenerTlsValidationTrustSdsAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ListenerTlsValidationTrustSdsAttributes) InternalWithRef(ref terra.Reference) ListenerTlsValidationTrustSdsAttributes {
@@ -1985,8 +1985,8 @@ type LoggingAttributes struct {
 	ref terra.Reference
 }
 
-func (l LoggingAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l LoggingAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l LoggingAttributes) InternalWithRef(ref terra.Reference) LoggingAttributes {
@@ -2005,8 +2005,8 @@ type AccessLogAttributes struct {
 	ref terra.Reference
 }
 
-func (al AccessLogAttributes) InternalRef() terra.Reference {
-	return al.ref
+func (al AccessLogAttributes) InternalRef() (terra.Reference, error) {
+	return al.ref, nil
 }
 
 func (al AccessLogAttributes) InternalWithRef(ref terra.Reference) AccessLogAttributes {
@@ -2025,8 +2025,8 @@ type AccessLogFileAttributes struct {
 	ref terra.Reference
 }
 
-func (f AccessLogFileAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f AccessLogFileAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f AccessLogFileAttributes) InternalWithRef(ref terra.Reference) AccessLogFileAttributes {
@@ -2049,8 +2049,8 @@ type FormatAttributes struct {
 	ref terra.Reference
 }
 
-func (f FormatAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FormatAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FormatAttributes) InternalWithRef(ref terra.Reference) FormatAttributes {
@@ -2073,8 +2073,8 @@ type JsonAttributes struct {
 	ref terra.Reference
 }
 
-func (j JsonAttributes) InternalRef() terra.Reference {
-	return j.ref
+func (j JsonAttributes) InternalRef() (terra.Reference, error) {
+	return j.ref, nil
 }
 
 func (j JsonAttributes) InternalWithRef(ref terra.Reference) JsonAttributes {
@@ -2097,8 +2097,8 @@ type ServiceDiscoveryAttributes struct {
 	ref terra.Reference
 }
 
-func (sd ServiceDiscoveryAttributes) InternalRef() terra.Reference {
-	return sd.ref
+func (sd ServiceDiscoveryAttributes) InternalRef() (terra.Reference, error) {
+	return sd.ref, nil
 }
 
 func (sd ServiceDiscoveryAttributes) InternalWithRef(ref terra.Reference) ServiceDiscoveryAttributes {
@@ -2121,8 +2121,8 @@ type AwsCloudMapAttributes struct {
 	ref terra.Reference
 }
 
-func (acm AwsCloudMapAttributes) InternalRef() terra.Reference {
-	return acm.ref
+func (acm AwsCloudMapAttributes) InternalRef() (terra.Reference, error) {
+	return acm.ref, nil
 }
 
 func (acm AwsCloudMapAttributes) InternalWithRef(ref terra.Reference) AwsCloudMapAttributes {
@@ -2149,8 +2149,8 @@ type DnsAttributes struct {
 	ref terra.Reference
 }
 
-func (d DnsAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DnsAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DnsAttributes) InternalWithRef(ref terra.Reference) DnsAttributes {

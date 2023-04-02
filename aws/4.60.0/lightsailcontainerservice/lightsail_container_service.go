@@ -42,8 +42,8 @@ type PrivateRegistryAccessAttributes struct {
 	ref terra.Reference
 }
 
-func (pra PrivateRegistryAccessAttributes) InternalRef() terra.Reference {
-	return pra.ref
+func (pra PrivateRegistryAccessAttributes) InternalRef() (terra.Reference, error) {
+	return pra.ref, nil
 }
 
 func (pra PrivateRegistryAccessAttributes) InternalWithRef(ref terra.Reference) PrivateRegistryAccessAttributes {
@@ -62,8 +62,8 @@ type EcrImagePullerRoleAttributes struct {
 	ref terra.Reference
 }
 
-func (eipr EcrImagePullerRoleAttributes) InternalRef() terra.Reference {
-	return eipr.ref
+func (eipr EcrImagePullerRoleAttributes) InternalRef() (terra.Reference, error) {
+	return eipr.ref, nil
 }
 
 func (eipr EcrImagePullerRoleAttributes) InternalWithRef(ref terra.Reference) EcrImagePullerRoleAttributes {
@@ -86,8 +86,8 @@ type PublicDomainNamesAttributes struct {
 	ref terra.Reference
 }
 
-func (pdn PublicDomainNamesAttributes) InternalRef() terra.Reference {
-	return pdn.ref
+func (pdn PublicDomainNamesAttributes) InternalRef() (terra.Reference, error) {
+	return pdn.ref, nil
 }
 
 func (pdn PublicDomainNamesAttributes) InternalWithRef(ref terra.Reference) PublicDomainNamesAttributes {
@@ -106,8 +106,8 @@ type CertificateAttributes struct {
 	ref terra.Reference
 }
 
-func (c CertificateAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CertificateAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CertificateAttributes) InternalWithRef(ref terra.Reference) CertificateAttributes {
@@ -130,8 +130,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

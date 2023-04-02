@@ -384,8 +384,8 @@ type SpecAttributes struct {
 	ref terra.Reference
 }
 
-func (s SpecAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SpecAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SpecAttributes) InternalWithRef(ref terra.Reference) SpecAttributes {
@@ -420,8 +420,8 @@ type GrpcRouteAttributes struct {
 	ref terra.Reference
 }
 
-func (gr GrpcRouteAttributes) InternalRef() terra.Reference {
-	return gr.ref
+func (gr GrpcRouteAttributes) InternalRef() (terra.Reference, error) {
+	return gr.ref, nil
 }
 
 func (gr GrpcRouteAttributes) InternalWithRef(ref terra.Reference) GrpcRouteAttributes {
@@ -452,8 +452,8 @@ type GrpcRouteActionAttributes struct {
 	ref terra.Reference
 }
 
-func (a GrpcRouteActionAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a GrpcRouteActionAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a GrpcRouteActionAttributes) InternalWithRef(ref terra.Reference) GrpcRouteActionAttributes {
@@ -472,8 +472,8 @@ type GrpcRouteActionWeightedTargetAttributes struct {
 	ref terra.Reference
 }
 
-func (wt GrpcRouteActionWeightedTargetAttributes) InternalRef() terra.Reference {
-	return wt.ref
+func (wt GrpcRouteActionWeightedTargetAttributes) InternalRef() (terra.Reference, error) {
+	return wt.ref, nil
 }
 
 func (wt GrpcRouteActionWeightedTargetAttributes) InternalWithRef(ref terra.Reference) GrpcRouteActionWeightedTargetAttributes {
@@ -500,8 +500,8 @@ type GrpcRouteMatchAttributes struct {
 	ref terra.Reference
 }
 
-func (m GrpcRouteMatchAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m GrpcRouteMatchAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m GrpcRouteMatchAttributes) InternalWithRef(ref terra.Reference) GrpcRouteMatchAttributes {
@@ -536,8 +536,8 @@ type MetadataAttributes struct {
 	ref terra.Reference
 }
 
-func (m MetadataAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MetadataAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MetadataAttributes) InternalWithRef(ref terra.Reference) MetadataAttributes {
@@ -564,8 +564,8 @@ type MetadataMatchAttributes struct {
 	ref terra.Reference
 }
 
-func (m MetadataMatchAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MetadataMatchAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MetadataMatchAttributes) InternalWithRef(ref terra.Reference) MetadataMatchAttributes {
@@ -600,8 +600,8 @@ type MetadataMatchRangeAttributes struct {
 	ref terra.Reference
 }
 
-func (r MetadataMatchRangeAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r MetadataMatchRangeAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r MetadataMatchRangeAttributes) InternalWithRef(ref terra.Reference) MetadataMatchRangeAttributes {
@@ -624,8 +624,8 @@ type GrpcRouteRetryPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (rp GrpcRouteRetryPolicyAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp GrpcRouteRetryPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp GrpcRouteRetryPolicyAttributes) InternalWithRef(ref terra.Reference) GrpcRouteRetryPolicyAttributes {
@@ -660,8 +660,8 @@ type GrpcRouteRetryPolicyPerRetryTimeoutAttributes struct {
 	ref terra.Reference
 }
 
-func (prt GrpcRouteRetryPolicyPerRetryTimeoutAttributes) InternalRef() terra.Reference {
-	return prt.ref
+func (prt GrpcRouteRetryPolicyPerRetryTimeoutAttributes) InternalRef() (terra.Reference, error) {
+	return prt.ref, nil
 }
 
 func (prt GrpcRouteRetryPolicyPerRetryTimeoutAttributes) InternalWithRef(ref terra.Reference) GrpcRouteRetryPolicyPerRetryTimeoutAttributes {
@@ -684,8 +684,8 @@ type GrpcRouteTimeoutAttributes struct {
 	ref terra.Reference
 }
 
-func (t GrpcRouteTimeoutAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t GrpcRouteTimeoutAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t GrpcRouteTimeoutAttributes) InternalWithRef(ref terra.Reference) GrpcRouteTimeoutAttributes {
@@ -708,8 +708,8 @@ type GrpcRouteTimeoutIdleAttributes struct {
 	ref terra.Reference
 }
 
-func (i GrpcRouteTimeoutIdleAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i GrpcRouteTimeoutIdleAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i GrpcRouteTimeoutIdleAttributes) InternalWithRef(ref terra.Reference) GrpcRouteTimeoutIdleAttributes {
@@ -732,8 +732,8 @@ type GrpcRouteTimeoutPerRequestAttributes struct {
 	ref terra.Reference
 }
 
-func (pr GrpcRouteTimeoutPerRequestAttributes) InternalRef() terra.Reference {
-	return pr.ref
+func (pr GrpcRouteTimeoutPerRequestAttributes) InternalRef() (terra.Reference, error) {
+	return pr.ref, nil
 }
 
 func (pr GrpcRouteTimeoutPerRequestAttributes) InternalWithRef(ref terra.Reference) GrpcRouteTimeoutPerRequestAttributes {
@@ -756,8 +756,8 @@ type Http2RouteAttributes struct {
 	ref terra.Reference
 }
 
-func (hr Http2RouteAttributes) InternalRef() terra.Reference {
-	return hr.ref
+func (hr Http2RouteAttributes) InternalRef() (terra.Reference, error) {
+	return hr.ref, nil
 }
 
 func (hr Http2RouteAttributes) InternalWithRef(ref terra.Reference) Http2RouteAttributes {
@@ -788,8 +788,8 @@ type Http2RouteActionAttributes struct {
 	ref terra.Reference
 }
 
-func (a Http2RouteActionAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a Http2RouteActionAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a Http2RouteActionAttributes) InternalWithRef(ref terra.Reference) Http2RouteActionAttributes {
@@ -808,8 +808,8 @@ type Http2RouteActionWeightedTargetAttributes struct {
 	ref terra.Reference
 }
 
-func (wt Http2RouteActionWeightedTargetAttributes) InternalRef() terra.Reference {
-	return wt.ref
+func (wt Http2RouteActionWeightedTargetAttributes) InternalRef() (terra.Reference, error) {
+	return wt.ref, nil
 }
 
 func (wt Http2RouteActionWeightedTargetAttributes) InternalWithRef(ref terra.Reference) Http2RouteActionWeightedTargetAttributes {
@@ -836,8 +836,8 @@ type Http2RouteMatchAttributes struct {
 	ref terra.Reference
 }
 
-func (m Http2RouteMatchAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m Http2RouteMatchAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m Http2RouteMatchAttributes) InternalWithRef(ref terra.Reference) Http2RouteMatchAttributes {
@@ -872,8 +872,8 @@ type Http2RouteMatchHeaderAttributes struct {
 	ref terra.Reference
 }
 
-func (h Http2RouteMatchHeaderAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h Http2RouteMatchHeaderAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h Http2RouteMatchHeaderAttributes) InternalWithRef(ref terra.Reference) Http2RouteMatchHeaderAttributes {
@@ -900,8 +900,8 @@ type Http2RouteMatchHeaderMatchAttributes struct {
 	ref terra.Reference
 }
 
-func (m Http2RouteMatchHeaderMatchAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m Http2RouteMatchHeaderMatchAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m Http2RouteMatchHeaderMatchAttributes) InternalWithRef(ref terra.Reference) Http2RouteMatchHeaderMatchAttributes {
@@ -936,8 +936,8 @@ type Http2RouteMatchHeaderMatchRangeAttributes struct {
 	ref terra.Reference
 }
 
-func (r Http2RouteMatchHeaderMatchRangeAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r Http2RouteMatchHeaderMatchRangeAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r Http2RouteMatchHeaderMatchRangeAttributes) InternalWithRef(ref terra.Reference) Http2RouteMatchHeaderMatchRangeAttributes {
@@ -960,8 +960,8 @@ type Http2RouteRetryPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (rp Http2RouteRetryPolicyAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp Http2RouteRetryPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp Http2RouteRetryPolicyAttributes) InternalWithRef(ref terra.Reference) Http2RouteRetryPolicyAttributes {
@@ -992,8 +992,8 @@ type Http2RouteRetryPolicyPerRetryTimeoutAttributes struct {
 	ref terra.Reference
 }
 
-func (prt Http2RouteRetryPolicyPerRetryTimeoutAttributes) InternalRef() terra.Reference {
-	return prt.ref
+func (prt Http2RouteRetryPolicyPerRetryTimeoutAttributes) InternalRef() (terra.Reference, error) {
+	return prt.ref, nil
 }
 
 func (prt Http2RouteRetryPolicyPerRetryTimeoutAttributes) InternalWithRef(ref terra.Reference) Http2RouteRetryPolicyPerRetryTimeoutAttributes {
@@ -1016,8 +1016,8 @@ type Http2RouteTimeoutAttributes struct {
 	ref terra.Reference
 }
 
-func (t Http2RouteTimeoutAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t Http2RouteTimeoutAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t Http2RouteTimeoutAttributes) InternalWithRef(ref terra.Reference) Http2RouteTimeoutAttributes {
@@ -1040,8 +1040,8 @@ type Http2RouteTimeoutIdleAttributes struct {
 	ref terra.Reference
 }
 
-func (i Http2RouteTimeoutIdleAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i Http2RouteTimeoutIdleAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i Http2RouteTimeoutIdleAttributes) InternalWithRef(ref terra.Reference) Http2RouteTimeoutIdleAttributes {
@@ -1064,8 +1064,8 @@ type Http2RouteTimeoutPerRequestAttributes struct {
 	ref terra.Reference
 }
 
-func (pr Http2RouteTimeoutPerRequestAttributes) InternalRef() terra.Reference {
-	return pr.ref
+func (pr Http2RouteTimeoutPerRequestAttributes) InternalRef() (terra.Reference, error) {
+	return pr.ref, nil
 }
 
 func (pr Http2RouteTimeoutPerRequestAttributes) InternalWithRef(ref terra.Reference) Http2RouteTimeoutPerRequestAttributes {
@@ -1088,8 +1088,8 @@ type HttpRouteAttributes struct {
 	ref terra.Reference
 }
 
-func (hr HttpRouteAttributes) InternalRef() terra.Reference {
-	return hr.ref
+func (hr HttpRouteAttributes) InternalRef() (terra.Reference, error) {
+	return hr.ref, nil
 }
 
 func (hr HttpRouteAttributes) InternalWithRef(ref terra.Reference) HttpRouteAttributes {
@@ -1120,8 +1120,8 @@ type HttpRouteActionAttributes struct {
 	ref terra.Reference
 }
 
-func (a HttpRouteActionAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a HttpRouteActionAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a HttpRouteActionAttributes) InternalWithRef(ref terra.Reference) HttpRouteActionAttributes {
@@ -1140,8 +1140,8 @@ type HttpRouteActionWeightedTargetAttributes struct {
 	ref terra.Reference
 }
 
-func (wt HttpRouteActionWeightedTargetAttributes) InternalRef() terra.Reference {
-	return wt.ref
+func (wt HttpRouteActionWeightedTargetAttributes) InternalRef() (terra.Reference, error) {
+	return wt.ref, nil
 }
 
 func (wt HttpRouteActionWeightedTargetAttributes) InternalWithRef(ref terra.Reference) HttpRouteActionWeightedTargetAttributes {
@@ -1168,8 +1168,8 @@ type HttpRouteMatchAttributes struct {
 	ref terra.Reference
 }
 
-func (m HttpRouteMatchAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m HttpRouteMatchAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m HttpRouteMatchAttributes) InternalWithRef(ref terra.Reference) HttpRouteMatchAttributes {
@@ -1204,8 +1204,8 @@ type HttpRouteMatchHeaderAttributes struct {
 	ref terra.Reference
 }
 
-func (h HttpRouteMatchHeaderAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h HttpRouteMatchHeaderAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h HttpRouteMatchHeaderAttributes) InternalWithRef(ref terra.Reference) HttpRouteMatchHeaderAttributes {
@@ -1232,8 +1232,8 @@ type HttpRouteMatchHeaderMatchAttributes struct {
 	ref terra.Reference
 }
 
-func (m HttpRouteMatchHeaderMatchAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m HttpRouteMatchHeaderMatchAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m HttpRouteMatchHeaderMatchAttributes) InternalWithRef(ref terra.Reference) HttpRouteMatchHeaderMatchAttributes {
@@ -1268,8 +1268,8 @@ type HttpRouteMatchHeaderMatchRangeAttributes struct {
 	ref terra.Reference
 }
 
-func (r HttpRouteMatchHeaderMatchRangeAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r HttpRouteMatchHeaderMatchRangeAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r HttpRouteMatchHeaderMatchRangeAttributes) InternalWithRef(ref terra.Reference) HttpRouteMatchHeaderMatchRangeAttributes {
@@ -1292,8 +1292,8 @@ type HttpRouteRetryPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (rp HttpRouteRetryPolicyAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp HttpRouteRetryPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp HttpRouteRetryPolicyAttributes) InternalWithRef(ref terra.Reference) HttpRouteRetryPolicyAttributes {
@@ -1324,8 +1324,8 @@ type HttpRouteRetryPolicyPerRetryTimeoutAttributes struct {
 	ref terra.Reference
 }
 
-func (prt HttpRouteRetryPolicyPerRetryTimeoutAttributes) InternalRef() terra.Reference {
-	return prt.ref
+func (prt HttpRouteRetryPolicyPerRetryTimeoutAttributes) InternalRef() (terra.Reference, error) {
+	return prt.ref, nil
 }
 
 func (prt HttpRouteRetryPolicyPerRetryTimeoutAttributes) InternalWithRef(ref terra.Reference) HttpRouteRetryPolicyPerRetryTimeoutAttributes {
@@ -1348,8 +1348,8 @@ type HttpRouteTimeoutAttributes struct {
 	ref terra.Reference
 }
 
-func (t HttpRouteTimeoutAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t HttpRouteTimeoutAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t HttpRouteTimeoutAttributes) InternalWithRef(ref terra.Reference) HttpRouteTimeoutAttributes {
@@ -1372,8 +1372,8 @@ type HttpRouteTimeoutIdleAttributes struct {
 	ref terra.Reference
 }
 
-func (i HttpRouteTimeoutIdleAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i HttpRouteTimeoutIdleAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i HttpRouteTimeoutIdleAttributes) InternalWithRef(ref terra.Reference) HttpRouteTimeoutIdleAttributes {
@@ -1396,8 +1396,8 @@ type HttpRouteTimeoutPerRequestAttributes struct {
 	ref terra.Reference
 }
 
-func (pr HttpRouteTimeoutPerRequestAttributes) InternalRef() terra.Reference {
-	return pr.ref
+func (pr HttpRouteTimeoutPerRequestAttributes) InternalRef() (terra.Reference, error) {
+	return pr.ref, nil
 }
 
 func (pr HttpRouteTimeoutPerRequestAttributes) InternalWithRef(ref terra.Reference) HttpRouteTimeoutPerRequestAttributes {
@@ -1420,8 +1420,8 @@ type TcpRouteAttributes struct {
 	ref terra.Reference
 }
 
-func (tr TcpRouteAttributes) InternalRef() terra.Reference {
-	return tr.ref
+func (tr TcpRouteAttributes) InternalRef() (terra.Reference, error) {
+	return tr.ref, nil
 }
 
 func (tr TcpRouteAttributes) InternalWithRef(ref terra.Reference) TcpRouteAttributes {
@@ -1448,8 +1448,8 @@ type TcpRouteActionAttributes struct {
 	ref terra.Reference
 }
 
-func (a TcpRouteActionAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a TcpRouteActionAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a TcpRouteActionAttributes) InternalWithRef(ref terra.Reference) TcpRouteActionAttributes {
@@ -1468,8 +1468,8 @@ type TcpRouteActionWeightedTargetAttributes struct {
 	ref terra.Reference
 }
 
-func (wt TcpRouteActionWeightedTargetAttributes) InternalRef() terra.Reference {
-	return wt.ref
+func (wt TcpRouteActionWeightedTargetAttributes) InternalRef() (terra.Reference, error) {
+	return wt.ref, nil
 }
 
 func (wt TcpRouteActionWeightedTargetAttributes) InternalWithRef(ref terra.Reference) TcpRouteActionWeightedTargetAttributes {
@@ -1496,8 +1496,8 @@ type TcpRouteMatchAttributes struct {
 	ref terra.Reference
 }
 
-func (m TcpRouteMatchAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m TcpRouteMatchAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m TcpRouteMatchAttributes) InternalWithRef(ref terra.Reference) TcpRouteMatchAttributes {
@@ -1516,8 +1516,8 @@ type TcpRouteTimeoutAttributes struct {
 	ref terra.Reference
 }
 
-func (t TcpRouteTimeoutAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TcpRouteTimeoutAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TcpRouteTimeoutAttributes) InternalWithRef(ref terra.Reference) TcpRouteTimeoutAttributes {
@@ -1536,8 +1536,8 @@ type TcpRouteTimeoutIdleAttributes struct {
 	ref terra.Reference
 }
 
-func (i TcpRouteTimeoutIdleAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i TcpRouteTimeoutIdleAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i TcpRouteTimeoutIdleAttributes) InternalWithRef(ref terra.Reference) TcpRouteTimeoutIdleAttributes {

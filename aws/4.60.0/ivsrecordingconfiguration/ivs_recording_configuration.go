@@ -35,8 +35,8 @@ type DestinationConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (dc DestinationConfigurationAttributes) InternalRef() terra.Reference {
-	return dc.ref
+func (dc DestinationConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return dc.ref, nil
 }
 
 func (dc DestinationConfigurationAttributes) InternalWithRef(ref terra.Reference) DestinationConfigurationAttributes {
@@ -55,8 +55,8 @@ type S3Attributes struct {
 	ref terra.Reference
 }
 
-func (s S3Attributes) InternalRef() terra.Reference {
-	return s.ref
+func (s S3Attributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s S3Attributes) InternalWithRef(ref terra.Reference) S3Attributes {
@@ -75,8 +75,8 @@ type ThumbnailConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (tc ThumbnailConfigurationAttributes) InternalRef() terra.Reference {
-	return tc.ref
+func (tc ThumbnailConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return tc.ref, nil
 }
 
 func (tc ThumbnailConfigurationAttributes) InternalWithRef(ref terra.Reference) ThumbnailConfigurationAttributes {
@@ -99,8 +99,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

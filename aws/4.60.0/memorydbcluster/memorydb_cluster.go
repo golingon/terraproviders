@@ -34,8 +34,8 @@ type ClusterEndpointAttributes struct {
 	ref terra.Reference
 }
 
-func (ce ClusterEndpointAttributes) InternalRef() terra.Reference {
-	return ce.ref
+func (ce ClusterEndpointAttributes) InternalRef() (terra.Reference, error) {
+	return ce.ref, nil
 }
 
 func (ce ClusterEndpointAttributes) InternalWithRef(ref terra.Reference) ClusterEndpointAttributes {
@@ -58,8 +58,8 @@ type ShardsAttributes struct {
 	ref terra.Reference
 }
 
-func (s ShardsAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ShardsAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ShardsAttributes) InternalWithRef(ref terra.Reference) ShardsAttributes {
@@ -90,8 +90,8 @@ type NodesAttributes struct {
 	ref terra.Reference
 }
 
-func (n NodesAttributes) InternalRef() terra.Reference {
-	return n.ref
+func (n NodesAttributes) InternalRef() (terra.Reference, error) {
+	return n.ref, nil
 }
 
 func (n NodesAttributes) InternalWithRef(ref terra.Reference) NodesAttributes {
@@ -122,8 +122,8 @@ type EndpointAttributes struct {
 	ref terra.Reference
 }
 
-func (e EndpointAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EndpointAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EndpointAttributes) InternalWithRef(ref terra.Reference) EndpointAttributes {
@@ -146,8 +146,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

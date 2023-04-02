@@ -13,8 +13,8 @@ type RegularExpressionAttributes struct {
 	ref terra.Reference
 }
 
-func (re RegularExpressionAttributes) InternalRef() terra.Reference {
-	return re.ref
+func (re RegularExpressionAttributes) InternalRef() (terra.Reference, error) {
+	return re.ref, nil
 }
 
 func (re RegularExpressionAttributes) InternalWithRef(ref terra.Reference) RegularExpressionAttributes {

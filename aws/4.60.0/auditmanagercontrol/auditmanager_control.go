@@ -35,8 +35,8 @@ type ControlMappingSourcesAttributes struct {
 	ref terra.Reference
 }
 
-func (cms ControlMappingSourcesAttributes) InternalRef() terra.Reference {
-	return cms.ref
+func (cms ControlMappingSourcesAttributes) InternalRef() (terra.Reference, error) {
+	return cms.ref, nil
 }
 
 func (cms ControlMappingSourcesAttributes) InternalWithRef(ref terra.Reference) ControlMappingSourcesAttributes {
@@ -83,8 +83,8 @@ type SourceKeywordAttributes struct {
 	ref terra.Reference
 }
 
-func (sk SourceKeywordAttributes) InternalRef() terra.Reference {
-	return sk.ref
+func (sk SourceKeywordAttributes) InternalRef() (terra.Reference, error) {
+	return sk.ref, nil
 }
 
 func (sk SourceKeywordAttributes) InternalWithRef(ref terra.Reference) SourceKeywordAttributes {

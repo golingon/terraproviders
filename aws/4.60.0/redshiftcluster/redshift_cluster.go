@@ -44,8 +44,8 @@ type ClusterNodesAttributes struct {
 	ref terra.Reference
 }
 
-func (cn ClusterNodesAttributes) InternalRef() terra.Reference {
-	return cn.ref
+func (cn ClusterNodesAttributes) InternalRef() (terra.Reference, error) {
+	return cn.ref, nil
 }
 
 func (cn ClusterNodesAttributes) InternalWithRef(ref terra.Reference) ClusterNodesAttributes {
@@ -72,8 +72,8 @@ type LoggingAttributes struct {
 	ref terra.Reference
 }
 
-func (l LoggingAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l LoggingAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l LoggingAttributes) InternalWithRef(ref terra.Reference) LoggingAttributes {
@@ -108,8 +108,8 @@ type SnapshotCopyAttributes struct {
 	ref terra.Reference
 }
 
-func (sc SnapshotCopyAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc SnapshotCopyAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc SnapshotCopyAttributes) InternalWithRef(ref terra.Reference) SnapshotCopyAttributes {
@@ -136,8 +136,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

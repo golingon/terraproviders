@@ -41,8 +41,8 @@ type MinimumHealthyHostsAttributes struct {
 	ref terra.Reference
 }
 
-func (mhh MinimumHealthyHostsAttributes) InternalRef() terra.Reference {
-	return mhh.ref
+func (mhh MinimumHealthyHostsAttributes) InternalRef() (terra.Reference, error) {
+	return mhh.ref, nil
 }
 
 func (mhh MinimumHealthyHostsAttributes) InternalWithRef(ref terra.Reference) MinimumHealthyHostsAttributes {
@@ -65,8 +65,8 @@ type TrafficRoutingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (trc TrafficRoutingConfigAttributes) InternalRef() terra.Reference {
-	return trc.ref
+func (trc TrafficRoutingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return trc.ref, nil
 }
 
 func (trc TrafficRoutingConfigAttributes) InternalWithRef(ref terra.Reference) TrafficRoutingConfigAttributes {
@@ -93,8 +93,8 @@ type TimeBasedCanaryAttributes struct {
 	ref terra.Reference
 }
 
-func (tbc TimeBasedCanaryAttributes) InternalRef() terra.Reference {
-	return tbc.ref
+func (tbc TimeBasedCanaryAttributes) InternalRef() (terra.Reference, error) {
+	return tbc.ref, nil
 }
 
 func (tbc TimeBasedCanaryAttributes) InternalWithRef(ref terra.Reference) TimeBasedCanaryAttributes {
@@ -117,8 +117,8 @@ type TimeBasedLinearAttributes struct {
 	ref terra.Reference
 }
 
-func (tbl TimeBasedLinearAttributes) InternalRef() terra.Reference {
-	return tbl.ref
+func (tbl TimeBasedLinearAttributes) InternalRef() (terra.Reference, error) {
+	return tbl.ref, nil
 }
 
 func (tbl TimeBasedLinearAttributes) InternalWithRef(ref terra.Reference) TimeBasedLinearAttributes {

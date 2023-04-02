@@ -45,8 +45,8 @@ type FirewallPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (fp FirewallPolicyAttributes) InternalRef() terra.Reference {
-	return fp.ref
+func (fp FirewallPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return fp.ref, nil
 }
 
 func (fp FirewallPolicyAttributes) InternalWithRef(ref terra.Reference) FirewallPolicyAttributes {
@@ -89,8 +89,8 @@ type StatefulEngineOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (seo StatefulEngineOptionsAttributes) InternalRef() terra.Reference {
-	return seo.ref
+func (seo StatefulEngineOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return seo.ref, nil
 }
 
 func (seo StatefulEngineOptionsAttributes) InternalWithRef(ref terra.Reference) StatefulEngineOptionsAttributes {
@@ -109,8 +109,8 @@ type StatefulRuleGroupReferenceAttributes struct {
 	ref terra.Reference
 }
 
-func (srgr StatefulRuleGroupReferenceAttributes) InternalRef() terra.Reference {
-	return srgr.ref
+func (srgr StatefulRuleGroupReferenceAttributes) InternalRef() (terra.Reference, error) {
+	return srgr.ref, nil
 }
 
 func (srgr StatefulRuleGroupReferenceAttributes) InternalWithRef(ref terra.Reference) StatefulRuleGroupReferenceAttributes {
@@ -133,8 +133,8 @@ type StatelessCustomActionAttributes struct {
 	ref terra.Reference
 }
 
-func (sca StatelessCustomActionAttributes) InternalRef() terra.Reference {
-	return sca.ref
+func (sca StatelessCustomActionAttributes) InternalRef() (terra.Reference, error) {
+	return sca.ref, nil
 }
 
 func (sca StatelessCustomActionAttributes) InternalWithRef(ref terra.Reference) StatelessCustomActionAttributes {
@@ -157,8 +157,8 @@ type ActionDefinitionAttributes struct {
 	ref terra.Reference
 }
 
-func (ad ActionDefinitionAttributes) InternalRef() terra.Reference {
-	return ad.ref
+func (ad ActionDefinitionAttributes) InternalRef() (terra.Reference, error) {
+	return ad.ref, nil
 }
 
 func (ad ActionDefinitionAttributes) InternalWithRef(ref terra.Reference) ActionDefinitionAttributes {
@@ -177,8 +177,8 @@ type PublishMetricActionAttributes struct {
 	ref terra.Reference
 }
 
-func (pma PublishMetricActionAttributes) InternalRef() terra.Reference {
-	return pma.ref
+func (pma PublishMetricActionAttributes) InternalRef() (terra.Reference, error) {
+	return pma.ref, nil
 }
 
 func (pma PublishMetricActionAttributes) InternalWithRef(ref terra.Reference) PublishMetricActionAttributes {
@@ -197,8 +197,8 @@ type DimensionAttributes struct {
 	ref terra.Reference
 }
 
-func (d DimensionAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DimensionAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DimensionAttributes) InternalWithRef(ref terra.Reference) DimensionAttributes {
@@ -217,8 +217,8 @@ type StatelessRuleGroupReferenceAttributes struct {
 	ref terra.Reference
 }
 
-func (srgr StatelessRuleGroupReferenceAttributes) InternalRef() terra.Reference {
-	return srgr.ref
+func (srgr StatelessRuleGroupReferenceAttributes) InternalRef() (terra.Reference, error) {
+	return srgr.ref, nil
 }
 
 func (srgr StatelessRuleGroupReferenceAttributes) InternalWithRef(ref terra.Reference) StatelessRuleGroupReferenceAttributes {

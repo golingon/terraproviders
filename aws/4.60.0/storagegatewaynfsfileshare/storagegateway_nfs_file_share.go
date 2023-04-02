@@ -36,8 +36,8 @@ type CacheAttributesAttributes struct {
 	ref terra.Reference
 }
 
-func (ca CacheAttributesAttributes) InternalRef() terra.Reference {
-	return ca.ref
+func (ca CacheAttributesAttributes) InternalRef() (terra.Reference, error) {
+	return ca.ref, nil
 }
 
 func (ca CacheAttributesAttributes) InternalWithRef(ref terra.Reference) CacheAttributesAttributes {
@@ -56,8 +56,8 @@ type NfsFileShareDefaultsAttributes struct {
 	ref terra.Reference
 }
 
-func (nfsd NfsFileShareDefaultsAttributes) InternalRef() terra.Reference {
-	return nfsd.ref
+func (nfsd NfsFileShareDefaultsAttributes) InternalRef() (terra.Reference, error) {
+	return nfsd.ref, nil
 }
 
 func (nfsd NfsFileShareDefaultsAttributes) InternalWithRef(ref terra.Reference) NfsFileShareDefaultsAttributes {
@@ -88,8 +88,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

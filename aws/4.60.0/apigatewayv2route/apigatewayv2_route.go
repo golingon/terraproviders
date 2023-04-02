@@ -18,8 +18,8 @@ type RequestParameterAttributes struct {
 	ref terra.Reference
 }
 
-func (rp RequestParameterAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp RequestParameterAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp RequestParameterAttributes) InternalWithRef(ref terra.Reference) RequestParameterAttributes {

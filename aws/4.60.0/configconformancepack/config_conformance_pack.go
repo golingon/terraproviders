@@ -18,8 +18,8 @@ type InputParameterAttributes struct {
 	ref terra.Reference
 }
 
-func (ip InputParameterAttributes) InternalRef() terra.Reference {
-	return ip.ref
+func (ip InputParameterAttributes) InternalRef() (terra.Reference, error) {
+	return ip.ref, nil
 }
 
 func (ip InputParameterAttributes) InternalWithRef(ref terra.Reference) InputParameterAttributes {

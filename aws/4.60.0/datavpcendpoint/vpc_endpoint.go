@@ -27,8 +27,8 @@ type DnsEntryAttributes struct {
 	ref terra.Reference
 }
 
-func (de DnsEntryAttributes) InternalRef() terra.Reference {
-	return de.ref
+func (de DnsEntryAttributes) InternalRef() (terra.Reference, error) {
+	return de.ref, nil
 }
 
 func (de DnsEntryAttributes) InternalWithRef(ref terra.Reference) DnsEntryAttributes {
@@ -51,8 +51,8 @@ type DnsOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (do DnsOptionsAttributes) InternalRef() terra.Reference {
-	return do.ref
+func (do DnsOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return do.ref, nil
 }
 
 func (do DnsOptionsAttributes) InternalWithRef(ref terra.Reference) DnsOptionsAttributes {
@@ -71,8 +71,8 @@ type FilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes {
@@ -95,8 +95,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

@@ -25,8 +25,8 @@ type RuleAttributes struct {
 	ref terra.Reference
 }
 
-func (r RuleAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RuleAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RuleAttributes) InternalWithRef(ref terra.Reference) RuleAttributes {
@@ -49,8 +49,8 @@ type ApplyServerSideEncryptionByDefaultAttributes struct {
 	ref terra.Reference
 }
 
-func (assebd ApplyServerSideEncryptionByDefaultAttributes) InternalRef() terra.Reference {
-	return assebd.ref
+func (assebd ApplyServerSideEncryptionByDefaultAttributes) InternalRef() (terra.Reference, error) {
+	return assebd.ref, nil
 }
 
 func (assebd ApplyServerSideEncryptionByDefaultAttributes) InternalWithRef(ref terra.Reference) ApplyServerSideEncryptionByDefaultAttributes {

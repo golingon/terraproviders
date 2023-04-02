@@ -26,8 +26,8 @@ type QuickConnectConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (qcc QuickConnectConfigAttributes) InternalRef() terra.Reference {
-	return qcc.ref
+func (qcc QuickConnectConfigAttributes) InternalRef() (terra.Reference, error) {
+	return qcc.ref, nil
 }
 
 func (qcc QuickConnectConfigAttributes) InternalWithRef(ref terra.Reference) QuickConnectConfigAttributes {
@@ -58,8 +58,8 @@ type PhoneConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (pc PhoneConfigAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc PhoneConfigAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc PhoneConfigAttributes) InternalWithRef(ref terra.Reference) PhoneConfigAttributes {
@@ -78,8 +78,8 @@ type QueueConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (qc QueueConfigAttributes) InternalRef() terra.Reference {
-	return qc.ref
+func (qc QueueConfigAttributes) InternalRef() (terra.Reference, error) {
+	return qc.ref, nil
 }
 
 func (qc QueueConfigAttributes) InternalWithRef(ref terra.Reference) QueueConfigAttributes {
@@ -102,8 +102,8 @@ type UserConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (uc UserConfigAttributes) InternalRef() terra.Reference {
-	return uc.ref
+func (uc UserConfigAttributes) InternalRef() (terra.Reference, error) {
+	return uc.ref, nil
 }
 
 func (uc UserConfigAttributes) InternalWithRef(ref terra.Reference) UserConfigAttributes {

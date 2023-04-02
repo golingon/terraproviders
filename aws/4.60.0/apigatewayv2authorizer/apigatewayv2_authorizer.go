@@ -18,8 +18,8 @@ type JwtConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (jc JwtConfigurationAttributes) InternalRef() terra.Reference {
-	return jc.ref
+func (jc JwtConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return jc.ref, nil
 }
 
 func (jc JwtConfigurationAttributes) InternalWithRef(ref terra.Reference) JwtConfigurationAttributes {

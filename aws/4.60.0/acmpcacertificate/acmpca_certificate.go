@@ -18,8 +18,8 @@ type ValidityAttributes struct {
 	ref terra.Reference
 }
 
-func (v ValidityAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v ValidityAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v ValidityAttributes) InternalWithRef(ref terra.Reference) ValidityAttributes {

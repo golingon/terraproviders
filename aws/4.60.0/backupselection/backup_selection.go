@@ -59,8 +59,8 @@ type ConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConditionAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConditionAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConditionAttributes) InternalWithRef(ref terra.Reference) ConditionAttributes {
@@ -91,8 +91,8 @@ type StringEqualsAttributes struct {
 	ref terra.Reference
 }
 
-func (se StringEqualsAttributes) InternalRef() terra.Reference {
-	return se.ref
+func (se StringEqualsAttributes) InternalRef() (terra.Reference, error) {
+	return se.ref, nil
 }
 
 func (se StringEqualsAttributes) InternalWithRef(ref terra.Reference) StringEqualsAttributes {
@@ -115,8 +115,8 @@ type StringLikeAttributes struct {
 	ref terra.Reference
 }
 
-func (sl StringLikeAttributes) InternalRef() terra.Reference {
-	return sl.ref
+func (sl StringLikeAttributes) InternalRef() (terra.Reference, error) {
+	return sl.ref, nil
 }
 
 func (sl StringLikeAttributes) InternalWithRef(ref terra.Reference) StringLikeAttributes {
@@ -139,8 +139,8 @@ type StringNotEqualsAttributes struct {
 	ref terra.Reference
 }
 
-func (sne StringNotEqualsAttributes) InternalRef() terra.Reference {
-	return sne.ref
+func (sne StringNotEqualsAttributes) InternalRef() (terra.Reference, error) {
+	return sne.ref, nil
 }
 
 func (sne StringNotEqualsAttributes) InternalWithRef(ref terra.Reference) StringNotEqualsAttributes {
@@ -163,8 +163,8 @@ type StringNotLikeAttributes struct {
 	ref terra.Reference
 }
 
-func (snl StringNotLikeAttributes) InternalRef() terra.Reference {
-	return snl.ref
+func (snl StringNotLikeAttributes) InternalRef() (terra.Reference, error) {
+	return snl.ref, nil
 }
 
 func (snl StringNotLikeAttributes) InternalWithRef(ref terra.Reference) StringNotLikeAttributes {
@@ -187,8 +187,8 @@ type SelectionTagAttributes struct {
 	ref terra.Reference
 }
 
-func (st SelectionTagAttributes) InternalRef() terra.Reference {
-	return st.ref
+func (st SelectionTagAttributes) InternalRef() (terra.Reference, error) {
+	return st.ref, nil
 }
 
 func (st SelectionTagAttributes) InternalWithRef(ref terra.Reference) SelectionTagAttributes {

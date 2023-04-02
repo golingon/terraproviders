@@ -40,8 +40,8 @@ type DagEdgeAttributes struct {
 	ref terra.Reference
 }
 
-func (de DagEdgeAttributes) InternalRef() terra.Reference {
-	return de.ref
+func (de DagEdgeAttributes) InternalRef() (terra.Reference, error) {
+	return de.ref, nil
 }
 
 func (de DagEdgeAttributes) InternalWithRef(ref terra.Reference) DagEdgeAttributes {
@@ -68,8 +68,8 @@ type DagNodeAttributes struct {
 	ref terra.Reference
 }
 
-func (dn DagNodeAttributes) InternalRef() terra.Reference {
-	return dn.ref
+func (dn DagNodeAttributes) InternalRef() (terra.Reference, error) {
+	return dn.ref, nil
 }
 
 func (dn DagNodeAttributes) InternalWithRef(ref terra.Reference) DagNodeAttributes {
@@ -100,8 +100,8 @@ type ArgsAttributes struct {
 	ref terra.Reference
 }
 
-func (a ArgsAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ArgsAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ArgsAttributes) InternalWithRef(ref terra.Reference) ArgsAttributes {

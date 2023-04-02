@@ -41,8 +41,8 @@ type ExternalIdsAttributes struct {
 	ref terra.Reference
 }
 
-func (ei ExternalIdsAttributes) InternalRef() terra.Reference {
-	return ei.ref
+func (ei ExternalIdsAttributes) InternalRef() (terra.Reference, error) {
+	return ei.ref, nil
 }
 
 func (ei ExternalIdsAttributes) InternalWithRef(ref terra.Reference) ExternalIdsAttributes {
@@ -65,8 +65,8 @@ type AlternateIdentifierAttributes struct {
 	ref terra.Reference
 }
 
-func (ai AlternateIdentifierAttributes) InternalRef() terra.Reference {
-	return ai.ref
+func (ai AlternateIdentifierAttributes) InternalRef() (terra.Reference, error) {
+	return ai.ref, nil
 }
 
 func (ai AlternateIdentifierAttributes) InternalWithRef(ref terra.Reference) AlternateIdentifierAttributes {
@@ -89,8 +89,8 @@ type ExternalIdAttributes struct {
 	ref terra.Reference
 }
 
-func (ei ExternalIdAttributes) InternalRef() terra.Reference {
-	return ei.ref
+func (ei ExternalIdAttributes) InternalRef() (terra.Reference, error) {
+	return ei.ref, nil
 }
 
 func (ei ExternalIdAttributes) InternalWithRef(ref terra.Reference) ExternalIdAttributes {
@@ -113,8 +113,8 @@ type UniqueAttributeAttributes struct {
 	ref terra.Reference
 }
 
-func (ua UniqueAttributeAttributes) InternalRef() terra.Reference {
-	return ua.ref
+func (ua UniqueAttributeAttributes) InternalRef() (terra.Reference, error) {
+	return ua.ref, nil
 }
 
 func (ua UniqueAttributeAttributes) InternalWithRef(ref terra.Reference) UniqueAttributeAttributes {
@@ -137,8 +137,8 @@ type FilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes {

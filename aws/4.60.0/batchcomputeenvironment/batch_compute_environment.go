@@ -69,8 +69,8 @@ type ComputeResourcesAttributes struct {
 	ref terra.Reference
 }
 
-func (cr ComputeResourcesAttributes) InternalRef() terra.Reference {
-	return cr.ref
+func (cr ComputeResourcesAttributes) InternalRef() (terra.Reference, error) {
+	return cr.ref, nil
 }
 
 func (cr ComputeResourcesAttributes) InternalWithRef(ref terra.Reference) ComputeResourcesAttributes {
@@ -149,8 +149,8 @@ type Ec2ConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ec Ec2ConfigurationAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec Ec2ConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec Ec2ConfigurationAttributes) InternalWithRef(ref terra.Reference) Ec2ConfigurationAttributes {
@@ -173,8 +173,8 @@ type LaunchTemplateAttributes struct {
 	ref terra.Reference
 }
 
-func (lt LaunchTemplateAttributes) InternalRef() terra.Reference {
-	return lt.ref
+func (lt LaunchTemplateAttributes) InternalRef() (terra.Reference, error) {
+	return lt.ref, nil
 }
 
 func (lt LaunchTemplateAttributes) InternalWithRef(ref terra.Reference) LaunchTemplateAttributes {
@@ -201,8 +201,8 @@ type EksConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ec EksConfigurationAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec EksConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec EksConfigurationAttributes) InternalWithRef(ref terra.Reference) EksConfigurationAttributes {

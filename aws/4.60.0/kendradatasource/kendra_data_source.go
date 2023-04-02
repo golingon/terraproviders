@@ -233,8 +233,8 @@ type ConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConfigurationAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConfigurationAttributes) InternalWithRef(ref terra.Reference) ConfigurationAttributes {
@@ -257,8 +257,8 @@ type S3ConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (sc S3ConfigurationAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc S3ConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc S3ConfigurationAttributes) InternalWithRef(ref terra.Reference) S3ConfigurationAttributes {
@@ -297,8 +297,8 @@ type AccessControlListConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (aclc AccessControlListConfigurationAttributes) InternalRef() terra.Reference {
-	return aclc.ref
+func (aclc AccessControlListConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return aclc.ref, nil
 }
 
 func (aclc AccessControlListConfigurationAttributes) InternalWithRef(ref terra.Reference) AccessControlListConfigurationAttributes {
@@ -317,8 +317,8 @@ type DocumentsMetadataConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (dmc DocumentsMetadataConfigurationAttributes) InternalRef() terra.Reference {
-	return dmc.ref
+func (dmc DocumentsMetadataConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return dmc.ref, nil
 }
 
 func (dmc DocumentsMetadataConfigurationAttributes) InternalWithRef(ref terra.Reference) DocumentsMetadataConfigurationAttributes {
@@ -337,8 +337,8 @@ type WebCrawlerConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (wcc WebCrawlerConfigurationAttributes) InternalRef() terra.Reference {
-	return wcc.ref
+func (wcc WebCrawlerConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return wcc.ref, nil
 }
 
 func (wcc WebCrawlerConfigurationAttributes) InternalWithRef(ref terra.Reference) WebCrawlerConfigurationAttributes {
@@ -389,8 +389,8 @@ type AuthenticationConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AuthenticationConfigurationAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AuthenticationConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AuthenticationConfigurationAttributes) InternalWithRef(ref terra.Reference) AuthenticationConfigurationAttributes {
@@ -409,8 +409,8 @@ type BasicAuthenticationAttributes struct {
 	ref terra.Reference
 }
 
-func (ba BasicAuthenticationAttributes) InternalRef() terra.Reference {
-	return ba.ref
+func (ba BasicAuthenticationAttributes) InternalRef() (terra.Reference, error) {
+	return ba.ref, nil
 }
 
 func (ba BasicAuthenticationAttributes) InternalWithRef(ref terra.Reference) BasicAuthenticationAttributes {
@@ -437,8 +437,8 @@ type ProxyConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (pc ProxyConfigurationAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc ProxyConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc ProxyConfigurationAttributes) InternalWithRef(ref terra.Reference) ProxyConfigurationAttributes {
@@ -465,8 +465,8 @@ type UrlsAttributes struct {
 	ref terra.Reference
 }
 
-func (u UrlsAttributes) InternalRef() terra.Reference {
-	return u.ref
+func (u UrlsAttributes) InternalRef() (terra.Reference, error) {
+	return u.ref, nil
 }
 
 func (u UrlsAttributes) InternalWithRef(ref terra.Reference) UrlsAttributes {
@@ -489,8 +489,8 @@ type SeedUrlConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (suc SeedUrlConfigurationAttributes) InternalRef() terra.Reference {
-	return suc.ref
+func (suc SeedUrlConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return suc.ref, nil
 }
 
 func (suc SeedUrlConfigurationAttributes) InternalWithRef(ref terra.Reference) SeedUrlConfigurationAttributes {
@@ -513,8 +513,8 @@ type SiteMapsConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (smc SiteMapsConfigurationAttributes) InternalRef() terra.Reference {
-	return smc.ref
+func (smc SiteMapsConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return smc.ref, nil
 }
 
 func (smc SiteMapsConfigurationAttributes) InternalWithRef(ref terra.Reference) SiteMapsConfigurationAttributes {
@@ -533,8 +533,8 @@ type CustomDocumentEnrichmentConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (cdec CustomDocumentEnrichmentConfigurationAttributes) InternalRef() terra.Reference {
-	return cdec.ref
+func (cdec CustomDocumentEnrichmentConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return cdec.ref, nil
 }
 
 func (cdec CustomDocumentEnrichmentConfigurationAttributes) InternalWithRef(ref terra.Reference) CustomDocumentEnrichmentConfigurationAttributes {
@@ -565,8 +565,8 @@ type InlineConfigurationsAttributes struct {
 	ref terra.Reference
 }
 
-func (ic InlineConfigurationsAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic InlineConfigurationsAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic InlineConfigurationsAttributes) InternalWithRef(ref terra.Reference) InlineConfigurationsAttributes {
@@ -593,8 +593,8 @@ type ConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConditionAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConditionAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConditionAttributes) InternalWithRef(ref terra.Reference) ConditionAttributes {
@@ -621,8 +621,8 @@ type ConditionConditionOnValueAttributes struct {
 	ref terra.Reference
 }
 
-func (cov ConditionConditionOnValueAttributes) InternalRef() terra.Reference {
-	return cov.ref
+func (cov ConditionConditionOnValueAttributes) InternalRef() (terra.Reference, error) {
+	return cov.ref, nil
 }
 
 func (cov ConditionConditionOnValueAttributes) InternalWithRef(ref terra.Reference) ConditionConditionOnValueAttributes {
@@ -653,8 +653,8 @@ type TargetAttributes struct {
 	ref terra.Reference
 }
 
-func (t TargetAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TargetAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TargetAttributes) InternalWithRef(ref terra.Reference) TargetAttributes {
@@ -681,8 +681,8 @@ type TargetDocumentAttributeValueAttributes struct {
 	ref terra.Reference
 }
 
-func (tdav TargetDocumentAttributeValueAttributes) InternalRef() terra.Reference {
-	return tdav.ref
+func (tdav TargetDocumentAttributeValueAttributes) InternalRef() (terra.Reference, error) {
+	return tdav.ref, nil
 }
 
 func (tdav TargetDocumentAttributeValueAttributes) InternalWithRef(ref terra.Reference) TargetDocumentAttributeValueAttributes {
@@ -713,8 +713,8 @@ type PostExtractionHookConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (pehc PostExtractionHookConfigurationAttributes) InternalRef() terra.Reference {
-	return pehc.ref
+func (pehc PostExtractionHookConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return pehc.ref, nil
 }
 
 func (pehc PostExtractionHookConfigurationAttributes) InternalWithRef(ref terra.Reference) PostExtractionHookConfigurationAttributes {
@@ -741,8 +741,8 @@ type PostExtractionHookConfigurationInvocationConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (ic PostExtractionHookConfigurationInvocationConditionAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic PostExtractionHookConfigurationInvocationConditionAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic PostExtractionHookConfigurationInvocationConditionAttributes) InternalWithRef(ref terra.Reference) PostExtractionHookConfigurationInvocationConditionAttributes {
@@ -769,8 +769,8 @@ type PostExtractionHookConfigurationInvocationConditionConditionOnValueAttribute
 	ref terra.Reference
 }
 
-func (cov PostExtractionHookConfigurationInvocationConditionConditionOnValueAttributes) InternalRef() terra.Reference {
-	return cov.ref
+func (cov PostExtractionHookConfigurationInvocationConditionConditionOnValueAttributes) InternalRef() (terra.Reference, error) {
+	return cov.ref, nil
 }
 
 func (cov PostExtractionHookConfigurationInvocationConditionConditionOnValueAttributes) InternalWithRef(ref terra.Reference) PostExtractionHookConfigurationInvocationConditionConditionOnValueAttributes {
@@ -801,8 +801,8 @@ type PreExtractionHookConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (pehc PreExtractionHookConfigurationAttributes) InternalRef() terra.Reference {
-	return pehc.ref
+func (pehc PreExtractionHookConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return pehc.ref, nil
 }
 
 func (pehc PreExtractionHookConfigurationAttributes) InternalWithRef(ref terra.Reference) PreExtractionHookConfigurationAttributes {
@@ -829,8 +829,8 @@ type PreExtractionHookConfigurationInvocationConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (ic PreExtractionHookConfigurationInvocationConditionAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic PreExtractionHookConfigurationInvocationConditionAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic PreExtractionHookConfigurationInvocationConditionAttributes) InternalWithRef(ref terra.Reference) PreExtractionHookConfigurationInvocationConditionAttributes {
@@ -857,8 +857,8 @@ type PreExtractionHookConfigurationInvocationConditionConditionOnValueAttributes
 	ref terra.Reference
 }
 
-func (cov PreExtractionHookConfigurationInvocationConditionConditionOnValueAttributes) InternalRef() terra.Reference {
-	return cov.ref
+func (cov PreExtractionHookConfigurationInvocationConditionConditionOnValueAttributes) InternalRef() (terra.Reference, error) {
+	return cov.ref, nil
 }
 
 func (cov PreExtractionHookConfigurationInvocationConditionConditionOnValueAttributes) InternalWithRef(ref terra.Reference) PreExtractionHookConfigurationInvocationConditionConditionOnValueAttributes {
@@ -889,8 +889,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

@@ -241,8 +241,8 @@ type CorsRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (cr CorsRuleAttributes) InternalRef() terra.Reference {
-	return cr.ref
+func (cr CorsRuleAttributes) InternalRef() (terra.Reference, error) {
+	return cr.ref, nil
 }
 
 func (cr CorsRuleAttributes) InternalWithRef(ref terra.Reference) CorsRuleAttributes {
@@ -277,8 +277,8 @@ type GrantAttributes struct {
 	ref terra.Reference
 }
 
-func (g GrantAttributes) InternalRef() terra.Reference {
-	return g.ref
+func (g GrantAttributes) InternalRef() (terra.Reference, error) {
+	return g.ref, nil
 }
 
 func (g GrantAttributes) InternalWithRef(ref terra.Reference) GrantAttributes {
@@ -309,8 +309,8 @@ type LifecycleRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (lr LifecycleRuleAttributes) InternalRef() terra.Reference {
-	return lr.ref
+func (lr LifecycleRuleAttributes) InternalRef() (terra.Reference, error) {
+	return lr.ref, nil
 }
 
 func (lr LifecycleRuleAttributes) InternalWithRef(ref terra.Reference) LifecycleRuleAttributes {
@@ -361,8 +361,8 @@ type ExpirationAttributes struct {
 	ref terra.Reference
 }
 
-func (e ExpirationAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e ExpirationAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e ExpirationAttributes) InternalWithRef(ref terra.Reference) ExpirationAttributes {
@@ -389,8 +389,8 @@ type NoncurrentVersionExpirationAttributes struct {
 	ref terra.Reference
 }
 
-func (nve NoncurrentVersionExpirationAttributes) InternalRef() terra.Reference {
-	return nve.ref
+func (nve NoncurrentVersionExpirationAttributes) InternalRef() (terra.Reference, error) {
+	return nve.ref, nil
 }
 
 func (nve NoncurrentVersionExpirationAttributes) InternalWithRef(ref terra.Reference) NoncurrentVersionExpirationAttributes {
@@ -409,8 +409,8 @@ type NoncurrentVersionTransitionAttributes struct {
 	ref terra.Reference
 }
 
-func (nvt NoncurrentVersionTransitionAttributes) InternalRef() terra.Reference {
-	return nvt.ref
+func (nvt NoncurrentVersionTransitionAttributes) InternalRef() (terra.Reference, error) {
+	return nvt.ref, nil
 }
 
 func (nvt NoncurrentVersionTransitionAttributes) InternalWithRef(ref terra.Reference) NoncurrentVersionTransitionAttributes {
@@ -433,8 +433,8 @@ type TransitionAttributes struct {
 	ref terra.Reference
 }
 
-func (t TransitionAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TransitionAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TransitionAttributes) InternalWithRef(ref terra.Reference) TransitionAttributes {
@@ -461,8 +461,8 @@ type LoggingAttributes struct {
 	ref terra.Reference
 }
 
-func (l LoggingAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l LoggingAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l LoggingAttributes) InternalWithRef(ref terra.Reference) LoggingAttributes {
@@ -485,8 +485,8 @@ type ObjectLockConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (olc ObjectLockConfigurationAttributes) InternalRef() terra.Reference {
-	return olc.ref
+func (olc ObjectLockConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return olc.ref, nil
 }
 
 func (olc ObjectLockConfigurationAttributes) InternalWithRef(ref terra.Reference) ObjectLockConfigurationAttributes {
@@ -509,8 +509,8 @@ type ObjectLockConfigurationRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (r ObjectLockConfigurationRuleAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r ObjectLockConfigurationRuleAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r ObjectLockConfigurationRuleAttributes) InternalWithRef(ref terra.Reference) ObjectLockConfigurationRuleAttributes {
@@ -529,8 +529,8 @@ type DefaultRetentionAttributes struct {
 	ref terra.Reference
 }
 
-func (dr DefaultRetentionAttributes) InternalRef() terra.Reference {
-	return dr.ref
+func (dr DefaultRetentionAttributes) InternalRef() (terra.Reference, error) {
+	return dr.ref, nil
 }
 
 func (dr DefaultRetentionAttributes) InternalWithRef(ref terra.Reference) DefaultRetentionAttributes {
@@ -557,8 +557,8 @@ type ReplicationConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (rc ReplicationConfigurationAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc ReplicationConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc ReplicationConfigurationAttributes) InternalWithRef(ref terra.Reference) ReplicationConfigurationAttributes {
@@ -581,8 +581,8 @@ type RulesAttributes struct {
 	ref terra.Reference
 }
 
-func (r RulesAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RulesAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RulesAttributes) InternalWithRef(ref terra.Reference) RulesAttributes {
@@ -629,8 +629,8 @@ type DestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (d DestinationAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DestinationAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DestinationAttributes) InternalWithRef(ref terra.Reference) DestinationAttributes {
@@ -673,8 +673,8 @@ type AccessControlTranslationAttributes struct {
 	ref terra.Reference
 }
 
-func (act AccessControlTranslationAttributes) InternalRef() terra.Reference {
-	return act.ref
+func (act AccessControlTranslationAttributes) InternalRef() (terra.Reference, error) {
+	return act.ref, nil
 }
 
 func (act AccessControlTranslationAttributes) InternalWithRef(ref terra.Reference) AccessControlTranslationAttributes {
@@ -693,8 +693,8 @@ type MetricsAttributes struct {
 	ref terra.Reference
 }
 
-func (m MetricsAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MetricsAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MetricsAttributes) InternalWithRef(ref terra.Reference) MetricsAttributes {
@@ -717,8 +717,8 @@ type ReplicationTimeAttributes struct {
 	ref terra.Reference
 }
 
-func (rt ReplicationTimeAttributes) InternalRef() terra.Reference {
-	return rt.ref
+func (rt ReplicationTimeAttributes) InternalRef() (terra.Reference, error) {
+	return rt.ref, nil
 }
 
 func (rt ReplicationTimeAttributes) InternalWithRef(ref terra.Reference) ReplicationTimeAttributes {
@@ -741,8 +741,8 @@ type FilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes {
@@ -765,8 +765,8 @@ type SourceSelectionCriteriaAttributes struct {
 	ref terra.Reference
 }
 
-func (ssc SourceSelectionCriteriaAttributes) InternalRef() terra.Reference {
-	return ssc.ref
+func (ssc SourceSelectionCriteriaAttributes) InternalRef() (terra.Reference, error) {
+	return ssc.ref, nil
 }
 
 func (ssc SourceSelectionCriteriaAttributes) InternalWithRef(ref terra.Reference) SourceSelectionCriteriaAttributes {
@@ -785,8 +785,8 @@ type SseKmsEncryptedObjectsAttributes struct {
 	ref terra.Reference
 }
 
-func (skeo SseKmsEncryptedObjectsAttributes) InternalRef() terra.Reference {
-	return skeo.ref
+func (skeo SseKmsEncryptedObjectsAttributes) InternalRef() (terra.Reference, error) {
+	return skeo.ref, nil
 }
 
 func (skeo SseKmsEncryptedObjectsAttributes) InternalWithRef(ref terra.Reference) SseKmsEncryptedObjectsAttributes {
@@ -805,8 +805,8 @@ type ServerSideEncryptionConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ssec ServerSideEncryptionConfigurationAttributes) InternalRef() terra.Reference {
-	return ssec.ref
+func (ssec ServerSideEncryptionConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ssec.ref, nil
 }
 
 func (ssec ServerSideEncryptionConfigurationAttributes) InternalWithRef(ref terra.Reference) ServerSideEncryptionConfigurationAttributes {
@@ -825,8 +825,8 @@ type ServerSideEncryptionConfigurationRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (r ServerSideEncryptionConfigurationRuleAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r ServerSideEncryptionConfigurationRuleAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r ServerSideEncryptionConfigurationRuleAttributes) InternalWithRef(ref terra.Reference) ServerSideEncryptionConfigurationRuleAttributes {
@@ -849,8 +849,8 @@ type ApplyServerSideEncryptionByDefaultAttributes struct {
 	ref terra.Reference
 }
 
-func (assebd ApplyServerSideEncryptionByDefaultAttributes) InternalRef() terra.Reference {
-	return assebd.ref
+func (assebd ApplyServerSideEncryptionByDefaultAttributes) InternalRef() (terra.Reference, error) {
+	return assebd.ref, nil
 }
 
 func (assebd ApplyServerSideEncryptionByDefaultAttributes) InternalWithRef(ref terra.Reference) ApplyServerSideEncryptionByDefaultAttributes {
@@ -873,8 +873,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
@@ -905,8 +905,8 @@ type VersioningAttributes struct {
 	ref terra.Reference
 }
 
-func (v VersioningAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v VersioningAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v VersioningAttributes) InternalWithRef(ref terra.Reference) VersioningAttributes {
@@ -929,8 +929,8 @@ type WebsiteAttributes struct {
 	ref terra.Reference
 }
 
-func (w WebsiteAttributes) InternalRef() terra.Reference {
-	return w.ref
+func (w WebsiteAttributes) InternalRef() (terra.Reference, error) {
+	return w.ref, nil
 }
 
 func (w WebsiteAttributes) InternalWithRef(ref terra.Reference) WebsiteAttributes {

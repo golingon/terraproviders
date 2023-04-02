@@ -63,8 +63,8 @@ type ThingGroupIndexingConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (tgic ThingGroupIndexingConfigurationAttributes) InternalRef() terra.Reference {
-	return tgic.ref
+func (tgic ThingGroupIndexingConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return tgic.ref, nil
 }
 
 func (tgic ThingGroupIndexingConfigurationAttributes) InternalWithRef(ref terra.Reference) ThingGroupIndexingConfigurationAttributes {
@@ -91,8 +91,8 @@ type ThingGroupIndexingConfigurationCustomFieldAttributes struct {
 	ref terra.Reference
 }
 
-func (cf ThingGroupIndexingConfigurationCustomFieldAttributes) InternalRef() terra.Reference {
-	return cf.ref
+func (cf ThingGroupIndexingConfigurationCustomFieldAttributes) InternalRef() (terra.Reference, error) {
+	return cf.ref, nil
 }
 
 func (cf ThingGroupIndexingConfigurationCustomFieldAttributes) InternalWithRef(ref terra.Reference) ThingGroupIndexingConfigurationCustomFieldAttributes {
@@ -115,8 +115,8 @@ type ThingGroupIndexingConfigurationManagedFieldAttributes struct {
 	ref terra.Reference
 }
 
-func (mf ThingGroupIndexingConfigurationManagedFieldAttributes) InternalRef() terra.Reference {
-	return mf.ref
+func (mf ThingGroupIndexingConfigurationManagedFieldAttributes) InternalRef() (terra.Reference, error) {
+	return mf.ref, nil
 }
 
 func (mf ThingGroupIndexingConfigurationManagedFieldAttributes) InternalWithRef(ref terra.Reference) ThingGroupIndexingConfigurationManagedFieldAttributes {
@@ -139,8 +139,8 @@ type ThingIndexingConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (tic ThingIndexingConfigurationAttributes) InternalRef() terra.Reference {
-	return tic.ref
+func (tic ThingIndexingConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return tic.ref, nil
 }
 
 func (tic ThingIndexingConfigurationAttributes) InternalWithRef(ref terra.Reference) ThingIndexingConfigurationAttributes {
@@ -179,8 +179,8 @@ type ThingIndexingConfigurationCustomFieldAttributes struct {
 	ref terra.Reference
 }
 
-func (cf ThingIndexingConfigurationCustomFieldAttributes) InternalRef() terra.Reference {
-	return cf.ref
+func (cf ThingIndexingConfigurationCustomFieldAttributes) InternalRef() (terra.Reference, error) {
+	return cf.ref, nil
 }
 
 func (cf ThingIndexingConfigurationCustomFieldAttributes) InternalWithRef(ref terra.Reference) ThingIndexingConfigurationCustomFieldAttributes {
@@ -203,8 +203,8 @@ type ThingIndexingConfigurationManagedFieldAttributes struct {
 	ref terra.Reference
 }
 
-func (mf ThingIndexingConfigurationManagedFieldAttributes) InternalRef() terra.Reference {
-	return mf.ref
+func (mf ThingIndexingConfigurationManagedFieldAttributes) InternalRef() (terra.Reference, error) {
+	return mf.ref, nil
 }
 
 func (mf ThingIndexingConfigurationManagedFieldAttributes) InternalWithRef(ref terra.Reference) ThingIndexingConfigurationManagedFieldAttributes {

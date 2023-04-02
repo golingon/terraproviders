@@ -40,8 +40,8 @@ type EvaluationRulesAttributes struct {
 	ref terra.Reference
 }
 
-func (er EvaluationRulesAttributes) InternalRef() terra.Reference {
-	return er.ref
+func (er EvaluationRulesAttributes) InternalRef() (terra.Reference, error) {
+	return er.ref, nil
 }
 
 func (er EvaluationRulesAttributes) InternalWithRef(ref terra.Reference) EvaluationRulesAttributes {
@@ -64,8 +64,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
@@ -92,8 +92,8 @@ type VariationsAttributes struct {
 	ref terra.Reference
 }
 
-func (v VariationsAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v VariationsAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v VariationsAttributes) InternalWithRef(ref terra.Reference) VariationsAttributes {
@@ -116,8 +116,8 @@ type ValueAttributes struct {
 	ref terra.Reference
 }
 
-func (v ValueAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v ValueAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v ValueAttributes) InternalWithRef(ref terra.Reference) ValueAttributes {

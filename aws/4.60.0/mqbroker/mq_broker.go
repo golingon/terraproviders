@@ -88,8 +88,8 @@ type InstancesAttributes struct {
 	ref terra.Reference
 }
 
-func (i InstancesAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i InstancesAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i InstancesAttributes) InternalWithRef(ref terra.Reference) InstancesAttributes {
@@ -116,8 +116,8 @@ type ConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConfigurationAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConfigurationAttributes) InternalWithRef(ref terra.Reference) ConfigurationAttributes {
@@ -140,8 +140,8 @@ type EncryptionOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (eo EncryptionOptionsAttributes) InternalRef() terra.Reference {
-	return eo.ref
+func (eo EncryptionOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return eo.ref, nil
 }
 
 func (eo EncryptionOptionsAttributes) InternalWithRef(ref terra.Reference) EncryptionOptionsAttributes {
@@ -164,8 +164,8 @@ type LdapServerMetadataAttributes struct {
 	ref terra.Reference
 }
 
-func (lsm LdapServerMetadataAttributes) InternalRef() terra.Reference {
-	return lsm.ref
+func (lsm LdapServerMetadataAttributes) InternalRef() (terra.Reference, error) {
+	return lsm.ref, nil
 }
 
 func (lsm LdapServerMetadataAttributes) InternalWithRef(ref terra.Reference) LdapServerMetadataAttributes {
@@ -224,8 +224,8 @@ type LogsAttributes struct {
 	ref terra.Reference
 }
 
-func (l LogsAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l LogsAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l LogsAttributes) InternalWithRef(ref terra.Reference) LogsAttributes {
@@ -248,8 +248,8 @@ type MaintenanceWindowStartTimeAttributes struct {
 	ref terra.Reference
 }
 
-func (mwst MaintenanceWindowStartTimeAttributes) InternalRef() terra.Reference {
-	return mwst.ref
+func (mwst MaintenanceWindowStartTimeAttributes) InternalRef() (terra.Reference, error) {
+	return mwst.ref, nil
 }
 
 func (mwst MaintenanceWindowStartTimeAttributes) InternalWithRef(ref terra.Reference) MaintenanceWindowStartTimeAttributes {
@@ -276,8 +276,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
@@ -304,8 +304,8 @@ type UserAttributes struct {
 	ref terra.Reference
 }
 
-func (u UserAttributes) InternalRef() terra.Reference {
-	return u.ref
+func (u UserAttributes) InternalRef() (terra.Reference, error) {
+	return u.ref, nil
 }
 
 func (u UserAttributes) InternalWithRef(ref terra.Reference) UserAttributes {

@@ -31,8 +31,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
@@ -59,8 +59,8 @@ type VpcConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (vc VpcConfigurationAttributes) InternalRef() terra.Reference {
-	return vc.ref
+func (vc VpcConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return vc.ref, nil
 }
 
 func (vc VpcConfigurationAttributes) InternalWithRef(ref terra.Reference) VpcConfigurationAttributes {

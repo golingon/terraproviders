@@ -16,8 +16,8 @@ type TlsConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (tc TlsConfigAttributes) InternalRef() terra.Reference {
-	return tc.ref
+func (tc TlsConfigAttributes) InternalRef() (terra.Reference, error) {
+	return tc.ref, nil
 }
 
 func (tc TlsConfigAttributes) InternalWithRef(ref terra.Reference) TlsConfigAttributes {

@@ -25,8 +25,8 @@ type DestinationPortRangeAttributes struct {
 	ref terra.Reference
 }
 
-func (dpr DestinationPortRangeAttributes) InternalRef() terra.Reference {
-	return dpr.ref
+func (dpr DestinationPortRangeAttributes) InternalRef() (terra.Reference, error) {
+	return dpr.ref, nil
 }
 
 func (dpr DestinationPortRangeAttributes) InternalWithRef(ref terra.Reference) DestinationPortRangeAttributes {
@@ -49,8 +49,8 @@ type SourcePortRangeAttributes struct {
 	ref terra.Reference
 }
 
-func (spr SourcePortRangeAttributes) InternalRef() terra.Reference {
-	return spr.ref
+func (spr SourcePortRangeAttributes) InternalRef() (terra.Reference, error) {
+	return spr.ref, nil
 }
 
 func (spr SourcePortRangeAttributes) InternalWithRef(ref terra.Reference) SourcePortRangeAttributes {

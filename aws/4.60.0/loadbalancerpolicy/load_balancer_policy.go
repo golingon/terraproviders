@@ -18,8 +18,8 @@ type PolicyAttributeAttributes struct {
 	ref terra.Reference
 }
 
-func (pa PolicyAttributeAttributes) InternalRef() terra.Reference {
-	return pa.ref
+func (pa PolicyAttributeAttributes) InternalRef() (terra.Reference, error) {
+	return pa.ref, nil
 }
 
 func (pa PolicyAttributeAttributes) InternalWithRef(ref terra.Reference) PolicyAttributeAttributes {

@@ -27,8 +27,8 @@ type LogConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (lc LogConfigurationAttributes) InternalRef() terra.Reference {
-	return lc.ref
+func (lc LogConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return lc.ref, nil
 }
 
 func (lc LogConfigurationAttributes) InternalWithRef(ref terra.Reference) LogConfigurationAttributes {
@@ -51,8 +51,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

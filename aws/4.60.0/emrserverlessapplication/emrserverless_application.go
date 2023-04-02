@@ -62,8 +62,8 @@ type AutoStartConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (asc AutoStartConfigurationAttributes) InternalRef() terra.Reference {
-	return asc.ref
+func (asc AutoStartConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return asc.ref, nil
 }
 
 func (asc AutoStartConfigurationAttributes) InternalWithRef(ref terra.Reference) AutoStartConfigurationAttributes {
@@ -82,8 +82,8 @@ type AutoStopConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (asc AutoStopConfigurationAttributes) InternalRef() terra.Reference {
-	return asc.ref
+func (asc AutoStopConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return asc.ref, nil
 }
 
 func (asc AutoStopConfigurationAttributes) InternalWithRef(ref terra.Reference) AutoStopConfigurationAttributes {
@@ -106,8 +106,8 @@ type InitialCapacityAttributes struct {
 	ref terra.Reference
 }
 
-func (ic InitialCapacityAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic InitialCapacityAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic InitialCapacityAttributes) InternalWithRef(ref terra.Reference) InitialCapacityAttributes {
@@ -130,8 +130,8 @@ type InitialCapacityConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (icc InitialCapacityConfigAttributes) InternalRef() terra.Reference {
-	return icc.ref
+func (icc InitialCapacityConfigAttributes) InternalRef() (terra.Reference, error) {
+	return icc.ref, nil
 }
 
 func (icc InitialCapacityConfigAttributes) InternalWithRef(ref terra.Reference) InitialCapacityConfigAttributes {
@@ -154,8 +154,8 @@ type WorkerConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (wc WorkerConfigurationAttributes) InternalRef() terra.Reference {
-	return wc.ref
+func (wc WorkerConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return wc.ref, nil
 }
 
 func (wc WorkerConfigurationAttributes) InternalWithRef(ref terra.Reference) WorkerConfigurationAttributes {
@@ -182,8 +182,8 @@ type MaximumCapacityAttributes struct {
 	ref terra.Reference
 }
 
-func (mc MaximumCapacityAttributes) InternalRef() terra.Reference {
-	return mc.ref
+func (mc MaximumCapacityAttributes) InternalRef() (terra.Reference, error) {
+	return mc.ref, nil
 }
 
 func (mc MaximumCapacityAttributes) InternalWithRef(ref terra.Reference) MaximumCapacityAttributes {
@@ -210,8 +210,8 @@ type NetworkConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (nc NetworkConfigurationAttributes) InternalRef() terra.Reference {
-	return nc.ref
+func (nc NetworkConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return nc.ref, nil
 }
 
 func (nc NetworkConfigurationAttributes) InternalWithRef(ref terra.Reference) NetworkConfigurationAttributes {

@@ -44,8 +44,8 @@ type DestinationConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (dc DestinationConfigurationAttributes) InternalRef() terra.Reference {
-	return dc.ref
+func (dc DestinationConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return dc.ref, nil
 }
 
 func (dc DestinationConfigurationAttributes) InternalWithRef(ref terra.Reference) DestinationConfigurationAttributes {
@@ -72,8 +72,8 @@ type CloudwatchLogsAttributes struct {
 	ref terra.Reference
 }
 
-func (cl CloudwatchLogsAttributes) InternalRef() terra.Reference {
-	return cl.ref
+func (cl CloudwatchLogsAttributes) InternalRef() (terra.Reference, error) {
+	return cl.ref, nil
 }
 
 func (cl CloudwatchLogsAttributes) InternalWithRef(ref terra.Reference) CloudwatchLogsAttributes {
@@ -92,8 +92,8 @@ type FirehoseAttributes struct {
 	ref terra.Reference
 }
 
-func (f FirehoseAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FirehoseAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FirehoseAttributes) InternalWithRef(ref terra.Reference) FirehoseAttributes {
@@ -112,8 +112,8 @@ type S3Attributes struct {
 	ref terra.Reference
 }
 
-func (s S3Attributes) InternalRef() terra.Reference {
-	return s.ref
+func (s S3Attributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s S3Attributes) InternalWithRef(ref terra.Reference) S3Attributes {
@@ -132,8 +132,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

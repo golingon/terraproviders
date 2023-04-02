@@ -171,8 +171,8 @@ type ConclusionStatementAttributes struct {
 	ref terra.Reference
 }
 
-func (cs ConclusionStatementAttributes) InternalRef() terra.Reference {
-	return cs.ref
+func (cs ConclusionStatementAttributes) InternalRef() (terra.Reference, error) {
+	return cs.ref, nil
 }
 
 func (cs ConclusionStatementAttributes) InternalWithRef(ref terra.Reference) ConclusionStatementAttributes {
@@ -195,8 +195,8 @@ type ConclusionStatementMessageAttributes struct {
 	ref terra.Reference
 }
 
-func (m ConclusionStatementMessageAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m ConclusionStatementMessageAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m ConclusionStatementMessageAttributes) InternalWithRef(ref terra.Reference) ConclusionStatementMessageAttributes {
@@ -223,8 +223,8 @@ type ConfirmationPromptAttributes struct {
 	ref terra.Reference
 }
 
-func (cp ConfirmationPromptAttributes) InternalRef() terra.Reference {
-	return cp.ref
+func (cp ConfirmationPromptAttributes) InternalRef() (terra.Reference, error) {
+	return cp.ref, nil
 }
 
 func (cp ConfirmationPromptAttributes) InternalWithRef(ref terra.Reference) ConfirmationPromptAttributes {
@@ -251,8 +251,8 @@ type ConfirmationPromptMessageAttributes struct {
 	ref terra.Reference
 }
 
-func (m ConfirmationPromptMessageAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m ConfirmationPromptMessageAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m ConfirmationPromptMessageAttributes) InternalWithRef(ref terra.Reference) ConfirmationPromptMessageAttributes {
@@ -279,8 +279,8 @@ type DialogCodeHookAttributes struct {
 	ref terra.Reference
 }
 
-func (dch DialogCodeHookAttributes) InternalRef() terra.Reference {
-	return dch.ref
+func (dch DialogCodeHookAttributes) InternalRef() (terra.Reference, error) {
+	return dch.ref, nil
 }
 
 func (dch DialogCodeHookAttributes) InternalWithRef(ref terra.Reference) DialogCodeHookAttributes {
@@ -303,8 +303,8 @@ type FollowUpPromptAttributes struct {
 	ref terra.Reference
 }
 
-func (fup FollowUpPromptAttributes) InternalRef() terra.Reference {
-	return fup.ref
+func (fup FollowUpPromptAttributes) InternalRef() (terra.Reference, error) {
+	return fup.ref, nil
 }
 
 func (fup FollowUpPromptAttributes) InternalWithRef(ref terra.Reference) FollowUpPromptAttributes {
@@ -327,8 +327,8 @@ type PromptAttributes struct {
 	ref terra.Reference
 }
 
-func (p PromptAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PromptAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PromptAttributes) InternalWithRef(ref terra.Reference) PromptAttributes {
@@ -355,8 +355,8 @@ type PromptMessageAttributes struct {
 	ref terra.Reference
 }
 
-func (m PromptMessageAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m PromptMessageAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m PromptMessageAttributes) InternalWithRef(ref terra.Reference) PromptMessageAttributes {
@@ -383,8 +383,8 @@ type FollowUpPromptRejectionStatementAttributes struct {
 	ref terra.Reference
 }
 
-func (rs FollowUpPromptRejectionStatementAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs FollowUpPromptRejectionStatementAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs FollowUpPromptRejectionStatementAttributes) InternalWithRef(ref terra.Reference) FollowUpPromptRejectionStatementAttributes {
@@ -407,8 +407,8 @@ type FollowUpPromptRejectionStatementMessageAttributes struct {
 	ref terra.Reference
 }
 
-func (m FollowUpPromptRejectionStatementMessageAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m FollowUpPromptRejectionStatementMessageAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m FollowUpPromptRejectionStatementMessageAttributes) InternalWithRef(ref terra.Reference) FollowUpPromptRejectionStatementMessageAttributes {
@@ -435,8 +435,8 @@ type FulfillmentActivityAttributes struct {
 	ref terra.Reference
 }
 
-func (fa FulfillmentActivityAttributes) InternalRef() terra.Reference {
-	return fa.ref
+func (fa FulfillmentActivityAttributes) InternalRef() (terra.Reference, error) {
+	return fa.ref, nil
 }
 
 func (fa FulfillmentActivityAttributes) InternalWithRef(ref terra.Reference) FulfillmentActivityAttributes {
@@ -459,8 +459,8 @@ type CodeHookAttributes struct {
 	ref terra.Reference
 }
 
-func (ch CodeHookAttributes) InternalRef() terra.Reference {
-	return ch.ref
+func (ch CodeHookAttributes) InternalRef() (terra.Reference, error) {
+	return ch.ref, nil
 }
 
 func (ch CodeHookAttributes) InternalWithRef(ref terra.Reference) CodeHookAttributes {
@@ -483,8 +483,8 @@ type RejectionStatementAttributes struct {
 	ref terra.Reference
 }
 
-func (rs RejectionStatementAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs RejectionStatementAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs RejectionStatementAttributes) InternalWithRef(ref terra.Reference) RejectionStatementAttributes {
@@ -507,8 +507,8 @@ type RejectionStatementMessageAttributes struct {
 	ref terra.Reference
 }
 
-func (m RejectionStatementMessageAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m RejectionStatementMessageAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m RejectionStatementMessageAttributes) InternalWithRef(ref terra.Reference) RejectionStatementMessageAttributes {
@@ -535,8 +535,8 @@ type SlotAttributes struct {
 	ref terra.Reference
 }
 
-func (s SlotAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SlotAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SlotAttributes) InternalWithRef(ref terra.Reference) SlotAttributes {
@@ -587,8 +587,8 @@ type ValueElicitationPromptAttributes struct {
 	ref terra.Reference
 }
 
-func (vep ValueElicitationPromptAttributes) InternalRef() terra.Reference {
-	return vep.ref
+func (vep ValueElicitationPromptAttributes) InternalRef() (terra.Reference, error) {
+	return vep.ref, nil
 }
 
 func (vep ValueElicitationPromptAttributes) InternalWithRef(ref terra.Reference) ValueElicitationPromptAttributes {
@@ -615,8 +615,8 @@ type ValueElicitationPromptMessageAttributes struct {
 	ref terra.Reference
 }
 
-func (m ValueElicitationPromptMessageAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m ValueElicitationPromptMessageAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m ValueElicitationPromptMessageAttributes) InternalWithRef(ref terra.Reference) ValueElicitationPromptMessageAttributes {
@@ -643,8 +643,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

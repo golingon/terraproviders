@@ -200,8 +200,8 @@ type UserPausedDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (upd UserPausedDetailsAttributes) InternalRef() terra.Reference {
-	return upd.ref
+func (upd UserPausedDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return upd.ref, nil
 }
 
 func (upd UserPausedDetailsAttributes) InternalWithRef(ref terra.Reference) UserPausedDetailsAttributes {
@@ -228,8 +228,8 @@ type S3JobDefinitionAttributes struct {
 	ref terra.Reference
 }
 
-func (sjd S3JobDefinitionAttributes) InternalRef() terra.Reference {
-	return sjd.ref
+func (sjd S3JobDefinitionAttributes) InternalRef() (terra.Reference, error) {
+	return sjd.ref, nil
 }
 
 func (sjd S3JobDefinitionAttributes) InternalWithRef(ref terra.Reference) S3JobDefinitionAttributes {
@@ -256,8 +256,8 @@ type BucketCriteriaAttributes struct {
 	ref terra.Reference
 }
 
-func (bc BucketCriteriaAttributes) InternalRef() terra.Reference {
-	return bc.ref
+func (bc BucketCriteriaAttributes) InternalRef() (terra.Reference, error) {
+	return bc.ref, nil
 }
 
 func (bc BucketCriteriaAttributes) InternalWithRef(ref terra.Reference) BucketCriteriaAttributes {
@@ -280,8 +280,8 @@ type BucketCriteriaExcludesAttributes struct {
 	ref terra.Reference
 }
 
-func (e BucketCriteriaExcludesAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e BucketCriteriaExcludesAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e BucketCriteriaExcludesAttributes) InternalWithRef(ref terra.Reference) BucketCriteriaExcludesAttributes {
@@ -300,8 +300,8 @@ type BucketCriteriaExcludesAndAttributes struct {
 	ref terra.Reference
 }
 
-func (a BucketCriteriaExcludesAndAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a BucketCriteriaExcludesAndAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a BucketCriteriaExcludesAndAttributes) InternalWithRef(ref terra.Reference) BucketCriteriaExcludesAndAttributes {
@@ -324,8 +324,8 @@ type ExcludesAndSimpleCriterionAttributes struct {
 	ref terra.Reference
 }
 
-func (sc ExcludesAndSimpleCriterionAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc ExcludesAndSimpleCriterionAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc ExcludesAndSimpleCriterionAttributes) InternalWithRef(ref terra.Reference) ExcludesAndSimpleCriterionAttributes {
@@ -352,8 +352,8 @@ type ExcludesAndTagCriterionAttributes struct {
 	ref terra.Reference
 }
 
-func (tc ExcludesAndTagCriterionAttributes) InternalRef() terra.Reference {
-	return tc.ref
+func (tc ExcludesAndTagCriterionAttributes) InternalRef() (terra.Reference, error) {
+	return tc.ref, nil
 }
 
 func (tc ExcludesAndTagCriterionAttributes) InternalWithRef(ref terra.Reference) ExcludesAndTagCriterionAttributes {
@@ -376,8 +376,8 @@ type ExcludesAndTagCriterionTagValuesAttributes struct {
 	ref terra.Reference
 }
 
-func (tv ExcludesAndTagCriterionTagValuesAttributes) InternalRef() terra.Reference {
-	return tv.ref
+func (tv ExcludesAndTagCriterionTagValuesAttributes) InternalRef() (terra.Reference, error) {
+	return tv.ref, nil
 }
 
 func (tv ExcludesAndTagCriterionTagValuesAttributes) InternalWithRef(ref terra.Reference) ExcludesAndTagCriterionTagValuesAttributes {
@@ -400,8 +400,8 @@ type BucketCriteriaIncludesAttributes struct {
 	ref terra.Reference
 }
 
-func (i BucketCriteriaIncludesAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i BucketCriteriaIncludesAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i BucketCriteriaIncludesAttributes) InternalWithRef(ref terra.Reference) BucketCriteriaIncludesAttributes {
@@ -420,8 +420,8 @@ type BucketCriteriaIncludesAndAttributes struct {
 	ref terra.Reference
 }
 
-func (a BucketCriteriaIncludesAndAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a BucketCriteriaIncludesAndAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a BucketCriteriaIncludesAndAttributes) InternalWithRef(ref terra.Reference) BucketCriteriaIncludesAndAttributes {
@@ -444,8 +444,8 @@ type IncludesAndSimpleCriterionAttributes struct {
 	ref terra.Reference
 }
 
-func (sc IncludesAndSimpleCriterionAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc IncludesAndSimpleCriterionAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc IncludesAndSimpleCriterionAttributes) InternalWithRef(ref terra.Reference) IncludesAndSimpleCriterionAttributes {
@@ -472,8 +472,8 @@ type IncludesAndTagCriterionAttributes struct {
 	ref terra.Reference
 }
 
-func (tc IncludesAndTagCriterionAttributes) InternalRef() terra.Reference {
-	return tc.ref
+func (tc IncludesAndTagCriterionAttributes) InternalRef() (terra.Reference, error) {
+	return tc.ref, nil
 }
 
 func (tc IncludesAndTagCriterionAttributes) InternalWithRef(ref terra.Reference) IncludesAndTagCriterionAttributes {
@@ -496,8 +496,8 @@ type IncludesAndTagCriterionTagValuesAttributes struct {
 	ref terra.Reference
 }
 
-func (tv IncludesAndTagCriterionTagValuesAttributes) InternalRef() terra.Reference {
-	return tv.ref
+func (tv IncludesAndTagCriterionTagValuesAttributes) InternalRef() (terra.Reference, error) {
+	return tv.ref, nil
 }
 
 func (tv IncludesAndTagCriterionTagValuesAttributes) InternalWithRef(ref terra.Reference) IncludesAndTagCriterionTagValuesAttributes {
@@ -520,8 +520,8 @@ type BucketDefinitionsAttributes struct {
 	ref terra.Reference
 }
 
-func (bd BucketDefinitionsAttributes) InternalRef() terra.Reference {
-	return bd.ref
+func (bd BucketDefinitionsAttributes) InternalRef() (terra.Reference, error) {
+	return bd.ref, nil
 }
 
 func (bd BucketDefinitionsAttributes) InternalWithRef(ref terra.Reference) BucketDefinitionsAttributes {
@@ -544,8 +544,8 @@ type ScopingAttributes struct {
 	ref terra.Reference
 }
 
-func (s ScopingAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ScopingAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ScopingAttributes) InternalWithRef(ref terra.Reference) ScopingAttributes {
@@ -568,8 +568,8 @@ type ScopingExcludesAttributes struct {
 	ref terra.Reference
 }
 
-func (e ScopingExcludesAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e ScopingExcludesAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e ScopingExcludesAttributes) InternalWithRef(ref terra.Reference) ScopingExcludesAttributes {
@@ -588,8 +588,8 @@ type ScopingExcludesAndAttributes struct {
 	ref terra.Reference
 }
 
-func (a ScopingExcludesAndAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ScopingExcludesAndAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ScopingExcludesAndAttributes) InternalWithRef(ref terra.Reference) ScopingExcludesAndAttributes {
@@ -612,8 +612,8 @@ type ExcludesAndSimpleScopeTermAttributes struct {
 	ref terra.Reference
 }
 
-func (sst ExcludesAndSimpleScopeTermAttributes) InternalRef() terra.Reference {
-	return sst.ref
+func (sst ExcludesAndSimpleScopeTermAttributes) InternalRef() (terra.Reference, error) {
+	return sst.ref, nil
 }
 
 func (sst ExcludesAndSimpleScopeTermAttributes) InternalWithRef(ref terra.Reference) ExcludesAndSimpleScopeTermAttributes {
@@ -640,8 +640,8 @@ type ExcludesAndTagScopeTermAttributes struct {
 	ref terra.Reference
 }
 
-func (tst ExcludesAndTagScopeTermAttributes) InternalRef() terra.Reference {
-	return tst.ref
+func (tst ExcludesAndTagScopeTermAttributes) InternalRef() (terra.Reference, error) {
+	return tst.ref, nil
 }
 
 func (tst ExcludesAndTagScopeTermAttributes) InternalWithRef(ref terra.Reference) ExcludesAndTagScopeTermAttributes {
@@ -672,8 +672,8 @@ type ExcludesAndTagScopeTermTagValuesAttributes struct {
 	ref terra.Reference
 }
 
-func (tv ExcludesAndTagScopeTermTagValuesAttributes) InternalRef() terra.Reference {
-	return tv.ref
+func (tv ExcludesAndTagScopeTermTagValuesAttributes) InternalRef() (terra.Reference, error) {
+	return tv.ref, nil
 }
 
 func (tv ExcludesAndTagScopeTermTagValuesAttributes) InternalWithRef(ref terra.Reference) ExcludesAndTagScopeTermTagValuesAttributes {
@@ -696,8 +696,8 @@ type ScopingIncludesAttributes struct {
 	ref terra.Reference
 }
 
-func (i ScopingIncludesAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i ScopingIncludesAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i ScopingIncludesAttributes) InternalWithRef(ref terra.Reference) ScopingIncludesAttributes {
@@ -716,8 +716,8 @@ type ScopingIncludesAndAttributes struct {
 	ref terra.Reference
 }
 
-func (a ScopingIncludesAndAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ScopingIncludesAndAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ScopingIncludesAndAttributes) InternalWithRef(ref terra.Reference) ScopingIncludesAndAttributes {
@@ -740,8 +740,8 @@ type IncludesAndSimpleScopeTermAttributes struct {
 	ref terra.Reference
 }
 
-func (sst IncludesAndSimpleScopeTermAttributes) InternalRef() terra.Reference {
-	return sst.ref
+func (sst IncludesAndSimpleScopeTermAttributes) InternalRef() (terra.Reference, error) {
+	return sst.ref, nil
 }
 
 func (sst IncludesAndSimpleScopeTermAttributes) InternalWithRef(ref terra.Reference) IncludesAndSimpleScopeTermAttributes {
@@ -768,8 +768,8 @@ type IncludesAndTagScopeTermAttributes struct {
 	ref terra.Reference
 }
 
-func (tst IncludesAndTagScopeTermAttributes) InternalRef() terra.Reference {
-	return tst.ref
+func (tst IncludesAndTagScopeTermAttributes) InternalRef() (terra.Reference, error) {
+	return tst.ref, nil
 }
 
 func (tst IncludesAndTagScopeTermAttributes) InternalWithRef(ref terra.Reference) IncludesAndTagScopeTermAttributes {
@@ -800,8 +800,8 @@ type IncludesAndTagScopeTermTagValuesAttributes struct {
 	ref terra.Reference
 }
 
-func (tv IncludesAndTagScopeTermTagValuesAttributes) InternalRef() terra.Reference {
-	return tv.ref
+func (tv IncludesAndTagScopeTermTagValuesAttributes) InternalRef() (terra.Reference, error) {
+	return tv.ref, nil
 }
 
 func (tv IncludesAndTagScopeTermTagValuesAttributes) InternalWithRef(ref terra.Reference) IncludesAndTagScopeTermTagValuesAttributes {
@@ -824,8 +824,8 @@ type ScheduleFrequencyAttributes struct {
 	ref terra.Reference
 }
 
-func (sf ScheduleFrequencyAttributes) InternalRef() terra.Reference {
-	return sf.ref
+func (sf ScheduleFrequencyAttributes) InternalRef() (terra.Reference, error) {
+	return sf.ref, nil
 }
 
 func (sf ScheduleFrequencyAttributes) InternalWithRef(ref terra.Reference) ScheduleFrequencyAttributes {

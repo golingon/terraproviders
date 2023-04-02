@@ -118,8 +118,8 @@ type AdminContactAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AdminContactAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AdminContactAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AdminContactAttributes) InternalWithRef(ref terra.Reference) AdminContactAttributes {
@@ -190,8 +190,8 @@ type NameServerAttributes struct {
 	ref terra.Reference
 }
 
-func (ns NameServerAttributes) InternalRef() terra.Reference {
-	return ns.ref
+func (ns NameServerAttributes) InternalRef() (terra.Reference, error) {
+	return ns.ref, nil
 }
 
 func (ns NameServerAttributes) InternalWithRef(ref terra.Reference) NameServerAttributes {
@@ -214,8 +214,8 @@ type RegistrantContactAttributes struct {
 	ref terra.Reference
 }
 
-func (rc RegistrantContactAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc RegistrantContactAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc RegistrantContactAttributes) InternalWithRef(ref terra.Reference) RegistrantContactAttributes {
@@ -286,8 +286,8 @@ type TechContactAttributes struct {
 	ref terra.Reference
 }
 
-func (tc TechContactAttributes) InternalRef() terra.Reference {
-	return tc.ref
+func (tc TechContactAttributes) InternalRef() (terra.Reference, error) {
+	return tc.ref, nil
 }
 
 func (tc TechContactAttributes) InternalWithRef(ref terra.Reference) TechContactAttributes {
@@ -358,8 +358,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

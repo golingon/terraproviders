@@ -23,8 +23,8 @@ type AclConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AclConfigurationAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AclConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AclConfigurationAttributes) InternalWithRef(ref terra.Reference) AclConfigurationAttributes {
@@ -43,8 +43,8 @@ type EncryptionConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ec EncryptionConfigurationAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec EncryptionConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec EncryptionConfigurationAttributes) InternalWithRef(ref terra.Reference) EncryptionConfigurationAttributes {

@@ -27,8 +27,8 @@ type BlockDeviceMappingsAttributes struct {
 	ref terra.Reference
 }
 
-func (bdm BlockDeviceMappingsAttributes) InternalRef() terra.Reference {
-	return bdm.ref
+func (bdm BlockDeviceMappingsAttributes) InternalRef() (terra.Reference, error) {
+	return bdm.ref, nil
 }
 
 func (bdm BlockDeviceMappingsAttributes) InternalWithRef(ref terra.Reference) BlockDeviceMappingsAttributes {
@@ -59,8 +59,8 @@ type ProductCodesAttributes struct {
 	ref terra.Reference
 }
 
-func (pc ProductCodesAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc ProductCodesAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc ProductCodesAttributes) InternalWithRef(ref terra.Reference) ProductCodesAttributes {
@@ -83,8 +83,8 @@ type FilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes {
@@ -107,8 +107,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

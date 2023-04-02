@@ -140,8 +140,8 @@ type AlarmsAttributes struct {
 	ref terra.Reference
 }
 
-func (a AlarmsAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AlarmsAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AlarmsAttributes) InternalWithRef(ref terra.Reference) AlarmsAttributes {
@@ -168,8 +168,8 @@ type CapacityProviderStrategyAttributes struct {
 	ref terra.Reference
 }
 
-func (cps CapacityProviderStrategyAttributes) InternalRef() terra.Reference {
-	return cps.ref
+func (cps CapacityProviderStrategyAttributes) InternalRef() (terra.Reference, error) {
+	return cps.ref, nil
 }
 
 func (cps CapacityProviderStrategyAttributes) InternalWithRef(ref terra.Reference) CapacityProviderStrategyAttributes {
@@ -196,8 +196,8 @@ type DeploymentCircuitBreakerAttributes struct {
 	ref terra.Reference
 }
 
-func (dcb DeploymentCircuitBreakerAttributes) InternalRef() terra.Reference {
-	return dcb.ref
+func (dcb DeploymentCircuitBreakerAttributes) InternalRef() (terra.Reference, error) {
+	return dcb.ref, nil
 }
 
 func (dcb DeploymentCircuitBreakerAttributes) InternalWithRef(ref terra.Reference) DeploymentCircuitBreakerAttributes {
@@ -220,8 +220,8 @@ type DeploymentControllerAttributes struct {
 	ref terra.Reference
 }
 
-func (dc DeploymentControllerAttributes) InternalRef() terra.Reference {
-	return dc.ref
+func (dc DeploymentControllerAttributes) InternalRef() (terra.Reference, error) {
+	return dc.ref, nil
 }
 
 func (dc DeploymentControllerAttributes) InternalWithRef(ref terra.Reference) DeploymentControllerAttributes {
@@ -240,8 +240,8 @@ type LoadBalancerAttributes struct {
 	ref terra.Reference
 }
 
-func (lb LoadBalancerAttributes) InternalRef() terra.Reference {
-	return lb.ref
+func (lb LoadBalancerAttributes) InternalRef() (terra.Reference, error) {
+	return lb.ref, nil
 }
 
 func (lb LoadBalancerAttributes) InternalWithRef(ref terra.Reference) LoadBalancerAttributes {
@@ -272,8 +272,8 @@ type NetworkConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (nc NetworkConfigurationAttributes) InternalRef() terra.Reference {
-	return nc.ref
+func (nc NetworkConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return nc.ref, nil
 }
 
 func (nc NetworkConfigurationAttributes) InternalWithRef(ref terra.Reference) NetworkConfigurationAttributes {
@@ -300,8 +300,8 @@ type OrderedPlacementStrategyAttributes struct {
 	ref terra.Reference
 }
 
-func (ops OrderedPlacementStrategyAttributes) InternalRef() terra.Reference {
-	return ops.ref
+func (ops OrderedPlacementStrategyAttributes) InternalRef() (terra.Reference, error) {
+	return ops.ref, nil
 }
 
 func (ops OrderedPlacementStrategyAttributes) InternalWithRef(ref terra.Reference) OrderedPlacementStrategyAttributes {
@@ -324,8 +324,8 @@ type PlacementConstraintsAttributes struct {
 	ref terra.Reference
 }
 
-func (pc PlacementConstraintsAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc PlacementConstraintsAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc PlacementConstraintsAttributes) InternalWithRef(ref terra.Reference) PlacementConstraintsAttributes {
@@ -348,8 +348,8 @@ type ServiceConnectConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (scc ServiceConnectConfigurationAttributes) InternalRef() terra.Reference {
-	return scc.ref
+func (scc ServiceConnectConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return scc.ref, nil
 }
 
 func (scc ServiceConnectConfigurationAttributes) InternalWithRef(ref terra.Reference) ServiceConnectConfigurationAttributes {
@@ -380,8 +380,8 @@ type LogConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (lc LogConfigurationAttributes) InternalRef() terra.Reference {
-	return lc.ref
+func (lc LogConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return lc.ref, nil
 }
 
 func (lc LogConfigurationAttributes) InternalWithRef(ref terra.Reference) LogConfigurationAttributes {
@@ -408,8 +408,8 @@ type SecretOptionAttributes struct {
 	ref terra.Reference
 }
 
-func (so SecretOptionAttributes) InternalRef() terra.Reference {
-	return so.ref
+func (so SecretOptionAttributes) InternalRef() (terra.Reference, error) {
+	return so.ref, nil
 }
 
 func (so SecretOptionAttributes) InternalWithRef(ref terra.Reference) SecretOptionAttributes {
@@ -432,8 +432,8 @@ type ServiceAttributes struct {
 	ref terra.Reference
 }
 
-func (s ServiceAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ServiceAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ServiceAttributes) InternalWithRef(ref terra.Reference) ServiceAttributes {
@@ -464,8 +464,8 @@ type ClientAliasAttributes struct {
 	ref terra.Reference
 }
 
-func (ca ClientAliasAttributes) InternalRef() terra.Reference {
-	return ca.ref
+func (ca ClientAliasAttributes) InternalRef() (terra.Reference, error) {
+	return ca.ref, nil
 }
 
 func (ca ClientAliasAttributes) InternalWithRef(ref terra.Reference) ClientAliasAttributes {
@@ -488,8 +488,8 @@ type ServiceRegistriesAttributes struct {
 	ref terra.Reference
 }
 
-func (sr ServiceRegistriesAttributes) InternalRef() terra.Reference {
-	return sr.ref
+func (sr ServiceRegistriesAttributes) InternalRef() (terra.Reference, error) {
+	return sr.ref, nil
 }
 
 func (sr ServiceRegistriesAttributes) InternalWithRef(ref terra.Reference) ServiceRegistriesAttributes {
@@ -520,8 +520,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

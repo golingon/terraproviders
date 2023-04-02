@@ -83,8 +83,8 @@ type InputDataConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (idc InputDataConfigAttributes) InternalRef() terra.Reference {
-	return idc.ref
+func (idc InputDataConfigAttributes) InternalRef() (terra.Reference, error) {
+	return idc.ref, nil
 }
 
 func (idc InputDataConfigAttributes) InternalWithRef(ref terra.Reference) InputDataConfigAttributes {
@@ -123,8 +123,8 @@ type AnnotationsAttributes struct {
 	ref terra.Reference
 }
 
-func (a AnnotationsAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AnnotationsAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AnnotationsAttributes) InternalWithRef(ref terra.Reference) AnnotationsAttributes {
@@ -147,8 +147,8 @@ type AugmentedManifestsAttributes struct {
 	ref terra.Reference
 }
 
-func (am AugmentedManifestsAttributes) InternalRef() terra.Reference {
-	return am.ref
+func (am AugmentedManifestsAttributes) InternalRef() (terra.Reference, error) {
+	return am.ref, nil
 }
 
 func (am AugmentedManifestsAttributes) InternalWithRef(ref terra.Reference) AugmentedManifestsAttributes {
@@ -187,8 +187,8 @@ type DocumentsAttributes struct {
 	ref terra.Reference
 }
 
-func (d DocumentsAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DocumentsAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DocumentsAttributes) InternalWithRef(ref terra.Reference) DocumentsAttributes {
@@ -215,8 +215,8 @@ type EntityListAttributes struct {
 	ref terra.Reference
 }
 
-func (el EntityListAttributes) InternalRef() terra.Reference {
-	return el.ref
+func (el EntityListAttributes) InternalRef() (terra.Reference, error) {
+	return el.ref, nil
 }
 
 func (el EntityListAttributes) InternalWithRef(ref terra.Reference) EntityListAttributes {
@@ -235,8 +235,8 @@ type EntityTypesAttributes struct {
 	ref terra.Reference
 }
 
-func (et EntityTypesAttributes) InternalRef() terra.Reference {
-	return et.ref
+func (et EntityTypesAttributes) InternalRef() (terra.Reference, error) {
+	return et.ref, nil
 }
 
 func (et EntityTypesAttributes) InternalWithRef(ref terra.Reference) EntityTypesAttributes {
@@ -255,8 +255,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
@@ -283,8 +283,8 @@ type VpcConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (vc VpcConfigAttributes) InternalRef() terra.Reference {
-	return vc.ref
+func (vc VpcConfigAttributes) InternalRef() (terra.Reference, error) {
+	return vc.ref, nil
 }
 
 func (vc VpcConfigAttributes) InternalWithRef(ref terra.Reference) VpcConfigAttributes {

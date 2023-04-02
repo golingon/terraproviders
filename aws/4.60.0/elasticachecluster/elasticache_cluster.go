@@ -24,8 +24,8 @@ type CacheNodesAttributes struct {
 	ref terra.Reference
 }
 
-func (cn CacheNodesAttributes) InternalRef() terra.Reference {
-	return cn.ref
+func (cn CacheNodesAttributes) InternalRef() (terra.Reference, error) {
+	return cn.ref, nil
 }
 
 func (cn CacheNodesAttributes) InternalWithRef(ref terra.Reference) CacheNodesAttributes {
@@ -60,8 +60,8 @@ type LogDeliveryConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ldc LogDeliveryConfigurationAttributes) InternalRef() terra.Reference {
-	return ldc.ref
+func (ldc LogDeliveryConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ldc.ref, nil
 }
 
 func (ldc LogDeliveryConfigurationAttributes) InternalWithRef(ref terra.Reference) LogDeliveryConfigurationAttributes {

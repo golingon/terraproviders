@@ -44,8 +44,8 @@ type AuditLogConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (alc AuditLogConfigurationAttributes) InternalRef() terra.Reference {
-	return alc.ref
+func (alc AuditLogConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return alc.ref, nil
 }
 
 func (alc AuditLogConfigurationAttributes) InternalWithRef(ref terra.Reference) AuditLogConfigurationAttributes {
@@ -72,8 +72,8 @@ type SelfManagedActiveDirectoryAttributes struct {
 	ref terra.Reference
 }
 
-func (smad SelfManagedActiveDirectoryAttributes) InternalRef() terra.Reference {
-	return smad.ref
+func (smad SelfManagedActiveDirectoryAttributes) InternalRef() (terra.Reference, error) {
+	return smad.ref, nil
 }
 
 func (smad SelfManagedActiveDirectoryAttributes) InternalWithRef(ref terra.Reference) SelfManagedActiveDirectoryAttributes {
@@ -112,8 +112,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

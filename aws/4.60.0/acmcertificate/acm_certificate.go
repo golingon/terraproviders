@@ -27,8 +27,8 @@ type DomainValidationOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (dvo DomainValidationOptionsAttributes) InternalRef() terra.Reference {
-	return dvo.ref
+func (dvo DomainValidationOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return dvo.ref, nil
 }
 
 func (dvo DomainValidationOptionsAttributes) InternalWithRef(ref terra.Reference) DomainValidationOptionsAttributes {
@@ -59,8 +59,8 @@ type RenewalSummaryAttributes struct {
 	ref terra.Reference
 }
 
-func (rs RenewalSummaryAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs RenewalSummaryAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs RenewalSummaryAttributes) InternalWithRef(ref terra.Reference) RenewalSummaryAttributes {
@@ -87,8 +87,8 @@ type OptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (o OptionsAttributes) InternalRef() terra.Reference {
-	return o.ref
+func (o OptionsAttributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o OptionsAttributes) InternalWithRef(ref terra.Reference) OptionsAttributes {
@@ -107,8 +107,8 @@ type ValidationOptionAttributes struct {
 	ref terra.Reference
 }
 
-func (vo ValidationOptionAttributes) InternalRef() terra.Reference {
-	return vo.ref
+func (vo ValidationOptionAttributes) InternalRef() (terra.Reference, error) {
+	return vo.ref, nil
 }
 
 func (vo ValidationOptionAttributes) InternalWithRef(ref terra.Reference) ValidationOptionAttributes {

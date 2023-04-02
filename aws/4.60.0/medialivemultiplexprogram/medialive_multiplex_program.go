@@ -56,8 +56,8 @@ type MultiplexProgramSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (mps MultiplexProgramSettingsAttributes) InternalRef() terra.Reference {
-	return mps.ref
+func (mps MultiplexProgramSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return mps.ref, nil
 }
 
 func (mps MultiplexProgramSettingsAttributes) InternalWithRef(ref terra.Reference) MultiplexProgramSettingsAttributes {
@@ -88,8 +88,8 @@ type ServiceDescriptorAttributes struct {
 	ref terra.Reference
 }
 
-func (sd ServiceDescriptorAttributes) InternalRef() terra.Reference {
-	return sd.ref
+func (sd ServiceDescriptorAttributes) InternalRef() (terra.Reference, error) {
+	return sd.ref, nil
 }
 
 func (sd ServiceDescriptorAttributes) InternalWithRef(ref terra.Reference) ServiceDescriptorAttributes {
@@ -112,8 +112,8 @@ type VideoSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (vs VideoSettingsAttributes) InternalRef() terra.Reference {
-	return vs.ref
+func (vs VideoSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return vs.ref, nil
 }
 
 func (vs VideoSettingsAttributes) InternalWithRef(ref terra.Reference) VideoSettingsAttributes {
@@ -140,8 +140,8 @@ type StatemuxSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ss StatemuxSettingsAttributes) InternalRef() terra.Reference {
-	return ss.ref
+func (ss StatemuxSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ss.ref, nil
 }
 
 func (ss StatemuxSettingsAttributes) InternalWithRef(ref terra.Reference) StatemuxSettingsAttributes {
@@ -168,8 +168,8 @@ type StatmuxSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ss StatmuxSettingsAttributes) InternalRef() terra.Reference {
-	return ss.ref
+func (ss StatmuxSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ss.ref, nil
 }
 
 func (ss StatmuxSettingsAttributes) InternalWithRef(ref terra.Reference) StatmuxSettingsAttributes {

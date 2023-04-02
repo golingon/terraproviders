@@ -60,8 +60,8 @@ type EgressAttributes struct {
 	ref terra.Reference
 }
 
-func (e EgressAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EgressAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EgressAttributes) InternalWithRef(ref terra.Reference) EgressAttributes {
@@ -112,8 +112,8 @@ type IngressAttributes struct {
 	ref terra.Reference
 }
 
-func (i IngressAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IngressAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IngressAttributes) InternalWithRef(ref terra.Reference) IngressAttributes {
@@ -164,8 +164,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

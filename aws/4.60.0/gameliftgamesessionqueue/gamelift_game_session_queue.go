@@ -18,8 +18,8 @@ type PlayerLatencyPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (plp PlayerLatencyPolicyAttributes) InternalRef() terra.Reference {
-	return plp.ref
+func (plp PlayerLatencyPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return plp.ref, nil
 }
 
 func (plp PlayerLatencyPolicyAttributes) InternalWithRef(ref terra.Reference) PlayerLatencyPolicyAttributes {

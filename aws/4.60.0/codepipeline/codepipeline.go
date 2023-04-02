@@ -63,8 +63,8 @@ type ArtifactStoreAttributes struct {
 	ref terra.Reference
 }
 
-func (as ArtifactStoreAttributes) InternalRef() terra.Reference {
-	return as.ref
+func (as ArtifactStoreAttributes) InternalRef() (terra.Reference, error) {
+	return as.ref, nil
 }
 
 func (as ArtifactStoreAttributes) InternalWithRef(ref terra.Reference) ArtifactStoreAttributes {
@@ -95,8 +95,8 @@ type EncryptionKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (ek EncryptionKeyAttributes) InternalRef() terra.Reference {
-	return ek.ref
+func (ek EncryptionKeyAttributes) InternalRef() (terra.Reference, error) {
+	return ek.ref, nil
 }
 
 func (ek EncryptionKeyAttributes) InternalWithRef(ref terra.Reference) EncryptionKeyAttributes {
@@ -119,8 +119,8 @@ type StageAttributes struct {
 	ref terra.Reference
 }
 
-func (s StageAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s StageAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s StageAttributes) InternalWithRef(ref terra.Reference) StageAttributes {
@@ -143,8 +143,8 @@ type ActionAttributes struct {
 	ref terra.Reference
 }
 
-func (a ActionAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ActionAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ActionAttributes) InternalWithRef(ref terra.Reference) ActionAttributes {

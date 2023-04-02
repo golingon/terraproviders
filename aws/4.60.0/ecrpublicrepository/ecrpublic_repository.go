@@ -31,8 +31,8 @@ type CatalogDataAttributes struct {
 	ref terra.Reference
 }
 
-func (cd CatalogDataAttributes) InternalRef() terra.Reference {
-	return cd.ref
+func (cd CatalogDataAttributes) InternalRef() (terra.Reference, error) {
+	return cd.ref, nil
 }
 
 func (cd CatalogDataAttributes) InternalWithRef(ref terra.Reference) CatalogDataAttributes {
@@ -71,8 +71,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

@@ -24,8 +24,8 @@ type ComputeLimitsAttributes struct {
 	ref terra.Reference
 }
 
-func (cl ComputeLimitsAttributes) InternalRef() terra.Reference {
-	return cl.ref
+func (cl ComputeLimitsAttributes) InternalRef() (terra.Reference, error) {
+	return cl.ref, nil
 }
 
 func (cl ComputeLimitsAttributes) InternalWithRef(ref terra.Reference) ComputeLimitsAttributes {

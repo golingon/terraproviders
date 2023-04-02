@@ -18,8 +18,8 @@ type ScopeAttributes struct {
 	ref terra.Reference
 }
 
-func (s ScopeAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ScopeAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ScopeAttributes) InternalWithRef(ref terra.Reference) ScopeAttributes {

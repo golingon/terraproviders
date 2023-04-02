@@ -20,8 +20,8 @@ type DestinationOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (do DestinationOptionsAttributes) InternalRef() terra.Reference {
-	return do.ref
+func (do DestinationOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return do.ref, nil
 }
 
 func (do DestinationOptionsAttributes) InternalWithRef(ref terra.Reference) DestinationOptionsAttributes {

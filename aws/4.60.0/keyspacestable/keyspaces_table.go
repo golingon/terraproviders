@@ -86,8 +86,8 @@ type CapacitySpecificationAttributes struct {
 	ref terra.Reference
 }
 
-func (cs CapacitySpecificationAttributes) InternalRef() terra.Reference {
-	return cs.ref
+func (cs CapacitySpecificationAttributes) InternalRef() (terra.Reference, error) {
+	return cs.ref, nil
 }
 
 func (cs CapacitySpecificationAttributes) InternalWithRef(ref terra.Reference) CapacitySpecificationAttributes {
@@ -114,8 +114,8 @@ type CommentAttributes struct {
 	ref terra.Reference
 }
 
-func (c CommentAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CommentAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CommentAttributes) InternalWithRef(ref terra.Reference) CommentAttributes {
@@ -134,8 +134,8 @@ type EncryptionSpecificationAttributes struct {
 	ref terra.Reference
 }
 
-func (es EncryptionSpecificationAttributes) InternalRef() terra.Reference {
-	return es.ref
+func (es EncryptionSpecificationAttributes) InternalRef() (terra.Reference, error) {
+	return es.ref, nil
 }
 
 func (es EncryptionSpecificationAttributes) InternalWithRef(ref terra.Reference) EncryptionSpecificationAttributes {
@@ -158,8 +158,8 @@ type PointInTimeRecoveryAttributes struct {
 	ref terra.Reference
 }
 
-func (pitr PointInTimeRecoveryAttributes) InternalRef() terra.Reference {
-	return pitr.ref
+func (pitr PointInTimeRecoveryAttributes) InternalRef() (terra.Reference, error) {
+	return pitr.ref, nil
 }
 
 func (pitr PointInTimeRecoveryAttributes) InternalWithRef(ref terra.Reference) PointInTimeRecoveryAttributes {
@@ -178,8 +178,8 @@ type SchemaDefinitionAttributes struct {
 	ref terra.Reference
 }
 
-func (sd SchemaDefinitionAttributes) InternalRef() terra.Reference {
-	return sd.ref
+func (sd SchemaDefinitionAttributes) InternalRef() (terra.Reference, error) {
+	return sd.ref, nil
 }
 
 func (sd SchemaDefinitionAttributes) InternalWithRef(ref terra.Reference) SchemaDefinitionAttributes {
@@ -210,8 +210,8 @@ type ClusteringKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (ck ClusteringKeyAttributes) InternalRef() terra.Reference {
-	return ck.ref
+func (ck ClusteringKeyAttributes) InternalRef() (terra.Reference, error) {
+	return ck.ref, nil
 }
 
 func (ck ClusteringKeyAttributes) InternalWithRef(ref terra.Reference) ClusteringKeyAttributes {
@@ -234,8 +234,8 @@ type ColumnAttributes struct {
 	ref terra.Reference
 }
 
-func (c ColumnAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ColumnAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ColumnAttributes) InternalWithRef(ref terra.Reference) ColumnAttributes {
@@ -258,8 +258,8 @@ type PartitionKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (pk PartitionKeyAttributes) InternalRef() terra.Reference {
-	return pk.ref
+func (pk PartitionKeyAttributes) InternalRef() (terra.Reference, error) {
+	return pk.ref, nil
 }
 
 func (pk PartitionKeyAttributes) InternalWithRef(ref terra.Reference) PartitionKeyAttributes {
@@ -278,8 +278,8 @@ type StaticColumnAttributes struct {
 	ref terra.Reference
 }
 
-func (sc StaticColumnAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc StaticColumnAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc StaticColumnAttributes) InternalWithRef(ref terra.Reference) StaticColumnAttributes {
@@ -298,8 +298,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
@@ -326,8 +326,8 @@ type TtlAttributes struct {
 	ref terra.Reference
 }
 
-func (t TtlAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TtlAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TtlAttributes) InternalWithRef(ref terra.Reference) TtlAttributes {

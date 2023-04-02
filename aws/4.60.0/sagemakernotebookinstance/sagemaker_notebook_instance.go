@@ -16,8 +16,8 @@ type InstanceMetadataServiceConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (imsc InstanceMetadataServiceConfigurationAttributes) InternalRef() terra.Reference {
-	return imsc.ref
+func (imsc InstanceMetadataServiceConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return imsc.ref, nil
 }
 
 func (imsc InstanceMetadataServiceConfigurationAttributes) InternalWithRef(ref terra.Reference) InstanceMetadataServiceConfigurationAttributes {

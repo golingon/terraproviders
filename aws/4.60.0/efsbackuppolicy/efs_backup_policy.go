@@ -16,8 +16,8 @@ type BackupPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (bp BackupPolicyAttributes) InternalRef() terra.Reference {
-	return bp.ref
+func (bp BackupPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return bp.ref, nil
 }
 
 func (bp BackupPolicyAttributes) InternalWithRef(ref terra.Reference) BackupPolicyAttributes {

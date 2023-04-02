@@ -148,8 +148,8 @@ type UserSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (us UserSettingsAttributes) InternalRef() terra.Reference {
-	return us.ref
+func (us UserSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return us.ref, nil
 }
 
 func (us UserSettingsAttributes) InternalWithRef(ref terra.Reference) UserSettingsAttributes {
@@ -196,8 +196,8 @@ type CanvasAppSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (cas CanvasAppSettingsAttributes) InternalRef() terra.Reference {
-	return cas.ref
+func (cas CanvasAppSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return cas.ref, nil
 }
 
 func (cas CanvasAppSettingsAttributes) InternalWithRef(ref terra.Reference) CanvasAppSettingsAttributes {
@@ -216,8 +216,8 @@ type TimeSeriesForecastingSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (tsfs TimeSeriesForecastingSettingsAttributes) InternalRef() terra.Reference {
-	return tsfs.ref
+func (tsfs TimeSeriesForecastingSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return tsfs.ref, nil
 }
 
 func (tsfs TimeSeriesForecastingSettingsAttributes) InternalWithRef(ref terra.Reference) TimeSeriesForecastingSettingsAttributes {
@@ -240,8 +240,8 @@ type JupyterServerAppSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (jsas JupyterServerAppSettingsAttributes) InternalRef() terra.Reference {
-	return jsas.ref
+func (jsas JupyterServerAppSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return jsas.ref, nil
 }
 
 func (jsas JupyterServerAppSettingsAttributes) InternalWithRef(ref terra.Reference) JupyterServerAppSettingsAttributes {
@@ -268,8 +268,8 @@ type CodeRepositoryAttributes struct {
 	ref terra.Reference
 }
 
-func (cr CodeRepositoryAttributes) InternalRef() terra.Reference {
-	return cr.ref
+func (cr CodeRepositoryAttributes) InternalRef() (terra.Reference, error) {
+	return cr.ref, nil
 }
 
 func (cr CodeRepositoryAttributes) InternalWithRef(ref terra.Reference) CodeRepositoryAttributes {
@@ -288,8 +288,8 @@ type JupyterServerAppSettingsDefaultResourceSpecAttributes struct {
 	ref terra.Reference
 }
 
-func (drs JupyterServerAppSettingsDefaultResourceSpecAttributes) InternalRef() terra.Reference {
-	return drs.ref
+func (drs JupyterServerAppSettingsDefaultResourceSpecAttributes) InternalRef() (terra.Reference, error) {
+	return drs.ref, nil
 }
 
 func (drs JupyterServerAppSettingsDefaultResourceSpecAttributes) InternalWithRef(ref terra.Reference) JupyterServerAppSettingsDefaultResourceSpecAttributes {
@@ -320,8 +320,8 @@ type KernelGatewayAppSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (kgas KernelGatewayAppSettingsAttributes) InternalRef() terra.Reference {
-	return kgas.ref
+func (kgas KernelGatewayAppSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return kgas.ref, nil
 }
 
 func (kgas KernelGatewayAppSettingsAttributes) InternalWithRef(ref terra.Reference) KernelGatewayAppSettingsAttributes {
@@ -348,8 +348,8 @@ type KernelGatewayAppSettingsCustomImageAttributes struct {
 	ref terra.Reference
 }
 
-func (ci KernelGatewayAppSettingsCustomImageAttributes) InternalRef() terra.Reference {
-	return ci.ref
+func (ci KernelGatewayAppSettingsCustomImageAttributes) InternalRef() (terra.Reference, error) {
+	return ci.ref, nil
 }
 
 func (ci KernelGatewayAppSettingsCustomImageAttributes) InternalWithRef(ref terra.Reference) KernelGatewayAppSettingsCustomImageAttributes {
@@ -376,8 +376,8 @@ type KernelGatewayAppSettingsDefaultResourceSpecAttributes struct {
 	ref terra.Reference
 }
 
-func (drs KernelGatewayAppSettingsDefaultResourceSpecAttributes) InternalRef() terra.Reference {
-	return drs.ref
+func (drs KernelGatewayAppSettingsDefaultResourceSpecAttributes) InternalRef() (terra.Reference, error) {
+	return drs.ref, nil
 }
 
 func (drs KernelGatewayAppSettingsDefaultResourceSpecAttributes) InternalWithRef(ref terra.Reference) KernelGatewayAppSettingsDefaultResourceSpecAttributes {
@@ -408,8 +408,8 @@ type RSessionAppSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (rsas RSessionAppSettingsAttributes) InternalRef() terra.Reference {
-	return rsas.ref
+func (rsas RSessionAppSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return rsas.ref, nil
 }
 
 func (rsas RSessionAppSettingsAttributes) InternalWithRef(ref terra.Reference) RSessionAppSettingsAttributes {
@@ -432,8 +432,8 @@ type RSessionAppSettingsCustomImageAttributes struct {
 	ref terra.Reference
 }
 
-func (ci RSessionAppSettingsCustomImageAttributes) InternalRef() terra.Reference {
-	return ci.ref
+func (ci RSessionAppSettingsCustomImageAttributes) InternalRef() (terra.Reference, error) {
+	return ci.ref, nil
 }
 
 func (ci RSessionAppSettingsCustomImageAttributes) InternalWithRef(ref terra.Reference) RSessionAppSettingsCustomImageAttributes {
@@ -460,8 +460,8 @@ type RSessionAppSettingsDefaultResourceSpecAttributes struct {
 	ref terra.Reference
 }
 
-func (drs RSessionAppSettingsDefaultResourceSpecAttributes) InternalRef() terra.Reference {
-	return drs.ref
+func (drs RSessionAppSettingsDefaultResourceSpecAttributes) InternalRef() (terra.Reference, error) {
+	return drs.ref, nil
 }
 
 func (drs RSessionAppSettingsDefaultResourceSpecAttributes) InternalWithRef(ref terra.Reference) RSessionAppSettingsDefaultResourceSpecAttributes {
@@ -492,8 +492,8 @@ type SharingSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ss SharingSettingsAttributes) InternalRef() terra.Reference {
-	return ss.ref
+func (ss SharingSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ss.ref, nil
 }
 
 func (ss SharingSettingsAttributes) InternalWithRef(ref terra.Reference) SharingSettingsAttributes {
@@ -520,8 +520,8 @@ type TensorBoardAppSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (tbas TensorBoardAppSettingsAttributes) InternalRef() terra.Reference {
-	return tbas.ref
+func (tbas TensorBoardAppSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return tbas.ref, nil
 }
 
 func (tbas TensorBoardAppSettingsAttributes) InternalWithRef(ref terra.Reference) TensorBoardAppSettingsAttributes {
@@ -540,8 +540,8 @@ type TensorBoardAppSettingsDefaultResourceSpecAttributes struct {
 	ref terra.Reference
 }
 
-func (drs TensorBoardAppSettingsDefaultResourceSpecAttributes) InternalRef() terra.Reference {
-	return drs.ref
+func (drs TensorBoardAppSettingsDefaultResourceSpecAttributes) InternalRef() (terra.Reference, error) {
+	return drs.ref, nil
 }
 
 func (drs TensorBoardAppSettingsDefaultResourceSpecAttributes) InternalWithRef(ref terra.Reference) TensorBoardAppSettingsDefaultResourceSpecAttributes {

@@ -13,8 +13,8 @@ type ComputeEnvironmentOrderAttributes struct {
 	ref terra.Reference
 }
 
-func (ceo ComputeEnvironmentOrderAttributes) InternalRef() terra.Reference {
-	return ceo.ref
+func (ceo ComputeEnvironmentOrderAttributes) InternalRef() (terra.Reference, error) {
+	return ceo.ref, nil
 }
 
 func (ceo ComputeEnvironmentOrderAttributes) InternalWithRef(ref terra.Reference) ComputeEnvironmentOrderAttributes {

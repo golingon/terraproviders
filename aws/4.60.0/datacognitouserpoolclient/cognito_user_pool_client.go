@@ -15,8 +15,8 @@ type AnalyticsConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AnalyticsConfigurationAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AnalyticsConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AnalyticsConfigurationAttributes) InternalWithRef(ref terra.Reference) AnalyticsConfigurationAttributes {
@@ -51,8 +51,8 @@ type TokenValidityUnitsAttributes struct {
 	ref terra.Reference
 }
 
-func (tvu TokenValidityUnitsAttributes) InternalRef() terra.Reference {
-	return tvu.ref
+func (tvu TokenValidityUnitsAttributes) InternalRef() (terra.Reference, error) {
+	return tvu.ref, nil
 }
 
 func (tvu TokenValidityUnitsAttributes) InternalWithRef(ref terra.Reference) TokenValidityUnitsAttributes {

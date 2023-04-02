@@ -18,8 +18,8 @@ type PreProvisioningHookAttributes struct {
 	ref terra.Reference
 }
 
-func (pph PreProvisioningHookAttributes) InternalRef() terra.Reference {
-	return pph.ref
+func (pph PreProvisioningHookAttributes) InternalRef() (terra.Reference, error) {
+	return pph.ref, nil
 }
 
 func (pph PreProvisioningHookAttributes) InternalWithRef(ref terra.Reference) PreProvisioningHookAttributes {

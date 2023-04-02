@@ -31,8 +31,8 @@ type ConnectionPoolConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (cpc ConnectionPoolConfigAttributes) InternalRef() terra.Reference {
-	return cpc.ref
+func (cpc ConnectionPoolConfigAttributes) InternalRef() (terra.Reference, error) {
+	return cpc.ref, nil
 }
 
 func (cpc ConnectionPoolConfigAttributes) InternalWithRef(ref terra.Reference) ConnectionPoolConfigAttributes {
@@ -67,8 +67,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

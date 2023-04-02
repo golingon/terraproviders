@@ -37,8 +37,8 @@ type AppMonitorConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (amc AppMonitorConfigurationAttributes) InternalRef() terra.Reference {
-	return amc.ref
+func (amc AppMonitorConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return amc.ref, nil
 }
 
 func (amc AppMonitorConfigurationAttributes) InternalWithRef(ref terra.Reference) AppMonitorConfigurationAttributes {
@@ -89,8 +89,8 @@ type CustomEventsAttributes struct {
 	ref terra.Reference
 }
 
-func (ce CustomEventsAttributes) InternalRef() terra.Reference {
-	return ce.ref
+func (ce CustomEventsAttributes) InternalRef() (terra.Reference, error) {
+	return ce.ref, nil
 }
 
 func (ce CustomEventsAttributes) InternalWithRef(ref terra.Reference) CustomEventsAttributes {

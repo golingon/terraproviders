@@ -35,8 +35,8 @@ type ContainerProviderAttributes struct {
 	ref terra.Reference
 }
 
-func (cp ContainerProviderAttributes) InternalRef() terra.Reference {
-	return cp.ref
+func (cp ContainerProviderAttributes) InternalRef() (terra.Reference, error) {
+	return cp.ref, nil
 }
 
 func (cp ContainerProviderAttributes) InternalWithRef(ref terra.Reference) ContainerProviderAttributes {
@@ -63,8 +63,8 @@ type InfoAttributes struct {
 	ref terra.Reference
 }
 
-func (i InfoAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i InfoAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i InfoAttributes) InternalWithRef(ref terra.Reference) InfoAttributes {
@@ -83,8 +83,8 @@ type EksInfoAttributes struct {
 	ref terra.Reference
 }
 
-func (ei EksInfoAttributes) InternalRef() terra.Reference {
-	return ei.ref
+func (ei EksInfoAttributes) InternalRef() (terra.Reference, error) {
+	return ei.ref, nil
 }
 
 func (ei EksInfoAttributes) InternalWithRef(ref terra.Reference) EksInfoAttributes {
@@ -103,8 +103,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

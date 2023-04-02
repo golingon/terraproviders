@@ -22,8 +22,8 @@ type RevocationConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (rc RevocationConfigurationAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc RevocationConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc RevocationConfigurationAttributes) InternalWithRef(ref terra.Reference) RevocationConfigurationAttributes {
@@ -46,8 +46,8 @@ type CrlConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (cc CrlConfigurationAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc CrlConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc CrlConfigurationAttributes) InternalWithRef(ref terra.Reference) CrlConfigurationAttributes {
@@ -82,8 +82,8 @@ type OcspConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (oc OcspConfigurationAttributes) InternalRef() terra.Reference {
-	return oc.ref
+func (oc OcspConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return oc.ref, nil
 }
 
 func (oc OcspConfigurationAttributes) InternalWithRef(ref terra.Reference) OcspConfigurationAttributes {

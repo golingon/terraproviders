@@ -18,8 +18,8 @@ type SpecAttributes struct {
 	ref terra.Reference
 }
 
-func (s SpecAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SpecAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SpecAttributes) InternalWithRef(ref terra.Reference) SpecAttributes {
@@ -38,8 +38,8 @@ type EgressFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (ef EgressFilterAttributes) InternalRef() terra.Reference {
-	return ef.ref
+func (ef EgressFilterAttributes) InternalRef() (terra.Reference, error) {
+	return ef.ref, nil
 }
 
 func (ef EgressFilterAttributes) InternalWithRef(ref terra.Reference) EgressFilterAttributes {

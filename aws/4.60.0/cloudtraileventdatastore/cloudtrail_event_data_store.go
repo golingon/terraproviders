@@ -44,8 +44,8 @@ type AdvancedEventSelectorAttributes struct {
 	ref terra.Reference
 }
 
-func (aes AdvancedEventSelectorAttributes) InternalRef() terra.Reference {
-	return aes.ref
+func (aes AdvancedEventSelectorAttributes) InternalRef() (terra.Reference, error) {
+	return aes.ref, nil
 }
 
 func (aes AdvancedEventSelectorAttributes) InternalWithRef(ref terra.Reference) AdvancedEventSelectorAttributes {
@@ -68,8 +68,8 @@ type FieldSelectorAttributes struct {
 	ref terra.Reference
 }
 
-func (fs FieldSelectorAttributes) InternalRef() terra.Reference {
-	return fs.ref
+func (fs FieldSelectorAttributes) InternalRef() (terra.Reference, error) {
+	return fs.ref, nil
 }
 
 func (fs FieldSelectorAttributes) InternalWithRef(ref terra.Reference) FieldSelectorAttributes {
@@ -112,8 +112,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

@@ -40,8 +40,8 @@ type StorageConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sc StorageConfigAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc StorageConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc StorageConfigAttributes) InternalWithRef(ref terra.Reference) StorageConfigAttributes {
@@ -76,8 +76,8 @@ type KinesisFirehoseConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (kfc KinesisFirehoseConfigAttributes) InternalRef() terra.Reference {
-	return kfc.ref
+func (kfc KinesisFirehoseConfigAttributes) InternalRef() (terra.Reference, error) {
+	return kfc.ref, nil
 }
 
 func (kfc KinesisFirehoseConfigAttributes) InternalWithRef(ref terra.Reference) KinesisFirehoseConfigAttributes {
@@ -96,8 +96,8 @@ type KinesisStreamConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ksc KinesisStreamConfigAttributes) InternalRef() terra.Reference {
-	return ksc.ref
+func (ksc KinesisStreamConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ksc.ref, nil
 }
 
 func (ksc KinesisStreamConfigAttributes) InternalWithRef(ref terra.Reference) KinesisStreamConfigAttributes {
@@ -116,8 +116,8 @@ type KinesisVideoStreamConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (kvsc KinesisVideoStreamConfigAttributes) InternalRef() terra.Reference {
-	return kvsc.ref
+func (kvsc KinesisVideoStreamConfigAttributes) InternalRef() (terra.Reference, error) {
+	return kvsc.ref, nil
 }
 
 func (kvsc KinesisVideoStreamConfigAttributes) InternalWithRef(ref terra.Reference) KinesisVideoStreamConfigAttributes {
@@ -144,8 +144,8 @@ type KinesisVideoStreamConfigEncryptionConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ec KinesisVideoStreamConfigEncryptionConfigAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec KinesisVideoStreamConfigEncryptionConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec KinesisVideoStreamConfigEncryptionConfigAttributes) InternalWithRef(ref terra.Reference) KinesisVideoStreamConfigEncryptionConfigAttributes {
@@ -168,8 +168,8 @@ type S3ConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sc S3ConfigAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc S3ConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc S3ConfigAttributes) InternalWithRef(ref terra.Reference) S3ConfigAttributes {
@@ -196,8 +196,8 @@ type S3ConfigEncryptionConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ec S3ConfigEncryptionConfigAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec S3ConfigEncryptionConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec S3ConfigEncryptionConfigAttributes) InternalWithRef(ref terra.Reference) S3ConfigEncryptionConfigAttributes {

@@ -58,8 +58,8 @@ type CapacityProviderStrategyAttributes struct {
 	ref terra.Reference
 }
 
-func (cps CapacityProviderStrategyAttributes) InternalRef() terra.Reference {
-	return cps.ref
+func (cps CapacityProviderStrategyAttributes) InternalRef() (terra.Reference, error) {
+	return cps.ref, nil
 }
 
 func (cps CapacityProviderStrategyAttributes) InternalWithRef(ref terra.Reference) CapacityProviderStrategyAttributes {
@@ -86,8 +86,8 @@ type LoadBalancerAttributes struct {
 	ref terra.Reference
 }
 
-func (lb LoadBalancerAttributes) InternalRef() terra.Reference {
-	return lb.ref
+func (lb LoadBalancerAttributes) InternalRef() (terra.Reference, error) {
+	return lb.ref, nil
 }
 
 func (lb LoadBalancerAttributes) InternalWithRef(ref terra.Reference) LoadBalancerAttributes {
@@ -118,8 +118,8 @@ type NetworkConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (nc NetworkConfigurationAttributes) InternalRef() terra.Reference {
-	return nc.ref
+func (nc NetworkConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return nc.ref, nil
 }
 
 func (nc NetworkConfigurationAttributes) InternalWithRef(ref terra.Reference) NetworkConfigurationAttributes {
@@ -146,8 +146,8 @@ type ScaleAttributes struct {
 	ref terra.Reference
 }
 
-func (s ScaleAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ScaleAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ScaleAttributes) InternalWithRef(ref terra.Reference) ScaleAttributes {
@@ -170,8 +170,8 @@ type ServiceRegistriesAttributes struct {
 	ref terra.Reference
 }
 
-func (sr ServiceRegistriesAttributes) InternalRef() terra.Reference {
-	return sr.ref
+func (sr ServiceRegistriesAttributes) InternalRef() (terra.Reference, error) {
+	return sr.ref, nil
 }
 
 func (sr ServiceRegistriesAttributes) InternalWithRef(ref terra.Reference) ServiceRegistriesAttributes {

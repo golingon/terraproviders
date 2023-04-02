@@ -43,8 +43,8 @@ type TargetActionAttributes struct {
 	ref terra.Reference
 }
 
-func (ta TargetActionAttributes) InternalRef() terra.Reference {
-	return ta.ref
+func (ta TargetActionAttributes) InternalRef() (terra.Reference, error) {
+	return ta.ref, nil
 }
 
 func (ta TargetActionAttributes) InternalWithRef(ref terra.Reference) TargetActionAttributes {
@@ -71,8 +71,8 @@ type PauseClusterAttributes struct {
 	ref terra.Reference
 }
 
-func (pc PauseClusterAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc PauseClusterAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc PauseClusterAttributes) InternalWithRef(ref terra.Reference) PauseClusterAttributes {
@@ -91,8 +91,8 @@ type ResizeClusterAttributes struct {
 	ref terra.Reference
 }
 
-func (rc ResizeClusterAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc ResizeClusterAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc ResizeClusterAttributes) InternalWithRef(ref terra.Reference) ResizeClusterAttributes {
@@ -127,8 +127,8 @@ type ResumeClusterAttributes struct {
 	ref terra.Reference
 }
 
-func (rc ResumeClusterAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc ResumeClusterAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc ResumeClusterAttributes) InternalWithRef(ref terra.Reference) ResumeClusterAttributes {

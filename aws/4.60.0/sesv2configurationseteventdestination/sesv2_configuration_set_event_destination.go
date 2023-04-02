@@ -57,8 +57,8 @@ type EventDestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (ed EventDestinationAttributes) InternalRef() terra.Reference {
-	return ed.ref
+func (ed EventDestinationAttributes) InternalRef() (terra.Reference, error) {
+	return ed.ref, nil
 }
 
 func (ed EventDestinationAttributes) InternalWithRef(ref terra.Reference) EventDestinationAttributes {
@@ -97,8 +97,8 @@ type CloudWatchDestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (cwd CloudWatchDestinationAttributes) InternalRef() terra.Reference {
-	return cwd.ref
+func (cwd CloudWatchDestinationAttributes) InternalRef() (terra.Reference, error) {
+	return cwd.ref, nil
 }
 
 func (cwd CloudWatchDestinationAttributes) InternalWithRef(ref terra.Reference) CloudWatchDestinationAttributes {
@@ -117,8 +117,8 @@ type DimensionConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (dc DimensionConfigurationAttributes) InternalRef() terra.Reference {
-	return dc.ref
+func (dc DimensionConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return dc.ref, nil
 }
 
 func (dc DimensionConfigurationAttributes) InternalWithRef(ref terra.Reference) DimensionConfigurationAttributes {
@@ -145,8 +145,8 @@ type KinesisFirehoseDestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (kfd KinesisFirehoseDestinationAttributes) InternalRef() terra.Reference {
-	return kfd.ref
+func (kfd KinesisFirehoseDestinationAttributes) InternalRef() (terra.Reference, error) {
+	return kfd.ref, nil
 }
 
 func (kfd KinesisFirehoseDestinationAttributes) InternalWithRef(ref terra.Reference) KinesisFirehoseDestinationAttributes {
@@ -169,8 +169,8 @@ type PinpointDestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (pd PinpointDestinationAttributes) InternalRef() terra.Reference {
-	return pd.ref
+func (pd PinpointDestinationAttributes) InternalRef() (terra.Reference, error) {
+	return pd.ref, nil
 }
 
 func (pd PinpointDestinationAttributes) InternalWithRef(ref terra.Reference) PinpointDestinationAttributes {
@@ -189,8 +189,8 @@ type SnsDestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (sd SnsDestinationAttributes) InternalRef() terra.Reference {
-	return sd.ref
+func (sd SnsDestinationAttributes) InternalRef() (terra.Reference, error) {
+	return sd.ref, nil
 }
 
 func (sd SnsDestinationAttributes) InternalWithRef(ref terra.Reference) SnsDestinationAttributes {

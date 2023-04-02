@@ -47,8 +47,8 @@ type AuthenticationOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (ao AuthenticationOptionsAttributes) InternalRef() terra.Reference {
-	return ao.ref
+func (ao AuthenticationOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return ao.ref, nil
 }
 
 func (ao AuthenticationOptionsAttributes) InternalWithRef(ref terra.Reference) AuthenticationOptionsAttributes {
@@ -83,8 +83,8 @@ type ClientConnectOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (cco ClientConnectOptionsAttributes) InternalRef() terra.Reference {
-	return cco.ref
+func (cco ClientConnectOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return cco.ref, nil
 }
 
 func (cco ClientConnectOptionsAttributes) InternalWithRef(ref terra.Reference) ClientConnectOptionsAttributes {
@@ -107,8 +107,8 @@ type ClientLoginBannerOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (clbo ClientLoginBannerOptionsAttributes) InternalRef() terra.Reference {
-	return clbo.ref
+func (clbo ClientLoginBannerOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return clbo.ref, nil
 }
 
 func (clbo ClientLoginBannerOptionsAttributes) InternalWithRef(ref terra.Reference) ClientLoginBannerOptionsAttributes {
@@ -131,8 +131,8 @@ type ConnectionLogOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (clo ConnectionLogOptionsAttributes) InternalRef() terra.Reference {
-	return clo.ref
+func (clo ConnectionLogOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return clo.ref, nil
 }
 
 func (clo ConnectionLogOptionsAttributes) InternalWithRef(ref terra.Reference) ConnectionLogOptionsAttributes {

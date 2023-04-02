@@ -27,8 +27,8 @@ type RevocationRecordAttributes struct {
 	ref terra.Reference
 }
 
-func (rr RevocationRecordAttributes) InternalRef() terra.Reference {
-	return rr.ref
+func (rr RevocationRecordAttributes) InternalRef() (terra.Reference, error) {
+	return rr.ref, nil
 }
 
 func (rr RevocationRecordAttributes) InternalWithRef(ref terra.Reference) RevocationRecordAttributes {
@@ -55,8 +55,8 @@ type SignedObjectAttributes struct {
 	ref terra.Reference
 }
 
-func (so SignedObjectAttributes) InternalRef() terra.Reference {
-	return so.ref
+func (so SignedObjectAttributes) InternalRef() (terra.Reference, error) {
+	return so.ref, nil
 }
 
 func (so SignedObjectAttributes) InternalWithRef(ref terra.Reference) SignedObjectAttributes {
@@ -75,8 +75,8 @@ type SignedObjectS3Attributes struct {
 	ref terra.Reference
 }
 
-func (s SignedObjectS3Attributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SignedObjectS3Attributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SignedObjectS3Attributes) InternalWithRef(ref terra.Reference) SignedObjectS3Attributes {
@@ -99,8 +99,8 @@ type SourceAttributes struct {
 	ref terra.Reference
 }
 
-func (s SourceAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SourceAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SourceAttributes) InternalWithRef(ref terra.Reference) SourceAttributes {
@@ -119,8 +119,8 @@ type SourceS3Attributes struct {
 	ref terra.Reference
 }
 
-func (s SourceS3Attributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SourceS3Attributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SourceS3Attributes) InternalWithRef(ref terra.Reference) SourceS3Attributes {

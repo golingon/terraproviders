@@ -32,8 +32,8 @@ type CookiesConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (cc CookiesConfigAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc CookiesConfigAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc CookiesConfigAttributes) InternalWithRef(ref terra.Reference) CookiesConfigAttributes {
@@ -56,8 +56,8 @@ type CookiesAttributes struct {
 	ref terra.Reference
 }
 
-func (c CookiesAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CookiesAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CookiesAttributes) InternalWithRef(ref terra.Reference) CookiesAttributes {
@@ -76,8 +76,8 @@ type HeadersConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (hc HeadersConfigAttributes) InternalRef() terra.Reference {
-	return hc.ref
+func (hc HeadersConfigAttributes) InternalRef() (terra.Reference, error) {
+	return hc.ref, nil
 }
 
 func (hc HeadersConfigAttributes) InternalWithRef(ref terra.Reference) HeadersConfigAttributes {
@@ -100,8 +100,8 @@ type HeadersAttributes struct {
 	ref terra.Reference
 }
 
-func (h HeadersAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h HeadersAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h HeadersAttributes) InternalWithRef(ref terra.Reference) HeadersAttributes {
@@ -120,8 +120,8 @@ type QueryStringsConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (qsc QueryStringsConfigAttributes) InternalRef() terra.Reference {
-	return qsc.ref
+func (qsc QueryStringsConfigAttributes) InternalRef() (terra.Reference, error) {
+	return qsc.ref, nil
 }
 
 func (qsc QueryStringsConfigAttributes) InternalWithRef(ref terra.Reference) QueryStringsConfigAttributes {
@@ -144,8 +144,8 @@ type QueryStringsAttributes struct {
 	ref terra.Reference
 }
 
-func (qs QueryStringsAttributes) InternalRef() terra.Reference {
-	return qs.ref
+func (qs QueryStringsAttributes) InternalRef() (terra.Reference, error) {
+	return qs.ref, nil
 }
 
 func (qs QueryStringsAttributes) InternalWithRef(ref terra.Reference) QueryStringsAttributes {

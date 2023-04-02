@@ -29,8 +29,8 @@ type AccepterAttributes struct {
 	ref terra.Reference
 }
 
-func (a AccepterAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AccepterAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AccepterAttributes) InternalWithRef(ref terra.Reference) AccepterAttributes {
@@ -57,8 +57,8 @@ type RequesterAttributes struct {
 	ref terra.Reference
 }
 
-func (r RequesterAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RequesterAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RequesterAttributes) InternalWithRef(ref terra.Reference) RequesterAttributes {

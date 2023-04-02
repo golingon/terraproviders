@@ -59,8 +59,8 @@ type EndpointOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (eo EndpointOptionsAttributes) InternalRef() terra.Reference {
-	return eo.ref
+func (eo EndpointOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return eo.ref, nil
 }
 
 func (eo EndpointOptionsAttributes) InternalWithRef(ref terra.Reference) EndpointOptionsAttributes {
@@ -83,8 +83,8 @@ type IndexFieldAttributes struct {
 	ref terra.Reference
 }
 
-func (_if IndexFieldAttributes) InternalRef() terra.Reference {
-	return _if.ref
+func (_if IndexFieldAttributes) InternalRef() (terra.Reference, error) {
+	return _if.ref, nil
 }
 
 func (_if IndexFieldAttributes) InternalWithRef(ref terra.Reference) IndexFieldAttributes {
@@ -139,8 +139,8 @@ type ScalingParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (sp ScalingParametersAttributes) InternalRef() terra.Reference {
-	return sp.ref
+func (sp ScalingParametersAttributes) InternalRef() (terra.Reference, error) {
+	return sp.ref, nil
 }
 
 func (sp ScalingParametersAttributes) InternalWithRef(ref terra.Reference) ScalingParametersAttributes {
@@ -167,8 +167,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

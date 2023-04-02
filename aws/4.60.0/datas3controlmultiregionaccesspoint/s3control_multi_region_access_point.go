@@ -15,8 +15,8 @@ type PublicAccessBlockAttributes struct {
 	ref terra.Reference
 }
 
-func (pab PublicAccessBlockAttributes) InternalRef() terra.Reference {
-	return pab.ref
+func (pab PublicAccessBlockAttributes) InternalRef() (terra.Reference, error) {
+	return pab.ref, nil
 }
 
 func (pab PublicAccessBlockAttributes) InternalWithRef(ref terra.Reference) PublicAccessBlockAttributes {
@@ -47,8 +47,8 @@ type RegionsAttributes struct {
 	ref terra.Reference
 }
 
-func (r RegionsAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RegionsAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RegionsAttributes) InternalWithRef(ref terra.Reference) RegionsAttributes {

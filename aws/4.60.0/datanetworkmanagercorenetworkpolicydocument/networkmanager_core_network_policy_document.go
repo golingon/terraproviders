@@ -102,8 +102,8 @@ type AttachmentPoliciesAttributes struct {
 	ref terra.Reference
 }
 
-func (ap AttachmentPoliciesAttributes) InternalRef() terra.Reference {
-	return ap.ref
+func (ap AttachmentPoliciesAttributes) InternalRef() (terra.Reference, error) {
+	return ap.ref, nil
 }
 
 func (ap AttachmentPoliciesAttributes) InternalWithRef(ref terra.Reference) AttachmentPoliciesAttributes {
@@ -138,8 +138,8 @@ type ActionAttributes struct {
 	ref terra.Reference
 }
 
-func (a ActionAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ActionAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ActionAttributes) InternalWithRef(ref terra.Reference) ActionAttributes {
@@ -170,8 +170,8 @@ type ConditionsAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConditionsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConditionsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConditionsAttributes) InternalWithRef(ref terra.Reference) ConditionsAttributes {
@@ -202,8 +202,8 @@ type CoreNetworkConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (cnc CoreNetworkConfigurationAttributes) InternalRef() terra.Reference {
-	return cnc.ref
+func (cnc CoreNetworkConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return cnc.ref, nil
 }
 
 func (cnc CoreNetworkConfigurationAttributes) InternalWithRef(ref terra.Reference) CoreNetworkConfigurationAttributes {
@@ -234,8 +234,8 @@ type EdgeLocationsAttributes struct {
 	ref terra.Reference
 }
 
-func (el EdgeLocationsAttributes) InternalRef() terra.Reference {
-	return el.ref
+func (el EdgeLocationsAttributes) InternalRef() (terra.Reference, error) {
+	return el.ref, nil
 }
 
 func (el EdgeLocationsAttributes) InternalWithRef(ref terra.Reference) EdgeLocationsAttributes {
@@ -262,8 +262,8 @@ type SegmentActionsAttributes struct {
 	ref terra.Reference
 }
 
-func (sa SegmentActionsAttributes) InternalRef() terra.Reference {
-	return sa.ref
+func (sa SegmentActionsAttributes) InternalRef() (terra.Reference, error) {
+	return sa.ref, nil
 }
 
 func (sa SegmentActionsAttributes) InternalWithRef(ref terra.Reference) SegmentActionsAttributes {
@@ -310,8 +310,8 @@ type SegmentsAttributes struct {
 	ref terra.Reference
 }
 
-func (s SegmentsAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SegmentsAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SegmentsAttributes) InternalWithRef(ref terra.Reference) SegmentsAttributes {

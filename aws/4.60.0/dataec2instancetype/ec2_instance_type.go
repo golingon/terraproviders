@@ -24,8 +24,8 @@ type FpgasAttributes struct {
 	ref terra.Reference
 }
 
-func (f FpgasAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FpgasAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FpgasAttributes) InternalWithRef(ref terra.Reference) FpgasAttributes {
@@ -56,8 +56,8 @@ type GpusAttributes struct {
 	ref terra.Reference
 }
 
-func (g GpusAttributes) InternalRef() terra.Reference {
-	return g.ref
+func (g GpusAttributes) InternalRef() (terra.Reference, error) {
+	return g.ref, nil
 }
 
 func (g GpusAttributes) InternalWithRef(ref terra.Reference) GpusAttributes {
@@ -88,8 +88,8 @@ type InferenceAcceleratorsAttributes struct {
 	ref terra.Reference
 }
 
-func (ia InferenceAcceleratorsAttributes) InternalRef() terra.Reference {
-	return ia.ref
+func (ia InferenceAcceleratorsAttributes) InternalRef() (terra.Reference, error) {
+	return ia.ref, nil
 }
 
 func (ia InferenceAcceleratorsAttributes) InternalWithRef(ref terra.Reference) InferenceAcceleratorsAttributes {
@@ -116,8 +116,8 @@ type InstanceDisksAttributes struct {
 	ref terra.Reference
 }
 
-func (id InstanceDisksAttributes) InternalRef() terra.Reference {
-	return id.ref
+func (id InstanceDisksAttributes) InternalRef() (terra.Reference, error) {
+	return id.ref, nil
 }
 
 func (id InstanceDisksAttributes) InternalWithRef(ref terra.Reference) InstanceDisksAttributes {
@@ -144,8 +144,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

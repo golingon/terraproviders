@@ -32,8 +32,8 @@ type ExcludeMapAttributes struct {
 	ref terra.Reference
 }
 
-func (em ExcludeMapAttributes) InternalRef() terra.Reference {
-	return em.ref
+func (em ExcludeMapAttributes) InternalRef() (terra.Reference, error) {
+	return em.ref, nil
 }
 
 func (em ExcludeMapAttributes) InternalWithRef(ref terra.Reference) ExcludeMapAttributes {
@@ -56,8 +56,8 @@ type IncludeMapAttributes struct {
 	ref terra.Reference
 }
 
-func (im IncludeMapAttributes) InternalRef() terra.Reference {
-	return im.ref
+func (im IncludeMapAttributes) InternalRef() (terra.Reference, error) {
+	return im.ref, nil
 }
 
 func (im IncludeMapAttributes) InternalWithRef(ref terra.Reference) IncludeMapAttributes {
@@ -80,8 +80,8 @@ type SecurityServicePolicyDataAttributes struct {
 	ref terra.Reference
 }
 
-func (sspd SecurityServicePolicyDataAttributes) InternalRef() terra.Reference {
-	return sspd.ref
+func (sspd SecurityServicePolicyDataAttributes) InternalRef() (terra.Reference, error) {
+	return sspd.ref, nil
 }
 
 func (sspd SecurityServicePolicyDataAttributes) InternalWithRef(ref terra.Reference) SecurityServicePolicyDataAttributes {

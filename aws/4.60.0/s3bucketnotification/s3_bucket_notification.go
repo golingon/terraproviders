@@ -50,8 +50,8 @@ type LambdaFunctionAttributes struct {
 	ref terra.Reference
 }
 
-func (lf LambdaFunctionAttributes) InternalRef() terra.Reference {
-	return lf.ref
+func (lf LambdaFunctionAttributes) InternalRef() (terra.Reference, error) {
+	return lf.ref, nil
 }
 
 func (lf LambdaFunctionAttributes) InternalWithRef(ref terra.Reference) LambdaFunctionAttributes {
@@ -86,8 +86,8 @@ type QueueAttributes struct {
 	ref terra.Reference
 }
 
-func (q QueueAttributes) InternalRef() terra.Reference {
-	return q.ref
+func (q QueueAttributes) InternalRef() (terra.Reference, error) {
+	return q.ref, nil
 }
 
 func (q QueueAttributes) InternalWithRef(ref terra.Reference) QueueAttributes {
@@ -122,8 +122,8 @@ type TopicAttributes struct {
 	ref terra.Reference
 }
 
-func (t TopicAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TopicAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TopicAttributes) InternalWithRef(ref terra.Reference) TopicAttributes {

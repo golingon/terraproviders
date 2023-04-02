@@ -51,8 +51,8 @@ type RouteAttributes struct {
 	ref terra.Reference
 }
 
-func (r RouteAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RouteAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RouteAttributes) InternalWithRef(ref terra.Reference) RouteAttributes {
@@ -123,8 +123,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

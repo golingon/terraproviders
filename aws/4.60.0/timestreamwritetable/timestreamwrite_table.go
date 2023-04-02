@@ -41,8 +41,8 @@ type MagneticStoreWritePropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (mswp MagneticStoreWritePropertiesAttributes) InternalRef() terra.Reference {
-	return mswp.ref
+func (mswp MagneticStoreWritePropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return mswp.ref, nil
 }
 
 func (mswp MagneticStoreWritePropertiesAttributes) InternalWithRef(ref terra.Reference) MagneticStoreWritePropertiesAttributes {
@@ -65,8 +65,8 @@ type MagneticStoreRejectedDataLocationAttributes struct {
 	ref terra.Reference
 }
 
-func (msrdl MagneticStoreRejectedDataLocationAttributes) InternalRef() terra.Reference {
-	return msrdl.ref
+func (msrdl MagneticStoreRejectedDataLocationAttributes) InternalRef() (terra.Reference, error) {
+	return msrdl.ref, nil
 }
 
 func (msrdl MagneticStoreRejectedDataLocationAttributes) InternalWithRef(ref terra.Reference) MagneticStoreRejectedDataLocationAttributes {
@@ -85,8 +85,8 @@ type S3ConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (sc S3ConfigurationAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc S3ConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc S3ConfigurationAttributes) InternalWithRef(ref terra.Reference) S3ConfigurationAttributes {
@@ -117,8 +117,8 @@ type RetentionPropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (rp RetentionPropertiesAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp RetentionPropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp RetentionPropertiesAttributes) InternalWithRef(ref terra.Reference) RetentionPropertiesAttributes {

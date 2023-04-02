@@ -18,8 +18,8 @@ type LexBotAttributes struct {
 	ref terra.Reference
 }
 
-func (lb LexBotAttributes) InternalRef() terra.Reference {
-	return lb.ref
+func (lb LexBotAttributes) InternalRef() (terra.Reference, error) {
+	return lb.ref, nil
 }
 
 func (lb LexBotAttributes) InternalWithRef(ref terra.Reference) LexBotAttributes {

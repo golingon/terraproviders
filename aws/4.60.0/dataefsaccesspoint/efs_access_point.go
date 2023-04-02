@@ -20,8 +20,8 @@ type PosixUserAttributes struct {
 	ref terra.Reference
 }
 
-func (pu PosixUserAttributes) InternalRef() terra.Reference {
-	return pu.ref
+func (pu PosixUserAttributes) InternalRef() (terra.Reference, error) {
+	return pu.ref, nil
 }
 
 func (pu PosixUserAttributes) InternalWithRef(ref terra.Reference) PosixUserAttributes {
@@ -48,8 +48,8 @@ type RootDirectoryAttributes struct {
 	ref terra.Reference
 }
 
-func (rd RootDirectoryAttributes) InternalRef() terra.Reference {
-	return rd.ref
+func (rd RootDirectoryAttributes) InternalRef() (terra.Reference, error) {
+	return rd.ref, nil
 }
 
 func (rd RootDirectoryAttributes) InternalWithRef(ref terra.Reference) RootDirectoryAttributes {
@@ -72,8 +72,8 @@ type CreationInfoAttributes struct {
 	ref terra.Reference
 }
 
-func (ci CreationInfoAttributes) InternalRef() terra.Reference {
-	return ci.ref
+func (ci CreationInfoAttributes) InternalRef() (terra.Reference, error) {
+	return ci.ref, nil
 }
 
 func (ci CreationInfoAttributes) InternalWithRef(ref terra.Reference) CreationInfoAttributes {

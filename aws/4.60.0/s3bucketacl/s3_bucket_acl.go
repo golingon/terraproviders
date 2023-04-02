@@ -43,8 +43,8 @@ type AccessControlPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (acp AccessControlPolicyAttributes) InternalRef() terra.Reference {
-	return acp.ref
+func (acp AccessControlPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return acp.ref, nil
 }
 
 func (acp AccessControlPolicyAttributes) InternalWithRef(ref terra.Reference) AccessControlPolicyAttributes {
@@ -67,8 +67,8 @@ type GrantAttributes struct {
 	ref terra.Reference
 }
 
-func (g GrantAttributes) InternalRef() terra.Reference {
-	return g.ref
+func (g GrantAttributes) InternalRef() (terra.Reference, error) {
+	return g.ref, nil
 }
 
 func (g GrantAttributes) InternalWithRef(ref terra.Reference) GrantAttributes {
@@ -91,8 +91,8 @@ type GranteeAttributes struct {
 	ref terra.Reference
 }
 
-func (g GranteeAttributes) InternalRef() terra.Reference {
-	return g.ref
+func (g GranteeAttributes) InternalRef() (terra.Reference, error) {
+	return g.ref, nil
 }
 
 func (g GranteeAttributes) InternalWithRef(ref terra.Reference) GranteeAttributes {
@@ -127,8 +127,8 @@ type OwnerAttributes struct {
 	ref terra.Reference
 }
 
-func (o OwnerAttributes) InternalRef() terra.Reference {
-	return o.ref
+func (o OwnerAttributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o OwnerAttributes) InternalWithRef(ref terra.Reference) OwnerAttributes {

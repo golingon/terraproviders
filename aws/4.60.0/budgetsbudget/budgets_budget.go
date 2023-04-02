@@ -79,8 +79,8 @@ type AutoAdjustDataAttributes struct {
 	ref terra.Reference
 }
 
-func (aad AutoAdjustDataAttributes) InternalRef() terra.Reference {
-	return aad.ref
+func (aad AutoAdjustDataAttributes) InternalRef() (terra.Reference, error) {
+	return aad.ref, nil
 }
 
 func (aad AutoAdjustDataAttributes) InternalWithRef(ref terra.Reference) AutoAdjustDataAttributes {
@@ -107,8 +107,8 @@ type HistoricalOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (ho HistoricalOptionsAttributes) InternalRef() terra.Reference {
-	return ho.ref
+func (ho HistoricalOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return ho.ref, nil
 }
 
 func (ho HistoricalOptionsAttributes) InternalWithRef(ref terra.Reference) HistoricalOptionsAttributes {
@@ -131,8 +131,8 @@ type CostFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (cf CostFilterAttributes) InternalRef() terra.Reference {
-	return cf.ref
+func (cf CostFilterAttributes) InternalRef() (terra.Reference, error) {
+	return cf.ref, nil
 }
 
 func (cf CostFilterAttributes) InternalWithRef(ref terra.Reference) CostFilterAttributes {
@@ -155,8 +155,8 @@ type CostTypesAttributes struct {
 	ref terra.Reference
 }
 
-func (ct CostTypesAttributes) InternalRef() terra.Reference {
-	return ct.ref
+func (ct CostTypesAttributes) InternalRef() (terra.Reference, error) {
+	return ct.ref, nil
 }
 
 func (ct CostTypesAttributes) InternalWithRef(ref terra.Reference) CostTypesAttributes {
@@ -215,8 +215,8 @@ type NotificationAttributes struct {
 	ref terra.Reference
 }
 
-func (n NotificationAttributes) InternalRef() terra.Reference {
-	return n.ref
+func (n NotificationAttributes) InternalRef() (terra.Reference, error) {
+	return n.ref, nil
 }
 
 func (n NotificationAttributes) InternalWithRef(ref terra.Reference) NotificationAttributes {
@@ -255,8 +255,8 @@ type PlannedLimitAttributes struct {
 	ref terra.Reference
 }
 
-func (pl PlannedLimitAttributes) InternalRef() terra.Reference {
-	return pl.ref
+func (pl PlannedLimitAttributes) InternalRef() (terra.Reference, error) {
+	return pl.ref, nil
 }
 
 func (pl PlannedLimitAttributes) InternalWithRef(ref terra.Reference) PlannedLimitAttributes {

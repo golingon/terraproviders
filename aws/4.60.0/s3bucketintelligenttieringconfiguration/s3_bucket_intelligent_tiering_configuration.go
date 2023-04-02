@@ -25,8 +25,8 @@ type FilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes {
@@ -49,8 +49,8 @@ type TieringAttributes struct {
 	ref terra.Reference
 }
 
-func (t TieringAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TieringAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TieringAttributes) InternalWithRef(ref terra.Reference) TieringAttributes {

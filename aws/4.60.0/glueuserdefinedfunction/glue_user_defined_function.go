@@ -18,8 +18,8 @@ type ResourceUrisAttributes struct {
 	ref terra.Reference
 }
 
-func (ru ResourceUrisAttributes) InternalRef() terra.Reference {
-	return ru.ref
+func (ru ResourceUrisAttributes) InternalRef() (terra.Reference, error) {
+	return ru.ref, nil
 }
 
 func (ru ResourceUrisAttributes) InternalWithRef(ref terra.Reference) ResourceUrisAttributes {

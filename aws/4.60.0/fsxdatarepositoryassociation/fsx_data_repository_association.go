@@ -37,8 +37,8 @@ type S3Attributes struct {
 	ref terra.Reference
 }
 
-func (s S3Attributes) InternalRef() terra.Reference {
-	return s.ref
+func (s S3Attributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s S3Attributes) InternalWithRef(ref terra.Reference) S3Attributes {
@@ -61,8 +61,8 @@ type AutoExportPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (aep AutoExportPolicyAttributes) InternalRef() terra.Reference {
-	return aep.ref
+func (aep AutoExportPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return aep.ref, nil
 }
 
 func (aep AutoExportPolicyAttributes) InternalWithRef(ref terra.Reference) AutoExportPolicyAttributes {
@@ -81,8 +81,8 @@ type AutoImportPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (aip AutoImportPolicyAttributes) InternalRef() terra.Reference {
-	return aip.ref
+func (aip AutoImportPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return aip.ref, nil
 }
 
 func (aip AutoImportPolicyAttributes) InternalWithRef(ref terra.Reference) AutoImportPolicyAttributes {
@@ -101,8 +101,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

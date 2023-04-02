@@ -298,8 +298,8 @@ type TrustedKeyGroupsAttributes struct {
 	ref terra.Reference
 }
 
-func (tkg TrustedKeyGroupsAttributes) InternalRef() terra.Reference {
-	return tkg.ref
+func (tkg TrustedKeyGroupsAttributes) InternalRef() (terra.Reference, error) {
+	return tkg.ref, nil
 }
 
 func (tkg TrustedKeyGroupsAttributes) InternalWithRef(ref terra.Reference) TrustedKeyGroupsAttributes {
@@ -322,8 +322,8 @@ type TrustedKeyGroupsItemsAttributes struct {
 	ref terra.Reference
 }
 
-func (i TrustedKeyGroupsItemsAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i TrustedKeyGroupsItemsAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i TrustedKeyGroupsItemsAttributes) InternalWithRef(ref terra.Reference) TrustedKeyGroupsItemsAttributes {
@@ -346,8 +346,8 @@ type TrustedSignersAttributes struct {
 	ref terra.Reference
 }
 
-func (ts TrustedSignersAttributes) InternalRef() terra.Reference {
-	return ts.ref
+func (ts TrustedSignersAttributes) InternalRef() (terra.Reference, error) {
+	return ts.ref, nil
 }
 
 func (ts TrustedSignersAttributes) InternalWithRef(ref terra.Reference) TrustedSignersAttributes {
@@ -370,8 +370,8 @@ type TrustedSignersItemsAttributes struct {
 	ref terra.Reference
 }
 
-func (i TrustedSignersItemsAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i TrustedSignersItemsAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i TrustedSignersItemsAttributes) InternalWithRef(ref terra.Reference) TrustedSignersItemsAttributes {
@@ -394,8 +394,8 @@ type CustomErrorResponseAttributes struct {
 	ref terra.Reference
 }
 
-func (cer CustomErrorResponseAttributes) InternalRef() terra.Reference {
-	return cer.ref
+func (cer CustomErrorResponseAttributes) InternalRef() (terra.Reference, error) {
+	return cer.ref, nil
 }
 
 func (cer CustomErrorResponseAttributes) InternalWithRef(ref terra.Reference) CustomErrorResponseAttributes {
@@ -426,8 +426,8 @@ type DefaultCacheBehaviorAttributes struct {
 	ref terra.Reference
 }
 
-func (dcb DefaultCacheBehaviorAttributes) InternalRef() terra.Reference {
-	return dcb.ref
+func (dcb DefaultCacheBehaviorAttributes) InternalRef() (terra.Reference, error) {
+	return dcb.ref, nil
 }
 
 func (dcb DefaultCacheBehaviorAttributes) InternalWithRef(ref terra.Reference) DefaultCacheBehaviorAttributes {
@@ -518,8 +518,8 @@ type DefaultCacheBehaviorForwardedValuesAttributes struct {
 	ref terra.Reference
 }
 
-func (fv DefaultCacheBehaviorForwardedValuesAttributes) InternalRef() terra.Reference {
-	return fv.ref
+func (fv DefaultCacheBehaviorForwardedValuesAttributes) InternalRef() (terra.Reference, error) {
+	return fv.ref, nil
 }
 
 func (fv DefaultCacheBehaviorForwardedValuesAttributes) InternalWithRef(ref terra.Reference) DefaultCacheBehaviorForwardedValuesAttributes {
@@ -550,8 +550,8 @@ type DefaultCacheBehaviorForwardedValuesCookiesAttributes struct {
 	ref terra.Reference
 }
 
-func (c DefaultCacheBehaviorForwardedValuesCookiesAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c DefaultCacheBehaviorForwardedValuesCookiesAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c DefaultCacheBehaviorForwardedValuesCookiesAttributes) InternalWithRef(ref terra.Reference) DefaultCacheBehaviorForwardedValuesCookiesAttributes {
@@ -574,8 +574,8 @@ type DefaultCacheBehaviorFunctionAssociationAttributes struct {
 	ref terra.Reference
 }
 
-func (fa DefaultCacheBehaviorFunctionAssociationAttributes) InternalRef() terra.Reference {
-	return fa.ref
+func (fa DefaultCacheBehaviorFunctionAssociationAttributes) InternalRef() (terra.Reference, error) {
+	return fa.ref, nil
 }
 
 func (fa DefaultCacheBehaviorFunctionAssociationAttributes) InternalWithRef(ref terra.Reference) DefaultCacheBehaviorFunctionAssociationAttributes {
@@ -598,8 +598,8 @@ type DefaultCacheBehaviorLambdaFunctionAssociationAttributes struct {
 	ref terra.Reference
 }
 
-func (lfa DefaultCacheBehaviorLambdaFunctionAssociationAttributes) InternalRef() terra.Reference {
-	return lfa.ref
+func (lfa DefaultCacheBehaviorLambdaFunctionAssociationAttributes) InternalRef() (terra.Reference, error) {
+	return lfa.ref, nil
 }
 
 func (lfa DefaultCacheBehaviorLambdaFunctionAssociationAttributes) InternalWithRef(ref terra.Reference) DefaultCacheBehaviorLambdaFunctionAssociationAttributes {
@@ -626,8 +626,8 @@ type LoggingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (lc LoggingConfigAttributes) InternalRef() terra.Reference {
-	return lc.ref
+func (lc LoggingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return lc.ref, nil
 }
 
 func (lc LoggingConfigAttributes) InternalWithRef(ref terra.Reference) LoggingConfigAttributes {
@@ -654,8 +654,8 @@ type OrderedCacheBehaviorAttributes struct {
 	ref terra.Reference
 }
 
-func (ocb OrderedCacheBehaviorAttributes) InternalRef() terra.Reference {
-	return ocb.ref
+func (ocb OrderedCacheBehaviorAttributes) InternalRef() (terra.Reference, error) {
+	return ocb.ref, nil
 }
 
 func (ocb OrderedCacheBehaviorAttributes) InternalWithRef(ref terra.Reference) OrderedCacheBehaviorAttributes {
@@ -750,8 +750,8 @@ type OrderedCacheBehaviorForwardedValuesAttributes struct {
 	ref terra.Reference
 }
 
-func (fv OrderedCacheBehaviorForwardedValuesAttributes) InternalRef() terra.Reference {
-	return fv.ref
+func (fv OrderedCacheBehaviorForwardedValuesAttributes) InternalRef() (terra.Reference, error) {
+	return fv.ref, nil
 }
 
 func (fv OrderedCacheBehaviorForwardedValuesAttributes) InternalWithRef(ref terra.Reference) OrderedCacheBehaviorForwardedValuesAttributes {
@@ -782,8 +782,8 @@ type OrderedCacheBehaviorForwardedValuesCookiesAttributes struct {
 	ref terra.Reference
 }
 
-func (c OrderedCacheBehaviorForwardedValuesCookiesAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c OrderedCacheBehaviorForwardedValuesCookiesAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c OrderedCacheBehaviorForwardedValuesCookiesAttributes) InternalWithRef(ref terra.Reference) OrderedCacheBehaviorForwardedValuesCookiesAttributes {
@@ -806,8 +806,8 @@ type OrderedCacheBehaviorFunctionAssociationAttributes struct {
 	ref terra.Reference
 }
 
-func (fa OrderedCacheBehaviorFunctionAssociationAttributes) InternalRef() terra.Reference {
-	return fa.ref
+func (fa OrderedCacheBehaviorFunctionAssociationAttributes) InternalRef() (terra.Reference, error) {
+	return fa.ref, nil
 }
 
 func (fa OrderedCacheBehaviorFunctionAssociationAttributes) InternalWithRef(ref terra.Reference) OrderedCacheBehaviorFunctionAssociationAttributes {
@@ -830,8 +830,8 @@ type OrderedCacheBehaviorLambdaFunctionAssociationAttributes struct {
 	ref terra.Reference
 }
 
-func (lfa OrderedCacheBehaviorLambdaFunctionAssociationAttributes) InternalRef() terra.Reference {
-	return lfa.ref
+func (lfa OrderedCacheBehaviorLambdaFunctionAssociationAttributes) InternalRef() (terra.Reference, error) {
+	return lfa.ref, nil
 }
 
 func (lfa OrderedCacheBehaviorLambdaFunctionAssociationAttributes) InternalWithRef(ref terra.Reference) OrderedCacheBehaviorLambdaFunctionAssociationAttributes {
@@ -858,8 +858,8 @@ type OriginAttributes struct {
 	ref terra.Reference
 }
 
-func (o OriginAttributes) InternalRef() terra.Reference {
-	return o.ref
+func (o OriginAttributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o OriginAttributes) InternalWithRef(ref terra.Reference) OriginAttributes {
@@ -914,8 +914,8 @@ type CustomHeaderAttributes struct {
 	ref terra.Reference
 }
 
-func (ch CustomHeaderAttributes) InternalRef() terra.Reference {
-	return ch.ref
+func (ch CustomHeaderAttributes) InternalRef() (terra.Reference, error) {
+	return ch.ref, nil
 }
 
 func (ch CustomHeaderAttributes) InternalWithRef(ref terra.Reference) CustomHeaderAttributes {
@@ -938,8 +938,8 @@ type CustomOriginConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (coc CustomOriginConfigAttributes) InternalRef() terra.Reference {
-	return coc.ref
+func (coc CustomOriginConfigAttributes) InternalRef() (terra.Reference, error) {
+	return coc.ref, nil
 }
 
 func (coc CustomOriginConfigAttributes) InternalWithRef(ref terra.Reference) CustomOriginConfigAttributes {
@@ -978,8 +978,8 @@ type OriginShieldAttributes struct {
 	ref terra.Reference
 }
 
-func (os OriginShieldAttributes) InternalRef() terra.Reference {
-	return os.ref
+func (os OriginShieldAttributes) InternalRef() (terra.Reference, error) {
+	return os.ref, nil
 }
 
 func (os OriginShieldAttributes) InternalWithRef(ref terra.Reference) OriginShieldAttributes {
@@ -1002,8 +1002,8 @@ type S3OriginConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (soc S3OriginConfigAttributes) InternalRef() terra.Reference {
-	return soc.ref
+func (soc S3OriginConfigAttributes) InternalRef() (terra.Reference, error) {
+	return soc.ref, nil
 }
 
 func (soc S3OriginConfigAttributes) InternalWithRef(ref terra.Reference) S3OriginConfigAttributes {
@@ -1022,8 +1022,8 @@ type OriginGroupAttributes struct {
 	ref terra.Reference
 }
 
-func (og OriginGroupAttributes) InternalRef() terra.Reference {
-	return og.ref
+func (og OriginGroupAttributes) InternalRef() (terra.Reference, error) {
+	return og.ref, nil
 }
 
 func (og OriginGroupAttributes) InternalWithRef(ref terra.Reference) OriginGroupAttributes {
@@ -1050,8 +1050,8 @@ type FailoverCriteriaAttributes struct {
 	ref terra.Reference
 }
 
-func (fc FailoverCriteriaAttributes) InternalRef() terra.Reference {
-	return fc.ref
+func (fc FailoverCriteriaAttributes) InternalRef() (terra.Reference, error) {
+	return fc.ref, nil
 }
 
 func (fc FailoverCriteriaAttributes) InternalWithRef(ref terra.Reference) FailoverCriteriaAttributes {
@@ -1070,8 +1070,8 @@ type MemberAttributes struct {
 	ref terra.Reference
 }
 
-func (m MemberAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MemberAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MemberAttributes) InternalWithRef(ref terra.Reference) MemberAttributes {
@@ -1090,8 +1090,8 @@ type RestrictionsAttributes struct {
 	ref terra.Reference
 }
 
-func (r RestrictionsAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RestrictionsAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RestrictionsAttributes) InternalWithRef(ref terra.Reference) RestrictionsAttributes {
@@ -1110,8 +1110,8 @@ type GeoRestrictionAttributes struct {
 	ref terra.Reference
 }
 
-func (gr GeoRestrictionAttributes) InternalRef() terra.Reference {
-	return gr.ref
+func (gr GeoRestrictionAttributes) InternalRef() (terra.Reference, error) {
+	return gr.ref, nil
 }
 
 func (gr GeoRestrictionAttributes) InternalWithRef(ref terra.Reference) GeoRestrictionAttributes {
@@ -1134,8 +1134,8 @@ type ViewerCertificateAttributes struct {
 	ref terra.Reference
 }
 
-func (vc ViewerCertificateAttributes) InternalRef() terra.Reference {
-	return vc.ref
+func (vc ViewerCertificateAttributes) InternalRef() (terra.Reference, error) {
+	return vc.ref, nil
 }
 
 func (vc ViewerCertificateAttributes) InternalWithRef(ref terra.Reference) ViewerCertificateAttributes {

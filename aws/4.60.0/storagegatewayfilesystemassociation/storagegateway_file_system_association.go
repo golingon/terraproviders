@@ -16,8 +16,8 @@ type CacheAttributesAttributes struct {
 	ref terra.Reference
 }
 
-func (ca CacheAttributesAttributes) InternalRef() terra.Reference {
-	return ca.ref
+func (ca CacheAttributesAttributes) InternalRef() (terra.Reference, error) {
+	return ca.ref, nil
 }
 
 func (ca CacheAttributesAttributes) InternalWithRef(ref terra.Reference) CacheAttributesAttributes {

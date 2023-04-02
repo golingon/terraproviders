@@ -36,8 +36,8 @@ type LocalDomainInfoAttributes struct {
 	ref terra.Reference
 }
 
-func (ldi LocalDomainInfoAttributes) InternalRef() terra.Reference {
-	return ldi.ref
+func (ldi LocalDomainInfoAttributes) InternalRef() (terra.Reference, error) {
+	return ldi.ref, nil
 }
 
 func (ldi LocalDomainInfoAttributes) InternalWithRef(ref terra.Reference) LocalDomainInfoAttributes {
@@ -64,8 +64,8 @@ type RemoteDomainInfoAttributes struct {
 	ref terra.Reference
 }
 
-func (rdi RemoteDomainInfoAttributes) InternalRef() terra.Reference {
-	return rdi.ref
+func (rdi RemoteDomainInfoAttributes) InternalRef() (terra.Reference, error) {
+	return rdi.ref, nil
 }
 
 func (rdi RemoteDomainInfoAttributes) InternalWithRef(ref terra.Reference) RemoteDomainInfoAttributes {
@@ -92,8 +92,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

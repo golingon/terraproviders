@@ -37,8 +37,8 @@ type FirewallStatusAttributes struct {
 	ref terra.Reference
 }
 
-func (fs FirewallStatusAttributes) InternalRef() terra.Reference {
-	return fs.ref
+func (fs FirewallStatusAttributes) InternalRef() (terra.Reference, error) {
+	return fs.ref, nil
 }
 
 func (fs FirewallStatusAttributes) InternalWithRef(ref terra.Reference) FirewallStatusAttributes {
@@ -57,8 +57,8 @@ type SyncStatesAttributes struct {
 	ref terra.Reference
 }
 
-func (ss SyncStatesAttributes) InternalRef() terra.Reference {
-	return ss.ref
+func (ss SyncStatesAttributes) InternalRef() (terra.Reference, error) {
+	return ss.ref, nil
 }
 
 func (ss SyncStatesAttributes) InternalWithRef(ref terra.Reference) SyncStatesAttributes {
@@ -81,8 +81,8 @@ type AttachmentAttributes struct {
 	ref terra.Reference
 }
 
-func (a AttachmentAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AttachmentAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AttachmentAttributes) InternalWithRef(ref terra.Reference) AttachmentAttributes {
@@ -105,8 +105,8 @@ type EncryptionConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ec EncryptionConfigurationAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec EncryptionConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec EncryptionConfigurationAttributes) InternalWithRef(ref terra.Reference) EncryptionConfigurationAttributes {
@@ -129,8 +129,8 @@ type SubnetMappingAttributes struct {
 	ref terra.Reference
 }
 
-func (sm SubnetMappingAttributes) InternalRef() terra.Reference {
-	return sm.ref
+func (sm SubnetMappingAttributes) InternalRef() (terra.Reference, error) {
+	return sm.ref, nil
 }
 
 func (sm SubnetMappingAttributes) InternalWithRef(ref terra.Reference) SubnetMappingAttributes {

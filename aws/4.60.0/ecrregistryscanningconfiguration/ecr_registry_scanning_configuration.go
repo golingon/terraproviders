@@ -25,8 +25,8 @@ type RuleAttributes struct {
 	ref terra.Reference
 }
 
-func (r RuleAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RuleAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RuleAttributes) InternalWithRef(ref terra.Reference) RuleAttributes {
@@ -49,8 +49,8 @@ type RepositoryFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (rf RepositoryFilterAttributes) InternalRef() terra.Reference {
-	return rf.ref
+func (rf RepositoryFilterAttributes) InternalRef() (terra.Reference, error) {
+	return rf.ref, nil
 }
 
 func (rf RepositoryFilterAttributes) InternalWithRef(ref terra.Reference) RepositoryFilterAttributes {

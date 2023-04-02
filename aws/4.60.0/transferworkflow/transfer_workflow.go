@@ -241,8 +241,8 @@ type OnExceptionStepsAttributes struct {
 	ref terra.Reference
 }
 
-func (oes OnExceptionStepsAttributes) InternalRef() terra.Reference {
-	return oes.ref
+func (oes OnExceptionStepsAttributes) InternalRef() (terra.Reference, error) {
+	return oes.ref, nil
 }
 
 func (oes OnExceptionStepsAttributes) InternalWithRef(ref terra.Reference) OnExceptionStepsAttributes {
@@ -281,8 +281,8 @@ type OnExceptionStepsCopyStepDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (csd OnExceptionStepsCopyStepDetailsAttributes) InternalRef() terra.Reference {
-	return csd.ref
+func (csd OnExceptionStepsCopyStepDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return csd.ref, nil
 }
 
 func (csd OnExceptionStepsCopyStepDetailsAttributes) InternalWithRef(ref terra.Reference) OnExceptionStepsCopyStepDetailsAttributes {
@@ -313,8 +313,8 @@ type OnExceptionStepsCopyStepDetailsDestinationFileLocationAttributes struct {
 	ref terra.Reference
 }
 
-func (dfl OnExceptionStepsCopyStepDetailsDestinationFileLocationAttributes) InternalRef() terra.Reference {
-	return dfl.ref
+func (dfl OnExceptionStepsCopyStepDetailsDestinationFileLocationAttributes) InternalRef() (terra.Reference, error) {
+	return dfl.ref, nil
 }
 
 func (dfl OnExceptionStepsCopyStepDetailsDestinationFileLocationAttributes) InternalWithRef(ref terra.Reference) OnExceptionStepsCopyStepDetailsDestinationFileLocationAttributes {
@@ -337,8 +337,8 @@ type OnExceptionStepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttrib
 	ref terra.Reference
 }
 
-func (efl OnExceptionStepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes) InternalRef() terra.Reference {
-	return efl.ref
+func (efl OnExceptionStepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes) InternalRef() (terra.Reference, error) {
+	return efl.ref, nil
 }
 
 func (efl OnExceptionStepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes) InternalWithRef(ref terra.Reference) OnExceptionStepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes {
@@ -361,8 +361,8 @@ type OnExceptionStepsCopyStepDetailsDestinationFileLocationS3FileLocationAttribu
 	ref terra.Reference
 }
 
-func (sfl OnExceptionStepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes) InternalRef() terra.Reference {
-	return sfl.ref
+func (sfl OnExceptionStepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes) InternalRef() (terra.Reference, error) {
+	return sfl.ref, nil
 }
 
 func (sfl OnExceptionStepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes) InternalWithRef(ref terra.Reference) OnExceptionStepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes {
@@ -385,8 +385,8 @@ type OnExceptionStepsCustomStepDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (csd OnExceptionStepsCustomStepDetailsAttributes) InternalRef() terra.Reference {
-	return csd.ref
+func (csd OnExceptionStepsCustomStepDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return csd.ref, nil
 }
 
 func (csd OnExceptionStepsCustomStepDetailsAttributes) InternalWithRef(ref terra.Reference) OnExceptionStepsCustomStepDetailsAttributes {
@@ -417,8 +417,8 @@ type OnExceptionStepsDecryptStepDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (dsd OnExceptionStepsDecryptStepDetailsAttributes) InternalRef() terra.Reference {
-	return dsd.ref
+func (dsd OnExceptionStepsDecryptStepDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return dsd.ref, nil
 }
 
 func (dsd OnExceptionStepsDecryptStepDetailsAttributes) InternalWithRef(ref terra.Reference) OnExceptionStepsDecryptStepDetailsAttributes {
@@ -453,8 +453,8 @@ type OnExceptionStepsDecryptStepDetailsDestinationFileLocationAttributes struct 
 	ref terra.Reference
 }
 
-func (dfl OnExceptionStepsDecryptStepDetailsDestinationFileLocationAttributes) InternalRef() terra.Reference {
-	return dfl.ref
+func (dfl OnExceptionStepsDecryptStepDetailsDestinationFileLocationAttributes) InternalRef() (terra.Reference, error) {
+	return dfl.ref, nil
 }
 
 func (dfl OnExceptionStepsDecryptStepDetailsDestinationFileLocationAttributes) InternalWithRef(ref terra.Reference) OnExceptionStepsDecryptStepDetailsDestinationFileLocationAttributes {
@@ -477,8 +477,8 @@ type OnExceptionStepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAtt
 	ref terra.Reference
 }
 
-func (efl OnExceptionStepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes) InternalRef() terra.Reference {
-	return efl.ref
+func (efl OnExceptionStepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes) InternalRef() (terra.Reference, error) {
+	return efl.ref, nil
 }
 
 func (efl OnExceptionStepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes) InternalWithRef(ref terra.Reference) OnExceptionStepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes {
@@ -501,8 +501,8 @@ type OnExceptionStepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttr
 	ref terra.Reference
 }
 
-func (sfl OnExceptionStepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes) InternalRef() terra.Reference {
-	return sfl.ref
+func (sfl OnExceptionStepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes) InternalRef() (terra.Reference, error) {
+	return sfl.ref, nil
 }
 
 func (sfl OnExceptionStepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes) InternalWithRef(ref terra.Reference) OnExceptionStepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes {
@@ -525,8 +525,8 @@ type OnExceptionStepsDeleteStepDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (dsd OnExceptionStepsDeleteStepDetailsAttributes) InternalRef() terra.Reference {
-	return dsd.ref
+func (dsd OnExceptionStepsDeleteStepDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return dsd.ref, nil
 }
 
 func (dsd OnExceptionStepsDeleteStepDetailsAttributes) InternalWithRef(ref terra.Reference) OnExceptionStepsDeleteStepDetailsAttributes {
@@ -549,8 +549,8 @@ type OnExceptionStepsTagStepDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (tsd OnExceptionStepsTagStepDetailsAttributes) InternalRef() terra.Reference {
-	return tsd.ref
+func (tsd OnExceptionStepsTagStepDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return tsd.ref, nil
 }
 
 func (tsd OnExceptionStepsTagStepDetailsAttributes) InternalWithRef(ref terra.Reference) OnExceptionStepsTagStepDetailsAttributes {
@@ -577,8 +577,8 @@ type OnExceptionStepsTagStepDetailsTagsAttributes struct {
 	ref terra.Reference
 }
 
-func (t OnExceptionStepsTagStepDetailsTagsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t OnExceptionStepsTagStepDetailsTagsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t OnExceptionStepsTagStepDetailsTagsAttributes) InternalWithRef(ref terra.Reference) OnExceptionStepsTagStepDetailsTagsAttributes {
@@ -601,8 +601,8 @@ type StepsAttributes struct {
 	ref terra.Reference
 }
 
-func (s StepsAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s StepsAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s StepsAttributes) InternalWithRef(ref terra.Reference) StepsAttributes {
@@ -641,8 +641,8 @@ type StepsCopyStepDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (csd StepsCopyStepDetailsAttributes) InternalRef() terra.Reference {
-	return csd.ref
+func (csd StepsCopyStepDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return csd.ref, nil
 }
 
 func (csd StepsCopyStepDetailsAttributes) InternalWithRef(ref terra.Reference) StepsCopyStepDetailsAttributes {
@@ -673,8 +673,8 @@ type StepsCopyStepDetailsDestinationFileLocationAttributes struct {
 	ref terra.Reference
 }
 
-func (dfl StepsCopyStepDetailsDestinationFileLocationAttributes) InternalRef() terra.Reference {
-	return dfl.ref
+func (dfl StepsCopyStepDetailsDestinationFileLocationAttributes) InternalRef() (terra.Reference, error) {
+	return dfl.ref, nil
 }
 
 func (dfl StepsCopyStepDetailsDestinationFileLocationAttributes) InternalWithRef(ref terra.Reference) StepsCopyStepDetailsDestinationFileLocationAttributes {
@@ -697,8 +697,8 @@ type StepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes struct
 	ref terra.Reference
 }
 
-func (efl StepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes) InternalRef() terra.Reference {
-	return efl.ref
+func (efl StepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes) InternalRef() (terra.Reference, error) {
+	return efl.ref, nil
 }
 
 func (efl StepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes) InternalWithRef(ref terra.Reference) StepsCopyStepDetailsDestinationFileLocationEfsFileLocationAttributes {
@@ -721,8 +721,8 @@ type StepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes struct 
 	ref terra.Reference
 }
 
-func (sfl StepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes) InternalRef() terra.Reference {
-	return sfl.ref
+func (sfl StepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes) InternalRef() (terra.Reference, error) {
+	return sfl.ref, nil
 }
 
 func (sfl StepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes) InternalWithRef(ref terra.Reference) StepsCopyStepDetailsDestinationFileLocationS3FileLocationAttributes {
@@ -745,8 +745,8 @@ type StepsCustomStepDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (csd StepsCustomStepDetailsAttributes) InternalRef() terra.Reference {
-	return csd.ref
+func (csd StepsCustomStepDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return csd.ref, nil
 }
 
 func (csd StepsCustomStepDetailsAttributes) InternalWithRef(ref terra.Reference) StepsCustomStepDetailsAttributes {
@@ -777,8 +777,8 @@ type StepsDecryptStepDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (dsd StepsDecryptStepDetailsAttributes) InternalRef() terra.Reference {
-	return dsd.ref
+func (dsd StepsDecryptStepDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return dsd.ref, nil
 }
 
 func (dsd StepsDecryptStepDetailsAttributes) InternalWithRef(ref terra.Reference) StepsDecryptStepDetailsAttributes {
@@ -813,8 +813,8 @@ type StepsDecryptStepDetailsDestinationFileLocationAttributes struct {
 	ref terra.Reference
 }
 
-func (dfl StepsDecryptStepDetailsDestinationFileLocationAttributes) InternalRef() terra.Reference {
-	return dfl.ref
+func (dfl StepsDecryptStepDetailsDestinationFileLocationAttributes) InternalRef() (terra.Reference, error) {
+	return dfl.ref, nil
 }
 
 func (dfl StepsDecryptStepDetailsDestinationFileLocationAttributes) InternalWithRef(ref terra.Reference) StepsDecryptStepDetailsDestinationFileLocationAttributes {
@@ -837,8 +837,8 @@ type StepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes str
 	ref terra.Reference
 }
 
-func (efl StepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes) InternalRef() terra.Reference {
-	return efl.ref
+func (efl StepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes) InternalRef() (terra.Reference, error) {
+	return efl.ref, nil
 }
 
 func (efl StepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes) InternalWithRef(ref terra.Reference) StepsDecryptStepDetailsDestinationFileLocationEfsFileLocationAttributes {
@@ -861,8 +861,8 @@ type StepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes stru
 	ref terra.Reference
 }
 
-func (sfl StepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes) InternalRef() terra.Reference {
-	return sfl.ref
+func (sfl StepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes) InternalRef() (terra.Reference, error) {
+	return sfl.ref, nil
 }
 
 func (sfl StepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes) InternalWithRef(ref terra.Reference) StepsDecryptStepDetailsDestinationFileLocationS3FileLocationAttributes {
@@ -885,8 +885,8 @@ type StepsDeleteStepDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (dsd StepsDeleteStepDetailsAttributes) InternalRef() terra.Reference {
-	return dsd.ref
+func (dsd StepsDeleteStepDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return dsd.ref, nil
 }
 
 func (dsd StepsDeleteStepDetailsAttributes) InternalWithRef(ref terra.Reference) StepsDeleteStepDetailsAttributes {
@@ -909,8 +909,8 @@ type StepsTagStepDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (tsd StepsTagStepDetailsAttributes) InternalRef() terra.Reference {
-	return tsd.ref
+func (tsd StepsTagStepDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return tsd.ref, nil
 }
 
 func (tsd StepsTagStepDetailsAttributes) InternalWithRef(ref terra.Reference) StepsTagStepDetailsAttributes {
@@ -937,8 +937,8 @@ type StepsTagStepDetailsTagsAttributes struct {
 	ref terra.Reference
 }
 
-func (t StepsTagStepDetailsTagsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t StepsTagStepDetailsTagsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t StepsTagStepDetailsTagsAttributes) InternalWithRef(ref terra.Reference) StepsTagStepDetailsTagsAttributes {

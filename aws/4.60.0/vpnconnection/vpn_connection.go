@@ -43,8 +43,8 @@ type RoutesAttributes struct {
 	ref terra.Reference
 }
 
-func (r RoutesAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RoutesAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RoutesAttributes) InternalWithRef(ref terra.Reference) RoutesAttributes {
@@ -71,8 +71,8 @@ type VgwTelemetryAttributes struct {
 	ref terra.Reference
 }
 
-func (vt VgwTelemetryAttributes) InternalRef() terra.Reference {
-	return vt.ref
+func (vt VgwTelemetryAttributes) InternalRef() (terra.Reference, error) {
+	return vt.ref, nil
 }
 
 func (vt VgwTelemetryAttributes) InternalWithRef(ref terra.Reference) VgwTelemetryAttributes {
@@ -111,8 +111,8 @@ type Tunnel1LogOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (tlo Tunnel1LogOptionsAttributes) InternalRef() terra.Reference {
-	return tlo.ref
+func (tlo Tunnel1LogOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return tlo.ref, nil
 }
 
 func (tlo Tunnel1LogOptionsAttributes) InternalWithRef(ref terra.Reference) Tunnel1LogOptionsAttributes {
@@ -131,8 +131,8 @@ type Tunnel1LogOptionsCloudwatchLogOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (clo Tunnel1LogOptionsCloudwatchLogOptionsAttributes) InternalRef() terra.Reference {
-	return clo.ref
+func (clo Tunnel1LogOptionsCloudwatchLogOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return clo.ref, nil
 }
 
 func (clo Tunnel1LogOptionsCloudwatchLogOptionsAttributes) InternalWithRef(ref terra.Reference) Tunnel1LogOptionsCloudwatchLogOptionsAttributes {
@@ -159,8 +159,8 @@ type Tunnel2LogOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (tlo Tunnel2LogOptionsAttributes) InternalRef() terra.Reference {
-	return tlo.ref
+func (tlo Tunnel2LogOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return tlo.ref, nil
 }
 
 func (tlo Tunnel2LogOptionsAttributes) InternalWithRef(ref terra.Reference) Tunnel2LogOptionsAttributes {
@@ -179,8 +179,8 @@ type Tunnel2LogOptionsCloudwatchLogOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (clo Tunnel2LogOptionsCloudwatchLogOptionsAttributes) InternalRef() terra.Reference {
-	return clo.ref
+func (clo Tunnel2LogOptionsCloudwatchLogOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return clo.ref, nil
 }
 
 func (clo Tunnel2LogOptionsCloudwatchLogOptionsAttributes) InternalWithRef(ref terra.Reference) Tunnel2LogOptionsCloudwatchLogOptionsAttributes {

@@ -27,8 +27,8 @@ type PortRangeAttributes struct {
 	ref terra.Reference
 }
 
-func (pr PortRangeAttributes) InternalRef() terra.Reference {
-	return pr.ref
+func (pr PortRangeAttributes) InternalRef() (terra.Reference, error) {
+	return pr.ref, nil
 }
 
 func (pr PortRangeAttributes) InternalWithRef(ref terra.Reference) PortRangeAttributes {
@@ -51,8 +51,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

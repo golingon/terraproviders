@@ -17,8 +17,8 @@ type ConnectSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (cs ConnectSettingsAttributes) InternalRef() terra.Reference {
-	return cs.ref
+func (cs ConnectSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return cs.ref, nil
 }
 
 func (cs ConnectSettingsAttributes) InternalWithRef(ref terra.Reference) ConnectSettingsAttributes {
@@ -57,8 +57,8 @@ type RadiusSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (rs RadiusSettingsAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs RadiusSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs RadiusSettingsAttributes) InternalWithRef(ref terra.Reference) RadiusSettingsAttributes {
@@ -101,8 +101,8 @@ type VpcSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (vs VpcSettingsAttributes) InternalRef() terra.Reference {
-	return vs.ref
+func (vs VpcSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return vs.ref, nil
 }
 
 func (vs VpcSettingsAttributes) InternalWithRef(ref terra.Reference) VpcSettingsAttributes {

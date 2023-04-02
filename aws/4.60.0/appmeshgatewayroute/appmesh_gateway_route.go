@@ -167,8 +167,8 @@ type SpecAttributes struct {
 	ref terra.Reference
 }
 
-func (s SpecAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SpecAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SpecAttributes) InternalWithRef(ref terra.Reference) SpecAttributes {
@@ -195,8 +195,8 @@ type GrpcRouteAttributes struct {
 	ref terra.Reference
 }
 
-func (gr GrpcRouteAttributes) InternalRef() terra.Reference {
-	return gr.ref
+func (gr GrpcRouteAttributes) InternalRef() (terra.Reference, error) {
+	return gr.ref, nil
 }
 
 func (gr GrpcRouteAttributes) InternalWithRef(ref terra.Reference) GrpcRouteAttributes {
@@ -219,8 +219,8 @@ type GrpcRouteActionAttributes struct {
 	ref terra.Reference
 }
 
-func (a GrpcRouteActionAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a GrpcRouteActionAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a GrpcRouteActionAttributes) InternalWithRef(ref terra.Reference) GrpcRouteActionAttributes {
@@ -239,8 +239,8 @@ type GrpcRouteActionTargetAttributes struct {
 	ref terra.Reference
 }
 
-func (t GrpcRouteActionTargetAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t GrpcRouteActionTargetAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t GrpcRouteActionTargetAttributes) InternalWithRef(ref terra.Reference) GrpcRouteActionTargetAttributes {
@@ -259,8 +259,8 @@ type GrpcRouteActionTargetVirtualServiceAttributes struct {
 	ref terra.Reference
 }
 
-func (vs GrpcRouteActionTargetVirtualServiceAttributes) InternalRef() terra.Reference {
-	return vs.ref
+func (vs GrpcRouteActionTargetVirtualServiceAttributes) InternalRef() (terra.Reference, error) {
+	return vs.ref, nil
 }
 
 func (vs GrpcRouteActionTargetVirtualServiceAttributes) InternalWithRef(ref terra.Reference) GrpcRouteActionTargetVirtualServiceAttributes {
@@ -279,8 +279,8 @@ type GrpcRouteMatchAttributes struct {
 	ref terra.Reference
 }
 
-func (m GrpcRouteMatchAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m GrpcRouteMatchAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m GrpcRouteMatchAttributes) InternalWithRef(ref terra.Reference) GrpcRouteMatchAttributes {
@@ -303,8 +303,8 @@ type Http2RouteAttributes struct {
 	ref terra.Reference
 }
 
-func (hr Http2RouteAttributes) InternalRef() terra.Reference {
-	return hr.ref
+func (hr Http2RouteAttributes) InternalRef() (terra.Reference, error) {
+	return hr.ref, nil
 }
 
 func (hr Http2RouteAttributes) InternalWithRef(ref terra.Reference) Http2RouteAttributes {
@@ -327,8 +327,8 @@ type Http2RouteActionAttributes struct {
 	ref terra.Reference
 }
 
-func (a Http2RouteActionAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a Http2RouteActionAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a Http2RouteActionAttributes) InternalWithRef(ref terra.Reference) Http2RouteActionAttributes {
@@ -351,8 +351,8 @@ type Http2RouteActionRewriteAttributes struct {
 	ref terra.Reference
 }
 
-func (r Http2RouteActionRewriteAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r Http2RouteActionRewriteAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r Http2RouteActionRewriteAttributes) InternalWithRef(ref terra.Reference) Http2RouteActionRewriteAttributes {
@@ -375,8 +375,8 @@ type Http2RouteActionRewriteHostnameAttributes struct {
 	ref terra.Reference
 }
 
-func (h Http2RouteActionRewriteHostnameAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h Http2RouteActionRewriteHostnameAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h Http2RouteActionRewriteHostnameAttributes) InternalWithRef(ref terra.Reference) Http2RouteActionRewriteHostnameAttributes {
@@ -395,8 +395,8 @@ type Http2RouteActionRewritePrefixAttributes struct {
 	ref terra.Reference
 }
 
-func (p Http2RouteActionRewritePrefixAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p Http2RouteActionRewritePrefixAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p Http2RouteActionRewritePrefixAttributes) InternalWithRef(ref terra.Reference) Http2RouteActionRewritePrefixAttributes {
@@ -419,8 +419,8 @@ type Http2RouteActionTargetAttributes struct {
 	ref terra.Reference
 }
 
-func (t Http2RouteActionTargetAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t Http2RouteActionTargetAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t Http2RouteActionTargetAttributes) InternalWithRef(ref terra.Reference) Http2RouteActionTargetAttributes {
@@ -439,8 +439,8 @@ type Http2RouteActionTargetVirtualServiceAttributes struct {
 	ref terra.Reference
 }
 
-func (vs Http2RouteActionTargetVirtualServiceAttributes) InternalRef() terra.Reference {
-	return vs.ref
+func (vs Http2RouteActionTargetVirtualServiceAttributes) InternalRef() (terra.Reference, error) {
+	return vs.ref, nil
 }
 
 func (vs Http2RouteActionTargetVirtualServiceAttributes) InternalWithRef(ref terra.Reference) Http2RouteActionTargetVirtualServiceAttributes {
@@ -459,8 +459,8 @@ type Http2RouteMatchAttributes struct {
 	ref terra.Reference
 }
 
-func (m Http2RouteMatchAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m Http2RouteMatchAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m Http2RouteMatchAttributes) InternalWithRef(ref terra.Reference) Http2RouteMatchAttributes {
@@ -487,8 +487,8 @@ type Http2RouteMatchHostnameAttributes struct {
 	ref terra.Reference
 }
 
-func (h Http2RouteMatchHostnameAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h Http2RouteMatchHostnameAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h Http2RouteMatchHostnameAttributes) InternalWithRef(ref terra.Reference) Http2RouteMatchHostnameAttributes {
@@ -511,8 +511,8 @@ type HttpRouteAttributes struct {
 	ref terra.Reference
 }
 
-func (hr HttpRouteAttributes) InternalRef() terra.Reference {
-	return hr.ref
+func (hr HttpRouteAttributes) InternalRef() (terra.Reference, error) {
+	return hr.ref, nil
 }
 
 func (hr HttpRouteAttributes) InternalWithRef(ref terra.Reference) HttpRouteAttributes {
@@ -535,8 +535,8 @@ type HttpRouteActionAttributes struct {
 	ref terra.Reference
 }
 
-func (a HttpRouteActionAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a HttpRouteActionAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a HttpRouteActionAttributes) InternalWithRef(ref terra.Reference) HttpRouteActionAttributes {
@@ -559,8 +559,8 @@ type HttpRouteActionRewriteAttributes struct {
 	ref terra.Reference
 }
 
-func (r HttpRouteActionRewriteAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r HttpRouteActionRewriteAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r HttpRouteActionRewriteAttributes) InternalWithRef(ref terra.Reference) HttpRouteActionRewriteAttributes {
@@ -583,8 +583,8 @@ type HttpRouteActionRewriteHostnameAttributes struct {
 	ref terra.Reference
 }
 
-func (h HttpRouteActionRewriteHostnameAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h HttpRouteActionRewriteHostnameAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h HttpRouteActionRewriteHostnameAttributes) InternalWithRef(ref terra.Reference) HttpRouteActionRewriteHostnameAttributes {
@@ -603,8 +603,8 @@ type HttpRouteActionRewritePrefixAttributes struct {
 	ref terra.Reference
 }
 
-func (p HttpRouteActionRewritePrefixAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p HttpRouteActionRewritePrefixAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p HttpRouteActionRewritePrefixAttributes) InternalWithRef(ref terra.Reference) HttpRouteActionRewritePrefixAttributes {
@@ -627,8 +627,8 @@ type HttpRouteActionTargetAttributes struct {
 	ref terra.Reference
 }
 
-func (t HttpRouteActionTargetAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t HttpRouteActionTargetAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t HttpRouteActionTargetAttributes) InternalWithRef(ref terra.Reference) HttpRouteActionTargetAttributes {
@@ -647,8 +647,8 @@ type HttpRouteActionTargetVirtualServiceAttributes struct {
 	ref terra.Reference
 }
 
-func (vs HttpRouteActionTargetVirtualServiceAttributes) InternalRef() terra.Reference {
-	return vs.ref
+func (vs HttpRouteActionTargetVirtualServiceAttributes) InternalRef() (terra.Reference, error) {
+	return vs.ref, nil
 }
 
 func (vs HttpRouteActionTargetVirtualServiceAttributes) InternalWithRef(ref terra.Reference) HttpRouteActionTargetVirtualServiceAttributes {
@@ -667,8 +667,8 @@ type HttpRouteMatchAttributes struct {
 	ref terra.Reference
 }
 
-func (m HttpRouteMatchAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m HttpRouteMatchAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m HttpRouteMatchAttributes) InternalWithRef(ref terra.Reference) HttpRouteMatchAttributes {
@@ -695,8 +695,8 @@ type HttpRouteMatchHostnameAttributes struct {
 	ref terra.Reference
 }
 
-func (h HttpRouteMatchHostnameAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h HttpRouteMatchHostnameAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h HttpRouteMatchHostnameAttributes) InternalWithRef(ref terra.Reference) HttpRouteMatchHostnameAttributes {

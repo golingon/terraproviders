@@ -106,8 +106,8 @@ type AudioAttributes struct {
 	ref terra.Reference
 }
 
-func (a AudioAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AudioAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AudioAttributes) InternalWithRef(ref terra.Reference) AudioAttributes {
@@ -142,8 +142,8 @@ type AudioCodecOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (aco AudioCodecOptionsAttributes) InternalRef() terra.Reference {
-	return aco.ref
+func (aco AudioCodecOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return aco.ref, nil
 }
 
 func (aco AudioCodecOptionsAttributes) InternalWithRef(ref terra.Reference) AudioCodecOptionsAttributes {
@@ -174,8 +174,8 @@ type ThumbnailsAttributes struct {
 	ref terra.Reference
 }
 
-func (t ThumbnailsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t ThumbnailsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t ThumbnailsAttributes) InternalWithRef(ref terra.Reference) ThumbnailsAttributes {
@@ -222,8 +222,8 @@ type VideoAttributes struct {
 	ref terra.Reference
 }
 
-func (v VideoAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v VideoAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v VideoAttributes) InternalWithRef(ref terra.Reference) VideoAttributes {
@@ -290,8 +290,8 @@ type VideoWatermarksAttributes struct {
 	ref terra.Reference
 }
 
-func (vw VideoWatermarksAttributes) InternalRef() terra.Reference {
-	return vw.ref
+func (vw VideoWatermarksAttributes) InternalRef() (terra.Reference, error) {
+	return vw.ref, nil
 }
 
 func (vw VideoWatermarksAttributes) InternalWithRef(ref terra.Reference) VideoWatermarksAttributes {

@@ -46,8 +46,8 @@ type AccessLogSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (als AccessLogSettingsAttributes) InternalRef() terra.Reference {
-	return als.ref
+func (als AccessLogSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return als.ref, nil
 }
 
 func (als AccessLogSettingsAttributes) InternalWithRef(ref terra.Reference) AccessLogSettingsAttributes {
@@ -70,8 +70,8 @@ type DefaultRouteSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (drs DefaultRouteSettingsAttributes) InternalRef() terra.Reference {
-	return drs.ref
+func (drs DefaultRouteSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return drs.ref, nil
 }
 
 func (drs DefaultRouteSettingsAttributes) InternalWithRef(ref terra.Reference) DefaultRouteSettingsAttributes {
@@ -106,8 +106,8 @@ type RouteSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (rs RouteSettingsAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs RouteSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs RouteSettingsAttributes) InternalWithRef(ref terra.Reference) RouteSettingsAttributes {

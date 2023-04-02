@@ -35,8 +35,8 @@ type AuthAttributes struct {
 	ref terra.Reference
 }
 
-func (a AuthAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AuthAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AuthAttributes) InternalWithRef(ref terra.Reference) AuthAttributes {
@@ -75,8 +75,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

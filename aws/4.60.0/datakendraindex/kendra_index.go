@@ -50,8 +50,8 @@ type CapacityUnitsAttributes struct {
 	ref terra.Reference
 }
 
-func (cu CapacityUnitsAttributes) InternalRef() terra.Reference {
-	return cu.ref
+func (cu CapacityUnitsAttributes) InternalRef() (terra.Reference, error) {
+	return cu.ref, nil
 }
 
 func (cu CapacityUnitsAttributes) InternalWithRef(ref terra.Reference) CapacityUnitsAttributes {
@@ -74,8 +74,8 @@ type DocumentMetadataConfigurationUpdatesAttributes struct {
 	ref terra.Reference
 }
 
-func (dmcu DocumentMetadataConfigurationUpdatesAttributes) InternalRef() terra.Reference {
-	return dmcu.ref
+func (dmcu DocumentMetadataConfigurationUpdatesAttributes) InternalRef() (terra.Reference, error) {
+	return dmcu.ref, nil
 }
 
 func (dmcu DocumentMetadataConfigurationUpdatesAttributes) InternalWithRef(ref terra.Reference) DocumentMetadataConfigurationUpdatesAttributes {
@@ -106,8 +106,8 @@ type RelevanceAttributes struct {
 	ref terra.Reference
 }
 
-func (r RelevanceAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RelevanceAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RelevanceAttributes) InternalWithRef(ref terra.Reference) RelevanceAttributes {
@@ -142,8 +142,8 @@ type SearchAttributes struct {
 	ref terra.Reference
 }
 
-func (s SearchAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SearchAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SearchAttributes) InternalWithRef(ref terra.Reference) SearchAttributes {
@@ -174,8 +174,8 @@ type IndexStatisticsAttributes struct {
 	ref terra.Reference
 }
 
-func (is IndexStatisticsAttributes) InternalRef() terra.Reference {
-	return is.ref
+func (is IndexStatisticsAttributes) InternalRef() (terra.Reference, error) {
+	return is.ref, nil
 }
 
 func (is IndexStatisticsAttributes) InternalWithRef(ref terra.Reference) IndexStatisticsAttributes {
@@ -198,8 +198,8 @@ type FaqStatisticsAttributes struct {
 	ref terra.Reference
 }
 
-func (fs FaqStatisticsAttributes) InternalRef() terra.Reference {
-	return fs.ref
+func (fs FaqStatisticsAttributes) InternalRef() (terra.Reference, error) {
+	return fs.ref, nil
 }
 
 func (fs FaqStatisticsAttributes) InternalWithRef(ref terra.Reference) FaqStatisticsAttributes {
@@ -218,8 +218,8 @@ type TextDocumentStatisticsAttributes struct {
 	ref terra.Reference
 }
 
-func (tds TextDocumentStatisticsAttributes) InternalRef() terra.Reference {
-	return tds.ref
+func (tds TextDocumentStatisticsAttributes) InternalRef() (terra.Reference, error) {
+	return tds.ref, nil
 }
 
 func (tds TextDocumentStatisticsAttributes) InternalWithRef(ref terra.Reference) TextDocumentStatisticsAttributes {
@@ -242,8 +242,8 @@ type ServerSideEncryptionConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ssec ServerSideEncryptionConfigurationAttributes) InternalRef() terra.Reference {
-	return ssec.ref
+func (ssec ServerSideEncryptionConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ssec.ref, nil
 }
 
 func (ssec ServerSideEncryptionConfigurationAttributes) InternalWithRef(ref terra.Reference) ServerSideEncryptionConfigurationAttributes {
@@ -262,8 +262,8 @@ type UserGroupResolutionConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ugrc UserGroupResolutionConfigurationAttributes) InternalRef() terra.Reference {
-	return ugrc.ref
+func (ugrc UserGroupResolutionConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ugrc.ref, nil
 }
 
 func (ugrc UserGroupResolutionConfigurationAttributes) InternalWithRef(ref terra.Reference) UserGroupResolutionConfigurationAttributes {
@@ -282,8 +282,8 @@ type UserTokenConfigurationsAttributes struct {
 	ref terra.Reference
 }
 
-func (utc UserTokenConfigurationsAttributes) InternalRef() terra.Reference {
-	return utc.ref
+func (utc UserTokenConfigurationsAttributes) InternalRef() (terra.Reference, error) {
+	return utc.ref, nil
 }
 
 func (utc UserTokenConfigurationsAttributes) InternalWithRef(ref terra.Reference) UserTokenConfigurationsAttributes {
@@ -306,8 +306,8 @@ type JsonTokenTypeConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (jttc JsonTokenTypeConfigurationAttributes) InternalRef() terra.Reference {
-	return jttc.ref
+func (jttc JsonTokenTypeConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return jttc.ref, nil
 }
 
 func (jttc JsonTokenTypeConfigurationAttributes) InternalWithRef(ref terra.Reference) JsonTokenTypeConfigurationAttributes {
@@ -330,8 +330,8 @@ type JwtTokenTypeConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (jttc JwtTokenTypeConfigurationAttributes) InternalRef() terra.Reference {
-	return jttc.ref
+func (jttc JwtTokenTypeConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return jttc.ref, nil
 }
 
 func (jttc JwtTokenTypeConfigurationAttributes) InternalWithRef(ref terra.Reference) JwtTokenTypeConfigurationAttributes {

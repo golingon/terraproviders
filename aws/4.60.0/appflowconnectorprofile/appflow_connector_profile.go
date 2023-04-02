@@ -493,8 +493,8 @@ type ConnectorProfileConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (cpc ConnectorProfileConfigAttributes) InternalRef() terra.Reference {
-	return cpc.ref
+func (cpc ConnectorProfileConfigAttributes) InternalRef() (terra.Reference, error) {
+	return cpc.ref, nil
 }
 
 func (cpc ConnectorProfileConfigAttributes) InternalWithRef(ref terra.Reference) ConnectorProfileConfigAttributes {
@@ -517,8 +517,8 @@ type ConnectorProfileCredentialsAttributes struct {
 	ref terra.Reference
 }
 
-func (cpc ConnectorProfileCredentialsAttributes) InternalRef() terra.Reference {
-	return cpc.ref
+func (cpc ConnectorProfileCredentialsAttributes) InternalRef() (terra.Reference, error) {
+	return cpc.ref, nil
 }
 
 func (cpc ConnectorProfileCredentialsAttributes) InternalWithRef(ref terra.Reference) ConnectorProfileCredentialsAttributes {
@@ -605,8 +605,8 @@ type ConnectorProfileCredentialsAmplitudeAttributes struct {
 	ref terra.Reference
 }
 
-func (a ConnectorProfileCredentialsAmplitudeAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ConnectorProfileCredentialsAmplitudeAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ConnectorProfileCredentialsAmplitudeAttributes) InternalWithRef(ref terra.Reference) ConnectorProfileCredentialsAmplitudeAttributes {
@@ -629,8 +629,8 @@ type ConnectorProfileCredentialsCustomConnectorAttributes struct {
 	ref terra.Reference
 }
 
-func (cc ConnectorProfileCredentialsCustomConnectorAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc ConnectorProfileCredentialsCustomConnectorAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc ConnectorProfileCredentialsCustomConnectorAttributes) InternalWithRef(ref terra.Reference) ConnectorProfileCredentialsCustomConnectorAttributes {
@@ -665,8 +665,8 @@ type ApiKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (ak ApiKeyAttributes) InternalRef() terra.Reference {
-	return ak.ref
+func (ak ApiKeyAttributes) InternalRef() (terra.Reference, error) {
+	return ak.ref, nil
 }
 
 func (ak ApiKeyAttributes) InternalWithRef(ref terra.Reference) ApiKeyAttributes {
@@ -689,8 +689,8 @@ type BasicAttributes struct {
 	ref terra.Reference
 }
 
-func (b BasicAttributes) InternalRef() terra.Reference {
-	return b.ref
+func (b BasicAttributes) InternalRef() (terra.Reference, error) {
+	return b.ref, nil
 }
 
 func (b BasicAttributes) InternalWithRef(ref terra.Reference) BasicAttributes {
@@ -713,8 +713,8 @@ type CustomAttributes struct {
 	ref terra.Reference
 }
 
-func (c CustomAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CustomAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CustomAttributes) InternalWithRef(ref terra.Reference) CustomAttributes {
@@ -737,8 +737,8 @@ type Oauth2Attributes struct {
 	ref terra.Reference
 }
 
-func (o Oauth2Attributes) InternalRef() terra.Reference {
-	return o.ref
+func (o Oauth2Attributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o Oauth2Attributes) InternalWithRef(ref terra.Reference) Oauth2Attributes {
@@ -773,8 +773,8 @@ type Oauth2OauthRequestAttributes struct {
 	ref terra.Reference
 }
 
-func (or Oauth2OauthRequestAttributes) InternalRef() terra.Reference {
-	return or.ref
+func (or Oauth2OauthRequestAttributes) InternalRef() (terra.Reference, error) {
+	return or.ref, nil
 }
 
 func (or Oauth2OauthRequestAttributes) InternalWithRef(ref terra.Reference) Oauth2OauthRequestAttributes {
@@ -797,8 +797,8 @@ type ConnectorProfileCredentialsDatadogAttributes struct {
 	ref terra.Reference
 }
 
-func (d ConnectorProfileCredentialsDatadogAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d ConnectorProfileCredentialsDatadogAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d ConnectorProfileCredentialsDatadogAttributes) InternalWithRef(ref terra.Reference) ConnectorProfileCredentialsDatadogAttributes {
@@ -821,8 +821,8 @@ type ConnectorProfileCredentialsDynatraceAttributes struct {
 	ref terra.Reference
 }
 
-func (d ConnectorProfileCredentialsDynatraceAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d ConnectorProfileCredentialsDynatraceAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d ConnectorProfileCredentialsDynatraceAttributes) InternalWithRef(ref terra.Reference) ConnectorProfileCredentialsDynatraceAttributes {
@@ -841,8 +841,8 @@ type ConnectorProfileCredentialsGoogleAnalyticsAttributes struct {
 	ref terra.Reference
 }
 
-func (ga ConnectorProfileCredentialsGoogleAnalyticsAttributes) InternalRef() terra.Reference {
-	return ga.ref
+func (ga ConnectorProfileCredentialsGoogleAnalyticsAttributes) InternalRef() (terra.Reference, error) {
+	return ga.ref, nil
 }
 
 func (ga ConnectorProfileCredentialsGoogleAnalyticsAttributes) InternalWithRef(ref terra.Reference) ConnectorProfileCredentialsGoogleAnalyticsAttributes {
@@ -877,8 +877,8 @@ type GoogleAnalyticsOauthRequestAttributes struct {
 	ref terra.Reference
 }
 
-func (or GoogleAnalyticsOauthRequestAttributes) InternalRef() terra.Reference {
-	return or.ref
+func (or GoogleAnalyticsOauthRequestAttributes) InternalRef() (terra.Reference, error) {
+	return or.ref, nil
 }
 
 func (or GoogleAnalyticsOauthRequestAttributes) InternalWithRef(ref terra.Reference) GoogleAnalyticsOauthRequestAttributes {
@@ -901,8 +901,8 @@ type ConnectorProfileCredentialsHoneycodeAttributes struct {
 	ref terra.Reference
 }
 
-func (h ConnectorProfileCredentialsHoneycodeAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h ConnectorProfileCredentialsHoneycodeAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h ConnectorProfileCredentialsHoneycodeAttributes) InternalWithRef(ref terra.Reference) ConnectorProfileCredentialsHoneycodeAttributes {
@@ -929,8 +929,8 @@ type HoneycodeOauthRequestAttributes struct {
 	ref terra.Reference
 }
 
-func (or HoneycodeOauthRequestAttributes) InternalRef() terra.Reference {
-	return or.ref
+func (or HoneycodeOauthRequestAttributes) InternalRef() (terra.Reference, error) {
+	return or.ref, nil
 }
 
 func (or HoneycodeOauthRequestAttributes) InternalWithRef(ref terra.Reference) HoneycodeOauthRequestAttributes {
@@ -953,8 +953,8 @@ type ConnectorProfileCredentialsInforNexusAttributes struct {
 	ref terra.Reference
 }
 
-func (in ConnectorProfileCredentialsInforNexusAttributes) InternalRef() terra.Reference {
-	return in.ref
+func (in ConnectorProfileCredentialsInforNexusAttributes) InternalRef() (terra.Reference, error) {
+	return in.ref, nil
 }
 
 func (in ConnectorProfileCredentialsInforNexusAttributes) InternalWithRef(ref terra.Reference) ConnectorProfileCredentialsInforNexusAttributes {
@@ -985,8 +985,8 @@ type ConnectorProfileCredentialsMarketoAttributes struct {
 	ref terra.Reference
 }
 
-func (m ConnectorProfileCredentialsMarketoAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m ConnectorProfileCredentialsMarketoAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m ConnectorProfileCredentialsMarketoAttributes) InternalWithRef(ref terra.Reference) ConnectorProfileCredentialsMarketoAttributes {
@@ -1017,8 +1017,8 @@ type MarketoOauthRequestAttributes struct {
 	ref terra.Reference
 }
 
-func (or MarketoOauthRequestAttributes) InternalRef() terra.Reference {
-	return or.ref
+func (or MarketoOauthRequestAttributes) InternalRef() (terra.Reference, error) {
+	return or.ref, nil
 }
 
 func (or MarketoOauthRequestAttributes) InternalWithRef(ref terra.Reference) MarketoOauthRequestAttributes {
@@ -1041,8 +1041,8 @@ type ConnectorProfileCredentialsRedshiftAttributes struct {
 	ref terra.Reference
 }
 
-func (r ConnectorProfileCredentialsRedshiftAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r ConnectorProfileCredentialsRedshiftAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r ConnectorProfileCredentialsRedshiftAttributes) InternalWithRef(ref terra.Reference) ConnectorProfileCredentialsRedshiftAttributes {
@@ -1065,8 +1065,8 @@ type ConnectorProfileCredentialsSalesforceAttributes struct {
 	ref terra.Reference
 }
 
-func (s ConnectorProfileCredentialsSalesforceAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ConnectorProfileCredentialsSalesforceAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ConnectorProfileCredentialsSalesforceAttributes) InternalWithRef(ref terra.Reference) ConnectorProfileCredentialsSalesforceAttributes {
@@ -1097,8 +1097,8 @@ type SalesforceOauthRequestAttributes struct {
 	ref terra.Reference
 }
 
-func (or SalesforceOauthRequestAttributes) InternalRef() terra.Reference {
-	return or.ref
+func (or SalesforceOauthRequestAttributes) InternalRef() (terra.Reference, error) {
+	return or.ref, nil
 }
 
 func (or SalesforceOauthRequestAttributes) InternalWithRef(ref terra.Reference) SalesforceOauthRequestAttributes {
@@ -1121,8 +1121,8 @@ type ConnectorProfileCredentialsSapoDataAttributes struct {
 	ref terra.Reference
 }
 
-func (sd ConnectorProfileCredentialsSapoDataAttributes) InternalRef() terra.Reference {
-	return sd.ref
+func (sd ConnectorProfileCredentialsSapoDataAttributes) InternalRef() (terra.Reference, error) {
+	return sd.ref, nil
 }
 
 func (sd ConnectorProfileCredentialsSapoDataAttributes) InternalWithRef(ref terra.Reference) ConnectorProfileCredentialsSapoDataAttributes {
@@ -1145,8 +1145,8 @@ type BasicAuthCredentialsAttributes struct {
 	ref terra.Reference
 }
 
-func (bac BasicAuthCredentialsAttributes) InternalRef() terra.Reference {
-	return bac.ref
+func (bac BasicAuthCredentialsAttributes) InternalRef() (terra.Reference, error) {
+	return bac.ref, nil
 }
 
 func (bac BasicAuthCredentialsAttributes) InternalWithRef(ref terra.Reference) BasicAuthCredentialsAttributes {
@@ -1169,8 +1169,8 @@ type OauthCredentialsAttributes struct {
 	ref terra.Reference
 }
 
-func (oc OauthCredentialsAttributes) InternalRef() terra.Reference {
-	return oc.ref
+func (oc OauthCredentialsAttributes) InternalRef() (terra.Reference, error) {
+	return oc.ref, nil
 }
 
 func (oc OauthCredentialsAttributes) InternalWithRef(ref terra.Reference) OauthCredentialsAttributes {
@@ -1205,8 +1205,8 @@ type OauthCredentialsOauthRequestAttributes struct {
 	ref terra.Reference
 }
 
-func (or OauthCredentialsOauthRequestAttributes) InternalRef() terra.Reference {
-	return or.ref
+func (or OauthCredentialsOauthRequestAttributes) InternalRef() (terra.Reference, error) {
+	return or.ref, nil
 }
 
 func (or OauthCredentialsOauthRequestAttributes) InternalWithRef(ref terra.Reference) OauthCredentialsOauthRequestAttributes {
@@ -1229,8 +1229,8 @@ type ConnectorProfileCredentialsServiceNowAttributes struct {
 	ref terra.Reference
 }
 
-func (sn ConnectorProfileCredentialsServiceNowAttributes) InternalRef() terra.Reference {
-	return sn.ref
+func (sn ConnectorProfileCredentialsServiceNowAttributes) InternalRef() (terra.Reference, error) {
+	return sn.ref, nil
 }
 
 func (sn ConnectorProfileCredentialsServiceNowAttributes) InternalWithRef(ref terra.Reference) ConnectorProfileCredentialsServiceNowAttributes {
@@ -1253,8 +1253,8 @@ type ConnectorProfileCredentialsSingularAttributes struct {
 	ref terra.Reference
 }
 
-func (s ConnectorProfileCredentialsSingularAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ConnectorProfileCredentialsSingularAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ConnectorProfileCredentialsSingularAttributes) InternalWithRef(ref terra.Reference) ConnectorProfileCredentialsSingularAttributes {
@@ -1273,8 +1273,8 @@ type ConnectorProfileCredentialsSlackAttributes struct {
 	ref terra.Reference
 }
 
-func (s ConnectorProfileCredentialsSlackAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ConnectorProfileCredentialsSlackAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ConnectorProfileCredentialsSlackAttributes) InternalWithRef(ref terra.Reference) ConnectorProfileCredentialsSlackAttributes {
@@ -1305,8 +1305,8 @@ type SlackOauthRequestAttributes struct {
 	ref terra.Reference
 }
 
-func (or SlackOauthRequestAttributes) InternalRef() terra.Reference {
-	return or.ref
+func (or SlackOauthRequestAttributes) InternalRef() (terra.Reference, error) {
+	return or.ref, nil
 }
 
 func (or SlackOauthRequestAttributes) InternalWithRef(ref terra.Reference) SlackOauthRequestAttributes {
@@ -1329,8 +1329,8 @@ type ConnectorProfileCredentialsSnowflakeAttributes struct {
 	ref terra.Reference
 }
 
-func (s ConnectorProfileCredentialsSnowflakeAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ConnectorProfileCredentialsSnowflakeAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ConnectorProfileCredentialsSnowflakeAttributes) InternalWithRef(ref terra.Reference) ConnectorProfileCredentialsSnowflakeAttributes {
@@ -1353,8 +1353,8 @@ type ConnectorProfileCredentialsTrendmicroAttributes struct {
 	ref terra.Reference
 }
 
-func (t ConnectorProfileCredentialsTrendmicroAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t ConnectorProfileCredentialsTrendmicroAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t ConnectorProfileCredentialsTrendmicroAttributes) InternalWithRef(ref terra.Reference) ConnectorProfileCredentialsTrendmicroAttributes {
@@ -1373,8 +1373,8 @@ type ConnectorProfileCredentialsVeevaAttributes struct {
 	ref terra.Reference
 }
 
-func (v ConnectorProfileCredentialsVeevaAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v ConnectorProfileCredentialsVeevaAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v ConnectorProfileCredentialsVeevaAttributes) InternalWithRef(ref terra.Reference) ConnectorProfileCredentialsVeevaAttributes {
@@ -1397,8 +1397,8 @@ type ConnectorProfileCredentialsZendeskAttributes struct {
 	ref terra.Reference
 }
 
-func (z ConnectorProfileCredentialsZendeskAttributes) InternalRef() terra.Reference {
-	return z.ref
+func (z ConnectorProfileCredentialsZendeskAttributes) InternalRef() (terra.Reference, error) {
+	return z.ref, nil
 }
 
 func (z ConnectorProfileCredentialsZendeskAttributes) InternalWithRef(ref terra.Reference) ConnectorProfileCredentialsZendeskAttributes {
@@ -1429,8 +1429,8 @@ type ZendeskOauthRequestAttributes struct {
 	ref terra.Reference
 }
 
-func (or ZendeskOauthRequestAttributes) InternalRef() terra.Reference {
-	return or.ref
+func (or ZendeskOauthRequestAttributes) InternalRef() (terra.Reference, error) {
+	return or.ref, nil
 }
 
 func (or ZendeskOauthRequestAttributes) InternalWithRef(ref terra.Reference) ZendeskOauthRequestAttributes {
@@ -1453,8 +1453,8 @@ type ConnectorProfilePropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (cpp ConnectorProfilePropertiesAttributes) InternalRef() terra.Reference {
-	return cpp.ref
+func (cpp ConnectorProfilePropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return cpp.ref, nil
 }
 
 func (cpp ConnectorProfilePropertiesAttributes) InternalWithRef(ref terra.Reference) ConnectorProfilePropertiesAttributes {
@@ -1541,8 +1541,8 @@ type ConnectorProfilePropertiesAmplitudeAttributes struct {
 	ref terra.Reference
 }
 
-func (a ConnectorProfilePropertiesAmplitudeAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ConnectorProfilePropertiesAmplitudeAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ConnectorProfilePropertiesAmplitudeAttributes) InternalWithRef(ref terra.Reference) ConnectorProfilePropertiesAmplitudeAttributes {
@@ -1557,8 +1557,8 @@ type ConnectorProfilePropertiesCustomConnectorAttributes struct {
 	ref terra.Reference
 }
 
-func (cc ConnectorProfilePropertiesCustomConnectorAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc ConnectorProfilePropertiesCustomConnectorAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc ConnectorProfilePropertiesCustomConnectorAttributes) InternalWithRef(ref terra.Reference) ConnectorProfilePropertiesCustomConnectorAttributes {
@@ -1581,8 +1581,8 @@ type Oauth2PropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (op Oauth2PropertiesAttributes) InternalRef() terra.Reference {
-	return op.ref
+func (op Oauth2PropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return op.ref, nil
 }
 
 func (op Oauth2PropertiesAttributes) InternalWithRef(ref terra.Reference) Oauth2PropertiesAttributes {
@@ -1609,8 +1609,8 @@ type ConnectorProfilePropertiesDatadogAttributes struct {
 	ref terra.Reference
 }
 
-func (d ConnectorProfilePropertiesDatadogAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d ConnectorProfilePropertiesDatadogAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d ConnectorProfilePropertiesDatadogAttributes) InternalWithRef(ref terra.Reference) ConnectorProfilePropertiesDatadogAttributes {
@@ -1629,8 +1629,8 @@ type ConnectorProfilePropertiesDynatraceAttributes struct {
 	ref terra.Reference
 }
 
-func (d ConnectorProfilePropertiesDynatraceAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d ConnectorProfilePropertiesDynatraceAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d ConnectorProfilePropertiesDynatraceAttributes) InternalWithRef(ref terra.Reference) ConnectorProfilePropertiesDynatraceAttributes {
@@ -1649,8 +1649,8 @@ type ConnectorProfilePropertiesGoogleAnalyticsAttributes struct {
 	ref terra.Reference
 }
 
-func (ga ConnectorProfilePropertiesGoogleAnalyticsAttributes) InternalRef() terra.Reference {
-	return ga.ref
+func (ga ConnectorProfilePropertiesGoogleAnalyticsAttributes) InternalRef() (terra.Reference, error) {
+	return ga.ref, nil
 }
 
 func (ga ConnectorProfilePropertiesGoogleAnalyticsAttributes) InternalWithRef(ref terra.Reference) ConnectorProfilePropertiesGoogleAnalyticsAttributes {
@@ -1665,8 +1665,8 @@ type ConnectorProfilePropertiesHoneycodeAttributes struct {
 	ref terra.Reference
 }
 
-func (h ConnectorProfilePropertiesHoneycodeAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h ConnectorProfilePropertiesHoneycodeAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h ConnectorProfilePropertiesHoneycodeAttributes) InternalWithRef(ref terra.Reference) ConnectorProfilePropertiesHoneycodeAttributes {
@@ -1681,8 +1681,8 @@ type ConnectorProfilePropertiesInforNexusAttributes struct {
 	ref terra.Reference
 }
 
-func (in ConnectorProfilePropertiesInforNexusAttributes) InternalRef() terra.Reference {
-	return in.ref
+func (in ConnectorProfilePropertiesInforNexusAttributes) InternalRef() (terra.Reference, error) {
+	return in.ref, nil
 }
 
 func (in ConnectorProfilePropertiesInforNexusAttributes) InternalWithRef(ref terra.Reference) ConnectorProfilePropertiesInforNexusAttributes {
@@ -1701,8 +1701,8 @@ type ConnectorProfilePropertiesMarketoAttributes struct {
 	ref terra.Reference
 }
 
-func (m ConnectorProfilePropertiesMarketoAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m ConnectorProfilePropertiesMarketoAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m ConnectorProfilePropertiesMarketoAttributes) InternalWithRef(ref terra.Reference) ConnectorProfilePropertiesMarketoAttributes {
@@ -1721,8 +1721,8 @@ type ConnectorProfilePropertiesRedshiftAttributes struct {
 	ref terra.Reference
 }
 
-func (r ConnectorProfilePropertiesRedshiftAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r ConnectorProfilePropertiesRedshiftAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r ConnectorProfilePropertiesRedshiftAttributes) InternalWithRef(ref terra.Reference) ConnectorProfilePropertiesRedshiftAttributes {
@@ -1765,8 +1765,8 @@ type ConnectorProfilePropertiesSalesforceAttributes struct {
 	ref terra.Reference
 }
 
-func (s ConnectorProfilePropertiesSalesforceAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ConnectorProfilePropertiesSalesforceAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ConnectorProfilePropertiesSalesforceAttributes) InternalWithRef(ref terra.Reference) ConnectorProfilePropertiesSalesforceAttributes {
@@ -1789,8 +1789,8 @@ type ConnectorProfilePropertiesSapoDataAttributes struct {
 	ref terra.Reference
 }
 
-func (sd ConnectorProfilePropertiesSapoDataAttributes) InternalRef() terra.Reference {
-	return sd.ref
+func (sd ConnectorProfilePropertiesSapoDataAttributes) InternalRef() (terra.Reference, error) {
+	return sd.ref, nil
 }
 
 func (sd ConnectorProfilePropertiesSapoDataAttributes) InternalWithRef(ref terra.Reference) ConnectorProfilePropertiesSapoDataAttributes {
@@ -1833,8 +1833,8 @@ type OauthPropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (op OauthPropertiesAttributes) InternalRef() terra.Reference {
-	return op.ref
+func (op OauthPropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return op.ref, nil
 }
 
 func (op OauthPropertiesAttributes) InternalWithRef(ref terra.Reference) OauthPropertiesAttributes {
@@ -1861,8 +1861,8 @@ type ConnectorProfilePropertiesServiceNowAttributes struct {
 	ref terra.Reference
 }
 
-func (sn ConnectorProfilePropertiesServiceNowAttributes) InternalRef() terra.Reference {
-	return sn.ref
+func (sn ConnectorProfilePropertiesServiceNowAttributes) InternalRef() (terra.Reference, error) {
+	return sn.ref, nil
 }
 
 func (sn ConnectorProfilePropertiesServiceNowAttributes) InternalWithRef(ref terra.Reference) ConnectorProfilePropertiesServiceNowAttributes {
@@ -1881,8 +1881,8 @@ type ConnectorProfilePropertiesSingularAttributes struct {
 	ref terra.Reference
 }
 
-func (s ConnectorProfilePropertiesSingularAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ConnectorProfilePropertiesSingularAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ConnectorProfilePropertiesSingularAttributes) InternalWithRef(ref terra.Reference) ConnectorProfilePropertiesSingularAttributes {
@@ -1897,8 +1897,8 @@ type ConnectorProfilePropertiesSlackAttributes struct {
 	ref terra.Reference
 }
 
-func (s ConnectorProfilePropertiesSlackAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ConnectorProfilePropertiesSlackAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ConnectorProfilePropertiesSlackAttributes) InternalWithRef(ref terra.Reference) ConnectorProfilePropertiesSlackAttributes {
@@ -1917,8 +1917,8 @@ type ConnectorProfilePropertiesSnowflakeAttributes struct {
 	ref terra.Reference
 }
 
-func (s ConnectorProfilePropertiesSnowflakeAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ConnectorProfilePropertiesSnowflakeAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ConnectorProfilePropertiesSnowflakeAttributes) InternalWithRef(ref terra.Reference) ConnectorProfilePropertiesSnowflakeAttributes {
@@ -1961,8 +1961,8 @@ type ConnectorProfilePropertiesTrendmicroAttributes struct {
 	ref terra.Reference
 }
 
-func (t ConnectorProfilePropertiesTrendmicroAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t ConnectorProfilePropertiesTrendmicroAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t ConnectorProfilePropertiesTrendmicroAttributes) InternalWithRef(ref terra.Reference) ConnectorProfilePropertiesTrendmicroAttributes {
@@ -1977,8 +1977,8 @@ type ConnectorProfilePropertiesVeevaAttributes struct {
 	ref terra.Reference
 }
 
-func (v ConnectorProfilePropertiesVeevaAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v ConnectorProfilePropertiesVeevaAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v ConnectorProfilePropertiesVeevaAttributes) InternalWithRef(ref terra.Reference) ConnectorProfilePropertiesVeevaAttributes {
@@ -1997,8 +1997,8 @@ type ConnectorProfilePropertiesZendeskAttributes struct {
 	ref terra.Reference
 }
 
-func (z ConnectorProfilePropertiesZendeskAttributes) InternalRef() terra.Reference {
-	return z.ref
+func (z ConnectorProfilePropertiesZendeskAttributes) InternalRef() (terra.Reference, error) {
+	return z.ref, nil
 }
 
 func (z ConnectorProfilePropertiesZendeskAttributes) InternalWithRef(ref terra.Reference) ConnectorProfilePropertiesZendeskAttributes {

@@ -145,8 +145,8 @@ type FlexibleTimeWindowAttributes struct {
 	ref terra.Reference
 }
 
-func (ftw FlexibleTimeWindowAttributes) InternalRef() terra.Reference {
-	return ftw.ref
+func (ftw FlexibleTimeWindowAttributes) InternalRef() (terra.Reference, error) {
+	return ftw.ref, nil
 }
 
 func (ftw FlexibleTimeWindowAttributes) InternalWithRef(ref terra.Reference) FlexibleTimeWindowAttributes {
@@ -169,8 +169,8 @@ type TargetAttributes struct {
 	ref terra.Reference
 }
 
-func (t TargetAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TargetAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TargetAttributes) InternalWithRef(ref terra.Reference) TargetAttributes {
@@ -225,8 +225,8 @@ type DeadLetterConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (dlc DeadLetterConfigAttributes) InternalRef() terra.Reference {
-	return dlc.ref
+func (dlc DeadLetterConfigAttributes) InternalRef() (terra.Reference, error) {
+	return dlc.ref, nil
 }
 
 func (dlc DeadLetterConfigAttributes) InternalWithRef(ref terra.Reference) DeadLetterConfigAttributes {
@@ -245,8 +245,8 @@ type EcsParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (ep EcsParametersAttributes) InternalRef() terra.Reference {
-	return ep.ref
+func (ep EcsParametersAttributes) InternalRef() (terra.Reference, error) {
+	return ep.ref, nil
 }
 
 func (ep EcsParametersAttributes) InternalWithRef(ref terra.Reference) EcsParametersAttributes {
@@ -317,8 +317,8 @@ type CapacityProviderStrategyAttributes struct {
 	ref terra.Reference
 }
 
-func (cps CapacityProviderStrategyAttributes) InternalRef() terra.Reference {
-	return cps.ref
+func (cps CapacityProviderStrategyAttributes) InternalRef() (terra.Reference, error) {
+	return cps.ref, nil
 }
 
 func (cps CapacityProviderStrategyAttributes) InternalWithRef(ref terra.Reference) CapacityProviderStrategyAttributes {
@@ -345,8 +345,8 @@ type NetworkConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (nc NetworkConfigurationAttributes) InternalRef() terra.Reference {
-	return nc.ref
+func (nc NetworkConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return nc.ref, nil
 }
 
 func (nc NetworkConfigurationAttributes) InternalWithRef(ref terra.Reference) NetworkConfigurationAttributes {
@@ -373,8 +373,8 @@ type PlacementConstraintsAttributes struct {
 	ref terra.Reference
 }
 
-func (pc PlacementConstraintsAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc PlacementConstraintsAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc PlacementConstraintsAttributes) InternalWithRef(ref terra.Reference) PlacementConstraintsAttributes {
@@ -397,8 +397,8 @@ type PlacementStrategyAttributes struct {
 	ref terra.Reference
 }
 
-func (ps PlacementStrategyAttributes) InternalRef() terra.Reference {
-	return ps.ref
+func (ps PlacementStrategyAttributes) InternalRef() (terra.Reference, error) {
+	return ps.ref, nil
 }
 
 func (ps PlacementStrategyAttributes) InternalWithRef(ref terra.Reference) PlacementStrategyAttributes {
@@ -421,8 +421,8 @@ type EventbridgeParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (ep EventbridgeParametersAttributes) InternalRef() terra.Reference {
-	return ep.ref
+func (ep EventbridgeParametersAttributes) InternalRef() (terra.Reference, error) {
+	return ep.ref, nil
 }
 
 func (ep EventbridgeParametersAttributes) InternalWithRef(ref terra.Reference) EventbridgeParametersAttributes {
@@ -445,8 +445,8 @@ type KinesisParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (kp KinesisParametersAttributes) InternalRef() terra.Reference {
-	return kp.ref
+func (kp KinesisParametersAttributes) InternalRef() (terra.Reference, error) {
+	return kp.ref, nil
 }
 
 func (kp KinesisParametersAttributes) InternalWithRef(ref terra.Reference) KinesisParametersAttributes {
@@ -465,8 +465,8 @@ type RetryPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (rp RetryPolicyAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp RetryPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp RetryPolicyAttributes) InternalWithRef(ref terra.Reference) RetryPolicyAttributes {
@@ -489,8 +489,8 @@ type SagemakerPipelineParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (spp SagemakerPipelineParametersAttributes) InternalRef() terra.Reference {
-	return spp.ref
+func (spp SagemakerPipelineParametersAttributes) InternalRef() (terra.Reference, error) {
+	return spp.ref, nil
 }
 
 func (spp SagemakerPipelineParametersAttributes) InternalWithRef(ref terra.Reference) SagemakerPipelineParametersAttributes {
@@ -509,8 +509,8 @@ type PipelineParameterAttributes struct {
 	ref terra.Reference
 }
 
-func (pp PipelineParameterAttributes) InternalRef() terra.Reference {
-	return pp.ref
+func (pp PipelineParameterAttributes) InternalRef() (terra.Reference, error) {
+	return pp.ref, nil
 }
 
 func (pp PipelineParameterAttributes) InternalWithRef(ref terra.Reference) PipelineParameterAttributes {
@@ -533,8 +533,8 @@ type SqsParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (sp SqsParametersAttributes) InternalRef() terra.Reference {
-	return sp.ref
+func (sp SqsParametersAttributes) InternalRef() (terra.Reference, error) {
+	return sp.ref, nil
 }
 
 func (sp SqsParametersAttributes) InternalWithRef(ref terra.Reference) SqsParametersAttributes {

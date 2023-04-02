@@ -50,8 +50,8 @@ type DatasourcesAttributes struct {
 	ref terra.Reference
 }
 
-func (d DatasourcesAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DatasourcesAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DatasourcesAttributes) InternalWithRef(ref terra.Reference) DatasourcesAttributes {
@@ -78,8 +78,8 @@ type KubernetesAttributes struct {
 	ref terra.Reference
 }
 
-func (k KubernetesAttributes) InternalRef() terra.Reference {
-	return k.ref
+func (k KubernetesAttributes) InternalRef() (terra.Reference, error) {
+	return k.ref, nil
 }
 
 func (k KubernetesAttributes) InternalWithRef(ref terra.Reference) KubernetesAttributes {
@@ -98,8 +98,8 @@ type AuditLogsAttributes struct {
 	ref terra.Reference
 }
 
-func (al AuditLogsAttributes) InternalRef() terra.Reference {
-	return al.ref
+func (al AuditLogsAttributes) InternalRef() (terra.Reference, error) {
+	return al.ref, nil
 }
 
 func (al AuditLogsAttributes) InternalWithRef(ref terra.Reference) AuditLogsAttributes {
@@ -118,8 +118,8 @@ type MalwareProtectionAttributes struct {
 	ref terra.Reference
 }
 
-func (mp MalwareProtectionAttributes) InternalRef() terra.Reference {
-	return mp.ref
+func (mp MalwareProtectionAttributes) InternalRef() (terra.Reference, error) {
+	return mp.ref, nil
 }
 
 func (mp MalwareProtectionAttributes) InternalWithRef(ref terra.Reference) MalwareProtectionAttributes {
@@ -138,8 +138,8 @@ type ScanEc2InstanceWithFindingsAttributes struct {
 	ref terra.Reference
 }
 
-func (seiwf ScanEc2InstanceWithFindingsAttributes) InternalRef() terra.Reference {
-	return seiwf.ref
+func (seiwf ScanEc2InstanceWithFindingsAttributes) InternalRef() (terra.Reference, error) {
+	return seiwf.ref, nil
 }
 
 func (seiwf ScanEc2InstanceWithFindingsAttributes) InternalWithRef(ref terra.Reference) ScanEc2InstanceWithFindingsAttributes {
@@ -158,8 +158,8 @@ type EbsVolumesAttributes struct {
 	ref terra.Reference
 }
 
-func (ev EbsVolumesAttributes) InternalRef() terra.Reference {
-	return ev.ref
+func (ev EbsVolumesAttributes) InternalRef() (terra.Reference, error) {
+	return ev.ref, nil
 }
 
 func (ev EbsVolumesAttributes) InternalWithRef(ref terra.Reference) EbsVolumesAttributes {
@@ -178,8 +178,8 @@ type S3LogsAttributes struct {
 	ref terra.Reference
 }
 
-func (sl S3LogsAttributes) InternalRef() terra.Reference {
-	return sl.ref
+func (sl S3LogsAttributes) InternalRef() (terra.Reference, error) {
+	return sl.ref, nil
 }
 
 func (sl S3LogsAttributes) InternalWithRef(ref terra.Reference) S3LogsAttributes {

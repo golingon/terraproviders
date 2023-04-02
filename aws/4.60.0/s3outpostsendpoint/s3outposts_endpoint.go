@@ -13,8 +13,8 @@ type NetworkInterfacesAttributes struct {
 	ref terra.Reference
 }
 
-func (ni NetworkInterfacesAttributes) InternalRef() terra.Reference {
-	return ni.ref
+func (ni NetworkInterfacesAttributes) InternalRef() (terra.Reference, error) {
+	return ni.ref, nil
 }
 
 func (ni NetworkInterfacesAttributes) InternalWithRef(ref terra.Reference) NetworkInterfacesAttributes {

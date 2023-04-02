@@ -81,8 +81,8 @@ type LoggingFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (lf LoggingFilterAttributes) InternalRef() terra.Reference {
-	return lf.ref
+func (lf LoggingFilterAttributes) InternalRef() (terra.Reference, error) {
+	return lf.ref, nil
 }
 
 func (lf LoggingFilterAttributes) InternalWithRef(ref terra.Reference) LoggingFilterAttributes {
@@ -105,8 +105,8 @@ type FilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes {
@@ -133,8 +133,8 @@ type ConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConditionAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConditionAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConditionAttributes) InternalWithRef(ref terra.Reference) ConditionAttributes {
@@ -157,8 +157,8 @@ type ActionConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (ac ActionConditionAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac ActionConditionAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac ActionConditionAttributes) InternalWithRef(ref terra.Reference) ActionConditionAttributes {
@@ -177,8 +177,8 @@ type LabelNameConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (lnc LabelNameConditionAttributes) InternalRef() terra.Reference {
-	return lnc.ref
+func (lnc LabelNameConditionAttributes) InternalRef() (terra.Reference, error) {
+	return lnc.ref, nil
 }
 
 func (lnc LabelNameConditionAttributes) InternalWithRef(ref terra.Reference) LabelNameConditionAttributes {
@@ -197,8 +197,8 @@ type RedactedFieldsAttributes struct {
 	ref terra.Reference
 }
 
-func (rf RedactedFieldsAttributes) InternalRef() terra.Reference {
-	return rf.ref
+func (rf RedactedFieldsAttributes) InternalRef() (terra.Reference, error) {
+	return rf.ref, nil
 }
 
 func (rf RedactedFieldsAttributes) InternalWithRef(ref terra.Reference) RedactedFieldsAttributes {
@@ -241,8 +241,8 @@ type AllQueryArgumentsAttributes struct {
 	ref terra.Reference
 }
 
-func (aqa AllQueryArgumentsAttributes) InternalRef() terra.Reference {
-	return aqa.ref
+func (aqa AllQueryArgumentsAttributes) InternalRef() (terra.Reference, error) {
+	return aqa.ref, nil
 }
 
 func (aqa AllQueryArgumentsAttributes) InternalWithRef(ref terra.Reference) AllQueryArgumentsAttributes {
@@ -257,8 +257,8 @@ type BodyAttributes struct {
 	ref terra.Reference
 }
 
-func (b BodyAttributes) InternalRef() terra.Reference {
-	return b.ref
+func (b BodyAttributes) InternalRef() (terra.Reference, error) {
+	return b.ref, nil
 }
 
 func (b BodyAttributes) InternalWithRef(ref terra.Reference) BodyAttributes {
@@ -273,8 +273,8 @@ type MethodAttributes struct {
 	ref terra.Reference
 }
 
-func (m MethodAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MethodAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MethodAttributes) InternalWithRef(ref terra.Reference) MethodAttributes {
@@ -289,8 +289,8 @@ type QueryStringAttributes struct {
 	ref terra.Reference
 }
 
-func (qs QueryStringAttributes) InternalRef() terra.Reference {
-	return qs.ref
+func (qs QueryStringAttributes) InternalRef() (terra.Reference, error) {
+	return qs.ref, nil
 }
 
 func (qs QueryStringAttributes) InternalWithRef(ref terra.Reference) QueryStringAttributes {
@@ -305,8 +305,8 @@ type SingleHeaderAttributes struct {
 	ref terra.Reference
 }
 
-func (sh SingleHeaderAttributes) InternalRef() terra.Reference {
-	return sh.ref
+func (sh SingleHeaderAttributes) InternalRef() (terra.Reference, error) {
+	return sh.ref, nil
 }
 
 func (sh SingleHeaderAttributes) InternalWithRef(ref terra.Reference) SingleHeaderAttributes {
@@ -325,8 +325,8 @@ type SingleQueryArgumentAttributes struct {
 	ref terra.Reference
 }
 
-func (sqa SingleQueryArgumentAttributes) InternalRef() terra.Reference {
-	return sqa.ref
+func (sqa SingleQueryArgumentAttributes) InternalRef() (terra.Reference, error) {
+	return sqa.ref, nil
 }
 
 func (sqa SingleQueryArgumentAttributes) InternalWithRef(ref terra.Reference) SingleQueryArgumentAttributes {
@@ -345,8 +345,8 @@ type UriPathAttributes struct {
 	ref terra.Reference
 }
 
-func (up UriPathAttributes) InternalRef() terra.Reference {
-	return up.ref
+func (up UriPathAttributes) InternalRef() (terra.Reference, error) {
+	return up.ref, nil
 }
 
 func (up UriPathAttributes) InternalWithRef(ref terra.Reference) UriPathAttributes {

@@ -30,8 +30,8 @@ type InstanceMetadataOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (imo InstanceMetadataOptionsAttributes) InternalRef() terra.Reference {
-	return imo.ref
+func (imo InstanceMetadataOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return imo.ref, nil
 }
 
 func (imo InstanceMetadataOptionsAttributes) InternalWithRef(ref terra.Reference) InstanceMetadataOptionsAttributes {
@@ -54,8 +54,8 @@ type LoggingAttributes struct {
 	ref terra.Reference
 }
 
-func (l LoggingAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l LoggingAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l LoggingAttributes) InternalWithRef(ref terra.Reference) LoggingAttributes {
@@ -74,8 +74,8 @@ type S3LogsAttributes struct {
 	ref terra.Reference
 }
 
-func (sl S3LogsAttributes) InternalRef() terra.Reference {
-	return sl.ref
+func (sl S3LogsAttributes) InternalRef() (terra.Reference, error) {
+	return sl.ref, nil
 }
 
 func (sl S3LogsAttributes) InternalWithRef(ref terra.Reference) S3LogsAttributes {

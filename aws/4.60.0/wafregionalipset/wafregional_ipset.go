@@ -18,8 +18,8 @@ type IpSetDescriptorAttributes struct {
 	ref terra.Reference
 }
 
-func (isd IpSetDescriptorAttributes) InternalRef() terra.Reference {
-	return isd.ref
+func (isd IpSetDescriptorAttributes) InternalRef() (terra.Reference, error) {
+	return isd.ref, nil
 }
 
 func (isd IpSetDescriptorAttributes) InternalWithRef(ref terra.Reference) IpSetDescriptorAttributes {

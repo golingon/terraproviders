@@ -41,8 +41,8 @@ type EncryptionConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ec EncryptionConfigurationAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec EncryptionConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec EncryptionConfigurationAttributes) InternalWithRef(ref terra.Reference) EncryptionConfigurationAttributes {
@@ -69,8 +69,8 @@ type CloudwatchEncryptionAttributes struct {
 	ref terra.Reference
 }
 
-func (ce CloudwatchEncryptionAttributes) InternalRef() terra.Reference {
-	return ce.ref
+func (ce CloudwatchEncryptionAttributes) InternalRef() (terra.Reference, error) {
+	return ce.ref, nil
 }
 
 func (ce CloudwatchEncryptionAttributes) InternalWithRef(ref terra.Reference) CloudwatchEncryptionAttributes {
@@ -93,8 +93,8 @@ type JobBookmarksEncryptionAttributes struct {
 	ref terra.Reference
 }
 
-func (jbe JobBookmarksEncryptionAttributes) InternalRef() terra.Reference {
-	return jbe.ref
+func (jbe JobBookmarksEncryptionAttributes) InternalRef() (terra.Reference, error) {
+	return jbe.ref, nil
 }
 
 func (jbe JobBookmarksEncryptionAttributes) InternalWithRef(ref terra.Reference) JobBookmarksEncryptionAttributes {
@@ -117,8 +117,8 @@ type S3EncryptionAttributes struct {
 	ref terra.Reference
 }
 
-func (se S3EncryptionAttributes) InternalRef() terra.Reference {
-	return se.ref
+func (se S3EncryptionAttributes) InternalRef() (terra.Reference, error) {
+	return se.ref, nil
 }
 
 func (se S3EncryptionAttributes) InternalWithRef(ref terra.Reference) S3EncryptionAttributes {

@@ -22,8 +22,8 @@ type ResourceSpecAttributes struct {
 	ref terra.Reference
 }
 
-func (rs ResourceSpecAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs ResourceSpecAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs ResourceSpecAttributes) InternalWithRef(ref terra.Reference) ResourceSpecAttributes {

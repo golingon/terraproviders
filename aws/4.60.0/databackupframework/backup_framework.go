@@ -22,8 +22,8 @@ type ControlAttributes struct {
 	ref terra.Reference
 }
 
-func (c ControlAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ControlAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ControlAttributes) InternalWithRef(ref terra.Reference) ControlAttributes {
@@ -50,8 +50,8 @@ type InputParameterAttributes struct {
 	ref terra.Reference
 }
 
-func (ip InputParameterAttributes) InternalRef() terra.Reference {
-	return ip.ref
+func (ip InputParameterAttributes) InternalRef() (terra.Reference, error) {
+	return ip.ref, nil
 }
 
 func (ip InputParameterAttributes) InternalWithRef(ref terra.Reference) InputParameterAttributes {
@@ -74,8 +74,8 @@ type ScopeAttributes struct {
 	ref terra.Reference
 }
 
-func (s ScopeAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ScopeAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ScopeAttributes) InternalWithRef(ref terra.Reference) ScopeAttributes {

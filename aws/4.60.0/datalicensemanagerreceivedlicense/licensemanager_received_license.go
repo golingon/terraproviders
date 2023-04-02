@@ -32,8 +32,8 @@ type ConsumptionConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (cc ConsumptionConfigurationAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc ConsumptionConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc ConsumptionConfigurationAttributes) InternalWithRef(ref terra.Reference) ConsumptionConfigurationAttributes {
@@ -60,8 +60,8 @@ type BorrowConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (bc BorrowConfigurationAttributes) InternalRef() terra.Reference {
-	return bc.ref
+func (bc BorrowConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return bc.ref, nil
 }
 
 func (bc BorrowConfigurationAttributes) InternalWithRef(ref terra.Reference) BorrowConfigurationAttributes {
@@ -84,8 +84,8 @@ type ProvisionalConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (pc ProvisionalConfigurationAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc ProvisionalConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc ProvisionalConfigurationAttributes) InternalWithRef(ref terra.Reference) ProvisionalConfigurationAttributes {
@@ -104,8 +104,8 @@ type EntitlementsAttributes struct {
 	ref terra.Reference
 }
 
-func (e EntitlementsAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EntitlementsAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EntitlementsAttributes) InternalWithRef(ref terra.Reference) EntitlementsAttributes {
@@ -140,8 +140,8 @@ type IssuerAttributes struct {
 	ref terra.Reference
 }
 
-func (i IssuerAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IssuerAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IssuerAttributes) InternalWithRef(ref terra.Reference) IssuerAttributes {
@@ -168,8 +168,8 @@ type LicenseMetadataAttributes struct {
 	ref terra.Reference
 }
 
-func (lm LicenseMetadataAttributes) InternalRef() terra.Reference {
-	return lm.ref
+func (lm LicenseMetadataAttributes) InternalRef() (terra.Reference, error) {
+	return lm.ref, nil
 }
 
 func (lm LicenseMetadataAttributes) InternalWithRef(ref terra.Reference) LicenseMetadataAttributes {
@@ -192,8 +192,8 @@ type ReceivedMetadataAttributes struct {
 	ref terra.Reference
 }
 
-func (rm ReceivedMetadataAttributes) InternalRef() terra.Reference {
-	return rm.ref
+func (rm ReceivedMetadataAttributes) InternalRef() (terra.Reference, error) {
+	return rm.ref, nil
 }
 
 func (rm ReceivedMetadataAttributes) InternalWithRef(ref terra.Reference) ReceivedMetadataAttributes {
@@ -220,8 +220,8 @@ type ValidityAttributes struct {
 	ref terra.Reference
 }
 
-func (v ValidityAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v ValidityAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v ValidityAttributes) InternalWithRef(ref terra.Reference) ValidityAttributes {

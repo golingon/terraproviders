@@ -27,8 +27,8 @@ type HomeDirectoryMappingsAttributes struct {
 	ref terra.Reference
 }
 
-func (hdm HomeDirectoryMappingsAttributes) InternalRef() terra.Reference {
-	return hdm.ref
+func (hdm HomeDirectoryMappingsAttributes) InternalRef() (terra.Reference, error) {
+	return hdm.ref, nil
 }
 
 func (hdm HomeDirectoryMappingsAttributes) InternalWithRef(ref terra.Reference) HomeDirectoryMappingsAttributes {
@@ -51,8 +51,8 @@ type PosixProfileAttributes struct {
 	ref terra.Reference
 }
 
-func (pp PosixProfileAttributes) InternalRef() terra.Reference {
-	return pp.ref
+func (pp PosixProfileAttributes) InternalRef() (terra.Reference, error) {
+	return pp.ref, nil
 }
 
 func (pp PosixProfileAttributes) InternalWithRef(ref terra.Reference) PosixProfileAttributes {

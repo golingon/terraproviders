@@ -20,8 +20,8 @@ type TagAttributes struct {
 	ref terra.Reference
 }
 
-func (t TagAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TagAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TagAttributes) InternalWithRef(ref terra.Reference) TagAttributes {

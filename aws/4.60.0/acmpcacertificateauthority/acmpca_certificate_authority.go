@@ -81,8 +81,8 @@ type CertificateAuthorityConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (cac CertificateAuthorityConfigurationAttributes) InternalRef() terra.Reference {
-	return cac.ref
+func (cac CertificateAuthorityConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return cac.ref, nil
 }
 
 func (cac CertificateAuthorityConfigurationAttributes) InternalWithRef(ref terra.Reference) CertificateAuthorityConfigurationAttributes {
@@ -109,8 +109,8 @@ type SubjectAttributes struct {
 	ref terra.Reference
 }
 
-func (s SubjectAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SubjectAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SubjectAttributes) InternalWithRef(ref terra.Reference) SubjectAttributes {
@@ -177,8 +177,8 @@ type RevocationConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (rc RevocationConfigurationAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc RevocationConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc RevocationConfigurationAttributes) InternalWithRef(ref terra.Reference) RevocationConfigurationAttributes {
@@ -201,8 +201,8 @@ type CrlConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (cc CrlConfigurationAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc CrlConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc CrlConfigurationAttributes) InternalWithRef(ref terra.Reference) CrlConfigurationAttributes {
@@ -237,8 +237,8 @@ type OcspConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (oc OcspConfigurationAttributes) InternalRef() terra.Reference {
-	return oc.ref
+func (oc OcspConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return oc.ref, nil
 }
 
 func (oc OcspConfigurationAttributes) InternalWithRef(ref terra.Reference) OcspConfigurationAttributes {
@@ -261,8 +261,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

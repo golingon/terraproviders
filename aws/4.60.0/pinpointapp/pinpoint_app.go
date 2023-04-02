@@ -38,8 +38,8 @@ type CampaignHookAttributes struct {
 	ref terra.Reference
 }
 
-func (ch CampaignHookAttributes) InternalRef() terra.Reference {
-	return ch.ref
+func (ch CampaignHookAttributes) InternalRef() (terra.Reference, error) {
+	return ch.ref, nil
 }
 
 func (ch CampaignHookAttributes) InternalWithRef(ref terra.Reference) CampaignHookAttributes {
@@ -66,8 +66,8 @@ type LimitsAttributes struct {
 	ref terra.Reference
 }
 
-func (l LimitsAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l LimitsAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l LimitsAttributes) InternalWithRef(ref terra.Reference) LimitsAttributes {
@@ -98,8 +98,8 @@ type QuietTimeAttributes struct {
 	ref terra.Reference
 }
 
-func (qt QuietTimeAttributes) InternalRef() terra.Reference {
-	return qt.ref
+func (qt QuietTimeAttributes) InternalRef() (terra.Reference, error) {
+	return qt.ref, nil
 }
 
 func (qt QuietTimeAttributes) InternalWithRef(ref terra.Reference) QuietTimeAttributes {

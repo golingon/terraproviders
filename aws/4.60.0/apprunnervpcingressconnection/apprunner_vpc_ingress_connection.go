@@ -18,8 +18,8 @@ type IngressVpcConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ivc IngressVpcConfigurationAttributes) InternalRef() terra.Reference {
-	return ivc.ref
+func (ivc IngressVpcConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ivc.ref, nil
 }
 
 func (ivc IngressVpcConfigurationAttributes) InternalWithRef(ref terra.Reference) IngressVpcConfigurationAttributes {

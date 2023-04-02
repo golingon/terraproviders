@@ -34,8 +34,8 @@ type ExecutionControlsAttributes struct {
 	ref terra.Reference
 }
 
-func (ec ExecutionControlsAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec ExecutionControlsAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec ExecutionControlsAttributes) InternalWithRef(ref terra.Reference) ExecutionControlsAttributes {
@@ -54,8 +54,8 @@ type SsmControlsAttributes struct {
 	ref terra.Reference
 }
 
-func (sc SsmControlsAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc SsmControlsAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc SsmControlsAttributes) InternalWithRef(ref terra.Reference) SsmControlsAttributes {
@@ -78,8 +78,8 @@ type ParameterAttributes struct {
 	ref terra.Reference
 }
 
-func (p ParameterAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p ParameterAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p ParameterAttributes) InternalWithRef(ref terra.Reference) ParameterAttributes {

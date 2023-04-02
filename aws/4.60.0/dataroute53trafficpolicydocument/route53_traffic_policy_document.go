@@ -121,8 +121,8 @@ type EndpointAttributes struct {
 	ref terra.Reference
 }
 
-func (e EndpointAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EndpointAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EndpointAttributes) InternalWithRef(ref terra.Reference) EndpointAttributes {
@@ -153,8 +153,8 @@ type RuleAttributes struct {
 	ref terra.Reference
 }
 
-func (r RuleAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RuleAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RuleAttributes) InternalWithRef(ref terra.Reference) RuleAttributes {
@@ -201,8 +201,8 @@ type GeoProximityLocationAttributes struct {
 	ref terra.Reference
 }
 
-func (gpl GeoProximityLocationAttributes) InternalRef() terra.Reference {
-	return gpl.ref
+func (gpl GeoProximityLocationAttributes) InternalRef() (terra.Reference, error) {
+	return gpl.ref, nil
 }
 
 func (gpl GeoProximityLocationAttributes) InternalWithRef(ref terra.Reference) GeoProximityLocationAttributes {
@@ -249,8 +249,8 @@ type ItemsAttributes struct {
 	ref terra.Reference
 }
 
-func (i ItemsAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i ItemsAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i ItemsAttributes) InternalWithRef(ref terra.Reference) ItemsAttributes {
@@ -273,8 +273,8 @@ type LocationAttributes struct {
 	ref terra.Reference
 }
 
-func (l LocationAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l LocationAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l LocationAttributes) InternalWithRef(ref terra.Reference) LocationAttributes {
@@ -321,8 +321,8 @@ type PrimaryAttributes struct {
 	ref terra.Reference
 }
 
-func (p PrimaryAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PrimaryAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PrimaryAttributes) InternalWithRef(ref terra.Reference) PrimaryAttributes {
@@ -353,8 +353,8 @@ type RegionAttributes struct {
 	ref terra.Reference
 }
 
-func (r RegionAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RegionAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RegionAttributes) InternalWithRef(ref terra.Reference) RegionAttributes {
@@ -389,8 +389,8 @@ type SecondaryAttributes struct {
 	ref terra.Reference
 }
 
-func (s SecondaryAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SecondaryAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SecondaryAttributes) InternalWithRef(ref terra.Reference) SecondaryAttributes {

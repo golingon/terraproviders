@@ -18,8 +18,8 @@ type EndpointAttributes struct {
 	ref terra.Reference
 }
 
-func (e EndpointAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EndpointAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EndpointAttributes) InternalWithRef(ref terra.Reference) EndpointAttributes {
@@ -42,8 +42,8 @@ type KinesisStreamConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ksc KinesisStreamConfigAttributes) InternalRef() terra.Reference {
-	return ksc.ref
+func (ksc KinesisStreamConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ksc.ref, nil
 }
 
 func (ksc KinesisStreamConfigAttributes) InternalWithRef(ref terra.Reference) KinesisStreamConfigAttributes {

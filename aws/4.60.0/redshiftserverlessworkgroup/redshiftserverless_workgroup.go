@@ -30,8 +30,8 @@ type EndpointAttributes struct {
 	ref terra.Reference
 }
 
-func (e EndpointAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EndpointAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EndpointAttributes) InternalWithRef(ref terra.Reference) EndpointAttributes {
@@ -58,8 +58,8 @@ type VpcEndpointAttributes struct {
 	ref terra.Reference
 }
 
-func (ve VpcEndpointAttributes) InternalRef() terra.Reference {
-	return ve.ref
+func (ve VpcEndpointAttributes) InternalRef() (terra.Reference, error) {
+	return ve.ref, nil
 }
 
 func (ve VpcEndpointAttributes) InternalWithRef(ref terra.Reference) VpcEndpointAttributes {
@@ -86,8 +86,8 @@ type NetworkInterfaceAttributes struct {
 	ref terra.Reference
 }
 
-func (ni NetworkInterfaceAttributes) InternalRef() terra.Reference {
-	return ni.ref
+func (ni NetworkInterfaceAttributes) InternalRef() (terra.Reference, error) {
+	return ni.ref, nil
 }
 
 func (ni NetworkInterfaceAttributes) InternalWithRef(ref terra.Reference) NetworkInterfaceAttributes {
@@ -118,8 +118,8 @@ type ConfigParameterAttributes struct {
 	ref terra.Reference
 }
 
-func (cp ConfigParameterAttributes) InternalRef() terra.Reference {
-	return cp.ref
+func (cp ConfigParameterAttributes) InternalRef() (terra.Reference, error) {
+	return cp.ref, nil
 }
 
 func (cp ConfigParameterAttributes) InternalWithRef(ref terra.Reference) ConfigParameterAttributes {

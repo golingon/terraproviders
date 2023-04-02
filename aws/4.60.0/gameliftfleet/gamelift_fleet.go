@@ -59,8 +59,8 @@ type CertificateConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (cc CertificateConfigurationAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc CertificateConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc CertificateConfigurationAttributes) InternalWithRef(ref terra.Reference) CertificateConfigurationAttributes {
@@ -79,8 +79,8 @@ type Ec2InboundPermissionAttributes struct {
 	ref terra.Reference
 }
 
-func (eip Ec2InboundPermissionAttributes) InternalRef() terra.Reference {
-	return eip.ref
+func (eip Ec2InboundPermissionAttributes) InternalRef() (terra.Reference, error) {
+	return eip.ref, nil
 }
 
 func (eip Ec2InboundPermissionAttributes) InternalWithRef(ref terra.Reference) Ec2InboundPermissionAttributes {
@@ -111,8 +111,8 @@ type ResourceCreationLimitPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (rclp ResourceCreationLimitPolicyAttributes) InternalRef() terra.Reference {
-	return rclp.ref
+func (rclp ResourceCreationLimitPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return rclp.ref, nil
 }
 
 func (rclp ResourceCreationLimitPolicyAttributes) InternalWithRef(ref terra.Reference) ResourceCreationLimitPolicyAttributes {
@@ -135,8 +135,8 @@ type RuntimeConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (rc RuntimeConfigurationAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc RuntimeConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc RuntimeConfigurationAttributes) InternalWithRef(ref terra.Reference) RuntimeConfigurationAttributes {
@@ -163,8 +163,8 @@ type ServerProcessAttributes struct {
 	ref terra.Reference
 }
 
-func (sp ServerProcessAttributes) InternalRef() terra.Reference {
-	return sp.ref
+func (sp ServerProcessAttributes) InternalRef() (terra.Reference, error) {
+	return sp.ref, nil
 }
 
 func (sp ServerProcessAttributes) InternalWithRef(ref terra.Reference) ServerProcessAttributes {
@@ -191,8 +191,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

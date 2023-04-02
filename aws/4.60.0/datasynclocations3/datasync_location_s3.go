@@ -16,8 +16,8 @@ type S3ConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sc S3ConfigAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc S3ConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc S3ConfigAttributes) InternalWithRef(ref terra.Reference) S3ConfigAttributes {

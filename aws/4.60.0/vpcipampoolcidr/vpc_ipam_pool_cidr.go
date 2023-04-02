@@ -25,8 +25,8 @@ type CidrAuthorizationContextAttributes struct {
 	ref terra.Reference
 }
 
-func (cac CidrAuthorizationContextAttributes) InternalRef() terra.Reference {
-	return cac.ref
+func (cac CidrAuthorizationContextAttributes) InternalRef() (terra.Reference, error) {
+	return cac.ref, nil
 }
 
 func (cac CidrAuthorizationContextAttributes) InternalWithRef(ref terra.Reference) CidrAuthorizationContextAttributes {
@@ -49,8 +49,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

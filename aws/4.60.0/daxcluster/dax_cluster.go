@@ -27,8 +27,8 @@ type NodesAttributes struct {
 	ref terra.Reference
 }
 
-func (n NodesAttributes) InternalRef() terra.Reference {
-	return n.ref
+func (n NodesAttributes) InternalRef() (terra.Reference, error) {
+	return n.ref, nil
 }
 
 func (n NodesAttributes) InternalWithRef(ref terra.Reference) NodesAttributes {
@@ -59,8 +59,8 @@ type ServerSideEncryptionAttributes struct {
 	ref terra.Reference
 }
 
-func (sse ServerSideEncryptionAttributes) InternalRef() terra.Reference {
-	return sse.ref
+func (sse ServerSideEncryptionAttributes) InternalRef() (terra.Reference, error) {
+	return sse.ref, nil
 }
 
 func (sse ServerSideEncryptionAttributes) InternalWithRef(ref terra.Reference) ServerSideEncryptionAttributes {
@@ -79,8 +79,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

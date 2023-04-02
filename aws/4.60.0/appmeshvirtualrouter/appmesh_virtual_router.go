@@ -28,8 +28,8 @@ type SpecAttributes struct {
 	ref terra.Reference
 }
 
-func (s SpecAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SpecAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SpecAttributes) InternalWithRef(ref terra.Reference) SpecAttributes {
@@ -48,8 +48,8 @@ type ListenerAttributes struct {
 	ref terra.Reference
 }
 
-func (l ListenerAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l ListenerAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l ListenerAttributes) InternalWithRef(ref terra.Reference) ListenerAttributes {
@@ -68,8 +68,8 @@ type PortMappingAttributes struct {
 	ref terra.Reference
 }
 
-func (pm PortMappingAttributes) InternalRef() terra.Reference {
-	return pm.ref
+func (pm PortMappingAttributes) InternalRef() (terra.Reference, error) {
+	return pm.ref, nil
 }
 
 func (pm PortMappingAttributes) InternalWithRef(ref terra.Reference) PortMappingAttributes {

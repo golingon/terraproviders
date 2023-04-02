@@ -20,8 +20,8 @@ type IngressAttributes struct {
 	ref terra.Reference
 }
 
-func (i IngressAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IngressAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IngressAttributes) InternalWithRef(ref terra.Reference) IngressAttributes {

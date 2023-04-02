@@ -13,8 +13,8 @@ type AccountsAttributes struct {
 	ref terra.Reference
 }
 
-func (a AccountsAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AccountsAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AccountsAttributes) InternalWithRef(ref terra.Reference) AccountsAttributes {

@@ -534,8 +534,8 @@ type DestinationFlowConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (dfc DestinationFlowConfigAttributes) InternalRef() terra.Reference {
-	return dfc.ref
+func (dfc DestinationFlowConfigAttributes) InternalRef() (terra.Reference, error) {
+	return dfc.ref, nil
 }
 
 func (dfc DestinationFlowConfigAttributes) InternalWithRef(ref terra.Reference) DestinationFlowConfigAttributes {
@@ -566,8 +566,8 @@ type DestinationConnectorPropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (dcp DestinationConnectorPropertiesAttributes) InternalRef() terra.Reference {
-	return dcp.ref
+func (dcp DestinationConnectorPropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return dcp.ref, nil
 }
 
 func (dcp DestinationConnectorPropertiesAttributes) InternalWithRef(ref terra.Reference) DestinationConnectorPropertiesAttributes {
@@ -634,8 +634,8 @@ type DestinationConnectorPropertiesCustomConnectorAttributes struct {
 	ref terra.Reference
 }
 
-func (cc DestinationConnectorPropertiesCustomConnectorAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc DestinationConnectorPropertiesCustomConnectorAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc DestinationConnectorPropertiesCustomConnectorAttributes) InternalWithRef(ref terra.Reference) DestinationConnectorPropertiesCustomConnectorAttributes {
@@ -670,8 +670,8 @@ type CustomConnectorErrorHandlingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ehc CustomConnectorErrorHandlingConfigAttributes) InternalRef() terra.Reference {
-	return ehc.ref
+func (ehc CustomConnectorErrorHandlingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ehc.ref, nil
 }
 
 func (ehc CustomConnectorErrorHandlingConfigAttributes) InternalWithRef(ref terra.Reference) CustomConnectorErrorHandlingConfigAttributes {
@@ -698,8 +698,8 @@ type CustomerProfilesAttributes struct {
 	ref terra.Reference
 }
 
-func (cp CustomerProfilesAttributes) InternalRef() terra.Reference {
-	return cp.ref
+func (cp CustomerProfilesAttributes) InternalRef() (terra.Reference, error) {
+	return cp.ref, nil
 }
 
 func (cp CustomerProfilesAttributes) InternalWithRef(ref terra.Reference) CustomerProfilesAttributes {
@@ -722,8 +722,8 @@ type EventBridgeAttributes struct {
 	ref terra.Reference
 }
 
-func (eb EventBridgeAttributes) InternalRef() terra.Reference {
-	return eb.ref
+func (eb EventBridgeAttributes) InternalRef() (terra.Reference, error) {
+	return eb.ref, nil
 }
 
 func (eb EventBridgeAttributes) InternalWithRef(ref terra.Reference) EventBridgeAttributes {
@@ -746,8 +746,8 @@ type EventBridgeErrorHandlingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ehc EventBridgeErrorHandlingConfigAttributes) InternalRef() terra.Reference {
-	return ehc.ref
+func (ehc EventBridgeErrorHandlingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ehc.ref, nil
 }
 
 func (ehc EventBridgeErrorHandlingConfigAttributes) InternalWithRef(ref terra.Reference) EventBridgeErrorHandlingConfigAttributes {
@@ -774,8 +774,8 @@ type HoneycodeAttributes struct {
 	ref terra.Reference
 }
 
-func (h HoneycodeAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h HoneycodeAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h HoneycodeAttributes) InternalWithRef(ref terra.Reference) HoneycodeAttributes {
@@ -798,8 +798,8 @@ type HoneycodeErrorHandlingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ehc HoneycodeErrorHandlingConfigAttributes) InternalRef() terra.Reference {
-	return ehc.ref
+func (ehc HoneycodeErrorHandlingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ehc.ref, nil
 }
 
 func (ehc HoneycodeErrorHandlingConfigAttributes) InternalWithRef(ref terra.Reference) HoneycodeErrorHandlingConfigAttributes {
@@ -826,8 +826,8 @@ type LookoutMetricsAttributes struct {
 	ref terra.Reference
 }
 
-func (lm LookoutMetricsAttributes) InternalRef() terra.Reference {
-	return lm.ref
+func (lm LookoutMetricsAttributes) InternalRef() (terra.Reference, error) {
+	return lm.ref, nil
 }
 
 func (lm LookoutMetricsAttributes) InternalWithRef(ref terra.Reference) LookoutMetricsAttributes {
@@ -842,8 +842,8 @@ type DestinationConnectorPropertiesMarketoAttributes struct {
 	ref terra.Reference
 }
 
-func (m DestinationConnectorPropertiesMarketoAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m DestinationConnectorPropertiesMarketoAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m DestinationConnectorPropertiesMarketoAttributes) InternalWithRef(ref terra.Reference) DestinationConnectorPropertiesMarketoAttributes {
@@ -866,8 +866,8 @@ type MarketoErrorHandlingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ehc MarketoErrorHandlingConfigAttributes) InternalRef() terra.Reference {
-	return ehc.ref
+func (ehc MarketoErrorHandlingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ehc.ref, nil
 }
 
 func (ehc MarketoErrorHandlingConfigAttributes) InternalWithRef(ref terra.Reference) MarketoErrorHandlingConfigAttributes {
@@ -894,8 +894,8 @@ type RedshiftAttributes struct {
 	ref terra.Reference
 }
 
-func (r RedshiftAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RedshiftAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RedshiftAttributes) InternalWithRef(ref terra.Reference) RedshiftAttributes {
@@ -926,8 +926,8 @@ type RedshiftErrorHandlingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ehc RedshiftErrorHandlingConfigAttributes) InternalRef() terra.Reference {
-	return ehc.ref
+func (ehc RedshiftErrorHandlingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ehc.ref, nil
 }
 
 func (ehc RedshiftErrorHandlingConfigAttributes) InternalWithRef(ref terra.Reference) RedshiftErrorHandlingConfigAttributes {
@@ -954,8 +954,8 @@ type DestinationConnectorPropertiesS3Attributes struct {
 	ref terra.Reference
 }
 
-func (s DestinationConnectorPropertiesS3Attributes) InternalRef() terra.Reference {
-	return s.ref
+func (s DestinationConnectorPropertiesS3Attributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s DestinationConnectorPropertiesS3Attributes) InternalWithRef(ref terra.Reference) DestinationConnectorPropertiesS3Attributes {
@@ -982,8 +982,8 @@ type S3S3OutputFormatConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sofc S3S3OutputFormatConfigAttributes) InternalRef() terra.Reference {
-	return sofc.ref
+func (sofc S3S3OutputFormatConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sofc.ref, nil
 }
 
 func (sofc S3S3OutputFormatConfigAttributes) InternalWithRef(ref terra.Reference) S3S3OutputFormatConfigAttributes {
@@ -1014,8 +1014,8 @@ type S3S3OutputFormatConfigAggregationConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ac S3S3OutputFormatConfigAggregationConfigAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac S3S3OutputFormatConfigAggregationConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac S3S3OutputFormatConfigAggregationConfigAttributes) InternalWithRef(ref terra.Reference) S3S3OutputFormatConfigAggregationConfigAttributes {
@@ -1034,8 +1034,8 @@ type S3S3OutputFormatConfigPrefixConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (pc S3S3OutputFormatConfigPrefixConfigAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc S3S3OutputFormatConfigPrefixConfigAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc S3S3OutputFormatConfigPrefixConfigAttributes) InternalWithRef(ref terra.Reference) S3S3OutputFormatConfigPrefixConfigAttributes {
@@ -1058,8 +1058,8 @@ type DestinationConnectorPropertiesSalesforceAttributes struct {
 	ref terra.Reference
 }
 
-func (s DestinationConnectorPropertiesSalesforceAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s DestinationConnectorPropertiesSalesforceAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s DestinationConnectorPropertiesSalesforceAttributes) InternalWithRef(ref terra.Reference) DestinationConnectorPropertiesSalesforceAttributes {
@@ -1090,8 +1090,8 @@ type SalesforceErrorHandlingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ehc SalesforceErrorHandlingConfigAttributes) InternalRef() terra.Reference {
-	return ehc.ref
+func (ehc SalesforceErrorHandlingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ehc.ref, nil
 }
 
 func (ehc SalesforceErrorHandlingConfigAttributes) InternalWithRef(ref terra.Reference) SalesforceErrorHandlingConfigAttributes {
@@ -1118,8 +1118,8 @@ type DestinationConnectorPropertiesSapoDataAttributes struct {
 	ref terra.Reference
 }
 
-func (sd DestinationConnectorPropertiesSapoDataAttributes) InternalRef() terra.Reference {
-	return sd.ref
+func (sd DestinationConnectorPropertiesSapoDataAttributes) InternalRef() (terra.Reference, error) {
+	return sd.ref, nil
 }
 
 func (sd DestinationConnectorPropertiesSapoDataAttributes) InternalWithRef(ref terra.Reference) DestinationConnectorPropertiesSapoDataAttributes {
@@ -1154,8 +1154,8 @@ type SapoDataErrorHandlingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ehc SapoDataErrorHandlingConfigAttributes) InternalRef() terra.Reference {
-	return ehc.ref
+func (ehc SapoDataErrorHandlingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ehc.ref, nil
 }
 
 func (ehc SapoDataErrorHandlingConfigAttributes) InternalWithRef(ref terra.Reference) SapoDataErrorHandlingConfigAttributes {
@@ -1182,8 +1182,8 @@ type SuccessResponseHandlingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (srhc SuccessResponseHandlingConfigAttributes) InternalRef() terra.Reference {
-	return srhc.ref
+func (srhc SuccessResponseHandlingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return srhc.ref, nil
 }
 
 func (srhc SuccessResponseHandlingConfigAttributes) InternalWithRef(ref terra.Reference) SuccessResponseHandlingConfigAttributes {
@@ -1206,8 +1206,8 @@ type SnowflakeAttributes struct {
 	ref terra.Reference
 }
 
-func (s SnowflakeAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SnowflakeAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SnowflakeAttributes) InternalWithRef(ref terra.Reference) SnowflakeAttributes {
@@ -1238,8 +1238,8 @@ type SnowflakeErrorHandlingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ehc SnowflakeErrorHandlingConfigAttributes) InternalRef() terra.Reference {
-	return ehc.ref
+func (ehc SnowflakeErrorHandlingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ehc.ref, nil
 }
 
 func (ehc SnowflakeErrorHandlingConfigAttributes) InternalWithRef(ref terra.Reference) SnowflakeErrorHandlingConfigAttributes {
@@ -1266,8 +1266,8 @@ type UpsolverAttributes struct {
 	ref terra.Reference
 }
 
-func (u UpsolverAttributes) InternalRef() terra.Reference {
-	return u.ref
+func (u UpsolverAttributes) InternalRef() (terra.Reference, error) {
+	return u.ref, nil
 }
 
 func (u UpsolverAttributes) InternalWithRef(ref terra.Reference) UpsolverAttributes {
@@ -1294,8 +1294,8 @@ type UpsolverS3OutputFormatConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sofc UpsolverS3OutputFormatConfigAttributes) InternalRef() terra.Reference {
-	return sofc.ref
+func (sofc UpsolverS3OutputFormatConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sofc.ref, nil
 }
 
 func (sofc UpsolverS3OutputFormatConfigAttributes) InternalWithRef(ref terra.Reference) UpsolverS3OutputFormatConfigAttributes {
@@ -1322,8 +1322,8 @@ type UpsolverS3OutputFormatConfigAggregationConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ac UpsolverS3OutputFormatConfigAggregationConfigAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac UpsolverS3OutputFormatConfigAggregationConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac UpsolverS3OutputFormatConfigAggregationConfigAttributes) InternalWithRef(ref terra.Reference) UpsolverS3OutputFormatConfigAggregationConfigAttributes {
@@ -1342,8 +1342,8 @@ type UpsolverS3OutputFormatConfigPrefixConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (pc UpsolverS3OutputFormatConfigPrefixConfigAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc UpsolverS3OutputFormatConfigPrefixConfigAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc UpsolverS3OutputFormatConfigPrefixConfigAttributes) InternalWithRef(ref terra.Reference) UpsolverS3OutputFormatConfigPrefixConfigAttributes {
@@ -1366,8 +1366,8 @@ type DestinationConnectorPropertiesZendeskAttributes struct {
 	ref terra.Reference
 }
 
-func (z DestinationConnectorPropertiesZendeskAttributes) InternalRef() terra.Reference {
-	return z.ref
+func (z DestinationConnectorPropertiesZendeskAttributes) InternalRef() (terra.Reference, error) {
+	return z.ref, nil
 }
 
 func (z DestinationConnectorPropertiesZendeskAttributes) InternalWithRef(ref terra.Reference) DestinationConnectorPropertiesZendeskAttributes {
@@ -1398,8 +1398,8 @@ type ZendeskErrorHandlingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ehc ZendeskErrorHandlingConfigAttributes) InternalRef() terra.Reference {
-	return ehc.ref
+func (ehc ZendeskErrorHandlingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ehc.ref, nil
 }
 
 func (ehc ZendeskErrorHandlingConfigAttributes) InternalWithRef(ref terra.Reference) ZendeskErrorHandlingConfigAttributes {
@@ -1426,8 +1426,8 @@ type SourceFlowConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sfc SourceFlowConfigAttributes) InternalRef() terra.Reference {
-	return sfc.ref
+func (sfc SourceFlowConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sfc.ref, nil
 }
 
 func (sfc SourceFlowConfigAttributes) InternalWithRef(ref terra.Reference) SourceFlowConfigAttributes {
@@ -1462,8 +1462,8 @@ type IncrementalPullConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ipc IncrementalPullConfigAttributes) InternalRef() terra.Reference {
-	return ipc.ref
+func (ipc IncrementalPullConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ipc.ref, nil
 }
 
 func (ipc IncrementalPullConfigAttributes) InternalWithRef(ref terra.Reference) IncrementalPullConfigAttributes {
@@ -1482,8 +1482,8 @@ type SourceConnectorPropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (scp SourceConnectorPropertiesAttributes) InternalRef() terra.Reference {
-	return scp.ref
+func (scp SourceConnectorPropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return scp.ref, nil
 }
 
 func (scp SourceConnectorPropertiesAttributes) InternalWithRef(ref terra.Reference) SourceConnectorPropertiesAttributes {
@@ -1562,8 +1562,8 @@ type AmplitudeAttributes struct {
 	ref terra.Reference
 }
 
-func (a AmplitudeAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AmplitudeAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AmplitudeAttributes) InternalWithRef(ref terra.Reference) AmplitudeAttributes {
@@ -1582,8 +1582,8 @@ type SourceConnectorPropertiesCustomConnectorAttributes struct {
 	ref terra.Reference
 }
 
-func (cc SourceConnectorPropertiesCustomConnectorAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc SourceConnectorPropertiesCustomConnectorAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc SourceConnectorPropertiesCustomConnectorAttributes) InternalWithRef(ref terra.Reference) SourceConnectorPropertiesCustomConnectorAttributes {
@@ -1606,8 +1606,8 @@ type DatadogAttributes struct {
 	ref terra.Reference
 }
 
-func (d DatadogAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DatadogAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DatadogAttributes) InternalWithRef(ref terra.Reference) DatadogAttributes {
@@ -1626,8 +1626,8 @@ type DynatraceAttributes struct {
 	ref terra.Reference
 }
 
-func (d DynatraceAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DynatraceAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DynatraceAttributes) InternalWithRef(ref terra.Reference) DynatraceAttributes {
@@ -1646,8 +1646,8 @@ type GoogleAnalyticsAttributes struct {
 	ref terra.Reference
 }
 
-func (ga GoogleAnalyticsAttributes) InternalRef() terra.Reference {
-	return ga.ref
+func (ga GoogleAnalyticsAttributes) InternalRef() (terra.Reference, error) {
+	return ga.ref, nil
 }
 
 func (ga GoogleAnalyticsAttributes) InternalWithRef(ref terra.Reference) GoogleAnalyticsAttributes {
@@ -1666,8 +1666,8 @@ type InforNexusAttributes struct {
 	ref terra.Reference
 }
 
-func (in InforNexusAttributes) InternalRef() terra.Reference {
-	return in.ref
+func (in InforNexusAttributes) InternalRef() (terra.Reference, error) {
+	return in.ref, nil
 }
 
 func (in InforNexusAttributes) InternalWithRef(ref terra.Reference) InforNexusAttributes {
@@ -1686,8 +1686,8 @@ type SourceConnectorPropertiesMarketoAttributes struct {
 	ref terra.Reference
 }
 
-func (m SourceConnectorPropertiesMarketoAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m SourceConnectorPropertiesMarketoAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m SourceConnectorPropertiesMarketoAttributes) InternalWithRef(ref terra.Reference) SourceConnectorPropertiesMarketoAttributes {
@@ -1706,8 +1706,8 @@ type SourceConnectorPropertiesS3Attributes struct {
 	ref terra.Reference
 }
 
-func (s SourceConnectorPropertiesS3Attributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SourceConnectorPropertiesS3Attributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SourceConnectorPropertiesS3Attributes) InternalWithRef(ref terra.Reference) SourceConnectorPropertiesS3Attributes {
@@ -1734,8 +1734,8 @@ type S3InputFormatConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sifc S3InputFormatConfigAttributes) InternalRef() terra.Reference {
-	return sifc.ref
+func (sifc S3InputFormatConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sifc.ref, nil
 }
 
 func (sifc S3InputFormatConfigAttributes) InternalWithRef(ref terra.Reference) S3InputFormatConfigAttributes {
@@ -1754,8 +1754,8 @@ type SourceConnectorPropertiesSalesforceAttributes struct {
 	ref terra.Reference
 }
 
-func (s SourceConnectorPropertiesSalesforceAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SourceConnectorPropertiesSalesforceAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SourceConnectorPropertiesSalesforceAttributes) InternalWithRef(ref terra.Reference) SourceConnectorPropertiesSalesforceAttributes {
@@ -1782,8 +1782,8 @@ type SourceConnectorPropertiesSapoDataAttributes struct {
 	ref terra.Reference
 }
 
-func (sd SourceConnectorPropertiesSapoDataAttributes) InternalRef() terra.Reference {
-	return sd.ref
+func (sd SourceConnectorPropertiesSapoDataAttributes) InternalRef() (terra.Reference, error) {
+	return sd.ref, nil
 }
 
 func (sd SourceConnectorPropertiesSapoDataAttributes) InternalWithRef(ref terra.Reference) SourceConnectorPropertiesSapoDataAttributes {
@@ -1802,8 +1802,8 @@ type ServiceNowAttributes struct {
 	ref terra.Reference
 }
 
-func (sn ServiceNowAttributes) InternalRef() terra.Reference {
-	return sn.ref
+func (sn ServiceNowAttributes) InternalRef() (terra.Reference, error) {
+	return sn.ref, nil
 }
 
 func (sn ServiceNowAttributes) InternalWithRef(ref terra.Reference) ServiceNowAttributes {
@@ -1822,8 +1822,8 @@ type SingularAttributes struct {
 	ref terra.Reference
 }
 
-func (s SingularAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SingularAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SingularAttributes) InternalWithRef(ref terra.Reference) SingularAttributes {
@@ -1842,8 +1842,8 @@ type SlackAttributes struct {
 	ref terra.Reference
 }
 
-func (s SlackAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SlackAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SlackAttributes) InternalWithRef(ref terra.Reference) SlackAttributes {
@@ -1862,8 +1862,8 @@ type TrendmicroAttributes struct {
 	ref terra.Reference
 }
 
-func (t TrendmicroAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TrendmicroAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TrendmicroAttributes) InternalWithRef(ref terra.Reference) TrendmicroAttributes {
@@ -1882,8 +1882,8 @@ type VeevaAttributes struct {
 	ref terra.Reference
 }
 
-func (v VeevaAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v VeevaAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v VeevaAttributes) InternalWithRef(ref terra.Reference) VeevaAttributes {
@@ -1918,8 +1918,8 @@ type SourceConnectorPropertiesZendeskAttributes struct {
 	ref terra.Reference
 }
 
-func (z SourceConnectorPropertiesZendeskAttributes) InternalRef() terra.Reference {
-	return z.ref
+func (z SourceConnectorPropertiesZendeskAttributes) InternalRef() (terra.Reference, error) {
+	return z.ref, nil
 }
 
 func (z SourceConnectorPropertiesZendeskAttributes) InternalWithRef(ref terra.Reference) SourceConnectorPropertiesZendeskAttributes {
@@ -1938,8 +1938,8 @@ type TaskAttributes struct {
 	ref terra.Reference
 }
 
-func (t TaskAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TaskAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TaskAttributes) InternalWithRef(ref terra.Reference) TaskAttributes {
@@ -1974,8 +1974,8 @@ type ConnectorOperatorAttributes struct {
 	ref terra.Reference
 }
 
-func (co ConnectorOperatorAttributes) InternalRef() terra.Reference {
-	return co.ref
+func (co ConnectorOperatorAttributes) InternalRef() (terra.Reference, error) {
+	return co.ref, nil
 }
 
 func (co ConnectorOperatorAttributes) InternalWithRef(ref terra.Reference) ConnectorOperatorAttributes {
@@ -2054,8 +2054,8 @@ type TriggerConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (tc TriggerConfigAttributes) InternalRef() terra.Reference {
-	return tc.ref
+func (tc TriggerConfigAttributes) InternalRef() (terra.Reference, error) {
+	return tc.ref, nil
 }
 
 func (tc TriggerConfigAttributes) InternalWithRef(ref terra.Reference) TriggerConfigAttributes {
@@ -2078,8 +2078,8 @@ type TriggerPropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (tp TriggerPropertiesAttributes) InternalRef() terra.Reference {
-	return tp.ref
+func (tp TriggerPropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return tp.ref, nil
 }
 
 func (tp TriggerPropertiesAttributes) InternalWithRef(ref terra.Reference) TriggerPropertiesAttributes {
@@ -2098,8 +2098,8 @@ type ScheduledAttributes struct {
 	ref terra.Reference
 }
 
-func (s ScheduledAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ScheduledAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ScheduledAttributes) InternalWithRef(ref terra.Reference) ScheduledAttributes {

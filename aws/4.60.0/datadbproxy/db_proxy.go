@@ -13,8 +13,8 @@ type AuthAttributes struct {
 	ref terra.Reference
 }
 
-func (a AuthAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AuthAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AuthAttributes) InternalWithRef(ref terra.Reference) AuthAttributes {

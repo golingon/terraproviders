@@ -13,8 +13,8 @@ type ThrottleSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ts ThrottleSettingsAttributes) InternalRef() terra.Reference {
-	return ts.ref
+func (ts ThrottleSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ts.ref, nil
 }
 
 func (ts ThrottleSettingsAttributes) InternalWithRef(ref terra.Reference) ThrottleSettingsAttributes {

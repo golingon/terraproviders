@@ -15,8 +15,8 @@ type EncryptionConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ec EncryptionConfigurationAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec EncryptionConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec EncryptionConfigurationAttributes) InternalWithRef(ref terra.Reference) EncryptionConfigurationAttributes {
@@ -39,8 +39,8 @@ type ImageScanningConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (isc ImageScanningConfigurationAttributes) InternalRef() terra.Reference {
-	return isc.ref
+func (isc ImageScanningConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return isc.ref, nil
 }
 
 func (isc ImageScanningConfigurationAttributes) InternalWithRef(ref terra.Reference) ImageScanningConfigurationAttributes {

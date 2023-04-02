@@ -17,8 +17,8 @@ type ComputeTypeAttributes struct {
 	ref terra.Reference
 }
 
-func (ct ComputeTypeAttributes) InternalRef() terra.Reference {
-	return ct.ref
+func (ct ComputeTypeAttributes) InternalRef() (terra.Reference, error) {
+	return ct.ref, nil
 }
 
 func (ct ComputeTypeAttributes) InternalWithRef(ref terra.Reference) ComputeTypeAttributes {
@@ -37,8 +37,8 @@ type RootStorageAttributes struct {
 	ref terra.Reference
 }
 
-func (rs RootStorageAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs RootStorageAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs RootStorageAttributes) InternalWithRef(ref terra.Reference) RootStorageAttributes {
@@ -57,8 +57,8 @@ type UserStorageAttributes struct {
 	ref terra.Reference
 }
 
-func (us UserStorageAttributes) InternalRef() terra.Reference {
-	return us.ref
+func (us UserStorageAttributes) InternalRef() (terra.Reference, error) {
+	return us.ref, nil
 }
 
 func (us UserStorageAttributes) InternalWithRef(ref terra.Reference) UserStorageAttributes {

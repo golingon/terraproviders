@@ -29,8 +29,8 @@ type IpSetsAttributes struct {
 	ref terra.Reference
 }
 
-func (is IpSetsAttributes) InternalRef() terra.Reference {
-	return is.ref
+func (is IpSetsAttributes) InternalRef() (terra.Reference, error) {
+	return is.ref, nil
 }
 
 func (is IpSetsAttributes) InternalWithRef(ref terra.Reference) IpSetsAttributes {
@@ -53,8 +53,8 @@ type AttributesAttributes struct {
 	ref terra.Reference
 }
 
-func (a AttributesAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AttributesAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AttributesAttributes) InternalWithRef(ref terra.Reference) AttributesAttributes {
@@ -81,8 +81,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

@@ -44,8 +44,8 @@ type RolesAttributes struct {
 	ref terra.Reference
 }
 
-func (r RolesAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RolesAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RolesAttributes) InternalWithRef(ref terra.Reference) RolesAttributes {
@@ -68,8 +68,8 @@ type RolesAllAttributes struct {
 	ref terra.Reference
 }
 
-func (ra RolesAllAttributes) InternalRef() terra.Reference {
-	return ra.ref
+func (ra RolesAllAttributes) InternalRef() (terra.Reference, error) {
+	return ra.ref, nil
 }
 
 func (ra RolesAllAttributes) InternalWithRef(ref terra.Reference) RolesAllAttributes {
@@ -92,8 +92,8 @@ type AssessmentReportsDestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (ard AssessmentReportsDestinationAttributes) InternalRef() terra.Reference {
-	return ard.ref
+func (ard AssessmentReportsDestinationAttributes) InternalRef() (terra.Reference, error) {
+	return ard.ref, nil
 }
 
 func (ard AssessmentReportsDestinationAttributes) InternalWithRef(ref terra.Reference) AssessmentReportsDestinationAttributes {
@@ -116,8 +116,8 @@ type ScopeAttributes struct {
 	ref terra.Reference
 }
 
-func (s ScopeAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ScopeAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ScopeAttributes) InternalWithRef(ref terra.Reference) ScopeAttributes {
@@ -140,8 +140,8 @@ type AwsAccountsAttributes struct {
 	ref terra.Reference
 }
 
-func (aa AwsAccountsAttributes) InternalRef() terra.Reference {
-	return aa.ref
+func (aa AwsAccountsAttributes) InternalRef() (terra.Reference, error) {
+	return aa.ref, nil
 }
 
 func (aa AwsAccountsAttributes) InternalWithRef(ref terra.Reference) AwsAccountsAttributes {
@@ -160,8 +160,8 @@ type AwsServicesAttributes struct {
 	ref terra.Reference
 }
 
-func (as AwsServicesAttributes) InternalRef() terra.Reference {
-	return as.ref
+func (as AwsServicesAttributes) InternalRef() (terra.Reference, error) {
+	return as.ref, nil
 }
 
 func (as AwsServicesAttributes) InternalWithRef(ref terra.Reference) AwsServicesAttributes {

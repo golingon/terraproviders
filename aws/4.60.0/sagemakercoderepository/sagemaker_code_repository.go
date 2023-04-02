@@ -20,8 +20,8 @@ type GitConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (gc GitConfigAttributes) InternalRef() terra.Reference {
-	return gc.ref
+func (gc GitConfigAttributes) InternalRef() (terra.Reference, error) {
+	return gc.ref, nil
 }
 
 func (gc GitConfigAttributes) InternalWithRef(ref terra.Reference) GitConfigAttributes {

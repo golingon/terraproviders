@@ -65,8 +65,8 @@ type ExternalIdsAttributes struct {
 	ref terra.Reference
 }
 
-func (ei ExternalIdsAttributes) InternalRef() terra.Reference {
-	return ei.ref
+func (ei ExternalIdsAttributes) InternalRef() (terra.Reference, error) {
+	return ei.ref, nil
 }
 
 func (ei ExternalIdsAttributes) InternalWithRef(ref terra.Reference) ExternalIdsAttributes {
@@ -89,8 +89,8 @@ type AddressesAttributes struct {
 	ref terra.Reference
 }
 
-func (a AddressesAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AddressesAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AddressesAttributes) InternalWithRef(ref terra.Reference) AddressesAttributes {
@@ -137,8 +137,8 @@ type EmailsAttributes struct {
 	ref terra.Reference
 }
 
-func (e EmailsAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EmailsAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EmailsAttributes) InternalWithRef(ref terra.Reference) EmailsAttributes {
@@ -165,8 +165,8 @@ type NameAttributes struct {
 	ref terra.Reference
 }
 
-func (n NameAttributes) InternalRef() terra.Reference {
-	return n.ref
+func (n NameAttributes) InternalRef() (terra.Reference, error) {
+	return n.ref, nil
 }
 
 func (n NameAttributes) InternalWithRef(ref terra.Reference) NameAttributes {
@@ -205,8 +205,8 @@ type PhoneNumbersAttributes struct {
 	ref terra.Reference
 }
 
-func (pn PhoneNumbersAttributes) InternalRef() terra.Reference {
-	return pn.ref
+func (pn PhoneNumbersAttributes) InternalRef() (terra.Reference, error) {
+	return pn.ref, nil
 }
 
 func (pn PhoneNumbersAttributes) InternalWithRef(ref terra.Reference) PhoneNumbersAttributes {

@@ -142,8 +142,8 @@ type EncryptionConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ec EncryptionConfigurationAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec EncryptionConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec EncryptionConfigurationAttributes) InternalWithRef(ref terra.Reference) EncryptionConfigurationAttributes {
@@ -162,8 +162,8 @@ type HealthCheckConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (hcc HealthCheckConfigurationAttributes) InternalRef() terra.Reference {
-	return hcc.ref
+func (hcc HealthCheckConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return hcc.ref, nil
 }
 
 func (hcc HealthCheckConfigurationAttributes) InternalWithRef(ref terra.Reference) HealthCheckConfigurationAttributes {
@@ -202,8 +202,8 @@ type InstanceConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ic InstanceConfigurationAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic InstanceConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic InstanceConfigurationAttributes) InternalWithRef(ref terra.Reference) InstanceConfigurationAttributes {
@@ -230,8 +230,8 @@ type NetworkConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (nc NetworkConfigurationAttributes) InternalRef() terra.Reference {
-	return nc.ref
+func (nc NetworkConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return nc.ref, nil
 }
 
 func (nc NetworkConfigurationAttributes) InternalWithRef(ref terra.Reference) NetworkConfigurationAttributes {
@@ -254,8 +254,8 @@ type EgressConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ec EgressConfigurationAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec EgressConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec EgressConfigurationAttributes) InternalWithRef(ref terra.Reference) EgressConfigurationAttributes {
@@ -278,8 +278,8 @@ type IngressConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ic IngressConfigurationAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic IngressConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic IngressConfigurationAttributes) InternalWithRef(ref terra.Reference) IngressConfigurationAttributes {
@@ -298,8 +298,8 @@ type ObservabilityConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (oc ObservabilityConfigurationAttributes) InternalRef() terra.Reference {
-	return oc.ref
+func (oc ObservabilityConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return oc.ref, nil
 }
 
 func (oc ObservabilityConfigurationAttributes) InternalWithRef(ref terra.Reference) ObservabilityConfigurationAttributes {
@@ -322,8 +322,8 @@ type SourceConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (sc SourceConfigurationAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc SourceConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc SourceConfigurationAttributes) InternalWithRef(ref terra.Reference) SourceConfigurationAttributes {
@@ -354,8 +354,8 @@ type AuthenticationConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AuthenticationConfigurationAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AuthenticationConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AuthenticationConfigurationAttributes) InternalWithRef(ref terra.Reference) AuthenticationConfigurationAttributes {
@@ -378,8 +378,8 @@ type CodeRepositoryAttributes struct {
 	ref terra.Reference
 }
 
-func (cr CodeRepositoryAttributes) InternalRef() terra.Reference {
-	return cr.ref
+func (cr CodeRepositoryAttributes) InternalRef() (terra.Reference, error) {
+	return cr.ref, nil
 }
 
 func (cr CodeRepositoryAttributes) InternalWithRef(ref terra.Reference) CodeRepositoryAttributes {
@@ -406,8 +406,8 @@ type CodeConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (cc CodeConfigurationAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc CodeConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc CodeConfigurationAttributes) InternalWithRef(ref terra.Reference) CodeConfigurationAttributes {
@@ -430,8 +430,8 @@ type CodeConfigurationValuesAttributes struct {
 	ref terra.Reference
 }
 
-func (ccv CodeConfigurationValuesAttributes) InternalRef() terra.Reference {
-	return ccv.ref
+func (ccv CodeConfigurationValuesAttributes) InternalRef() (terra.Reference, error) {
+	return ccv.ref, nil
 }
 
 func (ccv CodeConfigurationValuesAttributes) InternalWithRef(ref terra.Reference) CodeConfigurationValuesAttributes {
@@ -470,8 +470,8 @@ type SourceCodeVersionAttributes struct {
 	ref terra.Reference
 }
 
-func (scv SourceCodeVersionAttributes) InternalRef() terra.Reference {
-	return scv.ref
+func (scv SourceCodeVersionAttributes) InternalRef() (terra.Reference, error) {
+	return scv.ref, nil
 }
 
 func (scv SourceCodeVersionAttributes) InternalWithRef(ref terra.Reference) SourceCodeVersionAttributes {
@@ -494,8 +494,8 @@ type ImageRepositoryAttributes struct {
 	ref terra.Reference
 }
 
-func (ir ImageRepositoryAttributes) InternalRef() terra.Reference {
-	return ir.ref
+func (ir ImageRepositoryAttributes) InternalRef() (terra.Reference, error) {
+	return ir.ref, nil
 }
 
 func (ir ImageRepositoryAttributes) InternalWithRef(ref terra.Reference) ImageRepositoryAttributes {
@@ -522,8 +522,8 @@ type ImageConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ic ImageConfigurationAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic ImageConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic ImageConfigurationAttributes) InternalWithRef(ref terra.Reference) ImageConfigurationAttributes {

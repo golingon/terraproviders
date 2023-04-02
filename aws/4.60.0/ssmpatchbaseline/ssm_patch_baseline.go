@@ -47,8 +47,8 @@ type ApprovalRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (ar ApprovalRuleAttributes) InternalRef() terra.Reference {
-	return ar.ref
+func (ar ApprovalRuleAttributes) InternalRef() (terra.Reference, error) {
+	return ar.ref, nil
 }
 
 func (ar ApprovalRuleAttributes) InternalWithRef(ref terra.Reference) ApprovalRuleAttributes {
@@ -83,8 +83,8 @@ type PatchFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (pf PatchFilterAttributes) InternalRef() terra.Reference {
-	return pf.ref
+func (pf PatchFilterAttributes) InternalRef() (terra.Reference, error) {
+	return pf.ref, nil
 }
 
 func (pf PatchFilterAttributes) InternalWithRef(ref terra.Reference) PatchFilterAttributes {
@@ -107,8 +107,8 @@ type GlobalFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (gf GlobalFilterAttributes) InternalRef() terra.Reference {
-	return gf.ref
+func (gf GlobalFilterAttributes) InternalRef() (terra.Reference, error) {
+	return gf.ref, nil
 }
 
 func (gf GlobalFilterAttributes) InternalWithRef(ref terra.Reference) GlobalFilterAttributes {
@@ -131,8 +131,8 @@ type SourceAttributes struct {
 	ref terra.Reference
 }
 
-func (s SourceAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SourceAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SourceAttributes) InternalWithRef(ref terra.Reference) SourceAttributes {

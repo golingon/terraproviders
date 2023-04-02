@@ -26,8 +26,8 @@ type MetricTransformationAttributes struct {
 	ref terra.Reference
 }
 
-func (mt MetricTransformationAttributes) InternalRef() terra.Reference {
-	return mt.ref
+func (mt MetricTransformationAttributes) InternalRef() (terra.Reference, error) {
+	return mt.ref, nil
 }
 
 func (mt MetricTransformationAttributes) InternalWithRef(ref terra.Reference) MetricTransformationAttributes {

@@ -31,8 +31,8 @@ type IdentityInfoAttributes struct {
 	ref terra.Reference
 }
 
-func (ii IdentityInfoAttributes) InternalRef() terra.Reference {
-	return ii.ref
+func (ii IdentityInfoAttributes) InternalRef() (terra.Reference, error) {
+	return ii.ref, nil
 }
 
 func (ii IdentityInfoAttributes) InternalWithRef(ref terra.Reference) IdentityInfoAttributes {
@@ -59,8 +59,8 @@ type PhoneConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (pc PhoneConfigAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc PhoneConfigAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc PhoneConfigAttributes) InternalWithRef(ref terra.Reference) PhoneConfigAttributes {

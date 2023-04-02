@@ -27,8 +27,8 @@ type ActivatedRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (ar ActivatedRuleAttributes) InternalRef() terra.Reference {
-	return ar.ref
+func (ar ActivatedRuleAttributes) InternalRef() (terra.Reference, error) {
+	return ar.ref, nil
 }
 
 func (ar ActivatedRuleAttributes) InternalWithRef(ref terra.Reference) ActivatedRuleAttributes {
@@ -59,8 +59,8 @@ type ActionAttributes struct {
 	ref terra.Reference
 }
 
-func (a ActionAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ActionAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ActionAttributes) InternalWithRef(ref terra.Reference) ActionAttributes {

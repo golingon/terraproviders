@@ -20,8 +20,8 @@ type ClusterConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (cc ClusterConfigurationAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc ClusterConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc ClusterConfigurationAttributes) InternalWithRef(ref terra.Reference) ClusterConfigurationAttributes {
@@ -88,8 +88,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

@@ -25,8 +25,8 @@ type ReplicaAttributes struct {
 	ref terra.Reference
 }
 
-func (r ReplicaAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r ReplicaAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r ReplicaAttributes) InternalWithRef(ref terra.Reference) ReplicaAttributes {
@@ -45,8 +45,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

@@ -74,8 +74,8 @@ type ExecutionAttributes struct {
 	ref terra.Reference
 }
 
-func (e ExecutionAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e ExecutionAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e ExecutionAttributes) InternalWithRef(ref terra.Reference) ExecutionAttributes {
@@ -98,8 +98,8 @@ type GroupsAttributes struct {
 	ref terra.Reference
 }
 
-func (g GroupsAttributes) InternalRef() terra.Reference {
-	return g.ref
+func (g GroupsAttributes) InternalRef() (terra.Reference, error) {
+	return g.ref, nil
 }
 
 func (g GroupsAttributes) InternalWithRef(ref terra.Reference) GroupsAttributes {
@@ -130,8 +130,8 @@ type MetricMonitorsAttributes struct {
 	ref terra.Reference
 }
 
-func (mm MetricMonitorsAttributes) InternalRef() terra.Reference {
-	return mm.ref
+func (mm MetricMonitorsAttributes) InternalRef() (terra.Reference, error) {
+	return mm.ref, nil
 }
 
 func (mm MetricMonitorsAttributes) InternalWithRef(ref terra.Reference) MetricMonitorsAttributes {
@@ -150,8 +150,8 @@ type MetricDefinitionAttributes struct {
 	ref terra.Reference
 }
 
-func (md MetricDefinitionAttributes) InternalRef() terra.Reference {
-	return md.ref
+func (md MetricDefinitionAttributes) InternalRef() (terra.Reference, error) {
+	return md.ref, nil
 }
 
 func (md MetricDefinitionAttributes) InternalWithRef(ref terra.Reference) MetricDefinitionAttributes {
@@ -186,8 +186,8 @@ type ScheduledSplitsConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ssc ScheduledSplitsConfigAttributes) InternalRef() terra.Reference {
-	return ssc.ref
+func (ssc ScheduledSplitsConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ssc.ref, nil
 }
 
 func (ssc ScheduledSplitsConfigAttributes) InternalWithRef(ref terra.Reference) ScheduledSplitsConfigAttributes {
@@ -206,8 +206,8 @@ type StepsAttributes struct {
 	ref terra.Reference
 }
 
-func (s StepsAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s StepsAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s StepsAttributes) InternalWithRef(ref terra.Reference) StepsAttributes {
@@ -234,8 +234,8 @@ type SegmentOverridesAttributes struct {
 	ref terra.Reference
 }
 
-func (so SegmentOverridesAttributes) InternalRef() terra.Reference {
-	return so.ref
+func (so SegmentOverridesAttributes) InternalRef() (terra.Reference, error) {
+	return so.ref, nil
 }
 
 func (so SegmentOverridesAttributes) InternalWithRef(ref terra.Reference) SegmentOverridesAttributes {
@@ -262,8 +262,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

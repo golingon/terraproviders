@@ -15,8 +15,8 @@ type AwsLocationAttributes struct {
 	ref terra.Reference
 }
 
-func (al AwsLocationAttributes) InternalRef() terra.Reference {
-	return al.ref
+func (al AwsLocationAttributes) InternalRef() (terra.Reference, error) {
+	return al.ref, nil
 }
 
 func (al AwsLocationAttributes) InternalWithRef(ref terra.Reference) AwsLocationAttributes {
@@ -39,8 +39,8 @@ type LocationAttributes struct {
 	ref terra.Reference
 }
 
-func (l LocationAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l LocationAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l LocationAttributes) InternalWithRef(ref terra.Reference) LocationAttributes {

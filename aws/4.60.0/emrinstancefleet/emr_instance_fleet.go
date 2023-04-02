@@ -67,8 +67,8 @@ type InstanceTypeConfigsAttributes struct {
 	ref terra.Reference
 }
 
-func (itc InstanceTypeConfigsAttributes) InternalRef() terra.Reference {
-	return itc.ref
+func (itc InstanceTypeConfigsAttributes) InternalRef() (terra.Reference, error) {
+	return itc.ref, nil
 }
 
 func (itc InstanceTypeConfigsAttributes) InternalWithRef(ref terra.Reference) InstanceTypeConfigsAttributes {
@@ -107,8 +107,8 @@ type ConfigurationsAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConfigurationsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConfigurationsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConfigurationsAttributes) InternalWithRef(ref terra.Reference) ConfigurationsAttributes {
@@ -131,8 +131,8 @@ type EbsConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ec EbsConfigAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec EbsConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec EbsConfigAttributes) InternalWithRef(ref terra.Reference) EbsConfigAttributes {
@@ -163,8 +163,8 @@ type LaunchSpecificationsAttributes struct {
 	ref terra.Reference
 }
 
-func (ls LaunchSpecificationsAttributes) InternalRef() terra.Reference {
-	return ls.ref
+func (ls LaunchSpecificationsAttributes) InternalRef() (terra.Reference, error) {
+	return ls.ref, nil
 }
 
 func (ls LaunchSpecificationsAttributes) InternalWithRef(ref terra.Reference) LaunchSpecificationsAttributes {
@@ -187,8 +187,8 @@ type OnDemandSpecificationAttributes struct {
 	ref terra.Reference
 }
 
-func (ods OnDemandSpecificationAttributes) InternalRef() terra.Reference {
-	return ods.ref
+func (ods OnDemandSpecificationAttributes) InternalRef() (terra.Reference, error) {
+	return ods.ref, nil
 }
 
 func (ods OnDemandSpecificationAttributes) InternalWithRef(ref terra.Reference) OnDemandSpecificationAttributes {
@@ -207,8 +207,8 @@ type SpotSpecificationAttributes struct {
 	ref terra.Reference
 }
 
-func (ss SpotSpecificationAttributes) InternalRef() terra.Reference {
-	return ss.ref
+func (ss SpotSpecificationAttributes) InternalRef() (terra.Reference, error) {
+	return ss.ref, nil
 }
 
 func (ss SpotSpecificationAttributes) InternalWithRef(ref terra.Reference) SpotSpecificationAttributes {

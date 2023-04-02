@@ -28,8 +28,8 @@ type DestinationConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (dc DestinationConfigAttributes) InternalRef() terra.Reference {
-	return dc.ref
+func (dc DestinationConfigAttributes) InternalRef() (terra.Reference, error) {
+	return dc.ref, nil
 }
 
 func (dc DestinationConfigAttributes) InternalWithRef(ref terra.Reference) DestinationConfigAttributes {
@@ -52,8 +52,8 @@ type OnFailureAttributes struct {
 	ref terra.Reference
 }
 
-func (of OnFailureAttributes) InternalRef() terra.Reference {
-	return of.ref
+func (of OnFailureAttributes) InternalRef() (terra.Reference, error) {
+	return of.ref, nil
 }
 
 func (of OnFailureAttributes) InternalWithRef(ref terra.Reference) OnFailureAttributes {
@@ -72,8 +72,8 @@ type OnSuccessAttributes struct {
 	ref terra.Reference
 }
 
-func (os OnSuccessAttributes) InternalRef() terra.Reference {
-	return os.ref
+func (os OnSuccessAttributes) InternalRef() (terra.Reference, error) {
+	return os.ref, nil
 }
 
 func (os OnSuccessAttributes) InternalWithRef(ref terra.Reference) OnSuccessAttributes {

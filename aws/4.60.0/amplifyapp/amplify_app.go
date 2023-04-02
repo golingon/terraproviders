@@ -47,8 +47,8 @@ type ProductionBranchAttributes struct {
 	ref terra.Reference
 }
 
-func (pb ProductionBranchAttributes) InternalRef() terra.Reference {
-	return pb.ref
+func (pb ProductionBranchAttributes) InternalRef() (terra.Reference, error) {
+	return pb.ref, nil
 }
 
 func (pb ProductionBranchAttributes) InternalWithRef(ref terra.Reference) ProductionBranchAttributes {
@@ -79,8 +79,8 @@ type AutoBranchCreationConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (abcc AutoBranchCreationConfigAttributes) InternalRef() terra.Reference {
-	return abcc.ref
+func (abcc AutoBranchCreationConfigAttributes) InternalRef() (terra.Reference, error) {
+	return abcc.ref, nil
 }
 
 func (abcc AutoBranchCreationConfigAttributes) InternalWithRef(ref terra.Reference) AutoBranchCreationConfigAttributes {
@@ -135,8 +135,8 @@ type CustomRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (cr CustomRuleAttributes) InternalRef() terra.Reference {
-	return cr.ref
+func (cr CustomRuleAttributes) InternalRef() (terra.Reference, error) {
+	return cr.ref, nil
 }
 
 func (cr CustomRuleAttributes) InternalWithRef(ref terra.Reference) CustomRuleAttributes {

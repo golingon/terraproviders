@@ -60,8 +60,8 @@ type DatabaseAttributes struct {
 	ref terra.Reference
 }
 
-func (d DatabaseAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DatabaseAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DatabaseAttributes) InternalWithRef(ref terra.Reference) DatabaseAttributes {
@@ -84,8 +84,8 @@ type LfTagAttributes struct {
 	ref terra.Reference
 }
 
-func (lt LfTagAttributes) InternalRef() terra.Reference {
-	return lt.ref
+func (lt LfTagAttributes) InternalRef() (terra.Reference, error) {
+	return lt.ref, nil
 }
 
 func (lt LfTagAttributes) InternalWithRef(ref terra.Reference) LfTagAttributes {
@@ -112,8 +112,8 @@ type TableAttributes struct {
 	ref terra.Reference
 }
 
-func (t TableAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TableAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TableAttributes) InternalWithRef(ref terra.Reference) TableAttributes {
@@ -144,8 +144,8 @@ type TableWithColumnsAttributes struct {
 	ref terra.Reference
 }
 
-func (twc TableWithColumnsAttributes) InternalRef() terra.Reference {
-	return twc.ref
+func (twc TableWithColumnsAttributes) InternalRef() (terra.Reference, error) {
+	return twc.ref, nil
 }
 
 func (twc TableWithColumnsAttributes) InternalWithRef(ref terra.Reference) TableWithColumnsAttributes {
@@ -184,8 +184,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

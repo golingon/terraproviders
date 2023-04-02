@@ -55,8 +55,8 @@ type FeatureDefinitionAttributes struct {
 	ref terra.Reference
 }
 
-func (fd FeatureDefinitionAttributes) InternalRef() terra.Reference {
-	return fd.ref
+func (fd FeatureDefinitionAttributes) InternalRef() (terra.Reference, error) {
+	return fd.ref, nil
 }
 
 func (fd FeatureDefinitionAttributes) InternalWithRef(ref terra.Reference) FeatureDefinitionAttributes {
@@ -79,8 +79,8 @@ type OfflineStoreConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (osc OfflineStoreConfigAttributes) InternalRef() terra.Reference {
-	return osc.ref
+func (osc OfflineStoreConfigAttributes) InternalRef() (terra.Reference, error) {
+	return osc.ref, nil
 }
 
 func (osc OfflineStoreConfigAttributes) InternalWithRef(ref terra.Reference) OfflineStoreConfigAttributes {
@@ -107,8 +107,8 @@ type DataCatalogConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (dcc DataCatalogConfigAttributes) InternalRef() terra.Reference {
-	return dcc.ref
+func (dcc DataCatalogConfigAttributes) InternalRef() (terra.Reference, error) {
+	return dcc.ref, nil
 }
 
 func (dcc DataCatalogConfigAttributes) InternalWithRef(ref terra.Reference) DataCatalogConfigAttributes {
@@ -135,8 +135,8 @@ type S3StorageConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ssc S3StorageConfigAttributes) InternalRef() terra.Reference {
-	return ssc.ref
+func (ssc S3StorageConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ssc.ref, nil
 }
 
 func (ssc S3StorageConfigAttributes) InternalWithRef(ref terra.Reference) S3StorageConfigAttributes {
@@ -159,8 +159,8 @@ type OnlineStoreConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (osc OnlineStoreConfigAttributes) InternalRef() terra.Reference {
-	return osc.ref
+func (osc OnlineStoreConfigAttributes) InternalRef() (terra.Reference, error) {
+	return osc.ref, nil
 }
 
 func (osc OnlineStoreConfigAttributes) InternalWithRef(ref terra.Reference) OnlineStoreConfigAttributes {
@@ -183,8 +183,8 @@ type SecurityConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sc SecurityConfigAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc SecurityConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc SecurityConfigAttributes) InternalWithRef(ref terra.Reference) SecurityConfigAttributes {

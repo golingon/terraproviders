@@ -23,8 +23,8 @@ type ControlSetsAttributes struct {
 	ref terra.Reference
 }
 
-func (cs ControlSetsAttributes) InternalRef() terra.Reference {
-	return cs.ref
+func (cs ControlSetsAttributes) InternalRef() (terra.Reference, error) {
+	return cs.ref, nil
 }
 
 func (cs ControlSetsAttributes) InternalWithRef(ref terra.Reference) ControlSetsAttributes {
@@ -51,8 +51,8 @@ type ControlsAttributes struct {
 	ref terra.Reference
 }
 
-func (c ControlsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ControlsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ControlsAttributes) InternalWithRef(ref terra.Reference) ControlsAttributes {

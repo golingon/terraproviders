@@ -13,8 +13,8 @@ type LifecyclePolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (lp LifecyclePolicyAttributes) InternalRef() terra.Reference {
-	return lp.ref
+func (lp LifecyclePolicyAttributes) InternalRef() (terra.Reference, error) {
+	return lp.ref, nil
 }
 
 func (lp LifecyclePolicyAttributes) InternalWithRef(ref terra.Reference) LifecyclePolicyAttributes {

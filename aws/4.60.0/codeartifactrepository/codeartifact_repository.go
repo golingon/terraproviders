@@ -21,8 +21,8 @@ type ExternalConnectionsAttributes struct {
 	ref terra.Reference
 }
 
-func (ec ExternalConnectionsAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec ExternalConnectionsAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec ExternalConnectionsAttributes) InternalWithRef(ref terra.Reference) ExternalConnectionsAttributes {
@@ -49,8 +49,8 @@ type UpstreamAttributes struct {
 	ref terra.Reference
 }
 
-func (u UpstreamAttributes) InternalRef() terra.Reference {
-	return u.ref
+func (u UpstreamAttributes) InternalRef() (terra.Reference, error) {
+	return u.ref, nil
 }
 
 func (u UpstreamAttributes) InternalWithRef(ref terra.Reference) UpstreamAttributes {

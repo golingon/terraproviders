@@ -113,8 +113,8 @@ type ApplicationSourceAttributes struct {
 	ref terra.Reference
 }
 
-func (as ApplicationSourceAttributes) InternalRef() terra.Reference {
-	return as.ref
+func (as ApplicationSourceAttributes) InternalRef() (terra.Reference, error) {
+	return as.ref, nil
 }
 
 func (as ApplicationSourceAttributes) InternalWithRef(ref terra.Reference) ApplicationSourceAttributes {
@@ -137,8 +137,8 @@ type TagFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (tf TagFilterAttributes) InternalRef() terra.Reference {
-	return tf.ref
+func (tf TagFilterAttributes) InternalRef() (terra.Reference, error) {
+	return tf.ref, nil
 }
 
 func (tf TagFilterAttributes) InternalWithRef(ref terra.Reference) TagFilterAttributes {
@@ -161,8 +161,8 @@ type ScalingInstructionAttributes struct {
 	ref terra.Reference
 }
 
-func (si ScalingInstructionAttributes) InternalRef() terra.Reference {
-	return si.ref
+func (si ScalingInstructionAttributes) InternalRef() (terra.Reference, error) {
+	return si.ref, nil
 }
 
 func (si ScalingInstructionAttributes) InternalWithRef(ref terra.Reference) ScalingInstructionAttributes {
@@ -233,8 +233,8 @@ type CustomizedLoadMetricSpecificationAttributes struct {
 	ref terra.Reference
 }
 
-func (clms CustomizedLoadMetricSpecificationAttributes) InternalRef() terra.Reference {
-	return clms.ref
+func (clms CustomizedLoadMetricSpecificationAttributes) InternalRef() (terra.Reference, error) {
+	return clms.ref, nil
 }
 
 func (clms CustomizedLoadMetricSpecificationAttributes) InternalWithRef(ref terra.Reference) CustomizedLoadMetricSpecificationAttributes {
@@ -269,8 +269,8 @@ type PredefinedLoadMetricSpecificationAttributes struct {
 	ref terra.Reference
 }
 
-func (plms PredefinedLoadMetricSpecificationAttributes) InternalRef() terra.Reference {
-	return plms.ref
+func (plms PredefinedLoadMetricSpecificationAttributes) InternalRef() (terra.Reference, error) {
+	return plms.ref, nil
 }
 
 func (plms PredefinedLoadMetricSpecificationAttributes) InternalWithRef(ref terra.Reference) PredefinedLoadMetricSpecificationAttributes {
@@ -293,8 +293,8 @@ type TargetTrackingConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ttc TargetTrackingConfigurationAttributes) InternalRef() terra.Reference {
-	return ttc.ref
+func (ttc TargetTrackingConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ttc.ref, nil
 }
 
 func (ttc TargetTrackingConfigurationAttributes) InternalWithRef(ref terra.Reference) TargetTrackingConfigurationAttributes {
@@ -337,8 +337,8 @@ type CustomizedScalingMetricSpecificationAttributes struct {
 	ref terra.Reference
 }
 
-func (csms CustomizedScalingMetricSpecificationAttributes) InternalRef() terra.Reference {
-	return csms.ref
+func (csms CustomizedScalingMetricSpecificationAttributes) InternalRef() (terra.Reference, error) {
+	return csms.ref, nil
 }
 
 func (csms CustomizedScalingMetricSpecificationAttributes) InternalWithRef(ref terra.Reference) CustomizedScalingMetricSpecificationAttributes {
@@ -373,8 +373,8 @@ type PredefinedScalingMetricSpecificationAttributes struct {
 	ref terra.Reference
 }
 
-func (psms PredefinedScalingMetricSpecificationAttributes) InternalRef() terra.Reference {
-	return psms.ref
+func (psms PredefinedScalingMetricSpecificationAttributes) InternalRef() (terra.Reference, error) {
+	return psms.ref, nil
 }
 
 func (psms PredefinedScalingMetricSpecificationAttributes) InternalWithRef(ref terra.Reference) PredefinedScalingMetricSpecificationAttributes {

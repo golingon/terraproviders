@@ -142,8 +142,8 @@ type CapacityAttributes struct {
 	ref terra.Reference
 }
 
-func (c CapacityAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CapacityAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CapacityAttributes) InternalWithRef(ref terra.Reference) CapacityAttributes {
@@ -166,8 +166,8 @@ type AutoscalingAttributes struct {
 	ref terra.Reference
 }
 
-func (a AutoscalingAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AutoscalingAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AutoscalingAttributes) InternalWithRef(ref terra.Reference) AutoscalingAttributes {
@@ -202,8 +202,8 @@ type ScaleInPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (sip ScaleInPolicyAttributes) InternalRef() terra.Reference {
-	return sip.ref
+func (sip ScaleInPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return sip.ref, nil
 }
 
 func (sip ScaleInPolicyAttributes) InternalWithRef(ref terra.Reference) ScaleInPolicyAttributes {
@@ -222,8 +222,8 @@ type ScaleOutPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (sop ScaleOutPolicyAttributes) InternalRef() terra.Reference {
-	return sop.ref
+func (sop ScaleOutPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return sop.ref, nil
 }
 
 func (sop ScaleOutPolicyAttributes) InternalWithRef(ref terra.Reference) ScaleOutPolicyAttributes {
@@ -242,8 +242,8 @@ type ProvisionedCapacityAttributes struct {
 	ref terra.Reference
 }
 
-func (pc ProvisionedCapacityAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc ProvisionedCapacityAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc ProvisionedCapacityAttributes) InternalWithRef(ref terra.Reference) ProvisionedCapacityAttributes {
@@ -266,8 +266,8 @@ type KafkaClusterAttributes struct {
 	ref terra.Reference
 }
 
-func (kc KafkaClusterAttributes) InternalRef() terra.Reference {
-	return kc.ref
+func (kc KafkaClusterAttributes) InternalRef() (terra.Reference, error) {
+	return kc.ref, nil
 }
 
 func (kc KafkaClusterAttributes) InternalWithRef(ref terra.Reference) KafkaClusterAttributes {
@@ -286,8 +286,8 @@ type ApacheKafkaClusterAttributes struct {
 	ref terra.Reference
 }
 
-func (akc ApacheKafkaClusterAttributes) InternalRef() terra.Reference {
-	return akc.ref
+func (akc ApacheKafkaClusterAttributes) InternalRef() (terra.Reference, error) {
+	return akc.ref, nil
 }
 
 func (akc ApacheKafkaClusterAttributes) InternalWithRef(ref terra.Reference) ApacheKafkaClusterAttributes {
@@ -310,8 +310,8 @@ type VpcAttributes struct {
 	ref terra.Reference
 }
 
-func (v VpcAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v VpcAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v VpcAttributes) InternalWithRef(ref terra.Reference) VpcAttributes {
@@ -334,8 +334,8 @@ type KafkaClusterClientAuthenticationAttributes struct {
 	ref terra.Reference
 }
 
-func (kcca KafkaClusterClientAuthenticationAttributes) InternalRef() terra.Reference {
-	return kcca.ref
+func (kcca KafkaClusterClientAuthenticationAttributes) InternalRef() (terra.Reference, error) {
+	return kcca.ref, nil
 }
 
 func (kcca KafkaClusterClientAuthenticationAttributes) InternalWithRef(ref terra.Reference) KafkaClusterClientAuthenticationAttributes {
@@ -354,8 +354,8 @@ type KafkaClusterEncryptionInTransitAttributes struct {
 	ref terra.Reference
 }
 
-func (kceit KafkaClusterEncryptionInTransitAttributes) InternalRef() terra.Reference {
-	return kceit.ref
+func (kceit KafkaClusterEncryptionInTransitAttributes) InternalRef() (terra.Reference, error) {
+	return kceit.ref, nil
 }
 
 func (kceit KafkaClusterEncryptionInTransitAttributes) InternalWithRef(ref terra.Reference) KafkaClusterEncryptionInTransitAttributes {
@@ -374,8 +374,8 @@ type LogDeliveryAttributes struct {
 	ref terra.Reference
 }
 
-func (ld LogDeliveryAttributes) InternalRef() terra.Reference {
-	return ld.ref
+func (ld LogDeliveryAttributes) InternalRef() (terra.Reference, error) {
+	return ld.ref, nil
 }
 
 func (ld LogDeliveryAttributes) InternalWithRef(ref terra.Reference) LogDeliveryAttributes {
@@ -394,8 +394,8 @@ type WorkerLogDeliveryAttributes struct {
 	ref terra.Reference
 }
 
-func (wld WorkerLogDeliveryAttributes) InternalRef() terra.Reference {
-	return wld.ref
+func (wld WorkerLogDeliveryAttributes) InternalRef() (terra.Reference, error) {
+	return wld.ref, nil
 }
 
 func (wld WorkerLogDeliveryAttributes) InternalWithRef(ref terra.Reference) WorkerLogDeliveryAttributes {
@@ -422,8 +422,8 @@ type CloudwatchLogsAttributes struct {
 	ref terra.Reference
 }
 
-func (cl CloudwatchLogsAttributes) InternalRef() terra.Reference {
-	return cl.ref
+func (cl CloudwatchLogsAttributes) InternalRef() (terra.Reference, error) {
+	return cl.ref, nil
 }
 
 func (cl CloudwatchLogsAttributes) InternalWithRef(ref terra.Reference) CloudwatchLogsAttributes {
@@ -446,8 +446,8 @@ type FirehoseAttributes struct {
 	ref terra.Reference
 }
 
-func (f FirehoseAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FirehoseAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FirehoseAttributes) InternalWithRef(ref terra.Reference) FirehoseAttributes {
@@ -470,8 +470,8 @@ type S3Attributes struct {
 	ref terra.Reference
 }
 
-func (s S3Attributes) InternalRef() terra.Reference {
-	return s.ref
+func (s S3Attributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s S3Attributes) InternalWithRef(ref terra.Reference) S3Attributes {
@@ -498,8 +498,8 @@ type PluginAttributes struct {
 	ref terra.Reference
 }
 
-func (p PluginAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PluginAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PluginAttributes) InternalWithRef(ref terra.Reference) PluginAttributes {
@@ -518,8 +518,8 @@ type CustomPluginAttributes struct {
 	ref terra.Reference
 }
 
-func (cp CustomPluginAttributes) InternalRef() terra.Reference {
-	return cp.ref
+func (cp CustomPluginAttributes) InternalRef() (terra.Reference, error) {
+	return cp.ref, nil
 }
 
 func (cp CustomPluginAttributes) InternalWithRef(ref terra.Reference) CustomPluginAttributes {
@@ -542,8 +542,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
@@ -570,8 +570,8 @@ type WorkerConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (wc WorkerConfigurationAttributes) InternalRef() terra.Reference {
-	return wc.ref
+func (wc WorkerConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return wc.ref, nil
 }
 
 func (wc WorkerConfigurationAttributes) InternalWithRef(ref terra.Reference) WorkerConfigurationAttributes {

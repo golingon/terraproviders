@@ -13,8 +13,8 @@ type AppversionLifecycleAttributes struct {
 	ref terra.Reference
 }
 
-func (al AppversionLifecycleAttributes) InternalRef() terra.Reference {
-	return al.ref
+func (al AppversionLifecycleAttributes) InternalRef() (terra.Reference, error) {
+	return al.ref, nil
 }
 
 func (al AppversionLifecycleAttributes) InternalWithRef(ref terra.Reference) AppversionLifecycleAttributes {

@@ -20,8 +20,8 @@ type AddOnAttributes struct {
 	ref terra.Reference
 }
 
-func (ao AddOnAttributes) InternalRef() terra.Reference {
-	return ao.ref
+func (ao AddOnAttributes) InternalRef() (terra.Reference, error) {
+	return ao.ref, nil
 }
 
 func (ao AddOnAttributes) InternalWithRef(ref terra.Reference) AddOnAttributes {

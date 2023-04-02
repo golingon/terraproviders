@@ -18,8 +18,8 @@ type PermittedPublicSecurityGroupRuleRangeAttributes struct {
 	ref terra.Reference
 }
 
-func (ppsgrr PermittedPublicSecurityGroupRuleRangeAttributes) InternalRef() terra.Reference {
-	return ppsgrr.ref
+func (ppsgrr PermittedPublicSecurityGroupRuleRangeAttributes) InternalRef() (terra.Reference, error) {
+	return ppsgrr.ref, nil
 }
 
 func (ppsgrr PermittedPublicSecurityGroupRuleRangeAttributes) InternalWithRef(ref terra.Reference) PermittedPublicSecurityGroupRuleRangeAttributes {

@@ -31,8 +31,8 @@ type CustomCookbooksSourceAttributes struct {
 	ref terra.Reference
 }
 
-func (ccs CustomCookbooksSourceAttributes) InternalRef() terra.Reference {
-	return ccs.ref
+func (ccs CustomCookbooksSourceAttributes) InternalRef() (terra.Reference, error) {
+	return ccs.ref, nil
 }
 
 func (ccs CustomCookbooksSourceAttributes) InternalWithRef(ref terra.Reference) CustomCookbooksSourceAttributes {
@@ -71,8 +71,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

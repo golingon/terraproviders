@@ -32,8 +32,8 @@ type CloudwatchDestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (cd CloudwatchDestinationAttributes) InternalRef() terra.Reference {
-	return cd.ref
+func (cd CloudwatchDestinationAttributes) InternalRef() (terra.Reference, error) {
+	return cd.ref, nil
 }
 
 func (cd CloudwatchDestinationAttributes) InternalWithRef(ref terra.Reference) CloudwatchDestinationAttributes {
@@ -60,8 +60,8 @@ type KinesisDestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (kd KinesisDestinationAttributes) InternalRef() terra.Reference {
-	return kd.ref
+func (kd KinesisDestinationAttributes) InternalRef() (terra.Reference, error) {
+	return kd.ref, nil
 }
 
 func (kd KinesisDestinationAttributes) InternalWithRef(ref terra.Reference) KinesisDestinationAttributes {
@@ -84,8 +84,8 @@ type SnsDestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (sd SnsDestinationAttributes) InternalRef() terra.Reference {
-	return sd.ref
+func (sd SnsDestinationAttributes) InternalRef() (terra.Reference, error) {
+	return sd.ref, nil
 }
 
 func (sd SnsDestinationAttributes) InternalWithRef(ref terra.Reference) SnsDestinationAttributes {

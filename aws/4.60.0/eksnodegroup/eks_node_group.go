@@ -68,8 +68,8 @@ type ResourcesAttributes struct {
 	ref terra.Reference
 }
 
-func (r ResourcesAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r ResourcesAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r ResourcesAttributes) InternalWithRef(ref terra.Reference) ResourcesAttributes {
@@ -92,8 +92,8 @@ type AutoscalingGroupsAttributes struct {
 	ref terra.Reference
 }
 
-func (ag AutoscalingGroupsAttributes) InternalRef() terra.Reference {
-	return ag.ref
+func (ag AutoscalingGroupsAttributes) InternalRef() (terra.Reference, error) {
+	return ag.ref, nil
 }
 
 func (ag AutoscalingGroupsAttributes) InternalWithRef(ref terra.Reference) AutoscalingGroupsAttributes {
@@ -112,8 +112,8 @@ type LaunchTemplateAttributes struct {
 	ref terra.Reference
 }
 
-func (lt LaunchTemplateAttributes) InternalRef() terra.Reference {
-	return lt.ref
+func (lt LaunchTemplateAttributes) InternalRef() (terra.Reference, error) {
+	return lt.ref, nil
 }
 
 func (lt LaunchTemplateAttributes) InternalWithRef(ref terra.Reference) LaunchTemplateAttributes {
@@ -140,8 +140,8 @@ type RemoteAccessAttributes struct {
 	ref terra.Reference
 }
 
-func (ra RemoteAccessAttributes) InternalRef() terra.Reference {
-	return ra.ref
+func (ra RemoteAccessAttributes) InternalRef() (terra.Reference, error) {
+	return ra.ref, nil
 }
 
 func (ra RemoteAccessAttributes) InternalWithRef(ref terra.Reference) RemoteAccessAttributes {
@@ -164,8 +164,8 @@ type ScalingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sc ScalingConfigAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc ScalingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc ScalingConfigAttributes) InternalWithRef(ref terra.Reference) ScalingConfigAttributes {
@@ -192,8 +192,8 @@ type TaintAttributes struct {
 	ref terra.Reference
 }
 
-func (t TaintAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TaintAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TaintAttributes) InternalWithRef(ref terra.Reference) TaintAttributes {
@@ -220,8 +220,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
@@ -248,8 +248,8 @@ type UpdateConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (uc UpdateConfigAttributes) InternalRef() terra.Reference {
-	return uc.ref
+func (uc UpdateConfigAttributes) InternalRef() (terra.Reference, error) {
+	return uc.ref, nil
 }
 
 func (uc UpdateConfigAttributes) InternalWithRef(ref terra.Reference) UpdateConfigAttributes {

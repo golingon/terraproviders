@@ -47,8 +47,8 @@ type ClientDataAttributes struct {
 	ref terra.Reference
 }
 
-func (cd ClientDataAttributes) InternalRef() terra.Reference {
-	return cd.ref
+func (cd ClientDataAttributes) InternalRef() (terra.Reference, error) {
+	return cd.ref, nil
 }
 
 func (cd ClientDataAttributes) InternalWithRef(ref terra.Reference) ClientDataAttributes {
@@ -79,8 +79,8 @@ type DiskContainerAttributes struct {
 	ref terra.Reference
 }
 
-func (dc DiskContainerAttributes) InternalRef() terra.Reference {
-	return dc.ref
+func (dc DiskContainerAttributes) InternalRef() (terra.Reference, error) {
+	return dc.ref, nil
 }
 
 func (dc DiskContainerAttributes) InternalWithRef(ref terra.Reference) DiskContainerAttributes {
@@ -111,8 +111,8 @@ type UserBucketAttributes struct {
 	ref terra.Reference
 }
 
-func (ub UserBucketAttributes) InternalRef() terra.Reference {
-	return ub.ref
+func (ub UserBucketAttributes) InternalRef() (terra.Reference, error) {
+	return ub.ref, nil
 }
 
 func (ub UserBucketAttributes) InternalWithRef(ref terra.Reference) UserBucketAttributes {
@@ -135,8 +135,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

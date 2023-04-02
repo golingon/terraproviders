@@ -69,8 +69,8 @@ type ComponentAttributes struct {
 	ref terra.Reference
 }
 
-func (c ComponentAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ComponentAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ComponentAttributes) InternalWithRef(ref terra.Reference) ComponentAttributes {
@@ -93,8 +93,8 @@ type ParameterAttributes struct {
 	ref terra.Reference
 }
 
-func (p ParameterAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p ParameterAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p ParameterAttributes) InternalWithRef(ref terra.Reference) ParameterAttributes {
@@ -117,8 +117,8 @@ type InstanceConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ic InstanceConfigurationAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic InstanceConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic InstanceConfigurationAttributes) InternalWithRef(ref terra.Reference) InstanceConfigurationAttributes {
@@ -141,8 +141,8 @@ type BlockDeviceMappingAttributes struct {
 	ref terra.Reference
 }
 
-func (bdm BlockDeviceMappingAttributes) InternalRef() terra.Reference {
-	return bdm.ref
+func (bdm BlockDeviceMappingAttributes) InternalRef() (terra.Reference, error) {
+	return bdm.ref, nil
 }
 
 func (bdm BlockDeviceMappingAttributes) InternalWithRef(ref terra.Reference) BlockDeviceMappingAttributes {
@@ -173,8 +173,8 @@ type EbsAttributes struct {
 	ref terra.Reference
 }
 
-func (e EbsAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EbsAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EbsAttributes) InternalWithRef(ref terra.Reference) EbsAttributes {
@@ -221,8 +221,8 @@ type TargetRepositoryAttributes struct {
 	ref terra.Reference
 }
 
-func (tr TargetRepositoryAttributes) InternalRef() terra.Reference {
-	return tr.ref
+func (tr TargetRepositoryAttributes) InternalRef() (terra.Reference, error) {
+	return tr.ref, nil
 }
 
 func (tr TargetRepositoryAttributes) InternalWithRef(ref terra.Reference) TargetRepositoryAttributes {

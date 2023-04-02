@@ -13,8 +13,8 @@ type WorkspacePropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (wp WorkspacePropertiesAttributes) InternalRef() terra.Reference {
-	return wp.ref
+func (wp WorkspacePropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return wp.ref, nil
 }
 
 func (wp WorkspacePropertiesAttributes) InternalWithRef(ref terra.Reference) WorkspacePropertiesAttributes {

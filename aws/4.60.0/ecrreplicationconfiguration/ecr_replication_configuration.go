@@ -37,8 +37,8 @@ type ReplicationConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (rc ReplicationConfigurationAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc ReplicationConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc ReplicationConfigurationAttributes) InternalWithRef(ref terra.Reference) ReplicationConfigurationAttributes {
@@ -57,8 +57,8 @@ type RuleAttributes struct {
 	ref terra.Reference
 }
 
-func (r RuleAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RuleAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RuleAttributes) InternalWithRef(ref terra.Reference) RuleAttributes {
@@ -81,8 +81,8 @@ type DestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (d DestinationAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DestinationAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DestinationAttributes) InternalWithRef(ref terra.Reference) DestinationAttributes {
@@ -105,8 +105,8 @@ type RepositoryFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (rf RepositoryFilterAttributes) InternalRef() terra.Reference {
-	return rf.ref
+func (rf RepositoryFilterAttributes) InternalRef() (terra.Reference, error) {
+	return rf.ref, nil
 }
 
 func (rf RepositoryFilterAttributes) InternalWithRef(ref terra.Reference) RepositoryFilterAttributes {

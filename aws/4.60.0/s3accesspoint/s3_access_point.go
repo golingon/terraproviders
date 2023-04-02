@@ -27,8 +27,8 @@ type PublicAccessBlockConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (pabc PublicAccessBlockConfigurationAttributes) InternalRef() terra.Reference {
-	return pabc.ref
+func (pabc PublicAccessBlockConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return pabc.ref, nil
 }
 
 func (pabc PublicAccessBlockConfigurationAttributes) InternalWithRef(ref terra.Reference) PublicAccessBlockConfigurationAttributes {
@@ -59,8 +59,8 @@ type VpcConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (vc VpcConfigurationAttributes) InternalRef() terra.Reference {
-	return vc.ref
+func (vc VpcConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return vc.ref, nil
 }
 
 func (vc VpcConfigurationAttributes) InternalWithRef(ref terra.Reference) VpcConfigurationAttributes {

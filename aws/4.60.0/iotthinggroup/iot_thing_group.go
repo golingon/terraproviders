@@ -30,8 +30,8 @@ type MetadataAttributes struct {
 	ref terra.Reference
 }
 
-func (m MetadataAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MetadataAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MetadataAttributes) InternalWithRef(ref terra.Reference) MetadataAttributes {
@@ -58,8 +58,8 @@ type RootToParentGroupsAttributes struct {
 	ref terra.Reference
 }
 
-func (rtpg RootToParentGroupsAttributes) InternalRef() terra.Reference {
-	return rtpg.ref
+func (rtpg RootToParentGroupsAttributes) InternalRef() (terra.Reference, error) {
+	return rtpg.ref, nil
 }
 
 func (rtpg RootToParentGroupsAttributes) InternalWithRef(ref terra.Reference) RootToParentGroupsAttributes {
@@ -82,8 +82,8 @@ type PropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (p PropertiesAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PropertiesAttributes) InternalWithRef(ref terra.Reference) PropertiesAttributes {
@@ -106,8 +106,8 @@ type AttributePayloadAttributes struct {
 	ref terra.Reference
 }
 
-func (ap AttributePayloadAttributes) InternalRef() terra.Reference {
-	return ap.ref
+func (ap AttributePayloadAttributes) InternalRef() (terra.Reference, error) {
+	return ap.ref, nil
 }
 
 func (ap AttributePayloadAttributes) InternalWithRef(ref terra.Reference) AttributePayloadAttributes {

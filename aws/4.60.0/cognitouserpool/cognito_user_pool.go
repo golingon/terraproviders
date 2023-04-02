@@ -192,8 +192,8 @@ type AccountRecoverySettingAttributes struct {
 	ref terra.Reference
 }
 
-func (ars AccountRecoverySettingAttributes) InternalRef() terra.Reference {
-	return ars.ref
+func (ars AccountRecoverySettingAttributes) InternalRef() (terra.Reference, error) {
+	return ars.ref, nil
 }
 
 func (ars AccountRecoverySettingAttributes) InternalWithRef(ref terra.Reference) AccountRecoverySettingAttributes {
@@ -212,8 +212,8 @@ type RecoveryMechanismAttributes struct {
 	ref terra.Reference
 }
 
-func (rm RecoveryMechanismAttributes) InternalRef() terra.Reference {
-	return rm.ref
+func (rm RecoveryMechanismAttributes) InternalRef() (terra.Reference, error) {
+	return rm.ref, nil
 }
 
 func (rm RecoveryMechanismAttributes) InternalWithRef(ref terra.Reference) RecoveryMechanismAttributes {
@@ -236,8 +236,8 @@ type AdminCreateUserConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (acuc AdminCreateUserConfigAttributes) InternalRef() terra.Reference {
-	return acuc.ref
+func (acuc AdminCreateUserConfigAttributes) InternalRef() (terra.Reference, error) {
+	return acuc.ref, nil
 }
 
 func (acuc AdminCreateUserConfigAttributes) InternalWithRef(ref terra.Reference) AdminCreateUserConfigAttributes {
@@ -260,8 +260,8 @@ type InviteMessageTemplateAttributes struct {
 	ref terra.Reference
 }
 
-func (imt InviteMessageTemplateAttributes) InternalRef() terra.Reference {
-	return imt.ref
+func (imt InviteMessageTemplateAttributes) InternalRef() (terra.Reference, error) {
+	return imt.ref, nil
 }
 
 func (imt InviteMessageTemplateAttributes) InternalWithRef(ref terra.Reference) InviteMessageTemplateAttributes {
@@ -288,8 +288,8 @@ type DeviceConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (dc DeviceConfigurationAttributes) InternalRef() terra.Reference {
-	return dc.ref
+func (dc DeviceConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return dc.ref, nil
 }
 
 func (dc DeviceConfigurationAttributes) InternalWithRef(ref terra.Reference) DeviceConfigurationAttributes {
@@ -312,8 +312,8 @@ type EmailConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ec EmailConfigurationAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec EmailConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec EmailConfigurationAttributes) InternalWithRef(ref terra.Reference) EmailConfigurationAttributes {
@@ -348,8 +348,8 @@ type LambdaConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (lc LambdaConfigAttributes) InternalRef() terra.Reference {
-	return lc.ref
+func (lc LambdaConfigAttributes) InternalRef() (terra.Reference, error) {
+	return lc.ref, nil
 }
 
 func (lc LambdaConfigAttributes) InternalWithRef(ref terra.Reference) LambdaConfigAttributes {
@@ -416,8 +416,8 @@ type CustomEmailSenderAttributes struct {
 	ref terra.Reference
 }
 
-func (ces CustomEmailSenderAttributes) InternalRef() terra.Reference {
-	return ces.ref
+func (ces CustomEmailSenderAttributes) InternalRef() (terra.Reference, error) {
+	return ces.ref, nil
 }
 
 func (ces CustomEmailSenderAttributes) InternalWithRef(ref terra.Reference) CustomEmailSenderAttributes {
@@ -440,8 +440,8 @@ type CustomSmsSenderAttributes struct {
 	ref terra.Reference
 }
 
-func (css CustomSmsSenderAttributes) InternalRef() terra.Reference {
-	return css.ref
+func (css CustomSmsSenderAttributes) InternalRef() (terra.Reference, error) {
+	return css.ref, nil
 }
 
 func (css CustomSmsSenderAttributes) InternalWithRef(ref terra.Reference) CustomSmsSenderAttributes {
@@ -464,8 +464,8 @@ type PasswordPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (pp PasswordPolicyAttributes) InternalRef() terra.Reference {
-	return pp.ref
+func (pp PasswordPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return pp.ref, nil
 }
 
 func (pp PasswordPolicyAttributes) InternalWithRef(ref terra.Reference) PasswordPolicyAttributes {
@@ -504,8 +504,8 @@ type SchemaAttributes struct {
 	ref terra.Reference
 }
 
-func (s SchemaAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SchemaAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SchemaAttributes) InternalWithRef(ref terra.Reference) SchemaAttributes {
@@ -548,8 +548,8 @@ type NumberAttributeConstraintsAttributes struct {
 	ref terra.Reference
 }
 
-func (nac NumberAttributeConstraintsAttributes) InternalRef() terra.Reference {
-	return nac.ref
+func (nac NumberAttributeConstraintsAttributes) InternalRef() (terra.Reference, error) {
+	return nac.ref, nil
 }
 
 func (nac NumberAttributeConstraintsAttributes) InternalWithRef(ref terra.Reference) NumberAttributeConstraintsAttributes {
@@ -572,8 +572,8 @@ type StringAttributeConstraintsAttributes struct {
 	ref terra.Reference
 }
 
-func (sac StringAttributeConstraintsAttributes) InternalRef() terra.Reference {
-	return sac.ref
+func (sac StringAttributeConstraintsAttributes) InternalRef() (terra.Reference, error) {
+	return sac.ref, nil
 }
 
 func (sac StringAttributeConstraintsAttributes) InternalWithRef(ref terra.Reference) StringAttributeConstraintsAttributes {
@@ -596,8 +596,8 @@ type SmsConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (sc SmsConfigurationAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc SmsConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc SmsConfigurationAttributes) InternalWithRef(ref terra.Reference) SmsConfigurationAttributes {
@@ -624,8 +624,8 @@ type SoftwareTokenMfaConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (stmc SoftwareTokenMfaConfigurationAttributes) InternalRef() terra.Reference {
-	return stmc.ref
+func (stmc SoftwareTokenMfaConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return stmc.ref, nil
 }
 
 func (stmc SoftwareTokenMfaConfigurationAttributes) InternalWithRef(ref terra.Reference) SoftwareTokenMfaConfigurationAttributes {
@@ -644,8 +644,8 @@ type UserAttributeUpdateSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (uaus UserAttributeUpdateSettingsAttributes) InternalRef() terra.Reference {
-	return uaus.ref
+func (uaus UserAttributeUpdateSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return uaus.ref, nil
 }
 
 func (uaus UserAttributeUpdateSettingsAttributes) InternalWithRef(ref terra.Reference) UserAttributeUpdateSettingsAttributes {
@@ -664,8 +664,8 @@ type UserPoolAddOnsAttributes struct {
 	ref terra.Reference
 }
 
-func (upao UserPoolAddOnsAttributes) InternalRef() terra.Reference {
-	return upao.ref
+func (upao UserPoolAddOnsAttributes) InternalRef() (terra.Reference, error) {
+	return upao.ref, nil
 }
 
 func (upao UserPoolAddOnsAttributes) InternalWithRef(ref terra.Reference) UserPoolAddOnsAttributes {
@@ -684,8 +684,8 @@ type UsernameConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (uc UsernameConfigurationAttributes) InternalRef() terra.Reference {
-	return uc.ref
+func (uc UsernameConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return uc.ref, nil
 }
 
 func (uc UsernameConfigurationAttributes) InternalWithRef(ref terra.Reference) UsernameConfigurationAttributes {
@@ -704,8 +704,8 @@ type VerificationMessageTemplateAttributes struct {
 	ref terra.Reference
 }
 
-func (vmt VerificationMessageTemplateAttributes) InternalRef() terra.Reference {
-	return vmt.ref
+func (vmt VerificationMessageTemplateAttributes) InternalRef() (terra.Reference, error) {
+	return vmt.ref, nil
 }
 
 func (vmt VerificationMessageTemplateAttributes) InternalWithRef(ref terra.Reference) VerificationMessageTemplateAttributes {

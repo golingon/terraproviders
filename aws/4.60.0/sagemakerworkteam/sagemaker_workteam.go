@@ -37,8 +37,8 @@ type MemberDefinitionAttributes struct {
 	ref terra.Reference
 }
 
-func (md MemberDefinitionAttributes) InternalRef() terra.Reference {
-	return md.ref
+func (md MemberDefinitionAttributes) InternalRef() (terra.Reference, error) {
+	return md.ref, nil
 }
 
 func (md MemberDefinitionAttributes) InternalWithRef(ref terra.Reference) MemberDefinitionAttributes {
@@ -61,8 +61,8 @@ type CognitoMemberDefinitionAttributes struct {
 	ref terra.Reference
 }
 
-func (cmd CognitoMemberDefinitionAttributes) InternalRef() terra.Reference {
-	return cmd.ref
+func (cmd CognitoMemberDefinitionAttributes) InternalRef() (terra.Reference, error) {
+	return cmd.ref, nil
 }
 
 func (cmd CognitoMemberDefinitionAttributes) InternalWithRef(ref terra.Reference) CognitoMemberDefinitionAttributes {
@@ -89,8 +89,8 @@ type OidcMemberDefinitionAttributes struct {
 	ref terra.Reference
 }
 
-func (omd OidcMemberDefinitionAttributes) InternalRef() terra.Reference {
-	return omd.ref
+func (omd OidcMemberDefinitionAttributes) InternalRef() (terra.Reference, error) {
+	return omd.ref, nil
 }
 
 func (omd OidcMemberDefinitionAttributes) InternalWithRef(ref terra.Reference) OidcMemberDefinitionAttributes {
@@ -109,8 +109,8 @@ type NotificationConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (nc NotificationConfigurationAttributes) InternalRef() terra.Reference {
-	return nc.ref
+func (nc NotificationConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return nc.ref, nil
 }
 
 func (nc NotificationConfigurationAttributes) InternalWithRef(ref terra.Reference) NotificationConfigurationAttributes {

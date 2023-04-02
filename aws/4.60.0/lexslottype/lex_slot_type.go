@@ -27,8 +27,8 @@ type EnumerationValueAttributes struct {
 	ref terra.Reference
 }
 
-func (ev EnumerationValueAttributes) InternalRef() terra.Reference {
-	return ev.ref
+func (ev EnumerationValueAttributes) InternalRef() (terra.Reference, error) {
+	return ev.ref, nil
 }
 
 func (ev EnumerationValueAttributes) InternalWithRef(ref terra.Reference) EnumerationValueAttributes {
@@ -51,8 +51,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

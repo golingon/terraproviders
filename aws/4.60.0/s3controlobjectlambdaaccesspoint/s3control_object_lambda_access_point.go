@@ -41,8 +41,8 @@ type ConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConfigurationAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConfigurationAttributes) InternalWithRef(ref terra.Reference) ConfigurationAttributes {
@@ -73,8 +73,8 @@ type TransformationConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (tc TransformationConfigurationAttributes) InternalRef() terra.Reference {
-	return tc.ref
+func (tc TransformationConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return tc.ref, nil
 }
 
 func (tc TransformationConfigurationAttributes) InternalWithRef(ref terra.Reference) TransformationConfigurationAttributes {
@@ -97,8 +97,8 @@ type ContentTransformationAttributes struct {
 	ref terra.Reference
 }
 
-func (ct ContentTransformationAttributes) InternalRef() terra.Reference {
-	return ct.ref
+func (ct ContentTransformationAttributes) InternalRef() (terra.Reference, error) {
+	return ct.ref, nil
 }
 
 func (ct ContentTransformationAttributes) InternalWithRef(ref terra.Reference) ContentTransformationAttributes {
@@ -117,8 +117,8 @@ type AwsLambdaAttributes struct {
 	ref terra.Reference
 }
 
-func (al AwsLambdaAttributes) InternalRef() terra.Reference {
-	return al.ref
+func (al AwsLambdaAttributes) InternalRef() (terra.Reference, error) {
+	return al.ref, nil
 }
 
 func (al AwsLambdaAttributes) InternalWithRef(ref terra.Reference) AwsLambdaAttributes {

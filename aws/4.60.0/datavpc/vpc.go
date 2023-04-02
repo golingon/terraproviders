@@ -25,8 +25,8 @@ type CidrBlockAssociationsAttributes struct {
 	ref terra.Reference
 }
 
-func (cba CidrBlockAssociationsAttributes) InternalRef() terra.Reference {
-	return cba.ref
+func (cba CidrBlockAssociationsAttributes) InternalRef() (terra.Reference, error) {
+	return cba.ref, nil
 }
 
 func (cba CidrBlockAssociationsAttributes) InternalWithRef(ref terra.Reference) CidrBlockAssociationsAttributes {
@@ -53,8 +53,8 @@ type FilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes {
@@ -77,8 +77,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

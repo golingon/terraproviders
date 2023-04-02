@@ -16,8 +16,8 @@ type SnapshotDeliveryPropertiesAttributes struct {
 	ref terra.Reference
 }
 
-func (sdp SnapshotDeliveryPropertiesAttributes) InternalRef() terra.Reference {
-	return sdp.ref
+func (sdp SnapshotDeliveryPropertiesAttributes) InternalRef() (terra.Reference, error) {
+	return sdp.ref, nil
 }
 
 func (sdp SnapshotDeliveryPropertiesAttributes) InternalWithRef(ref terra.Reference) SnapshotDeliveryPropertiesAttributes {

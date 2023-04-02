@@ -18,8 +18,8 @@ type ServiceAccountCredentialsAttributes struct {
 	ref terra.Reference
 }
 
-func (sac ServiceAccountCredentialsAttributes) InternalRef() terra.Reference {
-	return sac.ref
+func (sac ServiceAccountCredentialsAttributes) InternalRef() (terra.Reference, error) {
+	return sac.ref, nil
 }
 
 func (sac ServiceAccountCredentialsAttributes) InternalWithRef(ref terra.Reference) ServiceAccountCredentialsAttributes {

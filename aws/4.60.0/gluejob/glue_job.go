@@ -30,8 +30,8 @@ type CommandAttributes struct {
 	ref terra.Reference
 }
 
-func (c CommandAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CommandAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CommandAttributes) InternalWithRef(ref terra.Reference) CommandAttributes {
@@ -58,8 +58,8 @@ type ExecutionPropertyAttributes struct {
 	ref terra.Reference
 }
 
-func (ep ExecutionPropertyAttributes) InternalRef() terra.Reference {
-	return ep.ref
+func (ep ExecutionPropertyAttributes) InternalRef() (terra.Reference, error) {
+	return ep.ref, nil
 }
 
 func (ep ExecutionPropertyAttributes) InternalWithRef(ref terra.Reference) ExecutionPropertyAttributes {
@@ -78,8 +78,8 @@ type NotificationPropertyAttributes struct {
 	ref terra.Reference
 }
 
-func (np NotificationPropertyAttributes) InternalRef() terra.Reference {
-	return np.ref
+func (np NotificationPropertyAttributes) InternalRef() (terra.Reference, error) {
+	return np.ref, nil
 }
 
 func (np NotificationPropertyAttributes) InternalWithRef(ref terra.Reference) NotificationPropertyAttributes {

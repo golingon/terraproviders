@@ -25,8 +25,8 @@ type PartitionIndexAttributes struct {
 	ref terra.Reference
 }
 
-func (pi PartitionIndexAttributes) InternalRef() terra.Reference {
-	return pi.ref
+func (pi PartitionIndexAttributes) InternalRef() (terra.Reference, error) {
+	return pi.ref, nil
 }
 
 func (pi PartitionIndexAttributes) InternalWithRef(ref terra.Reference) PartitionIndexAttributes {
@@ -53,8 +53,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

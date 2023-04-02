@@ -32,8 +32,8 @@ type AccessEndpointAttributes struct {
 	ref terra.Reference
 }
 
-func (ae AccessEndpointAttributes) InternalRef() terra.Reference {
-	return ae.ref
+func (ae AccessEndpointAttributes) InternalRef() (terra.Reference, error) {
+	return ae.ref, nil
 }
 
 func (ae AccessEndpointAttributes) InternalWithRef(ref terra.Reference) AccessEndpointAttributes {
@@ -56,8 +56,8 @@ type DomainJoinInfoAttributes struct {
 	ref terra.Reference
 }
 
-func (dji DomainJoinInfoAttributes) InternalRef() terra.Reference {
-	return dji.ref
+func (dji DomainJoinInfoAttributes) InternalRef() (terra.Reference, error) {
+	return dji.ref, nil
 }
 
 func (dji DomainJoinInfoAttributes) InternalWithRef(ref terra.Reference) DomainJoinInfoAttributes {
@@ -80,8 +80,8 @@ type VpcConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (vc VpcConfigAttributes) InternalRef() terra.Reference {
-	return vc.ref
+func (vc VpcConfigAttributes) InternalRef() (terra.Reference, error) {
+	return vc.ref, nil
 }
 
 func (vc VpcConfigAttributes) InternalWithRef(ref terra.Reference) VpcConfigAttributes {

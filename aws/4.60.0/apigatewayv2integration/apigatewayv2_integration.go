@@ -23,8 +23,8 @@ type ResponseParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (rp ResponseParametersAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp ResponseParametersAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp ResponseParametersAttributes) InternalWithRef(ref terra.Reference) ResponseParametersAttributes {
@@ -47,8 +47,8 @@ type TlsConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (tc TlsConfigAttributes) InternalRef() terra.Reference {
-	return tc.ref
+func (tc TlsConfigAttributes) InternalRef() (terra.Reference, error) {
+	return tc.ref, nil
 }
 
 func (tc TlsConfigAttributes) InternalWithRef(ref terra.Reference) TlsConfigAttributes {

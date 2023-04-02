@@ -27,8 +27,8 @@ type AssociationsAttributes struct {
 	ref terra.Reference
 }
 
-func (a AssociationsAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AssociationsAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AssociationsAttributes) InternalWithRef(ref terra.Reference) AssociationsAttributes {
@@ -63,8 +63,8 @@ type RoutesAttributes struct {
 	ref terra.Reference
 }
 
-func (r RoutesAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RoutesAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RoutesAttributes) InternalWithRef(ref terra.Reference) RoutesAttributes {
@@ -135,8 +135,8 @@ type FilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes {
@@ -159,8 +159,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

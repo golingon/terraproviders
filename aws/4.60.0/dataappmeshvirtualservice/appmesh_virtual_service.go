@@ -27,8 +27,8 @@ type SpecAttributes struct {
 	ref terra.Reference
 }
 
-func (s SpecAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SpecAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SpecAttributes) InternalWithRef(ref terra.Reference) SpecAttributes {
@@ -47,8 +47,8 @@ type ProviderAttributes struct {
 	ref terra.Reference
 }
 
-func (p ProviderAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p ProviderAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p ProviderAttributes) InternalWithRef(ref terra.Reference) ProviderAttributes {
@@ -71,8 +71,8 @@ type VirtualNodeAttributes struct {
 	ref terra.Reference
 }
 
-func (vn VirtualNodeAttributes) InternalRef() terra.Reference {
-	return vn.ref
+func (vn VirtualNodeAttributes) InternalRef() (terra.Reference, error) {
+	return vn.ref, nil
 }
 
 func (vn VirtualNodeAttributes) InternalWithRef(ref terra.Reference) VirtualNodeAttributes {
@@ -91,8 +91,8 @@ type VirtualRouterAttributes struct {
 	ref terra.Reference
 }
 
-func (vr VirtualRouterAttributes) InternalRef() terra.Reference {
-	return vr.ref
+func (vr VirtualRouterAttributes) InternalRef() (terra.Reference, error) {
+	return vr.ref, nil
 }
 
 func (vr VirtualRouterAttributes) InternalWithRef(ref terra.Reference) VirtualRouterAttributes {

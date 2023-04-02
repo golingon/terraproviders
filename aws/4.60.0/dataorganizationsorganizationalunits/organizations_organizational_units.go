@@ -13,8 +13,8 @@ type ChildrenAttributes struct {
 	ref terra.Reference
 }
 
-func (c ChildrenAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ChildrenAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ChildrenAttributes) InternalWithRef(ref terra.Reference) ChildrenAttributes {

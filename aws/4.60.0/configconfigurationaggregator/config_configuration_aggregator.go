@@ -29,8 +29,8 @@ type AccountAggregationSourceAttributes struct {
 	ref terra.Reference
 }
 
-func (aas AccountAggregationSourceAttributes) InternalRef() terra.Reference {
-	return aas.ref
+func (aas AccountAggregationSourceAttributes) InternalRef() (terra.Reference, error) {
+	return aas.ref, nil
 }
 
 func (aas AccountAggregationSourceAttributes) InternalWithRef(ref terra.Reference) AccountAggregationSourceAttributes {
@@ -57,8 +57,8 @@ type OrganizationAggregationSourceAttributes struct {
 	ref terra.Reference
 }
 
-func (oas OrganizationAggregationSourceAttributes) InternalRef() terra.Reference {
-	return oas.ref
+func (oas OrganizationAggregationSourceAttributes) InternalRef() (terra.Reference, error) {
+	return oas.ref, nil
 }
 
 func (oas OrganizationAggregationSourceAttributes) InternalWithRef(ref terra.Reference) OrganizationAggregationSourceAttributes {

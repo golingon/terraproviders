@@ -45,8 +45,8 @@ type ApiStagesAttributes struct {
 	ref terra.Reference
 }
 
-func (as ApiStagesAttributes) InternalRef() terra.Reference {
-	return as.ref
+func (as ApiStagesAttributes) InternalRef() (terra.Reference, error) {
+	return as.ref, nil
 }
 
 func (as ApiStagesAttributes) InternalWithRef(ref terra.Reference) ApiStagesAttributes {
@@ -73,8 +73,8 @@ type ThrottleAttributes struct {
 	ref terra.Reference
 }
 
-func (t ThrottleAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t ThrottleAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t ThrottleAttributes) InternalWithRef(ref terra.Reference) ThrottleAttributes {
@@ -101,8 +101,8 @@ type QuotaSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (qs QuotaSettingsAttributes) InternalRef() terra.Reference {
-	return qs.ref
+func (qs QuotaSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return qs.ref, nil
 }
 
 func (qs QuotaSettingsAttributes) InternalWithRef(ref terra.Reference) QuotaSettingsAttributes {
@@ -129,8 +129,8 @@ type ThrottleSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ts ThrottleSettingsAttributes) InternalRef() terra.Reference {
-	return ts.ref
+func (ts ThrottleSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ts.ref, nil
 }
 
 func (ts ThrottleSettingsAttributes) InternalWithRef(ref terra.Reference) ThrottleSettingsAttributes {

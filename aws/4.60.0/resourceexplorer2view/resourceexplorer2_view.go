@@ -21,8 +21,8 @@ type FiltersAttributes struct {
 	ref terra.Reference
 }
 
-func (f FiltersAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FiltersAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FiltersAttributes) InternalWithRef(ref terra.Reference) FiltersAttributes {
@@ -41,8 +41,8 @@ type IncludedPropertyAttributes struct {
 	ref terra.Reference
 }
 
-func (ip IncludedPropertyAttributes) InternalRef() terra.Reference {
-	return ip.ref
+func (ip IncludedPropertyAttributes) InternalRef() (terra.Reference, error) {
+	return ip.ref, nil
 }
 
 func (ip IncludedPropertyAttributes) InternalWithRef(ref terra.Reference) IncludedPropertyAttributes {

@@ -44,8 +44,8 @@ type GatewayNetworkInterfaceAttributes struct {
 	ref terra.Reference
 }
 
-func (gni GatewayNetworkInterfaceAttributes) InternalRef() terra.Reference {
-	return gni.ref
+func (gni GatewayNetworkInterfaceAttributes) InternalRef() (terra.Reference, error) {
+	return gni.ref, nil
 }
 
 func (gni GatewayNetworkInterfaceAttributes) InternalWithRef(ref terra.Reference) GatewayNetworkInterfaceAttributes {
@@ -64,8 +64,8 @@ type MaintenanceStartTimeAttributes struct {
 	ref terra.Reference
 }
 
-func (mst MaintenanceStartTimeAttributes) InternalRef() terra.Reference {
-	return mst.ref
+func (mst MaintenanceStartTimeAttributes) InternalRef() (terra.Reference, error) {
+	return mst.ref, nil
 }
 
 func (mst MaintenanceStartTimeAttributes) InternalWithRef(ref terra.Reference) MaintenanceStartTimeAttributes {
@@ -96,8 +96,8 @@ type SmbActiveDirectorySettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (sads SmbActiveDirectorySettingsAttributes) InternalRef() terra.Reference {
-	return sads.ref
+func (sads SmbActiveDirectorySettingsAttributes) InternalRef() (terra.Reference, error) {
+	return sads.ref, nil
 }
 
 func (sads SmbActiveDirectorySettingsAttributes) InternalWithRef(ref terra.Reference) SmbActiveDirectorySettingsAttributes {
@@ -140,8 +140,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

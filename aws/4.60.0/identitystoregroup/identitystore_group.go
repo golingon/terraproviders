@@ -13,8 +13,8 @@ type ExternalIdsAttributes struct {
 	ref terra.Reference
 }
 
-func (ei ExternalIdsAttributes) InternalRef() terra.Reference {
-	return ei.ref
+func (ei ExternalIdsAttributes) InternalRef() (terra.Reference, error) {
+	return ei.ref, nil
 }
 
 func (ei ExternalIdsAttributes) InternalWithRef(ref terra.Reference) ExternalIdsAttributes {

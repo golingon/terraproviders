@@ -51,8 +51,8 @@ type CsvClassifierAttributes struct {
 	ref terra.Reference
 }
 
-func (cc CsvClassifierAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc CsvClassifierAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc CsvClassifierAttributes) InternalWithRef(ref terra.Reference) CsvClassifierAttributes {
@@ -99,8 +99,8 @@ type GrokClassifierAttributes struct {
 	ref terra.Reference
 }
 
-func (gc GrokClassifierAttributes) InternalRef() terra.Reference {
-	return gc.ref
+func (gc GrokClassifierAttributes) InternalRef() (terra.Reference, error) {
+	return gc.ref, nil
 }
 
 func (gc GrokClassifierAttributes) InternalWithRef(ref terra.Reference) GrokClassifierAttributes {
@@ -127,8 +127,8 @@ type JsonClassifierAttributes struct {
 	ref terra.Reference
 }
 
-func (jc JsonClassifierAttributes) InternalRef() terra.Reference {
-	return jc.ref
+func (jc JsonClassifierAttributes) InternalRef() (terra.Reference, error) {
+	return jc.ref, nil
 }
 
 func (jc JsonClassifierAttributes) InternalWithRef(ref terra.Reference) JsonClassifierAttributes {
@@ -147,8 +147,8 @@ type XmlClassifierAttributes struct {
 	ref terra.Reference
 }
 
-func (xc XmlClassifierAttributes) InternalRef() terra.Reference {
-	return xc.ref
+func (xc XmlClassifierAttributes) InternalRef() (terra.Reference, error) {
+	return xc.ref, nil
 }
 
 func (xc XmlClassifierAttributes) InternalWithRef(ref terra.Reference) XmlClassifierAttributes {

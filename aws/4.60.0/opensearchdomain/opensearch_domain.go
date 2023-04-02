@@ -170,8 +170,8 @@ type AdvancedSecurityOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (aso AdvancedSecurityOptionsAttributes) InternalRef() terra.Reference {
-	return aso.ref
+func (aso AdvancedSecurityOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return aso.ref, nil
 }
 
 func (aso AdvancedSecurityOptionsAttributes) InternalWithRef(ref terra.Reference) AdvancedSecurityOptionsAttributes {
@@ -202,8 +202,8 @@ type MasterUserOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (muo MasterUserOptionsAttributes) InternalRef() terra.Reference {
-	return muo.ref
+func (muo MasterUserOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return muo.ref, nil
 }
 
 func (muo MasterUserOptionsAttributes) InternalWithRef(ref terra.Reference) MasterUserOptionsAttributes {
@@ -230,8 +230,8 @@ type AutoTuneOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (ato AutoTuneOptionsAttributes) InternalRef() terra.Reference {
-	return ato.ref
+func (ato AutoTuneOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return ato.ref, nil
 }
 
 func (ato AutoTuneOptionsAttributes) InternalWithRef(ref terra.Reference) AutoTuneOptionsAttributes {
@@ -258,8 +258,8 @@ type MaintenanceScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (ms MaintenanceScheduleAttributes) InternalRef() terra.Reference {
-	return ms.ref
+func (ms MaintenanceScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return ms.ref, nil
 }
 
 func (ms MaintenanceScheduleAttributes) InternalWithRef(ref terra.Reference) MaintenanceScheduleAttributes {
@@ -286,8 +286,8 @@ type DurationAttributes struct {
 	ref terra.Reference
 }
 
-func (d DurationAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DurationAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DurationAttributes) InternalWithRef(ref terra.Reference) DurationAttributes {
@@ -310,8 +310,8 @@ type ClusterConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (cc ClusterConfigAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc ClusterConfigAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc ClusterConfigAttributes) InternalWithRef(ref terra.Reference) ClusterConfigAttributes {
@@ -370,8 +370,8 @@ type ColdStorageOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (cso ColdStorageOptionsAttributes) InternalRef() terra.Reference {
-	return cso.ref
+func (cso ColdStorageOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return cso.ref, nil
 }
 
 func (cso ColdStorageOptionsAttributes) InternalWithRef(ref terra.Reference) ColdStorageOptionsAttributes {
@@ -390,8 +390,8 @@ type ZoneAwarenessConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (zac ZoneAwarenessConfigAttributes) InternalRef() terra.Reference {
-	return zac.ref
+func (zac ZoneAwarenessConfigAttributes) InternalRef() (terra.Reference, error) {
+	return zac.ref, nil
 }
 
 func (zac ZoneAwarenessConfigAttributes) InternalWithRef(ref terra.Reference) ZoneAwarenessConfigAttributes {
@@ -410,8 +410,8 @@ type CognitoOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (co CognitoOptionsAttributes) InternalRef() terra.Reference {
-	return co.ref
+func (co CognitoOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return co.ref, nil
 }
 
 func (co CognitoOptionsAttributes) InternalWithRef(ref terra.Reference) CognitoOptionsAttributes {
@@ -442,8 +442,8 @@ type DomainEndpointOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (deo DomainEndpointOptionsAttributes) InternalRef() terra.Reference {
-	return deo.ref
+func (deo DomainEndpointOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return deo.ref, nil
 }
 
 func (deo DomainEndpointOptionsAttributes) InternalWithRef(ref terra.Reference) DomainEndpointOptionsAttributes {
@@ -478,8 +478,8 @@ type EbsOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (eo EbsOptionsAttributes) InternalRef() terra.Reference {
-	return eo.ref
+func (eo EbsOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return eo.ref, nil
 }
 
 func (eo EbsOptionsAttributes) InternalWithRef(ref terra.Reference) EbsOptionsAttributes {
@@ -514,8 +514,8 @@ type EncryptAtRestAttributes struct {
 	ref terra.Reference
 }
 
-func (ear EncryptAtRestAttributes) InternalRef() terra.Reference {
-	return ear.ref
+func (ear EncryptAtRestAttributes) InternalRef() (terra.Reference, error) {
+	return ear.ref, nil
 }
 
 func (ear EncryptAtRestAttributes) InternalWithRef(ref terra.Reference) EncryptAtRestAttributes {
@@ -538,8 +538,8 @@ type LogPublishingOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (lpo LogPublishingOptionsAttributes) InternalRef() terra.Reference {
-	return lpo.ref
+func (lpo LogPublishingOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return lpo.ref, nil
 }
 
 func (lpo LogPublishingOptionsAttributes) InternalWithRef(ref terra.Reference) LogPublishingOptionsAttributes {
@@ -566,8 +566,8 @@ type NodeToNodeEncryptionAttributes struct {
 	ref terra.Reference
 }
 
-func (ntne NodeToNodeEncryptionAttributes) InternalRef() terra.Reference {
-	return ntne.ref
+func (ntne NodeToNodeEncryptionAttributes) InternalRef() (terra.Reference, error) {
+	return ntne.ref, nil
 }
 
 func (ntne NodeToNodeEncryptionAttributes) InternalWithRef(ref terra.Reference) NodeToNodeEncryptionAttributes {
@@ -586,8 +586,8 @@ type SnapshotOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (so SnapshotOptionsAttributes) InternalRef() terra.Reference {
-	return so.ref
+func (so SnapshotOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return so.ref, nil
 }
 
 func (so SnapshotOptionsAttributes) InternalWithRef(ref terra.Reference) SnapshotOptionsAttributes {
@@ -606,8 +606,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
@@ -634,8 +634,8 @@ type VpcOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (vo VpcOptionsAttributes) InternalRef() terra.Reference {
-	return vo.ref
+func (vo VpcOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return vo.ref, nil
 }
 
 func (vo VpcOptionsAttributes) InternalWithRef(ref terra.Reference) VpcOptionsAttributes {

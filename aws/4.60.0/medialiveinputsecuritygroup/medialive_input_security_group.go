@@ -25,8 +25,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
@@ -53,8 +53,8 @@ type WhitelistRulesAttributes struct {
 	ref terra.Reference
 }
 
-func (wr WhitelistRulesAttributes) InternalRef() terra.Reference {
-	return wr.ref
+func (wr WhitelistRulesAttributes) InternalRef() (terra.Reference, error) {
+	return wr.ref, nil
 }
 
 func (wr WhitelistRulesAttributes) InternalWithRef(ref terra.Reference) WhitelistRulesAttributes {

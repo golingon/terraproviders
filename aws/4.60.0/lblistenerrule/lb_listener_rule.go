@@ -168,8 +168,8 @@ type ActionAttributes struct {
 	ref terra.Reference
 }
 
-func (a ActionAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ActionAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ActionAttributes) InternalWithRef(ref terra.Reference) ActionAttributes {
@@ -216,8 +216,8 @@ type AuthenticateCognitoAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AuthenticateCognitoAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AuthenticateCognitoAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AuthenticateCognitoAttributes) InternalWithRef(ref terra.Reference) AuthenticateCognitoAttributes {
@@ -264,8 +264,8 @@ type AuthenticateOidcAttributes struct {
 	ref terra.Reference
 }
 
-func (ao AuthenticateOidcAttributes) InternalRef() terra.Reference {
-	return ao.ref
+func (ao AuthenticateOidcAttributes) InternalRef() (terra.Reference, error) {
+	return ao.ref, nil
 }
 
 func (ao AuthenticateOidcAttributes) InternalWithRef(ref terra.Reference) AuthenticateOidcAttributes {
@@ -324,8 +324,8 @@ type FixedResponseAttributes struct {
 	ref terra.Reference
 }
 
-func (fr FixedResponseAttributes) InternalRef() terra.Reference {
-	return fr.ref
+func (fr FixedResponseAttributes) InternalRef() (terra.Reference, error) {
+	return fr.ref, nil
 }
 
 func (fr FixedResponseAttributes) InternalWithRef(ref terra.Reference) FixedResponseAttributes {
@@ -352,8 +352,8 @@ type ForwardAttributes struct {
 	ref terra.Reference
 }
 
-func (f ForwardAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f ForwardAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f ForwardAttributes) InternalWithRef(ref terra.Reference) ForwardAttributes {
@@ -376,8 +376,8 @@ type StickinessAttributes struct {
 	ref terra.Reference
 }
 
-func (s StickinessAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s StickinessAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s StickinessAttributes) InternalWithRef(ref terra.Reference) StickinessAttributes {
@@ -400,8 +400,8 @@ type TargetGroupAttributes struct {
 	ref terra.Reference
 }
 
-func (tg TargetGroupAttributes) InternalRef() terra.Reference {
-	return tg.ref
+func (tg TargetGroupAttributes) InternalRef() (terra.Reference, error) {
+	return tg.ref, nil
 }
 
 func (tg TargetGroupAttributes) InternalWithRef(ref terra.Reference) TargetGroupAttributes {
@@ -424,8 +424,8 @@ type RedirectAttributes struct {
 	ref terra.Reference
 }
 
-func (r RedirectAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RedirectAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RedirectAttributes) InternalWithRef(ref terra.Reference) RedirectAttributes {
@@ -464,8 +464,8 @@ type ConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConditionAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConditionAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConditionAttributes) InternalWithRef(ref terra.Reference) ConditionAttributes {
@@ -504,8 +504,8 @@ type HostHeaderAttributes struct {
 	ref terra.Reference
 }
 
-func (hh HostHeaderAttributes) InternalRef() terra.Reference {
-	return hh.ref
+func (hh HostHeaderAttributes) InternalRef() (terra.Reference, error) {
+	return hh.ref, nil
 }
 
 func (hh HostHeaderAttributes) InternalWithRef(ref terra.Reference) HostHeaderAttributes {
@@ -524,8 +524,8 @@ type HttpHeaderAttributes struct {
 	ref terra.Reference
 }
 
-func (hh HttpHeaderAttributes) InternalRef() terra.Reference {
-	return hh.ref
+func (hh HttpHeaderAttributes) InternalRef() (terra.Reference, error) {
+	return hh.ref, nil
 }
 
 func (hh HttpHeaderAttributes) InternalWithRef(ref terra.Reference) HttpHeaderAttributes {
@@ -548,8 +548,8 @@ type HttpRequestMethodAttributes struct {
 	ref terra.Reference
 }
 
-func (hrm HttpRequestMethodAttributes) InternalRef() terra.Reference {
-	return hrm.ref
+func (hrm HttpRequestMethodAttributes) InternalRef() (terra.Reference, error) {
+	return hrm.ref, nil
 }
 
 func (hrm HttpRequestMethodAttributes) InternalWithRef(ref terra.Reference) HttpRequestMethodAttributes {
@@ -568,8 +568,8 @@ type PathPatternAttributes struct {
 	ref terra.Reference
 }
 
-func (pp PathPatternAttributes) InternalRef() terra.Reference {
-	return pp.ref
+func (pp PathPatternAttributes) InternalRef() (terra.Reference, error) {
+	return pp.ref, nil
 }
 
 func (pp PathPatternAttributes) InternalWithRef(ref terra.Reference) PathPatternAttributes {
@@ -588,8 +588,8 @@ type QueryStringAttributes struct {
 	ref terra.Reference
 }
 
-func (qs QueryStringAttributes) InternalRef() terra.Reference {
-	return qs.ref
+func (qs QueryStringAttributes) InternalRef() (terra.Reference, error) {
+	return qs.ref, nil
 }
 
 func (qs QueryStringAttributes) InternalWithRef(ref terra.Reference) QueryStringAttributes {
@@ -612,8 +612,8 @@ type SourceIpAttributes struct {
 	ref terra.Reference
 }
 
-func (si SourceIpAttributes) InternalRef() terra.Reference {
-	return si.ref
+func (si SourceIpAttributes) InternalRef() (terra.Reference, error) {
+	return si.ref, nil
 }
 
 func (si SourceIpAttributes) InternalWithRef(ref terra.Reference) SourceIpAttributes {

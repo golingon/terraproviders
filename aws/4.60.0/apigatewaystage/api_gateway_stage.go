@@ -27,8 +27,8 @@ type AccessLogSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (als AccessLogSettingsAttributes) InternalRef() terra.Reference {
-	return als.ref
+func (als AccessLogSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return als.ref, nil
 }
 
 func (als AccessLogSettingsAttributes) InternalWithRef(ref terra.Reference) AccessLogSettingsAttributes {
@@ -51,8 +51,8 @@ type CanarySettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (cs CanarySettingsAttributes) InternalRef() terra.Reference {
-	return cs.ref
+func (cs CanarySettingsAttributes) InternalRef() (terra.Reference, error) {
+	return cs.ref, nil
 }
 
 func (cs CanarySettingsAttributes) InternalWithRef(ref terra.Reference) CanarySettingsAttributes {

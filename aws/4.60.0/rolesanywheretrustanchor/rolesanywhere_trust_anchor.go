@@ -25,8 +25,8 @@ type SourceAttributes struct {
 	ref terra.Reference
 }
 
-func (s SourceAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SourceAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SourceAttributes) InternalWithRef(ref terra.Reference) SourceAttributes {
@@ -49,8 +49,8 @@ type SourceDataAttributes struct {
 	ref terra.Reference
 }
 
-func (sd SourceDataAttributes) InternalRef() terra.Reference {
-	return sd.ref
+func (sd SourceDataAttributes) InternalRef() (terra.Reference, error) {
+	return sd.ref, nil
 }
 
 func (sd SourceDataAttributes) InternalWithRef(ref terra.Reference) SourceDataAttributes {

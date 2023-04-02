@@ -53,8 +53,8 @@ type DestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (d DestinationAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DestinationAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DestinationAttributes) InternalWithRef(ref terra.Reference) DestinationAttributes {
@@ -73,8 +73,8 @@ type BucketAttributes struct {
 	ref terra.Reference
 }
 
-func (b BucketAttributes) InternalRef() terra.Reference {
-	return b.ref
+func (b BucketAttributes) InternalRef() (terra.Reference, error) {
+	return b.ref, nil
 }
 
 func (b BucketAttributes) InternalWithRef(ref terra.Reference) BucketAttributes {
@@ -109,8 +109,8 @@ type EncryptionAttributes struct {
 	ref terra.Reference
 }
 
-func (e EncryptionAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EncryptionAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EncryptionAttributes) InternalWithRef(ref terra.Reference) EncryptionAttributes {
@@ -133,8 +133,8 @@ type SseKmsAttributes struct {
 	ref terra.Reference
 }
 
-func (sk SseKmsAttributes) InternalRef() terra.Reference {
-	return sk.ref
+func (sk SseKmsAttributes) InternalRef() (terra.Reference, error) {
+	return sk.ref, nil
 }
 
 func (sk SseKmsAttributes) InternalWithRef(ref terra.Reference) SseKmsAttributes {
@@ -153,8 +153,8 @@ type SseS3Attributes struct {
 	ref terra.Reference
 }
 
-func (ss SseS3Attributes) InternalRef() terra.Reference {
-	return ss.ref
+func (ss SseS3Attributes) InternalRef() (terra.Reference, error) {
+	return ss.ref, nil
 }
 
 func (ss SseS3Attributes) InternalWithRef(ref terra.Reference) SseS3Attributes {
@@ -169,8 +169,8 @@ type FilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes {
@@ -189,8 +189,8 @@ type ScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (s ScheduleAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ScheduleAttributes) InternalWithRef(ref terra.Reference) ScheduleAttributes {

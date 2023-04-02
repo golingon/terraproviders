@@ -263,8 +263,8 @@ type LaunchSpecificationAttributes struct {
 	ref terra.Reference
 }
 
-func (ls LaunchSpecificationAttributes) InternalRef() terra.Reference {
-	return ls.ref
+func (ls LaunchSpecificationAttributes) InternalRef() (terra.Reference, error) {
+	return ls.ref, nil
 }
 
 func (ls LaunchSpecificationAttributes) InternalWithRef(ref terra.Reference) LaunchSpecificationAttributes {
@@ -359,8 +359,8 @@ type EbsBlockDeviceAttributes struct {
 	ref terra.Reference
 }
 
-func (ebd EbsBlockDeviceAttributes) InternalRef() terra.Reference {
-	return ebd.ref
+func (ebd EbsBlockDeviceAttributes) InternalRef() (terra.Reference, error) {
+	return ebd.ref, nil
 }
 
 func (ebd EbsBlockDeviceAttributes) InternalWithRef(ref terra.Reference) EbsBlockDeviceAttributes {
@@ -411,8 +411,8 @@ type EphemeralBlockDeviceAttributes struct {
 	ref terra.Reference
 }
 
-func (ebd EphemeralBlockDeviceAttributes) InternalRef() terra.Reference {
-	return ebd.ref
+func (ebd EphemeralBlockDeviceAttributes) InternalRef() (terra.Reference, error) {
+	return ebd.ref, nil
 }
 
 func (ebd EphemeralBlockDeviceAttributes) InternalWithRef(ref terra.Reference) EphemeralBlockDeviceAttributes {
@@ -435,8 +435,8 @@ type RootBlockDeviceAttributes struct {
 	ref terra.Reference
 }
 
-func (rbd RootBlockDeviceAttributes) InternalRef() terra.Reference {
-	return rbd.ref
+func (rbd RootBlockDeviceAttributes) InternalRef() (terra.Reference, error) {
+	return rbd.ref, nil
 }
 
 func (rbd RootBlockDeviceAttributes) InternalWithRef(ref terra.Reference) RootBlockDeviceAttributes {
@@ -479,8 +479,8 @@ type LaunchTemplateConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ltc LaunchTemplateConfigAttributes) InternalRef() terra.Reference {
-	return ltc.ref
+func (ltc LaunchTemplateConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ltc.ref, nil
 }
 
 func (ltc LaunchTemplateConfigAttributes) InternalWithRef(ref terra.Reference) LaunchTemplateConfigAttributes {
@@ -503,8 +503,8 @@ type LaunchTemplateSpecificationAttributes struct {
 	ref terra.Reference
 }
 
-func (lts LaunchTemplateSpecificationAttributes) InternalRef() terra.Reference {
-	return lts.ref
+func (lts LaunchTemplateSpecificationAttributes) InternalRef() (terra.Reference, error) {
+	return lts.ref, nil
 }
 
 func (lts LaunchTemplateSpecificationAttributes) InternalWithRef(ref terra.Reference) LaunchTemplateSpecificationAttributes {
@@ -531,8 +531,8 @@ type OverridesAttributes struct {
 	ref terra.Reference
 }
 
-func (o OverridesAttributes) InternalRef() terra.Reference {
-	return o.ref
+func (o OverridesAttributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o OverridesAttributes) InternalWithRef(ref terra.Reference) OverridesAttributes {
@@ -575,8 +575,8 @@ type InstanceRequirementsAttributes struct {
 	ref terra.Reference
 }
 
-func (ir InstanceRequirementsAttributes) InternalRef() terra.Reference {
-	return ir.ref
+func (ir InstanceRequirementsAttributes) InternalRef() (terra.Reference, error) {
+	return ir.ref, nil
 }
 
 func (ir InstanceRequirementsAttributes) InternalWithRef(ref terra.Reference) InstanceRequirementsAttributes {
@@ -683,8 +683,8 @@ type AcceleratorCountAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AcceleratorCountAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AcceleratorCountAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AcceleratorCountAttributes) InternalWithRef(ref terra.Reference) AcceleratorCountAttributes {
@@ -707,8 +707,8 @@ type AcceleratorTotalMemoryMibAttributes struct {
 	ref terra.Reference
 }
 
-func (atmm AcceleratorTotalMemoryMibAttributes) InternalRef() terra.Reference {
-	return atmm.ref
+func (atmm AcceleratorTotalMemoryMibAttributes) InternalRef() (terra.Reference, error) {
+	return atmm.ref, nil
 }
 
 func (atmm AcceleratorTotalMemoryMibAttributes) InternalWithRef(ref terra.Reference) AcceleratorTotalMemoryMibAttributes {
@@ -731,8 +731,8 @@ type BaselineEbsBandwidthMbpsAttributes struct {
 	ref terra.Reference
 }
 
-func (bebm BaselineEbsBandwidthMbpsAttributes) InternalRef() terra.Reference {
-	return bebm.ref
+func (bebm BaselineEbsBandwidthMbpsAttributes) InternalRef() (terra.Reference, error) {
+	return bebm.ref, nil
 }
 
 func (bebm BaselineEbsBandwidthMbpsAttributes) InternalWithRef(ref terra.Reference) BaselineEbsBandwidthMbpsAttributes {
@@ -755,8 +755,8 @@ type MemoryGibPerVcpuAttributes struct {
 	ref terra.Reference
 }
 
-func (mgpv MemoryGibPerVcpuAttributes) InternalRef() terra.Reference {
-	return mgpv.ref
+func (mgpv MemoryGibPerVcpuAttributes) InternalRef() (terra.Reference, error) {
+	return mgpv.ref, nil
 }
 
 func (mgpv MemoryGibPerVcpuAttributes) InternalWithRef(ref terra.Reference) MemoryGibPerVcpuAttributes {
@@ -779,8 +779,8 @@ type MemoryMibAttributes struct {
 	ref terra.Reference
 }
 
-func (mm MemoryMibAttributes) InternalRef() terra.Reference {
-	return mm.ref
+func (mm MemoryMibAttributes) InternalRef() (terra.Reference, error) {
+	return mm.ref, nil
 }
 
 func (mm MemoryMibAttributes) InternalWithRef(ref terra.Reference) MemoryMibAttributes {
@@ -803,8 +803,8 @@ type NetworkBandwidthGbpsAttributes struct {
 	ref terra.Reference
 }
 
-func (nbg NetworkBandwidthGbpsAttributes) InternalRef() terra.Reference {
-	return nbg.ref
+func (nbg NetworkBandwidthGbpsAttributes) InternalRef() (terra.Reference, error) {
+	return nbg.ref, nil
 }
 
 func (nbg NetworkBandwidthGbpsAttributes) InternalWithRef(ref terra.Reference) NetworkBandwidthGbpsAttributes {
@@ -827,8 +827,8 @@ type NetworkInterfaceCountAttributes struct {
 	ref terra.Reference
 }
 
-func (nic NetworkInterfaceCountAttributes) InternalRef() terra.Reference {
-	return nic.ref
+func (nic NetworkInterfaceCountAttributes) InternalRef() (terra.Reference, error) {
+	return nic.ref, nil
 }
 
 func (nic NetworkInterfaceCountAttributes) InternalWithRef(ref terra.Reference) NetworkInterfaceCountAttributes {
@@ -851,8 +851,8 @@ type TotalLocalStorageGbAttributes struct {
 	ref terra.Reference
 }
 
-func (tlsg TotalLocalStorageGbAttributes) InternalRef() terra.Reference {
-	return tlsg.ref
+func (tlsg TotalLocalStorageGbAttributes) InternalRef() (terra.Reference, error) {
+	return tlsg.ref, nil
 }
 
 func (tlsg TotalLocalStorageGbAttributes) InternalWithRef(ref terra.Reference) TotalLocalStorageGbAttributes {
@@ -875,8 +875,8 @@ type VcpuCountAttributes struct {
 	ref terra.Reference
 }
 
-func (vc VcpuCountAttributes) InternalRef() terra.Reference {
-	return vc.ref
+func (vc VcpuCountAttributes) InternalRef() (terra.Reference, error) {
+	return vc.ref, nil
 }
 
 func (vc VcpuCountAttributes) InternalWithRef(ref terra.Reference) VcpuCountAttributes {
@@ -899,8 +899,8 @@ type SpotMaintenanceStrategiesAttributes struct {
 	ref terra.Reference
 }
 
-func (sms SpotMaintenanceStrategiesAttributes) InternalRef() terra.Reference {
-	return sms.ref
+func (sms SpotMaintenanceStrategiesAttributes) InternalRef() (terra.Reference, error) {
+	return sms.ref, nil
 }
 
 func (sms SpotMaintenanceStrategiesAttributes) InternalWithRef(ref terra.Reference) SpotMaintenanceStrategiesAttributes {
@@ -919,8 +919,8 @@ type CapacityRebalanceAttributes struct {
 	ref terra.Reference
 }
 
-func (cr CapacityRebalanceAttributes) InternalRef() terra.Reference {
-	return cr.ref
+func (cr CapacityRebalanceAttributes) InternalRef() (terra.Reference, error) {
+	return cr.ref, nil
 }
 
 func (cr CapacityRebalanceAttributes) InternalWithRef(ref terra.Reference) CapacityRebalanceAttributes {
@@ -939,8 +939,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

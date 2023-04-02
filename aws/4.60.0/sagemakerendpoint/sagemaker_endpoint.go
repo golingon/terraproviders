@@ -62,8 +62,8 @@ type DeploymentConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (dc DeploymentConfigAttributes) InternalRef() terra.Reference {
-	return dc.ref
+func (dc DeploymentConfigAttributes) InternalRef() (terra.Reference, error) {
+	return dc.ref, nil
 }
 
 func (dc DeploymentConfigAttributes) InternalWithRef(ref terra.Reference) DeploymentConfigAttributes {
@@ -86,8 +86,8 @@ type AutoRollbackConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (arc AutoRollbackConfigurationAttributes) InternalRef() terra.Reference {
-	return arc.ref
+func (arc AutoRollbackConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return arc.ref, nil
 }
 
 func (arc AutoRollbackConfigurationAttributes) InternalWithRef(ref terra.Reference) AutoRollbackConfigurationAttributes {
@@ -106,8 +106,8 @@ type AlarmsAttributes struct {
 	ref terra.Reference
 }
 
-func (a AlarmsAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AlarmsAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AlarmsAttributes) InternalWithRef(ref terra.Reference) AlarmsAttributes {
@@ -126,8 +126,8 @@ type BlueGreenUpdatePolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (bgup BlueGreenUpdatePolicyAttributes) InternalRef() terra.Reference {
-	return bgup.ref
+func (bgup BlueGreenUpdatePolicyAttributes) InternalRef() (terra.Reference, error) {
+	return bgup.ref, nil
 }
 
 func (bgup BlueGreenUpdatePolicyAttributes) InternalWithRef(ref terra.Reference) BlueGreenUpdatePolicyAttributes {
@@ -154,8 +154,8 @@ type TrafficRoutingConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (trc TrafficRoutingConfigurationAttributes) InternalRef() terra.Reference {
-	return trc.ref
+func (trc TrafficRoutingConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return trc.ref, nil
 }
 
 func (trc TrafficRoutingConfigurationAttributes) InternalWithRef(ref terra.Reference) TrafficRoutingConfigurationAttributes {
@@ -186,8 +186,8 @@ type CanarySizeAttributes struct {
 	ref terra.Reference
 }
 
-func (cs CanarySizeAttributes) InternalRef() terra.Reference {
-	return cs.ref
+func (cs CanarySizeAttributes) InternalRef() (terra.Reference, error) {
+	return cs.ref, nil
 }
 
 func (cs CanarySizeAttributes) InternalWithRef(ref terra.Reference) CanarySizeAttributes {
@@ -210,8 +210,8 @@ type LinearStepSizeAttributes struct {
 	ref terra.Reference
 }
 
-func (lss LinearStepSizeAttributes) InternalRef() terra.Reference {
-	return lss.ref
+func (lss LinearStepSizeAttributes) InternalRef() (terra.Reference, error) {
+	return lss.ref, nil
 }
 
 func (lss LinearStepSizeAttributes) InternalWithRef(ref terra.Reference) LinearStepSizeAttributes {

@@ -22,8 +22,8 @@ type GlobalClusterMembersAttributes struct {
 	ref terra.Reference
 }
 
-func (gcm GlobalClusterMembersAttributes) InternalRef() terra.Reference {
-	return gcm.ref
+func (gcm GlobalClusterMembersAttributes) InternalRef() (terra.Reference, error) {
+	return gcm.ref, nil
 }
 
 func (gcm GlobalClusterMembersAttributes) InternalWithRef(ref terra.Reference) GlobalClusterMembersAttributes {
@@ -46,8 +46,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

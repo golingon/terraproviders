@@ -23,8 +23,8 @@ type OptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (o OptionsAttributes) InternalRef() terra.Reference {
-	return o.ref
+func (o OptionsAttributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o OptionsAttributes) InternalWithRef(ref terra.Reference) OptionsAttributes {
@@ -43,8 +43,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

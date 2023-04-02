@@ -186,8 +186,8 @@ type PolicyDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (pd PolicyDetailsAttributes) InternalRef() terra.Reference {
-	return pd.ref
+func (pd PolicyDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return pd.ref, nil
 }
 
 func (pd PolicyDetailsAttributes) InternalWithRef(ref terra.Reference) PolicyDetailsAttributes {
@@ -234,8 +234,8 @@ type ActionAttributes struct {
 	ref terra.Reference
 }
 
-func (a ActionAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ActionAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ActionAttributes) InternalWithRef(ref terra.Reference) ActionAttributes {
@@ -258,8 +258,8 @@ type CrossRegionCopyAttributes struct {
 	ref terra.Reference
 }
 
-func (crc CrossRegionCopyAttributes) InternalRef() terra.Reference {
-	return crc.ref
+func (crc CrossRegionCopyAttributes) InternalRef() (terra.Reference, error) {
+	return crc.ref, nil
 }
 
 func (crc CrossRegionCopyAttributes) InternalWithRef(ref terra.Reference) CrossRegionCopyAttributes {
@@ -286,8 +286,8 @@ type EncryptionConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ec EncryptionConfigurationAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec EncryptionConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec EncryptionConfigurationAttributes) InternalWithRef(ref terra.Reference) EncryptionConfigurationAttributes {
@@ -310,8 +310,8 @@ type CrossRegionCopyRetainRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (rr CrossRegionCopyRetainRuleAttributes) InternalRef() terra.Reference {
-	return rr.ref
+func (rr CrossRegionCopyRetainRuleAttributes) InternalRef() (terra.Reference, error) {
+	return rr.ref, nil
 }
 
 func (rr CrossRegionCopyRetainRuleAttributes) InternalWithRef(ref terra.Reference) CrossRegionCopyRetainRuleAttributes {
@@ -334,8 +334,8 @@ type EventSourceAttributes struct {
 	ref terra.Reference
 }
 
-func (es EventSourceAttributes) InternalRef() terra.Reference {
-	return es.ref
+func (es EventSourceAttributes) InternalRef() (terra.Reference, error) {
+	return es.ref, nil
 }
 
 func (es EventSourceAttributes) InternalWithRef(ref terra.Reference) EventSourceAttributes {
@@ -358,8 +358,8 @@ type EventSourceParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (p EventSourceParametersAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p EventSourceParametersAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p EventSourceParametersAttributes) InternalWithRef(ref terra.Reference) EventSourceParametersAttributes {
@@ -386,8 +386,8 @@ type PolicyDetailsParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (p PolicyDetailsParametersAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PolicyDetailsParametersAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PolicyDetailsParametersAttributes) InternalWithRef(ref terra.Reference) PolicyDetailsParametersAttributes {
@@ -410,8 +410,8 @@ type ScheduleAttributes struct {
 	ref terra.Reference
 }
 
-func (s ScheduleAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s ScheduleAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s ScheduleAttributes) InternalWithRef(ref terra.Reference) ScheduleAttributes {
@@ -466,8 +466,8 @@ type CreateRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (cr CreateRuleAttributes) InternalRef() terra.Reference {
-	return cr.ref
+func (cr CreateRuleAttributes) InternalRef() (terra.Reference, error) {
+	return cr.ref, nil
 }
 
 func (cr CreateRuleAttributes) InternalWithRef(ref terra.Reference) CreateRuleAttributes {
@@ -502,8 +502,8 @@ type CrossRegionCopyRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (crcr CrossRegionCopyRuleAttributes) InternalRef() terra.Reference {
-	return crcr.ref
+func (crcr CrossRegionCopyRuleAttributes) InternalRef() (terra.Reference, error) {
+	return crcr.ref, nil
 }
 
 func (crcr CrossRegionCopyRuleAttributes) InternalWithRef(ref terra.Reference) CrossRegionCopyRuleAttributes {
@@ -542,8 +542,8 @@ type CrossRegionCopyRuleDeprecateRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (dr CrossRegionCopyRuleDeprecateRuleAttributes) InternalRef() terra.Reference {
-	return dr.ref
+func (dr CrossRegionCopyRuleDeprecateRuleAttributes) InternalRef() (terra.Reference, error) {
+	return dr.ref, nil
 }
 
 func (dr CrossRegionCopyRuleDeprecateRuleAttributes) InternalWithRef(ref terra.Reference) CrossRegionCopyRuleDeprecateRuleAttributes {
@@ -566,8 +566,8 @@ type CrossRegionCopyRuleRetainRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (rr CrossRegionCopyRuleRetainRuleAttributes) InternalRef() terra.Reference {
-	return rr.ref
+func (rr CrossRegionCopyRuleRetainRuleAttributes) InternalRef() (terra.Reference, error) {
+	return rr.ref, nil
 }
 
 func (rr CrossRegionCopyRuleRetainRuleAttributes) InternalWithRef(ref terra.Reference) CrossRegionCopyRuleRetainRuleAttributes {
@@ -590,8 +590,8 @@ type ScheduleDeprecateRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (dr ScheduleDeprecateRuleAttributes) InternalRef() terra.Reference {
-	return dr.ref
+func (dr ScheduleDeprecateRuleAttributes) InternalRef() (terra.Reference, error) {
+	return dr.ref, nil
 }
 
 func (dr ScheduleDeprecateRuleAttributes) InternalWithRef(ref terra.Reference) ScheduleDeprecateRuleAttributes {
@@ -618,8 +618,8 @@ type FastRestoreRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (frr FastRestoreRuleAttributes) InternalRef() terra.Reference {
-	return frr.ref
+func (frr FastRestoreRuleAttributes) InternalRef() (terra.Reference, error) {
+	return frr.ref, nil
 }
 
 func (frr FastRestoreRuleAttributes) InternalWithRef(ref terra.Reference) FastRestoreRuleAttributes {
@@ -650,8 +650,8 @@ type ScheduleRetainRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (rr ScheduleRetainRuleAttributes) InternalRef() terra.Reference {
-	return rr.ref
+func (rr ScheduleRetainRuleAttributes) InternalRef() (terra.Reference, error) {
+	return rr.ref, nil
 }
 
 func (rr ScheduleRetainRuleAttributes) InternalWithRef(ref terra.Reference) ScheduleRetainRuleAttributes {
@@ -678,8 +678,8 @@ type ShareRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (sr ShareRuleAttributes) InternalRef() terra.Reference {
-	return sr.ref
+func (sr ShareRuleAttributes) InternalRef() (terra.Reference, error) {
+	return sr.ref, nil
 }
 
 func (sr ShareRuleAttributes) InternalWithRef(ref terra.Reference) ShareRuleAttributes {

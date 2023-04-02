@@ -18,8 +18,8 @@ type BrokerInstanceOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (bio BrokerInstanceOptionsAttributes) InternalRef() terra.Reference {
-	return bio.ref
+func (bio BrokerInstanceOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return bio.ref, nil
 }
 
 func (bio BrokerInstanceOptionsAttributes) InternalWithRef(ref terra.Reference) BrokerInstanceOptionsAttributes {
@@ -58,8 +58,8 @@ type AvailabilityZonesAttributes struct {
 	ref terra.Reference
 }
 
-func (az AvailabilityZonesAttributes) InternalRef() terra.Reference {
-	return az.ref
+func (az AvailabilityZonesAttributes) InternalRef() (terra.Reference, error) {
+	return az.ref, nil
 }
 
 func (az AvailabilityZonesAttributes) InternalWithRef(ref terra.Reference) AvailabilityZonesAttributes {

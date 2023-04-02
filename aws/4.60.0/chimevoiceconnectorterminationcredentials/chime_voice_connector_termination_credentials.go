@@ -18,8 +18,8 @@ type CredentialsAttributes struct {
 	ref terra.Reference
 }
 
-func (c CredentialsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CredentialsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CredentialsAttributes) InternalWithRef(ref terra.Reference) CredentialsAttributes {

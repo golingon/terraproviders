@@ -75,8 +75,8 @@ type S3RepositoryDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (srd S3RepositoryDetailsAttributes) InternalRef() terra.Reference {
-	return srd.ref
+func (srd S3RepositoryDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return srd.ref, nil
 }
 
 func (srd S3RepositoryDetailsAttributes) InternalWithRef(ref terra.Reference) S3RepositoryDetailsAttributes {
@@ -99,8 +99,8 @@ type CodeArtifactsAttributes struct {
 	ref terra.Reference
 }
 
-func (ca CodeArtifactsAttributes) InternalRef() terra.Reference {
-	return ca.ref
+func (ca CodeArtifactsAttributes) InternalRef() (terra.Reference, error) {
+	return ca.ref, nil
 }
 
 func (ca CodeArtifactsAttributes) InternalWithRef(ref terra.Reference) CodeArtifactsAttributes {
@@ -123,8 +123,8 @@ type KmsKeyDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (kkd KmsKeyDetailsAttributes) InternalRef() terra.Reference {
-	return kkd.ref
+func (kkd KmsKeyDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return kkd.ref, nil
 }
 
 func (kkd KmsKeyDetailsAttributes) InternalWithRef(ref terra.Reference) KmsKeyDetailsAttributes {
@@ -147,8 +147,8 @@ type RepositoryAttributes struct {
 	ref terra.Reference
 }
 
-func (r RepositoryAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RepositoryAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RepositoryAttributes) InternalWithRef(ref terra.Reference) RepositoryAttributes {
@@ -179,8 +179,8 @@ type BitbucketAttributes struct {
 	ref terra.Reference
 }
 
-func (b BitbucketAttributes) InternalRef() terra.Reference {
-	return b.ref
+func (b BitbucketAttributes) InternalRef() (terra.Reference, error) {
+	return b.ref, nil
 }
 
 func (b BitbucketAttributes) InternalWithRef(ref terra.Reference) BitbucketAttributes {
@@ -207,8 +207,8 @@ type CodecommitAttributes struct {
 	ref terra.Reference
 }
 
-func (c CodecommitAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CodecommitAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CodecommitAttributes) InternalWithRef(ref terra.Reference) CodecommitAttributes {
@@ -227,8 +227,8 @@ type GithubEnterpriseServerAttributes struct {
 	ref terra.Reference
 }
 
-func (ges GithubEnterpriseServerAttributes) InternalRef() terra.Reference {
-	return ges.ref
+func (ges GithubEnterpriseServerAttributes) InternalRef() (terra.Reference, error) {
+	return ges.ref, nil
 }
 
 func (ges GithubEnterpriseServerAttributes) InternalWithRef(ref terra.Reference) GithubEnterpriseServerAttributes {
@@ -255,8 +255,8 @@ type S3BucketAttributes struct {
 	ref terra.Reference
 }
 
-func (sb S3BucketAttributes) InternalRef() terra.Reference {
-	return sb.ref
+func (sb S3BucketAttributes) InternalRef() (terra.Reference, error) {
+	return sb.ref, nil
 }
 
 func (sb S3BucketAttributes) InternalWithRef(ref terra.Reference) S3BucketAttributes {
@@ -279,8 +279,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

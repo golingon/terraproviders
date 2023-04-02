@@ -33,8 +33,8 @@ type AutoScalingGroupProviderAttributes struct {
 	ref terra.Reference
 }
 
-func (asgp AutoScalingGroupProviderAttributes) InternalRef() terra.Reference {
-	return asgp.ref
+func (asgp AutoScalingGroupProviderAttributes) InternalRef() (terra.Reference, error) {
+	return asgp.ref, nil
 }
 
 func (asgp AutoScalingGroupProviderAttributes) InternalWithRef(ref terra.Reference) AutoScalingGroupProviderAttributes {
@@ -61,8 +61,8 @@ type ManagedScalingAttributes struct {
 	ref terra.Reference
 }
 
-func (ms ManagedScalingAttributes) InternalRef() terra.Reference {
-	return ms.ref
+func (ms ManagedScalingAttributes) InternalRef() (terra.Reference, error) {
+	return ms.ref, nil
 }
 
 func (ms ManagedScalingAttributes) InternalWithRef(ref terra.Reference) ManagedScalingAttributes {

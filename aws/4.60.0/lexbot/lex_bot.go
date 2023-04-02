@@ -61,8 +61,8 @@ type AbortStatementAttributes struct {
 	ref terra.Reference
 }
 
-func (as AbortStatementAttributes) InternalRef() terra.Reference {
-	return as.ref
+func (as AbortStatementAttributes) InternalRef() (terra.Reference, error) {
+	return as.ref, nil
 }
 
 func (as AbortStatementAttributes) InternalWithRef(ref terra.Reference) AbortStatementAttributes {
@@ -85,8 +85,8 @@ type AbortStatementMessageAttributes struct {
 	ref terra.Reference
 }
 
-func (m AbortStatementMessageAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m AbortStatementMessageAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m AbortStatementMessageAttributes) InternalWithRef(ref terra.Reference) AbortStatementMessageAttributes {
@@ -113,8 +113,8 @@ type ClarificationPromptAttributes struct {
 	ref terra.Reference
 }
 
-func (cp ClarificationPromptAttributes) InternalRef() terra.Reference {
-	return cp.ref
+func (cp ClarificationPromptAttributes) InternalRef() (terra.Reference, error) {
+	return cp.ref, nil
 }
 
 func (cp ClarificationPromptAttributes) InternalWithRef(ref terra.Reference) ClarificationPromptAttributes {
@@ -141,8 +141,8 @@ type ClarificationPromptMessageAttributes struct {
 	ref terra.Reference
 }
 
-func (m ClarificationPromptMessageAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m ClarificationPromptMessageAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m ClarificationPromptMessageAttributes) InternalWithRef(ref terra.Reference) ClarificationPromptMessageAttributes {
@@ -169,8 +169,8 @@ type IntentAttributes struct {
 	ref terra.Reference
 }
 
-func (i IntentAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IntentAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IntentAttributes) InternalWithRef(ref terra.Reference) IntentAttributes {
@@ -193,8 +193,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

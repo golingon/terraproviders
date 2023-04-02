@@ -27,8 +27,8 @@ type OutputLocationAttributes struct {
 	ref terra.Reference
 }
 
-func (ol OutputLocationAttributes) InternalRef() terra.Reference {
-	return ol.ref
+func (ol OutputLocationAttributes) InternalRef() (terra.Reference, error) {
+	return ol.ref, nil
 }
 
 func (ol OutputLocationAttributes) InternalWithRef(ref terra.Reference) OutputLocationAttributes {
@@ -55,8 +55,8 @@ type TargetsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TargetsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TargetsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TargetsAttributes) InternalWithRef(ref terra.Reference) TargetsAttributes {

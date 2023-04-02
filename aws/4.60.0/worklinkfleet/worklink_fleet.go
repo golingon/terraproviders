@@ -27,8 +27,8 @@ type IdentityProviderAttributes struct {
 	ref terra.Reference
 }
 
-func (ip IdentityProviderAttributes) InternalRef() terra.Reference {
-	return ip.ref
+func (ip IdentityProviderAttributes) InternalRef() (terra.Reference, error) {
+	return ip.ref, nil
 }
 
 func (ip IdentityProviderAttributes) InternalWithRef(ref terra.Reference) IdentityProviderAttributes {
@@ -51,8 +51,8 @@ type NetworkAttributes struct {
 	ref terra.Reference
 }
 
-func (n NetworkAttributes) InternalRef() terra.Reference {
-	return n.ref
+func (n NetworkAttributes) InternalRef() (terra.Reference, error) {
+	return n.ref, nil
 }
 
 func (n NetworkAttributes) InternalWithRef(ref terra.Reference) NetworkAttributes {

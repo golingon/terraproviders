@@ -46,8 +46,8 @@ type FilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes {
@@ -70,8 +70,8 @@ type StorageClassAnalysisAttributes struct {
 	ref terra.Reference
 }
 
-func (sca StorageClassAnalysisAttributes) InternalRef() terra.Reference {
-	return sca.ref
+func (sca StorageClassAnalysisAttributes) InternalRef() (terra.Reference, error) {
+	return sca.ref, nil
 }
 
 func (sca StorageClassAnalysisAttributes) InternalWithRef(ref terra.Reference) StorageClassAnalysisAttributes {
@@ -90,8 +90,8 @@ type DataExportAttributes struct {
 	ref terra.Reference
 }
 
-func (de DataExportAttributes) InternalRef() terra.Reference {
-	return de.ref
+func (de DataExportAttributes) InternalRef() (terra.Reference, error) {
+	return de.ref, nil
 }
 
 func (de DataExportAttributes) InternalWithRef(ref terra.Reference) DataExportAttributes {
@@ -114,8 +114,8 @@ type DestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (d DestinationAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DestinationAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DestinationAttributes) InternalWithRef(ref terra.Reference) DestinationAttributes {
@@ -134,8 +134,8 @@ type S3BucketDestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (sbd S3BucketDestinationAttributes) InternalRef() terra.Reference {
-	return sbd.ref
+func (sbd S3BucketDestinationAttributes) InternalRef() (terra.Reference, error) {
+	return sbd.ref, nil
 }
 
 func (sbd S3BucketDestinationAttributes) InternalWithRef(ref terra.Reference) S3BucketDestinationAttributes {

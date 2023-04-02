@@ -41,8 +41,8 @@ type AccessEndpointsAttributes struct {
 	ref terra.Reference
 }
 
-func (ae AccessEndpointsAttributes) InternalRef() terra.Reference {
-	return ae.ref
+func (ae AccessEndpointsAttributes) InternalRef() (terra.Reference, error) {
+	return ae.ref, nil
 }
 
 func (ae AccessEndpointsAttributes) InternalWithRef(ref terra.Reference) AccessEndpointsAttributes {
@@ -65,8 +65,8 @@ type ApplicationSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (as ApplicationSettingsAttributes) InternalRef() terra.Reference {
-	return as.ref
+func (as ApplicationSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return as.ref, nil
 }
 
 func (as ApplicationSettingsAttributes) InternalWithRef(ref terra.Reference) ApplicationSettingsAttributes {
@@ -89,8 +89,8 @@ type StorageConnectorsAttributes struct {
 	ref terra.Reference
 }
 
-func (sc StorageConnectorsAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc StorageConnectorsAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc StorageConnectorsAttributes) InternalWithRef(ref terra.Reference) StorageConnectorsAttributes {
@@ -117,8 +117,8 @@ type UserSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (us UserSettingsAttributes) InternalRef() terra.Reference {
-	return us.ref
+func (us UserSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return us.ref, nil
 }
 
 func (us UserSettingsAttributes) InternalWithRef(ref terra.Reference) UserSettingsAttributes {

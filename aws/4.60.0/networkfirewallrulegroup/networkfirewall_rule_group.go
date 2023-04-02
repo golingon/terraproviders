@@ -222,8 +222,8 @@ type EncryptionConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ec EncryptionConfigurationAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec EncryptionConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec EncryptionConfigurationAttributes) InternalWithRef(ref terra.Reference) EncryptionConfigurationAttributes {
@@ -246,8 +246,8 @@ type RuleGroupAttributes struct {
 	ref terra.Reference
 }
 
-func (rg RuleGroupAttributes) InternalRef() terra.Reference {
-	return rg.ref
+func (rg RuleGroupAttributes) InternalRef() (terra.Reference, error) {
+	return rg.ref, nil
 }
 
 func (rg RuleGroupAttributes) InternalWithRef(ref terra.Reference) RuleGroupAttributes {
@@ -278,8 +278,8 @@ type ReferenceSetsAttributes struct {
 	ref terra.Reference
 }
 
-func (rs ReferenceSetsAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs ReferenceSetsAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs ReferenceSetsAttributes) InternalWithRef(ref terra.Reference) ReferenceSetsAttributes {
@@ -298,8 +298,8 @@ type IpSetReferencesAttributes struct {
 	ref terra.Reference
 }
 
-func (isr IpSetReferencesAttributes) InternalRef() terra.Reference {
-	return isr.ref
+func (isr IpSetReferencesAttributes) InternalRef() (terra.Reference, error) {
+	return isr.ref, nil
 }
 
 func (isr IpSetReferencesAttributes) InternalWithRef(ref terra.Reference) IpSetReferencesAttributes {
@@ -322,8 +322,8 @@ type IpSetReferenceAttributes struct {
 	ref terra.Reference
 }
 
-func (isr IpSetReferenceAttributes) InternalRef() terra.Reference {
-	return isr.ref
+func (isr IpSetReferenceAttributes) InternalRef() (terra.Reference, error) {
+	return isr.ref, nil
 }
 
 func (isr IpSetReferenceAttributes) InternalWithRef(ref terra.Reference) IpSetReferenceAttributes {
@@ -342,8 +342,8 @@ type RuleVariablesAttributes struct {
 	ref terra.Reference
 }
 
-func (rv RuleVariablesAttributes) InternalRef() terra.Reference {
-	return rv.ref
+func (rv RuleVariablesAttributes) InternalRef() (terra.Reference, error) {
+	return rv.ref, nil
 }
 
 func (rv RuleVariablesAttributes) InternalWithRef(ref terra.Reference) RuleVariablesAttributes {
@@ -366,8 +366,8 @@ type IpSetsAttributes struct {
 	ref terra.Reference
 }
 
-func (is IpSetsAttributes) InternalRef() terra.Reference {
-	return is.ref
+func (is IpSetsAttributes) InternalRef() (terra.Reference, error) {
+	return is.ref, nil
 }
 
 func (is IpSetsAttributes) InternalWithRef(ref terra.Reference) IpSetsAttributes {
@@ -390,8 +390,8 @@ type IpSetAttributes struct {
 	ref terra.Reference
 }
 
-func (is IpSetAttributes) InternalRef() terra.Reference {
-	return is.ref
+func (is IpSetAttributes) InternalRef() (terra.Reference, error) {
+	return is.ref, nil
 }
 
 func (is IpSetAttributes) InternalWithRef(ref terra.Reference) IpSetAttributes {
@@ -410,8 +410,8 @@ type PortSetsAttributes struct {
 	ref terra.Reference
 }
 
-func (ps PortSetsAttributes) InternalRef() terra.Reference {
-	return ps.ref
+func (ps PortSetsAttributes) InternalRef() (terra.Reference, error) {
+	return ps.ref, nil
 }
 
 func (ps PortSetsAttributes) InternalWithRef(ref terra.Reference) PortSetsAttributes {
@@ -434,8 +434,8 @@ type PortSetAttributes struct {
 	ref terra.Reference
 }
 
-func (ps PortSetAttributes) InternalRef() terra.Reference {
-	return ps.ref
+func (ps PortSetAttributes) InternalRef() (terra.Reference, error) {
+	return ps.ref, nil
 }
 
 func (ps PortSetAttributes) InternalWithRef(ref terra.Reference) PortSetAttributes {
@@ -454,8 +454,8 @@ type RulesSourceAttributes struct {
 	ref terra.Reference
 }
 
-func (rs RulesSourceAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs RulesSourceAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs RulesSourceAttributes) InternalWithRef(ref terra.Reference) RulesSourceAttributes {
@@ -486,8 +486,8 @@ type RulesSourceListAttributes struct {
 	ref terra.Reference
 }
 
-func (rsl RulesSourceListAttributes) InternalRef() terra.Reference {
-	return rsl.ref
+func (rsl RulesSourceListAttributes) InternalRef() (terra.Reference, error) {
+	return rsl.ref, nil
 }
 
 func (rsl RulesSourceListAttributes) InternalWithRef(ref terra.Reference) RulesSourceListAttributes {
@@ -514,8 +514,8 @@ type StatefulRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (sr StatefulRuleAttributes) InternalRef() terra.Reference {
-	return sr.ref
+func (sr StatefulRuleAttributes) InternalRef() (terra.Reference, error) {
+	return sr.ref, nil
 }
 
 func (sr StatefulRuleAttributes) InternalWithRef(ref terra.Reference) StatefulRuleAttributes {
@@ -542,8 +542,8 @@ type HeaderAttributes struct {
 	ref terra.Reference
 }
 
-func (h HeaderAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h HeaderAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h HeaderAttributes) InternalWithRef(ref terra.Reference) HeaderAttributes {
@@ -582,8 +582,8 @@ type RuleOptionAttributes struct {
 	ref terra.Reference
 }
 
-func (ro RuleOptionAttributes) InternalRef() terra.Reference {
-	return ro.ref
+func (ro RuleOptionAttributes) InternalRef() (terra.Reference, error) {
+	return ro.ref, nil
 }
 
 func (ro RuleOptionAttributes) InternalWithRef(ref terra.Reference) RuleOptionAttributes {
@@ -606,8 +606,8 @@ type StatelessRulesAndCustomActionsAttributes struct {
 	ref terra.Reference
 }
 
-func (sraca StatelessRulesAndCustomActionsAttributes) InternalRef() terra.Reference {
-	return sraca.ref
+func (sraca StatelessRulesAndCustomActionsAttributes) InternalRef() (terra.Reference, error) {
+	return sraca.ref, nil
 }
 
 func (sraca StatelessRulesAndCustomActionsAttributes) InternalWithRef(ref terra.Reference) StatelessRulesAndCustomActionsAttributes {
@@ -630,8 +630,8 @@ type CustomActionAttributes struct {
 	ref terra.Reference
 }
 
-func (ca CustomActionAttributes) InternalRef() terra.Reference {
-	return ca.ref
+func (ca CustomActionAttributes) InternalRef() (terra.Reference, error) {
+	return ca.ref, nil
 }
 
 func (ca CustomActionAttributes) InternalWithRef(ref terra.Reference) CustomActionAttributes {
@@ -654,8 +654,8 @@ type ActionDefinitionAttributes struct {
 	ref terra.Reference
 }
 
-func (ad ActionDefinitionAttributes) InternalRef() terra.Reference {
-	return ad.ref
+func (ad ActionDefinitionAttributes) InternalRef() (terra.Reference, error) {
+	return ad.ref, nil
 }
 
 func (ad ActionDefinitionAttributes) InternalWithRef(ref terra.Reference) ActionDefinitionAttributes {
@@ -674,8 +674,8 @@ type PublishMetricActionAttributes struct {
 	ref terra.Reference
 }
 
-func (pma PublishMetricActionAttributes) InternalRef() terra.Reference {
-	return pma.ref
+func (pma PublishMetricActionAttributes) InternalRef() (terra.Reference, error) {
+	return pma.ref, nil
 }
 
 func (pma PublishMetricActionAttributes) InternalWithRef(ref terra.Reference) PublishMetricActionAttributes {
@@ -694,8 +694,8 @@ type DimensionAttributes struct {
 	ref terra.Reference
 }
 
-func (d DimensionAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DimensionAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DimensionAttributes) InternalWithRef(ref terra.Reference) DimensionAttributes {
@@ -714,8 +714,8 @@ type StatelessRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (sr StatelessRuleAttributes) InternalRef() terra.Reference {
-	return sr.ref
+func (sr StatelessRuleAttributes) InternalRef() (terra.Reference, error) {
+	return sr.ref, nil
 }
 
 func (sr StatelessRuleAttributes) InternalWithRef(ref terra.Reference) StatelessRuleAttributes {
@@ -738,8 +738,8 @@ type RuleDefinitionAttributes struct {
 	ref terra.Reference
 }
 
-func (rd RuleDefinitionAttributes) InternalRef() terra.Reference {
-	return rd.ref
+func (rd RuleDefinitionAttributes) InternalRef() (terra.Reference, error) {
+	return rd.ref, nil
 }
 
 func (rd RuleDefinitionAttributes) InternalWithRef(ref terra.Reference) RuleDefinitionAttributes {
@@ -762,8 +762,8 @@ type MatchAttributesAttributes struct {
 	ref terra.Reference
 }
 
-func (ma MatchAttributesAttributes) InternalRef() terra.Reference {
-	return ma.ref
+func (ma MatchAttributesAttributes) InternalRef() (terra.Reference, error) {
+	return ma.ref, nil
 }
 
 func (ma MatchAttributesAttributes) InternalWithRef(ref terra.Reference) MatchAttributesAttributes {
@@ -802,8 +802,8 @@ type DestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (d DestinationAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DestinationAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DestinationAttributes) InternalWithRef(ref terra.Reference) DestinationAttributes {
@@ -822,8 +822,8 @@ type DestinationPortAttributes struct {
 	ref terra.Reference
 }
 
-func (dp DestinationPortAttributes) InternalRef() terra.Reference {
-	return dp.ref
+func (dp DestinationPortAttributes) InternalRef() (terra.Reference, error) {
+	return dp.ref, nil
 }
 
 func (dp DestinationPortAttributes) InternalWithRef(ref terra.Reference) DestinationPortAttributes {
@@ -846,8 +846,8 @@ type SourceAttributes struct {
 	ref terra.Reference
 }
 
-func (s SourceAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SourceAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SourceAttributes) InternalWithRef(ref terra.Reference) SourceAttributes {
@@ -866,8 +866,8 @@ type SourcePortAttributes struct {
 	ref terra.Reference
 }
 
-func (sp SourcePortAttributes) InternalRef() terra.Reference {
-	return sp.ref
+func (sp SourcePortAttributes) InternalRef() (terra.Reference, error) {
+	return sp.ref, nil
 }
 
 func (sp SourcePortAttributes) InternalWithRef(ref terra.Reference) SourcePortAttributes {
@@ -890,8 +890,8 @@ type TcpFlagAttributes struct {
 	ref terra.Reference
 }
 
-func (tf TcpFlagAttributes) InternalRef() terra.Reference {
-	return tf.ref
+func (tf TcpFlagAttributes) InternalRef() (terra.Reference, error) {
+	return tf.ref, nil
 }
 
 func (tf TcpFlagAttributes) InternalWithRef(ref terra.Reference) TcpFlagAttributes {
@@ -914,8 +914,8 @@ type StatefulRuleOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (sro StatefulRuleOptionsAttributes) InternalRef() terra.Reference {
-	return sro.ref
+func (sro StatefulRuleOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return sro.ref, nil
 }
 
 func (sro StatefulRuleOptionsAttributes) InternalWithRef(ref terra.Reference) StatefulRuleOptionsAttributes {

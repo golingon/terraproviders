@@ -16,8 +16,8 @@ type MountOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (mo MountOptionsAttributes) InternalRef() terra.Reference {
-	return mo.ref
+func (mo MountOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return mo.ref, nil
 }
 
 func (mo MountOptionsAttributes) InternalWithRef(ref terra.Reference) MountOptionsAttributes {

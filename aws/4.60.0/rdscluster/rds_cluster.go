@@ -64,8 +64,8 @@ type RestoreToPointInTimeAttributes struct {
 	ref terra.Reference
 }
 
-func (rtpit RestoreToPointInTimeAttributes) InternalRef() terra.Reference {
-	return rtpit.ref
+func (rtpit RestoreToPointInTimeAttributes) InternalRef() (terra.Reference, error) {
+	return rtpit.ref, nil
 }
 
 func (rtpit RestoreToPointInTimeAttributes) InternalWithRef(ref terra.Reference) RestoreToPointInTimeAttributes {
@@ -96,8 +96,8 @@ type S3ImportAttributes struct {
 	ref terra.Reference
 }
 
-func (si S3ImportAttributes) InternalRef() terra.Reference {
-	return si.ref
+func (si S3ImportAttributes) InternalRef() (terra.Reference, error) {
+	return si.ref, nil
 }
 
 func (si S3ImportAttributes) InternalWithRef(ref terra.Reference) S3ImportAttributes {
@@ -132,8 +132,8 @@ type ScalingConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (sc ScalingConfigurationAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc ScalingConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc ScalingConfigurationAttributes) InternalWithRef(ref terra.Reference) ScalingConfigurationAttributes {
@@ -168,8 +168,8 @@ type Serverlessv2ScalingConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ssc Serverlessv2ScalingConfigurationAttributes) InternalRef() terra.Reference {
-	return ssc.ref
+func (ssc Serverlessv2ScalingConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ssc.ref, nil
 }
 
 func (ssc Serverlessv2ScalingConfigurationAttributes) InternalWithRef(ref terra.Reference) Serverlessv2ScalingConfigurationAttributes {
@@ -192,8 +192,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

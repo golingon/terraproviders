@@ -20,8 +20,8 @@ type CognitoIdentityProvidersAttributes struct {
 	ref terra.Reference
 }
 
-func (cip CognitoIdentityProvidersAttributes) InternalRef() terra.Reference {
-	return cip.ref
+func (cip CognitoIdentityProvidersAttributes) InternalRef() (terra.Reference, error) {
+	return cip.ref, nil
 }
 
 func (cip CognitoIdentityProvidersAttributes) InternalWithRef(ref terra.Reference) CognitoIdentityProvidersAttributes {

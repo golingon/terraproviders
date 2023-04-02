@@ -18,8 +18,8 @@ type VpcEndpointAttributes struct {
 	ref terra.Reference
 }
 
-func (ve VpcEndpointAttributes) InternalRef() terra.Reference {
-	return ve.ref
+func (ve VpcEndpointAttributes) InternalRef() (terra.Reference, error) {
+	return ve.ref, nil
 }
 
 func (ve VpcEndpointAttributes) InternalWithRef(ref terra.Reference) VpcEndpointAttributes {
@@ -46,8 +46,8 @@ type NetworkInterfaceAttributes struct {
 	ref terra.Reference
 }
 
-func (ni NetworkInterfaceAttributes) InternalRef() terra.Reference {
-	return ni.ref
+func (ni NetworkInterfaceAttributes) InternalRef() (terra.Reference, error) {
+	return ni.ref, nil
 }
 
 func (ni NetworkInterfaceAttributes) InternalWithRef(ref terra.Reference) NetworkInterfaceAttributes {

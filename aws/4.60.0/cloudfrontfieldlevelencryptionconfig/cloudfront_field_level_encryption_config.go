@@ -51,8 +51,8 @@ type ContentTypeProfileConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ctpc ContentTypeProfileConfigAttributes) InternalRef() terra.Reference {
-	return ctpc.ref
+func (ctpc ContentTypeProfileConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ctpc.ref, nil
 }
 
 func (ctpc ContentTypeProfileConfigAttributes) InternalWithRef(ref terra.Reference) ContentTypeProfileConfigAttributes {
@@ -75,8 +75,8 @@ type ContentTypeProfilesAttributes struct {
 	ref terra.Reference
 }
 
-func (ctp ContentTypeProfilesAttributes) InternalRef() terra.Reference {
-	return ctp.ref
+func (ctp ContentTypeProfilesAttributes) InternalRef() (terra.Reference, error) {
+	return ctp.ref, nil
 }
 
 func (ctp ContentTypeProfilesAttributes) InternalWithRef(ref terra.Reference) ContentTypeProfilesAttributes {
@@ -95,8 +95,8 @@ type ContentTypeProfilesItemsAttributes struct {
 	ref terra.Reference
 }
 
-func (i ContentTypeProfilesItemsAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i ContentTypeProfilesItemsAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i ContentTypeProfilesItemsAttributes) InternalWithRef(ref terra.Reference) ContentTypeProfilesItemsAttributes {
@@ -123,8 +123,8 @@ type QueryArgProfileConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (qapc QueryArgProfileConfigAttributes) InternalRef() terra.Reference {
-	return qapc.ref
+func (qapc QueryArgProfileConfigAttributes) InternalRef() (terra.Reference, error) {
+	return qapc.ref, nil
 }
 
 func (qapc QueryArgProfileConfigAttributes) InternalWithRef(ref terra.Reference) QueryArgProfileConfigAttributes {
@@ -147,8 +147,8 @@ type QueryArgProfilesAttributes struct {
 	ref terra.Reference
 }
 
-func (qap QueryArgProfilesAttributes) InternalRef() terra.Reference {
-	return qap.ref
+func (qap QueryArgProfilesAttributes) InternalRef() (terra.Reference, error) {
+	return qap.ref, nil
 }
 
 func (qap QueryArgProfilesAttributes) InternalWithRef(ref terra.Reference) QueryArgProfilesAttributes {
@@ -167,8 +167,8 @@ type QueryArgProfilesItemsAttributes struct {
 	ref terra.Reference
 }
 
-func (i QueryArgProfilesItemsAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i QueryArgProfilesItemsAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i QueryArgProfilesItemsAttributes) InternalWithRef(ref terra.Reference) QueryArgProfilesItemsAttributes {

@@ -26,8 +26,8 @@ type CorsRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (cr CorsRuleAttributes) InternalRef() terra.Reference {
-	return cr.ref
+func (cr CorsRuleAttributes) InternalRef() (terra.Reference, error) {
+	return cr.ref, nil
 }
 
 func (cr CorsRuleAttributes) InternalWithRef(ref terra.Reference) CorsRuleAttributes {

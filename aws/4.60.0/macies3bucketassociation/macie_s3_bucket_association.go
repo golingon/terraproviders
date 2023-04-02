@@ -18,8 +18,8 @@ type ClassificationTypeAttributes struct {
 	ref terra.Reference
 }
 
-func (ct ClassificationTypeAttributes) InternalRef() terra.Reference {
-	return ct.ref
+func (ct ClassificationTypeAttributes) InternalRef() (terra.Reference, error) {
+	return ct.ref, nil
 }
 
 func (ct ClassificationTypeAttributes) InternalWithRef(ref terra.Reference) ClassificationTypeAttributes {

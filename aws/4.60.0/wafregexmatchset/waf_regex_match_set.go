@@ -27,8 +27,8 @@ type RegexMatchTupleAttributes struct {
 	ref terra.Reference
 }
 
-func (rmt RegexMatchTupleAttributes) InternalRef() terra.Reference {
-	return rmt.ref
+func (rmt RegexMatchTupleAttributes) InternalRef() (terra.Reference, error) {
+	return rmt.ref, nil
 }
 
 func (rmt RegexMatchTupleAttributes) InternalWithRef(ref terra.Reference) RegexMatchTupleAttributes {
@@ -55,8 +55,8 @@ type FieldToMatchAttributes struct {
 	ref terra.Reference
 }
 
-func (ftm FieldToMatchAttributes) InternalRef() terra.Reference {
-	return ftm.ref
+func (ftm FieldToMatchAttributes) InternalRef() (terra.Reference, error) {
+	return ftm.ref, nil
 }
 
 func (ftm FieldToMatchAttributes) InternalWithRef(ref terra.Reference) FieldToMatchAttributes {

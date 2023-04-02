@@ -22,8 +22,8 @@ type DataCatalogEncryptionSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (dces DataCatalogEncryptionSettingsAttributes) InternalRef() terra.Reference {
-	return dces.ref
+func (dces DataCatalogEncryptionSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return dces.ref, nil
 }
 
 func (dces DataCatalogEncryptionSettingsAttributes) InternalWithRef(ref terra.Reference) DataCatalogEncryptionSettingsAttributes {
@@ -46,8 +46,8 @@ type ConnectionPasswordEncryptionAttributes struct {
 	ref terra.Reference
 }
 
-func (cpe ConnectionPasswordEncryptionAttributes) InternalRef() terra.Reference {
-	return cpe.ref
+func (cpe ConnectionPasswordEncryptionAttributes) InternalRef() (terra.Reference, error) {
+	return cpe.ref, nil
 }
 
 func (cpe ConnectionPasswordEncryptionAttributes) InternalWithRef(ref terra.Reference) ConnectionPasswordEncryptionAttributes {
@@ -70,8 +70,8 @@ type EncryptionAtRestAttributes struct {
 	ref terra.Reference
 }
 
-func (ear EncryptionAtRestAttributes) InternalRef() terra.Reference {
-	return ear.ref
+func (ear EncryptionAtRestAttributes) InternalRef() (terra.Reference, error) {
+	return ear.ref, nil
 }
 
 func (ear EncryptionAtRestAttributes) InternalWithRef(ref terra.Reference) EncryptionAtRestAttributes {

@@ -45,8 +45,8 @@ type PartitionIndexAttributes struct {
 	ref terra.Reference
 }
 
-func (pi PartitionIndexAttributes) InternalRef() terra.Reference {
-	return pi.ref
+func (pi PartitionIndexAttributes) InternalRef() (terra.Reference, error) {
+	return pi.ref, nil
 }
 
 func (pi PartitionIndexAttributes) InternalWithRef(ref terra.Reference) PartitionIndexAttributes {
@@ -73,8 +73,8 @@ type PartitionKeysAttributes struct {
 	ref terra.Reference
 }
 
-func (pk PartitionKeysAttributes) InternalRef() terra.Reference {
-	return pk.ref
+func (pk PartitionKeysAttributes) InternalRef() (terra.Reference, error) {
+	return pk.ref, nil
 }
 
 func (pk PartitionKeysAttributes) InternalWithRef(ref terra.Reference) PartitionKeysAttributes {
@@ -101,8 +101,8 @@ type StorageDescriptorAttributes struct {
 	ref terra.Reference
 }
 
-func (sd StorageDescriptorAttributes) InternalRef() terra.Reference {
-	return sd.ref
+func (sd StorageDescriptorAttributes) InternalRef() (terra.Reference, error) {
+	return sd.ref, nil
 }
 
 func (sd StorageDescriptorAttributes) InternalWithRef(ref terra.Reference) StorageDescriptorAttributes {
@@ -169,8 +169,8 @@ type ColumnsAttributes struct {
 	ref terra.Reference
 }
 
-func (c ColumnsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ColumnsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ColumnsAttributes) InternalWithRef(ref terra.Reference) ColumnsAttributes {
@@ -201,8 +201,8 @@ type SchemaReferenceAttributes struct {
 	ref terra.Reference
 }
 
-func (sr SchemaReferenceAttributes) InternalRef() terra.Reference {
-	return sr.ref
+func (sr SchemaReferenceAttributes) InternalRef() (terra.Reference, error) {
+	return sr.ref, nil
 }
 
 func (sr SchemaReferenceAttributes) InternalWithRef(ref terra.Reference) SchemaReferenceAttributes {
@@ -229,8 +229,8 @@ type SchemaIdAttributes struct {
 	ref terra.Reference
 }
 
-func (si SchemaIdAttributes) InternalRef() terra.Reference {
-	return si.ref
+func (si SchemaIdAttributes) InternalRef() (terra.Reference, error) {
+	return si.ref, nil
 }
 
 func (si SchemaIdAttributes) InternalWithRef(ref terra.Reference) SchemaIdAttributes {
@@ -257,8 +257,8 @@ type SerDeInfoAttributes struct {
 	ref terra.Reference
 }
 
-func (sdi SerDeInfoAttributes) InternalRef() terra.Reference {
-	return sdi.ref
+func (sdi SerDeInfoAttributes) InternalRef() (terra.Reference, error) {
+	return sdi.ref, nil
 }
 
 func (sdi SerDeInfoAttributes) InternalWithRef(ref terra.Reference) SerDeInfoAttributes {
@@ -285,8 +285,8 @@ type SkewedInfoAttributes struct {
 	ref terra.Reference
 }
 
-func (si SkewedInfoAttributes) InternalRef() terra.Reference {
-	return si.ref
+func (si SkewedInfoAttributes) InternalRef() (terra.Reference, error) {
+	return si.ref, nil
 }
 
 func (si SkewedInfoAttributes) InternalWithRef(ref terra.Reference) SkewedInfoAttributes {
@@ -313,8 +313,8 @@ type SortColumnsAttributes struct {
 	ref terra.Reference
 }
 
-func (sc SortColumnsAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc SortColumnsAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc SortColumnsAttributes) InternalWithRef(ref terra.Reference) SortColumnsAttributes {
@@ -337,8 +337,8 @@ type TargetTableAttributes struct {
 	ref terra.Reference
 }
 
-func (tt TargetTableAttributes) InternalRef() terra.Reference {
-	return tt.ref
+func (tt TargetTableAttributes) InternalRef() (terra.Reference, error) {
+	return tt.ref, nil
 }
 
 func (tt TargetTableAttributes) InternalWithRef(ref terra.Reference) TargetTableAttributes {

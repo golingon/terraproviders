@@ -68,8 +68,8 @@ type DeadLetterConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (dlc DeadLetterConfigAttributes) InternalRef() terra.Reference {
-	return dlc.ref
+func (dlc DeadLetterConfigAttributes) InternalRef() (terra.Reference, error) {
+	return dlc.ref, nil
 }
 
 func (dlc DeadLetterConfigAttributes) InternalWithRef(ref terra.Reference) DeadLetterConfigAttributes {
@@ -88,8 +88,8 @@ type EnvironmentAttributes struct {
 	ref terra.Reference
 }
 
-func (e EnvironmentAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EnvironmentAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EnvironmentAttributes) InternalWithRef(ref terra.Reference) EnvironmentAttributes {
@@ -108,8 +108,8 @@ type EphemeralStorageAttributes struct {
 	ref terra.Reference
 }
 
-func (es EphemeralStorageAttributes) InternalRef() terra.Reference {
-	return es.ref
+func (es EphemeralStorageAttributes) InternalRef() (terra.Reference, error) {
+	return es.ref, nil
 }
 
 func (es EphemeralStorageAttributes) InternalWithRef(ref terra.Reference) EphemeralStorageAttributes {
@@ -128,8 +128,8 @@ type FileSystemConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (fsc FileSystemConfigAttributes) InternalRef() terra.Reference {
-	return fsc.ref
+func (fsc FileSystemConfigAttributes) InternalRef() (terra.Reference, error) {
+	return fsc.ref, nil
 }
 
 func (fsc FileSystemConfigAttributes) InternalWithRef(ref terra.Reference) FileSystemConfigAttributes {
@@ -152,8 +152,8 @@ type ImageConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ic ImageConfigAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic ImageConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic ImageConfigAttributes) InternalWithRef(ref terra.Reference) ImageConfigAttributes {
@@ -180,8 +180,8 @@ type SnapStartAttributes struct {
 	ref terra.Reference
 }
 
-func (ss SnapStartAttributes) InternalRef() terra.Reference {
-	return ss.ref
+func (ss SnapStartAttributes) InternalRef() (terra.Reference, error) {
+	return ss.ref, nil
 }
 
 func (ss SnapStartAttributes) InternalWithRef(ref terra.Reference) SnapStartAttributes {
@@ -204,8 +204,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
@@ -232,8 +232,8 @@ type TracingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (tc TracingConfigAttributes) InternalRef() terra.Reference {
-	return tc.ref
+func (tc TracingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return tc.ref, nil
 }
 
 func (tc TracingConfigAttributes) InternalWithRef(ref terra.Reference) TracingConfigAttributes {
@@ -252,8 +252,8 @@ type VpcConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (vc VpcConfigAttributes) InternalRef() terra.Reference {
-	return vc.ref
+func (vc VpcConfigAttributes) InternalRef() (terra.Reference, error) {
+	return vc.ref, nil
 }
 
 func (vc VpcConfigAttributes) InternalWithRef(ref terra.Reference) VpcConfigAttributes {

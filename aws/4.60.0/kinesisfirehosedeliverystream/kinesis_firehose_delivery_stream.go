@@ -539,8 +539,8 @@ type ElasticsearchConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ec ElasticsearchConfigurationAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec ElasticsearchConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec ElasticsearchConfigurationAttributes) InternalWithRef(ref terra.Reference) ElasticsearchConfigurationAttributes {
@@ -607,8 +607,8 @@ type ElasticsearchConfigurationCloudwatchLoggingOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (clo ElasticsearchConfigurationCloudwatchLoggingOptionsAttributes) InternalRef() terra.Reference {
-	return clo.ref
+func (clo ElasticsearchConfigurationCloudwatchLoggingOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return clo.ref, nil
 }
 
 func (clo ElasticsearchConfigurationCloudwatchLoggingOptionsAttributes) InternalWithRef(ref terra.Reference) ElasticsearchConfigurationCloudwatchLoggingOptionsAttributes {
@@ -635,8 +635,8 @@ type ElasticsearchConfigurationProcessingConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (pc ElasticsearchConfigurationProcessingConfigurationAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc ElasticsearchConfigurationProcessingConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc ElasticsearchConfigurationProcessingConfigurationAttributes) InternalWithRef(ref terra.Reference) ElasticsearchConfigurationProcessingConfigurationAttributes {
@@ -659,8 +659,8 @@ type ElasticsearchConfigurationProcessingConfigurationProcessorsAttributes struc
 	ref terra.Reference
 }
 
-func (p ElasticsearchConfigurationProcessingConfigurationProcessorsAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p ElasticsearchConfigurationProcessingConfigurationProcessorsAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p ElasticsearchConfigurationProcessingConfigurationProcessorsAttributes) InternalWithRef(ref terra.Reference) ElasticsearchConfigurationProcessingConfigurationProcessorsAttributes {
@@ -683,8 +683,8 @@ type ElasticsearchConfigurationProcessingConfigurationProcessorsParametersAttrib
 	ref terra.Reference
 }
 
-func (p ElasticsearchConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p ElasticsearchConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p ElasticsearchConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalWithRef(ref terra.Reference) ElasticsearchConfigurationProcessingConfigurationProcessorsParametersAttributes {
@@ -707,8 +707,8 @@ type VpcConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (vc VpcConfigAttributes) InternalRef() terra.Reference {
-	return vc.ref
+func (vc VpcConfigAttributes) InternalRef() (terra.Reference, error) {
+	return vc.ref, nil
 }
 
 func (vc VpcConfigAttributes) InternalWithRef(ref terra.Reference) VpcConfigAttributes {
@@ -739,8 +739,8 @@ type ExtendedS3ConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (esc ExtendedS3ConfigurationAttributes) InternalRef() terra.Reference {
-	return esc.ref
+func (esc ExtendedS3ConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return esc.ref, nil
 }
 
 func (esc ExtendedS3ConfigurationAttributes) InternalWithRef(ref terra.Reference) ExtendedS3ConfigurationAttributes {
@@ -811,8 +811,8 @@ type ExtendedS3ConfigurationCloudwatchLoggingOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (clo ExtendedS3ConfigurationCloudwatchLoggingOptionsAttributes) InternalRef() terra.Reference {
-	return clo.ref
+func (clo ExtendedS3ConfigurationCloudwatchLoggingOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return clo.ref, nil
 }
 
 func (clo ExtendedS3ConfigurationCloudwatchLoggingOptionsAttributes) InternalWithRef(ref terra.Reference) ExtendedS3ConfigurationCloudwatchLoggingOptionsAttributes {
@@ -839,8 +839,8 @@ type DataFormatConversionConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (dfcc DataFormatConversionConfigurationAttributes) InternalRef() terra.Reference {
-	return dfcc.ref
+func (dfcc DataFormatConversionConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return dfcc.ref, nil
 }
 
 func (dfcc DataFormatConversionConfigurationAttributes) InternalWithRef(ref terra.Reference) DataFormatConversionConfigurationAttributes {
@@ -871,8 +871,8 @@ type InputFormatConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ifc InputFormatConfigurationAttributes) InternalRef() terra.Reference {
-	return ifc.ref
+func (ifc InputFormatConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ifc.ref, nil
 }
 
 func (ifc InputFormatConfigurationAttributes) InternalWithRef(ref terra.Reference) InputFormatConfigurationAttributes {
@@ -891,8 +891,8 @@ type DeserializerAttributes struct {
 	ref terra.Reference
 }
 
-func (d DeserializerAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DeserializerAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DeserializerAttributes) InternalWithRef(ref terra.Reference) DeserializerAttributes {
@@ -915,8 +915,8 @@ type HiveJsonSerDeAttributes struct {
 	ref terra.Reference
 }
 
-func (hjsd HiveJsonSerDeAttributes) InternalRef() terra.Reference {
-	return hjsd.ref
+func (hjsd HiveJsonSerDeAttributes) InternalRef() (terra.Reference, error) {
+	return hjsd.ref, nil
 }
 
 func (hjsd HiveJsonSerDeAttributes) InternalWithRef(ref terra.Reference) HiveJsonSerDeAttributes {
@@ -935,8 +935,8 @@ type OpenXJsonSerDeAttributes struct {
 	ref terra.Reference
 }
 
-func (oxjsd OpenXJsonSerDeAttributes) InternalRef() terra.Reference {
-	return oxjsd.ref
+func (oxjsd OpenXJsonSerDeAttributes) InternalRef() (terra.Reference, error) {
+	return oxjsd.ref, nil
 }
 
 func (oxjsd OpenXJsonSerDeAttributes) InternalWithRef(ref terra.Reference) OpenXJsonSerDeAttributes {
@@ -963,8 +963,8 @@ type OutputFormatConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ofc OutputFormatConfigurationAttributes) InternalRef() terra.Reference {
-	return ofc.ref
+func (ofc OutputFormatConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ofc.ref, nil
 }
 
 func (ofc OutputFormatConfigurationAttributes) InternalWithRef(ref terra.Reference) OutputFormatConfigurationAttributes {
@@ -983,8 +983,8 @@ type SerializerAttributes struct {
 	ref terra.Reference
 }
 
-func (s SerializerAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SerializerAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SerializerAttributes) InternalWithRef(ref terra.Reference) SerializerAttributes {
@@ -1007,8 +1007,8 @@ type OrcSerDeAttributes struct {
 	ref terra.Reference
 }
 
-func (osd OrcSerDeAttributes) InternalRef() terra.Reference {
-	return osd.ref
+func (osd OrcSerDeAttributes) InternalRef() (terra.Reference, error) {
+	return osd.ref, nil
 }
 
 func (osd OrcSerDeAttributes) InternalWithRef(ref terra.Reference) OrcSerDeAttributes {
@@ -1063,8 +1063,8 @@ type ParquetSerDeAttributes struct {
 	ref terra.Reference
 }
 
-func (psd ParquetSerDeAttributes) InternalRef() terra.Reference {
-	return psd.ref
+func (psd ParquetSerDeAttributes) InternalRef() (terra.Reference, error) {
+	return psd.ref, nil
 }
 
 func (psd ParquetSerDeAttributes) InternalWithRef(ref terra.Reference) ParquetSerDeAttributes {
@@ -1103,8 +1103,8 @@ type SchemaConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (sc SchemaConfigurationAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc SchemaConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc SchemaConfigurationAttributes) InternalWithRef(ref terra.Reference) SchemaConfigurationAttributes {
@@ -1143,8 +1143,8 @@ type DynamicPartitioningConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (dpc DynamicPartitioningConfigurationAttributes) InternalRef() terra.Reference {
-	return dpc.ref
+func (dpc DynamicPartitioningConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return dpc.ref, nil
 }
 
 func (dpc DynamicPartitioningConfigurationAttributes) InternalWithRef(ref terra.Reference) DynamicPartitioningConfigurationAttributes {
@@ -1167,8 +1167,8 @@ type ExtendedS3ConfigurationProcessingConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (pc ExtendedS3ConfigurationProcessingConfigurationAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc ExtendedS3ConfigurationProcessingConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc ExtendedS3ConfigurationProcessingConfigurationAttributes) InternalWithRef(ref terra.Reference) ExtendedS3ConfigurationProcessingConfigurationAttributes {
@@ -1191,8 +1191,8 @@ type ExtendedS3ConfigurationProcessingConfigurationProcessorsAttributes struct {
 	ref terra.Reference
 }
 
-func (p ExtendedS3ConfigurationProcessingConfigurationProcessorsAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p ExtendedS3ConfigurationProcessingConfigurationProcessorsAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p ExtendedS3ConfigurationProcessingConfigurationProcessorsAttributes) InternalWithRef(ref terra.Reference) ExtendedS3ConfigurationProcessingConfigurationProcessorsAttributes {
@@ -1215,8 +1215,8 @@ type ExtendedS3ConfigurationProcessingConfigurationProcessorsParametersAttribute
 	ref terra.Reference
 }
 
-func (p ExtendedS3ConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p ExtendedS3ConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p ExtendedS3ConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalWithRef(ref terra.Reference) ExtendedS3ConfigurationProcessingConfigurationProcessorsParametersAttributes {
@@ -1239,8 +1239,8 @@ type ExtendedS3ConfigurationS3BackupConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (sbc ExtendedS3ConfigurationS3BackupConfigurationAttributes) InternalRef() terra.Reference {
-	return sbc.ref
+func (sbc ExtendedS3ConfigurationS3BackupConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return sbc.ref, nil
 }
 
 func (sbc ExtendedS3ConfigurationS3BackupConfigurationAttributes) InternalWithRef(ref terra.Reference) ExtendedS3ConfigurationS3BackupConfigurationAttributes {
@@ -1291,8 +1291,8 @@ type ExtendedS3ConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttribu
 	ref terra.Reference
 }
 
-func (clo ExtendedS3ConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes) InternalRef() terra.Reference {
-	return clo.ref
+func (clo ExtendedS3ConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return clo.ref, nil
 }
 
 func (clo ExtendedS3ConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes) InternalWithRef(ref terra.Reference) ExtendedS3ConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes {
@@ -1319,8 +1319,8 @@ type HttpEndpointConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (hec HttpEndpointConfigurationAttributes) InternalRef() terra.Reference {
-	return hec.ref
+func (hec HttpEndpointConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return hec.ref, nil
 }
 
 func (hec HttpEndpointConfigurationAttributes) InternalWithRef(ref terra.Reference) HttpEndpointConfigurationAttributes {
@@ -1379,8 +1379,8 @@ type HttpEndpointConfigurationCloudwatchLoggingOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (clo HttpEndpointConfigurationCloudwatchLoggingOptionsAttributes) InternalRef() terra.Reference {
-	return clo.ref
+func (clo HttpEndpointConfigurationCloudwatchLoggingOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return clo.ref, nil
 }
 
 func (clo HttpEndpointConfigurationCloudwatchLoggingOptionsAttributes) InternalWithRef(ref terra.Reference) HttpEndpointConfigurationCloudwatchLoggingOptionsAttributes {
@@ -1407,8 +1407,8 @@ type HttpEndpointConfigurationProcessingConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (pc HttpEndpointConfigurationProcessingConfigurationAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc HttpEndpointConfigurationProcessingConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc HttpEndpointConfigurationProcessingConfigurationAttributes) InternalWithRef(ref terra.Reference) HttpEndpointConfigurationProcessingConfigurationAttributes {
@@ -1431,8 +1431,8 @@ type HttpEndpointConfigurationProcessingConfigurationProcessorsAttributes struct
 	ref terra.Reference
 }
 
-func (p HttpEndpointConfigurationProcessingConfigurationProcessorsAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p HttpEndpointConfigurationProcessingConfigurationProcessorsAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p HttpEndpointConfigurationProcessingConfigurationProcessorsAttributes) InternalWithRef(ref terra.Reference) HttpEndpointConfigurationProcessingConfigurationProcessorsAttributes {
@@ -1455,8 +1455,8 @@ type HttpEndpointConfigurationProcessingConfigurationProcessorsParametersAttribu
 	ref terra.Reference
 }
 
-func (p HttpEndpointConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p HttpEndpointConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p HttpEndpointConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalWithRef(ref terra.Reference) HttpEndpointConfigurationProcessingConfigurationProcessorsParametersAttributes {
@@ -1479,8 +1479,8 @@ type RequestConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (rc RequestConfigurationAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc RequestConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc RequestConfigurationAttributes) InternalWithRef(ref terra.Reference) RequestConfigurationAttributes {
@@ -1503,8 +1503,8 @@ type CommonAttributesAttributes struct {
 	ref terra.Reference
 }
 
-func (ca CommonAttributesAttributes) InternalRef() terra.Reference {
-	return ca.ref
+func (ca CommonAttributesAttributes) InternalRef() (terra.Reference, error) {
+	return ca.ref, nil
 }
 
 func (ca CommonAttributesAttributes) InternalWithRef(ref terra.Reference) CommonAttributesAttributes {
@@ -1527,8 +1527,8 @@ type KinesisSourceConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ksc KinesisSourceConfigurationAttributes) InternalRef() terra.Reference {
-	return ksc.ref
+func (ksc KinesisSourceConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ksc.ref, nil
 }
 
 func (ksc KinesisSourceConfigurationAttributes) InternalWithRef(ref terra.Reference) KinesisSourceConfigurationAttributes {
@@ -1551,8 +1551,8 @@ type RedshiftConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (rc RedshiftConfigurationAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc RedshiftConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc RedshiftConfigurationAttributes) InternalWithRef(ref terra.Reference) RedshiftConfigurationAttributes {
@@ -1615,8 +1615,8 @@ type RedshiftConfigurationCloudwatchLoggingOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (clo RedshiftConfigurationCloudwatchLoggingOptionsAttributes) InternalRef() terra.Reference {
-	return clo.ref
+func (clo RedshiftConfigurationCloudwatchLoggingOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return clo.ref, nil
 }
 
 func (clo RedshiftConfigurationCloudwatchLoggingOptionsAttributes) InternalWithRef(ref terra.Reference) RedshiftConfigurationCloudwatchLoggingOptionsAttributes {
@@ -1643,8 +1643,8 @@ type RedshiftConfigurationProcessingConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (pc RedshiftConfigurationProcessingConfigurationAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc RedshiftConfigurationProcessingConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc RedshiftConfigurationProcessingConfigurationAttributes) InternalWithRef(ref terra.Reference) RedshiftConfigurationProcessingConfigurationAttributes {
@@ -1667,8 +1667,8 @@ type RedshiftConfigurationProcessingConfigurationProcessorsAttributes struct {
 	ref terra.Reference
 }
 
-func (p RedshiftConfigurationProcessingConfigurationProcessorsAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p RedshiftConfigurationProcessingConfigurationProcessorsAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p RedshiftConfigurationProcessingConfigurationProcessorsAttributes) InternalWithRef(ref terra.Reference) RedshiftConfigurationProcessingConfigurationProcessorsAttributes {
@@ -1691,8 +1691,8 @@ type RedshiftConfigurationProcessingConfigurationProcessorsParametersAttributes 
 	ref terra.Reference
 }
 
-func (p RedshiftConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p RedshiftConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p RedshiftConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalWithRef(ref terra.Reference) RedshiftConfigurationProcessingConfigurationProcessorsParametersAttributes {
@@ -1715,8 +1715,8 @@ type RedshiftConfigurationS3BackupConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (sbc RedshiftConfigurationS3BackupConfigurationAttributes) InternalRef() terra.Reference {
-	return sbc.ref
+func (sbc RedshiftConfigurationS3BackupConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return sbc.ref, nil
 }
 
 func (sbc RedshiftConfigurationS3BackupConfigurationAttributes) InternalWithRef(ref terra.Reference) RedshiftConfigurationS3BackupConfigurationAttributes {
@@ -1767,8 +1767,8 @@ type RedshiftConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttribute
 	ref terra.Reference
 }
 
-func (clo RedshiftConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes) InternalRef() terra.Reference {
-	return clo.ref
+func (clo RedshiftConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return clo.ref, nil
 }
 
 func (clo RedshiftConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes) InternalWithRef(ref terra.Reference) RedshiftConfigurationS3BackupConfigurationCloudwatchLoggingOptionsAttributes {
@@ -1795,8 +1795,8 @@ type S3ConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (sc S3ConfigurationAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc S3ConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc S3ConfigurationAttributes) InternalWithRef(ref terra.Reference) S3ConfigurationAttributes {
@@ -1847,8 +1847,8 @@ type S3ConfigurationCloudwatchLoggingOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (clo S3ConfigurationCloudwatchLoggingOptionsAttributes) InternalRef() terra.Reference {
-	return clo.ref
+func (clo S3ConfigurationCloudwatchLoggingOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return clo.ref, nil
 }
 
 func (clo S3ConfigurationCloudwatchLoggingOptionsAttributes) InternalWithRef(ref terra.Reference) S3ConfigurationCloudwatchLoggingOptionsAttributes {
@@ -1875,8 +1875,8 @@ type ServerSideEncryptionAttributes struct {
 	ref terra.Reference
 }
 
-func (sse ServerSideEncryptionAttributes) InternalRef() terra.Reference {
-	return sse.ref
+func (sse ServerSideEncryptionAttributes) InternalRef() (terra.Reference, error) {
+	return sse.ref, nil
 }
 
 func (sse ServerSideEncryptionAttributes) InternalWithRef(ref terra.Reference) ServerSideEncryptionAttributes {
@@ -1903,8 +1903,8 @@ type SplunkConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (sc SplunkConfigurationAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc SplunkConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc SplunkConfigurationAttributes) InternalWithRef(ref terra.Reference) SplunkConfigurationAttributes {
@@ -1951,8 +1951,8 @@ type SplunkConfigurationCloudwatchLoggingOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (clo SplunkConfigurationCloudwatchLoggingOptionsAttributes) InternalRef() terra.Reference {
-	return clo.ref
+func (clo SplunkConfigurationCloudwatchLoggingOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return clo.ref, nil
 }
 
 func (clo SplunkConfigurationCloudwatchLoggingOptionsAttributes) InternalWithRef(ref terra.Reference) SplunkConfigurationCloudwatchLoggingOptionsAttributes {
@@ -1979,8 +1979,8 @@ type SplunkConfigurationProcessingConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (pc SplunkConfigurationProcessingConfigurationAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc SplunkConfigurationProcessingConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc SplunkConfigurationProcessingConfigurationAttributes) InternalWithRef(ref terra.Reference) SplunkConfigurationProcessingConfigurationAttributes {
@@ -2003,8 +2003,8 @@ type SplunkConfigurationProcessingConfigurationProcessorsAttributes struct {
 	ref terra.Reference
 }
 
-func (p SplunkConfigurationProcessingConfigurationProcessorsAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p SplunkConfigurationProcessingConfigurationProcessorsAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p SplunkConfigurationProcessingConfigurationProcessorsAttributes) InternalWithRef(ref terra.Reference) SplunkConfigurationProcessingConfigurationProcessorsAttributes {
@@ -2027,8 +2027,8 @@ type SplunkConfigurationProcessingConfigurationProcessorsParametersAttributes st
 	ref terra.Reference
 }
 
-func (p SplunkConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p SplunkConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p SplunkConfigurationProcessingConfigurationProcessorsParametersAttributes) InternalWithRef(ref terra.Reference) SplunkConfigurationProcessingConfigurationProcessorsParametersAttributes {
@@ -2051,8 +2051,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

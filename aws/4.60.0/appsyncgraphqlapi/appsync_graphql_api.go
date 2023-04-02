@@ -91,8 +91,8 @@ type AdditionalAuthenticationProviderAttributes struct {
 	ref terra.Reference
 }
 
-func (aap AdditionalAuthenticationProviderAttributes) InternalRef() terra.Reference {
-	return aap.ref
+func (aap AdditionalAuthenticationProviderAttributes) InternalRef() (terra.Reference, error) {
+	return aap.ref, nil
 }
 
 func (aap AdditionalAuthenticationProviderAttributes) InternalWithRef(ref terra.Reference) AdditionalAuthenticationProviderAttributes {
@@ -123,8 +123,8 @@ type AdditionalAuthenticationProviderLambdaAuthorizerConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (lac AdditionalAuthenticationProviderLambdaAuthorizerConfigAttributes) InternalRef() terra.Reference {
-	return lac.ref
+func (lac AdditionalAuthenticationProviderLambdaAuthorizerConfigAttributes) InternalRef() (terra.Reference, error) {
+	return lac.ref, nil
 }
 
 func (lac AdditionalAuthenticationProviderLambdaAuthorizerConfigAttributes) InternalWithRef(ref terra.Reference) AdditionalAuthenticationProviderLambdaAuthorizerConfigAttributes {
@@ -151,8 +151,8 @@ type AdditionalAuthenticationProviderOpenidConnectConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (occ AdditionalAuthenticationProviderOpenidConnectConfigAttributes) InternalRef() terra.Reference {
-	return occ.ref
+func (occ AdditionalAuthenticationProviderOpenidConnectConfigAttributes) InternalRef() (terra.Reference, error) {
+	return occ.ref, nil
 }
 
 func (occ AdditionalAuthenticationProviderOpenidConnectConfigAttributes) InternalWithRef(ref terra.Reference) AdditionalAuthenticationProviderOpenidConnectConfigAttributes {
@@ -183,8 +183,8 @@ type AdditionalAuthenticationProviderUserPoolConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (upc AdditionalAuthenticationProviderUserPoolConfigAttributes) InternalRef() terra.Reference {
-	return upc.ref
+func (upc AdditionalAuthenticationProviderUserPoolConfigAttributes) InternalRef() (terra.Reference, error) {
+	return upc.ref, nil
 }
 
 func (upc AdditionalAuthenticationProviderUserPoolConfigAttributes) InternalWithRef(ref terra.Reference) AdditionalAuthenticationProviderUserPoolConfigAttributes {
@@ -211,8 +211,8 @@ type LambdaAuthorizerConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (lac LambdaAuthorizerConfigAttributes) InternalRef() terra.Reference {
-	return lac.ref
+func (lac LambdaAuthorizerConfigAttributes) InternalRef() (terra.Reference, error) {
+	return lac.ref, nil
 }
 
 func (lac LambdaAuthorizerConfigAttributes) InternalWithRef(ref terra.Reference) LambdaAuthorizerConfigAttributes {
@@ -239,8 +239,8 @@ type LogConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (lc LogConfigAttributes) InternalRef() terra.Reference {
-	return lc.ref
+func (lc LogConfigAttributes) InternalRef() (terra.Reference, error) {
+	return lc.ref, nil
 }
 
 func (lc LogConfigAttributes) InternalWithRef(ref terra.Reference) LogConfigAttributes {
@@ -267,8 +267,8 @@ type OpenidConnectConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (occ OpenidConnectConfigAttributes) InternalRef() terra.Reference {
-	return occ.ref
+func (occ OpenidConnectConfigAttributes) InternalRef() (terra.Reference, error) {
+	return occ.ref, nil
 }
 
 func (occ OpenidConnectConfigAttributes) InternalWithRef(ref terra.Reference) OpenidConnectConfigAttributes {
@@ -299,8 +299,8 @@ type UserPoolConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (upc UserPoolConfigAttributes) InternalRef() terra.Reference {
-	return upc.ref
+func (upc UserPoolConfigAttributes) InternalRef() (terra.Reference, error) {
+	return upc.ref, nil
 }
 
 func (upc UserPoolConfigAttributes) InternalWithRef(ref terra.Reference) UserPoolConfigAttributes {

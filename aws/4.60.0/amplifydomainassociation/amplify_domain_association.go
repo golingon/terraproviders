@@ -18,8 +18,8 @@ type SubDomainAttributes struct {
 	ref terra.Reference
 }
 
-func (sd SubDomainAttributes) InternalRef() terra.Reference {
-	return sd.ref
+func (sd SubDomainAttributes) InternalRef() (terra.Reference, error) {
+	return sd.ref, nil
 }
 
 func (sd SubDomainAttributes) InternalWithRef(ref terra.Reference) SubDomainAttributes {

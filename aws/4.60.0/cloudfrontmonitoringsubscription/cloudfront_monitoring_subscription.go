@@ -21,8 +21,8 @@ type MonitoringSubscriptionAttributes struct {
 	ref terra.Reference
 }
 
-func (ms MonitoringSubscriptionAttributes) InternalRef() terra.Reference {
-	return ms.ref
+func (ms MonitoringSubscriptionAttributes) InternalRef() (terra.Reference, error) {
+	return ms.ref, nil
 }
 
 func (ms MonitoringSubscriptionAttributes) InternalWithRef(ref terra.Reference) MonitoringSubscriptionAttributes {
@@ -41,8 +41,8 @@ type RealtimeMetricsSubscriptionConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (rmsc RealtimeMetricsSubscriptionConfigAttributes) InternalRef() terra.Reference {
-	return rmsc.ref
+func (rmsc RealtimeMetricsSubscriptionConfigAttributes) InternalRef() (terra.Reference, error) {
+	return rmsc.ref, nil
 }
 
 func (rmsc RealtimeMetricsSubscriptionConfigAttributes) InternalWithRef(ref terra.Reference) RealtimeMetricsSubscriptionConfigAttributes {

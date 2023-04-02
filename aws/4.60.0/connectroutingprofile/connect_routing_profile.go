@@ -31,8 +31,8 @@ type QueueConfigsAssociatedAttributes struct {
 	ref terra.Reference
 }
 
-func (qca QueueConfigsAssociatedAttributes) InternalRef() terra.Reference {
-	return qca.ref
+func (qca QueueConfigsAssociatedAttributes) InternalRef() (terra.Reference, error) {
+	return qca.ref, nil
 }
 
 func (qca QueueConfigsAssociatedAttributes) InternalWithRef(ref terra.Reference) QueueConfigsAssociatedAttributes {
@@ -71,8 +71,8 @@ type MediaConcurrenciesAttributes struct {
 	ref terra.Reference
 }
 
-func (mc MediaConcurrenciesAttributes) InternalRef() terra.Reference {
-	return mc.ref
+func (mc MediaConcurrenciesAttributes) InternalRef() (terra.Reference, error) {
+	return mc.ref, nil
 }
 
 func (mc MediaConcurrenciesAttributes) InternalWithRef(ref terra.Reference) MediaConcurrenciesAttributes {
@@ -95,8 +95,8 @@ type QueueConfigsAttributes struct {
 	ref terra.Reference
 }
 
-func (qc QueueConfigsAttributes) InternalRef() terra.Reference {
-	return qc.ref
+func (qc QueueConfigsAttributes) InternalRef() (terra.Reference, error) {
+	return qc.ref, nil
 }
 
 func (qc QueueConfigsAttributes) InternalWithRef(ref terra.Reference) QueueConfigsAttributes {

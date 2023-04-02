@@ -58,8 +58,8 @@ type DefaultActionAttributes struct {
 	ref terra.Reference
 }
 
-func (da DefaultActionAttributes) InternalRef() terra.Reference {
-	return da.ref
+func (da DefaultActionAttributes) InternalRef() (terra.Reference, error) {
+	return da.ref, nil
 }
 
 func (da DefaultActionAttributes) InternalWithRef(ref terra.Reference) DefaultActionAttributes {
@@ -78,8 +78,8 @@ type LoggingConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (lc LoggingConfigurationAttributes) InternalRef() terra.Reference {
-	return lc.ref
+func (lc LoggingConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return lc.ref, nil
 }
 
 func (lc LoggingConfigurationAttributes) InternalWithRef(ref terra.Reference) LoggingConfigurationAttributes {
@@ -102,8 +102,8 @@ type RedactedFieldsAttributes struct {
 	ref terra.Reference
 }
 
-func (rf RedactedFieldsAttributes) InternalRef() terra.Reference {
-	return rf.ref
+func (rf RedactedFieldsAttributes) InternalRef() (terra.Reference, error) {
+	return rf.ref, nil
 }
 
 func (rf RedactedFieldsAttributes) InternalWithRef(ref terra.Reference) RedactedFieldsAttributes {
@@ -122,8 +122,8 @@ type FieldToMatchAttributes struct {
 	ref terra.Reference
 }
 
-func (ftm FieldToMatchAttributes) InternalRef() terra.Reference {
-	return ftm.ref
+func (ftm FieldToMatchAttributes) InternalRef() (terra.Reference, error) {
+	return ftm.ref, nil
 }
 
 func (ftm FieldToMatchAttributes) InternalWithRef(ref terra.Reference) FieldToMatchAttributes {
@@ -146,8 +146,8 @@ type RuleAttributes struct {
 	ref terra.Reference
 }
 
-func (r RuleAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RuleAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RuleAttributes) InternalWithRef(ref terra.Reference) RuleAttributes {
@@ -182,8 +182,8 @@ type ActionAttributes struct {
 	ref terra.Reference
 }
 
-func (a ActionAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ActionAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ActionAttributes) InternalWithRef(ref terra.Reference) ActionAttributes {
@@ -202,8 +202,8 @@ type OverrideActionAttributes struct {
 	ref terra.Reference
 }
 
-func (oa OverrideActionAttributes) InternalRef() terra.Reference {
-	return oa.ref
+func (oa OverrideActionAttributes) InternalRef() (terra.Reference, error) {
+	return oa.ref, nil
 }
 
 func (oa OverrideActionAttributes) InternalWithRef(ref terra.Reference) OverrideActionAttributes {

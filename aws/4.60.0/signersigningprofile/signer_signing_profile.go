@@ -20,8 +20,8 @@ type RevocationRecordAttributes struct {
 	ref terra.Reference
 }
 
-func (rr RevocationRecordAttributes) InternalRef() terra.Reference {
-	return rr.ref
+func (rr RevocationRecordAttributes) InternalRef() (terra.Reference, error) {
+	return rr.ref, nil
 }
 
 func (rr RevocationRecordAttributes) InternalWithRef(ref terra.Reference) RevocationRecordAttributes {
@@ -48,8 +48,8 @@ type SignatureValidityPeriodAttributes struct {
 	ref terra.Reference
 }
 
-func (svp SignatureValidityPeriodAttributes) InternalRef() terra.Reference {
-	return svp.ref
+func (svp SignatureValidityPeriodAttributes) InternalRef() (terra.Reference, error) {
+	return svp.ref, nil
 }
 
 func (svp SignatureValidityPeriodAttributes) InternalWithRef(ref terra.Reference) SignatureValidityPeriodAttributes {

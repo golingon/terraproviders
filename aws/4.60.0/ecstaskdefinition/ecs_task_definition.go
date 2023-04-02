@@ -108,8 +108,8 @@ type EphemeralStorageAttributes struct {
 	ref terra.Reference
 }
 
-func (es EphemeralStorageAttributes) InternalRef() terra.Reference {
-	return es.ref
+func (es EphemeralStorageAttributes) InternalRef() (terra.Reference, error) {
+	return es.ref, nil
 }
 
 func (es EphemeralStorageAttributes) InternalWithRef(ref terra.Reference) EphemeralStorageAttributes {
@@ -128,8 +128,8 @@ type InferenceAcceleratorAttributes struct {
 	ref terra.Reference
 }
 
-func (ia InferenceAcceleratorAttributes) InternalRef() terra.Reference {
-	return ia.ref
+func (ia InferenceAcceleratorAttributes) InternalRef() (terra.Reference, error) {
+	return ia.ref, nil
 }
 
 func (ia InferenceAcceleratorAttributes) InternalWithRef(ref terra.Reference) InferenceAcceleratorAttributes {
@@ -152,8 +152,8 @@ type PlacementConstraintsAttributes struct {
 	ref terra.Reference
 }
 
-func (pc PlacementConstraintsAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc PlacementConstraintsAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc PlacementConstraintsAttributes) InternalWithRef(ref terra.Reference) PlacementConstraintsAttributes {
@@ -176,8 +176,8 @@ type ProxyConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (pc ProxyConfigurationAttributes) InternalRef() terra.Reference {
-	return pc.ref
+func (pc ProxyConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return pc.ref, nil
 }
 
 func (pc ProxyConfigurationAttributes) InternalWithRef(ref terra.Reference) ProxyConfigurationAttributes {
@@ -204,8 +204,8 @@ type RuntimePlatformAttributes struct {
 	ref terra.Reference
 }
 
-func (rp RuntimePlatformAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp RuntimePlatformAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp RuntimePlatformAttributes) InternalWithRef(ref terra.Reference) RuntimePlatformAttributes {
@@ -228,8 +228,8 @@ type VolumeAttributes struct {
 	ref terra.Reference
 }
 
-func (v VolumeAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v VolumeAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v VolumeAttributes) InternalWithRef(ref terra.Reference) VolumeAttributes {
@@ -264,8 +264,8 @@ type DockerVolumeConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (dvc DockerVolumeConfigurationAttributes) InternalRef() terra.Reference {
-	return dvc.ref
+func (dvc DockerVolumeConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return dvc.ref, nil
 }
 
 func (dvc DockerVolumeConfigurationAttributes) InternalWithRef(ref terra.Reference) DockerVolumeConfigurationAttributes {
@@ -300,8 +300,8 @@ type EfsVolumeConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (evc EfsVolumeConfigurationAttributes) InternalRef() terra.Reference {
-	return evc.ref
+func (evc EfsVolumeConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return evc.ref, nil
 }
 
 func (evc EfsVolumeConfigurationAttributes) InternalWithRef(ref terra.Reference) EfsVolumeConfigurationAttributes {
@@ -336,8 +336,8 @@ type EfsVolumeConfigurationAuthorizationConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ac EfsVolumeConfigurationAuthorizationConfigAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac EfsVolumeConfigurationAuthorizationConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac EfsVolumeConfigurationAuthorizationConfigAttributes) InternalWithRef(ref terra.Reference) EfsVolumeConfigurationAuthorizationConfigAttributes {
@@ -360,8 +360,8 @@ type FsxWindowsFileServerVolumeConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (fwfsvc FsxWindowsFileServerVolumeConfigurationAttributes) InternalRef() terra.Reference {
-	return fwfsvc.ref
+func (fwfsvc FsxWindowsFileServerVolumeConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return fwfsvc.ref, nil
 }
 
 func (fwfsvc FsxWindowsFileServerVolumeConfigurationAttributes) InternalWithRef(ref terra.Reference) FsxWindowsFileServerVolumeConfigurationAttributes {
@@ -388,8 +388,8 @@ type FsxWindowsFileServerVolumeConfigurationAuthorizationConfigAttributes struct
 	ref terra.Reference
 }
 
-func (ac FsxWindowsFileServerVolumeConfigurationAuthorizationConfigAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac FsxWindowsFileServerVolumeConfigurationAuthorizationConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac FsxWindowsFileServerVolumeConfigurationAuthorizationConfigAttributes) InternalWithRef(ref terra.Reference) FsxWindowsFileServerVolumeConfigurationAuthorizationConfigAttributes {

@@ -33,8 +33,8 @@ type FindingCriteriaAttributes struct {
 	ref terra.Reference
 }
 
-func (fc FindingCriteriaAttributes) InternalRef() terra.Reference {
-	return fc.ref
+func (fc FindingCriteriaAttributes) InternalRef() (terra.Reference, error) {
+	return fc.ref, nil
 }
 
 func (fc FindingCriteriaAttributes) InternalWithRef(ref terra.Reference) FindingCriteriaAttributes {
@@ -53,8 +53,8 @@ type CriterionAttributes struct {
 	ref terra.Reference
 }
 
-func (c CriterionAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CriterionAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CriterionAttributes) InternalWithRef(ref terra.Reference) CriterionAttributes {

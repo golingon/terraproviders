@@ -173,8 +173,8 @@ type StorageLensConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (slc StorageLensConfigurationAttributes) InternalRef() terra.Reference {
-	return slc.ref
+func (slc StorageLensConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return slc.ref, nil
 }
 
 func (slc StorageLensConfigurationAttributes) InternalWithRef(ref terra.Reference) StorageLensConfigurationAttributes {
@@ -213,8 +213,8 @@ type AccountLevelAttributes struct {
 	ref terra.Reference
 }
 
-func (al AccountLevelAttributes) InternalRef() terra.Reference {
-	return al.ref
+func (al AccountLevelAttributes) InternalRef() (terra.Reference, error) {
+	return al.ref, nil
 }
 
 func (al AccountLevelAttributes) InternalWithRef(ref terra.Reference) AccountLevelAttributes {
@@ -249,8 +249,8 @@ type AccountLevelActivityMetricsAttributes struct {
 	ref terra.Reference
 }
 
-func (am AccountLevelActivityMetricsAttributes) InternalRef() terra.Reference {
-	return am.ref
+func (am AccountLevelActivityMetricsAttributes) InternalRef() (terra.Reference, error) {
+	return am.ref, nil
 }
 
 func (am AccountLevelActivityMetricsAttributes) InternalWithRef(ref terra.Reference) AccountLevelActivityMetricsAttributes {
@@ -269,8 +269,8 @@ type AccountLevelAdvancedCostOptimizationMetricsAttributes struct {
 	ref terra.Reference
 }
 
-func (acom AccountLevelAdvancedCostOptimizationMetricsAttributes) InternalRef() terra.Reference {
-	return acom.ref
+func (acom AccountLevelAdvancedCostOptimizationMetricsAttributes) InternalRef() (terra.Reference, error) {
+	return acom.ref, nil
 }
 
 func (acom AccountLevelAdvancedCostOptimizationMetricsAttributes) InternalWithRef(ref terra.Reference) AccountLevelAdvancedCostOptimizationMetricsAttributes {
@@ -289,8 +289,8 @@ type AccountLevelAdvancedDataProtectionMetricsAttributes struct {
 	ref terra.Reference
 }
 
-func (adpm AccountLevelAdvancedDataProtectionMetricsAttributes) InternalRef() terra.Reference {
-	return adpm.ref
+func (adpm AccountLevelAdvancedDataProtectionMetricsAttributes) InternalRef() (terra.Reference, error) {
+	return adpm.ref, nil
 }
 
 func (adpm AccountLevelAdvancedDataProtectionMetricsAttributes) InternalWithRef(ref terra.Reference) AccountLevelAdvancedDataProtectionMetricsAttributes {
@@ -309,8 +309,8 @@ type BucketLevelAttributes struct {
 	ref terra.Reference
 }
 
-func (bl BucketLevelAttributes) InternalRef() terra.Reference {
-	return bl.ref
+func (bl BucketLevelAttributes) InternalRef() (terra.Reference, error) {
+	return bl.ref, nil
 }
 
 func (bl BucketLevelAttributes) InternalWithRef(ref terra.Reference) BucketLevelAttributes {
@@ -345,8 +345,8 @@ type BucketLevelActivityMetricsAttributes struct {
 	ref terra.Reference
 }
 
-func (am BucketLevelActivityMetricsAttributes) InternalRef() terra.Reference {
-	return am.ref
+func (am BucketLevelActivityMetricsAttributes) InternalRef() (terra.Reference, error) {
+	return am.ref, nil
 }
 
 func (am BucketLevelActivityMetricsAttributes) InternalWithRef(ref terra.Reference) BucketLevelActivityMetricsAttributes {
@@ -365,8 +365,8 @@ type BucketLevelAdvancedCostOptimizationMetricsAttributes struct {
 	ref terra.Reference
 }
 
-func (acom BucketLevelAdvancedCostOptimizationMetricsAttributes) InternalRef() terra.Reference {
-	return acom.ref
+func (acom BucketLevelAdvancedCostOptimizationMetricsAttributes) InternalRef() (terra.Reference, error) {
+	return acom.ref, nil
 }
 
 func (acom BucketLevelAdvancedCostOptimizationMetricsAttributes) InternalWithRef(ref terra.Reference) BucketLevelAdvancedCostOptimizationMetricsAttributes {
@@ -385,8 +385,8 @@ type BucketLevelAdvancedDataProtectionMetricsAttributes struct {
 	ref terra.Reference
 }
 
-func (adpm BucketLevelAdvancedDataProtectionMetricsAttributes) InternalRef() terra.Reference {
-	return adpm.ref
+func (adpm BucketLevelAdvancedDataProtectionMetricsAttributes) InternalRef() (terra.Reference, error) {
+	return adpm.ref, nil
 }
 
 func (adpm BucketLevelAdvancedDataProtectionMetricsAttributes) InternalWithRef(ref terra.Reference) BucketLevelAdvancedDataProtectionMetricsAttributes {
@@ -405,8 +405,8 @@ type BucketLevelDetailedStatusCodeMetricsAttributes struct {
 	ref terra.Reference
 }
 
-func (dscm BucketLevelDetailedStatusCodeMetricsAttributes) InternalRef() terra.Reference {
-	return dscm.ref
+func (dscm BucketLevelDetailedStatusCodeMetricsAttributes) InternalRef() (terra.Reference, error) {
+	return dscm.ref, nil
 }
 
 func (dscm BucketLevelDetailedStatusCodeMetricsAttributes) InternalWithRef(ref terra.Reference) BucketLevelDetailedStatusCodeMetricsAttributes {
@@ -425,8 +425,8 @@ type PrefixLevelAttributes struct {
 	ref terra.Reference
 }
 
-func (pl PrefixLevelAttributes) InternalRef() terra.Reference {
-	return pl.ref
+func (pl PrefixLevelAttributes) InternalRef() (terra.Reference, error) {
+	return pl.ref, nil
 }
 
 func (pl PrefixLevelAttributes) InternalWithRef(ref terra.Reference) PrefixLevelAttributes {
@@ -445,8 +445,8 @@ type StorageMetricsAttributes struct {
 	ref terra.Reference
 }
 
-func (sm StorageMetricsAttributes) InternalRef() terra.Reference {
-	return sm.ref
+func (sm StorageMetricsAttributes) InternalRef() (terra.Reference, error) {
+	return sm.ref, nil
 }
 
 func (sm StorageMetricsAttributes) InternalWithRef(ref terra.Reference) StorageMetricsAttributes {
@@ -469,8 +469,8 @@ type SelectionCriteriaAttributes struct {
 	ref terra.Reference
 }
 
-func (sc SelectionCriteriaAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc SelectionCriteriaAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc SelectionCriteriaAttributes) InternalWithRef(ref terra.Reference) SelectionCriteriaAttributes {
@@ -497,8 +497,8 @@ type AccountLevelDetailedStatusCodeMetricsAttributes struct {
 	ref terra.Reference
 }
 
-func (dscm AccountLevelDetailedStatusCodeMetricsAttributes) InternalRef() terra.Reference {
-	return dscm.ref
+func (dscm AccountLevelDetailedStatusCodeMetricsAttributes) InternalRef() (terra.Reference, error) {
+	return dscm.ref, nil
 }
 
 func (dscm AccountLevelDetailedStatusCodeMetricsAttributes) InternalWithRef(ref terra.Reference) AccountLevelDetailedStatusCodeMetricsAttributes {
@@ -517,8 +517,8 @@ type AwsOrgAttributes struct {
 	ref terra.Reference
 }
 
-func (ao AwsOrgAttributes) InternalRef() terra.Reference {
-	return ao.ref
+func (ao AwsOrgAttributes) InternalRef() (terra.Reference, error) {
+	return ao.ref, nil
 }
 
 func (ao AwsOrgAttributes) InternalWithRef(ref terra.Reference) AwsOrgAttributes {
@@ -537,8 +537,8 @@ type DataExportAttributes struct {
 	ref terra.Reference
 }
 
-func (de DataExportAttributes) InternalRef() terra.Reference {
-	return de.ref
+func (de DataExportAttributes) InternalRef() (terra.Reference, error) {
+	return de.ref, nil
 }
 
 func (de DataExportAttributes) InternalWithRef(ref terra.Reference) DataExportAttributes {
@@ -561,8 +561,8 @@ type CloudWatchMetricsAttributes struct {
 	ref terra.Reference
 }
 
-func (cwm CloudWatchMetricsAttributes) InternalRef() terra.Reference {
-	return cwm.ref
+func (cwm CloudWatchMetricsAttributes) InternalRef() (terra.Reference, error) {
+	return cwm.ref, nil
 }
 
 func (cwm CloudWatchMetricsAttributes) InternalWithRef(ref terra.Reference) CloudWatchMetricsAttributes {
@@ -581,8 +581,8 @@ type S3BucketDestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (sbd S3BucketDestinationAttributes) InternalRef() terra.Reference {
-	return sbd.ref
+func (sbd S3BucketDestinationAttributes) InternalRef() (terra.Reference, error) {
+	return sbd.ref, nil
 }
 
 func (sbd S3BucketDestinationAttributes) InternalWithRef(ref terra.Reference) S3BucketDestinationAttributes {
@@ -621,8 +621,8 @@ type EncryptionAttributes struct {
 	ref terra.Reference
 }
 
-func (e EncryptionAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EncryptionAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EncryptionAttributes) InternalWithRef(ref terra.Reference) EncryptionAttributes {
@@ -645,8 +645,8 @@ type SseKmsAttributes struct {
 	ref terra.Reference
 }
 
-func (sk SseKmsAttributes) InternalRef() terra.Reference {
-	return sk.ref
+func (sk SseKmsAttributes) InternalRef() (terra.Reference, error) {
+	return sk.ref, nil
 }
 
 func (sk SseKmsAttributes) InternalWithRef(ref terra.Reference) SseKmsAttributes {
@@ -665,8 +665,8 @@ type SseS3Attributes struct {
 	ref terra.Reference
 }
 
-func (ss SseS3Attributes) InternalRef() terra.Reference {
-	return ss.ref
+func (ss SseS3Attributes) InternalRef() (terra.Reference, error) {
+	return ss.ref, nil
 }
 
 func (ss SseS3Attributes) InternalWithRef(ref terra.Reference) SseS3Attributes {
@@ -681,8 +681,8 @@ type ExcludeAttributes struct {
 	ref terra.Reference
 }
 
-func (e ExcludeAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e ExcludeAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e ExcludeAttributes) InternalWithRef(ref terra.Reference) ExcludeAttributes {
@@ -705,8 +705,8 @@ type IncludeAttributes struct {
 	ref terra.Reference
 }
 
-func (i IncludeAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IncludeAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IncludeAttributes) InternalWithRef(ref terra.Reference) IncludeAttributes {

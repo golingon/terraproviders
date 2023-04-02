@@ -25,8 +25,8 @@ type PermissionsBoundaryAttributes struct {
 	ref terra.Reference
 }
 
-func (pb PermissionsBoundaryAttributes) InternalRef() terra.Reference {
-	return pb.ref
+func (pb PermissionsBoundaryAttributes) InternalRef() (terra.Reference, error) {
+	return pb.ref, nil
 }
 
 func (pb PermissionsBoundaryAttributes) InternalWithRef(ref terra.Reference) PermissionsBoundaryAttributes {
@@ -49,8 +49,8 @@ type CustomerManagedPolicyReferenceAttributes struct {
 	ref terra.Reference
 }
 
-func (cmpr CustomerManagedPolicyReferenceAttributes) InternalRef() terra.Reference {
-	return cmpr.ref
+func (cmpr CustomerManagedPolicyReferenceAttributes) InternalRef() (terra.Reference, error) {
+	return cmpr.ref, nil
 }
 
 func (cmpr CustomerManagedPolicyReferenceAttributes) InternalWithRef(ref terra.Reference) CustomerManagedPolicyReferenceAttributes {

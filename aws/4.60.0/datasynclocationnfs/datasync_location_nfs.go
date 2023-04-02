@@ -21,8 +21,8 @@ type MountOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (mo MountOptionsAttributes) InternalRef() terra.Reference {
-	return mo.ref
+func (mo MountOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return mo.ref, nil
 }
 
 func (mo MountOptionsAttributes) InternalWithRef(ref terra.Reference) MountOptionsAttributes {
@@ -41,8 +41,8 @@ type OnPremConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (opc OnPremConfigAttributes) InternalRef() terra.Reference {
-	return opc.ref
+func (opc OnPremConfigAttributes) InternalRef() (terra.Reference, error) {
+	return opc.ref, nil
 }
 
 func (opc OnPremConfigAttributes) InternalWithRef(ref terra.Reference) OnPremConfigAttributes {

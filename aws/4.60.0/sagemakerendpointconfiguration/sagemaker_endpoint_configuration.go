@@ -144,8 +144,8 @@ type AsyncInferenceConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (aic AsyncInferenceConfigAttributes) InternalRef() terra.Reference {
-	return aic.ref
+func (aic AsyncInferenceConfigAttributes) InternalRef() (terra.Reference, error) {
+	return aic.ref, nil
 }
 
 func (aic AsyncInferenceConfigAttributes) InternalWithRef(ref terra.Reference) AsyncInferenceConfigAttributes {
@@ -168,8 +168,8 @@ type ClientConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (cc ClientConfigAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc ClientConfigAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc ClientConfigAttributes) InternalWithRef(ref terra.Reference) ClientConfigAttributes {
@@ -188,8 +188,8 @@ type OutputConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (oc OutputConfigAttributes) InternalRef() terra.Reference {
-	return oc.ref
+func (oc OutputConfigAttributes) InternalRef() (terra.Reference, error) {
+	return oc.ref, nil
 }
 
 func (oc OutputConfigAttributes) InternalWithRef(ref terra.Reference) OutputConfigAttributes {
@@ -216,8 +216,8 @@ type NotificationConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (nc NotificationConfigAttributes) InternalRef() terra.Reference {
-	return nc.ref
+func (nc NotificationConfigAttributes) InternalRef() (terra.Reference, error) {
+	return nc.ref, nil
 }
 
 func (nc NotificationConfigAttributes) InternalWithRef(ref terra.Reference) NotificationConfigAttributes {
@@ -240,8 +240,8 @@ type DataCaptureConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (dcc DataCaptureConfigAttributes) InternalRef() terra.Reference {
-	return dcc.ref
+func (dcc DataCaptureConfigAttributes) InternalRef() (terra.Reference, error) {
+	return dcc.ref, nil
 }
 
 func (dcc DataCaptureConfigAttributes) InternalWithRef(ref terra.Reference) DataCaptureConfigAttributes {
@@ -280,8 +280,8 @@ type CaptureContentTypeHeaderAttributes struct {
 	ref terra.Reference
 }
 
-func (ccth CaptureContentTypeHeaderAttributes) InternalRef() terra.Reference {
-	return ccth.ref
+func (ccth CaptureContentTypeHeaderAttributes) InternalRef() (terra.Reference, error) {
+	return ccth.ref, nil
 }
 
 func (ccth CaptureContentTypeHeaderAttributes) InternalWithRef(ref terra.Reference) CaptureContentTypeHeaderAttributes {
@@ -304,8 +304,8 @@ type CaptureOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (co CaptureOptionsAttributes) InternalRef() terra.Reference {
-	return co.ref
+func (co CaptureOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return co.ref, nil
 }
 
 func (co CaptureOptionsAttributes) InternalWithRef(ref terra.Reference) CaptureOptionsAttributes {
@@ -324,8 +324,8 @@ type ProductionVariantsAttributes struct {
 	ref terra.Reference
 }
 
-func (pv ProductionVariantsAttributes) InternalRef() terra.Reference {
-	return pv.ref
+func (pv ProductionVariantsAttributes) InternalRef() (terra.Reference, error) {
+	return pv.ref, nil
 }
 
 func (pv ProductionVariantsAttributes) InternalWithRef(ref terra.Reference) ProductionVariantsAttributes {
@@ -384,8 +384,8 @@ type ProductionVariantsCoreDumpConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (cdc ProductionVariantsCoreDumpConfigAttributes) InternalRef() terra.Reference {
-	return cdc.ref
+func (cdc ProductionVariantsCoreDumpConfigAttributes) InternalRef() (terra.Reference, error) {
+	return cdc.ref, nil
 }
 
 func (cdc ProductionVariantsCoreDumpConfigAttributes) InternalWithRef(ref terra.Reference) ProductionVariantsCoreDumpConfigAttributes {
@@ -408,8 +408,8 @@ type ProductionVariantsServerlessConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sc ProductionVariantsServerlessConfigAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc ProductionVariantsServerlessConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc ProductionVariantsServerlessConfigAttributes) InternalWithRef(ref terra.Reference) ProductionVariantsServerlessConfigAttributes {
@@ -432,8 +432,8 @@ type ShadowProductionVariantsAttributes struct {
 	ref terra.Reference
 }
 
-func (spv ShadowProductionVariantsAttributes) InternalRef() terra.Reference {
-	return spv.ref
+func (spv ShadowProductionVariantsAttributes) InternalRef() (terra.Reference, error) {
+	return spv.ref, nil
 }
 
 func (spv ShadowProductionVariantsAttributes) InternalWithRef(ref terra.Reference) ShadowProductionVariantsAttributes {
@@ -492,8 +492,8 @@ type ShadowProductionVariantsCoreDumpConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (cdc ShadowProductionVariantsCoreDumpConfigAttributes) InternalRef() terra.Reference {
-	return cdc.ref
+func (cdc ShadowProductionVariantsCoreDumpConfigAttributes) InternalRef() (terra.Reference, error) {
+	return cdc.ref, nil
 }
 
 func (cdc ShadowProductionVariantsCoreDumpConfigAttributes) InternalWithRef(ref terra.Reference) ShadowProductionVariantsCoreDumpConfigAttributes {
@@ -516,8 +516,8 @@ type ShadowProductionVariantsServerlessConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sc ShadowProductionVariantsServerlessConfigAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc ShadowProductionVariantsServerlessConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc ShadowProductionVariantsServerlessConfigAttributes) InternalWithRef(ref terra.Reference) ShadowProductionVariantsServerlessConfigAttributes {

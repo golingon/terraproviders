@@ -271,8 +271,8 @@ type StepAttributes struct {
 	ref terra.Reference
 }
 
-func (s StepAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s StepAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s StepAttributes) InternalWithRef(ref terra.Reference) StepAttributes {
@@ -299,8 +299,8 @@ type HadoopJarStepAttributes struct {
 	ref terra.Reference
 }
 
-func (hjs HadoopJarStepAttributes) InternalRef() terra.Reference {
-	return hjs.ref
+func (hjs HadoopJarStepAttributes) InternalRef() (terra.Reference, error) {
+	return hjs.ref, nil
 }
 
 func (hjs HadoopJarStepAttributes) InternalWithRef(ref terra.Reference) HadoopJarStepAttributes {
@@ -331,8 +331,8 @@ type AutoTerminationPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (atp AutoTerminationPolicyAttributes) InternalRef() terra.Reference {
-	return atp.ref
+func (atp AutoTerminationPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return atp.ref, nil
 }
 
 func (atp AutoTerminationPolicyAttributes) InternalWithRef(ref terra.Reference) AutoTerminationPolicyAttributes {
@@ -351,8 +351,8 @@ type BootstrapActionAttributes struct {
 	ref terra.Reference
 }
 
-func (ba BootstrapActionAttributes) InternalRef() terra.Reference {
-	return ba.ref
+func (ba BootstrapActionAttributes) InternalRef() (terra.Reference, error) {
+	return ba.ref, nil
 }
 
 func (ba BootstrapActionAttributes) InternalWithRef(ref terra.Reference) BootstrapActionAttributes {
@@ -379,8 +379,8 @@ type CoreInstanceFleetAttributes struct {
 	ref terra.Reference
 }
 
-func (cif CoreInstanceFleetAttributes) InternalRef() terra.Reference {
-	return cif.ref
+func (cif CoreInstanceFleetAttributes) InternalRef() (terra.Reference, error) {
+	return cif.ref, nil
 }
 
 func (cif CoreInstanceFleetAttributes) InternalWithRef(ref terra.Reference) CoreInstanceFleetAttributes {
@@ -427,8 +427,8 @@ type CoreInstanceFleetInstanceTypeConfigsAttributes struct {
 	ref terra.Reference
 }
 
-func (itc CoreInstanceFleetInstanceTypeConfigsAttributes) InternalRef() terra.Reference {
-	return itc.ref
+func (itc CoreInstanceFleetInstanceTypeConfigsAttributes) InternalRef() (terra.Reference, error) {
+	return itc.ref, nil
 }
 
 func (itc CoreInstanceFleetInstanceTypeConfigsAttributes) InternalWithRef(ref terra.Reference) CoreInstanceFleetInstanceTypeConfigsAttributes {
@@ -467,8 +467,8 @@ type CoreInstanceFleetInstanceTypeConfigsConfigurationsAttributes struct {
 	ref terra.Reference
 }
 
-func (c CoreInstanceFleetInstanceTypeConfigsConfigurationsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CoreInstanceFleetInstanceTypeConfigsConfigurationsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CoreInstanceFleetInstanceTypeConfigsConfigurationsAttributes) InternalWithRef(ref terra.Reference) CoreInstanceFleetInstanceTypeConfigsConfigurationsAttributes {
@@ -491,8 +491,8 @@ type CoreInstanceFleetInstanceTypeConfigsEbsConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ec CoreInstanceFleetInstanceTypeConfigsEbsConfigAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec CoreInstanceFleetInstanceTypeConfigsEbsConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec CoreInstanceFleetInstanceTypeConfigsEbsConfigAttributes) InternalWithRef(ref terra.Reference) CoreInstanceFleetInstanceTypeConfigsEbsConfigAttributes {
@@ -523,8 +523,8 @@ type CoreInstanceFleetLaunchSpecificationsAttributes struct {
 	ref terra.Reference
 }
 
-func (ls CoreInstanceFleetLaunchSpecificationsAttributes) InternalRef() terra.Reference {
-	return ls.ref
+func (ls CoreInstanceFleetLaunchSpecificationsAttributes) InternalRef() (terra.Reference, error) {
+	return ls.ref, nil
 }
 
 func (ls CoreInstanceFleetLaunchSpecificationsAttributes) InternalWithRef(ref terra.Reference) CoreInstanceFleetLaunchSpecificationsAttributes {
@@ -547,8 +547,8 @@ type CoreInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes struct
 	ref terra.Reference
 }
 
-func (ods CoreInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes) InternalRef() terra.Reference {
-	return ods.ref
+func (ods CoreInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes) InternalRef() (terra.Reference, error) {
+	return ods.ref, nil
 }
 
 func (ods CoreInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes) InternalWithRef(ref terra.Reference) CoreInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes {
@@ -567,8 +567,8 @@ type CoreInstanceFleetLaunchSpecificationsSpotSpecificationAttributes struct {
 	ref terra.Reference
 }
 
-func (ss CoreInstanceFleetLaunchSpecificationsSpotSpecificationAttributes) InternalRef() terra.Reference {
-	return ss.ref
+func (ss CoreInstanceFleetLaunchSpecificationsSpotSpecificationAttributes) InternalRef() (terra.Reference, error) {
+	return ss.ref, nil
 }
 
 func (ss CoreInstanceFleetLaunchSpecificationsSpotSpecificationAttributes) InternalWithRef(ref terra.Reference) CoreInstanceFleetLaunchSpecificationsSpotSpecificationAttributes {
@@ -599,8 +599,8 @@ type CoreInstanceGroupAttributes struct {
 	ref terra.Reference
 }
 
-func (cig CoreInstanceGroupAttributes) InternalRef() terra.Reference {
-	return cig.ref
+func (cig CoreInstanceGroupAttributes) InternalRef() (terra.Reference, error) {
+	return cig.ref, nil
 }
 
 func (cig CoreInstanceGroupAttributes) InternalWithRef(ref terra.Reference) CoreInstanceGroupAttributes {
@@ -643,8 +643,8 @@ type CoreInstanceGroupEbsConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ec CoreInstanceGroupEbsConfigAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec CoreInstanceGroupEbsConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec CoreInstanceGroupEbsConfigAttributes) InternalWithRef(ref terra.Reference) CoreInstanceGroupEbsConfigAttributes {
@@ -679,8 +679,8 @@ type Ec2AttributesAttributes struct {
 	ref terra.Reference
 }
 
-func (ea Ec2AttributesAttributes) InternalRef() terra.Reference {
-	return ea.ref
+func (ea Ec2AttributesAttributes) InternalRef() (terra.Reference, error) {
+	return ea.ref, nil
 }
 
 func (ea Ec2AttributesAttributes) InternalWithRef(ref terra.Reference) Ec2AttributesAttributes {
@@ -731,8 +731,8 @@ type KerberosAttributesAttributes struct {
 	ref terra.Reference
 }
 
-func (ka KerberosAttributesAttributes) InternalRef() terra.Reference {
-	return ka.ref
+func (ka KerberosAttributesAttributes) InternalRef() (terra.Reference, error) {
+	return ka.ref, nil
 }
 
 func (ka KerberosAttributesAttributes) InternalWithRef(ref terra.Reference) KerberosAttributesAttributes {
@@ -767,8 +767,8 @@ type MasterInstanceFleetAttributes struct {
 	ref terra.Reference
 }
 
-func (mif MasterInstanceFleetAttributes) InternalRef() terra.Reference {
-	return mif.ref
+func (mif MasterInstanceFleetAttributes) InternalRef() (terra.Reference, error) {
+	return mif.ref, nil
 }
 
 func (mif MasterInstanceFleetAttributes) InternalWithRef(ref terra.Reference) MasterInstanceFleetAttributes {
@@ -815,8 +815,8 @@ type MasterInstanceFleetInstanceTypeConfigsAttributes struct {
 	ref terra.Reference
 }
 
-func (itc MasterInstanceFleetInstanceTypeConfigsAttributes) InternalRef() terra.Reference {
-	return itc.ref
+func (itc MasterInstanceFleetInstanceTypeConfigsAttributes) InternalRef() (terra.Reference, error) {
+	return itc.ref, nil
 }
 
 func (itc MasterInstanceFleetInstanceTypeConfigsAttributes) InternalWithRef(ref terra.Reference) MasterInstanceFleetInstanceTypeConfigsAttributes {
@@ -855,8 +855,8 @@ type MasterInstanceFleetInstanceTypeConfigsConfigurationsAttributes struct {
 	ref terra.Reference
 }
 
-func (c MasterInstanceFleetInstanceTypeConfigsConfigurationsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c MasterInstanceFleetInstanceTypeConfigsConfigurationsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c MasterInstanceFleetInstanceTypeConfigsConfigurationsAttributes) InternalWithRef(ref terra.Reference) MasterInstanceFleetInstanceTypeConfigsConfigurationsAttributes {
@@ -879,8 +879,8 @@ type MasterInstanceFleetInstanceTypeConfigsEbsConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ec MasterInstanceFleetInstanceTypeConfigsEbsConfigAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec MasterInstanceFleetInstanceTypeConfigsEbsConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec MasterInstanceFleetInstanceTypeConfigsEbsConfigAttributes) InternalWithRef(ref terra.Reference) MasterInstanceFleetInstanceTypeConfigsEbsConfigAttributes {
@@ -911,8 +911,8 @@ type MasterInstanceFleetLaunchSpecificationsAttributes struct {
 	ref terra.Reference
 }
 
-func (ls MasterInstanceFleetLaunchSpecificationsAttributes) InternalRef() terra.Reference {
-	return ls.ref
+func (ls MasterInstanceFleetLaunchSpecificationsAttributes) InternalRef() (terra.Reference, error) {
+	return ls.ref, nil
 }
 
 func (ls MasterInstanceFleetLaunchSpecificationsAttributes) InternalWithRef(ref terra.Reference) MasterInstanceFleetLaunchSpecificationsAttributes {
@@ -935,8 +935,8 @@ type MasterInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes stru
 	ref terra.Reference
 }
 
-func (ods MasterInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes) InternalRef() terra.Reference {
-	return ods.ref
+func (ods MasterInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes) InternalRef() (terra.Reference, error) {
+	return ods.ref, nil
 }
 
 func (ods MasterInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes) InternalWithRef(ref terra.Reference) MasterInstanceFleetLaunchSpecificationsOnDemandSpecificationAttributes {
@@ -955,8 +955,8 @@ type MasterInstanceFleetLaunchSpecificationsSpotSpecificationAttributes struct {
 	ref terra.Reference
 }
 
-func (ss MasterInstanceFleetLaunchSpecificationsSpotSpecificationAttributes) InternalRef() terra.Reference {
-	return ss.ref
+func (ss MasterInstanceFleetLaunchSpecificationsSpotSpecificationAttributes) InternalRef() (terra.Reference, error) {
+	return ss.ref, nil
 }
 
 func (ss MasterInstanceFleetLaunchSpecificationsSpotSpecificationAttributes) InternalWithRef(ref terra.Reference) MasterInstanceFleetLaunchSpecificationsSpotSpecificationAttributes {
@@ -987,8 +987,8 @@ type MasterInstanceGroupAttributes struct {
 	ref terra.Reference
 }
 
-func (mig MasterInstanceGroupAttributes) InternalRef() terra.Reference {
-	return mig.ref
+func (mig MasterInstanceGroupAttributes) InternalRef() (terra.Reference, error) {
+	return mig.ref, nil
 }
 
 func (mig MasterInstanceGroupAttributes) InternalWithRef(ref terra.Reference) MasterInstanceGroupAttributes {
@@ -1027,8 +1027,8 @@ type MasterInstanceGroupEbsConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ec MasterInstanceGroupEbsConfigAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec MasterInstanceGroupEbsConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec MasterInstanceGroupEbsConfigAttributes) InternalWithRef(ref terra.Reference) MasterInstanceGroupEbsConfigAttributes {

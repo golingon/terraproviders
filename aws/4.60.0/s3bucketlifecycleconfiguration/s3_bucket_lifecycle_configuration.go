@@ -102,8 +102,8 @@ type RuleAttributes struct {
 	ref terra.Reference
 }
 
-func (r RuleAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RuleAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RuleAttributes) InternalWithRef(ref terra.Reference) RuleAttributes {
@@ -154,8 +154,8 @@ type AbortIncompleteMultipartUploadAttributes struct {
 	ref terra.Reference
 }
 
-func (aimu AbortIncompleteMultipartUploadAttributes) InternalRef() terra.Reference {
-	return aimu.ref
+func (aimu AbortIncompleteMultipartUploadAttributes) InternalRef() (terra.Reference, error) {
+	return aimu.ref, nil
 }
 
 func (aimu AbortIncompleteMultipartUploadAttributes) InternalWithRef(ref terra.Reference) AbortIncompleteMultipartUploadAttributes {
@@ -174,8 +174,8 @@ type ExpirationAttributes struct {
 	ref terra.Reference
 }
 
-func (e ExpirationAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e ExpirationAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e ExpirationAttributes) InternalWithRef(ref terra.Reference) ExpirationAttributes {
@@ -202,8 +202,8 @@ type FilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes {
@@ -238,8 +238,8 @@ type AndAttributes struct {
 	ref terra.Reference
 }
 
-func (a AndAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AndAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AndAttributes) InternalWithRef(ref terra.Reference) AndAttributes {
@@ -270,8 +270,8 @@ type TagAttributes struct {
 	ref terra.Reference
 }
 
-func (t TagAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TagAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TagAttributes) InternalWithRef(ref terra.Reference) TagAttributes {
@@ -294,8 +294,8 @@ type NoncurrentVersionExpirationAttributes struct {
 	ref terra.Reference
 }
 
-func (nve NoncurrentVersionExpirationAttributes) InternalRef() terra.Reference {
-	return nve.ref
+func (nve NoncurrentVersionExpirationAttributes) InternalRef() (terra.Reference, error) {
+	return nve.ref, nil
 }
 
 func (nve NoncurrentVersionExpirationAttributes) InternalWithRef(ref terra.Reference) NoncurrentVersionExpirationAttributes {
@@ -318,8 +318,8 @@ type NoncurrentVersionTransitionAttributes struct {
 	ref terra.Reference
 }
 
-func (nvt NoncurrentVersionTransitionAttributes) InternalRef() terra.Reference {
-	return nvt.ref
+func (nvt NoncurrentVersionTransitionAttributes) InternalRef() (terra.Reference, error) {
+	return nvt.ref, nil
 }
 
 func (nvt NoncurrentVersionTransitionAttributes) InternalWithRef(ref terra.Reference) NoncurrentVersionTransitionAttributes {
@@ -346,8 +346,8 @@ type TransitionAttributes struct {
 	ref terra.Reference
 }
 
-func (t TransitionAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TransitionAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TransitionAttributes) InternalWithRef(ref terra.Reference) TransitionAttributes {

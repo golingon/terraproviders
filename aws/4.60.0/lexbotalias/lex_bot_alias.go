@@ -38,8 +38,8 @@ type ConversationLogsAttributes struct {
 	ref terra.Reference
 }
 
-func (cl ConversationLogsAttributes) InternalRef() terra.Reference {
-	return cl.ref
+func (cl ConversationLogsAttributes) InternalRef() (terra.Reference, error) {
+	return cl.ref, nil
 }
 
 func (cl ConversationLogsAttributes) InternalWithRef(ref terra.Reference) ConversationLogsAttributes {
@@ -62,8 +62,8 @@ type LogSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ls LogSettingsAttributes) InternalRef() terra.Reference {
-	return ls.ref
+func (ls LogSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ls.ref, nil
 }
 
 func (ls LogSettingsAttributes) InternalWithRef(ref terra.Reference) LogSettingsAttributes {
@@ -98,8 +98,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

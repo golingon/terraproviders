@@ -13,8 +13,8 @@ type LocationAttributes struct {
 	ref terra.Reference
 }
 
-func (l LocationAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l LocationAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l LocationAttributes) InternalWithRef(ref terra.Reference) LocationAttributes {

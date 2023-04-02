@@ -20,8 +20,8 @@ type ReservationPlanSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (rps ReservationPlanSettingsAttributes) InternalRef() terra.Reference {
-	return rps.ref
+func (rps ReservationPlanSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return rps.ref, nil
 }
 
 func (rps ReservationPlanSettingsAttributes) InternalWithRef(ref terra.Reference) ReservationPlanSettingsAttributes {

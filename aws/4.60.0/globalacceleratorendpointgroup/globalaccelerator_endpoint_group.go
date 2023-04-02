@@ -36,8 +36,8 @@ type EndpointConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ec EndpointConfigurationAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec EndpointConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec EndpointConfigurationAttributes) InternalWithRef(ref terra.Reference) EndpointConfigurationAttributes {
@@ -64,8 +64,8 @@ type PortOverrideAttributes struct {
 	ref terra.Reference
 }
 
-func (po PortOverrideAttributes) InternalRef() terra.Reference {
-	return po.ref
+func (po PortOverrideAttributes) InternalRef() (terra.Reference, error) {
+	return po.ref, nil
 }
 
 func (po PortOverrideAttributes) InternalWithRef(ref terra.Reference) PortOverrideAttributes {
@@ -88,8 +88,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

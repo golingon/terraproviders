@@ -23,8 +23,8 @@ type AttributeAttributes struct {
 	ref terra.Reference
 }
 
-func (a AttributeAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AttributeAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AttributeAttributes) InternalWithRef(ref terra.Reference) AttributeAttributes {
@@ -47,8 +47,8 @@ type ValueAttributes struct {
 	ref terra.Reference
 }
 
-func (v ValueAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v ValueAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v ValueAttributes) InternalWithRef(ref terra.Reference) ValueAttributes {

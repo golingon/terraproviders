@@ -18,8 +18,8 @@ type Ec2ConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ec Ec2ConfigAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec Ec2ConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec Ec2ConfigAttributes) InternalWithRef(ref terra.Reference) Ec2ConfigAttributes {

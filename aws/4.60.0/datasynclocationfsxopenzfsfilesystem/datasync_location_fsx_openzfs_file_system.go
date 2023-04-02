@@ -26,8 +26,8 @@ type ProtocolAttributes struct {
 	ref terra.Reference
 }
 
-func (p ProtocolAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p ProtocolAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p ProtocolAttributes) InternalWithRef(ref terra.Reference) ProtocolAttributes {
@@ -46,8 +46,8 @@ type NfsAttributes struct {
 	ref terra.Reference
 }
 
-func (n NfsAttributes) InternalRef() terra.Reference {
-	return n.ref
+func (n NfsAttributes) InternalRef() (terra.Reference, error) {
+	return n.ref, nil
 }
 
 func (n NfsAttributes) InternalWithRef(ref terra.Reference) NfsAttributes {
@@ -66,8 +66,8 @@ type MountOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (mo MountOptionsAttributes) InternalRef() terra.Reference {
-	return mo.ref
+func (mo MountOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return mo.ref, nil
 }
 
 func (mo MountOptionsAttributes) InternalWithRef(ref terra.Reference) MountOptionsAttributes {

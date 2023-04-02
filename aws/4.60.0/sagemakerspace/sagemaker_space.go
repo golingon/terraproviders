@@ -72,8 +72,8 @@ type SpaceSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ss SpaceSettingsAttributes) InternalRef() terra.Reference {
-	return ss.ref
+func (ss SpaceSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ss.ref, nil
 }
 
 func (ss SpaceSettingsAttributes) InternalWithRef(ref terra.Reference) SpaceSettingsAttributes {
@@ -96,8 +96,8 @@ type JupyterServerAppSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (jsas JupyterServerAppSettingsAttributes) InternalRef() terra.Reference {
-	return jsas.ref
+func (jsas JupyterServerAppSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return jsas.ref, nil
 }
 
 func (jsas JupyterServerAppSettingsAttributes) InternalWithRef(ref terra.Reference) JupyterServerAppSettingsAttributes {
@@ -124,8 +124,8 @@ type CodeRepositoryAttributes struct {
 	ref terra.Reference
 }
 
-func (cr CodeRepositoryAttributes) InternalRef() terra.Reference {
-	return cr.ref
+func (cr CodeRepositoryAttributes) InternalRef() (terra.Reference, error) {
+	return cr.ref, nil
 }
 
 func (cr CodeRepositoryAttributes) InternalWithRef(ref terra.Reference) CodeRepositoryAttributes {
@@ -144,8 +144,8 @@ type JupyterServerAppSettingsDefaultResourceSpecAttributes struct {
 	ref terra.Reference
 }
 
-func (drs JupyterServerAppSettingsDefaultResourceSpecAttributes) InternalRef() terra.Reference {
-	return drs.ref
+func (drs JupyterServerAppSettingsDefaultResourceSpecAttributes) InternalRef() (terra.Reference, error) {
+	return drs.ref, nil
 }
 
 func (drs JupyterServerAppSettingsDefaultResourceSpecAttributes) InternalWithRef(ref terra.Reference) JupyterServerAppSettingsDefaultResourceSpecAttributes {
@@ -176,8 +176,8 @@ type KernelGatewayAppSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (kgas KernelGatewayAppSettingsAttributes) InternalRef() terra.Reference {
-	return kgas.ref
+func (kgas KernelGatewayAppSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return kgas.ref, nil
 }
 
 func (kgas KernelGatewayAppSettingsAttributes) InternalWithRef(ref terra.Reference) KernelGatewayAppSettingsAttributes {
@@ -204,8 +204,8 @@ type CustomImageAttributes struct {
 	ref terra.Reference
 }
 
-func (ci CustomImageAttributes) InternalRef() terra.Reference {
-	return ci.ref
+func (ci CustomImageAttributes) InternalRef() (terra.Reference, error) {
+	return ci.ref, nil
 }
 
 func (ci CustomImageAttributes) InternalWithRef(ref terra.Reference) CustomImageAttributes {
@@ -232,8 +232,8 @@ type KernelGatewayAppSettingsDefaultResourceSpecAttributes struct {
 	ref terra.Reference
 }
 
-func (drs KernelGatewayAppSettingsDefaultResourceSpecAttributes) InternalRef() terra.Reference {
-	return drs.ref
+func (drs KernelGatewayAppSettingsDefaultResourceSpecAttributes) InternalRef() (terra.Reference, error) {
+	return drs.ref, nil
 }
 
 func (drs KernelGatewayAppSettingsDefaultResourceSpecAttributes) InternalWithRef(ref terra.Reference) KernelGatewayAppSettingsDefaultResourceSpecAttributes {

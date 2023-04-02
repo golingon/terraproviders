@@ -18,8 +18,8 @@ type ProvisioningArtifactDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (pad ProvisioningArtifactDetailsAttributes) InternalRef() terra.Reference {
-	return pad.ref
+func (pad ProvisioningArtifactDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return pad.ref, nil
 }
 
 func (pad ProvisioningArtifactDetailsAttributes) InternalWithRef(ref terra.Reference) ProvisioningArtifactDetailsAttributes {
@@ -62,8 +62,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

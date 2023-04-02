@@ -19,8 +19,8 @@ type EbsBlockDeviceAttributes struct {
 	ref terra.Reference
 }
 
-func (ebd EbsBlockDeviceAttributes) InternalRef() terra.Reference {
-	return ebd.ref
+func (ebd EbsBlockDeviceAttributes) InternalRef() (terra.Reference, error) {
+	return ebd.ref, nil
 }
 
 func (ebd EbsBlockDeviceAttributes) InternalWithRef(ref terra.Reference) EbsBlockDeviceAttributes {
@@ -71,8 +71,8 @@ type EphemeralBlockDeviceAttributes struct {
 	ref terra.Reference
 }
 
-func (ebd EphemeralBlockDeviceAttributes) InternalRef() terra.Reference {
-	return ebd.ref
+func (ebd EphemeralBlockDeviceAttributes) InternalRef() (terra.Reference, error) {
+	return ebd.ref, nil
 }
 
 func (ebd EphemeralBlockDeviceAttributes) InternalWithRef(ref terra.Reference) EphemeralBlockDeviceAttributes {
@@ -95,8 +95,8 @@ type MetadataOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (mo MetadataOptionsAttributes) InternalRef() terra.Reference {
-	return mo.ref
+func (mo MetadataOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return mo.ref, nil
 }
 
 func (mo MetadataOptionsAttributes) InternalWithRef(ref terra.Reference) MetadataOptionsAttributes {
@@ -123,8 +123,8 @@ type RootBlockDeviceAttributes struct {
 	ref terra.Reference
 }
 
-func (rbd RootBlockDeviceAttributes) InternalRef() terra.Reference {
-	return rbd.ref
+func (rbd RootBlockDeviceAttributes) InternalRef() (terra.Reference, error) {
+	return rbd.ref, nil
 }
 
 func (rbd RootBlockDeviceAttributes) InternalWithRef(ref terra.Reference) RootBlockDeviceAttributes {

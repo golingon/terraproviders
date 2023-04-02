@@ -13,8 +13,8 @@ type LaunchTemplateAttributes struct {
 	ref terra.Reference
 }
 
-func (lt LaunchTemplateAttributes) InternalRef() terra.Reference {
-	return lt.ref
+func (lt LaunchTemplateAttributes) InternalRef() (terra.Reference, error) {
+	return lt.ref, nil
 }
 
 func (lt LaunchTemplateAttributes) InternalWithRef(ref terra.Reference) LaunchTemplateAttributes {

@@ -153,8 +153,8 @@ type AlarmConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AlarmConfigurationAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AlarmConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AlarmConfigurationAttributes) InternalWithRef(ref terra.Reference) AlarmConfigurationAttributes {
@@ -181,8 +181,8 @@ type AutoRollbackConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (arc AutoRollbackConfigurationAttributes) InternalRef() terra.Reference {
-	return arc.ref
+func (arc AutoRollbackConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return arc.ref, nil
 }
 
 func (arc AutoRollbackConfigurationAttributes) InternalWithRef(ref terra.Reference) AutoRollbackConfigurationAttributes {
@@ -205,8 +205,8 @@ type BlueGreenDeploymentConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (bgdc BlueGreenDeploymentConfigAttributes) InternalRef() terra.Reference {
-	return bgdc.ref
+func (bgdc BlueGreenDeploymentConfigAttributes) InternalRef() (terra.Reference, error) {
+	return bgdc.ref, nil
 }
 
 func (bgdc BlueGreenDeploymentConfigAttributes) InternalWithRef(ref terra.Reference) BlueGreenDeploymentConfigAttributes {
@@ -233,8 +233,8 @@ type DeploymentReadyOptionAttributes struct {
 	ref terra.Reference
 }
 
-func (dro DeploymentReadyOptionAttributes) InternalRef() terra.Reference {
-	return dro.ref
+func (dro DeploymentReadyOptionAttributes) InternalRef() (terra.Reference, error) {
+	return dro.ref, nil
 }
 
 func (dro DeploymentReadyOptionAttributes) InternalWithRef(ref terra.Reference) DeploymentReadyOptionAttributes {
@@ -257,8 +257,8 @@ type GreenFleetProvisioningOptionAttributes struct {
 	ref terra.Reference
 }
 
-func (gfpo GreenFleetProvisioningOptionAttributes) InternalRef() terra.Reference {
-	return gfpo.ref
+func (gfpo GreenFleetProvisioningOptionAttributes) InternalRef() (terra.Reference, error) {
+	return gfpo.ref, nil
 }
 
 func (gfpo GreenFleetProvisioningOptionAttributes) InternalWithRef(ref terra.Reference) GreenFleetProvisioningOptionAttributes {
@@ -277,8 +277,8 @@ type TerminateBlueInstancesOnDeploymentSuccessAttributes struct {
 	ref terra.Reference
 }
 
-func (tbiods TerminateBlueInstancesOnDeploymentSuccessAttributes) InternalRef() terra.Reference {
-	return tbiods.ref
+func (tbiods TerminateBlueInstancesOnDeploymentSuccessAttributes) InternalRef() (terra.Reference, error) {
+	return tbiods.ref, nil
 }
 
 func (tbiods TerminateBlueInstancesOnDeploymentSuccessAttributes) InternalWithRef(ref terra.Reference) TerminateBlueInstancesOnDeploymentSuccessAttributes {
@@ -301,8 +301,8 @@ type DeploymentStyleAttributes struct {
 	ref terra.Reference
 }
 
-func (ds DeploymentStyleAttributes) InternalRef() terra.Reference {
-	return ds.ref
+func (ds DeploymentStyleAttributes) InternalRef() (terra.Reference, error) {
+	return ds.ref, nil
 }
 
 func (ds DeploymentStyleAttributes) InternalWithRef(ref terra.Reference) DeploymentStyleAttributes {
@@ -325,8 +325,8 @@ type Ec2TagFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (etf Ec2TagFilterAttributes) InternalRef() terra.Reference {
-	return etf.ref
+func (etf Ec2TagFilterAttributes) InternalRef() (terra.Reference, error) {
+	return etf.ref, nil
 }
 
 func (etf Ec2TagFilterAttributes) InternalWithRef(ref terra.Reference) Ec2TagFilterAttributes {
@@ -353,8 +353,8 @@ type Ec2TagSetAttributes struct {
 	ref terra.Reference
 }
 
-func (ets Ec2TagSetAttributes) InternalRef() terra.Reference {
-	return ets.ref
+func (ets Ec2TagSetAttributes) InternalRef() (terra.Reference, error) {
+	return ets.ref, nil
 }
 
 func (ets Ec2TagSetAttributes) InternalWithRef(ref terra.Reference) Ec2TagSetAttributes {
@@ -373,8 +373,8 @@ type Ec2TagSetEc2TagFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (etf Ec2TagSetEc2TagFilterAttributes) InternalRef() terra.Reference {
-	return etf.ref
+func (etf Ec2TagSetEc2TagFilterAttributes) InternalRef() (terra.Reference, error) {
+	return etf.ref, nil
 }
 
 func (etf Ec2TagSetEc2TagFilterAttributes) InternalWithRef(ref terra.Reference) Ec2TagSetEc2TagFilterAttributes {
@@ -401,8 +401,8 @@ type EcsServiceAttributes struct {
 	ref terra.Reference
 }
 
-func (es EcsServiceAttributes) InternalRef() terra.Reference {
-	return es.ref
+func (es EcsServiceAttributes) InternalRef() (terra.Reference, error) {
+	return es.ref, nil
 }
 
 func (es EcsServiceAttributes) InternalWithRef(ref terra.Reference) EcsServiceAttributes {
@@ -425,8 +425,8 @@ type LoadBalancerInfoAttributes struct {
 	ref terra.Reference
 }
 
-func (lbi LoadBalancerInfoAttributes) InternalRef() terra.Reference {
-	return lbi.ref
+func (lbi LoadBalancerInfoAttributes) InternalRef() (terra.Reference, error) {
+	return lbi.ref, nil
 }
 
 func (lbi LoadBalancerInfoAttributes) InternalWithRef(ref terra.Reference) LoadBalancerInfoAttributes {
@@ -453,8 +453,8 @@ type ElbInfoAttributes struct {
 	ref terra.Reference
 }
 
-func (ei ElbInfoAttributes) InternalRef() terra.Reference {
-	return ei.ref
+func (ei ElbInfoAttributes) InternalRef() (terra.Reference, error) {
+	return ei.ref, nil
 }
 
 func (ei ElbInfoAttributes) InternalWithRef(ref terra.Reference) ElbInfoAttributes {
@@ -473,8 +473,8 @@ type TargetGroupInfoAttributes struct {
 	ref terra.Reference
 }
 
-func (tgi TargetGroupInfoAttributes) InternalRef() terra.Reference {
-	return tgi.ref
+func (tgi TargetGroupInfoAttributes) InternalRef() (terra.Reference, error) {
+	return tgi.ref, nil
 }
 
 func (tgi TargetGroupInfoAttributes) InternalWithRef(ref terra.Reference) TargetGroupInfoAttributes {
@@ -493,8 +493,8 @@ type TargetGroupPairInfoAttributes struct {
 	ref terra.Reference
 }
 
-func (tgpi TargetGroupPairInfoAttributes) InternalRef() terra.Reference {
-	return tgpi.ref
+func (tgpi TargetGroupPairInfoAttributes) InternalRef() (terra.Reference, error) {
+	return tgpi.ref, nil
 }
 
 func (tgpi TargetGroupPairInfoAttributes) InternalWithRef(ref terra.Reference) TargetGroupPairInfoAttributes {
@@ -521,8 +521,8 @@ type ProdTrafficRouteAttributes struct {
 	ref terra.Reference
 }
 
-func (ptr ProdTrafficRouteAttributes) InternalRef() terra.Reference {
-	return ptr.ref
+func (ptr ProdTrafficRouteAttributes) InternalRef() (terra.Reference, error) {
+	return ptr.ref, nil
 }
 
 func (ptr ProdTrafficRouteAttributes) InternalWithRef(ref terra.Reference) ProdTrafficRouteAttributes {
@@ -541,8 +541,8 @@ type TargetGroupAttributes struct {
 	ref terra.Reference
 }
 
-func (tg TargetGroupAttributes) InternalRef() terra.Reference {
-	return tg.ref
+func (tg TargetGroupAttributes) InternalRef() (terra.Reference, error) {
+	return tg.ref, nil
 }
 
 func (tg TargetGroupAttributes) InternalWithRef(ref terra.Reference) TargetGroupAttributes {
@@ -561,8 +561,8 @@ type TestTrafficRouteAttributes struct {
 	ref terra.Reference
 }
 
-func (ttr TestTrafficRouteAttributes) InternalRef() terra.Reference {
-	return ttr.ref
+func (ttr TestTrafficRouteAttributes) InternalRef() (terra.Reference, error) {
+	return ttr.ref, nil
 }
 
 func (ttr TestTrafficRouteAttributes) InternalWithRef(ref terra.Reference) TestTrafficRouteAttributes {
@@ -581,8 +581,8 @@ type OnPremisesInstanceTagFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (opitf OnPremisesInstanceTagFilterAttributes) InternalRef() terra.Reference {
-	return opitf.ref
+func (opitf OnPremisesInstanceTagFilterAttributes) InternalRef() (terra.Reference, error) {
+	return opitf.ref, nil
 }
 
 func (opitf OnPremisesInstanceTagFilterAttributes) InternalWithRef(ref terra.Reference) OnPremisesInstanceTagFilterAttributes {
@@ -609,8 +609,8 @@ type TriggerConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (tc TriggerConfigurationAttributes) InternalRef() terra.Reference {
-	return tc.ref
+func (tc TriggerConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return tc.ref, nil
 }
 
 func (tc TriggerConfigurationAttributes) InternalWithRef(ref terra.Reference) TriggerConfigurationAttributes {

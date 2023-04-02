@@ -126,8 +126,8 @@ type AuthParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (ap AuthParametersAttributes) InternalRef() terra.Reference {
-	return ap.ref
+func (ap AuthParametersAttributes) InternalRef() (terra.Reference, error) {
+	return ap.ref, nil
 }
 
 func (ap AuthParametersAttributes) InternalWithRef(ref terra.Reference) AuthParametersAttributes {
@@ -158,8 +158,8 @@ type ApiKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (ak ApiKeyAttributes) InternalRef() terra.Reference {
-	return ak.ref
+func (ak ApiKeyAttributes) InternalRef() (terra.Reference, error) {
+	return ak.ref, nil
 }
 
 func (ak ApiKeyAttributes) InternalWithRef(ref terra.Reference) ApiKeyAttributes {
@@ -182,8 +182,8 @@ type BasicAttributes struct {
 	ref terra.Reference
 }
 
-func (b BasicAttributes) InternalRef() terra.Reference {
-	return b.ref
+func (b BasicAttributes) InternalRef() (terra.Reference, error) {
+	return b.ref, nil
 }
 
 func (b BasicAttributes) InternalWithRef(ref terra.Reference) BasicAttributes {
@@ -206,8 +206,8 @@ type InvocationHttpParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (ihp InvocationHttpParametersAttributes) InternalRef() terra.Reference {
-	return ihp.ref
+func (ihp InvocationHttpParametersAttributes) InternalRef() (terra.Reference, error) {
+	return ihp.ref, nil
 }
 
 func (ihp InvocationHttpParametersAttributes) InternalWithRef(ref terra.Reference) InvocationHttpParametersAttributes {
@@ -234,8 +234,8 @@ type InvocationHttpParametersBodyAttributes struct {
 	ref terra.Reference
 }
 
-func (b InvocationHttpParametersBodyAttributes) InternalRef() terra.Reference {
-	return b.ref
+func (b InvocationHttpParametersBodyAttributes) InternalRef() (terra.Reference, error) {
+	return b.ref, nil
 }
 
 func (b InvocationHttpParametersBodyAttributes) InternalWithRef(ref terra.Reference) InvocationHttpParametersBodyAttributes {
@@ -262,8 +262,8 @@ type InvocationHttpParametersHeaderAttributes struct {
 	ref terra.Reference
 }
 
-func (h InvocationHttpParametersHeaderAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h InvocationHttpParametersHeaderAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h InvocationHttpParametersHeaderAttributes) InternalWithRef(ref terra.Reference) InvocationHttpParametersHeaderAttributes {
@@ -290,8 +290,8 @@ type InvocationHttpParametersQueryStringAttributes struct {
 	ref terra.Reference
 }
 
-func (qs InvocationHttpParametersQueryStringAttributes) InternalRef() terra.Reference {
-	return qs.ref
+func (qs InvocationHttpParametersQueryStringAttributes) InternalRef() (terra.Reference, error) {
+	return qs.ref, nil
 }
 
 func (qs InvocationHttpParametersQueryStringAttributes) InternalWithRef(ref terra.Reference) InvocationHttpParametersQueryStringAttributes {
@@ -318,8 +318,8 @@ type OauthAttributes struct {
 	ref terra.Reference
 }
 
-func (o OauthAttributes) InternalRef() terra.Reference {
-	return o.ref
+func (o OauthAttributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o OauthAttributes) InternalWithRef(ref terra.Reference) OauthAttributes {
@@ -350,8 +350,8 @@ type ClientParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (cp ClientParametersAttributes) InternalRef() terra.Reference {
-	return cp.ref
+func (cp ClientParametersAttributes) InternalRef() (terra.Reference, error) {
+	return cp.ref, nil
 }
 
 func (cp ClientParametersAttributes) InternalWithRef(ref terra.Reference) ClientParametersAttributes {
@@ -374,8 +374,8 @@ type OauthHttpParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (ohp OauthHttpParametersAttributes) InternalRef() terra.Reference {
-	return ohp.ref
+func (ohp OauthHttpParametersAttributes) InternalRef() (terra.Reference, error) {
+	return ohp.ref, nil
 }
 
 func (ohp OauthHttpParametersAttributes) InternalWithRef(ref terra.Reference) OauthHttpParametersAttributes {
@@ -402,8 +402,8 @@ type OauthHttpParametersBodyAttributes struct {
 	ref terra.Reference
 }
 
-func (b OauthHttpParametersBodyAttributes) InternalRef() terra.Reference {
-	return b.ref
+func (b OauthHttpParametersBodyAttributes) InternalRef() (terra.Reference, error) {
+	return b.ref, nil
 }
 
 func (b OauthHttpParametersBodyAttributes) InternalWithRef(ref terra.Reference) OauthHttpParametersBodyAttributes {
@@ -430,8 +430,8 @@ type OauthHttpParametersHeaderAttributes struct {
 	ref terra.Reference
 }
 
-func (h OauthHttpParametersHeaderAttributes) InternalRef() terra.Reference {
-	return h.ref
+func (h OauthHttpParametersHeaderAttributes) InternalRef() (terra.Reference, error) {
+	return h.ref, nil
 }
 
 func (h OauthHttpParametersHeaderAttributes) InternalWithRef(ref terra.Reference) OauthHttpParametersHeaderAttributes {
@@ -458,8 +458,8 @@ type OauthHttpParametersQueryStringAttributes struct {
 	ref terra.Reference
 }
 
-func (qs OauthHttpParametersQueryStringAttributes) InternalRef() terra.Reference {
-	return qs.ref
+func (qs OauthHttpParametersQueryStringAttributes) InternalRef() (terra.Reference, error) {
+	return qs.ref, nil
 }
 
 func (qs OauthHttpParametersQueryStringAttributes) InternalWithRef(ref terra.Reference) OauthHttpParametersQueryStringAttributes {

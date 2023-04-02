@@ -13,8 +13,8 @@ type DedicatedIpsAttributes struct {
 	ref terra.Reference
 }
 
-func (di DedicatedIpsAttributes) InternalRef() terra.Reference {
-	return di.ref
+func (di DedicatedIpsAttributes) InternalRef() (terra.Reference, error) {
+	return di.ref, nil
 }
 
 func (di DedicatedIpsAttributes) InternalWithRef(ref terra.Reference) DedicatedIpsAttributes {

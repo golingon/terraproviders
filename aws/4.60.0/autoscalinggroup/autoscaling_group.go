@@ -263,8 +263,8 @@ type InitialLifecycleHookAttributes struct {
 	ref terra.Reference
 }
 
-func (ilh InitialLifecycleHookAttributes) InternalRef() terra.Reference {
-	return ilh.ref
+func (ilh InitialLifecycleHookAttributes) InternalRef() (terra.Reference, error) {
+	return ilh.ref, nil
 }
 
 func (ilh InitialLifecycleHookAttributes) InternalWithRef(ref terra.Reference) InitialLifecycleHookAttributes {
@@ -307,8 +307,8 @@ type InstanceRefreshAttributes struct {
 	ref terra.Reference
 }
 
-func (ir InstanceRefreshAttributes) InternalRef() terra.Reference {
-	return ir.ref
+func (ir InstanceRefreshAttributes) InternalRef() (terra.Reference, error) {
+	return ir.ref, nil
 }
 
 func (ir InstanceRefreshAttributes) InternalWithRef(ref terra.Reference) InstanceRefreshAttributes {
@@ -335,8 +335,8 @@ type PreferencesAttributes struct {
 	ref terra.Reference
 }
 
-func (p PreferencesAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PreferencesAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PreferencesAttributes) InternalWithRef(ref terra.Reference) PreferencesAttributes {
@@ -375,8 +375,8 @@ type LaunchTemplateAttributes struct {
 	ref terra.Reference
 }
 
-func (lt LaunchTemplateAttributes) InternalRef() terra.Reference {
-	return lt.ref
+func (lt LaunchTemplateAttributes) InternalRef() (terra.Reference, error) {
+	return lt.ref, nil
 }
 
 func (lt LaunchTemplateAttributes) InternalWithRef(ref terra.Reference) LaunchTemplateAttributes {
@@ -403,8 +403,8 @@ type MixedInstancesPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (mip MixedInstancesPolicyAttributes) InternalRef() terra.Reference {
-	return mip.ref
+func (mip MixedInstancesPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return mip.ref, nil
 }
 
 func (mip MixedInstancesPolicyAttributes) InternalWithRef(ref terra.Reference) MixedInstancesPolicyAttributes {
@@ -427,8 +427,8 @@ type InstancesDistributionAttributes struct {
 	ref terra.Reference
 }
 
-func (id InstancesDistributionAttributes) InternalRef() terra.Reference {
-	return id.ref
+func (id InstancesDistributionAttributes) InternalRef() (terra.Reference, error) {
+	return id.ref, nil
 }
 
 func (id InstancesDistributionAttributes) InternalWithRef(ref terra.Reference) InstancesDistributionAttributes {
@@ -467,8 +467,8 @@ type MixedInstancesPolicyLaunchTemplateAttributes struct {
 	ref terra.Reference
 }
 
-func (lt MixedInstancesPolicyLaunchTemplateAttributes) InternalRef() terra.Reference {
-	return lt.ref
+func (lt MixedInstancesPolicyLaunchTemplateAttributes) InternalRef() (terra.Reference, error) {
+	return lt.ref, nil
 }
 
 func (lt MixedInstancesPolicyLaunchTemplateAttributes) InternalWithRef(ref terra.Reference) MixedInstancesPolicyLaunchTemplateAttributes {
@@ -491,8 +491,8 @@ type LaunchTemplateLaunchTemplateSpecificationAttributes struct {
 	ref terra.Reference
 }
 
-func (lts LaunchTemplateLaunchTemplateSpecificationAttributes) InternalRef() terra.Reference {
-	return lts.ref
+func (lts LaunchTemplateLaunchTemplateSpecificationAttributes) InternalRef() (terra.Reference, error) {
+	return lts.ref, nil
 }
 
 func (lts LaunchTemplateLaunchTemplateSpecificationAttributes) InternalWithRef(ref terra.Reference) LaunchTemplateLaunchTemplateSpecificationAttributes {
@@ -519,8 +519,8 @@ type OverrideAttributes struct {
 	ref terra.Reference
 }
 
-func (o OverrideAttributes) InternalRef() terra.Reference {
-	return o.ref
+func (o OverrideAttributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o OverrideAttributes) InternalWithRef(ref terra.Reference) OverrideAttributes {
@@ -551,8 +551,8 @@ type InstanceRequirementsAttributes struct {
 	ref terra.Reference
 }
 
-func (ir InstanceRequirementsAttributes) InternalRef() terra.Reference {
-	return ir.ref
+func (ir InstanceRequirementsAttributes) InternalRef() (terra.Reference, error) {
+	return ir.ref, nil
 }
 
 func (ir InstanceRequirementsAttributes) InternalWithRef(ref terra.Reference) InstanceRequirementsAttributes {
@@ -659,8 +659,8 @@ type AcceleratorCountAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AcceleratorCountAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AcceleratorCountAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AcceleratorCountAttributes) InternalWithRef(ref terra.Reference) AcceleratorCountAttributes {
@@ -683,8 +683,8 @@ type AcceleratorTotalMemoryMibAttributes struct {
 	ref terra.Reference
 }
 
-func (atmm AcceleratorTotalMemoryMibAttributes) InternalRef() terra.Reference {
-	return atmm.ref
+func (atmm AcceleratorTotalMemoryMibAttributes) InternalRef() (terra.Reference, error) {
+	return atmm.ref, nil
 }
 
 func (atmm AcceleratorTotalMemoryMibAttributes) InternalWithRef(ref terra.Reference) AcceleratorTotalMemoryMibAttributes {
@@ -707,8 +707,8 @@ type BaselineEbsBandwidthMbpsAttributes struct {
 	ref terra.Reference
 }
 
-func (bebm BaselineEbsBandwidthMbpsAttributes) InternalRef() terra.Reference {
-	return bebm.ref
+func (bebm BaselineEbsBandwidthMbpsAttributes) InternalRef() (terra.Reference, error) {
+	return bebm.ref, nil
 }
 
 func (bebm BaselineEbsBandwidthMbpsAttributes) InternalWithRef(ref terra.Reference) BaselineEbsBandwidthMbpsAttributes {
@@ -731,8 +731,8 @@ type MemoryGibPerVcpuAttributes struct {
 	ref terra.Reference
 }
 
-func (mgpv MemoryGibPerVcpuAttributes) InternalRef() terra.Reference {
-	return mgpv.ref
+func (mgpv MemoryGibPerVcpuAttributes) InternalRef() (terra.Reference, error) {
+	return mgpv.ref, nil
 }
 
 func (mgpv MemoryGibPerVcpuAttributes) InternalWithRef(ref terra.Reference) MemoryGibPerVcpuAttributes {
@@ -755,8 +755,8 @@ type MemoryMibAttributes struct {
 	ref terra.Reference
 }
 
-func (mm MemoryMibAttributes) InternalRef() terra.Reference {
-	return mm.ref
+func (mm MemoryMibAttributes) InternalRef() (terra.Reference, error) {
+	return mm.ref, nil
 }
 
 func (mm MemoryMibAttributes) InternalWithRef(ref terra.Reference) MemoryMibAttributes {
@@ -779,8 +779,8 @@ type NetworkBandwidthGbpsAttributes struct {
 	ref terra.Reference
 }
 
-func (nbg NetworkBandwidthGbpsAttributes) InternalRef() terra.Reference {
-	return nbg.ref
+func (nbg NetworkBandwidthGbpsAttributes) InternalRef() (terra.Reference, error) {
+	return nbg.ref, nil
 }
 
 func (nbg NetworkBandwidthGbpsAttributes) InternalWithRef(ref terra.Reference) NetworkBandwidthGbpsAttributes {
@@ -803,8 +803,8 @@ type NetworkInterfaceCountAttributes struct {
 	ref terra.Reference
 }
 
-func (nic NetworkInterfaceCountAttributes) InternalRef() terra.Reference {
-	return nic.ref
+func (nic NetworkInterfaceCountAttributes) InternalRef() (terra.Reference, error) {
+	return nic.ref, nil
 }
 
 func (nic NetworkInterfaceCountAttributes) InternalWithRef(ref terra.Reference) NetworkInterfaceCountAttributes {
@@ -827,8 +827,8 @@ type TotalLocalStorageGbAttributes struct {
 	ref terra.Reference
 }
 
-func (tlsg TotalLocalStorageGbAttributes) InternalRef() terra.Reference {
-	return tlsg.ref
+func (tlsg TotalLocalStorageGbAttributes) InternalRef() (terra.Reference, error) {
+	return tlsg.ref, nil
 }
 
 func (tlsg TotalLocalStorageGbAttributes) InternalWithRef(ref terra.Reference) TotalLocalStorageGbAttributes {
@@ -851,8 +851,8 @@ type VcpuCountAttributes struct {
 	ref terra.Reference
 }
 
-func (vc VcpuCountAttributes) InternalRef() terra.Reference {
-	return vc.ref
+func (vc VcpuCountAttributes) InternalRef() (terra.Reference, error) {
+	return vc.ref, nil
 }
 
 func (vc VcpuCountAttributes) InternalWithRef(ref terra.Reference) VcpuCountAttributes {
@@ -875,8 +875,8 @@ type OverrideLaunchTemplateSpecificationAttributes struct {
 	ref terra.Reference
 }
 
-func (lts OverrideLaunchTemplateSpecificationAttributes) InternalRef() terra.Reference {
-	return lts.ref
+func (lts OverrideLaunchTemplateSpecificationAttributes) InternalRef() (terra.Reference, error) {
+	return lts.ref, nil
 }
 
 func (lts OverrideLaunchTemplateSpecificationAttributes) InternalWithRef(ref terra.Reference) OverrideLaunchTemplateSpecificationAttributes {
@@ -903,8 +903,8 @@ type TagAttributes struct {
 	ref terra.Reference
 }
 
-func (t TagAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TagAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TagAttributes) InternalWithRef(ref terra.Reference) TagAttributes {
@@ -931,8 +931,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
@@ -955,8 +955,8 @@ type WarmPoolAttributes struct {
 	ref terra.Reference
 }
 
-func (wp WarmPoolAttributes) InternalRef() terra.Reference {
-	return wp.ref
+func (wp WarmPoolAttributes) InternalRef() (terra.Reference, error) {
+	return wp.ref, nil
 }
 
 func (wp WarmPoolAttributes) InternalWithRef(ref terra.Reference) WarmPoolAttributes {
@@ -987,8 +987,8 @@ type InstanceReusePolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (irp InstanceReusePolicyAttributes) InternalRef() terra.Reference {
-	return irp.ref
+func (irp InstanceReusePolicyAttributes) InternalRef() (terra.Reference, error) {
+	return irp.ref, nil
 }
 
 func (irp InstanceReusePolicyAttributes) InternalWithRef(ref terra.Reference) InstanceReusePolicyAttributes {

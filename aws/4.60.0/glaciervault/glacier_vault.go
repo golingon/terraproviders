@@ -18,8 +18,8 @@ type NotificationAttributes struct {
 	ref terra.Reference
 }
 
-func (n NotificationAttributes) InternalRef() terra.Reference {
-	return n.ref
+func (n NotificationAttributes) InternalRef() (terra.Reference, error) {
+	return n.ref, nil
 }
 
 func (n NotificationAttributes) InternalWithRef(ref terra.Reference) NotificationAttributes {

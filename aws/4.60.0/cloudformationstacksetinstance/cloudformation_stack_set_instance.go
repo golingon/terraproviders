@@ -40,8 +40,8 @@ type DeploymentTargetsAttributes struct {
 	ref terra.Reference
 }
 
-func (dt DeploymentTargetsAttributes) InternalRef() terra.Reference {
-	return dt.ref
+func (dt DeploymentTargetsAttributes) InternalRef() (terra.Reference, error) {
+	return dt.ref, nil
 }
 
 func (dt DeploymentTargetsAttributes) InternalWithRef(ref terra.Reference) DeploymentTargetsAttributes {
@@ -60,8 +60,8 @@ type OperationPreferencesAttributes struct {
 	ref terra.Reference
 }
 
-func (op OperationPreferencesAttributes) InternalRef() terra.Reference {
-	return op.ref
+func (op OperationPreferencesAttributes) InternalRef() (terra.Reference, error) {
+	return op.ref, nil
 }
 
 func (op OperationPreferencesAttributes) InternalWithRef(ref terra.Reference) OperationPreferencesAttributes {
@@ -100,8 +100,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

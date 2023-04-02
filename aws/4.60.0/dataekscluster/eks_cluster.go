@@ -31,8 +31,8 @@ type CertificateAuthorityAttributes struct {
 	ref terra.Reference
 }
 
-func (ca CertificateAuthorityAttributes) InternalRef() terra.Reference {
-	return ca.ref
+func (ca CertificateAuthorityAttributes) InternalRef() (terra.Reference, error) {
+	return ca.ref, nil
 }
 
 func (ca CertificateAuthorityAttributes) InternalWithRef(ref terra.Reference) CertificateAuthorityAttributes {
@@ -51,8 +51,8 @@ type IdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdentityAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdentityAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdentityAttributes) InternalWithRef(ref terra.Reference) IdentityAttributes {
@@ -71,8 +71,8 @@ type OidcAttributes struct {
 	ref terra.Reference
 }
 
-func (o OidcAttributes) InternalRef() terra.Reference {
-	return o.ref
+func (o OidcAttributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o OidcAttributes) InternalWithRef(ref terra.Reference) OidcAttributes {
@@ -91,8 +91,8 @@ type KubernetesNetworkConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (knc KubernetesNetworkConfigAttributes) InternalRef() terra.Reference {
-	return knc.ref
+func (knc KubernetesNetworkConfigAttributes) InternalRef() (terra.Reference, error) {
+	return knc.ref, nil
 }
 
 func (knc KubernetesNetworkConfigAttributes) InternalWithRef(ref terra.Reference) KubernetesNetworkConfigAttributes {
@@ -119,8 +119,8 @@ type OutpostConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (oc OutpostConfigAttributes) InternalRef() terra.Reference {
-	return oc.ref
+func (oc OutpostConfigAttributes) InternalRef() (terra.Reference, error) {
+	return oc.ref, nil
 }
 
 func (oc OutpostConfigAttributes) InternalWithRef(ref terra.Reference) OutpostConfigAttributes {
@@ -147,8 +147,8 @@ type ControlPlanePlacementAttributes struct {
 	ref terra.Reference
 }
 
-func (cpp ControlPlanePlacementAttributes) InternalRef() terra.Reference {
-	return cpp.ref
+func (cpp ControlPlanePlacementAttributes) InternalRef() (terra.Reference, error) {
+	return cpp.ref, nil
 }
 
 func (cpp ControlPlanePlacementAttributes) InternalWithRef(ref terra.Reference) ControlPlanePlacementAttributes {
@@ -167,8 +167,8 @@ type VpcConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (vc VpcConfigAttributes) InternalRef() terra.Reference {
-	return vc.ref
+func (vc VpcConfigAttributes) InternalRef() (terra.Reference, error) {
+	return vc.ref, nil
 }
 
 func (vc VpcConfigAttributes) InternalWithRef(ref terra.Reference) VpcConfigAttributes {

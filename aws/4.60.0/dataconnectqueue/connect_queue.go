@@ -13,8 +13,8 @@ type OutboundCallerConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (occ OutboundCallerConfigAttributes) InternalRef() terra.Reference {
-	return occ.ref
+func (occ OutboundCallerConfigAttributes) InternalRef() (terra.Reference, error) {
+	return occ.ref, nil
 }
 
 func (occ OutboundCallerConfigAttributes) InternalWithRef(ref terra.Reference) OutboundCallerConfigAttributes {

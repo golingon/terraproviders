@@ -41,8 +41,8 @@ type DnsConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (dc DnsConfigAttributes) InternalRef() terra.Reference {
-	return dc.ref
+func (dc DnsConfigAttributes) InternalRef() (terra.Reference, error) {
+	return dc.ref, nil
 }
 
 func (dc DnsConfigAttributes) InternalWithRef(ref terra.Reference) DnsConfigAttributes {
@@ -69,8 +69,8 @@ type DnsRecordsAttributes struct {
 	ref terra.Reference
 }
 
-func (dr DnsRecordsAttributes) InternalRef() terra.Reference {
-	return dr.ref
+func (dr DnsRecordsAttributes) InternalRef() (terra.Reference, error) {
+	return dr.ref, nil
 }
 
 func (dr DnsRecordsAttributes) InternalWithRef(ref terra.Reference) DnsRecordsAttributes {
@@ -93,8 +93,8 @@ type HealthCheckConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (hcc HealthCheckConfigAttributes) InternalRef() terra.Reference {
-	return hcc.ref
+func (hcc HealthCheckConfigAttributes) InternalRef() (terra.Reference, error) {
+	return hcc.ref, nil
 }
 
 func (hcc HealthCheckConfigAttributes) InternalWithRef(ref terra.Reference) HealthCheckConfigAttributes {
@@ -121,8 +121,8 @@ type HealthCheckCustomConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (hccc HealthCheckCustomConfigAttributes) InternalRef() terra.Reference {
-	return hccc.ref
+func (hccc HealthCheckCustomConfigAttributes) InternalRef() (terra.Reference, error) {
+	return hccc.ref, nil
 }
 
 func (hccc HealthCheckCustomConfigAttributes) InternalWithRef(ref terra.Reference) HealthCheckCustomConfigAttributes {

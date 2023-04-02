@@ -29,8 +29,8 @@ type ReportDeliveryChannelAttributes struct {
 	ref terra.Reference
 }
 
-func (rdc ReportDeliveryChannelAttributes) InternalRef() terra.Reference {
-	return rdc.ref
+func (rdc ReportDeliveryChannelAttributes) InternalRef() (terra.Reference, error) {
+	return rdc.ref, nil
 }
 
 func (rdc ReportDeliveryChannelAttributes) InternalWithRef(ref terra.Reference) ReportDeliveryChannelAttributes {
@@ -57,8 +57,8 @@ type ReportSettingAttributes struct {
 	ref terra.Reference
 }
 
-func (rs ReportSettingAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs ReportSettingAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs ReportSettingAttributes) InternalWithRef(ref terra.Reference) ReportSettingAttributes {

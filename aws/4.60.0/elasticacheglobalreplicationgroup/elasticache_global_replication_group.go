@@ -22,8 +22,8 @@ type GlobalNodeGroupsAttributes struct {
 	ref terra.Reference
 }
 
-func (gng GlobalNodeGroupsAttributes) InternalRef() terra.Reference {
-	return gng.ref
+func (gng GlobalNodeGroupsAttributes) InternalRef() (terra.Reference, error) {
+	return gng.ref, nil
 }
 
 func (gng GlobalNodeGroupsAttributes) InternalWithRef(ref terra.Reference) GlobalNodeGroupsAttributes {
@@ -46,8 +46,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

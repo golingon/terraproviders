@@ -32,8 +32,8 @@ type RuntimeAttributes struct {
 	ref terra.Reference
 }
 
-func (r RuntimeAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RuntimeAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RuntimeAttributes) InternalWithRef(ref terra.Reference) RuntimeAttributes {
@@ -56,8 +56,8 @@ type SyncConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sc SyncConfigAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc SyncConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc SyncConfigAttributes) InternalWithRef(ref terra.Reference) SyncConfigAttributes {
@@ -84,8 +84,8 @@ type LambdaConflictHandlerConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (lchc LambdaConflictHandlerConfigAttributes) InternalRef() terra.Reference {
-	return lchc.ref
+func (lchc LambdaConflictHandlerConfigAttributes) InternalRef() (terra.Reference, error) {
+	return lchc.ref, nil
 }
 
 func (lchc LambdaConflictHandlerConfigAttributes) InternalWithRef(ref terra.Reference) LambdaConflictHandlerConfigAttributes {

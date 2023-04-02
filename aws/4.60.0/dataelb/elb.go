@@ -17,8 +17,8 @@ type AccessLogsAttributes struct {
 	ref terra.Reference
 }
 
-func (al AccessLogsAttributes) InternalRef() terra.Reference {
-	return al.ref
+func (al AccessLogsAttributes) InternalRef() (terra.Reference, error) {
+	return al.ref, nil
 }
 
 func (al AccessLogsAttributes) InternalWithRef(ref terra.Reference) AccessLogsAttributes {
@@ -49,8 +49,8 @@ type HealthCheckAttributes struct {
 	ref terra.Reference
 }
 
-func (hc HealthCheckAttributes) InternalRef() terra.Reference {
-	return hc.ref
+func (hc HealthCheckAttributes) InternalRef() (terra.Reference, error) {
+	return hc.ref, nil
 }
 
 func (hc HealthCheckAttributes) InternalWithRef(ref terra.Reference) HealthCheckAttributes {
@@ -85,8 +85,8 @@ type ListenerAttributes struct {
 	ref terra.Reference
 }
 
-func (l ListenerAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l ListenerAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l ListenerAttributes) InternalWithRef(ref terra.Reference) ListenerAttributes {

@@ -49,8 +49,8 @@ type HierarchyStructureAttributes struct {
 	ref terra.Reference
 }
 
-func (hs HierarchyStructureAttributes) InternalRef() terra.Reference {
-	return hs.ref
+func (hs HierarchyStructureAttributes) InternalRef() (terra.Reference, error) {
+	return hs.ref, nil
 }
 
 func (hs HierarchyStructureAttributes) InternalWithRef(ref terra.Reference) HierarchyStructureAttributes {
@@ -85,8 +85,8 @@ type LevelFiveAttributes struct {
 	ref terra.Reference
 }
 
-func (lf LevelFiveAttributes) InternalRef() terra.Reference {
-	return lf.ref
+func (lf LevelFiveAttributes) InternalRef() (terra.Reference, error) {
+	return lf.ref, nil
 }
 
 func (lf LevelFiveAttributes) InternalWithRef(ref terra.Reference) LevelFiveAttributes {
@@ -113,8 +113,8 @@ type LevelFourAttributes struct {
 	ref terra.Reference
 }
 
-func (lf LevelFourAttributes) InternalRef() terra.Reference {
-	return lf.ref
+func (lf LevelFourAttributes) InternalRef() (terra.Reference, error) {
+	return lf.ref, nil
 }
 
 func (lf LevelFourAttributes) InternalWithRef(ref terra.Reference) LevelFourAttributes {
@@ -141,8 +141,8 @@ type LevelOneAttributes struct {
 	ref terra.Reference
 }
 
-func (lo LevelOneAttributes) InternalRef() terra.Reference {
-	return lo.ref
+func (lo LevelOneAttributes) InternalRef() (terra.Reference, error) {
+	return lo.ref, nil
 }
 
 func (lo LevelOneAttributes) InternalWithRef(ref terra.Reference) LevelOneAttributes {
@@ -169,8 +169,8 @@ type LevelThreeAttributes struct {
 	ref terra.Reference
 }
 
-func (lt LevelThreeAttributes) InternalRef() terra.Reference {
-	return lt.ref
+func (lt LevelThreeAttributes) InternalRef() (terra.Reference, error) {
+	return lt.ref, nil
 }
 
 func (lt LevelThreeAttributes) InternalWithRef(ref terra.Reference) LevelThreeAttributes {
@@ -197,8 +197,8 @@ type LevelTwoAttributes struct {
 	ref terra.Reference
 }
 
-func (lt LevelTwoAttributes) InternalRef() terra.Reference {
-	return lt.ref
+func (lt LevelTwoAttributes) InternalRef() (terra.Reference, error) {
+	return lt.ref, nil
 }
 
 func (lt LevelTwoAttributes) InternalWithRef(ref terra.Reference) LevelTwoAttributes {

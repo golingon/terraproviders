@@ -24,8 +24,8 @@ type S3DestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (sd S3DestinationAttributes) InternalRef() terra.Reference {
-	return sd.ref
+func (sd S3DestinationAttributes) InternalRef() (terra.Reference, error) {
+	return sd.ref, nil
 }
 
 func (sd S3DestinationAttributes) InternalWithRef(ref terra.Reference) S3DestinationAttributes {

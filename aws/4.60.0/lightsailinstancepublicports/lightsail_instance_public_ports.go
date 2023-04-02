@@ -26,8 +26,8 @@ type PortInfoAttributes struct {
 	ref terra.Reference
 }
 
-func (pi PortInfoAttributes) InternalRef() terra.Reference {
-	return pi.ref
+func (pi PortInfoAttributes) InternalRef() (terra.Reference, error) {
+	return pi.ref, nil
 }
 
 func (pi PortInfoAttributes) InternalWithRef(ref terra.Reference) PortInfoAttributes {

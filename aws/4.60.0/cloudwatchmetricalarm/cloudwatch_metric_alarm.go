@@ -43,8 +43,8 @@ type MetricQueryAttributes struct {
 	ref terra.Reference
 }
 
-func (mq MetricQueryAttributes) InternalRef() terra.Reference {
-	return mq.ref
+func (mq MetricQueryAttributes) InternalRef() (terra.Reference, error) {
+	return mq.ref, nil
 }
 
 func (mq MetricQueryAttributes) InternalWithRef(ref terra.Reference) MetricQueryAttributes {
@@ -87,8 +87,8 @@ type MetricAttributes struct {
 	ref terra.Reference
 }
 
-func (m MetricAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MetricAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MetricAttributes) InternalWithRef(ref terra.Reference) MetricAttributes {

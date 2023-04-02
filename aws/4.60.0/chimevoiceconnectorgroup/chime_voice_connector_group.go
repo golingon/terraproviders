@@ -18,8 +18,8 @@ type ConnectorAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConnectorAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConnectorAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConnectorAttributes) InternalWithRef(ref terra.Reference) ConnectorAttributes {

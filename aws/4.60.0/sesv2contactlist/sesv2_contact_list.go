@@ -22,8 +22,8 @@ type TopicAttributes struct {
 	ref terra.Reference
 }
 
-func (t TopicAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TopicAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TopicAttributes) InternalWithRef(ref terra.Reference) TopicAttributes {

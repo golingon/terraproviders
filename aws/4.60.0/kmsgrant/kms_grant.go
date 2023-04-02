@@ -18,8 +18,8 @@ type ConstraintsAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConstraintsAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConstraintsAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConstraintsAttributes) InternalWithRef(ref terra.Reference) ConstraintsAttributes {

@@ -44,8 +44,8 @@ type AppSourceAttributes struct {
 	ref terra.Reference
 }
 
-func (as AppSourceAttributes) InternalRef() terra.Reference {
-	return as.ref
+func (as AppSourceAttributes) InternalRef() (terra.Reference, error) {
+	return as.ref, nil
 }
 
 func (as AppSourceAttributes) InternalWithRef(ref terra.Reference) AppSourceAttributes {
@@ -84,8 +84,8 @@ type EnvironmentAttributes struct {
 	ref terra.Reference
 }
 
-func (e EnvironmentAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EnvironmentAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EnvironmentAttributes) InternalWithRef(ref terra.Reference) EnvironmentAttributes {
@@ -112,8 +112,8 @@ type SslConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (sc SslConfigurationAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc SslConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc SslConfigurationAttributes) InternalWithRef(ref terra.Reference) SslConfigurationAttributes {

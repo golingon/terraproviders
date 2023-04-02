@@ -53,8 +53,8 @@ type ListenerEndpointAttributes struct {
 	ref terra.Reference
 }
 
-func (le ListenerEndpointAttributes) InternalRef() terra.Reference {
-	return le.ref
+func (le ListenerEndpointAttributes) InternalRef() (terra.Reference, error) {
+	return le.ref, nil
 }
 
 func (le ListenerEndpointAttributes) InternalWithRef(ref terra.Reference) ListenerEndpointAttributes {
@@ -81,8 +81,8 @@ type BlueGreenUpdateAttributes struct {
 	ref terra.Reference
 }
 
-func (bgu BlueGreenUpdateAttributes) InternalRef() terra.Reference {
-	return bgu.ref
+func (bgu BlueGreenUpdateAttributes) InternalRef() (terra.Reference, error) {
+	return bgu.ref, nil
 }
 
 func (bgu BlueGreenUpdateAttributes) InternalWithRef(ref terra.Reference) BlueGreenUpdateAttributes {
@@ -101,8 +101,8 @@ type RestoreToPointInTimeAttributes struct {
 	ref terra.Reference
 }
 
-func (rtpit RestoreToPointInTimeAttributes) InternalRef() terra.Reference {
-	return rtpit.ref
+func (rtpit RestoreToPointInTimeAttributes) InternalRef() (terra.Reference, error) {
+	return rtpit.ref, nil
 }
 
 func (rtpit RestoreToPointInTimeAttributes) InternalWithRef(ref terra.Reference) RestoreToPointInTimeAttributes {
@@ -137,8 +137,8 @@ type S3ImportAttributes struct {
 	ref terra.Reference
 }
 
-func (si S3ImportAttributes) InternalRef() terra.Reference {
-	return si.ref
+func (si S3ImportAttributes) InternalRef() (terra.Reference, error) {
+	return si.ref, nil
 }
 
 func (si S3ImportAttributes) InternalWithRef(ref terra.Reference) S3ImportAttributes {
@@ -173,8 +173,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

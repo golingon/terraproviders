@@ -20,8 +20,8 @@ type RuleConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (rc RuleConfigAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc RuleConfigAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc RuleConfigAttributes) InternalWithRef(ref terra.Reference) RuleConfigAttributes {

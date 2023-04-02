@@ -27,8 +27,8 @@ type MessageReviewHandlerAttributes struct {
 	ref terra.Reference
 }
 
-func (mrh MessageReviewHandlerAttributes) InternalRef() terra.Reference {
-	return mrh.ref
+func (mrh MessageReviewHandlerAttributes) InternalRef() (terra.Reference, error) {
+	return mrh.ref, nil
 }
 
 func (mrh MessageReviewHandlerAttributes) InternalWithRef(ref terra.Reference) MessageReviewHandlerAttributes {
@@ -51,8 +51,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

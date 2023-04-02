@@ -51,8 +51,8 @@ type CognitoConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (cc CognitoConfigAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc CognitoConfigAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc CognitoConfigAttributes) InternalWithRef(ref terra.Reference) CognitoConfigAttributes {
@@ -75,8 +75,8 @@ type OidcConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (oc OidcConfigAttributes) InternalRef() terra.Reference {
-	return oc.ref
+func (oc OidcConfigAttributes) InternalRef() (terra.Reference, error) {
+	return oc.ref, nil
 }
 
 func (oc OidcConfigAttributes) InternalWithRef(ref terra.Reference) OidcConfigAttributes {
@@ -123,8 +123,8 @@ type SourceIpConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sic SourceIpConfigAttributes) InternalRef() terra.Reference {
-	return sic.ref
+func (sic SourceIpConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sic.ref, nil
 }
 
 func (sic SourceIpConfigAttributes) InternalWithRef(ref terra.Reference) SourceIpConfigAttributes {
@@ -143,8 +143,8 @@ type WorkforceVpcConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (wvc WorkforceVpcConfigAttributes) InternalRef() terra.Reference {
-	return wvc.ref
+func (wvc WorkforceVpcConfigAttributes) InternalRef() (terra.Reference, error) {
+	return wvc.ref, nil
 }
 
 func (wvc WorkforceVpcConfigAttributes) InternalWithRef(ref terra.Reference) WorkforceVpcConfigAttributes {

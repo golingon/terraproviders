@@ -257,8 +257,8 @@ type ArtifactsAttributes struct {
 	ref terra.Reference
 }
 
-func (a ArtifactsAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a ArtifactsAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a ArtifactsAttributes) InternalWithRef(ref terra.Reference) ArtifactsAttributes {
@@ -313,8 +313,8 @@ type BuildBatchConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (bbc BuildBatchConfigAttributes) InternalRef() terra.Reference {
-	return bbc.ref
+func (bbc BuildBatchConfigAttributes) InternalRef() (terra.Reference, error) {
+	return bbc.ref, nil
 }
 
 func (bbc BuildBatchConfigAttributes) InternalWithRef(ref terra.Reference) BuildBatchConfigAttributes {
@@ -345,8 +345,8 @@ type RestrictionsAttributes struct {
 	ref terra.Reference
 }
 
-func (r RestrictionsAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RestrictionsAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RestrictionsAttributes) InternalWithRef(ref terra.Reference) RestrictionsAttributes {
@@ -369,8 +369,8 @@ type CacheAttributes struct {
 	ref terra.Reference
 }
 
-func (c CacheAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c CacheAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c CacheAttributes) InternalWithRef(ref terra.Reference) CacheAttributes {
@@ -397,8 +397,8 @@ type EnvironmentAttributes struct {
 	ref terra.Reference
 }
 
-func (e EnvironmentAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EnvironmentAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EnvironmentAttributes) InternalWithRef(ref terra.Reference) EnvironmentAttributes {
@@ -445,8 +445,8 @@ type EnvironmentVariableAttributes struct {
 	ref terra.Reference
 }
 
-func (ev EnvironmentVariableAttributes) InternalRef() terra.Reference {
-	return ev.ref
+func (ev EnvironmentVariableAttributes) InternalRef() (terra.Reference, error) {
+	return ev.ref, nil
 }
 
 func (ev EnvironmentVariableAttributes) InternalWithRef(ref terra.Reference) EnvironmentVariableAttributes {
@@ -473,8 +473,8 @@ type RegistryCredentialAttributes struct {
 	ref terra.Reference
 }
 
-func (rc RegistryCredentialAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc RegistryCredentialAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc RegistryCredentialAttributes) InternalWithRef(ref terra.Reference) RegistryCredentialAttributes {
@@ -497,8 +497,8 @@ type FileSystemLocationsAttributes struct {
 	ref terra.Reference
 }
 
-func (fsl FileSystemLocationsAttributes) InternalRef() terra.Reference {
-	return fsl.ref
+func (fsl FileSystemLocationsAttributes) InternalRef() (terra.Reference, error) {
+	return fsl.ref, nil
 }
 
 func (fsl FileSystemLocationsAttributes) InternalWithRef(ref terra.Reference) FileSystemLocationsAttributes {
@@ -533,8 +533,8 @@ type LogsConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (lc LogsConfigAttributes) InternalRef() terra.Reference {
-	return lc.ref
+func (lc LogsConfigAttributes) InternalRef() (terra.Reference, error) {
+	return lc.ref, nil
 }
 
 func (lc LogsConfigAttributes) InternalWithRef(ref terra.Reference) LogsConfigAttributes {
@@ -557,8 +557,8 @@ type CloudwatchLogsAttributes struct {
 	ref terra.Reference
 }
 
-func (cl CloudwatchLogsAttributes) InternalRef() terra.Reference {
-	return cl.ref
+func (cl CloudwatchLogsAttributes) InternalRef() (terra.Reference, error) {
+	return cl.ref, nil
 }
 
 func (cl CloudwatchLogsAttributes) InternalWithRef(ref terra.Reference) CloudwatchLogsAttributes {
@@ -585,8 +585,8 @@ type S3LogsAttributes struct {
 	ref terra.Reference
 }
 
-func (sl S3LogsAttributes) InternalRef() terra.Reference {
-	return sl.ref
+func (sl S3LogsAttributes) InternalRef() (terra.Reference, error) {
+	return sl.ref, nil
 }
 
 func (sl S3LogsAttributes) InternalWithRef(ref terra.Reference) S3LogsAttributes {
@@ -617,8 +617,8 @@ type SecondaryArtifactsAttributes struct {
 	ref terra.Reference
 }
 
-func (sa SecondaryArtifactsAttributes) InternalRef() terra.Reference {
-	return sa.ref
+func (sa SecondaryArtifactsAttributes) InternalRef() (terra.Reference, error) {
+	return sa.ref, nil
 }
 
 func (sa SecondaryArtifactsAttributes) InternalWithRef(ref terra.Reference) SecondaryArtifactsAttributes {
@@ -673,8 +673,8 @@ type SecondarySourceVersionAttributes struct {
 	ref terra.Reference
 }
 
-func (ssv SecondarySourceVersionAttributes) InternalRef() terra.Reference {
-	return ssv.ref
+func (ssv SecondarySourceVersionAttributes) InternalRef() (terra.Reference, error) {
+	return ssv.ref, nil
 }
 
 func (ssv SecondarySourceVersionAttributes) InternalWithRef(ref terra.Reference) SecondarySourceVersionAttributes {
@@ -697,8 +697,8 @@ type SecondarySourcesAttributes struct {
 	ref terra.Reference
 }
 
-func (ss SecondarySourcesAttributes) InternalRef() terra.Reference {
-	return ss.ref
+func (ss SecondarySourcesAttributes) InternalRef() (terra.Reference, error) {
+	return ss.ref, nil
 }
 
 func (ss SecondarySourcesAttributes) InternalWithRef(ref terra.Reference) SecondarySourcesAttributes {
@@ -753,8 +753,8 @@ type SecondarySourcesAuthAttributes struct {
 	ref terra.Reference
 }
 
-func (a SecondarySourcesAuthAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a SecondarySourcesAuthAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a SecondarySourcesAuthAttributes) InternalWithRef(ref terra.Reference) SecondarySourcesAuthAttributes {
@@ -777,8 +777,8 @@ type SecondarySourcesBuildStatusConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (bsc SecondarySourcesBuildStatusConfigAttributes) InternalRef() terra.Reference {
-	return bsc.ref
+func (bsc SecondarySourcesBuildStatusConfigAttributes) InternalRef() (terra.Reference, error) {
+	return bsc.ref, nil
 }
 
 func (bsc SecondarySourcesBuildStatusConfigAttributes) InternalWithRef(ref terra.Reference) SecondarySourcesBuildStatusConfigAttributes {
@@ -801,8 +801,8 @@ type SecondarySourcesGitSubmodulesConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (gsc SecondarySourcesGitSubmodulesConfigAttributes) InternalRef() terra.Reference {
-	return gsc.ref
+func (gsc SecondarySourcesGitSubmodulesConfigAttributes) InternalRef() (terra.Reference, error) {
+	return gsc.ref, nil
 }
 
 func (gsc SecondarySourcesGitSubmodulesConfigAttributes) InternalWithRef(ref terra.Reference) SecondarySourcesGitSubmodulesConfigAttributes {
@@ -821,8 +821,8 @@ type SourceAttributes struct {
 	ref terra.Reference
 }
 
-func (s SourceAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SourceAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SourceAttributes) InternalWithRef(ref terra.Reference) SourceAttributes {
@@ -873,8 +873,8 @@ type SourceAuthAttributes struct {
 	ref terra.Reference
 }
 
-func (a SourceAuthAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a SourceAuthAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a SourceAuthAttributes) InternalWithRef(ref terra.Reference) SourceAuthAttributes {
@@ -897,8 +897,8 @@ type SourceBuildStatusConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (bsc SourceBuildStatusConfigAttributes) InternalRef() terra.Reference {
-	return bsc.ref
+func (bsc SourceBuildStatusConfigAttributes) InternalRef() (terra.Reference, error) {
+	return bsc.ref, nil
 }
 
 func (bsc SourceBuildStatusConfigAttributes) InternalWithRef(ref terra.Reference) SourceBuildStatusConfigAttributes {
@@ -921,8 +921,8 @@ type SourceGitSubmodulesConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (gsc SourceGitSubmodulesConfigAttributes) InternalRef() terra.Reference {
-	return gsc.ref
+func (gsc SourceGitSubmodulesConfigAttributes) InternalRef() (terra.Reference, error) {
+	return gsc.ref, nil
 }
 
 func (gsc SourceGitSubmodulesConfigAttributes) InternalWithRef(ref terra.Reference) SourceGitSubmodulesConfigAttributes {
@@ -941,8 +941,8 @@ type VpcConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (vc VpcConfigAttributes) InternalRef() terra.Reference {
-	return vc.ref
+func (vc VpcConfigAttributes) InternalRef() (terra.Reference, error) {
+	return vc.ref, nil
 }
 
 func (vc VpcConfigAttributes) InternalWithRef(ref terra.Reference) VpcConfigAttributes {

@@ -20,8 +20,8 @@ type IpamPoolsAttributes struct {
 	ref terra.Reference
 }
 
-func (ip IpamPoolsAttributes) InternalRef() terra.Reference {
-	return ip.ref
+func (ip IpamPoolsAttributes) InternalRef() (terra.Reference, error) {
+	return ip.ref, nil
 }
 
 func (ip IpamPoolsAttributes) InternalWithRef(ref terra.Reference) IpamPoolsAttributes {
@@ -112,8 +112,8 @@ type FilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes {

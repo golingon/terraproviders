@@ -22,8 +22,8 @@ type ParameterAttributes struct {
 	ref terra.Reference
 }
 
-func (p ParameterAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p ParameterAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p ParameterAttributes) InternalWithRef(ref terra.Reference) ParameterAttributes {
@@ -54,8 +54,8 @@ type AttachmentsSourceAttributes struct {
 	ref terra.Reference
 }
 
-func (as AttachmentsSourceAttributes) InternalRef() terra.Reference {
-	return as.ref
+func (as AttachmentsSourceAttributes) InternalRef() (terra.Reference, error) {
+	return as.ref, nil
 }
 
 func (as AttachmentsSourceAttributes) InternalWithRef(ref terra.Reference) AttachmentsSourceAttributes {

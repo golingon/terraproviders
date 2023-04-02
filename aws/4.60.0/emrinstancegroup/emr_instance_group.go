@@ -22,8 +22,8 @@ type EbsConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ec EbsConfigAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec EbsConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec EbsConfigAttributes) InternalWithRef(ref terra.Reference) EbsConfigAttributes {

@@ -13,8 +13,8 @@ type CorsConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (cc CorsConfigurationAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc CorsConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc CorsConfigurationAttributes) InternalWithRef(ref terra.Reference) CorsConfigurationAttributes {

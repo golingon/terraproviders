@@ -20,8 +20,8 @@ type DeviceAttributes struct {
 	ref terra.Reference
 }
 
-func (d DeviceAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DeviceAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DeviceAttributes) InternalWithRef(ref terra.Reference) DeviceAttributes {

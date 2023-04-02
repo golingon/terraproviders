@@ -20,8 +20,8 @@ type PhysicalConnectionRequirementsAttributes struct {
 	ref terra.Reference
 }
 
-func (pcr PhysicalConnectionRequirementsAttributes) InternalRef() terra.Reference {
-	return pcr.ref
+func (pcr PhysicalConnectionRequirementsAttributes) InternalRef() (terra.Reference, error) {
+	return pcr.ref, nil
 }
 
 func (pcr PhysicalConnectionRequirementsAttributes) InternalWithRef(ref terra.Reference) PhysicalConnectionRequirementsAttributes {

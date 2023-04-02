@@ -820,8 +820,8 @@ type AssumeRoleAttributes struct {
 	ref terra.Reference
 }
 
-func (ar AssumeRoleAttributes) InternalRef() terra.Reference {
-	return ar.ref
+func (ar AssumeRoleAttributes) InternalRef() (terra.Reference, error) {
+	return ar.ref, nil
 }
 
 func (ar AssumeRoleAttributes) InternalWithRef(ref terra.Reference) AssumeRoleAttributes {
@@ -876,8 +876,8 @@ type AssumeRoleWithWebIdentityAttributes struct {
 	ref terra.Reference
 }
 
-func (arwwi AssumeRoleWithWebIdentityAttributes) InternalRef() terra.Reference {
-	return arwwi.ref
+func (arwwi AssumeRoleWithWebIdentityAttributes) InternalRef() (terra.Reference, error) {
+	return arwwi.ref, nil
 }
 
 func (arwwi AssumeRoleWithWebIdentityAttributes) InternalWithRef(ref terra.Reference) AssumeRoleWithWebIdentityAttributes {
@@ -920,8 +920,8 @@ type DefaultTagsAttributes struct {
 	ref terra.Reference
 }
 
-func (dt DefaultTagsAttributes) InternalRef() terra.Reference {
-	return dt.ref
+func (dt DefaultTagsAttributes) InternalRef() (terra.Reference, error) {
+	return dt.ref, nil
 }
 
 func (dt DefaultTagsAttributes) InternalWithRef(ref terra.Reference) DefaultTagsAttributes {
@@ -940,8 +940,8 @@ type EndpointsAttributes struct {
 	ref terra.Reference
 }
 
-func (e EndpointsAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EndpointsAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EndpointsAttributes) InternalWithRef(ref terra.Reference) EndpointsAttributes {
@@ -2464,8 +2464,8 @@ type IgnoreTagsAttributes struct {
 	ref terra.Reference
 }
 
-func (it IgnoreTagsAttributes) InternalRef() terra.Reference {
-	return it.ref
+func (it IgnoreTagsAttributes) InternalRef() (terra.Reference, error) {
+	return it.ref, nil
 }
 
 func (it IgnoreTagsAttributes) InternalWithRef(ref terra.Reference) IgnoreTagsAttributes {

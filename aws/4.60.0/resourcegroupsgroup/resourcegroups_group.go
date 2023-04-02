@@ -39,8 +39,8 @@ type ConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConfigurationAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConfigurationAttributes) InternalWithRef(ref terra.Reference) ConfigurationAttributes {
@@ -63,8 +63,8 @@ type ParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (p ParametersAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p ParametersAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p ParametersAttributes) InternalWithRef(ref terra.Reference) ParametersAttributes {
@@ -87,8 +87,8 @@ type ResourceQueryAttributes struct {
 	ref terra.Reference
 }
 
-func (rq ResourceQueryAttributes) InternalRef() terra.Reference {
-	return rq.ref
+func (rq ResourceQueryAttributes) InternalRef() (terra.Reference, error) {
+	return rq.ref, nil
 }
 
 func (rq ResourceQueryAttributes) InternalWithRef(ref terra.Reference) ResourceQueryAttributes {
@@ -111,8 +111,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

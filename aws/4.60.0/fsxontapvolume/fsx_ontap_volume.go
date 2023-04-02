@@ -27,8 +27,8 @@ type TieringPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (tp TieringPolicyAttributes) InternalRef() terra.Reference {
-	return tp.ref
+func (tp TieringPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return tp.ref, nil
 }
 
 func (tp TieringPolicyAttributes) InternalWithRef(ref terra.Reference) TieringPolicyAttributes {
@@ -51,8 +51,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

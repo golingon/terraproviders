@@ -22,8 +22,8 @@ type AccountsAttributes struct {
 	ref terra.Reference
 }
 
-func (a AccountsAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AccountsAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AccountsAttributes) InternalWithRef(ref terra.Reference) AccountsAttributes {
@@ -58,8 +58,8 @@ type NonMasterAccountsAttributes struct {
 	ref terra.Reference
 }
 
-func (nma NonMasterAccountsAttributes) InternalRef() terra.Reference {
-	return nma.ref
+func (nma NonMasterAccountsAttributes) InternalRef() (terra.Reference, error) {
+	return nma.ref, nil
 }
 
 func (nma NonMasterAccountsAttributes) InternalWithRef(ref terra.Reference) NonMasterAccountsAttributes {
@@ -94,8 +94,8 @@ type RootsAttributes struct {
 	ref terra.Reference
 }
 
-func (r RootsAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RootsAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RootsAttributes) InternalWithRef(ref terra.Reference) RootsAttributes {
@@ -126,8 +126,8 @@ type PolicyTypesAttributes struct {
 	ref terra.Reference
 }
 
-func (pt PolicyTypesAttributes) InternalRef() terra.Reference {
-	return pt.ref
+func (pt PolicyTypesAttributes) InternalRef() (terra.Reference, error) {
+	return pt.ref, nil
 }
 
 func (pt PolicyTypesAttributes) InternalWithRef(ref terra.Reference) PolicyTypesAttributes {

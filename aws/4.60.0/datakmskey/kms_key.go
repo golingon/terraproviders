@@ -22,8 +22,8 @@ type MultiRegionConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (mrc MultiRegionConfigurationAttributes) InternalRef() terra.Reference {
-	return mrc.ref
+func (mrc MultiRegionConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return mrc.ref, nil
 }
 
 func (mrc MultiRegionConfigurationAttributes) InternalWithRef(ref terra.Reference) MultiRegionConfigurationAttributes {
@@ -50,8 +50,8 @@ type PrimaryKeyAttributes struct {
 	ref terra.Reference
 }
 
-func (pk PrimaryKeyAttributes) InternalRef() terra.Reference {
-	return pk.ref
+func (pk PrimaryKeyAttributes) InternalRef() (terra.Reference, error) {
+	return pk.ref, nil
 }
 
 func (pk PrimaryKeyAttributes) InternalWithRef(ref terra.Reference) PrimaryKeyAttributes {
@@ -74,8 +74,8 @@ type ReplicaKeysAttributes struct {
 	ref terra.Reference
 }
 
-func (rk ReplicaKeysAttributes) InternalRef() terra.Reference {
-	return rk.ref
+func (rk ReplicaKeysAttributes) InternalRef() (terra.Reference, error) {
+	return rk.ref, nil
 }
 
 func (rk ReplicaKeysAttributes) InternalWithRef(ref terra.Reference) ReplicaKeysAttributes {

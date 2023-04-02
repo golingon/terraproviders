@@ -25,8 +25,8 @@ type SqlInjectionMatchTuplesAttributes struct {
 	ref terra.Reference
 }
 
-func (simt SqlInjectionMatchTuplesAttributes) InternalRef() terra.Reference {
-	return simt.ref
+func (simt SqlInjectionMatchTuplesAttributes) InternalRef() (terra.Reference, error) {
+	return simt.ref, nil
 }
 
 func (simt SqlInjectionMatchTuplesAttributes) InternalWithRef(ref terra.Reference) SqlInjectionMatchTuplesAttributes {
@@ -49,8 +49,8 @@ type FieldToMatchAttributes struct {
 	ref terra.Reference
 }
 
-func (ftm FieldToMatchAttributes) InternalRef() terra.Reference {
-	return ftm.ref
+func (ftm FieldToMatchAttributes) InternalRef() (terra.Reference, error) {
+	return ftm.ref, nil
 }
 
 func (ftm FieldToMatchAttributes) InternalWithRef(ref terra.Reference) FieldToMatchAttributes {

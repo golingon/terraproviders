@@ -20,8 +20,8 @@ type DkimSigningAttributesAttributes struct {
 	ref terra.Reference
 }
 
-func (dsa DkimSigningAttributesAttributes) InternalRef() terra.Reference {
-	return dsa.ref
+func (dsa DkimSigningAttributesAttributes) InternalRef() (terra.Reference, error) {
+	return dsa.ref, nil
 }
 
 func (dsa DkimSigningAttributesAttributes) InternalWithRef(ref terra.Reference) DkimSigningAttributesAttributes {

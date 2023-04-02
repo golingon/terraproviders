@@ -48,8 +48,8 @@ type NfsExportsAttributes struct {
 	ref terra.Reference
 }
 
-func (ne NfsExportsAttributes) InternalRef() terra.Reference {
-	return ne.ref
+func (ne NfsExportsAttributes) InternalRef() (terra.Reference, error) {
+	return ne.ref, nil
 }
 
 func (ne NfsExportsAttributes) InternalWithRef(ref terra.Reference) NfsExportsAttributes {
@@ -68,8 +68,8 @@ type ClientConfigurationsAttributes struct {
 	ref terra.Reference
 }
 
-func (cc ClientConfigurationsAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc ClientConfigurationsAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc ClientConfigurationsAttributes) InternalWithRef(ref terra.Reference) ClientConfigurationsAttributes {
@@ -92,8 +92,8 @@ type OriginSnapshotAttributes struct {
 	ref terra.Reference
 }
 
-func (os OriginSnapshotAttributes) InternalRef() terra.Reference {
-	return os.ref
+func (os OriginSnapshotAttributes) InternalRef() (terra.Reference, error) {
+	return os.ref, nil
 }
 
 func (os OriginSnapshotAttributes) InternalWithRef(ref terra.Reference) OriginSnapshotAttributes {
@@ -116,8 +116,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
@@ -144,8 +144,8 @@ type UserAndGroupQuotasAttributes struct {
 	ref terra.Reference
 }
 
-func (uagq UserAndGroupQuotasAttributes) InternalRef() terra.Reference {
-	return uagq.ref
+func (uagq UserAndGroupQuotasAttributes) InternalRef() (terra.Reference, error) {
+	return uagq.ref, nil
 }
 
 func (uagq UserAndGroupQuotasAttributes) InternalWithRef(ref terra.Reference) UserAndGroupQuotasAttributes {

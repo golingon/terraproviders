@@ -13,8 +13,8 @@ type UsersAttributes struct {
 	ref terra.Reference
 }
 
-func (u UsersAttributes) InternalRef() terra.Reference {
-	return u.ref
+func (u UsersAttributes) InternalRef() (terra.Reference, error) {
+	return u.ref, nil
 }
 
 func (u UsersAttributes) InternalWithRef(ref terra.Reference) UsersAttributes {

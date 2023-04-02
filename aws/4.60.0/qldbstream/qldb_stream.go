@@ -18,8 +18,8 @@ type KinesisConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (kc KinesisConfigurationAttributes) InternalRef() terra.Reference {
-	return kc.ref
+func (kc KinesisConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return kc.ref, nil
 }
 
 func (kc KinesisConfigurationAttributes) InternalWithRef(ref terra.Reference) KinesisConfigurationAttributes {

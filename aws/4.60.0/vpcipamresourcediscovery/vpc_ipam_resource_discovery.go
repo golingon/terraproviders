@@ -25,8 +25,8 @@ type OperatingRegionsAttributes struct {
 	ref terra.Reference
 }
 
-func (or OperatingRegionsAttributes) InternalRef() terra.Reference {
-	return or.ref
+func (or OperatingRegionsAttributes) InternalRef() (terra.Reference, error) {
+	return or.ref, nil
 }
 
 func (or OperatingRegionsAttributes) InternalWithRef(ref terra.Reference) OperatingRegionsAttributes {
@@ -45,8 +45,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

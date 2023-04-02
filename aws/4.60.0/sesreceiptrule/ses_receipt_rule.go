@@ -86,8 +86,8 @@ type AddHeaderActionAttributes struct {
 	ref terra.Reference
 }
 
-func (aha AddHeaderActionAttributes) InternalRef() terra.Reference {
-	return aha.ref
+func (aha AddHeaderActionAttributes) InternalRef() (terra.Reference, error) {
+	return aha.ref, nil
 }
 
 func (aha AddHeaderActionAttributes) InternalWithRef(ref terra.Reference) AddHeaderActionAttributes {
@@ -114,8 +114,8 @@ type BounceActionAttributes struct {
 	ref terra.Reference
 }
 
-func (ba BounceActionAttributes) InternalRef() terra.Reference {
-	return ba.ref
+func (ba BounceActionAttributes) InternalRef() (terra.Reference, error) {
+	return ba.ref, nil
 }
 
 func (ba BounceActionAttributes) InternalWithRef(ref terra.Reference) BounceActionAttributes {
@@ -154,8 +154,8 @@ type LambdaActionAttributes struct {
 	ref terra.Reference
 }
 
-func (la LambdaActionAttributes) InternalRef() terra.Reference {
-	return la.ref
+func (la LambdaActionAttributes) InternalRef() (terra.Reference, error) {
+	return la.ref, nil
 }
 
 func (la LambdaActionAttributes) InternalWithRef(ref terra.Reference) LambdaActionAttributes {
@@ -186,8 +186,8 @@ type S3ActionAttributes struct {
 	ref terra.Reference
 }
 
-func (sa S3ActionAttributes) InternalRef() terra.Reference {
-	return sa.ref
+func (sa S3ActionAttributes) InternalRef() (terra.Reference, error) {
+	return sa.ref, nil
 }
 
 func (sa S3ActionAttributes) InternalWithRef(ref terra.Reference) S3ActionAttributes {
@@ -222,8 +222,8 @@ type SnsActionAttributes struct {
 	ref terra.Reference
 }
 
-func (sa SnsActionAttributes) InternalRef() terra.Reference {
-	return sa.ref
+func (sa SnsActionAttributes) InternalRef() (terra.Reference, error) {
+	return sa.ref, nil
 }
 
 func (sa SnsActionAttributes) InternalWithRef(ref terra.Reference) SnsActionAttributes {
@@ -250,8 +250,8 @@ type StopActionAttributes struct {
 	ref terra.Reference
 }
 
-func (sa StopActionAttributes) InternalRef() terra.Reference {
-	return sa.ref
+func (sa StopActionAttributes) InternalRef() (terra.Reference, error) {
+	return sa.ref, nil
 }
 
 func (sa StopActionAttributes) InternalWithRef(ref terra.Reference) StopActionAttributes {
@@ -278,8 +278,8 @@ type WorkmailActionAttributes struct {
 	ref terra.Reference
 }
 
-func (wa WorkmailActionAttributes) InternalRef() terra.Reference {
-	return wa.ref
+func (wa WorkmailActionAttributes) InternalRef() (terra.Reference, error) {
+	return wa.ref, nil
 }
 
 func (wa WorkmailActionAttributes) InternalWithRef(ref terra.Reference) WorkmailActionAttributes {

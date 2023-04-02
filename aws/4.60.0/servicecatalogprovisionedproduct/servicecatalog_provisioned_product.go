@@ -48,8 +48,8 @@ type OutputsAttributes struct {
 	ref terra.Reference
 }
 
-func (o OutputsAttributes) InternalRef() terra.Reference {
-	return o.ref
+func (o OutputsAttributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o OutputsAttributes) InternalWithRef(ref terra.Reference) OutputsAttributes {
@@ -76,8 +76,8 @@ type ProvisioningParametersAttributes struct {
 	ref terra.Reference
 }
 
-func (pp ProvisioningParametersAttributes) InternalRef() terra.Reference {
-	return pp.ref
+func (pp ProvisioningParametersAttributes) InternalRef() (terra.Reference, error) {
+	return pp.ref, nil
 }
 
 func (pp ProvisioningParametersAttributes) InternalWithRef(ref terra.Reference) ProvisioningParametersAttributes {
@@ -104,8 +104,8 @@ type StackSetProvisioningPreferencesAttributes struct {
 	ref terra.Reference
 }
 
-func (sspp StackSetProvisioningPreferencesAttributes) InternalRef() terra.Reference {
-	return sspp.ref
+func (sspp StackSetProvisioningPreferencesAttributes) InternalRef() (terra.Reference, error) {
+	return sspp.ref, nil
 }
 
 func (sspp StackSetProvisioningPreferencesAttributes) InternalWithRef(ref terra.Reference) StackSetProvisioningPreferencesAttributes {
@@ -144,8 +144,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

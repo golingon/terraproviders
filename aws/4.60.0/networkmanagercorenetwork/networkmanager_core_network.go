@@ -24,8 +24,8 @@ type EdgesAttributes struct {
 	ref terra.Reference
 }
 
-func (e EdgesAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EdgesAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EdgesAttributes) InternalWithRef(ref terra.Reference) EdgesAttributes {
@@ -52,8 +52,8 @@ type SegmentsAttributes struct {
 	ref terra.Reference
 }
 
-func (s SegmentsAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SegmentsAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SegmentsAttributes) InternalWithRef(ref terra.Reference) SegmentsAttributes {
@@ -80,8 +80,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

@@ -38,8 +38,8 @@ type ClusterModeAttributes struct {
 	ref terra.Reference
 }
 
-func (cm ClusterModeAttributes) InternalRef() terra.Reference {
-	return cm.ref
+func (cm ClusterModeAttributes) InternalRef() (terra.Reference, error) {
+	return cm.ref, nil
 }
 
 func (cm ClusterModeAttributes) InternalWithRef(ref terra.Reference) ClusterModeAttributes {
@@ -62,8 +62,8 @@ type LogDeliveryConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ldc LogDeliveryConfigurationAttributes) InternalRef() terra.Reference {
-	return ldc.ref
+func (ldc LogDeliveryConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ldc.ref, nil
 }
 
 func (ldc LogDeliveryConfigurationAttributes) InternalWithRef(ref terra.Reference) LogDeliveryConfigurationAttributes {
@@ -94,8 +94,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

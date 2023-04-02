@@ -25,8 +25,8 @@ type XssMatchTuplesAttributes struct {
 	ref terra.Reference
 }
 
-func (xmt XssMatchTuplesAttributes) InternalRef() terra.Reference {
-	return xmt.ref
+func (xmt XssMatchTuplesAttributes) InternalRef() (terra.Reference, error) {
+	return xmt.ref, nil
 }
 
 func (xmt XssMatchTuplesAttributes) InternalWithRef(ref terra.Reference) XssMatchTuplesAttributes {
@@ -49,8 +49,8 @@ type FieldToMatchAttributes struct {
 	ref terra.Reference
 }
 
-func (ftm FieldToMatchAttributes) InternalRef() terra.Reference {
-	return ftm.ref
+func (ftm FieldToMatchAttributes) InternalRef() (terra.Reference, error) {
+	return ftm.ref, nil
 }
 
 func (ftm FieldToMatchAttributes) InternalWithRef(ref terra.Reference) FieldToMatchAttributes {

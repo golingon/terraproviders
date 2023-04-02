@@ -13,8 +13,8 @@ type DataSourceConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (dsc DataSourceConfigurationAttributes) InternalRef() terra.Reference {
-	return dsc.ref
+func (dsc DataSourceConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return dsc.ref, nil
 }
 
 func (dsc DataSourceConfigurationAttributes) InternalWithRef(ref terra.Reference) DataSourceConfigurationAttributes {

@@ -13,8 +13,8 @@ type BandwidthAttributes struct {
 	ref terra.Reference
 }
 
-func (b BandwidthAttributes) InternalRef() terra.Reference {
-	return b.ref
+func (b BandwidthAttributes) InternalRef() (terra.Reference, error) {
+	return b.ref, nil
 }
 
 func (b BandwidthAttributes) InternalWithRef(ref terra.Reference) BandwidthAttributes {

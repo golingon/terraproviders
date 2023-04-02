@@ -15,8 +15,8 @@ type CreateDatabaseDefaultPermissionsAttributes struct {
 	ref terra.Reference
 }
 
-func (cddp CreateDatabaseDefaultPermissionsAttributes) InternalRef() terra.Reference {
-	return cddp.ref
+func (cddp CreateDatabaseDefaultPermissionsAttributes) InternalRef() (terra.Reference, error) {
+	return cddp.ref, nil
 }
 
 func (cddp CreateDatabaseDefaultPermissionsAttributes) InternalWithRef(ref terra.Reference) CreateDatabaseDefaultPermissionsAttributes {
@@ -39,8 +39,8 @@ type CreateTableDefaultPermissionsAttributes struct {
 	ref terra.Reference
 }
 
-func (ctdp CreateTableDefaultPermissionsAttributes) InternalRef() terra.Reference {
-	return ctdp.ref
+func (ctdp CreateTableDefaultPermissionsAttributes) InternalRef() (terra.Reference, error) {
+	return ctdp.ref, nil
 }
 
 func (ctdp CreateTableDefaultPermissionsAttributes) InternalWithRef(ref terra.Reference) CreateTableDefaultPermissionsAttributes {

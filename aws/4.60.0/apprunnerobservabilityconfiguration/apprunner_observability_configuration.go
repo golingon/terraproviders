@@ -16,8 +16,8 @@ type TraceConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (tc TraceConfigurationAttributes) InternalRef() terra.Reference {
-	return tc.ref
+func (tc TraceConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return tc.ref, nil
 }
 
 func (tc TraceConfigurationAttributes) InternalWithRef(ref terra.Reference) TraceConfigurationAttributes {

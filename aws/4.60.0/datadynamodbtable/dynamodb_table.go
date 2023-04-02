@@ -25,8 +25,8 @@ type AttributeAttributes struct {
 	ref terra.Reference
 }
 
-func (a AttributeAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AttributeAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AttributeAttributes) InternalWithRef(ref terra.Reference) AttributeAttributes {
@@ -49,8 +49,8 @@ type GlobalSecondaryIndexAttributes struct {
 	ref terra.Reference
 }
 
-func (gsi GlobalSecondaryIndexAttributes) InternalRef() terra.Reference {
-	return gsi.ref
+func (gsi GlobalSecondaryIndexAttributes) InternalRef() (terra.Reference, error) {
+	return gsi.ref, nil
 }
 
 func (gsi GlobalSecondaryIndexAttributes) InternalWithRef(ref terra.Reference) GlobalSecondaryIndexAttributes {
@@ -93,8 +93,8 @@ type LocalSecondaryIndexAttributes struct {
 	ref terra.Reference
 }
 
-func (lsi LocalSecondaryIndexAttributes) InternalRef() terra.Reference {
-	return lsi.ref
+func (lsi LocalSecondaryIndexAttributes) InternalRef() (terra.Reference, error) {
+	return lsi.ref, nil
 }
 
 func (lsi LocalSecondaryIndexAttributes) InternalWithRef(ref terra.Reference) LocalSecondaryIndexAttributes {
@@ -125,8 +125,8 @@ type PointInTimeRecoveryAttributes struct {
 	ref terra.Reference
 }
 
-func (pitr PointInTimeRecoveryAttributes) InternalRef() terra.Reference {
-	return pitr.ref
+func (pitr PointInTimeRecoveryAttributes) InternalRef() (terra.Reference, error) {
+	return pitr.ref, nil
 }
 
 func (pitr PointInTimeRecoveryAttributes) InternalWithRef(ref terra.Reference) PointInTimeRecoveryAttributes {
@@ -145,8 +145,8 @@ type ReplicaAttributes struct {
 	ref terra.Reference
 }
 
-func (r ReplicaAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r ReplicaAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r ReplicaAttributes) InternalWithRef(ref terra.Reference) ReplicaAttributes {
@@ -169,8 +169,8 @@ type TtlAttributes struct {
 	ref terra.Reference
 }
 
-func (t TtlAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TtlAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TtlAttributes) InternalWithRef(ref terra.Reference) TtlAttributes {
@@ -193,8 +193,8 @@ type ServerSideEncryptionAttributes struct {
 	ref terra.Reference
 }
 
-func (sse ServerSideEncryptionAttributes) InternalRef() terra.Reference {
-	return sse.ref
+func (sse ServerSideEncryptionAttributes) InternalRef() (terra.Reference, error) {
+	return sse.ref, nil
 }
 
 func (sse ServerSideEncryptionAttributes) InternalWithRef(ref terra.Reference) ServerSideEncryptionAttributes {

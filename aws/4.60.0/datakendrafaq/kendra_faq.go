@@ -13,8 +13,8 @@ type S3PathAttributes struct {
 	ref terra.Reference
 }
 
-func (sp S3PathAttributes) InternalRef() terra.Reference {
-	return sp.ref
+func (sp S3PathAttributes) InternalRef() (terra.Reference, error) {
+	return sp.ref, nil
 }
 
 func (sp S3PathAttributes) InternalWithRef(ref terra.Reference) S3PathAttributes {

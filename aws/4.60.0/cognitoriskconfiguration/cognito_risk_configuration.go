@@ -109,8 +109,8 @@ type AccountTakeoverRiskConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (atrc AccountTakeoverRiskConfigurationAttributes) InternalRef() terra.Reference {
-	return atrc.ref
+func (atrc AccountTakeoverRiskConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return atrc.ref, nil
 }
 
 func (atrc AccountTakeoverRiskConfigurationAttributes) InternalWithRef(ref terra.Reference) AccountTakeoverRiskConfigurationAttributes {
@@ -133,8 +133,8 @@ type AccountTakeoverRiskConfigurationActionsAttributes struct {
 	ref terra.Reference
 }
 
-func (a AccountTakeoverRiskConfigurationActionsAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AccountTakeoverRiskConfigurationActionsAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AccountTakeoverRiskConfigurationActionsAttributes) InternalWithRef(ref terra.Reference) AccountTakeoverRiskConfigurationActionsAttributes {
@@ -161,8 +161,8 @@ type HighActionAttributes struct {
 	ref terra.Reference
 }
 
-func (ha HighActionAttributes) InternalRef() terra.Reference {
-	return ha.ref
+func (ha HighActionAttributes) InternalRef() (terra.Reference, error) {
+	return ha.ref, nil
 }
 
 func (ha HighActionAttributes) InternalWithRef(ref terra.Reference) HighActionAttributes {
@@ -185,8 +185,8 @@ type LowActionAttributes struct {
 	ref terra.Reference
 }
 
-func (la LowActionAttributes) InternalRef() terra.Reference {
-	return la.ref
+func (la LowActionAttributes) InternalRef() (terra.Reference, error) {
+	return la.ref, nil
 }
 
 func (la LowActionAttributes) InternalWithRef(ref terra.Reference) LowActionAttributes {
@@ -209,8 +209,8 @@ type MediumActionAttributes struct {
 	ref terra.Reference
 }
 
-func (ma MediumActionAttributes) InternalRef() terra.Reference {
-	return ma.ref
+func (ma MediumActionAttributes) InternalRef() (terra.Reference, error) {
+	return ma.ref, nil
 }
 
 func (ma MediumActionAttributes) InternalWithRef(ref terra.Reference) MediumActionAttributes {
@@ -233,8 +233,8 @@ type NotifyConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (nc NotifyConfigurationAttributes) InternalRef() terra.Reference {
-	return nc.ref
+func (nc NotifyConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return nc.ref, nil
 }
 
 func (nc NotifyConfigurationAttributes) InternalWithRef(ref terra.Reference) NotifyConfigurationAttributes {
@@ -273,8 +273,8 @@ type BlockEmailAttributes struct {
 	ref terra.Reference
 }
 
-func (be BlockEmailAttributes) InternalRef() terra.Reference {
-	return be.ref
+func (be BlockEmailAttributes) InternalRef() (terra.Reference, error) {
+	return be.ref, nil
 }
 
 func (be BlockEmailAttributes) InternalWithRef(ref terra.Reference) BlockEmailAttributes {
@@ -301,8 +301,8 @@ type MfaEmailAttributes struct {
 	ref terra.Reference
 }
 
-func (me MfaEmailAttributes) InternalRef() terra.Reference {
-	return me.ref
+func (me MfaEmailAttributes) InternalRef() (terra.Reference, error) {
+	return me.ref, nil
 }
 
 func (me MfaEmailAttributes) InternalWithRef(ref terra.Reference) MfaEmailAttributes {
@@ -329,8 +329,8 @@ type NoActionEmailAttributes struct {
 	ref terra.Reference
 }
 
-func (nae NoActionEmailAttributes) InternalRef() terra.Reference {
-	return nae.ref
+func (nae NoActionEmailAttributes) InternalRef() (terra.Reference, error) {
+	return nae.ref, nil
 }
 
 func (nae NoActionEmailAttributes) InternalWithRef(ref terra.Reference) NoActionEmailAttributes {
@@ -357,8 +357,8 @@ type CompromisedCredentialsRiskConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ccrc CompromisedCredentialsRiskConfigurationAttributes) InternalRef() terra.Reference {
-	return ccrc.ref
+func (ccrc CompromisedCredentialsRiskConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ccrc.ref, nil
 }
 
 func (ccrc CompromisedCredentialsRiskConfigurationAttributes) InternalWithRef(ref terra.Reference) CompromisedCredentialsRiskConfigurationAttributes {
@@ -381,8 +381,8 @@ type CompromisedCredentialsRiskConfigurationActionsAttributes struct {
 	ref terra.Reference
 }
 
-func (a CompromisedCredentialsRiskConfigurationActionsAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a CompromisedCredentialsRiskConfigurationActionsAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a CompromisedCredentialsRiskConfigurationActionsAttributes) InternalWithRef(ref terra.Reference) CompromisedCredentialsRiskConfigurationActionsAttributes {
@@ -401,8 +401,8 @@ type RiskExceptionConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (rec RiskExceptionConfigurationAttributes) InternalRef() terra.Reference {
-	return rec.ref
+func (rec RiskExceptionConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return rec.ref, nil
 }
 
 func (rec RiskExceptionConfigurationAttributes) InternalWithRef(ref terra.Reference) RiskExceptionConfigurationAttributes {

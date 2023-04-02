@@ -18,8 +18,8 @@ type InlinePolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (ip InlinePolicyAttributes) InternalRef() terra.Reference {
-	return ip.ref
+func (ip InlinePolicyAttributes) InternalRef() (terra.Reference, error) {
+	return ip.ref, nil
 }
 
 func (ip InlinePolicyAttributes) InternalWithRef(ref terra.Reference) InlinePolicyAttributes {

@@ -20,8 +20,8 @@ type DefaultCapacityProviderStrategyAttributes struct {
 	ref terra.Reference
 }
 
-func (dcps DefaultCapacityProviderStrategyAttributes) InternalRef() terra.Reference {
-	return dcps.ref
+func (dcps DefaultCapacityProviderStrategyAttributes) InternalRef() (terra.Reference, error) {
+	return dcps.ref, nil
 }
 
 func (dcps DefaultCapacityProviderStrategyAttributes) InternalWithRef(ref terra.Reference) DefaultCapacityProviderStrategyAttributes {

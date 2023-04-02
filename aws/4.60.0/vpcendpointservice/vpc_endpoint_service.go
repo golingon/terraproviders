@@ -22,8 +22,8 @@ type PrivateDnsNameConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (pdnc PrivateDnsNameConfigurationAttributes) InternalRef() terra.Reference {
-	return pdnc.ref
+func (pdnc PrivateDnsNameConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return pdnc.ref, nil
 }
 
 func (pdnc PrivateDnsNameConfigurationAttributes) InternalWithRef(ref terra.Reference) PrivateDnsNameConfigurationAttributes {
@@ -54,8 +54,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

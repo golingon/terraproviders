@@ -29,8 +29,8 @@ type AutoEnableAttributes struct {
 	ref terra.Reference
 }
 
-func (ae AutoEnableAttributes) InternalRef() terra.Reference {
-	return ae.ref
+func (ae AutoEnableAttributes) InternalRef() (terra.Reference, error) {
+	return ae.ref, nil
 }
 
 func (ae AutoEnableAttributes) InternalWithRef(ref terra.Reference) AutoEnableAttributes {
@@ -57,8 +57,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

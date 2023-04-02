@@ -13,8 +13,8 @@ type DelegatedAdministratorsAttributes struct {
 	ref terra.Reference
 }
 
-func (da DelegatedAdministratorsAttributes) InternalRef() terra.Reference {
-	return da.ref
+func (da DelegatedAdministratorsAttributes) InternalRef() (terra.Reference, error) {
+	return da.ref, nil
 }
 
 func (da DelegatedAdministratorsAttributes) InternalWithRef(ref terra.Reference) DelegatedAdministratorsAttributes {

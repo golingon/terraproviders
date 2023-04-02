@@ -42,8 +42,8 @@ type SamlOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (so SamlOptionsAttributes) InternalRef() terra.Reference {
-	return so.ref
+func (so SamlOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return so.ref, nil
 }
 
 func (so SamlOptionsAttributes) InternalWithRef(ref terra.Reference) SamlOptionsAttributes {
@@ -86,8 +86,8 @@ type IdpAttributes struct {
 	ref terra.Reference
 }
 
-func (i IdpAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i IdpAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i IdpAttributes) InternalWithRef(ref terra.Reference) IdpAttributes {
@@ -110,8 +110,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

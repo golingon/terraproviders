@@ -168,8 +168,8 @@ type SubscriberAttributes struct {
 	ref terra.Reference
 }
 
-func (s SubscriberAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SubscriberAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SubscriberAttributes) InternalWithRef(ref terra.Reference) SubscriberAttributes {
@@ -192,8 +192,8 @@ type ThresholdExpressionAttributes struct {
 	ref terra.Reference
 }
 
-func (te ThresholdExpressionAttributes) InternalRef() terra.Reference {
-	return te.ref
+func (te ThresholdExpressionAttributes) InternalRef() (terra.Reference, error) {
+	return te.ref, nil
 }
 
 func (te ThresholdExpressionAttributes) InternalWithRef(ref terra.Reference) ThresholdExpressionAttributes {
@@ -232,8 +232,8 @@ type AndAttributes struct {
 	ref terra.Reference
 }
 
-func (a AndAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AndAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AndAttributes) InternalWithRef(ref terra.Reference) AndAttributes {
@@ -260,8 +260,8 @@ type AndCostCategoryAttributes struct {
 	ref terra.Reference
 }
 
-func (cc AndCostCategoryAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc AndCostCategoryAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc AndCostCategoryAttributes) InternalWithRef(ref terra.Reference) AndCostCategoryAttributes {
@@ -288,8 +288,8 @@ type AndDimensionAttributes struct {
 	ref terra.Reference
 }
 
-func (d AndDimensionAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d AndDimensionAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d AndDimensionAttributes) InternalWithRef(ref terra.Reference) AndDimensionAttributes {
@@ -316,8 +316,8 @@ type AndTagsAttributes struct {
 	ref terra.Reference
 }
 
-func (t AndTagsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t AndTagsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t AndTagsAttributes) InternalWithRef(ref terra.Reference) AndTagsAttributes {
@@ -344,8 +344,8 @@ type ThresholdExpressionCostCategoryAttributes struct {
 	ref terra.Reference
 }
 
-func (cc ThresholdExpressionCostCategoryAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc ThresholdExpressionCostCategoryAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc ThresholdExpressionCostCategoryAttributes) InternalWithRef(ref terra.Reference) ThresholdExpressionCostCategoryAttributes {
@@ -372,8 +372,8 @@ type ThresholdExpressionDimensionAttributes struct {
 	ref terra.Reference
 }
 
-func (d ThresholdExpressionDimensionAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d ThresholdExpressionDimensionAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d ThresholdExpressionDimensionAttributes) InternalWithRef(ref terra.Reference) ThresholdExpressionDimensionAttributes {
@@ -400,8 +400,8 @@ type NotAttributes struct {
 	ref terra.Reference
 }
 
-func (n NotAttributes) InternalRef() terra.Reference {
-	return n.ref
+func (n NotAttributes) InternalRef() (terra.Reference, error) {
+	return n.ref, nil
 }
 
 func (n NotAttributes) InternalWithRef(ref terra.Reference) NotAttributes {
@@ -428,8 +428,8 @@ type NotCostCategoryAttributes struct {
 	ref terra.Reference
 }
 
-func (cc NotCostCategoryAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc NotCostCategoryAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc NotCostCategoryAttributes) InternalWithRef(ref terra.Reference) NotCostCategoryAttributes {
@@ -456,8 +456,8 @@ type NotDimensionAttributes struct {
 	ref terra.Reference
 }
 
-func (d NotDimensionAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d NotDimensionAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d NotDimensionAttributes) InternalWithRef(ref terra.Reference) NotDimensionAttributes {
@@ -484,8 +484,8 @@ type NotTagsAttributes struct {
 	ref terra.Reference
 }
 
-func (t NotTagsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t NotTagsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t NotTagsAttributes) InternalWithRef(ref terra.Reference) NotTagsAttributes {
@@ -512,8 +512,8 @@ type OrAttributes struct {
 	ref terra.Reference
 }
 
-func (o OrAttributes) InternalRef() terra.Reference {
-	return o.ref
+func (o OrAttributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o OrAttributes) InternalWithRef(ref terra.Reference) OrAttributes {
@@ -540,8 +540,8 @@ type OrCostCategoryAttributes struct {
 	ref terra.Reference
 }
 
-func (cc OrCostCategoryAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc OrCostCategoryAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc OrCostCategoryAttributes) InternalWithRef(ref terra.Reference) OrCostCategoryAttributes {
@@ -568,8 +568,8 @@ type OrDimensionAttributes struct {
 	ref terra.Reference
 }
 
-func (d OrDimensionAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d OrDimensionAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d OrDimensionAttributes) InternalWithRef(ref terra.Reference) OrDimensionAttributes {
@@ -596,8 +596,8 @@ type OrTagsAttributes struct {
 	ref terra.Reference
 }
 
-func (t OrTagsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t OrTagsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t OrTagsAttributes) InternalWithRef(ref terra.Reference) OrTagsAttributes {
@@ -624,8 +624,8 @@ type ThresholdExpressionTagsAttributes struct {
 	ref terra.Reference
 }
 
-func (t ThresholdExpressionTagsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t ThresholdExpressionTagsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t ThresholdExpressionTagsAttributes) InternalWithRef(ref terra.Reference) ThresholdExpressionTagsAttributes {

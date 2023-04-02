@@ -16,8 +16,8 @@ type EventFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (ef EventFilterAttributes) InternalRef() terra.Reference {
-	return ef.ref
+func (ef EventFilterAttributes) InternalRef() (terra.Reference, error) {
+	return ef.ref, nil
 }
 
 func (ef EventFilterAttributes) InternalWithRef(ref terra.Reference) EventFilterAttributes {

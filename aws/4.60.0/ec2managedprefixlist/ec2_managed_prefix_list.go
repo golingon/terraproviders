@@ -18,8 +18,8 @@ type EntryAttributes struct {
 	ref terra.Reference
 }
 
-func (e EntryAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EntryAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EntryAttributes) InternalWithRef(ref terra.Reference) EntryAttributes {

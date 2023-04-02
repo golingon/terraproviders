@@ -25,8 +25,8 @@ type FilterGroupAttributes struct {
 	ref terra.Reference
 }
 
-func (fg FilterGroupAttributes) InternalRef() terra.Reference {
-	return fg.ref
+func (fg FilterGroupAttributes) InternalRef() (terra.Reference, error) {
+	return fg.ref, nil
 }
 
 func (fg FilterGroupAttributes) InternalWithRef(ref terra.Reference) FilterGroupAttributes {
@@ -45,8 +45,8 @@ type FilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes {

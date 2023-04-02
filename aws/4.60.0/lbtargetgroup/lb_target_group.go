@@ -50,8 +50,8 @@ type HealthCheckAttributes struct {
 	ref terra.Reference
 }
 
-func (hc HealthCheckAttributes) InternalRef() terra.Reference {
-	return hc.ref
+func (hc HealthCheckAttributes) InternalRef() (terra.Reference, error) {
+	return hc.ref, nil
 }
 
 func (hc HealthCheckAttributes) InternalWithRef(ref terra.Reference) HealthCheckAttributes {
@@ -102,8 +102,8 @@ type StickinessAttributes struct {
 	ref terra.Reference
 }
 
-func (s StickinessAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s StickinessAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s StickinessAttributes) InternalWithRef(ref terra.Reference) StickinessAttributes {
@@ -134,8 +134,8 @@ type TargetFailoverAttributes struct {
 	ref terra.Reference
 }
 
-func (tf TargetFailoverAttributes) InternalRef() terra.Reference {
-	return tf.ref
+func (tf TargetFailoverAttributes) InternalRef() (terra.Reference, error) {
+	return tf.ref, nil
 }
 
 func (tf TargetFailoverAttributes) InternalWithRef(ref terra.Reference) TargetFailoverAttributes {

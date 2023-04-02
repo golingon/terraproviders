@@ -21,8 +21,8 @@ type AllowedPublishersAttributes struct {
 	ref terra.Reference
 }
 
-func (ap AllowedPublishersAttributes) InternalRef() terra.Reference {
-	return ap.ref
+func (ap AllowedPublishersAttributes) InternalRef() (terra.Reference, error) {
+	return ap.ref, nil
 }
 
 func (ap AllowedPublishersAttributes) InternalWithRef(ref terra.Reference) AllowedPublishersAttributes {
@@ -41,8 +41,8 @@ type PoliciesAttributes struct {
 	ref terra.Reference
 }
 
-func (p PoliciesAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PoliciesAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PoliciesAttributes) InternalWithRef(ref terra.Reference) PoliciesAttributes {

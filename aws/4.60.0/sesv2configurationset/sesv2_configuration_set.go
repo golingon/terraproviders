@@ -55,8 +55,8 @@ type DeliveryOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (do DeliveryOptionsAttributes) InternalRef() terra.Reference {
-	return do.ref
+func (do DeliveryOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return do.ref, nil
 }
 
 func (do DeliveryOptionsAttributes) InternalWithRef(ref terra.Reference) DeliveryOptionsAttributes {
@@ -79,8 +79,8 @@ type ReputationOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (ro ReputationOptionsAttributes) InternalRef() terra.Reference {
-	return ro.ref
+func (ro ReputationOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return ro.ref, nil
 }
 
 func (ro ReputationOptionsAttributes) InternalWithRef(ref terra.Reference) ReputationOptionsAttributes {
@@ -103,8 +103,8 @@ type SendingOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (so SendingOptionsAttributes) InternalRef() terra.Reference {
-	return so.ref
+func (so SendingOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return so.ref, nil
 }
 
 func (so SendingOptionsAttributes) InternalWithRef(ref terra.Reference) SendingOptionsAttributes {
@@ -123,8 +123,8 @@ type SuppressionOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (so SuppressionOptionsAttributes) InternalRef() terra.Reference {
-	return so.ref
+func (so SuppressionOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return so.ref, nil
 }
 
 func (so SuppressionOptionsAttributes) InternalWithRef(ref terra.Reference) SuppressionOptionsAttributes {
@@ -143,8 +143,8 @@ type TrackingOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (to TrackingOptionsAttributes) InternalRef() terra.Reference {
-	return to.ref
+func (to TrackingOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return to.ref, nil
 }
 
 func (to TrackingOptionsAttributes) InternalWithRef(ref terra.Reference) TrackingOptionsAttributes {
@@ -163,8 +163,8 @@ type VdmOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (vo VdmOptionsAttributes) InternalRef() terra.Reference {
-	return vo.ref
+func (vo VdmOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return vo.ref, nil
 }
 
 func (vo VdmOptionsAttributes) InternalWithRef(ref terra.Reference) VdmOptionsAttributes {
@@ -187,8 +187,8 @@ type DashboardOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (do DashboardOptionsAttributes) InternalRef() terra.Reference {
-	return do.ref
+func (do DashboardOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return do.ref, nil
 }
 
 func (do DashboardOptionsAttributes) InternalWithRef(ref terra.Reference) DashboardOptionsAttributes {
@@ -207,8 +207,8 @@ type GuardianOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (_go GuardianOptionsAttributes) InternalRef() terra.Reference {
-	return _go.ref
+func (_go GuardianOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return _go.ref, nil
 }
 
 func (_go GuardianOptionsAttributes) InternalWithRef(ref terra.Reference) GuardianOptionsAttributes {

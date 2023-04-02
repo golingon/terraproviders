@@ -25,8 +25,8 @@ type SelectorAttributes struct {
 	ref terra.Reference
 }
 
-func (s SelectorAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SelectorAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SelectorAttributes) InternalWithRef(ref terra.Reference) SelectorAttributes {
@@ -49,8 +49,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

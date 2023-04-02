@@ -13,8 +13,8 @@ type RotationRulesAttributes struct {
 	ref terra.Reference
 }
 
-func (rr RotationRulesAttributes) InternalRef() terra.Reference {
-	return rr.ref
+func (rr RotationRulesAttributes) InternalRef() (terra.Reference, error) {
+	return rr.ref, nil
 }
 
 func (rr RotationRulesAttributes) InternalWithRef(ref terra.Reference) RotationRulesAttributes {

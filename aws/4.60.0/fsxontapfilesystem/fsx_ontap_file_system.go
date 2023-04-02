@@ -38,8 +38,8 @@ type EndpointsAttributes struct {
 	ref terra.Reference
 }
 
-func (e EndpointsAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EndpointsAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EndpointsAttributes) InternalWithRef(ref terra.Reference) EndpointsAttributes {
@@ -62,8 +62,8 @@ type InterclusterAttributes struct {
 	ref terra.Reference
 }
 
-func (i InterclusterAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i InterclusterAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i InterclusterAttributes) InternalWithRef(ref terra.Reference) InterclusterAttributes {
@@ -86,8 +86,8 @@ type ManagementAttributes struct {
 	ref terra.Reference
 }
 
-func (m ManagementAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m ManagementAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m ManagementAttributes) InternalWithRef(ref terra.Reference) ManagementAttributes {
@@ -110,8 +110,8 @@ type DiskIopsConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (dic DiskIopsConfigurationAttributes) InternalRef() terra.Reference {
-	return dic.ref
+func (dic DiskIopsConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return dic.ref, nil
 }
 
 func (dic DiskIopsConfigurationAttributes) InternalWithRef(ref terra.Reference) DiskIopsConfigurationAttributes {
@@ -134,8 +134,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

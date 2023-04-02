@@ -20,8 +20,8 @@ type RoutingStrategyAttributes struct {
 	ref terra.Reference
 }
 
-func (rs RoutingStrategyAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs RoutingStrategyAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs RoutingStrategyAttributes) InternalWithRef(ref terra.Reference) RoutingStrategyAttributes {

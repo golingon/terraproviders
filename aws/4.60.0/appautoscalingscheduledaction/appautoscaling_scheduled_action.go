@@ -18,8 +18,8 @@ type ScalableTargetActionAttributes struct {
 	ref terra.Reference
 }
 
-func (sta ScalableTargetActionAttributes) InternalRef() terra.Reference {
-	return sta.ref
+func (sta ScalableTargetActionAttributes) InternalRef() (terra.Reference, error) {
+	return sta.ref, nil
 }
 
 func (sta ScalableTargetActionAttributes) InternalWithRef(ref terra.Reference) ScalableTargetActionAttributes {

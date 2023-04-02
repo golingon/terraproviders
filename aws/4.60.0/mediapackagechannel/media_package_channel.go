@@ -18,8 +18,8 @@ type HlsIngestAttributes struct {
 	ref terra.Reference
 }
 
-func (hi HlsIngestAttributes) InternalRef() terra.Reference {
-	return hi.ref
+func (hi HlsIngestAttributes) InternalRef() (terra.Reference, error) {
+	return hi.ref, nil
 }
 
 func (hi HlsIngestAttributes) InternalWithRef(ref terra.Reference) HlsIngestAttributes {
@@ -38,8 +38,8 @@ type IngestEndpointsAttributes struct {
 	ref terra.Reference
 }
 
-func (ie IngestEndpointsAttributes) InternalRef() terra.Reference {
-	return ie.ref
+func (ie IngestEndpointsAttributes) InternalRef() (terra.Reference, error) {
+	return ie.ref, nil
 }
 
 func (ie IngestEndpointsAttributes) InternalWithRef(ref terra.Reference) IngestEndpointsAttributes {

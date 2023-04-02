@@ -18,8 +18,8 @@ type EndpointConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ec EndpointConfigurationAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec EndpointConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec EndpointConfigurationAttributes) InternalWithRef(ref terra.Reference) EndpointConfigurationAttributes {

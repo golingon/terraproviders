@@ -103,8 +103,8 @@ type CatalogTargetAttributes struct {
 	ref terra.Reference
 }
 
-func (ct CatalogTargetAttributes) InternalRef() terra.Reference {
-	return ct.ref
+func (ct CatalogTargetAttributes) InternalRef() (terra.Reference, error) {
+	return ct.ref, nil
 }
 
 func (ct CatalogTargetAttributes) InternalWithRef(ref terra.Reference) CatalogTargetAttributes {
@@ -139,8 +139,8 @@ type DeltaTargetAttributes struct {
 	ref terra.Reference
 }
 
-func (dt DeltaTargetAttributes) InternalRef() terra.Reference {
-	return dt.ref
+func (dt DeltaTargetAttributes) InternalRef() (terra.Reference, error) {
+	return dt.ref, nil
 }
 
 func (dt DeltaTargetAttributes) InternalWithRef(ref terra.Reference) DeltaTargetAttributes {
@@ -171,8 +171,8 @@ type DynamodbTargetAttributes struct {
 	ref terra.Reference
 }
 
-func (dt DynamodbTargetAttributes) InternalRef() terra.Reference {
-	return dt.ref
+func (dt DynamodbTargetAttributes) InternalRef() (terra.Reference, error) {
+	return dt.ref, nil
 }
 
 func (dt DynamodbTargetAttributes) InternalWithRef(ref terra.Reference) DynamodbTargetAttributes {
@@ -199,8 +199,8 @@ type JdbcTargetAttributes struct {
 	ref terra.Reference
 }
 
-func (jt JdbcTargetAttributes) InternalRef() terra.Reference {
-	return jt.ref
+func (jt JdbcTargetAttributes) InternalRef() (terra.Reference, error) {
+	return jt.ref, nil
 }
 
 func (jt JdbcTargetAttributes) InternalWithRef(ref terra.Reference) JdbcTargetAttributes {
@@ -231,8 +231,8 @@ type LakeFormationConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (lfc LakeFormationConfigurationAttributes) InternalRef() terra.Reference {
-	return lfc.ref
+func (lfc LakeFormationConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return lfc.ref, nil
 }
 
 func (lfc LakeFormationConfigurationAttributes) InternalWithRef(ref terra.Reference) LakeFormationConfigurationAttributes {
@@ -255,8 +255,8 @@ type LineageConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (lc LineageConfigurationAttributes) InternalRef() terra.Reference {
-	return lc.ref
+func (lc LineageConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return lc.ref, nil
 }
 
 func (lc LineageConfigurationAttributes) InternalWithRef(ref terra.Reference) LineageConfigurationAttributes {
@@ -275,8 +275,8 @@ type MongodbTargetAttributes struct {
 	ref terra.Reference
 }
 
-func (mt MongodbTargetAttributes) InternalRef() terra.Reference {
-	return mt.ref
+func (mt MongodbTargetAttributes) InternalRef() (terra.Reference, error) {
+	return mt.ref, nil
 }
 
 func (mt MongodbTargetAttributes) InternalWithRef(ref terra.Reference) MongodbTargetAttributes {
@@ -303,8 +303,8 @@ type RecrawlPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (rp RecrawlPolicyAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp RecrawlPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp RecrawlPolicyAttributes) InternalWithRef(ref terra.Reference) RecrawlPolicyAttributes {
@@ -323,8 +323,8 @@ type S3TargetAttributes struct {
 	ref terra.Reference
 }
 
-func (st S3TargetAttributes) InternalRef() terra.Reference {
-	return st.ref
+func (st S3TargetAttributes) InternalRef() (terra.Reference, error) {
+	return st.ref, nil
 }
 
 func (st S3TargetAttributes) InternalWithRef(ref terra.Reference) S3TargetAttributes {
@@ -363,8 +363,8 @@ type SchemaChangePolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (scp SchemaChangePolicyAttributes) InternalRef() terra.Reference {
-	return scp.ref
+func (scp SchemaChangePolicyAttributes) InternalRef() (terra.Reference, error) {
+	return scp.ref, nil
 }
 
 func (scp SchemaChangePolicyAttributes) InternalWithRef(ref terra.Reference) SchemaChangePolicyAttributes {

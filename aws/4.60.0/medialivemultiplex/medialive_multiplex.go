@@ -31,8 +31,8 @@ type MultiplexSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ms MultiplexSettingsAttributes) InternalRef() terra.Reference {
-	return ms.ref
+func (ms MultiplexSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ms.ref, nil
 }
 
 func (ms MultiplexSettingsAttributes) InternalWithRef(ref terra.Reference) MultiplexSettingsAttributes {
@@ -63,8 +63,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

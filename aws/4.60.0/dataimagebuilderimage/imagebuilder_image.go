@@ -20,8 +20,8 @@ type ImageTestsConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (itc ImageTestsConfigurationAttributes) InternalRef() terra.Reference {
-	return itc.ref
+func (itc ImageTestsConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return itc.ref, nil
 }
 
 func (itc ImageTestsConfigurationAttributes) InternalWithRef(ref terra.Reference) ImageTestsConfigurationAttributes {
@@ -44,8 +44,8 @@ type OutputResourcesAttributes struct {
 	ref terra.Reference
 }
 
-func (or OutputResourcesAttributes) InternalRef() terra.Reference {
-	return or.ref
+func (or OutputResourcesAttributes) InternalRef() (terra.Reference, error) {
+	return or.ref, nil
 }
 
 func (or OutputResourcesAttributes) InternalWithRef(ref terra.Reference) OutputResourcesAttributes {
@@ -64,8 +64,8 @@ type AmisAttributes struct {
 	ref terra.Reference
 }
 
-func (a AmisAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AmisAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AmisAttributes) InternalWithRef(ref terra.Reference) AmisAttributes {

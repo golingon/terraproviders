@@ -13,8 +13,8 @@ type PoolAddressRangesAttributes struct {
 	ref terra.Reference
 }
 
-func (par PoolAddressRangesAttributes) InternalRef() terra.Reference {
-	return par.ref
+func (par PoolAddressRangesAttributes) InternalRef() (terra.Reference, error) {
+	return par.ref, nil
 }
 
 func (par PoolAddressRangesAttributes) InternalWithRef(ref terra.Reference) PoolAddressRangesAttributes {

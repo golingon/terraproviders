@@ -22,8 +22,8 @@ type RecurringChargesAttributes struct {
 	ref terra.Reference
 }
 
-func (rc RecurringChargesAttributes) InternalRef() terra.Reference {
-	return rc.ref
+func (rc RecurringChargesAttributes) InternalRef() (terra.Reference, error) {
+	return rc.ref, nil
 }
 
 func (rc RecurringChargesAttributes) InternalWithRef(ref terra.Reference) RecurringChargesAttributes {
@@ -46,8 +46,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

@@ -38,8 +38,8 @@ type AutoDeploymentAttributes struct {
 	ref terra.Reference
 }
 
-func (ad AutoDeploymentAttributes) InternalRef() terra.Reference {
-	return ad.ref
+func (ad AutoDeploymentAttributes) InternalRef() (terra.Reference, error) {
+	return ad.ref, nil
 }
 
 func (ad AutoDeploymentAttributes) InternalWithRef(ref terra.Reference) AutoDeploymentAttributes {
@@ -62,8 +62,8 @@ type OperationPreferencesAttributes struct {
 	ref terra.Reference
 }
 
-func (op OperationPreferencesAttributes) InternalRef() terra.Reference {
-	return op.ref
+func (op OperationPreferencesAttributes) InternalRef() (terra.Reference, error) {
+	return op.ref, nil
 }
 
 func (op OperationPreferencesAttributes) InternalWithRef(ref terra.Reference) OperationPreferencesAttributes {
@@ -102,8 +102,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

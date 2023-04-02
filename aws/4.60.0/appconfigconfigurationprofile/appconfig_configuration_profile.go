@@ -18,8 +18,8 @@ type ValidatorAttributes struct {
 	ref terra.Reference
 }
 
-func (v ValidatorAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v ValidatorAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v ValidatorAttributes) InternalWithRef(ref terra.Reference) ValidatorAttributes {

@@ -25,8 +25,8 @@ type ResourceTagMappingListAttributes struct {
 	ref terra.Reference
 }
 
-func (rtml ResourceTagMappingListAttributes) InternalRef() terra.Reference {
-	return rtml.ref
+func (rtml ResourceTagMappingListAttributes) InternalRef() (terra.Reference, error) {
+	return rtml.ref, nil
 }
 
 func (rtml ResourceTagMappingListAttributes) InternalWithRef(ref terra.Reference) ResourceTagMappingListAttributes {
@@ -53,8 +53,8 @@ type ComplianceDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (cd ComplianceDetailsAttributes) InternalRef() terra.Reference {
-	return cd.ref
+func (cd ComplianceDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return cd.ref, nil
 }
 
 func (cd ComplianceDetailsAttributes) InternalWithRef(ref terra.Reference) ComplianceDetailsAttributes {
@@ -81,8 +81,8 @@ type TagFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (tf TagFilterAttributes) InternalRef() terra.Reference {
-	return tf.ref
+func (tf TagFilterAttributes) InternalRef() (terra.Reference, error) {
+	return tf.ref, nil
 }
 
 func (tf TagFilterAttributes) InternalWithRef(ref terra.Reference) TagFilterAttributes {

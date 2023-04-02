@@ -58,8 +58,8 @@ type AmazonManagedKafkaEventSourceConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (amkesc AmazonManagedKafkaEventSourceConfigAttributes) InternalRef() terra.Reference {
-	return amkesc.ref
+func (amkesc AmazonManagedKafkaEventSourceConfigAttributes) InternalRef() (terra.Reference, error) {
+	return amkesc.ref, nil
 }
 
 func (amkesc AmazonManagedKafkaEventSourceConfigAttributes) InternalWithRef(ref terra.Reference) AmazonManagedKafkaEventSourceConfigAttributes {
@@ -78,8 +78,8 @@ type DestinationConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (dc DestinationConfigAttributes) InternalRef() terra.Reference {
-	return dc.ref
+func (dc DestinationConfigAttributes) InternalRef() (terra.Reference, error) {
+	return dc.ref, nil
 }
 
 func (dc DestinationConfigAttributes) InternalWithRef(ref terra.Reference) DestinationConfigAttributes {
@@ -98,8 +98,8 @@ type OnFailureAttributes struct {
 	ref terra.Reference
 }
 
-func (of OnFailureAttributes) InternalRef() terra.Reference {
-	return of.ref
+func (of OnFailureAttributes) InternalRef() (terra.Reference, error) {
+	return of.ref, nil
 }
 
 func (of OnFailureAttributes) InternalWithRef(ref terra.Reference) OnFailureAttributes {
@@ -118,8 +118,8 @@ type FilterCriteriaAttributes struct {
 	ref terra.Reference
 }
 
-func (fc FilterCriteriaAttributes) InternalRef() terra.Reference {
-	return fc.ref
+func (fc FilterCriteriaAttributes) InternalRef() (terra.Reference, error) {
+	return fc.ref, nil
 }
 
 func (fc FilterCriteriaAttributes) InternalWithRef(ref terra.Reference) FilterCriteriaAttributes {
@@ -138,8 +138,8 @@ type FilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes {
@@ -158,8 +158,8 @@ type ScalingConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sc ScalingConfigAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc ScalingConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc ScalingConfigAttributes) InternalWithRef(ref terra.Reference) ScalingConfigAttributes {
@@ -178,8 +178,8 @@ type SelfManagedEventSourceAttributes struct {
 	ref terra.Reference
 }
 
-func (smes SelfManagedEventSourceAttributes) InternalRef() terra.Reference {
-	return smes.ref
+func (smes SelfManagedEventSourceAttributes) InternalRef() (terra.Reference, error) {
+	return smes.ref, nil
 }
 
 func (smes SelfManagedEventSourceAttributes) InternalWithRef(ref terra.Reference) SelfManagedEventSourceAttributes {
@@ -198,8 +198,8 @@ type SelfManagedKafkaEventSourceConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (smkesc SelfManagedKafkaEventSourceConfigAttributes) InternalRef() terra.Reference {
-	return smkesc.ref
+func (smkesc SelfManagedKafkaEventSourceConfigAttributes) InternalRef() (terra.Reference, error) {
+	return smkesc.ref, nil
 }
 
 func (smkesc SelfManagedKafkaEventSourceConfigAttributes) InternalWithRef(ref terra.Reference) SelfManagedKafkaEventSourceConfigAttributes {
@@ -218,8 +218,8 @@ type SourceAccessConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (sac SourceAccessConfigurationAttributes) InternalRef() terra.Reference {
-	return sac.ref
+func (sac SourceAccessConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return sac.ref, nil
 }
 
 func (sac SourceAccessConfigurationAttributes) InternalWithRef(ref terra.Reference) SourceAccessConfigurationAttributes {

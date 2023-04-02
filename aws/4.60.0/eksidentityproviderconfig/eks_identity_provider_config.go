@@ -37,8 +37,8 @@ type OidcAttributes struct {
 	ref terra.Reference
 }
 
-func (o OidcAttributes) InternalRef() terra.Reference {
-	return o.ref
+func (o OidcAttributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o OidcAttributes) InternalWithRef(ref terra.Reference) OidcAttributes {
@@ -85,8 +85,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

@@ -51,8 +51,8 @@ type AliasAttributes struct {
 	ref terra.Reference
 }
 
-func (a AliasAttributes) InternalRef() terra.Reference {
-	return a.ref
+func (a AliasAttributes) InternalRef() (terra.Reference, error) {
+	return a.ref, nil
 }
 
 func (a AliasAttributes) InternalWithRef(ref terra.Reference) AliasAttributes {
@@ -79,8 +79,8 @@ type CidrRoutingPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (crp CidrRoutingPolicyAttributes) InternalRef() terra.Reference {
-	return crp.ref
+func (crp CidrRoutingPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return crp.ref, nil
 }
 
 func (crp CidrRoutingPolicyAttributes) InternalWithRef(ref terra.Reference) CidrRoutingPolicyAttributes {
@@ -103,8 +103,8 @@ type FailoverRoutingPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (frp FailoverRoutingPolicyAttributes) InternalRef() terra.Reference {
-	return frp.ref
+func (frp FailoverRoutingPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return frp.ref, nil
 }
 
 func (frp FailoverRoutingPolicyAttributes) InternalWithRef(ref terra.Reference) FailoverRoutingPolicyAttributes {
@@ -123,8 +123,8 @@ type GeolocationRoutingPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (grp GeolocationRoutingPolicyAttributes) InternalRef() terra.Reference {
-	return grp.ref
+func (grp GeolocationRoutingPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return grp.ref, nil
 }
 
 func (grp GeolocationRoutingPolicyAttributes) InternalWithRef(ref terra.Reference) GeolocationRoutingPolicyAttributes {
@@ -151,8 +151,8 @@ type LatencyRoutingPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (lrp LatencyRoutingPolicyAttributes) InternalRef() terra.Reference {
-	return lrp.ref
+func (lrp LatencyRoutingPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return lrp.ref, nil
 }
 
 func (lrp LatencyRoutingPolicyAttributes) InternalWithRef(ref terra.Reference) LatencyRoutingPolicyAttributes {
@@ -171,8 +171,8 @@ type WeightedRoutingPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (wrp WeightedRoutingPolicyAttributes) InternalRef() terra.Reference {
-	return wrp.ref
+func (wrp WeightedRoutingPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return wrp.ref, nil
 }
 
 func (wrp WeightedRoutingPolicyAttributes) InternalWithRef(ref terra.Reference) WeightedRoutingPolicyAttributes {

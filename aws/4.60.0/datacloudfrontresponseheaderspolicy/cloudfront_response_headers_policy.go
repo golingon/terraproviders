@@ -66,8 +66,8 @@ type CorsConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (cc CorsConfigAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc CorsConfigAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc CorsConfigAttributes) InternalWithRef(ref terra.Reference) CorsConfigAttributes {
@@ -110,8 +110,8 @@ type AccessControlAllowHeadersAttributes struct {
 	ref terra.Reference
 }
 
-func (acah AccessControlAllowHeadersAttributes) InternalRef() terra.Reference {
-	return acah.ref
+func (acah AccessControlAllowHeadersAttributes) InternalRef() (terra.Reference, error) {
+	return acah.ref, nil
 }
 
 func (acah AccessControlAllowHeadersAttributes) InternalWithRef(ref terra.Reference) AccessControlAllowHeadersAttributes {
@@ -130,8 +130,8 @@ type AccessControlAllowMethodsAttributes struct {
 	ref terra.Reference
 }
 
-func (acam AccessControlAllowMethodsAttributes) InternalRef() terra.Reference {
-	return acam.ref
+func (acam AccessControlAllowMethodsAttributes) InternalRef() (terra.Reference, error) {
+	return acam.ref, nil
 }
 
 func (acam AccessControlAllowMethodsAttributes) InternalWithRef(ref terra.Reference) AccessControlAllowMethodsAttributes {
@@ -150,8 +150,8 @@ type AccessControlAllowOriginsAttributes struct {
 	ref terra.Reference
 }
 
-func (acao AccessControlAllowOriginsAttributes) InternalRef() terra.Reference {
-	return acao.ref
+func (acao AccessControlAllowOriginsAttributes) InternalRef() (terra.Reference, error) {
+	return acao.ref, nil
 }
 
 func (acao AccessControlAllowOriginsAttributes) InternalWithRef(ref terra.Reference) AccessControlAllowOriginsAttributes {
@@ -170,8 +170,8 @@ type AccessControlExposeHeadersAttributes struct {
 	ref terra.Reference
 }
 
-func (aceh AccessControlExposeHeadersAttributes) InternalRef() terra.Reference {
-	return aceh.ref
+func (aceh AccessControlExposeHeadersAttributes) InternalRef() (terra.Reference, error) {
+	return aceh.ref, nil
 }
 
 func (aceh AccessControlExposeHeadersAttributes) InternalWithRef(ref terra.Reference) AccessControlExposeHeadersAttributes {
@@ -190,8 +190,8 @@ type CustomHeadersConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (chc CustomHeadersConfigAttributes) InternalRef() terra.Reference {
-	return chc.ref
+func (chc CustomHeadersConfigAttributes) InternalRef() (terra.Reference, error) {
+	return chc.ref, nil
 }
 
 func (chc CustomHeadersConfigAttributes) InternalWithRef(ref terra.Reference) CustomHeadersConfigAttributes {
@@ -210,8 +210,8 @@ type ItemsAttributes struct {
 	ref terra.Reference
 }
 
-func (i ItemsAttributes) InternalRef() terra.Reference {
-	return i.ref
+func (i ItemsAttributes) InternalRef() (terra.Reference, error) {
+	return i.ref, nil
 }
 
 func (i ItemsAttributes) InternalWithRef(ref terra.Reference) ItemsAttributes {
@@ -238,8 +238,8 @@ type SecurityHeadersConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (shc SecurityHeadersConfigAttributes) InternalRef() terra.Reference {
-	return shc.ref
+func (shc SecurityHeadersConfigAttributes) InternalRef() (terra.Reference, error) {
+	return shc.ref, nil
 }
 
 func (shc SecurityHeadersConfigAttributes) InternalWithRef(ref terra.Reference) SecurityHeadersConfigAttributes {
@@ -278,8 +278,8 @@ type ContentSecurityPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (csp ContentSecurityPolicyAttributes) InternalRef() terra.Reference {
-	return csp.ref
+func (csp ContentSecurityPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return csp.ref, nil
 }
 
 func (csp ContentSecurityPolicyAttributes) InternalWithRef(ref terra.Reference) ContentSecurityPolicyAttributes {
@@ -302,8 +302,8 @@ type ContentTypeOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (cto ContentTypeOptionsAttributes) InternalRef() terra.Reference {
-	return cto.ref
+func (cto ContentTypeOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return cto.ref, nil
 }
 
 func (cto ContentTypeOptionsAttributes) InternalWithRef(ref terra.Reference) ContentTypeOptionsAttributes {
@@ -322,8 +322,8 @@ type FrameOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (fo FrameOptionsAttributes) InternalRef() terra.Reference {
-	return fo.ref
+func (fo FrameOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return fo.ref, nil
 }
 
 func (fo FrameOptionsAttributes) InternalWithRef(ref terra.Reference) FrameOptionsAttributes {
@@ -346,8 +346,8 @@ type ReferrerPolicyAttributes struct {
 	ref terra.Reference
 }
 
-func (rp ReferrerPolicyAttributes) InternalRef() terra.Reference {
-	return rp.ref
+func (rp ReferrerPolicyAttributes) InternalRef() (terra.Reference, error) {
+	return rp.ref, nil
 }
 
 func (rp ReferrerPolicyAttributes) InternalWithRef(ref terra.Reference) ReferrerPolicyAttributes {
@@ -370,8 +370,8 @@ type StrictTransportSecurityAttributes struct {
 	ref terra.Reference
 }
 
-func (sts StrictTransportSecurityAttributes) InternalRef() terra.Reference {
-	return sts.ref
+func (sts StrictTransportSecurityAttributes) InternalRef() (terra.Reference, error) {
+	return sts.ref, nil
 }
 
 func (sts StrictTransportSecurityAttributes) InternalWithRef(ref terra.Reference) StrictTransportSecurityAttributes {
@@ -402,8 +402,8 @@ type XssProtectionAttributes struct {
 	ref terra.Reference
 }
 
-func (xp XssProtectionAttributes) InternalRef() terra.Reference {
-	return xp.ref
+func (xp XssProtectionAttributes) InternalRef() (terra.Reference, error) {
+	return xp.ref, nil
 }
 
 func (xp XssProtectionAttributes) InternalWithRef(ref terra.Reference) XssProtectionAttributes {
@@ -434,8 +434,8 @@ type ServerTimingHeadersConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (sthc ServerTimingHeadersConfigAttributes) InternalRef() terra.Reference {
-	return sthc.ref
+func (sthc ServerTimingHeadersConfigAttributes) InternalRef() (terra.Reference, error) {
+	return sthc.ref, nil
 }
 
 func (sthc ServerTimingHeadersConfigAttributes) InternalWithRef(ref terra.Reference) ServerTimingHeadersConfigAttributes {

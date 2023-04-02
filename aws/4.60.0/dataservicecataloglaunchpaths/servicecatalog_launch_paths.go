@@ -23,8 +23,8 @@ type SummariesAttributes struct {
 	ref terra.Reference
 }
 
-func (s SummariesAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SummariesAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SummariesAttributes) InternalWithRef(ref terra.Reference) SummariesAttributes {
@@ -55,8 +55,8 @@ type ConstraintSummariesAttributes struct {
 	ref terra.Reference
 }
 
-func (cs ConstraintSummariesAttributes) InternalRef() terra.Reference {
-	return cs.ref
+func (cs ConstraintSummariesAttributes) InternalRef() (terra.Reference, error) {
+	return cs.ref, nil
 }
 
 func (cs ConstraintSummariesAttributes) InternalWithRef(ref terra.Reference) ConstraintSummariesAttributes {
@@ -79,8 +79,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

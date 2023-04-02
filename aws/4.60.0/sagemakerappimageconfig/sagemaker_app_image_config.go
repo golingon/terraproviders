@@ -34,8 +34,8 @@ type KernelGatewayImageConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (kgic KernelGatewayImageConfigAttributes) InternalRef() terra.Reference {
-	return kgic.ref
+func (kgic KernelGatewayImageConfigAttributes) InternalRef() (terra.Reference, error) {
+	return kgic.ref, nil
 }
 
 func (kgic KernelGatewayImageConfigAttributes) InternalWithRef(ref terra.Reference) KernelGatewayImageConfigAttributes {
@@ -58,8 +58,8 @@ type FileSystemConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (fsc FileSystemConfigAttributes) InternalRef() terra.Reference {
-	return fsc.ref
+func (fsc FileSystemConfigAttributes) InternalRef() (terra.Reference, error) {
+	return fsc.ref, nil
 }
 
 func (fsc FileSystemConfigAttributes) InternalWithRef(ref terra.Reference) FileSystemConfigAttributes {
@@ -86,8 +86,8 @@ type KernelSpecAttributes struct {
 	ref terra.Reference
 }
 
-func (ks KernelSpecAttributes) InternalRef() terra.Reference {
-	return ks.ref
+func (ks KernelSpecAttributes) InternalRef() (terra.Reference, error) {
+	return ks.ref, nil
 }
 
 func (ks KernelSpecAttributes) InternalWithRef(ref terra.Reference) KernelSpecAttributes {

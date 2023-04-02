@@ -18,8 +18,8 @@ type GeoMatchConstraintAttributes struct {
 	ref terra.Reference
 }
 
-func (gmc GeoMatchConstraintAttributes) InternalRef() terra.Reference {
-	return gmc.ref
+func (gmc GeoMatchConstraintAttributes) InternalRef() (terra.Reference, error) {
+	return gmc.ref, nil
 }
 
 func (gmc GeoMatchConstraintAttributes) InternalWithRef(ref terra.Reference) GeoMatchConstraintAttributes {

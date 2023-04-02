@@ -60,8 +60,8 @@ type AdvancedBackupSettingAttributes struct {
 	ref terra.Reference
 }
 
-func (abs AdvancedBackupSettingAttributes) InternalRef() terra.Reference {
-	return abs.ref
+func (abs AdvancedBackupSettingAttributes) InternalRef() (terra.Reference, error) {
+	return abs.ref, nil
 }
 
 func (abs AdvancedBackupSettingAttributes) InternalWithRef(ref terra.Reference) AdvancedBackupSettingAttributes {
@@ -84,8 +84,8 @@ type RuleAttributes struct {
 	ref terra.Reference
 }
 
-func (r RuleAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RuleAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RuleAttributes) InternalWithRef(ref terra.Reference) RuleAttributes {
@@ -136,8 +136,8 @@ type CopyActionAttributes struct {
 	ref terra.Reference
 }
 
-func (ca CopyActionAttributes) InternalRef() terra.Reference {
-	return ca.ref
+func (ca CopyActionAttributes) InternalRef() (terra.Reference, error) {
+	return ca.ref, nil
 }
 
 func (ca CopyActionAttributes) InternalWithRef(ref terra.Reference) CopyActionAttributes {
@@ -160,8 +160,8 @@ type CopyActionLifecycleAttributes struct {
 	ref terra.Reference
 }
 
-func (l CopyActionLifecycleAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l CopyActionLifecycleAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l CopyActionLifecycleAttributes) InternalWithRef(ref terra.Reference) CopyActionLifecycleAttributes {
@@ -184,8 +184,8 @@ type RuleLifecycleAttributes struct {
 	ref terra.Reference
 }
 
-func (l RuleLifecycleAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l RuleLifecycleAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l RuleLifecycleAttributes) InternalWithRef(ref terra.Reference) RuleLifecycleAttributes {

@@ -25,8 +25,8 @@ type IpamPoolCidrsAttributes struct {
 	ref terra.Reference
 }
 
-func (ipc IpamPoolCidrsAttributes) InternalRef() terra.Reference {
-	return ipc.ref
+func (ipc IpamPoolCidrsAttributes) InternalRef() (terra.Reference, error) {
+	return ipc.ref, nil
 }
 
 func (ipc IpamPoolCidrsAttributes) InternalWithRef(ref terra.Reference) IpamPoolCidrsAttributes {
@@ -49,8 +49,8 @@ type FilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes {
@@ -73,8 +73,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

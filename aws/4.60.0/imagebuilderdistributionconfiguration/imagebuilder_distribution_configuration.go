@@ -104,8 +104,8 @@ type DistributionAttributes struct {
 	ref terra.Reference
 }
 
-func (d DistributionAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DistributionAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DistributionAttributes) InternalWithRef(ref terra.Reference) DistributionAttributes {
@@ -144,8 +144,8 @@ type AmiDistributionConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (adc AmiDistributionConfigurationAttributes) InternalRef() terra.Reference {
-	return adc.ref
+func (adc AmiDistributionConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return adc.ref, nil
 }
 
 func (adc AmiDistributionConfigurationAttributes) InternalWithRef(ref terra.Reference) AmiDistributionConfigurationAttributes {
@@ -184,8 +184,8 @@ type LaunchPermissionAttributes struct {
 	ref terra.Reference
 }
 
-func (lp LaunchPermissionAttributes) InternalRef() terra.Reference {
-	return lp.ref
+func (lp LaunchPermissionAttributes) InternalRef() (terra.Reference, error) {
+	return lp.ref, nil
 }
 
 func (lp LaunchPermissionAttributes) InternalWithRef(ref terra.Reference) LaunchPermissionAttributes {
@@ -216,8 +216,8 @@ type ContainerDistributionConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (cdc ContainerDistributionConfigurationAttributes) InternalRef() terra.Reference {
-	return cdc.ref
+func (cdc ContainerDistributionConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return cdc.ref, nil
 }
 
 func (cdc ContainerDistributionConfigurationAttributes) InternalWithRef(ref terra.Reference) ContainerDistributionConfigurationAttributes {
@@ -244,8 +244,8 @@ type TargetRepositoryAttributes struct {
 	ref terra.Reference
 }
 
-func (tr TargetRepositoryAttributes) InternalRef() terra.Reference {
-	return tr.ref
+func (tr TargetRepositoryAttributes) InternalRef() (terra.Reference, error) {
+	return tr.ref, nil
 }
 
 func (tr TargetRepositoryAttributes) InternalWithRef(ref terra.Reference) TargetRepositoryAttributes {
@@ -268,8 +268,8 @@ type FastLaunchConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (flc FastLaunchConfigurationAttributes) InternalRef() terra.Reference {
-	return flc.ref
+func (flc FastLaunchConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return flc.ref, nil
 }
 
 func (flc FastLaunchConfigurationAttributes) InternalWithRef(ref terra.Reference) FastLaunchConfigurationAttributes {
@@ -304,8 +304,8 @@ type LaunchTemplateAttributes struct {
 	ref terra.Reference
 }
 
-func (lt LaunchTemplateAttributes) InternalRef() terra.Reference {
-	return lt.ref
+func (lt LaunchTemplateAttributes) InternalRef() (terra.Reference, error) {
+	return lt.ref, nil
 }
 
 func (lt LaunchTemplateAttributes) InternalWithRef(ref terra.Reference) LaunchTemplateAttributes {
@@ -332,8 +332,8 @@ type SnapshotConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (sc SnapshotConfigurationAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc SnapshotConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc SnapshotConfigurationAttributes) InternalWithRef(ref terra.Reference) SnapshotConfigurationAttributes {
@@ -352,8 +352,8 @@ type LaunchTemplateConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ltc LaunchTemplateConfigurationAttributes) InternalRef() terra.Reference {
-	return ltc.ref
+func (ltc LaunchTemplateConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ltc.ref, nil
 }
 
 func (ltc LaunchTemplateConfigurationAttributes) InternalWithRef(ref terra.Reference) LaunchTemplateConfigurationAttributes {

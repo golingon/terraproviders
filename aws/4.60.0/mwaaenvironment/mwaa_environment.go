@@ -82,8 +82,8 @@ type LastUpdatedAttributes struct {
 	ref terra.Reference
 }
 
-func (lu LastUpdatedAttributes) InternalRef() terra.Reference {
-	return lu.ref
+func (lu LastUpdatedAttributes) InternalRef() (terra.Reference, error) {
+	return lu.ref, nil
 }
 
 func (lu LastUpdatedAttributes) InternalWithRef(ref terra.Reference) LastUpdatedAttributes {
@@ -110,8 +110,8 @@ type ErrorAttributes struct {
 	ref terra.Reference
 }
 
-func (e ErrorAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e ErrorAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e ErrorAttributes) InternalWithRef(ref terra.Reference) ErrorAttributes {
@@ -134,8 +134,8 @@ type LoggingConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (lc LoggingConfigurationAttributes) InternalRef() terra.Reference {
-	return lc.ref
+func (lc LoggingConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return lc.ref, nil
 }
 
 func (lc LoggingConfigurationAttributes) InternalWithRef(ref terra.Reference) LoggingConfigurationAttributes {
@@ -170,8 +170,8 @@ type DagProcessingLogsAttributes struct {
 	ref terra.Reference
 }
 
-func (dpl DagProcessingLogsAttributes) InternalRef() terra.Reference {
-	return dpl.ref
+func (dpl DagProcessingLogsAttributes) InternalRef() (terra.Reference, error) {
+	return dpl.ref, nil
 }
 
 func (dpl DagProcessingLogsAttributes) InternalWithRef(ref terra.Reference) DagProcessingLogsAttributes {
@@ -198,8 +198,8 @@ type SchedulerLogsAttributes struct {
 	ref terra.Reference
 }
 
-func (sl SchedulerLogsAttributes) InternalRef() terra.Reference {
-	return sl.ref
+func (sl SchedulerLogsAttributes) InternalRef() (terra.Reference, error) {
+	return sl.ref, nil
 }
 
 func (sl SchedulerLogsAttributes) InternalWithRef(ref terra.Reference) SchedulerLogsAttributes {
@@ -226,8 +226,8 @@ type TaskLogsAttributes struct {
 	ref terra.Reference
 }
 
-func (tl TaskLogsAttributes) InternalRef() terra.Reference {
-	return tl.ref
+func (tl TaskLogsAttributes) InternalRef() (terra.Reference, error) {
+	return tl.ref, nil
 }
 
 func (tl TaskLogsAttributes) InternalWithRef(ref terra.Reference) TaskLogsAttributes {
@@ -254,8 +254,8 @@ type WebserverLogsAttributes struct {
 	ref terra.Reference
 }
 
-func (wl WebserverLogsAttributes) InternalRef() terra.Reference {
-	return wl.ref
+func (wl WebserverLogsAttributes) InternalRef() (terra.Reference, error) {
+	return wl.ref, nil
 }
 
 func (wl WebserverLogsAttributes) InternalWithRef(ref terra.Reference) WebserverLogsAttributes {
@@ -282,8 +282,8 @@ type WorkerLogsAttributes struct {
 	ref terra.Reference
 }
 
-func (wl WorkerLogsAttributes) InternalRef() terra.Reference {
-	return wl.ref
+func (wl WorkerLogsAttributes) InternalRef() (terra.Reference, error) {
+	return wl.ref, nil
 }
 
 func (wl WorkerLogsAttributes) InternalWithRef(ref terra.Reference) WorkerLogsAttributes {
@@ -310,8 +310,8 @@ type NetworkConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (nc NetworkConfigurationAttributes) InternalRef() terra.Reference {
-	return nc.ref
+func (nc NetworkConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return nc.ref, nil
 }
 
 func (nc NetworkConfigurationAttributes) InternalWithRef(ref terra.Reference) NetworkConfigurationAttributes {
@@ -334,8 +334,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

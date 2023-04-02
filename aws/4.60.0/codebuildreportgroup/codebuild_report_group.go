@@ -31,8 +31,8 @@ type ExportConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (ec ExportConfigAttributes) InternalRef() terra.Reference {
-	return ec.ref
+func (ec ExportConfigAttributes) InternalRef() (terra.Reference, error) {
+	return ec.ref, nil
 }
 
 func (ec ExportConfigAttributes) InternalWithRef(ref terra.Reference) ExportConfigAttributes {
@@ -55,8 +55,8 @@ type S3DestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (sd S3DestinationAttributes) InternalRef() terra.Reference {
-	return sd.ref
+func (sd S3DestinationAttributes) InternalRef() (terra.Reference, error) {
+	return sd.ref, nil
 }
 
 func (sd S3DestinationAttributes) InternalWithRef(ref terra.Reference) S3DestinationAttributes {

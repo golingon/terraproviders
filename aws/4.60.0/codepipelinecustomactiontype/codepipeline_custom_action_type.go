@@ -53,8 +53,8 @@ type ConfigurationPropertyAttributes struct {
 	ref terra.Reference
 }
 
-func (cp ConfigurationPropertyAttributes) InternalRef() terra.Reference {
-	return cp.ref
+func (cp ConfigurationPropertyAttributes) InternalRef() (terra.Reference, error) {
+	return cp.ref, nil
 }
 
 func (cp ConfigurationPropertyAttributes) InternalWithRef(ref terra.Reference) ConfigurationPropertyAttributes {
@@ -97,8 +97,8 @@ type InputArtifactDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (iad InputArtifactDetailsAttributes) InternalRef() terra.Reference {
-	return iad.ref
+func (iad InputArtifactDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return iad.ref, nil
 }
 
 func (iad InputArtifactDetailsAttributes) InternalWithRef(ref terra.Reference) InputArtifactDetailsAttributes {
@@ -121,8 +121,8 @@ type OutputArtifactDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (oad OutputArtifactDetailsAttributes) InternalRef() terra.Reference {
-	return oad.ref
+func (oad OutputArtifactDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return oad.ref, nil
 }
 
 func (oad OutputArtifactDetailsAttributes) InternalWithRef(ref terra.Reference) OutputArtifactDetailsAttributes {
@@ -145,8 +145,8 @@ type SettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (s SettingsAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SettingsAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SettingsAttributes) InternalWithRef(ref terra.Reference) SettingsAttributes {

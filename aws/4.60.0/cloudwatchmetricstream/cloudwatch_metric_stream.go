@@ -44,8 +44,8 @@ type ExcludeFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (ef ExcludeFilterAttributes) InternalRef() terra.Reference {
-	return ef.ref
+func (ef ExcludeFilterAttributes) InternalRef() (terra.Reference, error) {
+	return ef.ref, nil
 }
 
 func (ef ExcludeFilterAttributes) InternalWithRef(ref terra.Reference) ExcludeFilterAttributes {
@@ -64,8 +64,8 @@ type IncludeFilterAttributes struct {
 	ref terra.Reference
 }
 
-func (_if IncludeFilterAttributes) InternalRef() terra.Reference {
-	return _if.ref
+func (_if IncludeFilterAttributes) InternalRef() (terra.Reference, error) {
+	return _if.ref, nil
 }
 
 func (_if IncludeFilterAttributes) InternalWithRef(ref terra.Reference) IncludeFilterAttributes {
@@ -84,8 +84,8 @@ type StatisticsConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (sc StatisticsConfigurationAttributes) InternalRef() terra.Reference {
-	return sc.ref
+func (sc StatisticsConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return sc.ref, nil
 }
 
 func (sc StatisticsConfigurationAttributes) InternalWithRef(ref terra.Reference) StatisticsConfigurationAttributes {
@@ -108,8 +108,8 @@ type IncludeMetricAttributes struct {
 	ref terra.Reference
 }
 
-func (im IncludeMetricAttributes) InternalRef() terra.Reference {
-	return im.ref
+func (im IncludeMetricAttributes) InternalRef() (terra.Reference, error) {
+	return im.ref, nil
 }
 
 func (im IncludeMetricAttributes) InternalWithRef(ref terra.Reference) IncludeMetricAttributes {
@@ -132,8 +132,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

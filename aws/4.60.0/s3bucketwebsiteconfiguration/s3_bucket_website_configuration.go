@@ -55,8 +55,8 @@ type ErrorDocumentAttributes struct {
 	ref terra.Reference
 }
 
-func (ed ErrorDocumentAttributes) InternalRef() terra.Reference {
-	return ed.ref
+func (ed ErrorDocumentAttributes) InternalRef() (terra.Reference, error) {
+	return ed.ref, nil
 }
 
 func (ed ErrorDocumentAttributes) InternalWithRef(ref terra.Reference) ErrorDocumentAttributes {
@@ -75,8 +75,8 @@ type IndexDocumentAttributes struct {
 	ref terra.Reference
 }
 
-func (id IndexDocumentAttributes) InternalRef() terra.Reference {
-	return id.ref
+func (id IndexDocumentAttributes) InternalRef() (terra.Reference, error) {
+	return id.ref, nil
 }
 
 func (id IndexDocumentAttributes) InternalWithRef(ref terra.Reference) IndexDocumentAttributes {
@@ -95,8 +95,8 @@ type RedirectAllRequestsToAttributes struct {
 	ref terra.Reference
 }
 
-func (rart RedirectAllRequestsToAttributes) InternalRef() terra.Reference {
-	return rart.ref
+func (rart RedirectAllRequestsToAttributes) InternalRef() (terra.Reference, error) {
+	return rart.ref, nil
 }
 
 func (rart RedirectAllRequestsToAttributes) InternalWithRef(ref terra.Reference) RedirectAllRequestsToAttributes {
@@ -119,8 +119,8 @@ type RoutingRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (rr RoutingRuleAttributes) InternalRef() terra.Reference {
-	return rr.ref
+func (rr RoutingRuleAttributes) InternalRef() (terra.Reference, error) {
+	return rr.ref, nil
 }
 
 func (rr RoutingRuleAttributes) InternalWithRef(ref terra.Reference) RoutingRuleAttributes {
@@ -143,8 +143,8 @@ type ConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConditionAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConditionAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConditionAttributes) InternalWithRef(ref terra.Reference) ConditionAttributes {
@@ -167,8 +167,8 @@ type RedirectAttributes struct {
 	ref terra.Reference
 }
 
-func (r RedirectAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RedirectAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RedirectAttributes) InternalWithRef(ref terra.Reference) RedirectAttributes {

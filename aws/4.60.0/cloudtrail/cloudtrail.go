@@ -58,8 +58,8 @@ type AdvancedEventSelectorAttributes struct {
 	ref terra.Reference
 }
 
-func (aes AdvancedEventSelectorAttributes) InternalRef() terra.Reference {
-	return aes.ref
+func (aes AdvancedEventSelectorAttributes) InternalRef() (terra.Reference, error) {
+	return aes.ref, nil
 }
 
 func (aes AdvancedEventSelectorAttributes) InternalWithRef(ref terra.Reference) AdvancedEventSelectorAttributes {
@@ -82,8 +82,8 @@ type FieldSelectorAttributes struct {
 	ref terra.Reference
 }
 
-func (fs FieldSelectorAttributes) InternalRef() terra.Reference {
-	return fs.ref
+func (fs FieldSelectorAttributes) InternalRef() (terra.Reference, error) {
+	return fs.ref, nil
 }
 
 func (fs FieldSelectorAttributes) InternalWithRef(ref terra.Reference) FieldSelectorAttributes {
@@ -126,8 +126,8 @@ type EventSelectorAttributes struct {
 	ref terra.Reference
 }
 
-func (es EventSelectorAttributes) InternalRef() terra.Reference {
-	return es.ref
+func (es EventSelectorAttributes) InternalRef() (terra.Reference, error) {
+	return es.ref, nil
 }
 
 func (es EventSelectorAttributes) InternalWithRef(ref terra.Reference) EventSelectorAttributes {
@@ -158,8 +158,8 @@ type DataResourceAttributes struct {
 	ref terra.Reference
 }
 
-func (dr DataResourceAttributes) InternalRef() terra.Reference {
-	return dr.ref
+func (dr DataResourceAttributes) InternalRef() (terra.Reference, error) {
+	return dr.ref, nil
 }
 
 func (dr DataResourceAttributes) InternalWithRef(ref terra.Reference) DataResourceAttributes {
@@ -182,8 +182,8 @@ type InsightSelectorAttributes struct {
 	ref terra.Reference
 }
 
-func (is InsightSelectorAttributes) InternalRef() terra.Reference {
-	return is.ref
+func (is InsightSelectorAttributes) InternalRef() (terra.Reference, error) {
+	return is.ref, nil
 }
 
 func (is InsightSelectorAttributes) InternalWithRef(ref terra.Reference) InsightSelectorAttributes {

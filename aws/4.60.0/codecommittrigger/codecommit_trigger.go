@@ -24,8 +24,8 @@ type TriggerAttributes struct {
 	ref terra.Reference
 }
 
-func (t TriggerAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TriggerAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TriggerAttributes) InternalWithRef(ref terra.Reference) TriggerAttributes {

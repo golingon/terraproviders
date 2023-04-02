@@ -33,8 +33,8 @@ type RoleMappingAttributes struct {
 	ref terra.Reference
 }
 
-func (rm RoleMappingAttributes) InternalRef() terra.Reference {
-	return rm.ref
+func (rm RoleMappingAttributes) InternalRef() (terra.Reference, error) {
+	return rm.ref, nil
 }
 
 func (rm RoleMappingAttributes) InternalWithRef(ref terra.Reference) RoleMappingAttributes {
@@ -65,8 +65,8 @@ type MappingRuleAttributes struct {
 	ref terra.Reference
 }
 
-func (mr MappingRuleAttributes) InternalRef() terra.Reference {
-	return mr.ref
+func (mr MappingRuleAttributes) InternalRef() (terra.Reference, error) {
+	return mr.ref, nil
 }
 
 func (mr MappingRuleAttributes) InternalWithRef(ref terra.Reference) MappingRuleAttributes {

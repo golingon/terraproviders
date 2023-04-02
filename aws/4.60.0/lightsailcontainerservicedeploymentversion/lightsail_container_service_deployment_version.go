@@ -53,8 +53,8 @@ type ContainerAttributes struct {
 	ref terra.Reference
 }
 
-func (c ContainerAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ContainerAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ContainerAttributes) InternalWithRef(ref terra.Reference) ContainerAttributes {
@@ -89,8 +89,8 @@ type PublicEndpointAttributes struct {
 	ref terra.Reference
 }
 
-func (pe PublicEndpointAttributes) InternalRef() terra.Reference {
-	return pe.ref
+func (pe PublicEndpointAttributes) InternalRef() (terra.Reference, error) {
+	return pe.ref, nil
 }
 
 func (pe PublicEndpointAttributes) InternalWithRef(ref terra.Reference) PublicEndpointAttributes {
@@ -117,8 +117,8 @@ type HealthCheckAttributes struct {
 	ref terra.Reference
 }
 
-func (hc HealthCheckAttributes) InternalRef() terra.Reference {
-	return hc.ref
+func (hc HealthCheckAttributes) InternalRef() (terra.Reference, error) {
+	return hc.ref, nil
 }
 
 func (hc HealthCheckAttributes) InternalWithRef(ref terra.Reference) HealthCheckAttributes {
@@ -157,8 +157,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

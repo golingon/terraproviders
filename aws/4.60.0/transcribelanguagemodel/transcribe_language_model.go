@@ -25,8 +25,8 @@ type InputDataConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (idc InputDataConfigAttributes) InternalRef() terra.Reference {
-	return idc.ref
+func (idc InputDataConfigAttributes) InternalRef() (terra.Reference, error) {
+	return idc.ref, nil
 }
 
 func (idc InputDataConfigAttributes) InternalWithRef(ref terra.Reference) InputDataConfigAttributes {
@@ -53,8 +53,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

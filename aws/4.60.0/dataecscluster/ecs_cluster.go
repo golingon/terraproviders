@@ -15,8 +15,8 @@ type ServiceConnectDefaultsAttributes struct {
 	ref terra.Reference
 }
 
-func (scd ServiceConnectDefaultsAttributes) InternalRef() terra.Reference {
-	return scd.ref
+func (scd ServiceConnectDefaultsAttributes) InternalRef() (terra.Reference, error) {
+	return scd.ref, nil
 }
 
 func (scd ServiceConnectDefaultsAttributes) InternalWithRef(ref terra.Reference) ServiceConnectDefaultsAttributes {
@@ -35,8 +35,8 @@ type SettingAttributes struct {
 	ref terra.Reference
 }
 
-func (s SettingAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SettingAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SettingAttributes) InternalWithRef(ref terra.Reference) SettingAttributes {

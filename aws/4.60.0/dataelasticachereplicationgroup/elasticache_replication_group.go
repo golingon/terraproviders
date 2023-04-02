@@ -13,8 +13,8 @@ type LogDeliveryConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ldc LogDeliveryConfigurationAttributes) InternalRef() terra.Reference {
-	return ldc.ref
+func (ldc LogDeliveryConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ldc.ref, nil
 }
 
 func (ldc LogDeliveryConfigurationAttributes) InternalWithRef(ref terra.Reference) LogDeliveryConfigurationAttributes {

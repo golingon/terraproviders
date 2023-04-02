@@ -56,8 +56,8 @@ type EndpointDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (ed EndpointDetailsAttributes) InternalRef() terra.Reference {
-	return ed.ref
+func (ed EndpointDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return ed.ref, nil
 }
 
 func (ed EndpointDetailsAttributes) InternalWithRef(ref terra.Reference) EndpointDetailsAttributes {
@@ -92,8 +92,8 @@ type ProtocolDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (pd ProtocolDetailsAttributes) InternalRef() terra.Reference {
-	return pd.ref
+func (pd ProtocolDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return pd.ref, nil
 }
 
 func (pd ProtocolDetailsAttributes) InternalWithRef(ref terra.Reference) ProtocolDetailsAttributes {
@@ -124,8 +124,8 @@ type WorkflowDetailsAttributes struct {
 	ref terra.Reference
 }
 
-func (wd WorkflowDetailsAttributes) InternalRef() terra.Reference {
-	return wd.ref
+func (wd WorkflowDetailsAttributes) InternalRef() (terra.Reference, error) {
+	return wd.ref, nil
 }
 
 func (wd WorkflowDetailsAttributes) InternalWithRef(ref terra.Reference) WorkflowDetailsAttributes {
@@ -148,8 +148,8 @@ type OnPartialUploadAttributes struct {
 	ref terra.Reference
 }
 
-func (opu OnPartialUploadAttributes) InternalRef() terra.Reference {
-	return opu.ref
+func (opu OnPartialUploadAttributes) InternalRef() (terra.Reference, error) {
+	return opu.ref, nil
 }
 
 func (opu OnPartialUploadAttributes) InternalWithRef(ref terra.Reference) OnPartialUploadAttributes {
@@ -172,8 +172,8 @@ type OnUploadAttributes struct {
 	ref terra.Reference
 }
 
-func (ou OnUploadAttributes) InternalRef() terra.Reference {
-	return ou.ref
+func (ou OnUploadAttributes) InternalRef() (terra.Reference, error) {
+	return ou.ref, nil
 }
 
 func (ou OnUploadAttributes) InternalWithRef(ref terra.Reference) OnUploadAttributes {

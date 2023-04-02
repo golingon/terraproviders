@@ -18,8 +18,8 @@ type InsightsConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ic InsightsConfigurationAttributes) InternalRef() terra.Reference {
-	return ic.ref
+func (ic InsightsConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ic.ref, nil
 }
 
 func (ic InsightsConfigurationAttributes) InternalWithRef(ref terra.Reference) InsightsConfigurationAttributes {

@@ -13,8 +13,8 @@ type DomainValidationOptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (dvo DomainValidationOptionsAttributes) InternalRef() terra.Reference {
-	return dvo.ref
+func (dvo DomainValidationOptionsAttributes) InternalRef() (terra.Reference, error) {
+	return dvo.ref, nil
 }
 
 func (dvo DomainValidationOptionsAttributes) InternalWithRef(ref terra.Reference) DomainValidationOptionsAttributes {

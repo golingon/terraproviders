@@ -32,8 +32,8 @@ type LocationAttributes struct {
 	ref terra.Reference
 }
 
-func (l LocationAttributes) InternalRef() terra.Reference {
-	return l.ref
+func (l LocationAttributes) InternalRef() (terra.Reference, error) {
+	return l.ref, nil
 }
 
 func (l LocationAttributes) InternalWithRef(ref terra.Reference) LocationAttributes {
@@ -52,8 +52,8 @@ type S3Attributes struct {
 	ref terra.Reference
 }
 
-func (s S3Attributes) InternalRef() terra.Reference {
-	return s.ref
+func (s S3Attributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s S3Attributes) InternalWithRef(ref terra.Reference) S3Attributes {
@@ -80,8 +80,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

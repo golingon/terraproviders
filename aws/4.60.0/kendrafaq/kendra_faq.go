@@ -25,8 +25,8 @@ type S3PathAttributes struct {
 	ref terra.Reference
 }
 
-func (sp S3PathAttributes) InternalRef() terra.Reference {
-	return sp.ref
+func (sp S3PathAttributes) InternalRef() (terra.Reference, error) {
+	return sp.ref, nil
 }
 
 func (sp S3PathAttributes) InternalWithRef(ref terra.Reference) S3PathAttributes {
@@ -49,8 +49,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

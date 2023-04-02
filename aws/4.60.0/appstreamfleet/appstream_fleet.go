@@ -30,8 +30,8 @@ type ComputeCapacityAttributes struct {
 	ref terra.Reference
 }
 
-func (cc ComputeCapacityAttributes) InternalRef() terra.Reference {
-	return cc.ref
+func (cc ComputeCapacityAttributes) InternalRef() (terra.Reference, error) {
+	return cc.ref, nil
 }
 
 func (cc ComputeCapacityAttributes) InternalWithRef(ref terra.Reference) ComputeCapacityAttributes {
@@ -62,8 +62,8 @@ type DomainJoinInfoAttributes struct {
 	ref terra.Reference
 }
 
-func (dji DomainJoinInfoAttributes) InternalRef() terra.Reference {
-	return dji.ref
+func (dji DomainJoinInfoAttributes) InternalRef() (terra.Reference, error) {
+	return dji.ref, nil
 }
 
 func (dji DomainJoinInfoAttributes) InternalWithRef(ref terra.Reference) DomainJoinInfoAttributes {
@@ -86,8 +86,8 @@ type VpcConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (vc VpcConfigAttributes) InternalRef() terra.Reference {
-	return vc.ref
+func (vc VpcConfigAttributes) InternalRef() (terra.Reference, error) {
+	return vc.ref, nil
 }
 
 func (vc VpcConfigAttributes) InternalWithRef(ref terra.Reference) VpcConfigAttributes {

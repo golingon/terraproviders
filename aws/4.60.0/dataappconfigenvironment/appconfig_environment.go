@@ -13,8 +13,8 @@ type MonitorAttributes struct {
 	ref terra.Reference
 }
 
-func (m MonitorAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MonitorAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MonitorAttributes) InternalWithRef(ref terra.Reference) MonitorAttributes {

@@ -1514,8 +1514,8 @@ type CdiInputSpecificationAttributes struct {
 	ref terra.Reference
 }
 
-func (cis CdiInputSpecificationAttributes) InternalRef() terra.Reference {
-	return cis.ref
+func (cis CdiInputSpecificationAttributes) InternalRef() (terra.Reference, error) {
+	return cis.ref, nil
 }
 
 func (cis CdiInputSpecificationAttributes) InternalWithRef(ref terra.Reference) CdiInputSpecificationAttributes {
@@ -1534,8 +1534,8 @@ type DestinationsAttributes struct {
 	ref terra.Reference
 }
 
-func (d DestinationsAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d DestinationsAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d DestinationsAttributes) InternalWithRef(ref terra.Reference) DestinationsAttributes {
@@ -1566,8 +1566,8 @@ type MediaPackageSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (mps MediaPackageSettingsAttributes) InternalRef() terra.Reference {
-	return mps.ref
+func (mps MediaPackageSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return mps.ref, nil
 }
 
 func (mps MediaPackageSettingsAttributes) InternalWithRef(ref terra.Reference) MediaPackageSettingsAttributes {
@@ -1586,8 +1586,8 @@ type MultiplexSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ms MultiplexSettingsAttributes) InternalRef() terra.Reference {
-	return ms.ref
+func (ms MultiplexSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ms.ref, nil
 }
 
 func (ms MultiplexSettingsAttributes) InternalWithRef(ref terra.Reference) MultiplexSettingsAttributes {
@@ -1610,8 +1610,8 @@ type SettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (s SettingsAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s SettingsAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s SettingsAttributes) InternalWithRef(ref terra.Reference) SettingsAttributes {
@@ -1642,8 +1642,8 @@ type EncoderSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (es EncoderSettingsAttributes) InternalRef() terra.Reference {
-	return es.ref
+func (es EncoderSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return es.ref, nil
 }
 
 func (es EncoderSettingsAttributes) InternalWithRef(ref terra.Reference) EncoderSettingsAttributes {
@@ -1678,8 +1678,8 @@ type AudioDescriptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (ad AudioDescriptionsAttributes) InternalRef() terra.Reference {
-	return ad.ref
+func (ad AudioDescriptionsAttributes) InternalRef() (terra.Reference, error) {
+	return ad.ref, nil
 }
 
 func (ad AudioDescriptionsAttributes) InternalWithRef(ref terra.Reference) AudioDescriptionsAttributes {
@@ -1738,8 +1738,8 @@ type AudioNormalizationSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ans AudioNormalizationSettingsAttributes) InternalRef() terra.Reference {
-	return ans.ref
+func (ans AudioNormalizationSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ans.ref, nil
 }
 
 func (ans AudioNormalizationSettingsAttributes) InternalWithRef(ref terra.Reference) AudioNormalizationSettingsAttributes {
@@ -1766,8 +1766,8 @@ type AudioWatermarkSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (aws AudioWatermarkSettingsAttributes) InternalRef() terra.Reference {
-	return aws.ref
+func (aws AudioWatermarkSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return aws.ref, nil
 }
 
 func (aws AudioWatermarkSettingsAttributes) InternalWithRef(ref terra.Reference) AudioWatermarkSettingsAttributes {
@@ -1786,8 +1786,8 @@ type NielsenWatermarksSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (nws NielsenWatermarksSettingsAttributes) InternalRef() terra.Reference {
-	return nws.ref
+func (nws NielsenWatermarksSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return nws.ref, nil
 }
 
 func (nws NielsenWatermarksSettingsAttributes) InternalWithRef(ref terra.Reference) NielsenWatermarksSettingsAttributes {
@@ -1814,8 +1814,8 @@ type NielsenCbetSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ncs NielsenCbetSettingsAttributes) InternalRef() terra.Reference {
-	return ncs.ref
+func (ncs NielsenCbetSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ncs.ref, nil
 }
 
 func (ncs NielsenCbetSettingsAttributes) InternalWithRef(ref terra.Reference) NielsenCbetSettingsAttributes {
@@ -1842,8 +1842,8 @@ type NielsenNaesIiNwSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (nnins NielsenNaesIiNwSettingsAttributes) InternalRef() terra.Reference {
-	return nnins.ref
+func (nnins NielsenNaesIiNwSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return nnins.ref, nil
 }
 
 func (nnins NielsenNaesIiNwSettingsAttributes) InternalWithRef(ref terra.Reference) NielsenNaesIiNwSettingsAttributes {
@@ -1866,8 +1866,8 @@ type AudioDescriptionsCodecSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (cs AudioDescriptionsCodecSettingsAttributes) InternalRef() terra.Reference {
-	return cs.ref
+func (cs AudioDescriptionsCodecSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return cs.ref, nil
 }
 
 func (cs AudioDescriptionsCodecSettingsAttributes) InternalWithRef(ref terra.Reference) AudioDescriptionsCodecSettingsAttributes {
@@ -1910,8 +1910,8 @@ type AacSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (as AacSettingsAttributes) InternalRef() terra.Reference {
-	return as.ref
+func (as AacSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return as.ref, nil
 }
 
 func (as AacSettingsAttributes) InternalWithRef(ref terra.Reference) AacSettingsAttributes {
@@ -1962,8 +1962,8 @@ type Ac3SettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (as Ac3SettingsAttributes) InternalRef() terra.Reference {
-	return as.ref
+func (as Ac3SettingsAttributes) InternalRef() (terra.Reference, error) {
+	return as.ref, nil
 }
 
 func (as Ac3SettingsAttributes) InternalWithRef(ref terra.Reference) Ac3SettingsAttributes {
@@ -2006,8 +2006,8 @@ type Eac3AtmosSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (eas Eac3AtmosSettingsAttributes) InternalRef() terra.Reference {
-	return eas.ref
+func (eas Eac3AtmosSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return eas.ref, nil
 }
 
 func (eas Eac3AtmosSettingsAttributes) InternalWithRef(ref terra.Reference) Eac3AtmosSettingsAttributes {
@@ -2050,8 +2050,8 @@ type Eac3SettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (es Eac3SettingsAttributes) InternalRef() terra.Reference {
-	return es.ref
+func (es Eac3SettingsAttributes) InternalRef() (terra.Reference, error) {
+	return es.ref, nil
 }
 
 func (es Eac3SettingsAttributes) InternalWithRef(ref terra.Reference) Eac3SettingsAttributes {
@@ -2146,8 +2146,8 @@ type Mp2SettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ms Mp2SettingsAttributes) InternalRef() terra.Reference {
-	return ms.ref
+func (ms Mp2SettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ms.ref, nil
 }
 
 func (ms Mp2SettingsAttributes) InternalWithRef(ref terra.Reference) Mp2SettingsAttributes {
@@ -2174,8 +2174,8 @@ type PassThroughSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (pts PassThroughSettingsAttributes) InternalRef() terra.Reference {
-	return pts.ref
+func (pts PassThroughSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return pts.ref, nil
 }
 
 func (pts PassThroughSettingsAttributes) InternalWithRef(ref terra.Reference) PassThroughSettingsAttributes {
@@ -2190,8 +2190,8 @@ type WavSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ws WavSettingsAttributes) InternalRef() terra.Reference {
-	return ws.ref
+func (ws WavSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ws.ref, nil
 }
 
 func (ws WavSettingsAttributes) InternalWithRef(ref terra.Reference) WavSettingsAttributes {
@@ -2218,8 +2218,8 @@ type RemixSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (rs RemixSettingsAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs RemixSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs RemixSettingsAttributes) InternalWithRef(ref terra.Reference) RemixSettingsAttributes {
@@ -2246,8 +2246,8 @@ type ChannelMappingsAttributes struct {
 	ref terra.Reference
 }
 
-func (cm ChannelMappingsAttributes) InternalRef() terra.Reference {
-	return cm.ref
+func (cm ChannelMappingsAttributes) InternalRef() (terra.Reference, error) {
+	return cm.ref, nil
 }
 
 func (cm ChannelMappingsAttributes) InternalWithRef(ref terra.Reference) ChannelMappingsAttributes {
@@ -2270,8 +2270,8 @@ type InputChannelLevelsAttributes struct {
 	ref terra.Reference
 }
 
-func (icl InputChannelLevelsAttributes) InternalRef() terra.Reference {
-	return icl.ref
+func (icl InputChannelLevelsAttributes) InternalRef() (terra.Reference, error) {
+	return icl.ref, nil
 }
 
 func (icl InputChannelLevelsAttributes) InternalWithRef(ref terra.Reference) InputChannelLevelsAttributes {
@@ -2294,8 +2294,8 @@ type AvailBlankingAttributes struct {
 	ref terra.Reference
 }
 
-func (ab AvailBlankingAttributes) InternalRef() terra.Reference {
-	return ab.ref
+func (ab AvailBlankingAttributes) InternalRef() (terra.Reference, error) {
+	return ab.ref, nil
 }
 
 func (ab AvailBlankingAttributes) InternalWithRef(ref terra.Reference) AvailBlankingAttributes {
@@ -2318,8 +2318,8 @@ type AvailBlankingImageAttributes struct {
 	ref terra.Reference
 }
 
-func (abi AvailBlankingImageAttributes) InternalRef() terra.Reference {
-	return abi.ref
+func (abi AvailBlankingImageAttributes) InternalRef() (terra.Reference, error) {
+	return abi.ref, nil
 }
 
 func (abi AvailBlankingImageAttributes) InternalWithRef(ref terra.Reference) AvailBlankingImageAttributes {
@@ -2346,8 +2346,8 @@ type OutputGroupsAttributes struct {
 	ref terra.Reference
 }
 
-func (og OutputGroupsAttributes) InternalRef() terra.Reference {
-	return og.ref
+func (og OutputGroupsAttributes) InternalRef() (terra.Reference, error) {
+	return og.ref, nil
 }
 
 func (og OutputGroupsAttributes) InternalWithRef(ref terra.Reference) OutputGroupsAttributes {
@@ -2374,8 +2374,8 @@ type OutputGroupSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ogs OutputGroupSettingsAttributes) InternalRef() terra.Reference {
-	return ogs.ref
+func (ogs OutputGroupSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ogs.ref, nil
 }
 
 func (ogs OutputGroupSettingsAttributes) InternalWithRef(ref terra.Reference) OutputGroupSettingsAttributes {
@@ -2422,8 +2422,8 @@ type ArchiveGroupSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ags ArchiveGroupSettingsAttributes) InternalRef() terra.Reference {
-	return ags.ref
+func (ags ArchiveGroupSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ags.ref, nil
 }
 
 func (ags ArchiveGroupSettingsAttributes) InternalWithRef(ref terra.Reference) ArchiveGroupSettingsAttributes {
@@ -2450,8 +2450,8 @@ type ArchiveCdnSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (acs ArchiveCdnSettingsAttributes) InternalRef() terra.Reference {
-	return acs.ref
+func (acs ArchiveCdnSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return acs.ref, nil
 }
 
 func (acs ArchiveCdnSettingsAttributes) InternalWithRef(ref terra.Reference) ArchiveCdnSettingsAttributes {
@@ -2470,8 +2470,8 @@ type ArchiveS3SettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ass ArchiveS3SettingsAttributes) InternalRef() terra.Reference {
-	return ass.ref
+func (ass ArchiveS3SettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ass.ref, nil
 }
 
 func (ass ArchiveS3SettingsAttributes) InternalWithRef(ref terra.Reference) ArchiveS3SettingsAttributes {
@@ -2490,8 +2490,8 @@ type ArchiveGroupSettingsDestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (d ArchiveGroupSettingsDestinationAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d ArchiveGroupSettingsDestinationAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d ArchiveGroupSettingsDestinationAttributes) InternalWithRef(ref terra.Reference) ArchiveGroupSettingsDestinationAttributes {
@@ -2510,8 +2510,8 @@ type FrameCaptureGroupSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (fcgs FrameCaptureGroupSettingsAttributes) InternalRef() terra.Reference {
-	return fcgs.ref
+func (fcgs FrameCaptureGroupSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return fcgs.ref, nil
 }
 
 func (fcgs FrameCaptureGroupSettingsAttributes) InternalWithRef(ref terra.Reference) FrameCaptureGroupSettingsAttributes {
@@ -2534,8 +2534,8 @@ type FrameCaptureGroupSettingsDestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (d FrameCaptureGroupSettingsDestinationAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d FrameCaptureGroupSettingsDestinationAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d FrameCaptureGroupSettingsDestinationAttributes) InternalWithRef(ref terra.Reference) FrameCaptureGroupSettingsDestinationAttributes {
@@ -2554,8 +2554,8 @@ type FrameCaptureCdnSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (fccs FrameCaptureCdnSettingsAttributes) InternalRef() terra.Reference {
-	return fccs.ref
+func (fccs FrameCaptureCdnSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return fccs.ref, nil
 }
 
 func (fccs FrameCaptureCdnSettingsAttributes) InternalWithRef(ref terra.Reference) FrameCaptureCdnSettingsAttributes {
@@ -2574,8 +2574,8 @@ type FrameCaptureS3SettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (fcss FrameCaptureS3SettingsAttributes) InternalRef() terra.Reference {
-	return fcss.ref
+func (fcss FrameCaptureS3SettingsAttributes) InternalRef() (terra.Reference, error) {
+	return fcss.ref, nil
 }
 
 func (fcss FrameCaptureS3SettingsAttributes) InternalWithRef(ref terra.Reference) FrameCaptureS3SettingsAttributes {
@@ -2594,8 +2594,8 @@ type HlsGroupSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (hgs HlsGroupSettingsAttributes) InternalRef() terra.Reference {
-	return hgs.ref
+func (hgs HlsGroupSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return hgs.ref, nil
 }
 
 func (hgs HlsGroupSettingsAttributes) InternalWithRef(ref terra.Reference) HlsGroupSettingsAttributes {
@@ -2778,8 +2778,8 @@ type CaptionLanguageMappingsAttributes struct {
 	ref terra.Reference
 }
 
-func (clm CaptionLanguageMappingsAttributes) InternalRef() terra.Reference {
-	return clm.ref
+func (clm CaptionLanguageMappingsAttributes) InternalRef() (terra.Reference, error) {
+	return clm.ref, nil
 }
 
 func (clm CaptionLanguageMappingsAttributes) InternalWithRef(ref terra.Reference) CaptionLanguageMappingsAttributes {
@@ -2806,8 +2806,8 @@ type HlsGroupSettingsDestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (d HlsGroupSettingsDestinationAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d HlsGroupSettingsDestinationAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d HlsGroupSettingsDestinationAttributes) InternalWithRef(ref terra.Reference) HlsGroupSettingsDestinationAttributes {
@@ -2826,8 +2826,8 @@ type HlsCdnSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (hcs HlsCdnSettingsAttributes) InternalRef() terra.Reference {
-	return hcs.ref
+func (hcs HlsCdnSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return hcs.ref, nil
 }
 
 func (hcs HlsCdnSettingsAttributes) InternalWithRef(ref terra.Reference) HlsCdnSettingsAttributes {
@@ -2862,8 +2862,8 @@ type HlsAkamaiSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (has HlsAkamaiSettingsAttributes) InternalRef() terra.Reference {
-	return has.ref
+func (has HlsAkamaiSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return has.ref, nil
 }
 
 func (has HlsAkamaiSettingsAttributes) InternalWithRef(ref terra.Reference) HlsAkamaiSettingsAttributes {
@@ -2906,8 +2906,8 @@ type HlsBasicPutSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (hbps HlsBasicPutSettingsAttributes) InternalRef() terra.Reference {
-	return hbps.ref
+func (hbps HlsBasicPutSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return hbps.ref, nil
 }
 
 func (hbps HlsBasicPutSettingsAttributes) InternalWithRef(ref terra.Reference) HlsBasicPutSettingsAttributes {
@@ -2938,8 +2938,8 @@ type HlsMediaStoreSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (hmss HlsMediaStoreSettingsAttributes) InternalRef() terra.Reference {
-	return hmss.ref
+func (hmss HlsMediaStoreSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return hmss.ref, nil
 }
 
 func (hmss HlsMediaStoreSettingsAttributes) InternalWithRef(ref terra.Reference) HlsMediaStoreSettingsAttributes {
@@ -2974,8 +2974,8 @@ type HlsS3SettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (hss HlsS3SettingsAttributes) InternalRef() terra.Reference {
-	return hss.ref
+func (hss HlsS3SettingsAttributes) InternalRef() (terra.Reference, error) {
+	return hss.ref, nil
 }
 
 func (hss HlsS3SettingsAttributes) InternalWithRef(ref terra.Reference) HlsS3SettingsAttributes {
@@ -2994,8 +2994,8 @@ type HlsWebdavSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (hws HlsWebdavSettingsAttributes) InternalRef() terra.Reference {
-	return hws.ref
+func (hws HlsWebdavSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return hws.ref, nil
 }
 
 func (hws HlsWebdavSettingsAttributes) InternalWithRef(ref terra.Reference) HlsWebdavSettingsAttributes {
@@ -3030,8 +3030,8 @@ type KeyProviderSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (kps KeyProviderSettingsAttributes) InternalRef() terra.Reference {
-	return kps.ref
+func (kps KeyProviderSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return kps.ref, nil
 }
 
 func (kps KeyProviderSettingsAttributes) InternalWithRef(ref terra.Reference) KeyProviderSettingsAttributes {
@@ -3050,8 +3050,8 @@ type StaticKeySettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (sks StaticKeySettingsAttributes) InternalRef() terra.Reference {
-	return sks.ref
+func (sks StaticKeySettingsAttributes) InternalRef() (terra.Reference, error) {
+	return sks.ref, nil
 }
 
 func (sks StaticKeySettingsAttributes) InternalWithRef(ref terra.Reference) StaticKeySettingsAttributes {
@@ -3074,8 +3074,8 @@ type KeyProviderServerAttributes struct {
 	ref terra.Reference
 }
 
-func (kps KeyProviderServerAttributes) InternalRef() terra.Reference {
-	return kps.ref
+func (kps KeyProviderServerAttributes) InternalRef() (terra.Reference, error) {
+	return kps.ref, nil
 }
 
 func (kps KeyProviderServerAttributes) InternalWithRef(ref terra.Reference) KeyProviderServerAttributes {
@@ -3102,8 +3102,8 @@ type MediaPackageGroupSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (mpgs MediaPackageGroupSettingsAttributes) InternalRef() terra.Reference {
-	return mpgs.ref
+func (mpgs MediaPackageGroupSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return mpgs.ref, nil
 }
 
 func (mpgs MediaPackageGroupSettingsAttributes) InternalWithRef(ref terra.Reference) MediaPackageGroupSettingsAttributes {
@@ -3122,8 +3122,8 @@ type MediaPackageGroupSettingsDestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (d MediaPackageGroupSettingsDestinationAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d MediaPackageGroupSettingsDestinationAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d MediaPackageGroupSettingsDestinationAttributes) InternalWithRef(ref terra.Reference) MediaPackageGroupSettingsDestinationAttributes {
@@ -3142,8 +3142,8 @@ type MsSmoothGroupSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (msgs MsSmoothGroupSettingsAttributes) InternalRef() terra.Reference {
-	return msgs.ref
+func (msgs MsSmoothGroupSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return msgs.ref, nil
 }
 
 func (msgs MsSmoothGroupSettingsAttributes) InternalWithRef(ref terra.Reference) MsSmoothGroupSettingsAttributes {
@@ -3234,8 +3234,8 @@ type MsSmoothGroupSettingsDestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (d MsSmoothGroupSettingsDestinationAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d MsSmoothGroupSettingsDestinationAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d MsSmoothGroupSettingsDestinationAttributes) InternalWithRef(ref terra.Reference) MsSmoothGroupSettingsDestinationAttributes {
@@ -3254,8 +3254,8 @@ type MultiplexGroupSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (mgs MultiplexGroupSettingsAttributes) InternalRef() terra.Reference {
-	return mgs.ref
+func (mgs MultiplexGroupSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return mgs.ref, nil
 }
 
 func (mgs MultiplexGroupSettingsAttributes) InternalWithRef(ref terra.Reference) MultiplexGroupSettingsAttributes {
@@ -3270,8 +3270,8 @@ type RtmpGroupSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (rgs RtmpGroupSettingsAttributes) InternalRef() terra.Reference {
-	return rgs.ref
+func (rgs RtmpGroupSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return rgs.ref, nil
 }
 
 func (rgs RtmpGroupSettingsAttributes) InternalWithRef(ref terra.Reference) RtmpGroupSettingsAttributes {
@@ -3314,8 +3314,8 @@ type UdpGroupSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ugs UdpGroupSettingsAttributes) InternalRef() terra.Reference {
-	return ugs.ref
+func (ugs UdpGroupSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ugs.ref, nil
 }
 
 func (ugs UdpGroupSettingsAttributes) InternalWithRef(ref terra.Reference) UdpGroupSettingsAttributes {
@@ -3342,8 +3342,8 @@ type OutputsAttributes struct {
 	ref terra.Reference
 }
 
-func (o OutputsAttributes) InternalRef() terra.Reference {
-	return o.ref
+func (o OutputsAttributes) InternalRef() (terra.Reference, error) {
+	return o.ref, nil
 }
 
 func (o OutputsAttributes) InternalWithRef(ref terra.Reference) OutputsAttributes {
@@ -3378,8 +3378,8 @@ type OutputSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (os OutputSettingsAttributes) InternalRef() terra.Reference {
-	return os.ref
+func (os OutputSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return os.ref, nil
 }
 
 func (os OutputSettingsAttributes) InternalWithRef(ref terra.Reference) OutputSettingsAttributes {
@@ -3426,8 +3426,8 @@ type ArchiveOutputSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (aos ArchiveOutputSettingsAttributes) InternalRef() terra.Reference {
-	return aos.ref
+func (aos ArchiveOutputSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return aos.ref, nil
 }
 
 func (aos ArchiveOutputSettingsAttributes) InternalWithRef(ref terra.Reference) ArchiveOutputSettingsAttributes {
@@ -3454,8 +3454,8 @@ type ArchiveOutputSettingsContainerSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (cs ArchiveOutputSettingsContainerSettingsAttributes) InternalRef() terra.Reference {
-	return cs.ref
+func (cs ArchiveOutputSettingsContainerSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return cs.ref, nil
 }
 
 func (cs ArchiveOutputSettingsContainerSettingsAttributes) InternalWithRef(ref terra.Reference) ArchiveOutputSettingsContainerSettingsAttributes {
@@ -3478,8 +3478,8 @@ type ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) InternalRef() terra.Reference {
-	return ms.ref
+func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ms.ref, nil
 }
 
 func (ms ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes) InternalWithRef(ref terra.Reference) ArchiveOutputSettingsContainerSettingsM2TsSettingsAttributes {
@@ -3682,8 +3682,8 @@ type ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes 
 	ref terra.Reference
 }
 
-func (dns ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes) InternalRef() terra.Reference {
-	return dns.ref
+func (dns ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return dns.ref, nil
 }
 
 func (dns ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes) InternalWithRef(ref terra.Reference) ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes {
@@ -3710,8 +3710,8 @@ type ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes 
 	ref terra.Reference
 }
 
-func (dss ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes) InternalRef() terra.Reference {
-	return dss.ref
+func (dss ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return dss.ref, nil
 }
 
 func (dss ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes) InternalWithRef(ref terra.Reference) ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes {
@@ -3742,8 +3742,8 @@ type ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes 
 	ref terra.Reference
 }
 
-func (dts ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes) InternalRef() terra.Reference {
-	return dts.ref
+func (dts ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return dts.ref, nil
 }
 
 func (dts ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes) InternalWithRef(ref terra.Reference) ArchiveOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes {
@@ -3762,8 +3762,8 @@ type RawSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (rs RawSettingsAttributes) InternalRef() terra.Reference {
-	return rs.ref
+func (rs RawSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return rs.ref, nil
 }
 
 func (rs RawSettingsAttributes) InternalWithRef(ref terra.Reference) RawSettingsAttributes {
@@ -3778,8 +3778,8 @@ type FrameCaptureOutputSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (fcos FrameCaptureOutputSettingsAttributes) InternalRef() terra.Reference {
-	return fcos.ref
+func (fcos FrameCaptureOutputSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return fcos.ref, nil
 }
 
 func (fcos FrameCaptureOutputSettingsAttributes) InternalWithRef(ref terra.Reference) FrameCaptureOutputSettingsAttributes {
@@ -3798,8 +3798,8 @@ type HlsOutputSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (hos HlsOutputSettingsAttributes) InternalRef() terra.Reference {
-	return hos.ref
+func (hos HlsOutputSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return hos.ref, nil
 }
 
 func (hos HlsOutputSettingsAttributes) InternalWithRef(ref terra.Reference) HlsOutputSettingsAttributes {
@@ -3830,8 +3830,8 @@ type HlsSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (hs HlsSettingsAttributes) InternalRef() terra.Reference {
-	return hs.ref
+func (hs HlsSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return hs.ref, nil
 }
 
 func (hs HlsSettingsAttributes) InternalWithRef(ref terra.Reference) HlsSettingsAttributes {
@@ -3862,8 +3862,8 @@ type AudioOnlyHlsSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (aohs AudioOnlyHlsSettingsAttributes) InternalRef() terra.Reference {
-	return aohs.ref
+func (aohs AudioOnlyHlsSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return aohs.ref, nil
 }
 
 func (aohs AudioOnlyHlsSettingsAttributes) InternalWithRef(ref terra.Reference) AudioOnlyHlsSettingsAttributes {
@@ -3894,8 +3894,8 @@ type AudioOnlyImageAttributes struct {
 	ref terra.Reference
 }
 
-func (aoi AudioOnlyImageAttributes) InternalRef() terra.Reference {
-	return aoi.ref
+func (aoi AudioOnlyImageAttributes) InternalRef() (terra.Reference, error) {
+	return aoi.ref, nil
 }
 
 func (aoi AudioOnlyImageAttributes) InternalWithRef(ref terra.Reference) AudioOnlyImageAttributes {
@@ -3922,8 +3922,8 @@ type Fmp4HlsSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (fhs Fmp4HlsSettingsAttributes) InternalRef() terra.Reference {
-	return fhs.ref
+func (fhs Fmp4HlsSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return fhs.ref, nil
 }
 
 func (fhs Fmp4HlsSettingsAttributes) InternalWithRef(ref terra.Reference) Fmp4HlsSettingsAttributes {
@@ -3950,8 +3950,8 @@ type FrameCaptureHlsSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (fchs FrameCaptureHlsSettingsAttributes) InternalRef() terra.Reference {
-	return fchs.ref
+func (fchs FrameCaptureHlsSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return fchs.ref, nil
 }
 
 func (fchs FrameCaptureHlsSettingsAttributes) InternalWithRef(ref terra.Reference) FrameCaptureHlsSettingsAttributes {
@@ -3966,8 +3966,8 @@ type StandardHlsSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (shs StandardHlsSettingsAttributes) InternalRef() terra.Reference {
-	return shs.ref
+func (shs StandardHlsSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return shs.ref, nil
 }
 
 func (shs StandardHlsSettingsAttributes) InternalWithRef(ref terra.Reference) StandardHlsSettingsAttributes {
@@ -3990,8 +3990,8 @@ type M3U8SettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ms M3U8SettingsAttributes) InternalRef() terra.Reference {
-	return ms.ref
+func (ms M3U8SettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ms.ref, nil
 }
 
 func (ms M3U8SettingsAttributes) InternalWithRef(ref terra.Reference) M3U8SettingsAttributes {
@@ -4074,8 +4074,8 @@ type MediaPackageOutputSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (mpos MediaPackageOutputSettingsAttributes) InternalRef() terra.Reference {
-	return mpos.ref
+func (mpos MediaPackageOutputSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return mpos.ref, nil
 }
 
 func (mpos MediaPackageOutputSettingsAttributes) InternalWithRef(ref terra.Reference) MediaPackageOutputSettingsAttributes {
@@ -4090,8 +4090,8 @@ type MsSmoothOutputSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (msos MsSmoothOutputSettingsAttributes) InternalRef() terra.Reference {
-	return msos.ref
+func (msos MsSmoothOutputSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return msos.ref, nil
 }
 
 func (msos MsSmoothOutputSettingsAttributes) InternalWithRef(ref terra.Reference) MsSmoothOutputSettingsAttributes {
@@ -4114,8 +4114,8 @@ type MultiplexOutputSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (mos MultiplexOutputSettingsAttributes) InternalRef() terra.Reference {
-	return mos.ref
+func (mos MultiplexOutputSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return mos.ref, nil
 }
 
 func (mos MultiplexOutputSettingsAttributes) InternalWithRef(ref terra.Reference) MultiplexOutputSettingsAttributes {
@@ -4134,8 +4134,8 @@ type MultiplexOutputSettingsDestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (d MultiplexOutputSettingsDestinationAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d MultiplexOutputSettingsDestinationAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d MultiplexOutputSettingsDestinationAttributes) InternalWithRef(ref terra.Reference) MultiplexOutputSettingsDestinationAttributes {
@@ -4154,8 +4154,8 @@ type RtmpOutputSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ros RtmpOutputSettingsAttributes) InternalRef() terra.Reference {
-	return ros.ref
+func (ros RtmpOutputSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ros.ref, nil
 }
 
 func (ros RtmpOutputSettingsAttributes) InternalWithRef(ref terra.Reference) RtmpOutputSettingsAttributes {
@@ -4186,8 +4186,8 @@ type RtmpOutputSettingsDestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (d RtmpOutputSettingsDestinationAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d RtmpOutputSettingsDestinationAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d RtmpOutputSettingsDestinationAttributes) InternalWithRef(ref terra.Reference) RtmpOutputSettingsDestinationAttributes {
@@ -4206,8 +4206,8 @@ type UdpOutputSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (uos UdpOutputSettingsAttributes) InternalRef() terra.Reference {
-	return uos.ref
+func (uos UdpOutputSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return uos.ref, nil
 }
 
 func (uos UdpOutputSettingsAttributes) InternalWithRef(ref terra.Reference) UdpOutputSettingsAttributes {
@@ -4238,8 +4238,8 @@ type UdpOutputSettingsContainerSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (cs UdpOutputSettingsContainerSettingsAttributes) InternalRef() terra.Reference {
-	return cs.ref
+func (cs UdpOutputSettingsContainerSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return cs.ref, nil
 }
 
 func (cs UdpOutputSettingsContainerSettingsAttributes) InternalWithRef(ref terra.Reference) UdpOutputSettingsContainerSettingsAttributes {
@@ -4258,8 +4258,8 @@ type UdpOutputSettingsContainerSettingsM2TsSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) InternalRef() terra.Reference {
-	return ms.ref
+func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ms.ref, nil
 }
 
 func (ms UdpOutputSettingsContainerSettingsM2TsSettingsAttributes) InternalWithRef(ref terra.Reference) UdpOutputSettingsContainerSettingsM2TsSettingsAttributes {
@@ -4462,8 +4462,8 @@ type UdpOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes stru
 	ref terra.Reference
 }
 
-func (dns UdpOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes) InternalRef() terra.Reference {
-	return dns.ref
+func (dns UdpOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return dns.ref, nil
 }
 
 func (dns UdpOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes) InternalWithRef(ref terra.Reference) UdpOutputSettingsContainerSettingsM2TsSettingsDvbNitSettingsAttributes {
@@ -4490,8 +4490,8 @@ type UdpOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes stru
 	ref terra.Reference
 }
 
-func (dss UdpOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes) InternalRef() terra.Reference {
-	return dss.ref
+func (dss UdpOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return dss.ref, nil
 }
 
 func (dss UdpOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes) InternalWithRef(ref terra.Reference) UdpOutputSettingsContainerSettingsM2TsSettingsDvbSdtSettingsAttributes {
@@ -4522,8 +4522,8 @@ type UdpOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes stru
 	ref terra.Reference
 }
 
-func (dts UdpOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes) InternalRef() terra.Reference {
-	return dts.ref
+func (dts UdpOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return dts.ref, nil
 }
 
 func (dts UdpOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes) InternalWithRef(ref terra.Reference) UdpOutputSettingsContainerSettingsM2TsSettingsDvbTdtSettingsAttributes {
@@ -4542,8 +4542,8 @@ type UdpOutputSettingsDestinationAttributes struct {
 	ref terra.Reference
 }
 
-func (d UdpOutputSettingsDestinationAttributes) InternalRef() terra.Reference {
-	return d.ref
+func (d UdpOutputSettingsDestinationAttributes) InternalRef() (terra.Reference, error) {
+	return d.ref, nil
 }
 
 func (d UdpOutputSettingsDestinationAttributes) InternalWithRef(ref terra.Reference) UdpOutputSettingsDestinationAttributes {
@@ -4562,8 +4562,8 @@ type FecOutputSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (fos FecOutputSettingsAttributes) InternalRef() terra.Reference {
-	return fos.ref
+func (fos FecOutputSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return fos.ref, nil
 }
 
 func (fos FecOutputSettingsAttributes) InternalWithRef(ref terra.Reference) FecOutputSettingsAttributes {
@@ -4590,8 +4590,8 @@ type TimecodeConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (tc TimecodeConfigAttributes) InternalRef() terra.Reference {
-	return tc.ref
+func (tc TimecodeConfigAttributes) InternalRef() (terra.Reference, error) {
+	return tc.ref, nil
 }
 
 func (tc TimecodeConfigAttributes) InternalWithRef(ref terra.Reference) TimecodeConfigAttributes {
@@ -4614,8 +4614,8 @@ type VideoDescriptionsAttributes struct {
 	ref terra.Reference
 }
 
-func (vd VideoDescriptionsAttributes) InternalRef() terra.Reference {
-	return vd.ref
+func (vd VideoDescriptionsAttributes) InternalRef() (terra.Reference, error) {
+	return vd.ref, nil
 }
 
 func (vd VideoDescriptionsAttributes) InternalWithRef(ref terra.Reference) VideoDescriptionsAttributes {
@@ -4658,8 +4658,8 @@ type VideoDescriptionsCodecSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (cs VideoDescriptionsCodecSettingsAttributes) InternalRef() terra.Reference {
-	return cs.ref
+func (cs VideoDescriptionsCodecSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return cs.ref, nil
 }
 
 func (cs VideoDescriptionsCodecSettingsAttributes) InternalWithRef(ref terra.Reference) VideoDescriptionsCodecSettingsAttributes {
@@ -4682,8 +4682,8 @@ type FrameCaptureSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (fcs FrameCaptureSettingsAttributes) InternalRef() terra.Reference {
-	return fcs.ref
+func (fcs FrameCaptureSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return fcs.ref, nil
 }
 
 func (fcs FrameCaptureSettingsAttributes) InternalWithRef(ref terra.Reference) FrameCaptureSettingsAttributes {
@@ -4706,8 +4706,8 @@ type H264SettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (hs H264SettingsAttributes) InternalRef() terra.Reference {
-	return hs.ref
+func (hs H264SettingsAttributes) InternalRef() (terra.Reference, error) {
+	return hs.ref, nil
 }
 
 func (hs H264SettingsAttributes) InternalWithRef(ref terra.Reference) H264SettingsAttributes {
@@ -4882,8 +4882,8 @@ type FilterSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (fs FilterSettingsAttributes) InternalRef() terra.Reference {
-	return fs.ref
+func (fs FilterSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return fs.ref, nil
 }
 
 func (fs FilterSettingsAttributes) InternalWithRef(ref terra.Reference) FilterSettingsAttributes {
@@ -4902,8 +4902,8 @@ type TemporalFilterSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (tfs TemporalFilterSettingsAttributes) InternalRef() terra.Reference {
-	return tfs.ref
+func (tfs TemporalFilterSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return tfs.ref, nil
 }
 
 func (tfs TemporalFilterSettingsAttributes) InternalWithRef(ref terra.Reference) TemporalFilterSettingsAttributes {
@@ -4926,8 +4926,8 @@ type InputAttachmentsAttributes struct {
 	ref terra.Reference
 }
 
-func (ia InputAttachmentsAttributes) InternalRef() terra.Reference {
-	return ia.ref
+func (ia InputAttachmentsAttributes) InternalRef() (terra.Reference, error) {
+	return ia.ref, nil
 }
 
 func (ia InputAttachmentsAttributes) InternalWithRef(ref terra.Reference) InputAttachmentsAttributes {
@@ -4958,8 +4958,8 @@ type AutomaticInputFailoverSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (aifs AutomaticInputFailoverSettingsAttributes) InternalRef() terra.Reference {
-	return aifs.ref
+func (aifs AutomaticInputFailoverSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return aifs.ref, nil
 }
 
 func (aifs AutomaticInputFailoverSettingsAttributes) InternalWithRef(ref terra.Reference) AutomaticInputFailoverSettingsAttributes {
@@ -4990,8 +4990,8 @@ type FailoverConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (fc FailoverConditionAttributes) InternalRef() terra.Reference {
-	return fc.ref
+func (fc FailoverConditionAttributes) InternalRef() (terra.Reference, error) {
+	return fc.ref, nil
 }
 
 func (fc FailoverConditionAttributes) InternalWithRef(ref terra.Reference) FailoverConditionAttributes {
@@ -5010,8 +5010,8 @@ type FailoverConditionSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (fcs FailoverConditionSettingsAttributes) InternalRef() terra.Reference {
-	return fcs.ref
+func (fcs FailoverConditionSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return fcs.ref, nil
 }
 
 func (fcs FailoverConditionSettingsAttributes) InternalWithRef(ref terra.Reference) FailoverConditionSettingsAttributes {
@@ -5038,8 +5038,8 @@ type AudioSilenceSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ass AudioSilenceSettingsAttributes) InternalRef() terra.Reference {
-	return ass.ref
+func (ass AudioSilenceSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ass.ref, nil
 }
 
 func (ass AudioSilenceSettingsAttributes) InternalWithRef(ref terra.Reference) AudioSilenceSettingsAttributes {
@@ -5062,8 +5062,8 @@ type InputLossSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ils InputLossSettingsAttributes) InternalRef() terra.Reference {
-	return ils.ref
+func (ils InputLossSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ils.ref, nil
 }
 
 func (ils InputLossSettingsAttributes) InternalWithRef(ref terra.Reference) InputLossSettingsAttributes {
@@ -5082,8 +5082,8 @@ type VideoBlackSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (vbs VideoBlackSettingsAttributes) InternalRef() terra.Reference {
-	return vbs.ref
+func (vbs VideoBlackSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return vbs.ref, nil
 }
 
 func (vbs VideoBlackSettingsAttributes) InternalWithRef(ref terra.Reference) VideoBlackSettingsAttributes {
@@ -5106,8 +5106,8 @@ type InputSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (is InputSettingsAttributes) InternalRef() terra.Reference {
-	return is.ref
+func (is InputSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return is.ref, nil
 }
 
 func (is InputSettingsAttributes) InternalWithRef(ref terra.Reference) InputSettingsAttributes {
@@ -5166,8 +5166,8 @@ type AudioSelectorAttributes struct {
 	ref terra.Reference
 }
 
-func (as AudioSelectorAttributes) InternalRef() terra.Reference {
-	return as.ref
+func (as AudioSelectorAttributes) InternalRef() (terra.Reference, error) {
+	return as.ref, nil
 }
 
 func (as AudioSelectorAttributes) InternalWithRef(ref terra.Reference) AudioSelectorAttributes {
@@ -5190,8 +5190,8 @@ type AudioSelectorSelectorSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ss AudioSelectorSelectorSettingsAttributes) InternalRef() terra.Reference {
-	return ss.ref
+func (ss AudioSelectorSelectorSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ss.ref, nil
 }
 
 func (ss AudioSelectorSelectorSettingsAttributes) InternalWithRef(ref terra.Reference) AudioSelectorSelectorSettingsAttributes {
@@ -5222,8 +5222,8 @@ type AudioHlsRenditionSelectionAttributes struct {
 	ref terra.Reference
 }
 
-func (ahrs AudioHlsRenditionSelectionAttributes) InternalRef() terra.Reference {
-	return ahrs.ref
+func (ahrs AudioHlsRenditionSelectionAttributes) InternalRef() (terra.Reference, error) {
+	return ahrs.ref, nil
 }
 
 func (ahrs AudioHlsRenditionSelectionAttributes) InternalWithRef(ref terra.Reference) AudioHlsRenditionSelectionAttributes {
@@ -5246,8 +5246,8 @@ type AudioLanguageSelectionAttributes struct {
 	ref terra.Reference
 }
 
-func (als AudioLanguageSelectionAttributes) InternalRef() terra.Reference {
-	return als.ref
+func (als AudioLanguageSelectionAttributes) InternalRef() (terra.Reference, error) {
+	return als.ref, nil
 }
 
 func (als AudioLanguageSelectionAttributes) InternalWithRef(ref terra.Reference) AudioLanguageSelectionAttributes {
@@ -5270,8 +5270,8 @@ type AudioPidSelectionAttributes struct {
 	ref terra.Reference
 }
 
-func (aps AudioPidSelectionAttributes) InternalRef() terra.Reference {
-	return aps.ref
+func (aps AudioPidSelectionAttributes) InternalRef() (terra.Reference, error) {
+	return aps.ref, nil
 }
 
 func (aps AudioPidSelectionAttributes) InternalWithRef(ref terra.Reference) AudioPidSelectionAttributes {
@@ -5290,8 +5290,8 @@ type AudioTrackSelectionAttributes struct {
 	ref terra.Reference
 }
 
-func (ats AudioTrackSelectionAttributes) InternalRef() terra.Reference {
-	return ats.ref
+func (ats AudioTrackSelectionAttributes) InternalRef() (terra.Reference, error) {
+	return ats.ref, nil
 }
 
 func (ats AudioTrackSelectionAttributes) InternalWithRef(ref terra.Reference) AudioTrackSelectionAttributes {
@@ -5310,8 +5310,8 @@ type TrackAttributes struct {
 	ref terra.Reference
 }
 
-func (t TrackAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TrackAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TrackAttributes) InternalWithRef(ref terra.Reference) TrackAttributes {
@@ -5330,8 +5330,8 @@ type CaptionSelectorAttributes struct {
 	ref terra.Reference
 }
 
-func (cs CaptionSelectorAttributes) InternalRef() terra.Reference {
-	return cs.ref
+func (cs CaptionSelectorAttributes) InternalRef() (terra.Reference, error) {
+	return cs.ref, nil
 }
 
 func (cs CaptionSelectorAttributes) InternalWithRef(ref terra.Reference) CaptionSelectorAttributes {
@@ -5358,8 +5358,8 @@ type CaptionSelectorSelectorSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ss CaptionSelectorSelectorSettingsAttributes) InternalRef() terra.Reference {
-	return ss.ref
+func (ss CaptionSelectorSelectorSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ss.ref, nil
 }
 
 func (ss CaptionSelectorSelectorSettingsAttributes) InternalWithRef(ref terra.Reference) CaptionSelectorSelectorSettingsAttributes {
@@ -5398,8 +5398,8 @@ type AncillarySourceSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ass AncillarySourceSettingsAttributes) InternalRef() terra.Reference {
-	return ass.ref
+func (ass AncillarySourceSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ass.ref, nil
 }
 
 func (ass AncillarySourceSettingsAttributes) InternalWithRef(ref terra.Reference) AncillarySourceSettingsAttributes {
@@ -5418,8 +5418,8 @@ type SelectorSettingsDvbTdtSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (dts SelectorSettingsDvbTdtSettingsAttributes) InternalRef() terra.Reference {
-	return dts.ref
+func (dts SelectorSettingsDvbTdtSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return dts.ref, nil
 }
 
 func (dts SelectorSettingsDvbTdtSettingsAttributes) InternalWithRef(ref terra.Reference) SelectorSettingsDvbTdtSettingsAttributes {
@@ -5442,8 +5442,8 @@ type EmbeddedSourceSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (ess EmbeddedSourceSettingsAttributes) InternalRef() terra.Reference {
-	return ess.ref
+func (ess EmbeddedSourceSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return ess.ref, nil
 }
 
 func (ess EmbeddedSourceSettingsAttributes) InternalWithRef(ref terra.Reference) EmbeddedSourceSettingsAttributes {
@@ -5474,8 +5474,8 @@ type Scte20SourceSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (sss Scte20SourceSettingsAttributes) InternalRef() terra.Reference {
-	return sss.ref
+func (sss Scte20SourceSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return sss.ref, nil
 }
 
 func (sss Scte20SourceSettingsAttributes) InternalWithRef(ref terra.Reference) Scte20SourceSettingsAttributes {
@@ -5498,8 +5498,8 @@ type Scte27SourceSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (sss Scte27SourceSettingsAttributes) InternalRef() terra.Reference {
-	return sss.ref
+func (sss Scte27SourceSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return sss.ref, nil
 }
 
 func (sss Scte27SourceSettingsAttributes) InternalWithRef(ref terra.Reference) Scte27SourceSettingsAttributes {
@@ -5522,8 +5522,8 @@ type TeletextSourceSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (tss TeletextSourceSettingsAttributes) InternalRef() terra.Reference {
-	return tss.ref
+func (tss TeletextSourceSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return tss.ref, nil
 }
 
 func (tss TeletextSourceSettingsAttributes) InternalWithRef(ref terra.Reference) TeletextSourceSettingsAttributes {
@@ -5546,8 +5546,8 @@ type OutputRectangleAttributes struct {
 	ref terra.Reference
 }
 
-func (or OutputRectangleAttributes) InternalRef() terra.Reference {
-	return or.ref
+func (or OutputRectangleAttributes) InternalRef() (terra.Reference, error) {
+	return or.ref, nil
 }
 
 func (or OutputRectangleAttributes) InternalWithRef(ref terra.Reference) OutputRectangleAttributes {
@@ -5578,8 +5578,8 @@ type NetworkInputSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (nis NetworkInputSettingsAttributes) InternalRef() terra.Reference {
-	return nis.ref
+func (nis NetworkInputSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return nis.ref, nil
 }
 
 func (nis NetworkInputSettingsAttributes) InternalWithRef(ref terra.Reference) NetworkInputSettingsAttributes {
@@ -5602,8 +5602,8 @@ type HlsInputSettingsAttributes struct {
 	ref terra.Reference
 }
 
-func (his HlsInputSettingsAttributes) InternalRef() terra.Reference {
-	return his.ref
+func (his HlsInputSettingsAttributes) InternalRef() (terra.Reference, error) {
+	return his.ref, nil
 }
 
 func (his HlsInputSettingsAttributes) InternalWithRef(ref terra.Reference) HlsInputSettingsAttributes {
@@ -5638,8 +5638,8 @@ type VideoSelectorAttributes struct {
 	ref terra.Reference
 }
 
-func (vs VideoSelectorAttributes) InternalRef() terra.Reference {
-	return vs.ref
+func (vs VideoSelectorAttributes) InternalRef() (terra.Reference, error) {
+	return vs.ref, nil
 }
 
 func (vs VideoSelectorAttributes) InternalWithRef(ref terra.Reference) VideoSelectorAttributes {
@@ -5662,8 +5662,8 @@ type InputSpecificationAttributes struct {
 	ref terra.Reference
 }
 
-func (is InputSpecificationAttributes) InternalRef() terra.Reference {
-	return is.ref
+func (is InputSpecificationAttributes) InternalRef() (terra.Reference, error) {
+	return is.ref, nil
 }
 
 func (is InputSpecificationAttributes) InternalWithRef(ref terra.Reference) InputSpecificationAttributes {
@@ -5690,8 +5690,8 @@ type MaintenanceAttributes struct {
 	ref terra.Reference
 }
 
-func (m MaintenanceAttributes) InternalRef() terra.Reference {
-	return m.ref
+func (m MaintenanceAttributes) InternalRef() (terra.Reference, error) {
+	return m.ref, nil
 }
 
 func (m MaintenanceAttributes) InternalWithRef(ref terra.Reference) MaintenanceAttributes {
@@ -5714,8 +5714,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
@@ -5742,8 +5742,8 @@ type VpcAttributes struct {
 	ref terra.Reference
 }
 
-func (v VpcAttributes) InternalRef() terra.Reference {
-	return v.ref
+func (v VpcAttributes) InternalRef() (terra.Reference, error) {
+	return v.ref, nil
 }
 
 func (v VpcAttributes) InternalWithRef(ref terra.Reference) VpcAttributes {

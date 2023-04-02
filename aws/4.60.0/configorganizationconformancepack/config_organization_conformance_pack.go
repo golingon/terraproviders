@@ -27,8 +27,8 @@ type InputParameterAttributes struct {
 	ref terra.Reference
 }
 
-func (ip InputParameterAttributes) InternalRef() terra.Reference {
-	return ip.ref
+func (ip InputParameterAttributes) InternalRef() (terra.Reference, error) {
+	return ip.ref, nil
 }
 
 func (ip InputParameterAttributes) InternalWithRef(ref terra.Reference) InputParameterAttributes {
@@ -51,8 +51,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {

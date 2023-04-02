@@ -62,8 +62,8 @@ type InputDataConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (idc InputDataConfigAttributes) InternalRef() terra.Reference {
-	return idc.ref
+func (idc InputDataConfigAttributes) InternalRef() (terra.Reference, error) {
+	return idc.ref, nil
 }
 
 func (idc InputDataConfigAttributes) InternalWithRef(ref terra.Reference) InputDataConfigAttributes {
@@ -98,8 +98,8 @@ type AugmentedManifestsAttributes struct {
 	ref terra.Reference
 }
 
-func (am AugmentedManifestsAttributes) InternalRef() terra.Reference {
-	return am.ref
+func (am AugmentedManifestsAttributes) InternalRef() (terra.Reference, error) {
+	return am.ref, nil
 }
 
 func (am AugmentedManifestsAttributes) InternalWithRef(ref terra.Reference) AugmentedManifestsAttributes {
@@ -138,8 +138,8 @@ type OutputDataConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (odc OutputDataConfigAttributes) InternalRef() terra.Reference {
-	return odc.ref
+func (odc OutputDataConfigAttributes) InternalRef() (terra.Reference, error) {
+	return odc.ref, nil
 }
 
 func (odc OutputDataConfigAttributes) InternalWithRef(ref terra.Reference) OutputDataConfigAttributes {
@@ -166,8 +166,8 @@ type TimeoutsAttributes struct {
 	ref terra.Reference
 }
 
-func (t TimeoutsAttributes) InternalRef() terra.Reference {
-	return t.ref
+func (t TimeoutsAttributes) InternalRef() (terra.Reference, error) {
+	return t.ref, nil
 }
 
 func (t TimeoutsAttributes) InternalWithRef(ref terra.Reference) TimeoutsAttributes {
@@ -194,8 +194,8 @@ type VpcConfigAttributes struct {
 	ref terra.Reference
 }
 
-func (vc VpcConfigAttributes) InternalRef() terra.Reference {
-	return vc.ref
+func (vc VpcConfigAttributes) InternalRef() (terra.Reference, error) {
+	return vc.ref, nil
 }
 
 func (vc VpcConfigAttributes) InternalWithRef(ref terra.Reference) VpcConfigAttributes {

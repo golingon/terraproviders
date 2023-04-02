@@ -24,8 +24,8 @@ type ConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConfigurationAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConfigurationAttributes) InternalWithRef(ref terra.Reference) ConfigurationAttributes {
@@ -48,8 +48,8 @@ type ContentSourceConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (csc ContentSourceConfigurationAttributes) InternalRef() terra.Reference {
-	return csc.ref
+func (csc ContentSourceConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return csc.ref, nil
 }
 
 func (csc ContentSourceConfigurationAttributes) InternalWithRef(ref terra.Reference) ContentSourceConfigurationAttributes {
@@ -76,8 +76,8 @@ type UserIdentityConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (uic UserIdentityConfigurationAttributes) InternalRef() terra.Reference {
-	return uic.ref
+func (uic UserIdentityConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return uic.ref, nil
 }
 
 func (uic UserIdentityConfigurationAttributes) InternalWithRef(ref terra.Reference) UserIdentityConfigurationAttributes {
@@ -96,8 +96,8 @@ type EndpointsAttributes struct {
 	ref terra.Reference
 }
 
-func (e EndpointsAttributes) InternalRef() terra.Reference {
-	return e.ref
+func (e EndpointsAttributes) InternalRef() (terra.Reference, error) {
+	return e.ref, nil
 }
 
 func (e EndpointsAttributes) InternalWithRef(ref terra.Reference) EndpointsAttributes {

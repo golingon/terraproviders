@@ -25,8 +25,8 @@ type AuthenticationConfigurationAttributes struct {
 	ref terra.Reference
 }
 
-func (ac AuthenticationConfigurationAttributes) InternalRef() terra.Reference {
-	return ac.ref
+func (ac AuthenticationConfigurationAttributes) InternalRef() (terra.Reference, error) {
+	return ac.ref, nil
 }
 
 func (ac AuthenticationConfigurationAttributes) InternalWithRef(ref terra.Reference) AuthenticationConfigurationAttributes {
@@ -49,8 +49,8 @@ type FilterAttributes struct {
 	ref terra.Reference
 }
 
-func (f FilterAttributes) InternalRef() terra.Reference {
-	return f.ref
+func (f FilterAttributes) InternalRef() (terra.Reference, error) {
+	return f.ref, nil
 }
 
 func (f FilterAttributes) InternalWithRef(ref terra.Reference) FilterAttributes {

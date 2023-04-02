@@ -25,8 +25,8 @@ type RuleAttributes struct {
 	ref terra.Reference
 }
 
-func (r RuleAttributes) InternalRef() terra.Reference {
-	return r.ref
+func (r RuleAttributes) InternalRef() (terra.Reference, error) {
+	return r.ref, nil
 }
 
 func (r RuleAttributes) InternalWithRef(ref terra.Reference) RuleAttributes {
@@ -45,8 +45,8 @@ type DefaultRetentionAttributes struct {
 	ref terra.Reference
 }
 
-func (dr DefaultRetentionAttributes) InternalRef() terra.Reference {
-	return dr.ref
+func (dr DefaultRetentionAttributes) InternalRef() (terra.Reference, error) {
+	return dr.ref, nil
 }
 
 func (dr DefaultRetentionAttributes) InternalWithRef(ref terra.Reference) DefaultRetentionAttributes {

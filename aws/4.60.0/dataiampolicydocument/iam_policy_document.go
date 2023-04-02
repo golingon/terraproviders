@@ -55,8 +55,8 @@ type StatementAttributes struct {
 	ref terra.Reference
 }
 
-func (s StatementAttributes) InternalRef() terra.Reference {
-	return s.ref
+func (s StatementAttributes) InternalRef() (terra.Reference, error) {
+	return s.ref, nil
 }
 
 func (s StatementAttributes) InternalWithRef(ref terra.Reference) StatementAttributes {
@@ -107,8 +107,8 @@ type ConditionAttributes struct {
 	ref terra.Reference
 }
 
-func (c ConditionAttributes) InternalRef() terra.Reference {
-	return c.ref
+func (c ConditionAttributes) InternalRef() (terra.Reference, error) {
+	return c.ref, nil
 }
 
 func (c ConditionAttributes) InternalWithRef(ref terra.Reference) ConditionAttributes {
@@ -135,8 +135,8 @@ type NotPrincipalsAttributes struct {
 	ref terra.Reference
 }
 
-func (np NotPrincipalsAttributes) InternalRef() terra.Reference {
-	return np.ref
+func (np NotPrincipalsAttributes) InternalRef() (terra.Reference, error) {
+	return np.ref, nil
 }
 
 func (np NotPrincipalsAttributes) InternalWithRef(ref terra.Reference) NotPrincipalsAttributes {
@@ -159,8 +159,8 @@ type PrincipalsAttributes struct {
 	ref terra.Reference
 }
 
-func (p PrincipalsAttributes) InternalRef() terra.Reference {
-	return p.ref
+func (p PrincipalsAttributes) InternalRef() (terra.Reference, error) {
+	return p.ref, nil
 }
 
 func (p PrincipalsAttributes) InternalWithRef(ref terra.Reference) PrincipalsAttributes {
